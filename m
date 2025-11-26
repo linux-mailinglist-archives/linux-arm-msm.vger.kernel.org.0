@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-83452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1E9DC89B4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 13:14:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CB41C89BC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 13:22:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EC2FF34311F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 12:14:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A4113A93F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 12:22:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22A2526ED5F;
-	Wed, 26 Nov 2025 12:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38E23327216;
+	Wed, 26 Nov 2025 12:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="iHgvpHlC"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="csIfU6zF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60CC236437;
-	Wed, 26 Nov 2025 12:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67205155326;
+	Wed, 26 Nov 2025 12:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764159282; cv=none; b=AM3ft1aQ7LqO+2ErK6ith7hbVefSRGKguXhW6+C5T96e3lnEYFrNia34YdKa000xAGyKyvnc4kV6sS/8p/vmFHhKJM7Qc/4nijk+UYxNGnLb4/vxWcBirZMt1Je1MKyrYmeeVV9P/AdFpojpyOUKb+zZar+6ffS6Gsv0KtbP3UI=
+	t=1764159710; cv=none; b=sTAqfWCklJr8FiYlwkdCHcpov5/BKrsHjXdVbBj88TKYvhEQkq9bfnNJWxvPk+HFUBXjS0qK+EZYc9aoBp6tfJLyEYTrXLZGvAKwdpPVHJtApdDfjtQiGkYOsA8gCo79T6Uin3aQgvFsm63CSoWy+NtvrQRIAtipyIWXHxrHATw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764159282; c=relaxed/simple;
-	bh=RSBa7hUMXgqS8U4UG1ZrUdgyQ+ko7O3RdVe8C061wew=;
+	s=arc-20240116; t=1764159710; c=relaxed/simple;
+	bh=vGjw9giEAuwaPRQQ809egB6bshSoOsXVYmA/NGmiLCQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u7AHGwp1yl6ZJPmEyAMAINCg/TBcTD1xMYltkErWJrFpI7qJ3fGMPtl+HuanX+IGA6JpXUJYMK2QLlxe6g/+9vWBCRtIbsajVf4U7tFvGbIKE84+nYAMlr3AHkpMCRROohVvMSKV7lbMd7REVmWW6izSzJRTx3C4e1VYKmCpQN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=iHgvpHlC; arc=none smtp.client-ip=94.112.25.9
+	 In-Reply-To:Content-Type; b=heV+Ln3XBztSuiLiMLjCvW/oNTHQHnrD2WCuG/0J6vMf3sjXBy9Rj+7mCwN/lUqoEhw3toE2OHCX/QbWlfNVdKHSaQL/GqpsgQPkflUPTTA921FiIRBDe6X84i/ptVcywRy4EPpxpMOfwV/36pKJpgw7cKfhj8zk5O2Y1DPRqlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=csIfU6zF; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [10.0.0.200] (unknown [10.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 10FA553400FC;
-	Wed, 26 Nov 2025 13:14:30 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 29BEB534013A;
+	Wed, 26 Nov 2025 13:21:45 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764159270;
+	t=1764159705;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=LcXrwcKrInrH5xKoyymC7FYkJ3G2RfHYQcJdu+YSq1w=;
-	b=iHgvpHlCG5BtRBIBqLs1Qr0m+jDpbYCL9SdBUHlnDdGYVlb1IuNzfyDZQ4asNwfP2WySUA
-	+UnH5XcUYfQaenEqvozI6wyH+IgCm0d1zKqh47VROP8CasYpRa5TPZYXnUjuHvxHV7VxD7
-	fX/eZSgCt1/kDe7r8r7IcrMzdm6Mv+w=
-Message-ID: <4c80c922-5955-4490-bb69-fc0e91368bdf@ixit.cz>
-Date: Wed, 26 Nov 2025 13:14:29 +0100
+	bh=KKA3AXZoREj8PlhGqA5ParUtLN76EnaGmR742rBiI5A=;
+	b=csIfU6zFPWCUDC7sLMzmeuhenpV1seupTlDWUTXeirUJStYtas4tfhN7d5utEmOKomB3yE
+	TvAg0e9VCATsEqlB1OISBVzCk+J0+lVQStNLWBEixPaa5y1JVywvJc15c6GBXJ3IM59EwJ
+	CG0CH419dafdCFLOEKJFd09neQS33vU=
+Message-ID: <ac398b13-e2f1-4483-8805-39f9d0b19952@ixit.cz>
+Date: Wed, 26 Nov 2025 13:21:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,26 +56,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/11] arm64: dts: qcom: sdm845-lg-{common, judyln}:
- Add wifi node
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Paul Sajna <sajattack@postmarketos.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add
+ placeholders and sort
+To: longnoserob@gmail.com, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>,
- Christopher Brown <crispybrown@gmail.com>
-References: <20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org>
- <20250928-judyln-dts-v3-7-b14cf9e9a928@postmarketos.org>
- <f58493a9-6def-4610-9c3e-d6a877dc23d3@oss.qualcomm.com>
- <d38801bc77ad00442b1669ea252ae30a5c6af5b4@postmarketos.org>
- <7661d9d9-eca3-4708-8162-960df0d7f6c7@oss.qualcomm.com>
- <998d44a8500132bc48e6882a5f7b19b45286a965@postmarketos.org>
- <fae984c564f240b72bc65bf3eab679587a9d90c4@postmarketos.org>
- <g7chy34wnwbqme77ssnpp6fzuc2ymesfk2jssjdfskqjxhayzj@cie763xuzec5>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251126-slpi-v1-0-c101d08beaf2@gmail.com>
+ <20251126-slpi-v1-2-c101d08beaf2@gmail.com>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -121,49 +110,25 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <g7chy34wnwbqme77ssnpp6fzuc2ymesfk2jssjdfskqjxhayzj@cie763xuzec5>
+In-Reply-To: <20251126-slpi-v1-2-c101d08beaf2@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 26/11/2025 01:38, Dmitry Baryshkov wrote:
-
-[...]
->>> with qcom,snoc-host-cap-8bit-quirk I get
->>> ```
->>> ath10k_snoc 18800000.wifi: msa info req rejected: 90
->>> ```
->>>
->>> without it I get
->>> ```
->>> ath10k_snoc 18800000.wifi: host capability request rejected: 1
->>>
->>> ```
->>>
->>> Please help me understand how I should proceed.
->>>
->>
->> I guess I'll just voice my support in https://patchwork.kernel.org/project/ath10k/patch/1601058581-19461-1-git-send-email-amit.pundir@linaro.org/ for now.
+On 26/11/2025 13:08, Robert Eckelmann via B4 Relay wrote:
+> From: Robert Eckelmann <longnoserob@gmail.com>
 > 
-> Can "... we just ignore the return value of
-> ath10k_qmi_host_cap_send_sync() and move along"?
+> We know these devices are present, most of them are supported by
+> downstream and close to the mainline kernels.
+> 
+> This is very handy when rebasing the integration tree with the support.
+> 
+> No functional changes.
+> 
+> Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
+> ---
+>   .../dts/qcom/sdm845-xiaomi-beryllium-common.dtsi   | 23 +++++++++++++++-------
+>   1 file changed, 16 insertions(+), 7 deletions(-)
 > 
 
-From: https://lore.kernel.org/all/20201029134017.GA807@yoga/
-SNIP ---
- > Why can't you just always ignore this error? If you can't deal with this
- > entirely in the driver, then it should be part of the WiFi firmware so
- > it's always in sync.
- >
-
-Unfortunately the firmware versions I've hit this problem on has gone
-belly up when receiving this request, that's why I asked Amit to add a
-flag to skip it.
-
-That said, in the devices I've hit this I've managed to get newer
-firmware working, which doesn't have either problem.
-SNIP ---
-
-That's the pain behind it.
-
-David
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
