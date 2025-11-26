@@ -1,156 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-83503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3950CC8B581
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 18:52:19 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB1EC8B554
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 18:50:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 456123BB3EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 17:47:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2AABF4EECF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 17:47:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 756B03176E7;
-	Wed, 26 Nov 2025 17:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3544A30EF66;
+	Wed, 26 Nov 2025 17:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t71wDoEP"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gEUZNiIG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4A3128CA;
-	Wed, 26 Nov 2025 17:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AF430BF67;
+	Wed, 26 Nov 2025 17:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764179004; cv=none; b=s6hHnkJu7is2No0K+VCdyQddsQMja8biV9kYptJWIeIFwH7ZNWH4dYcvo+MneT/MkdofoL9X/8St2087ucCeJ9kYZwCnn5JjaA1WCu+hF8f6jo1TZi7kP2HVb7VJCG5wSSK2CdTPKxXv1VbVY7R6e/r6xCVMZyr6R7HdDdt0QjY=
+	t=1764179058; cv=none; b=cd9JIjIstwMZHKn8cjTtxaEM1W1gxYyAiCELOsogoY2pkTiF1Dqi9dtdjhPIUoYkiqb9M7seqncjEtbFJsmgK2PcCKHwtxmIh4PbX1zQl0+la9p2iZbwNm1feZ7MGUeIK88pKdWsGiBQXAqLtoql8lcbjz6+r2mxSE+kiOlMJh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764179004; c=relaxed/simple;
-	bh=s7kogi1zzJmGKeU3OBajrOm18Dhy7srZInmeF6Mv1RU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gS0+qrxckh6WfQV87jIe+naiGfvaqJAczAWa3sEjSRis6QadXVKPjNZkb8aM05Y0sj5iaEGD6EFmpwYAOgZ/ClBkvfnSY/uJP1NbE51FWQRopZR1dgZ8WaUIWOEtmlkkYPbteM3b6UKlce2/6Zqsl7Hfq/1wd9Awfp0OMTkF2dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t71wDoEP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76916C4CEF7;
-	Wed, 26 Nov 2025 17:43:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764179003;
-	bh=s7kogi1zzJmGKeU3OBajrOm18Dhy7srZInmeF6Mv1RU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=t71wDoEPgkrDfD8pHHitejJYk39o2FEFHFSmVT4ygOrZcB73k1A8mkh7b4/S7vge4
-	 I5C3GCpkFVGL6+w17G5PvFbBFaokZw3QsvRJwteYViOO6lazvrtdarUvwP4WzAtR3D
-	 daurM7DWpsmImxIPHNOU/gY1NMUW3UZYrPIGLr5cTxvcvwJKRr9z9M1P0sJ/isdlh/
-	 IqKQxtOsw47XjmxeY280Hx846IvYFyQXOH7Pc0dN0hfE9tX9ffTaBgISBozgRjS5w2
-	 p7OrblkyeQ0ONduKSMGkEepJLD6nwZoVHAe3UHSuCoKWXAe+RpCHINnQTuR8DKTDOA
-	 aFQD4Ru55iDcg==
-Message-ID: <8078408c-b4c4-426f-8801-902b2b6dfd71@kernel.org>
-Date: Wed, 26 Nov 2025 18:43:19 +0100
+	s=arc-20240116; t=1764179058; c=relaxed/simple;
+	bh=AfU72dzoQEIN05MEic99nCWprMePE4jWVDyflLUgKkk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G049hvk6M0VGAKgwjQaWoUQzYgWrBqDcRKpQwt4vdfD1/Iy74vU6yom3WStkW76p28ycvbaEAJH3zUK1GTMfAkz9wlCNka3P09mMs6aeD1wcuwwqYREfTeAAuMXrJa6bb8wR8n6H4cuJRCWMGqer3KfOzEtimlMDAxEyWTsG+gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gEUZNiIG; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764179056; x=1795715056;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=AfU72dzoQEIN05MEic99nCWprMePE4jWVDyflLUgKkk=;
+  b=gEUZNiIGlpp8uQ5VddtDLax1xhYwsN88gOsw/w381W4csrSG4CLIKckL
+   h8mGda3Hic/canRXl1IH0w8PJSMHCbbRFNPn/LUgTcl8VOSBPfyT0JSmG
+   K3Qt6es94KdNOW4A5Qco993OT8LY9Ms4ljaVWY3bbMrbhMlFJb5lHHKxp
+   LzeCXlHIc5+0PUnmxI6LSef8znJANkO01nUMY4dHwxWUqmQWQqkIk8Wd/
+   qqibWhrw00jSPVm77TUUZiGBrpVqtqlamztkGApyBkIdphFCjbbelJNes
+   J9MwgWZCz+8S5gMq9ezjPMKjKuojDQfU3GCtdsfvg9Uy4SZSn7VfeWhU0
+   w==;
+X-CSE-ConnectionGUID: u0Et37u0Q+aRrlYXemP90w==
+X-CSE-MsgGUID: kkPh+CU+Qs+Dx7pRlcW5Kg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11625"; a="66264058"
+X-IronPort-AV: E=Sophos;i="6.20,228,1758610800"; 
+   d="scan'208";a="66264058"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Nov 2025 09:44:15 -0800
+X-CSE-ConnectionGUID: opP1pdLNTO64iIk/2cdoTw==
+X-CSE-MsgGUID: IWP9lX+tR9+QiQePNNUPKQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,228,1758610800"; 
+   d="scan'208";a="198113466"
+Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
+  by orviesa005.jf.intel.com with ESMTP; 26 Nov 2025 09:44:12 -0800
+Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vOJYn-000000003CX-1COV;
+	Wed, 26 Nov 2025 17:44:09 +0000
+Date: Thu, 27 Nov 2025 01:44:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>
+Subject: Re: [PATCH 3/5] PCI/pwrctrl: Add APIs for explicitly creating and
+ destroying pwrctrl devices
+Message-ID: <202511270103.uCCr0RCQ-lkp@intel.com>
+References: <20251124-pci-pwrctrl-rework-v1-3-78a72627683d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] soc: qcom: llcc: Fix usecase id macro alignment
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251125-glymur_llcc_enablement-v2-0-75a10be51d74@oss.qualcomm.com>
- <20251125-glymur_llcc_enablement-v2-2-75a10be51d74@oss.qualcomm.com>
- <20251126-gigantic-dinosaur-of-bloom-aca95f@kuoka>
- <7158bde2-bf70-4a2d-b19f-fcc24cc37d28@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <7158bde2-bf70-4a2d-b19f-fcc24cc37d28@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251124-pci-pwrctrl-rework-v1-3-78a72627683d@oss.qualcomm.com>
 
-On 26/11/2025 12:38, Pankaj Patil wrote:
-> On 11/26/2025 2:29 PM, Krzysztof Kozlowski wrote:
->> On Tue, Nov 25, 2025 at 02:46:23PM +0530, Pankaj Patil wrote:
->>> Aligned macro values for usecase id along the column length
->>> -#define LLCC_CAMOFE	 71
->>> -#define LLCC_CAMRTIP	 72
->>> -#define LLCC_CAMSRTIP	 73
->>> -#define LLCC_CAMRTRF	 74
->>> -#define LLCC_CAMSRTRF	 75
->>> -#define LLCC_VIDEO_APV	 83
->>> -#define LLCC_COMPUTE1	 87
->>> -#define LLCC_CPUSS_OPP	 88
->>> -#define LLCC_CPUSSMPAM	 89
->>> -#define LLCC_CAM_IPE_STROV	 92
->>> -#define LLCC_CAM_OFE_STROV	 93
->>> -#define LLCC_CPUSS_HEU	 94
->>> -#define LLCC_MDM_PNG_FIXED	 100
->>> +#define LLCC_CPUSS         1
->>> +#define LLCC_VIDSC0        2
->>> +#define LLCC_VIDSC1        3
->>> +#define LLCC_ROTATOR       4
->>> +#define LLCC_VOICE         5
->> This does not look right - you still have here spaces, so nothing fixed.
->>
->> I don't think this change is useful. You replaced one poor alignment
->> into another poor alignment, so IMO better not to touch this at all.
->>
->> Best regards,
->> Krzysztof
->>
-> Sure, Will drop this patch in next revision
+Hi Manivannan,
 
-If fixing this, fix correctly, so these should be tabs accommodating
-future IDs, so you won't be doing the same every 3 months.
+kernel test robot noticed the following build errors:
 
-But to me it is a bit of churn, does not improve readability and
-actually affects negatively git blame and backporting, so I would
-propose to drop it.
+[auto build test ERROR on 3a8660878839faadb4f1a6dd72c3179c1df56787]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-Parse-PERST-from-all-PCIe-bridge-nodes/20251125-002444
+base:   3a8660878839faadb4f1a6dd72c3179c1df56787
+patch link:    https://lore.kernel.org/r/20251124-pci-pwrctrl-rework-v1-3-78a72627683d%40oss.qualcomm.com
+patch subject: [PATCH 3/5] PCI/pwrctrl: Add APIs for explicitly creating and destroying pwrctrl devices
+config: loongarch-randconfig-r121-20251126 (https://download.01.org/0day-ci/archive/20251127/202511270103.uCCr0RCQ-lkp@intel.com/config)
+compiler: loongarch64-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251127/202511270103.uCCr0RCQ-lkp@intel.com/reproduce)
 
-Best regards,
-Krzysztof
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511270103.uCCr0RCQ-lkp@intel.com/
+
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+>> ERROR: modpost: "of_pci_supply_present" [drivers/pci/pwrctrl/pci-pwrctrl-core.ko] undefined!
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
