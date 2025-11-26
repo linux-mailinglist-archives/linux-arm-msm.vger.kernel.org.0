@@ -1,66 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-83511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0682CC8BC32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 21:05:34 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBCD0C8BC44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 21:05:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD45B3AF474
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 20:05:29 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ADB01359C3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 20:05:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6996D34107C;
-	Wed, 26 Nov 2025 20:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D86134320A;
+	Wed, 26 Nov 2025 20:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7cEAe7X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsfO09IQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3394A34104F;
-	Wed, 26 Nov 2025 20:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8143431EE;
+	Wed, 26 Nov 2025 20:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764187521; cv=none; b=Pmp/Jp5nvtAj6TGUcOELYqvngh1llYSt1wsYRtaaF4AO/lS8MCmppG02KY9eXYGCbZ+f4o6yklfaeps9Tdotzg95klep/6UJ+BBHDkVoG+QbqiRjaiR026HdV8eb1p/7z3NDYyH1f5gDDxwreC9X9qPdPbDlKdjORnFGeHqWST0=
+	t=1764187524; cv=none; b=mD/osqdCV4PM7BeOSbh62FXH0EL8mlrspusraH2VEYzhjPdyAq8t126sYjGycnQNiTOQPD2VSCGNsDh1jfKlF/qEENpogCZ5D+1Azej42icWrDyZTTkwOUUiEqQchzNq/rMZSqIBtMSx+G5hWzluHyirIg7fXCCEc+74O+hvTOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764187521; c=relaxed/simple;
-	bh=zv5NPZLk5xocYfuAXyByIGPAeSW64LITYQnD70lfGL4=;
+	s=arc-20240116; t=1764187524; c=relaxed/simple;
+	bh=HNlhUSAZHy9m56st5YpHKHIBWXjQyR/HAaQSnTKncP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QCH4MMCeuV9pL3KiUuRlHYC1/loP0+PqPx1LrmvBJR8W626KJQjSGwWfhnyfgtBmgNzL4lAhpDF7LTCBqzUACe3mcaISn836zRqdo7uXwIqgDekjfXGIEzhGGvUx4r0Nsa8WOm1TiPBST7vCHOz3S5iM42e6u0ijsIG0DYqPrnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7cEAe7X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10FFC116D0;
-	Wed, 26 Nov 2025 20:05:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ac9NirmYsgYe2idvxxVQ+rN//ggY5d1Ipl9G2NwDCEN9WVk5Po5Wpq9KaMP2wQZWP4rxFBrd+bZGPBXPIRXnKAEYpGvTgBCglM/NezuuqB2NX3Fpv26lvhjw5qpdRL6zXkejsBxRPtmFB/v8EheRwNNlPo8c+Wnfvy8Fze3fwP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsfO09IQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19FFC4CEF7;
+	Wed, 26 Nov 2025 20:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764187520;
-	bh=zv5NPZLk5xocYfuAXyByIGPAeSW64LITYQnD70lfGL4=;
+	s=k20201202; t=1764187523;
+	bh=HNlhUSAZHy9m56st5YpHKHIBWXjQyR/HAaQSnTKncP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U7cEAe7XnvRePeOgvazlK6nMvfb6YHvv4oyRTu7cnWVEX5M4pwGIzyhjzw1bV1jnm
-	 iSPLB88Vr6mvcYHBf0bjJwdoGCRAeUR9dBHr4s9npw1F7ddkfM+J6Hf3VZ/VzntxyC
-	 Q4743w5j9S8yVAWn0/qKxivsbyq9Thw20I9Z79UEYa9tGhCMPQfvEXiiylDcMNtZwO
-	 bl2hLy7hkWcvg5KBED2s1b6G6Q8voQF9slZy8H1MpHmK791pSPG0TUPusKFjqBLNZ5
-	 +1r6CXfUzH+/1nWTJ/FZ4Unje45xL5oeeaZsMdSV6DD/cTJN2DW0XD0abI02ibIE1g
-	 au+msK4d5KJ5Q==
+	b=DsfO09IQ7Lkx9NQNdoXXALYCw6/Y+5nkpb1agRzj+bq84MnIhGTWVEkGWr6lUisaT
+	 VHjPQ0z51ZaTH/jLPk/Ja4K0UdBdhAwk9JZxzeJOc9QSqd0Fv8b6wEFeNZe4wROGKu
+	 5jk5huuvl8PyOb2tggpSokOb3P5DTRD0l2DZcGME0bk8pv7shYn2dQjk9+GjHEeuBy
+	 MPUahTrySMeEorKMaMQSodcj+IzINh78BC4fAZmc90eSIkpOpeqXYIuq0mnPdWQ+mw
+	 xK9vHsrlNpSFqTmL1To7CNwdzUq5XJIaUOnZ0EvviEvH7iHEoFdgUE/7WFW6na9f70
+	 pmOfqvYI2pi3g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca@lucaweiss.eu>
+	Nickolay Goppen <setotau@mainlining.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/4] Start using rpmpd for power domains on MSM8974
-Date: Wed, 26 Nov 2025 14:10:42 -0600
-Message-ID: <176418784420.1591314.3648653659027460213.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	linux@mainlining.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/3] Add SDM660 cDSP support
+Date: Wed, 26 Nov 2025 14:10:45 -0600
+Message-ID: <176418784440.1591314.3239085261697231881.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
-References: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
+In-Reply-To: <20251110-qcom-sdm660-cdsp-v3-0-cc3c37287e72@mainlining.org>
+References: <20251110-qcom-sdm660-cdsp-v3-0-cc3c37287e72@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,24 +72,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 21 Jun 2025 15:19:55 +0200, Luca Weiss wrote:
-> Switch over the ADSP PIL to use power-domains instead of a regulator,
-> and have one commit switching over the MSM8974 SoC plus all the devices
-> to use power-domains.
+On Mon, 10 Nov 2025 21:29:42 +0300, Nickolay Goppen wrote:
+> This series adds an ability to load and boot the cDSP remoteproc
+> found in the SDM660 SoC.
 > 
-> Note, that I'm aware that these changes are not backwards compatible and
-> not really bisectable, but since it only affects the ADSP on these
-> pretty old boards, I say it's fine to have this. Get all the patches
-> into the same release (6.17?) and then we're good again.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/4] dt-bindings: remoteproc: qcom,adsp: Make msm8974 use CX as power domain
-      commit: 3d447dcdae53b13b5d7df32c4d1d35971d460008
-[2/4] remoteproc: qcom_q6v5_pas: Use resource with CX PD for MSM8974
-      commit: a1f2c2d55a81c38d63c251ebb7e73e00be37c229
+[1/3] dt-bindings: remoteproc: qcom: adsp: Add missing constrains for SDM660 ADSP
+      commit: db03780e43781d48effef75c9b1960987f6751d4
+[2/3] dt-bindings: remoteproc: qcom: adsp: Add SDM660 CDSP compatible
+      commit: acd6c28a2503f1e53ef06fb3dc1b6cbf9cc6cec3
+[3/3] remoteproc: qcom: pas: Add support for SDM660 CDSP
+      commit: 950c74fd6cd80ae6773aa3bf4cb4321b83f194d2
 
 Best regards,
 -- 
