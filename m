@@ -1,223 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-83462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23D31C8A1FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:01:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BDF1C8A23F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:04:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A45474E47BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 14:01:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A70B3A300D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 14:04:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45F891E231E;
-	Wed, 26 Nov 2025 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFE451DF254;
+	Wed, 26 Nov 2025 14:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Cwy2j730";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HXrAdQuG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O5uUQ9t0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X8MgEU8c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1137D137C52;
-	Wed, 26 Nov 2025 14:00:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB271FE47B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 14:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764165661; cv=none; b=YknCMyOIrYOcQmSMc1mHrx7nIDqz43Q+C7FjTyVtTIroyo+NPSk1p7w7qiyvro52k1i/O4FuoH4LMnXQc8BYJSxpkCOxF2DWhuqUHC5Zw4OgDMKZrClvlTrFXhZEeZwFtqUOsmbd0smRqBLEho5Rm8NHhh2S0s2swajQ99TYB3A=
+	t=1764165844; cv=none; b=cT3HDA9CtofIhYv7mtwCzOMi2ZkmhSH4VqZdVPTQiHfWqH3qwgOEE4J++gNQ+x09B2HkaxxB0XV425yWGsiuDd7lT//MNwQtYGdsSYR5Dg24Ud6Rz5dt/qXM9vDtGtE33c/HpqQxqBCFahvb8SfSjojBfWr0ECrLXjC66HMysBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764165661; c=relaxed/simple;
-	bh=YPaj0iMsevOTP8GI9PWH05D8ZA2CgzzSRRCxKtKkl9U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EdXdGPITxOoVpyPAgy9HT4v1EB3v8XxEhJYgAOvCr2IgA+OA7i8k2UAAuNnT2VWoKPbE+TGVwlgrO5j1Sg50MZZntw+wvAuTZnwzzFe4HRdB3fOkTkK8x7YGvZ+AHp9myB5iSEj+yKVAsVtDdmmtrxO1xdHPAEEB4QoO+X/1Ab8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Cwy2j730; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HXrAdQuG; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1764165630; bh=98Z8IhtiwxpFOEoUf8F7jdZ
-	okl9OCBSivqNWZSRrKaE=; b=Cwy2j730GvIcTHJ/zJj9FqPhfI64iUIwfVPXqvfRPOcoKxPI+r
-	PIeum0H1cyJFQsG6JYbz9Segmk+wgrT5i6PeEHwxxAZlz7KkQnt1k/XUj4E+83EiKk8MlyLKY72
-	z4BbW3zpJFlURvKyiLGiMgFEX6SjXTFTYhShlTkzqVVV6bodgXihz4fCGSMPhI+inC7ubQSfC0u
-	HdumstTecvpJ9qsqgYM9wh22+uzfTNeogRuQ0eSlMt5Q9MZE9wdWAi0jGX4K+mKr9G0buWlAwTz
-	LtQjkfDTJ/okrCcxk3zx0FnnOEh6KK8Sf+utF7EKw5d8Udww1zRPaW4c4iOYplB8Ehg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1764165630; bh=98Z8IhtiwxpFOEoUf8F7jdZ
-	okl9OCBSivqNWZSRrKaE=; b=HXrAdQuG3aHEFFE3hidI4q5Yp1/L3bWZPP1zXgsBnbp5iDMZXG
-	H4KncF09O/O37RUqGUcmAJtV63XuOeqSVlDQ==;
-Message-ID: <515191cf-a8b8-4487-989b-4c1736a67b2c@mainlining.org>
-Date: Wed, 26 Nov 2025 17:00:29 +0300
+	s=arc-20240116; t=1764165844; c=relaxed/simple;
+	bh=8v1x2RS2pjT3QKt9mvzTfTrPxDuF/2BMWOoPGs7cASs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fMkLQpK+5HbI0fN3Mts4Tp6Zjzuq8giY0ccWkRWPkStP9Mt8ts+yn25/pEsAbYyt8NuAeJfg8z79bnO6WmGiKcC9285utx4cwRTC3cz0zh/pFPcRpgHkeOpK7A1N8cITKUbcZ3wcKkE/C0nU9M0j/ckBWLMj9E71xGmNAeoa1q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O5uUQ9t0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X8MgEU8c; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AQAsmjW1700334
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 14:04:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	j4Pu61FlX7ik1HTPqKufvU6avYQgm5W31lthRKIaR6E=; b=O5uUQ9t0jKDO1yBw
+	NoMLZMVCy0T2XEbjHzAadosxwOexC41Ckz95dn937mPdH3F+/cG6RtPsVu9ataZW
+	XTAF2FUTDSCE3uMdAaTliiMb1fh7m+wU64VhH1DV0nXl7OgtI9tVzJczewYsQseg
+	54RUtXGey3mEfMwvJqzzd5LuSYP4Xex5t2rg+SGyArKGRsbosR0NrlDXvSo5ay5s
+	7AIFkM2IGKNV/uhCCaf4+EMIXMrdIYzO/HqN8XOQYToyZoCgi/lHM1itKhsN3l4r
+	LaxYFyRwhCrOOX7vXrb8sx9JNk+eXfD6HjKsGQNE6V/HhXDAvpMCn+5ZIGDA3qVn
+	B1/6KA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ap07a0e2a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 14:04:02 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b2e2342803so1730413385a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 06:04:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764165841; x=1764770641; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j4Pu61FlX7ik1HTPqKufvU6avYQgm5W31lthRKIaR6E=;
+        b=X8MgEU8cTJa20URdftqHMmNNvxo80cxviM3L9USl0zuTeP5s3FaDRACJh+2YNbuJCi
+         /tUAKHbz6cT9r0bLactq5kulgiVtMYcNxaJqLbTLZf76GEqjBcJiGMdS8SPfzmmiQO0T
+         efIGKChgvhnyGMDdkQNV+kqFPsnCZN6+yVbskBAMg5bwT5cLHkblRyExhmJNByMLQjB/
+         80joBGTDmyOt5dM5+ctjBPCCFms9tIJz6/J+h5ehuRVjznGTveNtrWLBiMa1W3jrmhTk
+         +C4k18mjl3Dyj9e65Hy/uDaN/M5zZogcm35HSdPWJH0O5Ui1UEmNDsBTKBLbZc+2la7X
+         uhqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764165841; x=1764770641;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=j4Pu61FlX7ik1HTPqKufvU6avYQgm5W31lthRKIaR6E=;
+        b=rYUBNvzHV26zHJwc6LA9qtRsXUx5gFzeLHHtLkcyUkQ9zZ2O7/Iv6AX01BDAVjGZ4O
+         5Cy1TFEKhLu5VsvvCIKYCVExrQG8Hy3SdoVYDDXQQMG56a8uPZZ0nzSDQus2g/P9eUxb
+         DWGIbrcQ1Gb9G9wyrNWq24f64OOiL9JvbGa0SOJCznXhuZv4Mp/r5HrXql3COMrdgx2U
+         GiiP+L0XWa47bhfEwICo07z4iF0h3QvyKAFwpw68NtQvCMJKvofHXwzLEUfO1R5OEbcB
+         OS1LQs8HVmlGhJgfQ3BYs/6Yb6IZmbmYDpORtxiXRLQKRQt5fUW2BKRtcGNoV38e0xDt
+         eQlg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmcXmYNOVPUOfYuKUvTbu+TDQVF1zCZ82GNsXVeIKhyzi1nGhx6grMGbUJ9eJH1Y1fLUoPczND47fpw/ED@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEwHdZ4ajxpbgLoymuDa2bnP+1ii0QeaMcq6vt2OCwx1W10c5R
+	hw/3/AbAvny6VdAPnHiF2vRTfaVTWhAxds3QUARkncZbn6aKPXRu6tu+HFv5eC5YumOWxT2vx7t
+	bK9C9pZNZQcnR35p/pObIySxb+6qpwUbOs/w1giksqyCZsZBRBVYk+BdPrLbCLTNghC0AAAA7em
+	GgOxEWw2ycOziM57mIH7JtMi0CEkdYZ7Vq4L1QFMPoGYU=
+X-Gm-Gg: ASbGncv5+b46I0CMxlTTxOz1dpkz0ruJ9N23b/0dmgGHiYHkK22txmkgAQwNZdw2l5b
+	+413rZq+LiIkLbL1l65pdh7HTV3/X7WnKttds2Nl14Xu17Frq6wtc5hoaWfuQRqJlDnZOQ55ggF
+	Y8hnlYUxyFWzscnc2pEaqXGmpkRWpB2jFr+NYKhFIWBlErAdYiydRwToYWLBvLj7dRuBk8VVAhN
+	2OB5T2as90MvO3z43V/Kga21t0=
+X-Received: by 2002:a05:620a:404f:b0:8b2:e922:5297 with SMTP id af79cd13be357-8b4ebd6fd06mr928362485a.21.1764165841535;
+        Wed, 26 Nov 2025 06:04:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsbcB5py6KG3ibgJ3gEgq7um1CGHVok1rTCxoPdVhPI5x/5mvjr3hUdeJyz7HAPgluh6fFxRrAfnZqtAPHkl0=
+X-Received: by 2002:a05:620a:404f:b0:8b2:e922:5297 with SMTP id
+ af79cd13be357-8b4ebd6fd06mr928355185a.21.1764165840892; Wed, 26 Nov 2025
+ 06:04:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related
- nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
- Chenna Kesava Raju <chennak@qti.qualcomm.com>,
- Bharath Kumar <bkumar@qti.qualcomm.com>
-References: <a3cb6633-1595-41e7-8e87-ca48a98f822c@mainlining.org>
- <83c3aea5-764e-4e60-8b16-67b474f19357@oss.qualcomm.com>
- <d17548bb-ddce-4d60-8dc4-2c0633989299@oss.qualcomm.com>
- <f5c7eb1c-28b1-4cf1-afb0-b993384b7712@oss.qualcomm.com>
- <80836b8f-16a8-4520-ad11-5ca0abb3403e@oss.qualcomm.com>
- <99c22e73-797c-4a30-92ba-bc3bd8cf70f0@oss.qualcomm.com>
- <eddc16cb-d951-401c-8fb8-fccfcf600143@mainlining.org>
- <0b06f744-b695-43d9-8da3-4424e2b53a5e@oss.qualcomm.com>
- <24221ce7-24e4-4eaa-8681-ed9b4b9f2d6e@oss.qualcomm.com>
- <be4e2715-882d-4358-8575-374187f7ee2f@oss.qualcomm.com>
- <2h222ejvc37cldeno7e4qom5tnvdblqn2zypuquvadbcu7d3pr@765qomrwfvwl>
-Content-Language: ru-RU, en-US
-From: Nickolay Goppen <setotau@mainlining.org>
-In-Reply-To: <2h222ejvc37cldeno7e4qom5tnvdblqn2zypuquvadbcu7d3pr@765qomrwfvwl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251120155825.121483-1-r.mereu.kernel@arduino.cc>
+ <20251120155825.121483-7-r.mereu.kernel@arduino.cc> <45329a9f-545b-4425-9667-26bceca67982@oss.qualcomm.com>
+ <CAKA1Jha7HuEC-KgGktmuiG-U0ZVbKnmLU4bXTwLg+paoLpQ=kQ@mail.gmail.com>
+In-Reply-To: <CAKA1Jha7HuEC-KgGktmuiG-U0ZVbKnmLU4bXTwLg+paoLpQ=kQ@mail.gmail.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Wed, 26 Nov 2025 15:03:50 +0100
+X-Gm-Features: AWmQ_bnu7I2BV-0kj-pM4cBdPYEuUByoq8WpKikAvYHg-1WklPoc-0N_i0hL9x0
+Message-ID: <CAFEp6-0kHtbXKQRtaLUB1bqRV5s_c_bcoAWPdTOH3JvV69rUqQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: qrb2210: add dts for Arduino unoq
+To: Riccardo Mereu Linux Kernel <r.mereu.kernel@arduino.cc>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, broonie@kernel.org, linux@roeck-us.net,
+        Jonathan.Cameron@huawei.com, wenswang@yeah.net,
+        naresh.solanki@9elements.com, michal.simek@amd.com, nuno.sa@analog.com,
+        chou.cosmo@gmail.com, grantpeltier93@gmail.com, eajames@linux.ibm.com,
+        farouk.bouabid@cherry.de, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org, m.facchin@arduino.cc,
+        Riccardo Mereu <r.mereu@arduino.cc>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=ZZEQ98VA c=1 sm=1 tr=0 ts=692708d2 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=JSZs4kpC3w6-UMKaf54A:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: 1B_IZPLW-Xct93TOLHuiazaIh6P37wjR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI2MDExNSBTYWx0ZWRfX2FLED6uLUy37
+ MdEg+6rj2ulq6Buloq7+9tZcTRghFvO5IeIWvRG8yd3HD4dgoPgBFuMWkKmwe8caurWJYE5hQ0F
+ Dn5EBHsrgyAFr4FmhQE9pkJlyf10SOVtV2vE3UeMSf7T0okOeT9GfRO3foxcMtYLf7nzWz1FwLi
+ Rd6onTgOxbTEioMy/LlyUFymtMjlaOQgGtfjkG+vZqEhfrA0oT330+6lBtTCpcEMbF79byh1CBp
+ q+YRy/XK3+AHymMKe7ZiImBi0ZRM0O4n48ZJUQjBAfaW8p6tTK4UfKnAPOnknqpk8IVG8qgZH+1
+ rsciungp98Xax454kV2CEoO5TZBZcOrWbCX82d1AOmAoeJKmPiUvbqYMnD/t+lYGnNrOWvOf3Jx
+ leUKCDmbbm8xj1z6MdUTfp063lgRLA==
+X-Proofpoint-GUID: 1B_IZPLW-Xct93TOLHuiazaIh6P37wjR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511260115
 
-
-21.11.2025 15:09, Dmitry Baryshkov пишет:
-> On Fri, Nov 21, 2025 at 01:41:21PM +0530, Ekansh Gupta wrote:
->>
->> On 11/20/2025 5:17 PM, Konrad Dybcio wrote:
->>> On 11/20/25 11:54 AM, Ekansh Gupta wrote:
->>>> On 11/20/2025 1:27 PM, Nickolay Goppen wrote:
->>>>> 20.11.2025 07:55, Ekansh Gupta пишет:
->>>>>> On 11/20/2025 1:58 AM, Srinivas Kandagatla wrote:
->>>>>>> On 11/12/25 1:52 PM, Konrad Dybcio wrote:
->>>>>>>> On 11/10/25 6:41 PM, Srinivas Kandagatla wrote:
->>>>>>>>> On 11/3/25 12:52 PM, Konrad Dybcio wrote:
->>>>>>>>>> On 10/31/25 12:30 PM, Nickolay Goppen wrote:
->>>>>>>>>>> 24.10.2025 16:58, Nickolay Goppen пишет:
->>>>>>>>>>>> 24.10.2025 11:28, Konrad Dybcio пишет:
->>>>>>>>>>>>> On 10/23/25 9:51 PM, Nickolay Goppen wrote:
->>>>>>>>>>>>>> In order to enable CDSP support for SDM660 SoC:
->>>>>>>>>>>>>>     * add shared memory p2p nodes for CDSP
->>>>>>>>>>>>>>     * add CDSP-specific smmu node
->>>>>>>>>>>>>>     * add CDSP peripheral image loader node
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> Memory region for CDSP in SDM660 occupies the same spot as
->>>>>>>>>>>>>> TZ buffer mem defined in sdm630.dtsi (which does not have CDSP).
->>>>>>>>>>>>>> In sdm660.dtsi replace buffer_mem inherited from SDM630 with
->>>>>>>>>>>>>> cdsp_region, which is also larger in size.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> SDM636 also doesn't have CDSP, so remove inherited from sdm660.dtsi
->>>>>>>>>>>>>> related nodes and add buffer_mem back.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
->>>>>>>>>>>>>> ---
->>>>>>>>>>>>> [...]
->>>>>>>>>>>>>
->>>>>>>>>>>>>> +            label = "turing";
->>>>>>>>>>>>> "cdsp"
->>>>>>>>>>>> Ok, I'll change this in the next revision.
->>>>>>>>>>>>>> +            mboxes = <&apcs_glb 29>;
->>>>>>>>>>>>>> +            qcom,remote-pid = <5>;
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +            fastrpc {
->>>>>>>>>>>>>> +                compatible = "qcom,fastrpc";
->>>>>>>>>>>>>> +                qcom,glink-channels = "fastrpcglink-apps-dsp";
->>>>>>>>>>>>>> +                label = "cdsp";
->>>>>>>>>>>>>> +                qcom,non-secure-domain;
->>>>>>>>>>>>> This shouldn't matter, both a secure and a non-secure device is
->>>>>>>>>>>>> created for CDSP
->>>>>>>>>>>> I've added this property, because it is used in other SoC's, such as SDM845 and SM6115 for both ADSP and CDSP
->>>>>>>>>>> Is this property not neccessary anymore?
->>>>>>>>>> +Srini?
->>>>>>>>> That is true, we do not require this for CDSP, as CDSP allows both
->>>>>>>>> unsigned and signed loading, we create both secured and non-secure node
->>>>>>>>> by default. May be we can provide that clarity in yaml bindings so that
->>>>>>>>> it gets caught during dtb checks.
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> However in ADSP case, we only support singed modules, due to historical
->>>>>>>>> reasons how this driver evolved over years, we have this flag to allow
->>>>>>>>> compatiblity for such users.
->>>>>>>> Does that mean that we can only load signed modules on the ADSP, but
->>>>>>>> the driver behavior was previously such that unsigned modules were
->>>>>>>> allowed (which was presumably fine on devboards, but not on fused
->>>>>>>> devices)?
->>>>>>> Yes, its true that we allowed full access to adsp device nodes when we
->>>>>>> first started upstreaming fastrpc driver.
->>>>>>>
->>>>>>> irrespective of the board only signed modules are supported on the ADSP.
->>>>>>> I think there was one version of SoC i think 8016 or some older one
->>>>>>> which had adsp with hvx which can load unsigned modules for compute
->>>>>>> usecase only.
->>>>>>>
->>>>>>> I have added @Ekansh for more clarity.
->>>>>>>
->>>>>>> --srini
->>>>>> For all the available platforms, ADSP supports only signed modules. Unsigned
->>>>>> modules(as well as signed) are supported by CDSP and GDSP subsystems.
->>>>>>
->>>>>> qcom,non-secure-domain property marks the corresponding DSP as non-secure DSP.
->>>>>> The implications of adding this property would be the following:
->>>>>> on ADSP, SDSP, MDSP:
->>>>>> - Only non-secure device node(/dev/fastrpc-Xdsp) is created.
->>>>>> - Non-secure device node can be used for signed DSP PD offload.
->>>>>>
->>>>>> on CDSP, GDSP:
->>>>>> - Both secure(/dev/fastrpc-Xdsp-secure) and non-secure(/dev/fastrpc-Xdsp) devices
->>>>>>     are created, regardless of this property.
->>>>>> - Both the nodes can be used for signed and unsigned DSP PD offload.
->>>>>>
->>>>>> Note: If the property is not added for CDSP/GDSP, only secure device node can
->>>>>> be used for signed PD offload, if non-secure device is used, the request gets
->>>>>> rejected[1].
->>>>>>
->>>>>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n1245
->>>>>>
->>>>>> //Ekansh
->>>>> Does this mean that the qcom,non-secure-domain property should be dropped from both nodes?
->>>> I checked again and found that unsigned module support for CDSP is
->>>> not available on this platform. Given this, the safest approach would
->>>> be to add the property for both ADSP and CDSP, ensuring that all
->>>> created device nodes can be used for signed PD offload. I can provide
->>> The property allows *unsigned* PD offload though
->> I don't think I can directly relate this property to unsigned PD offload. This is just
->> defining what type of device node will be created and whether the channel is secure
->> or not. There is a possibility of making unsigned PD request(on CDSP/GDSP) irrespective
->> of whether this property is added or not. If DSP does not support unsigned offload, it
->> should return failures for such requests.
-> Which part of the hardware and/or firmware interface does it define? If
-> it simply declared Linux behaviour, it is incorrect and probably should
-> be dropped.
+On Wed, Nov 26, 2025 at 10:28=E2=80=AFAM Riccardo Mereu Linux Kernel
+<r.mereu.kernel@arduino.cc> wrote:
 >
-When I've removed the qcom,non-secure-domain property from cdsp and 
-tried to run hexagonrpcd via this command:
-
-sudo -u fastrpc hexagonrpcd -f /dev/fastrpc-cdsp  -R 
-/usr/share/qcom/sdm660/Xiaomi/clover/ -d cdsp -c 
-/usr/share/qcom/sdm660/Xiaomi/clover/dsp/cdsp/fastrpc_shell_3
-
-It raised the following error:
-
-qcom,fastrpc 1a300000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1: 
-Error: Untrusted application trying to offload to signed PD
-
-
-
->>>> a more definitive recommendation once I know the specific use cases
->>>> you plan to run.
->>> Why would the usecase affect this?
->> I'm saying this as per past discussions where some application was relying on non-secure
->> device node on some old platform(on postmarketOS)[1] and having this property in place.
->> So if similar usecase is being enabled here, the property might be required[1].
-> DT files are not usecase-based.
+> On Mon, Nov 24, 2025 at 12:44=E2=80=AFPM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+> >
+> > On 11/20/25 4:58 PM, Riccardo Mereu wrote:
+> > > From: Riccardo Mereu <r.mereu@arduino.cc>
+> > >
+> > > Arduino UnoQ is a single-board computer combining Qualcomm
+> > > Dragonwing=E2=84=A2 QRB2210 microprocessor with STMicroelectronics ST=
+M32U585
+> > > microcontroller.
+> > > Support to a simply boot to shell environment includes:
+> > > - UART, I2C, SPI
+> > > - onboard LEDS
+> > > - eMMC
+> > > - WLAN and BT
+> > >
+> > > Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
+> > > ---
+> >
+> > [...]
+> >
+> > > +&wifi {
+> > > +     vdd-0.8-cx-mx-supply =3D <&pm4125_l7>;
+> > > +     vdd-1.8-xo-supply =3D <&pm4125_l13>;
+> > > +     vdd-1.3-rfa-supply =3D <&pm4125_l10>;
+> > > +     vdd-3.3-ch0-supply =3D <&pm4125_l22>;
+> > > +     qcom,ath10k-calibration-variant =3D "ArduinoImola";
+> > > +     firmware-name =3D "qcm2290";
+> >
+> > I'm not sure about this line but otherwise this lgtm
 >
->> [1] https://lkml.org/lkml/2024/8/15/117
+> This should be fine, I'll gently ask Loic (added in CC) to confirm that.
 
--- 
-Best regards,
-Nickolay
+Yes we need to use the firmware APi file under WCN3990/hw1.0/qcm2290
+as it has the correct configuration for the QCM2290 platform.
+From log: The wlanmdsp for QCM2290 / QRB4210 platforms requires
+single-chan-info-per-channe feature bit to be set.
 
+Regards,
+Loic
 
