@@ -1,169 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-83518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64BE4C8C104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 22:42:56 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7054DC8C5DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 00:36:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id DF46335AE9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 21:42:55 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 301C84E05B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 23:36:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7922C304BAB;
-	Wed, 26 Nov 2025 21:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GEl/yGbC";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ds7WZijG"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 202112D6E68;
+	Wed, 26 Nov 2025 23:36:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECBE3168E0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 21:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECAE287506;
+	Wed, 26 Nov 2025 23:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764193367; cv=none; b=RBVRCSi8xnTfFDmvbwYJqnMViWM9w2fu/yJc1It4TweXA1U4za59CtMx9IWG61z8kWEf7DbQF1/P+YVYhW2YN8au6446CgMWGw0X05wmwVDwAM4QfpDWuvJcRfVHsJzdENHv27329NnK0SmkWoF5kmGskYCL6yHV9YY+8mPlCAE=
+	t=1764200165; cv=none; b=sU2z7EYpgbnjnTUi89dEe6tAtqSwrulPBcIpNjmsKBBDUwjlVYI/vQCUXdGaDUpCj/LYE1Kr0t4CMPsAy7mXsz31shvO6CVRFwVWaZFfJ9DiaXkO2XwiS9VLAkZ1/C//jI7FKQp4UuKHtmMJZhJDpARhpM3VmHqymtengTPxiUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764193367; c=relaxed/simple;
-	bh=KLk0N1FAetp7tkmzfYNdMAb0rPrwY7OkD8wk8cLPZrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RA8LuCDFlotCY8rAM/WEq+gs0dKeqboKoKljKIA9b9ujf/l27lwgOAiKw0ghIecp8LJJn3uiAkjSh+zncXyKDp+kh8RaI5o/oDrZ9iNvFI1eSGLofm1s+DyIqLsC940oGsGW053VYAMZtsJ/r2tSby22Cz/nsDbxNwv3uaeDvDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GEl/yGbC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ds7WZijG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AQBNxog1849691
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 21:42:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=z+WPrqph3VWDf+dS1LJJ1KlR
-	DwYS2bbPcyS/oPhvXlc=; b=GEl/yGbCRUI/c6OQ8IPSjWdNvZXV91TguQT5Y6aw
-	PcDDhC5scY/y7LgUKz24x2muKP5S/mYwvC8lYOEnoncCvbwXdqjoUsE2NbXdR/jz
-	FDPDpCB9o3SUKKPH8tCkY/jHh0DR5TS77wP/DxSO3XXu09ceQn88dELmbY0sOYIc
-	HRaHz2Ut3sJUHivN9lqE8ADjYG2WYLh/XbmpChF9m76oY18Px/pRaWlrDvjCmL/8
-	KDWElglI16o3+Hp+CsE5ssTRU29PmAUGTtdGXpfyVRVmAbxJQP5wfVzCXbYBQcNV
-	pFGawcgkSYkGLFzJ5ytdsieRRB5WSpmpD8O6rll9+aS+kQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ap0msskxm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 21:42:45 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b286006ffaso46122885a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 13:42:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764193364; x=1764798164; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+WPrqph3VWDf+dS1LJJ1KlRDwYS2bbPcyS/oPhvXlc=;
-        b=Ds7WZijGhFcobO0QGU67vZXTyXij34eA6xK0dQX22V5vhD+wGzwaG/XpH5ZOVYIJoR
-         lA5Rq6HMqBDDDnu91P+OoIJ6sZ1M+LN3YKY9U/Rr6WAMzMzRrbD2M76o0yYbbyfgUB3w
-         4qGw/PLZ3I61Dg/Q9OZEzt+aN726/AWzg2a37wcCD2KMw6OzpiCyY/3oeKLU4v6mpQaC
-         7wRZGwd4s+vaHj/W/VJxtgYL/qGZpTm1xFpEcBCX77nD+Ddd2LvxoMzyZurovVUdnx0m
-         5SHpgVAmbGh2a+glFjGC5P5YqxSNaEnr74DUDqXMoEKuYIQOcxzACXYe6OGOKM3qzYAm
-         qK5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764193364; x=1764798164;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z+WPrqph3VWDf+dS1LJJ1KlRDwYS2bbPcyS/oPhvXlc=;
-        b=DAwNEbWx7UgU+ajay6ZIhzPJt4eyvhVepl9WoYxpuI/LAzYPZGyXa/ZLgVCyBNNF5f
-         auvYuD7/U6uVaXVDgRhULg+OXZphHiWUnMDZynR6auzShGQ/eBXKAGC4BVXHLU7AZ+5o
-         5OWqjnLqr8gKHyEueQFTUurZipXsJU1B4+wYAfVgM53+ImhzVi+eDy9AWYknutenzrWS
-         BJW9if/hVb8uJZTpil8M79gN47UOiRIZUZdyvNkSsFA+15/Fh6oIT1RBpPFlCZvpM/Wf
-         VgizhXiHSeji+oySUOsOowCsNRJk2En7G0FN3/BsOAnRRPFjfUWBOscVL/Et6kp4xSap
-         Su3A==
-X-Forwarded-Encrypted: i=1; AJvYcCX+oGmK1TmQpw9+oe0aIZRS5zK/5jir1qC6SWqZuBSFa5K+liuyShWVMvmrKWyHURIF6V4w7cRxdtFh8+q7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5kl8dPEO35LfKQ4kIap5WZFh+sHBCRqt9U/ZRMcWGKZXgPtje
-	EWx5fE/C1H5K74dbXo/3k4w9ppKzNJfcJMWoEEDf6u/5BWxq1VWnwGQFWPgmwvmAKK219+0aAw6
-	EdHJOQ+gZTxR5eXm1kKPTY2QksKKwzU8UM1KKZ5FHBNCgnHQHhYhHf7gA4OFMXKW7B72U
-X-Gm-Gg: ASbGncuCpTXbtE++e6i2O/2zX1f27zAozomzWTSyvU0INhMz9pnLCUitLxkbTq/CDMS
-	d67r1NE+EKtaYthsgkLE6ji3z9sos6/cMc8DU2HrFXl0kR1o8YCIeAzmhCNBS6FIwNdfliZPG5n
-	AlowUc8nb8CIbsLJVaqerMegkaXOVnkgz/i0W5B83+UL2GWtUK/fq+3FLDFqBW10HNZZnC/NcAG
-	8ANEVJPdXdIX6A7NWzG+BsDnJgpG0kgT/KYlJjg4b4OG/GIwmB7alNp1a3fy2d8AcjWD26cIItd
-	QnGsN0Q0imqUGC/cxzFnViekVyoIT94C7aZV5D7Y2MbZ9lLSYexVOIUvxOsFocWGXSo16oAsEHk
-	Qw5hnP+WmMib5nynyEat7eZZzC/yHl75f8xPy8YPVD8aEQzHIo4hycLrWwK2dCSFUppGJZFjkUV
-	UWICh3S5um//hxp9LJnyjv5R4=
-X-Received: by 2002:a05:620a:28d2:b0:8b2:dd7b:cc8a with SMTP id af79cd13be357-8b33d469758mr2883989385a.75.1764193364018;
-        Wed, 26 Nov 2025 13:42:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGH2vVGd+GcWOMX+Re4xb1YF/CKD+k9Z5kHfJEow6wWU+/bNxqvRsyFDVIN+UdpwQznY75zxQ==
-X-Received: by 2002:a05:620a:28d2:b0:8b2:dd7b:cc8a with SMTP id af79cd13be357-8b33d469758mr2883985685a.75.1764193363526;
-        Wed, 26 Nov 2025 13:42:43 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37cc6b59ef2sm41430281fa.16.2025.11.26.13.42.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 13:42:41 -0800 (PST)
-Date: Wed, 26 Nov 2025 23:42:38 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm: add PERFCTR_CNTL to ifpc_reglist
-Message-ID: <c5t3ae5ip2eoxrxv34ssudf3det73nht2ug6o6ia5lawy2ws7d@jafvcijp5hjg>
-References: <20251126-ifpc_counters-v2-1-b798bc433eff@gmail.com>
+	s=arc-20240116; t=1764200165; c=relaxed/simple;
+	bh=RiWUBWz6MH7vzwS84/JPT1J5aTf7gc2SpKEGiYZGqsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jMloE5cqX4HM7FZ2z0CCG5VbiI9oUxotLnGAjMvAQlMKeWqweM4YtuAlnLVTSGZU7q2aSO5FuxocNdysvS/Cg12rwxXnD0LjpAEwMp3tGX0jdju/uAhVmeAwyQ9pwTYQBuZ0QeOVdgHsBFtHGT0+wweDdGeZaBt+R/7B0E125IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip3t1764200140t26c1d66f
+X-QQ-Originating-IP: hgMl6M65ccjvhNfvtBjTl6QJMNwIooehNHyypEk8E9k=
+Received: from [IPV6:240f:10b:7440:1:c95a:801a ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 27 Nov 2025 07:35:37 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3508264673174158136
+Message-ID: <A528C970F1441854+e82f1fbb-b82e-436c-9336-7b34f515b67b@radxa.com>
+Date: Thu, 27 Nov 2025 08:35:37 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251126-ifpc_counters-v2-1-b798bc433eff@gmail.com>
-X-Proofpoint-GUID: WRgOUvZigPnpY6LvmUdLFhZR8u9BeBDZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI2MDE3NiBTYWx0ZWRfX88Uo8UTUoXf0
- EXMDrY9LSqtcySgTRdUq3kNNaj6lf4Ds6S9TDevEGjrte65VZUFqj9jKKKI6S+uR/CwpJLouEgq
- Lt4EQBsb3YSUAA+g9EvCtY1DuEUANjdrz7j8UflWx8PIzlF1J5B6GiCQq6ERLRGodIE0y3tShuk
- +jtgZFo4luvro47ybEUF2QyCysFvJKJfjDDou00S0vLtK5Y16+icXt1MLvDJ7SeFWWUgO+6LQXj
- TJj8YXZNQZ5sSrBKEW5L3jNWECirFKxk+3phR8TvSIV5e99sPHiQS7PGNv3n5TspCxM49LbuOla
- uAI4WK8SL/pe4iq9qAj6zZhhtbiq4a6jiAUXNRfHaXBCZ+IetdkbpbTlgZll7vGSRFLOVyJZH6I
- v49/h5QOgncoMC8VX9eddSINP7vsQw==
-X-Authority-Analysis: v=2.4 cv=N5Qk1m9B c=1 sm=1 tr=0 ts=69277455 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=RUpeJWWRx64e7F2V8Y0A:9
- a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: WRgOUvZigPnpY6LvmUdLFhZR8u9BeBDZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-25_02,2025-11-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511260176
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] PCI: dwc: Revert Link Up IRQ support
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Niklas Cassel <cassel@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Heiko Stuebner <heiko@sntech.de>, Shawn Lin <shawn.lin@rock-chips.com>,
+ Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20251111105100.869997-8-cassel@kernel.org>
+ <mt7miqkipr4dvxemftq6octxqzauueln252ncrcwy6i2t7wfhi@jtwokeilhwsi>
+ <aSRli_Mb6qoQ9TZO@ryzen>
+ <7667E818D7D31A4E+cf7c83d4-b99c-469d-8d46-588fc95b843f@radxa.com>
+ <pbcemex3hdu4ryw2r7iy6xxt3chwaytlm2eina7mm4ukjfcagt@x4777z7ral26>
+Content-Language: en-US
+From: FUKAUMI Naoki <naoki@radxa.com>
+In-Reply-To: <pbcemex3hdu4ryw2r7iy6xxt3chwaytlm2eina7mm4ukjfcagt@x4777z7ral26>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: N0mS+7D7RQfjFYYGJptHmc9BX10V8/GiKGnkFoMyqJq3T/FWSSBisagX
+	UDta+xTFuX9m+ncgk+oglFqAJ1E8Yq2IdnpxtreKYOqjdEjytpC78BAXPRfAIyB+X111Dyy
+	8pMZ1vSD5RArFx0OoZa/9ACQmopa1R6iPdpQmG7vK0VYLvfzzCCh9JgqjFtiKHyxOm6Tlk5
+	3pj/ws7aeyOj4iuOYUPjgKsr/J6IpZnT57neijWcn/JvA/IuH01wn1Gf/QhYswQUJ05NvZ6
+	zicSaBPrs/JYuyXtPGGlmGWMUBfS0fihXKjINFolqMM4KjtNe1/fM2jP/DbhZcANZjbsDMU
+	Rp5NFCt55Y3doM9xSZaA3ckxfcZD9zgKRjuuWxRsIm876nepQ/4KuLdQCc2gJw1yj1hnlZ+
+	FL6gFEWMAcdmewLj98figUNn1x10mFyQHL0wzvd1NxLHYjsBu0aIOj/o/+LN7bZkWkvRprt
+	zygFKiNkoH321ZKlvYUx1w7oiWqdTE32LO+9AJOPkZc7BUuVWoqf72SAKO5guoRSgdWDr+B
+	O58Xuj41xsGCJOxaUqtlRnNdX4twjFKdHbPJXnOFvWKj953wgj/K4Q6viwIHRLvNtFWaOlE
+	yp0xBRYZcD921M7o+enVGKTAdEmOTHCk5Sm67kTaLlsiLlMByajHhfyLf+CtB+iOsfy1+VS
+	MPwGOHP4OxN8AjX7r5EnO3CcNy5dZ+N+a3Br5XyW1sDRfM2omcMq9OPXN+tbv66t5RctJ9u
+	BJw1uokOm/3O/Jmv7lEob5u4bk/g5IFjvWJJiM/VMvOLQymJ8VzXrFmfVp6VRcXExHdIGde
+	Vpwe40plfglZIR5fQKInfcTaj6SAbOEpP8Y1Uy2thLWbB/6Y2KbtrhnsPhm19j2bzrtIByy
+	zf3qFi5dixqqpLM75IMELwse2F3cAQ29sre9tJDJWEApW6v2Ty9dsOnd0EvFWqS0tW0/0BO
+	sMNx4u3FiSTwWFi59vOm3OczPmrQvRGeDLTGvtCt68WHMWtHsIrxtn70DE+baKf6qrNt5j/
+	N4qa7i+Q==
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-RECHKSPAM: 0
 
-On Wed, Nov 26, 2025 at 10:31:30PM +0100, Anna Maniscalco wrote:
-> Previously this register would become 0 after IFPC took place which
-> broke all usages of counters.
+Hi Mani,
+
+On 11/26/25 22:54, Manivannan Sadhasivam wrote:
+> On Wed, Nov 26, 2025 at 10:30:06PM +0900, FUKAUMI Naoki wrote:
+>> Hi Niklas,
+>>
+>> I apologize for the delayed response.
+>>
+>> On 11/24/25 23:02, Niklas Cassel wrote:
+>>> On Mon, Nov 24, 2025 at 06:07:44PM +0530, Manivannan Sadhasivam wrote:
+>>>> While I suggested to revert the link up IRQ patch for rockchip earlier, I didn't
+>>>> expect to drop the support for Qcom. The reason is, on Qcom SoCs, we have not
+>>>> seen a case where people connect a random PCIe switch and saw failures. Most of
+>>>> the Qcom usecases were around the M.2 and other proprietary connectors. There is
+>>>> only one in-house PCIe switch that is being actively used in our products, but
+>>>> so far, none of the bootloaders have turned them ON before kernel booting. So
+>>>> kernel relies on the newly merged pwrctrl driver to do the job. Even though it
+>>>> also suffers from the same resource allocation issue, this series won't help in
+>>>> any way as pwrctrl core performs rescan after the switch power ON, and by that
+>>>> time, it will be very late anyway.
+>>>>
+>>>> So I'm happy to take the rockhip patches from this series as they fix the real
+>>>> issue that people have reported. But once the pwrctrl rework series gets merged,
+>>>> and the rockchip drivers support them, we can bring back the reverted changes.
+>>>
+>>> FUKAUMI Naoki, just to confirm:
+>>>
+>>> Neither my suggested approach:
+>>> https://lore.kernel.org/linux-pci/aRHdeVCY3rRmxe80@ryzen/
+>>>
+>>> nor Shawn's suggested approach:
+>>> https://lore.kernel.org/linux-pci/dc932773-af5b-4af7-a0d0-8cc72dfbd3c7@rock-chips.com/
+>>>
+>>> worked for you?
+>>
+>> Yes, I re-tested the two methods mentioned above, separately, on v6.18-rc7,
+>> but neither of them resolved the issue in my environment (ROCK 5C +
+>> ASM2806).
+>>
+>>> If so, I don't see many alternative but for Mani to apply patch 1 and
+>>> patch 2 from this series.
+>>
+>> I believe applying patch 1 and patch 2 should be sufficient.
+>>
+>> ----
+>>
+>> Incidentally, (probably) while applying patch 1 and patch 2, I have
+>> encountered the following issue several times:
+>>
 > 
-> Fixes: a6a0157cc68e ("drm/msm/a6xx: Enable IFPC on Adreno X1-85")
-> Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-> ---
-> Changes in v2:
-> - Added Fixes tag
+> Do you see the below issue *after* applying the patches? I don't know how to
+> interpret "while applying".
+>   
+>> [    1.709614] pcieport 0004:41:00.0: of_irq_parse_pci: failed with rc=134
+>> [    1.710208] pcieport 0004:41:00.0: Unable to change power state from
+>> D3cold to D0, device inaccessible
+>>
+> 
+> Looks like the device was seen during bus scan, but then it went down
+> afterwards.
 
-Cc: stable@vger.kernel.org
+Sorry, I meant "after". But I guess it occurred with vanilla kernel in 
+the past:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+  https://lore.kernel.org/linux-pci/4487DA40249CC821+19232169-a096-4737-bc6a-5cec9592d65f@radxa.com/
+  https://gist.github.com/RadxaNaoki/b42252ce3209d9f6bc2d4c90c71956ae#file-gistfile1-txt-L551
 
+This time I unset CONFIG_PCI_DYNAMIC_OF_NODES, but this error occurred 
+at same location when kernel oops occurred.
 
-> - Link to v1: https://lore.kernel.org/r/20251126-ifpc_counters-v1-1-f2d5e7048032@gmail.com
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 1 +
->  1 file changed, 1 insertion(+)
+It might be a problem with ROCK 5C, (or *my* ROCK 5C), so I'll test 
+again with ROCK 5B.
+
+Best regards,
+
+--
+FUKAUMI Naoki
+Radxa Computer (Shenzhen) Co., Ltd.
+
+> - Mani
 > 
 
--- 
-With best wishes
-Dmitry
 
