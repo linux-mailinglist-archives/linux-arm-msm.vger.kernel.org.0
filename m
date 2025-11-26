@@ -1,67 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-83512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBCD0C8BC44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 21:05:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3026CC8BC4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 21:06:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ADB01359C3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 20:05:54 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C19F4359974
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 20:06:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D86134320A;
-	Wed, 26 Nov 2025 20:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C63343D86;
+	Wed, 26 Nov 2025 20:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsfO09IQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PfJ/Dv2l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8143431EE;
-	Wed, 26 Nov 2025 20:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAF3343D75;
+	Wed, 26 Nov 2025 20:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764187524; cv=none; b=mD/osqdCV4PM7BeOSbh62FXH0EL8mlrspusraH2VEYzhjPdyAq8t126sYjGycnQNiTOQPD2VSCGNsDh1jfKlF/qEENpogCZ5D+1Azej42icWrDyZTTkwOUUiEqQchzNq/rMZSqIBtMSx+G5hWzluHyirIg7fXCCEc+74O+hvTOc=
+	t=1764187525; cv=none; b=IP4y3nQf7Ify+uNj7D1fXRX4Y7wZ3v7Oo39rFQutryEhs0sMKlASFkj4A12AiAR/N+E7UiLnv0lKLosz3IFI2u2UQCIfueuxfqkjpasXfBeIwu6HV3Ea2fAjheuYTJvR7K4G4TEuUxr6EMWHaNFkxExpgENt0BRPv1rAg1zKZbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764187524; c=relaxed/simple;
-	bh=HNlhUSAZHy9m56st5YpHKHIBWXjQyR/HAaQSnTKncP0=;
+	s=arc-20240116; t=1764187525; c=relaxed/simple;
+	bh=fxXewd0db+LlmRCyNbx297Vyzwp0eMZwFvVWYmB/k8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ac9NirmYsgYe2idvxxVQ+rN//ggY5d1Ipl9G2NwDCEN9WVk5Po5Wpq9KaMP2wQZWP4rxFBrd+bZGPBXPIRXnKAEYpGvTgBCglM/NezuuqB2NX3Fpv26lvhjw5qpdRL6zXkejsBxRPtmFB/v8EheRwNNlPo8c+Wnfvy8Fze3fwP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsfO09IQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19FFC4CEF7;
-	Wed, 26 Nov 2025 20:05:22 +0000 (UTC)
+	 MIME-Version:Content-Type; b=pHpn8shEUc3RMgkHKVPYIVUrhS2tGrVX3PQGPOrYkcCdZK3WluphXHMrvK02oYhkI3zCFtxr6dwx35CcpQvwRDeNzqTpAkQhofLHMWovTRRvjUDsLyx1lAqaosC9bStcoAtttjA3iy8Jq4t7jNzFf4OKOq/IKI+cNrbY9C6Odok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PfJ/Dv2l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120B1C113D0;
+	Wed, 26 Nov 2025 20:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764187523;
-	bh=HNlhUSAZHy9m56st5YpHKHIBWXjQyR/HAaQSnTKncP0=;
+	s=k20201202; t=1764187524;
+	bh=fxXewd0db+LlmRCyNbx297Vyzwp0eMZwFvVWYmB/k8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DsfO09IQ7Lkx9NQNdoXXALYCw6/Y+5nkpb1agRzj+bq84MnIhGTWVEkGWr6lUisaT
-	 VHjPQ0z51ZaTH/jLPk/Ja4K0UdBdhAwk9JZxzeJOc9QSqd0Fv8b6wEFeNZe4wROGKu
-	 5jk5huuvl8PyOb2tggpSokOb3P5DTRD0l2DZcGME0bk8pv7shYn2dQjk9+GjHEeuBy
-	 MPUahTrySMeEorKMaMQSodcj+IzINh78BC4fAZmc90eSIkpOpeqXYIuq0mnPdWQ+mw
-	 xK9vHsrlNpSFqTmL1To7CNwdzUq5XJIaUOnZ0EvviEvH7iHEoFdgUE/7WFW6na9f70
-	 pmOfqvYI2pi3g==
+	b=PfJ/Dv2lUtxnTl1tOt4ObOmTbOCeeGWnLoCGYguu8am5L1Y8vkbbmROL+qzyCazdV
+	 1xzEh0Mw6a5OueOnxbUUNPukXFWdvBUKnvvFEbGsZADJKFY3/2m/+pes33chVfAtnR
+	 pG3Esztr2aQLAdc/X+5FkgsJ9zhHANMKEW5ERlw8zz9CVgCPs0XNrLGtdUcGuO7ep2
+	 bOqWF0rub+kiT/nNRsH1+RzlYvC/FefIzX9IkmUbuHpbWeRVpnuyOmwlk8Bgv6eD0u
+	 wh7c6Xx+vlm5phZtRXL/7D1eA/RXOLnBDN5umOkbJ3zHFEi8Bu26oI+LYCS/6sUhDJ
+	 BGLfVpb++r9zw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Nickolay Goppen <setotau@mainlining.org>
-Cc: linux-arm-msm@vger.kernel.org,
+To: srinivas.kandagatla@oss.qualcomm.com
+Cc: mathieu.poirier@linaro.org,
+	srichara@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	linux@mainlining.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/3] Add SDM660 cDSP support
-Date: Wed, 26 Nov 2025 14:10:45 -0600
-Message-ID: <176418784440.1591314.3239085261697231881.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] rpmsg: glink_native: fix leak and cleanup
+Date: Wed, 26 Nov 2025 14:10:46 -0600
+Message-ID: <176418784421.1591314.5207437260242000484.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251110-qcom-sdm660-cdsp-v3-0-cc3c37287e72@mainlining.org>
-References: <20251110-qcom-sdm660-cdsp-v3-0-cc3c37287e72@mainlining.org>
+In-Reply-To: <20250822100043.2604794-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20250822100043.2604794-1-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,20 +64,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 10 Nov 2025 21:29:42 +0300, Nickolay Goppen wrote:
-> This series adds an ability to load and boot the cDSP remoteproc
-> found in the SDM660 SoC.
+On Fri, 22 Aug 2025 11:00:41 +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > 
+> This series fixes a rpmsg_device leak in glink_native, and also adds
+> helper function to remove some code duplication.
 > 
+> Am not 100% sure if this behaviour was intentional and not allow
+> rpmsg-char interface to work from glink_native, but by the looks
+> of the code it looks buggy, which is why am sending this series for
+> discussion.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/3] dt-bindings: remoteproc: qcom: adsp: Add missing constrains for SDM660 ADSP
-      commit: db03780e43781d48effef75c9b1960987f6751d4
-[2/3] dt-bindings: remoteproc: qcom: adsp: Add SDM660 CDSP compatible
-      commit: acd6c28a2503f1e53ef06fb3dc1b6cbf9cc6cec3
-[3/3] remoteproc: qcom: pas: Add support for SDM660 CDSP
-      commit: 950c74fd6cd80ae6773aa3bf4cb4321b83f194d2
+[1/2] rpmsg: glink_native: fix rpmsg device leak
+      commit: a53e356df548f6b0e82529ef3cc6070f42622189
+[2/2] rpmsg: glink_native: remove duplicate code for rpmsg device remove
+      commit: 112766cdf2e5ea0a0f72b0304d57a6f74c066670
 
 Best regards,
 -- 
