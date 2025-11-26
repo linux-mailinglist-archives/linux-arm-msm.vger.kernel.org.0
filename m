@@ -1,163 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-83487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3CCAC8ABDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:48:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D57FAC8ABA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 16:47:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CC0E3A494E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:48:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8613A3A65D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Nov 2025 15:47:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBED733A6E5;
-	Wed, 26 Nov 2025 15:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA1333B97E;
+	Wed, 26 Nov 2025 15:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="PEhmnWRO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuiST38E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029E13054EE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 15:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90DE1FC7C5;
+	Wed, 26 Nov 2025 15:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764172089; cv=none; b=MhEPc4LZe5RxFk8V9lcNKHxfS5U8gTupo6Y5y/PkO6/ZJpgTg+lWlMiPVW6UwXraBVIG+YJHGeZrBNddc9/8tGkPUb3ojdyAyTmjnuwYT98bMHFsJO/RhalPLsJpi5pwFp4eO2FzVxfsed4J2LGAsjg4cKtN/n2Ts3k6h91JsT4=
+	t=1764172029; cv=none; b=hL2z8valUwwLZ4eCgcIEWpIx0WqycEpD2BaNKqLJPetLABAUHCUJ+1WnoobCFVU/luEKqL0MZH3DOagPGUF8blZJc+9b5bG2FXu+V/A/Rt6SWhGIHbPA/+fqwLQvS9iypn6/ZXpPXIjvcyMESi331Bbb0gIHBeNsviFFEA21+rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764172089; c=relaxed/simple;
-	bh=S8LmYUH9KEaLTuJ7OFfoJvQ2MvHXl9U2/WgqG1bny/E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NjKoTK64w4zHc0BqBlqte1QrVLAbGadkm/H/Xoy02nIiHNb+TzC8/AQ+TxAG6fir3BGwopjWG64h7JZUWE29BT4URdQzsd5D/ePVc9DwonMDVQC5xVBsV/pjZzLm+LoCGobU3LA9F9SiRV9ULnL3S7RutOWNl76yzppIlb0fyQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=PEhmnWRO; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-37a34702a20so56510431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Nov 2025 07:48:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764172086; x=1764776886; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dFuVp5mjywP+NMccfEdA1smMO0SeI/6ihvGyik/4sgc=;
-        b=PEhmnWROe/ZKxaaEu3ZS342A7CTYpt5wk8eBtVxZtVDgNsFqeCLlDRD/EhT4eJQnhN
-         tvtbJ1pmmK0amjF67PFKanVkAHKcqbZOBoy2j/tc3sJISGsK6wW4nTqbYL5ye2ZM4/MB
-         i+vTot0lX+9AclQNQS74zk9hG4tV5X4Zy3MJRjwLcM0nAajoIfSP8GeLVupcxu3Wu+Ne
-         Cd78IBbDubDFM5CbVJzkbuMAlu4pIBQLYT6Hzp1LEVOHJUptjRWdXRhSRsTvIFKldsbm
-         WMs9vxd9NGTDZHo5NuSR4gNZAC8lUuxtDzckT15lpWeeimr1CbYglA7gVllI2UkcaCPg
-         dnOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764172086; x=1764776886;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dFuVp5mjywP+NMccfEdA1smMO0SeI/6ihvGyik/4sgc=;
-        b=mlL2MzOqfii0L0gwvxN8m8g/O/YPQ1i5N96kD4ybdtZiyWgBGeni2zEmOSmKQmdCM0
-         kODSQAZdXDXmXp3ghZKmOWtAVx7W0NQmVKbDxTycTgBW8AbqQzd785qJT0QwteonQryO
-         UhA6y77URy3OOtc1m/oB6pg81F/z+7YUJ9nJclC+LZFjs5VadD5zZqI26b0mcqjqiiwv
-         LjqvgQFhC59UekolgU9Bzw68OJFyxlzVX9RaiRIKFlDbHY2tYCicZgmlV03kLn0v6luX
-         Kd0wE7I0NT/J0W5KAfhVgOBZ2dutjwLikvvJDkcCe0pEhP5Emfz5Sx0LjVB3Gcx6b2Am
-         HWRg==
-X-Forwarded-Encrypted: i=1; AJvYcCWwEZzvzSnHT27bW9CSq8stXLjj/88Iv74YVd/vbCi4yMnEIq7zNRVguoaUxfiKFP8dHEVu+oxQjjb3fGUV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxP7Q3SMkoRpF8LFAlNpOe+VXOjGqgQ7lqU5dLFZpqC1zHdRdvw
-	qjZiCoGWl2k7lKCcFm6p7OYAeZPI1eW9eDf6R+rPSs/6azpIdOZOiCCXNKJelus2mHcvKIuJAIM
-	Lm71r+bE0ZLJc0+ReKLv21SXWHje9zoEr0obfK3bccw==
-X-Gm-Gg: ASbGncvUDMFF68imwEgzjDKQsuFA29gKa7GM3jk/TK1Ay45e/aiO2Gpng8p52Eutj3+
-	MZhS9U5QmX+G/mbp0wgKCJ7hs+HB5/NbyDX2z/UWZ6UTIf39AbquNKp4pQoFDoCkgZVJKco5Elg
-	i2eb6za3OTI+f1pBYK4sLCbpKuq5KvDKs/IJgmSRtk5e2G6qXh7l0vjf1XlkY+6STAyso5OuyqH
-	EUoTq2aK9AaMNPsttARLa4ibcTBTOp71+fZbFaKpfAtU6KjIIqJIz5op7dxMuSgPwfgdbOB1z0G
-	xMQX/7E4v6p7v5N/g2TKK/4V+Ps=
-X-Google-Smtp-Source: AGHT+IEhUl1jNda9/yp2GCLrKXBikNNwXFAiy8yPxeZdtimGdt9zzATr5ITlVaihFGQ0IjBdRUtALikJOU6Bmen20go=
-X-Received: by 2002:a05:6512:10c2:b0:594:51ac:148 with SMTP id
- 2adb3069b0e04-596b4e5618fmr2340043e87.15.1764172085977; Wed, 26 Nov 2025
- 07:48:05 -0800 (PST)
+	s=arc-20240116; t=1764172029; c=relaxed/simple;
+	bh=DUZirXcwc71Z+jIStyr86QpnCJLfkISWi1F3mf2tlFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DT/P802NhjjFKIhqcyzmJe7AN1j97LJJyrB680LGn8FMf7PXthSnNK897qmvJc42I38akNP/RzhW4LI31yy0dUoEkbR2IS6BA2Z/gAxumr8uVs7PzlYhBQ+dMI8UJhUdhaJjLb7es9hhnsWKgAsuhIfD1I63sIFOBc1UgMUiY4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuiST38E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A630C4CEF7;
+	Wed, 26 Nov 2025 15:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764172029;
+	bh=DUZirXcwc71Z+jIStyr86QpnCJLfkISWi1F3mf2tlFQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tuiST38EgaBds+eRYUE5ppHAdvIvOu3T9UgkcRaCE0S5BtIkK2BJXA2coxyDl0qGk
+	 ELowJCjvNi3ZXT7sa+ljCLGtXRrg6/DGy4bwujtqxSf+K1HSnj0tHF0l+eoKHZMJwC
+	 NneMrqaT+ERLHBrrg6tpHCvud/3eNe99tpZeXZWZOgwUZlbD0DlacyxBvHZpm63rzx
+	 U96ABKRB3gXcglDCjqtp4P3Y7BWA4aPwIfVY51UJou33mrqzIIMVFbJ1/7M4fUYzHn
+	 /r2aI/XC/KSmG/yDmN1ngJgyJ6vq6K6loMq0NOZOH0TpNU3kWXeUC+Qn4ndDYY40R1
+	 n6mLZa/XGloXg==
+Date: Wed, 26 Nov 2025 09:52:38 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, psodagud@quicinc.com, 
+	djaggi@quicinc.com, quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com, 
+	quic_arandive@quicinc.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v1 12/12] i2c: qcom-geni: Enable I2C on SA8255p Qualcomm
+ platforms
+Message-ID: <4kjkadmhf67ts4pryhvqdk57b2k27ggwkt2vqdijvhmwygpspb@rpdwcpxpq2up>
+References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
+ <20251122050018.283669-13-praveen.talari@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <20251112-gpio-shared-v4-3-b51f97b1abd8@linaro.org> <2d96e464-e17c-4ff5-9a08-b215b77da04f@gmail.com>
-In-Reply-To: <2d96e464-e17c-4ff5-9a08-b215b77da04f@gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 26 Nov 2025 16:47:54 +0100
-X-Gm-Features: AWmQ_bnK-S4TlEVeOIf3ITE7TZsWB2TJ1MXZpLcLB_4C4obVKenyvukRrMrvtB4
-Message-ID: <CAMRc=Mexa9eSe+qy9dm_q=+gBKtc-EZ7M0RXsgSe6fhWj1FV4A@mail.gmail.com>
-Subject: Re: [PATCH v4 03/10] gpiolib: implement low-level, shared GPIO support
-To: Cosmin Tanislav <demonsingur@gmail.com>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251122050018.283669-13-praveen.talari@oss.qualcomm.com>
 
-On Wed, Nov 26, 2025 at 4:34=E2=80=AFPM Cosmin Tanislav <demonsingur@gmail.=
-com> wrote:
->
-> > +
-> > +             count =3D of_count_phandle_with_args(curr, prop->name,
-> > +                                                "#gpio-cells");
->
-> This call causes error messages to be printed for gpio-hog entries, like
-> this one from arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi:
->
+On Sat, Nov 22, 2025 at 10:30:18AM +0530, Praveen Talari wrote:
+> The Qualcomm automotive SA8255p SoC relies on firmware to configure
+> platform resources, including clocks, interconnects and TLMM.
+> The driver requests resources operations over SCMI using power
+> and performance protocols.
+> 
+> The SCMI power protocol enables or disables resources like clocks,
+> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
+> such as resume/suspend, to control power states(on/off).
+> 
+> The SCMI performance protocol manages I2C frequency, with each
+> frequency rate represented by a performance level. The driver uses
+> geni_se_set_perf_opp() API to request the desired frequency rate..
+> 
+> As part of geni_se_set_perf_opp(), the OPP for the requested frequency
+> is obtained using dev_pm_opp_find_freq_floor() and the performance
+> level is set using dev_pm_opp_set_opp().
+> 
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+> ---
+>  drivers/i2c/busses/i2c-qcom-geni.c | 46 +++++++++++++++++++++++-------
+>  1 file changed, 35 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index a0f68fdd4078..78154879f02d 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -82,6 +82,9 @@ struct geni_i2c_desc {
+>  	char *icc_ddr;
+>  	bool no_dma_support;
+>  	unsigned int tx_fifo_depth;
+> +	int (*resources_init)(struct geni_se *se);
+> +	int (*set_rate)(struct geni_se *se, unsigned long freq);
+> +	int (*power_state)(struct geni_se *se, bool state);
 
-Thanks for the report.
+You have isolated this quite nicely now, so I'd prefer 3 (four to keep
+power on/off separate) if statements, over these function pointers, at
+this point.
 
-Please trim your responses to just the relevant context though, you
-included the entire huge patch.
+This saves the future reader from having to remember the combination of
+function pointer targets in the various cases - and allow things like
+"jump to definition" in your editor to still work.
 
->         sdhi0-emmc-iovs-hog {
->                 gpio-hog;
->                 gpios =3D <RZT2H_GPIO(2, 6) GPIO_ACTIVE_HIGH>;
->                 output-high;
->                 line-name =3D "SD0_IOVS";
->         };
->
-> For gpio-hog entries, the first element is not a phandle (gpio-hog is
-> already under its parent).
->
-> of_count_phandle_with_args() will however try to interpret it as a
-> parent either way, causing the following error to be printed.
->
-> OF: /soc/pinctrl@802c0000/sdhi0-emmc-iovs-hog: could not get #gpio-cells
-> for /soc/ethernet@92010000/mdio/ethernet-phy@2
->
-> RZT2H_GPIO(2, 6) expands to 22, or 0x16.
->
-> Coincidentally, in the decompiled dts file we have:
->
-> ethernet-phy@2 {
->         ...
->         phandle =3D <0x16>;
-> };
->
+>  };
+>  
+>  #define QCOM_I2C_MIN_NUM_OF_MSGS_MULTI_DESC	2
+> @@ -203,8 +206,9 @@ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+>  	return -EINVAL;
+>  }
+>  
+> -static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
+> +static int qcom_geni_i2c_conf(struct geni_se *se, unsigned long freq)
 
-Yes, because behind the scenes, a phandle really is nothing more than
-an integer.
+This sounds like a qcom_geni_i2c_set_rate() now that it takes a
+frequency argument.
 
-> Maybe a check for gpio-hogs should be added?
->
-> Something like the following before the call to
-> of_count_phandle_with_args().
->
-> if (strcmp(prop->name, "gpios") =3D=3D 0 &&
->      of_property_present(curr, "gpio-hog"))
->         continue;
->
+Regards,
+Bjorn
 
-Yes, that's a good idea, thanks. Let me cook up a patch.
-
-Bart
+>  {
+> +	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
+>  	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+>  	u32 val;
+>  
+> @@ -217,6 +221,7 @@ static void qcom_geni_i2c_conf(struct geni_i2c_dev *gi2c)
+>  	val |= itr->t_low_cnt << LOW_COUNTER_SHFT;
+>  	val |= itr->t_cycle_cnt;
+>  	writel_relaxed(val, gi2c->se.base + SE_I2C_SCL_COUNTERS);
+> +	return 0;
+>  }
+>  
+>  static void geni_i2c_err_misc(struct geni_i2c_dev *gi2c)
+> @@ -908,7 +913,9 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>  		return ret;
+>  	}
+>  
+> -	qcom_geni_i2c_conf(gi2c);
+> +	ret = gi2c->dev_data->set_rate(&gi2c->se, gi2c->clk_freq_out);
+> +	if (ret)
+> +		return ret;
+>  
+>  	if (gi2c->gpi_mode)
+>  		ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
+> @@ -1041,8 +1048,9 @@ static int geni_i2c_init(struct geni_i2c_dev *gi2c)
+>  	return ret;
+>  }
+>  
+> -static int geni_i2c_resources_init(struct geni_i2c_dev *gi2c)
+> +static int geni_i2c_resources_init(struct geni_se *se)
+>  {
+> +	struct geni_i2c_dev *gi2c = dev_get_drvdata(se->dev);
+>  	int ret;
+>  
+>  	ret = geni_se_resources_init(&gi2c->se);
+> @@ -1095,7 +1103,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>  	spin_lock_init(&gi2c->lock);
+>  	platform_set_drvdata(pdev, gi2c);
+>  
+> -	ret = geni_i2c_resources_init(gi2c);
+> +	ret = gi2c->dev_data->resources_init(&gi2c->se);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -1165,10 +1173,12 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>  
+>  	disable_irq(gi2c->irq);
+>  
+> -	ret = geni_se_resources_state(&gi2c->se, false);
+> -	if (ret) {
+> -		enable_irq(gi2c->irq);
+> -		return ret;
+> +	if (gi2c->dev_data->power_state) {
+> +		ret = gi2c->dev_data->power_state(&gi2c->se, false);
+> +		if (ret) {
+> +			enable_irq(gi2c->irq);
+> +			return ret;
+> +		}
+>  	}
+>  
+>  	gi2c->suspended = 1;
+> @@ -1180,9 +1190,11 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+>  	int ret;
+>  	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>  
+> -	ret = geni_se_resources_state(&gi2c->se, true);
+> -	if (ret)
+> -		return ret;
+> +	if (gi2c->dev_data->power_state) {
+> +		ret = gi2c->dev_data->power_state(&gi2c->se, true);
+> +		if (ret)
+> +			return ret;
+> +	}
+>  
+>  	enable_irq(gi2c->irq);
+>  	gi2c->suspended = 0;
+> @@ -1221,6 +1233,9 @@ static const struct dev_pm_ops geni_i2c_pm_ops = {
+>  
+>  static const struct geni_i2c_desc geni_i2c = {
+>  	.icc_ddr = "qup-memory",
+> +	.resources_init = geni_i2c_resources_init,
+> +	.set_rate = qcom_geni_i2c_conf,
+> +	.power_state = geni_se_resources_state,
+>  };
+>  
+>  static const struct geni_i2c_desc i2c_master_hub = {
+> @@ -1228,11 +1243,20 @@ static const struct geni_i2c_desc i2c_master_hub = {
+>  	.icc_ddr = NULL,
+>  	.no_dma_support = true,
+>  	.tx_fifo_depth = 16,
+> +	.resources_init = geni_i2c_resources_init,
+> +	.set_rate = qcom_geni_i2c_conf,
+> +	.power_state = geni_se_resources_state,
+> +};
+> +
+> +static const struct geni_i2c_desc sa8255p_geni_i2c = {
+> +	.resources_init = geni_se_domain_attach,
+> +	.set_rate = geni_se_set_perf_opp,
+>  };
+>  
+>  static const struct of_device_id geni_i2c_dt_match[] = {
+>  	{ .compatible = "qcom,geni-i2c", .data = &geni_i2c },
+>  	{ .compatible = "qcom,geni-i2c-master-hub", .data = &i2c_master_hub },
+> +	{ .compatible = "qcom,sa8255p-geni-i2c", .data = &sa8255p_geni_i2c },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, geni_i2c_dt_match);
+> -- 
+> 2.34.1
+> 
 
