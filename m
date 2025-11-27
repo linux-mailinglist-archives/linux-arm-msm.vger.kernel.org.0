@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA2ABC8E421
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:30:44 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F6CAC8E427
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:30:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E352E3ACCEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:30:22 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2A031342EEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:30:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 355073314B7;
-	Thu, 27 Nov 2025 12:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BAE3314C5;
+	Thu, 27 Nov 2025 12:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gIzY5t3K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZinV1Yd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864E33123C;
-	Thu, 27 Nov 2025 12:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA092D97A5;
+	Thu, 27 Nov 2025 12:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764246621; cv=none; b=A7FUulVcHGHfrXm6+IOv09x8whNnRgCOTWMNG+RZ42TeqivQekGRfE4UawL0Io9oT04NVFm3lJCRbsvLOYX/AgbYXHOSD42eVoRLIbI7TqUHh12iOQPivV37qasx6m9ULiP+asoJIdK/uMGdGU/m328v75TcKNGWGnRSylbch5k=
+	t=1764246646; cv=none; b=kDqL9dnEYVR+bp759FTLaRcB3S3SqBaQ0FrnikWQvaiawFd8Aj5FzYMmir98Pa/flb0qkbfrX4NvFjUsgXec+qIpXSSN52nGw2hZiZJWtLbGMkTCyx/7nKLEFIVpIsAqbbPzCFDIM2yUacqRHZR5bmuM1JYNUXOj78lgi/xavAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764246621; c=relaxed/simple;
-	bh=fCngyquGhKS7ux3Y3gW6zZ8ixV22Q4aXg0807Na/zVo=;
+	s=arc-20240116; t=1764246646; c=relaxed/simple;
+	bh=RxxDTV1MZ1SC2UfQayCkkgEfw1YSPiEMimz+2IOWCyU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Thk4SeCxtxC8gMEqnI5xDGvPT257wQNSpPBeNU0UbF3Gx9sMChzHBgLZBGgyrpYsGCVCGPfryDVOjMFrHqSMZ8eRZHrgM+IP7PUUH81Zje3N1ABTYRdxsu1+q7f7nq3yZ47CzxnmcGo7yBhdmby9Radd8/8Xr30CBU3RFT06p1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gIzY5t3K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40EEC4CEF8;
-	Thu, 27 Nov 2025 12:30:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=cPIJSmwUMyhvCjvLCOnbbDfkhPGON6ZDLN2thxS1rCJ/+RrDhH54zKKfaZ/hC/1MhvNKDw7nZGWXRnA6Co71hO58n6uT/ATSKsRUd1Te3nXb9eAgQp9qLDyB7Fs6uTInBITcjUX7o6O1O+7GwDAtGZsRb7iAUgBBas1zL9IoHlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZinV1Yd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27C1C4CEF8;
+	Thu, 27 Nov 2025 12:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764246620;
-	bh=fCngyquGhKS7ux3Y3gW6zZ8ixV22Q4aXg0807Na/zVo=;
+	s=k20201202; t=1764246645;
+	bh=RxxDTV1MZ1SC2UfQayCkkgEfw1YSPiEMimz+2IOWCyU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gIzY5t3KT6cX2QsbK7VjQaK4kkcBiA5qEjs45/9k6PoGqdHoYx2ax6hmqfWUBhtaY
-	 dpDjfpp/TdZzTCue4VeBv0kggVedKBHgx/MqStxLOJkPFBn1PCGuXLZsrtOjA+lSZg
-	 YzTWSwkd92CNtpxWiHQqlbPWrtvfpllO3eUX/sQJ80rRKsJ9bOxEz4rzJryk4U/1NB
-	 4Jq0LQ1fy0eHWOTwIepeZ1b3R4k3t30Of+3diMwRb1UKtXNg+IInc5mtl9DY3r4ed4
-	 oW4lvOEvtPqJd2rL1j1dimDBgAkZnqHSvhB4dJmlA82AgoBbJ1sJxiYyylmfiRKazM
-	 E0zxHfux6g6hw==
-Message-ID: <ea864521-c1ed-4aca-8a72-64f2a16c19bd@kernel.org>
-Date: Thu, 27 Nov 2025 13:30:15 +0100
+	b=LZinV1YdXRaRVdtBb471CbpnO8ROVoAy2YORji9n9z3bvFvtwmIX9iJTfwgfDuoXE
+	 0Vs3THJ6HIvfdozO7bFTPA3YKVdRanK5doRaXgqDMA/60QmfDVpLg09WuWUDsaZleT
+	 CTOsAhmg9hmi36d52wl+vEzo6J8aeASYzFE2vJYDxVTyhHt/B8v7RddHjwBwRiRJd6
+	 XVoQjyJa1Bj0ui1z0gzsvaMd/CZRI+863wRkoNuqEtTSLXGPtzH89tJLEe01e7xu0X
+	 43qs/4V1YdoP1r1tywg29LkU1I2uLMb4HfKSiyeHwSym3UvpXpE/C+E38iPE04Cprt
+	 yNeV6/i/VUqHA==
+Message-ID: <7a69ced3-c698-4eb1-b705-58a48048e684@kernel.org>
+Date: Thu, 27 Nov 2025 13:30:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -117,11 +117,20 @@ On 26/11/2025 19:09, Taniya Das wrote:
 > ---
 >  arch/arm64/boot/dts/qcom/sm8750.dtsi | 14 ++++++++++++++
 >  1 file changed, 14 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index 3f0b57f428bbb388521c27d9ae96bbef3d62b2e2..18e43c509f1f24785d55113addc5cd9f96e986f1 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -2740,6 +2740,20 @@ usb_dwc3_ss: endpoint {
+>  			};
+>  		};
+>  
+> +		videocc: clock-controller@aaf0000 {
+> +			compatible = "qcom,sm8750-videocc";
+> +			reg = <0 0x0aaf0000 0 0x10000>;
 
-
-This was already sent.
-
-https://lore.kernel.org/all/20251120-b4-sm8750-iris-dts-v3-1-8715442c30d9@kernel.org/
+... and the code is not here matching style.
 
 Best regards,
 Krzysztof
