@@ -1,157 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-83667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 439AFC90054
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 20:29:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E55C9006F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 20:34:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 00C224E12A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 19:29:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB48F3AA607
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 19:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B30D8304BCB;
-	Thu, 27 Nov 2025 19:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2443E2EBDF2;
+	Thu, 27 Nov 2025 19:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A5pbYQ+/"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="xKHxy324"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE613054C3;
-	Thu, 27 Nov 2025 19:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA161E1A17
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 19:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764271771; cv=none; b=aUa3pcIxgK8Nt8xitnNk0aNgwl8MtPjJXGb+YwIa7goANxBrHwEyT6Gs/gAKQDz8CW+qbM8ag12PWk4SC0X/guhE+XrSXxLb1obeN8MyMIdaAUPygSWELFUMCT9nPVrgK30wgguH3KL4QovKJr57YDnPvM1nGW4k5lePCoJGicg=
+	t=1764272029; cv=none; b=NpG5h5v9pL42wJuZrALQMs0HsMCEG/Dsjfs5OyiRySHeH7eU1/NaE2lrFD5tcqCBVEda0lv7mhUUloOdW24MupyAotSbRUv1UClHHLlfZ9bTPMz3vI2NNqjQ361PuprOskqpWWVBW3nK2Am9nQtBcRvTz38dwcUY5Bx+SnUcEHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764271771; c=relaxed/simple;
-	bh=3dA7eKTdIK6Z2EWuL1CUxNnWxGO002dwKrQWaVzfMQ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GAuinSJDWzTtgj6p41/WIbbW0Nzyv6BE5cRAv37x+0PFsf1G4NrFdrNTYPF4PTbvSvOlffa69ZsazWSp5ckTCm7FmJsgIvGqwTp8PQcpQAF0gaUdmNcoRK8ktWQdTpbya0k7U+if8I5BqGVpsxjCtk5EhvkHbeKj4Rcwm+O1AjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A5pbYQ+/; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764271770; x=1795807770;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3dA7eKTdIK6Z2EWuL1CUxNnWxGO002dwKrQWaVzfMQ4=;
-  b=A5pbYQ+/5bEabKU6Pwa29JdSZFStsp1+JG1QBnvmwA+XwswCELux9N7m
-   wo0GzrVqzrb/7kzItf/jQlFleM6LSFLqmEGzMvljpVNlrtgvZEj67zrdW
-   UXQPzm0El/7gSzAmeTiWbo7mH4cbfZ/TbuIpBiEbOtOiLLjJwnBWeBsZf
-   U8hGgO7IBSn6prZCtg8vKXkfhgK4UjoSN9NXhUit1DFSZlj+FWkn7ugcl
-   A2xfPI0xYc/5h8/8/gPDi5XasKj4PBRo3E6657UcxS5Toirlnjje1w7u7
-   U2lP+08yxGTjmszfwrGP0IdNsScwT5TnATlzCu7j24lQHScnuzeUEu0nR
-   g==;
-X-CSE-ConnectionGUID: 2RNXEew2RcihRxaa1JbINA==
-X-CSE-MsgGUID: dXqp8H0+SHG3At9lusjGOg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="66393948"
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="66393948"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 11:29:29 -0800
-X-CSE-ConnectionGUID: 19qKVL8VTRiNqYXMIIEb/Q==
-X-CSE-MsgGUID: wQwkhhWVRfmX8dHiJ7yaxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="197607869"
-Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 27 Nov 2025 11:29:26 -0800
-Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vOhgC-000000005Zv-1iSb;
-	Thu, 27 Nov 2025 19:29:24 +0000
-Date: Fri, 28 Nov 2025 03:29:06 +0800
-From: kernel test robot <lkp@intel.com>
-To: Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev,
-	Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Taniya Das <taniya.das@oss.qualcomm.com>
-Subject: Re: [PATCH] clk: qcom: clk-rpmh: Update the clock suffix for Glymur
-Message-ID: <202511280306.L2l4tAmD-lkp@intel.com>
-References: <20251125-glymur_rpmhcc_fix-v1-1-60081b3cce7f@oss.qualcomm.com>
+	s=arc-20240116; t=1764272029; c=relaxed/simple;
+	bh=fs9vnPDceBUMF0spi5bUKF/L+DAeC19uipcq7XjRaUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AgfuIJPBpY9Gky3RF+8s4v1Fg5zClGx+3+RFGs4iqnBXF45CrEjxN8h+okp/M5oS2HPlKq3Rz0aNbOaFK0RwiCObOdoz88o6RJfljc9RcYPexu22RgDaJaLZdjRY8PPPUwDviNs0uuEr5hYDFMy0yoklOmqQVH6jHrXcyuDes3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=xKHxy324; arc=none smtp.client-ip=95.215.58.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <f820c42b-4cd9-430f-a1ee-4f380dc9ca8a@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1764272024;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=twC3DgrcBjAoJ79kbEz8s5y7IoW5MR+ZajnMa5xe4b4=;
+	b=xKHxy324q+linhDJBQ/dINfLg8h80Jwpo+VGm6Yw74EQCGPnLNvAQiRk60QYPEhWCHNXSq
+	zAyWxxytNjsqv/XlJGtAIaLn+hvABnNyqnpcRRkVH3J8/y5Tb0CX/t3HliwOF8QNkQidvg
+	7SOA7pQapN8eX6LcBhX+Mgb5c+aOJIY/bz5vzLBQl86IhQht90t+Mb7I705rxEGkAo/Vyk
+	dLvXMkPEf+d02luwf1lAmPhrX9m4aWA5KNHKXSu/V9b1duG1+sEqsC6eBm6MWyMpnA8Y9C
+	h5IqyC7TutmKbhY6Ubv6RujIEGgxp9ykAZCCD3AFhx6Fi1eWRzqXwdrd9myd0Q==
+Date: Thu, 27 Nov 2025 16:33:29 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251125-glymur_rpmhcc_fix-v1-1-60081b3cce7f@oss.qualcomm.com>
-
-Hi Taniya,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on 92fd6e84175befa1775e5c0ab682938eca27c0b2]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Taniya-Das/clk-qcom-clk-rpmh-Update-the-clock-suffix-for-Glymur/20251126-021404
-base:   92fd6e84175befa1775e5c0ab682938eca27c0b2
-patch link:    https://lore.kernel.org/r/20251125-glymur_rpmhcc_fix-v1-1-60081b3cce7f%40oss.qualcomm.com
-patch subject: [PATCH] clk: qcom: clk-rpmh: Update the clock suffix for Glymur
-config: arm64-randconfig-003-20251127 (https://download.01.org/0day-ci/archive/20251128/202511280306.L2l4tAmD-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 9.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251128/202511280306.L2l4tAmD-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511280306.L2l4tAmD-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/clk-rpmh.c:891:21: error: 'clk_rpmh_clk3_a' undeclared here (not in a function); did you mean 'clk_rpmh_clk3_a2'?
-     891 |  [RPMH_RF_CLK3]  = &clk_rpmh_clk3_a.hw,
-         |                     ^~~~~~~~~~~~~~~
-         |                     clk_rpmh_clk3_a2
->> drivers/clk/qcom/clk-rpmh.c:892:22: error: 'clk_rpmh_clk3_a_ao' undeclared here (not in a function); did you mean 'clk_rpmh_clk3_a2_ao'?
-     892 |  [RPMH_RF_CLK3_A] = &clk_rpmh_clk3_a_ao.hw,
-         |                      ^~~~~~~~~~~~~~~~~~
-         |                      clk_rpmh_clk3_a2_ao
->> drivers/clk/qcom/clk-rpmh.c:893:21: error: 'clk_rpmh_clk4_a' undeclared here (not in a function); did you mean 'clk_rpmh_clk4_a2'?
-     893 |  [RPMH_RF_CLK4]  = &clk_rpmh_clk4_a.hw,
-         |                     ^~~~~~~~~~~~~~~
-         |                     clk_rpmh_clk4_a2
->> drivers/clk/qcom/clk-rpmh.c:894:22: error: 'clk_rpmh_clk4_a_ao' undeclared here (not in a function); did you mean 'clk_rpmh_clk4_a2_ao'?
-     894 |  [RPMH_RF_CLK4_A] = &clk_rpmh_clk4_a_ao.hw,
-         |                      ^~~~~~~~~~~~~~~~~~
-         |                      clk_rpmh_clk4_a2_ao
->> drivers/clk/qcom/clk-rpmh.c:895:21: error: 'clk_rpmh_clk5_a' undeclared here (not in a function); did you mean 'clk_rpmh_clk5_a2'?
-     895 |  [RPMH_RF_CLK5]  = &clk_rpmh_clk5_a.hw,
-         |                     ^~~~~~~~~~~~~~~
-         |                     clk_rpmh_clk5_a2
->> drivers/clk/qcom/clk-rpmh.c:896:22: error: 'clk_rpmh_clk5_a_ao' undeclared here (not in a function); did you mean 'clk_rpmh_clk5_a2_ao'?
-     896 |  [RPMH_RF_CLK5_A] = &clk_rpmh_clk5_a_ao.hw,
-         |                      ^~~~~~~~~~~~~~~~~~
-         |                      clk_rpmh_clk5_a2_ao
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sm8x50: Enable UHS-I SDR50 and
+ SDR104 SD card modes
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring
+ <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251126012043.3764567-1-vladimir.zapolskiy@linaro.org>
+ <bdf3f54d-a223-4eff-aa71-0d74a83ef46d@packett.cool>
+ <3b609409-e19f-4685-848d-807a4e840ad8@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <3b609409-e19f-4685-848d-807a4e840ad8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
 
-vim +891 drivers/clk/qcom/clk-rpmh.c
+On 11/27/25 10:47 AM, Konrad Dybcio wrote:
+> On 11/26/25 5:14 PM, Val Packett wrote:
+>> Hi,
+>>
+>> On 11/25/25 10:20 PM, Vladimir Zapolskiy wrote:
+>>> The reported problem of some non-working UHS-I speed modes on SM8450
+>>> originates in commit 0a631a36f724 ("arm64: dts: qcom: Add device tree
+>>> for Sony Xperia 1 IV"), and then it was spread to all SM8450 powered
+>>> platforms by commit 9d561dc4e5cc ("arm64: dts: qcom: sm8450: disable
+>>> SDHCI SDR104/SDR50 on all boards").
+>>>
+>>> The tests show that the rootcause of the problem was related to an
+>>> overclocking of SD cards, and it's fixed later on by commit a27ac3806b0a
+>>> ("clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs").
+>>>
+>>> Due to a missed setting of an appropriate SDCC clock operations in
+>>> platform GCC driver the workaround of dropping SD card speeds from UHS-I
+>>> to high speed was spread to SM8550 and SM8650 platforms, and since
+>>> the fixes in the clock controller drivers are ready [1], it should be
+>>> safe to remove the speed mode restrictions from SM8450, SM8550 and
+>>> SM8650 platforms.
+>>> [..]
+>> I see you have tested with dd on the raw block device, but have you tested hotplugging SD cards that have partition tables and filesystems on them?
+>>
+>> We have this kind of issue on Hamoa where we get I/O errors early, right after the card is inserted and the partition table / filesystem headers are being read:
+>>
+>> [  714.057106] mmc0: new UHS-I speed SDR104 SDXC card at address 0001
+>> [  714.060567] mmcblk0: mmc0:0001 EC2QT 59.6 GiB
+>> [  714.503873] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
+>> [  714.505660] Buffer I/O error on dev mmcblk0, logical block 0, async page read
+>> [  714.513632] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
+>> [  714.516469] Buffer I/O error on dev mmcblk0, logical block 0, async page read
+>> [  714.516512]  mmcblk0: unable to read partition table
+> Before we start debugging, could you please confirm it's using the internal
+> (&sdhc_2) MMC controller, and not one connected over PCIe, like it's the
+> case on the Surface Laptop?
+Of course it is. I'm quite familiar with the DTS on this device, I 
+pushed it over the finish line into upstream myself :)
+> Are the regulators supplying vmmc and vqmmc in high power mode?
 
-c035a9e265dd80 Taniya Das 2024-12-04  887  
-ebcb9db98bdab8 Taniya Das 2025-08-25  888  static struct clk_hw *glymur_rpmh_clocks[] = {
-ebcb9db98bdab8 Taniya Das 2025-08-25  889  	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25  890  	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @891  	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @892  	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a_ao.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @893  	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @894  	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a_ao.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @895  	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25 @896  	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a_ao.hw,
-ebcb9db98bdab8 Taniya Das 2025-08-25  897  };
-ebcb9db98bdab8 Taniya Das 2025-08-25  898  
+Yes. regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>; and no 
+allow-set-load / allowed-modes (..hm, maybe we can actually add those to 
+save power since sdhci-msm *does* do regulator_set_load..)
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+But turns out this is not a consistent problem with every card!.. At 
+least *now* one of the two Kingston Canvas Select Plus cards I have 
+attaches perfectly every time. (Another one of those though often fails 
+to probe with "error -84 reading general info of SD ext reg" and 
+sometimes has an early I/O error, but exFAT mounts even after that error 
+— but this seems like just a "microSD cards are crap" thing.)
+
+It's the Samsung Evo Plus card that consistently has early I/O errors 
+preventing the partition table scan from succeeding (or if that 
+succeeds, prevents the exFAT mount). There is a *card compat* issue here 
+for sure, as the card is not corrupted, it mounts every time on a 
+different laptop with a PCIe card reader [1217:8621] in the same SDR104 
+mode. But consistently has these errors on sdhci-msm.
+
+Thanks,
+~val
+
 
