@@ -1,115 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-83663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0F31C8FF43
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 19:55:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C971EC90033
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 20:28:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4F69E3461E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 18:55:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F7D03AA231
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 19:28:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2037F2F547F;
-	Thu, 27 Nov 2025 18:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E5123043DB;
+	Thu, 27 Nov 2025 19:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KisMf1vu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PydTTUpJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4258879C8;
-	Thu, 27 Nov 2025 18:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEEA304BBA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 19:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764269715; cv=none; b=sc5Do5MaGEDkG83GJLtZTzh1x+/CCzosHK1lv4yYM6K0egJwTs6iMdg+mb5eTLICgGYDIvAcfjAYPra19rfprqQZVMnSbAgx4FBkdJniCquv3r8DAJGWO4c6qF/cqHoLoPbz+Q5gMf+Tg+89ThruZDVoVff2muG0TrRbTwcq8iE=
+	t=1764271685; cv=none; b=Fshn8kXPRI2nAHCyyA+u3r1uHGH3+x/eqGfAf1AdQw3sp5ZEKlLdqXEelN6jCUV0Togu8N/NcSOEuzE3jofq39yIxnBPneNaqe5tlCDiTEDFL4m3hYD/1J2gDwTIDrg24YOVk7+T0MLRW6z7I6kslxy7jySZ7plX7ZFvskgFZfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764269715; c=relaxed/simple;
-	bh=9OGJoKTTeNxpXd4hc6X0kluLEJb7Wr89HVeKcgy60A0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G4dPqvuK15d+3Y/lan6xkV23Jrpps922Ba1JWPn8malNOViZ7koC5oevobCeZWUMpgl1oeyrclXRInbau7TTK0jpbJ9VP+PGy2qSkmF0S7NWBvGbljdy+QZMqK55vqYKyNu/Ej7ixhvGoKaeexGeYbjATK2zdQDasqpD8ODhALQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KisMf1vu; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764269714; x=1795805714;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9OGJoKTTeNxpXd4hc6X0kluLEJb7Wr89HVeKcgy60A0=;
-  b=KisMf1vu5yWDxl3sKOZiy4n948PZURq7GVrdpwxfw1ubml2PKKxBOVUv
-   YUS8stGmX74xehqtnhD86WfNgE165thsiN59fOb8Ql7HLTyz+pXT58z5p
-   ZJrGMvZi4EnAi/rzQOP5oynzfzyzkRnBzOtQvjgKwIE5KStlYtqWCk9y7
-   W2dqiPQT9EalSSF5Uf63osIb8kpUH7sHxgmbz85KGUO5RGHGEW0rUpRUx
-   X0F2GO1tt94dlPm1CwK2d/2Asmscsr4bUe4nvlx1lU6tr83aSZkbv3uJM
-   GfHUcSt4JqJAy0DXvRdoBBXCXj7LToxzLdGWqwRNIIC3uWOeLssoe94mg
-   A==;
-X-CSE-ConnectionGUID: 2P4BxRLQQz6RQ6c2cGvZ6Q==
-X-CSE-MsgGUID: JLEBgqDMRnmCawtgE8Z2dA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="77005533"
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="77005533"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 10:55:13 -0800
-X-CSE-ConnectionGUID: zo+cvfkTRcKAgq9F5Plxnw==
-X-CSE-MsgGUID: 3AiLodaiQaqJirxYhFXt5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="193092258"
-Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.245.225])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 10:55:09 -0800
-Date: Thu, 27 Nov 2025 20:55:06 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Rudraksha Gupta <guptarud@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-iio@vger.kernel.org
-Subject: Re: [PATCH v4 5/6] iio: accel: Prevent NULL pointer dereference in
- interrupt setup
-Message-ID: <aSieijZt117wOh-6@smile.fi.intel.com>
-References: <20251124-expressatt_nfc_accel_magn_light-v4-0-9c5686ad67e2@gmail.com>
- <20251124-expressatt_nfc_accel_magn_light-v4-5-9c5686ad67e2@gmail.com>
- <d3318386-2646-4f1c-ab4b-6ae3bc71e9bb@oss.qualcomm.com>
- <aSWPnRBRdPS8vnir@smile.fi.intel.com>
- <61e860e7-fc3b-49ad-bf6a-9745f205d52b@gmail.com>
- <c627fc05-6980-44bd-bdde-4750b3bafe2d@oss.qualcomm.com>
+	s=arc-20240116; t=1764271685; c=relaxed/simple;
+	bh=UZAwFoanMv4ojyrr/Eavmil7E7Xl3JU5cDcURXwl0Ac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N8Umi+UOLQsPDdILY21mLFCVIqTBZ1NSUEuUrMPRqKVu8PM8if9AmIB54e7mOAe3pp06tjXSS8/GoUnelU1WUc6K5cwZlIAAd6bHAo+iadbqpCrImQ+ihVMRomMPcP1hCirM6bLrwLHjOozlcM71uOLcBVPWZeNo8X6L0LnJFek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PydTTUpJ; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-37b657f6e24so1712561fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 11:28:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764271681; x=1764876481; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ek8p6A463hv8Si4HXmKmI7aW/9WAgbYM2EL8RGiyZ+8=;
+        b=PydTTUpJ5kxt/5yCsTiXKZ8r/UtQ/nNe1I7Yq3+FICCupJSy7X5kruxNvX3Y4RctST
+         u7Egx7UzEr7Ym3jpFVMur0YPH9oUtLv8bbaGNIKwF0XJl6FFZw39zfUclCJEPjgf97mh
+         bL7NNOF3Cf5YfoP9b59/DTxPZfqKyNtclhhhvxnT1qmXyl/X4fEPn0bDZ2uSzwxdW1aw
+         l0kxq9/O1ZfQjuAQx5YrzVYZUcDqq5bWE+PaIh2gJv4ocHUfYk5ag4dQuVfYgix9ZVRK
+         kxqNcX3Kgz0HbEVxfpwSH3T/n6WDGFsHmSdA4C/hT5t6cFP7XunMp0XA+MJSbFR77pa5
+         pJ6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764271681; x=1764876481;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ek8p6A463hv8Si4HXmKmI7aW/9WAgbYM2EL8RGiyZ+8=;
+        b=PNMAjZ4eXs5UroyMjzAxWbO3PHBoiHeZx8ytQVWwAfS/CzL7/tlJKEIZxHeAJpKtYj
+         8I1aLJ8uLUjL3sZ/KvMcfX4/tcJSNNpTYu8d5bNKFQ5CVlBle9imw5/1sq41O7p5tFmd
+         drnfXC6DOt0Le3of85BZOANdxm8b0eLTKnlhBvGCOnSWQRQMnYDXFzGKusICD8/EalJe
+         cmK338WhaiRDs/rFhBze92uof3lgjYIG2UmWS/fJVY5ZimptWY1E9fFvufawohSdMJ64
+         QIJAlaqXQk1M3dSagd0HKn0w/AiNx+lXWLWW/8CNd05da05q91qUetEuA9WPnBGqZ4qG
+         /Raw==
+X-Forwarded-Encrypted: i=1; AJvYcCVxXa888gTdIErCA6BAIxTMJgMprGi8BXib5N9+BwJJqbEdY+7v9eWdK6xWQQADvma5VF7/yRkE3OFmalf1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt0zXNPq4iSW7RU4jqkcfnon1REta1fFSi2W0w1IuJ1NH2+Bno
+	xP4J/SbtBPi8WLINFHrnriw2uNTgrtJFihBPAZFumMsrRq3ReV2G8mCHfqzZivPNTu4=
+X-Gm-Gg: ASbGncs0w56GbtCTwvZPxUnkgpRJTZE4/56poACnR1veGY3QDw3FgkIXgZ9j7CNGyd2
+	Yt1+4g3HlJkm2kFi+aZP8fIinm+oZZGZEa+rU7RmndpBYSfsOmtshg0IHdBSoAJ8DZ/QVmbN6O8
+	N1/OnA9uxaNCDRCCskuVUJ6H1P3M5LS+jNO1XT7yefTbHtGj5pFuH9pPr8zk6r7wIxAkl1Pz4ZU
+	fYf7DTsqMsTvDIAKEIu3hnpCzZzNinkLJv2KxdAe0YmvmrZdKb3BVHVF2Jv5nztG9wLD9IDh0dg
+	7AEyOKQDTI1S+sOCBFN3V79ilxce+NAJXZv7xoTlT3JN9xy2k32Ibd7GjfSSOn4qB+alXjptufP
+	eWNVWdlOJT9/yxnTSO354JprY9lZ/HOB9rl4JI0j6rxfyMRpv+HpX5//TKhs007hZ38emEVZjhE
+	G2Rp+GI53vbcORNAwG2zzJMD1UvpaU7SOpbQne2KE3Lql2gSsCW/wQpfi2sM7DuOt2bA==
+X-Google-Smtp-Source: AGHT+IGFumLAM3mMcRCHGRJUMc9x3tdPoRtxoU0CKQ+nP522dxxTt8NUxY/84RLdyRbRJSje7zoHQw==
+X-Received: by 2002:a05:6512:3182:b0:594:3a08:162f with SMTP id 2adb3069b0e04-596a528b52cmr4878262e87.1.1764271680595;
+        Thu, 27 Nov 2025 11:28:00 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-596bfa48d67sm606630e87.74.2025.11.27.11.27.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Nov 2025 11:28:00 -0800 (PST)
+Message-ID: <ec5b3a20-f28a-47d2-9b71-ef5d2af8b41c@linaro.org>
+Date: Thu, 27 Nov 2025 21:27:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c627fc05-6980-44bd-bdde-4750b3bafe2d@oss.qualcomm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] clk: qcom: gcc-x1e80100: Update the SDCC RCGs to
+ use shared_floor_ops
+To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Taniya Das <quic_tdas@quicinc.com>, Melody Olvera
+ <quic_molvera@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251127-sdcc_shared_floor_ops-v2-0-473afc86589c@oss.qualcomm.com>
+ <20251127-sdcc_shared_floor_ops-v2-6-473afc86589c@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251127-sdcc_shared_floor_ops-v2-6-473afc86589c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 27, 2025 at 07:38:45PM +0100, Konrad Dybcio wrote:
-> On 11/25/25 10:23 PM, Rudraksha Gupta wrote:
+On 11/27/25 19:57, Jagadeesh Kona wrote:
+> Use shared_floor_ops for the SDCC RCGs so the RCG is safely parked
+> during disable and the new parent configuration is programmed in
+> hardware only when the new parent is enabled, avoiding cases where
+> the RCG configuration fails to update.
+> 
+> Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
+> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[...]
-
-> We won't be taking any non-urgent patches until rc1 drops (~3 weeks)
-> so if the IIO folks decide to pick it up in meantime, just send it as
-> one
-
-AFAIK IIO is closed as well till v6.19-rc1.
-The patch can be taken to a deferred queue though,
-but in the result it will wait for a new cycle.
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+Best wishes,
+Vladimir
 
