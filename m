@@ -1,116 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-83547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8B52C8D63D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 09:43:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A974C8D77E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 10:15:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0C8214E5DCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 08:43:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F2CBF4E72EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 09:14:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAC523246ED;
-	Thu, 27 Nov 2025 08:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42F2032720A;
+	Thu, 27 Nov 2025 09:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Ow3WjpYq"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WYFUaeHT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731DA3233F4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 08:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C20326939
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 09:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764233018; cv=none; b=PNSGOdYplRnO98xH3GjSZxn3r6LalOXwauZfwT6Zael4eqmXafPL1H/1of7CxYXJwDvBaO8KXpn4pCG11kePFFg5fw8xcPtwbXj0flK0w22uTNY6V+3cQwNMxFEtyiSv9YwF0fjo/hR9b5cK7b7EB1AylVR1ZZOO1q5F7+Tt8a4=
+	t=1764234891; cv=none; b=ZHcabYf5WXPvvPvNIo7UpzM3yyCItyOOsZ+BEGHFVoKhzyO+NvB3DNkFcVQCdNcSpZrZlRR7cjKXaMaVLULhcPYxsFbTD9i/Pvldx1RwNs4aDRyEGn2U9Pxn1jppOBs3/s0WPssLlBZJRCtdv7zbHqg5Uype5WK6HvG7vdpkmJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764233018; c=relaxed/simple;
-	bh=lnI6VphI4sRWqtqle/2ZNbK8+6JfJjQ2SBCO9HiGERk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S4hDzxOJOS5PMYcrzSDjVTM7sQ9kyp/4CQ64IMbQbK/abhIJ7y8p72ung71vsmdTL+e0KpnK4yP+RHmfEn3TiaQddsriIgTRR33WkLMXLXsgplnU08VzyjkHHpkkGkwNlYb0nddqMzy0CZrtDhMbYtCuYhBjrocfpHQvPXCV6yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Ow3WjpYq; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id A77B64E41916;
-	Thu, 27 Nov 2025 08:43:34 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 76AD46068C;
-	Thu, 27 Nov 2025 08:43:34 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 412E6102F260E;
-	Thu, 27 Nov 2025 09:43:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1764233012; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=v7i/xAYNg7oAhrbuk/a3rHlIdqx/C0f22ZxKL6Ehfco=;
-	b=Ow3WjpYqNNJp+x/vNohs+/R7Oc49tIZj7N0oOYB9+x4kBl7GjIu4WI8qw3xoCEgntcZnpk
-	QElwUyJKuwMYZR9cypkMQHGBGZEmubkGy7OGF9zE9DS+eK3wArMTvmsXsAh1zD0MYoY/vM
-	lgZqxqNJMGkQBCP1OfegeFJEbj+c5UnKoqu49LCU3ef0NXWVrN5oNW5nYYUoEmJk23kzJq
-	bdJm50S2L3db11jQmMugY7wq4J8l440bPI0kksUqiPhfOzSlLkskHUSb89pt3Rfvqbtrln
-	/5c8JwolI7gDq2gAKjLQxKPQSrKDWrTmv/OBmm3ZRwQyF7vOoLsHq3wgzVYnPA==
-Message-ID: <e4bdc937-04db-421b-bbce-e71f0466672a@bootlin.com>
-Date: Thu, 27 Nov 2025 09:43:23 +0100
+	s=arc-20240116; t=1764234891; c=relaxed/simple;
+	bh=X03jox/gV8bqLBLEBTR625O9w1oSc+eeKS2ioi2DhKA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jNUKZ9Vm4oTs2zKtUpnPhOCKMsEqVbu3e1YTIH04CEmQKb1b83jrePJ+1AqdwYBEZegkRsvoJWPyurG2/1BgBMrS50sHmw5PpvEf5QXhbdEEhiB7FSznfPn1NYNiVlgJMHABORIvrF76j603piUto3vyyJhPoY5gbOt0uNHk+i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WYFUaeHT; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-595819064cdso914403e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 01:14:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764234887; x=1764839687; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X03jox/gV8bqLBLEBTR625O9w1oSc+eeKS2ioi2DhKA=;
+        b=WYFUaeHTCcZh99fNLyg4ZjCVWMHQInJ4eA1K7+hq/WQJjQDsK/MkEK+wSVvyqeuXla
+         KQa1t3ugiAEhdhvw5FvDcYQF8hkf+S9JRACEIlFnj3VNJmxNFmVmloBvRI9XUUrMNNfO
+         NmPNMA4MP0Rw/2YFqK6ctPM4s19cMSCQdeQgtQMihpOQsIDy96B/KeuwAEo1tirvPgTB
+         pAev8SvLVNCUeU227JfrXqZ9bW0ISv9TY3tN8kx3JZMvbUwnG4hz8CC8GNCYSqsMUPVm
+         4p4cqX3cEnv8LNJgZ6I2AGQm235EbNo/jgAtE2WSpViVqhBgk85pcb+xn31/dvq+fQgL
+         1yhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764234887; x=1764839687;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=X03jox/gV8bqLBLEBTR625O9w1oSc+eeKS2ioi2DhKA=;
+        b=FOhIQ5+Fk6tUtz+pSnRZRt3Q+rSsdnlBJTG4RbqaAY1s/pkAF15fLUlsYuS1z1PvBM
+         SccMKSErJ348dxCuVVi1JL5/Xs+VbptRARSFVPvu1sagnkf/zCc9UaVZPJGEn4oAC39y
+         JG0WE9zh2aPh+CoDo6kVEJw2ctJU36cJOG3fsPJCFviwsc8Mx55wNTGy7yZpmEU8gFP9
+         yqPPGBL95B5dr8OG2ZjsGSp4X4dkdPMGmp4eNzmaZq4xSP8BGhwPGtcI5Aclp8v09RpR
+         PBi9ZwnPiEyaCb2X9dIDFEpA7MR9ofqMAq76Vs84PSTsXwGwwFtgF8CX99+HGuR67CFQ
+         fYTA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHwZZuXxbbk9mBb3T9ibBmLD18YRW5tGZA/l7CXUHt55fW+PgN22kdUrTVeyQK7mFeX7QjWBXHFVcm6bhn@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZSjSKBOdOKrRcJutMBEXY8qD7NVOXPpEEaKV1nUjejc+zvPAb
+	aq6JFJT4HS/bMht0f9MbYkCkgFvN8CqRCEjWaYhyhfogQCWpMpflQKyCSd78nODF6+VsV96mFfJ
+	YtzUa3Z6ErETc14p+hxcg5iBR0H9KTHD8m0KFGDQRaw==
+X-Gm-Gg: ASbGncsHn0MrpdiEIf8JOLC2RsOuYAmJ7iHR8AN4BcO68Zz1O2y4MpktRX46217Sfcg
+	UdtWHI9UP0JLkm9rDt7PL9GvZQbeSzo1eiPkgPzr5BwKYm2qbg3nVNpJ4ASyF1413AGp9SYX6AM
+	Xm7QtohakhPjr/vfiJpnnB7sbr0C7iPkHhP0Kkdsy9wJMhtEFyW2AU1Ti18oIy4tRDcPQbR7/rO
+	W68UXeSJNOr6NQ4gKMI2D604h6E2MHcbGxP9y6oqaKKi+XePjEoFAVNnM/MBOKfRf5hng9ZDdiP
+	HNtjLEnX2jUBI/JDtgZXaNJsBgY=
+X-Google-Smtp-Source: AGHT+IEbc2TbO/tYVAauVYSWlsGPpU9aKscxV4CCCOtz2gTp8D6aQtAJcJ71cXNyLsAVeBjOKBJwqCStf35Mbf46OXA=
+X-Received: by 2002:a05:6512:8010:20b0:596:9ebf:25a2 with SMTP id
+ 2adb3069b0e04-5969ebf25d0mr6811454e87.19.1764234887164; Thu, 27 Nov 2025
+ 01:14:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v19 00/15] net: phy: Introduce PHY ports
- representation
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
- Tariq Toukan <tariqt@nvidia.com>
-References: <20251122124317.92346-1-maxime.chevallier@bootlin.com>
- <20251126190035.2a4e0558@kernel.org>
-Content-Language: en-US
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-In-Reply-To: <20251126190035.2a4e0558@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com> <20251125-pci-m2-e-v2-3-32826de07cc5@oss.qualcomm.com>
+In-Reply-To: <20251125-pci-m2-e-v2-3-32826de07cc5@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 27 Nov 2025 10:14:35 +0100
+X-Gm-Features: AWmQ_bkMx1pQI7KIzXZheaED5_3WOsSVYkYxsGF26N74WOl7tj2ktgI1roknym0
+Message-ID: <CAMRc=Mc_=F3HiKCVh26RtJ-8vcFWbdRRFS5R8tJa7320W-Tcig@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] serdev: Allow passing the serdev device name to serdev_device_add()
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jakub,
+On Tue, Nov 25, 2025 at 3:45=E2=80=AFPM Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> Instead of always setting the serdev device name from 'struct device' nam=
+e,
+> allow the callers to pass an optional name and set it as the serdev devic=
+e
+> name.
+>
+> This will be used by the future callers passing the serdev device ID as t=
+he
+> name.
+>
+> Acked-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
+> ---
 
-On 27/11/2025 04:00, Jakub Kicinski wrote:
-> On Sat, 22 Nov 2025 13:42:59 +0100 Maxime Chevallier wrote:
->> This is v19 of the phy_port work. Patches 2 and 3 lack PHY maintainers reviews.
->>
->> This v19 has no changes compared to v18, but patch 2 was rebased on top
->> of the recent 1.6T linkmodes.
->>
->> Thanks for everyone's patience and reviews on that work ! Now, the
->> usual blurb for the series description.
-> 
-> Hopefully we can still make v6.19, but we hooked up Claude Code review
-> to patchwork this week, and it points out some legit issues here :(
-> Some look transient but others are definitely legit, please look thru
-> this:
-> 
-> https://netdev-ai.bots.linux.dev/ai-review.html?id=5388d317-98c9-458e-8655-d60f31112574
+Instead of modifying the existing callers with an unneeded argument,
+I'd suggest adding a new call - serdev_device_add_full() or something
+like that - that takes more arguments and make the existing function
+wrap it.
 
-Heh this is actually fairly impressive, I'll go through that :)
-
-Maxime
+Bart
 
