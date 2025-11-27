@@ -1,231 +1,390 @@
-Return-Path: <linux-arm-msm+bounces-83614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A96BEC8EC0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 15:28:57 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB30CC8EC25
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 15:31:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2CA9734AB4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:28:57 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A4B114E1468
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA86333449;
-	Thu, 27 Nov 2025 14:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1163921A447;
+	Thu, 27 Nov 2025 14:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="erbwpoOD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ObnpTdqh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404D7332EC0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 14:28:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDC2149C6F;
+	Thu, 27 Nov 2025 14:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764253734; cv=none; b=JGKWrGYfv4uQRiRFzn+4Ltv72vd8Qbd3R9qjGlg69Y6H3fVu/5HsZ98lFVKxjCbjgnjI3nKp7yQSd4aTykHrbiRB2r5eDMVB8Z1bphBwQaqH7ZUrHCOlVjZqjsMXvuhWJ+u8cfyP52dmvg74V71YlS9gbyQFzeg7nNtl0tVqdok=
+	t=1764253857; cv=none; b=l3Yx68zdLzo2duyOe0fA3kyA4IiRD8mG27i39a6yTwsRVGvMrqHPRTyRFOcvBqRXw3k6z4p/APGTOh1KOALO12jrVliquoqywKdccxCCP/fU9+0VKVfJQVVT18JD4HOj4TDR9xWdwaDNH9V7BeUKff6GxXx+qpDRnVYDHTYbszA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764253734; c=relaxed/simple;
-	bh=T1sb+tHvhi6RuyEEQJOSXM9p3OhuwHipbQpSaEsjzL4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=sQIuOdJZrwWYmUJY3WdJitfoSpGujBD3CjhiD7EUMdfmToIjVUU3tzz3CWTbMqRUwLhp+xTDVen/Zd4D/BQKY0k15kOMypFy5BDook7H1EU3ZDoN2nKRw8W21mR9qj7d15NogutfZDAfV2121elFilPGt0vq70qnAZckRCcm4II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=erbwpoOD; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20251127142840euoutp010abfb9f8f49a8466636af6398b6ef3b9~742k-BX-e2694626946euoutp01o
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 14:28:40 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20251127142840euoutp010abfb9f8f49a8466636af6398b6ef3b9~742k-BX-e2694626946euoutp01o
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1764253720;
-	bh=c+QeMOJOnfslgDcfNzsZCKnwETDURGiBqjri2tCUFfk=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=erbwpoODj8qo874optlioim476oOShFTEsV3Ii2jsn23RSu2+ZqD/Byawvhgk9B9y
-	 8GKnMWuwLJ8Iga9mkAgXYi8I7oqYCCBi7g0JqpaqvnXzJjhKcm0qtB14Eu9mnTXfmB
-	 /fKBWfHcgCCVRO6fXtKiJOBP8NR400dWaL9LnMok=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c~742kOva7m0371103711eucas1p14;
-	Thu, 27 Nov 2025 14:28:39 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20251127142836eusmtip20607f11d6d5e39787db9d5c4efbb27f3~742huJECq1704117041eusmtip2Y;
-	Thu, 27 Nov 2025 14:28:36 +0000 (GMT)
-Message-ID: <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
-Date: Thu, 27 Nov 2025 15:28:35 +0100
+	s=arc-20240116; t=1764253857; c=relaxed/simple;
+	bh=H/3GnlU+cVOGm7Hm4LXCbkZdGoRGLlj0ZG8SNSH1ISk=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=qR6X3QOvxv5pVwT0KSwoSMT2NJCD186JlhIVoDH6stuy4AYN+l3x+bbf8HpFHr9Vzwe114hm9BjvTSN9KT5PZ38dYfbSmv0799rYDAo4BA+SCp04P46OlX/TU+JwoYEdQ6gz1YQgZEEIpe6OWNaxkQt34Qb//1EPk3o/yD3UuOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ObnpTdqh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19493C4CEF8;
+	Thu, 27 Nov 2025 14:30:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764253856;
+	bh=H/3GnlU+cVOGm7Hm4LXCbkZdGoRGLlj0ZG8SNSH1ISk=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=ObnpTdqht2jogCous70VeM7lgEVTn+ifBsWJWHg8G27fR9S107o543k4purpw/DY5
+	 LafYan3nSlK1BMZEsxHKGb7SJJJeFd+QRPZZWges0dr3gs0zDTDzveFqOf1Aa9WNkj
+	 FJDnfDd2Quu3gw27+YWLmuzVjHL8TQXc2h6XM22nmy+P497n59i1HkajCiaWRKhpGJ
+	 MyMBuqTV+E9jEp6CpubJzZ+2M07LTcxAeRRFy4O1Djpc0tLrcyzGfgafg4pG17DzPC
+	 8SKdk+yh/U1cJArmlI5n55avoLyoE1+GWzDh2j77u9hNd/acMhIC0kvIygT2eU0rtu
+	 XHfoHnGESosyA==
+Date: Thu, 27 Nov 2025 08:30:54 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH v7 2/2] remoteproc: qcom: Use of_reserved_mem_region_*
- functions for "memory-region"
-To: "Rob Herring (Arm)" <robh@kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn
-	Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam
-	<festevam@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Magnus
-	Damm <magnus.damm@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
-	<alexandre.torgue@foss.st.com>
-Cc: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan
-	<peng.fan@nxp.com>, Beleswar Padhi <b-padhi@ti.com>,
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-msm@vger.kernel.org
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20251124182751.507624-2-robh@kernel.org>
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
-X-EPHeader: CA
-X-CMS-RootMailID: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
-References: <20251124182751.507624-1-robh@kernel.org>
-	<20251124182751.507624-2-robh@kernel.org>
-	<CGME20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c@eucas1p1.samsung.com>
-
-Hi Rob,
-
-On 24.11.2025 19:27, Rob Herring (Arm) wrote:
-> Use the newly added of_reserved_mem_region_to_resource() and
-> of_reserved_mem_region_count() functions to handle "memory-region"
-> properties.
->
-> The error handling is a bit different in some cases. Often
-> "memory-region" is optional, so failed lookup is not an error. But then
-> an error in of_reserved_mem_lookup() is treated as an error. However,
-> that distinction is not really important. Either the region is available
-> and usable or it is not. So now, it is just
-> of_reserved_mem_region_to_resource() which is checked for an error.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-
-This patch landed in today's linux-next as commit c70b9d5fdcd7 
-("remoteproc: qcom: Use of_reserved_mem_region_* functions for 
-"memory-region""). In my tests I found that it breaks booting of 
-DragonBoard410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts) by causing 
-the NULL pointer dereference. The issue is caused by replacing 
-devm_ioremap_wc() with devm_ioremap_resource_wc(), which fails on 
-devm_request_mem_region(), see comment in the code below. It looks that 
-the error handling is somewhere broken. Here is the the kernel log:
-
-remoteproc remoteproc0: 4080000.remoteproc is available
-qcom-wcnss-pil a204000.remoteproc: error -EBUSY: can't request region 
-for resource [mem 0x8e200000-0x8e7fffff]
-remoteproc remoteproc1: a204000.remoteproc is available
-remoteproc remoteproc1: powering up a204000.remoteproc
-remoteproc remoteproc1: Booting fw image qcom/apq8016/wcnss.mbn, size 
-4111376
-Unable to handle kernel paging request at virtual address fffffffffffffff0
-Mem abort info:
-...
-Internal error: Oops: 0000000096000046 [#1]  SMP
-Modules linked in: cpufreq_powersave qcom_wcnss_pil cpufreq_conservative 
-coresight_stm coresight_replicator coresight_tmc coresight_tpiu stm_core 
-coresight_funnel coresight_cpu_debug coresight_cti(+) adv7511 coresight 
-nfc rfkill msm snd_soc_lpass_apq8016 snd_soc_apq8016_sbc 
-snd_soc_lpass_cpu snd_soc_msm8916_analog snd_soc_msm8916_digital 
-snd_soc_qcom_common snd_soc_lpass_platform snd_soc_core qrtr ubwc_config 
-snd_compress llcc_qcom snd_pcm_dmaengine qcom_q6v5_mss snd_pcm ocmem 
-qcom_pil_info qcom_spmi_vadc qcom_camss drm_gpuvm qcom_pon rtc_pm8xxx 
-qcom_q6v5 qcom_spmi_temp_alarm venus_core qcom_vadc_common snd_timer 
-drm_exec qcom_sysmon snd qcom_common gpu_sched videobuf2_dma_sg 
-v4l2_mem2mem qcom_glink_smem v4l2_fwnode soundcore drm_dp_aux_bus 
-qmi_helpers mdt_loader v4l2_async videobuf2_memops videobuf2_v4l2 
-videodev qnoc_msm8916 videobuf2_common qcom_rng drm_display_helper mc 
-qcom_stats rpmsg_ctrl rpmsg_char display_connector ramoops socinfo 
-rmtfs_mem reed_solomon ax88796b asix usbnet phy_qcom_usb_hs ipv6 libsha1
-CPU: 2 UID: 0 PID: 28 Comm: kworker/2:0 Tainted: G W           
-6.18.0-rc1+ #16209 PREEMPT
-Tainted: [W]=WARN
-lr : __qcom_mdt_load+0x210/0x304 [mdt_loader]
-Call trace:
-  __pi_memcpy_generic+0x128/0x22c (P)
-  qcom_mdt_load+0x68/0x60c [mdt_loader]
-  wcnss_load+0x2c/0x5c [qcom_wcnss_pil]
-  rproc_start+0x30/0x1b4
-  rproc_boot+0x19c/0x560
-  rproc_auto_boot_callback+0x1c/0x34
-  request_firmware_work_func+0x4c/0x98
-  process_one_work+0x208/0x60c
-  worker_thread+0x244/0x388
-  kthread+0x150/0x228
-  ret_from_fork+0x10/0x20
-Code: 927cec03 cb0e0021 8b0e0042 a9411c26 (a900340c)
----[ end trace 0000000000000000 ]---
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: stephan.gerhold@linaro.org, subbaraman.narayanamurthy@oss.qualcomm.com, 
+ rafael@kernel.org, linux-kernel@vger.kernel.org, 
+ krzysztof.kozlowski@linaro.org, sboyd@kernel.org, linux-pm@vger.kernel.org, 
+ anjelique.melendez@oss.qualcomm.com, linux-iio@vger.kernel.org, 
+ lukasz.luba@arm.com, neil.armstrong@linaro.org, 
+ david.collins@oss.qualcomm.com, lumag@kernel.org, 
+ cros-qcom-dts-watchers@chromium.org, rui.zhang@intel.com, 
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+ dmitry.baryshkov@oss.qualcomm.com, agross@kernel.org, andersson@kernel.org, 
+ daniel.lezcano@linaro.org, quic_kotarake@quicinc.com, 
+ konradybcio@kernel.org, krzk+dt@kernel.org, lee@kernel.org, 
+ thara.gopinath@gmail.com, jic23@kernel.org, kamal.wadhwa@oss.qualcomm.com, 
+ devicetree@vger.kernel.org, amitk@kernel.org
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <20251127133903.208760-1-jishnu.prakash@oss.qualcomm.com>
+References: <20251127133903.208760-1-jishnu.prakash@oss.qualcomm.com>
+Message-Id: <176425385464.79996.16817084593997529435.robh@kernel.org>
+Subject: Re: [PATCH V8] dt-bindings: iio/adc: Move QCOM ADC channel
+ definitions out of bindings folder
 
 
+On Thu, 27 Nov 2025 19:09:03 +0530, Jishnu Prakash wrote:
+> There are several header files containing QCOM ADC macros for channel names
+> right now in the include/dt-bindings/iio folder. Since these are hardware
+> constants mostly used in devicetree and not exactly bindings, move the
+> files to the arch/arm(64)/boot/dts/qcom folders.
+> 
+> Correct the header file paths in all affected devicetree files to fix
+> compilation errors seen with this move. Update documentation files
+> similarly to fix dtbinding check errors for the same. Make a copy
+> of the header file with constants used in ADC driver files in the
+> /include/linux/iio/adc folder and update driver files to use this
+> path to include it.
+> 
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 > ---
-> v7:
->   - Split QCom to separate patch
-> ---
->   drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++------
->   drivers/remoteproc/qcom_q6v5_mss.c  | 60 ++++++++-----------------
->   drivers/remoteproc/qcom_q6v5_pas.c  | 69 +++++++++++------------------
->   drivers/remoteproc/qcom_q6v5_wcss.c | 25 +++++------
->   drivers/remoteproc/qcom_wcnss.c     | 23 ++++------
->   5 files changed, 72 insertions(+), 129 deletions(-)
->
+> Changes since v7:
+> - Based on a discussion with Krzysztof concluded here:
+>   https://lore.kernel.org/all/d10e2eea-4b86-4e1a-b7a0-54c55907a605@oss.qualcomm.com/,
+>   moved ADC macro header files to arch/arm(64)/boot/dts/qcom folders. The file
+>   include/dt-bindings/iio/qcom,spmi-vadc.h is moved to arch/arm/boot/dts/qcom/
+>   as it is used in both arm and arm64 SoCs and other per-PMIC adc7 header files
+>   are moved to arch/arm64/boot/dts/qcom.
+> - Updated affected devicetree and documentation files based on path changes above.
+> - Made a copy of qcom,spmi-vadc.h in /include/linux/iio/adc folder
+>   for inclusion in ADC driver files and updated affected driver files to use it.
+> - Dropped Acked-by tags from Lee, Rob and Jonathan due to these significant changes
+>   made in latest patch version.
+> - Updated some more devicetree files affected by this change.
+> - Pushing this as a standalone change separate from ADC5 Gen3 series, as that
+>   series will no longer depend upon this patch for the location of
+>   qcom,spmi-vadc.h, as ADC5 Gen3 macros will be added in separate new files.
+> - Link to v7: https://lore.kernel.org/all/20250826083657.4005727-2-jishnu.prakash@oss.qualcomm.com/
+> 
+> Changes since v6:
+> - Collected Acked-by tag from Jonathan.
+> 
+> Changes since v5:
+> - Updated one more devicetree file requiring this change.
+>   Ran full dt_binding_check and dtbs_check and verified that no
+>   errors were reported related to this patch.
+> 
+>   Mentioning this explicitly as there was an invalid error reported on
+>   this patch in the last two patch series, from upstream kernel
+>   automation:
+> 
+>   fatal error: dt-bindings/iio/adc/qcom,spmi-vadc.h: No such file or directory
+> 
+>   The error is invalid as this file does get added in this patch, in
+>   previous patch series too.
+> 
+>   Links to discussion for same in v5:
+>   https://lore.kernel.org/all/cc328ade-a05e-4b1d-a8f0-55b18b4a0873@oss.qualcomm.com/
+>   https://lore.kernel.org/all/9f24e85d-f762-4c29-a58f-ed7652f50919@oss.qualcomm.com/
+> 
+>   Links to discussion for same in v4:
+>   https://lore.kernel.org/all/16aaae04-4fe8-4227-9374-0919960a4ca2@quicinc.com/
+> 
+> Changes since v4:
+> - Updated some more devicetree files requiring this change.
+> 
+> Changes since v3:
+> - Updated files affected by adc file path change in /arch/arm, which
+>   were missed earlier. Updated some more new devicetree files requiring
+>   this change in /arch/arm64.
+> 
+> Changes since v2:
+> - Updated some more new devicetree files requiring this change.
+> - Collected Acked-by tags from Rob and Lee.
+> 
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml      |   4 +-
+>  .../bindings/mfd/qcom,spmi-pmic.yaml          |   2 +-
+>  .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml |   2 +-
+>  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |   6 +-
+>  arch/arm/boot/dts/qcom/pm8226.dtsi            |   2 +-
+>  arch/arm/boot/dts/qcom/pm8941.dtsi            |   3 +-
+>  arch/arm/boot/dts/qcom/pma8084.dtsi           |   2 +-
+>  arch/arm/boot/dts/qcom/pmx55.dtsi             |   2 +-
+>  .../arm/boot/dts/qcom}/qcom,spmi-vadc.h       |   0
+>  arch/arm64/boot/dts/qcom/pm4125.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm6125.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm6150l.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pm660.dtsi           |   2 +-
+>  arch/arm64/boot/dts/qcom/pm660l.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm7250b.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8150.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8150b.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8150l.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8916.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8937.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8950.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8953.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8994.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pm8998.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pmi632.dtsi          |   2 +-
+>  arch/arm64/boot/dts/qcom/pmi8950.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi     |   2 +-
+>  arch/arm64/boot/dts/qcom/pmp8074.dtsi         |   2 +-
+>  arch/arm64/boot/dts/qcom/pms405.dtsi          |   2 +-
+>  .../boot/dts/qcom/qcm6490-fairphone-fp5.dts   |   4 +-
+>  .../dts/qcom/qcm6490-particle-tachyon.dts     |   4 +-
+>  .../boot/dts/qcom/qcm6490-shift-otter.dts     |   4 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pm7325.h    |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pm8350.h    |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pm8350b.h   |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pmk8350.h   |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pmr735a.h   |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-pmr735b.h   |   2 +-
+>  .../boot/dts/qcom}/qcom,spmi-adc7-smb139x.h   |   2 +-
+>  .../dts/qcom/qcs6490-radxa-dragon-q6a.dts     |   4 +-
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |   4 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |   4 +-
+>  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi   |   2 +-
+>  .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts |   2 +-
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |   2 +-
+>  .../dts/qcom/sc8280xp-microsoft-blackrock.dts |   2 +-
+>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  |   6 +-
+>  .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |   2 +-
+>  .../boot/dts/qcom/sm7325-nothing-spacewar.dts |   6 +-
+>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts       |   9 +-
+>  drivers/iio/adc/qcom-spmi-adc5.c              |   3 +-
+>  drivers/iio/adc/qcom-spmi-vadc.c              |   3 +-
+>  include/linux/iio/adc/qcom,spmi-vadc.h        | 303 ++++++++++++++++++
+>  56 files changed, 374 insertions(+), 73 deletions(-)
+>  rename {include/dt-bindings/iio => arch/arm/boot/dts/qcom}/qcom,spmi-vadc.h (100%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pm7325.h (98%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pm8350.h (98%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pm8350b.h (99%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pmk8350.h (98%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pmr735a.h (96%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-pmr735b.h (96%)
+>  rename {include/dt-bindings/iio => arch/arm64/boot/dts/qcom}/qcom,spmi-adc7-smb139x.h (93%)
+>  create mode 100644 include/linux/iio/adc/qcom,spmi-vadc.h
+> 
 
-> ...
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-> index 2c7e519a2254..14005fb049a2 100644
-> --- a/drivers/remoteproc/qcom_wcnss.c
-> +++ b/drivers/remoteproc/qcom_wcnss.c
-> @@ -526,25 +526,20 @@ static int wcnss_request_irq(struct qcom_wcnss *wcnss,
->   
->   static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
->   {
-> -	struct reserved_mem *rmem = NULL;
-> -	struct device_node *node;
-> -
-> -	node = of_parse_phandle(wcnss->dev->of_node, "memory-region", 0);
-> -	if (node)
-> -		rmem = of_reserved_mem_lookup(node);
-> -	of_node_put(node);
-> +	struct resource res;
-> +	int ret;
->   
-> -	if (!rmem) {
-> +	ret = of_reserved_mem_region_to_resource(wcnss->dev->of_node, 0, &res);
-> +	if (ret) {
->   		dev_err(wcnss->dev, "unable to resolve memory-region\n");
-> -		return -EINVAL;
-> +		return ret;
->   	}
->   
-> -	wcnss->mem_phys = wcnss->mem_reloc = rmem->base;
-> -	wcnss->mem_size = rmem->size;
-> -	wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
-> +	wcnss->mem_phys = wcnss->mem_reloc = res.start;
-> +	wcnss->mem_size = resource_size(&res);
-> +	wcnss->mem_region = devm_ioremap_resource_wc(wcnss->dev, &res);
+yamllint warnings/errors:
 
-The above line causes the failure. After restoring it to:
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/slimbus/slimbus.example.dtb: slim@28080000 (qcom,slim-ngd-v1.5.0): 'audio-codec@1,0' does not match any of the regexes: '^pinctrl-[0-9]+$', '^slim@[0-9a-f]+$'
+	from schema $id: http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/slimbus/slimbus.example.dtb: slim@28080000 (qcom,slim-ngd-v1.5.0): #address-cells: 1 was expected
+	from schema $id: http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/slimbus/slimbus.example.dtb: slim@28080000 (qcom,slim-ngd-v1.5.0): 'dmas' is a required property
+	from schema $id: http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/slimbus/slimbus.example.dtb: slim@28080000 (qcom,slim-ngd-v1.5.0): 'dma-names' is a required property
+	from schema $id: http://devicetree.org/schemas/slimbus/qcom,slim-ngd.yaml
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 428, in get_or_retrieve
+    resource = registry._retrieve(uri)
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/validator.py", line 426, in retrieve
+    return DRAFT201909.create_resource(self.schemas[uri])
+                                       ~~~~~~~~~~~~^^^^^
+KeyError: 'http://devicetree.org/schemas/thermal/qcom-tsens.yaml'
 
-wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
+The above exception was the direct cause of the following exception:
 
-the mentioned board boots fine again. I'm not sure about other drivers, 
-if they also fail the same way as they might not be used on the tested 
-board.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 682, in lookup
+    retrieved = self._registry.get_or_retrieve(uri)
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 435, in get_or_retrieve
+    raise exceptions.Unretrievable(ref=uri) from error
+referencing.exceptions.Unretrievable: 'http://devicetree.org/schemas/thermal/qcom-tsens.yaml'
 
->   	if (!wcnss->mem_region) {
-> -		dev_err(wcnss->dev, "unable to map memory region: %pa+%zx\n",
-> -			&rmem->base, wcnss->mem_size);
-> +		dev_err(wcnss->dev, "unable to map memory region: %pR\n", &res);
->   		return -EBUSY;
->   	}
->   
+The above exception was the direct cause of the following exception:
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 463, in _validate_reference
+    resolved = self._resolver.lookup(ref)
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 686, in lookup
+    raise exceptions.Unresolvable(ref=ref) from error
+referencing.exceptions.Unresolvable: /schemas/thermal/qcom-tsens.yaml#
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-validate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 158, in main
+    sg.check_dtb(filename)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 95, in check_dtb
+    self.check_subtree(dt, subtree, False, "/", "/", filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 88, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 88, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 83, in check_subtree
+    self.check_node(tree, subtree, disabled, nodename, fullname, filename)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 34, in check_node
+    for error in self.validator.iter_errors(node, filter=match_schema_file,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            compatible_match=compatible_match):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/validator.py", line 448, in iter_errors
+    for error in self.DtValidator(schema, registry=self.registry).iter_errors(instance):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 384, in iter_errors
+    for error in errors:
+                 ^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/_keywords.py", line 296, in properties
+    yield from validator.descend(
+    ...<4 lines>...
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 432, in descend
+    for error in errors:
+                 ^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/_keywords.py", line 275, in ref
+    yield from validator._validate_reference(ref=ref, instance=instance)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 465, in _validate_reference
+    raise exceptions._WrappedReferencingError(err) from err
+jsonschema.exceptions._WrappedReferencingError: Unresolvable: /schemas/thermal/qcom-tsens.yaml#
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 428, in get_or_retrieve
+    resource = registry._retrieve(uri)
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/validator.py", line 426, in retrieve
+    return DRAFT201909.create_resource(self.schemas[uri])
+                                       ~~~~~~~~~~~~^^^^^
+KeyError: 'http://devicetree.org/schemas/thermal/qcom-tsens.yaml'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 682, in lookup
+    retrieved = self._registry.get_or_retrieve(uri)
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 435, in get_or_retrieve
+    raise exceptions.Unretrievable(ref=uri) from error
+referencing.exceptions.Unretrievable: 'http://devicetree.org/schemas/thermal/qcom-tsens.yaml'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 463, in _validate_reference
+    resolved = self._resolver.lookup(ref)
+  File "/usr/local/lib/python3.13/dist-packages/referencing/_core.py", line 686, in lookup
+    raise exceptions.Unresolvable(ref=ref) from error
+referencing.exceptions.Unresolvable: /schemas/thermal/qcom-tsens.yaml#
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-validate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 158, in main
+    sg.check_dtb(filename)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 95, in check_dtb
+    self.check_subtree(dt, subtree, False, "/", "/", filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 88, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 88, in check_subtree
+    self.check_subtree(tree, value, disabled, name, fullname + name, filename)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 83, in check_subtree
+    self.check_node(tree, subtree, disabled, nodename, fullname, filename)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/dtb_validate.py", line 34, in check_node
+    for error in self.validator.iter_errors(node, filter=match_schema_file,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            compatible_match=compatible_match):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/dtschema/validator.py", line 448, in iter_errors
+    for error in self.DtValidator(schema, registry=self.registry).iter_errors(instance):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 384, in iter_errors
+    for error in errors:
+                 ^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/_keywords.py", line 296, in properties
+    yield from validator.descend(
+    ...<4 lines>...
+    )
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 432, in descend
+    for error in errors:
+                 ^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/_keywords.py", line 334, in allOf
+    yield from validator.descend(instance, subschema, schema_path=index)
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 432, in descend
+    for error in errors:
+                 ^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/_keywords.py", line 275, in ref
+    yield from validator._validate_reference(ref=ref, instance=instance)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/jsonschema/validators.py", line 465, in _validate_reference
+    raise exceptions._WrappedReferencingError(err) from err
+jsonschema.exceptions._WrappedReferencingError: Unresolvable: /schemas/thermal/qcom-tsens.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251127133903.208760-1-jishnu.prakash@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
