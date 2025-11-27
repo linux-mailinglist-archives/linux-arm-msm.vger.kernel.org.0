@@ -1,226 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-83588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3399C8E3E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:24:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA2ABC8E421
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:30:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8C7934E1FC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:24:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E352E3ACCEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:30:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F97E33030A;
-	Thu, 27 Nov 2025 12:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 355073314B7;
+	Thu, 27 Nov 2025 12:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ST2IUyE0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gIzY5t3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F02932B9A5;
-	Thu, 27 Nov 2025 12:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864E33123C;
+	Thu, 27 Nov 2025 12:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764246283; cv=none; b=tkr8HMFav55R4B5a78DTZzNLoGD0TO/sQR5Zm59MUQ4JDvUs7DOiXKl95oW/aVpUSr8SV8n1Q0Jg7zjvDGiNzvMpDVImQ4SEegvNL8oQttjjtsPbLtj2/ZDq3F+RK4LEgzI+IumA1a0TAW8Eh2wX8g4bjr7DrWe84Gu/X33qbpY=
+	t=1764246621; cv=none; b=A7FUulVcHGHfrXm6+IOv09x8whNnRgCOTWMNG+RZ42TeqivQekGRfE4UawL0Io9oT04NVFm3lJCRbsvLOYX/AgbYXHOSD42eVoRLIbI7TqUHh12iOQPivV37qasx6m9ULiP+asoJIdK/uMGdGU/m328v75TcKNGWGnRSylbch5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764246283; c=relaxed/simple;
-	bh=iFmA0gfBLZi3VRH7c1aQ06IjGcorTM9TWDyCB6dTNtE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eM+rJhHheDIKADEDWHMyTGqSQ4tHKq9KlBlucaL9oDtKE2G4yZOnVk7aiszcD/KIWIRBOIdod8QU3SrIFfuNj39WSddXtSjYZKxu8Z9RvvTsJT3w1lk087HHgKeAQQtOdKLv1LlH2WNEKY8J8vfK6XZGF6tTv5PuEX29DVMI5yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ST2IUyE0; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764246282; x=1795782282;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=iFmA0gfBLZi3VRH7c1aQ06IjGcorTM9TWDyCB6dTNtE=;
-  b=ST2IUyE0iTz5Tr/jEdJhuczzn1uQR6jxHidA11ahBZgSlDbX06yyjiT9
-   3rRZ1sMl0fyTJwig+3EeCySSA0KSQ5LVcj8Kr7QcWTuUAheg65KiX77E8
-   RVvUtqQMw6rAD60NGTEMi8h8Nr01KfrLm5UD/no5BWiGMmglbtX+nZoMT
-   /krrHdDuy+vUQvuwIlh3RCub+hFWNj179LL+OCadjduR65GRmdx2+gBUb
-   xQg0CRuT26rqn/HSVLGrls21qBprcQks8YR8rZhvQQw4U+GBXddhRLfkh
-   howRKTpltJSQKUia7OToH4wKEBaY2I6NRJwUHX8YFY9OjEqnVALo4LMO/
-   Q==;
-X-CSE-ConnectionGUID: JuP9l02yQiWAW81xRlvZLg==
-X-CSE-MsgGUID: ks6Sfun3RSKDRTc0FmwkOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11625"; a="83685484"
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="83685484"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 04:24:41 -0800
-X-CSE-ConnectionGUID: +S3LMCMKQKKCeX7JLBZV4A==
-X-CSE-MsgGUID: OkMQesF8QauVnnjuq5hlyg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; 
-   d="scan'208";a="192474715"
-Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by orviesa010.jf.intel.com with ESMTP; 27 Nov 2025 04:24:36 -0800
-Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vOb33-000000004k1-2N6M;
-	Thu, 27 Nov 2025 12:24:33 +0000
-Date: Thu, 27 Nov 2025 20:23:42 +0800
-From: kernel test robot <lkp@intel.com>
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>,
-	kpallavi@qti.qualcomm.com, srini@kernel.org,
-	amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>,
-	quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com,
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, jingyi.wang@oss.qualcomm.com,
-	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
-Subject: Re: [PATCH v4 2/4] misc: fastrpc: Rename phys to dma_addr for clarity
-Message-ID: <202511272058.teHG4sdy-lkp@intel.com>
-References: <20251126094545.2139376-3-kumari.pallavi@oss.qualcomm.com>
+	s=arc-20240116; t=1764246621; c=relaxed/simple;
+	bh=fCngyquGhKS7ux3Y3gW6zZ8ixV22Q4aXg0807Na/zVo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Thk4SeCxtxC8gMEqnI5xDGvPT257wQNSpPBeNU0UbF3Gx9sMChzHBgLZBGgyrpYsGCVCGPfryDVOjMFrHqSMZ8eRZHrgM+IP7PUUH81Zje3N1ABTYRdxsu1+q7f7nq3yZ47CzxnmcGo7yBhdmby9Radd8/8Xr30CBU3RFT06p1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gIzY5t3K; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40EEC4CEF8;
+	Thu, 27 Nov 2025 12:30:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764246620;
+	bh=fCngyquGhKS7ux3Y3gW6zZ8ixV22Q4aXg0807Na/zVo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gIzY5t3KT6cX2QsbK7VjQaK4kkcBiA5qEjs45/9k6PoGqdHoYx2ax6hmqfWUBhtaY
+	 dpDjfpp/TdZzTCue4VeBv0kggVedKBHgx/MqStxLOJkPFBn1PCGuXLZsrtOjA+lSZg
+	 YzTWSwkd92CNtpxWiHQqlbPWrtvfpllO3eUX/sQJ80rRKsJ9bOxEz4rzJryk4U/1NB
+	 4Jq0LQ1fy0eHWOTwIepeZ1b3R4k3t30Of+3diMwRb1UKtXNg+IInc5mtl9DY3r4ed4
+	 oW4lvOEvtPqJd2rL1j1dimDBgAkZnqHSvhB4dJmlA82AgoBbJ1sJxiYyylmfiRKazM
+	 E0zxHfux6g6hw==
+Message-ID: <ea864521-c1ed-4aca-8a72-64f2a16c19bd@kernel.org>
+Date: Thu, 27 Nov 2025 13:30:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251126094545.2139376-3-kumari.pallavi@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add videocc node for SM8750 SoC
+To: Taniya Das <taniya.das@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251126-sm8750-videocc-dt-v1-1-a848fbfb257f@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251126-sm8750-videocc-dt-v1-1-a848fbfb257f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Kumari,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus robh/for-next soc/for-next linus/master v6.18-rc7 next-20251127]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kumari-Pallavi/dt-bindings-misc-qcom-fastrpc-Add-compatible-for-Kaanapali/20251126-175106
-base:   char-misc/char-misc-testing
-patch link:    https://lore.kernel.org/r/20251126094545.2139376-3-kumari.pallavi%40oss.qualcomm.com
-patch subject: [PATCH v4 2/4] misc: fastrpc: Rename phys to dma_addr for clarity
-config: arm-randconfig-002-20251127 (https://download.01.org/0day-ci/archive/20251127/202511272058.teHG4sdy-lkp@intel.com/config)
-compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project 9e9fe08b16ea2c4d9867fb4974edf2a3776d6ece)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251127/202511272058.teHG4sdy-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511272058.teHG4sdy-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/misc/fastrpc.c:328:6: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
-     327 |                                         "Failed to assign memory dma_addr 0x%llx size 0x%llx err %d\n",
-         |                                                                             ~~~~
-         |                                                                             %x
-     328 |                                         map->dma_addr, map->len, err);
-         |                                         ^~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/misc/fastrpc.c:823:5: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
-     822 |                                 "Failed to assign memory with dma_addr 0x%llx size 0x%llx err %d\n",
-         |                                                                          ~~~~
-         |                                                                          %x
-     823 |                                 map->dma_addr, map->len, err);
-         |                                 ^~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/misc/fastrpc.c:1318:6: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
-    1317 |                                         "Failed to assign memory with dma_addr 0x%llx size 0x%llx err %d\n",
-         |                                                                                  ~~~~
-         |                                                                                  %x
-    1318 |                                         fl->cctx->remote_heap->dma_addr,
-         |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/misc/fastrpc.c:1373:5: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
-    1372 |                         dev_err(fl->sctx->dev, "Failed to assign memory dma_addr 0x%llx size 0x%llx err %d\n",
-         |                                                                                    ~~~~
-         |                                                                                    %x
-    1373 |                                 fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
-         |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   drivers/misc/fastrpc.c:1953:5: warning: format specifies type 'unsigned long long' but the argument has type 'dma_addr_t' (aka 'unsigned int') [-Wformat]
-    1952 |                                 "Failed to assign memory dma_addr 0x%llx size 0x%llx err %d",
-         |                                                                     ~~~~
-         |                                                                     %x
-    1953 |                                 buf->dma_addr, buf->size, err);
-         |                                 ^~~~~~~~~~~~~
-   include/linux/dev_printk.h:154:65: note: expanded from macro 'dev_err'
-     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                                ~~~     ^~~~~~~~~~~
-   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ~~~    ^~~~~~~~~~~
-   5 warnings generated.
+On 26/11/2025 19:09, Taniya Das wrote:
+> Add device node for video clock controller on Qualcomm SM8750 SoC.
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 
 
-vim +328 drivers/misc/fastrpc.c
+This was already sent.
 
-   307	
-   308	static void fastrpc_free_map(struct kref *ref)
-   309	{
-   310		struct fastrpc_map *map;
-   311	
-   312		map = container_of(ref, struct fastrpc_map, refcount);
-   313	
-   314		if (map->table) {
-   315			if (map->attr & FASTRPC_ATTR_SECUREMAP) {
-   316				struct qcom_scm_vmperm perm;
-   317				int vmid = map->fl->cctx->vmperms[0].vmid;
-   318				u64 src_perms = BIT(QCOM_SCM_VMID_HLOS) | BIT(vmid);
-   319				int err = 0;
-   320	
-   321				perm.vmid = QCOM_SCM_VMID_HLOS;
-   322				perm.perm = QCOM_SCM_PERM_RWX;
-   323				err = qcom_scm_assign_mem(map->dma_addr, map->len,
-   324					&src_perms, &perm, 1);
-   325				if (err) {
-   326					dev_err(map->fl->sctx->dev,
-   327						"Failed to assign memory dma_addr 0x%llx size 0x%llx err %d\n",
- > 328						map->dma_addr, map->len, err);
-   329					return;
-   330				}
-   331			}
-   332			dma_buf_unmap_attachment_unlocked(map->attach, map->table,
-   333							  DMA_BIDIRECTIONAL);
-   334			dma_buf_detach(map->buf, map->attach);
-   335			dma_buf_put(map->buf);
-   336		}
-   337	
-   338		if (map->fl) {
-   339			spin_lock(&map->fl->lock);
-   340			list_del(&map->node);
-   341			spin_unlock(&map->fl->lock);
-   342			map->fl = NULL;
-   343		}
-   344	
-   345		kfree(map);
-   346	}
-   347	
+https://lore.kernel.org/all/20251120-b4-sm8750-iris-dts-v3-1-8715442c30d9@kernel.org/
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Krzysztof
 
