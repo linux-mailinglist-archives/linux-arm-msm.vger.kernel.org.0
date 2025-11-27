@@ -1,163 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-83613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45F6EC8EC03
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 15:27:57 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A96BEC8EC0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 15:28:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F30CA3AA74F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:27:55 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2CA9734AB4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:28:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 319B7332EA4;
-	Thu, 27 Nov 2025 14:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA86333449;
+	Thu, 27 Nov 2025 14:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nBkcTbUP"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="erbwpoOD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362A4224AF2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 14:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404D7332EC0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 14:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764253673; cv=none; b=mx31YdmPT3dLdFuWqZwjlojoC13dHkBtmJSAhA6iEZLsClXwUZv5otY1r/MDeKX2foFVe7UELqoDfmDiZlPm0CrxsL6DwoC6WGBspe2AlvQPv2drAQXV9ATSZRkYCP3TWfBZ9oPbiHx3YpjW/zA5jd6G1N+PxbJxglkAR1u3Bag=
+	t=1764253734; cv=none; b=JGKWrGYfv4uQRiRFzn+4Ltv72vd8Qbd3R9qjGlg69Y6H3fVu/5HsZ98lFVKxjCbjgnjI3nKp7yQSd4aTykHrbiRB2r5eDMVB8Z1bphBwQaqH7ZUrHCOlVjZqjsMXvuhWJ+u8cfyP52dmvg74V71YlS9gbyQFzeg7nNtl0tVqdok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764253673; c=relaxed/simple;
-	bh=VsxF4F1+V+wVbP+TVp2TXSyzJ/baeBpnP51twMV82pM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lgCel3IGfFHWnWeT2RsIlcuP1368r91eNHN8QIjvrSfeWQ+wgEt5FE6HTpNdlBmPgy+TAudJXTB2+GE0AW6yD0HjWpA3VQV1QFRT5tfS4SOjdjWD7LAjCsXLvv/RaoaRYayo/gABPTSg06yxJcK8gc31TP4reA256/GBXXOUlt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nBkcTbUP; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37a4ab6aa55so315821fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 06:27:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764253669; x=1764858469; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Izu2FHuEoh3gQsex6rJEdJvdieWvoBfp7SLE5TF7nSY=;
-        b=nBkcTbUP2ihqDxq4MvLepAdnt/JT0GCIn7YLHvJ/AW0uGqhshu+FT0OWnlxwkXQmGB
-         afubwL1lwkjQ2CtJ3gid+B7Lf8sngQQfsWdAH9GNH9/8vVKYmCQHZoE6dHkXbdFXt1si
-         pVrrMm0vrK6QaB21bzHGE/Pzji9y3yuLX3afOTzx+ZQ5HrShSG9LYolNzYzyOApfdb71
-         y99iCZNYBP+qQCvl50mk+WMJBDmM2aG79Mw2y935/G5t2dOtzVk3bGZGpA8AmRel1f3y
-         tD2ZR6K5rq1m0vsPjfNodeE/47Fka93spxNLlv33NCpN2r/4k7uq5GezqwvMc+t7yAvR
-         X91w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764253669; x=1764858469;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Izu2FHuEoh3gQsex6rJEdJvdieWvoBfp7SLE5TF7nSY=;
-        b=jX8h0QllGbsEGKaW/nNc1GCpnJa0fgYt78KHPrOXbodLDs/TZEAZsEv7atAJt7wEko
-         lx2P1rb0zxj7uAo4Wesq+2/Lj2oGWhWrBSD8DfCiyb0v9jB5PpaTtpLOmhvx+vJC91+1
-         VlLLDrblmZPmEkKFnMWJldtOUHc1mtxTfNf3a4mDefzeaPQPRSoVhmzdKnO0DR799fhd
-         5Il9Bft31o77iClzeDnPQmfzKWLMo/CPsngeIPCzglvsogW9FpT9MfiMBwNteXB2I8cr
-         7csVZFAOmmizU5MSMmaUC04aL9pNrM9stA5tZgGSMMsdLJ4lpatTQqtHvC2hEGUiObME
-         hCtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXCicofSqUpVCCgw2H+5RWnDhjWSSDjGnvBKJii0h7zU16yJwSm7wH+BmYJpxzVRz08dVT/totj2RMTx+YQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwI3z3fT96L2YY7T1rxL8skJwj3ifhaDGPx1eq1L8JdN7Lb1lpG
-	5Ipp5VjFTN/GobB+9jOKWaUDDEYqFAKVojnh+bfdnk9b789u54+lMMRyZmU3BWF2cw0=
-X-Gm-Gg: ASbGncuWII/2APNYOq4OLMaHuB17aeVtT1dHzei8kygCho/q2p2KAUviodwhKYlh1fm
-	nx6LQ/qFJwpflF0T1lOMct1uNEMPzDHqV0iV5qfLR+C7XpNsmXyG6SjQb9c92bf+Xq8N+OOmlCQ
-	DyWxZsolyZGcO2uV+cHJcHKyZt5ZZYtx/cUXvsG6DCVmxSR0aYKenBcUizoLZJ/MzGRWGpuXohj
-	sABkJ4AJnmOXDimj4ieQ/2Rnabx04mj+48hKVXzDAmIQSvFjgmKN1teaOF8AiPvxjrhYMo+N0Yg
-	4cxgCRsPAiHWt0DAqJrbh0KFM2OR7vg/U0uUXZ+x5zXVhZJU2N/JU9IU/nPEWZmPt1KY5lrTHdO
-	zx8puMrkC3tLTzeTzzRr3ulrHANxD+I1AAMcobG65h+mT6C87FoMdLiHIp8LUHAfq0XldiXmqzq
-	JcwPt0bNeRmtiyTp0ncIHTiL60bPvMP9vfkgWlGQmSQ3TMgDtcyXENMXsRmeYN+YIhhw7HFHSsz
-	627
-X-Google-Smtp-Source: AGHT+IFt6vU27xKv/0kuU+d2Qo4LF76uFAOV+qiVtW1RJs/5m+HZGfbtFg/MAFAH3yfFrmgDtBZ9LQ==
-X-Received: by 2002:a05:651c:3244:b0:37b:926d:5c06 with SMTP id 38308e7fff4ca-37cdc46f662mr32899781fa.8.1764253669119;
-        Thu, 27 Nov 2025 06:27:49 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37d236e5ec1sm4034821fa.16.2025.11.27.06.27.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Nov 2025 06:27:48 -0800 (PST)
-Message-ID: <d3cccdf4-8c50-4b6c-a29b-5b1388ce2249@linaro.org>
-Date: Thu, 27 Nov 2025 16:27:47 +0200
+	s=arc-20240116; t=1764253734; c=relaxed/simple;
+	bh=T1sb+tHvhi6RuyEEQJOSXM9p3OhuwHipbQpSaEsjzL4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
+	 Content-Type:References; b=sQIuOdJZrwWYmUJY3WdJitfoSpGujBD3CjhiD7EUMdfmToIjVUU3tzz3CWTbMqRUwLhp+xTDVen/Zd4D/BQKY0k15kOMypFy5BDook7H1EU3ZDoN2nKRw8W21mR9qj7d15NogutfZDAfV2121elFilPGt0vq70qnAZckRCcm4II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=erbwpoOD; arc=none smtp.client-ip=210.118.77.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20251127142840euoutp010abfb9f8f49a8466636af6398b6ef3b9~742k-BX-e2694626946euoutp01o
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 14:28:40 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20251127142840euoutp010abfb9f8f49a8466636af6398b6ef3b9~742k-BX-e2694626946euoutp01o
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1764253720;
+	bh=c+QeMOJOnfslgDcfNzsZCKnwETDURGiBqjri2tCUFfk=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=erbwpoODj8qo874optlioim476oOShFTEsV3Ii2jsn23RSu2+ZqD/Byawvhgk9B9y
+	 8GKnMWuwLJ8Iga9mkAgXYi8I7oqYCCBi7g0JqpaqvnXzJjhKcm0qtB14Eu9mnTXfmB
+	 /fKBWfHcgCCVRO6fXtKiJOBP8NR400dWaL9LnMok=
+Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+	20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c~742kOva7m0371103711eucas1p14;
+	Thu, 27 Nov 2025 14:28:39 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20251127142836eusmtip20607f11d6d5e39787db9d5c4efbb27f3~742huJECq1704117041eusmtip2Y;
+	Thu, 27 Nov 2025 14:28:36 +0000 (GMT)
+Message-ID: <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
+Date: Thu, 27 Nov 2025 15:28:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: Enable UHS-I SDR50 and
- SDR104 SD card modes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring
- <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251126012043.3764567-1-vladimir.zapolskiy@linaro.org>
- <20251126012043.3764567-3-vladimir.zapolskiy@linaro.org>
- <b07b88ed-83a3-46d6-8b97-e8661e2cfaa3@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <b07b88ed-83a3-46d6-8b97-e8661e2cfaa3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH v7 2/2] remoteproc: qcom: Use of_reserved_mem_region_*
+ functions for "memory-region"
+To: "Rob Herring (Arm)" <robh@kernel.org>, Bjorn Andersson
+	<andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn
+	Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam
+	<festevam@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>, Magnus
+	Damm <magnus.damm@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+	<alexandre.torgue@foss.st.com>
+Cc: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan
+	<peng.fan@nxp.com>, Beleswar Padhi <b-padhi@ti.com>,
+	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-msm@vger.kernel.org
+Content-Language: en-US
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <20251124182751.507624-2-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
+X-EPHeader: CA
+X-CMS-RootMailID: 20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c
+References: <20251124182751.507624-1-robh@kernel.org>
+	<20251124182751.507624-2-robh@kernel.org>
+	<CGME20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c@eucas1p1.samsung.com>
 
-Hi Konrad.
+Hi Rob,
 
-On 11/27/25 15:40, Konrad Dybcio wrote:
-> On 11/26/25 2:20 AM, Vladimir Zapolskiy wrote:
->> The restriction on UHS-I speed modes was added to all SM8550 platforms
->> by copying it from SM8450 dtsi file, and due to the overclocking of SD
->> cards it was an actually reproducible problem. Since the latter issue
->> has been fixed, UHS-I speed modes are working fine on SM8550 boards,
->> below is the test performed on SM8550-HDK:
->>
->> SDR50 speed mode:
->>
->>      mmc0: new UHS-I speed SDR50 SDHC card at address 0001
->>      mmcblk0: mmc0:0001 00000 14.6 GiB
->>       mmcblk0: p1
->>
->>      % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
->>      1024+0 records in
->>      1024+0 records out
->>      1073741824 bytes (1.1 GB, 1.0 GiB) copied, 23.5468 s, 45.6 MB/s
->>
->> SDR104 speed mode:
->>
->>      mmc0: new UHS-I speed SDR104 SDHC card at address 59b4
->>      mmcblk0: mmc0:59b4 USDU1 28.3 GiB
->>       mmcblk0: p1
->>
->>      % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
->>      1024+0 records in
->>      1024+0 records out
->>      1073741824 bytes (1.1 GB, 1.0 GiB) copied, 11.9819 s, 89.6 MB/s
->>
->> Unset the UHS-I speed mode restrictions from the SM8550 platform dtsi
->> file, there is no indication that the SDHC controller is broken.
->>
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
-> 
-> 8550 has additional limitations. One was addressed recently with
-> max-sd-hs-hz (HS mode can only run at 37.5 MHz), but when in SDR104,
-> the frequency must also be capped to 148 MHz. I don't know whether
-> the driver respects that today.
-> 
+On 24.11.2025 19:27, Rob Herring (Arm) wrote:
+> Use the newly added of_reserved_mem_region_to_resource() and
+> of_reserved_mem_region_count() functions to handle "memory-region"
+> properties.
+>
+> The error handling is a bit different in some cases. Often
+> "memory-region" is optional, so failed lookup is not an error. But then
+> an error in of_reserved_mem_lookup() is treated as an error. However,
+> that distinction is not really important. Either the region is available
+> and usable or it is not. So now, it is just
+> of_reserved_mem_region_to_resource() which is checked for an error.
+>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-This frequency cap tuning for SDR104 speed mode is not done. If I
-remember the story properly, the frequency cap for HS speed mode was
-implemented in dts instead of being a pure Qualcomm SDHC specific
-quirk, because it's possible to workaround the limitation by slightly
-changing a board PCB layout. Then should this new SDR104 quirk be
-considered due to a property in the dtb as well?
+This patch landed in today's linux-next as commit c70b9d5fdcd7 
+("remoteproc: qcom: Use of_reserved_mem_region_* functions for 
+"memory-region""). In my tests I found that it breaks booting of 
+DragonBoard410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts) by causing 
+the NULL pointer dereference. The issue is caused by replacing 
+devm_ioremap_wc() with devm_ioremap_resource_wc(), which fails on 
+devm_request_mem_region(), see comment in the code below. It looks that 
+the error handling is somewhere broken. Here is the the kernel log:
 
-FWIW, comparing register dumps SD host controllers on SM8550 and SM8650
-SoCs are identical, should HS and SDR104 quirks be ported to SM8650 also?
+remoteproc remoteproc0: 4080000.remoteproc is available
+qcom-wcnss-pil a204000.remoteproc: error -EBUSY: can't request region 
+for resource [mem 0x8e200000-0x8e7fffff]
+remoteproc remoteproc1: a204000.remoteproc is available
+remoteproc remoteproc1: powering up a204000.remoteproc
+remoteproc remoteproc1: Booting fw image qcom/apq8016/wcnss.mbn, size 
+4111376
+Unable to handle kernel paging request at virtual address fffffffffffffff0
+Mem abort info:
+...
+Internal error: Oops: 0000000096000046 [#1]  SMP
+Modules linked in: cpufreq_powersave qcom_wcnss_pil cpufreq_conservative 
+coresight_stm coresight_replicator coresight_tmc coresight_tpiu stm_core 
+coresight_funnel coresight_cpu_debug coresight_cti(+) adv7511 coresight 
+nfc rfkill msm snd_soc_lpass_apq8016 snd_soc_apq8016_sbc 
+snd_soc_lpass_cpu snd_soc_msm8916_analog snd_soc_msm8916_digital 
+snd_soc_qcom_common snd_soc_lpass_platform snd_soc_core qrtr ubwc_config 
+snd_compress llcc_qcom snd_pcm_dmaengine qcom_q6v5_mss snd_pcm ocmem 
+qcom_pil_info qcom_spmi_vadc qcom_camss drm_gpuvm qcom_pon rtc_pm8xxx 
+qcom_q6v5 qcom_spmi_temp_alarm venus_core qcom_vadc_common snd_timer 
+drm_exec qcom_sysmon snd qcom_common gpu_sched videobuf2_dma_sg 
+v4l2_mem2mem qcom_glink_smem v4l2_fwnode soundcore drm_dp_aux_bus 
+qmi_helpers mdt_loader v4l2_async videobuf2_memops videobuf2_v4l2 
+videodev qnoc_msm8916 videobuf2_common qcom_rng drm_display_helper mc 
+qcom_stats rpmsg_ctrl rpmsg_char display_connector ramoops socinfo 
+rmtfs_mem reed_solomon ax88796b asix usbnet phy_qcom_usb_hs ipv6 libsha1
+CPU: 2 UID: 0 PID: 28 Comm: kworker/2:0 Tainted: G W           
+6.18.0-rc1+ #16209 PREEMPT
+Tainted: [W]=WARN
+lr : __qcom_mdt_load+0x210/0x304 [mdt_loader]
+Call trace:
+  __pi_memcpy_generic+0x128/0x22c (P)
+  qcom_mdt_load+0x68/0x60c [mdt_loader]
+  wcnss_load+0x2c/0x5c [qcom_wcnss_pil]
+  rproc_start+0x30/0x1b4
+  rproc_boot+0x19c/0x560
+  rproc_auto_boot_callback+0x1c/0x34
+  request_firmware_work_func+0x4c/0x98
+  process_one_work+0x208/0x60c
+  worker_thread+0x244/0x388
+  kthread+0x150/0x228
+  ret_from_fork+0x10/0x20
+Code: 927cec03 cb0e0021 8b0e0042 a9411c26 (a900340c)
+---[ end trace 0000000000000000 ]---
 
-Thank you a lot for reviews and hints!
 
+> ---
+> v7:
+>   - Split QCom to separate patch
+> ---
+>   drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++------
+>   drivers/remoteproc/qcom_q6v5_mss.c  | 60 ++++++++-----------------
+>   drivers/remoteproc/qcom_q6v5_pas.c  | 69 +++++++++++------------------
+>   drivers/remoteproc/qcom_q6v5_wcss.c | 25 +++++------
+>   drivers/remoteproc/qcom_wcnss.c     | 23 ++++------
+>   5 files changed, 72 insertions(+), 129 deletions(-)
+>
+
+> ...
+
+> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> index 2c7e519a2254..14005fb049a2 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -526,25 +526,20 @@ static int wcnss_request_irq(struct qcom_wcnss *wcnss,
+>   
+>   static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+>   {
+> -	struct reserved_mem *rmem = NULL;
+> -	struct device_node *node;
+> -
+> -	node = of_parse_phandle(wcnss->dev->of_node, "memory-region", 0);
+> -	if (node)
+> -		rmem = of_reserved_mem_lookup(node);
+> -	of_node_put(node);
+> +	struct resource res;
+> +	int ret;
+>   
+> -	if (!rmem) {
+> +	ret = of_reserved_mem_region_to_resource(wcnss->dev->of_node, 0, &res);
+> +	if (ret) {
+>   		dev_err(wcnss->dev, "unable to resolve memory-region\n");
+> -		return -EINVAL;
+> +		return ret;
+>   	}
+>   
+> -	wcnss->mem_phys = wcnss->mem_reloc = rmem->base;
+> -	wcnss->mem_size = rmem->size;
+> -	wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
+> +	wcnss->mem_phys = wcnss->mem_reloc = res.start;
+> +	wcnss->mem_size = resource_size(&res);
+> +	wcnss->mem_region = devm_ioremap_resource_wc(wcnss->dev, &res);
+
+The above line causes the failure. After restoring it to:
+
+wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
+
+the mentioned board boots fine again. I'm not sure about other drivers, 
+if they also fail the same way as they might not be used on the tested 
+board.
+
+>   	if (!wcnss->mem_region) {
+> -		dev_err(wcnss->dev, "unable to map memory region: %pa+%zx\n",
+> -			&rmem->base, wcnss->mem_size);
+> +		dev_err(wcnss->dev, "unable to map memory region: %pR\n", &res);
+>   		return -EBUSY;
+>   	}
+>   
+
+Best regards
 -- 
-Best wishes,
-Vladimir
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
 
