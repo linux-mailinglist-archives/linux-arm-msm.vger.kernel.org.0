@@ -1,232 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-83545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEEE8C8D4F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 09:19:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CC02C8D50F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 09:21:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 776193AC6BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 08:19:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D79AB3AC9BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 08:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85A8D322C6D;
-	Thu, 27 Nov 2025 08:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE55D31CA6A;
+	Thu, 27 Nov 2025 08:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vK9vN7aN"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="1fvDhN7c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5BC31DDBB;
-	Thu, 27 Nov 2025 08:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EA1315D2F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 08:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764231550; cv=none; b=tw+PZ4gpT44KNUc+CQTe1OOFKbnLk0u3ifPzBjUJCwHEE81jaKU1qS9dd4FyRRPjMrv70OTx1wFvJB8iuW7B9X0JtpIIFYRLKD9hRi+rfLoDtWhTcjgoMwsdbuIb6TsvVUu5fPj+6mr7xeY/v4qrnOHuSAejIPbEj/aBK8K7jho=
+	t=1764231706; cv=none; b=obksPS3CPCQagqSeuzSfDNjZQ4fb+Q79UcTQ16H33TNsmBVZ450OG6fUXsnoGRjkyo9I4dobUS7ppBefQj+k5cAtgB/dIK8Z/itSQ/MGusea2OlkBxL0G4M33SvNG2HjibQCnxv5ZnT+PYAhSJhbY29C6QufgygEXUd50Suk2vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764231550; c=relaxed/simple;
-	bh=zvSBv3v4KG57xEeMLbULPeU468+ReKAcLYzEnG04EC8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ORNItxz4OjKOg9NrFPeupFHRcDD0lMcRzy8xywV3iq/xhtsJaWhpkogB12TeTRNyxS4L61Vj3qkDO4atpo6IuD1iePWW5mbGo9KhETunTNT0DV0S1HgIg/KvwimxDOfJ2mahK+Z6DKlJI9ZacVzTDraCU5ASNqePbj8zvVsWhpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vK9vN7aN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453DBC4CEF8;
-	Thu, 27 Nov 2025 08:19:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764231549;
-	bh=zvSBv3v4KG57xEeMLbULPeU468+ReKAcLYzEnG04EC8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vK9vN7aNSIV+AamM/unmn4GUbYiL3lBKxekZJqM6tCr1dvfEMGCVhJMAAgRC5x8SQ
-	 0ieeeDdG+/+12GWeKLT65ziYft6X0rs8p29qeSY6bKVgLWZnAxkVcE/Lc3N85quUAV
-	 waGS0NKRZ8E7BJ18nb02apsWCJTGMuKtU1roB2YgzVnQtcuaWqNom/zt1N2grdjcDA
-	 3ifYRGtECO1ilNEht2gXQhhKUHuY+ZG0Hts6GvS1QQ2zQa6h56vDCerrjtmawIQyfv
-	 CoE+fqhRpk+jeX0CTwjc+NRew0I4INQIccC5iqitxuFJ2QTrMtsW2ZEDvJiD7s1gNr
-	 br0BNvlfC/KBg==
-Message-ID: <bf6e1039-c3ff-45e5-a225-4f2301c469fb@kernel.org>
-Date: Thu, 27 Nov 2025 09:19:05 +0100
+	s=arc-20240116; t=1764231706; c=relaxed/simple;
+	bh=Y9HbYHfS9sLGPwxxlfvNCTbzS2ssSvhlDBLvtPBhoLs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QxJRhVdT6g3HtuWxen3A3X+GROWq2dHjXc1t1ti+jyUtFdqfF7BsTPeIKPAkNO6N+NqhzZdhCj0+FKo90Ra/bZCZGWB00N9sjS5/K5O92rqgY5H9uOtx0BMmBjipGQwLeAGkkDiLA3w5F2WZP71ev0lha+XMF9Yn3g24iHRZcvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=1fvDhN7c; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-47774d3536dso4441155e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 00:21:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764231703; x=1764836503; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7wFtUrQJYvhgrliY3ZtBCl2DhI7sZrvKomnUFVXMk4U=;
+        b=1fvDhN7cPmoT9olXfcjOSH8lj2pnBAKxDEN6+y6ZQe1gXULiLvIqDVluB2rEqTn4hR
+         0GoGx0YAs0TnX8U8CE1hW32yV7X6GFsQva4EJPhlhMGQ9tq6UrlHvZA5J47XJmvJoVkt
+         eOBAGC+KyFVJqSGgNwF04HhvOXbrGThmUq1W7LkGxHCxVwZXkKoZlhmVAEpPNc6d6qAk
+         sWloa03c/FHUtBLx/CzLMVt26pQZ2mtqMXy1krlfb/7ZhwXYsLepxT8t0g7LTkHWUgMW
+         XOTe1HwbKJCihzRwmn/MgOHryvn3LJhrlBbk9/uPceot3M9n1DrjPqZO2tPALnRjalSu
+         jisg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764231703; x=1764836503;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7wFtUrQJYvhgrliY3ZtBCl2DhI7sZrvKomnUFVXMk4U=;
+        b=TRIBXPKR5oBZa8IyXAZ1FwahxDUEHgoaAARAmsQXDDv3UPIYH+Yhq0IInjZBvr//g0
+         ZZPzms3AVj5kv4N2IP5qQwc20n9kRI1NWEi18HvsJEuz3iwF37omDGSf5xuIEJAG9Fsl
+         5ZBcdpvrN5geBwVi/E9ciQBA3Pza73yGT9lAsn4OpDbCFXSULe4ZL04p/+kXjNvhqp9n
+         Bk/LMA7eIG1Aa/wMegSuzO5VBVVLxJ9k4sqRqFw0emZuS8mXYi40zBqxkvHsw6oAOEV0
+         aBDdETj6bRqGO60O/gAhAjBIck5csT9ySS6UeTjTypQU9GH39Z0Kv393ckqsJrDfWxc0
+         KGKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVfx7o+E6oHn1DgL5LvsrvBRH3IXkTOJJXtmfEuRnu3eRYHkhLKc9/MHEfTx1/DHLRHOa+P742Xo4RJC8oi@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhPlcqzVRk5IMOacAwygie6wIVMFRlTCkdW4uMDQpZ70PCKfmB
+	Y0sF/zIV280byI/zCu9RhvZqO3OhF8gzN5x7GIJs+NJOthITNqmV74OfeSWwoNctC9E=
+X-Gm-Gg: ASbGncuXCGi6rM6wGLNJpUSkkvlbyB2JLrMVBM1fbHYWZ5lFyv8ztL33rdJpLYNt79B
+	CT6bt4W3aQ2D+qsOcKW3P0dnUmo7eZQ7UXby6/vduenjzVzTiIbDT/Bz35WZsUuk8oB623qMR82
+	R86BfWNAFSr+5o12V+mZHmlzuyMP3aeyUFpwOjppNvqQ1+jx9J6ihl9jdesUgI6RhHygScI4vmS
+	o8SD7z3OiiP+TXp5VIYP9S4qRpzB8UwoJt+nRoYEmyZ+xbcKWhhGaVSjJocWx4oSaqyoqsbq5YZ
+	ehgkEsRIC8oHJUcGGEz/16s5q9ce+Olp0S9Wdr+P+SMXt5/Mqsz6iHhOtsMy+4ER1pqUERO/xZF
+	5bVvtQrTWS5BzkGCrbDh9OLDtG7fJdQOYQn4YZNHHprh2FnaKI4ilbaOCAWWJAtwgJeayxYZLlL
+	suykRkCw==
+X-Google-Smtp-Source: AGHT+IFUSoYvvgrvfuRweTnB8dHyWguLhMvmoW128+Cji2p3fl3QicsjjyDtIeGjTkbHQJSh+55q+Q==
+X-Received: by 2002:a05:600c:c8a:b0:471:5c0:94fc with SMTP id 5b1f17b1804b1-477c04cfb70mr246319795e9.6.1764231703074;
+        Thu, 27 Nov 2025 00:21:43 -0800 (PST)
+Received: from brgl-uxlite ([2a01:cb1d:dc:7e00:bd28:e1d9:5af3:b39d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-479111438b9sm21446735e9.2.2025.11.27.00.21.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Nov 2025 00:21:42 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Val Packett <val@packett.cool>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] gpio: shared: handle the reset-gpios corner case
+Date: Thu, 27 Nov 2025 09:21:41 +0100
+Message-ID: <176423169902.7348.9978985875894103087.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251125-gpiolib-shared-reset-gpio-fix-v2-1-4eb6fa41f1dd@linaro.org>
+References: <20251125-gpiolib-shared-reset-gpio-fix-v2-1-4eb6fa41f1dd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] arm64: dts: qcom: lemans-evk: Add OTG support for
- primary USB controller
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251127073537.1218832-1-krishna.kurapati@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251127073537.1218832-1-krishna.kurapati@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 27/11/2025 08:35, Krishna Kurapati wrote:
-> Enable OTG support for primary USB controller on EVK Platform. Add
-> HD3SS3220 Type-C port controller present between Type-C port and SoC
-> that provides role switch notifications to controller.
-> 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> ---
-> Changes in v6:
-> - Renamed remote endpoints in controller node
-> 
-> Link to v5:
-> https://lore.kernel.org/all/20251125110420.2192971-1-krishna.kurapati@oss.qualcomm.com/
-> 
-> Changes in v5:
-> - Re-organised pmic gpio node to maintain alphanumeric order
-> 
-> Link to v4:
-> https://lore.kernel.org/all/20251102165126.2799143-1-krishna.kurapati@oss.qualcomm.com/
-> 
-> Changes in v4:
-> - Moved remote endpoints to SoC file.
-> - Renamed vbus regulator name.
-> - Moved usb-role-swich property to SoC file.
-> 
-> Link to v3:
-> https://lore.kernel.org/all/20251024182138.2744861-1-krishna.kurapati@oss.qualcomm.com/
-> 
-> Changes in v3:
-> - Moved "usb-role-switch" to lemans dtsi file
-> - Moved vbus supply to connector node
-> 
-> Link to v2:
-> https://lore.kernel.org/all/20251008180036.1770735-1-krishna.kurapati@oss.qualcomm.com/
-> 
-> Changes in v2:
-> - Removed redundant property of dr_mode setting.
-> - Added power-role property in connector node.
-> 
-> Link to v1:
-> https://lore.kernel.org/all/20251002172946.589061-1-krishna.kurapati@oss.qualcomm.com/
-> 
->  arch/arm64/boot/dts/qcom/lemans-evk.dts | 108 +++++++++++++++++++++++-
->  arch/arm64/boot/dts/qcom/lemans.dtsi    |  20 +++++
->  2 files changed, 126 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> index b40fa203e4a2..f4a8f853e0ca 100644
-> --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> @@ -38,6 +38,35 @@ chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
->  
-> +	connector-0 {
-> +		compatible = "usb-c-connector";
-> +		label = "USB0-Type-C";
-> +		data-role = "dual";
-> +		power-role = "dual";
-> +
-> +		vbus-supply = <&vbus_supply_regulator_0>;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				usb0_con_hs_ep: endpoint {
-> +					remote-endpoint = <&usb_0_dwc3_hs>;
-> +				};
-> +			};
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				usb0_con_ss_ep: endpoint {
-> +					remote-endpoint = <&hd3ss3220_in_ep>;
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->  	edp0-connector {
->  		compatible = "dp-connector";
->  		label = "EDP0";
-> @@ -102,6 +131,15 @@ platform {
->  		};
->  	};
->  
-> +	vbus_supply_regulator_0: regulator-vbus-supply-0 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vbus_supply_0";
-> +		gpio = <&expander1 2 GPIO_ACTIVE_HIGH>;
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		enable-active-high;
-> +	};
-> +
->  	vmmc_sdc: regulator-vmmc-sdc {
->  		compatible = "regulator-fixed";
->  
-> @@ -454,6 +492,43 @@ &gpi_dma2 {
->  	status = "okay";
->  };
->  
-> +&i2c11 {
-> +	status = "okay";
-> +
-> +	hd3ss3220@67 {
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-If you cannot find a name matching your device, please check in kernel
-sources for similar cases or you can grow the spec (via pull request to
-DT spec repo).
 
+On Tue, 25 Nov 2025 11:19:09 +0100, Bartosz Golaszewski wrote:
+> There's an unexpected interaction between the reset-gpio driver and the
+> shared GPIO support. The reset-gpio device is an auxiliary device that's
+> created dynamically and fulfills a similar role to the gpio-shared-proxy
+> driver but is limited in scope to just supporting the "reset-gpios"
+> property.
+> 
+> The shared GPIO core code does not take into account that the machine
+> lookup entry we create when scanning the device-tree must connect the
+> reset-gpio device - that is the actual consumer of the GPIO and not the
+> consumer defined on the device tree, which in turn consumes the shared
+> reset control exposed by the reset-gpio device - to the GPIO controller.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] gpio: shared: handle the reset-gpios corner case
+      https://git.kernel.org/brgl/linux/c/7b78b26757e0d997b31635d76eaa46d5ef5e1431
 
 Best regards,
-Krzysztof
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
