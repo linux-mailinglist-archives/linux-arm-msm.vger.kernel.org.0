@@ -1,92 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-83604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48F06C8E9CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:52:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CCB37C8E9F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 14:54:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE57A3ADECC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:48:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81D2A3B8895
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:49:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E534529BD85;
-	Thu, 27 Nov 2025 13:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCDB8315D52;
+	Thu, 27 Nov 2025 13:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="i02WFtvh"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="uLj1JFNa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD45626F28A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 13:48:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2828A28C014
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 13:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764251302; cv=none; b=KIvONoh+Z0JqJJRi0hewM5KemVZr8qS28/pAkXRhhD5oHOOPn1rH1opGJrLgktLm13taJZy9x1FytnuzzQvE6urEKKsgweY7AJZyn8qm9cfnfIf09UegNJ9u1gBbFfu4jZ1Ym5r+DjdjztNXJz9jRNIPHyREeg0suD/tlfXjpAI=
+	t=1764251364; cv=none; b=Bi+UHw1hnn5fBOgK07CQF9ue0gO75eKlyy0dNJNvO4WTQCU63+ymrGwma+853XN+VADNlL0P4RWQdxR/VPDvuJwN6+QnANpZZ10mPMHU560V2aDRUPdZ+CUTbR5c/xC68/e8dkIRWvofcuwC9HkgOCOiaQIfy27xz783eSKMq2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764251302; c=relaxed/simple;
-	bh=uaVm51pAfA+7BtceViMdoGw/achxdyKv4cZ8WrD61Jg=;
+	s=arc-20240116; t=1764251364; c=relaxed/simple;
+	bh=djx46A/t4g9tFTNKTkwprP+1rBHg+hljQCYzR5C8ROA=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B4a6j6Ii8H0Rz1I6ldOJ3mAtrPE0cJ33fURVb/tCjl5VkIyLvCgrw5wLua3BO0NMRNSne4kPDcicSPnTsCpGJ9VZKMe6N4aLfSLuW+xuI7LjspoCdpKLLRRV04qZzN+l3Le2swhhBw1P0rWvq4z1tnndn0/KLbhrL0Affjw/duQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=i02WFtvh; arc=none smtp.client-ip=209.85.167.41
+	 To:Cc:Content-Type; b=ZrVUNaTNHGv8CJDu8nLNp6PH7AH6EQmnIUHZ6q2v0aplE6NlWD4vwrTOpO1mqOBLOgfzKI1DHqOOEPQdviPyDGJtWYPRI3ZWG5lo5bIlSWtS/Btg6w9TjDTa6yYxrO76G02bXb7nnnTsxLSmBjWLTxMRxDewjj2y/Llu9SM+7Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=uLj1JFNa; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-59583505988so1124145e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 05:48:19 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5969c5af23bso947467e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 05:49:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764251298; x=1764856098; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764251360; x=1764856160; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=G07GekTGY4SC2iSrWnFuwKzI1N7AFmcaYb52fmGR7rY=;
-        b=i02WFtvhCeLzn92sa9e6xhLxGCy5Sim19nT058tNigw8epvH/gu95hf6cLoCMwaNKY
-         IqDKAGXh9dHQ/dGJmuBfIuL3x/3mQmdidgbmfcIKIjLBeAG7tUFDR0YBRsGW0Q1IIWCk
-         8BuLjnJel7z1JJH+LbF6Le/w1hwgX1kygRLXlZuPD8EGkDB3tvxTix82fUhYx1k6zGAF
-         WYPTVg29Fu6D0wGZWAe3AaCoPL1SrCyRd+L5F+8XRBLDTLLH+h0GNs9EAqP9xQuJU9hr
-         2RtSX9K2ugisuqMpl+ZtNhMiLL6v8ebRDa+i7wN7d6DHi3DpAxXVwwbzJUy6U9og1UQx
-         LF5w==
+        bh=djx46A/t4g9tFTNKTkwprP+1rBHg+hljQCYzR5C8ROA=;
+        b=uLj1JFNaKbDfbxo09KGuxHCMyfKejpCJ1WTapAbhCouqWGf7nWZMdnozs59WqDSOOe
+         pKh+xItKdnpSkz+ie4zbDtWnGqjhIUj5iJcN4GZc3r9OWWFjUDbtmIDFnDxS7kQs52N5
+         o7zRwL9XMpj0ovWUukkXhdxO+Oom/eQ0xP1Bqhns1G3+RLZvbuTMbuE9wi0OoxAuFS/a
+         PPG6CyfX81DIu4rzuUmZ0n2d7PklxBj89vNtazQQpqPzyAkP9MVXbw8pmaXbiQRlQAok
+         Je2FL5kvoXJ0r70ZgvakShfVpiV4HBUa4RGJc9S0isAgm4GJ9jVZ2ODpt7XqWEIKhhNw
+         jhPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764251298; x=1764856098;
+        d=1e100.net; s=20230601; t=1764251360; x=1764856160;
         h=cc:to:subject:message-id:date:references:mime-version:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G07GekTGY4SC2iSrWnFuwKzI1N7AFmcaYb52fmGR7rY=;
-        b=SYPHF4QVH5a0L5a8MCTrIjR1NkLH0WZgH6ayUYl7YATV9SZCcRsvKDVS/ePcsuGsuP
-         lPdiSNrdxxuXgWVuh+LvdDIf1SArHKdquB8z/q05/gudMBwZx349b4lcx/yIIk3HLBJB
-         FInCV1fs6OhoZAJ815JYoEWgGXGsqHY5ulqNYD0nUyKyUXwBrOWNDQ43VHoykEPRESd9
-         sTnxjQj3zrVQt9uvSq6497/wrIZ6QODDNAAiOQjFusu3gahyekWmnHQgf8FYedkjeT2N
-         qmxoRF+6PhNLVJ9p8kAkw5RHPQAK/7xtZHstf+JcSv5fxlIawjrMUopp2tQ0DnZcd+S/
-         ZxOw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvOiPqRV0PF/FpgNjUMDRfojOJNWjNjRXk2PI1y0c8TonL+lUs8G/k2+FqJd5VFcHeO5g+uZDbBTWuW3cz@vger.kernel.org
-X-Gm-Message-State: AOJu0YwT9JHZPcviOMnWusaa09X+pek+QHuv1GL3KwIF3eaPXGPHMPNM
-	jjlmEoVAKK30rkXq2LYOwqqng+BmnYQkIsZhORaoF74Wlkd5i5+DWU+a2TGxgx30eaMQrJMaK6M
-	4JC+pY0hr1XziZN9j+75y34r/R4fD4/mbc9anovZMaQ==
-X-Gm-Gg: ASbGncuhsYgWE4SN15AXIywNXhAiFoxLkohiyBn7+i52UyxwQoPa0mmt7roE9IwCVIp
-	twrM0Q3qqcMCoRIoj1iaKVBU8uYpmgTbgIwb0vnpAIExYeWLdeN58voOBJWEoAyEqnhfxicD+sP
-	9LvMoO5+9msLkp2CVIukOxy09sgnUx2NeMQK4M1iPNXBYl4SZBtnsWHTXOnSk+60ecyURYzJKaX
-	Os3nBOh+gThw4WL0GUxstWTOfAJL3bE7LZdshzUKa3+fj/lXloqcfCfs7aEj6Ycyv5PmkAKkSRq
-	VqLuDpKFdLrD7caF+Kip0dlm73c=
-X-Google-Smtp-Source: AGHT+IGvFI8L5fGXcjZ+qNvP8EZkHInkEP3SOQcYofhj+ZFeXXcaPdCECdiTD+YtbO/uvB+N8tYFM9k+NWHSnM4EQ3k=
-X-Received: by 2002:a05:6512:6d3:b0:594:37bc:f40c with SMTP id
- 2adb3069b0e04-596a3749dfcmr8511591e87.10.1764251297792; Thu, 27 Nov 2025
- 05:48:17 -0800 (PST)
+        bh=djx46A/t4g9tFTNKTkwprP+1rBHg+hljQCYzR5C8ROA=;
+        b=hXpHv4UnblXtlTChMd1hr/k7y9AsxxPArCkrJfHgLboYqT0YQQ0fnIyjYJkE94hlfb
+         lYcmN/XS5P+ZdZDiXB4eb0j0JShBmXymZnXCfKLLzriVoZZHDCGaSuCGxHcFgb5SF7L1
+         caTc1yrgB84qmElCghWOcvD49xnNdr4PNLTjSToXmb92oxzVIILzJEiwnBQfFOF9RqPM
+         6D1h8cnKlQgArN0rmkS6k9fAigZQsnRyDUKTXf1UrVtkg9vjFdW+e8AGl4crj0PA/29y
+         6cSHXzZEo9ms4FFgVQh295nWGJDwMhTmF94tYwCFL/0u+/Q8ajM/a82bUuW9acFXEMUq
+         3BWA==
+X-Forwarded-Encrypted: i=1; AJvYcCXX5qjPNz14cFrPRHhHZNMFASMeFcO1oRtHggBM+wXi+RTpb5QOSHSlS/NVxSQk/fTDXe3rB9Z6l3gBHXMh@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXwsnVUmth1yoU7wUm0gqfDm8HydegOkSEBEDK1eUgDNLH/9S5
+	6NgWpWHHV/Ef0KSvH09mEakjBHanC0nuXj7p2+vstikLNPetMqnoulomMItAsrIDX1gK1tPV7yB
+	S85RKlAErd+0MbGh3mjgVJtRVp5dnWvxlxJC99oMFWA==
+X-Gm-Gg: ASbGncs2sFNvzIke50feTJBK98NheDqz/7WPLy9Qw/zspzPbwrLU05N3Xzh9v6jxXjZ
+	1YuruQ3XKCtsx4Gt3/7ZPwQLCMpOjVLNh57svm6fyeqllY5jJ2pZtAO8y+wtYwYGzCTXVzb4tW3
+	V/yPy/653WFNyy+CnMg9YwX4FGoFIHVeO9ZSoaOU103Rd+qKKKBPqwBlhM9A+Wcmtb9NZLd/lTR
+	mg4sHyLYdRoeJwbEN3CX195FBmxV3xe734k40HU4N8elA4FNIdEc0dpfey6p7DWoLTE8+pvTGjj
+	PSMOYaHNTqot0t+rZa9/O2g+LzY=
+X-Google-Smtp-Source: AGHT+IH+CDUfKujPpotwtmLcmyLVWHWVuqtFgSXM/kqLIDQE6VNVNZAmDKJw5gKN9s8jiNvQgCQtNi8buZoDHFa0ulg=
+X-Received: by 2002:a05:6512:800c:20b0:596:a540:c95f with SMTP id
+ 2adb3069b0e04-596a540cb59mr5729287e87.19.1764251360301; Thu, 27 Nov 2025
+ 05:49:20 -0800 (PST)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Nov 2025 05:48:16 -0800
+ HTTPREST; Thu, 27 Nov 2025 05:49:19 -0800
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Nov 2025 05:48:16 -0800
+ HTTPREST; Thu, 27 Nov 2025 05:49:19 -0800
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <20251125-pci-m2-e-v2-7-32826de07cc5@oss.qualcomm.com>
+In-Reply-To: <20251125-pci-m2-e-v2-9-32826de07cc5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com> <20251125-pci-m2-e-v2-7-32826de07cc5@oss.qualcomm.com>
-Date: Thu, 27 Nov 2025 05:48:16 -0800
-X-Gm-Features: AWmQ_bk0-XCJTQ6PapzzNjyRg3LPIzKuWTKtDYqS86NfBbxq1eZ_R5ABgi6vUTk
-Message-ID: <CAMRc=Mck-Vx6SSDSp4+jFWeobQ3fzf9P=zJa_bQoEe6T6R_VHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 07/10] serdev: Do not return -ENODEV from
- of_serdev_register_devices() if external connector is used
+References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com> <20251125-pci-m2-e-v2-9-32826de07cc5@oss.qualcomm.com>
+Date: Thu, 27 Nov 2025 05:49:19 -0800
+X-Gm-Features: AWmQ_bmLrPADj6DoaQnC1ZJGmDNpk5NRcjPDulR-pWqLbapX0f-JV3TGd0Beet4
+Message-ID: <CAMRc=McQO4OKra4S+goHsrq75HJbO1U=pfOg_8RrGFxNwy_-pw@mail.gmail.com>
+Subject: Re: [PATCH v2 09/10] Bluetooth: hci_qca: Add support for WCN7850 PCIe
+ M.2 card
 To: manivannan.sadhasivam@oss.qualcomm.com
 Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
 	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
@@ -104,53 +104,18 @@ Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualco
 	Bartosz Golaszewski <brgl@bgdev.pl>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 25 Nov 2025 15:45:11 +0100, Manivannan Sadhasivam via B4 Relay
+On Tue, 25 Nov 2025 15:45:13 +0100, Manivannan Sadhasivam via B4 Relay
 <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
 > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 >
-> If an external connector like M.2 is connected to the serdev controller
-> in DT, then the serdev devices may be created dynamically by the connector
-> driver. So do not return -ENODEV from of_serdev_register_devices() if the
-> static nodes are not found and the graph node is used.
+> The WCN7850 PCIe M.2 card connected to the UART controller exposes the
+> 'WCN7850' serdev device and is controlled using the pwrseq framework.
+>
+> Hence, add support for it in the driver. It reuses the existing
+> 'qca_soc_data_wcn7850' driver data.
 >
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > ---
->  drivers/tty/serdev/core.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
-> index 8c2a40a537d9..fba7b98026bb 100644
-> --- a/drivers/tty/serdev/core.c
-> +++ b/drivers/tty/serdev/core.c
-> @@ -12,6 +12,7 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> +#include <linux/of_graph.h>
->  #include <linux/of_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_runtime.h>
-> @@ -581,7 +582,13 @@ static int of_serdev_register_devices(struct serdev_controller *ctrl)
->  		} else
->  			found = true;
->  	}
-> -	if (!found)
-> +
-> +	/*
-> +	 * When the serdev controller is connected to an external connector like
-> +	 * M.2 in DT, then the serdev devices may be created dynamically by the
-> +	 * connector driver.
-> +	 */
-> +	if (!found && !of_graph_is_present(ctrl->dev.of_node))
->  		return -ENODEV;
->
->  	return 0;
->
-> --
-> 2.48.1
->
->
->
 
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
