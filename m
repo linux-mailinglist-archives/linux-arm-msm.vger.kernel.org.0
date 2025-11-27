@@ -1,154 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-83531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53796C8D1E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 08:33:59 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C763C8D214
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 08:35:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B023D3422A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 07:33:33 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ABFFC342A95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 07:35:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E453931E0F0;
-	Thu, 27 Nov 2025 07:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aNfbPY9J"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D54030EF75;
+	Thu, 27 Nov 2025 07:35:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B671B29ACD7;
-	Thu, 27 Nov 2025 07:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DC42D948A;
+	Thu, 27 Nov 2025 07:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764228757; cv=none; b=Q7WDy8U2Skmsr58A7oxcJod+AlNFw5yXO7XyjQeRzmrloZiRjbhDVoTPz264Fj90XebeHZ0IzWmCO6Y2OQCGAF5+cvw5pztHVVmB/SAJT9trrIp3zSmuuXeeURwqkcdLnrr7elWw+7XnL4+x8/DY6i/BN9WfDAbIKVB8Tfgf00A=
+	t=1764228938; cv=none; b=i2MzZJ5eNu7RwXIKWnlM83ElEze7kaVldn0v2lxCcmRj+ZTfShl8BMAldupMAWQumVraj5Q4ZjxrzN+9GgyEeb2gKHjJFbYX8jpOT19bTxE9VdhgAJCW5ofIU8Bm+t0LfsZ1VJuNPd2HdJ+LaYyeWY9RfnoSqrpaGlSBWmaN7Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764228757; c=relaxed/simple;
-	bh=YjYMuJ4WwkDAUrkkzpqXIur0vkDiZXPtn4Yire7fP+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hnwowjpEMUstjLRryBCoSxstRE0yxxfY0DgBWJJF8stZ/GJRor8XtkH28SvN9wnb3WM87g7tu7/c2PZlKLLAv2cXuRE3+UP0BKagPkomwlKyGBFmBCBsa5qUyCgeuvSM04w7+LwJrRwaworb2LO3/Gnc53w8mrnSnhVfs7DlAfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aNfbPY9J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6770C4CEF8;
-	Thu, 27 Nov 2025 07:32:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764228757;
-	bh=YjYMuJ4WwkDAUrkkzpqXIur0vkDiZXPtn4Yire7fP+g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aNfbPY9J53ReZwX208tcTNE2ncueZ+5f5z+43rwRjadX6lt3lW0Y4fXwSHUqfiMTR
-	 eqKEgkpvhaHud+M8Dx1r/vG0o9QCWhFtfkqTfz4iZQGUcwhPd1V3xbgzTb38/HmLvI
-	 6rBbLWWJ0eTIwhKAZ0qdmIoaLmr8xapcCcdUPwloU7MD/ovLgWbSR8QEz2waZZ6mqB
-	 BNEXzgm4L4FA4w5T75Ketl8vkRViH70/xvc/r1Htl6oTonSqfECHQXyku2pFbhOZpj
-	 YaBznN9w0NVhAPg3veh/hyPXTMNQa7lQ+H4HQjUvcAhjFFKKRj5UJXq8Il4N/Wcevz
-	 qqNrWgskreIcg==
-Date: Thu, 27 Nov 2025 08:32:34 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
-	arnd@arndb.de, gregkh@linuxfoundation.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com, 
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
-	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
-Subject: Re: [PATCH v4 3/4] misc: fastrpc: Add support for new DSP IOVA
- formatting
-Message-ID: <20251127-liberal-azure-turtle-194a9b@kuoka>
-References: <20251126094545.2139376-1-kumari.pallavi@oss.qualcomm.com>
- <20251126094545.2139376-4-kumari.pallavi@oss.qualcomm.com>
+	s=arc-20240116; t=1764228938; c=relaxed/simple;
+	bh=QWzDWy+SQXxfM94LKZR/okFJz6M5Z+riyTWN+UKqjt8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=WdaOGrVVQ2uQSLjtbhH02vXYXWhuPxrs8pm3cgfYvH7B9NkRbFslJMR0lsbvjTmcbuQqqhDWurU3FjC5vhfPC5ormrm8OwyoFt/rOm4MuyhybCnPc9Zo8xuFHnNvK0SD2hUoQNTCmvMAUOfW8mwQ+SO4fU3cgpsZS4R3RN0HFtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip4t1764228896tea6b6582
+X-QQ-Originating-IP: m2NFOC1l7CtxMECnINXb88RBau0mbZAl118Ji8E0/s0=
+Received: from [IPV6:240f:10b:7440:1:c95a:801a ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 27 Nov 2025 15:34:53 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4363788777336798568
+Message-ID: <F11F0D13437B012D+0c15c5ca-f64f-49f1-9ff5-26b88d59ff59@radxa.com>
+Date: Thu, 27 Nov 2025 16:34:53 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251126094545.2139376-4-kumari.pallavi@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] PCI: dwc: Revert Link Up IRQ support
+From: FUKAUMI Naoki <naoki@radxa.com>
+To: Niklas Cassel <cassel@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Heiko Stuebner <heiko@sntech.de>, Shawn Lin <shawn.lin@rock-chips.com>,
+ Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20251111105100.869997-8-cassel@kernel.org>
+ <mt7miqkipr4dvxemftq6octxqzauueln252ncrcwy6i2t7wfhi@jtwokeilhwsi>
+ <aSRli_Mb6qoQ9TZO@ryzen>
+ <7667E818D7D31A4E+cf7c83d4-b99c-469d-8d46-588fc95b843f@radxa.com>
+Content-Language: en-US
+In-Reply-To: <7667E818D7D31A4E+cf7c83d4-b99c-469d-8d46-588fc95b843f@radxa.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: M8eXz3YJtIUHVeCj2S4KR1MZmmoX2rpgqITCRKAByPTmRvDFqhCMxd9n
+	fNsp4rjiFxs2pmH9ymwz9fBj11QjGjwfkT4el0ZZ6vPUpiCbAr01EBvtAXghxjxOFGdpRZ1
+	BhqzamevYG3sA7sEeeouEtU4Sd7zeFRC2Ftta9hZsJGZFVhQ1srNKcdfBWuGSjI7HZBTJOt
+	CgvQe6zMaeKvp+OryiLX9bZGLwMxvBFMkK5qwfxbjIumDlBDiKovdhnBXKO4UOHOhoeTqdY
+	p6RhrWqh3wP/y1Pai/k1HvqkFQJ+dEIkLqHluT7b5WbxxWdLJHDkI2Wtek/J9KKqOoVeLm+
+	/E+ujymEQlD1ZG0xqYV05z4sRcCOAS98kn1VDeJsnNZVeOXCUi1hwGefH67EZgo1rqXLE5k
+	OqtKbSD8Laz77TYqD0ZCTBryrLVFqdmWQzX3iMqudOGszbKQZhK9atNQ97rrwdS9xxshz5K
+	/fanU15gi5cK+cgvb52kr28bPEl3jsCz7/Ex6hQT7i+kvYQuWc4fNwEPQUvTEZt7ozHHFni
+	LCvEJuYnIJkjb+8gaRJQd4lZYqPkUJUeoR2qZeW3McbpKU7TBd/qXJ9lIt7LaVHiu6LX/XJ
+	3Gv057ENBY2itXgM2mXhv5sGXkfjrxJLVf+00/ZkjZlK2CJ9OKB+JeBYL2c8mACk0LvS0K2
+	L4qyzB6lJkVNZB94iyqIYwEvjCNjIjuAKv6UKtFHFnqWFaigyFCe4COxiyJhIz1/E47DS7j
+	p5nIa3RdtHGsfwASEfXYUsNxIBrWm23LScRCGyHKyiFRDlaLC3nCn6KCc+cJvcmJ8pKkhjS
+	rrASjkG12MZa/2ZLfMnDJAFvLPa3uuHBP38VS+3036P66v5mVPUev2WHSoYTIAwrT1tm4+B
+	9VCvJK23m7GzZDdO29ss+Y9f47W/o5cLMvy66PrnGufFpt6vVbFt73K2+LCTYkG1dwzXY6v
+	jh/O6bmqMTDgOiHzNiHIQ/Qpm78kIjvKhyGtjtCA5iE8/0Jh9uAJ3YjBfzFGA7g1AwqhO+Z
+	ancZMogA==
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
 
-On Wed, Nov 26, 2025 at 03:15:44PM +0530, Kumari Pallavi wrote:
-> @@ -685,7 +701,8 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
->  		return -ENOMEM;
->  
->  	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
-> -			      FASTRPC_PHYS(buffer->dma_addr), buffer->size);
-> +			      IPA_TO_DMA_ADDR(buffer->dma_addr,
-> +			      buffer->fl->cctx->soc_data->sid_pos), buffer->size);
->  	if (ret < 0) {
->  		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
->  		kfree(a);
-> @@ -734,7 +751,8 @@ static int fastrpc_mmap(struct dma_buf *dmabuf,
->  	dma_resv_assert_held(dmabuf->resv);
->  
->  	return dma_mmap_coherent(buf->dev, vma, buf->virt,
-> -				 FASTRPC_PHYS(buf->dma_addr), size);
-> +				 IPA_TO_DMA_ADDR(buf->dma_addr,
-> +				 buf->fl->cctx->soc_data->sid_pos), size);
+Hi all,
 
-Some odd alignment here. Are you sure you run checkpatch --strict?
+I'm very sorry, but my ROCK 5C appears to be unreliable. (It worked fine 
+with vanilla v6.13, so I thought it was fine.)
 
+I replaced it with another 5C (Lite), and now every method (Niklas's 
+patch, Shawn's patch, and applying patch 1 and 2) seems to work.
 
->  }
->  
->  static const struct dma_buf_ops fastrpc_dma_buf_ops = {
-> @@ -789,7 +807,8 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
->  		map->dma_addr = sg_phys(map->table->sgl);
->  	} else {
->  		map->dma_addr = sg_dma_address(map->table->sgl);
-> -		map->dma_addr += ((u64)fl->sctx->sid << 32);
-> +		map->dma_addr += fastrpc_compute_sid_offset((u64)fl->sctx->sid,
-> +				 fl->cctx->soc_data->sid_pos);
->  	}
->  	for_each_sg(map->table->sgl, sgl, map->table->nents,
->  		sgl_index)
-> @@ -2290,6 +2309,14 @@ static int fastrpc_get_domain_id(const char *domain)
->  	return -EINVAL;
->  }
->  
-> +static const struct fastrpc_soc_data kaanapali_soc_data = {
-> +	.sid_pos = 56,
-> +};
-> +
-> +static const struct fastrpc_soc_data default_soc_data = {
-> +	.sid_pos = 32,
-> +};
-> +
->  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  {
->  	struct device *rdev = &rpdev->dev;
-> @@ -2298,6 +2325,11 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	const char *domain;
->  	bool secure_dsp;
->  	unsigned int vmids[FASTRPC_MAX_VMIDS];
-> +	const struct fastrpc_soc_data *soc_data = NULL;
+Testing with the 5C Lite is still not enough, further testing is 
+required, but I will probably need to revise my test results.
 
-Drop assignment, not helpful.
+(Those seem to work on ROCK 5A/5B, but they also need further testing.)
 
-> +
-> +	soc_data = device_get_match_data(rdev);
-> +	if (!soc_data)
-> +		soc_data = &default_soc_data;
->  
->  	err = of_property_read_string(rdev->of_node, "label", &domain);
->  	if (err) {
-> @@ -2350,6 +2382,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  
->  	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
->  	data->secure = secure_dsp;
-> +	data->soc_data = soc_data;
->  
->  	switch (domain_id) {
->  	case ADSP_DOMAIN_ID:
-> @@ -2487,7 +2520,8 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
->  }
->  
->  static const struct of_device_id fastrpc_rpmsg_of_match[] = {
-> -	{ .compatible = "qcom,fastrpc" },
-> +	{ .compatible = "qcom,kaanapali-fastrpc", .data = &kaanapali_soc_data },
-> +	{ .compatible = "qcom,fastrpc", .data = &default_soc_data },
->  	{ },
->  };
->  MODULE_DEVICE_TABLE(of, fastrpc_rpmsg_of_match);
-> -- 
-> 2.34.1
+I truly apologize for my unreliable testing.
+
+Best regards,
+
+--
+FUKAUMI Naoki
+Radxa Computer (Shenzhen) Co., Ltd.
+
+On 11/26/25 22:30, FUKAUMI Naoki wrote:
+> Hi Niklas,
 > 
+> I apologize for the delayed response.
+> 
+> On 11/24/25 23:02, Niklas Cassel wrote:
+>> On Mon, Nov 24, 2025 at 06:07:44PM +0530, Manivannan Sadhasivam wrote:
+>>> While I suggested to revert the link up IRQ patch for rockchip 
+>>> earlier, I didn't
+>>> expect to drop the support for Qcom. The reason is, on Qcom SoCs, we 
+>>> have not
+>>> seen a case where people connect a random PCIe switch and saw 
+>>> failures. Most of
+>>> the Qcom usecases were around the M.2 and other proprietary 
+>>> connectors. There is
+>>> only one in-house PCIe switch that is being actively used in our 
+>>> products, but
+>>> so far, none of the bootloaders have turned them ON before kernel 
+>>> booting. So
+>>> kernel relies on the newly merged pwrctrl driver to do the job. Even 
+>>> though it
+>>> also suffers from the same resource allocation issue, this series 
+>>> won't help in
+>>> any way as pwrctrl core performs rescan after the switch power ON, 
+>>> and by that
+>>> time, it will be very late anyway.
+>>>
+>>> So I'm happy to take the rockhip patches from this series as they fix 
+>>> the real
+>>> issue that people have reported. But once the pwrctrl rework series 
+>>> gets merged,
+>>> and the rockchip drivers support them, we can bring back the reverted 
+>>> changes.
+>>
+>> FUKAUMI Naoki, just to confirm:
+>>
+>> Neither my suggested approach:
+>> https://lore.kernel.org/linux-pci/aRHdeVCY3rRmxe80@ryzen/
+>>
+>> nor Shawn's suggested approach:
+>> https://lore.kernel.org/linux-pci/dc932773-af5b-4af7- 
+>> a0d0-8cc72dfbd3c7@rock-chips.com/
+>>
+>> worked for you?
+> 
+> Yes, I re-tested the two methods mentioned above, separately, on v6.18- 
+> rc7, but neither of them resolved the issue in my environment (ROCK 5C + 
+> ASM2806).
+> 
+>> If so, I don't see many alternative but for Mani to apply patch 1 and
+>> patch 2 from this series.
+> 
+> I believe applying patch 1 and patch 2 should be sufficient.
+> 
+> ----
+> 
+> Incidentally, (probably) while applying patch 1 and patch 2, I have 
+> encountered the following issue several times:
+> 
+> [    1.709614] pcieport 0004:41:00.0: of_irq_parse_pci: failed with rc=134
+> [    1.710208] pcieport 0004:41:00.0: Unable to change power state from 
+> D3cold to D0, device inaccessible
+> 
+> I am still investigating this matter, and the conditions under which it 
+> occurs are currently unknown.
+> 
+> Best regards,
+> 
+> -- 
+> FUKAUMI Naoki
+> Radxa Computer (Shenzhen) Co., Ltd.
+> 
+>> Kind regards,
+>> Niklas
+>>
+> 
+
 
