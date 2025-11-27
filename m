@@ -1,137 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-83668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6E55C9006F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 20:34:02 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 857F4C90318
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 22:31:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB48F3AA607
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 19:34:00 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 32CEC34AF63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 21:31:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2443E2EBDF2;
-	Thu, 27 Nov 2025 19:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE15231DDA4;
+	Thu, 27 Nov 2025 21:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="xKHxy324"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="eiHqGIBg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA161E1A17
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 19:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1644F30215A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 21:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764272029; cv=none; b=NpG5h5v9pL42wJuZrALQMs0HsMCEG/Dsjfs5OyiRySHeH7eU1/NaE2lrFD5tcqCBVEda0lv7mhUUloOdW24MupyAotSbRUv1UClHHLlfZ9bTPMz3vI2NNqjQ361PuprOskqpWWVBW3nK2Am9nQtBcRvTz38dwcUY5Bx+SnUcEHk=
+	t=1764279086; cv=none; b=ZL9nOhlQG39OhSNHWRT1TAG+33nWvYz6AMavD1xOd5jpiFQgIVNqMwkY05bWjRg9L6/XCz8fCWOYf9lO8wVBZCbyy7OD2RKxDhrmA/nKSHwFyETIgu6Bh6SmYNEjgPGLJgQOkqnCxgKdFQ5z+xl0YH0Y6eCXS6QNedi0IxjOGNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764272029; c=relaxed/simple;
-	bh=fs9vnPDceBUMF0spi5bUKF/L+DAeC19uipcq7XjRaUs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AgfuIJPBpY9Gky3RF+8s4v1Fg5zClGx+3+RFGs4iqnBXF45CrEjxN8h+okp/M5oS2HPlKq3Rz0aNbOaFK0RwiCObOdoz88o6RJfljc9RcYPexu22RgDaJaLZdjRY8PPPUwDviNs0uuEr5hYDFMy0yoklOmqQVH6jHrXcyuDes3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=xKHxy324; arc=none smtp.client-ip=95.215.58.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <f820c42b-4cd9-430f-a1ee-4f380dc9ca8a@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1764272024;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=twC3DgrcBjAoJ79kbEz8s5y7IoW5MR+ZajnMa5xe4b4=;
-	b=xKHxy324q+linhDJBQ/dINfLg8h80Jwpo+VGm6Yw74EQCGPnLNvAQiRk60QYPEhWCHNXSq
-	zAyWxxytNjsqv/XlJGtAIaLn+hvABnNyqnpcRRkVH3J8/y5Tb0CX/t3HliwOF8QNkQidvg
-	7SOA7pQapN8eX6LcBhX+Mgb5c+aOJIY/bz5vzLBQl86IhQht90t+Mb7I705rxEGkAo/Vyk
-	dLvXMkPEf+d02luwf1lAmPhrX9m4aWA5KNHKXSu/V9b1duG1+sEqsC6eBm6MWyMpnA8Y9C
-	h5IqyC7TutmKbhY6Ubv6RujIEGgxp9ykAZCCD3AFhx6Fi1eWRzqXwdrd9myd0Q==
-Date: Thu, 27 Nov 2025 16:33:29 -0300
+	s=arc-20240116; t=1764279086; c=relaxed/simple;
+	bh=tPW1bpPIWJ0CADx+eKJZJl6RdfM1Bd5PXpVP1HAYXR0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L5Bmvji1FXE9tR8FY50tQLIq+Mrgwk0+MOVz9cSR/k8VuPWSFLjMmS5YsG9s+nm2Qmko6he9hOKXblEZJdCooOf3KvWp91F82N4XiCZnvlwbqWHBQFNBRXhDEf9/VSQs+/UieNu3RKkPk/fBVFGWExUa7O4cg5zN2jlIxSz39+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=eiHqGIBg; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4ee257e56aaso12105311cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 13:31:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1764279084; x=1764883884; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b4g6GOhzvAVpoxPftm+uHcKV+iFO3W6xh3Ht/X1kJXA=;
+        b=eiHqGIBgXhG0IIinQOGzolCicP78YRV7trYhhxgAZQFUVZpIlorv8eox2wmOryCH2w
+         Kbin230/AkFczJiHSxRWr60FHH7hxPybOVfHf9Bxl2UCq+YqYR89KhlpvW4Yr36P4hp2
+         jB3XYYdqtQqeHDzVKexa/IhkOAqJ04Yi7xG8RFWAj5zzQk7MIelZDWV9tM9eNnOL4Z0x
+         YpakrnR94SHmMOcfI0AaXBfuoIyGRAOg1w4RtUNo9+Hp4p2AxGzzdNzy+grxDKbZxhQ4
+         eIhS/ZmRcI/tfKYijVsIsLT/yLO7edIfNiUbsbMZsibrrM158tfTMQaCS0O5+jZDyOJE
+         IYWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764279084; x=1764883884;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b4g6GOhzvAVpoxPftm+uHcKV+iFO3W6xh3Ht/X1kJXA=;
+        b=rIlpXWtfI+OyAoIz6f/jlnK5vkxHoAaSg0WgCboE/14dVnFwChBdX6T8qQrJuRHSP8
+         gvd9SjG+bfAM1P7eWJsvY2rhjlILS6rgPA9PNmSRJSeUix6vRkqjtY78m0K930ZF/u5Q
+         FnXfg+Gq3J99U/pdOmlCm1Oe2jP8V0+WzekUFgxmN9LIV6rgjBmd5lhmfj3YHEidUL0t
+         jWK0Jf5EnKvbLLMkkSmHbkGnhWYnRnP+4vfX3n6IBRKwkJqC8ic7/UjH0c3hHANJW2pl
+         GTclN1IrQZwdlLGEaiO7XP1S5uPSc8hg0qUVbx3X0bOEQInHGk6rULIBRQCmT6mSdScS
+         DiZA==
+X-Gm-Message-State: AOJu0YzYDar6Ppd0VKR44aFrQeyOjT2JpnDiLs/GmwIabWKyK0gFaSyK
+	+HI/vCiReRRcl/n8oiHmz9fItwcGXWva9AL/SgGiZmIeEcIVP4YXRuA2wY/4Ym8tTZk4MkA0MhS
+	q6oLO
+X-Gm-Gg: ASbGncu6Ik1W3KtgdEEN9SE5ts06evVoS1zS6eQi4RcDLdmk43bB1/OSExmBYjF2kgM
+	2jHIBNmfJ7UeG9kT7z9p0iIzX3PNXOQfzXlU6ZbxKYnNetXHyr1umY/GrOkgHfqL9hYyl8h4EVq
+	tt/KaPVVYHb6dhLSjjnaPtIM6fazE0DSEd50b/371wPkwHzOupPyy/NxFGsHUD/Q674nr3gcMLD
+	mdu0sqyeIvOJmr9husPCh1403lrpT4FJU95NC5wzqmrj2TPWrEn3uvk0b4/lTczGwJ0yV/AfG/Y
+	obsrkBrS3BDAVmw0dLXXnove1pFYLbIHhgzF/uw2g7kJsS2ayvj/kB2fjy2TBUoRUnwz63dVWfk
+	80ZNicBtpysp6mWFO1bA8oSWoZ3KFTneFMTMUgZEo6viAjMYosixOUeVe9FdcUlrAAZ+Q/FPuUJ
+	Lr3dATwgr9gU3dNaNVWp8Dtbx6NkGmLZMdXIbeDOUV+W3aiQ/+9rSrcIoM91qYfNGDfA==
+X-Google-Smtp-Source: AGHT+IGUEdxHiyCWperhHsuDIhEO8V9sJUM1A2kjTrgtL+dCAbFKdPYVCFKjJJ08pF2S64in52/XSg==
+X-Received: by 2002:a05:622a:14ce:b0:4ee:58b:72f2 with SMTP id d75a77b69052e-4ee4b444ae0mr440157101cf.12.1764279083539;
+        Thu, 27 Nov 2025 13:31:23 -0800 (PST)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4efd3449703sm14437431cf.32.2025.11.27.13.31.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Nov 2025 13:31:23 -0800 (PST)
+From: Jonathan Marek <jonathan@marek.ca>
+To: linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
+Date: Thu, 27 Nov 2025 16:29:42 -0500
+Message-ID: <20251127212943.24480-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sm8x50: Enable UHS-I SDR50 and
- SDR104 SD card modes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring
- <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251126012043.3764567-1-vladimir.zapolskiy@linaro.org>
- <bdf3f54d-a223-4eff-aa71-0d74a83ef46d@packett.cool>
- <3b609409-e19f-4685-848d-807a4e840ad8@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <3b609409-e19f-4685-848d-807a4e840ad8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
+Unlike the phone SoCs this was copied from, x1e has a 40-bit physical bus.
+The upper address space is used to support more than 32GB of memory.
 
-On 11/27/25 10:47 AM, Konrad Dybcio wrote:
-> On 11/26/25 5:14 PM, Val Packett wrote:
->> Hi,
->>
->> On 11/25/25 10:20 PM, Vladimir Zapolskiy wrote:
->>> The reported problem of some non-working UHS-I speed modes on SM8450
->>> originates in commit 0a631a36f724 ("arm64: dts: qcom: Add device tree
->>> for Sony Xperia 1 IV"), and then it was spread to all SM8450 powered
->>> platforms by commit 9d561dc4e5cc ("arm64: dts: qcom: sm8450: disable
->>> SDHCI SDR104/SDR50 on all boards").
->>>
->>> The tests show that the rootcause of the problem was related to an
->>> overclocking of SD cards, and it's fixed later on by commit a27ac3806b0a
->>> ("clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs").
->>>
->>> Due to a missed setting of an appropriate SDCC clock operations in
->>> platform GCC driver the workaround of dropping SD card speeds from UHS-I
->>> to high speed was spread to SM8550 and SM8650 platforms, and since
->>> the fixes in the clock controller drivers are ready [1], it should be
->>> safe to remove the speed mode restrictions from SM8450, SM8550 and
->>> SM8650 platforms.
->>> [..]
->> I see you have tested with dd on the raw block device, but have you tested hotplugging SD cards that have partition tables and filesystems on them?
->>
->> We have this kind of issue on Hamoa where we get I/O errors early, right after the card is inserted and the partition table / filesystem headers are being read:
->>
->> [  714.057106] mmc0: new UHS-I speed SDR104 SDXC card at address 0001
->> [  714.060567] mmcblk0: mmc0:0001 EC2QT 59.6 GiB
->> [  714.503873] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
->> [  714.505660] Buffer I/O error on dev mmcblk0, logical block 0, async page read
->> [  714.513632] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
->> [  714.516469] Buffer I/O error on dev mmcblk0, logical block 0, async page read
->> [  714.516512]  mmcblk0: unable to read partition table
-> Before we start debugging, could you please confirm it's using the internal
-> (&sdhc_2) MMC controller, and not one connected over PCIe, like it's the
-> case on the Surface Laptop?
-Of course it is. I'm quite familiar with the DTS on this device, I 
-pushed it over the finish line into upstream myself :)
-> Are the regulators supplying vmmc and vqmmc in high power mode?
+This fixes issues when DMA buffers are allocated outside the 36-bit range.
 
-Yes. regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>; and no 
-allow-set-load / allowed-modes (..hm, maybe we can actually add those to 
-save power since sdhci-msm *does* do regulator_set_load..)
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-But turns out this is not a consistent problem with every card!.. At 
-least *now* one of the two Kingston Canvas Select Plus cards I have 
-attaches perfectly every time. (Another one of those though often fails 
-to probe with "error -84 reading general info of SD ext reg" and 
-sometimes has an early I/O error, but exFAT mounts even after that error 
-— but this seems like just a "microSD cards are crap" thing.)
-
-It's the Samsung Evo Plus card that consistently has early I/O errors 
-preventing the partition table scan from succeeding (or if that 
-succeeds, prevents the exFAT mount). There is a *card compat* issue here 
-for sure, as the card is not corrupted, it mounts every time on a 
-different laptop with a PCIe card reader [1217:8621] in the same SDR104 
-mode. But consistently has these errors on sdhci-msm.
-
-Thanks,
-~val
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index cff34d1c74b60..cd34ce5dfd63a 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -792,8 +792,8 @@ soc: soc@0 {
+ 
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+-		dma-ranges = <0 0 0 0 0x10 0>;
+-		ranges = <0 0 0 0 0x10 0>;
++		dma-ranges = <0 0 0 0 0x100 0>;
++		ranges = <0 0 0 0 0x100 0>;
+ 
+ 		gcc: clock-controller@100000 {
+ 			compatible = "qcom,x1e80100-gcc";
+-- 
+2.51.0
 
 
