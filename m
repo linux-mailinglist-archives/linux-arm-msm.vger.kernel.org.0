@@ -1,102 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6581C8DCDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 11:37:27 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66B5EC8DD19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 11:42:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F5933A21FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 10:37:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E1EDD344D23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 10:41:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09B7A2E0418;
-	Thu, 27 Nov 2025 10:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E75B322DD1;
+	Thu, 27 Nov 2025 10:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d4XWowcm";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="P4MjiQ15"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VdQYM9+V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8029A31815D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 10:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D371779DA;
+	Thu, 27 Nov 2025 10:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764239842; cv=none; b=WRVnlSxckcxIc4gsir66tYBCyzZUf+1AYXHP5ZXVKMkju1yxibW3641fN+95EV9T+u2QEkdVXVFA88KYuwSVjLZYydgWuW7SMABgH3UgePs23FZwXMzTDhgIljU4qvnFGbG2frvQ+UMyO4vkqEVC/7y9EaDVoIYCv9xVCm1aeIU=
+	t=1764240114; cv=none; b=dv+CgN82uJgf4H5KIQSWOebOtQ+FkNu7pnhz1coKkFDgje+WG/EW/5aAnemBrNSHQbeOgGMHkgOVwRuRWghdtUVhXzBE1vKVesBSHEvCLXpOd5kAOWN+zaTNJ408GxmCdi40wK/wi7ucUMdWNKBQ7LeuYVNEUVLpKwGe6uae12s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764239842; c=relaxed/simple;
-	bh=1y7iw0ob2e14nP2XASuQ/K/LoS5tKm3KA9jdEeMU+gQ=;
+	s=arc-20240116; t=1764240114; c=relaxed/simple;
+	bh=pvMSXbyKfRjsCOuDy7+gCTtYt3nSa0EzL+bz3+E4fxA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aJEv1vpXRlQf3NeeV63MUnBKS1GhjnP+499Kt6h0OCEVqWcwyKkFrD/rk/X7lJFIPOiUJwP9SUc1pKrWyIxzadYBAT/DzdWXML9OzIARLFlUxGjEAozJ4bkM/H+PBK1MLyqXEm+eInaN22zyi5JI+PChDllTYFKjeBWDdixtQy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d4XWowcm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=P4MjiQ15; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AR9evq73332706
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 10:37:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1y7iw0ob2e14nP2XASuQ/K/LoS5tKm3KA9jdEeMU+gQ=; b=d4XWowcmeUdWzZVN
-	ehsy2UcFDx3u/9Cj5tmh34YikcCK0ZtJCUTpWQNfjz2hywJkrdsw1HK1S7a3B4Pb
-	Yx1AMaP2RfPhgC7IFmS5uSC9shugPQ0Y25VLWnSz3ZMuVmcdWIbfTIKiAd0CezpF
-	x88rC27Lc3np9HCEEPWCjVYnjRZB+KMwWAuKgsbayR+AQiQb6cilxV0SsvmFsAdk
-	cFL/1ka/RX+UqnlXn6DgWGAcUtY37agabvJ+8g0c8wX7cTUdh7FyBO5OAdAB/NCy
-	8t9uBWxhGBOuMcfFL678W1mq62jtgHPOFPyuPv1ieWWwZuaPcYYP3Zxiz/qQbCaV
-	CzfTfw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4apavs1q0v-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 10:37:20 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-340c0604e3dso747840a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 02:37:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764239839; x=1764844639; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1y7iw0ob2e14nP2XASuQ/K/LoS5tKm3KA9jdEeMU+gQ=;
-        b=P4MjiQ15ambMSKamfr8tVsBV6qpnxgg94uy6vZJrEZ/qkIPKj8PkSTHCrQ8DpahCej
-         s7IJCVZ/e0woY1LI1k9FOG995y7o6r20Bs6YjOpOaFBSxm37YzVYbcPBY6fwG8LQ0Lza
-         nv3/wI7fayYjdw1KZgC5qbJt6oBl7YsbKChZYxUH451B/vIUbKG4mkOtn4ggzXjCXq5F
-         W8/yWUVYPId8uyh7I8XiWJKLF8VKKfGf3dyejNIs/AZKKZEIItf5tQpHr2+xWVLjtPzl
-         cnAeP1MmrVE6DIyRNGjOIpkZU3TE0EUM8pXPoMYwQQVHJKbiP8Wm5+krmLgCpL2aay8M
-         mReQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764239839; x=1764844639;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1y7iw0ob2e14nP2XASuQ/K/LoS5tKm3KA9jdEeMU+gQ=;
-        b=JNQr+mfDjc4KCp7yb1CPlAueO7mpePXbfDvdfDk8XT3PwsXBgAsjB4nIIyQzyF4rVW
-         edeX7kTSZNp2kYxjuoxWr91zwsrQqUa/wWl24z3B2mxHJAjcKUGoR5enbcL/bbTjOd7+
-         LMZwizaz+YUkqgywtpbYrwa1qv0EN4VAh92plyTj2SNK4hx61nLmgXO3ngX40s9vrYMB
-         /mSz3LK10+MO4djOicnEau2CRkfi3R2R8dGtCIlwZxu+Fp3DeHZkvq/UXGRVfWNg2hsC
-         xwLEncEWnHdfLiP3krT+RMwHq6xq3jYKL9/zzlB+rwPEs/JzM6fZ7YziPTCC2UWm9AUT
-         yVyA==
-X-Gm-Message-State: AOJu0Yyagv3wP36CX4UUOhHBO8CqIFEe1chox+r3N9VQVQS5mi7TNkuG
-	aZQN4gx4PBQc14KlBajjMKkE6kLCPjZ5kerT/9Lule8XzylOInjx0nBD30lnTYZqoqPhHxGHgtC
-	bNlTZfSqzRpTUiUTcF7a1cnHPZHPbaP9O8/ykgA/9fEQ2FPuyK42GpQH2xus+hWyPXclY
-X-Gm-Gg: ASbGnctZIImOSL4wDGHceFIq3S4jkjmM1O9WOClLA9d3hWmYTFkULWwB/aRE9heCLQV
-	7oSXWSqNU0+trub6JYPsNWTuc8sJhv5k+txwWLWF0oj28/Cn+ISUuplbtNOFgGebnXicIXHdJTd
-	0TWxIVWZr9gx+s0u7gxl2NHHa0GQq+pHQficfzcrujcDbG+E5P/AEvKWiVGr0+4GTxuKCdfNgY8
-	Qsw1v4iCq2E/HKBOZdtaaCX8+FU8h9cpiXNca143TdiF4hG9INUb6107hzoCZpZEMnuY03mLS3W
-	drepnOTyehJRkJaTQRbmXE++N1yTY5Y98nn12vpPwxHxhjfIM6OS3pH+GJGqO/uBYJnCFWWTLQV
-	/Cf7FQ4JZ7VZ4i2ga8CTtnIZyeMer12fLpkpnXpoPy1mjz+/f424N4ne5CPbQoxg9cBdPLuKHLL
-	iofv0eN1cLTUTX8wBBYQV1bB9tVOal
-X-Received: by 2002:a17:90b:2543:b0:340:9cf1:54d0 with SMTP id 98e67ed59e1d1-34733e4ccf1mr19718157a91.1.1764239839299;
-        Thu, 27 Nov 2025 02:37:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnmdipQGlMWE4OwwHLbdcFRyy5E2ppt8YoS89aQix+KF6nHnCZS6tf6pM5xyCJxE3838KHDA==
-X-Received: by 2002:a17:90b:2543:b0:340:9cf1:54d0 with SMTP id 98e67ed59e1d1-34733e4ccf1mr19718132a91.1.1764239838830;
-        Thu, 27 Nov 2025 02:37:18 -0800 (PST)
-Received: from [10.190.200.209] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3477b74b8f1sm1472835a91.14.2025.11.27.02.37.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Nov 2025 02:37:18 -0800 (PST)
-Message-ID: <19ebab89-e0f2-425a-a95d-01637f324170@oss.qualcomm.com>
-Date: Thu, 27 Nov 2025 16:07:14 +0530
+	 In-Reply-To:Content-Type; b=Wd78qPb6C8HXSdCSBXJidVtHzgVjR29D4SpxWD2Q2NIlMzTxjCszO3xy0+uu0N+KiVIy2fOlggwjLmuxl7SV6wn1lzLXdEMVD4BRGdpJZfZq/+nsi+wOhvJXDVdqmpveg9yikCad9kx6+p0fNj2LV1/4XBVVSPfTqXQBjz0Dv1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VdQYM9+V; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24CDC4CEF8;
+	Thu, 27 Nov 2025 10:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764240114;
+	bh=pvMSXbyKfRjsCOuDy7+gCTtYt3nSa0EzL+bz3+E4fxA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VdQYM9+VC15204grGwe/xeQLuotNdpu6kMgDVe0D7SoFtCz3LtzNefOMF3cAPDMor
+	 EkIu9F+Trc+c8lEl9RHzy67XhWLUDcZFZZy20B2Y+3qIOtoXDIwsRUl/2sXqEQjbGp
+	 6PBmsEgLet0xrdWYFcc+YRWdpyXDVvBjNF7Uik3ZJiu3nYvWZ+s/UQ2B5cEw04yxkD
+	 ZYzwCExxS0ep5Mltftm0mWwce/Ym8eDS4/20cvA8X7ujX//wGKtyl62ykSjkodNeNN
+	 oSDogTZLT4AsPmH/AqoT1z4mLc2RJFMqt015PCf2Oyq5tY36T3o+Iyq+gKmPfL3NI7
+	 xs3rGo2XLUR7Q==
+Message-ID: <26c1e2ac-6568-4d04-93f8-a8f1e49d156a@kernel.org>
+Date: Thu, 27 Nov 2025 10:41:49 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,61 +50,494 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] soc: qcom: llcc-qcom: Add support for Glymur
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Conor Dooley <conor@kernel.org>,
-        Jonathan Cameron <jonathan.cameron@huawei.com>,
-        Rob Herring
- <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251125-glymur_llcc_enablement-v2-0-75a10be51d74@oss.qualcomm.com>
- <20251125-glymur_llcc_enablement-v2-3-75a10be51d74@oss.qualcomm.com>
- <80c26f33-aaee-44f2-ab7f-767467423396@oss.qualcomm.com>
+Subject: Re: [PATCH 2/4] media: qcom: iris: Add Long-Term Reference support
+ for encoder
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: quic_qiweil@quicinc.com, Renjiang Han <renjiang.han@oss.qualcomm.com>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251127-batch2_iris_encoder_enhancements-v1-0-5ea78e2de2ae@oss.qualcomm.com>
+ <Lm-sduib7iCBaaUii-g8s2lQybZpjV4n2nWi9p68zk9gRImpIof2Z2zkV1pYMifyLlQmN4CqnFpbHpz8K-bffw==@protonmail.internalid>
+ <20251127-batch2_iris_encoder_enhancements-v1-2-5ea78e2de2ae@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-From: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-In-Reply-To: <80c26f33-aaee-44f2-ab7f-767467423396@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20251127-batch2_iris_encoder_enhancements-v1-2-5ea78e2de2ae@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: U0C86uKdk_7jwdcalci8aBCtGw1dQt-Y
-X-Authority-Analysis: v=2.4 cv=PYPyRyhd c=1 sm=1 tr=0 ts=692829e0 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=XIfWN14xvu2QelebLYUA:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI3MDA3NyBTYWx0ZWRfX7mvZ6NF5UTXc
- UVn+wXtOzuurFoo2Pie2DvklVau0+BmA27K/W91OaA3Lb4wtHMKAWCw1PI2bK7qHzZSwDJmzvsv
- r2IuZONiZPTAJzUVAehE0TvRcVi7/ueBqspWwgdP1VHBN6AXR+Qri5otv30hPOUsbC5R55xqgWU
- uSEED4nr7HutRGtBq26OlX0yEVagkiLasoTFvXmd7YdoZR/aPu5LTVzNrKHXCjECelzP0zzEJY5
- Bu3K8lpxmAUCGcIU6Uw/fu/NQocfkGQqFo7qGonEY29Hqf6wz8xnlnt25K5ZGXuA2NClNnoCVA8
- w1FL8sCPffHzAaLIopHBvEiys1SqD9Hutj1CRXfHKsUsqsZ2OFhZm06saAZisbcxn7YW1h8Or6O
- SvTEkJtkYJ6BhOCHAzv+fi1ACn/Kuw==
-X-Proofpoint-GUID: U0C86uKdk_7jwdcalci8aBCtGw1dQt-Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-25_02,2025-11-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015
- spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511270077
 
-On 11/27/2025 3:52 PM, Konrad Dybcio wrote:
-> On 11/25/25 10:16 AM, Pankaj Patil wrote:
->> Add system cache table(SCT) and configs for Glymur SoC
->> Updated the list of usecase id's to enable additional clients for Glymur
->>
->> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->> ---
-> What happened to my tag? :(
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->
-> Konrad
-The commit was updated since I squashed the patch for enabling additional
-usecase id's.
-That makes the tag obsolete?
+On 27/11/2025 07:44, Wangao Wang wrote:
+> Add Long-Term Reference(LTR) frame support for both gen1 and gen2
+> encoders by enabling the following V4L2 controls:
+> V4L2_CID_MPEG_VIDEO_LTR_COUNT
+> V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES
+> V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX
+> 
+> Key changes:
+> Added LTR capability IDs and V4L2 controls.
+> Implemented handlers for LTR count, use, and mark (gen1/gen2).
+> Defined new HFI properties and structures for LTR.
+> Updated platform capability tables and buffer size calculations.
+> 
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_ctrls.c      | 126 +++++++++++++++++++++
+>   drivers/media/platform/qcom/iris/iris_ctrls.h      |   5 +
+>   .../platform/qcom/iris/iris_hfi_gen1_command.c     |  25 ++++
+>   .../platform/qcom/iris/iris_hfi_gen1_defines.h     |  24 ++++
+>   .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   3 +
+>   .../platform/qcom/iris/iris_platform_common.h      |   6 +
+>   .../media/platform/qcom/iris/iris_platform_gen1.c  |  30 +++++
+>   .../media/platform/qcom/iris/iris_platform_gen2.c  |  30 +++++
+>   drivers/media/platform/qcom/iris/iris_vpu_buffer.c |  33 ++++--
+>   9 files changed, 270 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> index cdf38c285b9133f20bdb9bc3dd0f5e916d3ed7f8..33e104142a5bb51c952550fa45e81b3bdc723ac2 100644
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -108,6 +108,12 @@ static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+>   		return IR_TYPE;
+>   	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
+>   		return IR_PERIOD;
+> +	case V4L2_CID_MPEG_VIDEO_LTR_COUNT:
+> +		return LTR_COUNT;
+> +	case V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES:
+> +		return USE_LTR;
+> +	case V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX:
+> +		return MARK_LTR;
+>   	default:
+>   		return INST_FW_CAP_MAX;
+>   	}
+> @@ -205,6 +211,12 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
+>   		return V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE;
+>   	case IR_PERIOD:
+>   		return V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD;
+> +	case LTR_COUNT:
+> +		return V4L2_CID_MPEG_VIDEO_LTR_COUNT;
+> +	case USE_LTR:
+> +		return V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES;
+> +	case MARK_LTR:
+> +		return V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX;
+>   	default:
+>   		return 0;
+>   	}
+> @@ -1022,6 +1034,120 @@ int iris_set_ir_period_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_ty
+>   					     &ir_period, sizeof(u32));
+>   }
+> 
+> +int iris_set_ltr_count_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> +	u32 ltr_count = inst->fw_caps[cap_id].value;
+> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+> +	struct hfi_ltr_mode ltr_mode;
+> +
+> +	if (!ltr_count)
+> +		return -EINVAL;
+> +
+> +	ltr_mode.count = ltr_count;
+> +	ltr_mode.mode = HFI_LTR_MODE_MANUAL;
+> +	ltr_mode.trust_mode = 1;
+> +
+> +	return hfi_ops->session_set_property(inst, hfi_id,
+> +					     HFI_HOST_FLAGS_NONE,
+> +					     iris_get_port_info(inst, cap_id),
+> +					     HFI_PAYLOAD_STRUCTURE,
+> +					     &ltr_mode, sizeof(ltr_mode));
+> +}
+> +
+> +int iris_set_use_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> +	struct vb2_queue *sq = v4l2_m2m_get_src_vq(inst->m2m_ctx);
+> +	struct vb2_queue *dq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
+> +	u32 ltr_count = inst->fw_caps[LTR_COUNT].value;
+> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+> +	struct hfi_ltr_use ltr_use;
+> +
+> +	if (!vb2_is_streaming(sq) && !vb2_is_streaming(dq))
+> +		return -EINVAL;
+> +
+> +	if (!ltr_count)
+> +		return -EINVAL;
+> +
+> +	ltr_use.ref_ltr = inst->fw_caps[cap_id].value;
+> +	ltr_use.use_constrnt = true;
+> +	ltr_use.frames = 0;
+> +
+> +	return hfi_ops->session_set_property(inst, hfi_id,
+> +					     HFI_HOST_FLAGS_NONE,
+> +					     iris_get_port_info(inst, cap_id),
+> +					     HFI_PAYLOAD_STRUCTURE,
+> +					     &ltr_use, sizeof(ltr_use));
+> +}
+> +
+> +int iris_set_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> +	struct vb2_queue *sq = v4l2_m2m_get_src_vq(inst->m2m_ctx);
+> +	struct vb2_queue *dq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
+> +	u32 ltr_count = inst->fw_caps[LTR_COUNT].value;
+> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+> +	struct hfi_ltr_mark ltr_mark;
+> +
+> +	if (!vb2_is_streaming(sq) && !vb2_is_streaming(dq))
+> +		return -EINVAL;
+> +
+> +	if (!ltr_count)
+> +		return -EINVAL;
+> +
+> +	ltr_mark.mark_frame = inst->fw_caps[cap_id].value;
+> +
+> +	return hfi_ops->session_set_property(inst, hfi_id,
+> +					     HFI_HOST_FLAGS_NONE,
+> +					     iris_get_port_info(inst, cap_id),
+> +					     HFI_PAYLOAD_STRUCTURE,
+> +					     &ltr_mark, sizeof(ltr_mark));
+> +}
+> +
+> +int iris_set_ltr_count_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> +	u32 ltr_count = inst->fw_caps[cap_id].value;
+> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+> +
+> +	if (!ltr_count)
+> +		return -EINVAL;
+> +
+> +	if (inst->hfi_rc_type == HFI_RATE_CONTROL_VBR_VFR ||
+> +	    inst->hfi_rc_type == HFI_RATE_CONTROL_VBR_CFR ||
+> +	    inst->hfi_rc_type == HFI_RATE_CONTROL_CQ)
+> +		return -EINVAL;
+> +
+> +	return hfi_ops->session_set_property(inst, hfi_id,
+> +					     HFI_HOST_FLAGS_NONE,
+> +					     iris_get_port_info(inst, cap_id),
+> +					     HFI_PAYLOAD_U32,
+> +					     &ltr_count, sizeof(u32));
+> +}
+> +
+> +int iris_set_use_and_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> +	u32 ltr_count = inst->fw_caps[LTR_COUNT].value;
+> +	u32 hfi_val = inst->fw_caps[cap_id].value;
+> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+> +
+> +	if (!ltr_count || hfi_val == INVALID_DEFAULT_MARK_OR_USE_LTR)
+> +		return -EINVAL;
+> +
+> +	if (inst->hfi_rc_type == HFI_RATE_CONTROL_VBR_VFR ||
+> +	    inst->hfi_rc_type == HFI_RATE_CONTROL_VBR_CFR ||
+> +	    inst->hfi_rc_type == HFI_RATE_CONTROL_CQ)
+> +		return -EINVAL;
+> +
+> +	return hfi_ops->session_set_property(inst, hfi_id,
+> +					     HFI_HOST_FLAGS_NONE,
+> +					     iris_get_port_info(inst, cap_id),
+> +					     HFI_PAYLOAD_U32,
+> +					     &hfi_val, sizeof(u32));
+> +}
+> +
+>   int iris_set_properties(struct iris_inst *inst, u32 plane)
+>   {
+>   	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.h b/drivers/media/platform/qcom/iris/iris_ctrls.h
+> index a0d5338bdc910bd30407132e8b700c333ad74e4c..996c83fdc6f492dc252771129fc1d62e8b7a7e07 100644
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.h
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.h
+> @@ -36,6 +36,11 @@ int iris_set_rotation(struct iris_inst *inst, enum platform_inst_fw_cap_type cap
+>   int iris_set_flip(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+>   int iris_set_ir_period_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+>   int iris_set_ir_period_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+> +int iris_set_ltr_count_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+> +int iris_set_ltr_count_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+> +int iris_set_use_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+> +int iris_set_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+> +int iris_set_use_and_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
+>   int iris_set_properties(struct iris_inst *inst, u32 plane);
+> 
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> index 4d9632ba86bc8f629cee6d726eb44efcdeba2475..139e7a9321d30d3e348671f99b0fa81afed4827e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> @@ -693,6 +693,31 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+>   		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_refresh);
+>   		break;
+>   	}
+> +	case HFI_PROPERTY_PARAM_VENC_LTRMODE: {
+> +		struct hfi_ltr_mode *in = pdata, *ltr_mode = prop_data;
+> +
+> +		ltr_mode->mode = in->mode;
+> +		ltr_mode->count = in->count;
+> +		ltr_mode->trust_mode = in->trust_mode;
+> +		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mode);
+
+This looks like an unconditional pattern in this code
+
+packet->shdr.hdr.size += sizeof(u32) for each one of the switch cases.
+
+Could you at least add a patch to the end of this series to tidy this up 
+- either always incrmenting by sizeof(u32) before the swich - or making 
+a macro or static inline that packs the header appropriately.
+
+Also what is the sizeof(u32) representative of ? "Some field in the 
+header" - get that but right now its just a literal unnamed dword.
+
+> +		break;
+> +	}
+> +	case HFI_PROPERTY_CONFIG_VENC_USELTRFRAME: {
+> +		struct hfi_ltr_use *in = pdata, *ltr_use = prop_data;
+> +
+> +		ltr_use->frames = in->frames;
+> +		ltr_use->ref_ltr = in->ref_ltr;
+> +		ltr_use->use_constrnt = in->use_constrnt;
+> +		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_use);
+> +		break;
+> +	}
+> +	case HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME: {
+> +		struct hfi_ltr_mark *in = pdata, *ltr_mark = prop_data;
+> +
+> +		ltr_mark->mark_frame = in->mark_frame;
+> +		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mark);
+> +		break;
+> +	}
+>   	default:
+>   		return -EINVAL;
+>   	}
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> index 04c79ee0463d7f32a2042044fe4564718cc01561..34249fc0d047918c2463517b8303e30df3666b97 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> @@ -147,8 +147,16 @@
+>   #define HFI_INTRA_REFRESH_RANDOM		0x5
+> 
+>   #define HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH			0x200500d
+> +
+> +#define HFI_LTR_MODE_DISABLE			0x0
+> +#define HFI_LTR_MODE_MANUAL			0x1
+> +#define HFI_LTR_MODE_PERIODIC			0x2
+> +
+> +#define HFI_PROPERTY_PARAM_VENC_LTRMODE				0x200501c
+>   #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
+>   #define HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE			0x2006001
+> +#define HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME			0x2006009
+> +#define HFI_PROPERTY_CONFIG_VENC_USELTRFRAME			0x200600a
+>   #define HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER	0x2006008
+> 
+>   struct hfi_pkt_hdr {
+> @@ -460,6 +468,22 @@ struct hfi_intra_refresh {
+>   	u32 mbs;
+>   };
+> 
+> +struct hfi_ltr_mode {
+> +	u32 mode;
+> +	u32 count;
+> +	u32 trust_mode;
+> +};
+> +
+> +struct hfi_ltr_use {
+> +	u32 ref_ltr;
+> +	u32 use_constrnt;
+> +	u32 frames;
+> +};
+> +
+> +struct hfi_ltr_mark {
+> +	u32 mark_frame;
+> +};
+> +
+>   struct hfi_event_data {
+>   	u32 error;
+>   	u32 height;
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> index f6a214a6815420f299be70f80732943d02168f0c..2b8c87c25a066ead30bb1b134bdc3fe1e84e8f05 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> @@ -71,6 +71,9 @@ enum hfi_rate_control {
+>   #define HFI_PROP_MIN_QP_PACKED			0x0300012f
+>   #define HFI_PROP_MAX_QP_PACKED			0x03000130
+>   #define HFI_PROP_IR_RANDOM_PERIOD		0x03000131
+> +#define HFI_PROP_LTR_COUNT			0x03000134
+> +#define HFI_PROP_LTR_MARK			0x03000135
+> +#define HFI_PROP_LTR_USE			0x03000136
+>   #define HFI_PROP_TOTAL_BITRATE			0x0300013b
+>   #define HFI_PROP_MAX_GOP_FRAMES			0x03000146
+>   #define HFI_PROP_MAX_B_FRAMES			0x03000147
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index dd0a4210a2647ff4dadf8d67b71c6f4a22deb548..c48dfb6d47734fadd4f2e4123c93560f55355b86 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -29,6 +29,9 @@ struct iris_inst;
+>   #define MAX_QP_HEVC				63
+>   #define DEFAULT_QP				20
+>   #define BITRATE_DEFAULT			20000000
+> +#define INVALID_DEFAULT_MARK_OR_USE_LTR		-1
+> +#define MAX_LTR_FRAME_COUNT_GEN1		4
+> +#define MAX_LTR_FRAME_COUNT_GEN2		2
+> 
+>   enum stage_type {
+>   	STAGE_1 = 1,
+> @@ -148,6 +151,9 @@ enum platform_inst_fw_cap_type {
+>   	VFLIP,
+>   	IR_TYPE,
+>   	IR_PERIOD,
+> +	LTR_COUNT,
+> +	USE_LTR,
+> +	MARK_LTR,
+>   	INST_FW_CAP_MAX,
+>   };
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen1.c b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> index e7645bd60eb46785e0110a34f3257f7c37bbfca5..13cee5f72a443b85136d30b41b589aeb0db8eb9a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> @@ -249,6 +249,36 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
+>   		.flags = CAP_FLAG_OUTPUT_PORT,
+>   		.set = iris_set_ir_period_gen1,
+>   	},
+> +	{
+> +		.cap_id = LTR_COUNT,
+> +		.min = 0,
+> +		.max = MAX_LTR_FRAME_COUNT_GEN1,
+> +		.step_or_mask = 1,
+> +		.value = 0,
+> +		.hfi_id = HFI_PROPERTY_PARAM_VENC_LTRMODE,
+> +		.flags = CAP_FLAG_OUTPUT_PORT,
+> +		.set = iris_set_ltr_count_gen1,
+> +	},
+> +	{
+> +		.cap_id = USE_LTR,
+> +		.min = 0,
+> +		.max = ((1 << MAX_LTR_FRAME_COUNT_GEN1) - 1),
+> +		.step_or_mask = 0,
+> +		.value = 0,
+> +		.hfi_id = HFI_PROPERTY_CONFIG_VENC_USELTRFRAME,
+> +		.flags = CAP_FLAG_INPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
+> +		.set = iris_set_use_ltr,
+> +	},
+> +	{
+> +		.cap_id = MARK_LTR,
+> +		.min = 0,
+> +		.max = (MAX_LTR_FRAME_COUNT_GEN1 - 1),
+> +		.step_or_mask = 1,
+> +		.value = 0,
+> +		.hfi_id = HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME,
+> +		.flags = CAP_FLAG_INPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
+> +		.set = iris_set_mark_ltr,
+> +	},
+>   };
+> 
+>   static struct platform_inst_caps platform_inst_cap_sm8250 = {
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> index b3425dcea22ceadbd56021e5859a24134100d5df..6ae34312f50d4a3709ca20b3aadcfee12338a2f7 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> @@ -637,6 +637,36 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_enc[] = {
+>   			CAP_FLAG_DYNAMIC_ALLOWED,
+>   		.set = iris_set_ir_period_gen2,
+>   	},
+> +	{
+> +		.cap_id = LTR_COUNT,
+> +		.min = 0,
+> +		.max = MAX_LTR_FRAME_COUNT_GEN2,
+> +		.step_or_mask = 1,
+> +		.value = 0,
+> +		.hfi_id = HFI_PROP_LTR_COUNT,
+> +		.flags = CAP_FLAG_OUTPUT_PORT,
+> +		.set = iris_set_ltr_count_gen2,
+> +	},
+> +	{
+> +		.cap_id = USE_LTR,
+> +		.min = 0,
+> +		.max = ((1 << MAX_LTR_FRAME_COUNT_GEN2) - 1),
+> +		.step_or_mask = 0,
+> +		.value = 0,
+> +		.hfi_id = HFI_PROP_LTR_USE,
+> +		.flags = CAP_FLAG_INPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
+> +		.set = iris_set_use_and_mark_ltr,
+> +	},
+> +	{
+> +		.cap_id = MARK_LTR,
+> +		.min = INVALID_DEFAULT_MARK_OR_USE_LTR,
+> +		.max = (MAX_LTR_FRAME_COUNT_GEN2 - 1),
+> +		.step_or_mask = 1,
+> +		.value = INVALID_DEFAULT_MARK_OR_USE_LTR,
+> +		.hfi_id = HFI_PROP_LTR_MARK,
+> +		.flags = CAP_FLAG_INPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
+> +		.set = iris_set_use_and_mark_ltr,
+> +	},
+>   };
+> 
+>   static struct platform_inst_caps platform_inst_cap_sm8550 = {
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> index 1e54ace966c74956208d88f06837b97b1fd48e17..8139fefe40fe179ff7862bbca879ce94c71c1f89 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> @@ -668,6 +668,19 @@ static u32 iris_vpu_enc_bin_size(struct iris_inst *inst)
+>   				  num_vpp_pipes, inst->hfi_rc_type);
+>   }
+> 
+> +static inline u32 hfi_buffer_get_recon_count(struct iris_inst *inst)
+> +{
+> +	u32 num_ref = 1;
+> +	u32 ltr_count;
+> +
+> +	ltr_count = inst->fw_caps[LTR_COUNT].value;
+> +
+> +	if (ltr_count)
+> +		num_ref = num_ref + ltr_count;
+> +
+> +	return num_ref + 1;
+> +}
+> +
+>   static inline
+>   u32 hfi_buffer_comv_enc(u32 frame_width, u32 frame_height, u32 lcu_size,
+>   			u32 num_recon, u32 standard)
+> @@ -693,17 +706,14 @@ static u32 iris_vpu_enc_comv_size(struct iris_inst *inst)
+>   {
+>   	u32 height = iris_vpu_enc_get_bitstream_height(inst);
+>   	u32 width = iris_vpu_enc_get_bitstream_width(inst);
+> -	u32 num_recon = 1;
+> -	u32 lcu_size = 16;
+> +	u32 num_recon = hfi_buffer_get_recon_count(inst);
+> +	u32 standard, lcu_size;
+> 
+> -	if (inst->codec == V4L2_PIX_FMT_HEVC) {
+> -		lcu_size = 32;
+> -		return hfi_buffer_comv_enc(width, height, lcu_size,
+> -					   num_recon + 1, HFI_CODEC_ENCODE_HEVC);
+> -	}
+> +	standard = (inst->codec == V4L2_PIX_FMT_HEVC) ?
+> +		   HFI_CODEC_ENCODE_HEVC : HFI_CODEC_ENCODE_AVC;
+> +	lcu_size = (inst->codec == V4L2_PIX_FMT_HEVC) ? 32 : 16;
+> 
+> -	return hfi_buffer_comv_enc(width, height, lcu_size,
+> -				   num_recon + 1, HFI_CODEC_ENCODE_AVC);
+> +	return hfi_buffer_comv_enc(width, height, lcu_size, num_recon, standard);
+>   }
+> 
+>   static inline
+> @@ -1402,10 +1412,9 @@ static u32 iris_vpu_enc_scratch2_size(struct iris_inst *inst)
+>   {
+>   	u32 frame_height = iris_vpu_enc_get_bitstream_height(inst);
+>   	u32 frame_width = iris_vpu_enc_get_bitstream_width(inst);
+> -	u32 num_ref = 1;
+> +	u32 num_ref = hfi_buffer_get_recon_count(inst);
+> 
+> -	return hfi_buffer_scratch2_enc(frame_width, frame_height, num_ref,
+> -				       false);
+> +	return hfi_buffer_scratch2_enc(frame_width, frame_height, num_ref, false);
+>   }
+> 
+>   static u32 iris_vpu_enc_vpss_size(struct iris_inst *inst)
+> 
+> --
+> 2.43.0
+> 
+
 
