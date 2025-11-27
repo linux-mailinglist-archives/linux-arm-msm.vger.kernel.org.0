@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547D3C8E38A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:15:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2518C8E390
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 13:15:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 97C8B3ADCDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:14:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72ED83B2FF4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Nov 2025 12:14:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EA4432D422;
-	Thu, 27 Nov 2025 12:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98BAB32E699;
+	Thu, 27 Nov 2025 12:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bh6rPduj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSQ9BT8O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F073617BA2;
-	Thu, 27 Nov 2025 12:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647C532AAA9;
+	Thu, 27 Nov 2025 12:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764245638; cv=none; b=oZN5UqbpXiSji+GnLrPCRkttJMlKA1riXUGYabAMcxQVi1jiSaQTXA19137NnU1Bbfjn+CyRtptownMr81X4zGoGe6am7dDScpZQZbvZj0udsYinDwBSsVTkRglH4PhgEyg9yN3mAgRZRUOEgqkWLqmfEAjcxoT510nhEfNmxtQ=
+	t=1764245673; cv=none; b=Nsp+qGJJIhplsUGJkOV+e6ucq+jk6l81aTb2oBxHLv2vHpce0WsieGUUHMwuV3rvIJiw6XTGDN3gxpxcgCUeSmvSzmjHCX/NnuqRjJW0VprPOkKrqQUiC6oy4Y2Fyu293djreaMN/PzVHRl8Vyuqg08GU+8F5A7w46NN+T7K6TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764245638; c=relaxed/simple;
-	bh=vkyNrxzBL31HzfZQEt130P0SdOrTqfWzMLDKaesDnRM=;
+	s=arc-20240116; t=1764245673; c=relaxed/simple;
+	bh=7/C/7geMsxC0/mEobiPtx4JPT6NXYbpIFFRUEwbEOtU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NsqDa4Z3iAldW+uZ2Ww3MKr3bjyQ1YlmQngv5IVUx/EUbnRZpsZ7lM/W6UTrVOxpXjUKrXS9jpgdw06liSuddtMp9v0Est/IrXQoUIY8p1BE/dXDCM75/Qz9C4nsTs9ISIbZYoYga6GhK5VUO7OwQo83QtOo7vUrT8fu7touDcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bh6rPduj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB3DC4CEF8;
-	Thu, 27 Nov 2025 12:13:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BN2+YLvE2GGg/uj+qjgU/mVWOoycesRI+5HyEps2fE1HKPhs726ARbsG3gT/Y0fJAXlEqqUfvpHwx9MtwLt4REByHXiQC72kIzurNBtwmsfyX6bKpIkfIwx4RjzS9urgyIw5b62fGur75vilnrWEFz8eIcTddWI1EV/RYF8BAxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSQ9BT8O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA45BC4CEF8;
+	Thu, 27 Nov 2025 12:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764245637;
-	bh=vkyNrxzBL31HzfZQEt130P0SdOrTqfWzMLDKaesDnRM=;
+	s=k20201202; t=1764245672;
+	bh=7/C/7geMsxC0/mEobiPtx4JPT6NXYbpIFFRUEwbEOtU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bh6rPdujYrZQPzrSgAgzuVKL/dLj6OmBVgSd43P5wWB0BMk+laTRbydcqcwmiMHpb
-	 daeK5o5+TylY3HGnYduVFwUXtO10aHQ9F8R5KsLhgIl4bavL/A2UO55dTtifP3RrvJ
-	 5bJgYMp5Rj79aefyqoidWfMl3GPbLNrT5FG/q900Ae5W8zOWKs/yqMH8YE7Oq9fgJs
-	 cnfANV1p1iEUkc8/qyhzR/FDQqHpv7OUrpUl/eqvVM899VMVkOYqFsNlr62K6I0EZT
-	 kMsm3/DiSJqGEPmbj9cWU0bUalu6nzNL9NKiq2IoXN/sCOENKw83FBiuXz//1YQj9K
-	 5xTRxvwQ/tX5w==
-Message-ID: <e9363a14-183e-4d12-91b0-1ac5655e6e90@kernel.org>
-Date: Thu, 27 Nov 2025 13:13:51 +0100
+	b=GSQ9BT8Op3MPoqtqrtrV+j1e4rbsvAnND6S9+ykNzjCpyzv78eNJb1n6yE/OYQGUk
+	 cXbLpJ2wuScBpq+s1TnIslmmN8ybyWoJ1OafxxHxW+awrhCdsb07Zquk1xhY1U8yjG
+	 QdLkNlCk/8hwg3nHNQOmxPNFdy6jfG84u9XjRHZoXNE1bKXgLmjN/ppINQvKG8fX2F
+	 3HMGhKbE6ZDoswET1sUsUfrd9CGXrCiC1gBdLyTkGOrSf7eeNlWgNYITg5k1GKIyWh
+	 jkdlvY7SiVZol8QUxbJFXga4VUW1vjJmbZUMMOiKI5HCWCuDq4ThoikxKxoTLmwa5Q
+	 MEUC87+XTaPZQ==
+Message-ID: <1df4fa7a-4b52-4816-bfa3-39afb5c7ad84@kernel.org>
+Date: Thu, 27 Nov 2025 13:14:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,snps-dwc3: Add support for
- firmware-managed resources
+Subject: Re: [PATCH 2/2] usb: dwc3: qcom: Support firmware-managed resource
+ states for power management
 To: Sriram Dash <sriram.dash@oss.qualcomm.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -61,9 +61,10 @@ Cc: jack.pham@oss.qualcomm.com, faisal.hassan@oss.qualcomm.com,
  krishna.kurapati@oss.qualcomm.com, andersson@kernel.org,
  linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Shazad Hussain <shazad.hussain@oss.qualcomm.com>
 References: <20251127-controller_scmi_upstream-v1-0-38bcca513c28@oss.qualcomm.com>
- <20251127-controller_scmi_upstream-v1-1-38bcca513c28@oss.qualcomm.com>
+ <20251127-controller_scmi_upstream-v1-2-38bcca513c28@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,73 +110,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251127-controller_scmi_upstream-v1-1-38bcca513c28@oss.qualcomm.com>
+In-Reply-To: <20251127-controller_scmi_upstream-v1-2-38bcca513c28@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 27/11/2025 11:31, Sriram Dash wrote:
-> On Qualcomm automotive SoC sa8255p, platform resources like clocks,
-> interconnect, resets, regulators and GDSC are configured remotely by
-> firmware.
+> Add support for firmware-managed resource states in the
+> Qualcomm DWC3 USB controller driver. On platforms
+> like sa8255p, where controller resources are abstracted
+> and managed collectively by firmware, the driver communicates
+> power management transitions using dedicated resource state
+> levels via dev_pm_opp_set_level().
 > 
-> PM OPP is used to abstract these resources in firmware and SCMI perf
-> protocol is used to request resource operations by using runtime PM
-> framework APIs such as pm_runtime_get/put_sync to signal firmware
-> for managing resources accordingly for respective perf levels.
-> 
-> "qcom,snps-dwc3-fw-managed" compatible helps determine if
-> the device's resources are managed by firmware.
-> Additionally, it makes the power-domains property mandatory
-> and excludes the clocks property for the controller.
+> Macros are introduced to represent key lifecycle events:
+> initialization, system and runtime suspend/resume, and exit.
+> The driver sets the appropriate resource state during probe,
+> remove, suspend, and resume operations, enabling bulk ON/OFF
+> transitions of grouped resources according to the
+> controller's operational state.
 > 
 > Signed-off-by: Sriram Dash <sriram.dash@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/usb/qcom,snps-dwc3.yaml    | 173 +++++++++++++--------
->  1 file changed, 111 insertions(+), 62 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> index 8cee7c5582f2..d2d1b42fbb07 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-> @@ -12,68 +12,65 @@ maintainers:
->  description:
->    Describes the Qualcomm USB block, based on Synopsys DWC3.
->  
-> -select:
-> -  properties:
-> -    compatible:
-> -      contains:
-> -        const: qcom,snps-dwc3
-> -  required:
-> -    - compatible
-
-I wonder why do you think dropping some code is fine...
+> Co-developed-by: Shazad Hussain <shazad.hussain@oss.qualcomm.com>
+> Signed-off-by: Shazad Hussain <shazad.hussain@oss.qualcomm.com>
 
 
-> +      - items:
-> +          - enum:
-> +              - qcom,sa8255p-dwc3
-> +          - const: qcom,snps-dwc3-fw-managed
-
-No, you cannot keep coming with more generic compatibles.
-
-If you want generic a compatible, you already have - qcom,snps-dwc3 -
-and that "generic" part already said that everything is compatible with it.
-
-Now you claim that existing generic compatible qcom,snps-dwc3 is not
-generic enough and you need one more generic compatible.
-
-Next year you will say that two generic compatibles are not generic
-enough and you need third generic compatible.
-
-In two years we will learn that three generic compatibles are not enough...
-
-I think I was complaining on the lists a lot on this, so I am surprised
-it is still coming back.
-
-So no, you cannot claim that you need more generic compatibles because
-one generic is not generic. NAK.
-
+Messed order of tags. Please read carefully submitting patches, so you
+understand what you certify before you actually certify.
 
 Best regards,
 Krzysztof
