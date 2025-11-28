@@ -1,82 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-83757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56908C91D3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 12:44:20 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27C30C91D49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 12:44:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CEF003424DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:44:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 89BD14E4733
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:44:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ACC42E62B3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D816D30F921;
 	Fri, 28 Nov 2025 11:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="yLQI8T4r"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="MQ5NLo8R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7F930C63E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B9230F541
 	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 11:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764330256; cv=none; b=L/WdCJJMcEWIV6iJzHQ0u4yDr7/EZn9pWoSpdpNC3FQ0lBUHAT7xu4UYycVZw4DW8Du5yIzmUxh+lYecads3gxiblJz7epppkMTs3Y5zdtac3si3DSz9ic1madtOqE1LdTOSWxaXU3rHUzLhRDhRwNX6eNQp7r5mpj3VIMjTLrE=
+	t=1764330256; cv=none; b=uT6vtjRP3VkQ5rkzoB0NFCNe9wAJgsS13UTzsknbB73gHpnqpvOqwM0mZpugDDvINGnX5yCzTchIX39tzleUugOM9QRaFKh6dqW45Y5TQK2gG4LXYHdW5JhlA3NAsE/ZSH0muIc8lMSqQ7TxdTxa9xjgLlBYizgPcjdF0n2l9QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764330256; c=relaxed/simple;
-	bh=4khc6stX0k+SR3+8DlSRY+DGyoru5P/CEeBIvZI1qlw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iM+p/IJ0DmpStkucBQG443v8EpeGzRa2hEtSk9HuIxCB/z+cBlFiVUAsRYPodYOnh9o+mOXt0t9jlkSMUFLZUCYm6MZiA4YVANQqRShZp5nOZ83K4SI9uGM7eUCel5Qmb4RwCEfOF9D18liohtiiXfNGwm+ez5n8oky909dxLJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=yLQI8T4r; arc=none smtp.client-ip=209.85.128.41
+	bh=TUyr94Jtc33qfF1dHLVyC6XEZjaXwlAM1r5rnAPwmwY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Ia6RbMQOdKBLiRdD48baJJQkTSW7BSPzaU3CdeZU3PCQLIn79a2+UGkdpSz8FXS+ycnGNHxmu6xCucXahYx8RqlGbjxgrYd4WcM9SmdPOS0EiUMth7nXUhZrqdA2XY8Yz7tk8406atH3zmga6QS1P6TinGD7K85DJ43jhUBxDl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=MQ5NLo8R; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47778b23f64so10304705e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 03:44:13 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-47775fb6c56so14035655e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 03:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764330252; x=1764935052; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=afZZW9qdftp5SRXhu9OIj/Ikh4syLmLNM6zCl8JfOhA=;
-        b=yLQI8T4rfaPGm9IWD0LB+s4RMcWiELpY22huAtmhc0F9qhHUqntwOU3Iw49JskBCN2
-         FYNDR1/hDXP/PECGPKI54ueTsItvpNd9bEQzC/T6B6Fl3t56hS+2X5p64GFRglQhJhP8
-         LWI6GGp5k2Aj1pKkxwMQ5YN2ETQh44e7erqO6tSsk23VSu2CJXeUYNXOayB1nPeO3BKO
-         Z0jvDAKokbQHU34MNG9Fy43eg+B9Qltjlku2NNSk5vVo94hDBRKWCEsnCUgNKIIHz8Iv
-         +mhm+EKbtR8hzoBB96xbeadKwwaU6xgTR7QdsGDTkcYPWxsSbLdC9TyhV4oa8pDEXXWd
-         YC/A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764330253; x=1764935053; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wsLkHPSXKJgPwvxtY/gmIzQjj9kLAJgCqTwY9k7v6bM=;
+        b=MQ5NLo8RG4YGu+iv+0fBLa5akDVnyC4YJIToVoLtAGara/lMq+etDwx+MucK9jHu40
+         c9K39umXd117hTOIBZqysN1Mmw/VP2yDPj27UL9oXBFhsSOivxR540fA/Awz0O9dVUcr
+         IKqz0Q9TG4/uURqucdWAmU5HOcGYCfE1np0GL/fmniX+GgVLHp7t3548UeTx1wyEnmX/
+         HUdJRpsJVRFFguifZBl/RaCbY6ktEZzLPn33oggYCv1W5aujx+cTZNltimwt1/co3cgo
+         E7x4HbCyipKBRC0vWsP6+VY6Qz2FsQyFS13uwRt4gFPITRNlcLYQSbvokIkM1NyKApBO
+         Y0KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764330252; x=1764935052;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=afZZW9qdftp5SRXhu9OIj/Ikh4syLmLNM6zCl8JfOhA=;
-        b=hp1gDqwdlcc8ZHZMIkBzlrcL9qR9iQlA1rrjwd6/IXO5pYYmRVIXxrH/W/41rTWmeW
-         N/CkBnIX/qr0c4iz8NIoOsvbLjz/pM8xOwGGqOaASNNf6H8B1+5x21AE/Gabh3EB02UV
-         ik/2OpaphCU4rb4AWuIB93YKcCsvwaqcB32SB5oHe6gAjuv5L1KiaLWE0w+ahqbl0LAS
-         Y7hu+wEw3ZHpFg5BvRFwv9oy1ghte4dk0tkXxQDnZWL42aLnTITaC6UMH97Vaq3Qs1dY
-         /S9J7y4igJoPv/Nur9QiHeD3DwjY3VHdsQh8mYpcyrf7D7Gp2RJP9VPZoZvFzKZGnNgp
-         nZXg==
-X-Forwarded-Encrypted: i=1; AJvYcCUiGEtw5mBLRqu6crgKu+08i0ACoUtZHJk4vzrQgsTH7IV6rb18QWiFjd8fXAkFGsQfvvZ7BdeVptdhNwVH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxw9g626H0Nv+UyJzn+W3fAXeMo9vNOuVYYi8XQLXv0bPWa7FIo
-	DPN+rteonJjWMRjdqDw9C+oOKbD7tbtHYrxAhhRM3MrvKyUBgCf9YeJdw2MFYUfG3iE=
-X-Gm-Gg: ASbGncs9qBRGiLYKwlknlQCNGVc1pink9ctn/7CgIhEKi9AionjjYEAMfwVZNQafBug
-	kOlEYnQMYQVUdCgZhZGrjGRsfKLAVhtUL16EPdDc3kFw0wHRunhAdMrl+KR+c2vMokTZUmqGbxr
-	iIUH+wx+iM08Gc+K63ymyuhNAtxtxCcpv4zqVMTBz/ukW+5BST71EZd+M20dmP1+9xtp6CtZTYw
-	rJ5ipk4XKfaWNTLqpVVG4wHSwILMM82kgbQXL0nIQaapAhs+Sru3GMgP0qJq4IjCodOzLumiqkb
-	Oq/9K0L1X3C0dKT71H064SsXOM/LNGlgefiE/u+2xl129IIFX/N8VWFuW8rIlsL3FOgzT5y7j0T
-	36W67V1KVdU5IOs0JnBkK9cAHo2O76hYN6R5lXq+kbrTIoANLylGrm9bZzSUd5wsTOs98tcAt0e
-	QHyEoFon8csJKGuHQi
-X-Google-Smtp-Source: AGHT+IF3zfvu+7wPntsJa5nMDSCYwSXTfuvBzBgPmvlXYCnQSl6OkGtkzf4+1RON3gU7YypBm0y+yQ==
-X-Received: by 2002:a05:600c:3b01:b0:477:54cd:200a with SMTP id 5b1f17b1804b1-477c110325dmr248783535e9.6.1764330252139;
-        Fri, 28 Nov 2025 03:44:12 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764330253; x=1764935053;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wsLkHPSXKJgPwvxtY/gmIzQjj9kLAJgCqTwY9k7v6bM=;
+        b=p/G41Va4T72zbXa6u/LEFJT9dmiFNxdIIodUEELkxksbOMOVxLa9PbnpUWOAv14MZ7
+         noVQV0yAB3lNoKkHvfYOJ/MmkMcssf8c5K51zCK7zHzl7TbqMs9UCmJyULpNAKPxigN8
+         H+z3QMqsbL+Goyf+HraWaKD6ffcxrlp4IgSUFhFG0PAyu3v718Ho7NZNhdy6YnaBJTbx
+         niTXYiSeE+LbpvXcPMorNZnIr8+D7LaIjFIaHotT+CA2VAmZ9Q6aSqrK9ZJdRhtIUSmu
+         np/sYGzwl0QmF6OQCrn13EXgOhFLM2UjiKin9uNTdxO03xokey7hKVH01jUZnL5nqvTx
+         0tow==
+X-Forwarded-Encrypted: i=1; AJvYcCWhjSD62qdtllHZaNhoymzndllr5xfCmlFNHdpnfNyBxMBB2J2FhMXl0Q9Uq+y4fEujckwiDY0LLISiZBoc@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws4S/VxIaU/ztXkNJjNcPhrOJNLPCO6CtZPNAhWNU5xjA4hspB
+	CiDvyO12TTUxYjYgVd5LrKaXtH1HH43bA+w7WfZPE5+sva1XkTfqtpdHBf1YJOGKdZGsHJ2jU/y
+	7+Nql
+X-Gm-Gg: ASbGncu1f+fs5fdoYMMwxy/9y1MxKsXpolpJwpEnKDmlDUU9QWq0U9tWePvex87lcrY
+	xo2ss96x2Y/zrJwjMxRzpEMnwbouaIwhWWLLbRSvOb7obRYdABnbzavPDH+tcLrh7y18pXoIc5T
+	07Hv/r0AVdB8wTAsNfFvCL2J+VxyGVY1OcCWtl4Val2tgD+hCPWfKLrS9xHRTdV3p/lXGQPilon
+	0OVfA95IR8GHJDfqX48Qm37rXLXnieW8uPjJFGUtJOXKdnSOaFY7iP1A3mVQk0ksZeCpjVpYUN4
+	nG/P9vJpN3r2iKeUfyLG4iJTM8HqmK1XodZ69G+WHQyQtqswOpd6cboDrVyDAq9HKznheAtCBiY
+	qIQfURyfHN6kKtnCZnY451VV675flogRWvrzxJ+lzu5nrFLERaQq7vzsqOrAT3+bh/T6HJSzcZA
+	uaOxEnuA==
+X-Google-Smtp-Source: AGHT+IFSd8jIclsoKvcKNm3qGT/FEKyfyxGrRbEKlz3oiFEyjjtFmnavNU+aqDkyD9XhXLIvGRzzbQ==
+X-Received: by 2002:a05:600c:4fce:b0:477:9aeb:6a8f with SMTP id 5b1f17b1804b1-47904ad9438mr138361265e9.9.1764330253201;
+        Fri, 28 Nov 2025 03:44:13 -0800 (PST)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:f3c6:aa54:79d2:8979])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47906cb1f60sm89888445e9.1.2025.11.28.03.44.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47906cb1f60sm89888445e9.1.2025.11.28.03.44.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Nov 2025 03:44:11 -0800 (PST)
+        Fri, 28 Nov 2025 03:44:12 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Subject: [PATCH v9 00/11] crypto/dmaengine: qce: introduce BAM locking and
- use DMA for register I/O
-Date: Fri, 28 Nov 2025 12:43:58 +0100
-Message-Id: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
+Date: Fri, 28 Nov 2025 12:43:59 +0100
+Subject: [PATCH v9 01/11] dmaengine: qcom: bam_dma: Extend the driver's
+ device match data
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,11 +87,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAP6KKWkC/22NQQqDMBBFryKz7pQkomhXvUdxYSejDlTTTkpoE
- e/eVOiui/nwPvw3K0RW4QinYgXlJFHCkqE9FEBTv4yM4jODM66y1pT4oDDnYKTZo+dIilRxe7V
- 24Nq0kId35UFeu/TSZZ4kPoO+9x+p+bY/Xf1Plxo0yOQ99a7MV59vsvQajkFH6LZt+wC+FHF4t
- QAAAA==
-X-Change-ID: 20251103-qcom-qce-cmd-descr-c5e9b11fe609
+Message-Id: <20251128-qcom-qce-cmd-descr-v9-1-9a5f72b89722@linaro.org>
+References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
+In-Reply-To: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
  Thara Gopinath <thara.gopinath@gmail.com>, 
  Herbert Xu <herbert@gondor.apana.org.au>, 
@@ -103,169 +103,128 @@ Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
  linux-crypto@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6263;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3649;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=4khc6stX0k+SR3+8DlSRY+DGyoru5P/CEeBIvZI1qlw=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpKYsCXvc+JuhAbpBmEvwsMaL3pa0+mw9pTOsdx
- 5xLRp7TzNOJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaSmLAgAKCRAFnS7L/zaE
- wzXiD/sF+q0Zkhqo+RZHB8+evczRi1o5+PSLZIlVbVC7vozr2EQiQNmasfjJcH3b3kYJ+5AVq+E
- WcXPUNB6rO6lDjEpH0GhlSz8SJ5Mi9FmqPxeWOyoRdjARH9Xm9IECH25N8rAGEgxwPZQ508WY8z
- jwkSYLWptuJ5J5vEYyuXRzXhpBwbmr3JVzfznySnPRvnDNsHLcZGXvQOqSBH3mlFrZpvr22BJ1/
- z2nieGUujUqd8mMu0KPkOGZTOTU4aBd8WNnb2WtTCwKN5ziuW5ScRGlGZZRFZP8MM2DbeTAXLWB
- cLYbEgrH954Kaq1wcBFUw5/+PJuNCmztR8MoWgaCOvHayBVbsa9M0K6vYLFxbN3Zx36NEbK+5Fi
- mgS63q24oMAgbKAWFFnZAIJWDLLEBtW9qJ5csP2V/RzKjkVpSBzv6dUlUDIgF9lZO5clUKTub14
- GlVVDgp+idXmO5dQ/1olfRBWpPQFsJcussCUgnOt0EsegiHsOONOt8ppUigPz+IeH9IclxZhoxi
- 2PPN5RYOZYhcaKgpxQ1r3mEZqPvDdS3kz0d/xJME9ePIjD42elMlJt1OKCvlT5tNtI49EvFG5oz
- c0vEfn04kp0KDaN6Z/aQBa03ORLkqz6zv5XCX6bkMumsXhM9rFrTTA2yzUzT+We8J0bG2LppLj7
- 4Tbih7VOBCZwHaA==
+ bh=0woh03/bgCFE8ePGo1YBxXHVZW/UvQS3qBPjY4r3K2A=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpKYsGNDUf9Ng+dfUac05iglgaNCsKaY2Lrm/P4
+ HhNOhG3EeeJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaSmLBgAKCRAFnS7L/zaE
+ w4F9D/9BMJX/tFeUWAm1i3ry15M349LsqliUmWdcxq0xxLuIofu6Vx5Kas7waECTmxMM/pOaIyf
+ cW+8672+vdSduCeRWD/aqJMAwbioj0G8jxYTQ5OcfqzHaImXCL2cvC3Ti4IeFCE0J6vnpaKeeeA
+ NhkbZn5U8+p7ltLfZwYjD+J5ijbufnIXQOZyTYgVW8XwCiQq5hyEuny6KrboiKdtWNylznDIKMR
+ M3XUfFmIbiyVkJgSuG9SJ15AR6mBssG6YEzi5zpP8P1sI7aKnMht//ukR5Nhyfu2pZdwhBZRueq
+ KzOsoZyDNasf9Q/1EltdmlQOO5/j+mQ1rw6WvTYmWKmGsAJFn5TEQnzKNzmwn3tWfUcpnYtZaRF
+ oXiHA82hXAzmuSV6Wu0MI/4dKmIju/yc6vhdje0Rj/BsRshC3m09SmbEi0bE9upb+fVJa6+rG7t
+ RGsCuYlzpKTkAw8Bjo0hzzbX2h+sDOh293aMEkt3knnNNkQKI8cFF9fjBgCekLwwjwDtKXQcV70
+ 16fLZUbVdTqanbJtEUQ7aP2KRqz5AuN/dEGv9AEQwkcA6l2mnM9Xs89nBaQGD6j9OBxsJjKmkmW
+ BGX/+NoI6vuFWAwvdoasuqKTRtInW3mr/kg9kX+SUtzr1oDg1Wlk+4oaB6eUn9i1WnZ+r5evaZ/
+ cc/Of/cqn7I6M2A==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-Currently the QCE crypto driver accesses the crypto engine registers
-directly via CPU. Trust Zone may perform crypto operations simultaneously
-resulting in a race condition. To remedy that, let's introduce support
-for BAM locking/unlocking using DMA descriptor metadata as medium for
-passing the relevant information from the QCE engine driver to the BAM
-driver.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-In the specific case of the BAM DMA this translates to sending command
-descriptors performing dummy writes with the relevant flags set. The BAM
-will then lock all other pipes not related to the current pipe group, and
-keep handling the current pipe only until it sees the the unlock bit.
+In preparation for supporting the pipe locking feature flag, extend the
+amount of information we can carry in device match data: create a
+separate structure and make the register information one of its fields.
+This way, in subsequent patches, it will be just a matter of adding a
+new field to the device data.
 
-In order for the locking to work correctly, we also need to switch to
-using DMA for all register I/O.
-
-On top of this, the series contains some additional tweaks and
-refactoring.
-
-The goal of this is not to improve the performance but to prepare the
-driver for supporting decryption into secure buffers in the future.
-
-Tested with tcrypt.ko, kcapi and cryptsetup.
-
-Shout out to Daniel and Udit from Qualcomm for helping me out with some
-DMA issues we encountered.
-
-Merging strategy: either an Ack from Vinod or an immutable branch with
-the DMA changes for the crypto subsystem will work.
-
+Reviewed-by: Dmitry Baryshkov <lumag@kernel.org>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
-Changes in v9:
-- Drop the global, generic LOCK/UNLOCK flags and instead use DMA
-  descriptor metadata ops to pass BAM-specific information from the QCE
-  to the DMA engine
-- Link to v8: https://lore.kernel.org/r/20251106-qcom-qce-cmd-descr-v8-0-ecddca23ca26@linaro.org
+ drivers/dma/qcom/bam_dma.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-Changes in v8:
-- Rework the command descriptor logic and drop a lot of unneeded code
-- Use the physical address for BAM command descriptor access, not the
-  mapped DMA address
-- Fix the problems with iommu faults on newer platforms
-- Generalize the LOCK/UNLOCK flags in dmaengine and reword the docs and
-  commit messages
-- Make the BAM locking logic stricter in the DMA engine driver
-- Add some additional minor QCE driver refactoring changes to the series
-- Lots of small reworks and tweaks to rebase on current mainline and fix
-  previous issues
-- Link to v7: https://lore.kernel.org/all/20250311-qce-cmd-descr-v7-0-db613f5d9c9f@linaro.org/
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 2cf060174795fe326abaf053a7a7a10022455586..8861245314b1d13c1abb78f474fd0749fea52f06 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -111,6 +111,10 @@ struct reg_offset_data {
+ 	unsigned int pipe_mult, evnt_mult, ee_mult;
+ };
+ 
++struct bam_device_data {
++	const struct reg_offset_data *reg_info;
++};
++
+ static const struct reg_offset_data bam_v1_3_reg_info[] = {
+ 	[BAM_CTRL]		= { 0x0F80, 0x00, 0x00, 0x00 },
+ 	[BAM_REVISION]		= { 0x0F84, 0x00, 0x00, 0x00 },
+@@ -140,6 +144,10 @@ static const struct reg_offset_data bam_v1_3_reg_info[] = {
+ 	[BAM_P_FIFO_SIZES]	= { 0x1020, 0x00, 0x40, 0x00 },
+ };
+ 
++static const struct bam_device_data bam_v1_3_data = {
++	.reg_info = bam_v1_3_reg_info,
++};
++
+ static const struct reg_offset_data bam_v1_4_reg_info[] = {
+ 	[BAM_CTRL]		= { 0x0000, 0x00, 0x00, 0x00 },
+ 	[BAM_REVISION]		= { 0x0004, 0x00, 0x00, 0x00 },
+@@ -169,6 +177,10 @@ static const struct reg_offset_data bam_v1_4_reg_info[] = {
+ 	[BAM_P_FIFO_SIZES]	= { 0x1820, 0x00, 0x1000, 0x00 },
+ };
+ 
++static const struct bam_device_data bam_v1_4_data = {
++	.reg_info = bam_v1_4_reg_info,
++};
++
+ static const struct reg_offset_data bam_v1_7_reg_info[] = {
+ 	[BAM_CTRL]		= { 0x00000, 0x00, 0x00, 0x00 },
+ 	[BAM_REVISION]		= { 0x01000, 0x00, 0x00, 0x00 },
+@@ -198,6 +210,10 @@ static const struct reg_offset_data bam_v1_7_reg_info[] = {
+ 	[BAM_P_FIFO_SIZES]	= { 0x13820, 0x00, 0x1000, 0x00 },
+ };
+ 
++static const struct bam_device_data bam_v1_7_data = {
++	.reg_info = bam_v1_7_reg_info,
++};
++
+ /* BAM CTRL */
+ #define BAM_SW_RST			BIT(0)
+ #define BAM_EN				BIT(1)
+@@ -391,7 +407,7 @@ struct bam_device {
+ 	bool powered_remotely;
+ 	u32 active_channels;
+ 
+-	const struct reg_offset_data *layout;
++	const struct bam_device_data *dev_data;
+ 
+ 	struct clk *bamclk;
+ 	int irq;
+@@ -409,7 +425,7 @@ struct bam_device {
+ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
+ 		enum bam_reg reg)
+ {
+-	const struct reg_offset_data r = bdev->layout[reg];
++	const struct reg_offset_data r = bdev->dev_data->reg_info[reg];
+ 
+ 	return bdev->regs + r.base_offset +
+ 		r.pipe_mult * pipe +
+@@ -1225,9 +1241,9 @@ static void bam_channel_init(struct bam_device *bdev, struct bam_chan *bchan,
+ }
+ 
+ static const struct of_device_id bam_of_match[] = {
+-	{ .compatible = "qcom,bam-v1.3.0", .data = &bam_v1_3_reg_info },
+-	{ .compatible = "qcom,bam-v1.4.0", .data = &bam_v1_4_reg_info },
+-	{ .compatible = "qcom,bam-v1.7.0", .data = &bam_v1_7_reg_info },
++	{ .compatible = "qcom,bam-v1.3.0", .data = &bam_v1_3_data },
++	{ .compatible = "qcom,bam-v1.4.0", .data = &bam_v1_4_data },
++	{ .compatible = "qcom,bam-v1.7.0", .data = &bam_v1_7_data },
+ 	{}
+ };
+ 
+@@ -1251,7 +1267,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
+-	bdev->layout = match->data;
++	bdev->dev_data = match->data;
+ 
+ 	bdev->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(bdev->regs))
 
-Changes in v7:
-- remove unused code: writing to multiple registers was not used in v6,
-  neither were the functions for reading registers over BAM DMA-
-- remove
-- don't read the SW_VERSION register needlessly in the BAM driver,
-  instead: encode the information on whether the IP supports BAM locking
-  in device match data
-- shrink code where possible with logic modifications (for instance:
-  change the implementation of qce_write() instead of replacing it
-  everywhere with a new symbol)
-- remove duplicated error messages
-- rework commit messages
-- a lot of shuffling code around for easier review and a more
-  streamlined series
-- Link to v6: https://lore.kernel.org/all/20250115103004.3350561-1-quic_mdalam@quicinc.com/
-
-Changes in v6:
-- change "BAM" to "DMA"
-- Ensured this series is compilable with the current Linux-next tip of
-  the tree (TOT).
-
-Changes in v5:
-- Added DMA_PREP_LOCK and DMA_PREP_UNLOCK flag support in separate patch
-- Removed DMA_PREP_LOCK & DMA_PREP_UNLOCK flag
-- Added FIELD_GET and GENMASK macro to extract major and minor version
-
-Changes in v4:
-- Added feature description and test hardware
-  with test command
-- Fixed patch version numbering
-- Dropped dt-binding patch
-- Dropped device tree changes
-- Added BAM_SW_VERSION register read
-- Handled the error path for the api dma_map_resource()
-  in probe
-- updated the commit messages for batter redability
-- Squash the change where qce_bam_acquire_lock() and
-  qce_bam_release_lock() api got introduce to the change where
-  the lock/unlock flag get introced
-- changed cover letter subject heading to
-  "dmaengine: qcom: bam_dma: add cmd descriptor support"
-- Added the very initial post for BAM lock/unlock patch link
-  as v1 to track this feature
-
-Changes in v3:
-- https://lore.kernel.org/lkml/183d4f5e-e00a-8ef6-a589-f5704bc83d4a@quicinc.com/
-- Addressed all the comments from v2
-- Added the dt-binding
-- Fix alignment issue
-- Removed type casting from qce_write_reg_dma()
-  and qce_read_reg_dma()
-- Removed qce_bam_txn = dma->qce_bam_txn; line from
-  qce_alloc_bam_txn() api and directly returning
-  dma->qce_bam_txn
-
-Changes in v2:
-- https://lore.kernel.org/lkml/20231214114239.2635325-1-quic_mdalam@quicinc.com/
-- Initial set of patches for cmd descriptor support
-- Add client driver to use BAM lock/unlock feature
-- Added register read/write via BAM in QCE Crypto driver
-  to use BAM lock/unlock feature
-
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
----
-Bartosz Golaszewski (11):
-      dmaengine: qcom: bam_dma: Extend the driver's device match data
-      dmaengine: qcom: bam_dma: Add bam_pipe_lock flag support
-      dmaengine: qcom: bam_dma: implement support for BAM locking
-      crypto: qce - Include algapi.h in the core.h header
-      crypto: qce - Remove unused ignore_buf
-      crypto: qce - Simplify arguments of devm_qce_dma_request()
-      crypto: qce - Use existing devres APIs in devm_qce_dma_request()
-      crypto: qce - Map crypto memory for DMA
-      crypto: qce - Add BAM DMA support for crypto register I/O
-      crypto: qce - Add support for BAM locking
-      crypto: qce - Switch to using BAM DMA for crypto I/O
-
- drivers/crypto/qce/aead.c        |  10 +++
- drivers/crypto/qce/common.c      |  39 ++++++---
- drivers/crypto/qce/core.c        |  28 ++++++-
- drivers/crypto/qce/core.h        |  11 +++
- drivers/crypto/qce/dma.c         | 176 ++++++++++++++++++++++++++++++++-------
- drivers/crypto/qce/dma.h         |  15 +++-
- drivers/crypto/qce/sha.c         |   8 ++
- drivers/crypto/qce/skcipher.c    |   7 ++
- drivers/dma/qcom/bam_dma.c       |  92 ++++++++++++++++++--
- include/linux/dma/qcom_bam_dma.h |  12 +++
- 10 files changed, 345 insertions(+), 53 deletions(-)
----
-base-commit: 60ce1919ad707c77df15449238bcb665020ffc93
-change-id: 20251103-qcom-qce-cmd-descr-c5e9b11fe609
-
-Best regards,
 -- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+2.51.0
 
 
