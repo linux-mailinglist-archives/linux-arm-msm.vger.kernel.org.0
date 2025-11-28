@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-83677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35396C908C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 02:59:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA30BC90A8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 03:53:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC99C3AADEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 01:59:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 542E13AB8FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 02:52:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5951A24A067;
-	Fri, 28 Nov 2025 01:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC767258EC1;
+	Fri, 28 Nov 2025 02:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZPPyMRFU"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jwuXKnvl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869251C861A;
-	Fri, 28 Nov 2025 01:59:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC8B1EE7C6;
+	Fri, 28 Nov 2025 02:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764295196; cv=none; b=RlhszW8/u86s/5XkRNPCWhJebT9BvHkfGrYJEDIQuNUeXpqE/hpvNWBZKOg+xEgvRJxqC4fLhL2iSfGxoXAaaVlNBQEZipEkeK9rFqFV/DtZEi/hNdWs2o4seQNqFDe2pM8fqk4vpSUCEuVzHuKE5P520tWlnv1s4ORQlcun1iY=
+	t=1764298377; cv=none; b=tvrqXjmStsFp17C5aRu6slEIpIBJdFBm7m0CwsRNP3XyOoNVESlgEcDhEbEqhJbUfSGAkZ5FB1Bi0F80LsSurP+vt6udzAkTenyPaWRHGKB7TpKTn2+zs+ATJa2INAzHTsQMvNAPUJDam0xvI6Ov4L9VVQwRfm0WJGlcEIDeN6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764295196; c=relaxed/simple;
-	bh=jG+Q3vKVz8tj9mgaLr+HMnR7/uIPrxtNMPCHuccxSdA=;
+	s=arc-20240116; t=1764298377; c=relaxed/simple;
+	bh=kN8f8ocFg/9iq69/nMOZcevqnWg1yZnJ/G3yn1vCZBg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jk8N6Rfy1flA6FPjVCPpeMSU0YYSROYUqeCkG3BC+Zi+RWRxRrnJwWPs8GuN/JvXxpc99otktGASeLrxrBqtAC7J9V6LSrAIwarv6haRIPV7x352qlzSuc+Z6TuX+nQCj+7cV5QnTljeYF5qUlM6ruY2ADACT0T6v/1i8VA6HZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZPPyMRFU; arc=none smtp.client-ip=192.198.163.13
+	 Content-Type:Content-Disposition:In-Reply-To; b=hDnacae3yaa6QmlIUQYrHReFU4KXDdrsXg/OycKBPGgsXrGPqZyd8dP2rdG+m84UWA5BETAi8rZofcOhLvn+IDthJxHcvVRSjQUFOJIBw3uPbFZ9aLDv20muazCoe3GX2PDSG1WN8pyGxdmrjbjlQV9WhbZzMrHTIkhkwx4kfq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jwuXKnvl; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764295195; x=1795831195;
+  t=1764298376; x=1795834376;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=jG+Q3vKVz8tj9mgaLr+HMnR7/uIPrxtNMPCHuccxSdA=;
-  b=ZPPyMRFUznFTy23LZz7Ga6D4s1iLuDBdI1MaRix4mLFm5Bii64UaaccJ
-   An7vhBuxNZ8qOjrmSib/6VN/6ZYfSZUwAR+IZ3zUkrzdnG8FjGR3V46IE
-   vPwtoLVrHA5Epf/x1VEx/dgNWkJn015PvKwJ33EWtv6QAoMBbd0IhipJG
-   Ur9+/P3BH54ZBACoOikun6tPDXOvGKBhIzsnpBGlOLbknN6ox7K3BkadS
-   w5+z8g/OzOfYgq/JTfvGq/45ClaVIvEBbERRjWwqIU6t8p5hv7Vld3TFp
-   BhGwvSFVEFy8PysKNanYHmP2r+O4L4XzidREkPsYiO1DzfLFirT4aENk+
+  bh=kN8f8ocFg/9iq69/nMOZcevqnWg1yZnJ/G3yn1vCZBg=;
+  b=jwuXKnvlSlYpwdsuRSo+7bN42FuZxdo8v1XcRvX+LAUqP2Z5DOoKwUWY
+   ft2QcllrmyWPSe1Q0v542t4ySUaih99I6R4ozr/2bxZ0sh5XG35FlZzlq
+   PSuPO0PATYv8StFflhzaJqGto1fMjB56d/8yXlixH0qhGs6VEz12HDFQI
+   rnn/7G8ir8zeEBuLWw0kp0TAoKhBzuJzfYFirBE8/NuR2l5brVzavcHAP
+   kzaKO/ilA8FEVdV4jeZX2XS9xpQBOik53rxOwIGXW0Nj8NALLQmRCD92X
+   0EopTGl/PnPkoZPJID0aKj0wg+Um61PY18EW94lwosBgnSGfKvwvGKsTg
    Q==;
-X-CSE-ConnectionGUID: T9dELlFSSaeg0nVkXX3NpQ==
-X-CSE-MsgGUID: MCiP2F4hS2ypUOsa7P63GQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="68925548"
+X-CSE-ConnectionGUID: VM9Ti/BJQFaupTrJX6uYbQ==
+X-CSE-MsgGUID: XdqbldHvTvafuI1G0j07Pg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="66281699"
 X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="68925548"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 17:59:54 -0800
-X-CSE-ConnectionGUID: ddZGwDcEQ66Xb8fiKIQDbw==
-X-CSE-MsgGUID: m60YY/UUSkGdERHuslMpnw==
+   d="scan'208";a="66281699"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 18:52:55 -0800
+X-CSE-ConnectionGUID: kHmaFFJtSrCUNitANqQ8Mg==
+X-CSE-MsgGUID: OVGbIM/SSGC2110517cZ5w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="192475967"
+   d="scan'208";a="193159342"
 Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by orviesa006.jf.intel.com with ESMTP; 27 Nov 2025 17:59:49 -0800
+  by orviesa009.jf.intel.com with ESMTP; 27 Nov 2025 18:52:51 -0800
 Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1vOnly-000000005v3-2oCr;
-	Fri, 28 Nov 2025 01:59:46 +0000
-Date: Fri, 28 Nov 2025 09:59:39 +0800
+	id 1vOobI-000000005xN-3R8H;
+	Fri, 28 Nov 2025 02:52:48 +0000
+Date: Fri, 28 Nov 2025 10:52:00 +0800
 From: kernel test robot <lkp@intel.com>
 To: Anna Maniscalco <anna.maniscalco2000@gmail.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -74,12 +74,13 @@ To: Anna Maniscalco <anna.maniscalco2000@gmail.com>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
 	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
 	Antonino Maniscalco <antomani103@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
 	Anna Maniscalco <anna.maniscalco2000@gmail.com>
 Subject: Re: [PATCH] drm/msm: Fix a7xx per pipe register programming
-Message-ID: <202511280900.x5OzOOoJ-lkp@intel.com>
+Message-ID: <202511281253.rIkrIiqt-lkp@intel.com>
 References: <20251127-gras_nc_mode_fix-v1-1-5c0cf616401f@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -101,20 +102,27 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Anna-Maniscalco/drm-msm-F
 base:   7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
 patch link:    https://lore.kernel.org/r/20251127-gras_nc_mode_fix-v1-1-5c0cf616401f%40gmail.com
 patch subject: [PATCH] drm/msm: Fix a7xx per pipe register programming
-config: loongarch-randconfig-001-20251128 (https://download.01.org/0day-ci/archive/20251128/202511280900.x5OzOOoJ-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251128/202511280900.x5OzOOoJ-lkp@intel.com/reproduce)
+config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20251128/202511281253.rIkrIiqt-lkp@intel.com/config)
+compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251128/202511281253.rIkrIiqt-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511280900.x5OzOOoJ-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511281253.rIkrIiqt-lkp@intel.com/
 
 All warnings (new ones prefixed by >>):
 
-   drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function 'a7xx_patch_pwrup_reglist':
->> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:71: warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+>> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: warning: & has lower precedence than ==; == will be evaluated first [-Wparentheses]
      984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
+         |                                                        ^~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: note: place parentheses around the '==' expression to silence this warning
+     984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
+         |                                                        ^ ~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: note: place parentheses around the & expression to evaluate it first
+     984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
+         |                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+   1 warning generated.
 
 
 vim +984 drivers/gpu/drm/msm/adreno/a6xx_gpu.c
