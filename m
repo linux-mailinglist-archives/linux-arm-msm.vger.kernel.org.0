@@ -1,110 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-83733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4306CC91AC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:36:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28F96C91B60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:50:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1A86D34DBFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:35:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDBF33ABF48
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:49:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D06A830DEAC;
-	Fri, 28 Nov 2025 10:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB13330DEB5;
+	Fri, 28 Nov 2025 10:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BDpDz5xh";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Dp6GO3IB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OA5l8Xnh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888730CD92
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:34:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073D42DEA95;
+	Fri, 28 Nov 2025 10:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764326082; cv=none; b=pwOD3GVOEwdGcnUAV5GJxfBwFUE4B9qjIHzEkzLkiMIY/3gnlfTU+TEIyQ2aDgOqIsFVie7VMpDwxWP9GlWfR1Ry4BxRAfxCuiwgBkLNtbwByMiU5O6i+3MXi6kB2rI1TVDSngb7eF3lCOV+ejFkhx5e1PvTezNTa0RuEnfrtSo=
+	t=1764326989; cv=none; b=aVs/vMkZXNJhi0EQf9Zw6MzbajHPSPI+abgSIvUWHFQd4EVEV0Z+6pJa0C2bvo4qVyBBz14/Z2HGiQwvdU6iEoJaGPC+jkzbeXvIB4VHCOSn2X5qPzmm9lzRMZSSe8iaj4dA95iKxpJiV1f9DvAEw4h/e97BOBXxJJYkCFmYogs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764326082; c=relaxed/simple;
-	bh=3McFV9+MNY0DtMFk+39XUHIIYjw72LprTYXBqI4SwGA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y89R6KT1U9jml816pySvSajnMIK9xtySrcuuLoE5IDkZPjcw0W1Z8W3j3a/C+ahxXQHcp88ucNm61zXPVDVBeconZvEG8xTDgK4OZ1AQgZcg7cWsCsBbIQbwAydhgcDiJP/aAD0RO7WfnOBlYlx/QRb46V9kZyLrJdK+2RKIii0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BDpDz5xh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dp6GO3IB; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1764326989; c=relaxed/simple;
+	bh=XgYHgTJif0Kt4tQ0ots92qx7+sf8k9cuvqs9xCd4zvQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RFHo8V15shbIUXb8J2jK0kcgasU4KCbQsEnKIkSIoJvnLf+V1aEQmR4Eq2DwMyGstvlHHpv39zcBxrLEgxKl3hxI1+hIg09cMeS5hEGc6iA40dDLAErTP8tsXAntBmQAewwLVzxDiajMJz1KQQj5zY0b4Y/Gq+yyvKEdTKjFWS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OA5l8Xnh; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS8Nl883122964
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:34:40 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS8NvIR4191713;
+	Fri, 28 Nov 2025 10:49:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=tksOsG49Dg9
-	nA4MxpHKa0diwA7zCt+Mdk9sP8H6UiFQ=; b=BDpDz5xhdBTByVRlPHItsGkAxya
-	X5Up2sJiSn77996IJYwNJOFnTSAv624Z6EnKTnPhrEeC7dy1Bg73qBAiXE0IsNTW
-	sKJ06ZwNEAjN8/J7ibOtWLZ27poS7DdBWLNTONO3WOb8/6hSUNJM2dpPNFk0RqPa
-	F17FGpgd98IecvYO67KXyjJ+mPjYZe0zXRjBhXe8pe29XRosnlotmLPRDFTErWAa
-	LQMD2gI+jvlIePISdQJXYKJ26A6Wgq5ZUS1MThIt4oy7D8klodB1fhoQQdFN1UMl
-	PkNCLvOxkG80Jor60OF+zmbZSwOjTLD1Nh6VzKnwO0hmtCbx0I1WyXAapjQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aq58ugw4g-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:34:40 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-297d50cd8c4so59167885ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 02:34:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764326080; x=1764930880; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tksOsG49Dg9nA4MxpHKa0diwA7zCt+Mdk9sP8H6UiFQ=;
-        b=Dp6GO3IB6XIOfk3Vbh5TtQXpdI7fZeUniYgjiGwpvy4x8t7nc56ZaX2u1ox9Ew95GB
-         FOmJ1FAgIkubO82kuA4gD/Mjvxu88DepuAuNp+l4e4ifq8oFLK8dTHKw1T2ZbkSS7Mfb
-         fezd1ew0vnY1KQRx4NvvU4lVKOFK7pt6ZkHDJS6vqgEXjgas7ZnqhZHLwoz2gZH61+ma
-         MhpHR/5vNlIeiapKsAsQzJZ941wcZbAqm1Dvr8GlUQ+hxlcWnAUz0tRq7h9/xz5wlJYP
-         5rh1Tx/xacGY57Zvqbj7e1jZIDJGvtD2aZbCBjWBfnoMET7TaQ4tVO9fIPBol0ksO8WE
-         Ip9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764326080; x=1764930880;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tksOsG49Dg9nA4MxpHKa0diwA7zCt+Mdk9sP8H6UiFQ=;
-        b=c31TMevq1bFSP8pQmFtutC/t2LIIEF9AVtUEzMvTkGL4MRR+DvQjOsfaU/55uVOaIK
-         HyWL0hEybHehbKGF1a/UmQELUSOawdFn9s51SQ6S+7k/YaFux8ObmLDhPyOwL71uYHFp
-         HDoN9+FYqvBTrv2tJGMMCE/+QeFcATjqrWZQuKc2MCrf6JBnK8+v3Kr9fpDotjDmQxv3
-         Fsm06n7OP7sr4tqdEAt7s72oo3DqoipEm3QK0fq2DB/A0jJwKy1ogSQYsi9EghUumPXN
-         nYvNi0D53yNDRdfrLVaLZyLHsY6vJ7Z/E341Z+AOfQgtQdKoFIq7dI6LGSx2mYFFBrsf
-         KJiw==
-X-Forwarded-Encrypted: i=1; AJvYcCUAmyudrP8zWK8YBvwnJCaji12wycunWYECrdsLfjN7du5KSXt2QwOu5gsfanNYj0B+YzrNejR/ObmhI61g@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVbW6rJ/V4PwhyRTMw5OvtYNzeSAEuQFV33Qq7IvSTiBerbu0L
-	cZYce3/aSBUrChc7CTKRuBFKY5PZEMzU1jiiaZYxniaDopBgNte7YIZo+1sQpcArGj7T68aN64X
-	knqgsfai3b7gKbWDF+Z/9vSc0XlbVhkIzHR4fGeQiymCzp9uFSYnZiMsChYNO6fXgZHeC
-X-Gm-Gg: ASbGncuUeQM2qSJKVKPb/4Be+xpq9Iyq5+S6xrv0QuNMw/WSRrKRwzZKrjzM0EhV5/b
-	F9xKMo4V4tsX/N1jpAmuu6eP3fhFgWPDbbWUmcfK8oVHhwt4TRCK8FNkYLiX8PXSPDcJ0rFT3tf
-	p6bHU9XxteAFqfPh2U0LqoMRQL8M6RvjlP7h6987CstHBJoyr0pX09P/zW+J6M80tE+WIa+YwMS
-	DiwsepQ/lxXfbV8nAMnXqHu9jyudRoDRHv2qT+aPjFLO1wa3Iq/QCmI/g8pO+kUn06sGm6A6tmg
-	+NqGOmYAbU455bOdWyYdIIZ4dw6uhb87s5PiFSCF+LHpi1dhRJ79mLoNYRSrqWtmnOPzDyrFTWb
-	7dcvayt0lfdPw97zJcYO3IUXZtC+mKQXqbLACEvcysw==
-X-Received: by 2002:a17:903:3b87:b0:295:565b:c691 with SMTP id d9443c01a7336-29baaf75d56mr164237025ad.17.1764326079668;
-        Fri, 28 Nov 2025 02:34:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQsu550Gf8bRhwbobshsjKneIYUQA5FyjtpAtmmp+z1D8G7bxKdB2r9mHvhM84fy3g652XSw==
-X-Received: by 2002:a17:903:3b87:b0:295:565b:c691 with SMTP id d9443c01a7336-29baaf75d56mr164236655ad.17.1764326079120;
-        Fri, 28 Nov 2025 02:34:39 -0800 (PST)
-Received: from hu-ekangupt-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bce40b993sm43098195ad.14.2025.11.28.02.34.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Nov 2025 02:34:38 -0800 (PST)
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-To: srini@kernel.org, linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de,
-        dmitry.baryshkov@oss.qualcomm.com
-Subject: [PATCH v2 2/2] misc: fastrpc: Support mapping userspace-allocated buffers
-Date: Fri, 28 Nov 2025 16:04:28 +0530
-Message-Id: <20251128103428.1119696-3-ekansh.gupta@oss.qualcomm.com>
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=VnO1XI5Z6djcuLYGOcp4ZXXOOQJxWEIAn6r
+	C1Y2MO8c=; b=OA5l8XnhuT5GWNkgEdwViVcXjUBdKMT8E6aDpYakaXQ46/XGPkY
+	ogESpyttv9reK8Wnjd9BMA31WWhKMmfmvyuye9tba8iV0Z9gRjbsXBXX/VV6m1zJ
+	Oo5LjDRpXsrTTAJXVNamIYJdXcWRTbxNvEiaYU4qQSUyo/tUxiV4bsqWR7D9edjc
+	KUCwzI99NacRa5t9aX3zfLkiH9aco+dUilO8cF/SFU4cA8yNyu65PUvt4a7iieoC
+	3pZTpkGckL0wJvbUSvwC7UKm+gcz91jSqof0mQg73ASJ9hC3B2Yrek5BS2F9Berx
+	zZgaRsxCevTwsMwpF8j0JK010lXTJAk9AIQ==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aq58fgwhc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Nov 2025 10:49:37 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5ASAnYqF023536;
+	Fri, 28 Nov 2025 10:49:34 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4ak68mwd7h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Nov 2025 10:49:34 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5ASAnXw1023524;
+	Fri, 28 Nov 2025 10:49:33 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5ASAnX3T023515
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Nov 2025 10:49:33 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
+	id 189C676F; Fri, 28 Nov 2025 18:49:32 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: [PATCH v15 0/6] pci: qcom: Add QCS8300 PCIe support
+Date: Fri, 28 Nov 2025 18:49:22 +0800
+Message-Id: <20251128104928.4070050-1-ziyue.zhang@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251128103428.1119696-1-ekansh.gupta@oss.qualcomm.com>
-References: <20251128103428.1119696-1-ekansh.gupta@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -112,179 +86,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: dx9uUjqEt98v0RVUJFPKgEvLIHK358LQ
-X-Authority-Analysis: v=2.4 cv=UKvQ3Sfy c=1 sm=1 tr=0 ts=69297ac0 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=9b90K331daA_tkPLntcA:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDA3NiBTYWx0ZWRfX5yks6zhPyy3W
- amrrK7C+QbeGOUzwoELNS66Q6viebSP93m7E99aLA9yTckbKafQoSVSm+7jmNCBUnq157RW/Lhd
- jqBHoI3gfE6amUDekwNjsijckMkzTC9BzXk8m79HWyUvasWK30CD3geVGlMhaUAmSasDvxPkSyX
- Ii8y+Mecy13zSbVkmV+BHTaA5PTZgsEYR8CYDRfNV+W9DeHR8OwAsJaSAJP4qRppi1smATTiqVR
- SewSxcuUluoVjVqbyBmxM2f116wdygUKyscZsGvhOsT5rTqbv1p7Hs8sRqebK3i84liHhR4yBcU
- qu55I03/DD8D+FKgqfKyWsf46hDGnIuVjmzaDnSdIvsWu9819r/0myZpdvYN+pwfAkoVlg7h7oy
- LyPtsSH/BQaHKbQJYHXZDBbNYL21VQ==
-X-Proofpoint-ORIG-GUID: dx9uUjqEt98v0RVUJFPKgEvLIHK358LQ
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: pKyA0y3VMVUaOLvbIzSGhU7Y_4eX1dDo
+X-Proofpoint-ORIG-GUID: pKyA0y3VMVUaOLvbIzSGhU7Y_4eX1dDo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDA3OCBTYWx0ZWRfX/132emUBaExB
+ PSkCdRtoc2SOS7ThQplK3IZqtMVEtOvRNqCcy61rep2CQDdGImFa8rN8gS4Lxx6qYEeEYQWqtN7
+ lyUTCmGGkyJ41UixOkORmE2IqXTIxXq9u/GYfL/NDu5bEQyTCGKS9Go4jlKgF5YgtvLXpBaurM+
+ SUN5wae6vMt0R0Ps49uMV6LaIQGL2zbtJ05K1aU7RYikxgrcjj7GdJQ9Z1BCekzgVQIBxX5wnND
+ T0H5aRQnzWYHAluOVvH2pOmqfa5iA4GuU438jCc7teupJ3c5QykLTwh8MR8rTI9OUnFL6U6DJIc
+ VGAvx2yENXRV9+XezRvgjZpKkED+UPstk8S0nD2kwvQumY05w0BEq2x/FPAh37V/abDoUwhzzid
+ K2f2QIhw/YO9sJ63m3vjKHV7DJsbDA==
+X-Authority-Analysis: v=2.4 cv=E6DAZKdl c=1 sm=1 tr=0 ts=69297e41 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8 a=0l7i4LX0jF_Ij28KvGoA:9
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-28_03,2025-11-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ malwarescore=0 suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280076
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280078
 
-Currently, FastRPC only supports mapping buffers allocated by the
-kernel. This limits flexibility for applications that allocate memory
-in userspace using rpcmem or DMABUF and need to share it with the DSP.
-Add support for mapping and unmapping userspace-allocated buffers to
-the DSP through SMMU. This includes handling map requests for rpcmem
-and DMABUF-backed memory and providing corresponding unmap
-functionality.
+This series adds document, phy, configs support for PCIe in QCS8300.
+It also adds 'link_down' reset for sa8775p.
 
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Have follwing changes:
+	- Add dedicated schema for the PCIe controllers found on QCS8300.
+	- Add compatible for qcs8300 platform.
+	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 ---
- drivers/misc/fastrpc.c | 96 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 85 insertions(+), 11 deletions(-)
+Changes in v15:
+- rebase patches
+- fix incorrect indentation (Dmitry)
+- Add patches for monaco-evk enablement
+- Link to v14: https://lore.kernel.org/all/20251024095609.48096-1-ziyue.zhang@oss.qualcomm.com/
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 9bf76e224852..feba79913763 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1854,8 +1854,10 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
- static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
- {
- 	struct fastrpc_buf *buf = NULL, *iter, *b;
-+	struct fastrpc_map *map = NULL, *iterm, *m;
- 	struct fastrpc_req_munmap req;
- 	struct device *dev = fl->sctx->dev;
-+	int err;
- 
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -1869,13 +1871,41 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
- 	}
- 	spin_unlock(&fl->lock);
- 
--	if (!buf) {
--		dev_err(dev, "mmap\t\tpt 0x%09llx [len 0x%08llx] not in list\n",
-+	if (buf) {
-+		err = fastrpc_req_munmap_impl(fl, buf);
-+		if (err) {
-+			spin_lock(&fl->lock);
-+			list_add_tail(&buf->node, &fl->mmaps);
-+			spin_unlock(&fl->lock);
-+		}
-+		return err;
-+	}
-+
-+	spin_lock(&fl->lock);
-+	list_for_each_entry_safe(iterm, m, &fl->maps, node) {
-+		if (iterm->raddr == req.vaddrout) {
-+			map = iterm;
-+			list_del(&iterm->node);
-+			break;
-+		}
-+	}
-+	spin_unlock(&fl->lock);
-+	if (!map) {
-+		dev_dbg(dev, "buffer/map not found addr 0x%09llx, len 0x%08llx\n",
- 			req.vaddrout, req.size);
- 		return -EINVAL;
- 	}
- 
--	return fastrpc_req_munmap_impl(fl, buf);
-+	err = fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
-+	if (err) {
-+		dev_dbg(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
-+		spin_lock(&fl->lock);
-+		list_add_tail(&map->node, &fl->maps);
-+		spin_unlock(&fl->lock);
-+	} else {
-+		fastrpc_map_put(map);
-+	}
-+	return err;
- }
- 
- static int fastrpc_req_map_dsp(struct fastrpc_user *fl, u64 phys,
-@@ -1989,25 +2019,69 @@ static int fastrpc_req_buf_alloc(struct fastrpc_user *fl,
- 	return err;
- }
- 
--static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-+static int fastrpc_req_map_create(struct fastrpc_user *fl,
-+				  struct fastrpc_req_mmap req,
-+				  char __user *argp)
- {
--	struct fastrpc_req_mmap req;
-+	struct fastrpc_map *map = NULL;
-+	struct device *dev = fl->sctx->dev;
-+	u64 raddr = 0;
- 	int err;
- 
--	if (copy_from_user(&req, argp, sizeof(req)))
--		return -EFAULT;
-+	err = fastrpc_map_create(fl, req.fd, req.size, 0, &map);
-+	if (err) {
-+		dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
-+		return err;
-+	}
- 
--	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
--		dev_err(fl->sctx->dev, "flag not supported 0x%x\n", req.flags);
-+	err = fastrpc_req_map_dsp(fl, map->phys, map->size, req.flags,
-+				  req.vaddrin, &raddr);
-+	if (err)
-+		goto err_invoke;
- 
--		return -EINVAL;
-+	/* update the buffer to be able to deallocate the memory on the DSP */
-+	map->raddr = (u64)raddr;
-+
-+	/* let the client know the address to use */
-+	req.vaddrout = raddr;
-+	dev_dbg(dev, "mmap\t\tpt 0x%09llx OK [len 0x%08llx]\n",
-+		map->raddr, map->size);
-+
-+	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
-+		err = -EFAULT;
-+		goto err_copy;
- 	}
- 
--	err = fastrpc_req_buf_alloc(fl, req, argp);
-+	return 0;
-+err_copy:
-+	fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
-+err_invoke:
-+	fastrpc_map_put(map);
- 
- 	return err;
- }
- 
-+static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-+{
-+	struct fastrpc_req_mmap req;
-+	int err;
-+
-+	if (copy_from_user(&req, argp, sizeof(req)))
-+		return -EFAULT;
-+
-+	if ((req.flags == ADSP_MMAP_ADD_PAGES ||
-+	     req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)) {
-+		err = fastrpc_req_buf_alloc(fl, req, argp);
-+		if (err)
-+			return err;
-+	} else {
-+		err = fastrpc_req_map_create(fl, req, argp);
-+		if (err)
-+			return err;
-+	}
-+	return 0;
-+}
-+
- static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_mem_unmap *req)
- {
- 	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+Changes in v14:
+- rebase patches
+- Link to v13: https://lore.kernel.org/all/20250908073848.3045957-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v13:
+- Fix dtb error
+- Link to v12: https://lore.kernel.org/all/20250905071448.2034594-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v12:
+- rebased pcie phy bindings
+- Link to v11: https://lore.kernel.org/all/20250826091205.3625138-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v11:
+- move phy/perst/wake to pcie bridge node (Mani)
+- Link to v10: https://lore.kernel.org/all/20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v10:
+- Update PHY max_items (Johan)
+- Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v9:
+- Fix DTB error (Vinod)
+- Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v8:
+- rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
+- Add Fixes tag to phy change (Johan)
+- Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v7:
+- rebase qcs8300-ride.dtsi change to solve conflicts.
+- Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v6:
+- move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
+- Update QCS8300 and sa8775p phy dt, remove aux clock.
+- Fixed compile error found by kernel test robot
+- Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v5:
+- Add QCOM PCIe controller version in commit msg (Mani)
+- Modify platform dts change subject (Dmitry)
+- Fixed compile error found by kernel test robot
+- Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v4:
+- Add received tag
+- Fixed compile error found by kernel test robot
+- Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
+
+Changes in v3:
+- Add received tag(Rob & Dmitry)
+- Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
+- remove pcieprot0 node(Konrad & Mani)
+- Fix format comments(Konrad)
+- Update base-commit to tag: next-20241213(Bjorn)
+- Corrected of_device_id.data from 1.9.0 to 1.34.0.
+- Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v2:
+- Fix some format comments and match the style in x1e80100(Konrad)
+- Add global interrupt for PCIe0 and PCIe1(Konrad)
+- split the soc dtsi and the platform dts into two changes(Konrad)
+- Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
+
+Sushrut Shree Trivedi (1):
+  arm64: dts: qcom: monaco-evk: Enable PCIe0 and PCIe1.
+
+Ziyue Zhang (5):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+    for qcs8300
+  arm64: dts: qcom: qcs8300: enable pcie0
+  arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
+  arm64: dts: qcom: qcs8300: enable pcie1
+  arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
+
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  17 +-
+ arch/arm64/boot/dts/qcom/monaco-evk.dts       |  85 ++++
+ arch/arm64/boot/dts/qcom/monaco.dtsi          | 374 +++++++++++++++++-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  84 ++++
+ 4 files changed, 543 insertions(+), 17 deletions(-)
+
 -- 
 2.34.1
 
