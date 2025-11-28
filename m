@@ -1,101 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-83701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 921E1C9143F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:44:04 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A412C913F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:40:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D1DF94E85E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 08:40:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C84B43450D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 08:40:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E2412E8E06;
-	Fri, 28 Nov 2025 08:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCAB62F0665;
+	Fri, 28 Nov 2025 08:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cMqJPVC0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FOU3kNNL"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="mJc5geUX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF7C2E8E0E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:40:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECAE2EA173
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:40:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764319220; cv=none; b=KzOFlVqRJcbdZEzAoWMRuxH542j6Eb/jekl7/HJKyY1sda1rwt1ZMf3La4LrXCKJO+cENnoU8uP0Sh+sRk1Ife55FahXOcZL84skovZmvy9qSb4gH+QtAGTtfLvpOJ1KYs6QAXp6qSKvKulxOl8oOZH70Fk1H+mjBYsQPseGJP4=
+	t=1764319229; cv=none; b=XdIanuYNdUGmwHywDKziT7pREnXBpJCBlSPWqBmpPe8bAE48G4dWHMCj7mJNmcH6HaDDpEp3lINi2Wk+d3FacDUH0Ov8PQKVoeE/MyGHWqeyb2dG88dVEkegEMn5xbNMwEXXOHqdlCj39GQ6WJcVg4Lj1DwAVDF26G2OkR88T7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764319220; c=relaxed/simple;
-	bh=4m3eSCxxytd3/9ULrzWMXUlBCzfX/0w0UNwcUeemTBg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AHknaNy72ktzOIMlZczYGc8EVCrrWnoDSScM5PdhjmNZs5NAv56HCKHes0p6SyV9pO/gwM67kjgPtUbYMPZAi8RFfVBE1HRUEI9dNI0y2FL2lr7R1MIDpZJegpx0mWjYqrgryFgPDp9D9VwQHF4mrZak4MEbgSQT2favuTmysBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cMqJPVC0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FOU3kNNL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS8NlCL3123003
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:40:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tNJ+LEhWT70faj1LvFJVUChOAyLj23F8IPQ1qe4AelM=; b=cMqJPVC0P1AYmG5N
-	NqSDSnDMGD98V8YBzIhWWz8XosyyEHW1idRNonqZtV9EFUMsyLT5eRxl8PRC+s5M
-	QKTUjJO+k8davh689pmlAEQUEWVBTj8vWyKZaNQxZNldaPAKbiC4ksa3cEhvG/iz
-	VdcWYMUYKyrWt68IXMacKHx8+uYfgbMfqUrhWWpy2j2MdqVQmkhSJt9nkTjDMAHq
-	CDBkEjbqW6QVyYuORDd1wn73UvSfwhkH4Q5aEv3j/4uP7eTk+tLixa6GwCCyZAFt
-	kr/YAr6otq9MGn/h8svycqRqTb6nKluEeT14KnZI8NJj0TUoVrYRoQHGaPK/d7f1
-	F3/NrA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aq58ugj31-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:40:15 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b99763210e5so2720420a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 00:40:15 -0800 (PST)
+	s=arc-20240116; t=1764319229; c=relaxed/simple;
+	bh=3X8tyZWXTkjNYVdi07QB6cTqdnSusNZcaxQfhmtbFck=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jskYiXd7OiHvZOpgMACxvvFdrnv35Y/NAj2SsUDSLzoPecshfBZWWvMUcmWNKfivVsScWh+7AMBty5jsQzHhyKq8V88MndWAVquyuifLZD4oIrYjUJwWHouapZGyQpY3/a1Io4yruCiJhFAthB84L2J5nIqTYWAdyZTXClgxYE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=mJc5geUX; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4777771ed1aso9154795e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 00:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764319215; x=1764924015; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tNJ+LEhWT70faj1LvFJVUChOAyLj23F8IPQ1qe4AelM=;
-        b=FOU3kNNLatGd4jvQoM1JcqnxNfLkhxImm2KntGltAaf7d+hnX+lA5dV3sZp5/jSDK/
-         iOJKWlr7eBDqQOerArlkjssDoxbTmN9B7bKrBssQKhxlmULJXYfBQ8SZ87Jcisx7lt1l
-         V/YM0qyE8JvA+sNn7qyB8/XPgBhgaaIddDkweiIFBnDzcPzhnzyR6+zQOFiS121WQyIR
-         YJBJr5RgpO3r/x/QT47wZHlfximrRkSLkT5XkPPp7Vrfa+MuNgDRLgwj6TaogVKZQij9
-         0A576Xw6uEF78jqArpc5d0VsJAESTXpNiIkkCNDD0KAy6Anq9bdDwUQ3jBDKn2gUs3TO
-         8Vdg==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764319219; x=1764924019; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pv57BML390TluVq3G2un1REvxVC2ClNJmdiej8kENaU=;
+        b=mJc5geUXoVaY/pBYFNIOYQ/Ty7HI7DQc0NKbfj+ayOZblg/nNtw3/wzK6d+KXAC0nP
+         LA6mdNIMmJfzDiSbX/+UoTlOmxO9amCrDXSct0gaK9ftSDnfpFidX9QaXshYj/YPsWll
+         bCTicbRAAPemw44Zfr9GG1C/T3moXspVXQpuTs2CMyjMJUJrREUBfcne85S6K+zxbLYr
+         yPhAy+L+0trC7C5mqIGvkdeSl2THK9PG/X28ZfquGMO8YbTSztxefH+kqGcMuLSscTe1
+         75dXRWM/DJd1jyXuFnS6uif0/0osP2ASRAZXLLAcd1m18QF/Z7E9yH781SSIQNDl7eac
+         QL2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764319215; x=1764924015;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=tNJ+LEhWT70faj1LvFJVUChOAyLj23F8IPQ1qe4AelM=;
-        b=Qq+DN0iduRuCADhDS5EobzXmyWDJ992pcedHn/cAutXpOXZB4F/Z2MKcLAaLieQFLY
-         utQY51OArPJjkCSey9go8COlpIr3PhA99Y93sT957/7bH284Iraybon6C+9oA8SFiOhj
-         gzFhMnP6L/o+NovQJxNYasvujyvIOVAfSU2qvb3YhRS//nhbS1L1xl42K6P1zr6YXGhC
-         j6gwrn9yyg2fdAjLPYY5sYRkzFwOXrAPxADBsknoKmp4sNPohbQkZ2HM9bYnO23EGUJO
-         +pSjIXPF5Z2r3dn3iUKxIsl5C9RQ7J95jNZZIfBxlskIPkPfDtHXGpzGUYRNjcitiWE2
-         ZByA==
-X-Gm-Message-State: AOJu0YyGQp9XpCklyleRm0S5yjvEuV9DpcXja7LbKvOa3YXL196w07nV
-	BtunVwMfYVSdotxMEeCkY9KZygaHqfIAYCv6lQQBkr3Q/VYZogfVwGVJ2kGijet+O10PBiA/kda
-	QpPVxso/T2SrajYwuiDuDZQ8HNXLbpArLoyiMJ6MDFLjtVW9xd2bwwKL1vuW5yHWC2Bbv
-X-Gm-Gg: ASbGnct5sRMbYoiUaKQ1t+7qdmlspFkmvehItRxcgXN4c71hn6WYUDM1ctDajfEd2Qw
-	Gosq/2U4dNGUsGkRnz/2ouhw09WLDk7je4nVHjfuZRT3+sulkmxuQqXpjcG2nFkpESLhQadHqKm
-	98LE0Aaqk6E2ttVkzle17vVcRwciHIdKNC+vcTuk4igzKJGd7tspE8HRmaxgCGVTSPTolfUfWrB
-	cJ42jDmVGP+07njzgK6o8Bao7Ota/bmNriRZdoxRr7zsxbPIafOAVaLQKpTHxsXZ66KGfxlm6CS
-	wfu/5r54Y9sBh/cESK5/+rXRWy9UK1HO1mLuwmx0poHdTbE7WQbec9V+tnF7SyohHc7MTFLnyE+
-	EJ+rQ2DI+U/bIfGWpPlwEMuV4yV7BnpmtowuCJLiyIhb/HYbY6Qso
-X-Received: by 2002:a05:7300:bc0b:b0:2a4:3593:6472 with SMTP id 5a478bee46e88-2a7192e5cb2mr17064706eec.34.1764319215181;
-        Fri, 28 Nov 2025 00:40:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXPQpamY2fDlIkuiT3ygR+MdZL1pAWcFiFrbesihBz0rPgNOyBAxYPw5kV+1l5Eqsw/N7AVA==
-X-Received: by 2002:a05:7300:bc0b:b0:2a4:3593:6472 with SMTP id 5a478bee46e88-2a7192e5cb2mr17064681eec.34.1764319214613;
-        Fri, 28 Nov 2025 00:40:14 -0800 (PST)
-Received: from hu-luoj-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a96560986csm21895872eec.2.2025.11.28.00.40.13
+        d=1e100.net; s=20230601; t=1764319219; x=1764924019;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pv57BML390TluVq3G2un1REvxVC2ClNJmdiej8kENaU=;
+        b=KRcxQgwSO/h9okZlBnb/DjtqMptUnzG+UBj+soPwMtrKFUaB6Sv7kVkxB1pTf3m7cM
+         W7Q2udcr1bXf1Nj95SnMaq00WNYwBCqmDLVpH73VmB/1FIcPzbzr46sbW5Xrygv0pcBd
+         Fq6aKvQwZOo2VPvQqb8lC9D1hIdnUZFlm9nbxzOzclb1unbXO1puChGDBbphr0tBQEpJ
+         ymMJzjYGQO4O/AUfsrM4HAJ3vO6Gbti0FHPqGmg7EqIaZr5nNQPTWfV6aJllTZg18DW3
+         qFrMy3ufNEEgpCo2xyy5+zjCWFkumcZZvpuQ4zZuOyFDvUJvc/xBA1TuJjSKJvnEq35j
+         NKLA==
+X-Gm-Message-State: AOJu0Yzvv+l/WY+kKVBzhfXwc3lpMFgfhnbS6U/gi1c/PgSb8s9MKGfj
+	3q27Z5KJXAZSQ2YuPYkIYLHWSAzchIjuZe1QFc3ShzYDLsd0D3UvV3SxEGVWG/ofXz0FFWiPnuP
+	dBz3d
+X-Gm-Gg: ASbGnctLjvGWU7JVes/ZWaQuHrylxhUf4OqmICAFe0rGciKEmVaUvc5tF+RALJyibdj
+	a6RL1St45v0ANs9Qn4/GAe3+dqlyzObt2WPtCgj7Ekpz1sQdVLQin7Pt9y5XiGrYOX5I+46Co/a
+	1/5wKBdNHtBAgoKpehW5iASnpk3pbsPlB4Dp1Pd5Fjb/78KShgMBXlrpBN5UYp6TFdLyYICLLo8
+	+RDRL3ZytUDNNQpPxKxLEOaW2ZU6UDr4zozebEgozIVKpiv6dJwK7Nl6ACEYAY/hNMCp0xO2ci/
+	ENQGBqXfj7ZgrkDAKJxFjPCxISGO2ceGvY5708GJi6tN7HdHKE+UQO73O0zfCqJvcsmmuDXePvQ
+	/3B9FwFtopBA0MKvpwaiR/CaqPPPpyAZ1JWsXBQ7GU7QxyxWZIuXFtz43ZwR6t0CzSFKKjT/O3K
+	7qv2qayjtgV2sMWvc=
+X-Google-Smtp-Source: AGHT+IG6gmIEdZdrYij+Blr0UQRsnegWS77cDteB4jdM+Vo/iuKrHqMmj2kaDrtFyf6NlzMiQ9tl7A==
+X-Received: by 2002:a05:6000:1887:b0:42b:2f90:bd05 with SMTP id ffacd0b85a97d-42cc1d3571amr27379548f8f.45.1764319218845;
+        Fri, 28 Nov 2025 00:40:18 -0800 (PST)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:f3c6:aa54:79d2:8979])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1ca78f77sm8190005f8f.32.2025.11.28.00.40.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Nov 2025 00:40:14 -0800 (PST)
-From: Luo Jie <jie.luo@oss.qualcomm.com>
-Date: Fri, 28 Nov 2025 00:40:11 -0800
-Subject: [PATCH 1/5] clk: qcom: cmnpll: Account for reference clock divider
+        Fri, 28 Nov 2025 00:40:18 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 28 Nov 2025 09:40:11 +0100
+Subject: [PATCH v2] gpio: shared: fix a deadlock
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,104 +83,306 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251128-qcom_ipq5332_cmnpll-v1-1-55127ba85613@oss.qualcomm.com>
-References: <20251128-qcom_ipq5332_cmnpll-v1-0-55127ba85613@oss.qualcomm.com>
-In-Reply-To: <20251128-qcom_ipq5332_cmnpll-v1-0-55127ba85613@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Luo Jie <quic_luoj@quicinc.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-        quic_leiwei@quicinc.com, quic_pavir@quicinc.com,
-        quic_suruchia@quicinc.com, Luo Jie <jie.luo@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-47773
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764319213; l=1996;
- i=jie.luo@oss.qualcomm.com; s=20251128; h=from:subject:message-id;
- bh=4m3eSCxxytd3/9ULrzWMXUlBCzfX/0w0UNwcUeemTBg=;
- b=sp9K5nJf6Csi0yduFV2qnisYcsLERB8DNuCWdugfeV1u8aXcCG72IMAaMNgwlv5Xal8Fjv6Rb
- oOigt/zrEf8DMPASksXGEK2/ZB/UicqyzwC0PfVhL8u3gIIgJ8d9NYe
-X-Developer-Key: i=jie.luo@oss.qualcomm.com; a=ed25519;
- pk=gSsYMDakxtd6UDFYDdA9y9yjIs5Etp5GK/3DoXWPyS0=
-X-Proofpoint-GUID: WBFLl1zr3fLvxxYxuVu-UOACaZpf-sst
-X-Authority-Analysis: v=2.4 cv=UKvQ3Sfy c=1 sm=1 tr=0 ts=69295fef cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=S55vJYNB7fQppqqD1sAA:9
- a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDA2MiBTYWx0ZWRfX/pRZGy94erH1
- kb+gvRQEo1r34UYnFDC1HF/bCrkVG1LiVZqBwurZ5wsKt1mu7gzVFxixwtHl7PV43AIs6CgVJ4X
- 3ndvkML8OsicEU/GajTQEAgrM6/fJIrIdImNznNa3SjnwPVxCI2V8uSqVCvFFsVNNfPrbHc+B/u
- 8qN/caEjKQEkW9AZ+y/PqXyJDBhOUjZJG5RTYkJhibWKy/77DTZRNWO00mFEAvCsQjV//GDHODs
- JYFK7AC/tfRc9l9Em7zPMTF3zW3qFwKzbZarvPtepy71XDnGfdlyNY+ugm7iqKNHkOsJhQlL9Jg
- 8pWuXs6Vxjg+lycf5IxjxjX5erwdRCkJyaM0rm1hlvEjkZWHgUc/vnLPRspP23AEUsfxjvGRaEJ
- uBpx7MCV28TPKQFmQIY1K+ce7mXsBg==
-X-Proofpoint-ORIG-GUID: WBFLl1zr3fLvxxYxuVu-UOACaZpf-sst
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-28_03,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1011 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280062
+Message-Id: <20251128-gpio-shared-deadlock-v2-1-9f3ae8ddcb09@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOpfKWkC/4WNTQrCQAxGr1KyNtKJ/RFX3kO6iJ3YBkunZKQoZ
+ e7u2Au4fA++920QxVQiXIoNTFaNGuYMdCigH3keBNVnBiqpdo5aHBYNGEc28eiF/RT6J5KvKip
+ rpnPbQJ4uJg9979lbl3nU+Ar22V9W97N/gqtDh3xquKnLnvy9uk46s4VjsAG6lNIXezdmJ7kAA
+ AA=
+X-Change-ID: 20251127-gpio-shared-deadlock-2d44205a2876
+To: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10636;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=9lox0R+mgEuMYviCChf0yb+hjOX6OPa9S8ZAoFMys7k=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpKV/t/H+vrv5MBitQhroKo8RSrginL8pRxQNoP
+ T4F4WCzbF2JAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaSlf7QAKCRAFnS7L/zaE
+ w+EqD/kBapQ3KqcH+T1TjwWahDkgbatPSax2eDFdx51C58PcXv3o5Ltb5TiUXRp/YXNCT4Gl0kA
+ 7pfGaVEPR5qzuRcakLA1ZgcyGgvCBVBYBj3dkWxEFdYWs/QGutxAPYUgy/0sfTAsGxPV9N5RspB
+ WX13Db9hcI/baPYz9DGTVY9oxluYVoADrXWz30pvQvyR7WeGuQn4ObAkd1d1pFUVr+QI6khk+Vf
+ hBh/IUBDwrxBqEHP7YXA0cVkxyf537XMs9kW4sjMXKc3muUn54VTez8fm5KiFG9q1kNw94Kaklx
+ 28H4bzVIq54MPqp3oivWfeWj+cdD/1X7IEQuHFmqt6occAcA6WT+atxF6MAFXbdRDkq5osRPFXR
+ Z1/acgNKzHNuMR5GPCkBNBNMeeXx3MbbtTk9kiPKCRd46aiGKlnwjzcLqdOpSD1dX6amTu0DLc4
+ Z+gI+0DH+JPz1ooe9lO1pLdnPl8bFWXp5hErigwcAsYBpio1DGZbu69n2LSGnVVt7tgwFMDgtTE
+ GXcVhcaWknWljjuBfbuFPaDGVsaCrlD7UA113fH8bp+KDGm7jEs2k9Sb3aHgWxBerv1JPH1OdUj
+ MYEksoxOHxvmJlLzWaMChJO4s/KAnLF5lGX/sHvqX/RSAp2Jsvan9pEQ4q6rbmWbtFh4apmRAZX
+ LWDGuFD2jEY37QA==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-The clk_cmn_pll_recalc_rate() function must account for the reference clock
-divider programmed in CMN_PLL_REFCLK_CONFIG. Without this fix, platforms
-with a reference divider other than 1 calculate incorrect CMN PLL rates.
-For example, on IPQ5332 where the reference divider is 2, the computed rate
-becomes twice the actual output.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Read CMN_PLL_REFCLK_DIV and divide the parent rate by this value before
-applying the 2 * FACTOR scaling. This yields the correct rate calculation:
-rate = (parent_rate / ref_div) * 2 * factor.
+It's possible that the auxiliary proxy device we add when setting up the
+GPIO controller exposing shared pins, will get matched and probed
+immediately. The gpio-proxy-driver will then retrieve the shared
+descriptor structure. That will cause a recursive mutex locking and
+a deadlock because we're already holding the gpio_shared_lock in
+gpio_device_setup_shared() and try to take it again in
+devm_gpiod_shared_get() like this:
 
-Maintain backward compatibility with earlier platforms (e.g. IPQ9574,
-IPQ5424, IPQ5018) that use ref_div = 1.
+[    4.298346] gpiolib_shared: GPIO 130 owned by f100000.pinctrl is shared by multiple consumers
+[    4.307157] gpiolib_shared: Setting up a shared GPIO entry for speaker@0,3
+[    4.314604]
+[    4.316146] ============================================
+[    4.321600] WARNING: possible recursive locking detected
+[    4.327054] 6.18.0-rc7-next-20251125-g3f300d0674f6-dirty #3887 Not tainted
+[    4.334115] --------------------------------------------
+[    4.339566] kworker/u32:3/71 is trying to acquire lock:
+[    4.344931] ffffda019ba71850 (gpio_shared_lock){+.+.}-{4:4}, at: devm_gpiod_shared_get+0x34/0x2e0
+[    4.354057]
+[    4.354057] but task is already holding lock:
+[    4.360041] ffffda019ba71850 (gpio_shared_lock){+.+.}-{4:4}, at: gpio_device_setup_shared+0x30/0x268
+[    4.369421]
+[    4.369421] other info that might help us debug this:
+[    4.376126]  Possible unsafe locking scenario:
+[    4.376126]
+[    4.382198]        CPU0
+[    4.384711]        ----
+[    4.387223]   lock(gpio_shared_lock);
+[    4.390992]   lock(gpio_shared_lock);
+[    4.394761]
+[    4.394761]  *** DEADLOCK ***
+[    4.394761]
+[    4.400832]  May be due to missing lock nesting notation
+[    4.400832]
+[    4.407802] 5 locks held by kworker/u32:3/71:
+[    4.412279]  #0: ffff000080020948 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x194/0x64c
+[    4.422650]  #1: ffff800080963d60 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x1bc/0x64c
+[    4.432117]  #2: ffff00008165c8f8 (&dev->mutex){....}-{4:4}, at: __device_attach+0x3c/0x198
+[    4.440700]  #3: ffffda019ba71850 (gpio_shared_lock){+.+.}-{4:4}, at: gpio_device_setup_shared+0x30/0x268
+[    4.450523]  #4: ffff0000810fe918 (&dev->mutex){....}-{4:4}, at: __device_attach+0x3c/0x198
+[    4.459103]
+[    4.459103] stack backtrace:
+[    4.463581] CPU: 6 UID: 0 PID: 71 Comm: kworker/u32:3 Not tainted 6.18.0-rc7-next-20251125-g3f300d0674f6-dirty #3887 PREEMPT
+[    4.463589] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+[    4.463593] Workqueue: events_unbound deferred_probe_work_func
+[    4.463602] Call trace:
+[    4.463604]  show_stack+0x18/0x24 (C)
+[    4.463617]  dump_stack_lvl+0x70/0x98
+[    4.463627]  dump_stack+0x18/0x24
+[    4.463636]  print_deadlock_bug+0x224/0x238
+[    4.463643]  __lock_acquire+0xe4c/0x15f0
+[    4.463648]  lock_acquire+0x1cc/0x344
+[    4.463653]  __mutex_lock+0xb8/0x840
+[    4.463661]  mutex_lock_nested+0x24/0x30
+[    4.463667]  devm_gpiod_shared_get+0x34/0x2e0
+[    4.463674]  gpio_shared_proxy_probe+0x18/0x138
+[    4.463682]  auxiliary_bus_probe+0x40/0x78
+[    4.463688]  really_probe+0xbc/0x2c0
+[    4.463694]  __driver_probe_device+0x78/0x120
+[    4.463701]  driver_probe_device+0x3c/0x160
+[    4.463708]  __device_attach_driver+0xb8/0x140
+[    4.463716]  bus_for_each_drv+0x88/0xe8
+[    4.463723]  __device_attach+0xa0/0x198
+[    4.463729]  device_initial_probe+0x14/0x20
+[    4.463737]  bus_probe_device+0xb4/0xc0
+[    4.463743]  device_add+0x578/0x76c
+[    4.463747]  __auxiliary_device_add+0x40/0xac
+[    4.463752]  gpio_device_setup_shared+0x1f8/0x268
+[    4.463758]  gpiochip_add_data_with_key+0xdac/0x10ac
+[    4.463763]  devm_gpiochip_add_data_with_key+0x30/0x80
+[    4.463768]  msm_pinctrl_probe+0x4b0/0x5e0
+[    4.463779]  sm8250_pinctrl_probe+0x18/0x40
+[    4.463784]  platform_probe+0x5c/0xa4
+[    4.463793]  really_probe+0xbc/0x2c0
+[    4.463800]  __driver_probe_device+0x78/0x120
+[    4.463807]  driver_probe_device+0x3c/0x160
+[    4.463814]  __device_attach_driver+0xb8/0x140
+[    4.463821]  bus_for_each_drv+0x88/0xe8
+[    4.463827]  __device_attach+0xa0/0x198
+[    4.463834]  device_initial_probe+0x14/0x20
+[    4.463841]  bus_probe_device+0xb4/0xc0
+[    4.463847]  deferred_probe_work_func+0x90/0xcc
+[    4.463854]  process_one_work+0x214/0x64c
+[    4.463860]  worker_thread+0x1bc/0x360
+[    4.463866]  kthread+0x14c/0x220
+[    4.463871]  ret_from_fork+0x10/0x20
+[   77.265041] random: crng init done
 
-Fixes: f81715a4c87c ("clk: qcom: Add CMN PLL clock controller driver for IPQ SoC")
-Signed-off-by: Luo Jie <jie.luo@oss.qualcomm.com>
+Fortunately, at the time of creating of the auxiliary device, we already
+know the correct entry so let's store it as the device's platform data.
+We don't need to hold gpio_shared_lock in devm_gpiod_shared_get() as
+we're not removing the entry or traversing the list anymore but we still
+need to protect it from concurrent modification of its fields so add a
+more fine-grained mutex.
+
+Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Closes: https://lore.kernel.org/all/fimuvblfy2cmn7o4wzcxjzrux5mwhvlvyxfsgeqs6ore2xg75i@ax46d3sfmdux/
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/clk/qcom/ipq-cmn-pll.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Changes in v2:
+- Don't dereference entry->shared_desc until we take entry->lock in two
+  places
+- Link to v1: https://lore.kernel.org/r/20251127-gpio-shared-deadlock-v1-1-a36a650c2db4@linaro.org
+---
+ drivers/gpio/gpiolib-shared.c | 63 +++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
-index dafbf5732048..c6180116e1fc 100644
---- a/drivers/clk/qcom/ipq-cmn-pll.c
-+++ b/drivers/clk/qcom/ipq-cmn-pll.c
-@@ -185,7 +185,7 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
- 					     unsigned long parent_rate)
- {
- 	struct clk_cmn_pll *cmn_pll = to_clk_cmn_pll(hw);
--	u32 val, factor;
-+	u32 val, factor, ref_div;
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index cd4dd6fc76abf32e7a437c3c54eec807478170f9..8bdd107b1ad1d2fbd9742de20cf59f0820a2b267 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -49,6 +49,7 @@ struct gpio_shared_entry {
+ 	unsigned int offset;
+ 	/* Index in the property value array. */
+ 	size_t index;
++	struct mutex lock;
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct kref ref;
+ 	struct list_head refs;
+@@ -170,6 +171,7 @@ static int gpio_shared_of_traverse(struct device_node *curr)
+ 				entry->offset = offset;
+ 				entry->index = count;
+ 				INIT_LIST_HEAD(&entry->refs);
++				mutex_init(&entry->lock);
  
- 	/*
- 	 * The value of CMN_PLL_DIVIDER_CTRL_FACTOR is automatically adjusted
-@@ -193,8 +193,15 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
- 	 */
- 	regmap_read(cmn_pll->regmap, CMN_PLL_DIVIDER_CTRL, &val);
- 	factor = FIELD_GET(CMN_PLL_DIVIDER_CTRL_FACTOR, val);
-+	if (unlikely(factor == 0))
-+		factor = 1;
- 
--	return parent_rate * 2 * factor;
-+	regmap_read(cmn_pll->regmap, CMN_PLL_REFCLK_CONFIG, &val);
-+	ref_div = FIELD_GET(CMN_PLL_REFCLK_DIV, val);
-+	if (unlikely(ref_div == 0))
-+		ref_div = 1;
-+
-+	return div_u64((u64)parent_rate * 2 * factor, ref_div);
+ 				list_add_tail(&entry->list, &gpio_shared_list);
+ 			}
+@@ -246,6 +248,7 @@ static void gpio_shared_adev_release(struct device *dev)
  }
  
- static int clk_cmn_pll_determine_rate(struct clk_hw *hw,
+ static int gpio_shared_make_adev(struct gpio_device *gdev,
++				 struct gpio_shared_entry *entry,
+ 				 struct gpio_shared_ref *ref)
+ {
+ 	struct auxiliary_device *adev = &ref->adev;
+@@ -258,6 +261,7 @@ static int gpio_shared_make_adev(struct gpio_device *gdev,
+ 	adev->id = ref->dev_id;
+ 	adev->name = "proxy";
+ 	adev->dev.parent = gdev->dev.parent;
++	adev->dev.platform_data = entry;
+ 	adev->dev.release = gpio_shared_adev_release;
+ 
+ 	ret = auxiliary_device_init(adev);
+@@ -461,7 +465,7 @@ int gpio_device_setup_shared(struct gpio_device *gdev)
+ 			pr_debug("Setting up a shared GPIO entry for %s\n",
+ 				 fwnode_get_name(ref->fwnode));
+ 
+-			ret = gpio_shared_make_adev(gdev, ref);
++			ret = gpio_shared_make_adev(gdev, entry, ref);
+ 			if (ret)
+ 				return ret;
+ 		}
+@@ -495,10 +499,11 @@ static void gpio_shared_release(struct kref *kref)
+ {
+ 	struct gpio_shared_entry *entry =
+ 		container_of(kref, struct gpio_shared_entry, ref);
+-	struct gpio_shared_desc *shared_desc = entry->shared_desc;
++	struct gpio_shared_desc *shared_desc;
+ 
+-	guard(mutex)(&gpio_shared_lock);
++	guard(mutex)(&entry->lock);
+ 
++	shared_desc = entry->shared_desc;
+ 	gpio_device_put(shared_desc->desc->gdev);
+ 	if (shared_desc->can_sleep)
+ 		mutex_destroy(&shared_desc->mutex);
+@@ -521,6 +526,8 @@ gpiod_shared_desc_create(struct gpio_shared_entry *entry)
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct gpio_device *gdev;
+ 
++	lockdep_assert_held(&entry->lock);
++
+ 	shared_desc = kzalloc(sizeof(*shared_desc), GFP_KERNEL);
+ 	if (!shared_desc)
+ 		return ERR_PTR(-ENOMEM);
+@@ -541,57 +548,42 @@ gpiod_shared_desc_create(struct gpio_shared_entry *entry)
+ 	return shared_desc;
+ }
+ 
+-static struct gpio_shared_entry *gpiod_shared_find(struct auxiliary_device *adev)
++struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev)
+ {
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct gpio_shared_entry *entry;
+-	struct gpio_shared_ref *ref;
++	int ret;
+ 
+-	guard(mutex)(&gpio_shared_lock);
++	lockdep_assert_not_held(&gpio_shared_lock);
+ 
+-	list_for_each_entry(entry, &gpio_shared_list, list) {
+-		list_for_each_entry(ref, &entry->refs, list) {
+-			if (adev != &ref->adev)
+-				continue;
+-
+-			if (entry->shared_desc) {
+-				kref_get(&entry->ref);
+-				return entry;
+-			}
++	entry = dev_get_platdata(dev);
++	if (WARN_ON(!entry))
++		/* Programmer bug */
++		return ERR_PTR(-ENOENT);
+ 
++	scoped_guard(mutex, &entry->lock) {
++		if (entry->shared_desc) {
++			kref_get(&entry->ref);
++			shared_desc = entry->shared_desc;
++		} else {
+ 			shared_desc = gpiod_shared_desc_create(entry);
+ 			if (IS_ERR(shared_desc))
+ 				return ERR_CAST(shared_desc);
+ 
+ 			kref_init(&entry->ref);
+ 			entry->shared_desc = shared_desc;
+-
+-			pr_debug("Device %s acquired a reference to the shared GPIO %u owned by %s\n",
+-				 dev_name(&adev->dev), gpiod_hwgpio(shared_desc->desc),
+-				 gpio_device_get_label(shared_desc->desc->gdev));
+-
+-
+-			return entry;
+ 		}
++
++		pr_debug("Device %s acquired a reference to the shared GPIO %u owned by %s\n",
++			 dev_name(dev), gpiod_hwgpio(shared_desc->desc),
++			 gpio_device_get_label(shared_desc->desc->gdev));
+ 	}
+ 
+-	return ERR_PTR(-ENOENT);
+-}
+-
+-struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev)
+-{
+-	struct gpio_shared_entry *entry;
+-	int ret;
+-
+-	entry = gpiod_shared_find(to_auxiliary_dev(dev));
+-	if (IS_ERR(entry))
+-		return ERR_CAST(entry);
+-
+ 	ret = devm_add_action_or_reset(dev, gpiod_shared_put, entry);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	return entry->shared_desc;
++	return shared_desc;
+ }
+ EXPORT_SYMBOL_GPL(devm_gpiod_shared_get);
+ 
+@@ -607,6 +599,7 @@ static void gpio_shared_drop_ref(struct gpio_shared_ref *ref)
+ static void gpio_shared_drop_entry(struct gpio_shared_entry *entry)
+ {
+ 	list_del(&entry->list);
++	mutex_destroy(&entry->lock);
+ 	fwnode_handle_put(entry->fwnode);
+ 	kfree(entry);
+ }
 
+---
+base-commit: 5920c057a2fe9f4f05f87b5f0ab647d40d4b5087
+change-id: 20251127-gpio-shared-deadlock-2d44205a2876
+
+Best regards,
 -- 
-2.43.0
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
 
