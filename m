@@ -1,209 +1,384 @@
-Return-Path: <linux-arm-msm+bounces-83719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC412C918F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:03:12 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB518C919B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 11:25:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CAEAF4E1A32
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:03:11 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 2E22134594C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C04B930217A;
-	Fri, 28 Nov 2025 10:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF43C30B509;
+	Fri, 28 Nov 2025 10:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="GbOlW/IH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RTdSCiuT";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Gf7YO2SN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973175.qiye.163.com (mail-m1973175.qiye.163.com [220.197.31.75])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504713002D7;
-	Fri, 28 Nov 2025 10:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E73054DE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764324189; cv=none; b=q0nP35M93YTvqInH2DevDjIcvQx5xx10iN45Y6Q86csrQ3fFVoZqWUpgSAh4iepwnM9ypVkxI3bdze9Do4pn8ootrFWvuEdUQ/F4hqjhqpeafXJ3l4rTOTYEXdGzj8TEoYPJ58QATlllW09xeYNDoQ4whjHZLl92KaRm3crhiYc=
+	t=1764325518; cv=none; b=FEhRzGcuFMrLYzSRR2+EeQBfWdJuwnTMjoB2V6HwmnFG2PHvNB2LUrkexaBN9dhoiYTHGmQBhwyY0aZ51SiCwDoW2vGg+cwCIL/eFIF18tjRvikhCcqlRogocTUBTuZs1LWT3PRmvHhCkHDRPd+OPszYvFLAbrLA+24CTLB+v8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764324189; c=relaxed/simple;
-	bh=Av2+/muJiBJ/UxJApjUl1cE96TDlyTztxtrF+MWKLAQ=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=fTeyAlFESjLxrW3hLmhgxKU7WljhueZqTUjnFNV5A3o+UeHkzSUHZtrxZAOJLMpzs9MaJuv3MNauwMbeFhdSCoMTkvn9pA/ussetoeAADkeIWQk0X/rPMGdazs7EIzsL45TzI+i/G5YhVPLDhRtj/nJGt7Q/mchm4cyp2t/UkVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=GbOlW/IH; arc=none smtp.client-ip=220.197.31.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2b435546d;
-	Fri, 28 Nov 2025 18:02:54 +0800 (GMT+08:00)
-Message-ID: <5b5d0ac2-72b4-4641-a0ef-a34c20ce8729@rock-chips.com>
-Date: Fri, 28 Nov 2025 18:02:50 +0800
+	s=arc-20240116; t=1764325518; c=relaxed/simple;
+	bh=fZgWizBnPPlVTWS2nuOlSWwPJtzT5jETR+QI+4Hy6j0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=HR8vnJ5gZ47yfExiQ/ReokwKOsX+JW/s57uqa5zsYs9SMYULb+ldvvRFVkCRZ7gPbRbg8iqAqWmUIbdhOh1WlS9XFNKLsFOgvL8tYYOv7/opCICl4jWOn8HizKpHPnu375asp9wmXuCKNx3UE061CWK4H5dJi8jJUCzLMxxldCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RTdSCiuT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Gf7YO2SN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS8OglR3627248
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:25:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=vxrCpTObh+sq8TpBfdVpWIOw/J1PvdPRar/
+	7svAe1Ms=; b=RTdSCiuT+ZrAtcmrWHLcsKkF3kxC1NSMTWNaQipQelKqJ048qfq
+	IIsxoZuAOpKGfHBWhWFqDO5X22iGtkWvcGNcUiAXtngk9yT/b841WQGC/a7ZAhJ1
+	v2hB7pYiV066lNyfM9sByg3YhyWddc/TdvZISK/NZggvej1xdRiW1yp8/pk49Q93
+	txWZEMc84OS2vn6btJ5wyHTFZXtjInHU7yJygLU4SuxvcQeCqkPhCCC0A+DZolCa
+	nx1pZpZM788eeh/JtEbzvSzdxQjJWc31+74219xGsyhK5CrrmfvV9ZsxOmdnb197
+	9rN1nFusoEx2fpJVKWSsBS2bvJMfdTktTBw==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4apmynu050-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 10:25:16 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7be3d08f863so2529271b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 02:25:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764325515; x=1764930315; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vxrCpTObh+sq8TpBfdVpWIOw/J1PvdPRar/7svAe1Ms=;
+        b=Gf7YO2SNE+2JhUrtSvdBctpSj1n0Bondl4blivTcKCoVca3sXiRBkU310BXbgQYubB
+         QXm6PvsAjiCTwvmvSQKem+9i7Kwr++htykhVwda/rB730u3ysIdiVS6kJ1noSi/ElOF4
+         eXO6IQBArtBFyj6zl0KlsN9aq5zy4O7q4rG3C+Ohtwjvgi1fwUT8csMesqyw1dkMzzyT
+         P7CdernAu/qOrUrirh0wRLllQ4v68WZ084Rl5KoD6H+4RP0gmSb523E276y9NZO/wVEx
+         nFIPPztrmFiHkJQgVxQhkiNljQPvUAw7Dh5nUq3XznEeM/0F+qsXywbLlYZSU5J0M1W+
+         4kzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764325515; x=1764930315;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vxrCpTObh+sq8TpBfdVpWIOw/J1PvdPRar/7svAe1Ms=;
+        b=MWHTdF7T976fyIothKus9ewjG+Am3r7bJ8Bjq1vH6jysAw8R5B25jy/ZlzcvbVnytk
+         1LfADoeOmdUnYx2uGRPjHk9MaUXdwsjSd6uyyxHXvriarkosKMiFbAA/l1Jpi2LABv+6
+         3opuS2endY2GadHFY2SwqwzkNPvrKPc0/yulzYvK0518vAGJhJ1nqcvWrZz7C9GhveLN
+         Cm5nfcrIz7DgCoAW2LtciwNOOcQU78jHKOs3cBYgtjlXz5XHHtK6B+B4XxcnkvMbh2Wv
+         vhWUCqz6YSqNdhf+W2EsZ2/TqfJtYkNTJPYoGQJlGx1AEP7jsj/JG6fZ7AWtnGpYjuGm
+         7W/w==
+X-Gm-Message-State: AOJu0YxXwaDfjwtretbt0BMaZbkVSF4u3NUldcU4fMQuDmSohF899IFo
+	x/+sdCXRGW1FWRdZlkhGcbI2oqQuCbj8kOxPGdXZ2+XfTVl1n8nfvm+2MkyGt0OnhaVnyfcmvdj
+	QmiwG/q5ppJMLPyfd5Z3XjuGbCvqCHfg59G7+L8G4HhOiinSRC3uUEZN/kAoYr7uMMcnc
+X-Gm-Gg: ASbGncuqgK5UxA4Lpv+Aoeo+94Jb72wqkV7/PGMjIbRjrpT1bxOb/d/IONxKKc0Nw2J
+	pdmY0PtiIgi+tnBLBDsiEzyOC/mjtOYdz6eF75o0Dh5aQHeXz7z0RgYsEr3WLpZFoVat1JRWqhk
+	pr8MW0+WCXa759XeBiCqtjAVPQIQ3peSn9Ne4uJai6AFJN/bHnbMdIDYCqg+3wDRXQ0AuELyAww
+	4AehWft/3BoQDO7r+wuvPzaebCHG9a10Rh6MQmDLy4KMqTQdLpz7phVeePtlu43zNaGYx5KxGZA
+	pLp7gP6ZK7GzwB60c/Lu/Q4YUvOElDWwiY0hTOtBxq8pVfY3xNPKsgkP0WruYXh1mTKbcSSNDK/
+	7jYj+AZ/bMOLIUF5MQDq6W6/WTMabzME+XLMrOX71jbaAX4g=
+X-Received: by 2002:aa7:989d:0:b0:7aa:ac12:2c33 with SMTP id d2e1a72fcca58-7c58c2a7354mr21421320b3a.1.1764325515318;
+        Fri, 28 Nov 2025 02:25:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IElceZ+5sXf28FIfmwcALeTyEwrEaZoHYrPc4zex0f3/yT0I2F4BVk4hndXZaNhkmXYfAWmIA==
+X-Received: by 2002:aa7:989d:0:b0:7aa:ac12:2c33 with SMTP id d2e1a72fcca58-7c58c2a7354mr21421293b3a.1.1764325514750;
+        Fri, 28 Nov 2025 02:25:14 -0800 (PST)
+Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d1520a03a3sm4621255b3a.29.2025.11.28.02.25.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Nov 2025 02:25:14 -0800 (PST)
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Subject: [PATCH v7] arm64: dts: qcom: lemans-evk: Add OTG support for primary USB controller
+Date: Fri, 28 Nov 2025 15:55:07 +0530
+Message-Id: <20251128102507.3206169-1-krishna.kurapati@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/5] PCI: dwc: Remove MSI/MSIX capability if iMSI-RX is
- used as MSI controller
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-References: <20251109-remove_cap-v1-0-2208f46f4dc2@oss.qualcomm.com>
- <20251109-remove_cap-v1-3-2208f46f4dc2@oss.qualcomm.com>
- <dc8fb64e-fcb1-4070-9565-9b4c014a548f@rock-chips.com>
- <7d4xj3tguhf6yodhhwnsqp5s4gvxxtmrovzwhzhrvozhkidod7@j4w2nexd5je2>
- <3ac0d6c5-0c49-45fd-b855-d9b040249096@rock-chips.com>
- <aSlx91D1MczvUUdV@hu-qianyu-lv.qualcomm.com>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <aSlx91D1MczvUUdV@hu-qianyu-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ac9ea6c1009cckunm7ad65ca470101b
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQxhIGVZKSxkfQkkeTUJOGB9WFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=GbOlW/IHwyRixsVP1CIDoCLIfiF9/sbDA4p2SPkYJtYT5xGAmdP8SU0hdmueSJMlck38zdY2N8qJXHe7IQQFHZ74//nU7YtA0pni6J1G0sJdN+cqKkJFrNT/w2d06p1V61g+ltGqp2MvIzEjOqpzJdFMQWoMl1gFE9P7v6xUYZE=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=HzeuSFODqOQQndAd/qKh98myiRiX8TIis0dhMbPG8PI=;
-	h=date:mime-version:subject:message-id:from;
+X-Proofpoint-ORIG-GUID: LS5B67V-SgT-fbu5PNdkWkiBXFFh8FpN
+X-Authority-Analysis: v=2.4 cv=QOplhwLL c=1 sm=1 tr=0 ts=6929788c cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QAzQKOYyiUK49Y4y4FoA:9
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDA3NSBTYWx0ZWRfX29r59gjhBajT
+ DJI7yhMc/lvbHNEoTscr0s6wBcbRUPj0IaYjJyW4V3ZPiHUqEl7dkC3dyX8k9a6yO6jZ/0C7LOF
+ AddZ084wlRA7iJpjw/BC+Z7Y92XvoU/f26E7J/17tYmTU3qDY2VRmRnNvRTYHC1HqHRcQ3fB8FE
+ vgdWSEGvZdzwxrDCzBWpmNOMBFFlmVd85j8lPOm+5C47teFiR//8aFcR/+q/9gLEsJUIr9V2zZp
+ pUSYNbPuuyu0h3Vw4OQwFmVX6j05OggfBHxyfH3WReviOTvrg7HwPgZzRCraVq19uxCg68Bo/tj
+ M1fFAsDxZgMgvAAYU6oNZXgj9QbA3EcQAnsITvRQrSLYHt0VvWzvbHgsk0dnxf344IAxfOsUZgM
+ WRuftIKuM+fKeI0pLV7XM5wJxeLSwA==
+X-Proofpoint-GUID: LS5B67V-SgT-fbu5PNdkWkiBXFFh8FpN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_03,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280075
 
-在 2025/11/28 星期五 17:57, Qiang Yu 写道:
-> On Fri, Nov 21, 2025 at 12:04:09PM +0800, Shawn Lin wrote:
->> 在 2025/11/21 星期五 1:00, Manivannan Sadhasivam 写道:
->>> On Thu, Nov 20, 2025 at 10:06:03PM +0800, Shawn Lin wrote:
->>>> 在 2025/11/10 星期一 14:59, Qiang Yu 写道:
->>>>> Some platforms may not support ITS (Interrupt Translation Service) and
->>>>> MBI (Message Based Interrupt), or there are not enough available empty SPI
->>>>> lines for MBI, in which case the msi-map and msi-parent property will not
->>>>> be provided in device tree node. For those cases, the DWC PCIe driver
->>>>> defaults to using the iMSI-RX module as MSI controller. However, due to
->>>>> DWC IP design, iMSI-RX cannot generate MSI interrupts for Root Ports even
->>>>> when MSI is properly configured and supported as iMSI-RX will only monitor
->>>>> and intercept incoming MSI TLPs from PCIe link, but the memory write
->>>>> generated by Root Port are internal system bus transactions instead of
->>>>> PCIe TLPs, so they are ignored.
->>>>>
->>>>> This leads to interrupts such as PME, AER from the Root Port not received
->>>>
->>>> This's true which also stops Rockchip's dwc IP from working with AER
->>>> service. But my platform can't work with AER service even with ITS support.
->>>>
->>>>> on the host and the users have to resort to workarounds such as passing
->>>>> "pcie_pme=nomsi" cmdline parameter.
->>>>
->>>> ack.
->>>>
->>>>>
->>>>> To ensure reliable interrupt handling, remove MSI and MSI-X capabilities
->>>>> from Root Ports when using iMSI-RX as MSI controller, which is indicated
->>>>> by has_msi_ctrl == true. This forces a fallback to INTx interrupts,
->>>>> eliminating the need for manual kernel command line workarounds.
->>>>>
->>>>> With this behavior:
->>>>> - Platforms with ITS/MBI support use ITS/MBI MSI for interrupts from all
->>>>>      components.
->>>>> - Platforms without ITS/MBI support fall back to INTx for Root Ports and
->>>>>      use iMSI-RX for other PCI devices.
->>>>>
->>>>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->>>>> ---
->>>>>     drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++++
->>>>>     1 file changed, 10 insertions(+)
->>>>>
->>>>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->>>>> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..3724aa7f9b356bfba33a6515e2c62a3170aef1e9 100644
->>>>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->>>>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->>>>> @@ -1083,6 +1083,16 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->>>>>     	dw_pcie_dbi_ro_wr_dis(pci);
->>>>> +	/*
->>>>> +	 * If iMSI-RX module is used as the MSI controller, remove MSI and
->>>>> +	 * MSI-X capabilities from PCIe Root Ports to ensure fallback to INTx
->>>>> +	 * interrupt handling.
->>>>> +	 */
->>>>> +	if (pp->has_msi_ctrl) {
->>>>
->>>> Isn't has_msi_ctrl means you have something like GIC-ITS
->>>> support instead of iMSI module? Am I missing anything?
->>>>
->>>
->>> It is the other way around. Presence of this flag means, iMSI-RX is used. But I
->>> think the driver should clear the CAPs irrespective of this flag.
->>
->> Thanks for correcting me. Yeap, how can I make such a mistake. :(
->>
->> Anyway, this patch works for me:
->>
->> root@debian:/userdata# ./aer-inject aer.txt
->> [   17.764272] pcieport 0000:00:00.0: aer_inject: Injecting errors
->> 00000040/00000000 into device 0000:01:00.0
->> [   17.765178] aer_isr ! #log I added in aer_isr
->> [   17.765394] pcieport 0000:00:00.0: AER: Correctable error message
->> received from 0000:01:00.0
->> [   17.766211] nvme 0000:01:00.0: PCIe Bus Error: severity=Correctable,
->> type=Data Link Layer, (Receiver ID)
->> root@debian:/userdata# [   17.767045] nvme 0000:01:00.0:   device
->> [144d:a80a] error status/mask=00000040/0000e000
->> [   17.767980] nvme 0000:01:00.0:    [ 6] BadTLP
->>
->> root@debian:/userdata# cat /proc/interrupts | grep aerdrv
->>   60:      0      0      0      0      0      0     0     0     INTx   0 Edge
->> PCIe PME, aerdrv, PCIe bwctrl
->>   63:      0      0      0      1      0      0     0     0     INTx   0 Edge
->> PCIe PME, aerdrv
->> 110:      0      0      0      0      0      0     0     0     INTx   0 Edge
->> PCIe PME, aerdrv
->>
->>>
->>>>> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
->>>>> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
->>>>
->>>> Will it make all devices connected to use INTx only?
->>>>
->>>
->>> Nah, it is just for the Root Port. The MSI/MSI-X from endpoint devices will
->>> continue to work as usual.
->>
->> Qiang Yu,
->>
->> Could you please help your IP version with below patch?
->> It's in hex format, you could convert each pair of hex
->> characters to ASCII, i.g, 0x3437302a is 4.70a. The reason
->> is we asked Synopsys to help check this issue before, then
->> we were informed that they have supported it at least since
->> IP version 6.0x. So we may have to limit the version first.
->>
-> 
-> Hi Shawn,
-> 
-> I checked the IP version of PCIe core on glymur, it is 6.00a (0x3630302A)
-> and iMSI-RX still can't generate MSI for rootport.
-> 
+Enable OTG support for primary USB controller on EVK Platform. Add
+HD3SS3220 Type-C port controller present between Type-C port and SoC
+that provides role switch notifications to controller.
 
-Thanks for let me know. I have no doubt about this patch, it works
-for me as well.
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+---
+Changes in v7:
+- Renamed hd3ss3220@67 to usb-typec@67
+- Compile tested since its only node name change
 
-> - Qiang Yu
->> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->> @@ -1057,6 +1057,10 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->>
->>          dw_pcie_msi_init(pp);
->>
->> +#define PORT_LOGIC_PCIE_VERSION_NUMBER_OFF 0x8f8
->> +       val = dw_pcie_readl_dbi(pci, PORT_LOGIC_PCIE_VERSION_NUMBER_OFF);
->> +       printk("version = 0x%x\n", val);
->> +
->>
->>
->>
-> 
-> 
+Link to v6:
+https://lore.kernel.org/all/20251127073537.1218832-1-krishna.kurapati@oss.qualcomm.com/
+
+Changes in v6:
+- Renamed remote endpoints in controller node
+
+Link to v5:
+https://lore.kernel.org/all/20251125110420.2192971-1-krishna.kurapati@oss.qualcomm.com/
+
+Changes in v5:
+- Re-organised pmic gpio node to maintain alphanumeric order
+
+Link to v4:
+https://lore.kernel.org/all/20251102165126.2799143-1-krishna.kurapati@oss.qualcomm.com/
+
+Changes in v4:
+- Moved remote endpoints to SoC file.
+- Renamed vbus regulator name.
+- Moved usb-role-swich property to SoC file.
+
+Link to v3:
+https://lore.kernel.org/all/20251024182138.2744861-1-krishna.kurapati@oss.qualcomm.com/
+
+Changes in v3:
+- Moved "usb-role-switch" to lemans dtsi file
+- Moved vbus supply to connector node
+
+Link to v2:
+https://lore.kernel.org/all/20251008180036.1770735-1-krishna.kurapati@oss.qualcomm.com/
+
+Changes in v2:
+- Removed redundant property of dr_mode setting.
+- Added power-role property in connector node.
+
+Link to v1:
+https://lore.kernel.org/all/20251002172946.589061-1-krishna.kurapati@oss.qualcomm.com/
+
+ arch/arm64/boot/dts/qcom/lemans-evk.dts | 108 +++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/lemans.dtsi    |  20 +++++
+ 2 files changed, 126 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+index b40fa203e4a2..2536ebe36edb 100644
+--- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
++++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+@@ -38,6 +38,35 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	connector-0 {
++		compatible = "usb-c-connector";
++		label = "USB0-Type-C";
++		data-role = "dual";
++		power-role = "dual";
++
++		vbus-supply = <&vbus_supply_regulator_0>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				usb0_con_hs_ep: endpoint {
++					remote-endpoint = <&usb_0_dwc3_hs>;
++				};
++			};
++			port@1 {
++				reg = <1>;
++
++				usb0_con_ss_ep: endpoint {
++					remote-endpoint = <&hd3ss3220_in_ep>;
++				};
++			};
++		};
++	};
++
+ 	edp0-connector {
+ 		compatible = "dp-connector";
+ 		label = "EDP0";
+@@ -102,6 +131,15 @@ platform {
+ 		};
+ 	};
+ 
++	vbus_supply_regulator_0: regulator-vbus-supply-0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vbus_supply_0";
++		gpio = <&expander1 2 GPIO_ACTIVE_HIGH>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		enable-active-high;
++	};
++
+ 	vmmc_sdc: regulator-vmmc-sdc {
+ 		compatible = "regulator-fixed";
+ 
+@@ -454,6 +492,43 @@ &gpi_dma2 {
+ 	status = "okay";
+ };
+ 
++&i2c11 {
++	status = "okay";
++
++	usb-typec@67 {
++		compatible = "ti,hd3ss3220";
++		reg = <0x67>;
++
++		interrupts-extended = <&pmm8654au_2_gpios 5 IRQ_TYPE_EDGE_FALLING>;
++
++		id-gpios = <&tlmm 50 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&usb_id>, <&usb0_intr_state>;
++		pinctrl-names = "default";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				hd3ss3220_in_ep: endpoint {
++					remote-endpoint = <&usb0_con_ss_ep>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				hd3ss3220_out_ep: endpoint {
++					remote-endpoint = <&usb_0_dwc3_ss>;
++				};
++			};
++		};
++	};
++};
++
+ &i2c18 {
+ 	status = "okay";
+ 
+@@ -607,6 +682,16 @@ &pmm8654au_0_pon_resin {
+ 	status = "okay";
+ };
+ 
++&pmm8654au_2_gpios {
++	usb0_intr_state: usb0-intr-state {
++		pins = "gpio5";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		power-source = <0>;
++	};
++};
++
+ &qup_i2c19_default {
+ 	drive-strength = <2>;
+ 	bias-pull-up;
+@@ -746,11 +831,24 @@ wake-pins {
+ 		};
+ 	};
+ 
++	qup_i2c11_default: qup-i2c11-state {
++		pins = "gpio48", "gpio49";
++		function = "qup1_se4";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
+ 	sd_cd: sd-cd-state {
+ 		pins = "gpio36";
+ 		function = "gpio";
+ 		bias-pull-up;
+ 	};
++
++	usb_id: usb-id-state {
++		pins = "gpio50";
++		function = "gpio";
++		bias-pull-up;
++	};
+ };
+ 
+ &uart10 {
+@@ -779,11 +877,17 @@ &ufs_mem_phy {
+ };
+ 
+ &usb_0 {
+-	dr_mode = "peripheral";
+-
+ 	status = "okay";
+ };
+ 
++&usb_0_dwc3_hs {
++	remote-endpoint = <&usb0_con_hs_ep>;
++};
++
++&usb_0_dwc3_ss {
++	remote-endpoint = <&hd3ss3220_out_ep>;
++};
++
+ &usb_0_hsphy {
+ 	vdda-pll-supply = <&vreg_l7a>;
+ 	vdda18-supply = <&vreg_l6c>;
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index 0b154d57ba24..bf869c5b5ee0 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -4026,7 +4026,27 @@ usb_0: usb@a600000 {
+ 			snps,dis-u1-entry-quirk;
+ 			snps,dis-u2-entry-quirk;
+ 
++			usb-role-switch;
+ 			status = "disabled";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usb_0_dwc3_hs: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usb_0_dwc3_ss: endpoint {
++					};
++				};
++			};
+ 		};
+ 
+ 		usb_1: usb@a800000 {
+-- 
+2.34.1
 
 
