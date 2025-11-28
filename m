@@ -1,102 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-83681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49B9AC90CE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 04:55:47 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87D14C90D72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 05:42:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C483E34DB21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 03:55:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 04C014E3E74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 04:42:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D16DD2D0283;
-	Fri, 28 Nov 2025 03:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A51ED2C21E8;
+	Fri, 28 Nov 2025 04:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="obqZA9V1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="a3Zegj4q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kTmlwuLx";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LeEHoqbl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC6C295516
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 03:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFB1242D87
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 04:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764302142; cv=none; b=JmdkVcA6769kt77Hog7n+B4N/G2eUawncvxaV+JTZR63dfT4eA85IuvzIWB6CBUokfwQ1HNDiQ1pNGw9oAf5x53juWMAQ3hZN1Sf1beyzsSx6wSbnm7JJIAz8208hAKsTRxMAMC8GLpYW344d1yGWeVJ+o2WFGebozz6dBPFYWo=
+	t=1764304951; cv=none; b=RaGFTOzLb6pnSn2RQoOWAedU/1o6I8LowzA4DoTUaLS+a4MDgnPdfanmBD2JLCqgLkrmWWzSOzbwqRVH3quZaPZfnzLB/o4/lPGN8HVaaGcyankDqZ2Pgu4iG06YkPkihFYy9/EXi1/oB0xQZwTChupOLYsUsrLpazxaZcPQwT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764302142; c=relaxed/simple;
-	bh=IeTUGQBihXldKwxVZRfC3Ibaus9jWGPghfgg6wC9iwU=;
+	s=arc-20240116; t=1764304951; c=relaxed/simple;
+	bh=8rl0QrU3MlRdwHNYRZG/3TlzxVsvny1fEpzP63WAjJc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SrYLfNk0vos/1TEJIqAzSj2aJCQ/34nbQdjX2GqR+EtX3Rq7eN0L01m93KdOzp1q+aUMiQI/4Jfg8GESvw2UYHA8dX7+igeRdyCUqd0ghzdja29gzYfmkWBpdFQLm67a7mLQIy9Qc+i7zU5scrVwA66jag+WMhz4VHrPbS9aY6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=obqZA9V1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=a3Zegj4q; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=uA1ykwaoti69rzCUxfjZQV/VHBpO+JLGg0iVFsgg/GHRL45Wtuo07R79Dn3DEU+VpXkaS1Xqr3ZdVsM+c06dly8LUWrNoUloPw3esNGapqkackFS7WX8ClXb2CiroIjRiTMWyEoQaqg9ZiAzb2qM1xFjEqU2wODM6Pk+YYeO1HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kTmlwuLx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LeEHoqbl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS1PDLV785511
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 03:55:40 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5ARMuAhq2261833
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 04:42:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	g6WPJq973eX+KP/yKOjzdDcbbmr+wFA5V2WCdo5WMyI=; b=obqZA9V1TCHI6pPH
-	jzCmZKRVUgL2G8nwVIwZQ5pXdQzFWGDrMZ3utrYGTOKkSqdoEhq+Rj7PBStEErcU
-	M6BKysL++t8W5WAbq6vUZdsp70JW5t/u2p0/5rfSQtkjV4fi/rtf0lDV5++lO2kr
-	ZpoSWRzo0l2RnfdPxB9y9h1lh01z8T78jTPeYE+zdTyOfgmiRjLKaoS1sEydVGFA
-	3dc1Nu27Folptl8uw9zt4oVTXy/z0iD5+deX5lPLZeck67giXQJglKxJ6Ung44GB
-	NfF9Ift3ATheLudB3sdZ9qV1zVzs/lNfjMr/YtPSpdGXnxzASKVCuWCGPRgkZID7
-	2ECR/g==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4apm61t3wh-1
+	XB4p3JALjAdaEds41Kpv7aXiJdteIXPc5KCCtJz6euc=; b=kTmlwuLx2TObGY5n
+	0ZMAKlUT2p2oyHcbJwK1dw7Q47LvSVVeHmDRls5dyvF7Tqk56hyHwSHGCLf4Vcv7
+	wv7uHLpg1Z4WCkYU8IK5auaVIwfe+sJwZP2YU7E74xMKMU0RoMPppSRI4YYyZn2u
+	DjZTWE9M/BtcVtDK3mBCQkKKK7Izphr2/FsgFfN0bT0xbJfenxEBVqndivZ458HA
+	oebKsN/hxYGyhuW/uQk80YeSjBSmwpT7CiW+EB2VfBxzWiHWlUDyevsaIe8usYhj
+	qdqTQzYcyuk0dqCm/UUNFWEDnAXSrl/HulQ4yDboNJh5CZ7ov6GUtZDwvj2RSxWU
+	C+sLkQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4apdj0bdnw-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 03:55:40 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-340c07119bfso2144274a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 19:55:39 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 04:42:28 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-297f3710070so28043525ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 20:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764302139; x=1764906939; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1764304948; x=1764909748; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=g6WPJq973eX+KP/yKOjzdDcbbmr+wFA5V2WCdo5WMyI=;
-        b=a3Zegj4qVCshqMbzypnCKCZ0IddY280n3+f4kDVnKmnN8YqN96KYcHNfIn5RTgucLr
-         jwyEo/FAR50MXjD4kjQS24pAOG9FuQpXmsXI0u1tBK7BR9CVGzd2zMEuwKkuGTzhTt0L
-         GDE+tHYrxAswZVW5rN+mFq+HoQQZF7OYqiIBC08hhQzqAzoOxnvi5pgEK+Pjw+S8HPym
-         BGInwb0yLaqjDGxP06UbpRruvtivt1aW7Jq4azwo7YP+PyStHWViQB5GGgR+gkCsJNhK
-         usOQJEZszcS0dFD8C464d2vs71CmkrPq8PcImMRzga/v7Ae6Gh2b8twvyJaIzGLFnCAi
-         2SHA==
+        bh=XB4p3JALjAdaEds41Kpv7aXiJdteIXPc5KCCtJz6euc=;
+        b=LeEHoqbl+uoM6lK2B0M50HLeqA4WzIcDIalqfKavFSbiuBu+8wOSHOiMQWzcl0UHc5
+         azCfXUZHutsIPl2GQY+sKbjHS/Y+jllT4j6Y0XuIK3JECJhvZP2C8tPB0Ls/zLs4KyYp
+         igfCI/7Pp6vAerYW130EGkXtI2Q85elqJLap1aDzdaArsq5Dej3MIUFlaw6NVE1EqxCm
+         8kYA1xyQLMqGSttRLoNiQKhGVPRow7wPs+ado5rms+7/926LKlrq/t2JjpMLzeh8mmwF
+         GKenlw2UCVU9vExhStThVUFszQbj5Nqheufzl6HzBHTKEGYA3xzWAoWxdSQAmQ2UhAXN
+         xqVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764302139; x=1764906939;
+        d=1e100.net; s=20230601; t=1764304948; x=1764909748;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=g6WPJq973eX+KP/yKOjzdDcbbmr+wFA5V2WCdo5WMyI=;
-        b=VEskl9pJR7oHwA4Aqs+ZgXtZ4TGjPJv8JDpkOQUBNnXMfDdIryGVIf+w9O8NYe4OFq
-         EVA+vUP4v89F7bjmYgpHSK8C2BLn8u+t5K6QvqI1NahWthlAc4Uh54h72CO1WEqalpQ1
-         hJy76w71dL1bz/XCz9Y2KGYG3+YpVopwanXTMOK9zfwRv75BxapaJtViiogcsPGjiyce
-         djIUfonzctiLpC7WcUIL1Ma/DAtZmLW/B/BJW60rd+AcXfO0X0eTTg8ksvv5ua9vDB1+
-         ylQlIVyTB6sh5lZd3cZcKVNpx0uKXIEfxUTqAWs7lW/pAIimIUQHAoLOnrKze6ow+Rfp
-         HUDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUoUG35BH/iMf/MoiI4qW87eWpKxnG/Fp0qIeYJqEJcg+M26lHjzq4Y4ACWDLT80njvgVpuiBU1gbQmCrHd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1IcUYFJ9hZ47jfZ/maI4QSiKYsSIBu17HiZr+GEOPYQiFLDQG
-	NVJ8D9kY1PnR6eD/B6vc/TcRrux3+25zSz1dVIRDA+HnE8Vd5EtIfTacQLTNFlG7uWTozfcuJ80
-	n3jFgQhSljyBCFuFpTlhzwkvMWhHfB7oYR9mbYRQdc3Pekp9x+kdW581UDfDc5C9VGKsJ
-X-Gm-Gg: ASbGncseuFZ5bG1dj1dyp6RyXobOnGDo3sABcRH3r90bGh9vk/nJuHIV0tyUEFU2NgD
-	4fTNYebQiqQGAOze1HSLaTJ1YqpKHo/mr8X1ZzyFZCSopb9Dvz+Ma9/1lGjQf9OHq7vZdiiFl7l
-	PEVtKfd61CkHQz5Goc8zz+dKw7qCSIJfoKBN+bM1nwn+Tkch8g/efFfQmPAzACD5AtUvRLizzdB
-	jy/ukAF/N4vZ7n2StV/ejJTniy4y1gI2LbSVZxTEPW+Pc0MxtPSpl6R/xe4PCRRi0Ka4Un7N3Lk
-	xbI135CyJHtlZuBVshIxeGJxLlxrb4Xh8gV4kYxTEGdrpD6XEMB7cvwQNk8vk2N0hQbVnkUFPFV
-	VUWXQx94Qj7aEPp1nIpPoUGSUBfhQk52lW31OLA==
-X-Received: by 2002:a17:90b:2d4c:b0:340:b06f:712e with SMTP id 98e67ed59e1d1-34733f22104mr23805105a91.19.1764302138929;
-        Thu, 27 Nov 2025 19:55:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFzaTpzvVEcgi4SvBYVDFQZwxQ3RaZ++NVOh3Hp4KAq7hTbG7ZICn/N06Wl4DveGKglzbKmFA==
-X-Received: by 2002:a17:90b:2d4c:b0:340:b06f:712e with SMTP id 98e67ed59e1d1-34733f22104mr23805074a91.19.1764302138406;
-        Thu, 27 Nov 2025 19:55:38 -0800 (PST)
-Received: from [10.217.217.147] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3476a7c2ce5sm6884455a91.14.2025.11.27.19.55.32
+        bh=XB4p3JALjAdaEds41Kpv7aXiJdteIXPc5KCCtJz6euc=;
+        b=QtIyyl3jgLZBD05p4EdeLCspAzbM4ItouJgo2RZeUEsi049WgYsIMROJwvhTeR9UaI
+         m//Pz0VI5bwA2i650pjV4WS1KN+jTO9xukpV6BcHRWyMerA5qNaM1y2oxsdTWow387/B
+         Jc3Mu6cfIKOLUSXGIF/4Ig+m/yMrF38iEZY2cHO0aef3TH4Jc2khSUg6+GmJdghtKR1H
+         79FGZmQrIMbjnC+gDXCPpgTyNaeMuRHQG6vnu40dXVE0zOkE9NaB4GTvTri5wLccq/TB
+         rfPKbUjRfLEs1wfjRO7CO7fWSEMs3/r7QaKH5NJPnhVABOzcrGjrDeePEcLWoWPJoC7Z
+         zDBw==
+X-Forwarded-Encrypted: i=1; AJvYcCX/E+eWyo2O9WxXyt4l/JMhN28S/afHe09277CI3Pt/w0yWBK4X9JuHNqQuLy4NxS9iZUaHeh+K7axG96Mw@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxZgLkyv+eDEd/UdvAm65fzs4ZwJBZ8bMwCzKi3diBQLdhIpbM
+	TsWPq3r6hOK15+L2DpIwniPoCb6pVqtst2FAqzGx83fAv3+fpk4XYJFtT+1EVrW54AhTahHXLrU
+	jOhUSSAQHiviA/ayEqxxQdxVC1XQTLWsUnLH3ozoF+B6LTHL1+D2E7gKfe91/HR0D+tzo
+X-Gm-Gg: ASbGncvaPBcL4q98hSZy3tgw+ShqqodCn4RxVUhYzyq8+MdVGpS9QITODd9IT9k3mwK
+	7VWykFQeXQrxQgDYLIZPX3WRtlQVjPd5e/5qClma8g/hppkKWq/vzx1UnVFQsD31a7Vfedbq7HT
+	tyReVTTSLUBB+dChCO/wsRpPgV4FP85D8Q9s1fJz/Fa7LS6JzYs6cycXR21SjYYbqdvBDbbFdwL
+	AI4ANQyyvLUNg5D5MHPQ3AwI+sJxSpVGRDH5NFFx5ChObw9aooA25WJJGFjV5/PchN38lmJUgFL
+	0hjDD2t7vf/ORLSYSfQ/6oPSJZZGVRfAiun1AW0vCLbUrEnwx+aLOlGZGEPvotA6X8rr0+VLiH8
+	KYv+InFXuVj0VFgGrBkE7HNEJUm3luw+pX8zw09Sg4w==
+X-Received: by 2002:a17:902:d2cd:b0:298:3892:3279 with SMTP id d9443c01a7336-29b6c40542cmr296229795ad.17.1764304947733;
+        Thu, 27 Nov 2025 20:42:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKoSQAoyWlLvG9Vcnnkn7v1pyhIqUhELgGxaiA4ZAottbIZWLZGceYNfF/YTGLtSDABNSzoQ==
+X-Received: by 2002:a17:902:d2cd:b0:298:3892:3279 with SMTP id d9443c01a7336-29b6c40542cmr296229155ad.17.1764304947087;
+        Thu, 27 Nov 2025 20:42:27 -0800 (PST)
+Received: from [192.168.1.4] ([49.204.106.218])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bceb276a7sm31043815ad.48.2025.11.27.20.42.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Nov 2025 19:55:37 -0800 (PST)
-Message-ID: <547b0b85-d353-4bd1-9f25-6876bed281e6@oss.qualcomm.com>
-Date: Fri, 28 Nov 2025 09:25:31 +0530
+        Thu, 27 Nov 2025 20:42:26 -0800 (PST)
+Message-ID: <18c151c7-5c64-48ca-b6a5-3363544f292d@oss.qualcomm.com>
+Date: Fri, 28 Nov 2025 10:12:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,103 +104,262 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] clk: qcom: gcc-glymur: Update the SDCC RCGs to use
- shared_floor_ops
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Melody Olvera
- <quic_molvera@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251127-sdcc_shared_floor_ops-v2-0-473afc86589c@oss.qualcomm.com>
- <20251127-sdcc_shared_floor_ops-v2-8-473afc86589c@oss.qualcomm.com>
+Subject: Re: [PATCH v1 04/12] soc: qcom: geni-se: Add geni_se_resource_state()
+ helper
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_arandive@quicinc.com, quic_shazhuss@quicinc.com
+References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
+ <20251122050018.283669-5-praveen.talari@oss.qualcomm.com>
+ <bskhxahakxpc74rdoz54eqlplb4obaoleouh4pn6qdy6yjmggw@fojwzct2haxa>
 Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <20251127-sdcc_shared_floor_ops-v2-8-473afc86589c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: pi_YfaXzN-v9MRL9ClxQrnF45990WjLg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDAyNiBTYWx0ZWRfX7JIWGM0eZ5lk
- TJa3hR8j/hI2jNicDDaCFw/Y560O1CYUVQIFUxzTB7aWO5+k0QxCJKhnmW3zbu5zXKM6hJN99af
- Q5mBnW7VayznvC/PQpg+tRip3WtwDsFm8unN3AIMn4puXUOWOAr1jk+rLxwHDTsS7+S7b0ojF8r
- iohF0t/JrmL2Gu/A1H1kPLMnyy6xEnlf3+YhlWa/lXLxiEinc7nplWdt6fJ+cCf7NGMq5UKEJkE
- /039VlDZ2KY+m82Pqf7PZUe06P1hrZbxdi50Txe/ickL7/HniiOLTQ+dHkGnURxGLDtP8AwQNWr
- nKEGkHlNB6lgD/P91bPIpMkDzDXajlGkFWkWxbwBGB63H6ttCYMCf2wHrvF+Le2hEe3bUUu09Ks
- 39cDfWO1uwvWOUUYGzJwoe570K6gug==
-X-Proofpoint-ORIG-GUID: pi_YfaXzN-v9MRL9ClxQrnF45990WjLg
-X-Authority-Analysis: v=2.4 cv=IciKmGqa c=1 sm=1 tr=0 ts=69291d3c cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+In-Reply-To: <bskhxahakxpc74rdoz54eqlplb4obaoleouh4pn6qdy6yjmggw@fojwzct2haxa>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDAzMSBTYWx0ZWRfX2M3UNEJwKIzh
+ 3ljK6Ygh2r120Jl51/lh9Bo6wxjugNNz59WmvUwQflY1XxcrCNYTc5GqQXKWIEfNNuk554D8E8s
+ 0F5X9OilOukwiZvQX9/h/R01RClUiYVhlqHnliBT+U/k19bVPr8L8VT1ifFLc2jYvzAwNiYiVB1
+ VPC61VFocfkQqtV4y+E0fy9zUfXCiMxqPwZ/4s4ZXqBqadaxtOdsrUJN1tYdxVTZn7qorJKTWGk
+ VldKIohmsQdVKJ8icZ5OlgZ6fLOPrlwAHi6fZVI9te6xld7jVnqGFqSgXnutvRqoMvaDPKxS675
+ DOHeu1FRc1SYof4hkMbYLlt6JL8NGp3ZgeRdCxUchOcgl3ijZB64oKW59zQEQasXSN97zQrjc1h
+ c/fjC+gCjTOpWtnYwpcPNzQez5aYDw==
+X-Proofpoint-GUID: Cj8oh4UqlJXOJKRmPFEef_KBx-9P3kL5
+X-Proofpoint-ORIG-GUID: Cj8oh4UqlJXOJKRmPFEef_KBx-9P3kL5
+X-Authority-Analysis: v=2.4 cv=PJoCOPqC c=1 sm=1 tr=0 ts=69292834 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=knFCEH6M0+SSkFC620ieTA==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=BxFOA6ydGOS16N4CFHUA:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=1NPS5M18cN_QFYAy7wgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-25_02,2025-11-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511280026
+ spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280031
 
+H Bjorn
 
-
-On 11/27/2025 11:27 PM, Jagadeesh Kona wrote:
-> Use shared_floor_ops for the SDCC RCGs so the RCG is safely parked
-> during disable and the new parent configuration is programmed in
-> hardware only when the new parent is enabled, avoiding cases where
-> the RCG configuration fails to update.
+On 11/26/2025 8:49 PM, Bjorn Andersson wrote:
+> On Sat, Nov 22, 2025 at 10:30:10AM +0530, Praveen Talari wrote:
+>> The GENI SE protocol drivers (I2C, SPI, UART) implement similar resource
+>> activation/deactivation sequences independently, leading to code
+>> duplication.
+>>
+>> Introduce geni_se_resource_state() to control power state of GENI SE
+>> resources. This function provides a unified interface that calls either
+>> geni_se_resources_activate() to power on resources or
+>> geni_se_resources_deactivate() to power off resources based on the
+>> power_on parameter.
+>>
+>> The activate function enables ICC, clocks, and TLMM with proper error
+>> handling and cleanup paths. The deactivate function disables resources
+>> in reverse order including OPP rate reset, clocks, ICC and TLMM.
+>>
+>> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+>> ---
+>>   drivers/soc/qcom/qcom-geni-se.c  | 61 ++++++++++++++++++++++++++++++++
+>>   include/linux/soc/qcom/geni-se.h |  2 ++
+>>   2 files changed, 63 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+>> index 726b77650007..7aee7fd2e240 100644
+>> --- a/drivers/soc/qcom/qcom-geni-se.c
+>> +++ b/drivers/soc/qcom/qcom-geni-se.c
+>> @@ -1013,6 +1013,67 @@ int geni_icc_disable(struct geni_se *se)
+>>   }
+>>   EXPORT_SYMBOL_GPL(geni_icc_disable);
+>>   
+>> +static int geni_se_resources_deactivate(struct geni_se *se)
+>> +{
+>> +	int ret;
+>> +
+>> +	if (se->has_opp)
+>> +		dev_pm_opp_set_rate(se->dev, 0);
+>> +
+>> +	ret = geni_se_resources_off(se);
 > 
-> Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
-> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/gcc-glymur.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-> index deab819576d0e18afb0b699b7ec6fa4c155eb5c2..238e205735ed594618b8526651968a4f73b1104e 100644
-> --- a/drivers/clk/qcom/gcc-glymur.c
-> +++ b/drivers/clk/qcom/gcc-glymur.c
-> @@ -2317,7 +2317,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
->  		.parent_data = gcc_parent_data_17,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_17),
->  		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_floor_ops,
-> +		.ops = &clk_rcg2_shared_floor_ops,
->  	},
->  };
->  
-> @@ -2339,7 +2339,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
->  		.parent_data = gcc_parent_data_3,
->  		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
->  		.flags = CLK_SET_RATE_PARENT,
-> -		.ops = &clk_rcg2_floor_ops,
-> +		.ops = &clk_rcg2_shared_floor_ops,
->  	},
->  };
->  
-> 
+> Why do we end this series with two different APIs for turning (on/) off
 
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Currently, we have resources_off() which only manages clocks and 
+pinctrl. I’m leveraging that in the new API.
 
--- 
+If you agree, I can migrate the logic from resources_off() into the new 
+API and remove resources_off() once support for all protocols is 
+implemented.
+
+Code snippet:
+
+static int geni_se_resources_deactivate(struct geni_se *se)
+{
+         int ret;
+
+         if (has_acpi_companion(se->dev))
+                 return 0;
+
+         if (se->has_opp)
+                 dev_pm_opp_set_rate(se->dev, 0);
+
+         ret = pinctrl_pm_select_sleep_state(se->dev);
+         if (ret)
+                 return ret;
+
+         geni_se_clks_off(se);
+
+         if (se->core_clk)
+                 clk_disable_unprepare(se->core_clk);
+
+         return geni_icc_disable(se);
+}
+
+static int geni_se_resources_activate(struct geni_se *se)
+{
+         int ret;
+
+         if (has_acpi_companion(se->dev))
+                 return 0;
+
+         ret = geni_icc_enable(se);
+         if (ret)
+                 return ret;
+
+         if (se->core_clk) {
+                 ret = clk_prepare_enable(se->core_clk);
+                 if (ret)
+                         goto out_icc_disable;
+         }
+
+         ret = geni_se_clks_on(se);
+         if (ret)
+                 goto out_clk_disable;
+
+         ret = pinctrl_pm_select_default_state(se->dev);
+         if (ret) {
+                 geni_se_clks_off(se);
+                 goto out_clk_disable;
+         }
+
+         return ret;
+
+out_clk_disable:
+         if (se->core_clk)
+                 clk_disable_unprepare(se->core_clk);
+out_icc_disable:
+         geni_icc_disable(se);
+         return ret;
+}
+
+> the GENI resources? Can't there be a single geni_se_resources_"off"()?
+> 
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	if (se->core_clk)
+>> +		clk_disable_unprepare(se->core_clk);
+>> +
+>> +	return geni_icc_disable(se);
+>> +}
+>> +
+>> +static int geni_se_resources_activate(struct geni_se *se)
+>> +{
+>> +	int ret;
+>> +
+>> +	ret = geni_icc_enable(se);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	if (se->core_clk) {
+>> +		ret = clk_prepare_enable(se->core_clk);
+>> +		if (ret)
+>> +			goto out_icc_disable;
+>> +	}
+>> +
+>> +	ret = geni_se_resources_on(se);
+>> +	if (ret)
+>> +		goto out_clk_disable;
+>> +
+>> +	return 0;
+>> +
+>> +out_clk_disable:
+>> +	if (se->core_clk)
+>> +		clk_disable_unprepare(se->core_clk);
+>> +out_icc_disable:
+>> +	geni_icc_disable(se);
+>> +	return ret;
+>> +}
+
+
+>> +
+>> +/**
+>> + * geni_se_resources_state() - Control power state of GENI SE resources
+>> + * @se: Pointer to the geni_se structure
+>> + * @power_on: Boolean flag for desired power state (true = on, false = off)
+>> + *
+>> + * Controls GENI SE resource power state by calling activate or deactivate
+>> + * functions based on the power_on parameter.
+>> + *
+>> + * Return: 0 on success, negative error code on failure
+>> + */
+>> +int geni_se_resources_state(struct geni_se *se, bool power_on)
+> 
+> It seems the purpose of this "helper function" is to allow replacing
+> geni_se_resource_on() with geni_se_resources_state(true) and
+> geni_se_resource_off() with geni_se_resources_state(false) in patch 10.
+> 
+> 
+> Naming a function "on", "activate", or "enable" provides a clear
+> indication of what will happen when you call the function. Calling a
+> function to "set state to true" is not as clear.
+> 
+> Further, the code paths that needs to have resources turned on should be
+> separate from those who signal that those resources can be turned off.
+> So there should not be any gain from this function, unless the same
+> obfuscation happens further up the stack.
+> 
+> Just call the activate/deactivate in the respective code path.
+
+Thank you for the inputs.
+Sure, will review and update next patch.
+
 Thanks,
-Taniya Das
-
+Praveen Talari
+> 
+> Regards,
+> Bjorn
+> 
+>> +{
+>> +	return power_on ? geni_se_resources_activate(se) : geni_se_resources_deactivate(se);
+>> +}
+>> +EXPORT_SYMBOL_GPL(geni_se_resources_state);
+>> +
+>>   /**
+>>    * geni_se_resources_init() - Initialize resources for a GENI SE device.
+>>    * @se: Pointer to the geni_se structure representing the GENI SE device.
+>> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
+>> index c182dd0f0bde..d1ca13a4e54c 100644
+>> --- a/include/linux/soc/qcom/geni-se.h
+>> +++ b/include/linux/soc/qcom/geni-se.h
+>> @@ -541,6 +541,8 @@ int geni_icc_disable(struct geni_se *se);
+>>   
+>>   int geni_se_resources_init(struct geni_se *se);
+>>   
+>> +int geni_se_resources_state(struct geni_se *se, bool power_on);
+>> +
+>>   int geni_load_se_firmware(struct geni_se *se, enum geni_se_protocol_type protocol);
+>>   #endif
+>>   #endif
+>> -- 
+>> 2.34.1
+>>
 
