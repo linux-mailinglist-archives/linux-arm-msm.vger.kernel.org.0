@@ -1,199 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-83678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA30BC90A8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 03:53:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C501C90BE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 04:17:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 542E13AB8FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 02:52:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CF963A1DA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 03:17:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC767258EC1;
-	Fri, 28 Nov 2025 02:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jwuXKnvl"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ADBE231A21;
+	Fri, 28 Nov 2025 03:17:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC8B1EE7C6;
-	Fri, 28 Nov 2025 02:52:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+Received: from angie.orcam.me.uk (angie.orcam.me.uk [78.133.224.34])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF2ABC2EA;
+	Fri, 28 Nov 2025 03:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.133.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764298377; cv=none; b=tvrqXjmStsFp17C5aRu6slEIpIBJdFBm7m0CwsRNP3XyOoNVESlgEcDhEbEqhJbUfSGAkZ5FB1Bi0F80LsSurP+vt6udzAkTenyPaWRHGKB7TpKTn2+zs+ATJa2INAzHTsQMvNAPUJDam0xvI6Ov4L9VVQwRfm0WJGlcEIDeN6M=
+	t=1764299834; cv=none; b=huApmMJuARszjQXIXnFx+AD8JPIdZ61DG0smqerPVXT/wJQgpU0dEqvEEnn+nJVPzpaItIvmRk5M2PGj2OnEndfbpmRgPqxpJTuvQuGCZviyRRnsya58b4Wm6V3IhqrINhfaXIN/zy2/QDN0SEolJ8kYYq5aejDgEsCRRyb+yWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764298377; c=relaxed/simple;
-	bh=kN8f8ocFg/9iq69/nMOZcevqnWg1yZnJ/G3yn1vCZBg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hDnacae3yaa6QmlIUQYrHReFU4KXDdrsXg/OycKBPGgsXrGPqZyd8dP2rdG+m84UWA5BETAi8rZofcOhLvn+IDthJxHcvVRSjQUFOJIBw3uPbFZ9aLDv20muazCoe3GX2PDSG1WN8pyGxdmrjbjlQV9WhbZzMrHTIkhkwx4kfq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jwuXKnvl; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764298376; x=1795834376;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=kN8f8ocFg/9iq69/nMOZcevqnWg1yZnJ/G3yn1vCZBg=;
-  b=jwuXKnvlSlYpwdsuRSo+7bN42FuZxdo8v1XcRvX+LAUqP2Z5DOoKwUWY
-   ft2QcllrmyWPSe1Q0v542t4ySUaih99I6R4ozr/2bxZ0sh5XG35FlZzlq
-   PSuPO0PATYv8StFflhzaJqGto1fMjB56d/8yXlixH0qhGs6VEz12HDFQI
-   rnn/7G8ir8zeEBuLWw0kp0TAoKhBzuJzfYFirBE8/NuR2l5brVzavcHAP
-   kzaKO/ilA8FEVdV4jeZX2XS9xpQBOik53rxOwIGXW0Nj8NALLQmRCD92X
-   0EopTGl/PnPkoZPJID0aKj0wg+Um61PY18EW94lwosBgnSGfKvwvGKsTg
-   Q==;
-X-CSE-ConnectionGUID: VM9Ti/BJQFaupTrJX6uYbQ==
-X-CSE-MsgGUID: XdqbldHvTvafuI1G0j07Pg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="66281699"
-X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="66281699"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 18:52:55 -0800
-X-CSE-ConnectionGUID: kHmaFFJtSrCUNitANqQ8Mg==
-X-CSE-MsgGUID: OVGbIM/SSGC2110517cZ5w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="193159342"
-Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by orviesa009.jf.intel.com with ESMTP; 27 Nov 2025 18:52:51 -0800
-Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vOobI-000000005xN-3R8H;
-	Fri, 28 Nov 2025 02:52:48 +0000
-Date: Fri, 28 Nov 2025 10:52:00 +0800
-From: kernel test robot <lkp@intel.com>
-To: Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Antonino Maniscalco <antomani103@gmail.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Subject: Re: [PATCH] drm/msm: Fix a7xx per pipe register programming
-Message-ID: <202511281253.rIkrIiqt-lkp@intel.com>
-References: <20251127-gras_nc_mode_fix-v1-1-5c0cf616401f@gmail.com>
+	s=arc-20240116; t=1764299834; c=relaxed/simple;
+	bh=3cEwNUAXvWTaaLNF33BLpSaYoUG3JvuH9NaqbFnzv28=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=ccKukGt4Ik9cNc1VjPsrvnkoM5uVmZ5VdmWkWhsciJtW1ylqGW0fpSQbVGyzN5GRdyNmlJEWqjR3flgoePfpVjBc0yHN+0Xs/6JdO0UoMhLEFdejIGNdeGOFYwS4GqzUR5gEiUieYadz1jfjRTRkXdPryEwiDx+9wZIGhbrl9ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk; spf=none smtp.mailfrom=orcam.me.uk; arc=none smtp.client-ip=78.133.224.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=orcam.me.uk
+Received: by angie.orcam.me.uk (Postfix, from userid 500)
+	id 9082B92009C; Fri, 28 Nov 2025 04:17:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by angie.orcam.me.uk (Postfix) with ESMTP id 8C79F92009B;
+	Fri, 28 Nov 2025 03:17:02 +0000 (GMT)
+Date: Fri, 28 Nov 2025 03:17:02 +0000 (GMT)
+From: "Maciej W. Rozycki" <macro@orcam.me.uk>
+To: Manivannan Sadhasivam <mani@kernel.org>
+cc: Jingoo Han <jingoohan1@gmail.com>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+    Krzysztof Kozlowski <krzk@kernel.org>, 
+    Alim Akhtar <alim.akhtar@samsung.com>, 
+    Jonathan Chocron <jonnyc@amazon.com>, linux-pci@vger.kernel.org, 
+    linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+    linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH v9 4/4] PCI: dwc: Support ECAM mechanism by enabling iATU
+ 'CFG Shift Feature'
+In-Reply-To: <20250909-controller-dwc-ecam-v9-4-7d5b651840dd@kernel.org>
+Message-ID: <alpine.DEB.2.21.2511280256260.36486@angie.orcam.me.uk>
+References: <20250909-controller-dwc-ecam-v9-0-7d5b651840dd@kernel.org> <20250909-controller-dwc-ecam-v9-4-7d5b651840dd@kernel.org>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251127-gras_nc_mode_fix-v1-1-5c0cf616401f@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
 
-Hi Anna,
+On Tue, 9 Sep 2025, Manivannan Sadhasivam wrote:
 
-kernel test robot noticed the following build warnings:
+> From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 
+> Designware databook r5.20a, sec 3.10.10.3 documents the 'CFG Shift Feature'
+> of the internal Address Translation Unit (iATU). When this feature is
+> enabled, it shifts/maps the BDF contained in the bits [27:12] of the target
+> address in MEM TLP to become BDF of the CFG TLP. This essentially
+> implements the Enhanced Configuration Address Mapping (ECAM) mechanism as
+> defined in PCIe r6.0, sec 7.2.2.
 
-[auto build test WARNING on 7bc29d5fb6faff2f547323c9ee8d3a0790cd2530]
+ So this broke a parallel port on my HiFive Unmatched machine (a SiFive 
+FU740-C000 based system), the driver no longer registers the device, no 
+/dev/parport0 anymore.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Anna-Maniscalco/drm-msm-Fix-a7xx-per-pipe-register-programming/20251127-074833
-base:   7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
-patch link:    https://lore.kernel.org/r/20251127-gras_nc_mode_fix-v1-1-5c0cf616401f%40gmail.com
-patch subject: [PATCH] drm/msm: Fix a7xx per pipe register programming
-config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20251128/202511281253.rIkrIiqt-lkp@intel.com/config)
-compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251128/202511281253.rIkrIiqt-lkp@intel.com/reproduce)
+ I've had to bisect it with commit a1978b692a39 ("PCI: dwc: Use custom 
+pci_ops for root bus DBI vs ECAM config access") and commit fc2bc2623e3a 
+("Revert "PCI: qcom: Prepare for the DWC ECAM enablement"") applied on top 
+and it's affirmative it's this change, i.e. upstream commit 0da48c5b2fa7 
+("PCI: dwc: Support ECAM mechanism by enabling iATU 'CFG Shift Feature'").
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511281253.rIkrIiqt-lkp@intel.com/
+ Here's the relevant part of a diff between bootstrap logs:
 
-All warnings (new ones prefixed by >>):
+--- dmesg-good.log	2025-11-28 03:41:18.943097032 +0100
++++ dmesg-bad.log	2025-11-28 03:47:29.582049781 +0100
+@@ -1,5 +1,5 @@
+-Booting Linux on hartid 3
+-Linux version 6.17.0-rc1-00008-g4660e50cf818-dirty (macro@angie) (riscv64-linux-gnu-gcc (GCC) 13.0.0 20220602 (experimental), GNU ld (GNU Binutils) 2.38.50.20220503) #19 SMP Fri Nov 28 02:37:51 GMT 2025
++Booting Linux on hartid 1
++Linux version 6.17.0-rc1-00009-g0da48c5b2fa7-dirty (macro@angie) (riscv64-linux-gnu-gcc (GCC) 13.0.0 20220602 (experimental), GNU ld (GNU Binutils) 2.38.50.20220503) #20 SMP Fri Nov 28 02:43:00 GMT 2025
+ Machine model: SiFive HiFive Unmatched A00
+ SBI specification v0.3 detected
+ SBI implementation ID=0x1 Version=0x9
+@@ -61,7 +61,7 @@
+ EFI services will not be available.
+ smp: Bringing up secondary CPUs ...
+ smp: Brought up 1 node, 4 CPUs
+-Memory: 16383064K/16777216K available (10746K kernel code, 2200K rwdata, 4972K rodata, 537K init, 371K bss, 389448K reserved, 0K cma-reserved)
++Memory: 16383064K/16777216K available (10746K kernel code, 2200K rwdata, 4972K rodata, 536K init, 371K bss, 389448K reserved, 0K cma-reserved)
+ devtmpfs: initialized
+ clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+ posixtimers hash table entries: 2048 (order: 3, 32768 bytes, linear)
+@@ -161,6 +161,7 @@
+ fu740-pcie e00000000.pcie:       IO 0x0060080000..0x006008ffff -> 0x0060080000
+ fu740-pcie e00000000.pcie:      MEM 0x0060090000..0x007fffffff -> 0x0060090000
+ fu740-pcie e00000000.pcie:      MEM 0x2000000000..0x3fffffffff -> 0x2000000000
++fu740-pcie e00000000.pcie: ECAM at [mem 0xdf0000000-0xdffffffff] for [bus 00-ff]
+ fu740-pcie e00000000.pcie: Using 256 MSI vectors
+ fu740-pcie e00000000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4096G
+ fu740-pcie e00000000.pcie: cap_exp at 70
+@@ -655,7 +656,7 @@
+ usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.17
+ usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+ usb usb1: Product: xHCI Host Controller
+-usb usb1: Manufacturer: Linux 6.17.0-rc1-00008-g4660e50cf818-dirty xhci-hcd
++usb usb1: Manufacturer: Linux 6.17.0-rc1-00009-g0da48c5b2fa7-dirty xhci-hcd
+ usb usb1: SerialNumber: 0000:04:00.0
+ hub 1-0:1.0: USB hub found
+ hub 1-0:1.0: 2 ports detected
+@@ -663,7 +664,7 @@
+ usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.17
+ usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+ usb usb2: Product: xHCI Host Controller
+-usb usb2: Manufacturer: Linux 6.17.0-rc1-00008-g4660e50cf818-dirty xhci-hcd
++usb usb2: Manufacturer: Linux 6.17.0-rc1-00009-g0da48c5b2fa7-dirty xhci-hcd
+ usb usb2: SerialNumber: 0000:04:00.0
+ hub 2-0:1.0: USB hub found
+ hub 2-0:1.0: 2 ports detected
+@@ -735,8 +736,6 @@
+ pcieport 0000:06:01.0: enabling bus mastering
+ parport_pc 0000:07:00.0: enabling device (0000 -> 0001)
+ PCI parallel port detected: 1415:c118, I/O at 0x1000(0x1008), IRQ 35
+-parport0: PC-style at 0x1000 (0x1008), irq 35, using FIFO [PCSPP,TRISTATE,EPP,ECP]
+-lp0: using parport0 (interrupt-driven).
+ parport_pc 0000:07:00.0: vgaarb: pci_notify
+ serial 0000:07:00.3: vgaarb: pci_notify
+ serial 0000:07:00.3: assign IRQ: got 40
 
->> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: warning: & has lower precedence than ==; == will be evaluated first [-Wparentheses]
-     984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
-         |                                                        ^~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: note: place parentheses around the '==' expression to silence this warning
-     984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
-         |                                                        ^ ~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:984:35: note: place parentheses around the & expression to evaluate it first
-     984 |                         if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
-         |                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-   1 warning generated.
+and then it goes on with insignificant changes only owing to differences 
+in the order of messages produced, the kernel version ID or date stamps.  
+As you can see the PCIe parallel port device continues being accessible, 
+it's only the driver that doesn't pick up the device anymore.
 
+ I'm stumped as to where it might be coming from.  Any ideas?
 
-vim +984 drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-
-   931	
-   932	static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
-   933	{
-   934		struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-   935		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-   936		const struct adreno_reglist_list *reglist;
-   937		const struct adreno_reglist_pipe_list *pipe_reglist;
-   938		void *ptr = a6xx_gpu->pwrup_reglist_ptr;
-   939		struct cpu_gpu_lock *lock = ptr;
-   940		u32 *dest = (u32 *)&lock->regs[0];
-   941		u32 pipe_reglist_count = 0;
-   942		int i;
-   943	
-   944		lock->gpu_req = lock->cpu_req = lock->turn = 0;
-   945	
-   946		reglist = adreno_gpu->info->a6xx->ifpc_reglist;
-   947		lock->ifpc_list_len = reglist->count;
-   948	
-   949		/*
-   950		 * For each entry in each of the lists, write the offset and the current
-   951		 * register value into the GPU buffer
-   952		 */
-   953		for (i = 0; i < reglist->count; i++) {
-   954			*dest++ = reglist->regs[i];
-   955			*dest++ = gpu_read(gpu, reglist->regs[i]);
-   956		}
-   957	
-   958		reglist = adreno_gpu->info->a6xx->pwrup_reglist;
-   959		lock->preemption_list_len = reglist->count;
-   960	
-   961		for (i = 0; i < reglist->count; i++) {
-   962			*dest++ = reglist->regs[i];
-   963			*dest++ = gpu_read(gpu, reglist->regs[i]);
-   964		}
-   965	
-   966		/*
-   967		 * The overall register list is composed of
-   968		 * 1. Static IFPC-only registers
-   969		 * 2. Static IFPC + preemption registers
-   970		 * 3. Dynamic IFPC + preemption registers (ex: perfcounter selects)
-   971		 *
-   972		 * The first two lists are static. Size of these lists are stored as
-   973		 * number of pairs in ifpc_list_len and preemption_list_len
-   974		 * respectively. With concurrent binning, Some of the perfcounter
-   975		 * registers being virtualized, CP needs to know the pipe id to program
-   976		 * the aperture inorder to restore the same. Thus, third list is a
-   977		 * dynamic list with triplets as
-   978		 * (<aperture, shifted 12 bits> <address> <data>), and the length is
-   979		 * stored as number for triplets in dynamic_list_len.
-   980		 */
-   981		pipe_reglist = adreno_gpu->info->a6xx->pipe_reglist;
-   982		for (u32 pipe_id = PIPE_BR; pipe_id <= PIPE_BV; pipe_id++) {
-   983			for (i = 0; i < pipe_reglist->count; i++) {
- > 984				if (pipe_reglist->regs[i].pipe & BIT(pipe_id) == 0)
-   985					continue;
-   986				*dest++ = A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id);
-   987				*dest++ = pipe_reglist->regs[i].offset;
-   988				*dest++ = a7xx_read_pipe(gpu, pipe_id,
-   989							 pipe_reglist->regs[i].offset);
-   990				pipe_reglist_count++;
-   991			}
-   992		}
-   993		lock->dynamic_list_len = pipe_reglist_count;
-   994	}
-   995	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+  Maciej
 
