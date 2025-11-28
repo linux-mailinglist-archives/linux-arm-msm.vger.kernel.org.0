@@ -1,133 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-83708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70975C91469
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:45:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C4BCC914D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:49:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1F0B634AFEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 08:45:17 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EF64B3441F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 08:49:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4D62EF65B;
-	Fri, 28 Nov 2025 08:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B3A02E7F3E;
+	Fri, 28 Nov 2025 08:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="BBTHcI0a"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="SdhH9ATY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8652EC54D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:45:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E0427B324
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764319513; cv=none; b=kphvLA2J+F2s2iWD2bt9jkJHl8OfATu/aWUzyFR8ClXHGZfY/DOnLsECceOQgCD00jUOALtCxpWBO3fD/ldPZsoiKfRoYp7KyZsf8aSkvXZMrwLPmJ+0Depwe/5fEH1QBClTaWjrxlbsE4IZDK0iyrAXivs24TiD51lvR/+mLCY=
+	t=1764319765; cv=none; b=Lv7npH/qo/v/vrvX6E4VPmDnvru2dnO4OEAFq3oRVBQPovbQmn8q697NaBxtNrDHbBzRgmdgIJNiXt0nZv9HiK3BZ/LncEEjJTjXvIEUlddZsJp60xsQhufBlCDg/UL3gS/BYmGGI7513Yxia63AfVMu/DRdJE4p8NskNlm06OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764319513; c=relaxed/simple;
-	bh=0X/ydzoWDB4ZtJE0RBBBD7ONqrPxkKp/vJTWLZBq2/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pjk8UyGrC5gwH7KBnTqkN3mP2eIRWpMqO/lqykwUg8gVAQxggcFl1kuxn3y1XytRxqjiaLAe8Ao7JoRUGcVv5I1Jy7zf+4tQLzpLoClt50SKdoN/TKC2io9XESnVX+VLVWc+ImH5By0xxqoy409uqcIDIvsWxIvhVmCDbtrI8Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=BBTHcI0a; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 620A21A1DE6;
-	Fri, 28 Nov 2025 08:45:09 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 2F9C460706;
-	Fri, 28 Nov 2025 08:45:09 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E6FCF103C8F20;
-	Fri, 28 Nov 2025 09:45:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1764319507; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=P0+e6XTu3A6o5AA0Sdf7CPZ+DssyTSsdo2j6rOigGDU=;
-	b=BBTHcI0acimD4Z+tf+m+ZYYQA+zUHulwmzzRJl76h86HdO/UEPydJHf53ev70bfY4aiIby
-	QuEkZFbcYpZU7rQRtod433l/ajomrZ1uWGCGGr0l2SO47MVJUcvI1kR5L970OEDTluHjI3
-	pEnCGUJI2MMc3t/PnM4WWvL+BFtbp0iGLF7aSAtnWpCqyQDi+E5Kaj+ze9PK4QNAHccyAH
-	ac8AAZKSGrBDmlX2aKRaPiA/E1xPCoBhK5pDjL4OpzQZL+XYsWWIg/QioPv7f2ih3dBrZK
-	hzJIAu0eoVuAonbYRSOcYMQOgmDLjKqaEfceDzdP04sLoN84YN+sIGr8YyG2oA==
-Message-ID: <e18d4197-b06e-493a-a843-e195fbc46d6c@bootlin.com>
-Date: Fri, 28 Nov 2025 09:45:00 +0100
+	s=arc-20240116; t=1764319765; c=relaxed/simple;
+	bh=G5X/YIuYDgm3G9FPXn7GKHHHqQxxwo7wholdpY7VZyg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rDAbX6FoaXYW5jABmOjjuj1kxNYS1M8AUZKUNrnFJ9m3dYrDGyA5G9S9SbQpJnJuhq5X6Bh9TmeVhZnKyKbMzMiUW1tGSkN3JyZkkl8NlozzS++R+HwRiCaH/G0YJ1RpTRVx4qxfxbMoyHZ8VId+Fy7Xk9RzSbVYFxpqqS73r9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=SdhH9ATY; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-477b198f4bcso10465475e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 00:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1764319762; x=1764924562; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DsiHm+sn8Df9okW2vJdbAxHPy5xfO+1LmNYi1WvueZo=;
+        b=SdhH9ATYVAvP10fh5TUbSNDvdO9OHH7cP3TELL11Ru87r1c4JFSG0h8jhnGQIFoziC
+         u4Klw8wSPVbbASWBK0zyeo3Yz0oL8ZOHX8vnYCzZr61aeluTHMxwSc8hCuzwimFkaulY
+         ys2imWyRfhT8jLgXlVqTIDY/mTbG9NXQlKV/oO1oGECSzwA/LVxV8gGLiACVSw0rTznV
+         TBdcTBuLmb8Yvn3GBolpNZ+BxZYpJW0nBOlwSOLEIs+Y97zfd7f3w1eCmFhnP/GEfjZx
+         VvGnXJRFWBy08hGlCtZk5yBXoKSxprbeF2VftJQPA0EUkVCqStV7NZpij9yUXvPk+IHk
+         sYhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764319762; x=1764924562;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DsiHm+sn8Df9okW2vJdbAxHPy5xfO+1LmNYi1WvueZo=;
+        b=SG21lMprjCmOGa8T4rdbWicH+hgXuPEEVaJIhuRyjDRJxe0w8fWzTT3eqDGCngddt1
+         k61hcVOHwDRjc/hVl/Z1GT4jovXxsyo5G8VssaAemoqeY4MQZ8KCE0VP/r9kHGBOOr6l
+         Dr9R5epxTMMaokvOFRs4x/6SoTNQmR9djO8NElHY9CML7iorATxnWq4lM28usmFJgECv
+         V3NMmMgDymRK/DBekiP8VeP603XvwAXeaCoCrYhqoiiGrWrrOUMoNhn4OAvxLZd0hDFC
+         qG756041SNuACB3JiYPAlePao5QbaWruVAdPUXlVo2kN6LT2NyGWB7iTn9sf3GMY/XnB
+         LnYg==
+X-Forwarded-Encrypted: i=1; AJvYcCVGr5oCwO402ROdUB6HPzZL7iQiXjt0TSWl437tpYY1LJyw1QNVsFBqE/Si5MnjD22XQwO0HQ7H5nQVjGCF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx62+zs4U85KV9I0sddCJSZQJrSOss4/WNfQf7f6ZJjhXxz9ps6
+	XNKqxArmJyI7cpNMNWlXFnohQtzfNT0geCV5VkO2+PvaG6dxY3qJpWExRbN3eB7x7SE=
+X-Gm-Gg: ASbGncv6lxmwi7lmaE3xYQZ90b8UlsJB486r12hyOLqY46r7vjmoG/xtT8fmHBeAV9f
+	u1O2ncCIOj36cqu+v1niZx1AVxTFh6XyhJ+w74IMQvWsUEYy8JGc29Ah9lI7U0vbb2vZlSnxTY6
+	B78nmN/SYTW/RuKqUv+zch5XSPzFIDYoHLI2g3FZYFsYeXTWwN11IysxQBBTbBZq34njkaKZ//f
+	dHmwsKqXNMBzpYDgtbzTDEUk2KsINJJo7uL4IxcuC4l6dKlEi74xdvtzVw79bwqD36eglp550nB
+	sUNWQ/iCVxt2KIePPYF3gb/AUnt9ZEDUbhNrncUuGBXwIFR6PZSS0/4dtSnyNABAUaHKtBG9tRw
+	Hv8wMorjjEqQcrJz0XRUdFaCmob7Ai5f87kOy654Spb9DV5q36LhBVmfrVoRjsgBOMGSH8CsSxK
+	UZwtAZCg==
+X-Google-Smtp-Source: AGHT+IEL5xPF2KAStmNdok10DICduqfrrjezb2Fw/8Wh+mxcVZ1J34S/WolT2p/t7R9B/7m5au8NrA==
+X-Received: by 2002:a05:600c:1f0f:b0:471:14af:c715 with SMTP id 5b1f17b1804b1-477c0165bb8mr255966385e9.3.1764319762098;
+        Fri, 28 Nov 2025 00:49:22 -0800 (PST)
+Received: from brgl-uxlite ([2a01:cb1d:dc:7e00:f3c6:aa54:79d2:8979])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4790b0cc186sm133272105e9.13.2025.11.28.00.49.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Nov 2025 00:49:21 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] gpio: shared: fix a deadlock
+Date: Fri, 28 Nov 2025 09:49:20 +0100
+Message-ID: <176431975833.13482.3073514830553688627.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251128-gpio-shared-deadlock-v2-1-9f3ae8ddcb09@linaro.org>
+References: <20251128-gpio-shared-deadlock-v2-1-9f3ae8ddcb09@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v20 03/14] net: phy: Introduce PHY ports
- representation
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
- Tariq Toukan <tariqt@nvidia.com>
-References: <20251127171800.171330-1-maxime.chevallier@bootlin.com>
- <20251127171800.171330-4-maxime.chevallier@bootlin.com>
- <aSiSxbE-XY_zxMBC@shell.armlinux.org.uk>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <aSiSxbE-XY_zxMBC@shell.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Russell,
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-On 27/11/2025 19:04, Russell King (Oracle) wrote:
-> On Thu, Nov 27, 2025 at 06:17:46PM +0100, Maxime Chevallier wrote:
->> Ethernet provides a wide variety of layer 1 protocols and standards for
->> data transmission. The front-facing ports of an interface have their own
->> complexity and configurability.
->>
->> Introduce a representation of these front-facing ports. The current code
->> is minimalistic and only support ports controlled by PHY devices, but
->> the plan is to extend that to SFP as well as raw Ethernet MACs that
->> don't use PHY devices.
->>
->> This minimal port representation allows describing the media and number
->> of pairs of a BaseT port. From that information, we can derive the
->> linkmodes usable on the port, which can be used to limit the
->> capabilities of an interface.
->>
->> For now, the port pairs and medium is derived from devicetree, defined
->> by the PHY driver, or populated with default values (as we assume that
->> all PHYs expose at least one port).
->>
->> The typical example is 100M ethernet. 100BaseT can work using only 2
->> pairs on a Cat 5 cables.
+
+On Fri, 28 Nov 2025 09:40:11 +0100, Bartosz Golaszewski wrote:
+> It's possible that the auxiliary proxy device we add when setting up the
+> GPIO controller exposing shared pins, will get matched and probed
+> immediately. The gpio-proxy-driver will then retrieve the shared
+> descriptor structure. That will cause a recursive mutex locking and
+> a deadlock because we're already holding the gpio_shared_lock in
+> gpio_device_setup_shared() and try to take it again in
+> devm_gpiod_shared_get() like this:
 > 
-> Correction: 100BASE-TX. 100BASE-T, which covers the family of 100BASE-T
-> media, includes 100BASE-T4 which is over all four pairs of the cable.
-> 
- As Rob's bot made what appears at a first glance to be incorrect
-comments, I'm not sure a resend is on the table yet. Do you want me to
-send a v21 with the updated description ? I have the same question about
-your comment on patch 2 :)
+> [...]
 
-I'll gladly resend, but that'll be after the 24h cooldown.
+Applied, thanks!
 
-Thanks a lot for taking a look a this,
+[1/1] gpio: shared: fix a deadlock
+      https://git.kernel.org/brgl/linux/c/54a2df5afa2382d6fd1168a3caf151f50c68dfea
 
-Maxime
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
