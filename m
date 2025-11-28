@@ -1,102 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-83692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E57C90EED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 07:22:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 84CAAC90FDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 07:55:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6B01D4E05F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 06:22:18 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E54164E02C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 06:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA0CC2D0618;
-	Fri, 28 Nov 2025 06:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nHYe7ClA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fW2kBW8G"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5562D46BD;
+	Fri, 28 Nov 2025 06:55:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FB02C236B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 06:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABEC2144C7;
+	Fri, 28 Nov 2025 06:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764310936; cv=none; b=etQJfKBgOjkwGuaYnQWe6KvLu2BpRLqYfasClmzVEqiRyDDflK/yisffidysMBSzfcYzY+736hHNBNCZ/Pgix6wrK4Vqc4UdfF60+JgNW/7BHfEFIdBylWJjAgEsi0y1MoIcGJqB59KLgMoadRfDic9yvL9uJwdnrygGyeDVl9w=
+	t=1764312944; cv=none; b=UPEguc8YC92S1B1weIKZSp+1/JyFg6SE5nuOWovb71txHrvrTEsAh2pH4OrE5Ex47Dud5FoJDd1SooHtY3B8qbjba967nP0qrIAk0POKzF4RS9DMahNVjDy0ec52GrLvj2GzpG6LVQ4szjPSb/r5EZVogV01Krlr5mUOXAYAELU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764310936; c=relaxed/simple;
-	bh=BracIS+Xd6atAPw30XiCJB91DEGb12idVZhaKsfMj1E=;
+	s=arc-20240116; t=1764312944; c=relaxed/simple;
+	bh=mlH2v4Z945EkdaoCGAa4JH5SWVsj/RLLqwsIO4CzJwQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZDH4CwRcipyqawIIE/oQFuNjYjfuGhy70Ogxtin6hHhdqBZvVIUP7Oz0OCNHhEQa3egbXf8dF97TIs/t+ZANeM4317jY91RLjP9k4jOBXexIiN8ddPpZSFszva5BA81crJnpdReeX4PO54ckOY2o8mva1jNmNGj5J6ryuC8WqkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nHYe7ClA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fW2kBW8G; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS54DbT2699460
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 06:22:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yXfC5bxB35EN6mnVCYtR6QZAZwZl0nfuVLSX/8xWrJo=; b=nHYe7ClAbOdDllCt
-	2JxLWZ5iCUn9cVccaWSnkNQtIPX1BFfQL18cheIfcMjWtAe9sdOyMv4/WVIS21d5
-	mdEDlxEzsXOs2EPyFDZGDe6jxlLTzsGcDMU8R2gd15zh9s9Z9un554Jxg9XxQyEa
-	DlroxMEJy60PUxApPElErE9koZeOpTUpd8HWnPgwG6/KpBd+cx+2fhAwN40nziQG
-	IAvNr2XkvaArYZvCv7dL6B9PH6kUkmS9Zm+Hej0BNik2chCZMto5Mc1BCxpXaarz
-	/Y/lUu3rwvi8NIRg8ntksf+TJkPZWRdyAnWKh8+XKIbepekjcuh4hiFkw+PcXwDU
-	7TOrpA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aq58ug614-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 06:22:14 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b895b520a2so1433656b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 22:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764310933; x=1764915733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yXfC5bxB35EN6mnVCYtR6QZAZwZl0nfuVLSX/8xWrJo=;
-        b=fW2kBW8GFQyk3YiKPSNp5Vav18VgYh5Xqxx3I6QHAeaC4M9g/uCOxCikUNALWYcv9u
-         IjBkaT48y6DUcHL8SKuor4G+LfkR3/Nxllt/yZp8kla98hPLiNrB8gHP62cnHJ3G8NSJ
-         qWQyI7Xwhf9VZXIBTJC8eYdiWplkBN6hV1l/ftrAZQLRhvUnI3WWC39tqI5GPI8i0hyn
-         03eVPxpB84gYVaII0zuFahUU+W1qAb+rrBjz/m+L2ucBYMdw/XsekM4QJsDL6x37Fdzh
-         oCX7xIbR8vj0ViA4RyBcX8W2srmliaddVhFUsncGJ+5mjDDcPDimYpIdveUVftn5hdPq
-         CuVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764310933; x=1764915733;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yXfC5bxB35EN6mnVCYtR6QZAZwZl0nfuVLSX/8xWrJo=;
-        b=YWIA4kVJ5WqHTU2JwoGy+WADd0YN2FNtGuIdVV/ehZc78iShIcrmEu0rtmOMY+w6il
-         /FAefn7Gxrx6ljFt0vgEwSYuJmjTXDnE14C2M9qj/sWveNYxAi2SpwhoYEpmUglDYYlI
-         2XJl2ByDeK4+TlDFCZq7LDpnRW2yz8hTXJVG+8AuGhn2g3ZVw5UKw301zc5SmSTu5onN
-         oVD5odcA5Ra0fOQmt9//0Y9r/D2KrxbAt7HTyZnepXApMCb+Aa/CZWofV7NHHn8lMNud
-         7TgBPMTzFyTIVL+LEH0ZXljQibb1gOjwyJ/h84gHNITF2E1FDmGV1Z/DZkDylidVN6Qc
-         iaCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW3qeoVw4ZuVbTt48J3MIrNlbL4xe+4E782JW1mJGQVFzMyA6oXA1EKHzMzkzkuir0+a1VRyT74gkiq+Wno@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfK9tAH5DPrdd2ER1f8hoy1fwlPe4EVGVdVOpwib+HltvQnCiT
-	DzRh1UnAhblpvV9ONpZOcVaIKvgPtODp8pstNZNZCl/FVPozLIOtxDRTOhd2yvQ7anmZuhX3IRv
-	Ik0gMCWnOaO5p7jZEe/ytOhUgLYdYfe8IHYal2P7JBAAu+PTy0G7vvVdwJBubnAW4JbWA
-X-Gm-Gg: ASbGnctaEnmxZOX1maaxiwdp3kpmveLabfWTefFNTz649bMmBTVEk9l0eRsQY5jDiDJ
-	gda4t35jHufLb8hzulFGzPTDpZwVS90knE1SCgyMqamfSom8EAe9pLmCFhPWp0SberDbk3PQLED
-	Tpi10Em3sJSGcMSj1aMn3GEGClYIjojionEEiBUJcgHWQTVGnr1OvnkahtTRtzPAfP1zCUo2JXA
-	sWnv933XJfTW5V3++XhrAQGWMxpSPFNLFC+rZwjD7Hg1v6YcWhD9emvzKWUmfg/cfx6WCCF2hhq
-	uSC1g4DpAtPNVj2Z+IPpDEpOQNWzLFUkAdLptcbC15ipLBDp1DnF/P/wuhlM/cHnyK7OYiYiL4E
-	G5SKgpTEHD1Vo1d24sUB7dJG8mCfnf5DUk/+1PkepdA==
-X-Received: by 2002:a05:6a00:2407:b0:7bf:1a4b:1665 with SMTP id d2e1a72fcca58-7ca8926ec0amr14748327b3a.15.1764310933391;
-        Thu, 27 Nov 2025 22:22:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGO1liUQm+jpYlRcSQC7wCYR26ocA5dXrSjhrHaQRqRf3O3NL4JXaBUvC6b2Piipwj9zZ5PNg==
-X-Received: by 2002:a05:6a00:2407:b0:7bf:1a4b:1665 with SMTP id d2e1a72fcca58-7ca8926ec0amr14748272b3a.15.1764310932697;
-        Thu, 27 Nov 2025 22:22:12 -0800 (PST)
-Received: from [192.168.1.4] ([49.204.106.218])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d15e6e6df9sm3720818b3a.39.2025.11.27.22.22.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Nov 2025 22:22:12 -0800 (PST)
-Message-ID: <15a28ddc-9883-42d5-a008-b2ea22d8becc@oss.qualcomm.com>
-Date: Fri, 28 Nov 2025 11:52:05 +0530
+	 In-Reply-To:Content-Type; b=GD37VduB0H4b9FJPYrMHopLJXQlpwzlggGL4f24Vjv3CnmX6GWTvUy4FWqmebBHl26jb89BjlWmxuYrJN2csIs79kdL5V8X5EL3n8I1KwBhtAOJ2o4WOP4BHv0zEf4rw4g2N/wWxuqm0+d6wzgAMLVLEnLWqoamfM5lXVd0cANA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip2t1764312933t344f4295
+X-QQ-Originating-IP: 4XhcG94tvpdMsiJbY6FD3NXEU7PCVugMC0KMKrHQ+Sc=
+Received: from [IPV6:240f:10b:7440:1:54db:6346 ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 28 Nov 2025 14:55:30 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 17621855191314125653
+Message-ID: <77CAEF73515D28BB+4b2d2237-7be7-4adb-b378-bc0a311272bc@radxa.com>
+Date: Fri, 28 Nov 2025 15:55:30 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,280 +46,286 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 08/12] i2c: qcom-geni: Isolate serial engine setup
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
-        quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_arandive@quicinc.com, quic_shazhuss@quicinc.com
-References: <20251122050018.283669-1-praveen.talari@oss.qualcomm.com>
- <20251122050018.283669-9-praveen.talari@oss.qualcomm.com>
- <ar5t2wdmxzvog7smlwbg3skg6ga35au6uiahfe3rlnmumlmpyr@572sf6ru6424>
+Subject: Re: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered
+ on PCIe switches
+To: Niklas Cassel <cassel@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Heiko Stuebner <heiko@sntech.de>
+Cc: linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20251127134318.3655052-2-cassel@kernel.org>
 Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <ar5t2wdmxzvog7smlwbg3skg6ga35au6uiahfe3rlnmumlmpyr@572sf6ru6424>
+From: FUKAUMI Naoki <naoki@radxa.com>
+In-Reply-To: <20251127134318.3655052-2-cassel@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: -EZ0eskIMMTr3Usr1iPUW_BOKJRoxDv3
-X-Authority-Analysis: v=2.4 cv=UKvQ3Sfy c=1 sm=1 tr=0 ts=69293f96 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=knFCEH6M0+SSkFC620ieTA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=HUEr38yWfXq3XK2hY-kA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDA0NCBTYWx0ZWRfXzkgaPU9gSSym
- mVjWGSv4NFO6f57Ao19nvt/gCdEBjzT+hqu+l81L/xkLvBNgOS3CrzdLVWhJoKUMagfK42MRJs6
- ed/8X+B1cnkkUD2elCB5BwhIOFD7LoS5Rc6eOyS40b2c7KBtkwTst4UkkFxOFlQbAUTYvRoqvM3
- eGcNCaNGwx40EByHPnkhHjB4BvyYhg7pIebKWo59Sf9GDS1DSGagmS9+e7wpOkO6blj3zCrBUQQ
- eQrzQGpdsrlg7O59kR/vyNyes6WMdFMj2j0LaqrJLIrm+f4PAfARbgOP2b68AggpP7i9eRUoT7J
- 0y0lKd7cZ2hnJDm8DnkZXm0DCEEk5gs57osesgBDMA2pGcO+jzh4w2D7hIKkLKsu33hY5RJ/6xt
- hbt4bBP9cbsYrZy/Od2PbQdY8BAWOA==
-X-Proofpoint-ORIG-GUID: -EZ0eskIMMTr3Usr1iPUW_BOKJRoxDv3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-25_02,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280044
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: NDd9MucL1yTJmNPRM2q+BzaB8pQA0MVQm/OQHS5zx/KSHsudvpbhL6SG
+	FCfiJ18rPBHbCZMZkHR1pKebGVvI1rXkyk5B+rHkGmdFY16BpXK8uPvfxJ7IHzbCm6nJRNi
+	8Dr1dvKbtPZDKQTHQptSquRmIw+vMTbtSXrkjNw2t589jLeX2loaxFTRMG1fys6tpnoJQQK
+	+VVsWOpMizACtbmXtzQDPx/DHte9EHZMC935cw0etPbbJ9KJj8sCSD7V3TqRDGSpEG+AOdX
+	cWaRhpKS3kvbdlAat1k8IXKqZ3nfMZdS6EmWbihM0g3ifs0iSYIxtbphttw9/PShCbvxcn8
+	EUWUqHI4+XIVu+0y61/xV9eIn7Vlmuy78KLo20K+woAHPQWqh0aswJ96cdZVU/vrcxr8U7G
+	lQtOLWjMNOX/dT+0+r/ASAMLnD83oak1a6DpXKQvsHmsF8gz7s/8s4Zj0RoyjVx/lH+YyvM
+	TWCdTNSIXNsUdfP9DZCgC2V/Owhr2MEulKEkpKHEszdqC5fy8kh543KDN7NWOpWQWhfCwUN
+	pOy5qgWAwAwX6j/i181H0HWXlox+/qxt0cJvsnZBHligeWhp8NMPM8VGtDKprmCyuhvqs34
+	mv/UHOfeiLA9vEIYPjLyXEO+gse8Lx8XWBged9WBXULq9p2SjIGkci+aH6aA4kCZ/mgq7Ys
+	KUsJ6OH2VqUv8XZFotg+KGWu4UI6Za+KjTlMbfLisT34ICd0Fd+VHwW+AtwgM6GfF9CzXaj
+	00Y5L8M4YtlPGJImJ6cZBg88oiocy32lYegKGx+L8uLwMLq1FyLeHRbxTGXyIitphxa1mjO
+	5DPVYnkNCzph3vK0InpSV+cjyMTBa1/wldBx5xThCNDvAGNkC8D+GNuwtAY2k40i6ELDekV
+	Rit1Khy6O5bl9RUEg2mF1z8d4yos+gcG3IMqsqsE1uICYUFmKrFCPDGp8lNuhd7qQvznIDN
+	DAGIuUvSZAb+HTnOlb/CxLkYFeLsxUod1Tz71UudEmAnfmfl0dZnGo0Xp
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-Hi Bjorn,
+Hi Niklas,
 
-Thank you for review.
-
-On 11/26/2025 9:00 PM, Bjorn Andersson wrote:
-> On Sat, Nov 22, 2025 at 10:30:14AM +0530, Praveen Talari wrote:
->> Move serial engine configuration from probe to geni_i2c_init().
->>
->> Relocating the serial engine setup to a dedicated initialization function
->> enhances code clarity and simplifies future modifications.
+On 11/27/25 22:43, Niklas Cassel wrote:
+> The DWC glue drivers always call pci_host_probe() during probe(), which
+> will allocate upstream bridge resources and enumerate the bus.
 > 
-> Please enhance commit message clarity. I don't think "code clarity" is
-> your most significant reason for this change, and "simplifies future
-> modification" is completely vague.
+> For controllers without Link Up IRQ support, pci_host_probe() is called
+> after dw_pcie_wait_for_link(), which will also wait the time required by
+> the PCIe specification before performing PCI Configuration Space reads.
 > 
-> Be specific, the reader of this commit message hasn't implemented the
-> next set of commits, so they don't understand why this helps.
+> For controllers with Link Up IRQ support, the pci_host_probe() call (which
+> will perform PCI Configuration Space reads) is done without any of the
+> delays mandated by the PCIe specification.
 > 
-> If the reason is that this simplifies the error handling around the
-> resource acquisition in the next patches, write that.
+> For controllers with Link Up IRQ support, since the pci_host_probe() call
+> is done without any delay (link training might still be ongoing), it is
+> very unlikely that this scan will find any devices. Once the Link Up IRQ
+> triggers, the Link Up IRQ handler will call pci_rescan_bus().
 > 
-> If my guess is wrong and the sole reason for you change is that you
-> don't like 179 lines long functions, then just say that.
+> This works fine for PCIe endpoints connected to the Root Port, since they
+> don't extend the bus. However, if the pci_rescan_bus() call detects a PCIe
+> switch, then there will be a problem when the downstream busses starts
+> showing up, because the PCIe controller is not hotplug capable, so we are
+> not allowed to extend the subordinate bus number after the initial scan,
+> resulting in error messages such as:
 > 
-
-Moving the serial engine setup to geni_i2c_init() API for a cleaner
-probe function and utilizes the PM runtime API to control resources 
-instead of direct clock-related APIs for better resource management.
-
-Enables reusability of the serial engine initialization in future use 
-cases like hibernation and deep sleep features where hardware context is 
-lost.
-
-I hope the commit text above should be appropriate.
-
-Thanks,
-Praveen
-
-> Regards,
-> Bjorn
+> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
 > 
->>
->> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 148 ++++++++++++++---------------
->>   1 file changed, 73 insertions(+), 75 deletions(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 3a04016db2c3..4111afe2713e 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -976,10 +976,75 @@ static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
->>   	return ret;
->>   }
->>   
->> +static int geni_i2c_init(struct geni_i2c_dev *gi2c)
->> +{
->> +	const struct geni_i2c_desc *desc = NULL;
->> +	u32 proto, tx_depth;
->> +	bool fifo_disable;
->> +	int ret;
->> +
->> +	ret = pm_runtime_resume_and_get(gi2c->se.dev);
->> +	if (ret < 0) {
->> +		dev_err(gi2c->se.dev, "error turning on device :%d\n", ret);
->> +		return ret;
->> +	}
->> +
->> +	proto = geni_se_read_proto(&gi2c->se);
->> +	if (proto == GENI_SE_INVALID_PROTO) {
->> +		ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
->> +		if (ret) {
->> +			dev_err_probe(gi2c->se.dev, ret, "i2c firmware load failed ret: %d\n", ret);
->> +			goto err;
->> +		}
->> +	} else if (proto != GENI_SE_I2C) {
->> +		ret = dev_err_probe(gi2c->se.dev, -ENXIO, "Invalid proto %d\n", proto);
->> +		goto err;
->> +	}
->> +
->> +	desc = device_get_match_data(gi2c->se.dev);
->> +	if (desc && desc->no_dma_support)
->> +		fifo_disable = false;
->> +	else
->> +		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
->> +
->> +	if (fifo_disable) {
->> +		/* FIFO is disabled, so we can only use GPI DMA */
->> +		gi2c->gpi_mode = true;
->> +		ret = setup_gpi_dma(gi2c);
->> +		if (ret)
->> +			goto err;
->> +
->> +		dev_dbg(gi2c->se.dev, "Using GPI DMA mode for I2C\n");
->> +	} else {
->> +		gi2c->gpi_mode = false;
->> +		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
->> +
->> +		/* I2C Master Hub Serial Elements doesn't have the HW_PARAM_0 register */
->> +		if (!tx_depth && desc)
->> +			tx_depth = desc->tx_fifo_depth;
->> +
->> +		if (!tx_depth) {
->> +			ret = dev_err_probe(gi2c->se.dev, -EINVAL,
->> +					    "Invalid TX FIFO depth\n");
->> +			goto err;
->> +		}
->> +
->> +		gi2c->tx_wm = tx_depth - 1;
->> +		geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
->> +		geni_se_config_packing(&gi2c->se, BITS_PER_BYTE,
->> +				       PACKING_BYTES_PW, true, true, true);
->> +
->> +		dev_dbg(gi2c->se.dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
->> +	}
->> +
->> +err:
->> +	pm_runtime_put(gi2c->se.dev);
->> +	return ret;
->> +}
->> +
->>   static int geni_i2c_probe(struct platform_device *pdev)
->>   {
->>   	struct geni_i2c_dev *gi2c;
->> -	u32 proto, tx_depth, fifo_disable;
->>   	int ret;
->>   	struct device *dev = &pdev->dev;
->>   	const struct geni_i2c_desc *desc = NULL;
->> @@ -1059,79 +1124,19 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		return ret;
->>   
->> -	ret = clk_prepare_enable(gi2c->core_clk);
->> -	if (ret)
->> -		return ret;
->> -
->> -	ret = geni_se_resources_on(&gi2c->se);
->> -	if (ret) {
->> -		dev_err_probe(dev, ret, "Error turning on resources\n");
->> -		goto err_clk;
->> -	}
->> -	proto = geni_se_read_proto(&gi2c->se);
->> -	if (proto == GENI_SE_INVALID_PROTO) {
->> -		ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
->> -		if (ret) {
->> -			dev_err_probe(dev, ret, "i2c firmware load failed ret: %d\n", ret);
->> -			goto err_resources;
->> -		}
->> -	} else if (proto != GENI_SE_I2C) {
->> -		ret = dev_err_probe(dev, -ENXIO, "Invalid proto %d\n", proto);
->> -		goto err_resources;
->> -	}
->> -
->> -	if (desc && desc->no_dma_support)
->> -		fifo_disable = false;
->> -	else
->> -		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
->> -
->> -	if (fifo_disable) {
->> -		/* FIFO is disabled, so we can only use GPI DMA */
->> -		gi2c->gpi_mode = true;
->> -		ret = setup_gpi_dma(gi2c);
->> -		if (ret)
->> -			goto err_resources;
->> -
->> -		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
->> -	} else {
->> -		gi2c->gpi_mode = false;
->> -		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
->> -
->> -		/* I2C Master Hub Serial Elements doesn't have the HW_PARAM_0 register */
->> -		if (!tx_depth && desc)
->> -			tx_depth = desc->tx_fifo_depth;
->> -
->> -		if (!tx_depth) {
->> -			ret = dev_err_probe(dev, -EINVAL,
->> -					    "Invalid TX FIFO depth\n");
->> -			goto err_resources;
->> -		}
->> -
->> -		gi2c->tx_wm = tx_depth - 1;
->> -		geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
->> -		geni_se_config_packing(&gi2c->se, BITS_PER_BYTE,
->> -				       PACKING_BYTES_PW, true, true, true);
->> -
->> -		dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
->> -	}
->> -
->> -	clk_disable_unprepare(gi2c->core_clk);
->> -	ret = geni_se_resources_off(&gi2c->se);
->> -	if (ret) {
->> -		dev_err_probe(dev, ret, "Error turning off resources\n");
->> -		goto err_dma;
->> -	}
->> -
->> -	ret = geni_icc_disable(&gi2c->se);
->> -	if (ret)
->> -		goto err_dma;
->> -
->>   	gi2c->suspended = 1;
->>   	pm_runtime_set_suspended(gi2c->se.dev);
->>   	pm_runtime_set_autosuspend_delay(gi2c->se.dev, I2C_AUTO_SUSPEND_DELAY);
->>   	pm_runtime_use_autosuspend(gi2c->se.dev);
->>   	pm_runtime_enable(gi2c->se.dev);
->>   
->> +	ret =  geni_i2c_init(gi2c);
->> +	if (ret < 0) {
->> +		dev_err(gi2c->se.dev, "I2C init failed :%d\n", ret);
->> +		pm_runtime_disable(gi2c->se.dev);
->> +		goto err_dma;
->> +	}
->> +
->>   	ret = i2c_add_adapter(&gi2c->adap);
->>   	if (ret) {
->>   		dev_err_probe(dev, ret, "Error adding i2c adapter\n");
->> @@ -1143,13 +1148,6 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   
->>   	return ret;
->>   
->> -err_resources:
->> -	geni_se_resources_off(&gi2c->se);
->> -err_clk:
->> -	clk_disable_unprepare(gi2c->core_clk);
->> -
->> -	return ret;
->> -
->>   err_dma:
->>   	release_gpi_dma(gi2c);
->>   
->> -- 
->> 2.34.1
->>
+> While we would like to set the is_hotplug_bridge flag
+> (quirk_hotplug_bridge()), many embedded SoCs that use the DWC controller
+> have synthesized the controller without hot-plug support.
+> Thus, the Link Up IRQ logic is only mimicking hot-plug functionality, i.e.
+> it is not compliant with the PCI Hot-Plug Specification, so we cannot make
+> use of the is_hotplug_bridge flag.
+> 
+> In order to let the Link Up IRQ logic handle PCIe switches that are already
+> powered on (PCIe switches that not powered on already need to implement a
+> pwrctrl driver), don't perform a pci_host_probe() call during probe()
+> (which disregards the delays required by the PCIe specification).
+> 
+> Instead let the first Link Up IRQ call pci_host_probe(). Any follow up
+> Link Up IRQ will call pci_rescan_bus().
+
+I'm pleased to inform you that your patch worked perfectly with devices 
+behind the ASM2806 switch (Radxa Dual 2.5G Router HAT) connected to the 
+PCIe 2.1 bus of the Radxa ROCK 5A, 5B, and 5C Lite.
+
+So,
+Tested-by: FUKAUMI Naoki <naoki@radxa.com>
+
+
+Thank you very much for your work, and I apologize for any confusion 
+caused by my test report.
+
+Best regards,
+
+--
+FUKAUMI Naoki
+Radxa Computer (Shenzhen) Co., Ltd.
+
+> Fixes: ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect Link Up")
+> Fixes: 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ")
+> Reported-by: FUKAUMI Naoki <naoki@radxa.com>
+> Closes: https://lore.kernel.org/linux-pci/1E8E4DB773970CB5+5a52c9e1-01b8-4872-99b7-021099f04031@radxa.com/
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> ---
+>   .../pci/controller/dwc/pcie-designware-host.c | 70 ++++++++++++++++---
+>   drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
+>   drivers/pci/controller/dwc/pcie-dw-rockchip.c |  5 +-
+>   drivers/pci/controller/dwc/pcie-qcom.c        |  5 +-
+>   4 files changed, 68 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index e92513c5bda51..8654346729574 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -565,6 +565,59 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+>   	return 0;
+>   }
+>   
+> +static int dw_pcie_host_initial_scan(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct pci_host_bridge *bridge = pp->bridge;
+> +	int ret;
+> +
+> +	ret = pci_host_probe(bridge);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (pp->ops->post_init)
+> +		pp->ops->post_init(pp);
+> +
+> +	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
+> +
+> +	return 0;
+> +}
+> +
+> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
+> +{
+> +	if (!pp->initial_linkup_irq_done) {
+> +		int ret;
+> +
+> +		ret = dw_pcie_host_initial_scan(pp);
+> +		if (ret) {
+> +			struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +			struct device *dev = pci->dev;
+> +
+> +			dev_err(dev, "Initial scan from IRQ failed: %d\n", ret);
+> +
+> +			dw_pcie_stop_link(pci);
+> +
+> +			dw_pcie_edma_remove(pci);
+> +
+> +			if (pp->has_msi_ctrl)
+> +				dw_pcie_free_msi(pp);
+> +
+> +			if (pp->ops->deinit)
+> +				pp->ops->deinit(pp);
+> +
+> +			if (pp->cfg)
+> +				pci_ecam_free(pp->cfg);
+> +		} else {
+> +			pp->initial_linkup_irq_done = true;
+> +		}
+> +	} else {
+> +		/* Rescan the bus to enumerate endpoint devices */
+> +		pci_lock_rescan_remove();
+> +		pci_rescan_bus(pp->bridge->bus);
+> +		pci_unlock_rescan_remove();
+> +	}
+> +}
+> +
+>   int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -669,18 +722,17 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>   	 * If there is no Link Up IRQ, we should not bypass the delay
+>   	 * because that would require users to manually rescan for devices.
+>   	 */
+> -	if (!pp->use_linkup_irq)
+> +	if (!pp->use_linkup_irq) {
+>   		/* Ignore errors, the link may come up later */
+>   		dw_pcie_wait_for_link(pci);
+>   
+> -	ret = pci_host_probe(bridge);
+> -	if (ret)
+> -		goto err_stop_link;
+> -
+> -	if (pp->ops->post_init)
+> -		pp->ops->post_init(pp);
+> -
+> -	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
+> +		/*
+> +		 * For platforms with Link Up IRQ, initial scan will be done
+> +		 * on first Link Up IRQ.
+> +		 */
+> +		if (dw_pcie_host_initial_scan(pp))
+> +			goto err_stop_link;
+> +	}
+>   
+>   	return 0;
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index e995f692a1ecd..a31bd93490dcd 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -427,6 +427,7 @@ struct dw_pcie_rp {
+>   	int			msg_atu_index;
+>   	struct resource		*msg_res;
+>   	bool			use_linkup_irq;
+> +	bool			initial_linkup_irq_done;
+>   	struct pci_eq_presets	presets;
+>   	struct pci_config_window *cfg;
+>   	bool			ecam_enabled;
+> @@ -807,6 +808,7 @@ void dw_pcie_msi_init(struct dw_pcie_rp *pp);
+>   int dw_pcie_msi_host_init(struct dw_pcie_rp *pp);
+>   void dw_pcie_free_msi(struct dw_pcie_rp *pp);
+>   int dw_pcie_setup_rc(struct dw_pcie_rp *pp);
+> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp);
+>   int dw_pcie_host_init(struct dw_pcie_rp *pp);
+>   void dw_pcie_host_deinit(struct dw_pcie_rp *pp);
+>   int dw_pcie_allocate_domains(struct dw_pcie_rp *pp);
+> @@ -844,6 +846,9 @@ static inline int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>   	return 0;
+>   }
+>   
+> +static inline void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
+> +{ }
+> +
+>   static inline int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>   {
+>   	return 0;
+> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> index 3e2752c7dd096..8f2cc1ef25e3d 100644
+> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> @@ -466,10 +466,7 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
+>   		if (rockchip_pcie_link_up(pci)) {
+>   			msleep(PCIE_RESET_CONFIG_WAIT_MS);
+>   			dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+> -			/* Rescan the bus to enumerate endpoint devices */
+> -			pci_lock_rescan_remove();
+> -			pci_rescan_bus(pp->bridge->bus);
+> -			pci_unlock_rescan_remove();
+> +			dw_pcie_handle_link_up_irq(pp);
+>   		}
+>   	}
+>   
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c48a20602d7fa..2d8aca6630949 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1617,10 +1617,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+>   	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+>   		msleep(PCIE_RESET_CONFIG_WAIT_MS);
+>   		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+> -		/* Rescan the bus to enumerate endpoint devices */
+> -		pci_lock_rescan_remove();
+> -		pci_rescan_bus(pp->bridge->bus);
+> -		pci_unlock_rescan_remove();
+> +		dw_pcie_handle_link_up_irq(pp);
+>   
+>   		qcom_pcie_icc_opp_update(pcie);
+>   	} else {
+
+
 
