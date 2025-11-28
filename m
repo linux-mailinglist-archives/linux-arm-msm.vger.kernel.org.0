@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7C9DC915C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:07:11 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62C64C915D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 10:09:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 736193472F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:07:04 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5E3184E063F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 09:09:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B222D3009D6;
-	Fri, 28 Nov 2025 09:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0B372DCF52;
+	Fri, 28 Nov 2025 09:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LXCvDJFV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Im8SvMJj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845B23002DF;
-	Fri, 28 Nov 2025 09:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CB224DCF6;
+	Fri, 28 Nov 2025 09:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764320811; cv=none; b=p89ziClqJCj9KnRJ+x30vSeWMCHgFSZNB8TahY7mW8Hit/yXQkGFKqloCYX2WMC3tXoPGXF201cAYEFWnJjlKIapjVs7w+en2iweajPUwdBpWmV4PlT+x4VNKYWPwTHofmlV3RaX7oCRzE6GIaOovH0/zKQ/u58JZn+yBsaL4k8=
+	t=1764320990; cv=none; b=ReyTprx6z32OrrVNlNCHB0vfvTo28lVxo8BycPLoDEjk+z1BgRp+1ucgv01Yfv6HWfXL/14rfwgxowryvo1vdaWc3p2FG0it4R7vGNTFhsnwGtkoCWz9gL9UcrkVh25AdQNcQuXXGTDAnpfzMAkm6aujY4sIudk4aDEUfVR+mus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764320811; c=relaxed/simple;
-	bh=Vh0LuF0gS+lrMM9WoJmSq8MPQZpCzrMImlm3Z3WqzOU=;
+	s=arc-20240116; t=1764320990; c=relaxed/simple;
+	bh=sxEyqSNum+7T2Kv+R1KITv7ke2WkUwvAtNPQYBCC2HE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZZpAWXsAVIEVi+TEq1VsA91TRvAfLSsc0/gh+UvxpLllyo9gXN6aDPJwKaJQ3DT2u5Oz6amgeHL0Wa23QSLobGW+U6M90KedgTTAittioJE0djObvllhAkq/VKcQRi8ZAdPEEhf3RJaKkV18tW1RlddPqMBv5Uj9SvXtmIqDdZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LXCvDJFV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B38C4CEF1;
-	Fri, 28 Nov 2025 09:06:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=aOA9KzToh2vlGLMYOixbFEo3w57WUc5XkjjIzXzewMnudPRYfIfYZqH5LUW3loGM8jc4ubXhAUiy8f5UH4vGFQ184qNfqBpm3vjF7aPwD3d2VL883nioZhTBYWPyuehwlnS3zxmYDjdlWSa8QVUZrJqHMsoUfgiSG/nCNsGN9Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Im8SvMJj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E9EC4CEF1;
+	Fri, 28 Nov 2025 09:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764320811;
-	bh=Vh0LuF0gS+lrMM9WoJmSq8MPQZpCzrMImlm3Z3WqzOU=;
+	s=k20201202; t=1764320989;
+	bh=sxEyqSNum+7T2Kv+R1KITv7ke2WkUwvAtNPQYBCC2HE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LXCvDJFVHr13m/4MhEEIua5oEaw6YY4UgHWyJJjH+QJ//LF+5t54hsTjFZyDC/2Se
-	 Ba3YlV1sJUjKAq0aCTR5gO4mC93dXVI7aPGyMx0jep07ZEKNRVnW5sLmNRHvJvR0+F
-	 cmnC1DIo1VUIipB1OukKXsjWsmsvSbZp2HbQr57rgyfCKOTV5/71++uhEGC9nW8Ab6
-	 sLFzhQaaTtRbdxfJvfikqTC76uaJEN4kGKX6XegG1PbvUdsX3GwT9fMHS70FeAGnSA
-	 OD1WFHM5UZ6yAtctjTGFyALwYqxd551bLKvI/qe/MCSJr5Rhe3iyC5hTmgRd1ec43q
-	 q7VzrBoQboJVA==
-Message-ID: <369271f5-8ada-4c72-a9f2-852346b07867@kernel.org>
-Date: Fri, 28 Nov 2025 10:06:46 +0100
+	b=Im8SvMJj1D6zatswXcO5t8nw37AmvD2lecIpSMiUvJNNdUniKXcCUILXKOh83ehSx
+	 W8xQEjgUQrYOcXl8DFAfwiCm4o7kbZBUHiER1ayS03KR7qcWZaqxDKblusOo/+0sKz
+	 tAmWCRlUiirg83UVCmGI7p4SgO+UzcbbaZqiWOMiFw0dAzMc56dGmcgRWaVCvUoh4u
+	 tjjKi91KaKH4vUNC6zFH7bI7xQCRGaleDkn6Q0j28dn1AoKBU0v5FRxcR9q4mDuYWA
+	 ZzYNGHD8MUjGl1IJEBZs4m0ZGneNuMYPYSDWAVdMczYiiHBKtHNOh8SX98JWufAHuv
+	 XLFA+X/qUPGdQ==
+Message-ID: <09ce56eb-2527-4f96-9417-82cbd75f722f@kernel.org>
+Date: Fri, 28 Nov 2025 10:09:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add videocc node for SM8750 SoC
-To: Taniya Das <taniya.das@oss.qualcomm.com>,
+Subject: Re: [PATCH v6] arm64: dts: qcom: lemans-evk: Add OTG support for
+ primary USB controller
+To: Krishna Kurapati PSSNV <krishna.kurapati@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251126-sm8750-videocc-dt-v1-1-a848fbfb257f@oss.qualcomm.com>
- <7a69ced3-c698-4eb1-b705-58a48048e684@kernel.org>
- <9a3c2518-3a32-4165-a7e7-22171488991c@oss.qualcomm.com>
+References: <20251127073537.1218832-1-krishna.kurapati@oss.qualcomm.com>
+ <bf6e1039-c3ff-45e5-a225-4f2301c469fb@kernel.org>
+ <d57b71b0-f0b0-4dd5-91a6-53d570d9d060@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,42 +107,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <9a3c2518-3a32-4165-a7e7-22171488991c@oss.qualcomm.com>
+In-Reply-To: <d57b71b0-f0b0-4dd5-91a6-53d570d9d060@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/11/2025 09:41, Taniya Das wrote:
+On 27/11/2025 19:00, Krishna Kurapati PSSNV wrote:
 > 
-> 
-> On 11/27/2025 6:00 PM, Krzysztof Kozlowski wrote:
->> On 26/11/2025 19:09, Taniya Das wrote:
->>> Add device node for video clock controller on Qualcomm SM8750 SoC.
->>>
->>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 14 ++++++++++++++
->>>  1 file changed, 14 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> index 3f0b57f428bbb388521c27d9ae96bbef3d62b2e2..18e43c509f1f24785d55113addc5cd9f96e986f1 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> @@ -2740,6 +2740,20 @@ usb_dwc3_ss: endpoint {
->>>  			};
->>>  		};
->>>  
->>> +		videocc: clock-controller@aaf0000 {
->>> +			compatible = "qcom,sm8750-videocc";
->>> +			reg = <0 0x0aaf0000 0 0x10000>;
->>
->> ... and the code is not here matching style.
+>>> +&i2c11 {
+>>> +	status = "okay";
+>>> +
+>>> +	hd3ss3220@67 {
 >>
 > 
-> I can fix that in the next version. Will you drop it from your patch set?
+> 
+> Hi Krzysztof,
+> 
+> Thanks for the review.
+> 
+>> Node names should be generic. See also an explanation and list of
+>> examples (not exhaustive) in DT specification:
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+>> If you cannot find a name matching your device, please check in kernel
+>> sources for similar cases or you can grow the spec (via pull request to
+>> DT spec repo).
+>>
+> 
+> I see the following used in some freescale DTs:
+> usb-typec@47
+> usb_typec: usb-typec@67
+> usb-mux@47
+> 
+> In Renesas DTs I see the following used:
+> hd3ss3220@47
+> 
+> Can I use "usb-typec" and rename the node ?
 
-No, of course not! Because as I said - this was sent already. Please do
-not send in parallel code which is upstreamed already since long time.
-> 
+Yes, usb-typec feels right.
 
 
 Best regards,
