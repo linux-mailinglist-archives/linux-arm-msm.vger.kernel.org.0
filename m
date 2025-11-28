@@ -1,114 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-83776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 546D5C91F47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 13:11:48 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55800C91F78
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 13:18:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12FAF3A366D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 12:11:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 252FC4E31DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 12:18:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D72D4327BE5;
-	Fri, 28 Nov 2025 12:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A191F328B71;
+	Fri, 28 Nov 2025 12:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7OU1tLA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PoU05y5y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C9E3126D9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 12:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E2D328633;
+	Fri, 28 Nov 2025 12:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764331904; cv=none; b=k0Eyfl7XBcHFCdggylIcYXxpUhsMTiROfi2aeXWSMWp+NYZbZzqIXBWQgrDiqyu5g4HO5scSRGjyIHIHWecNpBXkDYyziu34eQIVeLyhLnNXKnyzM5NMaNKd94V/kdjfqSLeAPXWOE7NNCVfSRey1/wBFdvV0ZwCwOA42uuKCYs=
+	t=1764332333; cv=none; b=dAxPHc86zEIaRKmutJAG2xdCNOGSsjVwF5jyz7T3uAl4wXD6QcH4QyTQ66eII2KwKNgmJGPUlJO81epC0RLr7J9ww+AYSA+lYnK5J5ll0L9W62a1uCAD1kirHyielxnXWy3pis4PrJFqnV1Xz3JPjUXorK2Sy8O6a6w+jngwdW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764331904; c=relaxed/simple;
-	bh=3FW2c0xkEaAdUlSJBkucIUI20nlOnek/5STA9IOZ09g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cj2VhXMnCPYjmqZWZATBBYWxdAS+wC0fNXSqfvv0hewFBvpGmwEuBJomPhtbcIlG0VnfoOulJbz+D9bOEeVGR+QJMZEDps74/nCrRWm7Kw5tRT4x3mfWHLUr0jhFlIGeHni9qmBk1odltS6wbN7GRH9MgIR1ORdpex4rg83aWAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7OU1tLA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D15C2BCB2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 12:11:44 +0000 (UTC)
+	s=arc-20240116; t=1764332333; c=relaxed/simple;
+	bh=gwDTvuVEHdwL5CUTLbeq4biMUroLNJCpGrbaPQOlfCw=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=Gtc9lcPW87CkzXYxSd/bqgAIH5lz200Tcqiy7afPiWFkEOQuX8xcRF1HUvYyM27cztKCtTd98LILAemCCjmbgHyV49FTpsVacxcKOkPMduUVcC8G9hxSM63rYVBT7PjAvMNJJd+7GF8aSAB0PDBCkNkYMR+HTQ6igIIRimMqy4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PoU05y5y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5BEC4CEF1;
+	Fri, 28 Nov 2025 12:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764331904;
-	bh=3FW2c0xkEaAdUlSJBkucIUI20nlOnek/5STA9IOZ09g=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=q7OU1tLAY92DZt2exafBgDIn8E7uV0G4gL/8NXn7zXtJboAz+93WG51GyhhL0G8Uh
-	 qpd/X1HcOCmuQkcxml7VAGWCSll35VHL3Vhr+p8/9iI8uWvngXoX+jd8uGknlE+/q6
-	 YmtH51vDgAKxVp0XS0dHF+j98V3qYplFKPxCMJtw09KfAT7dA1j7Zel9RQFZVbCO8S
-	 Oma9u/de88G/DcQjWl1xen6830+Jd06UEO02xGl7UtdDK+x6HTeioNvg7c0L7b9xEy
-	 QBTEMQmhg54WmJbrIIXY6TY3ZEWCPJXqkBPmLMW1dzYOWRbNVmtdnlOLAqTDxz19uf
-	 HYgrtH+apSUmQ==
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5942bac322dso1956879e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 04:11:44 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU83mKO/16HGDb6yDH7YE8JvoqtKOtTBk+KA7IN7p3EsZQ9UIwb71WRQX7zO/hFpmqo5L9HngTGXN+4j0le@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0xrqImDiT7hn9pMEaIpsBI5ShtElj15+nj4U2YYdQVk6/xxgF
-	EwdDGNUatQMf6VlJLUqEohp8cBluNJDj2AxUCY8oV9Fx8s6X9VYDl7MyARI28PObP99QbUfw/uT
-	QZtvOzM+GSsxKktn3ETbWqolu1GE4JJOEIG0/jeazog==
-X-Google-Smtp-Source: AGHT+IFccEJqPf9GsVz7Ow8O/OUAsp3ckoijCPZ13KjRL7MhqqIzGrI9RfOPL3/bH3zHx3X5oE0rddi7qROkHTi0PRQ=
-X-Received: by 2002:a05:6512:33d4:b0:57a:7c9a:e826 with SMTP id
- 2adb3069b0e04-596a3e9fe30mr9367079e87.4.1764331903056; Fri, 28 Nov 2025
- 04:11:43 -0800 (PST)
+	s=k20201202; t=1764332331;
+	bh=gwDTvuVEHdwL5CUTLbeq4biMUroLNJCpGrbaPQOlfCw=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=PoU05y5ysXu2aV9aWhr1Z4El4WoOUqFX1MQqkEQWpgWfHFWJOqq/slmGgmMeUnH6j
+	 nLOwi8Q9sRIvjV9BuIIQY/74a4ck2fWuhC5G/cgHrnTYUTJoWA84N1T1HdiTFH4481
+	 MMUZSWc1h1l1hqzjsyW6KoBZhPVa3versw2HZIYdXV9q+q3kOILLH0xp4sqnAI91J4
+	 KTdwcjQj1yWfeR3v43Unr5iw64TJCy3JIRsCFw5LpP/Pxn2HZ4KjB6SB5X+jtHfyRr
+	 1ullpmvw84BUX9JhGzj4KuFEOsyWlMtYER5gJHW5O4+FdXwg5n+p+oJzgUnc1+i+sW
+	 I9BoXVDAngGeA==
+Date: Fri, 28 Nov 2025 06:18:49 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
- <20251128-qcom-qce-cmd-descr-v9-11-9a5f72b89722@linaro.org> <afde1841-f809-4eb2-a024-6965539fcb94@oss.qualcomm.com>
-In-Reply-To: <afde1841-f809-4eb2-a024-6965539fcb94@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 28 Nov 2025 13:11:30 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Mefy=6XDzA2bqe6g_AZS3bbdNEKoq4Z9hV8VwSq5mYBSw@mail.gmail.com>
-X-Gm-Features: AWmQ_bk5XhGbnR_8N9trznxcsVBgdT9UGm7CPw1PznDVP6sEw0lzXqWlPIaBWPM
-Message-ID: <CAMRc=Mefy=6XDzA2bqe6g_AZS3bbdNEKoq4Z9hV8VwSq5mYBSw@mail.gmail.com>
-Subject: Re: [PATCH v9 11/11] crypto: qce - Switch to using BAM DMA for crypto I/O
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, andersson@kernel.org, 
+ devicetree@vger.kernel.org, abel.vesa@linaro.org, 
+ linux-arm-msm@vger.kernel.org, quic_krichai@quicinc.com, 
+ qiang.yu@oss.qualcomm.com, bhelgaas@google.com, kishon@kernel.org, 
+ mani@kernel.org, quic_vbadigan@quicinc.com, johan+linaro@kernel.org, 
+ kwilczynski@kernel.org, jingoohan1@gmail.com, krzk+dt@kernel.org, 
+ neil.armstrong@linaro.org, vkoul@kernel.org, conor+dt@kernel.org, 
+ lpieralisi@kernel.org, linux-pci@vger.kernel.org, 
+ linux-phy@lists.infradead.org, konradybcio@kernel.org, kw@linux.com
+To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+In-Reply-To: <20251128104928.4070050-2-ziyue.zhang@oss.qualcomm.com>
+References: <20251128104928.4070050-1-ziyue.zhang@oss.qualcomm.com>
+ <20251128104928.4070050-2-ziyue.zhang@oss.qualcomm.com>
+Message-Id: <176433232993.1873037.5014618389839995125.robh@kernel.org>
+Subject: Re: [PATCH v15 1/6] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Update pcie phy bindings for qcs8300
 
-On Fri, Nov 28, 2025 at 1:08=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 11/28/25 12:44 PM, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > With everything else in place, we can now switch to actually using the
-> > BAM DMA for register I/O with DMA engine locking.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
->
-> [...]
->
-> > @@ -25,7 +26,7 @@ static inline u32 qce_read(struct qce_device *qce, u3=
-2 offset)
-> >
-> >  static inline void qce_write(struct qce_device *qce, u32 offset, u32 v=
-al)
-> >  {
-> > -     writel(val, qce->base + offset);
-> > +     qce_write_dma(qce, offset, val);
-> >  }
->
-> qce_write() seems no longer useful now
->
 
-I prefer to leave it like this if there are no strong objections. It
-reduces the size of the final patch and also - if for any reason in
-the future - we need to go back to supporting both DMA and CPU, we
-could handle it here.
+On Fri, 28 Nov 2025 18:49:23 +0800, Ziyue Zhang wrote:
+> The gcc_aux_clk is not required by the PCIe PHY on qcs8300 and is not
+> specified in the device tree node. Hence, move the qcs8300 phy
+> compatibility entry into the list of PHYs that require six clocks.
+> 
+> Removed the phy_aux clock from the PCIe PHY binding as it is no longer
+> used by any instance.
+> 
+> Fixes: e46e59b77a9e ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the QCS8300 QMP PCIe PHY Gen4 x2")
+> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+> Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml         | 17 ++---------------
+>  1 file changed, 2 insertions(+), 15 deletions(-)
+> 
 
-Bart
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
+Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
+Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
+Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251128104928.4070050-2-ziyue.zhang@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
