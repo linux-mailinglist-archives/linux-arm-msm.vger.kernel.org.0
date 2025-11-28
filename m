@@ -1,41 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-83676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A22CFC9084B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 02:42:06 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id D136EC907A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 02:20:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 53BE84E17C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 01:41:59 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 5107434C9CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 01:20:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3904525D53C;
-	Fri, 28 Nov 2025 01:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BAB81E7C2E;
+	Fri, 28 Nov 2025 01:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="FmbyETUi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sEzO12M+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49216.qiye.163.com (mail-m49216.qiye.163.com [45.254.49.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963852522B6;
-	Fri, 28 Nov 2025 01:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF446A33B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 01:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764294111; cv=none; b=e9WhKqf9mVw69yKkTPLEcDN7ieqlGydhYuff91B+tfqP63lnpAY2nEZNjSY7DdpiEXYRZC+xxWvsMF0nke70SuW+pXSZvbPEHMc4lSYOjqZHcs26AvM3wcCxl5HkrqtYIhpR8IlL0B63Ie19h6crENVropUQurE9a+FauCKj6c0=
+	t=1764292801; cv=none; b=sHe4s+yUenxTTI9VyzdeA4iiY+Ic1UVdN2dWKbKDXcTynkPhsnU0gdpvHAPQy6owZN2tRvwup49OhUf9VhLVH00uvL/shFav3eMxV6xy7GHxlkLdq2Gry6Gv+PczPAnx+P5WzxDRm8zzqXAeSTpErTP6PrnJml8vaf6IzIDk7zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764294111; c=relaxed/simple;
-	bh=0wDiS+BN/rTBUoa9oiwKomP92jTLbrXU1GyGnUYbJNA=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AYc/xm3gJI/lEHrzN1Z0zWKPkymwjWzC0nFInRXrQs2MS7FEd/eETnN3J8BN0KX07lp4xDFSeo/EPqlkSMwnnFIPUoci0unNo9HaysFQDl7hegCthphch2WK4t4/aKo5sbD3N1tE6v1DrvACqccVSmW8iVRXqZXaR10g/UYfIhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=FmbyETUi; arc=none smtp.client-ip=45.254.49.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2b2e92628;
-	Fri, 28 Nov 2025 09:06:16 +0800 (GMT+08:00)
-Message-ID: <dbe6975d-9b99-4493-9145-b2db382fd468@rock-chips.com>
-Date: Fri, 28 Nov 2025 09:06:13 +0800
+	s=arc-20240116; t=1764292801; c=relaxed/simple;
+	bh=Xh8FidNQEs184MgopMgAshY0wsFIouLntNkVMgKSSFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SVWyyhqePRwSZAnWD8bwT6T0AKKILLUYjfd+osCjPSqKQVINSUWwGkOvRhs8/7f8gX/Q5H7kjXeR/2Omfp8I2aAY6J39rn7q6qd61BJdccoG0CmM9SjaLLQrU3ARhAOLcweSoGB9F71BhMWS2sZFWBbxVsxLNp4u4QjSiVA5SsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sEzO12M+; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-37b657f6e24so2010461fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Nov 2025 17:19:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764292797; x=1764897597; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1xDF0EDM6IMGCavyFBHjGw9HJGxUae+QwmkNBhQa+yU=;
+        b=sEzO12M+XCcTVo6dXmJp80fvvoPFgbgiBTikS980gkg9T8p3vVj/dkCM8W1e0QUWQY
+         sbxKDiAax3XzlQYJHLTth+vzuAx+AGiSM/6hmoA0CcGxUurIMl9EKWEjM7JTd5EC9bkh
+         zWysY64/1EEy0LqDdmj+qJGfrsuSRe1yqCGMqgPTC03iv5NsDRAoVFC1Wl9mnm9uWAhJ
+         xKCl3AwEWkbFTHKi8D1cqZqp2JjkPQrV0imiOAHd3tAmgTEPZkmzNEaeNys64UlqYikj
+         ZB5REQAiBZ0GSZh+TFhuMqbzHyXeqWLEX84CHBWCbiwP/DGMuN06E/DcRjdtMDLAKZij
+         T7cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764292797; x=1764897597;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1xDF0EDM6IMGCavyFBHjGw9HJGxUae+QwmkNBhQa+yU=;
+        b=CdS8zI6rjMhcKfmyYOXLWMKDO6+IDui+Y9+uM75lZ/YZsnWzqmt1mgtZQ71ldUBuI8
+         9WohjK3nsX81s4Rw3Oz+AqOwxzHm9D2ka8OWZLS+dOu09K5W/RgWhh7chEuybTyBqhkC
+         BUuI4bbql7Hbi3uZdFTzFE0u6JiFivXAsULxMbsHfp/kM0rMjTdiqcJ4FHcVdszT0Bb8
+         bLf+slbeM5A95vwms5fsJOrprgZdLtO7tnk10NPXteMoYBU5BeIfpYR3ufNPUB17xa1r
+         qNDlseWO3xjG/ZjGY3vNZW3pcz5RP5Zuv+y3Z/Ah1P/bSVU50AztdPu+pJUkZqamGbeF
+         m/jg==
+X-Forwarded-Encrypted: i=1; AJvYcCVuy4Q3wqFospYSoYYJqj7S5/4TLkuPcpn89jMMcOIIdfr75njcOhvGhrFyKdVXsk6PfqZYdE2k8YjnC/j1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwC4jK99hQJMtEdItKbu8uLotlA38JxqG4GLZ7K/eLO4Rk2n/r6
+	AmW9BbtnZgvFcrxPY1Sky6shiUWhxkbdTRFI+LfHpxeVXLEeFHcxtNFYVW/L+MwWVsA=
+X-Gm-Gg: ASbGncsWtciEWGKxhiNxxkSHcMo3jL/Cet//xaVeC0VnkejlJO75qJ5wQGoSRcISje7
+	2FON1fugnzgMubgAAh1QAr7YP95dU7gJ/BReqNQPPRral0V/7ixbK9cFCrD/4xqF21NBEl87T/b
+	IXUMCWECb9CTbomL11zUktK+nR3qlL4eNyNV71gS/pgb7a+o7wNB46ABQCScSmOaBdEp4hXM4Ro
+	7nFjsCllBvLkVkxx79slAT5aSVVA85HcMf39SKfiubK+QfGImxneBp6yCNkU/Ezo96klfKuNinB
+	WAH684UteYRWjqShuSg6t4U755Mes2hPuLsNe4Kbent5n7bEnE8TrpIbDITUpG8wowm1luKgTpM
+	8FRSS3F9NbhBhyV3YqhGdyMsAs2p8qc3B7vW/n6A/joGzTctxb3AEJZBBmtZgrQkRrRWAnWR/Hj
+	0lFzEe6ilZpRI9+eR4diIUfmRUsoiPv1F9Tk4jla3N1JtU3vNN6/QxqV9e0cf+iYWF+A==
+X-Google-Smtp-Source: AGHT+IHeUKobSKShByGKOG8AH/8FuEh/1k4+K0a8G021A9UAm4AYIoKpHsWdJBUNVgcktttj9wAAzA==
+X-Received: by 2002:a2e:2a41:0:b0:375:f6b9:c95d with SMTP id 38308e7fff4ca-37cdc3e3c4fmr34380401fa.8.1764292796702;
+        Thu, 27 Nov 2025 17:19:56 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37d236efb16sm6918701fa.20.2025.11.27.17.19.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Nov 2025 17:19:56 -0800 (PST)
+Message-ID: <820ac446-a55c-402a-8c53-e83ca0c3f654@linaro.org>
+Date: Fri, 28 Nov 2025 03:19:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -43,264 +83,96 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, FUKAUMI Naoki <naoki@radxa.com>,
- linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered
- on PCIe switches
-To: Niklas Cassel <cassel@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
- Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Heiko Stuebner <heiko@sntech.de>
-References: <20251127134318.3655052-2-cassel@kernel.org>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20251127134318.3655052-2-cassel@kernel.org>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sm8x50: Enable UHS-I SDR50 and
+ SDR104 SD card modes
+To: Val Packett <val@packett.cool>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring
+ <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251126012043.3764567-1-vladimir.zapolskiy@linaro.org>
+ <bdf3f54d-a223-4eff-aa71-0d74a83ef46d@packett.cool>
+ <3b609409-e19f-4685-848d-807a4e840ad8@oss.qualcomm.com>
+ <f820c42b-4cd9-430f-a1ee-4f380dc9ca8a@packett.cool>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <f820c42b-4cd9-430f-a1ee-4f380dc9ca8a@packett.cool>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ac7ff1dd209cckunmb69f50316946c2
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQklMTVYYSExOHkxKTEsaTBlWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=FmbyETUih0zC01PvdaA7bUcXVK9lGATf0na3P/WE2HDqlcEHBgkENNEJDTNEXHOPEV7T8YcLkLJj/UuZg+eJsI4jI9+Ve6zNR+eO5KE9Vvmy+nRGtk4Rmj6K6oEXy7S8/3vhuaKXAy1NHx/MZxRm8SVoLqpnf0HgUMle4FsWG4o=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=cbz0T3Pb1Oli5KHPUp2Dx7P8QO+RzTOk0Et4ZiYbRK8=;
-	h=date:mime-version:subject:message-id:from;
 
-在 2025/11/27 星期四 21:43, Niklas Cassel 写道:
-> The DWC glue drivers always call pci_host_probe() during probe(), which
-> will allocate upstream bridge resources and enumerate the bus.
+On 11/27/25 21:33, Val Packett wrote:
+> On 11/27/25 10:47 AM, Konrad Dybcio wrote:
+>> On 11/26/25 5:14 PM, Val Packett wrote:
+>>> Hi,
+>>>
+>>> On 11/25/25 10:20 PM, Vladimir Zapolskiy wrote:
+>>>> The reported problem of some non-working UHS-I speed modes on SM8450
+>>>> originates in commit 0a631a36f724 ("arm64: dts: qcom: Add device tree
+>>>> for Sony Xperia 1 IV"), and then it was spread to all SM8450 powered
+>>>> platforms by commit 9d561dc4e5cc ("arm64: dts: qcom: sm8450: disable
+>>>> SDHCI SDR104/SDR50 on all boards").
+>>>>
+>>>> The tests show that the rootcause of the problem was related to an
+>>>> overclocking of SD cards, and it's fixed later on by commit a27ac3806b0a
+>>>> ("clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs").
+>>>>
+>>>> Due to a missed setting of an appropriate SDCC clock operations in
+>>>> platform GCC driver the workaround of dropping SD card speeds from UHS-I
+>>>> to high speed was spread to SM8550 and SM8650 platforms, and since
+>>>> the fixes in the clock controller drivers are ready [1], it should be
+>>>> safe to remove the speed mode restrictions from SM8450, SM8550 and
+>>>> SM8650 platforms.
+>>>> [..]
+>>> I see you have tested with dd on the raw block device, but have you tested hotplugging SD cards that have partition tables and filesystems on them?
+>>>
+>>> We have this kind of issue on Hamoa where we get I/O errors early, right after the card is inserted and the partition table / filesystem headers are being read:
+>>>
+>>> [  714.057106] mmc0: new UHS-I speed SDR104 SDXC card at address 0001
+>>> [  714.060567] mmcblk0: mmc0:0001 EC2QT 59.6 GiB
+>>> [  714.503873] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
+>>> [  714.505660] Buffer I/O error on dev mmcblk0, logical block 0, async page read
+>>> [  714.513632] I/O error, dev mmcblk0, sector 0 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 2
+>>> [  714.516469] Buffer I/O error on dev mmcblk0, logical block 0, async page read
+>>> [  714.516512]  mmcblk0: unable to read partition table
+>> Before we start debugging, could you please confirm it's using the internal
+>> (&sdhc_2) MMC controller, and not one connected over PCIe, like it's the
+>> case on the Surface Laptop?
+> Of course it is. I'm quite familiar with the DTS on this device, I
+> pushed it over the finish line into upstream myself :)
+>> Are the regulators supplying vmmc and vqmmc in high power mode?
 > 
-> For controllers without Link Up IRQ support, pci_host_probe() is called
-> after dw_pcie_wait_for_link(), which will also wait the time required by
-> the PCIe specification before performing PCI Configuration Space reads.
+> Yes. regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>; and no
+> allow-set-load / allowed-modes (..hm, maybe we can actually add those to
+> save power since sdhci-msm *does* do regulator_set_load..)
 > 
-> For controllers with Link Up IRQ support, the pci_host_probe() call (which
-> will perform PCI Configuration Space reads) is done without any of the
-> delays mandated by the PCIe specification.
+> But turns out this is not a consistent problem with every card!.. At
+> least *now* one of the two Kingston Canvas Select Plus cards I have
+> attaches perfectly every time. (Another one of those though often fails
+> to probe with "error -84 reading general info of SD ext reg" and
+> sometimes has an early I/O error, but exFAT mounts even after that error
+> — but this seems like just a "microSD cards are crap" thing.)
 > 
-> For controllers with Link Up IRQ support, since the pci_host_probe() call
-> is done without any delay (link training might still be ongoing), it is
-> very unlikely that this scan will find any devices. Once the Link Up IRQ
-> triggers, the Link Up IRQ handler will call pci_rescan_bus().
-> 
-> This works fine for PCIe endpoints connected to the Root Port, since they
-> don't extend the bus. However, if the pci_rescan_bus() call detects a PCIe
-> switch, then there will be a problem when the downstream busses starts
-> showing up, because the PCIe controller is not hotplug capable, so we are
-> not allowed to extend the subordinate bus number after the initial scan,
-> resulting in error messages such as:
-> 
-> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
-> 
-> While we would like to set the is_hotplug_bridge flag
-> (quirk_hotplug_bridge()), many embedded SoCs that use the DWC controller
-> have synthesized the controller without hot-plug support.
-> Thus, the Link Up IRQ logic is only mimicking hot-plug functionality, i.e.
-> it is not compliant with the PCI Hot-Plug Specification, so we cannot make
-> use of the is_hotplug_bridge flag.
-> 
-> In order to let the Link Up IRQ logic handle PCIe switches that are already
-> powered on (PCIe switches that not powered on already need to implement a
-> pwrctrl driver), don't perform a pci_host_probe() call during probe()
-> (which disregards the delays required by the PCIe specification).
-> 
-> Instead let the first Link Up IRQ call pci_host_probe(). Any follow up
-> Link Up IRQ will call pci_rescan_bus().
+> It's the Samsung Evo Plus card that consistently has early I/O errors
+> preventing the partition table scan from succeeding (or if that
+
+For the last 10 years it's known that a multitude of Samsung Evo SD cards
+are fake.
+
+> succeeds, prevents the exFAT mount). There is a *card compat* issue here
+> for sure, as the card is not corrupted, it mounts every time on a
+> different laptop with a PCIe card reader [1217:8621] in the same SDR104
+> mode. But consistently has these errors on sdhci-msm.
 > 
 
-Thanks for fixing this, I'v tested it on RK3588S-EVB1 with both of PCIe
-switch + 2 NVMe and NVMe directly connected.
+Please check the actual I/O speed of this card on a host, the given dd
+command should be sufficient for that purpose. It might happen that if
+the actually supported max speed is not close to SDR104, however the mode
+is set by the Qualcomm SDHC driver due to info read from the card out,
+the I/O may be faulty.
 
-FWIW,
-Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-
-> Fixes: ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect Link Up")
-> Fixes: 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ")
-> Reported-by: FUKAUMI Naoki <naoki@radxa.com>
-> Closes: https://lore.kernel.org/linux-pci/1E8E4DB773970CB5+5a52c9e1-01b8-4872-99b7-021099f04031@radxa.com/
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> ---
->   .../pci/controller/dwc/pcie-designware-host.c | 70 ++++++++++++++++---
->   drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
->   drivers/pci/controller/dwc/pcie-dw-rockchip.c |  5 +-
->   drivers/pci/controller/dwc/pcie-qcom.c        |  5 +-
->   4 files changed, 68 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index e92513c5bda51..8654346729574 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -565,6 +565,59 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->   	return 0;
->   }
->   
-> +static int dw_pcie_host_initial_scan(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct pci_host_bridge *bridge = pp->bridge;
-> +	int ret;
-> +
-> +	ret = pci_host_probe(bridge);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (pp->ops->post_init)
-> +		pp->ops->post_init(pp);
-> +
-> +	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
-> +
-> +	return 0;
-> +}
-> +
-> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
-> +{
-> +	if (!pp->initial_linkup_irq_done) {
-> +		int ret;
-> +
-> +		ret = dw_pcie_host_initial_scan(pp);
-> +		if (ret) {
-> +			struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +			struct device *dev = pci->dev;
-> +
-> +			dev_err(dev, "Initial scan from IRQ failed: %d\n", ret);
-> +
-> +			dw_pcie_stop_link(pci);
-> +
-> +			dw_pcie_edma_remove(pci);
-> +
-> +			if (pp->has_msi_ctrl)
-> +				dw_pcie_free_msi(pp);
-> +
-> +			if (pp->ops->deinit)
-> +				pp->ops->deinit(pp);
-> +
-> +			if (pp->cfg)
-> +				pci_ecam_free(pp->cfg);
-> +		} else {
-> +			pp->initial_linkup_irq_done = true;
-> +		}
-> +	} else {
-> +		/* Rescan the bus to enumerate endpoint devices */
-> +		pci_lock_rescan_remove();
-> +		pci_rescan_bus(pp->bridge->bus);
-> +		pci_unlock_rescan_remove();
-> +	}
-> +}
-> +
->   int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   {
->   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> @@ -669,18 +722,17 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	 * If there is no Link Up IRQ, we should not bypass the delay
->   	 * because that would require users to manually rescan for devices.
->   	 */
-> -	if (!pp->use_linkup_irq)
-> +	if (!pp->use_linkup_irq) {
->   		/* Ignore errors, the link may come up later */
->   		dw_pcie_wait_for_link(pci);
->   
-> -	ret = pci_host_probe(bridge);
-> -	if (ret)
-> -		goto err_stop_link;
-> -
-> -	if (pp->ops->post_init)
-> -		pp->ops->post_init(pp);
-> -
-> -	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
-> +		/*
-> +		 * For platforms with Link Up IRQ, initial scan will be done
-> +		 * on first Link Up IRQ.
-> +		 */
-> +		if (dw_pcie_host_initial_scan(pp))
-> +			goto err_stop_link;
-> +	}
->   
->   	return 0;
->   
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index e995f692a1ecd..a31bd93490dcd 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -427,6 +427,7 @@ struct dw_pcie_rp {
->   	int			msg_atu_index;
->   	struct resource		*msg_res;
->   	bool			use_linkup_irq;
-> +	bool			initial_linkup_irq_done;
->   	struct pci_eq_presets	presets;
->   	struct pci_config_window *cfg;
->   	bool			ecam_enabled;
-> @@ -807,6 +808,7 @@ void dw_pcie_msi_init(struct dw_pcie_rp *pp);
->   int dw_pcie_msi_host_init(struct dw_pcie_rp *pp);
->   void dw_pcie_free_msi(struct dw_pcie_rp *pp);
->   int dw_pcie_setup_rc(struct dw_pcie_rp *pp);
-> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp);
->   int dw_pcie_host_init(struct dw_pcie_rp *pp);
->   void dw_pcie_host_deinit(struct dw_pcie_rp *pp);
->   int dw_pcie_allocate_domains(struct dw_pcie_rp *pp);
-> @@ -844,6 +846,9 @@ static inline int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->   	return 0;
->   }
->   
-> +static inline void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
-> +{ }
-> +
->   static inline int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   {
->   	return 0;
-> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> index 3e2752c7dd096..8f2cc1ef25e3d 100644
-> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> @@ -466,10 +466,7 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
->   		if (rockchip_pcie_link_up(pci)) {
->   			msleep(PCIE_RESET_CONFIG_WAIT_MS);
->   			dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-> -			/* Rescan the bus to enumerate endpoint devices */
-> -			pci_lock_rescan_remove();
-> -			pci_rescan_bus(pp->bridge->bus);
-> -			pci_unlock_rescan_remove();
-> +			dw_pcie_handle_link_up_irq(pp);
->   		}
->   	}
->   
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c48a20602d7fa..2d8aca6630949 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1617,10 +1617,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
->   	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
->   		msleep(PCIE_RESET_CONFIG_WAIT_MS);
->   		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-> -		/* Rescan the bus to enumerate endpoint devices */
-> -		pci_lock_rescan_remove();
-> -		pci_rescan_bus(pp->bridge->bus);
-> -		pci_unlock_rescan_remove();
-> +		dw_pcie_handle_link_up_irq(pp);
->   
->   		qcom_pcie_icc_opp_update(pcie);
->   	} else {
-
+-- 
+Best wishes,
+Vladimir
 
