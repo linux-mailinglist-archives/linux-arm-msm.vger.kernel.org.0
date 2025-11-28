@@ -1,174 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-83789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE7C4C9252C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 15:27:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F30FDC92555
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 15:30:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D9D43A60AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 14:27:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABB923AC1BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 14:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5D526ED51;
-	Fri, 28 Nov 2025 14:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7BFE32ED2A;
+	Fri, 28 Nov 2025 14:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VWeWGmEY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iG8Ozd1t";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="a+Ou6BND"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08395267B92;
-	Fri, 28 Nov 2025 14:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD09D30F7F3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 14:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764340041; cv=none; b=RlAEyA1w3XANxYOmj7W3OyFXs5tEgXcgwsMMuTP6qjawM6iEnxqVL2BrfOS03+Chp1/KOVX6+fG7xYuN+q+oswr7giseuQtKzpxpoo27dyYn8R4l77h+OxMX3XFDBnMcDdnFMBVCyRuGyobKI5Wr6p/+sYrex+MDC+Y1Smav6y4=
+	t=1764340205; cv=none; b=HqJpaeoFUPAle80FIUxkp9aY0Wm3ecBWxEo5YdjO8u3fuGPq9fVGMNHWcyvU4myGBEuhNPgU63xhcCAEYyZK2ivsAbD23vrv0Ws4u6OzN5CDviYTTLyGwftqOZV8w/qQNu+9FH7pshYi808X8fSaU8dVSd232VtfU0jGjaFhyGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764340041; c=relaxed/simple;
-	bh=MCNZ7/JOKVOKMS2Ye0Z5CGLQlCRGTTYsDLTxzMvltaE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bJF4NvmTp0pdPSGoGs20L9qjL51zUjEcdEmQyGg6N+YrD4LAOgvzALm9HjVP+cKD44UccFQst5ztARdxbdgBG2csPFXFNA8+oS2mO1JINzwuWommSvQZFi3MZwentCiRel+szkG7vT9k+c16RN7K0OrPIVokSgm+WWhA05rB97M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VWeWGmEY; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1764340038;
-	bh=MCNZ7/JOKVOKMS2Ye0Z5CGLQlCRGTTYsDLTxzMvltaE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=VWeWGmEYeGIgOvnLOSv8vEZiGfLixdNRBrF3Bgr0AQUVMMk6cw7rC3fmfJScOHhk0
-	 dq3yDCG0wySHJ0aZbKRoxq0re1kYfYMGz3whg8KFAuKb5XNE9DLT5nB71E51SK/Cf2
-	 nU88JdaCMFOf/JFtsbIkvVK/L4VXruBPjCG4JH+y31ngZIHhAqW8x/WXC5RaGIiwIz
-	 ys2oaPzY/4viwi7a5+jNUkoheY6zfcvJSf+O49BorhP0pEa/0c+Mp/VcXdioCRFuRR
-	 zAelT7RVIaYa9P/7f4yeLE3FDFRXQD8ExFh2rZc7tqfsDgRgBQiJBEP2wg5bE0Nm1G
-	 S3cnWYoaDhB2g==
-Received: from fedora (unknown [IPv6:2a01:e0a:2c:6930:d919:a6e:5ea1:8a9f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id A7BC717E0EDB;
-	Fri, 28 Nov 2025 15:27:16 +0100 (CET)
-Date: Fri, 28 Nov 2025 15:27:13 +0100
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Danilo Krummrich <dakr@kernel.org>, Daniel Almeida
- <daniel.almeida@collabora.com>, Matthew Brost <matthew.brost@intel.com>,
- "Thomas =?UTF-8?B?SGVsbHN0csO2bQ==?=" <thomas.hellstrom@linux.intel.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
- <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Steven Price
- <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, Miguel Ojeda
- <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo
- <gary@garyguo.net>, "=?UTF-8?B?QmrDtnJu?= Roy Baron"
- <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, Andreas
- Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, Frank
- Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, Rob
- Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
- <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, Marijn
- Suijten <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>,
- Lucas De Marchi <lucas.demarchi@intel.com>, Rodrigo Vivi
- <rodrigo.vivi@intel.com>, Sumit Semwal <sumit.semwal@linaro.org>,
- "Christian =?UTF-8?B?S8O2bmln?=" <christian.koenig@amd.com>,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- rust-for-linux@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-media@vger.kernel.org,
- linaro-mm-sig@lists.linaro.org
-Subject: Re: [PATCH 3/4] drm/gpuvm: use const for drm_gpuva_op_* ptrs
-Message-ID: <20251128152713.15bf1c37@fedora>
-In-Reply-To: <20251128-gpuvm-rust-v1-3-ebf66bf234e0@google.com>
-References: <20251128-gpuvm-rust-v1-0-ebf66bf234e0@google.com>
-	<20251128-gpuvm-rust-v1-3-ebf66bf234e0@google.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1764340205; c=relaxed/simple;
+	bh=tRNBe4fjRO1hx9IAslahBhVvZMSRTvihSK2tbffhBp0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D092aCATE6ZumZaYD5ScmZfmehXItCu3Gcnf2EXcJUJNhRUlaZTgu3ijUCmlYt0lam5eVxXluoQ3+AXXP302qEZnFPjev4F1HcirLd7LwW9s8/GPtOrtFaV+hHIoXPdy/FoL/Wx2Un4qttB1aNZIKt+JAs5dDnrOWi0+pQO/qf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iG8Ozd1t; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=a+Ou6BND; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AS8OgbA3627217
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 14:30:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	I8m/Cd13luBRYG7SBIJit3CvmjCN2CxIcV7mIbzooIg=; b=iG8Ozd1tc2RsfYFs
+	sSv5uIi6bkvfKUUvQYZ1efBDhdy/Nsbf6VL/TCtjnHct7tR1j+5J/fZluNL/wERy
+	OCV+HreSeU4pB/zn2RgitxSg+nh7g3zdr53Smk5QLk6hQqFc10eEoxu0G/vjtUu3
+	AKglRC/z5aFpId35ztl8iNZOsxTXYNw3QdmPkigDyoYijxTA5mctG6Z5majWcX62
+	436bPIlgqeFEexVB/FyqAfcnY/VXv/lAb0iQHzLB4Z3FWbM0+3mDzmAxpkWVdyrt
+	GLrEkWc0h8sElqYW3O1gddf37pSuOrpeOpHW3f14YJJcgDYHaS1E8nQ23IUgIetm
+	tDETWQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4apmynum57-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 14:30:00 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b6ce1b57b9cso2093950a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 06:30:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764340200; x=1764945000; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I8m/Cd13luBRYG7SBIJit3CvmjCN2CxIcV7mIbzooIg=;
+        b=a+Ou6BNDQRak3prVWQh81bkpVgDNzdYyb+5ZyD6aOjZLwfOl0ExP6GZZwWUzFZgDzE
+         e0UtmDw+r4oqr/LYxYrXO95EGKbiT7D20QGX9vcA2BGAmvdvcYudgb43W5gvVc1RhEyP
+         l7TbSOsytajJ5oczGPpUplZd7VpdzyIivPGGxWJNgLYpFFui4+TKHuEMbCknVO7XMu1H
+         pOpbqgH3vy93cCpiycb0F0TozETIyAz9Ko+vbUBnLfvTRiplJ4H4mdo34xnb4B1l8VbN
+         8EDdRR0PNXhYbJDjVCEbWJ4AMqjCDiHZxEn5qxjdXSmjQiVvwrN54GuaP57SYImAkAo2
+         Mb1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764340200; x=1764945000;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=I8m/Cd13luBRYG7SBIJit3CvmjCN2CxIcV7mIbzooIg=;
+        b=s/JWxNq8DkV0q5KVqTE5lFaqhU1rVQAoYmlYqcAt0zxtLce8dicxn1+SIRi/TaCSRT
+         QEM3423GR/xwcWwxHOX9TBAYonYq8bc1nkqtYqCeyJnnIEM6X2IYzWOnnSBE4wtGdCJE
+         UmToipjSdr+XCWDDDI0a5m1AZQ/2S+GLS/3EpE5akEJGEJe6I6hQRePUBdFEGuRXv2bl
+         RV3ER/Ii3pwaIq8MUeqOfXZpy3xceBu42YT0eQ2klpu4qQll73AOrDS83zLjGpnN3pAi
+         BUnQFkxk2vVu2Fll47Ok9vnj2CWRRGHgaw4+3Ng4jtmVr4VCyOi3u77aK7nY4DySCDjd
+         NI2Q==
+X-Gm-Message-State: AOJu0YwuAFOhoEQMcjRXtJ7vpGhylVH4A02SbE/YzO03yUexaMNFwQgD
+	RBW0q2OwPP4J1M0+xhl4akXQhEdv+YMTiri7pzHUIToHdbUTIDdp+U2tLvbMWEJOEt9RbKWkcZL
+	cpA3V1hpSEW1AbfNHLpTQp41sfouW9KKSXzhdaKfsS/BqoXekVWcYTdbv/EnLEAvTjOPe
+X-Gm-Gg: ASbGncvbaxnsTngmll1twg7RLTSn+avvqVPjUt3GeA8FKfR06vetQ4rnGj3SGpVCE8+
+	6jhb6EQMiOcM+ZWB4ZW11gF0N1pCtwImSU89iFiRrMyGowbU1E+MLJiPD9Ort+ZzP8QnYW5av5+
+	YRxTrUkYbCyLMcaagc8Zeo1WgfgVu4S7vw31O08WsBPGhXjmrp2bg3jBjC2jY7c6yCXh74ZoHJt
+	saGOYu94r8Wso9byiXMo6SHBNu5eexGCdZz3eWTh6ATMDl7LBKTs8GPFXBUOYDZNT7+1FHJSe6J
+	VCPKS2uYsps/r8QJVVvZ9MMp0M1IxYM82nDo7DxVl1nwSYcys/WdsSjkRJ2TWnOG6m3a12aREgn
+	S5irI2rODaaC1ivQH3y0J5BBVKNWwUmXtxw==
+X-Received: by 2002:a17:903:234a:b0:299:fc47:d7e3 with SMTP id d9443c01a7336-29b6c57224emr319638405ad.31.1764340199727;
+        Fri, 28 Nov 2025 06:29:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGQDWkrRLq6Z/YilM0CQ3+TKY3UGACkoNWNyTlguCOA8KyIumCSBYe74T3rnKhV4ld7zREH+Q==
+X-Received: by 2002:a17:903:234a:b0:299:fc47:d7e3 with SMTP id d9443c01a7336-29b6c57224emr319637915ad.31.1764340199231;
+        Fri, 28 Nov 2025 06:29:59 -0800 (PST)
+Received: from [192.168.1.119] ([183.192.29.70])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bceb54c6asm48719675ad.90.2025.11.28.06.29.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Nov 2025 06:29:58 -0800 (PST)
+Message-ID: <ed2aaebf-f0ed-4eb6-b880-9c39d4f0533c@oss.qualcomm.com>
+Date: Fri, 28 Nov 2025 22:29:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] clk: qcom: cmnpll: Account for reference clock
+ divider
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
+        quic_leiwei@quicinc.com, quic_pavir@quicinc.com,
+        quic_suruchia@quicinc.com
+References: <20251128-qcom_ipq5332_cmnpll-v1-0-55127ba85613@oss.qualcomm.com>
+ <20251128-qcom_ipq5332_cmnpll-v1-1-55127ba85613@oss.qualcomm.com>
+ <2d83f0d3-4798-4183-9e3d-9972db706cdb@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Luo <jie.luo@oss.qualcomm.com>
+In-Reply-To: <2d83f0d3-4798-4183-9e3d-9972db706cdb@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: apgjXbWz6FxTzr8-jjjWI-lxyX1Mm17S
+X-Authority-Analysis: v=2.4 cv=QOplhwLL c=1 sm=1 tr=0 ts=6929b1e8 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=sdhyOahhduPysBwc4dimug==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=HfvJj5BQp2OzgikQKL0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI4MDEwNiBTYWx0ZWRfX40fmt7HKppE8
+ cBUO7Q5aADX7fmD56y0oZfr/D4R/csCL2G7ibIjwEHQtDdYdZ55V5iDur3Nea1ldGO9iWzcrk99
+ Cw9fPEklHzMv5SdTn/4f+rAvk4i4b3LHP3f9jLbM30OxeBhqe/Bk0QpGrErm46UtabeJJFNMX7N
+ CHXQBR/H+HtR5cAIBcN8jmcPruAz0mGdje5HssekrqkRG4sv+ghTIj/OdObN5TtnfJrGTdzMWJt
+ mBrMAfkpiQ29hkSnIGC59GB/e9FqhtvEc3MtcmwRWSgKnWf9NjDI6ayQlhZtsZnR4x+pyd/afDP
+ MAka41IZvvkLjuoETq0dWdn2c5wtCbBdPDGSRHwaSd8Xh+dlEWDkUprXtVaCg3xCFeKDX3fBphc
+ Cs8OwA5gE1MnozU1OUZyi/TbC/xQww==
+X-Proofpoint-GUID: apgjXbWz6FxTzr8-jjjWI-lxyX1Mm17S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_03,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511280106
 
-On Fri, 28 Nov 2025 14:14:17 +0000
-Alice Ryhl <aliceryhl@google.com> wrote:
 
-> These methods just read the values stored in the op pointers without
-> modifying them, so it is appropriate to use const ptrs here.
+
+On 11/28/2025 7:38 PM, Konrad Dybcio wrote:
+> On 11/28/25 9:40 AM, Luo Jie wrote:
+>> The clk_cmn_pll_recalc_rate() function must account for the reference clock
+>> divider programmed in CMN_PLL_REFCLK_CONFIG. Without this fix, platforms
+>> with a reference divider other than 1 calculate incorrect CMN PLL rates.
+>> For example, on IPQ5332 where the reference divider is 2, the computed rate
+>> becomes twice the actual output.
+>>
+>> Read CMN_PLL_REFCLK_DIV and divide the parent rate by this value before
+>> applying the 2 * FACTOR scaling. This yields the correct rate calculation:
+>> rate = (parent_rate / ref_div) * 2 * factor.
+>>
+>> Maintain backward compatibility with earlier platforms (e.g. IPQ9574,
+>> IPQ5424, IPQ5018) that use ref_div = 1.
 > 
-> This allows us to avoid const -> mut pointer casts in Rust.
+> I'm not sure how to interpret this. Is the value fixed on these platforms
+> you mentioned, and always shows up as 0?
 > 
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> Konrad
 
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+On these platforms the hardware ref_div register comes up with a value
+of 1 by default. It is, however, still a programmable field and not
+strictly fixed to 1.
 
-> ---
->  drivers/gpu/drm/drm_gpuvm.c | 6 +++---
->  include/drm/drm_gpuvm.h     | 8 ++++----
->  2 files changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
-> index 9cd06c7600dc32ceee0f0beb5e3daf31698a66b3..e06b58aabb8ea6ebd92c625583ae2852c9d2caf1 100644
-> --- a/drivers/gpu/drm/drm_gpuvm.c
-> +++ b/drivers/gpu/drm/drm_gpuvm.c
-> @@ -2283,7 +2283,7 @@ EXPORT_SYMBOL_GPL(drm_gpuvm_interval_empty);
->  void
->  drm_gpuva_map(struct drm_gpuvm *gpuvm,
->  	      struct drm_gpuva *va,
-> -	      struct drm_gpuva_op_map *op)
-> +	      const struct drm_gpuva_op_map *op)
->  {
->  	drm_gpuva_init_from_op(va, op);
->  	drm_gpuva_insert(gpuvm, va);
-> @@ -2303,7 +2303,7 @@ EXPORT_SYMBOL_GPL(drm_gpuva_map);
->  void
->  drm_gpuva_remap(struct drm_gpuva *prev,
->  		struct drm_gpuva *next,
-> -		struct drm_gpuva_op_remap *op)
-> +		const struct drm_gpuva_op_remap *op)
->  {
->  	struct drm_gpuva *va = op->unmap->va;
->  	struct drm_gpuvm *gpuvm = va->vm;
-> @@ -2330,7 +2330,7 @@ EXPORT_SYMBOL_GPL(drm_gpuva_remap);
->   * Removes the &drm_gpuva associated with the &drm_gpuva_op_unmap.
->   */
->  void
-> -drm_gpuva_unmap(struct drm_gpuva_op_unmap *op)
-> +drm_gpuva_unmap(const struct drm_gpuva_op_unmap *op)
->  {
->  	drm_gpuva_remove(op->va);
->  }
-> diff --git a/include/drm/drm_gpuvm.h b/include/drm/drm_gpuvm.h
-> index 0d3fc1f6cac9966a42f3bc82b0b491bfefaf5b96..655bd9104ffb24170fca14dfa034ee79f5400930 100644
-> --- a/include/drm/drm_gpuvm.h
-> +++ b/include/drm/drm_gpuvm.h
-> @@ -1121,7 +1121,7 @@ void drm_gpuva_ops_free(struct drm_gpuvm *gpuvm,
->  			struct drm_gpuva_ops *ops);
->  
->  static inline void drm_gpuva_init_from_op(struct drm_gpuva *va,
-> -					  struct drm_gpuva_op_map *op)
-> +					  const struct drm_gpuva_op_map *op)
->  {
->  	va->va.addr = op->va.addr;
->  	va->va.range = op->va.range;
-> @@ -1265,13 +1265,13 @@ int drm_gpuvm_sm_unmap_exec_lock(struct drm_gpuvm *gpuvm, struct drm_exec *exec,
->  
->  void drm_gpuva_map(struct drm_gpuvm *gpuvm,
->  		   struct drm_gpuva *va,
-> -		   struct drm_gpuva_op_map *op);
-> +		   const struct drm_gpuva_op_map *op);
->  
->  void drm_gpuva_remap(struct drm_gpuva *prev,
->  		     struct drm_gpuva *next,
-> -		     struct drm_gpuva_op_remap *op);
-> +		     const struct drm_gpuva_op_remap *op);
->  
-> -void drm_gpuva_unmap(struct drm_gpuva_op_unmap *op);
-> +void drm_gpuva_unmap(const struct drm_gpuva_op_unmap *op);
->  
->  /**
->   * drm_gpuva_op_remap_to_unmap_range() - Helper to get the start and range of
-> 
-
+The ref_div == 0 check in this patch is only meant as a safety net to
+avoid a divide‑by‑zero in the rate calculation.
 
