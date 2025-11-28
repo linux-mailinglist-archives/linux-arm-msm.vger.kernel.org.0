@@ -1,120 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-83800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB87FC928FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 17:19:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7D7CC92977
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 17:36:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AA3ED4E1826
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 16:19:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C8FB3AC2DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Nov 2025 16:36:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 222BD28726E;
-	Fri, 28 Nov 2025 16:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9331426CE2F;
+	Fri, 28 Nov 2025 16:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XO+IfEn8"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="AKGvIonl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73AC283CA3;
-	Fri, 28 Nov 2025 16:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1D423C4F4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 16:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764346768; cv=none; b=hoDb3pan3yEWYxgNCgIeswmISFQAE+3BywmveO4MQvdKr4kIE07PsyGIoL8rAEqaHq1to329XDBbXjCILq24omgaJeHE4sLbXUgD1CwEh3+UnTcRol9RXvxwQEdCdwWiJVcfX93ekCrfk3Fl3DFUz2GxwmI/FQKYblPo/e96t5I=
+	t=1764347751; cv=none; b=t0ZT4Snz9vj+wsEaxaEd80ZbuwpO90ZrJLKgBZ4l46xJ3zDiPoj9OOQjujZoJw0BZd9yTDkE00e/1vEMyhaR0XhSmfVH1pgc4panKs9aZCWot5lMxT1CDrdGo3KiCc79P5orOZX5tmOCBkk6Tg6R2I+RsBKdDeM2f5L78HhDsu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764346768; c=relaxed/simple;
-	bh=68QekvtfCVU8xJ7qaRkA8qixOyPPyNfIdJ+5zWCAlAs=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=sTQNUHkPc1OqNp2PbYOR27CrPMf47lhcd5731icXQZX9HJlNw46Dmw9AFxiYhqDBtAwahNXPCHF6MSTBpe9zyXzbJzoYTSsItNht7nCw4lPP2iIkGZp/FFLv1p2Vvcr63VTiYk0BhesuE4aeYdRLsZq5rbEaIG7tJGNEUDhby9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XO+IfEn8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E43AC4CEFB;
-	Fri, 28 Nov 2025 16:19:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764346767;
-	bh=68QekvtfCVU8xJ7qaRkA8qixOyPPyNfIdJ+5zWCAlAs=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=XO+IfEn84KYofn3IAyhjBokgm1uFAgEF8jIXR/UaAaq3Y1UlxqZPiqD1BaUtvJEES
-	 v1HkuHOHs/icuDJiqzsK/+W9zhmtE66spDxWRtSOGCMxmZYoC/uekfSYNwJ8bd3fi1
-	 BRETo4ACfNBFYlVB9A4u7iv4sGnQYDw0GEBUd5pfHRUnPbQU0LN6vMax3nB6Hw+7w7
-	 TOxEZ/RaOINUHVJJwqq4aeRVnpFPfVI7CY4y4r3lC23Pe+vkLy7vfvV+aH6CozR+Ue
-	 /ETPDSvXAz6HjfWygYh5VU9B6OFte2lspmIXKt4D5sLfCaQ0fOP2kyp2Jqs4whco6l
-	 jJx0RzQ1aM+gg==
-Date: Fri, 28 Nov 2025 10:19:26 -0600
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	s=arc-20240116; t=1764347751; c=relaxed/simple;
+	bh=GOP/kpxv/SiG8IleAVvu3y+ovNM3AHbdlm/tdl/uDsI=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=uWgDMF0kr59oy0UgkadP0ydoWnZUBipPwOIfB+PKCIPXC8nNj1AQ9rTMa9C1K4L+fim1ooC+4nKl9WIRyIsOesxJx8pne+a0ktxcy/ERnG1eVcDURgxc0M/jTlc4GXLAHqSHa+GKrJF8Ly7SHvQ556tS2ZCCL1WOTMCAK2H1UgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=AKGvIonl; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4ed9c19248bso17388151cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Nov 2025 08:35:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1764347749; x=1764952549; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dsIiGN2rbV6QEaM41dIcddlDyFwba69ep6ezkRocLRE=;
+        b=AKGvIonlFOQigaHBKSSeGgckHwdMJM9QTUckb5hessWdzB+1Y0kaicVncYT9owjoQj
+         YBe/S/psKdU158bN/jOWntQoHYfOZW8v2OJs+jfpL5hY2DSendg7/vJM80+gHqTLAOmK
+         rd0hm9+ijsZvgekLw/CtV9Y4zSIDPd/IhoFX9f0mAPmYQV4gE5H1IfikUa1rr2jymL1P
+         gUq13GOECj2nH0LWnC5pP5QXOnNDFd+oo/MbkngWoY15SqO0vDi9RnfJ36f9hgjEf+Zx
+         YQHQuSsoBO8UAdPxPFN5FigAH0rczTnvB0y7pxi8Zw5CGAQdlSHopKQSHBWJckqq5+dV
+         DBEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764347749; x=1764952549;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dsIiGN2rbV6QEaM41dIcddlDyFwba69ep6ezkRocLRE=;
+        b=dLwU1DO6GMfayxr8FjFgLaS+mYOnTgznyJu5E3kKrURQa1KtQ2IqEE035598sZAgFj
+         VbhOIB+blpRbxLS7kdNzcGI3Lm3JWZPJPtbc9MH0464Qh1Na09t85EqtEbnCqZmLQgsW
+         QQ2rFT9zKBMU6ovoLOJ/CUmP7ykBBIxnoQJNZO0+6CNzuE1lG8EmKc9MTldA7s5PiLNS
+         +QCFP73dTrRUsEXxnsP5W60v3s/BQyWkR8P88IA/mBehckFxwcOfT4w0KUZclA9G/lDy
+         2GxhvNBxJxpFSabP8JcTqYhvnOJktQm3sJKUM7wjCvMmNm0nRSLCNH/9B4nQANV+kNVU
+         A3xg==
+X-Gm-Message-State: AOJu0YzXSzvHy6SkHt1qC5DcnJVebNnj6V7XYZ/EubPPGGJ7cj0Qde/i
+	cw0rC5xEDHYoZmniMtClRqlj6DqDkLz2yoRHqAipMEdgrl1MQ60xRG+RRkh0Tzqf2SY=
+X-Gm-Gg: ASbGnctfPVlT05RaVmC79ON/dk2QLiEpmVamVbgXAxVIo/ZX1xl4IZ4hWfG5aGI92AT
+	cYNuSdpGpWeEdGpb1H6Td/YDxB0DRVVArw2DCaZ0zJCdnzGaagvNgKgiiVOE1AL6zVzNzjPkTsX
+	REi44LkbkcuuUguW+oPoI5gjMANJjovZ3FQOQXOmq2lm1bIsMZi+Z71MSivfJXfOvECt3zj441S
+	qkUdtX6xqUVGQtn0oVwxh7pFSU98wPDnfrJSfsawMQ9JiVYnb//qjq3iKt3j0tneM5y0e4Gi4bw
+	TsanY3yXKOOG5wPFmJhSrVqQat1MsbqD8S01LcLuaIFFqm1daBtlPEnzhPXxtZblDENmAVki/9A
+	20W3SOfEXTQmKSWyRcAfXMK7Y4lsLMlnlQtgARbcgxTc/fzm4W7sLnxo65/OHURn2QvVq0C6/oB
+	ZqHzjtiqtVznXEU+WrGlSx6KG77RyJCXYfEGjafEpKu5T8RbBCCUzWtwh1Lw==
+X-Google-Smtp-Source: AGHT+IEid5PwFVhxwHcg2m8sj1oMjCxEDjABwlPhJ94vWnRIxAYTmRy804ezhMM72PRfoULBpaYSRw==
+X-Received: by 2002:a05:622a:591:b0:4d2:f9e3:c12d with SMTP id d75a77b69052e-4ee5883f8f2mr405538631cf.14.1764347747428;
+        Fri, 28 Nov 2025 08:35:47 -0800 (PST)
+Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4efd34365b4sm28012621cf.26.2025.11.28.08.35.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Nov 2025 08:35:47 -0800 (PST)
+Subject: Re: [PATCH] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+ Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+References: <20251127212943.24480-1-jonathan@marek.ca>
+ <aSl48gV9laFb-MR1@linaro.org> <d969b3e6-a6e1-6dd3-45b9-539ba7a9f42d@marek.ca>
+ <aSnH3C8s5xVSk_ti@linaro.org>
+From: Jonathan Marek <jonathan@marek.ca>
+Message-ID: <1aa75dd2-6fb4-e9ca-ca27-c0bd910246fe@marek.ca>
+Date: Fri, 28 Nov 2025 11:34:40 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Mike Tipton <mike.tipton@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, Georgi Djakov <djakov@kernel.org>
-To: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-In-Reply-To: <20251128150106.13849-2-odelu.kukatla@oss.qualcomm.com>
-References: <20251128150106.13849-1-odelu.kukatla@oss.qualcomm.com>
- <20251128150106.13849-2-odelu.kukatla@oss.qualcomm.com>
-Message-Id: <176434676426.2173810.9273510900390540492.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: interconnect: add clocks property to
- enable QoS on qcs8300
+In-Reply-To: <aSnH3C8s5xVSk_ti@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
+On 11/28/25 11:03 AM, Stephan Gerhold wrote:
+> On Fri, Nov 28, 2025 at 09:39:52AM -0500, Jonathan Marek wrote:
+>> On 11/28/25 5:26 AM, Stephan Gerhold wrote:
 
-On Fri, 28 Nov 2025 20:31:04 +0530, Odelu Kukatla wrote:
-> Add 'clocks' property to enable QoS configuration. This property
-> enables the necessary clocks for QoS configuration.
+...
+
+>>
+>> I am using EL2.
+>>
+>> Without this patch, DMA buffers allocated in the upper 36-bit physical range
+>> will try to use bounce buffers. The dma range from the dts is compared
+>> against the physical address, not the virtual address.
 > 
-> QoS configuration is essential for ensuring that latency sensitive
-> components such as CPUs and multimedia engines receive prioritized
-> access to memory and interconnect resources. This helps to manage
-> bandwidth and latency across subsystems, improving system responsiveness
-> and performance in concurrent workloads.
+> I don't think this is the case for the dma-iommu layer. I debugged a
+> crash caused by USB in EL1 on a 64 GiB device earlier this year and it
+> was happily using buffers above the 36-bit physical range without using
+> bounce buffers. There is some code inside dma-iommu for using swiotlb,
+> but it's used only for "untrusted" PCI devices and some edge cases with
+> unaligned/small buffers.
 > 
-> Both 'reg' and 'clocks' properties are optional. If either is missing,
-> QoS configuration will be skipped. This behavior is controlled by the
-> 'qos_requires_clocks' flag in the driver, which ensures that QoS
-> configuration is bypassed when required clocks are not defined.
+>>
+>> The crash I see is display driver crashes/freezes once a buffer is allocated
+>> in the upper 36-bit range and it tries to use bounce buffers. This can
+>> happens very quickly under load.
+>>
 > 
-> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> ---
->  .../interconnect/qcom,qcs8300-rpmh.yaml       | 53 ++++++++++++++++---
->  1 file changed, 47 insertions(+), 6 deletions(-)
+> You could be right about the MSM display driver though, since that
+> bypasses dma-iommu and manages the IOMMU itself. I stared at the code a
+> bit and I'm not immediately seeing where it would end up calling into
+> swiotlb, but it might be hidden somewhere in the endless nesting.
 > 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Looks like you are right about this, MSM driver ends up going through 
+dma_direct_map_phys(), which decides to use bounce buffers. I didn't try 
+to see if other drivers end up using bounce buffers, but it would make 
+sense that only MSM driver is affected.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251128150106.13849-2-odelu.kukatla@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>> The same crash would happen for EL1 as well. I wasn't aware of the EL1
+>> broken firmware when I sent this patch, but instead of display freezing I
+>> guess the behavior would a hard reset now, which is a bit worse but still
+>> unusable unles display/gpu driver is disabled.
+>>
+>> This patch is correct and should be applied regardless of broken-firmware
+>> EL1 cases (where 64GB isn't usable anyway), but I guess the Fixes tag
+>> can/should be dropped.
+>>
+> 
+> Please clarify the commit message a bit and mention the two separate use
+> cases (EL1 and EL2). I'll leave it up to Bjorn/Konrad to decide whether
+> to merge it. At the end you are right and using 64 GiB RAM in EL1 is
+> kind of a lost cause anyway.
+> 
+> Thanks,
+> Stephan
+> 
 
