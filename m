@@ -1,187 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-83879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7835C94473
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 17:51:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4669EC94836
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 21:55:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 18A594E2F3C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 16:50:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 221293A75C9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 20:55:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE19E1C701F;
-	Sat, 29 Nov 2025 16:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C890A30DECE;
+	Sat, 29 Nov 2025 20:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vLwxFzdo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YR4ar81h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4642AD3D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 16:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9830F272E54;
+	Sat, 29 Nov 2025 20:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764435031; cv=none; b=hm7MZg+EKFKnLwJM3vqcALeQoxILKit/zr7V5KfEyUXYwQpUG3+uEVoZrhwv/MxA4tgaFE7yDqOPgfhqXxRjwfgsjT2546OM2xEaX78R88N5bkVhhDK+K+hWt3Z5KSqJKgxAH+0aHmMc3eCF3u/RvkAbGRq5eaN1bq2KFQuaeUU=
+	t=1764449755; cv=none; b=nerOt8i5xKkKcdGivoIaOB+zX3yHbARqdfw9OhctdTKb2QloBftw+6YjGwLvt1mR8/SBBh9ATVwfbaZGJJAt8H6QPnWUj0vjFDefQXH/VC/WAM4iUsJ7sq+stNMnxCtabrf+8OcUjp1/ZgeY7TIbawVc3lJqwymLC4Co39Sn7xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764435031; c=relaxed/simple;
-	bh=Cn+yNuLXa8lWVWpF6f/eF1X7MDE7Ri0IU5SGShQe0HM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=dHV7I77a4STcd2J3eA0n8Mih49s+eFfBQ89Y5194WAXvtzmiTjXv8McpXnbpdAgOXz8zprI7/+nVt3iYRczhO7peZ5VFvrICknK/XhG0U2is1gCB1aKGkrrE1Ggi1Qigde4O6HRFPsW1THTZdmP8reW9n1Aj6yJi84hU0Y4yCRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vLwxFzdo; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4779d47be12so22109605e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 08:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764435027; x=1765039827; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+u+kxqq4MMJGawqIDaTzXliKugbB0Ij2lnspVyD3E7E=;
-        b=vLwxFzdoqbvrnnOp7dQCuCCA/jIpY/NmTLEuxOZpBnSMusIyCRr3XBkQfP1XNVhS7N
-         fQlWflSSsFNTitmUMSejctgCJ1V4SakiYXej7qsulWvcz7uqFfIo2Lvon1qUnrXNeMPE
-         7VEYCPsPVvhBuL7noS6/Vz81ycw9Uz7up/N52k/A2Gj/IliS4BvwM4yXdNLNAWqJCu4h
-         qKjDaGx6wT76S+xJjBFoeLPNwm+fvMvlGP0ZbMvqPq7GeGA6mYvf5eOvCO03JIJf3bNZ
-         rU64fHiLK0z26NFDyIx0ETR5mtcCga/6f5e6BCPxmuPsONLnJzyIHND2aZbzlrh5mH8u
-         KFwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764435027; x=1765039827;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+u+kxqq4MMJGawqIDaTzXliKugbB0Ij2lnspVyD3E7E=;
-        b=cxRhyjYVnZkedqgYXpZZH5n8HnV9GEGFCUT1dxRlcDyaLUcW0+IPwH827bYZ/NrFkX
-         +Ls2mKyAadXxHGperYlufLJF/MZUA7k26sTvBzWytJ6OB/pY8HudA7s3Bu6QXCXYQ3IJ
-         whu6DTJe8uU/+GfCORDdqS1qvaElo92Vu99us+G8twO0QKDFj91ATW4ntvf/kycpGfVI
-         IbD1lDE2RQ61tyaLj0Rd0Ljp+wDHi3qjiX7f0fAJtbYUMHKH6kmhMdW4lp2Be09F/dK/
-         G9FH1Wrzm5S3MniKiknyxFmvTA8aLcC67ZLU1eEFI8fw4e2U4iQcLPBThG8qt8Wzze3z
-         QKdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUreNhBELd68pUPaCXo2JWHvTh284EtWSdAlYOS3qpu+RvKatxY2bHTeqmZogsm7ltrzT/nI3lxEJQ5kNNe@vger.kernel.org
-X-Gm-Message-State: AOJu0YwktVSkXwV+4GlXH6F3YeHpY17BOYcJeBC4a7V7ZRAJmnaCHSjv
-	f7DqL4B4qEGskiFwgjcJlRlCMRhQJjF1gXa70zbA/bvrSpvINCL3pD1SHo4aZXc4rr0=
-X-Gm-Gg: ASbGnctSJf96CDLl0O9GB0hUQf1OqC4wTJ3L7ESZTHE43gvxeryeqOrWMr/3IIeMCP5
-	u5EFogQgnIvEXA0mqb7kPRDc+NmMP+HfVvdFuFJhbPSNNsCGMwqRmW/KXiIyDs5FtQ0Rxj2cfU1
-	koHVvx+dAbAWqU0RG/QKurgxfsgW3iooXqEAzZUptXSmpIVT1/DGpLNbd5trY9xxBqoZab9lV07
-	pR6pECgkngBwkKvACZwfvkyzD6306WyRqzZUJqUqBHkrefReO41LDIdueZWa1i2+8K+8YJH+oVx
-	hNt+2oqEJx5KGbDIP61NQBIsw9iiH/6I7rxbshC5XkRNHRIh7Z73HnvN7fmRrMKhJCLLdAtaAjE
-	bsihgJy9ZyCdtrD75oBEtnRe+shHH0426lGUAzukjXK7E0D0AIC3/7/dSxrJJbIDIpXGX14RWC0
-	R1I2xQi2Hy2p/2h1Wv
-X-Google-Smtp-Source: AGHT+IGEoZUwPFD59KrJidNkG9F67yymewSdufIMxYqDAzd7rSdFYU/UTCa8BEI6YpP6tuO8Wx01SA==
-X-Received: by 2002:a05:600c:46cc:b0:477:7b16:5fb1 with SMTP id 5b1f17b1804b1-477c0174856mr324752135e9.7.1764435026599;
-        Sat, 29 Nov 2025 08:50:26 -0800 (PST)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4791115caa7sm144049695e9.6.2025.11.29.08.50.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 08:50:26 -0800 (PST)
-Date: Sat, 29 Nov 2025 19:50:22 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev, Niklas Cassel <cassel@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered
- on PCIe switches
-Message-ID: <202511290255.uBLXDIG5-lkp@intel.com>
+	s=arc-20240116; t=1764449755; c=relaxed/simple;
+	bh=LEzyAKobk7kjA6raGTsp1bNeymxqUDP+k+LfItAZDWA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jGci+fm3rntDlPq/Dzcylx6DoQgv+DRU1H8cZTML36mH/N2FXEoqArJ0o7gTlkhsQDPVIEsXzqdkfYXPJcFugD9AgulM+ZOVL+n0KsGZcDA1FYa+V2K90pxAvnXhtCfKnImdToaS9HnVsX4NXTrD3WLW1XKIsDmnDchI7Y57IF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YR4ar81h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4D4C4CEF7;
+	Sat, 29 Nov 2025 20:55:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764449755;
+	bh=LEzyAKobk7kjA6raGTsp1bNeymxqUDP+k+LfItAZDWA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YR4ar81hqVGXMt55va3yqlAwMSq99rTPi7/zXERUcBXz9nFtU2AGs/JMF/Qrqk2NH
+	 L1ZqcjusLAqRx5mDuHn1LE4ubIP0NmJnP5xNSK+4akRCXwlsxmG3/BZkpnEqBT1Gef
+	 AVgHeH8UbAgOz9lXsmaYa7gOx8oY/NgONoeljLKCMgpulw0v7ISRBWIFpGnEgiLKj/
+	 97JV2q6h4I2vRTb3Ny83J1XuvBwACF2wGghdetwm05Unf2E6scFsYX5K1PDf0dC9K5
+	 SdZUQ1443B0jIxgtLtDchLI/Jfuq07/JZpn9SOyJJPUi101Ra2eERIl+Dx8A5WaOqA
+	 NiuHw6FyTRjBg==
+Date: Sat, 29 Nov 2025 15:01:42 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] remoteproc: qcom: Fix NULL pointer issue
+Message-ID: <o7txzvxy36nphtf5aybzb3z25zovhgtseubkyn2hbira3aorxo@vky3kzv7gvs3>
+References: <20251128103240.1723386-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251127134318.3655052-2-cassel@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251128103240.1723386-1-mukesh.ojha@oss.qualcomm.com>
 
-Hi Niklas,
+On Fri, Nov 28, 2025 at 04:02:40PM +0530, Mukesh Ojha wrote:
+> There is a scenario, when fatal interrupt triggers rproc crash handling
+> while a user-space recovery is initiated in parallel. The overlapping
+> recovery/stop sequences race on rproc state and subdevice teardown,
+> resulting in a NULL pointer dereference in the GLINK SMEM unregister
+> path.
+> 
+> 	Process-A                			Process-B
+> 
+>   fatal error interrupt happens
+> 
+>   rproc_crash_handler_work()
+>     mutex_lock_interruptible(&rproc->lock);
+>     ...
+> 
+>        rproc->state = RPROC_CRASHED;
+>     ...
+>     mutex_unlock(&rproc->lock);
+> 
+>     rproc_trigger_recovery()
+>      mutex_lock_interruptible(&rproc->lock);
+> 
+>       qcom_pas_stop()
+>       qcom_q6v5_pas 20c00000.remoteproc: failed to shutdown: -22
+>       remoteproc remoteproc3: can't stop rproc: -22
+>      mutex_unlock(&rproc->lock);
+> 
+> 						echo enabled > /sys/class/remoteproc/remoteprocX/recovery
+> 						recovery_store()
+> 						 rproc_trigger_recovery()
+> 						  mutex_lock_interruptible(&rproc->lock);
+> 						   rproc_stop()
+> 						    glink_subdev_stop()
+> 						      qcom_glink_smem_unregister() ==|
+>                                                                                      |
+>                                                                                      V
+> 						      Unable to handle kernel NULL pointer dereference
+>                                                                 at virtual address 0000000000000358
 
-kernel test robot noticed the following build warnings:
+I'm not able to read out from these two flows where there would be a
+race condition. You're describing things that happens in process A and
+then you're describing things in processes B, but I think you're
+expecting the reader to deduce what the actual problem is from those
+-EINVAL lines in Process-A - or I'm completely failing to see what
+problem you're solving here.
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> It is tempting to introduce a remoteproc state that could be set from
+> the ->ops->stop() callback, which would have avoided the second attempt
+> and prevented the crash.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Niklas-Cassel/PCI-dwc-Make-Link-Up-IRQ-logic-handle-already-powered-on-PCIe-switches/20251127-214649
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20251127134318.3655052-2-cassel%40kernel.org
-patch subject: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered on PCIe switches
-config: x86_64-randconfig-r071-20251128 (https://download.01.org/0day-ci/archive/20251129/202511290255.uBLXDIG5-lkp@intel.com/config)
-compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+Above you tried to describe a race condition, but this is talking about
+something else.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202511290255.uBLXDIG5-lkp@intel.com/
+> However, making remoteproc recovery dependent
+> on manual intervention or a system reboot is not ideal.
 
-smatch warnings:
-drivers/pci/controller/dwc/pcie-designware-host.c:737 dw_pcie_host_init() warn: missing error code 'ret'
+I totally agree with this statement, but I find it to come out of
+nothing.
 
-vim +/ret +737 drivers/pci/controller/dwc/pcie-designware-host.c
+> We should always
+> try to recover the remote processor if possible.
 
-59fbab1ae40eb0 drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  712  
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  713  	ret = dw_pcie_setup_rc(pp);
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  714  	if (ret)
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  715  		goto err_remove_edma;
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  716  
-c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  717  	if (!dw_pcie_link_up(pci)) {
-a37beefbde8802 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  718  		ret = dw_pcie_start_link(pci);
-886a9c1347558f drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  719  		if (ret)
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  720  			goto err_remove_edma;
-da56a1bfbab551 drivers/pci/controller/dwc/pcie-designware-host.c Ajay Agarwal              2023-04-12  721  	}
-886a9c1347558f drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  722  
-8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  723  	/*
-8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  724  	 * Note: Skip the link up delay only when a Link Up IRQ is present.
-8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  725  	 * If there is no Link Up IRQ, we should not bypass the delay
-8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  726  	 * because that would require users to manually rescan for devices.
-8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  727  	 */
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  728  	if (!pp->use_linkup_irq) {
-c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  729  		/* Ignore errors, the link may come up later */
-c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  730  		dw_pcie_wait_for_link(pci);
-c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  731  
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  732  		/*
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  733  		 * For platforms with Link Up IRQ, initial scan will be done
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  734  		 * on first Link Up IRQ.
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  735  		 */
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  736  		if (dw_pcie_host_initial_scan(pp))
-113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24 @737  			goto err_stop_link;
+Yes! But there is a race condition?
+
+> A failure in the
+> ->ops->stop() callback might be temporary or caused by a timeout, and a
+> recovery attempt could still succeed, as seen in similar scenarios.
+
+This on the other hand, seems to be a real problem - but I don't think
+it's a race condition.
+
+> Therefore, instead of adding a restrictive state, let’s add a NULL check
+> at the appropriate places to avoid a kernel crash and allow the system
+> to move forward gracefully.
+
+You haven't established why the restrictive state would be needed.
 
 
-	ret = dw_pcie_host_initial_scan(pp);
-	if (ret)
-		goto err_stop_link;
+In fact, I don't think you have a race condition, because I think it can
+be 20 minutes between the "mutex_unlock()" and your "echo enabled" and
+you would see exactly the same problem.
 
-cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  738  	}
-4fbfa17f9a0755 drivers/pci/controller/dwc/pcie-designware-host.c Shradha Todi              2025-02-21  739  
-feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  740  	return 0;
-feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  741  
-113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  742  err_stop_link:
-a37beefbde8802 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  743  	dw_pcie_stop_link(pci);
-113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  744  
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  745  err_remove_edma:
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  746  	dw_pcie_edma_remove(pci);
-939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  747  
-9e2b5de5604a6f drivers/pci/controller/dwc/pcie-designware-host.c Jisheng Zhang             2019-03-29  748  err_free_msi:
-f78f02638af594 drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  749  	if (pp->has_msi_ctrl)
-9e2b5de5604a6f drivers/pci/controller/dwc/pcie-designware-host.c Jisheng Zhang             2019-03-29  750  		dw_pcie_free_msi(pp);
-c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  751  
-c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  752  err_deinit_host:
-aea370b2aec9d3 drivers/pci/controller/dwc/pcie-designware-host.c Yoshihiro Shimoda         2023-12-20  753  	if (pp->ops->deinit)
-aea370b2aec9d3 drivers/pci/controller/dwc/pcie-designware-host.c Yoshihiro Shimoda         2023-12-20  754  		pp->ops->deinit(pp);
-c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  755  
-f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  756  err_free_ecam:
-f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  757  	if (pp->cfg)
-f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  758  		pci_ecam_free(pp->cfg);
-f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  759  
-feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  760  	return ret;
-feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  761  }
+If I interpret pieces of your commit message and read the code, I think
+you're solving the problem that
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+rproc_crash_handler_work()
+  rproc_trigger_recovery()
+    rproc_boot_recovery()
+      rproc_stop()
+        rproc_stop_subdevices()
+          glink_subdev_stop()
+            qcom_glink_smem_unregister(glink->edge)
+              deref(glink->edge)
+            glink->edge = NULL;
+        rproc_ops->stop() // returns -EINVAL
+        // rproc_unprepare_subdevices never happens
+        // rproc->state = OFFLINE never happens
 
+// rproc left in CRASHED state
+
+rproc_recovery_write()
+  rproc_trigger_recovery()
+    rproc_boot_recovery()
+      rproc_stop()
+        rproc_stop_subdevices()
+          glink_subdev_stop()
+            qcom_glink_smem_unregister(glink->edge)
+              deref(glink->edge) // glink is NULL -> oops
+
+
+Or in English, stopping the remoteproc fails, but we've already stopped
+the subdevices and when we then try to recover a second time, we fail to
+stop the subdevice.
+
+This does sound familiar, to the point that I believe we've talked about
+this in the past, and perhaps that's where the idea of a new state
+you're talking about is coming from? Unfortunately I don't remember the
+details, and the future reader of the git history surely won't
+remember...
+
+> 
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+> Changes in v4: https://lore.kernel.org/all/20241016045546.2613436-1-quic_mojha@quicinc.com/
+>  - Brought the same change from v2.
+>  - Added smd->edge NULL check.
+>  - Rephrased the commit text.
+> 
+> Changes in v3:
+>  - Fix kernel test reported error.
+> 
+> Changes in v2: https://lore.kernel.org/lkml/20240925103351.1628788-1-quic_mojha@quicinc.com/
+>  - Removed NULL pointer check instead added a new state to signify
+>    non-recoverable state of remoteproc.
+> 
+>  drivers/remoteproc/qcom_common.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+> index 8c8688f99f0a..6480293d2f61 100644
+> --- a/drivers/remoteproc/qcom_common.c
+> +++ b/drivers/remoteproc/qcom_common.c
+> @@ -209,6 +209,9 @@ static void glink_subdev_stop(struct rproc_subdev *subdev, bool crashed)
+>  {
+>  	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
+>  
+> +	if (!glink->edge)
+> +		return;
+
+This does make glink_subdev_stop() idempotent, but do we guarantee that
+the rest of the involved callstack handles this as well? Is it
+documented somewhere that any changes to the framework or remoteproc
+drivers need to maintain this property - or does it just happen to work
+today?
+
+
+
+The commit message needs to be rewritten so that a 3rd party can read it
+and understand what problem it solves.
+
+Under what circumstance does qcom_pas_stop() fail, and in what
+circumstances would it work again a little bit later? Why do we get
+-EINVAL here?
+
+I fully agree with you that we should do our very best to recover the
+crashed remoteproc, to the point that I wonder who will actually trigger
+this bug? In what circumstance would a user go and manually enable
+recovery on a remoteproc with recovery already enabled, to dislodge it.
+
+I think we should fix the root cause, because that's what all the users
+and 99% of the developers will hit. Very few will attempt a manual
+recovery.
+
+If we then consider attempting a manual recovery after the recovery has
+failed, then we need to document that all parts of the stop must be
+idempotent - in which case this patch would be part of that
+implementation.
+
+Regards,
+Bjorn
+
+> +
+>  	qcom_glink_smem_unregister(glink->edge);
+>  	glink->edge = NULL;
+>  }
+> @@ -320,6 +323,9 @@ static void smd_subdev_stop(struct rproc_subdev *subdev, bool crashed)
+>  {
+>  	struct qcom_rproc_subdev *smd = to_smd_subdev(subdev);
+>  
+> +	if (!smd->edge)
+> +		return;
+> +
+>  	qcom_smd_unregister_edge(smd->edge);
+>  	smd->edge = NULL;
+>  }
+> -- 
+> 2.50.1
+> 
 
