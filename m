@@ -1,155 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-83847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5595EC93C07
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 11:29:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FA5CC93CCA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 12:11:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 278C64E1978
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 10:29:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E542E3A6458
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 11:11:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875082737E0;
-	Sat, 29 Nov 2025 10:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 284FE2580F9;
+	Sat, 29 Nov 2025 11:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="US8FPeQ0"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MokggMNn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B18E1D5CC6
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 10:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CAC23A99F;
+	Sat, 29 Nov 2025 11:11:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764412176; cv=none; b=Z/mms2yYkTEcxwC6ttK059ZPEex3mCXPS+jHMwTayH7n9npDoMeLfaKCLZs9annJ//GNkxCJtBQUM7TgHF2fL4iSndWFQYFeCHIFj9341HBOZXzZdP+zee7L4v51XXF2OPTTPlsd1d4PrVfig0jb+CjXIbZwGd7TeksFeerJSeM=
+	t=1764414665; cv=none; b=mz6sVmq5xon+hI93Hvg0Ok1/SYNmMLPgPj5Tf2rwgTqU4nuIFnZnnjN1TRt3p0gQaOia5OE8Ko6E+JeWSfFoe4JfoQllTDD8oS6WzJxOxTezxSa7NVosGZNeNwrJbXrYAbPQnG0uKGZNUsc0s9tnbIhp4sa5Y5hVz1eHOa86igo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764412176; c=relaxed/simple;
-	bh=EXIAZkX9JbCZEV40QF6tt5G/xP6fu5FJr2BYKTQr4tk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pM5gagQ1l2sMp18TTcl9kSLm9kZLDnIdGnlW/6OmumWaatEqbQvxkDTSFETTPgf7NiytntFD8zCpTVPpfgnN6h1/xpdJdb9hf3rDWmKWcZ9goCSOoySKhhkpiNodgd1KCr08r2Ou3vEyq/vXFzwogTdVb4xs5hj4JwA15M5PtSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=US8FPeQ0; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-42b32a3e78bso2447971f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 02:29:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764412172; x=1765016972; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XB8ojDLPmRPjgdbiNqqeSPVDfEQQay9vSxKvQQfS0ls=;
-        b=US8FPeQ05vlOd8gQODpXBhwYuCM/mO7vzxuPEHHukdEDD2zn3/RoG6LVb+6zo8RqdH
-         q3sZUUMsUR84Kf06K+K19b3MyaoOk8fvsOt+SnRrh+xhViNql1BjpXVpUBdU0CCekrlk
-         qrdFIIpmYbrSjppsqiLcTWONtuKgLRNbAvmd4RIhFe3A1sLUF7ZeHWc3zVwJrFOD5ZMs
-         oIb89v6lr/2+JS9k6LaO4h44PujWed+okdl6FuMZLpcl06s3VGjX++aoDUB6T8N58r8J
-         TDFwj2ZW2zBJoZiJ//k5IL/ZM5Rsh8fJx9Zgk7LOzqNR7cRsKjR/4WDiNDuFlEKrUy3H
-         pnzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764412172; x=1765016972;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XB8ojDLPmRPjgdbiNqqeSPVDfEQQay9vSxKvQQfS0ls=;
-        b=K8rwhqnynR4nr4ymbsvNkOzkngtIl7OJrg5iSxQ5NV5RvgLh3qVFZ8qTuy5OLGrZHO
-         vL16gP8gXwCyN7jmzaC8WUWwG+iAN4Fh+zA6+nBLig1dlXDQgeUvw4eUZ6aXXQYEEeJk
-         OKUqh29UTVB2KFSrFYmqp4ccWPM+V4OqUygaeJXx1VgeQRA+Woflvdd+5cJrzJ49Hqso
-         /1226HVs7snX/mCh0APbwSD1ERWMLYoNAcJ+yBtohEijWBYMdeSHdLFARZ5m3C0jcxUb
-         1zIkTnl4RSWgTmoDN3FlvaIbbGn1GyVHhHRzaomkR2y+IM+wdJT+VHSIk3QCWgRfxO8P
-         UV0g==
-X-Forwarded-Encrypted: i=1; AJvYcCX2pBfvtWKYHbmdeH6JH84HoTABkun9/PZaSkBIfLJUSmKJSnoJbUDaOlnoz13/bko2Iv5pNW5I2OSvA2gi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlgCmJH25CnoOt/prv12GoELniTCjwYrw+gVOEKb8Sgi+31HsK
-	qUe5lkx1qlWGVhpd+ewFDwAwCvpt8n2iTTp8daXQefJjvm32idwu47Yu
-X-Gm-Gg: ASbGncuURrljsoJft96wS35AIScB9DIj/TALKT9VCFAgrkHNcbWysiVwd99PCfsP5GN
-	GX0ARSym/DFdbXGxrrgIDxK8AzSd71TjGzIIkI2UiM7Y6lPxSIR2OvWubbt8rYLsDhQZq0k4JuA
-	Am7XYRjWY6BKNLj1lvXJwL0ghmJrSXkhHSB5yftzTGmiNjmeTUuC+OA+cYE7xUQqHOX1LJiyMpC
-	hpiI55mVTIPQE6HjIHm5RVWEBM5AVbfTMHdy/X83xtaWtJqZYe9r5Yj3WJU+A5+P2A6RUpRM0bC
-	+2G1PgUYb4LQbj+wRL39MWGMHhmEm/hm4lRKjYWhX0WSWIGm2BJRZoc90tLU7PW8Wdy/Uz2Xfhy
-	iJwGPx7HcGX4v3XnsIXfFjoRppHqi11CfmtVrP+eUQ6KyNIof9Dr+aV7xIPMG5FWNboc5Kgx1//
-	i7+kvD7w4ZGnXmEYgS4M+rpHqvTt9RS4wUS5YKsfk4hOSPYXbKpjw=
-X-Google-Smtp-Source: AGHT+IFF8NfCPDZoCDRvd2e/3m3f9IuNEk2//VmqY35vg4vwN/ox68TOxm1dPHp0YHoIW6ze/wYpJw==
-X-Received: by 2002:a05:6000:4026:b0:42b:2c54:d9ba with SMTP id ffacd0b85a97d-42cc1cbd449mr38035756f8f.20.1764412172508;
-        Sat, 29 Nov 2025 02:29:32 -0800 (PST)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-42e1c5c30b8sm14740128f8f.7.2025.11.29.02.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 02:29:32 -0800 (PST)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Sat, 29 Nov 2025 11:29:27 +0100
-Subject: [PATCH] spi: spi-qpic-snand: remove superfluous
- qcom_spi_set_read_loc() calls
+	s=arc-20240116; t=1764414665; c=relaxed/simple;
+	bh=2UA5sco6NuFh6yBNwCIqsd1c3E4ylFlBew9OjNjMjDA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=faHgSB6YD18Qd9MoRKV6kLBUKniK+buBq8MNN6aFs1SfZfOPRTCd/qZpHSdNGiMFDHB+01ZuXGCkUicfkZdJf+WMUp1Cgto4KN8r/53NIgNIY7Qx5COrkGVCuyLSkIsD/phoOhmb3wrIgzzOXU/gcxaBQlQrcwxORdsCqPn60f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MokggMNn; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764414663; x=1795950663;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2UA5sco6NuFh6yBNwCIqsd1c3E4ylFlBew9OjNjMjDA=;
+  b=MokggMNnfiqYE0Bgk1DTO2XMnCsbJKbNNIgOf/3QkmPgLbpCLa2iCUZg
+   UjMUtJ8ontSZedPZ2xp3POv48ZIU/iQyogrWJIESwkfPkFWStcOs4igkS
+   ztbFgC7IJbFq/1Yv7bF/FwQ4o2W3Te8zbt5sdQc6gPBTED/wnFx5dPPki
+   s4vItbDJwxfVbw1WsRQfzCBmU5miCTEoSBG+H2VxDEoCRX8vfckh1PnN+
+   qTv7f952iBA+22w0KIJFgRJEAHtCDh3InfUdehBc4dEzkz7ll1HOAUwPz
+   3J2kqlb3eGKcUEGnnYXXbs/YJrkNSzupO5MRWK+hpibvWOiInazI00wK0
+   g==;
+X-CSE-ConnectionGUID: f3yV0YfCTWGJ/d4vC5OI3w==
+X-CSE-MsgGUID: FJpLcX5RSLqEFvFaVBBGSA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11627"; a="66306797"
+X-IronPort-AV: E=Sophos;i="6.20,236,1758610800"; 
+   d="scan'208";a="66306797"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2025 03:11:02 -0800
+X-CSE-ConnectionGUID: 07e4EypTSjqk02QeoBMjlw==
+X-CSE-MsgGUID: VptHr+F9Sd6YJLQl0Xa/Sw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,236,1758610800"; 
+   d="scan'208";a="193754572"
+Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
+  by orviesa008.jf.intel.com with ESMTP; 29 Nov 2025 03:10:58 -0800
+Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vPIqt-00000000789-3cxV;
+	Sat, 29 Nov 2025 11:10:55 +0000
+Date: Sat, 29 Nov 2025 19:10:09 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de, dmitry.baryshkov@oss.qualcomm.com
+Subject: Re: [PATCH v2 1/2] misc: fastrpc: Refactor mmap and munmap logic
+ into helper functions
+Message-ID: <202511291834.zu81Ud77-lkp@intel.com>
+References: <20251128103428.1119696-2-ekansh.gupta@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251129-qpic-snand-superfluous-readloc-v1-1-b84ca17095d9@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAbLKmkC/x3NwQrCMAyA4VcZORtYy6biq4iHkGYaGG1NqAhj7
- 76y43f5/w1cTMXhMWxg8lPXkjvCZQD+UH4LauqGOMY5hHjHb1VGz5QTeqtiy9pKczShtBZGvnG
- cZoojTVfokWqy6P8cPF/7fgAo3rvCcAAAAA==
-X-Change-ID: 20251128-qpic-snand-superfluous-readloc-c7c245a20a46
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251128103428.1119696-2-ekansh.gupta@oss.qualcomm.com>
 
-Before configuring the registers related to page read, both the
-qcom_spi_read_page_ecc() and the qcom_spi_read_page_oob() functions
-are calling qcom_spi_set_read_loc() to set the read location for the
-first codeword.
+Hi Ekansh,
 
-However the qcom_spi_set_read_loc() function puts the passed value
-into the register write cache only, from where those gets written
-to the corresponding register later via DMA.
+kernel test robot noticed the following build warnings:
 
-Yet, the qcom_spi_set_read_loc() is also gets called within the
-internal loops, and during the first iteration the read location
-register values written by the initial call gets overwritten in
-the register cache.
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.18-rc7 next-20251128]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This means that the values written by the first calls are never
-getting used in practice, so remove the calls as those are
-superfluous.
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Refactor-mmap-and-munmap-logic-into-helper-functions/20251128-183620
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/20251128103428.1119696-2-ekansh.gupta%40oss.qualcomm.com
+patch subject: [PATCH v2 1/2] misc: fastrpc: Refactor mmap and munmap logic into helper functions
+config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20251129/202511291834.zu81Ud77-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251129/202511291834.zu81Ud77-lkp@intel.com/reproduce)
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/spi/spi-qpic-snand.c | 4 ----
- 1 file changed, 4 deletions(-)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511291834.zu81Ud77-lkp@intel.com/
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 7681a91d67d563fd21fcbd69d223b6e846e97787..0334ba738bef2811e3458d20ce69bd3a213cb20b 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -850,8 +850,6 @@ static int qcom_spi_read_page_ecc(struct qcom_nand_controller *snandc,
- 	snandc->regs->ecc_bch_cfg = cpu_to_le32(ecc_bch_cfg);
- 	snandc->regs->exec = cpu_to_le32(1);
- 
--	qcom_spi_set_read_loc(snandc, 0, 0, 0, ecc_cfg->cw_data, 1);
--
- 	qcom_clear_bam_transaction(snandc);
- 
- 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
-@@ -941,8 +939,6 @@ static int qcom_spi_read_page_oob(struct qcom_nand_controller *snandc,
- 	snandc->regs->ecc_bch_cfg = cpu_to_le32(ecc_bch_cfg);
- 	snandc->regs->exec = cpu_to_le32(1);
- 
--	qcom_spi_set_read_loc(snandc, 0, 0, 0, ecc_cfg->cw_data, 1);
--
- 	qcom_write_reg_dma(snandc, &snandc->regs->addr0, NAND_ADDR0, 2, 0);
- 	qcom_write_reg_dma(snandc, &snandc->regs->cfg0, NAND_DEV0_CFG0, 3, 0);
- 	qcom_write_reg_dma(snandc, &snandc->regs->erased_cw_detect_cfg_clr,
+All warnings (new ones prefixed by >>):
 
----
-base-commit: cb5c2eb459f4c98d584eaf3d3ea7c3612385d081
-change-id: 20251128-qpic-snand-superfluous-readloc-c7c245a20a46
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_munmap_dsp':
+>> drivers/misc/fastrpc.c:1825:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1825 |         args[0].ptr = (u64) &req_msg;
+         |                       ^
+   drivers/misc/fastrpc.c: In function 'fastrpc_req_map_dsp':
+   drivers/misc/fastrpc.c:1897:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1897 |         args[0].ptr = (u64)&req_msg;
+         |                       ^
+   drivers/misc/fastrpc.c:1903:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1903 |         args[1].ptr = (u64)&pages;
+         |                       ^
+   drivers/misc/fastrpc.c:1906:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+    1906 |         args[2].ptr = (u64)&rsp_msg;
+         |                       ^
 
-Best regards,
+
+vim +1825 drivers/misc/fastrpc.c
+
+  1813	
+  1814	static int fastrpc_req_munmap_dsp(struct fastrpc_user *fl, u64 raddr, u64 size)
+  1815	{
+  1816		struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+  1817		struct fastrpc_munmap_req_msg req_msg;
+  1818		int err;
+  1819		u32 sc;
+  1820	
+  1821		req_msg.client_id = fl->client_id;
+  1822		req_msg.size = size;
+  1823		req_msg.vaddr = raddr;
+  1824	
+> 1825		args[0].ptr = (u64) &req_msg;
+  1826		args[0].length = sizeof(req_msg);
+  1827	
+  1828		sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MUNMAP, 1, 0);
+  1829		err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+  1830					      &args[0]);
+  1831	
+  1832		return err;
+  1833	}
+  1834	
+
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
