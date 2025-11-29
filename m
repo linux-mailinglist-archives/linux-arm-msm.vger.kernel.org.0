@@ -1,105 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-83877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EFA1C94095
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 16:22:55 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 277B3C94404
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 17:45:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 29CA4342339
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 15:22:55 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3234F4E66FB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 16:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D28E1A9FB4;
-	Sat, 29 Nov 2025 15:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kbOyqfAb"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09F43311961;
+	Sat, 29 Nov 2025 16:43:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2101E50E;
-	Sat, 29 Nov 2025 15:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E9B30FC0E
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 16:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.168
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764429771; cv=none; b=tLGhwzVY2ZYdCdVzTwsMTI8U4fkH5O2oDh2ONyMJbvudjzFym2QnV5++C1+F1/KyQs+I8J3M3x6Vg686/w/y9UZjaQh3tVCLL/Eopp5ON/wNllxcRxyVN8YrtapBCOgePfa5cmlMvGPSGmtOt9DxsVi/gHAN3qhmzFn0F4CLjj4=
+	t=1764434619; cv=none; b=L/hTfS1I64rGOF0z6jBAdnkeeSZzdnJWqAZ2uZxDfx3sYsPqgPQzZcFx1eqowHFToyyZJr0uhXoCPhLfP5mAsK02vW4nY7+S0hGz3Dr8bxlUvGxGlqRbgPpZZe1dSS+ihH+95dMuFTngbDvAUI8E0ODf96TtejgS71fw7+6rhR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764429771; c=relaxed/simple;
-	bh=RfzZyrNDCnWJM4vEwdyob0uPBIIFELux1Gp3qGHDeGw=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=IKaW6LZAgWvtVh6c2Nb1gHR+p+O0GNOUtpueZmaZa1OADDEUMeOo0MdICGerhtYS/ahl/pATMT0cErt6Z3Q20VnT9JthZCJDNSdY+Dj/PBcm26N41/oYsaWswY4AMMvYJH8kKlKppqoHMrO+4BMgeFmQg4wgfHS/kWSmQoWwi+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kbOyqfAb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBB8C4CEF7;
-	Sat, 29 Nov 2025 15:22:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764429770;
-	bh=RfzZyrNDCnWJM4vEwdyob0uPBIIFELux1Gp3qGHDeGw=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=kbOyqfAbUp+Mxoy/gEXMiJvo6ayZZhuGMMqrwHdHiSM9tHsYDs340ZTR5Jig4D200
-	 RVlKR3A/CwW0hxPSTh9SbpLVJAJOM+t1oVcnPjeGROpcOEcqa3XPNQU3ldcWA73Erm
-	 rMNfRXQZPjBw+RUSvEK43DYfHMS5J59DMwhJYo9sXmZuwxXE6uVy4WWfl8rzpSNTcF
-	 kUPjyvRzo3Ftyzo3jVzwXi6cDuIfh8BzKvtlVrdk374Uaq6xMJ7nltlDgHU+mou6ME
-	 CdyU9eD0U/XaA7S5pEZp8X1WmD5cxAr7e1cq4UZoXWPRS3muxIgprekVIlELfFnTnB
-	 1tbodpE4EywPw==
-Date: Sat, 29 Nov 2025 09:22:49 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1764434619; c=relaxed/simple;
+	bh=10SmU4oNe0ANdPQ9EMrsw1fh+y3D0Qak9HytxRTpYPc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gt9uNoeO34k2XN1D4V7qaW2JNQ4oUnEhpTWgfZ4blo1Fytg47L1WHo6Ikbyp8yXtrolLb53/s1FX0/YZwzHvbsohciUZvBvuDxeezv7sNq5J75Shln97oaKvjwhHEpcdqDKC19wjsaw3/1pmWb3dwpeT/aWI/5GNQ6o9vd4yKLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.168
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 43BA73EB7F;
+	Sat, 29 Nov 2025 17:37:45 +0100 (CET)
+Date: Sat, 29 Nov 2025 17:37:43 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: Re: [PATCH v16 10/10] drm/msm/dpu: Enable quad-pipe for DSC and
+ dual-DSI case
+Message-ID: <tjakx64c25gyakblncsvuoj2iquoknx4ngwujt2uf2clhhfvfl@lbvhrimf6gwp>
+References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
+ <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- krzk+dt@kernel.org, konradybcio@kernel.org, conor+dt@kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, andersson@kernel.org, 
- linux-kernel@vger.kernel.org
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-In-Reply-To: <20251129142242.3661349-2-tessolveupstream@gmail.com>
-References: <20251129142242.3661349-1-tessolveupstream@gmail.com>
- <20251129142242.3661349-2-tessolveupstream@gmail.com>
-Message-Id: <176442976917.4054928.8877916591661919569.robh@kernel.org>
-Subject: Re: [PATCH v8 1/2] dt-bindings: arm: qcom: talos-evk: Add QCS615
- Talos EVK SMARC platform
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
 
-
-On Sat, 29 Nov 2025 19:52:41 +0530, Sudarshan Shetty wrote:
-> Add binding support for the Qualcomm Technologies, Inc. Talos EVK
-> SMARC platform based on the QCS615 SoC.
+On 2025-09-18 21:29:02, Jun Nie wrote:
+> To support high-resolution cases that exceed the width limitation of
+> a pair of SSPPs, or scenarios that surpass the maximum MDP clock rate,
+> additional pipes are necessary to enable parallel data processing
+> within the SSPP width constraints and MDP clock rate.
 > 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+> Request 4 mixers and 4 DSCs for high-resolution cases where both DSC
+> and dual interfaces are enabled. More use cases can be incorporated
+> later if quad-pipe capabilities are required.
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 27 +++++++++++++++++------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++----------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
+>  6 files changed, 35 insertions(+), 32 deletions(-)
 
-My bot found errors running 'make dt_binding_check' on your patch:
+With this patch applied, I get the following crash on the Sony Xperia 1 III, a
+dual-DSI dual-DSC device:
 
-yamllint warnings/errors:
+	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
+	Mem abort info:
+	  ESR = 0x0000000096000004
+	  EC = 0x25: DABT (current EL), IL = 32 bits
+	  SET = 0, FnV = 0
+	  EA = 0, S1PTW = 0
+	  FSC = 0x04: level 0 translation fault
+	Data abort info:
+	  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+	  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+	  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+	user pgtable: 4k pages, 48-bit VAs, pgdp=000000012d4e1000
+	[0000000000000020] pgd=0000000000000000, p4d=0000000000000000
+	Internal error: Oops: 0000000096000004 [#1]  SMP
+	Modules linked in: msm drm_client_lib ubwc_config drm_dp_aux_bus gpu_sched drm_gpuvm drm_exec
+	CPU: 5 UID: 0 PID: 3081 Comm: (sd-close) Tainted: G     U              6.18.0-rc7-next-20251127-SoMainline-12422-g10b6db5b056d-dirty #21 NONE
+	Tainted: [U]=USER
+	Hardware name: Sony Xperia 1 III (DT)
+	pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+	pc : dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm]
+	lr : dpu_plane_atomic_check_sspp.isra.0+0x84/0x3f4 [msm]
+	sp : ffff800081e23940
+	x29: ffff800081e23950 x28: ffff0000bf2700d0 x27: 0000000000000a00
+	x26: ffff0000bf270000 x25: 0000000000000a00 x24: ffff0000bd0e5c18
+	x23: ffff000087a6c080 x22: 0000000000000224 x21: ffff00008ce88080
+	x20: 0000000000000002 x19: ffff0000bf270138 x18: ffff8000818350b0
+	x17: 000000040044ffff x16: ffffc488ae2e37e0 x15: 0000000000000005
+	x14: 0000000000000a00 x13: 0000000000000000 x12: 0000000000000138
+	x11: 0000000000000000 x10: 0000000000000012 x9 : 0000000000000000
+	x8 : 0000000000000a00 x7 : 0000000000000000 x6 : 0000000000000000
+	x5 : 0000000000000002 x4 : 0000000000000000 x3 : ffffc48897741db0
+	x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+	Call trace:
+	 dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm] (P)
+	 dpu_plane_atomic_check+0x100/0x1a0 [msm]
+	 drm_atomic_helper_check_planes+0xd8/0x224
+	 drm_atomic_helper_check+0x50/0xb4
+	 msm_atomic_check+0xd0/0xe0 [msm]
+	 drm_atomic_check_only+0x4e0/0x928
+	 drm_atomic_commit+0x50/0xd4
+	 drm_client_modeset_commit_atomic+0x200/0x260
+	 drm_client_modeset_commit_locked+0x64/0x180
+	 drm_client_modeset_commit+0x30/0x60
+	 drm_fb_helper_lastclose+0x60/0xb0
+	 drm_fbdev_client_restore+0x18/0x38 [drm_client_lib]
+	 drm_client_dev_restore+0xac/0xf8
+	 drm_release+0x124/0x158
+	 __fput+0xd4/0x2e4
+	 fput_close_sync+0x3c/0xe0
+	 __arm64_sys_close+0x3c/0x84
+	 invoke_syscall.constprop.0+0x44/0x100
+	 el0_svc_common.constprop.0+0x3c/0xe4
+	 do_el0_svc+0x20/0x3c
+	 el0_svc+0x38/0x110
+	 el0t_64_sync_handler+0xa8/0xec
+	 el0t_64_sync+0x1a0/0x1a4
+	Code: 2a1403e5 52800082 94008e28 f9400380 (f940101b)
+	---[ end trace 0000000000000000 ]---
+	pstore: backend (ramoops) writing error (-28)
+	[drm:dpu_encoder_frame_done_timeout:2726] [dpu error]enc33 frame done timeout
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c263000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
-Documentation/devicetree/bindings/thermal/thermal-sensor.example.dtb: /example-0/soc/thermal-sensor@c265000: failed to match any schema with compatible: ['qcom,sdm845-tsens', 'qcom,tsens-v2']
+I don't see any thought given to it in the extremely terse patch description,
+but this patch seems to unconditionally select 4 DSCs and 4 LMs on this device
+because the underlying SM8350 SoC has 4 available in its catalog - while it
+was previously affixed to 2:2:2 matching the downstream and known-working
+configuration of this device - and I can only imagine things are rolling
+downhill from there.
 
-doc reference errors (make refcheckdocs):
+faddr2line seems to be failing for me, but this is the line
+`dpu_plane_atomic_check_sspp.isra.0+0x88` seems to be referring to:
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251129142242.3661349-2-tessolveupstream@gmail.com
+	aarch64-linux-gnu-objdump .output/drivers/gpu/drm/msm/msm.ko -dS | grep dpu_plane_atomic_check_sspp.isra.0\> -A80
+	00000000000671ac <dpu_plane_atomic_check_sspp.isra.0>:
+	static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+	...
+	   67234:	f940101b 	ldr	x27, [x0, #32]
+		if (!(sblk->scaler_blk.len && pipe->sspp->ops.setup_scaler) &&
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Please help resolve this issue, as I am not understanding the thought process
+behind this patch and unsure how to solve this issue short of just reverting it.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Looking forward to some assistance, thanks;
+- Marijn
 
