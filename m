@@ -1,54 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-83878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 277B3C94404
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 17:45:25 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7835C94473
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 17:51:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3234F4E66FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 16:44:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 18A594E2F3C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 16:50:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09F43311961;
-	Sat, 29 Nov 2025 16:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE19E1C701F;
+	Sat, 29 Nov 2025 16:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vLwxFzdo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E9B30FC0E
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 16:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4642AD3D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 16:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764434619; cv=none; b=L/hTfS1I64rGOF0z6jBAdnkeeSZzdnJWqAZ2uZxDfx3sYsPqgPQzZcFx1eqowHFToyyZJr0uhXoCPhLfP5mAsK02vW4nY7+S0hGz3Dr8bxlUvGxGlqRbgPpZZe1dSS+ihH+95dMuFTngbDvAUI8E0ODf96TtejgS71fw7+6rhR0=
+	t=1764435031; cv=none; b=hm7MZg+EKFKnLwJM3vqcALeQoxILKit/zr7V5KfEyUXYwQpUG3+uEVoZrhwv/MxA4tgaFE7yDqOPgfhqXxRjwfgsjT2546OM2xEaX78R88N5bkVhhDK+K+hWt3Z5KSqJKgxAH+0aHmMc3eCF3u/RvkAbGRq5eaN1bq2KFQuaeUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764434619; c=relaxed/simple;
-	bh=10SmU4oNe0ANdPQ9EMrsw1fh+y3D0Qak9HytxRTpYPc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gt9uNoeO34k2XN1D4V7qaW2JNQ4oUnEhpTWgfZ4blo1Fytg47L1WHo6Ikbyp8yXtrolLb53/s1FX0/YZwzHvbsohciUZvBvuDxeezv7sNq5J75Shln97oaKvjwhHEpcdqDKC19wjsaw3/1pmWb3dwpeT/aWI/5GNQ6o9vd4yKLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 43BA73EB7F;
-	Sat, 29 Nov 2025 17:37:45 +0100 (CET)
-Date: Sat, 29 Nov 2025 17:37:43 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH v16 10/10] drm/msm/dpu: Enable quad-pipe for DSC and
- dual-DSI case
-Message-ID: <tjakx64c25gyakblncsvuoj2iquoknx4ngwujt2uf2clhhfvfl@lbvhrimf6gwp>
-References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
- <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
+	s=arc-20240116; t=1764435031; c=relaxed/simple;
+	bh=Cn+yNuLXa8lWVWpF6f/eF1X7MDE7Ri0IU5SGShQe0HM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=dHV7I77a4STcd2J3eA0n8Mih49s+eFfBQ89Y5194WAXvtzmiTjXv8McpXnbpdAgOXz8zprI7/+nVt3iYRczhO7peZ5VFvrICknK/XhG0U2is1gCB1aKGkrrE1Ggi1Qigde4O6HRFPsW1THTZdmP8reW9n1Aj6yJi84hU0Y4yCRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vLwxFzdo; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4779d47be12so22109605e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 08:50:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764435027; x=1765039827; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+u+kxqq4MMJGawqIDaTzXliKugbB0Ij2lnspVyD3E7E=;
+        b=vLwxFzdoqbvrnnOp7dQCuCCA/jIpY/NmTLEuxOZpBnSMusIyCRr3XBkQfP1XNVhS7N
+         fQlWflSSsFNTitmUMSejctgCJ1V4SakiYXej7qsulWvcz7uqFfIo2Lvon1qUnrXNeMPE
+         7VEYCPsPVvhBuL7noS6/Vz81ycw9Uz7up/N52k/A2Gj/IliS4BvwM4yXdNLNAWqJCu4h
+         qKjDaGx6wT76S+xJjBFoeLPNwm+fvMvlGP0ZbMvqPq7GeGA6mYvf5eOvCO03JIJf3bNZ
+         rU64fHiLK0z26NFDyIx0ETR5mtcCga/6f5e6BCPxmuPsONLnJzyIHND2aZbzlrh5mH8u
+         KFwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764435027; x=1765039827;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+u+kxqq4MMJGawqIDaTzXliKugbB0Ij2lnspVyD3E7E=;
+        b=cxRhyjYVnZkedqgYXpZZH5n8HnV9GEGFCUT1dxRlcDyaLUcW0+IPwH827bYZ/NrFkX
+         +Ls2mKyAadXxHGperYlufLJF/MZUA7k26sTvBzWytJ6OB/pY8HudA7s3Bu6QXCXYQ3IJ
+         whu6DTJe8uU/+GfCORDdqS1qvaElo92Vu99us+G8twO0QKDFj91ATW4ntvf/kycpGfVI
+         IbD1lDE2RQ61tyaLj0Rd0Ljp+wDHi3qjiX7f0fAJtbYUMHKH6kmhMdW4lp2Be09F/dK/
+         G9FH1Wrzm5S3MniKiknyxFmvTA8aLcC67ZLU1eEFI8fw4e2U4iQcLPBThG8qt8Wzze3z
+         QKdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUreNhBELd68pUPaCXo2JWHvTh284EtWSdAlYOS3qpu+RvKatxY2bHTeqmZogsm7ltrzT/nI3lxEJQ5kNNe@vger.kernel.org
+X-Gm-Message-State: AOJu0YwktVSkXwV+4GlXH6F3YeHpY17BOYcJeBC4a7V7ZRAJmnaCHSjv
+	f7DqL4B4qEGskiFwgjcJlRlCMRhQJjF1gXa70zbA/bvrSpvINCL3pD1SHo4aZXc4rr0=
+X-Gm-Gg: ASbGnctSJf96CDLl0O9GB0hUQf1OqC4wTJ3L7ESZTHE43gvxeryeqOrWMr/3IIeMCP5
+	u5EFogQgnIvEXA0mqb7kPRDc+NmMP+HfVvdFuFJhbPSNNsCGMwqRmW/KXiIyDs5FtQ0Rxj2cfU1
+	koHVvx+dAbAWqU0RG/QKurgxfsgW3iooXqEAzZUptXSmpIVT1/DGpLNbd5trY9xxBqoZab9lV07
+	pR6pECgkngBwkKvACZwfvkyzD6306WyRqzZUJqUqBHkrefReO41LDIdueZWa1i2+8K+8YJH+oVx
+	hNt+2oqEJx5KGbDIP61NQBIsw9iiH/6I7rxbshC5XkRNHRIh7Z73HnvN7fmRrMKhJCLLdAtaAjE
+	bsihgJy9ZyCdtrD75oBEtnRe+shHH0426lGUAzukjXK7E0D0AIC3/7/dSxrJJbIDIpXGX14RWC0
+	R1I2xQi2Hy2p/2h1Wv
+X-Google-Smtp-Source: AGHT+IGEoZUwPFD59KrJidNkG9F67yymewSdufIMxYqDAzd7rSdFYU/UTCa8BEI6YpP6tuO8Wx01SA==
+X-Received: by 2002:a05:600c:46cc:b0:477:7b16:5fb1 with SMTP id 5b1f17b1804b1-477c0174856mr324752135e9.7.1764435026599;
+        Sat, 29 Nov 2025 08:50:26 -0800 (PST)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4791115caa7sm144049695e9.6.2025.11.29.08.50.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Nov 2025 08:50:26 -0800 (PST)
+Date: Sat, 29 Nov 2025 19:50:22 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: oe-kbuild@lists.linux.dev, Niklas Cassel <cassel@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+	FUKAUMI Naoki <naoki@radxa.com>, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered
+ on PCIe switches
+Message-ID: <202511290255.uBLXDIG5-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,114 +97,91 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
+In-Reply-To: <20251127134318.3655052-2-cassel@kernel.org>
 
-On 2025-09-18 21:29:02, Jun Nie wrote:
-> To support high-resolution cases that exceed the width limitation of
-> a pair of SSPPs, or scenarios that surpass the maximum MDP clock rate,
-> additional pipes are necessary to enable parallel data processing
-> within the SSPP width constraints and MDP clock rate.
-> 
-> Request 4 mixers and 4 DSCs for high-resolution cases where both DSC
-> and dual interfaces are enabled. More use cases can be incorporated
-> later if quad-pipe capabilities are required.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 27 +++++++++++++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++----------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
->  6 files changed, 35 insertions(+), 32 deletions(-)
+Hi Niklas,
 
-With this patch applied, I get the following crash on the Sony Xperia 1 III, a
-dual-DSI dual-DSC device:
+kernel test robot noticed the following build warnings:
 
-	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-	Mem abort info:
-	  ESR = 0x0000000096000004
-	  EC = 0x25: DABT (current EL), IL = 32 bits
-	  SET = 0, FnV = 0
-	  EA = 0, S1PTW = 0
-	  FSC = 0x04: level 0 translation fault
-	Data abort info:
-	  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-	  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-	  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-	user pgtable: 4k pages, 48-bit VAs, pgdp=000000012d4e1000
-	[0000000000000020] pgd=0000000000000000, p4d=0000000000000000
-	Internal error: Oops: 0000000096000004 [#1]  SMP
-	Modules linked in: msm drm_client_lib ubwc_config drm_dp_aux_bus gpu_sched drm_gpuvm drm_exec
-	CPU: 5 UID: 0 PID: 3081 Comm: (sd-close) Tainted: G     U              6.18.0-rc7-next-20251127-SoMainline-12422-g10b6db5b056d-dirty #21 NONE
-	Tainted: [U]=USER
-	Hardware name: Sony Xperia 1 III (DT)
-	pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-	pc : dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm]
-	lr : dpu_plane_atomic_check_sspp.isra.0+0x84/0x3f4 [msm]
-	sp : ffff800081e23940
-	x29: ffff800081e23950 x28: ffff0000bf2700d0 x27: 0000000000000a00
-	x26: ffff0000bf270000 x25: 0000000000000a00 x24: ffff0000bd0e5c18
-	x23: ffff000087a6c080 x22: 0000000000000224 x21: ffff00008ce88080
-	x20: 0000000000000002 x19: ffff0000bf270138 x18: ffff8000818350b0
-	x17: 000000040044ffff x16: ffffc488ae2e37e0 x15: 0000000000000005
-	x14: 0000000000000a00 x13: 0000000000000000 x12: 0000000000000138
-	x11: 0000000000000000 x10: 0000000000000012 x9 : 0000000000000000
-	x8 : 0000000000000a00 x7 : 0000000000000000 x6 : 0000000000000000
-	x5 : 0000000000000002 x4 : 0000000000000000 x3 : ffffc48897741db0
-	x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-	Call trace:
-	 dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm] (P)
-	 dpu_plane_atomic_check+0x100/0x1a0 [msm]
-	 drm_atomic_helper_check_planes+0xd8/0x224
-	 drm_atomic_helper_check+0x50/0xb4
-	 msm_atomic_check+0xd0/0xe0 [msm]
-	 drm_atomic_check_only+0x4e0/0x928
-	 drm_atomic_commit+0x50/0xd4
-	 drm_client_modeset_commit_atomic+0x200/0x260
-	 drm_client_modeset_commit_locked+0x64/0x180
-	 drm_client_modeset_commit+0x30/0x60
-	 drm_fb_helper_lastclose+0x60/0xb0
-	 drm_fbdev_client_restore+0x18/0x38 [drm_client_lib]
-	 drm_client_dev_restore+0xac/0xf8
-	 drm_release+0x124/0x158
-	 __fput+0xd4/0x2e4
-	 fput_close_sync+0x3c/0xe0
-	 __arm64_sys_close+0x3c/0x84
-	 invoke_syscall.constprop.0+0x44/0x100
-	 el0_svc_common.constprop.0+0x3c/0xe4
-	 do_el0_svc+0x20/0x3c
-	 el0_svc+0x38/0x110
-	 el0t_64_sync_handler+0xa8/0xec
-	 el0t_64_sync+0x1a0/0x1a4
-	Code: 2a1403e5 52800082 94008e28 f9400380 (f940101b)
-	---[ end trace 0000000000000000 ]---
-	pstore: backend (ramoops) writing error (-28)
-	[drm:dpu_encoder_frame_done_timeout:2726] [dpu error]enc33 frame done timeout
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I don't see any thought given to it in the extremely terse patch description,
-but this patch seems to unconditionally select 4 DSCs and 4 LMs on this device
-because the underlying SM8350 SoC has 4 available in its catalog - while it
-was previously affixed to 2:2:2 matching the downstream and known-working
-configuration of this device - and I can only imagine things are rolling
-downhill from there.
+url:    https://github.com/intel-lab-lkp/linux/commits/Niklas-Cassel/PCI-dwc-Make-Link-Up-IRQ-logic-handle-already-powered-on-PCIe-switches/20251127-214649
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/20251127134318.3655052-2-cassel%40kernel.org
+patch subject: [PATCH] PCI: dwc: Make Link Up IRQ logic handle already powered on PCIe switches
+config: x86_64-randconfig-r071-20251128 (https://download.01.org/0day-ci/archive/20251129/202511290255.uBLXDIG5-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
 
-faddr2line seems to be failing for me, but this is the line
-`dpu_plane_atomic_check_sspp.isra.0+0x88` seems to be referring to:
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202511290255.uBLXDIG5-lkp@intel.com/
 
-	aarch64-linux-gnu-objdump .output/drivers/gpu/drm/msm/msm.ko -dS | grep dpu_plane_atomic_check_sspp.isra.0\> -A80
-	00000000000671ac <dpu_plane_atomic_check_sspp.isra.0>:
-	static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
-	...
-	   67234:	f940101b 	ldr	x27, [x0, #32]
-		if (!(sblk->scaler_blk.len && pipe->sspp->ops.setup_scaler) &&
+smatch warnings:
+drivers/pci/controller/dwc/pcie-designware-host.c:737 dw_pcie_host_init() warn: missing error code 'ret'
 
-Please help resolve this issue, as I am not understanding the thought process
-behind this patch and unsure how to solve this issue short of just reverting it.
+vim +/ret +737 drivers/pci/controller/dwc/pcie-designware-host.c
 
-Looking forward to some assistance, thanks;
-- Marijn
+59fbab1ae40eb0 drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  712  
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  713  	ret = dw_pcie_setup_rc(pp);
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  714  	if (ret)
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  715  		goto err_remove_edma;
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  716  
+c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  717  	if (!dw_pcie_link_up(pci)) {
+a37beefbde8802 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  718  		ret = dw_pcie_start_link(pci);
+886a9c1347558f drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  719  		if (ret)
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  720  			goto err_remove_edma;
+da56a1bfbab551 drivers/pci/controller/dwc/pcie-designware-host.c Ajay Agarwal              2023-04-12  721  	}
+886a9c1347558f drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  722  
+8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  723  	/*
+8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  724  	 * Note: Skip the link up delay only when a Link Up IRQ is present.
+8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  725  	 * If there is no Link Up IRQ, we should not bypass the delay
+8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  726  	 * because that would require users to manually rescan for devices.
+8d3bf19f1b585a drivers/pci/controller/dwc/pcie-designware-host.c Krishna chaitanya chundru 2024-11-23  727  	 */
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  728  	if (!pp->use_linkup_irq) {
+c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  729  		/* Ignore errors, the link may come up later */
+c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  730  		dw_pcie_wait_for_link(pci);
+c5097b9869a136 drivers/pci/controller/dwc/pcie-designware-host.c Johan Hovold              2023-07-06  731  
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  732  		/*
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  733  		 * For platforms with Link Up IRQ, initial scan will be done
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  734  		 * on first Link Up IRQ.
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  735  		 */
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  736  		if (dw_pcie_host_initial_scan(pp))
+113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24 @737  			goto err_stop_link;
+
+
+	ret = dw_pcie_host_initial_scan(pp);
+	if (ret)
+		goto err_stop_link;
+
+cd723d3dce14ac drivers/pci/controller/dwc/pcie-designware-host.c Niklas Cassel             2025-11-27  738  	}
+4fbfa17f9a0755 drivers/pci/controller/dwc/pcie-designware-host.c Shradha Todi              2025-02-21  739  
+feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  740  	return 0;
+feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  741  
+113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  742  err_stop_link:
+a37beefbde8802 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  743  	dw_pcie_stop_link(pci);
+113fa857b74c94 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  744  
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  745  err_remove_edma:
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  746  	dw_pcie_edma_remove(pci);
+939fbcd568fd29 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2023-01-13  747  
+9e2b5de5604a6f drivers/pci/controller/dwc/pcie-designware-host.c Jisheng Zhang             2019-03-29  748  err_free_msi:
+f78f02638af594 drivers/pci/controller/dwc/pcie-designware-host.c Rob Herring               2020-11-05  749  	if (pp->has_msi_ctrl)
+9e2b5de5604a6f drivers/pci/controller/dwc/pcie-designware-host.c Jisheng Zhang             2019-03-29  750  		dw_pcie_free_msi(pp);
+c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  751  
+c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  752  err_deinit_host:
+aea370b2aec9d3 drivers/pci/controller/dwc/pcie-designware-host.c Yoshihiro Shimoda         2023-12-20  753  	if (pp->ops->deinit)
+aea370b2aec9d3 drivers/pci/controller/dwc/pcie-designware-host.c Yoshihiro Shimoda         2023-12-20  754  		pp->ops->deinit(pp);
+c6481d51dc65f2 drivers/pci/controller/dwc/pcie-designware-host.c Serge Semin               2022-06-24  755  
+f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  756  err_free_ecam:
+f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  757  	if (pp->cfg)
+f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  758  		pci_ecam_free(pp->cfg);
+f6fd357f7afbeb drivers/pci/controller/dwc/pcie-designware-host.c Krishna Chaitanya Chundru 2025-09-23  759  
+feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  760  	return ret;
+feb85d9b1c47ea drivers/pci/dwc/pcie-designware-host.c            Kishon Vijay Abraham I    2017-02-15  761  }
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
 
