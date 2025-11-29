@@ -1,155 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-83871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2E12C93FC6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 15:31:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E21BDC9401D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 15:51:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 241F3343A4A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 14:31:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 98AA8345741
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Nov 2025 14:51:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9851230FC35;
-	Sat, 29 Nov 2025 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 371A630F80D;
+	Sat, 29 Nov 2025 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWj4NUCZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IyuxZMsm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C30E2475CF;
-	Sat, 29 Nov 2025 14:31:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6421530E839
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 14:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764426674; cv=none; b=Sxo1hPp3WSd5PqN2GqITi1mZoFmIeGeo/36jarfEx8lnSxPMgawifVPSIz06jZ/DF7BV1RhbdK1rU0HRklUySiXM+6Q+3dm7o4xbODItXmaY36zkXJt6zGyibeOUbEhOUOP7tcy3Ln0klK5Swd4/FnL2Zo7cfcMPeEZG7gkFQ6c=
+	t=1764427854; cv=none; b=t/bhTGRRUOg4J3LRXAV0csuUKICr/dTXrLXXUO25TZ8VIu7jyewy93GpEbziUXFGYLoDk8uld1luOVqxZzBBRx65+/ArEHJFTddItZvyJQRiZRQu++TUMxtkvxWVwbmc7SM8rmVACP74fjlDUrdgxGUrjSfawdKe8ILeGly0I6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764426674; c=relaxed/simple;
-	bh=OOXM+8VJNr1jofMq1aDwIoY/tJO1ZvIsD3b19brw7lc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FCdDzs/duUsn4BXITUAsA78yUYV+ycWDFrOKQqPRv09WDwaYOG8NQ5VyRJWb7smtVbyLITP7KxwocUlAhoNl4N5VHqA9AR8qi9carSdI/ASsPPzqDzDXaSf/eUJ+F+MgnUkLypMKFzWgcPPnlfupXu38/SqX9mNx6/XDnkA91Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWj4NUCZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E083AC4CEF7;
-	Sat, 29 Nov 2025 14:31:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764426671;
-	bh=OOXM+8VJNr1jofMq1aDwIoY/tJO1ZvIsD3b19brw7lc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PWj4NUCZXJCf0cQOQb/LwGSzkgtSkTq3JT0SBX/1zyzCien82/KxUzpcFPaPNswO1
-	 LPsmXmQGJaV/nsBwXaRc+feT5qhOHUyfve6rwdiYNZTuZDq4ve43Lr9B6KzaOEx1BT
-	 3zmN40bldzF85pdUb/lerOgzou1GFRyUUPNCnRVlHr1SUTob626mzl5IcZJvMWTvAt
-	 OANnR3Mpymo9zIAywoq14c/rXgiM7+MbSLIw+wWZzQrHmOWro44T3QcT70eaQ626DY
-	 MvjC4jKdWWhEH5sfrKC/+iEzAFN9Gm2uGILsrHvsHzIGHMqlgMtiMcR6i1cpV+wLao
-	 gm220dgQpILkw==
-Message-ID: <9efa0a3c-ffef-488a-97f3-45b9649d35fd@kernel.org>
-Date: Sat, 29 Nov 2025 15:31:03 +0100
+	s=arc-20240116; t=1764427854; c=relaxed/simple;
+	bh=On8iufHNupMUM8gQiRcj/sMjUlOBoIku4zCGN1itpwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=rqu0fB547nUgOkG0pB4qu/iwtDVbIt6iIgFJc9o2N0u9Lh8BXiJHLu3a8eaTquEMTElHI1rpopDxOR0PihSmZ1ueK1HdBiiPhbtl/sfTbfBE6BvBZ4TByFeG1vp8dtFoDQGhO/1GD1cZLIiCFaUlOLMeRzuy15RR0Y/qy95ANwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IyuxZMsm; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-42b3c965df5so1570979f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Nov 2025 06:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764427851; x=1765032651; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ctIpJYtrQV3nLKe/1NlZuGbTH89WBc7HNhCgLG2n0ts=;
+        b=IyuxZMsmR76vTptkNE5lElzz/1qfJIrfVgY4Awu3WSbd/ALHao3ERTiI9lRjwUFmGW
+         wGkTVKxcqSirvEmllIJAeL9QOiK7l4x0GK7OK5dpQZc7CrwPYtwOvqkEWh5FZTWFWFuc
+         WU6thrTFKWFkpZNO09+MUYmmXYAnjMZhixzxWJ7UERIMraSe1EQNRg5nQGr+3b+NCZDo
+         GZrKjR1Dcft+/bDK/wAe/OnrKrwPQhD67Y/djVlcpTiRd3LyNxt8p70YqH812uNMg1tF
+         O0JsQkyLWEGhihS/ZYSCayoMmj43KsIOb1wGn81AF0cqoj2KuyYn+r4B+dEn+NxNtxkw
+         h9bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764427851; x=1765032651;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ctIpJYtrQV3nLKe/1NlZuGbTH89WBc7HNhCgLG2n0ts=;
+        b=sRcy2v80pi9uBdWk+9zOkH3AXncCqOLdPdnroGkFB5B3J6vQ01tkAs2bT0OaU1V7Tp
+         oEsSp/LJy4JM9RH4iNrqSKdJaUtZznK7zw0q+BcNm9KVHszaMfgUMvYNoyBMOw3x8lvZ
+         GHJWLFv4JGLgjrL7WFfFTDFEaK193lyS0b/IXtF7l5O0dRUarWYp0gMQDuX1hkFNFK5H
+         2vSfBSipx0YOiWpaHW/ZibygmME+9m8t5ZoYCI0eBUuV5jyxPQ966+v+fL3/btrMOOU2
+         rdd/KMn/Ozkzj0LxyaCpUIA5j4uBgE2zQMvTNvu+l9WE779J2w4Fmw4OuFTaBXKjJvrM
+         AAbA==
+X-Forwarded-Encrypted: i=1; AJvYcCVlI2QYDmiz7UFwfpGs0aHBnJT8yYIFMA2WkbXd4JLNJNxn7KQcw2Y6tSCTx2yefaXG0+kw1/0KZl4OJrnt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxe+JWn0BsJy0E73PwSCTKR74BCWuMoXKnAeNIn5YMubm6fm52h
+	o5vh00WzIhniTtDl16a4B1QZSFzXL43dU+yMKwiYCQEcWxMiy/k/HetioS7lyYUUBcQ=
+X-Gm-Gg: ASbGnctrNwJldyMWIuL+4bvopVEkDD87JhSaNsHxle1HIMSt07BOvYw5Aj/YFwz+/Bp
+	HqCQs8oyWjJpxEBAkI5JkM1v+11rkNywuQDXKZiDvtZky1E9f7ZwyhIBx6wIT7gNt2m884pt3YB
+	LYRbTCmsp2rpyv5sEmZWsPC0iRr5n31UYnVycm06uq5J0AbfcdZ995SamsSujlfb1YS+OImfuXO
+	6NickzJ5aN6SaidvFBBIcgvi5e8wuveeKmQNBHGIHF8lkV5v2W8U6BZ/6ff6SUa+Mr5Dro9Nd03
+	GK6m7xQzWsIdnrcDIkQxPWncDKmvpd7dXmLP70YdrkygNlUphYzmGHahHqdMlb+3yjWPiVraMIH
+	JACWIhacf1VCZv4qXGohz3e0afg5mrNET1l6KXJldMbq2eXC7pV3SxbtR3jYME6iBHGtaga2VBt
+	VKZGTk2OjyW8JiTcra
+X-Google-Smtp-Source: AGHT+IEagBHd9lVZqVEQQFeawH/ZHO01RUoyPCy8iCQRfDy6+PBcG45QVAvcVinElE8Ql4ZFoPlYNw==
+X-Received: by 2002:a05:6000:2410:b0:42b:36f4:cd22 with SMTP id ffacd0b85a97d-42e0f344714mr21478943f8f.38.1764427850629;
+        Sat, 29 Nov 2025 06:50:50 -0800 (PST)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-42e1c5d618csm15509253f8f.14.2025.11.29.06.50.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Nov 2025 06:50:49 -0800 (PST)
+Date: Sat, 29 Nov 2025 17:50:47 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 0/4] remoteproc: qcom: Fix devm_ioremap_resource_wc() checking
+Message-ID: <cover.1764427595.git.dan.carpenter@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/10] power: sequencing: pcie-m2: Add support for PCIe
- M.2 Key E connectors
-To: manivannan.sadhasivam@oss.qualcomm.com, Rob Herring <robh@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Mark Pearson <mpearson-lenovo@squebb.ca>,
- "Derek J. Clark" <derekjohn.clark@gmail.com>,
- Manivannan Sadhasivam <mani@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
- <20251125-pci-m2-e-v2-10-32826de07cc5@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251125-pci-m2-e-v2-10-32826de07cc5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 25/11/2025 15:45, Manivannan Sadhasivam via B4 Relay wrote:
->  static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data = {
->  	.targets = pwrseq_pcie_m2_m_targets,
->  };
-> @@ -92,6 +174,96 @@ static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
->  	return PWRSEQ_NO_MATCH;
->  }
->  
-> +static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned long action,
-> +			      void *data)
-> +{
-> +	struct pwrseq_pcie_m2_ctx *ctx = container_of(nb, struct pwrseq_pcie_m2_ctx, nb);
-> +	struct pci_dev *pdev = to_pci_dev(data);
-> +	struct device_node *pci_remote __free(device_node) = NULL;
+The devm_ioremap_resource_wc() function returns error pointers and not
+NULL.  I don't know, if you'll want to fold these patches all together
+or not.  Or into the original patch, perhaps?
 
+Dan Carpenter (4):
+  remoteproc: qcom: Fix a NULL vs IS_ERR() check in
+    adsp_alloc_memory_region()
+  remoteproc: qcom: pas: Fix a couple NULL vs IS_ERR() bugs
+  remoteproc: qcom: Fix NULL vs IS_ERR() bug in
+    q6v5_alloc_memory_region()
+  remoteproc: qcom_wcnss: Fix NULL vs IS_ERR() bug in
+    wcnss_alloc_memory_region()
 
-This is an undesired syntax explicitly documented as one to avoid. You
-need here proper assignment, not NULL. Please don't use cleanup.h if you
-do not intend to follow it because it does not make the code simpler.
+ drivers/remoteproc/qcom_q6v5_adsp.c | 5 +++--
+ drivers/remoteproc/qcom_q6v5_pas.c  | 8 ++++----
+ drivers/remoteproc/qcom_q6v5_wcss.c | 4 ++--
+ drivers/remoteproc/qcom_wcnss.c     | 4 ++--
+ 4 files changed, 11 insertions(+), 10 deletions(-)
 
-> +	struct device_node *serdev_remote __free(device_node) = NULL;
+-- 
+2.51.0
 
-This is even worse. Instead of making it local scope, you have automatic
-cleanup for entire function with completely redundant constructor.
-
-Please, use cleanup.h only if you really want to follow its spirit.
-Otherwise it does not make the code easier.
-
-
-Best regards,
-Krzysztof
 
