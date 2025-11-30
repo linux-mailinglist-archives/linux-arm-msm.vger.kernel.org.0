@@ -1,100 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-83900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C45CC9505A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 15:41:29 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22DB5C95059
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 15:41:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 058AA3A3451
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 14:41:24 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E2B024E0EF0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 14:41:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40F5F27AC59;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E43279DCA;
 	Sun, 30 Nov 2025 14:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OBvt+qqT";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FAoHtA+k"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RrNcISqh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kOhm66h1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0A3233D9C
-	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 14:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0FE23ABA1
+	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 14:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764513678; cv=none; b=haxvZbtfNucFMuA1k7XnzDDdVPwtEn7USeX+wdoTf1Xt+UK5F5uREW3j+GQVnuEcurTDKqxgODq3Bkw6k1Bk9lbBRwHLRavTeeI4pW9d3SPfJ/vTQAtVcRfx4c3ZsV6mzc3q3RVi4TqIEyRQchg+djPPcKYOzO/LWs9m+dJ99xw=
+	t=1764513678; cv=none; b=JY4DFxIgacwLuzs4hQvdfoA4hIH/OJ5L/hifaTdSDHNIXSkK8jfTgM8v0xMEeTi6AO2t7+NXhoyU6kZsQCSRmr5cH3s/TJcy6tNKt8T9/k/1ZHw39hYejhABxpu2JxD6gKajm0AS/hQJb5W9UIAGpBd/kXhDXibf6Lc0hnBnO1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764513678; c=relaxed/simple;
-	bh=J+hafaL2yIMA+OCC2yuTD74ZJk0OMzIt4uYNAhK8iFk=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pUuAOj3ljgmKSCscdaAQxC9VdZT3qNKyylV8SRj9uRkop8UWIiuqduLoZqy/KY/E2kSg2LOg1PHkD+mG3io/9FJWyIk3o+wxBhUnXvQnCpkORtWZaNuYKrdToRMxJiV2jz0pZi+yqiIVkmadSdNB9Y1ODES0l61641H1nQHDW9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OBvt+qqT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FAoHtA+k; arc=none smtp.client-ip=205.220.180.131
+	bh=K+XCHjC8KWupOYTNWBlXk+nWg8FYug0wz5XSG4bR8J4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ZM8IO+JsPxz1fWCqU0sHfg++WFaPkbisqp26IbnjdZ1vZhWSkJf9C5Q5q0b/pVo+EhSo3cAZ/MpMZrGRd7zwjJtIbXTxGAI+894j0hyWSnejs9jZFEQlO7zvdITsnHHofVZnXPUjZI0Voc6YOMIT89XHN8pQt/WHmPujwxQggOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RrNcISqh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kOhm66h1; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AUDq0OH1979545
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AUBdVLO1675767
 	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 14:41:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=O972evu9tLujMLwJHPEDY9
-	0SejJvENvtdIFrd371ZqU=; b=OBvt+qqT9xbFN77CchTuD9UH2WEIiD2sCKa0bl
-	lZlIUUGFYOYNOoGPc2jV0iVg0a213dR4g0wJMhhPFQpZ6GQEQ66X6LETGzDzGVqp
-	EjsGRy5BECNFtoX4FclRuvNosq18Jua0uZyvOvChG/yop2VIEv6G4wBWL+OAeAEG
-	MWPSidj7/1dW62EUHqYavd8ufYRPulhRRNxIQCe+Dd8At6dSGsXK7eqPAFIZAfVh
-	HV8IKLZOBvhlleRaj9UddgvEJroqKmbJG7nCwo5nSphwsEE5oT250kG9pehYAVy+
-	u1DBtof7SZnTdNFq2vlUG3OdEX/TzZZlDRpnpzlFG4H8i4og==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aqp6pjhpm-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	H5+ufLvy/HmVXY04G0FNH65Lg/GXMDaCxoGP3bQSCUs=; b=RrNcISqhPiXkxG6p
+	i24yV+j8VtE4H6Kc1dkf2/r7U5pvdJELbEN44JTpSS095n1FfDTDK/0pAtEs4KUP
+	ZuOFfZJh9PVJfOIgazkfQIk2SFVHK8kpQqQKLMQkKsB1MCla+nsO/RbxxFLq35qr
+	1TEqUqoz/y/3LGN1KW6V/bPq9zDEIcSkO45DVGFv8DpIDNpopqS4DpMiasbSek6U
+	HyfaFGC2cYxGiyNq5F4n6hwC2zmPkFD165bpr6h9QEiEigdzCjGpJFhzKbMVlN82
+	2RY2nF3rrS3xIEVIiMbHLujmFYVXsbbdL1yt1pVuejQGiV7/uEHp15EalEdssMri
+	8uBy0Q==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aqs78ta2d-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 14:41:15 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7a99a5f77e0so4856340b3a.2
+	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 14:41:14 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bad1cef9bcso5469058b3a.1
         for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 06:41:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764513671; x=1765118471; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=O972evu9tLujMLwJHPEDY90SejJvENvtdIFrd371ZqU=;
-        b=FAoHtA+kTDQGEBvk+oh+a7T528/m1RFrzn1fRdX9DDIkXoFF1HmJJQKlbpyUCihyF0
-         09rK8XwSxUXpIKFDqmxsQ1LBHvRSNaV/Y4DLNpPatQ4kn9ghNkb7MdnOU3GFkCsfxbih
-         4K9iRpFCR0TXuXcou811Y9VDMhrjVoyiAgQ24sGkpTUJFEO2zmZuK35VN4kATyCqdGK1
-         CMR1AREIE5l2dYl0yqDgj3FCf2zcRREMI50cET4fCin8G6fNyiN3JwTnJNv9SLMY3lyx
-         /STS5VEw123pwMpknQ4IISRdauTOzTHC9YFk2lYiBj2jps0sOgOVjlegNMJiEtU6sbVh
-         bUSw==
+        d=oss.qualcomm.com; s=google; t=1764513674; x=1765118474; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H5+ufLvy/HmVXY04G0FNH65Lg/GXMDaCxoGP3bQSCUs=;
+        b=kOhm66h1DgcX2YFKCGVjjy4QpPXSlBTbjNc92Mp2ZUbi5Ot6Yp/bGYkWLAasQ6iq6l
+         PLapk6DYe/2ZnjESfesfYmDqAizj+9YH+7zADhx+yvkJ83nHQnItLaS7Ys6LvQwqnNZJ
+         EO3cRFtyMJDwATmOBwGJ39HL3+dVJXsKNRFxdGroKJnYEABeXFxD+ifePy8PB/qTxZ7/
+         fjzMesiI253MGV4hPwFQ8xkfX/KTGmTT6x6W3UabdsLdtWCuXzZJv1y3JqkpodiwdeYi
+         XoKlwLoPsXM2KnY5r3O9UVK9tQ9sZjqXNF/edP8PXQEDM9Lx4LcMGf0c7B5yYNbFbGTu
+         vwQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764513671; x=1765118471;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O972evu9tLujMLwJHPEDY90SejJvENvtdIFrd371ZqU=;
-        b=Q0v2SdsGwd8OdB6fKnWVyZk1bSqutDYT3TrMmxOJCPDRLhSyLAgKtThovAUiC9yMEt
-         hLFI87AbfKkmN24F06hJTv2+ba3BHThPebc+1WHS+Uo7+eBPM2mI/oN4Nlo58aI3r/dc
-         /gF5Y9VPQqTPlQDL7zRPTJAxuivnctZx398fkZhaV9aMFZkAMT9qRYHVUPeqeB874sEV
-         46X52tTvyFQMGRayVPTeNSYhrlKB+NsvgZVXLXlGIsnsgv2QBlZPNpDsXt4HhTGU8CV1
-         2Cxmy/nyLvmTrBSgbYIwo8LuiqhFpzUOOdjkTyabH8FF/fR1ojY7ziJn31Q1SR5V/8+P
-         jHCw==
-X-Gm-Message-State: AOJu0YzTTk2IDMognWGEuGZvQI3v0H4XuezfS9nDDA5kv22Xarh8mRXY
-	E1tIPUIsSvU8aajRUe2NBnz7ZEvTjcAqzhDCfyjWh2DKwwYkq2pjv15a/t5WwdA1RLxruX7svf3
-	s/Dn69aedYw575gNs7fpOhpXQFpYO+6GxB+fHPh+9oPiniDZgmlj6eYqgcAAr5o37CdxB
-X-Gm-Gg: ASbGnctx2c2wXK0jyFIPiRygXFQKYZtxLTE5vJhQrh6JzXihKHn3nwredPuuaMCramV
-	+qR9pQ1UCUJET5LLn4vf2+xjxoQ1AGFImJaD9momPgudCm3Th4dqOC5ndOsSSLzSZdl+8sHfwFY
-	+XOZ3VazYRhYn5LXlOANrQZHVYvUNUqxIXVu79SoahQ1840eNn+fXoc5rmO+cyrOJSKgJtte6ko
-	O8vlLaZilZF3FJhnSIhiuWw8P2N66a+4TKh0m5dclxrgGtFG2t35rh36dKTU00nzNeUijZLHHYC
-	ZXNJx0LzMX5jBN4nr+fRqvFBcdai7EGVcYWCn8uv9qmW7HnaJXIO48p0POqfe6ozK6IIB4pxYSI
-	tDG1Or5eeY3KmzyQCiUwTm9gtGM09k+vX3jRpEZT0DGwrEQ==
-X-Received: by 2002:a05:6a00:1488:b0:781:d98e:ebda with SMTP id d2e1a72fcca58-7c58e705ea8mr37182886b3a.30.1764513671181;
-        Sun, 30 Nov 2025 06:41:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0XzraT8mWcrU03+lOGDrsV9mLO2S7OIoHB7UVsGnYP7DTUgzGp+uVWvDV37ikrSdT3jl4mQ==
-X-Received: by 2002:a05:6a00:1488:b0:781:d98e:ebda with SMTP id d2e1a72fcca58-7c58e705ea8mr37182860b3a.30.1764513670678;
-        Sun, 30 Nov 2025 06:41:10 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764513674; x=1765118474;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=H5+ufLvy/HmVXY04G0FNH65Lg/GXMDaCxoGP3bQSCUs=;
+        b=EPnfXMElLZePIkumPhJs/aQM9rxAff8CW8DvGl1THbR/0KAfL1glbjZoetxBuyqic9
+         3bdywp19rpwSsKgPO1eRbqgtMJ+1GGHjaPqKGNFzWGZ9W2xyHmgrxRlQ9pNuCJyEQzYH
+         BLehl+f8ZWg9iRKlhbrjDgjNRo3jKPnGGmM/JPah1VkJ+TYgA8pAXXEvJSgjhfD7ijiq
+         nETxalkXCk10Wh/w40PJuR422wYaz0czm2U2i5kz1nU2J7HOa+x9shnrON6Sx5HOZBN3
+         nKkD+C4QG1Ea2ReZMZIJtRUsY8ZKSt4Y1dHnH9wm7ofyAQhpWJQrZE4hhF/GNu1BB8BV
+         mGqA==
+X-Gm-Message-State: AOJu0YxCsChk6u7xKRUu1jziwNPCKsQyWVxfFran0xJWdaGua8i2t9hY
+	7y8Jbj0b1/ZmbRY787CbGeTPe6C1UGKKVk3mC8fdy971QfbXSzfciq5tiH8o0g9bNl3Mb01JNaH
+	nzRDbJ4rtKTCNlynFRRbU0ROhePjcj4jxWtezkG7wtCNzw9L18mZQgBltQwyoOTR5NMyc
+X-Gm-Gg: ASbGncuFdWXhlCGEiKmYtBawcLCsDIehB0LDJLasBbPMiMTaIRRzZQQEuWeghtNikxY
+	t5/k2L3vMc5f6SZTFlbyQWiAq+mLyqJEpqw0DfbaOvfiakVP10MoK17dG3Rclp6Cu+cgoF7ZuWh
+	dtVBoGpmm86o3OEiylWrBSlSXushQruIXAimoceZ1XiAnQSDm8Z3//hBE3J4Bb5/109NrI6eLfT
+	nTVqnFLF2i/e+KAGi8otLBU2XtUY4XjoyJjs7AEP226MzbQEV5p5eXmn86TOgHICRLMtcJW0R12
+	HJQt1L4C1G8w5uroaWPmEdPIf2xFESzp/bJI/pKSw/taqnx5+IQzslTezEkLLCL/UeeqTFpC1Ou
+	IwLzVTzN1Z1X13CxrDFw9jk7xEuElHQdI+Jt09/0Y+Exo1g==
+X-Received: by 2002:a05:6a00:3cc8:b0:7a2:70c5:f74f with SMTP id d2e1a72fcca58-7c58eaf2ec3mr36784997b3a.32.1764513673618;
+        Sun, 30 Nov 2025 06:41:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsgXvnKYqn7A6wSDwd2SNfOU+ke4D/AO+k7zsNV2oQCjWvwQCBiqkX2NXQo/RIjhbCsIBSBg==
+X-Received: by 2002:a05:6a00:3cc8:b0:7a2:70c5:f74f with SMTP id d2e1a72fcca58-7c58eaf2ec3mr36784979b3a.32.1764513673174;
+        Sun, 30 Nov 2025 06:41:13 -0800 (PST)
 Received: from hu-spratap-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d54b003177sm5240065b3a.14.2025.11.30.06.41.08
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d54b003177sm5240065b3a.14.2025.11.30.06.41.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Nov 2025 06:41:10 -0800 (PST)
+        Sun, 30 Nov 2025 06:41:12 -0800 (PST)
 From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Subject: [PATCH v10 0/3] SCM: Support latest version of waitq-aware
- firmware
-Date: Sun, 30 Nov 2025 20:11:01 +0530
-Message-Id: <20251130-multi_waitq_scm-v10-0-5a5f2f05a417@oss.qualcomm.com>
+Date: Sun, 30 Nov 2025 20:11:02 +0530
+Subject: [PATCH v10 1/3] firmware: qcom_scm: Add API to get waitqueue IRQ
+ info
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,13 +104,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAH1XLGkC/3XOUW6EIBSF4a1MeC7mAiLap9lH0xhAHG+i0gGlb
- SbuvWiTpont4yHhu/+DRBfQRfJ8eZDgEkb0cx4Mni7EDnq+OYpdfiAcuATOFZ3WccH2XeNyb6O
- dqDQ9yLIGowwj+ddbcD1+HOTLa9598BNdhuD04VifXCiYEqBKXglV3HAp7ivads33RrTDdV842
- 8L6aQcHjIsPn0diqnb2O6bk8hSTKgrUGl1bLXXVgbj6GDOvx4xNh7g3pfqHYQz4makz0ynmnDK
- NMBX/h2l+MVycmSYzADX0lsumK7s/mG3bvgB/MNJ8hQEAAA==
-X-Change-ID: 20250227-multi_waitq_scm-5bf05480b7b1
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251130-multi_waitq_scm-v10-1-5a5f2f05a417@oss.qualcomm.com>
+References: <20251130-multi_waitq_scm-v10-0-5a5f2f05a417@oss.qualcomm.com>
+In-Reply-To: <20251130-multi_waitq_scm-v10-0-5a5f2f05a417@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -116,150 +115,168 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764513668; l=5390;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764513668; l=4465;
  i=shivendra.pratap@oss.qualcomm.com; s=20250710; h=from:subject:message-id;
- bh=J+hafaL2yIMA+OCC2yuTD74ZJk0OMzIt4uYNAhK8iFk=;
- b=lSpNGkf8luj3GKTx6eFxxsj9OOpzYGvwqgEtZ2GFec+fK/NqklrxSkoicoeRTe4OcrocGhuE9
- gpP2VWcpGwpDOW30xW8WEdB9Vykq95MG7SGXaiQbmtfi/Xz/pBn4CFH
+ bh=KfWJv+YDd10f+5NwbiCP5vaNOv+wkhfxctDmxzsCvwY=;
+ b=zo6kL7pRsmIF56G1Wl+o3tcDLjoaNZXc5fv9/xx1h3BagLoAheVYGdkaKc/xl/uMx4ozHb6+3
+ eEmxo635feOBHKYjEVvcyl//bOeIbK/e5i2AI9D5HURXUOao+ARQPYy
 X-Developer-Key: i=shivendra.pratap@oss.qualcomm.com; a=ed25519;
  pk=CpsuL7yZ8NReDPhGgq6Xn/SRoa59mAvzWOW0QZoo4gw=
-X-Proofpoint-ORIG-GUID: WgA3EvWlGeDgicKrN0ngtEKnl_55AQw0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTMwMDEyNiBTYWx0ZWRfX3ssBzWznhn2I
- tBVk0rVNvnztviHtgCFJ9Nk2Ikw6GDnJUB/GAcDblUjvbySuHCXqPph+0XxifzEkmH8Gv8oTe81
- s19/feqJcjpigbyFdzQmeVVxXjBZQXGZ0ZACizr1/Q4Hmt9TUrIH+edJfUFL/oAPjQ5Xd/L8xyg
- BW1muOqaWH/qUgnZEzt21lnCws5z67kkxXFJb2rdzMMH9Annn4VtkdMK1mjd9VqkFtLRdeN3aHh
- 6vxGvKHkcZ0rfeNRQjOfQdlnUcnPM3qIV8b+lk9p7SlXRCS7nYaPXYJfUs1/FTaq3StcJcVCs+c
- yVKdYVEEWYA8KYltf3b9HSYsffqSdzucDahxUgA0RvrL+FcnDEaqgPQhlwiB3AZ9uqAteJMXIbw
- aui6Pe5n2P4YhwAtFlFBihEnDm+FHw==
-X-Proofpoint-GUID: WgA3EvWlGeDgicKrN0ngtEKnl_55AQw0
-X-Authority-Analysis: v=2.4 cv=KIpXzVFo c=1 sm=1 tr=0 ts=692c578b cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-ORIG-GUID: Y1oc0JCSlZjxw33E9DQG-56_yi3F8_IA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTMwMDEyNiBTYWx0ZWRfX1JnacoXjT5zt
+ 1J1/m2+L7674SCEupQQXdRZfRzMmFTVMeX+l3JQGX0Hc0bg7vfmUTG2u3mtii/dmbuyj4On6kCq
+ MbymQqdgeyjTvhGsN8B10g17HCiLKh4Rf6Lx2lFdINryZd8ZUFba3Vuw4RTnHPjSqWZMPeLu/Xz
+ AoYFyGvWXNQhpICiCeEOxNpOXbt/UQaTKTOGLU6iuxppJ/Ri20JvCamjKTrp3igGC6ZyiedQxa6
+ FKtZVBJ3V7/Ewk+9OY6JjMuu6ePJJmxiaxQAxnpljbVenE2ZnZbPczYXLGcIK74UlFK763Hpdp+
+ yrFZhKd9bbu7QnQBTwENDmrfbJ5zLcJhF4tCSGtjiyU1UPN9F8khSUUomWeTgi+EKZ3MBOhJiDj
+ tSyyWcHdgJy5Za2v7GshCj4FkvNizA==
+X-Authority-Analysis: v=2.4 cv=FdQ6BZ+6 c=1 sm=1 tr=0 ts=692c578b cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=XOwmYTm7vgc_1ZyUsUwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=l69UaY8b6P0ZDUfUprYA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: Y1oc0JCSlZjxw33E9DQG-56_yi3F8_IA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 phishscore=0 impostorscore=0 suspectscore=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511300126
+ adultscore=0 clxscore=1015 spamscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511300126
 
-This series adds support for the latest improvements made in SCM
-firmware that allow for multiple wait-queues in firmware.
+From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
 
-To support multi VM synchronization when VMs make SMC calls on same CPU,
-waitqueue mechanism is added in firmware which runs at EL2 & EL3 exception
-levels.
+Bootloader and firmware for SM8650 and older chipsets expect node
+name as "qcom_scm", in order to patch the wait queue IRQ information.
+However, DeviceTree uses node name "scm" and this mismatch prevents
+firmware from correctly identifying waitqueue IRQ information. Waitqueue
+IRQ is used for signaling between secure and non-secure worlds.
 
-Thanks to Unnathi for bringing the path to this level of maturity.
-P.S. While at Qualcomm, Guru Das Srinagesh authored the initial version of
-these patches.
-Thanks Guru!
+To resolve this, introduce qcom_scm_get_waitq_irq() that'll get the
+hardware IRQ number to be used from firmware instead of relying on data
+provided by devicetree, thereby bypassing the DeviceTree node name
+mismatch.
 
+This hardware IRQ number is converted to a Linux IRQ number using newly
+qcom_scm_fill_irq_fwspec_params(). This Linux IRQ number is then
+supplied to the threaded_irq call.
+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
 Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-
 ---
-Changes in v10:
-- Keeping Reviewed-by from Bartosz
-By Mukesh
--firmware: qcom_scm: Add API to get waitqueue IRQ info
- - minor update to commit text.
- - qcom_scm_fill_irq_fwspec_params(): changed name of input parameter
-   from virq to hwirq.
- - qcom_scm_get_waitq_irq – declared variables in reverse xmas.
- - qcom_scm_get_waitq_irq - return irq_create_fwspec_mapping directly
-   instead of storing return value for return.
-firmware: qcom_scm: Support multiple waitq contexts
- - remove error prints form qcom_scm_query_waitq_count.
- - Use `ret < 0` instead of `ret <= 0` to set waitq count as 1.
-- Link to v9: https://lore.kernel.org/r/20251123-multi_waitq_scm-v9-0-0080fc259d4d@oss.qualcomm.com
+ drivers/firmware/qcom/qcom_scm.c | 60 +++++++++++++++++++++++++++++++++++++++-
+ drivers/firmware/qcom/qcom_scm.h |  1 +
+ 2 files changed, 60 insertions(+), 1 deletion(-)
 
-Changes in v9:
-By Bart
-- Updated commit text for wait_for_completion_state(..., TASK_IDLE).
-- Changed variable name of waitq to waitq_comps, to align to its usage.
-Others changes
-- Move the scm call to get the waitq_count after the clock and memory related
-  init in qcom_scm_probe.
-- Link to v8: https://lore.kernel.org/r/20251102-multi_waitq_scm-v8-0-d71ee7b93b62@oss.qualcomm.com
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index e777b7cb9b127944fe112f453cae9cbc40c06cae..79ab1707f71b0157835deaea6309f33016e3de8c 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -29,12 +29,18 @@
+ #include <linux/reset-controller.h>
+ #include <linux/sizes.h>
+ #include <linux/types.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
+ 
+ #include "qcom_scm.h"
+ #include "qcom_tzmem.h"
+ 
+ static u32 download_mode;
+ 
++#define GIC_SPI_BASE        32
++#define GIC_MAX_SPI       1019  // SPIs in GICv3 spec range from 32..1019
++#define GIC_ESPI_BASE     4096
++#define GIC_MAX_ESPI      5119 // ESPIs in GICv3 spec range from 4096..5119
++
+ struct qcom_scm {
+ 	struct device *dev;
+ 	struct clk *core_clk;
+@@ -2223,6 +2229,55 @@ bool qcom_scm_is_available(void)
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_is_available);
+ 
++static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 hwirq)
++{
++	if (hwirq >= GIC_SPI_BASE && hwirq <= GIC_MAX_SPI) {
++		fwspec->param[0] = GIC_SPI;
++		fwspec->param[1] = hwirq - GIC_SPI_BASE;
++	} else if (hwirq >= GIC_ESPI_BASE && hwirq <= GIC_MAX_ESPI) {
++		fwspec->param[0] = GIC_ESPI;
++		fwspec->param[1] = hwirq - GIC_ESPI_BASE;
++	} else {
++		WARN(1, "Unexpected hwirq: %d\n", hwirq);
++		return -ENXIO;
++	}
++	fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
++	fwspec->param_count = 3;
++
++	return 0;
++}
++
++static int qcom_scm_get_waitq_irq(struct qcom_scm *scm)
++{
++	struct device_node *parent_irq_node;
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_WAITQ,
++		.cmd = QCOM_SCM_WAITQ_GET_INFO,
++		.owner = ARM_SMCCC_OWNER_SIP
++	};
++	struct irq_fwspec fwspec;
++	struct qcom_scm_res res;
++	u32 hwirq;
++	int ret;
++
++	ret = qcom_scm_call_atomic(scm->dev, &desc, &res);
++	if (ret)
++		return ret;
++
++	hwirq = res.result[1] & GENMASK(15, 0);
++
++	ret = qcom_scm_fill_irq_fwspec_params(&fwspec, hwirq);
++	if (ret)
++		return ret;
++	parent_irq_node = of_irq_find_parent(scm->dev->of_node);
++	if (!parent_irq_node)
++		return -ENODEV;
++
++	fwspec.fwnode = of_fwnode_handle(parent_irq_node);
++
++	return irq_create_fwspec_mapping(&fwspec);
++}
++
+ static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
+ {
+ 	/* FW currently only supports a single wq_ctx (zero).
+@@ -2396,7 +2451,10 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 		return dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
+ 				     "Failed to create the SCM memory pool\n");
+ 
+-	irq = platform_get_irq_optional(pdev, 0);
++	irq = qcom_scm_get_waitq_irq(scm);
++	if (irq < 0)
++		irq = platform_get_irq_optional(pdev, 0);
++
+ 	if (irq < 0) {
+ 		if (irq != -ENXIO)
+ 			return irq;
+diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+index a56c8212cc0c41021e5a067d52b7d5dcc49107ea..8b1e2ea18a59ac143907a381b73236148bace189 100644
+--- a/drivers/firmware/qcom/qcom_scm.h
++++ b/drivers/firmware/qcom/qcom_scm.h
+@@ -152,6 +152,7 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
+ #define QCOM_SCM_SVC_WAITQ			0x24
+ #define QCOM_SCM_WAITQ_RESUME			0x02
+ #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
++#define QCOM_SCM_WAITQ_GET_INFO		0x04
+ 
+ #define QCOM_SCM_SVC_GPU			0x28
+ #define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
 
-Changes in v8:
-- Replace "of_node_to_fwnode" with "of_fwnode_handle to align
-  with current kernel version.
-- Add NULL check for parent_irq_node in function qcom_scm_get_waitq_irq.
-- Change declaration of qcom_scm_get_waitq_irq and pass qcom_scm pointer.
-- Set the scm->wq_cnt to one, in case where waitqueue is not
-  supported by firmware and continue to probe the qcom_scm driver.
-- Link to v7: https://lore.kernel.org/all/20250523-multi_waitq_scm-v7-0-5b51b60ed396@oss.qualcomm.com/
-
-Changes in v7:
-- Assume failing scm call to mean WAITQ_GET_INFO is not supported on target
-  as qcom_scm_is_call_available() is handled in Qualcomm firmware's TZ (EL3),
-  which doesn’t implement WAITQ_GET_INFO, and therefore always returns 0.
-- Link to v6: https://lore.kernel.org/r/20250425-multi_waitq_scm-v6-0-cba8ca5a6d03@oss.qualcomm.com
-
-Changes in v6:
-- Added R-b tag from Bartosz for first patch.
-- Check if QCOM_SCM_WAITQ_GET_INFO is available before making scm call,
-instead of assuming failing scm call to mean WAITQ_GET_INFO is not
-supported on target.
-- Add a new patch to check for waitq idle state in wait_for_wq_completion().
-- Link to v5: https://lore.kernel.org/all/20250227-multi_waitq_scm-v5-0-16984ea97edf@oss.qualcomm.com/
-
-Changes in v5:
-- Use GIC_SPI and GIC_ESPI macros from dt-bindings instead of redefining
-- Modified qcom_scm_query_waitq_count to take struct qcom_scm as
-argument; scm is anyway stored to global struct __scm after
-smp_store_and_release().
-- Tested on SM8650 which has multi-waitq support and SM8550, which
-doesn't. No error logs are seen.
--Link to v4: https://lore.kernel.org/all/cover.1730742637.git.quic_uchalich@quicinc.com/
-
-Changes in v4:
-- Moving back to redefining GIC_IRQ_TYPE_SPI and GIC_IRQ_TYPE_ESPI macros
-in qcom_scm as seeing compilation issues in linux/irq.h when including
-arm-gic header. Will send a fixes patch and move to dt-bindings in next patchset.
-- Fixed a few compilation errors.
-- Link to v3: https://lore.kernel.org/all/cover.1730735881.git.quic_uchalich@quicinc.com/
-
-Changes in v3:
-- Use GIC_SPI and GIC_ESPI macros from dt-bindings instead of redefining
-- Prettified qcom_scm_fill_irq_fwspec_params()
-- Moved waitq initialization before smp_store_release()
-- There is no Gunyah hypercall API that can be used to fetch IRQ information hence
-introducing new SCM call.
-- Link to v2: https://lore.kernel.org/all/cover.1724968351.git.quic_uchalich@quicinc.com/
-
-Changes in v2:
-- Dropped "Initialize waitq before setting global __scm" as it was merged here:
-https://lore.kernel.org/r/1711034642-22860-4-git-send-email-quic_mojha@quicinc.com
-- Decoupled "Remove QCOM_SMC_WAITQ_FLAG_WAKE_ALL" from series
-- Converted xarray to a statically sized array
-- Initialize waitq array in probe function
-- Remove reinit of waitq completion struct in scm_get_completion()
-- Introduced new APIs to get no. of waitqueue contexts and waitqueue IRQ no.
-directly from firmware.
-- Link to v1: https://lore.kernel.org/all/20240228-multi_waitq-v1-0-ccb096419af0@quicinc.com/
-
----
-Unnathi Chalicheemala (3):
-      firmware: qcom_scm: Add API to get waitqueue IRQ info
-      firmware: qcom_scm: Support multiple waitq contexts
-      firmware: qcom_scm: Use TASK_IDLE state in wait_for_wq_completion()
-
- drivers/firmware/qcom/qcom_scm.c | 126 +++++++++++++++++++++++++++++++++------
- drivers/firmware/qcom/qcom_scm.h |   1 +
- 2 files changed, 108 insertions(+), 19 deletions(-)
----
-base-commit: d724c6f85e80a23ed46b7ebc6e38b527c09d64f5
-change-id: 20250227-multi_waitq_scm-5bf05480b7b1
-
-Best regards,
 -- 
-Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+2.34.1
 
 
