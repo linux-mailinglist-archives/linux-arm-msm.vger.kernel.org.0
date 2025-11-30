@@ -1,173 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-83886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F9C5C94ABD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 03:48:47 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6860EC94C13
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 08:38:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 825BC345ABF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 02:48:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 26E034E0417
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 07:38:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26EB211290;
-	Sun, 30 Nov 2025 02:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6BE821D3F5;
+	Sun, 30 Nov 2025 07:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="JzLWIGZ1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TMmv1vrb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49251.qiye.163.com (mail-m49251.qiye.163.com [45.254.49.251])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1909B1E0DCB;
-	Sun, 30 Nov 2025 02:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.251
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055B836D510;
+	Sun, 30 Nov 2025 07:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764470920; cv=none; b=MMcCN3REmKFZwSDINC+wrvhMvSdTfCT8sm7qdZ6Nwhp319FiXb11r1cT3tw4yNcCmoeBPF8HKUzqZBgv/vs4WEdncOeq9o0dnnH2sf7gA0zE1SXQfZ1sM/ehPzO6l4I5wzal2Pt6+Xcx2zMeZzYhz++kt+RMUmNUrDII0jhtz7s=
+	t=1764488334; cv=none; b=B921hVkMAOZfkI94EqjVig4XXXuPyjjiravFKbba2uEZ10G7SM6/bFmGwSp4sa9GmvKYhog2ZHZk8SVOXoCWAx6UdtJxNAuco7vd9LB7VFdSavM8j03QAlqepis3GsntvfALrbZTJNPcoec7nM7XZX0JU+OxV4RXKu5qiFmPnLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764470920; c=relaxed/simple;
-	bh=1k+cWOYAukKSkK+vW0sOtzTEkK3a4VTiXYlOWmwlxyM=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DmzWy3U5thELLqrJEs+krrJWvy9aiT+88DKTw+UukLCoCzZ1qxPd/Smov0SepXlI8ak16/UnXGS/ynAzdygZM8SXZog02VjY20wVZCI0TjMNQ7I+iWNrreMpoiEdk61lrsAtyVM1NTIT6gIxrO8bTo8YFal0bzTT8vSjw/JTpqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=JzLWIGZ1; arc=none smtp.client-ip=45.254.49.251
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2b625e1cc;
-	Sun, 30 Nov 2025 10:43:15 +0800 (GMT+08:00)
-Message-ID: <c43b637a-a0c1-4106-b37b-df389c085057@rock-chips.com>
-Date: Sun, 30 Nov 2025 10:43:14 +0800
+	s=arc-20240116; t=1764488334; c=relaxed/simple;
+	bh=5dnK4oFXEiZYt1cEpiBmjME4Q9+HAvXwwE8FFYoFVCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VPFuwZoGS3LpUW7cmDG7R8LtTkDo3pOcyLrEgJej/d8xJNjhzrXuE5JyH5m72st5pOnXw0mr/I5jwvu3ziey4ddLhAjOAvE9Nfe1OurJNasPvUAjNnW9FloQugzS5hjvjuUzC9VMhMFlukd6GW+IvOryKFc7FLEp8wRyH57L0BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TMmv1vrb; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764488332; x=1796024332;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5dnK4oFXEiZYt1cEpiBmjME4Q9+HAvXwwE8FFYoFVCU=;
+  b=TMmv1vrbYF/fIySPWd13d9v1S6xlouHTIp6YTACYiTGkXxAcHSBOPUnI
+   gYlFUD2PfzHnTHuYqaCaTJdpcW5zujMkIJFzk+SnTp4PmYwxX3hfmPf6g
+   6OV8zv5XqTvoNcrTgf9tMDh1N3CVNM5IUae7QlyvY8YmvR4J6BXbdUPTF
+   dvCE9ssStOR0BXALMDIKQft6ADD5weC5u8KMWLOCdwZxG9ZgJmNhDEEDW
+   /Tk8D7/H2Pz6yj0Xk2LgxGIXiEnQtuedCYPsSVDgIbgcLPD2UgU5zsrWU
+   6ABL4IKvahIdDO0xWozOmZvsVxcXG074DftcLKUJmqadHtEC3R38Eilej
+   w==;
+X-CSE-ConnectionGUID: MzDfYGtcTpuRgxy+nsPRhg==
+X-CSE-MsgGUID: GX67BFmKSMGJ1W3rxekqlA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11628"; a="54006014"
+X-IronPort-AV: E=Sophos;i="6.20,238,1758610800"; 
+   d="scan'208";a="54006014"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2025 23:38:51 -0800
+X-CSE-ConnectionGUID: dRXbbdVWRnGYZ/4OuEzi1Q==
+X-CSE-MsgGUID: dcPc/0ZbT665FlB88ciN8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,238,1758610800"; 
+   d="scan'208";a="231074250"
+Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
+  by orviesa001.jf.intel.com with ESMTP; 29 Nov 2025 23:38:46 -0800
+Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vPc16-000000007px-29Xd;
+	Sun, 30 Nov 2025 07:38:44 +0000
+Date: Sun, 30 Nov 2025 15:38:22 +0800
+From: kernel test robot <lkp@intel.com>
+To: Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Antonino Maniscalco <antomani103@gmail.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Subject: Re: [PATCH v2] drm/msm: Fix a7xx per pipe register programming
+Message-ID: <202511301514.t3OSLc6E-lkp@intel.com>
+References: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com,
- Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>,
- Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] PCI: dwc: Program device-id
-To: Manivannan Sadhasivam <mani@kernel.org>
-References: <20251127-program-device-id-v1-0-31ad36beda2c@quicinc.com>
- <20251127-program-device-id-v1-1-31ad36beda2c@quicinc.com>
- <09aed728-51ca-42dd-b680-f6597e0ac00a@rock-chips.com>
- <mp67n7jw3azihax25yw2u25f6nrjl237exw2t66fz3bpt3wzdt@2j4ooqdfgp2l>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <mp67n7jw3azihax25yw2u25f6nrjl237exw2t66fz3bpt3wzdt@2j4ooqdfgp2l>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ad2a49dc509cckunm63e59fb97e5053
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGR4dHVYYHUlDQx1MSU8YTUhWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=JzLWIGZ17NOIFOI3ayh5vO6VXFQPw2MCOVDn39SpmB8L8zxnnBzRvZIT1oguG9PvfEPcyT802IjS+J4n0Bvs7szki6SXYoeFaQjkbwfd2UiIMU0zaB8ifvl0ryyHRJ7R+NrRBXZ0wVmDRtiRhH79cKNYJdI2zKpWXu0D9GvnyDU=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=AnhHjeoEZhWmtIMeV/a+xErbeAW6DGW2H4faPusNFPI=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
 
-在 2025/11/29 星期六 15:34, Manivannan Sadhasivam 写道:
-> On Fri, Nov 28, 2025 at 09:03:52AM +0800, Shawn Lin wrote:
->> 在 2025/11/27 星期四 23:30, Sushrut Shree Trivedi 写道:
->>> For some controllers, HW doesn't program the correct device-id
->>> leading to incorrect identification in lspci. For ex, QCOM
->>> controller SC7280 uses same device id as SM8250. This would
->>> cause issues while applying controller specific quirks.
->>>
->>> So, program the correct device-id after reading it from the
->>> devicetree.
->>>
->>> Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
->>> ---
->>>    drivers/pci/controller/dwc/pcie-designware-host.c | 7 +++++++
->>>    drivers/pci/controller/dwc/pcie-designware.h      | 2 ++
->>>    2 files changed, 9 insertions(+)
->>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
->>> index e92513c5bda5..e8b975044b22 100644
->>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
->>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
->>> @@ -619,6 +619,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->>>    		}
->>>    	}
->>> +	pp->device_id = 0xffff;
->>> +	of_property_read_u32(np, "device-id", &pp->device_id);
->>> +
->>>    	dw_pcie_version_detect(pci);
->>>    	dw_pcie_iatu_detect(pci);
->>> @@ -1094,6 +1097,10 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->>>    	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 0);
->>> +	/* Program correct device id */
->>> +	if (pp->device_id != 0xffff)
->>> +		dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, pp->device_id);
->>> +
->>>    	/* Program correct class for RC */
->>>    	dw_pcie_writew_dbi(pci, PCI_CLASS_DEVICE, PCI_CLASS_BRIDGE_PCI);
->>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->>> index e995f692a1ec..eff6da9438c4 100644
->>> --- a/drivers/pci/controller/dwc/pcie-designware.h
->>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->>> @@ -431,6 +431,8 @@ struct dw_pcie_rp {
->>>    	struct pci_config_window *cfg;
->>>    	bool			ecam_enabled;
->>>    	bool			native_ecam;
->>> +	u32			vendor_id;
->>
->> I don't see where vendor_id is used.
->> And why should dwc core take care of per HW bugs, could someone else
->> will argue their HW doesn't program correct vender id/class code, then
->> we add more into dw_pcie_rp to fix these?
->>
-> 
-> Device ID and Vendor ID are PCI generic properties and many controllers specify
-> them in devicetree due to the default values being wrong or just hardcode them
-> in the driver. There is nothing wrong in DWC core programming these values if
-> they are available in devicetree.
-> 
->> How about do it in the defective HW drivers?
->>
-> 
-> If the issue is a vendor DWC wrapper specific, for sure it should be added to
-> the relevant controller driver. But this issue is pretty common among the DWC
-> wrapper implementations.
-> 
+Hi Anna,
 
-I think there are already some dwc instances working around this kind of 
-defects in their relevant condroller driver.
+kernel test robot noticed the following build errors:
 
-drivers/pci/controller/dwc/pci-keystone.c:806:  dw_pcie_writew_dbi(pci, 
-PCI_VENDOR_ID, id & PCIE_VENDORID_MASK);
+[auto build test ERROR on 7bc29d5fb6faff2f547323c9ee8d3a0790cd2530]
 
-drivers/pci/controller/dwc/pcie-spacemit-k1.c:146: 
-dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
+url:    https://github.com/intel-lab-lkp/linux/commits/Anna-Maniscalco/drm-msm-Fix-a7xx-per-pipe-register-programming/20251129-012027
+base:   7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
+patch link:    https://lore.kernel.org/r/20251128-gras_nc_mode_fix-v2-1-634cda7b810f%40gmail.com
+patch subject: [PATCH v2] drm/msm: Fix a7xx per pipe register programming
+config: um-randconfig-002-20251130 (https://download.01.org/0day-ci/archive/20251130/202511301514.t3OSLc6E-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251130/202511301514.t3OSLc6E-lkp@intel.com/reproduce)
 
-drivers/pci/controller/dwc/pcie-spear13xx.c:139: 
-dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, 0x104A);
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511301514.t3OSLc6E-lkp@intel.com/
 
-drivers/pci/controller/dwc/pci-keystone.c:807:  dw_pcie_writew_dbi(pci, 
-PCI_DEVICE_ID, id >> PCIE_DEVICEID_SHIFT);
+All errors (new ones prefixed by >>):
 
-drivers/pci/controller/dwc/pcie-spacemit-k1.c:147: 
-dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K1);
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function 'a6xx_set_ubwc_config':
+>> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:853:36: error: 'A7XX_PIPE_BR' undeclared (first use in this function)
+     853 |                 for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+         |                                    ^~~~~~~~~~~~
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:853:36: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:853:61: error: 'A7XX_PIPE_BV' undeclared (first use in this function)
+     853 |                 for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+         |                                                             ^~~~~~~~~~~~
+>> drivers/gpu/drm/msm/adreno/a6xx_gpu.c:860:59: error: 'A7XX_PIPE_NONE' undeclared (first use in this function); did you mean 'MSM_PIPE_NONE'?
+     860 |                           A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
+         |                                                           ^~~~~~~~~~~~~~
+         |                                                           MSM_PIPE_NONE
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c: In function 'a7xx_patch_pwrup_reglist':
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:921:36: error: 'A7XX_PIPE_BR' undeclared (first use in this function)
+     921 |                 for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+         |                                    ^~~~~~~~~~~~
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:921:61: error: 'A7XX_PIPE_BV' undeclared (first use in this function)
+     921 |                 for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+         |                                                             ^~~~~~~~~~~~
+   drivers/gpu/drm/msm/adreno/a6xx_gpu.c:934:59: error: 'A7XX_PIPE_NONE' undeclared (first use in this function); did you mean 'MSM_PIPE_NONE'?
+     934 |                           A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
+         |                                                           ^~~~~~~~~~~~~~
+         |                                                           MSM_PIPE_NONE
 
-drivers/pci/controller/dwc/pcie-spear13xx.c:140: 
-dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, 0xCD80);
 
-If this patch applied, there are two non-consistent apporaches to work
-around this situation. Could dwc core provide a common helper for 
-them(this qcom instance inclueded) to call without bothering the dwc core?
+vim +/A7XX_PIPE_BR +853 drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 
-> - Mani
-> 
+   807	
+   808	static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+   809	{
+   810		struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+   811		const struct qcom_ubwc_cfg_data *cfg = adreno_gpu->ubwc_config;
+   812		/*
+   813		 * We subtract 13 from the highest bank bit (13 is the minimum value
+   814		 * allowed by hw) and write the lowest two bits of the remaining value
+   815		 * as hbb_lo and the one above it as hbb_hi to the hardware.
+   816		 */
+   817		BUG_ON(cfg->highest_bank_bit < 13);
+   818		u32 hbb = cfg->highest_bank_bit - 13;
+   819		bool rgb565_predicator = cfg->ubwc_enc_version >= UBWC_4_0;
+   820		u32 level2_swizzling_dis = !(cfg->ubwc_swizzle & UBWC_SWIZZLE_ENABLE_LVL2);
+   821		bool ubwc_mode = qcom_ubwc_get_ubwc_mode(cfg);
+   822		bool amsbc = cfg->ubwc_enc_version >= UBWC_3_0;
+   823		bool min_acc_len_64b = false;
+   824		u8 uavflagprd_inv = 0;
+   825		u32 hbb_hi = hbb >> 2;
+   826		u32 hbb_lo = hbb & 3;
+   827	
+   828		if (adreno_is_a650_family(adreno_gpu) || adreno_is_a7xx(adreno_gpu))
+   829			uavflagprd_inv = 2;
+   830	
+   831		if (adreno_is_a610(adreno_gpu) || adreno_is_a702(adreno_gpu))
+   832			min_acc_len_64b = true;
+   833	
+   834		gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+   835			  level2_swizzling_dis << 12 |
+   836			  rgb565_predicator << 11 |
+   837			  hbb_hi << 10 | amsbc << 4 |
+   838			  min_acc_len_64b << 3 |
+   839			  hbb_lo << 1 | ubwc_mode);
+   840	
+   841		gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL,
+   842			  level2_swizzling_dis << 6 | hbb_hi << 4 |
+   843			  min_acc_len_64b << 3 |
+   844			  hbb_lo << 1 | ubwc_mode);
+   845	
+   846		gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL,
+   847			  level2_swizzling_dis << 12 | hbb_hi << 10 |
+   848			  uavflagprd_inv << 4 |
+   849			  min_acc_len_64b << 3 |
+   850			  hbb_lo << 1 | ubwc_mode);
+   851	
+   852		if (adreno_is_a7xx(adreno_gpu)) {
+ > 853			for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+   854				gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+   855					  A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id));
+   856				gpu_write(gpu, REG_A7XX_GRAS_NC_MODE_CNTL,
+   857					  FIELD_PREP(GENMASK(8, 5), hbb_lo));
+   858			}
+   859			gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+ > 860				  A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
+   861		}
+   862	
+   863		gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL,
+   864			  min_acc_len_64b << 23 | hbb_lo << 21);
+   865	
+   866		gpu_write(gpu, REG_A6XX_RBBM_NC_MODE_CNTL,
+   867			  cfg->macrotile_mode);
+   868	}
+   869	
 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
