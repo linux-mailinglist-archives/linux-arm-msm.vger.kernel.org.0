@@ -1,126 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-83885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD93AC94A24
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 02:29:29 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F9C5C94ABD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 03:48:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AFDC3A6124
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 01:29:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 825BC345ABF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Nov 2025 02:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6013535950;
-	Sun, 30 Nov 2025 01:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26EB211290;
+	Sun, 30 Nov 2025 02:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=veygax.dev header.i=@veygax.dev header.b="b3vQdMF/"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="JzLWIGZ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-07.mail-europe.com (mail-0701.mail-europe.com [51.83.17.38])
+Received: from mail-m49251.qiye.163.com (mail-m49251.qiye.163.com [45.254.49.251])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F70223702
-	for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 01:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.83.17.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1909B1E0DCB;
+	Sun, 30 Nov 2025 02:48:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.251
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764466159; cv=none; b=URD6pJD9ezhD2d/2V9AhTXxzUXVUANlAJE6bciwkcrQglk+/AwOvTrUl2UgxMbWZx+8CrtJZQsoS9l/3qmwTP/cVXZ5Ux2qN5B6Gy6552hX9Ij8nzHjnvypY7yLNKHUAhexEH9yPV70+sM9KbQK+ILPZSeOmeRmXmHucHkXhw/c=
+	t=1764470920; cv=none; b=MMcCN3REmKFZwSDINC+wrvhMvSdTfCT8sm7qdZ6Nwhp319FiXb11r1cT3tw4yNcCmoeBPF8HKUzqZBgv/vs4WEdncOeq9o0dnnH2sf7gA0zE1SXQfZ1sM/ehPzO6l4I5wzal2Pt6+Xcx2zMeZzYhz++kt+RMUmNUrDII0jhtz7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764466159; c=relaxed/simple;
-	bh=ozUsX/bT64HY1yGl9o4Rpp0gGQHX5PlMeVLIyIxsBkU=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=uj2ehGYjO4CY35Ifo0NepNhMusohsh64VgVTBVYWT9aTRR/8sDBYIa7efm6u8DPJS+DuepEX13jIxr4IRyLOGmMtZ9rvGfUtMBkD/2XB7cCsKnc4uwcidZYGSMHlwC8g6J/am6xeyTT0G0+3Fa4HIPnpw38+S3bAvuj2+wUVtM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=veygax.dev; spf=fail smtp.mailfrom=veygax.dev; dkim=pass (2048-bit key) header.d=veygax.dev header.i=@veygax.dev header.b=b3vQdMF/; arc=none smtp.client-ip=51.83.17.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=veygax.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=veygax.dev
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=veygax.dev;
-	s=protonmail; t=1764466141; x=1764725341;
-	bh=ozUsX/bT64HY1yGl9o4Rpp0gGQHX5PlMeVLIyIxsBkU=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=b3vQdMF/u924WT4HLmCIb7P6XrxvgsnJdHtRNfzfkTHI32Tsb39jENadWnJVPoLu7
-	 LLTLbQ3TAPXAi+LOcyegMSLC1v8hM+Vw/3L1NvUPe1ZrfF1nIEtZ/i6f4EYpg8vDYR
-	 1F0p1up2drNRAY0gIBgK7AvhGr4DB68KcL8S+mXXUzeB0ghUndEgb4sKhoFpO5/PBW
-	 oCUsBjErYBhWun7dXsCvUo8awmOs5vMGbfgbDgGrFgg4gAXdx1HqlP0hkgrFZqnMxx
-	 ArsJEuximdYjc5f6OatEE8BCi0QD8esPmffmq1BB6jUfcICcKqD5qtlWfdAMoTqDp+
-	 C8c778nWV/vkw==
-Date: Sun, 30 Nov 2025 01:28:54 +0000
-To: robin.clark@oss.qualcomm.com, lumag@kernel.org
-From: veygax <veyga@veygax.dev>
-Cc: abhinav.kumar@linux.dev, jessica.zhang@oss.qualcomm.com, sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, veygax <veyga@veygax.dev>
-Subject: [PATCH] drm/msm: Replace unsafe snprintf usage with scnprintf
-Message-ID: <20251130012834.142585-2-veyga@veygax.dev>
-Feedback-ID: 160365411:user:proton
-X-Pm-Message-ID: e0373c99e967915a910429b8886ef243b72b1be0
+	s=arc-20240116; t=1764470920; c=relaxed/simple;
+	bh=1k+cWOYAukKSkK+vW0sOtzTEkK3a4VTiXYlOWmwlxyM=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=DmzWy3U5thELLqrJEs+krrJWvy9aiT+88DKTw+UukLCoCzZ1qxPd/Smov0SepXlI8ak16/UnXGS/ynAzdygZM8SXZog02VjY20wVZCI0TjMNQ7I+iWNrreMpoiEdk61lrsAtyVM1NTIT6gIxrO8bTo8YFal0bzTT8vSjw/JTpqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=JzLWIGZ1; arc=none smtp.client-ip=45.254.49.251
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2b625e1cc;
+	Sun, 30 Nov 2025 10:43:15 +0800 (GMT+08:00)
+Message-ID: <c43b637a-a0c1-4106-b37b-df389c085057@rock-chips.com>
+Date: Sun, 30 Nov 2025 10:43:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com,
+ Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>,
+ Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi
+ <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
+ <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: dwc: Program device-id
+To: Manivannan Sadhasivam <mani@kernel.org>
+References: <20251127-program-device-id-v1-0-31ad36beda2c@quicinc.com>
+ <20251127-program-device-id-v1-1-31ad36beda2c@quicinc.com>
+ <09aed728-51ca-42dd-b680-f6597e0ac00a@rock-chips.com>
+ <mp67n7jw3azihax25yw2u25f6nrjl237exw2t66fz3bpt3wzdt@2j4ooqdfgp2l>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <mp67n7jw3azihax25yw2u25f6nrjl237exw2t66fz3bpt3wzdt@2j4ooqdfgp2l>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9ad2a49dc509cckunm63e59fb97e5053
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGR4dHVYYHUlDQx1MSU8YTUhWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=JzLWIGZ17NOIFOI3ayh5vO6VXFQPw2MCOVDn39SpmB8L8zxnnBzRvZIT1oguG9PvfEPcyT802IjS+J4n0Bvs7szki6SXYoeFaQjkbwfd2UiIMU0zaB8ifvl0ryyHRJ7R+NrRBXZ0wVmDRtiRhH79cKNYJdI2zKpWXu0D9GvnyDU=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=AnhHjeoEZhWmtIMeV/a+xErbeAW6DGW2H4faPusNFPI=;
+	h=date:mime-version:subject:message-id:from;
 
-The refill_buf function uses snprintf to append to a fixed-size buffer.
-snprintf returns the length that would have been written, which can
-exceed the remaining buffer size. If this happens, ptr advances beyond
-the buffer and rem becomes negative. In the 2nd iteration, rem is
-treated as a large unsigned integer, causing snprintf to write oob.
+在 2025/11/29 星期六 15:34, Manivannan Sadhasivam 写道:
+> On Fri, Nov 28, 2025 at 09:03:52AM +0800, Shawn Lin wrote:
+>> 在 2025/11/27 星期四 23:30, Sushrut Shree Trivedi 写道:
+>>> For some controllers, HW doesn't program the correct device-id
+>>> leading to incorrect identification in lspci. For ex, QCOM
+>>> controller SC7280 uses same device id as SM8250. This would
+>>> cause issues while applying controller specific quirks.
+>>>
+>>> So, program the correct device-id after reading it from the
+>>> devicetree.
+>>>
+>>> Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+>>> ---
+>>>    drivers/pci/controller/dwc/pcie-designware-host.c | 7 +++++++
+>>>    drivers/pci/controller/dwc/pcie-designware.h      | 2 ++
+>>>    2 files changed, 9 insertions(+)
+>>>
+>>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+>>> index e92513c5bda5..e8b975044b22 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+>>> @@ -619,6 +619,9 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>>    		}
+>>>    	}
+>>> +	pp->device_id = 0xffff;
+>>> +	of_property_read_u32(np, "device-id", &pp->device_id);
+>>> +
+>>>    	dw_pcie_version_detect(pci);
+>>>    	dw_pcie_iatu_detect(pci);
+>>> @@ -1094,6 +1097,10 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>>>    	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 0);
+>>> +	/* Program correct device id */
+>>> +	if (pp->device_id != 0xffff)
+>>> +		dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, pp->device_id);
+>>> +
+>>>    	/* Program correct class for RC */
+>>>    	dw_pcie_writew_dbi(pci, PCI_CLASS_DEVICE, PCI_CLASS_BRIDGE_PCI);
+>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+>>> index e995f692a1ec..eff6da9438c4 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-designware.h
+>>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>>> @@ -431,6 +431,8 @@ struct dw_pcie_rp {
+>>>    	struct pci_config_window *cfg;
+>>>    	bool			ecam_enabled;
+>>>    	bool			native_ecam;
+>>> +	u32			vendor_id;
+>>
+>> I don't see where vendor_id is used.
+>> And why should dwc core take care of per HW bugs, could someone else
+>> will argue their HW doesn't program correct vender id/class code, then
+>> we add more into dw_pcie_rp to fix these?
+>>
+> 
+> Device ID and Vendor ID are PCI generic properties and many controllers specify
+> them in devicetree due to the default values being wrong or just hardcode them
+> in the driver. There is nothing wrong in DWC core programming these values if
+> they are available in devicetree.
+> 
+>> How about do it in the defective HW drivers?
+>>
+> 
+> If the issue is a vendor DWC wrapper specific, for sure it should be added to
+> the relevant controller driver. But this issue is pretty common among the DWC
+> wrapper implementations.
+> 
 
-While this behavior is technically mitigated by num_perfcntrs being
-locked at 5, it's still unsafe if num_perfcntrs were ever to change/a
-second source was added.
+I think there are already some dwc instances working around this kind of 
+defects in their relevant condroller driver.
 
-Signed-off-by: veygax <veyga@veygax.dev>
----
- drivers/gpu/drm/msm/msm_perf.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+drivers/pci/controller/dwc/pci-keystone.c:806:  dw_pcie_writew_dbi(pci, 
+PCI_VENDOR_ID, id & PCIE_VENDORID_MASK);
 
-diff --git a/drivers/gpu/drm/msm/msm_perf.c b/drivers/gpu/drm/msm/msm_perf.=
-c
-index d3c7889aaf26..c369d4acc378 100644
---- a/drivers/gpu/drm/msm/msm_perf.c
-+++ b/drivers/gpu/drm/msm/msm_perf.c
-@@ -65,13 +65,13 @@ static int refill_buf(struct msm_perf_state *perf)
-=20
- =09if ((perf->cnt++ % 32) =3D=3D 0) {
- =09=09/* Header line: */
--=09=09n =3D snprintf(ptr, rem, "%%BUSY");
-+=09=09n =3D scnprintf(ptr, rem, "%%BUSY");
- =09=09ptr +=3D n;
- =09=09rem -=3D n;
-=20
- =09=09for (i =3D 0; i < gpu->num_perfcntrs; i++) {
- =09=09=09const struct msm_gpu_perfcntr *perfcntr =3D &gpu->perfcntrs[i];
--=09=09=09n =3D snprintf(ptr, rem, "\t%s", perfcntr->name);
-+=09=09=09n =3D scnprintf(ptr, rem, "\t%s", perfcntr->name);
- =09=09=09ptr +=3D n;
- =09=09=09rem -=3D n;
- =09=09}
-@@ -93,21 +93,21 @@ static int refill_buf(struct msm_perf_state *perf)
- =09=09=09return ret;
-=20
- =09=09val =3D totaltime ? 1000 * activetime / totaltime : 0;
--=09=09n =3D snprintf(ptr, rem, "%3d.%d%%", val / 10, val % 10);
-+=09=09n =3D scnprintf(ptr, rem, "%3d.%d%%", val / 10, val % 10);
- =09=09ptr +=3D n;
- =09=09rem -=3D n;
-=20
- =09=09for (i =3D 0; i < ret; i++) {
- =09=09=09/* cycle counters (I think).. convert to MHz.. */
- =09=09=09val =3D cntrs[i] / 10000;
--=09=09=09n =3D snprintf(ptr, rem, "\t%5d.%02d",
-+=09=09=09n =3D scnprintf(ptr, rem, "\t%5d.%02d",
- =09=09=09=09=09val / 100, val % 100);
- =09=09=09ptr +=3D n;
- =09=09=09rem -=3D n;
- =09=09}
- =09}
-=20
--=09n =3D snprintf(ptr, rem, "\n");
-+=09n =3D scnprintf(ptr, rem, "\n");
- =09ptr +=3D n;
- =09rem -=3D n;
-=20
---=20
-2.52.0
+drivers/pci/controller/dwc/pcie-spacemit-k1.c:146: 
+dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
 
+drivers/pci/controller/dwc/pcie-spear13xx.c:139: 
+dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, 0x104A);
+
+drivers/pci/controller/dwc/pci-keystone.c:807:  dw_pcie_writew_dbi(pci, 
+PCI_DEVICE_ID, id >> PCIE_DEVICEID_SHIFT);
+
+drivers/pci/controller/dwc/pcie-spacemit-k1.c:147: 
+dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K1);
+
+drivers/pci/controller/dwc/pcie-spear13xx.c:140: 
+dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, 0xCD80);
+
+If this patch applied, there are two non-consistent apporaches to work
+around this situation. Could dwc core provide a common helper for 
+them(this qcom instance inclueded) to call without bothering the dwc core?
+
+> - Mani
+> 
 
 
