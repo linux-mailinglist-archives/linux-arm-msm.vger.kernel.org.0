@@ -1,363 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-84015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5198AC98B98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 19:34:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 600C7C98FA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 21:14:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EC289342D94
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 18:34:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 22EC54E1E70
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 20:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80346221542;
-	Mon,  1 Dec 2025 18:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E1F125F988;
+	Mon,  1 Dec 2025 20:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hExj3D3Z";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="j0+b1nfS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IndXaRzx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18A61E9B1C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 18:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C6A248F6A;
+	Mon,  1 Dec 2025 20:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764614040; cv=none; b=bwIsJBe20NRs3U0Wx5e30Ev9pNM+/JVHheBgfP34ATuQyYWesYvHImMNpADBukzHYqBh06JJvMTz/1D7HNHIWQh7QUQwLJQX6aAwFO+4qbvazTj+vwacX2KTPxqnfapWk71KVdeeeFXKdi1wcWbxYOlU8WoVnTo6HeKVOyy0BYM=
+	t=1764620082; cv=none; b=ashUvxqusP/WRE/1h9WV+iHcNp3TZXzwRFvPgqupEQMHB8b+hCXXUFicwifQmXhSCtQLUBiqZCNK51cC6B/IhW5SKJtQYhpY6OP+IPE6rrLn6gh/h/JBBWad3ufzmsI0/K5OxrrcQO3/95yJmCbPDzCaQ0GZONXhe6JQk/2UXnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764614040; c=relaxed/simple;
-	bh=7btU86B0lr0GceHeyI0bOWPOFK/CTF+EAeXL9dqG9/A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DnOyqLjmTqU7N585Eqyl2ef00tjNme7qbZ0veIouIml5gWmSAMqctIR8+aGpahinSP/o7ehTWUC2rF2E25RKPqucUeh5INVqleZvD1YOqIeuCO5aRQw6z0zBChJ7wIDo6qrv5hKg1vC57720nIyH4AYOGymS6N5wpH8EptqONJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hExj3D3Z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=j0+b1nfS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B1Ax82d343481
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Dec 2025 18:33:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PK2J/iZhIGhQgzf1B18h8BafaLKYvoOEA+mZjvy3e/g=; b=hExj3D3ZP9GDbhVR
-	FX7SDSijPr5OC1WpKB2HJInFWN2iAvpISTPy/06wkRQxUHRrAMJf9PeoL/q3A4To
-	lRAIDPniYBni2gu0oLR4SEL2Wel7nz628HlTsgb7qGuvo5pkSdY3yzwPuBPD0j4N
-	k4Qy0PDQHEfnnRjA4zXMHfeb/BUqh0vLejPaIY+BtgrALx+LGhrsTJNwMv9DktfY
-	H4B/dF0OQFmBc/ym8+opkBR5KkOsVpEnaGS1xfI5Kr57UYUJKUJkDq5d7x0/PGGk
-	urYnCuAlJJ671cfYjPcf3ZYhJ8uBEtEt6PkE5ptQTIim/61JdReqY321VHxhDliS
-	1CkSnw==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4as9re1a7w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 18:33:57 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7c1df71b076so7615234b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 10:33:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764614037; x=1765218837; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PK2J/iZhIGhQgzf1B18h8BafaLKYvoOEA+mZjvy3e/g=;
-        b=j0+b1nfSujzgFd7ztHVE7LmCyoWiHEQQP/Nt6A9whXRD3R1omXYec8JebmE/q3Wa7J
-         2L6eWNTyPk1mhfMf+x0zk0QQIR4aKEBEylyJnK56nsURzTC5+i9vFEzSphF1qCK0bEn9
-         DwlHWKGGoDOuBVilw0yLesy9/KZDUFnQoXPwFYExtA/Mf4mcfKuwNVuUMiUODyg/jNKb
-         ay+2+zdczvRm2fXEbHSsq9Hqp9uG7xMawygW4PDDanabTGbZPLA4JQZDiihdz4SlrbgN
-         syRTxkr4f5CLXDIjYOrFbx7bX2KViHb82ngvFK0HOFz8BUykiXEDgVQXuYklgmnkMu5j
-         IoSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764614037; x=1765218837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PK2J/iZhIGhQgzf1B18h8BafaLKYvoOEA+mZjvy3e/g=;
-        b=VxjI+tfRDLBcRcTfFSCvm5zWEB9HVU1yvsHwnlGFeqoU1MnveopYfCKkeRUAC3c/gH
-         WqPO82AkEEqbaM2GvtmecvOyYnvtxoFL6/JzrbDwT4tKD0qCXM/08847BxrfsIyJ2zb5
-         WYF9zNLUqBhc3Y1l3h89Rtw8Qrpb+xeQ+1Pmvxl52DVGEgw7piJFALUlPFG+EgLNBTam
-         FQ8SfWtWWCUcDbPgww3nRUHFP3q9XSMZxpMT0C5TASE0N3OewhA+AXbZgI4Nwlrnp/e8
-         WA5sJwjxx6z0xRkCzdG1iYtuLVjlTI+9BDRxNXMKWX+t8TqdY76BKwHRFDAncaqV4BuE
-         KuCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXLGEoHNm/ji3MokCjl0ZiCYdgcFdUpuKdgV8nfThW6oTBK6NAxzqcK/g9Xtfn9QHxk7tEVwX+IYYAdDNzg@vger.kernel.org
-X-Gm-Message-State: AOJu0YweV27PC3/+qqnpTIHzlQeR+6z8OnSYLrTQsMLbkH2fSEo3BZFn
-	ldCXFSxTTB1lCP6ILwT33/wSIh9RsP/4WqLek+y+epzg2qi8H/ILCf8o+5m2J2XYpk0irTKx4rl
-	MeTKfthRCAu8i2yotqTzUNBSxep4lXyRGpMh4Nf2UJXQ7w4eD0tQe+WoY3414L68tHHem
-X-Gm-Gg: ASbGncsGzU2KlWpHXO7RFPGu+PHtKq3/cDeh1u14x+hTPR+Jrw9gxo5Bu8n/e6A+hAx
-	1GZB0LARFJeSbDSHRLIOxaxj8O7W03sIaABnzpY2K6loepjIuZoGh6013KDo8f6Mw3QQdhzZft0
-	93o94OqB7MAlAp7p6/h56t5c06uu1aM77yDSE6wz4CKw9j/5g53jDcxUgd0ibgehzWLhBmG+3vL
-	2mQSsKWOinwxnYMHfwLGXgu3FmJPRReMALktg3FDWScbHjgka4n4RuUz5AHLlLyQJwfOwelZ2Ur
-	FxvUo1GpYIwsBW1rClVCmU0JlswMB6dHwWuibQnHcjT7hGRBmTDdww4gRKaThKjys3SZ1C740h7
-	g898YJcAHwejGjT6v0iiWzFQtQPvUccec6PZzYyY2oijOmGU50yz5bNMn
-X-Received: by 2002:a05:6a20:3d05:b0:34e:8fed:8a69 with SMTP id adf61e73a8af0-3614eb83e47mr42943192637.16.1764614036373;
-        Mon, 01 Dec 2025 10:33:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH33gkVTClU/n0TXeXLHXqy72ak9h2kHhJlB/59JjuSa3S33wdKx9X8wypoiytm8qAbPcPtng==
-X-Received: by 2002:a05:6a20:3d05:b0:34e:8fed:8a69 with SMTP id adf61e73a8af0-3614eb83e47mr42943158637.16.1764614035763;
-        Mon, 01 Dec 2025 10:33:55 -0800 (PST)
-Received: from [10.73.112.168] (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-be50a04514asm12586283a12.35.2025.12.01.10.33.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Dec 2025 10:33:55 -0800 (PST)
-Message-ID: <2dc234d3-3bb4-4d6e-810a-e7197174769f@oss.qualcomm.com>
-Date: Mon, 1 Dec 2025 10:33:53 -0800
+	s=arc-20240116; t=1764620082; c=relaxed/simple;
+	bh=KdTQM2498wHob4LHPdfu7J0oIGz3l16QRf0Ft8fUkfk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hgD2WxP0n9k9HJ6uqgGjPQvFCHWsW44oy1OE+YLQ0Jwmz2vyrb2kS8D6NaNrGZGxiAwpUk9c+RcS0kjNjzshMUDIJcvFpWezLRCLD82jBILAEn0MCddCY9h6PbLbyu/HfjXN3U5YQGn/emWKgy1fuJQqGZMxZ35ZmPEq09IHSyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IndXaRzx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDB6C4CEF1;
+	Mon,  1 Dec 2025 20:14:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764620081;
+	bh=KdTQM2498wHob4LHPdfu7J0oIGz3l16QRf0Ft8fUkfk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IndXaRzxvPhp5ZhUqhXn8DNLU02m9BsYeXhVml6j0shwKXGF5yHP+d5Owb8oapETz
+	 C9seo/D1A87IhKS5ekXezPWlj83n9Q9uCNc1AKfp9QGuGolvDlwE0Aw5k49RjXtUO6
+	 LeGceweGyj2p3ZQINGC4I6qDvn9CPv6SF65H5W3fTuw+d6aHPEFb9aUfSc/NSNcA0d
+	 n2b35O1u6fwxTIsr2FP7+qlwQg/g+30urT9ncbGb3rhLDfPTECxkEJk/tNcJY0sPZI
+	 dbyt4JgDevx/nGSTNB2CudZ5sSvEw7SMSd6HVF8xBzVl2riQHUgfPu6d4VEvNgCkBx
+	 4vmfs+zMX2ZpQ==
+Date: Mon, 1 Dec 2025 14:14:40 -0600
+From: Rob Herring <robh@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH 0/5] Define VDD_MXC for SC8280XP
+Message-ID: <20251201201440.GA4041208-robh@kernel.org>
+References: <20251104-topic-8280_mxc-v1-0-df545af0ef94@oss.qualcomm.com>
+ <176418784438.1591314.8587929353938909456.b4-ty@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] bus: mhi: Fix broken runtime PM design
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
-        Oded Gabbay <ogabbay@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
- <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
-        ath12k@lists.infradead.org, netdev@vger.kernel.org,
-        quic_vbadigan@quicinc.com, vivek.pernamitta@oss.qualcomm.com
-References: <20251201-mhi_runtimepm-v1-0-fab94399ca75@oss.qualcomm.com>
- <20251201-mhi_runtimepm-v1-4-fab94399ca75@oss.qualcomm.com>
-Content-Language: en-US
-From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-In-Reply-To: <20251201-mhi_runtimepm-v1-4-fab94399ca75@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDE1MSBTYWx0ZWRfX+OzwFRaEu9YD
- xxCD6S7S2adBeyR/+97e4Xir8HCHRq7q5tSoKlDG+ion9kOEmBLYel7f0cNq1VcZpbIlBiZBK0p
- wg0CR2T1E9pnHlYGk7kffZoeHReeNJI9asiyR912aHAm6lCxWWc9IQQuZTwPxqQKND7uxE+DpER
- z23ywRKud9F0xKI6l2eIwBL4dm7rVZmmtC1oKzDxM7Ysq7Z2djFT6xGxLrH/BDhCiUxtTFYxqJq
- bG31uXgWprSK6Vwf4guuPjKGRZNb0KUiSKr+MvZZjh8iq0qZ3N4MvvA0mPlPT8aANG060Fqx8ZW
- KTPpLo9CY7Uu50rpPOPkYiUfNpm5gVcQvvOfnNK2q9vDLvURtBUvBwyKpeV+iyoadbCNfQqIgGs
- W3loyEuzrDSInAiWpFDQW8VyVSX78g==
-X-Authority-Analysis: v=2.4 cv=MNptWcZl c=1 sm=1 tr=0 ts=692ddf95 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=vjJm78u74TUbUCzliFQA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-ORIG-GUID: RCNugrgqVx_TAChst1VIkasdIh9fvo_4
-X-Proofpoint-GUID: RCNugrgqVx_TAChst1VIkasdIh9fvo_4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0 clxscore=1015
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512010151
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <176418784438.1591314.8587929353938909456.b4-ty@kernel.org>
 
-Hi Krishna
-
-On 12/1/2025 4:43 AM, Krishna Chaitanya Chundru wrote:
-> The current MHI runtime PM design is flawed, as the MHI core attempts to
-> manage power references internally via mhi_queue() and related paths.
-> This is problematic because the controller drivers do not have the
-> knowledge of the client PM status due to the broken PM topology. So when
-> they runtime suspend the controller, the client drivers could no longer
-> function.
+On Wed, Nov 26, 2025 at 02:10:41PM -0600, Bjorn Andersson wrote:
 > 
-> To address this, in the new design, the client drivers reports their own
-> runtime PM status now and the PM framework makes sure that the parent
-> (controller driver) and other components up in the chain remain active.
-> This leverages the standard parent-child PM relationship.
+> On Tue, 04 Nov 2025 20:31:05 +0100, Konrad Dybcio wrote:
+> > This has somehow been omitted, leading to potentially stale votes.
+> > On the flip side, the domain will now be powered off, which will
+> > uncover any omissions we've made in the DTs so far.
+> > 
+> > Reasonably tested on an x13s without pd_ignore_unused (camera still
+> > works).
+> > 
+> > [...]
 > 
-> Since MHI creates a mhi_dev device without an associated driver, we
-> explicitly enable runtime PM on it and mark it with
-> pm_runtime_no_callbacks() to indicate the PM core that no callbacks
-> exist for this device. This is only needed for MHI controller, since
-> the controller driver uses the bus device just like PCI device.
+> Applied, thanks!
 > 
-> Also Update the MHI core to explicitly manage runtime PM references in
-> __mhi_device_get_sync() and mhi_device_put() to ensure the controller
-> does not enter suspend while a client device is active.
-Why does this needed here ?
-Isn't it MHI client driver take care of allowing suspend ?
-Do you think we should remove mhi_device_get_sync() and mhi_device_put() 
-API interfaces as well ? And let controller/client driver takes care of 
-calling get/sync directly ?
+> [2/5] dt-bindings: remoteproc: qcom,sc8280xp-pas: Fix CDSP power desc
+>       commit: ca079ec3ebed19a12c1bf080496dacbc6fdfbb39
 
-How are you handling cases for M0 and M3 suspend ?
-Do we need to tie runtime usage with M0 (pm_runtime_get) and M3 
-(pm_runtime_put) ?
+This has was picked up, but the .dts change was not, so there's a bunch 
+of new warnings. What's the plan? I know it's separate trees. Can you 
+please take binding and .dts changes like these together if there aren't 
+driver changes?
 
-Regards,
-Mayank
-
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->   drivers/bus/mhi/host/internal.h |  6 +++---
->   drivers/bus/mhi/host/main.c     | 28 ++++------------------------
->   drivers/bus/mhi/host/pm.c       | 18 ++++++++----------
->   3 files changed, 15 insertions(+), 37 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 61e03298e898e6dd02d2a977cddc4c87b21e3a6c..d6a3168bb3ecc34eab1036c0e74f8d70cf422fed 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -355,9 +355,9 @@ static inline bool mhi_is_active(struct mhi_controller *mhi_cntrl)
->   static inline void mhi_trigger_resume(struct mhi_controller *mhi_cntrl)
->   {
->   	pm_wakeup_event(&mhi_cntrl->mhi_dev->dev, 0);
-> -	pm_runtime_get(mhi_cntrl->cntrl_dev);
-> -	pm_runtime_mark_last_busy(mhi_cntrl->cntrl_dev);
-> -	pm_runtime_put(mhi_cntrl->cntrl_dev);
-> +	pm_runtime_get(&mhi_cntrl->mhi_dev->dev);
-> +	pm_runtime_mark_last_busy(&mhi_cntrl->mhi_dev->dev);
-> +	pm_runtime_put(&mhi_cntrl->mhi_dev->dev);
->   }
->   
->   /* Register access methods */
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 7ac1162a0a81ae11245a2bbd9bf6fd6c0f86fbc1..85a9a5a62a6d3f92b0e9dc35b13fd867db89dd95 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -427,6 +427,8 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
->   		if (ret)
->   			put_device(&mhi_dev->dev);
->   	}
-> +	pm_runtime_no_callbacks(&mhi_cntrl->mhi_dev->dev);
-> +	devm_pm_runtime_set_active_enabled(&mhi_cntrl->mhi_dev->dev);
->   }
->   
->   irqreturn_t mhi_irq_handler(int irq_number, void *dev)
-> @@ -658,12 +660,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->   			/* notify client */
->   			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->   
-> -			if (mhi_chan->dir == DMA_TO_DEVICE) {
-> +			if (mhi_chan->dir == DMA_TO_DEVICE)
->   				atomic_dec(&mhi_cntrl->pending_pkts);
-> -				/* Release the reference got from mhi_queue() */
-> -				pm_runtime_mark_last_busy(mhi_cntrl->cntrl_dev);
-> -				pm_runtime_put(mhi_cntrl->cntrl_dev);
-> -			}
->   
->   			/*
->   			 * Recycle the buffer if buffer is pre-allocated,
-> @@ -1152,12 +1150,6 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
->   
->   	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
->   
-> -	/* Packet is queued, take a usage ref to exit M3 if necessary
-> -	 * for host->device buffer, balanced put is done on buffer completion
-> -	 * for device->host buffer, balanced put is after ringing the DB
-> -	 */
-> -	pm_runtime_get(mhi_cntrl->cntrl_dev);
-> -
->   	/* Assert dev_wake (to exit/prevent M1/M2)*/
->   	mhi_cntrl->wake_toggle(mhi_cntrl);
->   
-> @@ -1167,11 +1159,6 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
->   	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
->   		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
->   
-> -	if (dir == DMA_FROM_DEVICE) {
-> -		pm_runtime_mark_last_busy(mhi_cntrl->cntrl_dev);
-> -		pm_runtime_put(mhi_cntrl->cntrl_dev);
-> -	}
-> -
->   	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
->   
->   	return ret;
-> @@ -1377,7 +1364,6 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->   	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
->   	if (ret)
->   		return ret;
-> -	pm_runtime_get(mhi_cntrl->cntrl_dev);
->   
->   	reinit_completion(&mhi_chan->completion);
->   	ret = mhi_send_cmd(mhi_cntrl, mhi_chan, cmd);
-> @@ -1408,8 +1394,6 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->   
->   	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, TPS("Updated"));
->   exit_channel_update:
-> -	pm_runtime_mark_last_busy(mhi_cntrl->cntrl_dev);
-> -	pm_runtime_put(mhi_cntrl->cntrl_dev);
->   	mhi_device_put(mhi_cntrl->mhi_dev);
->   
->   	return ret;
-> @@ -1592,12 +1576,8 @@ static void mhi_reset_data_chan(struct mhi_controller *mhi_cntrl,
->   	while (tre_ring->rp != tre_ring->wp) {
->   		struct mhi_buf_info *buf_info = buf_ring->rp;
->   
-> -		if (mhi_chan->dir == DMA_TO_DEVICE) {
-> +		if (mhi_chan->dir == DMA_TO_DEVICE)
->   			atomic_dec(&mhi_cntrl->pending_pkts);
-> -			/* Release the reference got from mhi_queue() */
-> -			pm_runtime_mark_last_busy(mhi_cntrl->cntrl_dev);
-> -			pm_runtime_put(mhi_cntrl->cntrl_dev);
-> -		}
->   
->   		if (!buf_info->pre_mapped)
->   			mhi_cntrl->unmap_single(mhi_cntrl, buf_info);
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index b4ef115189b505c3450ff0949ad2d09f3ed53386..fd690e8af693109ed8c55248db0ea153f9e69423 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -429,6 +429,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
->   
->   	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->   		ret = -EIO;
-> +		read_unlock_bh(&mhi_cntrl->pm_lock);
->   		goto error_mission_mode;
->   	}
->   
-> @@ -459,11 +460,9 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
->   	 */
->   	mhi_create_devices(mhi_cntrl);
->   
-> -	read_lock_bh(&mhi_cntrl->pm_lock);
->   
->   error_mission_mode:
-> -	mhi_cntrl->wake_put(mhi_cntrl, false);
-> -	read_unlock_bh(&mhi_cntrl->pm_lock);
-> +	mhi_device_put(mhi_cntrl->mhi_dev);
->   
->   	return ret;
->   }
-> @@ -1038,9 +1037,11 @@ int __mhi_device_get_sync(struct mhi_controller *mhi_cntrl)
->   		read_unlock_bh(&mhi_cntrl->pm_lock);
->   		return -EIO;
->   	}
-> +	read_unlock_bh(&mhi_cntrl->pm_lock);
-> +
-> +	pm_runtime_get_sync(&mhi_cntrl->mhi_dev->dev);
-> +	read_lock_bh(&mhi_cntrl->pm_lock);
->   	mhi_cntrl->wake_get(mhi_cntrl, true);
-> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
-> -		mhi_trigger_resume(mhi_cntrl);
->   	read_unlock_bh(&mhi_cntrl->pm_lock);
->   
->   	ret = wait_event_timeout(mhi_cntrl->state_event,
-> @@ -1049,9 +1050,7 @@ int __mhi_device_get_sync(struct mhi_controller *mhi_cntrl)
->   				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
->   
->   	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
-> -		read_lock_bh(&mhi_cntrl->pm_lock);
-> -		mhi_cntrl->wake_put(mhi_cntrl, false);
-> -		read_unlock_bh(&mhi_cntrl->pm_lock);
-> +		mhi_device_put(mhi_cntrl->mhi_dev);
->   		return -EIO;
->   	}
->   
-> @@ -1339,11 +1338,10 @@ void mhi_device_put(struct mhi_device *mhi_dev)
->   
->   	mhi_dev->dev_wake--;
->   	read_lock_bh(&mhi_cntrl->pm_lock);
-> -	if (MHI_PM_IN_SUSPEND_STATE(mhi_cntrl->pm_state))
-> -		mhi_trigger_resume(mhi_cntrl);
->   
->   	mhi_cntrl->wake_put(mhi_cntrl, false);
->   	read_unlock_bh(&mhi_cntrl->pm_lock);
-> +	pm_runtime_put(&mhi_cntrl->mhi_dev->dev);
->   }
->   EXPORT_SYMBOL_GPL(mhi_device_put);
->   
-> 
-
+Rob
 
