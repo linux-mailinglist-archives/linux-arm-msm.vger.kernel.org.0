@@ -1,127 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-84001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6CCCC9858F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 17:46:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5090DC98659
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 18:02:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 88E8B4E3DE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 16:43:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B9E93A12DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 17:02:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FA50335576;
-	Mon,  1 Dec 2025 16:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7AEA334C0A;
+	Mon,  1 Dec 2025 17:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jr7StedP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from angie.orcam.me.uk (angie.orcam.me.uk [78.133.224.34])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83439334C32;
-	Mon,  1 Dec 2025 16:42:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.133.224.34
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12F633342A;
+	Mon,  1 Dec 2025 17:01:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764607367; cv=none; b=EyHKdESWotDPnzy8sQGQf9PVAe+c1ApZQUFkXcDRvJ1tqlj4ajRd4JjuZJrFvPda73KEnbQmHavB+z2hZhG1kDbpRzz94HydzOGms4ukclbFwCX1M6nogXU6kqiDLs2rYBAoNsU68Sjo9DjvC00r2f7ix06VlUfiWRf4MxM32lg=
+	t=1764608520; cv=none; b=jDnZJKSQ3E0JmBez+R79QHTJrVtOVEMcmwylaqFVwM2Pd5DR9eNrBKhgdQ03EkFpWMCEfKSkFv0Y6q0keFuQcaRq2QMTUjtySV+mFIFfvnSxp39kBcQ7GdPbt5RnaR0J1bJ7ow637ZVvhAE2fx9F4klLoufGodn2CGJqhuJrVB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764607367; c=relaxed/simple;
-	bh=3y20a/7HqrRAO0GSDVb5dlt84oR3CLrMRD5wIyWGpo0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Ppxinz9mlvJd+naS9KJRHBU5mGs24pAm8weyF9XVG2+2B1IT0L88A3f7cDf4jF23jr2OEzVPm6YEZh0hYmdxmVp5PsGcGatKzqvU39EmAlFVcOveIzuRpCRvjQRQ9siZ1KidsWYYEIj2VG0ADH5itEVPrMZJMxbYk4bKAFtfMmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk; spf=none smtp.mailfrom=orcam.me.uk; arc=none smtp.client-ip=78.133.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=orcam.me.uk
-Received: by angie.orcam.me.uk (Postfix, from userid 500)
-	id 2D8EC92009C; Mon,  1 Dec 2025 17:42:42 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by angie.orcam.me.uk (Postfix) with ESMTP id 266B992009B;
-	Mon,  1 Dec 2025 16:42:42 +0000 (GMT)
-Date: Mon, 1 Dec 2025 16:42:42 +0000 (GMT)
-From: "Maciej W. Rozycki" <macro@orcam.me.uk>
-To: Manivannan Sadhasivam <mani@kernel.org>
-cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    Jingoo Han <jingoohan1@gmail.com>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-    Krzysztof Kozlowski <krzk@kernel.org>, 
-    Alim Akhtar <alim.akhtar@samsung.com>, 
-    Jonathan Chocron <jonnyc@amazon.com>, linux-pci@vger.kernel.org, 
-    linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-    linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v9 4/4] PCI: dwc: Support ECAM mechanism by enabling iATU
- 'CFG Shift Feature'
-In-Reply-To: <syg7vpbt3w53s24hgl7b6w64odmif5bq557lwlvzlbvgkukwcn@66jtzzc3vtiu>
-Message-ID: <alpine.DEB.2.21.2512011617250.49654@angie.orcam.me.uk>
-References: <20250909-controller-dwc-ecam-v9-0-7d5b651840dd@kernel.org> <20250909-controller-dwc-ecam-v9-4-7d5b651840dd@kernel.org> <alpine.DEB.2.21.2511280256260.36486@angie.orcam.me.uk> <c7aea2b3-6984-40f5-8234-14d265dabefc@oss.qualcomm.com>
- <alpine.DEB.2.21.2511280755440.36486@angie.orcam.me.uk> <cabf4c20-095b-4579-adc1-146a566b19b9@oss.qualcomm.com> <alpine.DEB.2.21.2511281714030.36486@angie.orcam.me.uk> <a4c6d47f-28b5-40d3-bc82-10aeb14f8e78@oss.qualcomm.com> <alpine.DEB.2.21.2511290428340.36486@angie.orcam.me.uk>
- <h7pgm3lqolm53sb4wrcpcurk4ghz4tulqnr7vgd7rzxy4hscue@jcn5tepevlwl> <syg7vpbt3w53s24hgl7b6w64odmif5bq557lwlvzlbvgkukwcn@66jtzzc3vtiu>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+	s=arc-20240116; t=1764608520; c=relaxed/simple;
+	bh=bmyTq2q+hM5yLfaOwvV4mt3DtxhrkyZjZ87SLQzIRvc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HhA0henr2rgwllVP4G161l08tKEmbwiQRe+vejf9xlAu58qleWUC98wcLgzaaCwq9zxGGCceIPRSbj4IbIDuMLWquYOj8b1iTsouDXlYlPqblLwko7nY9PgR0syQ6vFO4j7Zzl7CeiklpzO0r9Ahwjg28KHsvD+sT47lTmzOzew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jr7StedP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5905C116C6;
+	Mon,  1 Dec 2025 17:01:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764608519;
+	bh=bmyTq2q+hM5yLfaOwvV4mt3DtxhrkyZjZ87SLQzIRvc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jr7StedPEyC4/M1t7fb11w5L7eX7EwY91G07P7AMGijfckxto+L1WhwGZsjlsXYIY
+	 oPOBlsHBliJM+a+Ck+s95tJX7dUkcTP5pveCNFp/krPg4vR0LXWKAYEHPMZFH7BnSa
+	 w/jmhdgHtlBNuR767BlzygS7X3PXNC6OjSXYaqFQBISNpnI6dO3zRh4SkdSFewBq7X
+	 zREFhG+p8OGRGjPPiSi80gwvkw0y85GNS/W5tNjwqV7H9L1DBf2eLGS8ArX4PFGdca
+	 NRClciXygKLJ3Mf0U36BtEe3k+YhGpk6jI8Jy8BC6oYJJRGMbYG05OQchgkdz3i2TA
+	 5RsxeDtcuuY4Q==
+Date: Mon, 1 Dec 2025 18:01:56 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Daniel Stone <daniel@fooishbar.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <20251201-enlightened-zebu-from-asgard-5a20be@houat>
+References: <20250925-fervent-merry-beagle-2baba3@penduick>
+ <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
+ <20250929-gregarious-worm-of-memory-c5354d@houat>
+ <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
+ <20251003-uptight-echidna-of-stamina-815305@houat>
+ <zpygq4kapil3swsmhhqkdwny4ry2dznnzixsw5rkza5p2kqnvp@abvf2vxlbwif>
+ <2a5fitdzr2bz235fj6rvqzxr6ckszkjbazjfszlvnizdh2cvbt@w3ypjo7vahhs>
+ <pibxhl5hlcpuk3zsgyienfdlda5cwuxrnofwlw356scuzzplqy@zw3ofelgvwik>
+ <bsoqyzxi45i67jpzhwr2d4illufa5ghqf25z6flbp67lsbvh22@rrlcihp2oxea>
+ <cgzclxjubj5oca3rdnv44qwrkmpddxve4tlz76cc6p3b4hz3oc@3l7mt5ha7do6>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="nhtgib353qneclwb"
+Content-Disposition: inline
+In-Reply-To: <cgzclxjubj5oca3rdnv44qwrkmpddxve4tlz76cc6p3b4hz3oc@3l7mt5ha7do6>
 
-On Mon, 1 Dec 2025, Manivannan Sadhasivam wrote:
 
-> > > So it's definitely nothing specific to the parport driver, but rather a 
-> > > general issue with PCI/e port I/O not working anymore.  I do hope these 
-> > > observations will let you address the issue now.  You might be able to 
-> > > reproduce it with hardware you have available even.
-> > > 
-> > 
-> > Yes, looks like the I/O port access is not working with the CFG Shift feature.
-> > The spec says that both I/O and MEM TLPs should be handled by this feature, so
-> > we are currently unsure why MEM works, but not I/O.
+--nhtgib353qneclwb
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+MIME-Version: 1.0
 
- As I say, last time I checked (for another reason) documentation was not 
-available to the general public, so I can't help with that.
+On Fri, Nov 21, 2025 at 07:09:01PM +0200, Dmitry Baryshkov wrote:
+> > So it's not really impossible, you just need some hardware and a day's
+> > worth of work.
+> >=20
+> > There's no reason these should get a pass, it's breaking the spec for no
+> > reason.
+> >=20
+> > > > For SPD, It's really not clear to me why atomic_check should do tha=
+t in
+> > > > the first place. Your initial concern was about exposing infoframes=
+ in
+> > > > debugfs that wouldn't be used by the driver.
+> > > >=20
+> > > > If the driver doesn't register a debugfs file for SPD, and ignores
+> > > > whatever is in the atomic state, what's should we force drivers to =
+do
+> > > > that?
+> > >=20
+> > > I really don't think that drivers should mess up with debugfs on their
+> > > own. Making atomic_check() disable the unsupported InfoFrames makes t=
+he
+> > > picture perfect: the DRM no longer tries to program them to the
+> > > hardware, DebugFS files stay empty, so the whole state becomes
+> > > consistent.
+> >=20
+> > In the "bridge has no access to infoframes" case, there's really no
+> > infoframe. An empty file is "the infoframe can be there but isn't used",
+> > not "we don't have access to it and can't report them". Only drivers
+> > have those infos.
+> >=20
+> > If we do split up write_infoframe into multiple functions though, I
+> > guess we could create the debugfs file only if the function pointer is
+> > set, which removes drivers' involvement if you don't like that.
+>=20
+> I'm fine with not using HDMI connector framework for lt9611uxc.
+> Likewise, I think, it's fine to have empty files for the infoframes
+> which are not being sent over the wire for any reason (hw not supporting
+> it is one of the reasons).
 
-> > The issue you reported with parport_pc driver is that the driver gets probed,
-> > but it fails to detect the parallel ports on the device. More precisely, it
-> > fails due to the parport_SPP_supported() check in drivers/parport/parport_pc.c.
-> > This function performs some read/write checks to make sure that the port exists,
-> > but most likely the read value doesn't match the written one. And since there is
-> > no log printed in this function, it just failed silently.
+I can't think of any other example in the kernel where an empty file
+means that the driver doesn't support something.
 
- Whatever the exact transaction conditions are port I/O TLPs seem not to 
-make it through to the requested target device anymore.
+Maxime
 
- FWIW the defxx driver issues a command to the device's command register 
-and wants to see a successful completion status in the status register 
-before retrieving the MAC address via the data register.  So it's not a 
-simple case of poking at a register and reading it back, but the end 
-result is the same: the device cannot be talked to.
+--nhtgib353qneclwb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> > We will check why I/O access fails with ECAM mode and revert back asap. Since
-> > the merge window is now open, it becomes difficult to revert the CFG shift
-> > feature cleanly. The timing of the report also made it difficult to fix the
-> > issue in v6.18. Hopefully, we can backport the fix once we identify the culprit.
+-----BEGIN PGP SIGNATURE-----
 
- No worries, I've been around for long enough (short of 30 years) to know 
-the process.
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaS3KBAAKCRAnX84Zoj2+
+dpehAX9df8UFvZVN58dQXWwnBnuke2vOU1UxT4zbhxIdR/6V/O2rER74TkmbviQv
+h0HIhF0BgLOgEP5gmSlL9xZCFl5EWhJpy16T7ozKZGULaHEy/3NJR+/SzYOZmLZ5
+yR5aU4SDRQ==
+=m4w1
+-----END PGP SIGNATURE-----
 
- FWIW the original change would've best been reverted for 6.18 as a fatal 
-regression, however port I/O is uncommon enough nowadays we can defer any 
-final decision to 6.19 I suppose.  I'm glad I've tripped over this in the 
-first place as I'm not eager to upgrade all my lab devices all the time, 
-and it was owing to another issue only that I chose this moment to move 
-forward, not so long after the original commit.
-
-> Can you try the attached patch? It is a reworked version of Krishna's patch. I
-> just moved things around to check potential override issue.
-
- No change in behaviour, sorry.  I suppose it's this range of host address 
-decoding:
-
-fu740-pcie e00000000.pcie:       IO 0x0060080000..0x006008ffff -> 0x0060080000
-
-aka:
-
-pci_bus 0000:00: root bus resource [io  0x0000-0xffff] (bus address [0x60080000-0x6008ffff])
-
-that you're after.  Are you sure your code discovers it correctly?  As I 
-say I can only see IORESOURCE_MEM references and no IORESOURCE_IO ones as 
-would be appropriate for the root bus resource quoted.
-
-  Maciej
+--nhtgib353qneclwb--
 
