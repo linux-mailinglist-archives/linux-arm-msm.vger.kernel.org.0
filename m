@@ -1,122 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-83997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DF0FC9818E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 16:49:45 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15A90C98361
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 17:20:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C801A3A1507
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 15:49:43 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 81E654E1C6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 16:20:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73A8B33291A;
-	Mon,  1 Dec 2025 15:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DD5C3346A4;
+	Mon,  1 Dec 2025 16:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iQt/mmiS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DzfN4wmN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5207248898;
-	Mon,  1 Dec 2025 15:49:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6ED328621
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 16:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764604182; cv=none; b=Va4cNXJ2XqHh2dZhCfwRqzJTQdtKrxyV8Os6KjDfenfXYE84c4Wh503R9BjZBdPG3u0GE1RkCGLpBgIwC0TcqlaRRTwHX/bTAjaoAIP0vqV06InPFqmKAm6V0q7usbNFxzZaS6h3rikNXoQBYFftzo0dR9QiKCEK7fXmbkFYKQw=
+	t=1764606042; cv=none; b=drlKWsmWwgXLmtqY6dpaK8JJ7uyqnPM5b3CodE9R2elFOHfVCz2e8Ck2JDyMLBWAqttFPMR5/2VWH2kWNeWsszwqG0DXIrghuTSQHh7PVBp7TYJz9hJl15iwgEFlhQmWAZRyvDcPkJyv6meW89tkygef+BzzWlEYwtLJSulW0Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764604182; c=relaxed/simple;
-	bh=1c9J4q1neG1gudKs5OVJ1JNCeSTxftP6emxXSKcTElw=;
+	s=arc-20240116; t=1764606042; c=relaxed/simple;
+	bh=cbTq8BHjRToGTEY8Sx66KTwTfnaIXn5PKzRscbZtMbY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ChX6RoW+/djAer9rbMtv9ZyDEIJJU4R6f1JpZQttvS5xSjUco75jBR47AnFw4jzBissp9ZWnm1DST8RSqlD1sv7jvF/VteG4k8v7qMd7R/4sNXNFEC1b90oqsNkOqE64mu2WFghcLSErgvrIb2sZXF/6lZWmgTw2qYsGVLxlFlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iQt/mmiS; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764604180; x=1796140180;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1c9J4q1neG1gudKs5OVJ1JNCeSTxftP6emxXSKcTElw=;
-  b=iQt/mmiSK9CKXd0iIUaixDQE+VbAIWQepg/TmbJZXlQgJA0Iw9HjuLbS
-   SLEmvFb6ULsr/Y7vr9oQY+hCBD8pIPE8Q7Tm4DAFsYiAXVXX8nYcFXFcA
-   ugBCEvDK0IhRaqfm6bf1mKjxnYPx70JUgKnBFef/0sxu6Oc3B8C3O5xoq
-   C5XBitED/xrpqIJYEM2/BV2xnAbLgsVGodPAr4sevOGCp1DSaM2+bScpb
-   8DunXcspPqVheb7kcJpwlis4VUZADXry5GT9vGA9AehmePBAnTrLMoYLQ
-   /qiVjlw5xdpXCXt/Yg9DNybBBBjfBCfOMeti8mm6wKzuhECWaz6V37zyC
-   Q==;
-X-CSE-ConnectionGUID: 8o9U/Q+mTmaEMBVygqCq+w==
-X-CSE-MsgGUID: 3ZBTsc88RJK+s2iCXzu/XA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11629"; a="83939824"
-X-IronPort-AV: E=Sophos;i="6.20,241,1758610800"; 
-   d="scan'208";a="83939824"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2025 07:49:39 -0800
-X-CSE-ConnectionGUID: 4pEW9aM1QU+ohR0hYSrNMg==
-X-CSE-MsgGUID: dd6uz1+4QC+N72HOYq53oA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,241,1758610800"; 
-   d="scan'208";a="194531575"
-Received: from rvuia-mobl.ger.corp.intel.com (HELO localhost) ([10.245.244.4])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2025 07:49:27 -0800
-Date: Mon, 1 Dec 2025 17:49:25 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Romain Gantois <romain.gantois@bootlin.com>
-Cc: MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Guenter Roeck <linux@roeck-us.net>, Peter Rosin <peda@axentia.se>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Mariel Tinaco <Mariel.Tinaco@analog.com>,
-	Kevin Tsai <ktsai@capellamicro.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Eugen Hristev <eugen.hristev@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Support Opensource <support.opensource@diasemi.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Iskren Chernev <me@iskren.info>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Matheus Castello <matheus@castello.eng.br>,
-	Saravanan Sekar <sravanhome@gmail.com>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=L4RQRuvTWuKb0j887KQ6mc3FwOwdy3C1CmUhS3UlXA+zQlgWOoEfBPJT2wuSOKRyw8axsRGSzIQtbdw8fDZpuEtiFPAsWi1ClDclA9N4fr3FoTQ3J/FxJR7L7S/pBSc6Q3/Pjm9uxdPvAknBrkWImrWK+iTNU/10HNqHaHJSeNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DzfN4wmN; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7b22ffa2a88so4244687b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 08:20:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764606039; x=1765210839; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cspTNBzt+I5BtqKUZhFjJeUVwDFagEE/l2BBHLFNpxc=;
+        b=DzfN4wmNhudh9Aoo99BlK6Ljv9vadO0w7/OlP7wg/MAmTyeAD2fMfjZe8RJoqcoAx6
+         xHyFEXNCUOVrZAuzr9iWeXwYbotQl3IzUKSnwYxDfbse93Bex1paum/dJiMpt7JfbGqY
+         mQZ/+CwybL2tCvzU3T5SUozd98yu4O5/p8XxGwnTeeC0Fe8SV5Z9qgjZWOHoUIbTmWlH
+         XyrMfBcZZfTAIaX7hRbO9zdDygKjrNsXbOD0OyQYzyPTdis7RHTTAKD612SAYh620O4N
+         GOs1DPvReKrst2BeaUiNzaawm+ba03LT/oDPzfdCq4FNFeGE6EMZhM7HMKjX0fOYupPM
+         ORaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764606039; x=1765210839;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cspTNBzt+I5BtqKUZhFjJeUVwDFagEE/l2BBHLFNpxc=;
+        b=p21FZKFspXRu6YbGe4FADGrL4L6fpgnrTznsgn6rPtX3cfHazBbx1gLs157p280cor
+         ZYnIZCM4mAAlPEbYczpy3ZAZR9YdkI/VMXHMVESE5mXHNWUMProoiHcjPq9eN1QsYJPp
+         nuQHMXTYC7uMyWjHCQrUKNLju3mkjXlspaiEqyis5ivIyuSm7hVsRhWsgK26CqSzeK0s
+         1KnMNHNQFq+9JSEmUXSFd8Ut4xtrYFvDZrqrfyYySd0uPMmvv6SqMgNzuIWq7VWTwnjh
+         YC/4Uf/1BViawplw/BcYQ+VBxi5RrtDjguu22+31IjxltZCgvlzE9ro2JgbpXgeHOYoE
+         aSOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoIs19BxWJfgwdt99gbj9nPmWGJhqDf22Ack9r3kzxEZzAZrH9ppA/u3Lktxsxme2Lp71xOy9DWZWpcHww@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2nqjqjBqwFl4fqJtSACkBkYm200dN8/AAtNqfKVCnratvIKcV
+	IW4R85VlSR75fAxQ/TL9Y73NpRxyes2KVymHgU+KQCjhA8wDpNFGI/UcEVinWp4UJ+E=
+X-Gm-Gg: ASbGncsGHS4EnXDGIXRGTT7zZ/nQuS6i1vuCzFw/3dU46MY393TVy2aoZdpJg75i6PO
+	7CDLZIdYy5rA85qghv2ckyrkKOpNlEPk/pLfsLWyrlqcJU2hSunqFk6fqA434uFOZEk+TKO+1P1
+	d1bdUTz8BbPmS2oSS2hOOdD2og4Zc2xcDnG8YJTdw4h3Bor9zlqoMUKvBE9g6MlqH+iFQ93gVcU
+	aZMb7re8cBDkkcaSHFHDLg1wHQVE3oY1zXwz0LSivOsrhXopR5M0VtdqdCXDGw5Zkg+8+GOIRlA
+	dh4Px6oUP/xnWfgUkjyJ3ARPs8gajzLiGPd78pzk/jqzVVxHFyWNKqR7bS+5FGFA/mbM38S4oZ+
+	R/vxJjvel6d6fWZvgLOnnrKEpjdI9FqFzcGgMeZ2AJXuBLVWLQxNNobdxxjebNQc/xCHiwIVAsg
+	maa+yWt9YNJigDmw==
+X-Google-Smtp-Source: AGHT+IEC7gGRxUyVtd+YE469cDLd2n7LeD/hmDQKTfHSUTd0/7SmlOv1H6YZTofFyUN0T2uY8DHV7Q==
+X-Received: by 2002:a05:6a20:2448:b0:345:e30f:d6da with SMTP id adf61e73a8af0-36150f059e2mr47497364637.37.1764606039144;
+        Mon, 01 Dec 2025 08:20:39 -0800 (PST)
+Received: from p14s ([2604:3d09:148c:c800:7234:1ea8:3e35:6ee3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d15e9c3e41sm14161217b3a.33.2025.12.01.08.20.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Dec 2025 08:20:38 -0800 (PST)
+Date: Mon, 1 Dec 2025 09:20:35 -0700
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
-	linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH] iio: inkern: Use namespaced exports
-Message-ID: <aS25Beoq8YWfqLzU@smile.fi.intel.com>
-References: <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
+	Takashi Iwai <tiwai@suse.com>, linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org
+Subject: Re: [PATCH 0/4] ASoC / rpmsg / remoteproc / soc: qcom: Constify
+ buffer passed to send functions
+Message-ID: <aS3AU0gEEOvWs4Uw@p14s>
+References: <20251130-rpmsg-send-const-v1-0-cb11c7e0a024@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -125,30 +99,68 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20251130-rpmsg-send-const-v1-0-cb11c7e0a024@oss.qualcomm.com>
 
-On Mon, Dec 01, 2025 at 11:59:43AM +0100, Romain Gantois wrote:
-> Use namespaced exports for IIO consumer API functions.
+On Sun, Nov 30, 2025 at 01:36:07PM +0100, Krzysztof Kozlowski wrote:
+> Dependencies / merging
+> ======================
+> Entire patchset is one logical chain, all further patches depend on
+> previous ones, thus everything should be taken via same tree or shared
+> between trees with tags.  Probably everything should go via ASoC with
+> necessary acks.
+> 
+> Also, first patch or two patches could be taken now for this merge
+> window...
+> 
+> Description
+> ===========
+> The remoteproc and rpmsg send-like functions should not modify data
+> being sent, so buffer should be marked as pointer to const.  This is not
+> only self-documenting code but actually increases the actual safety and
+> clearly documents who is the owner of passed buffer.
+> 
+> Best regards,
+> Krzysztof
+> 
+> ---
+> Krzysztof Kozlowski (4):
+>       remoteproc: mtp_scp_ipi: Constify buffer passed to scp_ipi_send()
+>       remoteproc: mtp_scp: Constify buffer passed to scp_send_ipi()
+>       rpmsg: Constify buffer passed to send API
+>       ASoC: qcom:: Constify GPR packet being send over GPR interface
+> 
+>  drivers/remoteproc/mtk_scp.c       |  2 +-
+>  drivers/remoteproc/mtk_scp_ipi.c   |  2 +-
+>  drivers/rpmsg/mtk_rpmsg.c          |  4 ++--
+>  drivers/rpmsg/qcom_glink_native.c  | 13 ++++++++-----
+>  drivers/rpmsg/qcom_smd.c           | 10 ++++++----
+>  drivers/rpmsg/rpmsg_core.c         |  8 ++++----
+>  drivers/rpmsg/rpmsg_internal.h     |  8 ++++----
+>  drivers/rpmsg/virtio_rpmsg_bus.c   | 24 +++++++++++++-----------
+>  drivers/soc/qcom/apr.c             |  8 ++++----
+>  include/linux/remoteproc/mtk_scp.h |  2 +-
+>  include/linux/rpmsg.h              | 17 +++++++++--------
+>  include/linux/rpmsg/mtk_rpmsg.h    |  2 +-
+>  include/linux/soc/qcom/apr.h       |  4 ++--
 
-Thanks! You probably also want to explain that due to nature of the change
-it may not be split to a separate patches.
+Acked-by: Mathieu Poirier <mathieuu.poirier@linaro.org>
 
-...
+I'll let Bjorn decide if he wants to include this in his upcoming pull request.
 
-So far we have IIO_BACKEND and IIO_GTS_HELPER, this one introduces
-IIO_CONSUMER. I have briefly looked at the names of the APIs and taking into
-account that they are all in inkern.c with the consumer.h header to provide
-an API for the users. That said, I found the choice and implementation sane
-and consistent. If we need any changes in the future it will require anyway
-more than just namespace shuffling.
+Thanks,
+Mathieu
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+>  sound/soc/qcom/qdsp6/audioreach.c  |  6 +++---
+>  sound/soc/qcom/qdsp6/audioreach.h  |  4 ++--
+>  sound/soc/qcom/qdsp6/q6apm.c       |  3 ++-
+>  sound/soc/qcom/qdsp6/q6apm.h       |  2 +-
+>  17 files changed, 64 insertions(+), 55 deletions(-)
+> ---
+> base-commit: 7a9e871ce4c7c8a7d75eaef8407083a0525de2dd
+> change-id: 20251130-rpmsg-send-const-ae216a1fbd8f
+> 
+> Best regards,
+> -- 
+> Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> 
 
