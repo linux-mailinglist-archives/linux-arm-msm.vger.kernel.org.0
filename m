@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-83933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F357C9602D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 08:31:24 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9BBFC96057
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 08:35:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1DBE13A229C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 07:31:23 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 93EF4342C98
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 07:35:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CD92D543A;
-	Mon,  1 Dec 2025 07:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEB9F28C874;
+	Mon,  1 Dec 2025 07:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fEpzA+cZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="triFu7KY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A12276058;
-	Mon,  1 Dec 2025 07:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8369E1E868;
+	Mon,  1 Dec 2025 07:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764574235; cv=none; b=X2WBuesEZVFmDZRqNFEBxHNWZ5H7i/u/1GlXDCmaaqmF7qlpmVX9QXvWJeldHarckcXmo3wDS1RojUr/TdQp4+t7oRNeumbiirCJqRlRvpBHtWqDTz+Qxr+hBL54ssRDy8q5pWzzGd0zAr/K9bjf+cjKmtcHePPdEj62ftG9Bo8=
+	t=1764574522; cv=none; b=T0CJkRPSup9GwFKMQzCQDJo5RQBnQy5aKsNK04U+VgDwnVnPCcdY+4YfReJjIfCSLKcVnfpmooU5AqZnnRVxGGSw36vdfThEWUebVObrmCZUIvLb5KB9Ya9t70ZOgBFuFIMRNAG+Tgm2wIYIbSEzsSk4Od7KquN1YPCZWYTdeqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764574235; c=relaxed/simple;
-	bh=CArqBuKEKZbdSr69+nJRxcsYRgHHPFRJtBN+1wTEfCI=;
+	s=arc-20240116; t=1764574522; c=relaxed/simple;
+	bh=JZs7G8T/3JRt0ZvUolyJvOncTl4XADz3CVR3TY3IVS8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YZxoI7PVz/R/cyPgpq0Y1Dhp0mZeceEpFvODhY4nrAPtVwRi/T0+pBx5ifPoiP8qZYSgW/5AB5RhmwfkBUxoMMHEx1wiYdT44sOH77ww7ZRJBrbnmbyQQrakG75UC3nrBTUAG1/I+MwQ/0i/mTs25jMePQm9b1gHJ0EiyQpLtOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fEpzA+cZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13075C4CEF1;
-	Mon,  1 Dec 2025 07:30:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kr09bKu5xu8/Atm3QSSFMu1ML0XeIouwQtYA9v2tEtLl/9uUJnw09D/D2LfO1PIcsSSoMPMqW1XiEUpT8XzcTL4/eZgZsRtXwsuKS1QOvoAyNjN7vL+jN5LTrqsux2GzX+k407oFvUdOUkEVzW5zfqUbqZl1EGrLDdDBxmcUCXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=triFu7KY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F97C116C6;
+	Mon,  1 Dec 2025 07:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764574234;
-	bh=CArqBuKEKZbdSr69+nJRxcsYRgHHPFRJtBN+1wTEfCI=;
+	s=k20201202; t=1764574522;
+	bh=JZs7G8T/3JRt0ZvUolyJvOncTl4XADz3CVR3TY3IVS8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fEpzA+cZQz1oBC2ivB9Evu7rIsO0vaOnbA0b0yyjsyIiJcjWH+EzddqKqgay4mtV2
-	 9ADlpH5SUJctOI68y2t5FHJjjzzkPms/69AbmxCIguS8xts7LqE4UfRvqtUDycmM/m
-	 IuIbQcTBa4HIZsGRI+uM0W7816D5/U8hzloK/Zk6bO8sh4n/k7EhW6c7JGlK/dMaW1
-	 hxd+x/XR6+OgdX4tmrlWGXVsLcmaIPGdM6F9Ej87/ylJnjJ0pIPWIiEa1Q4NDLl3/M
-	 YksmZg+BUafN6L8pU8BpaxAtFE2OQDnQVyAwaw/4ENSPkjgysfqAaTU6UQNzaEUzIf
-	 5UnKEJHc7gdVQ==
-Message-ID: <dc2abbb2-2212-42c8-a600-44c9061595fc@kernel.org>
-Date: Mon, 1 Dec 2025 08:30:30 +0100
+	b=triFu7KYRadSNxvd2YyGp7Y3kkgdtN2Q+UiaA2BWheMOezBSxlkfUJd+Tq6PBZDcy
+	 3J5Edc6djKU7SyRuBITSAYztG9Rf+Xx9GyiJgYhO8A7AhcGpnQKWR4CZz62iZo0JVm
+	 OAQ+JfbVw5UCvy8z8HFBlmIBIzjzgn9XtmqjW59vurE8ZMM6Utwamov5auO3750EK2
+	 WzOF7P2pQVMjcyT2+QHV87xPla4vFbWSc9dxZ9hVQSmnt0hkpTUmDT0z69bs8PhERg
+	 TndGGHigoxL6IO2a38TW/ADCYQaNOE7BtHQy7wUbnroE8nYELc34pZ3jnNfnv3PzAn
+	 9Ojtl7nCYRq5g==
+Message-ID: <9aca23d5-2433-4c25-a95d-6a87127c7c83@kernel.org>
+Date: Mon, 1 Dec 2025 08:35:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: arm: qcom: Document Microsoft Surface
- Pro 11
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: x1-microsoft-denali: Disable
+ rfkill for wifi0
 To: Dale Whinham <daleyo@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -59,7 +59,7 @@ Cc: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20251201011457.17422-1-daleyo@gmail.com>
- <20251201011457.17422-2-daleyo@gmail.com>
+ <20251201011457.17422-9-daleyo@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,42 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251201011457.17422-2-daleyo@gmail.com>
+In-Reply-To: <20251201011457.17422-9-daleyo@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 On 01/12/2025 02:14, Dale Whinham wrote:
-> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> Disable rfkill as it is supposed to be according to the ath12k feature
+> flags in the Microsoft Surface Pro 11 ACPI DSDT.
 > 
-> Add the compatible for the Qualcomm X1-based Microsoft Surface Pro 11,
-> using its Denali codename.
-> 
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > Signed-off-by: Dale Whinham <daleyo@gmail.com>
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > ---
+>  arch/arm64/boot/dts/qcom/x1-microsoft-denali.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
+No, you just added this file. This must be squashed.
 
-Don't ask us to do the work twice. It is waste of time.
-
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
-of patchset, under or above your Signed-off-by tag, unless patch changed
-significantly (e.g. new properties added to the DT bindings). Tag is
-"received", when provided in a message replied to you on the mailing
-list. Tools like b4 can help here. However, there's no need to repost
-patches *only* to add the tags. The upstream maintainer will do that for
-tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+What happened with the rest of patches? I got only 1, 4, 6 and 8?
 
 Best regards,
 Krzysztof
