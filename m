@@ -1,357 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-83920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01051C95B0D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 05:15:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61A91C95CBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 07:26:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DDC0C4E028A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 04:15:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9CE33A1566
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 06:26:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D8D202F9C;
-	Mon,  1 Dec 2025 04:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2029427AC48;
+	Mon,  1 Dec 2025 06:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cxG7mIjN";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Q/nbwyw4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZrPKBz1Z";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZK9QTbOJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830371F2380
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 04:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CC4279DCA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 06:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764562506; cv=none; b=d4hF90AROSJtA32eOfjTQ2A0r4MracqKwj19gNRqpBG79Yx4Yw0PAVuoRTvjLQ5u4mSrU3cgR/gLnuYq0QYOwBYLv52e2mGsvMjUG0FRmyZtkYjnKgNwjEc1cbRe8ScnGjRioOfxAnBaMGjjZwX5hziQyRPQCJqT07WVK3wnZt8=
+	t=1764570383; cv=none; b=OVrMPd6NBwROxfHuHYnVQZ5NSuxHLagnHJCqKuUlpBlT0h9gftKCs32v8dgA5lPinLpoHCvyW0RUt4nG7Q3yZbxBVMICY7a/J+T5hnNnlrFUH9SfNPy4vUnbMgkd7RFd7HkbdsdsOUJvMp+WFWz7+xe1PcJgMkeOtS3uvEkAPHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764562506; c=relaxed/simple;
-	bh=5u0j3QinjG3Y8FysB8a7uA6R6d6m07+gh2oOYuHuoYc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WGIbKzXd4zIEzhDGDKd8GHisUtmsKVB+AcfGJYmM0FB7yyn/KoyUdvIo+y2VI4l4nahRr/KlITC9tm8U5ReqpHVQW3FcdGkDbEus+Fe0OkQW3KOtqFdbHsbJcNKmsO5Z8sOK3zS0M/YEUG9bXpQGNBxUBWkgtWMSjL0q8ELonJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cxG7mIjN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Q/nbwyw4; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1764570383; c=relaxed/simple;
+	bh=xwACydKQvgDKuB0v3VRVNVKaf/7fL95Co83H8L4/8V8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=H1eVnN18iG5YFCq7RXBHe5GpEPeEynFUBrpWcJXEw2ZJGn7eK0hrlIQm0uduApV+RqyPDjbwyfUAlDeBmGg4JLuHWanqjZrZJHAnSikIhBX3IQ1LNfE/+7dPNrBiz9pPMe7FYTrtlcuT08aRbxuenv5OBJUy0o9I55QG5b4eXGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZrPKBz1Z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZK9QTbOJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AUMO6Ys2659118
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Dec 2025 04:15:03 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AUNGEFF3040669
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Dec 2025 06:26:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=; b=cxG7mIjN0G6Qg7w4
-	Cwf08ehzDm6SC3vW9cpp8U/lePiRhaVPpUYhkiy9M5WjhjOsHUVViRLo8ASFd5yP
-	Rq3WU7GfJNGH6kT9YhBxyodw7fz6CD629tYswMr0Gxxt/c8U7ia213qXYC98IvhH
-	QGH0ZArqFpOEkviRb9d4FUQ/zWwpJ4WN33tpaBwj7fUcHdXTf96Qwnj6a+6EKSzy
-	4QAldNd2ro54HSmQG/3KsCyLHWxgAHXNB32JsSQ+rdWWEumjrHS6genE1MuBtqWv
-	oJz1wdRuFqTGd19QuzLVYgY6VF7Pr5kDysdRFqB3OfeQZ6E52ven27Jp6PVrzblr
-	5v1rkQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4arwn2gkd1-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Tbyvd4eRGssa6Ha0ecVbsY
+	tSBYVsX1t2xVyxXt94ET0=; b=ZrPKBz1ZqFfUvfy8wsD9OepT0ejCr49l8CJIDB
+	RI037dW52yyhZoF9ddXxh2wvgdU32v/ubnmfN65lPV21f9MhatZFpZRLeSI6gGnj
+	K3+wY1z4Mje8b7ejbBc5lciO4qJAKBMc7PP9if3JBiN5FR9956iYr+V4R8xausS7
+	Bynbq5o+OKiStwLplwydWGMUEGAnARqr7iFDlgSV7dlawMuP3vxQnSOmgRUwV5+r
+	cUmxqsdeF1fK1jiKT01PInpCzJwr7JexXsdPg195/wjVF6E4FW6nH3y2LuMpyBtt
+	gUX4ebdQg5oUmxMoV+U52HM07mFibAAUx7MC0EsD85pCl1gg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aqs78um7p-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 04:15:03 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2982dec5ccbso65530715ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 20:15:03 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 06:26:20 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b6097ca315bso5575628a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 22:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764562503; x=1765167303; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=;
-        b=Q/nbwyw48Lz/fr8i0n9qUTbAL1CTZjmd1wQ272LXQHlrtOG/cERd1Tbyzc9RpxwqjE
-         E4LbNkP50mNeVfaXSVt7copRSa6wqNNonRPSMgPRARiBY04BsoN5CmWTWDwVRwbvOraY
-         PKyY9ZwEyDMteHI0daBant/1XUEaKFzZ/rW9vDw6uI4p+5LsEf1XvbKnmXW6xO9oA9c6
-         1BbKijuyTwxO62bPV2XPzMNv4JSlkMWBcif23N4bUWS8KI3ExqXIWlumiC5QDJatzbAE
-         tsg1VEW5oXO+dqkn8FTiLDGK754SOso7Rv0i6iOMYrpojz9cl58JxajQbhZphOV54l+1
-         7htA==
+        d=oss.qualcomm.com; s=google; t=1764570379; x=1765175179; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tbyvd4eRGssa6Ha0ecVbsYtSBYVsX1t2xVyxXt94ET0=;
+        b=ZK9QTbOJtrNzjh4EqDX+jTrFO1LjwsfcRek5/Mzc+ZSLhXQIHnW/3NAxqKnc9oIm7D
+         twwQmzQkqXGuXZ2rti1qXMzsJu9VWn+OdsWfujlM5p6O9X/x4sssdGjb0DZOLPvvXyeX
+         vurm15OOdUGLTVLmhZ1/2kXNVC5nHKpIjtQ73nLusBTTUHoTcbt0+DEhr/yQ+lzpAyyN
+         N5+7l4qQO1KSa4p+JJtaHHHzrTTPb+73X6Pu+K6ro55248CAf+80DngjxjZTzg6NznOx
+         0SwKf4JxrWv1DVqnMU5nQvnQTUNaUEj9K/NgFGCudOkkCDl1qCoTKLTTK/3JUfF8Q1Ih
+         +j3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764562503; x=1765167303;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=;
-        b=QpIb3ZZppoyLP72En0co72w01gnBzeWy5wA8sWdVhLmK97FDN/SsSxxsUz4KiUwdZS
-         yiwoadiQvYflj3oUBHxnMikPuK/8bfh97szieSjgwbWa2i6lahMzx7gNNoZ2J9SNs1PK
-         CSmOdNnIvwpfOPf3FBQd4X94O8HtqcE2Eb0N+mVEi5HzU5x9hAZ34+rxH0v3ClSrxHaB
-         pcLRbhTepcLlgJMx8GjZQCJwQioL1WOrlUXf+i2swJlxuK2fOq5NL+Ozvto19VNfc0Kw
-         CPi3K456P8d7EUEoeUTt0JaHI33jQlrL5IccvR8GFgyKI+rd9lgWJC/bCneJB8tNLOjr
-         Oirg==
-X-Forwarded-Encrypted: i=1; AJvYcCX4er/x7qfToVKqGQF9q2t9LV/G0eixMKNNnu5N69qDlsUHZbnqgpf7B3JENIT5NQgMHsiD7T75TMxapIJe@vger.kernel.org
-X-Gm-Message-State: AOJu0YwB1UyzWlBhhEA3DSnhZx+FHQq5TshmfsCDnO0B7DCmjMH+aHsB
-	nKr881IfSESyX7wllW+8HUF3ijr/05I0A8aMiJ7TS4HTSFM4XPr3Je5rzEm8IUb09N3QdJ3QQ/A
-	UCCcfe/ay3BCC5b1nYAIRsita0fILd14hPUAek4wSpaunE8/2OqwguawWB+hclxSep2cwiG2H1J
-	K/
-X-Gm-Gg: ASbGncthdkli4dNkdGlVBazK3DW7Wdvz7koEHWqYmdkKDZLbAoM39iR7dE4NHkKIO8o
-	MglHYnBhnB5tfVOa8VeIVhs/9xF2POLtC6sJqQnaujuGhCkll27bb6GqWoLRWJ8MI9lFQUWQvOx
-	pA1d5DD73865pbdcxOZnNq/lfAv+M+aFNQ+rVorh5r99sIyeU2e8+raP5piOoXhTc0epoCDZJmu
-	DIK1duEp57yoe7P53ERVaI2TEGw6Su0nU8mOXRaaAsFFRRosX/b0hNOrcSwr7RjguhLSvfIYvBq
-	LwM5z5v0k9eYuHFNR9x8rY9IzHSKYGUBLe1mgEBLuSEGHJr0Y1MQXpPg0IRSl+3zECnmJPQGKUr
-	F81lecLLw6L86pGUEbatY7o1Sj1ZCXD70
-X-Received: by 2002:a17:903:1b2b:b0:298:43f4:cc49 with SMTP id d9443c01a7336-29b6c5225f0mr420884385ad.24.1764562502848;
-        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUvdYqQdcAB8wtQ4iFi6hdrLX7WH1Zr/sDxqFvq3nFRKk9zpvXvS8fz9AvXPWK52opFXU2Cw==
-X-Received: by 2002:a17:903:1b2b:b0:298:43f4:cc49 with SMTP id d9443c01a7336-29b6c5225f0mr420884085ad.24.1764562502354;
-        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
-Received: from [192.168.1.9] ([117.211.36.176])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bce47096csm106669955ad.44.2025.11.30.20.14.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
-Message-ID: <17b0f475-6c67-4cef-9277-251f45c1837c@oss.qualcomm.com>
-Date: Mon, 1 Dec 2025 09:44:56 +0530
+        d=1e100.net; s=20230601; t=1764570379; x=1765175179;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tbyvd4eRGssa6Ha0ecVbsYtSBYVsX1t2xVyxXt94ET0=;
+        b=FX/pw9Ufxsy9TS7P9ZIDhMgMk06AOWRXlTzugFqTuQCn5Mde59wDYWaqRmegWC3Ctv
+         i7sKfeaIYOLfi6hlI0Nkbxp8r2iSU+oUccf2pnStQaJdyrjbGx1rENavkZfsc1WDABAO
+         WLEOBS/NwWLwgzslN6t6p0umu3IsDQ+pSEWit2YltpX7OAtfNhoOk5cPufJnVp6JVStz
+         uekN8MAe4g9FNqr2xf1T3mehoIBVvNBQhP4AdtVX5MhtYuLdc+XUkjrAoBlI/F0bWJeL
+         jE2J1uGb6TOJGLQQvNDMBuFnfiABeWGlKfx8HVhTcjIlLqUfoFQMNL4LYgBm20B3kA+2
+         Ml2A==
+X-Forwarded-Encrypted: i=1; AJvYcCVv2jVH9cU69DhigCkO/yjLihMjHrgiMnYy56w06HXdDC3P5XenBJAXSakS6nXlEbNwXL20kA6ybny53qOT@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ8Bli4WktwcWANDKqDG4Zt6CA4pC0hraQLvCuQyjMlbXIqOBT
+	m8Kx2leDwsm1Wg+F7nHELTY2sVuvZVyHQwahlk3Ffp0cYIWUZSh74S62ETpRdfhz0zF0W0XHulk
+	aE91T+I5iZ/3qYmx8PkIUTJ+uhLOzHpoT9Dfm/awujZJMKSsCpgqriu+4EFjikCbp4jQ3
+X-Gm-Gg: ASbGncs+mZxxYklmRKHlGgU59rFwLS9sClahx3FhDcnVk1Xa1XpgInO0z4pCdZbDD2N
+	TkDZq0wzcGmMc96czvdLdKdmaZxJcTTpTVhWnpxAwyWG9GEBcsi/Dzk9m1PaoqRzy5SbAi4Njos
+	9U2+jMzrVEVS5neXYeGFeA5R3cP3MEDS+U1T1pApakT8zW8kWN/+IYlRS6gONnoMB2UyoXV11Y+
+	qMId/VVP8eE+9An3H96c1PA85HcJjdzxVUMuAxZ1ii5gZF0oc4Mc2/uXODYNblpXvsb1UOdMu1p
+	BCjHuAouCqfIOiUrgJ3TlqBxfVwAAyaVK/43CoF82u5IMVUMeNG0J7x9uCyz0id5tQ5v2FGvx6m
+	mlY+HmtB9fUkcfAt5lk0jIIlMVCvRhFiGtOjlZAtzg6HvFD8SAXX26WrY5yOUCNLu
+X-Received: by 2002:a05:7022:4581:b0:11b:8185:abff with SMTP id a92af1059eb24-11c9d84a4e4mr21503841c88.30.1764570378993;
+        Sun, 30 Nov 2025 22:26:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEGiUkQhPHRaozyfqb9PynFx9lYVvOC8kg1YIBrk3c4ptAh69WLgR70tMbUh+zHTWI84tQ9HQ==
+X-Received: by 2002:a05:7022:4581:b0:11b:8185:abff with SMTP id a92af1059eb24-11c9d84a4e4mr21503815c88.30.1764570378459;
+        Sun, 30 Nov 2025 22:26:18 -0800 (PST)
+Received: from hu-hangxian-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcb057cb0sm67109081c88.9.2025.11.30.22.26.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Nov 2025 22:26:18 -0800 (PST)
+From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Date: Sun, 30 Nov 2025 22:25:36 -0800
+Subject: [PATCH RESEND] media: camss: csiphy: Make CSIPHY status macro
+ cross-platform
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/msm: Fix a7xx per pipe register programming
-To: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
-Content-Language: en-US
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-In-Reply-To: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: kIQAevgA8CvoYTK_4gkI6hmHu4y9tfpD
-X-Proofpoint-GUID: kIQAevgA8CvoYTK_4gkI6hmHu4y9tfpD
-X-Authority-Analysis: v=2.4 cv=Q4DfIo2a c=1 sm=1 tr=0 ts=692d1647 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=bQZbETVgiEA5ROTFRdaCHA==:17
+Message-Id: <20251130-make-csiphy-status-macro-cross-platform-v1-1-334664c6cf70@oss.qualcomm.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org,
+        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Proofpoint-ORIG-GUID: f6By0XOI4urLl9r4BW2ydvPEjRBTFEkE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDA1MCBTYWx0ZWRfX5SXJtn4mPP2i
+ RUo0NQ6NprItSaHvdzpW3Jn6z0B9YkA5X1/qGns9jk/hBFYUJH6kMg1NxlnXAJ5WHR31yu7ucJX
+ DRh2wXdUgmwm7tcX1WYbKFFva78yurXWLBVJkhjSeh5X/OjHF6qEzvkdkEAO4CkuMyDsSsTn+qP
+ b1j5JroJhpxaTYi2JnILwv8i8gRx91hkLP3yL3zbHH+QqSubWQdieRnDxFnSPgQ0Qm9A+U5XccU
+ GAuOlttled05UGCSLI49/vYGF4Fxc70ZJoafUAEIercst58J6s6USj2H+UBD41cGbAvBEfHDO4E
+ BtkmjlRX94KMNAaKIF+fTOLszc/I5PT9BG01AXD5tCKahkuw3drpCEacRziSAtF/xVLoGyGnfVk
+ ErRK6yRTZ7xk7PF9L1boVH1wAvXpYA==
+X-Authority-Analysis: v=2.4 cv=FdQ6BZ+6 c=1 sm=1 tr=0 ts=692d350c cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=ScosPgwaH3TmPZige8AA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDAzMSBTYWx0ZWRfXw7ITCNynQFmp
- Q/Y+3etaj481222chNTI7ov2ip/rE/9wSAi0lAfGtaDINor1ZlxYjuNeERR4uRGuv6/7p2KGGNn
- krgX8rnIwcg+fDLH3f5zCeZJf489qIaJbol8p8K2HICW9m1aVLOL9KoD/AsXpIe+kkML17B1HnP
- /fAV9CyvTM1gQBM+tqdoUi0GlEVrdZpSJsLMd0jFkKAXEDueZ/qa1ZkeCxxcLF8AdA7HL9lUCdS
- A0ytNNuLm9wCaalMYeMfLcLJMlClJPhp/1cb9xP+3GHwkfs89BfewmFChwK4oJEbDb8rXS/90B0
- iFrN448HwkE4t28NtSl+6QhtR96AkOvKf5geoWfTO5jO2pEiuKgIXGD7rt8AS2LWUBOgwNbLV1W
- ez0/YrADJVGapaPws4kI0wAEg4RI4w==
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=edmtyYkapI0WV9tsjtgA:9
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: f6By0XOI4urLl9r4BW2ydvPEjRBTFEkE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512010031
+ adultscore=0 clxscore=1015 spamscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512010050
 
-On 11/28/2025 10:47 PM, Anna Maniscalco wrote:
-> GEN7_GRAS_NC_MODE_CNTL was only programmed for BR and not for BV pipe
-> but it needs to be programmed for both.
-> 
-> Program both pipes in hw_init and introducea separate reglist for it in
-> order to add this register to the dynamic reglist which supports
-> restoring registers per pipe.
-> 
-> Fixes: 91389b4e3263 ("drm/msm/a6xx: Add a pwrup_list field to a6xx_info")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-> ---
-> Changes in v2:
-> - Added missing Cc: stable to commit
-> - Added pipe_regs to all 7xx gens
-> - Null check pipe_regs in a7xx_patch_pwrup_reglist
-> - Added parentheses around bitwise and in a7xx_patch_pwrup_reglist
-> - Use A7XX_PIPE_{BR, BV, NONE} enum values
-> - Link to v1: https://lore.kernel.org/r/20251127-gras_nc_mode_fix-v1-1-5c0cf616401f@gmail.com
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 12 ++++++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 34 +++++++++++++++++++++++++++----
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 13 ++++++++++++
->  4 files changed, 55 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> index 29107b362346..10732062d681 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> @@ -1376,7 +1376,6 @@ static const uint32_t a7xx_pwrup_reglist_regs[] = {
->  	REG_A6XX_UCHE_MODE_CNTL,
->  	REG_A6XX_RB_NC_MODE_CNTL,
->  	REG_A6XX_RB_CMP_DBG_ECO_CNTL,
-> -	REG_A7XX_GRAS_NC_MODE_CNTL,
->  	REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE_ENABLE,
->  	REG_A6XX_UCHE_GBIF_GX_CONFIG,
->  	REG_A6XX_UCHE_CLIENT_PF,
-> @@ -1448,6 +1447,12 @@ static const u32 a750_ifpc_reglist_regs[] = {
->  
->  DECLARE_ADRENO_REGLIST_LIST(a750_ifpc_reglist);
->  
-> +static const struct adreno_reglist_pipe a7xx_reglist_pipe_regs[] = {
-> +	{ REG_A7XX_GRAS_NC_MODE_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-> +};
-> +
-> +DECLARE_ADRENO_REGLIST_PIPE_LIST(a7xx_reglist_pipe);
-> +
->  static const struct adreno_info a7xx_gpus[] = {
->  	{
->  		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
-> @@ -1491,6 +1496,7 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.hwcg = a730_hwcg,
->  			.protect = &a730_protect,
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
-> +			.pipe_reglist = &a7xx_reglist_pipe,
->  			.gbif_cx = a640_gbif,
->  			.gmu_cgc_mode = 0x00020000,
->  		},
-> @@ -1513,6 +1519,7 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.hwcg = a740_hwcg,
->  			.protect = &a730_protect,
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
-> +			.pipe_reglist = &a7xx_reglist_pipe,
->  			.gbif_cx = a640_gbif,
->  			.gmu_chipid = 0x7020100,
->  			.gmu_cgc_mode = 0x00020202,
-> @@ -1548,6 +1555,7 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.protect = &a730_protect,
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
->  			.ifpc_reglist = &a750_ifpc_reglist,
-> +			.pipe_reglist = &a7xx_reglist_pipe,
->  			.gbif_cx = a640_gbif,
->  			.gmu_chipid = 0x7050001,
->  			.gmu_cgc_mode = 0x00020202,
-> @@ -1590,6 +1598,7 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.protect = &a730_protect,
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
->  			.ifpc_reglist = &a750_ifpc_reglist,
-> +			.pipe_reglist = &a7xx_reglist_pipe,
->  			.gbif_cx = a640_gbif,
->  			.gmu_chipid = 0x7090100,
->  			.gmu_cgc_mode = 0x00020202,
-> @@ -1623,6 +1632,7 @@ static const struct adreno_info a7xx_gpus[] = {
->  			.hwcg = a740_hwcg,
->  			.protect = &a730_protect,
->  			.pwrup_reglist = &a7xx_pwrup_reglist,
-> +			.pipe_reglist = &a7xx_reglist_pipe,
->  			.gbif_cx = a640_gbif,
->  			.gmu_chipid = 0x70f0000,
->  			.gmu_cgc_mode = 0x00020222,
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 0200a7e71cdf..422ce4c97f70 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -849,9 +849,16 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->  		  min_acc_len_64b << 3 |
->  		  hbb_lo << 1 | ubwc_mode);
->  
-> -	if (adreno_is_a7xx(adreno_gpu))
-> -		gpu_write(gpu, REG_A7XX_GRAS_NC_MODE_CNTL,
-> -			  FIELD_PREP(GENMASK(8, 5), hbb_lo));
-> +	if (adreno_is_a7xx(adreno_gpu)) {
-> +		for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
-> +			gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
-> +				  A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id));
-> +			gpu_write(gpu, REG_A7XX_GRAS_NC_MODE_CNTL,
-> +				  FIELD_PREP(GENMASK(8, 5), hbb_lo));
-> +		}
-> +		gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
-> +			  A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
-> +	}
->  
->  	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL,
->  		  min_acc_len_64b << 23 | hbb_lo << 21);
-> @@ -865,9 +872,11 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->  	const struct adreno_reglist_list *reglist;
-> +	const struct adreno_reglist_pipe_list *pipe_reglist;
->  	void *ptr = a6xx_gpu->pwrup_reglist_ptr;
->  	struct cpu_gpu_lock *lock = ptr;
->  	u32 *dest = (u32 *)&lock->regs[0];
-> +	u32 pipe_reglist_count = 0;
->  	int i;
->  
->  	lock->gpu_req = lock->cpu_req = lock->turn = 0;
-> @@ -907,7 +916,24 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->  	 * (<aperture, shifted 12 bits> <address> <data>), and the length is
->  	 * stored as number for triplets in dynamic_list_len.
->  	 */
-> -	lock->dynamic_list_len = 0;
-> +	pipe_reglist = adreno_gpu->info->a6xx->pipe_reglist;
-> +	if (pipe_reglist) {
-> +		for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+The current value of '0xb0' that represents the offset to the status
+registers within the common registers of the CSIPHY has been changed on
+the newer SOCs and it requires generalizing the macro using a new
+variable 'common_status_offset'. This variable is initialized in the
+csiphy_init() function.
 
-This patch is probably not rebased on msm-next. On msm-next tip, we have
-removed A7XX prefix for pipe enums.
+Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+---
+This change introduces common_status_offset to replace the hardcoded
+offset in CSIPHY_3PH_CMN_CSI_COMMON_STATUSn.
+---
+ .../media/platform/qcom/camss/camss-csiphy-3ph-1-0.c  | 19 +++++++++++++------
+ drivers/media/platform/qcom/camss/camss-csiphy.h      |  1 +
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-> +			gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
-> +				  A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id));
-> +			for (i = 0; i < pipe_reglist->count; i++) {
-> +				if ((pipe_reglist->regs[i].pipe & BIT(pipe_id)) == 0)
-> +					continue;
-> +				*dest++ = A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id);
-> +				*dest++ = pipe_reglist->regs[i].offset;
-> +				*dest++ = gpu_read(gpu, pipe_reglist->regs[i].offset);
-> +				pipe_reglist_count++;
-> +			}
-> +		}
-> +		gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
-> +			  A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
-> +	}
-> +	lock->dynamic_list_len = pipe_reglist_count;
->  }
->  
->  static int a7xx_preempt_start(struct msm_gpu *gpu)
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> index 6820216ec5fc..0a1d6acbc638 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> @@ -46,6 +46,7 @@ struct a6xx_info {
->  	const struct adreno_protect *protect;
->  	const struct adreno_reglist_list *pwrup_reglist;
->  	const struct adreno_reglist_list *ifpc_reglist;
-> +	const struct adreno_reglist_pipe_list *pipe_reglist;
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+index a229ba04b158..9b6a0535cdf8 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+@@ -46,7 +46,8 @@
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE	BIT(7)
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B	BIT(0)
+ #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
+-#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, n)	((offset) + 0xb0 + 0x4 * (n))
++#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, common_status_offset, n) \
++	((offset) + (common_status_offset) + 0x4 * (n))
+ 
+ #define CSIPHY_DEFAULT_PARAMS		0
+ #define CSIPHY_LANE_ENABLE		1
+@@ -714,13 +715,17 @@ static void csiphy_hw_version_read(struct csiphy_device *csiphy,
+ 	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, 6));
+ 
+ 	hw_version = readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 12));
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 12));
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 13)) << 8;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 13)) << 8;
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 14)) << 16;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 14)) << 16;
+ 	hw_version |= readl_relaxed(csiphy->base +
+-				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 15)) << 24;
++		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++						  regs->common_status_offset, 15)) << 24;
+ 
+ 	dev_dbg(dev, "CSIPHY 3PH HW Version = 0x%08x\n", hw_version);
+ }
+@@ -749,7 +754,8 @@ static irqreturn_t csiphy_isr(int irq, void *dev)
+ 	for (i = 0; i < 11; i++) {
+ 		int c = i + 22;
+ 		u8 val = readl_relaxed(csiphy->base +
+-				       CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, i));
++			CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
++							  regs->common_status_offset, i));
+ 
+ 		writel_relaxed(val, csiphy->base +
+ 			       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, c));
+@@ -989,6 +995,7 @@ static int csiphy_init(struct csiphy_device *csiphy)
+ 
+ 	csiphy->regs = regs;
+ 	regs->offset = 0x800;
++	regs->common_status_offset = 0xb0;
+ 
+ 	switch (csiphy->camss->res->version) {
+ 	case CAMSS_845:
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
+index 895f80003c44..2d5054819df7 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.h
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+@@ -90,6 +90,7 @@ struct csiphy_device_regs {
+ 	const struct csiphy_lane_regs *lane_regs;
+ 	int lane_array_size;
+ 	u32 offset;
++	u32 common_status_offset;
+ };
+ 
+ struct csiphy_device {
 
-nit: Maybe dyn_pwrup_reglist is a better name.
+---
+base-commit: 076fb8624c282c10aa8add9a4ae2d9354d2594cb
+change-id: 20251021-make-csiphy-status-macro-cross-platform-5390dc128aee
 
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Best regards,
+-- 
+Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 
--Akhil
-
-
->  	const struct adreno_reglist *gbif_cx;
->  	const struct adreno_reglist_pipe *nonctxt_reglist;
->  	u32 max_slices;
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 0f8d3de97636..1d0145f8b3ec 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -188,6 +188,19 @@ static const struct adreno_reglist_list name = {		\
->  	.count = ARRAY_SIZE(name ## _regs),		\
->  };
->  
-> +struct adreno_reglist_pipe_list {
-> +	/** @reg: List of register **/
-> +	const struct adreno_reglist_pipe *regs;
-> +	/** @count: Number of registers in the list **/
-> +	u32 count;
-> +};
-> +
-> +#define DECLARE_ADRENO_REGLIST_PIPE_LIST(name)	\
-> +static const struct adreno_reglist_pipe_list name = {		\
-> +	.regs = name ## _regs,				\
-> +	.count = ARRAY_SIZE(name ## _regs),		\
-> +};
-> +
->  struct adreno_gpu {
->  	struct msm_gpu base;
->  	const struct adreno_info *info;
-> 
-> ---
-> base-commit: 7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
-> change-id: 20251126-gras_nc_mode_fix-7224ee506a39
-> 
-> Best regards,
 
