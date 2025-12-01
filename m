@@ -1,143 +1,357 @@
-Return-Path: <linux-arm-msm+bounces-83919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5724BC9593D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 03:25:31 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01051C95B0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 05:15:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F404B3A1AB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 02:25:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DDC0C4E028A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 04:15:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CF32146D53;
-	Mon,  1 Dec 2025 02:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D8D202F9C;
+	Mon,  1 Dec 2025 04:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJvtvl5a"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cxG7mIjN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Q/nbwyw4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6343421348
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 02:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830371F2380
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 04:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764555927; cv=none; b=lJDSJEY/kseXovObYhFvF/pXwdRVdDs9APFB77YBzAkrr2YZov3cYqWCxj7yNI+2cQzLCIUtUZuqH6YkJZmF371CwnLZX9AH6VddZsKiUoW3eHO+ZOazpYWNlTd9PSgNdZKPch6WbU4H9v9XjcswqgLTffs8wb1eT8p7L4CIZc0=
+	t=1764562506; cv=none; b=d4hF90AROSJtA32eOfjTQ2A0r4MracqKwj19gNRqpBG79Yx4Yw0PAVuoRTvjLQ5u4mSrU3cgR/gLnuYq0QYOwBYLv52e2mGsvMjUG0FRmyZtkYjnKgNwjEc1cbRe8ScnGjRioOfxAnBaMGjjZwX5hziQyRPQCJqT07WVK3wnZt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764555927; c=relaxed/simple;
-	bh=om49OYvgDAfSrmmC6qejgj5k+MoC43n1qX8G7M9zkB8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IeWAPreSmBBjHTd0AuEQJjfXo9WrNIx1QI/Yvl/ELZGdP6phP18fD/SCYKegkrx7lA/UBYeCGZbE4VXe6D3LMfN7uepmq96onzSY/9n3zKU6onf+vmcHKzLmKu6yMglalBFLVmM2nxLR2hRoMH1lMKy1Ih6ubk5z4eej/VFL2E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CJvtvl5a; arc=none smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-63f97ab5cfcso2797910d50.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 18:25:26 -0800 (PST)
+	s=arc-20240116; t=1764562506; c=relaxed/simple;
+	bh=5u0j3QinjG3Y8FysB8a7uA6R6d6m07+gh2oOYuHuoYc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WGIbKzXd4zIEzhDGDKd8GHisUtmsKVB+AcfGJYmM0FB7yyn/KoyUdvIo+y2VI4l4nahRr/KlITC9tm8U5ReqpHVQW3FcdGkDbEus+Fe0OkQW3KOtqFdbHsbJcNKmsO5Z8sOK3zS0M/YEUG9bXpQGNBxUBWkgtWMSjL0q8ELonJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cxG7mIjN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Q/nbwyw4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AUMO6Ys2659118
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Dec 2025 04:15:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=; b=cxG7mIjN0G6Qg7w4
+	Cwf08ehzDm6SC3vW9cpp8U/lePiRhaVPpUYhkiy9M5WjhjOsHUVViRLo8ASFd5yP
+	Rq3WU7GfJNGH6kT9YhBxyodw7fz6CD629tYswMr0Gxxt/c8U7ia213qXYC98IvhH
+	QGH0ZArqFpOEkviRb9d4FUQ/zWwpJ4WN33tpaBwj7fUcHdXTf96Qwnj6a+6EKSzy
+	4QAldNd2ro54HSmQG/3KsCyLHWxgAHXNB32JsSQ+rdWWEumjrHS6genE1MuBtqWv
+	oJz1wdRuFqTGd19QuzLVYgY6VF7Pr5kDysdRFqB3OfeQZ6E52ven27Jp6PVrzblr
+	5v1rkQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4arwn2gkd1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 04:15:03 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2982dec5ccbso65530715ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 20:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764555925; x=1765160725; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YbiDFDafiEp67ttSmcQHfLRRWo+MM5BzHhb0MRB/fnI=;
-        b=CJvtvl5aewt1J4Dq26ZECCcCvfx8s/jpLUKMBJtzNFHFD38/90d2bEevNZYTqAc+Uy
-         0uH6afKPBDH8cs7GH018fgmdVl6v7Frrw29oKAqZ0+HV5iCWUCfSGjH2qU1Fcf/9kyiQ
-         BTWEsjTiKZNWKJ+sSkQ7vHAAgvwwLwqOVkGFdBIZ1/k01YIFEiQITKmKZ9ZCh9FmkXop
-         mhffQP/IGt9lS4RqLKwAtY8UmZ2YRMQYnJR4n2JtGBir9sE2sl43vrDo1XqMS+bdbUpU
-         gyq6KY8KIj4LhO/5hLo6AN7WuulRoYvfLieJm3ma+YOSJb+jF8qeT2pj8jcEKGp4eE2f
-         iqMw==
+        d=oss.qualcomm.com; s=google; t=1764562503; x=1765167303; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=;
+        b=Q/nbwyw48Lz/fr8i0n9qUTbAL1CTZjmd1wQ272LXQHlrtOG/cERd1Tbyzc9RpxwqjE
+         E4LbNkP50mNeVfaXSVt7copRSa6wqNNonRPSMgPRARiBY04BsoN5CmWTWDwVRwbvOraY
+         PKyY9ZwEyDMteHI0daBant/1XUEaKFzZ/rW9vDw6uI4p+5LsEf1XvbKnmXW6xO9oA9c6
+         1BbKijuyTwxO62bPV2XPzMNv4JSlkMWBcif23N4bUWS8KI3ExqXIWlumiC5QDJatzbAE
+         tsg1VEW5oXO+dqkn8FTiLDGK754SOso7Rv0i6iOMYrpojz9cl58JxajQbhZphOV54l+1
+         7htA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764555925; x=1765160725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YbiDFDafiEp67ttSmcQHfLRRWo+MM5BzHhb0MRB/fnI=;
-        b=ZR68q8tU9rMc/So8HXnoC3uQX9eBP20HlR94zAVNFsMGBWehJzuLmT8b8Iva8wBQ37
-         AAYa2zkIVSkkcYTpe+IBPSnAyRcdWUr44KtmmBOn6aO/a+6SKxPyA3JqkRHUZtytBx7J
-         OjGxO8C5JEWM/PGqyqNCJoKQRIT0Fuw9BjAWbxVYfVUM2iSRhoVPWEax7iaCj7UZxH2q
-         6V3LhDqe+ar7meRB/YCWK1+NXKuw89dZB9s5cLMkS0adP0ewrfK9UUVzIboMU5hhxU2i
-         vLHAfxJjMnYFK3Kzi5fUldkh/naquh076Z3YZQReokdQrb4SeAwLE622lYjOW9MiW7+r
-         J45w==
-X-Forwarded-Encrypted: i=1; AJvYcCUFYJXZJZ/nWwK3fjiwk8tU9/QslVVvnBWkUhmNLvSedy8t3m/9RcfB2I8YdNXaCz6FwgAqlDZRQsoi2jU5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyM1h74sHjW0/5CLJ0vrivr8zqYjQ4MP/Us2F30CV66HRrzMnJ6
-	EQJf+RAVj6wSNjzzpyEeqvjKjKzw8ZjW3oT6hkCgandzfOl9SBqbOertAtOGkZZ+x1blZqx0y48
-	SQdAuihADByae2NHgBUr8TEcmEjUIgCY=
-X-Gm-Gg: ASbGncsvaQJYc/DhHc0rnCNPjmnWHi3s+yTejqrf734p9kkYTxO0lnB91zhek15mSfn
-	x20HKpY45B6reF/CVCjXREUNl5YhZikFGt+b5FgV/b6unqzqx0mvnqiSaaxgbRRCa79bwDBEioL
-	3P3Ta4WU7SwCDhuwPURvsUHTj/gbrxrfV/y41kJ6va/STwOFEcj3+t5EFPxgvaq1Icjpn4PCOyv
-	v/PAQpwnfcjDmnxO8sSQAJlBACGQsmhOj/eYZqoPJ8WFZwR1hcEbdoplEFSBDhN793MIqNx3OaV
-	GnelFSQ=
-X-Google-Smtp-Source: AGHT+IHNrdBTSsVZw1TVMN6aUclbLeTK9pfKC0PQSp7u6i4tFVERxY4MvuCzD/zi6W+3QTtsOjlisTpAKjTSyK6idr4=
-X-Received: by 2002:a05:690c:260a:b0:787:cad1:bdbf with SMTP id
- 00721157ae682-78ab6f7f310mr185477697b3.53.1764555925356; Sun, 30 Nov 2025
- 18:25:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764562503; x=1765167303;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FseXoC0UFPlFn2ULWDdIiyt46WABe6AmHmF+Jh8csI4=;
+        b=QpIb3ZZppoyLP72En0co72w01gnBzeWy5wA8sWdVhLmK97FDN/SsSxxsUz4KiUwdZS
+         yiwoadiQvYflj3oUBHxnMikPuK/8bfh97szieSjgwbWa2i6lahMzx7gNNoZ2J9SNs1PK
+         CSmOdNnIvwpfOPf3FBQd4X94O8HtqcE2Eb0N+mVEi5HzU5x9hAZ34+rxH0v3ClSrxHaB
+         pcLRbhTepcLlgJMx8GjZQCJwQioL1WOrlUXf+i2swJlxuK2fOq5NL+Ozvto19VNfc0Kw
+         CPi3K456P8d7EUEoeUTt0JaHI33jQlrL5IccvR8GFgyKI+rd9lgWJC/bCneJB8tNLOjr
+         Oirg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4er/x7qfToVKqGQF9q2t9LV/G0eixMKNNnu5N69qDlsUHZbnqgpf7B3JENIT5NQgMHsiD7T75TMxapIJe@vger.kernel.org
+X-Gm-Message-State: AOJu0YwB1UyzWlBhhEA3DSnhZx+FHQq5TshmfsCDnO0B7DCmjMH+aHsB
+	nKr881IfSESyX7wllW+8HUF3ijr/05I0A8aMiJ7TS4HTSFM4XPr3Je5rzEm8IUb09N3QdJ3QQ/A
+	UCCcfe/ay3BCC5b1nYAIRsita0fILd14hPUAek4wSpaunE8/2OqwguawWB+hclxSep2cwiG2H1J
+	K/
+X-Gm-Gg: ASbGncthdkli4dNkdGlVBazK3DW7Wdvz7koEHWqYmdkKDZLbAoM39iR7dE4NHkKIO8o
+	MglHYnBhnB5tfVOa8VeIVhs/9xF2POLtC6sJqQnaujuGhCkll27bb6GqWoLRWJ8MI9lFQUWQvOx
+	pA1d5DD73865pbdcxOZnNq/lfAv+M+aFNQ+rVorh5r99sIyeU2e8+raP5piOoXhTc0epoCDZJmu
+	DIK1duEp57yoe7P53ERVaI2TEGw6Su0nU8mOXRaaAsFFRRosX/b0hNOrcSwr7RjguhLSvfIYvBq
+	LwM5z5v0k9eYuHFNR9x8rY9IzHSKYGUBLe1mgEBLuSEGHJr0Y1MQXpPg0IRSl+3zECnmJPQGKUr
+	F81lecLLw6L86pGUEbatY7o1Sj1ZCXD70
+X-Received: by 2002:a17:903:1b2b:b0:298:43f4:cc49 with SMTP id d9443c01a7336-29b6c5225f0mr420884385ad.24.1764562502848;
+        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHUvdYqQdcAB8wtQ4iFi6hdrLX7WH1Zr/sDxqFvq3nFRKk9zpvXvS8fz9AvXPWK52opFXU2Cw==
+X-Received: by 2002:a17:903:1b2b:b0:298:43f4:cc49 with SMTP id d9443c01a7336-29b6c5225f0mr420884085ad.24.1764562502354;
+        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
+Received: from [192.168.1.9] ([117.211.36.176])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bce47096csm106669955ad.44.2025.11.30.20.14.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Nov 2025 20:15:02 -0800 (PST)
+Message-ID: <17b0f475-6c67-4cef-9277-251f45c1837c@oss.qualcomm.com>
+Date: Mon, 1 Dec 2025 09:44:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <35615ad4-5b86-577f-4695-c6cd85206334@marek.ca>
- <20251201001353.9852-1-threeway@gmail.com> <4e3c1c5d-fee9-d4d8-8b06-d33210c5819e@marek.ca>
-In-Reply-To: <4e3c1c5d-fee9-d4d8-8b06-d33210c5819e@marek.ca>
-From: Steev Klimaszewski <threeway@gmail.com>
-Date: Sun, 30 Nov 2025 20:25:17 -0600
-X-Gm-Features: AWmQ_bkIJ2Th3UmmrTX0Dkua98Xe2UIze9xOsU13YQ3ZW2NZe4Hpii3OtfGV0FU
-Message-ID: <CAOvMTZhartq70YBCkGHbNNYd4MK1RqCjwoV3-WhrHoEqEtgLTA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: abel.vesa@linaro.org, andersson@kernel.org, christopher.obbard@linaro.org, 
-	conor+dt@kernel.org, devicetree@vger.kernel.org, konradybcio@kernel.org, 
-	krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_rjendra@quicinc.com, robh@kernel.org, 
-	sibi.sankar@oss.qualcomm.com, stephan.gerhold@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/msm: Fix a7xx per pipe register programming
+To: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Antonino Maniscalco <antomani103@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
+Content-Language: en-US
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <20251128-gras_nc_mode_fix-v2-1-634cda7b810f@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: kIQAevgA8CvoYTK_4gkI6hmHu4y9tfpD
+X-Proofpoint-GUID: kIQAevgA8CvoYTK_4gkI6hmHu4y9tfpD
+X-Authority-Analysis: v=2.4 cv=Q4DfIo2a c=1 sm=1 tr=0 ts=692d1647 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=bQZbETVgiEA5ROTFRdaCHA==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=ScosPgwaH3TmPZige8AA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDAzMSBTYWx0ZWRfXw7ITCNynQFmp
+ Q/Y+3etaj481222chNTI7ov2ip/rE/9wSAi0lAfGtaDINor1ZlxYjuNeERR4uRGuv6/7p2KGGNn
+ krgX8rnIwcg+fDLH3f5zCeZJf489qIaJbol8p8K2HICW9m1aVLOL9KoD/AsXpIe+kkML17B1HnP
+ /fAV9CyvTM1gQBM+tqdoUi0GlEVrdZpSJsLMd0jFkKAXEDueZ/qa1ZkeCxxcLF8AdA7HL9lUCdS
+ A0ytNNuLm9wCaalMYeMfLcLJMlClJPhp/1cb9xP+3GHwkfs89BfewmFChwK4oJEbDb8rXS/90B0
+ iFrN448HwkE4t28NtSl+6QhtR96AkOvKf5geoWfTO5jO2pEiuKgIXGD7rt8AS2LWUBOgwNbLV1W
+ ez0/YrADJVGapaPws4kI0wAEg4RI4w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512010031
 
-Hi Jonathan,
+On 11/28/2025 10:47 PM, Anna Maniscalco wrote:
+> GEN7_GRAS_NC_MODE_CNTL was only programmed for BR and not for BV pipe
+> but it needs to be programmed for both.
+> 
+> Program both pipes in hw_init and introducea separate reglist for it in
+> order to add this register to the dynamic reglist which supports
+> restoring registers per pipe.
+> 
+> Fixes: 91389b4e3263 ("drm/msm/a6xx: Add a pwrup_list field to a6xx_info")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+> ---
+> Changes in v2:
+> - Added missing Cc: stable to commit
+> - Added pipe_regs to all 7xx gens
+> - Null check pipe_regs in a7xx_patch_pwrup_reglist
+> - Added parentheses around bitwise and in a7xx_patch_pwrup_reglist
+> - Use A7XX_PIPE_{BR, BV, NONE} enum values
+> - Link to v1: https://lore.kernel.org/r/20251127-gras_nc_mode_fix-v1-1-5c0cf616401f@gmail.com
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 12 ++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 34 +++++++++++++++++++++++++++----
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 13 ++++++++++++
+>  4 files changed, 55 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> index 29107b362346..10732062d681 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> @@ -1376,7 +1376,6 @@ static const uint32_t a7xx_pwrup_reglist_regs[] = {
+>  	REG_A6XX_UCHE_MODE_CNTL,
+>  	REG_A6XX_RB_NC_MODE_CNTL,
+>  	REG_A6XX_RB_CMP_DBG_ECO_CNTL,
+> -	REG_A7XX_GRAS_NC_MODE_CNTL,
+>  	REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE_ENABLE,
+>  	REG_A6XX_UCHE_GBIF_GX_CONFIG,
+>  	REG_A6XX_UCHE_CLIENT_PF,
+> @@ -1448,6 +1447,12 @@ static const u32 a750_ifpc_reglist_regs[] = {
+>  
+>  DECLARE_ADRENO_REGLIST_LIST(a750_ifpc_reglist);
+>  
+> +static const struct adreno_reglist_pipe a7xx_reglist_pipe_regs[] = {
+> +	{ REG_A7XX_GRAS_NC_MODE_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
+> +};
+> +
+> +DECLARE_ADRENO_REGLIST_PIPE_LIST(a7xx_reglist_pipe);
+> +
+>  static const struct adreno_info a7xx_gpus[] = {
+>  	{
+>  		.chip_ids = ADRENO_CHIP_IDS(0x07000200),
+> @@ -1491,6 +1496,7 @@ static const struct adreno_info a7xx_gpus[] = {
+>  			.hwcg = a730_hwcg,
+>  			.protect = &a730_protect,
+>  			.pwrup_reglist = &a7xx_pwrup_reglist,
+> +			.pipe_reglist = &a7xx_reglist_pipe,
+>  			.gbif_cx = a640_gbif,
+>  			.gmu_cgc_mode = 0x00020000,
+>  		},
+> @@ -1513,6 +1519,7 @@ static const struct adreno_info a7xx_gpus[] = {
+>  			.hwcg = a740_hwcg,
+>  			.protect = &a730_protect,
+>  			.pwrup_reglist = &a7xx_pwrup_reglist,
+> +			.pipe_reglist = &a7xx_reglist_pipe,
+>  			.gbif_cx = a640_gbif,
+>  			.gmu_chipid = 0x7020100,
+>  			.gmu_cgc_mode = 0x00020202,
+> @@ -1548,6 +1555,7 @@ static const struct adreno_info a7xx_gpus[] = {
+>  			.protect = &a730_protect,
+>  			.pwrup_reglist = &a7xx_pwrup_reglist,
+>  			.ifpc_reglist = &a750_ifpc_reglist,
+> +			.pipe_reglist = &a7xx_reglist_pipe,
+>  			.gbif_cx = a640_gbif,
+>  			.gmu_chipid = 0x7050001,
+>  			.gmu_cgc_mode = 0x00020202,
+> @@ -1590,6 +1598,7 @@ static const struct adreno_info a7xx_gpus[] = {
+>  			.protect = &a730_protect,
+>  			.pwrup_reglist = &a7xx_pwrup_reglist,
+>  			.ifpc_reglist = &a750_ifpc_reglist,
+> +			.pipe_reglist = &a7xx_reglist_pipe,
+>  			.gbif_cx = a640_gbif,
+>  			.gmu_chipid = 0x7090100,
+>  			.gmu_cgc_mode = 0x00020202,
+> @@ -1623,6 +1632,7 @@ static const struct adreno_info a7xx_gpus[] = {
+>  			.hwcg = a740_hwcg,
+>  			.protect = &a730_protect,
+>  			.pwrup_reglist = &a7xx_pwrup_reglist,
+> +			.pipe_reglist = &a7xx_reglist_pipe,
+>  			.gbif_cx = a640_gbif,
+>  			.gmu_chipid = 0x70f0000,
+>  			.gmu_cgc_mode = 0x00020222,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 0200a7e71cdf..422ce4c97f70 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -849,9 +849,16 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>  		  min_acc_len_64b << 3 |
+>  		  hbb_lo << 1 | ubwc_mode);
+>  
+> -	if (adreno_is_a7xx(adreno_gpu))
+> -		gpu_write(gpu, REG_A7XX_GRAS_NC_MODE_CNTL,
+> -			  FIELD_PREP(GENMASK(8, 5), hbb_lo));
+> +	if (adreno_is_a7xx(adreno_gpu)) {
+> +		for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
+> +			gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+> +				  A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id));
+> +			gpu_write(gpu, REG_A7XX_GRAS_NC_MODE_CNTL,
+> +				  FIELD_PREP(GENMASK(8, 5), hbb_lo));
+> +		}
+> +		gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+> +			  A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
+> +	}
+>  
+>  	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL,
+>  		  min_acc_len_64b << 23 | hbb_lo << 21);
+> @@ -865,9 +872,11 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
+>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>  	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>  	const struct adreno_reglist_list *reglist;
+> +	const struct adreno_reglist_pipe_list *pipe_reglist;
+>  	void *ptr = a6xx_gpu->pwrup_reglist_ptr;
+>  	struct cpu_gpu_lock *lock = ptr;
+>  	u32 *dest = (u32 *)&lock->regs[0];
+> +	u32 pipe_reglist_count = 0;
+>  	int i;
+>  
+>  	lock->gpu_req = lock->cpu_req = lock->turn = 0;
+> @@ -907,7 +916,24 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
+>  	 * (<aperture, shifted 12 bits> <address> <data>), and the length is
+>  	 * stored as number for triplets in dynamic_list_len.
+>  	 */
+> -	lock->dynamic_list_len = 0;
+> +	pipe_reglist = adreno_gpu->info->a6xx->pipe_reglist;
+> +	if (pipe_reglist) {
+> +		for (u32 pipe_id = A7XX_PIPE_BR; pipe_id <= A7XX_PIPE_BV; pipe_id++) {
 
-On Sun, Nov 30, 2025 at 8:07=E2=80=AFPM Jonathan Marek <jonathan@marek.ca> =
-wrote:
->
-> I was curious about this so I tried booting EL1
-> - 32GB CRD boots fine
-> - 64GB T14S boots with CONFIG_ARM64_VA_BITS_39 (except display driver
-> didn't probe, because it depends on adsp firmware, lol). without
-> CONFIG_ARM64_VA_BITS_39 it resets
+This patch is probably not rebased on msm-next. On msm-next tip, we have
+removed A7XX prefix for pipe enums.
 
-Weird, I definitely have CONFIG_ARM64_VA_BITS_39 set here.
+> +			gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+> +				  A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id));
+> +			for (i = 0; i < pipe_reglist->count; i++) {
+> +				if ((pipe_reglist->regs[i].pipe & BIT(pipe_id)) == 0)
+> +					continue;
+> +				*dest++ = A7XX_CP_APERTURE_CNTL_HOST_PIPE(pipe_id);
+> +				*dest++ = pipe_reglist->regs[i].offset;
+> +				*dest++ = gpu_read(gpu, pipe_reglist->regs[i].offset);
+> +				pipe_reglist_count++;
+> +			}
+> +		}
+> +		gpu_write(gpu, REG_A7XX_CP_APERTURE_CNTL_HOST,
+> +			  A7XX_CP_APERTURE_CNTL_HOST_PIPE(A7XX_PIPE_NONE));
+> +	}
+> +	lock->dynamic_list_len = pipe_reglist_count;
+>  }
+>  
+>  static int a7xx_preempt_start(struct msm_gpu *gpu)
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index 6820216ec5fc..0a1d6acbc638 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -46,6 +46,7 @@ struct a6xx_info {
+>  	const struct adreno_protect *protect;
+>  	const struct adreno_reglist_list *pwrup_reglist;
+>  	const struct adreno_reglist_list *ifpc_reglist;
+> +	const struct adreno_reglist_pipe_list *pipe_reglist;
 
->
-> Anyway making things worse for "64GB+EL1+broken firmware" shouldn't
-> block this patch, because "64GB+EL1+broken firmware" needs workarounds
-> anyway and this change is needed to use 64GB without issues otherwise.
+nit: Maybe dyn_pwrup_reglist is a better name.
 
-I'm not sure I follow this logic; most users when they first get the
-system will be stuck in el1 until they get el2 set up, which also
-requires workarounds in order to set up.  I don't at all disagree that
-the fix is more correct, but I don't like users having broken things
-just because the vendor hasn't fixed their firmware yet.
-Additionally, distro kernels will default to BITS_52 for arm64
-kernels, not 39 because most of them run more places than just
-Qualcomm laptops.
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
->
-> On 11/30/25 7:13 PM, Steev Klimaszewski wrote:
-> > Hi All,
-> >
-> > On my Thinkpad T14S OLED with 64GB, with this patch applied, I am unabl=
-e to boot
-> > the laptop anymore.  It doesn't matter whether I have mem=3D30GB, nor i=
-f I set
-> > CONFIG_ARM64_VA_BITS_39, or not limiting the ram - shortly after loadin=
-g the
-> > device tree, the laptop just resets.
-> >
-> > I have tried over 20 boots with it applied, as well as trying both boot=
-ing a
-> > working kernel, and then rebooting as well as cold boots.
-> >
-> >
-> > -- steev
-> >
-> .
+-Akhil
+
+
+>  	const struct adreno_reglist *gbif_cx;
+>  	const struct adreno_reglist_pipe *nonctxt_reglist;
+>  	u32 max_slices;
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 0f8d3de97636..1d0145f8b3ec 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -188,6 +188,19 @@ static const struct adreno_reglist_list name = {		\
+>  	.count = ARRAY_SIZE(name ## _regs),		\
+>  };
+>  
+> +struct adreno_reglist_pipe_list {
+> +	/** @reg: List of register **/
+> +	const struct adreno_reglist_pipe *regs;
+> +	/** @count: Number of registers in the list **/
+> +	u32 count;
+> +};
+> +
+> +#define DECLARE_ADRENO_REGLIST_PIPE_LIST(name)	\
+> +static const struct adreno_reglist_pipe_list name = {		\
+> +	.regs = name ## _regs,				\
+> +	.count = ARRAY_SIZE(name ## _regs),		\
+> +};
+> +
+>  struct adreno_gpu {
+>  	struct msm_gpu base;
+>  	const struct adreno_info *info;
+> 
+> ---
+> base-commit: 7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
+> change-id: 20251126-gras_nc_mode_fix-7224ee506a39
+> 
+> Best regards,
 
