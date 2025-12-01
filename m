@@ -1,186 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-83953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53161C971F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 12:51:55 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10E0DC97320
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 13:18:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2685E3A41D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 11:51:53 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7363B4E1600
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 12:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F397E2F1FFE;
-	Mon,  1 Dec 2025 11:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C0E930B522;
+	Mon,  1 Dec 2025 12:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxxVMSdR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HfgBPhBC";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eYL0WXfo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF6E2F1FCF;
-	Mon,  1 Dec 2025 11:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7E02DA76C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 12:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764589910; cv=none; b=bQYfXqjLv2TtCXxwEK3DwEr1Gw4DOA2jYNYiu8O0QubKDu/NnwU/lXQKVsuYvOExWemaaGjWzdfthZhX7vBDw/F4liOmOCn70lb+APnCGoAnFBtAM/rp5UmykLgl0iISx6QHqSk3El8a6GLyI55m2kwH2UiJ03S9T1AO2Y3qRSE=
+	t=1764591504; cv=none; b=q+9DlYYq/NHEIu7ptVFL/wZjnK+egDOMNW6QWh5CuFnH05a2Gravp/z4W1Nnl8GwQgtBCznMCdks21APdmPMsk4xV+wGADZOov8aJc3LXo1iQfWSS5dGieUFWY6cPLwOlKCjTirZ9J9O1HwRji04R0MyGyxRl5BrtJuPZm8BkII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764589910; c=relaxed/simple;
-	bh=3HC8X3QnxHsDdV1qdXMUkclAd82ZLov/gFh81kRCVuM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GOG5ICaCve+ve/ilTtJN69zLo2ABI/V1FI7lvHmQAWsVAGVYXPHZeiyg7XLNfk7eIR2komYNUsSqHFVJXG5FV3a5/4b5cSfIr+jQAGcdvcL6XXM1KrBV5pIIDYBOiY3gRmH0n2i+b5Lu7a75QBTVYCP4acNU70+9uaSIFQS3eUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxxVMSdR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1CFC4CEF1;
-	Mon,  1 Dec 2025 11:51:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764589910;
-	bh=3HC8X3QnxHsDdV1qdXMUkclAd82ZLov/gFh81kRCVuM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cxxVMSdRYaTGz7G2omN0JBxOHZ3CcZ9mhrs//pSijQsiiPaJIso1SqReYJBs0jEpm
-	 XJpNxdIivIO2KdC2D7r944Fc7aTMl2XqBp4nhQ3ZBsgPyA0KYWJjibmcdLv8OKdcEm
-	 EQrebsr6Uo47RM4k86dE15Gq3XH1CmGgW5zI4ZcNpjr/Rog/9FMG9ASYnaVvIH92ky
-	 oF+GDmFTqYRQTkZQTbJj3jFrOef62kmz9pbOq2jRuImXtQOMJDm1oZXfHEwSHxDfzP
-	 1hw/WpaH1eAnFKF14GTxAfvCtBXjc4Hw+UQuIG7cisBjI536GiDTCgWbjCeS+FcA4J
-	 8+O4GNY101p6g==
-Date: Mon, 1 Dec 2025 17:21:33 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Jonathan Chocron <jonnyc@amazon.com>, linux-pci@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v9 4/4] PCI: dwc: Support ECAM mechanism by enabling iATU
- 'CFG Shift Feature'
-Message-ID: <h7pgm3lqolm53sb4wrcpcurk4ghz4tulqnr7vgd7rzxy4hscue@jcn5tepevlwl>
-References: <20250909-controller-dwc-ecam-v9-0-7d5b651840dd@kernel.org>
- <20250909-controller-dwc-ecam-v9-4-7d5b651840dd@kernel.org>
- <alpine.DEB.2.21.2511280256260.36486@angie.orcam.me.uk>
- <c7aea2b3-6984-40f5-8234-14d265dabefc@oss.qualcomm.com>
- <alpine.DEB.2.21.2511280755440.36486@angie.orcam.me.uk>
- <cabf4c20-095b-4579-adc1-146a566b19b9@oss.qualcomm.com>
- <alpine.DEB.2.21.2511281714030.36486@angie.orcam.me.uk>
- <a4c6d47f-28b5-40d3-bc82-10aeb14f8e78@oss.qualcomm.com>
- <alpine.DEB.2.21.2511290428340.36486@angie.orcam.me.uk>
+	s=arc-20240116; t=1764591504; c=relaxed/simple;
+	bh=AAYaNa4GQ8Ez3/aLfbHSgfhXobH7Rm4Rp7YXEtlVYUY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qhlRdZaaTceBFPWoUX+iF8Y7mrxI+XDgYMKOe4itn2U71OOioiRMle5Br93mu20pxixuCQSZGvPTCvJOoPIfH8+Q8ANprXLzQQmTMwQo/p2b3ujJAN8eOyciDVhIz52syL3bh9klwz2oJBDQj8OADsUZ1qb0hKRp2Oti7f9sg4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HfgBPhBC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eYL0WXfo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B1AxRRF349136
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Dec 2025 12:18:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S7x/5lDJpG9MLNGER0uMlUs9xddlh9rKN8rkCt8nLcU=; b=HfgBPhBCXNALgN5S
+	LYVVrg3Q0krv4BCSbaviNJodIg6xNfQHXUCrSbT1t9dIzem5uK9UDw2399Oche+g
+	2tWUrI7cIZkP7D2x9bpY/6ar8wGTXiSkN0bDdDn/VYu4pFOoCj04ftoJsq0/HK8w
+	CsUDy6Qpe1NE09nTxhjSn/SEW+noIAaJshmecVwipW3gAWj92awSGb+701hS8Y/s
+	mNwF4G1H/tZ0sbPnb14Qf1CyrOxJ582ZHSsAegv7lDCFhOj2nD9iKCrMUzOHy1Ar
+	CIsFBL9w8KfhOkol39ytotuF0Zbr+kCltbk3+OgEleQdd4w9p3NQle65+PgqbBL3
+	ywnCmw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4as9re06h4-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 12:18:20 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b1d8f56e24so978264785a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 04:18:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764591500; x=1765196300; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S7x/5lDJpG9MLNGER0uMlUs9xddlh9rKN8rkCt8nLcU=;
+        b=eYL0WXfowwb8P9ZVsQkFC++ujluiIhPP+qf72GmT3Uqmn5JLKKzXE30s12ZIVnWnrt
+         vO+3aK8wenalFoBLymMNNJhY/XfzksgXJ33oYtwEUBN3oSRTpg2OYseRNQ47P7+jc5+W
+         ZNCCyEU6eew/5McENHKxjJ4WWWt2T2xZlHaf7m9KS9EhlJGk+J/GlBfnYVmgST+IAsMj
+         BGbX2vl7Di/ImlhCoPySaeVS6lxP0NFr8XhX0VCESob9yIPvekNBk/QAHt/5TaLpXNjj
+         ocRbl0QUSGUkY4mnh4jy7zH2zU+r3MmxGpWzfUbkfZdx5zHMcyAfLSmJHEU5LL5ngbXq
+         xhag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764591500; x=1765196300;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S7x/5lDJpG9MLNGER0uMlUs9xddlh9rKN8rkCt8nLcU=;
+        b=Oic912X3vONVCoWMG4EdXvUdPVzU354ZUoQuOmB1V5m9pHSTZUZBui8HFvMO/C1gvs
+         kYm0IKmz4fEIqof+IC6ijBdYNEPNerX/CYWV5xsaeXryL+acQ2agxvvPeiAR+rP9O80K
+         iFCBTHuUQH3EdV6/azHEr/lBrW0XeNDyme3f7I4C8x5M0+J7NVTbb7bmhWtpblT4+0oF
+         FSn4hnTMze2i//P7QAkVz25qpQYw1iupnEuVY57/oiu0H7dFlAhFMQ7RFK5Qc1o6uu4H
+         A76KUD/3Vr1dn/VRjNunXN5q8NeRyw0cN4kWBQkwHr835XtVimtE5qDc5OB3gq+2ugsH
+         hLEw==
+X-Forwarded-Encrypted: i=1; AJvYcCX0ZoCSqZarsgThz4/0d53t4N7PKl0AzPpRdJlNww4x8s8B1SwN8JleFP5YxQMgUcQET9rGH8k3YQzqAyRO@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxmy8fEuT/sZR12pLhxYKoIMkVSHG0zQ4JzlS1/M3xfTEEJx3PA
+	8KLqnJlbVAVXvS76owrrzCwkd1XVAsaW8I1lQY8NoTkbh1yvQnIsd5x+ejheJc5ky3rTs0W2OwF
+	pRzK3ub+tLLmis8SP+ry8Nj6kezNQVhVYeAjc6DQh0txAj6/Z6QSmBMTENSOBw8taNRBL
+X-Gm-Gg: ASbGncsuYSEEybXPwRZq2Y+3alRqHybnZAVwhctIFpJpXOaKrWqtmAaYhzEy5OuqxOL
+	WRzrkNP8Vd6sMc4dkv0Nee59ec5IF5WZcUtchvatQBV+O24SGQxb9Lz03el5kIY3ohEeZohI5F1
+	pvBzbGcAH9tb9sgV2JMsb0Z0K6U7YVDdc8HqrkB9aBBZRQzyZP9CRSijKnpfTEOq6Ykb78VMSVv
+	K5oMcjL2WmSmicE4wC1KEDFLWeBeGeMebP/Nyl4efTp7Dx0O3S4SuhcmCoGBMEzRjV2D+BpQ5xt
+	5Msl7j67lkQd6Gp6R25wqUABLE+yrxjwxrwxaPoh0WbP+wBHd1B7y7UMizrN6o5DPLuQQzyvMTU
+	wHQinnJT5/UgzuCUUwBpZ9b0fA+RSbvjrwKJD
+X-Received: by 2002:a05:620a:4629:b0:8b2:e533:66f7 with SMTP id af79cd13be357-8b4ebd567ccmr3486883085a.10.1764591500188;
+        Mon, 01 Dec 2025 04:18:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHR4G7h21uepjoqGj+HTnF9EXrnBkONdATlsyVgmaOwHgYnZY5PX5j8yfp1NqPWxk8IfOgLMQ==
+X-Received: by 2002:a05:620a:4629:b0:8b2:e533:66f7 with SMTP id af79cd13be357-8b4ebd567ccmr3486877185a.10.1764591499741;
+        Mon, 01 Dec 2025 04:18:19 -0800 (PST)
+Received: from [192.168.68.121] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-42e1c5d6133sm27682614f8f.16.2025.12.01.04.18.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Dec 2025 04:18:19 -0800 (PST)
+Message-ID: <88b63ab9-85bc-4af1-a802-e2e2f332254f@oss.qualcomm.com>
+Date: Mon, 1 Dec 2025 12:18:18 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <alpine.DEB.2.21.2511290428340.36486@angie.orcam.me.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] ASoC: codecs: wcd93xx: fix OF node leaks on probe
+ failure
+To: Johan Hovold <johan@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
+        Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251201093419.24474-1-johan@kernel.org>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20251201093419.24474-1-johan@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDEwMCBTYWx0ZWRfX4anySw75P4Nj
+ KPlVUtuboHucFNZm3pkGSLBjnj9TT4ziztCrlhkGpX6CHaPoppIp7oR4+uOWXGfAD7Oxe+49DoI
+ zgM94XSWEt7Sx0ExttcsbuXK0iwJCtMUs/AZtnZY03j++DQxk5Cpm6sBre6vcGXRbnkFsC52U62
+ tybR0lN32eFa+FPcas2aX8/fVpzNKkutz6mqUwk5jGtETgcHCfQiZkiNJWrYuv1/ZRWIwGIJx6v
+ 6UFgTHXrbKKnK1vEfZ83/aOoqr5TGshQEHl1P1tzUXJE1n3Msp1xhv5xaYFrVoy6x/OqoYJdqmw
+ lmg+04+ob5bYTqtTDsmtByKezsRiDhxard/euycnUHPLlhITleWxy5ZImESvnFQ1S/2f8i3GTY8
+ bOffOz2TIua6m/3halnlHYCtYYpPmQ==
+X-Authority-Analysis: v=2.4 cv=MNptWcZl c=1 sm=1 tr=0 ts=692d878c cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=MVHWC56zHThdgQPXUUYA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: ez9ns1NJKgEqQsxmzpyrxgZ-E0hP944h
+X-Proofpoint-GUID: ez9ns1NJKgEqQsxmzpyrxgZ-E0hP944h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512010100
 
-On Sat, Nov 29, 2025 at 06:04:24AM +0000, Maciej W. Rozycki wrote:
-> On Sat, 29 Nov 2025, Krishna Chaitanya Chundru wrote:
+
+
+On 12/1/25 9:34 AM, Johan Hovold wrote:
+> The original wcd938x driver has a couple of OF node reference leaks
+> which have been reproduced in the two later added drivers.
 > 
-> > > > Hi Maciej, Can you try attached patch and let me know if that is helping
-> > > > you
-> > > > or not. - Krishna Chaitanya.
-> > >   No change, it's still broken, sorry.
-> > HI Maciej,
-> > For the previous patch can you apply this diff and share me dmesg o/p
-> 
->  Your patch came though garbled, likely due to:
-> 
-> Content-Type: text/plain; charset=UTF-8; format=flowed
-> 
-> Please refer Documentation/process/email-clients.rst and reconfigure your 
-> e-mail client if possible.
-> 
->  Regardless, I've fixed it up by hand and the only difference in the log, 
-> except for usual noise which I removed, is this:
-> 
-> --- dmesg-bad.log	2025-11-28 03:47:29.582049781 +0100
-> +++ dmesg-debug.log	2025-11-29 05:41:23.384645926 +0100
-> @@ -164,6 +164,8 @@
->  fu740-pcie e00000000.pcie: ECAM at [mem 0xdf0000000-0xdffffffff] for [bus 00-ff]
->  fu740-pcie e00000000.pcie: Using 256 MSI vectors
->  fu740-pcie e00000000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4096G
-> +fu740-pcie e00000000.pcie: Current iATU OB index 2
-> +fu740-pcie e00000000.pcie: Current iATU OB index 4
->  fu740-pcie e00000000.pcie: cap_exp at 70
->  fu740-pcie e00000000.pcie: PCIe Gen.1 x8 link up
->  fu740-pcie e00000000.pcie: changing speed back to original
-> 
-> I've attached a full copy of the debug log too.  I hope this helps you 
-> narrow the issue down or otherwise let me know what to try next.
-> 
->  NB I note that code you've been poking at only refers resources of the 
-> IORESOURCE_MEM type.  What about IORESOURCE_IO, which seems more relevant 
-> here?
-> 
->  Also as a quick check I've now reconfigured the defxx driver for PCI port 
-> I/O (which is a one-liner; the mapping used to be selectable by hand, but 
-> distributions got it wrong for systems w/o PCI port I/O, so I switched the 
-> driver to an automatic choice a few years ago, but the logic remains):
-> 
-> # cat /proc/ioports
-> 00000000-0000ffff : pcie@e00000000
->   00001000-00002fff : PCI Bus 0000:01
->     00001000-00002fff : PCI Bus 0000:02
->       00001000-00002fff : PCI Bus 0000:05
->         00001000-00002fff : PCI Bus 0000:06
->           00001000-00001fff : PCI Bus 0000:07
->           00001000-00001007 : 0000:07:00.0
->           00001000-00001002 : parport0
->           00001003-00001007 : parport0
->           00001008-0000100b : 0000:07:00.0
->           00001008-0000100a : parport0
->           00002000-00002fff : PCI Bus 0000:08
->           00002000-00002fff : PCI Bus 0000:09
->           00002000-000020ff : 0000:09:01.0
->           00002100-0000217f : 0000:09:02.0
->           00002100-0000217f : defxx
-> # 
-> 
-> and:
-> 
-> defxx 0000:09:02.0: assign IRQ: got 40
-> defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-> defxx 0000:09:02.0: enabling device (0000 -> 0003)
-> defxx 0000:09:02.0: enabling bus mastering
-> 0000:09:02.0: DEFPA at I/O addr = 0x2100, IRQ = 40, Hardware addr = 00-60-6d-xx-xx-xx
-> 0000:09:02.0: registered as fddi0
-> 
-> (as at commit 4660e50cf818) and likewise it has stopped working here from 
-> commit 0da48c5b2fa7 onwards:
-> 
-> defxx 0000:09:02.0: assign IRQ: got 40
-> defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-> defxx 0000:09:02.0: enabling device (0000 -> 0003)
-> defxx 0000:09:02.0: enabling bus mastering
-> 0000:09:02.0: Could not read adapter factory MAC address!
-> 
-> So it's definitely nothing specific to the parport driver, but rather a 
-> general issue with PCI/e port I/O not working anymore.  I do hope these 
-> observations will let you address the issue now.  You might be able to 
-> reproduce it with hardware you have available even.
+> Johan
 > 
 
-Yes, looks like the I/O port access is not working with the CFG Shift feature.
-The spec says that both I/O and MEM TLPs should be handled by this feature, so
-we are currently unsure why MEM works, but not I/O.
+Thanks for the patches,
 
-The issue you reported with parport_pc driver is that the driver gets probed,
-but it fails to detect the parallel ports on the device. More precisely, it
-fails due to the parport_SPP_supported() check in drivers/parport/parport_pc.c.
-This function performs some read/write checks to make sure that the port exists,
-but most likely the read value doesn't match the written one. And since there is
-no log printed in this function, it just failed silently.
+Yes, of_parse_phandle() already gets a node refcount, another refcount
+is redundant and will leak.
 
-We will check why I/O access fails with ECAM mode and revert back asap. Since
-the merge window is now open, it becomes difficult to revert the CFG shift
-feature cleanly. The timing of the report also made it difficult to fix the
-issue in v6.18. Hopefully, we can backport the fix once we identify the culprit.
+LGTM
 
-Sorry for the inconvenience!
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-- Mani
+--srini>
+> Johan Hovold (3):
+>   ASoC: codecs: wcd937x: fix OF node leaks on probe failure
+>   ASoC: codecs: wcd938x: fix OF node leaks on probe failure
+>   ASoC: codecs: wcd939x: fix OF node leaks on probe failure
+> 
+>  sound/soc/codecs/wcd937x.c | 4 ++--
+>  sound/soc/codecs/wcd938x.c | 3 +--
+>  sound/soc/codecs/wcd939x.c | 3 +--
+>  3 files changed, 4 insertions(+), 6 deletions(-)
+> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+
 
