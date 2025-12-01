@@ -1,153 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-84002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5090DC98659
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 18:02:30 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D5A6C987A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 18:18:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B9E93A12DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 17:02:03 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A9B0D4E2B06
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 17:16:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7AEA334C0A;
-	Mon,  1 Dec 2025 17:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA96F337114;
+	Mon,  1 Dec 2025 17:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jr7StedP"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Npow+MGS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12F633342A;
-	Mon,  1 Dec 2025 17:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7613370F5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 17:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764608520; cv=none; b=jDnZJKSQ3E0JmBez+R79QHTJrVtOVEMcmwylaqFVwM2Pd5DR9eNrBKhgdQ03EkFpWMCEfKSkFv0Y6q0keFuQcaRq2QMTUjtySV+mFIFfvnSxp39kBcQ7GdPbt5RnaR0J1bJ7ow637ZVvhAE2fx9F4klLoufGodn2CGJqhuJrVB0=
+	t=1764609364; cv=none; b=t5gQLTpi31b0KeOxyen3Q8Nh6ZIiLdaHU5l/KujpMj/C0xXwflStMDe4vOZozldTwQ5Wx4R0AULM3wjU7J5xKGK9GpmuSTAchR+kljHqnbTm2thKHgt15WAr9lbaeI8+/JrrlqQZW18hF89954MdovcopXt+gFGFnVJZe3Bln/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764608520; c=relaxed/simple;
-	bh=bmyTq2q+hM5yLfaOwvV4mt3DtxhrkyZjZ87SLQzIRvc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HhA0henr2rgwllVP4G161l08tKEmbwiQRe+vejf9xlAu58qleWUC98wcLgzaaCwq9zxGGCceIPRSbj4IbIDuMLWquYOj8b1iTsouDXlYlPqblLwko7nY9PgR0syQ6vFO4j7Zzl7CeiklpzO0r9Ahwjg28KHsvD+sT47lTmzOzew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jr7StedP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5905C116C6;
-	Mon,  1 Dec 2025 17:01:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764608519;
-	bh=bmyTq2q+hM5yLfaOwvV4mt3DtxhrkyZjZ87SLQzIRvc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jr7StedPEyC4/M1t7fb11w5L7eX7EwY91G07P7AMGijfckxto+L1WhwGZsjlsXYIY
-	 oPOBlsHBliJM+a+Ck+s95tJX7dUkcTP5pveCNFp/krPg4vR0LXWKAYEHPMZFH7BnSa
-	 w/jmhdgHtlBNuR767BlzygS7X3PXNC6OjSXYaqFQBISNpnI6dO3zRh4SkdSFewBq7X
-	 zREFhG+p8OGRGjPPiSi80gwvkw0y85GNS/W5tNjwqV7H9L1DBf2eLGS8ArX4PFGdca
-	 NRClciXygKLJ3Mf0U36BtEe3k+YhGpk6jI8Jy8BC6oYJJRGMbYG05OQchgkdz3i2TA
-	 5RsxeDtcuuY4Q==
-Date: Mon, 1 Dec 2025 18:01:56 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Daniel Stone <daniel@fooishbar.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-Message-ID: <20251201-enlightened-zebu-from-asgard-5a20be@houat>
-References: <20250925-fervent-merry-beagle-2baba3@penduick>
- <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
- <20250929-gregarious-worm-of-memory-c5354d@houat>
- <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
- <20251003-uptight-echidna-of-stamina-815305@houat>
- <zpygq4kapil3swsmhhqkdwny4ry2dznnzixsw5rkza5p2kqnvp@abvf2vxlbwif>
- <2a5fitdzr2bz235fj6rvqzxr6ckszkjbazjfszlvnizdh2cvbt@w3ypjo7vahhs>
- <pibxhl5hlcpuk3zsgyienfdlda5cwuxrnofwlw356scuzzplqy@zw3ofelgvwik>
- <bsoqyzxi45i67jpzhwr2d4illufa5ghqf25z6flbp67lsbvh22@rrlcihp2oxea>
- <cgzclxjubj5oca3rdnv44qwrkmpddxve4tlz76cc6p3b4hz3oc@3l7mt5ha7do6>
+	s=arc-20240116; t=1764609364; c=relaxed/simple;
+	bh=HH/YjoTJvK+HycLUz2tbwGdJb1nNegFYrobhQ9Ypw8s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dv/QK7cLqXe0kDdWmjDxfW5spLKE8q+dZjWM9ktSX/L59lqLGU7VM2VFTe/S/86rcIC9bWq7zJ21GAKqU6jyr/SqDKujl8eGXxgEucnLrdabki4B4QfSOkjn2sNd0IBFlF/mlKajP44WnYHWreNg7pqqrTK+oqX5t/OzXAPOE4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Npow+MGS; arc=none smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-45358572a11so108258b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 09:15:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1764609357; x=1765214157; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mXBvbePBmN0aGW+rjYL5kzNiYaDe50sZg3kuC1eECMg=;
+        b=Npow+MGScSa9PmoCppCBKLkH/lvjtJcb6awX9aPoo0MtWh2u5ueZl/upHY6tPLROi5
+         EW73g+TiACBOJ+6zy3qphgzGuN5GmxU+PFQrjTy1JxwXANnbrwdp5plkDZDTUHuv0JEr
+         /OhNtkJdZQ2tjwgdau6y7JHlSn3T1eYWvaUdRrCjFeRqk2rWcjfNRY7xp9O58g1TKOs7
+         TENNcDQyxVmuY8UZ9RorIWWD6IcDvaEP5x9IAtzciD9xU7ComNVSJfHGYv2lHYq0m5Mp
+         C373JHEbOJ7pFsoWM7r6gp+mCteyyMrpi4dKE1LEy4ThHi502gBLwkQ2Pjs+1wi4HnJv
+         zC/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764609357; x=1765214157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mXBvbePBmN0aGW+rjYL5kzNiYaDe50sZg3kuC1eECMg=;
+        b=nEjCktDEQfsIU6ots1GPRy9i3ZisF8IeAT/sCjfJwFeEQymWU1IHKlEPUR3iZXBSbH
+         cyU5jzz6vgk2YF/7vFLuqVzmNtF3xGRS/Lj0ZRroODJWMwwm7uiCzHJX/UHa1+KErhB5
+         C5WMYo9nNpxMQuK+3qU1FzFKimGPF/xTn6yfFtdeaSytfi7hVum/5AH1AD99iI/7RPnR
+         Yb3jUWlhEhB3VLmyZiZaxDgJyExo9jxJkPWd3W6oBKEiEoD/80uzUhRrziPD/C8E4GaP
+         NLWwQsDMGC8Ev77KLS5IYfXMKpOulxTqdzpv63LQEmsyr5CINgP2LXUySydx5Gc8iipR
+         gzNw==
+X-Forwarded-Encrypted: i=1; AJvYcCUTJHLdCCzooXbNfNI8rWaqw4OIWjuw1dy/OPHL/1fYfDeuPODNOIakhcndKKs1Pij7CCbYgiieDpt2SoJp@vger.kernel.org
+X-Gm-Message-State: AOJu0YzD0Fw5mOyMWGAPqmAw5mtZSrpKb1dok+SBWNe4BCXTgjL44WuM
+	FDDxVQNruc+6vZLswM7zPIizSZ3LVo4hbwegA/GRajmJy5oLe4vpl6QTsifmxyY7ems=
+X-Gm-Gg: ASbGncvkCZV9V2AgsMCZlYOJGNWMh74GVkbENH4rMU54rB2iYKM1x/2zrgi+fb/xB8p
+	gpmghsjmW9dqfuh+INtblBe3LI9bz4mJh5dhxN9XBpQlhSHWPZfbhz43tRtfmJzo8ct5EDX4Dah
+	r2qmzJnbNnRO2Deep2ZdGwhQjE/Xg476l7HuoZhoPhiY0IillS4h06oUVgeSNZSM69FCXEMXYcT
+	d4opTmVTaHHVBLIWeV6PNGq6kP6Tk26Ez5jJIIi4Dz0/oo4oicew846eXBd1z6REtT0YP5mQwCO
+	zZRVq4Ev2PR6pzCfGzYcD6p9Kgx9G49esyOKSTs8ylThQE52NRmA9MSHLFyNx2CN2BIYl06g+SW
+	C5YSRIwKecXpQCtr3U3xKnaAx9LB6rZ/G1rrMptkpNE2HF9PkhXRfxfBkYcEiYwgLMdvwe6SlvZ
+	5b7i3qofMN9Wgu7/PDfLLSAUvV9l4V9KTFXpw+N1q3J8Ecf4WoTKnhiSaKLg==
+X-Google-Smtp-Source: AGHT+IFhXzu7oIvN//K+0gQ9fSmHlhexzrACWF7hMjJsE/gYpW4bjA3882odDNc+t9DkOzPtuw0t9A==
+X-Received: by 2002:a05:6808:1790:b0:450:65dc:1fce with SMTP id 5614622812f47-4514e5f84ddmr11527679b6e.3.1764609356945;
+        Mon, 01 Dec 2025 09:15:56 -0800 (PST)
+Received: from ?IPV6:2600:8803:e7e4:500:b67b:16c:f7ae:4908? ([2600:8803:e7e4:500:b67b:16c:f7ae:4908])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-453169b2a51sm3922009b6e.4.2025.12.01.09.15.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Dec 2025 09:15:56 -0800 (PST)
+Message-ID: <78240755-44dc-4835-aca5-99540cca0304@baylibre.com>
+Date: Mon, 1 Dec 2025 11:15:54 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="nhtgib353qneclwb"
-Content-Disposition: inline
-In-Reply-To: <cgzclxjubj5oca3rdnv44qwrkmpddxve4tlz76cc6p3b4hz3oc@3l7mt5ha7do6>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iio: inkern: Use namespaced exports
+To: Romain Gantois <romain.gantois@bootlin.com>,
+ MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi
+ <cw00.choi@samsung.com>, Guenter Roeck <linux@roeck-us.net>,
+ Peter Rosin <peda@axentia.se>, Jonathan Cameron <jic23@kernel.org>,
+ =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
+ Michael Hennerich <Michael.Hennerich@analog.com>,
+ Mariel Tinaco <Mariel.Tinaco@analog.com>, Kevin Tsai
+ <ktsai@capellamicro.com>, Linus Walleij <linus.walleij@linaro.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+ Hans de Goede <hansg@kernel.org>,
+ Support Opensource <support.opensource@diasemi.com>,
+ Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Matheus Castello <matheus@castello.eng.br>,
+ Saravanan Sekar <sravanhome@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Casey Connolly <casey.connolly@linaro.org>, =?UTF-8?Q?Pali_Roh=C3=A1r?=
+ <pali@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Chunyan Zhang <zhang.lyra@gmail.com>, Amit Kucheria <amitk@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>,
+ Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Olivier Moysan <olivier.moysan@foss.st.com>,
+ Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com
+References: <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
+Content-Language: en-US
+From: David Lechner <dlechner@baylibre.com>
+In-Reply-To: <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 12/1/25 4:59 AM, Romain Gantois wrote:
+> Use namespaced exports for IIO consumer API functions.
+> 
+> Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+> ---
 
---nhtgib353qneclwb
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-MIME-Version: 1.0
+...
 
-On Fri, Nov 21, 2025 at 07:09:01PM +0200, Dmitry Baryshkov wrote:
-> > So it's not really impossible, you just need some hardware and a day's
-> > worth of work.
-> >=20
-> > There's no reason these should get a pass, it's breaking the spec for no
-> > reason.
-> >=20
-> > > > For SPD, It's really not clear to me why atomic_check should do tha=
-t in
-> > > > the first place. Your initial concern was about exposing infoframes=
- in
-> > > > debugfs that wouldn't be used by the driver.
-> > > >=20
-> > > > If the driver doesn't register a debugfs file for SPD, and ignores
-> > > > whatever is in the atomic state, what's should we force drivers to =
-do
-> > > > that?
-> > >=20
-> > > I really don't think that drivers should mess up with debugfs on their
-> > > own. Making atomic_check() disable the unsupported InfoFrames makes t=
-he
-> > > picture perfect: the DRM no longer tries to program them to the
-> > > hardware, DebugFS files stay empty, so the whole state becomes
-> > > consistent.
-> >=20
-> > In the "bridge has no access to infoframes" case, there's really no
-> > infoframe. An empty file is "the infoframe can be there but isn't used",
-> > not "we don't have access to it and can't report them". Only drivers
-> > have those infos.
-> >=20
-> > If we do split up write_infoframe into multiple functions though, I
-> > guess we could create the debugfs file only if the function pointer is
-> > set, which removes drivers' involvement if you don't like that.
->=20
-> I'm fine with not using HDMI connector framework for lt9611uxc.
-> Likewise, I think, it's fine to have empty files for the infoframes
-> which are not being sent over the wire for any reason (hw not supporting
-> it is one of the reasons).
+> diff --git a/drivers/iio/dac/ds4424.c b/drivers/iio/dac/ds4424.c
+> index a8198ba4f98a..33d6692f46fe 100644
+> --- a/drivers/iio/dac/ds4424.c
+> +++ b/drivers/iio/dac/ds4424.c
+> @@ -14,7 +14,6 @@
+>  #include <linux/iio/iio.h>
+>  #include <linux/iio/driver.h>
+>  #include <linux/iio/machine.h>
+> -#include <linux/iio/consumer.h>
 
-I can't think of any other example in the kernel where an empty file
-means that the driver doesn't support something.
+Unrelated change?
 
-Maxime
-
---nhtgib353qneclwb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaS3KBAAKCRAnX84Zoj2+
-dpehAX9df8UFvZVN58dQXWwnBnuke2vOU1UxT4zbhxIdR/6V/O2rER74TkmbviQv
-h0HIhF0BgLOgEP5gmSlL9xZCFl5EWhJpy16T7ozKZGULaHEy/3NJR+/SzYOZmLZ5
-yR5aU4SDRQ==
-=m4w1
------END PGP SIGNATURE-----
-
---nhtgib353qneclwb--
+>  
+>  #define DS4422_MAX_DAC_CHANNELS		2
+>  #define DS4424_MAX_DAC_CHANNELS		4
+> @@ -321,3 +320,4 @@ MODULE_AUTHOR("Ismail H. Kose <ismail.kose@maximintegrated.com>");
+>  MODULE_AUTHOR("Vishal Sood <vishal.sood@maximintegrated.com>");
+>  MODULE_AUTHOR("David Jung <david.jung@maximintegrated.com>");
+>  MODULE_LICENSE("GPL v2");
+> +MODULE_IMPORT_NS("IIO_CONSUMER");
+Is this actually needed if we don't use anything from consumer.h?
 
