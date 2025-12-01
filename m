@@ -1,128 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-83910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D1FCC95775
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 01:44:25 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC827C957A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 02:16:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 623554E02D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 00:44:24 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9842D4E0577
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 01:16:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FA523A1C9;
-	Mon,  1 Dec 2025 00:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4F81339A4;
+	Mon,  1 Dec 2025 01:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMAyTRDk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TssZYJYi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12DC2A1AA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 00:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0222AD00
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 01:15:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764549860; cv=none; b=BB/Vg6i1k3omwHu9leI3BcGDiEVeNa2onQZX19zjEOGMD+bdIOkA6OmSF5o685KKEkLZEGge+mwpKILuOl93h6NAePHWDuJPf/65hIS2YElzjCqmPJ9Z/oSfZvvFD5Sna9V20+l8Rqbp42AnK/A+CUdissQowaO/LTasmOLhanc=
+	t=1764551754; cv=none; b=Bo/BuqnG3EwUYu3Txp9hzvXrniOKkPxhj2yoDCtLFnvGdfCiKAQ+OgZhmnM4i/e8IZeKpjrb6iKpQYJjW6ZCFiAfCf5bn39uJUrGyn8EtRhxu4dx+lWEojdsZ+PtDx5CznRiBJou/UFAFYITPDJPiYGRSRKr34dLPLh2RfbZURU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764549860; c=relaxed/simple;
-	bh=WXei8faNKFRbZg/5TRBpJIVvZ5EV4z9whv3No2ypEdg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gQXpblebqQqk67x68FmrzgcNCe2z9vKmWBr2l9kjW5CZIgE7DzsgQA/fYF6jY7iw8cE4Jz6GYzhBzOZ6fY4zqZsrjbiImnh09FRH6cFAXJLV5iFsTXJBWmA1WqGQWrrj1nABnL466W8XD2zSpK2XZqz8cG8iQz+oz7oVbEEdnVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMAyTRDk; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1764551754; c=relaxed/simple;
+	bh=f2Gyeign6kwrMQ/XWX8ZeYYQxhP1TmsqHN5OiBoHeSA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e90bnv1ty568jCVrSS288PWgsOiUD5ear4/Q+7PqT9us4nYj1nFHqp0uyQSeVL4S/Xdv3WIPLVA2/VkSgcrOHD6YAM9Aju/BvE1XlHMhUmjjgLGdj9GJUSm9sipktNQjBEFQr8AtrG74TWKf6KLQtY5kdQh3dgA0CM73xP7adDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TssZYJYi; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7ade456b6abso2735869b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 16:44:18 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-477aa218f20so22747575e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Nov 2025 17:15:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764549858; x=1765154658; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=loQBrjsHTLWumic5XUfpbVeTUpVIR2+yqTrDotKERHY=;
-        b=VMAyTRDkTdDDHtdDk4RvIQACnLWow6xl7MH2H36dKK8KcRjs26CRPye1lumSZgwL6I
-         VTGz6RF0+FwxHBWWnMyBZKWSunE8wq9En8b9ot93uu9/STnPO6UwczSJRctdtAXTX9vL
-         F8dWH8TkVQaWcnzBr1YeTYFeH8VECBVKZv1Hm129yd51Xep35Fm1zBzqnfWrEJ0G6dIe
-         PGvs8ZECyoOFielqaC/LHyxhfDz4taMfYHaBCqf2/lNBCom6jLSiT1Zv3QJxaIlRJ57O
-         V/0kqyo+zZBI9VK6axYWmMW4w2YYQJaIh14U8RcTcINsxYJl2imec5EAAn0TTocBbcqE
-         +H9w==
+        d=gmail.com; s=20230601; t=1764551750; x=1765156550; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tx/uBhoEOHIhsehasECkzayBzot/ALhISZ90zdBh0Qs=;
+        b=TssZYJYizMT6Gk9386mnJGPe5jUu0iWlNDafH3R4+5oeNI+J5xGKWCwujEr5PWlECu
+         HjwQ6ocV7gRjfFVWChy3rL9xXMYTEvSeZiEFO8y9Y+oUeDkR07cR5x/hqdOFktDNJN10
+         nuZlDO08K5We19IjcLRc1chDWpMUpk9hbzw1s9h0SdyfVrwoH5oIBL/NbotAZ9Afb2Ea
+         q/WERLhPOsY+OzqQyi3ZoehFZ7gvT2mjdkOs237U7VuS/Wyk/CDfr7+T8hOKp7Py77xT
+         SIpez5eArBMKP+Rk+HKuLfJFZpi1lj5vYsEwRRzzFvHAnFFKTC8W/01CogWf8W91/epw
+         DZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764549858; x=1765154658;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=loQBrjsHTLWumic5XUfpbVeTUpVIR2+yqTrDotKERHY=;
-        b=tZsDjy55YCcJKkTU5BATW7i1QPfiwPxR+vKbK7nSX2DFU013bwJ89QyXGYeAk22egh
-         z8soh3BrP9kIeNR38l7FTu9wwrdmnTeMkOrZZ5mYoRl7LmwZkdWiH0Y1t3xv4sGVeFQ2
-         gslvRZD1uKB2brc2s40mxpJalM7X0/c61Wg6a0GTfjJPK3poZy38ZZxd2O5z7X44oJlT
-         TjadpJkzIHbYKmaivfTqVpr76JuqtvuTi5QO0lUoV1GufqRHvA0u1DWMtOwmMs57OrqA
-         MUjM+ucY84f/4VEBKj3EdaklDzQ3OPEgIXntwnlw6HZTyquhUvHNOTcWSAls764R3SMd
-         kzGw==
-X-Forwarded-Encrypted: i=1; AJvYcCX/L4bshXNZQG+1V+/NX82HsTcRJPbBZEi6dh41oRWiPAqm90fUskeawsnsVxuMzPtlCSd1W3V7BfrXjiHE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhyzIjHaSlxu0C3r3zO3gRjRsgAoQ+A5mSGR4h4mbUbGCaEV5P
-	PgsUdb/u80o3ytCdo2g32HObUbW4wiYScYz2iTpRAxWZ2OyJDitTEpFd
-X-Gm-Gg: ASbGncsM9zNsvrIaUfem7mFlKUvMZkjyLNQAFkK8afmPrZVLMTJ0HEn+S0JovpjxfvH
-	qPCjZpd1I3B3z+i++ouNpY3U/0XaL2AN1411sOvtmRjHO2LeC4iLp9gqPmwWtER0SLILyODgZEo
-	jujlEfOSYFZTPmVyJgvviRKPp60JP0f9QOwZRKisrI/BqPBW9zcEBSyyA1BH1CsjdsoqHJH6lKv
-	oFHRimcEmqbu6fj7UWbsEd9NfIDMoARJDwQfHSIpXzWRn3uhrl1hdyFpQYyjFTeaSEAdsXQCuGv
-	k0lI433QRnfIS5x2Fp2AgJ6dSWxHzuNPAv35Ex3W/mSqBiUYK/yFGcd2qlFaTr/e06leZRp8Kgl
-	rU6E3L8g52KpMPX01sblOg4kWRoQMRzGk9zXEBVy9mp9m6CUdFk6UJSO8PAjftQlHvbLov8TtBf
-	E/GGQJQbdykA8JuLkRNXkIpYEzvHiIW70mWn/QOQ2XuA32GYg4+ZY1EVOnL3ffkK2r
-X-Google-Smtp-Source: AGHT+IFgJVWGW8YwKUU9Iny4M1dxzau1tG3wPCluSngGPGy5qUbx1lrl2uJNSMdXKWMj7Ocp4T1S4A==
-X-Received: by 2002:a05:7022:20f:b0:11b:c2fd:3960 with SMTP id a92af1059eb24-11c9d85ff19mr19455932c88.28.1764549857774;
-        Sun, 30 Nov 2025 16:44:17 -0800 (PST)
-Received: from [192.168.68.63] (104-12-136-65.lightspeed.irvnca.sbcglobal.net. [104.12.136.65])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcb03c232sm51936663c88.6.2025.11.30.16.44.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Nov 2025 16:44:17 -0800 (PST)
-Message-ID: <ff66f890-b405-4a81-9d8d-7d94fee68680@gmail.com>
-Date: Sun, 30 Nov 2025 16:44:16 -0800
+        d=1e100.net; s=20230601; t=1764551750; x=1765156550;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tx/uBhoEOHIhsehasECkzayBzot/ALhISZ90zdBh0Qs=;
+        b=KF0ffLRMLcLU9glo9zM67KtI8/heaxcxT8vS+cmVBCCGTCdEpzk1PbvFfQIUaaPwX9
+         K5281y0EFRk+cngkjccWMS5rqOS5wxdifsea01vI/CZRAP19O4bYEi1QxAk+++WtZuWJ
+         gXQVHYGQAJo2XAruZA2i15m+6J9EU9xOywVhiY7D0olvfibv8GkFeRJeyzYSBBkAbi0N
+         jOPvuM+fLFb7V/Koc4kMa193T21pOCJ2NOgh8HDX63l/bypXyll0aUo4dPFI78P0GPuE
+         92T7rBXLavGPDXp+5Bwi3Bmk8eoBmM1G4q0gUlGpX4jNVJeE1eZ6XtE9iSmEhv1vxqsn
+         LWzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUL1o8Wn22wgBexwkQjrlyaPDfp5jPPzoNLy7F44USlQRTokZmEDZ4RCMZrXq1OLUYYnz+QA5qVgYysLYzY@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQLNQpD+029NWk1EzyyAgKcNxU465yBI7K6Fh94B5CEA4lINok
+	FupL+ylDHiCS0RUwb6bgNR7/KCYQBShjhpULcTQfA/J0HmsbY5H+NPWk
+X-Gm-Gg: ASbGnctTHXdnEtYv9JT5IVTiKKI8q0r0hm1na4pHKg74Rlylcw0pHeXDfvo9/qh+pmj
+	IAIVGAs3wD0cPywgvsu+wPm3Iqsf2sA8099SCCu2HpjQ+ufA8A7TpjgpdUDomE6iLCxyH88DLXI
+	rvYmnYZ/wmVHB/+I+LKBZzgvF2b3yKuoG0TM/HGAVrxH8xyFguGfCb8f4xTe3BtWo9uUo5zfEF/
+	RgeJiz4cshAMygpLD6a34DohCRHOAEl4br6XcNSEKEbgQ0sCpwrZG0skUgdZ04JDvEKWiDPbpwv
+	/oY8lnRMjawZ8VKtd+Awug1l0E6yVC/2vnoSwOb8YP5bJcgyo0RVBt7pPrVHIjWFU6IltQpbqvB
+	6YI+uRCThdZEQIFhGoTgHUzo3zmVUr3jQoegS0DaWrNqYeYF7A1Udg0rDSy6Q4b9CXecD/14Jfq
+	6VOx3rvLB6B/Ulk5zygYX9Bx1xMMLMt+EwrScM/mH4yyuUwtKo93aHIA==
+X-Google-Smtp-Source: AGHT+IGHjRl74icUPwWh1aQ2xdTwSRRUQMAjgiSVanlvJksDJ6M0AluYsyZQkKBUguFBzPL4kDKIoQ==
+X-Received: by 2002:a05:600c:3110:b0:477:632c:5b91 with SMTP id 5b1f17b1804b1-477c01b4b2amr432822595e9.16.1764551749507;
+        Sun, 30 Nov 2025 17:15:49 -0800 (PST)
+Received: from alarm (92.40.200.0.threembb.co.uk. [92.40.200.0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-479110b6da9sm216152305e9.0.2025.11.30.17.15.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Nov 2025 17:15:49 -0800 (PST)
+From: Dale Whinham <daleyo@gmail.com>
+To: Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	platform-driver-x86@vger.kernel.org
+Cc: =?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
+	Dale Whinham <daleyo@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH v2 0/8] Microsoft Surface Pro 11 support
+Date: Mon,  1 Dec 2025 01:14:41 +0000
+Message-ID: <20251201011457.17422-1-daleyo@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/6] iio: accel: Prevent NULL pointer dereference in
- interrupt setup
-To: Andy Shevchenko <andriy.shevchenko@intel.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- David Lechner <dlechner@baylibre.com>, =?UTF-8?Q?Nuno_S=C3=A1?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org
-References: <20251124-expressatt_nfc_accel_magn_light-v4-0-9c5686ad67e2@gmail.com>
- <20251124-expressatt_nfc_accel_magn_light-v4-5-9c5686ad67e2@gmail.com>
- <d3318386-2646-4f1c-ab4b-6ae3bc71e9bb@oss.qualcomm.com>
- <aSWPnRBRdPS8vnir@smile.fi.intel.com>
- <61e860e7-fc3b-49ad-bf6a-9745f205d52b@gmail.com>
- <c627fc05-6980-44bd-bdde-4750b3bafe2d@oss.qualcomm.com>
- <aSieijZt117wOh-6@smile.fi.intel.com>
-Content-Language: en-US
-From: Rudraksha Gupta <guptarud@gmail.com>
-In-Reply-To: <aSieijZt117wOh-6@smile.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello all,
+This series brings support for the X1E80100/X1P64100-based Microsoft
+Surface Pro 11.
 
+Patches 6 to 8 are included as RFC as we are unsure of how best to
+achieve the required functionality, however the implementation is
+functional.
 
-Seems like Linus Walleij encountered this as well, and the fix seems to 
-have landed upstream:
+v2:
+  - Dropped ATNA30DW01 patch as it was merged.
+  - Split device tree into x1e (OLED)/x1p (LCD) specific *.dts files and move common code into x1-microsoft-denali.dtsi (patch 4).
+  - Device tree now enables higher external monitor refresh rates/resolutions (patch 4).
+  - Device tree now enables partially working audio output; requires alsa-ucm-conf and audioreach-topology definitions in userspace (patch 4).
+  - Replaced 'Work around bogus maximum link rate' with a quirk-based approach (patch 5).
+  - Improve the commit message about the disable-rfkill property in response to feedback (patch 6).
 
-https://lore.kernel.org/all/20251103-fix-bmc150-v2-1-0811592259df@linaro.org/
+Dale Whinham (5):
+  firmware: qcom: scm: allow QSEECOM on Surface Pro 11
+  platform/surface: aggregator_registry: Add Surface Pro 11
+  arm64: dts: qcom: Add support for Surface Pro 11
+  wifi: ath12k: Add support for disabling rfkill via devicetree
+  arm64: dts: qcom: x1-microsoft-denali: Disable rfkill for wifi0
 
+Jérôme de Bretagne (3):
+  dt-bindings: arm: qcom: Document Microsoft Surface Pro 11
+  drm/msm/dp: Add dpcd link_rate quirk for Surface Pro 11 OLED
+  dt-bindings: wireless: ath12k: Add disable-rfkill property
 
-This patch no longer applies.
+ .../devicetree/bindings/arm/qcom.yaml         |    1 +
+ .../bindings/net/wireless/qcom,ath12k.yaml    |    3 +
+ arch/arm64/boot/dts/qcom/Makefile             |    4 +
+ .../boot/dts/qcom/x1-microsoft-denali.dtsi    | 1340 +++++++++++++++++
+ .../qcom/x1e80100-microsoft-denali-oled.dts   |   20 +
+ .../dts/qcom/x1p64100-microsoft-denali.dts    |   16 +
+ drivers/firmware/qcom/qcom_scm.c              |    1 +
+ drivers/gpu/drm/display/drm_dp_helper.c       |    2 +
+ drivers/gpu/drm/msm/dp/dp_panel.c             |   14 +
+ drivers/net/wireless/ath/ath12k/core.c        |    3 +
+ .../surface/surface_aggregator_registry.c     |   18 +
+ include/drm/display/drm_dp_helper.h           |    7 +
+ 12 files changed, 1429 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1-microsoft-denali.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-microsoft-denali-oled.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dts
 
-
-Thanks,
-
-Rudraksha
+-- 
+2.52.0
 
 
