@@ -1,166 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-83998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-83999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15A90C98361
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 17:20:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2405C983E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Dec 2025 17:30:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 81E654E1C6A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 16:20:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A02A43A12CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Dec 2025 16:30:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DD5C3346A4;
-	Mon,  1 Dec 2025 16:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D28334694;
+	Mon,  1 Dec 2025 16:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DzfN4wmN"
+	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="QNZJ9f0N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6ED328621
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Dec 2025 16:20:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2901288D2;
+	Mon,  1 Dec 2025 16:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764606042; cv=none; b=drlKWsmWwgXLmtqY6dpaK8JJ7uyqnPM5b3CodE9R2elFOHfVCz2e8Ck2JDyMLBWAqttFPMR5/2VWH2kWNeWsszwqG0DXIrghuTSQHh7PVBp7TYJz9hJl15iwgEFlhQmWAZRyvDcPkJyv6meW89tkygef+BzzWlEYwtLJSulW0Hc=
+	t=1764606602; cv=none; b=oPMyd3m1QGtFo7ERX1vG1IFbDObePDvNERlO8dSNGWbABIdFzAfJ9562Q1nZEiJRxOhkHE7Q7Vn4fACqZsVDFtWszHXtFJeAjIW2LMw8topcVvpJdGtUWCuHwm/6bvOSRwa9Ykw/ZYIm1VihHQcqDBl0Vd9fyuKXBbQO3auv4Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764606042; c=relaxed/simple;
-	bh=cbTq8BHjRToGTEY8Sx66KTwTfnaIXn5PKzRscbZtMbY=;
+	s=arc-20240116; t=1764606602; c=relaxed/simple;
+	bh=tkyO5p8LYYbNGz/+zu6mllYxkhDq9GTEjlu9HhYiUDk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L4RQRuvTWuKb0j887KQ6mc3FwOwdy3C1CmUhS3UlXA+zQlgWOoEfBPJT2wuSOKRyw8axsRGSzIQtbdw8fDZpuEtiFPAsWi1ClDclA9N4fr3FoTQ3J/FxJR7L7S/pBSc6Q3/Pjm9uxdPvAknBrkWImrWK+iTNU/10HNqHaHJSeNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DzfN4wmN; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7b22ffa2a88so4244687b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Dec 2025 08:20:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764606039; x=1765210839; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cspTNBzt+I5BtqKUZhFjJeUVwDFagEE/l2BBHLFNpxc=;
-        b=DzfN4wmNhudh9Aoo99BlK6Ljv9vadO0w7/OlP7wg/MAmTyeAD2fMfjZe8RJoqcoAx6
-         xHyFEXNCUOVrZAuzr9iWeXwYbotQl3IzUKSnwYxDfbse93Bex1paum/dJiMpt7JfbGqY
-         mQZ/+CwybL2tCvzU3T5SUozd98yu4O5/p8XxGwnTeeC0Fe8SV5Z9qgjZWOHoUIbTmWlH
-         XyrMfBcZZfTAIaX7hRbO9zdDygKjrNsXbOD0OyQYzyPTdis7RHTTAKD612SAYh620O4N
-         GOs1DPvReKrst2BeaUiNzaawm+ba03LT/oDPzfdCq4FNFeGE6EMZhM7HMKjX0fOYupPM
-         ORaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764606039; x=1765210839;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cspTNBzt+I5BtqKUZhFjJeUVwDFagEE/l2BBHLFNpxc=;
-        b=p21FZKFspXRu6YbGe4FADGrL4L6fpgnrTznsgn6rPtX3cfHazBbx1gLs157p280cor
-         ZYnIZCM4mAAlPEbYczpy3ZAZR9YdkI/VMXHMVESE5mXHNWUMProoiHcjPq9eN1QsYJPp
-         nuQHMXTYC7uMyWjHCQrUKNLju3mkjXlspaiEqyis5ivIyuSm7hVsRhWsgK26CqSzeK0s
-         1KnMNHNQFq+9JSEmUXSFd8Ut4xtrYFvDZrqrfyYySd0uPMmvv6SqMgNzuIWq7VWTwnjh
-         YC/4Uf/1BViawplw/BcYQ+VBxi5RrtDjguu22+31IjxltZCgvlzE9ro2JgbpXgeHOYoE
-         aSOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWoIs19BxWJfgwdt99gbj9nPmWGJhqDf22Ack9r3kzxEZzAZrH9ppA/u3Lktxsxme2Lp71xOy9DWZWpcHww@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2nqjqjBqwFl4fqJtSACkBkYm200dN8/AAtNqfKVCnratvIKcV
-	IW4R85VlSR75fAxQ/TL9Y73NpRxyes2KVymHgU+KQCjhA8wDpNFGI/UcEVinWp4UJ+E=
-X-Gm-Gg: ASbGncsGHS4EnXDGIXRGTT7zZ/nQuS6i1vuCzFw/3dU46MY393TVy2aoZdpJg75i6PO
-	7CDLZIdYy5rA85qghv2ckyrkKOpNlEPk/pLfsLWyrlqcJU2hSunqFk6fqA434uFOZEk+TKO+1P1
-	d1bdUTz8BbPmS2oSS2hOOdD2og4Zc2xcDnG8YJTdw4h3Bor9zlqoMUKvBE9g6MlqH+iFQ93gVcU
-	aZMb7re8cBDkkcaSHFHDLg1wHQVE3oY1zXwz0LSivOsrhXopR5M0VtdqdCXDGw5Zkg+8+GOIRlA
-	dh4Px6oUP/xnWfgUkjyJ3ARPs8gajzLiGPd78pzk/jqzVVxHFyWNKqR7bS+5FGFA/mbM38S4oZ+
-	R/vxJjvel6d6fWZvgLOnnrKEpjdI9FqFzcGgMeZ2AJXuBLVWLQxNNobdxxjebNQc/xCHiwIVAsg
-	maa+yWt9YNJigDmw==
-X-Google-Smtp-Source: AGHT+IEC7gGRxUyVtd+YE469cDLd2n7LeD/hmDQKTfHSUTd0/7SmlOv1H6YZTofFyUN0T2uY8DHV7Q==
-X-Received: by 2002:a05:6a20:2448:b0:345:e30f:d6da with SMTP id adf61e73a8af0-36150f059e2mr47497364637.37.1764606039144;
-        Mon, 01 Dec 2025 08:20:39 -0800 (PST)
-Received: from p14s ([2604:3d09:148c:c800:7234:1ea8:3e35:6ee3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d15e9c3e41sm14161217b3a.33.2025.12.01.08.20.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Dec 2025 08:20:38 -0800 (PST)
-Date: Mon, 1 Dec 2025 09:20:35 -0700
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=MRTZ8ZQvXlE9CcFot5Vkr46Xt3E96IVZ/4Fz44dLpTrVBFik2P9iaBOVm8m19Tc4xNImPZ34vFfyh/sQ/f0jdL5T093JiPDBQEtW4jeEeTUugZ1fTQALI90SE7AYE/8AzrxuMhEv141CQPt8dV7iUJZeLgjH3VNV/OPrpALWdPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=QNZJ9f0N; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 2A8061C00AB; Mon,  1 Dec 2025 17:29:51 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+	t=1764606591;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Ys4fM5oxuac5BA8yXwPfUxu5XSYHVpba6xxZaqliwMw=;
+	b=QNZJ9f0NVkMN90sS7G6UbXXOErLvhTIW9qzPwO8ba1XpK64RGNMdA4zIDxxP7GCydNAumH
+	FKEj2dlLZhZJ2ewUXnP/wNGs7cXtycpaTYJi2781Ib4aYVsd6Vs1IqFEKV6AyxJ0sXRhIs
+	DDJTsV7FSPh7vM/rXrhueYudwFV8Dks=
+Date: Mon, 1 Dec 2025 17:29:50 +0100
+From: Pavel Machek <pavel@ucw.cz>
+To: david@ixit.cz
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-Subject: Re: [PATCH 0/4] ASoC / rpmsg / remoteproc / soc: qcom: Constify
- buffer passed to send functions
-Message-ID: <aS3AU0gEEOvWs4Uw@p14s>
-References: <20251130-rpmsg-send-const-v1-0-cb11c7e0a024@oss.qualcomm.com>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>,
+	linux-input@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+	Gergo Koteles <soyer@irl.hu>, Casey Connolly <casey@connolly.tech>
+Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: sdm845-oneplus: Add alert-slider
+Message-ID: <aS3Cfmx3gVyl/wTr@duo.ucw.cz>
+References: <20251113-op6-tri-state-v8-0-54073f3874bc@ixit.cz>
+ <20251113-op6-tri-state-v8-2-54073f3874bc@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FtYVekWiQ6/kXxDO"
 Content-Disposition: inline
-In-Reply-To: <20251130-rpmsg-send-const-v1-0-cb11c7e0a024@oss.qualcomm.com>
+In-Reply-To: <20251113-op6-tri-state-v8-2-54073f3874bc@ixit.cz>
 
-On Sun, Nov 30, 2025 at 01:36:07PM +0100, Krzysztof Kozlowski wrote:
-> Dependencies / merging
-> ======================
-> Entire patchset is one logical chain, all further patches depend on
-> previous ones, thus everything should be taken via same tree or shared
-> between trees with tags.  Probably everything should go via ASoC with
-> necessary acks.
-> 
-> Also, first patch or two patches could be taken now for this merge
-> window...
-> 
-> Description
-> ===========
-> The remoteproc and rpmsg send-like functions should not modify data
-> being sent, so buffer should be marked as pointer to const.  This is not
-> only self-documenting code but actually increases the actual safety and
-> clearly documents who is the owner of passed buffer.
-> 
-> Best regards,
-> Krzysztof
-> 
-> ---
-> Krzysztof Kozlowski (4):
->       remoteproc: mtp_scp_ipi: Constify buffer passed to scp_ipi_send()
->       remoteproc: mtp_scp: Constify buffer passed to scp_send_ipi()
->       rpmsg: Constify buffer passed to send API
->       ASoC: qcom:: Constify GPR packet being send over GPR interface
-> 
->  drivers/remoteproc/mtk_scp.c       |  2 +-
->  drivers/remoteproc/mtk_scp_ipi.c   |  2 +-
->  drivers/rpmsg/mtk_rpmsg.c          |  4 ++--
->  drivers/rpmsg/qcom_glink_native.c  | 13 ++++++++-----
->  drivers/rpmsg/qcom_smd.c           | 10 ++++++----
->  drivers/rpmsg/rpmsg_core.c         |  8 ++++----
->  drivers/rpmsg/rpmsg_internal.h     |  8 ++++----
->  drivers/rpmsg/virtio_rpmsg_bus.c   | 24 +++++++++++++-----------
->  drivers/soc/qcom/apr.c             |  8 ++++----
->  include/linux/remoteproc/mtk_scp.h |  2 +-
->  include/linux/rpmsg.h              | 17 +++++++++--------
->  include/linux/rpmsg/mtk_rpmsg.h    |  2 +-
->  include/linux/soc/qcom/apr.h       |  4 ++--
 
-Acked-by: Mathieu Poirier <mathieuu.poirier@linaro.org>
+--FtYVekWiQ6/kXxDO
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'll let Bjorn decide if he wants to include this in his upcoming pull request.
+Hi!
 
-Thanks,
-Mathieu
+> From: Gergo Koteles <soyer@irl.hu>
+>=20
+> The alert-slider is a tri-state sound profile switch found on the
+> OnePlus 6, Android maps the states to "silent", "vibrate" and "ring".
+> Expose them as ABS_SND_PROFILE events.
+> The previous GPIO numbers were wrong. Update them to the correct ones.
+>=20
+> Co-developed-by: Casey Connolly <casey@connolly.tech>
+> Signed-off-by: Casey Connolly <casey@connolly.tech>
+> Signed-off-by: Gergo Koteles <soyer@irl.hu>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Tested-by: Guido G=FCnther <agx@sigxcpu.org> # oneplus,fajita & oneplus,e=
+nchilada
+> Reviewed-by: Guido G=FCnther <agx@sigxcpu.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
->  sound/soc/qcom/qdsp6/audioreach.c  |  6 +++---
->  sound/soc/qcom/qdsp6/audioreach.h  |  4 ++--
->  sound/soc/qcom/qdsp6/q6apm.c       |  3 ++-
->  sound/soc/qcom/qdsp6/q6apm.h       |  2 +-
->  17 files changed, 64 insertions(+), 55 deletions(-)
-> ---
-> base-commit: 7a9e871ce4c7c8a7d75eaef8407083a0525de2dd
-> change-id: 20251130-rpmsg-send-const-ae216a1fbd8f
-> 
-> Best regards,
-> -- 
-> Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> 
+Reviewed-by: Pavel Machek <pavel@ucw.cz>
+
+Best regards,
+     							Pavel=09
+
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> @@ -25,6 +25,41 @@ / {
+>  	chassis-type =3D "handset";
+>  	qcom,msm-id =3D <QCOM_ID_SDM845 0x20001>;
+> =20
+> +	alert-slider {
+> +		compatible =3D "gpio-keys";
+> +		label =3D "Alert slider";
+> +
+> +		pinctrl-0 =3D <&alert_slider_default>;
+> +		pinctrl-names =3D "default";
+> +
+> +		switch-top {
+> +			label =3D "Silent";
+> +			linux,input-type =3D <EV_ABS>;
+> +			linux,code =3D <ABS_SND_PROFILE>;
+> +			linux,input-value =3D <SND_PROFILE_SILENT>;
+> +			gpios =3D <&tlmm 126 GPIO_ACTIVE_LOW>;
+> +			linux,can-disable;
+> +		};
+> +
+> +		switch-middle {
+> +			label =3D "Vibrate";
+> +			linux,input-type =3D <EV_ABS>;
+> +			linux,code =3D <ABS_SND_PROFILE>;
+> +			linux,input-value =3D <SND_PROFILE_VIBRATE>;
+> +			gpios =3D <&tlmm 52 GPIO_ACTIVE_LOW>;
+> +			linux,can-disable;
+> +		};
+> +
+> +		switch-bottom {
+> +			label =3D "Ring";
+> +			linux,input-type =3D <EV_ABS>;
+> +			linux,code =3D <ABS_SND_PROFILE>;
+> +			linux,input-value =3D <SND_PROFILE_RING>;
+> +			gpios =3D <&tlmm 24 GPIO_ACTIVE_LOW>;
+> +			linux,can-disable;
+> +		};
+> +	};
+> +
+>  	aliases {
+>  		serial0 =3D &uart9;
+>  		serial1 =3D &uart6;
+>=20
+
+--=20
+I don't work for Nazis and criminals, and neither should you.
+Boycott Putin, Trump, Netanyahu and Musk!
+
+--FtYVekWiQ6/kXxDO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaS3CfgAKCRAw5/Bqldv6
+8np0AJ4g37/E7yC1TFrIYjmX1lFqPyanagCfavl9NgqGe6YnRqOeqERMZWE2skE=
+=M3u4
+-----END PGP SIGNATURE-----
+
+--FtYVekWiQ6/kXxDO--
 
