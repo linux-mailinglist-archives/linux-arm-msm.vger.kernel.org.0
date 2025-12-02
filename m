@@ -1,140 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-84104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 823D7C9C26F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 17:12:46 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 533B9C9C2F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 17:26:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DA9F94E47C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 16:10:19 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F215234813E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 16:26:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4E228CF49;
-	Tue,  2 Dec 2025 16:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15D1D28468D;
+	Tue,  2 Dec 2025 16:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRV0HM9R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZ9mB6uj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012F6279903;
-	Tue,  2 Dec 2025 16:10:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5499D280A51
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 16:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764691805; cv=none; b=GNfMaOojGyZOcDgU/VZa3/FAo1Kyu3qKGsYXVlkwMvalEXRK0jaPo1UZxD93n8+0SDVQhwGRJtdzuTJM2SUYyYHBQReEU71VBUgXJ/rnvqUjtYOsKQMU/0P9GZTl7ObTMQILxikumJMCFCWOWYWeKDkIVKwwwWjAmu3HZ2baolg=
+	t=1764692791; cv=none; b=NaR0qpTkM+5OOinJqWjnnV0VwADjDS8R3b0rCbo00xJdAra6U6nbWlYjW+m8B88kKeGH9qMMSlj4JjUbykQTat5wPaOId4d77lnhe9lyexWebpcfpn4ujbu/tvZkzcgd2IyPZVZuIcGXHAgX8K3hHRXal1sBQf00aWpgVRVEzhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764691805; c=relaxed/simple;
-	bh=O+A0kLl0dXk3GMmduwTyEYiopuGLA9KVuNGd8qQ+n0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NC4DKpUckuVzg86oNqTPhUFZASH3cn+eTz1acTFlBF/0KXopafLO/HFdMhiERv8+2V8VVmKK7cIwm5CJvRC4/42l2lyytomBhvfcxXQu8wheUU90my70V+K8Jvt0B2OB+QBY/Rsu89rkBwH56kqas3dnInfHZH8AY3Nvkli/3As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRV0HM9R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD7BC116D0;
-	Tue,  2 Dec 2025 16:10:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764691804;
-	bh=O+A0kLl0dXk3GMmduwTyEYiopuGLA9KVuNGd8qQ+n0A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LRV0HM9RvnXREKhXJrIGdksL4ybGTmrPfdGHmJU3araV8zO06Kzulm/5Fgl3hpGvs
-	 ZLFHSHKgf3iU/XGxqw/MrLG1fq++j+T6bEe9zR7JLXmhpSDEUrc2LgrKsf8gDLAkHF
-	 HbKH2VQ6YjX9luYBEptyCMXnHz7cZts8U8BpHxxDEk8ZLflAQnFljrROEZlVX0Y5xs
-	 bWUzGqL8629pZibL4qnzXDgYPyKhiFOLghjih1w+34YPrFtSBjmgun5HngelOtzHRF
-	 okZB7GduKpv5QbSpjZMDfgi43yOIMHHVA1YNwHwfxhDhFyvNKOxF/ZhXTRJbJsNW65
-	 4K8513FmRNHFQ==
-Message-ID: <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
-Date: Tue, 2 Dec 2025 17:09:58 +0100
+	s=arc-20240116; t=1764692791; c=relaxed/simple;
+	bh=7TmdTTWdR2sAJDGsV/H1+Ez7fZ9qzH/Ras91GEmcQMg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d+w+jyXpEcbmsVcysA1RWCKI+wVkLIUy8Ic3K9xL0c2Pw2iAy244Krvo+nD788QJ2t1/oh1VbdMCfTIIZi3yzH6gb08T/eCo4X4n4yg9f2xi7I/DCa/8+wAlmmNQyNuKTo1DLfRAXheJ/Oo1fP8xs2u+Jyty0GRdv0jtcC1D+NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZ9mB6uj; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-45076d89e56so3108554b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 08:26:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764692789; x=1765297589; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2PnAtWmdbMkCmI0bWWt89OpkxziHYbElMXbsGDyHdDw=;
+        b=AZ9mB6ujh1DFUorNzwidpY0aQKW39aXPDGLf4iYrbKGRO0B9x7iOhe3LfNU9D2W922
+         Lvl+lWAo1GuF3BVZcyD3cEGmDAZhfh1RYpIP6mI1DOzDqbXAiZouOtNnEjymg/uCGVDc
+         7zgxuFUi70ADQ5IfNNGIszvto7HxFz29XO880tsWJ7f0sMh7i/H2vMwqRfoiFMc4QLjQ
+         mQEQ+uqqcmglokMolyR25VMHYYojtUXRyDUQVEivFEudCTOw1vw6R+dKzO6gBoQKQWMe
+         jkjTqPX2TgS6p0MQgalKRvabqtqE/1B+Lu9i+X0qKlc/HrprX0ojPd/hZMTiayb6GwOX
+         Cgag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764692789; x=1765297589;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2PnAtWmdbMkCmI0bWWt89OpkxziHYbElMXbsGDyHdDw=;
+        b=sRJpvi0ohjlgpUOR/SUOJXDtKhb7Kdxb2wX+5YyKL6UgHOfdEy9CPCWdCuBetsRmcz
+         91KDATLhXvehSFMWiE+h1IYiT/ZAskjFYDGtCNe5OyvNv1lPy7v2/9fESxp4fq3ZAmQS
+         UV9cxRst00yPRDkyCQqsIjYJo1XZeTSYpoeHCmz2SH6x8xlf7UFt2Jb+QOAViPuctivt
+         sFmLkhVwqldgcRmiHd3ld8H/4hdzZ7JmHPCHSFmgrLdq+s/NFoUrqNHKea/TLCPMV9h8
+         xZzDIhaQVjK4HX70SPooa7tYNEYkL1eIuQDrOG00B3X4tKyBc8Bo7BRXF/NI5PPpi2+x
+         rpkw==
+X-Forwarded-Encrypted: i=1; AJvYcCWtzSRpfsSQprZ3QkKFtlU3kA9V81R0Y30B52hNUpXfRaumzp/vCM0lg4VjwZDr4c1V8usDENYZjC7IWQnf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWa0o6Q3ricpiKViJ1uLE5ndqIGQ3yfs58f+HgwIgv4lWlOhC3
+	26KcGMk854Gnrkz1UvVV5tFXd3FsocuO1gZ/P1anbPmv8JZNt7S+bBrk
+X-Gm-Gg: ASbGncscay2TqrgkV4AJYpd5X9ui/J04nhoI1aEqpNS+KQh2OPmfwNi7sdQ+XEeNwU1
+	dAJ5p9kIh56l8p8Lll/emBf1CFD/cAKaaO3A2+ozVXDwWQpE/mF1PBjMqcRu2+rC6V9SxiSqPVE
+	TMyCsoZsOrV+ge8SZ4d3FeVxdfadSJ/5P+zrQesHNfIGsGRXn1JigdV2jaD1UGJ2cZC5QlMmDts
+	Kzt8Taadv4MubgMJH+qV9FsrRpC0oT232t8BwZosEpILd2gNF1MitGist+WJujmjGmZXCI/nAkH
+	b6kPyiYls/ojX3iZii1x4mxMXkAfLxI5M2uPwqXauJjA8qz+vMdSBtgBQ2JwYDgTnQ+r+n8n1Dr
+	KhJyedRpumzh3xWg+wTm7FYGCMk8euet0V3A+1++9tMwOacrXggUWrtA0k5GEWf/HJ01TLruKzJ
+	PrFfnqff3C0ayzhntd5LxJQNh7Nkp7tSBVVl8SLOGT3XXEgqNG2fhrMkmbceShLYPkHJxT7IOiY
+	YXLZ+evtGBW/PeMx0d+VpamqzmZ
+X-Google-Smtp-Source: AGHT+IHnSymlG4Rcfy7ky8sdHo/8LOZg5So4LcXdseUa5CzeTuphJTK1jKlkQxS0JuGgxnJtmsOZGQ==
+X-Received: by 2002:a05:6808:80c4:b0:442:cc90:1e4e with SMTP id 5614622812f47-4514e5fa7e5mr13578497b6e.14.1764692789380;
+        Tue, 02 Dec 2025 08:26:29 -0800 (PST)
+Received: from nukework.lan (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-659332e1480sm4236722eaf.7.2025.12.02.08.26.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Dec 2025 08:26:28 -0800 (PST)
+From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+To: andersson@kernel.org,
+	mathieu.poirier@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	p.zabel@pengutronix.de,
+	Govind Singh <govinds@codeaurora.org>,
+	Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+Cc: konrad.dybcio@oss.qualcomm.com,
+	linux-kernel@vger.kernel.org,
+	Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Subject: [PATCH v2 1/2] remoteproc: qcom_q6v5_wcss: fix parsing of qcom,halt-regs
+Date: Tue,  2 Dec 2025 10:26:24 -0600
+Message-ID: <20251202162626.1135615-1-mr.nuke.me@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add Medion device
-To: Georg Gottleuber <ggo@tuxedocomputers.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251202143757.69817-1-ggo@tuxedocomputers.com>
- <20251202143757.69817-3-ggo@tuxedocomputers.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251202143757.69817-3-ggo@tuxedocomputers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 02/12/2025 15:37, Georg Gottleuber wrote:
-> Introduce new binding for the Medion SPRCHRGD 14 S1 notebook with
-> X1E78100 SoC.
-> 
-> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index d84bd3bca201..95cc1d00fb1f 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1067,6 +1067,12 @@ properties:
->            - const: qcom,x1e78100
->            - const: qcom,x1e80100
->  
-> +      - items:
-> +          - enum:
-> +              - medion,sprchrgd14s1
+The "qcom,halt-regs" consists of a phandle reference followed by the
+three offsets within syscon for halt registers. Thus, we need to
+request 4 integers from of_property_read_variable_u32_array(), with
+the halt_reg ofsets at indexes 1, 2, and 3. Offset 0 is the phandle.
 
+With MAX_HALT_REG at 3, of_property_read_variable_u32_array() returns
+-EOVERFLOW, causing .probe() to fail.
 
-Your cover letter says this is based on Tuxedo laptop patches, thus just
-squash it into that enum.
+Increase MAX_HALT_REG to 4, and update the indexes accordingly.
 
-Best regards,
-Krzysztof
+Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
+
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+---
+changes since v1:
+ - Add "Fixes:" to commit message
+
+ drivers/remoteproc/qcom_q6v5_wcss.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index 07c88623f5978..23ec87827d4f8 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -85,7 +85,7 @@
+ #define TCSR_WCSS_CLK_MASK	0x1F
+ #define TCSR_WCSS_CLK_ENABLE	0x14
+ 
+-#define MAX_HALT_REG		3
++#define MAX_HALT_REG		4
+ enum {
+ 	WCSS_IPQ8074,
+ 	WCSS_QCS404,
+@@ -864,9 +864,9 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
+ 		return -EINVAL;
+ 	}
+ 
+-	wcss->halt_q6 = halt_reg[0];
+-	wcss->halt_wcss = halt_reg[1];
+-	wcss->halt_nc = halt_reg[2];
++	wcss->halt_q6 = halt_reg[1];
++	wcss->halt_wcss = halt_reg[2];
++	wcss->halt_nc = halt_reg[3];
+ 
+ 	return 0;
+ }
+-- 
+2.45.1
+
 
