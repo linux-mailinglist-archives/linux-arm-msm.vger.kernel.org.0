@@ -1,205 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-84088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B3F0C9BB5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 15:07:26 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93E94C9BBDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 15:15:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 70CBB4E3792
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 14:07:21 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 82C744E1786
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 14:15:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C50D322A15;
-	Tue,  2 Dec 2025 14:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D85F2153D3;
+	Tue,  2 Dec 2025 14:15:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oS2mkVPH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB0E315D27
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 14:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160891C84B8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 14:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764684439; cv=none; b=napiGu4m/nzbPDRyLg3KcENOA7WoaQdJd5j8zz25Hs+BUe2ZZlp+c4Woky/CXpMbnt/xAhMsgpr+FWfSsxmp+WEpM6M4eZ6FlKOdHkKKhujDGkv0ulqI+zNs/nzwC3yukaKReuurxv6MnNh35omLGs3DE3ho+kmQOaUiDy8vDq8=
+	t=1764684937; cv=none; b=IR3q6mA+pmBMbRda7iwIjOQvXXdHFHYeqaMz7tqvYO2TGwXjg1SMH9/BKaRB2SKCyRM0Zy12JJ2w2/LrAjj6V2AexmrFMc8PKJrSHTnqv/5sSW9N+umnQxjTinFXcHA2zEHruccXscEpq3DNXUnB8sqeq5BGxEQDY2yt3Y/gKXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764684439; c=relaxed/simple;
-	bh=vHUrQ6w324fYnCNxiHl4mdFInNGEkkrZLMojf3dBXGg=;
+	s=arc-20240116; t=1764684937; c=relaxed/simple;
+	bh=4Wc48KRaIcqiX0vglMdyQboI7iIQ2x8CgSCV7WOL/hs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=keJWN9CllgCoX81yBw2ax7G83LqsMDNpReJ6kz9jsrFtGwEFvxtoUZRJ5swqvbIrvicDkT+0eva1H1qy9LOE6O04/YrGJ4HHygk26zqqZwqUcWSDiZ/UapWG2/NVihuijRixpsQ+6aH/yCOYYcd6P5M8MEmtPsvW9E19Joj7Mpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7881b67da53so51713987b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 06:07:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764684436; x=1765289236;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P35uIC8+DPfTCMfHgmdtX7Glr2h/6n9nJWKZMAhyHf0=;
-        b=nWabtv5w7PUnVL76s+eygu1nnGLoYkEnOC7ZXEG8C9wRzGNzE0+PAk3wf45PaAewhz
-         hFLodGGumuYE4gyUljVoGXTJFnX8EHfjtUfHtJNyT1biLzUChwtZVIbHwRiierIfyrbK
-         OpAwVHa+fyUrZH4iWSFybU5dWF7904mDrOnolEGnde7q7q8cd06n3b84LyX2hlUoheU+
-         zD9zFVcenO/bvV5469WKJ5hruLx8d53GzBLKz7WEGfCD4sCFKFHwrNkgYjB0eSuOVzW4
-         MuSpxXo8jQmG3DehtwWyShaX1Nw9HtMYOpEFmsdVOJWFNbKi0VAi5cX+duUQmYQBWyGB
-         pjDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVwvOZCh0pkb6DXwNc9q0CTVsvt4TjRYWUZ6qaLPvYV5eru8qECNivJ5Tym7AUCGyHBzzg1gbULW0cfHhh8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw559tqq1qnNLtLZ7mAlCC9jVitN5+enG3UsgoilhCeOxm0bfZ0
-	uWVojLxg0mDdijYgWsu+V+E9FQWTl8ZYXsxAogq5ZbFgZ3WLYMtThxaC2JVErNXd
-X-Gm-Gg: ASbGncsqPSOd8vj4A4bNPMrPTpZ1bdj8MDyPi+VrEEwCsCq9YYYtz6KqWCjMUxSSx6/
-	GkHFXmA7cDmTJTsZ7NvMZUHNtFg76qsGHtBF4aLJN3XpDZzvjSHbBjljtkh2+aqYBP+Wp7n2Fgp
-	N0O4ebxRiM5w870etz2oGtHBinry4WgqVmE+Us57LlN8CHrwVCdZ2J6Qc0Zgi/qBxdOLJ1yw98d
-	+I4F4P6edIchqlP6bJbKqJrJw1PxH+JoPkPzIHiSYwplbS8oeOwiocMLoBHK+RV1p2LqCRpKbPS
-	BszB4BTvHznDgA26cwR9C8uK16ZZnavhLxkjm24HOFx8oOxoYObkGnOdRlXixeJhx5cdEzBWpZ8
-	MNeMJxavNJHEtyMrkeC46UFwCarYbTXbBc8UieokyXgSHUNKpxG9X9ug+KFdGQcBGTQx7EPA3UR
-	v9x0gH18XsP5+031jYPShelnKqlZAkwKd4lnzLhqyGMY3Ax22Z
-X-Google-Smtp-Source: AGHT+IEyVOYkx994bZNIfI3lmDHzCHwwCpk1ZPA2sjbWGidznKNBwSaBEmxqfHE/Lr2cmiupEO/ckQ==
-X-Received: by 2002:a05:690e:4282:10b0:640:fdbc:6cf2 with SMTP id 956f58d0204a3-64302ab97f8mr24586338d50.53.1764684436218;
-        Tue, 02 Dec 2025 06:07:16 -0800 (PST)
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com. [74.125.224.46])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78ad1044f9esm62974347b3.56.2025.12.02.06.07.15
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Dec 2025 06:07:15 -0800 (PST)
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6420dc2e5feso4336820d50.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 06:07:15 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXXro+oobbaopMs1gJoM7NFVoGoiaxX1QWpZD/IWaSdRyRL58SlTXyweJyTKNke4o7VCPk//XJeZqF/XwiF@vger.kernel.org
-X-Received: by 2002:a53:dd48:0:b0:63e:17d8:d977 with SMTP id
- 956f58d0204a3-64302abbb9cmr22209916d50.41.1764684434875; Tue, 02 Dec 2025
- 06:07:14 -0800 (PST)
+	 To:Cc:Content-Type; b=F9cYUUGQTwN2QYfSTnJfeb1BUJwC1g4HX+qGA7FFI9ICjw1EsSphE4o4R/D+dc/nf/vOYVICu4OcuU5JBu+vOQYmUGu6VW80CXLV7agPZjY9erB2EFQ3Otwg6DCtxTaZxQEWqCO00iSLCoD2YkcLIXguwOZqm/0pBRa386WpqHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oS2mkVPH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0187C19424
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 14:15:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764684936;
+	bh=4Wc48KRaIcqiX0vglMdyQboI7iIQ2x8CgSCV7WOL/hs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=oS2mkVPHrpV8sWUwH+Q0AJ0ClWDtVr/T+8Z9ZI+6iedRlqKw4FAuwSCb5BfkSlgJN
+	 SqCVRql5CR+IxwmmKB87Usk2+iZkbCoEdljR0q4TOSCRcY2HH3VxAZIWWfiDvv2973
+	 6HaDODJFFN5V0Ovs3P3G2ZNgu8QnR+YYgP5S6MEfDUyRaMV+vOrpfegKEG5h1sIQ4U
+	 2A9C9rNoxXy4cF1lPEO/thcP/a17WAEeWOUsE+irpkdDfF1e3WqjeJ3k/TDT2U5AfO
+	 yp8DS3LMrMuWjX5BddfjIf3dgMScZVeOJA7+yJE8gMGqEXpMADVWUNxOdiboptIWBw
+	 6n3oljKWqG0VA==
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-644f90587e5so8619582a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 06:15:36 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVEOAmmiF34/+dvnM8T4nSc6yQOeZh1Uu+zXpwWiOlst2VnPIVqCfzCf1myIPviKU9oq7gp+kBC5oCk9nkx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2WHTCul+0z2KpJs+KsrxqXIGRbofPUrzEOf83YZUWmcsHD9os
+	7UylBdn9/8BrN+AX+x+t/K6PcdUawYtERqMHthyB7SiAlXuVEsIjPX9293JYz7V4kEz24SClbdv
+	iIXOQDwV21ZgNaW0EQmrqG4Pq640ulw==
+X-Google-Smtp-Source: AGHT+IHOK37x0Kt35joRUOghP+Y+b/h+dUlhViPYEEU5vZFEgzun82hvWA1eFjAbdPJqCcazIpiBmOYOIRh+oi7lQBk=
+X-Received: by 2002:a05:6402:51c9:b0:647:6589:516f with SMTP id
+ 4fb4d7f45d1cf-647658951c8mr11422163a12.23.1764684935180; Tue, 02 Dec 2025
+ 06:15:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org> <20251112-b4-of-match-matchine-data-v2-1-d46b72003fd6@linaro.org>
-In-Reply-To: <20251112-b4-of-match-matchine-data-v2-1-d46b72003fd6@linaro.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 2 Dec 2025 15:07:03 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdVAZpp7M+pp27+kHZwoet2Q8Rm-Y4ePu7=W_1oXhebLmQ@mail.gmail.com>
-X-Gm-Features: AWmQ_bnQtK_C28o8ts-DX6QMHSfgR5FWBqGmuyp3cjxdu41cx4XkoPs5W_lQhYE
-Message-ID: <CAMuHMdVAZpp7M+pp27+kHZwoet2Q8Rm-Y4ePu7=W_1oXhebLmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/11] of: Add wrappers to match root node with OF
- device ID tables
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Daniel Lezcano <daniel.lezcano@kernel.org>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20251124182751.507624-1-robh@kernel.org> <CGME20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c@eucas1p1.samsung.com>
+ <20251124182751.507624-2-robh@kernel.org> <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
+In-Reply-To: <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 2 Dec 2025 08:15:23 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
+X-Gm-Features: AWmQ_blpHLPsU5za5Q3_8cThmj1tfuI1sEcIZQQrDepEj9pfYTWSHFtibfJZbEw
+Message-ID: <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
+Subject: Re: [PATCH v7 2/2] remoteproc: qcom: Use of_reserved_mem_region_*
+ functions for "memory-region"
+To: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, 
+	Beleswar Padhi <b-padhi@ti.com>, linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Krzysztof,
-
-Thanks for your patch, which is now commit 4a93adcbd201aad5
-("of: Add wrappers to match root node with OF device ID tables")
-in dt-rh/for-next.
-
-On Wed, 12 Nov 2025 at 11:30, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> Several drivers duplicate same code for getting reference to the root
-> node, matching it against 'struct of_device_id' table and getting out
-> the match data from the table entry.
+On Thu, Nov 27, 2025 at 8:28=E2=80=AFAM Marek Szyprowski
+<m.szyprowski@samsung.com> wrote:
 >
-> There is a of_machine_compatible_match() wrapper but it takes array of
-> strings, which is not suitable for many drivers since they want the
-> driver data associated with each compatible.
+> Hi Rob,
 >
-> Add two wrappers, similar to existing of_device_get_match_data():
-> 1. of_machine_device_match() doing only matching against 'struct
->    of_device_id' and returning bool.
-> 2. of_machine_get_match_data() doing the matching and returning
->    associated driver data for found compatible.
-
-Shouldn't the first function be called of_match_machine(), and return
-a const struct of_device_id *, cfr. of_match_device()?
-
+> On 24.11.2025 19:27, Rob Herring (Arm) wrote:
+> > Use the newly added of_reserved_mem_region_to_resource() and
+> > of_reserved_mem_region_count() functions to handle "memory-region"
+> > properties.
+> >
+> > The error handling is a bit different in some cases. Often
+> > "memory-region" is optional, so failed lookup is not an error. But then
+> > an error in of_reserved_mem_lookup() is treated as an error. However,
+> > that distinction is not really important. Either the region is availabl=
+e
+> > and usable or it is not. So now, it is just
+> > of_reserved_mem_region_to_resource() which is checked for an error.
+> >
+> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 >
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-> --- a/drivers/of/base.c
-> +++ b/drivers/of/base.c
-> @@ -434,6 +434,53 @@ bool of_machine_compatible_match(const char *const *compats)
->  }
->  EXPORT_SYMBOL(of_machine_compatible_match);
+> This patch landed in today's linux-next as commit c70b9d5fdcd7
+> ("remoteproc: qcom: Use of_reserved_mem_region_* functions for
+> "memory-region""). In my tests I found that it breaks booting of
+> DragonBoard410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts) by causing
+> the NULL pointer dereference. The issue is caused by replacing
+> devm_ioremap_wc() with devm_ioremap_resource_wc(), which fails on
+> devm_request_mem_region(), see comment in the code below. It looks that
+> the error handling is somewhere broken. Here is the the kernel log:
 >
-> +/**
-> + * of_machine_device_match - Test root of device tree against a of_device_id array
-> + * @matches:   NULL terminated array of of_device_id match structures to search in
-> + *
-> + * Returns true if the root node has any of the given compatible values in its
-> + * compatible property.
-> + */
-> +bool of_machine_device_match(const struct of_device_id *matches)
-> +{
-> +       struct device_node *root;
-> +       const struct of_device_id *match = NULL;
-> +
-> +       root = of_find_node_by_path("/");
-> +       if (root) {
-> +               match = of_match_node(matches, root);
-> +               of_node_put(root);
-> +       }
-> +
-> +       return match != NULL;
-> +}
-> +EXPORT_SYMBOL(of_machine_device_match);
-> +
-> +/**
-> + * of_machine_get_match_data - Tell if root of device tree has a matching of_match structure
-> + * @matches:   NULL terminated array of of_device_id match structures to search in
-> + *
-> + * Returns data associated with matched entry or NULL
-> + */
-> +const void *of_machine_get_match_data(const struct of_device_id *matches)
-> +{
-> +       const struct of_device_id *match;
-> +       struct device_node *root;
-> +
-> +       root = of_find_node_by_path("/");
-> +       if (!root)
-> +               return NULL;
-> +
-> +       match = of_match_node(matches, root);
-> +       of_node_put(root);
-> +
-> +       if (!match)
-> +               return NULL;
-> +
-> +       return match->data;
-> +}
-> +EXPORT_SYMBOL(of_machine_get_match_data);
+> remoteproc remoteproc0: 4080000.remoteproc is available
+> qcom-wcnss-pil a204000.remoteproc: error -EBUSY: can't request region
+> for resource [mem 0x8e200000-0x8e7fffff]
+> remoteproc remoteproc1: a204000.remoteproc is available
+> remoteproc remoteproc1: powering up a204000.remoteproc
+> remoteproc remoteproc1: Booting fw image qcom/apq8016/wcnss.mbn, size
+> 4111376
+> Unable to handle kernel paging request at virtual address fffffffffffffff=
+0
+> Mem abort info:
+> ...
+> Internal error: Oops: 0000000096000046 [#1]  SMP
+> Modules linked in: cpufreq_powersave qcom_wcnss_pil cpufreq_conservative
+> coresight_stm coresight_replicator coresight_tmc coresight_tpiu stm_core
+> coresight_funnel coresight_cpu_debug coresight_cti(+) adv7511 coresight
+> nfc rfkill msm snd_soc_lpass_apq8016 snd_soc_apq8016_sbc
+> snd_soc_lpass_cpu snd_soc_msm8916_analog snd_soc_msm8916_digital
+> snd_soc_qcom_common snd_soc_lpass_platform snd_soc_core qrtr ubwc_config
+> snd_compress llcc_qcom snd_pcm_dmaengine qcom_q6v5_mss snd_pcm ocmem
+> qcom_pil_info qcom_spmi_vadc qcom_camss drm_gpuvm qcom_pon rtc_pm8xxx
+> qcom_q6v5 qcom_spmi_temp_alarm venus_core qcom_vadc_common snd_timer
+> drm_exec qcom_sysmon snd qcom_common gpu_sched videobuf2_dma_sg
+> v4l2_mem2mem qcom_glink_smem v4l2_fwnode soundcore drm_dp_aux_bus
+> qmi_helpers mdt_loader v4l2_async videobuf2_memops videobuf2_v4l2
+> videodev qnoc_msm8916 videobuf2_common qcom_rng drm_display_helper mc
+> qcom_stats rpmsg_ctrl rpmsg_char display_connector ramoops socinfo
+> rmtfs_mem reed_solomon ax88796b asix usbnet phy_qcom_usb_hs ipv6 libsha1
+> CPU: 2 UID: 0 PID: 28 Comm: kworker/2:0 Tainted: G W
+> 6.18.0-rc1+ #16209 PREEMPT
+> Tainted: [W]=3DWARN
+> lr : __qcom_mdt_load+0x210/0x304 [mdt_loader]
+> Call trace:
+>   __pi_memcpy_generic+0x128/0x22c (P)
+>   qcom_mdt_load+0x68/0x60c [mdt_loader]
+>   wcnss_load+0x2c/0x5c [qcom_wcnss_pil]
+>   rproc_start+0x30/0x1b4
+>   rproc_boot+0x19c/0x560
+>   rproc_auto_boot_callback+0x1c/0x34
+>   request_firmware_work_func+0x4c/0x98
+>   process_one_work+0x208/0x60c
+>   worker_thread+0x244/0x388
+>   kthread+0x150/0x228
+>   ret_from_fork+0x10/0x20
+> Code: 927cec03 cb0e0021 8b0e0042 a9411c26 (a900340c)
+> ---[ end trace 0000000000000000 ]---
+>
+>
+> > ---
+> > v7:
+> >   - Split QCom to separate patch
+> > ---
+> >   drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++------
+> >   drivers/remoteproc/qcom_q6v5_mss.c  | 60 ++++++++-----------------
+> >   drivers/remoteproc/qcom_q6v5_pas.c  | 69 +++++++++++-----------------=
+-
+> >   drivers/remoteproc/qcom_q6v5_wcss.c | 25 +++++------
+> >   drivers/remoteproc/qcom_wcnss.c     | 23 ++++------
+> >   5 files changed, 72 insertions(+), 129 deletions(-)
+> >
+>
+> > ...
+>
+> > diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_=
+wcnss.c
+> > index 2c7e519a2254..14005fb049a2 100644
+> > --- a/drivers/remoteproc/qcom_wcnss.c
+> > +++ b/drivers/remoteproc/qcom_wcnss.c
+> > @@ -526,25 +526,20 @@ static int wcnss_request_irq(struct qcom_wcnss *w=
+cnss,
+> >
+> >   static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+> >   {
+> > -     struct reserved_mem *rmem =3D NULL;
+> > -     struct device_node *node;
+> > -
+> > -     node =3D of_parse_phandle(wcnss->dev->of_node, "memory-region", 0=
+);
+> > -     if (node)
+> > -             rmem =3D of_reserved_mem_lookup(node);
+> > -     of_node_put(node);
+> > +     struct resource res;
+> > +     int ret;
+> >
+> > -     if (!rmem) {
+> > +     ret =3D of_reserved_mem_region_to_resource(wcnss->dev->of_node, 0=
+, &res);
+> > +     if (ret) {
+> >               dev_err(wcnss->dev, "unable to resolve memory-region\n");
+> > -             return -EINVAL;
+> > +             return ret;
+> >       }
+> >
+> > -     wcnss->mem_phys =3D wcnss->mem_reloc =3D rmem->base;
+> > -     wcnss->mem_size =3D rmem->size;
+> > -     wcnss->mem_region =3D devm_ioremap_wc(wcnss->dev, wcnss->mem_phys=
+, wcnss->mem_size);
+> > +     wcnss->mem_phys =3D wcnss->mem_reloc =3D res.start;
+> > +     wcnss->mem_size =3D resource_size(&res);
+> > +     wcnss->mem_region =3D devm_ioremap_resource_wc(wcnss->dev, &res);
+>
+> The above line causes the failure. After restoring it to:
+>
+> wcnss->mem_region =3D devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss-=
+>mem_size);
+>
+> the mentioned board boots fine again. I'm not sure about other drivers,
+> if they also fail the same way as they might not be used on the tested
+> board.
 
-These two functions are very similar, but look different.  If the
-former would return a pointer instead of a bool, the latter could be
-built on top.
+Other platforms (non-QCom) were tested also use
+devm_ioremap_resource_wc(). So something else is claiming the same
+region? Can you dump out /proc/iomem?
 
-Even if you still prefer returning a bool, they could share a common
-private helper returning a pointer.
+The region is dynamically allocated, so maybe that has something to do with=
+ it.
 
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Rob
 
