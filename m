@@ -1,166 +1,299 @@
-Return-Path: <linux-arm-msm+bounces-84087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3433C9BB4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 15:04:47 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A13C7C9BAF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 14:59:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E45F0344CA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 14:04:46 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 997234E1786
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 13:59:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9BC2214228;
-	Tue,  2 Dec 2025 14:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 042373203AF;
+	Tue,  2 Dec 2025 13:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x00jzQT+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73948315D27
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 14:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1616E31ED72
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 13:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764684284; cv=none; b=RP4rFg97GqPYSVFWj1NhdHu6lJMtSnntYKEupmHj2TXghzU7YGhuobGPG4TfgIPEe8edt32K1vP7oOE6/1g5Zf7l6ZmlsoBxd4KBAw79/UtMpnJemTbVcDvVhYsnwaoEyDVmxMUHMGF7yhdJ7mrxUlHuHaeh4xAYKjp4toeuOjQ=
+	t=1764683956; cv=none; b=c4VW/YBMqWSH78QZIXRJQGHuGDO838QPx34BwHhCHTkdElrdL+ZeBxjkkrS2rgm4TBWRwoGhpm9cIsLfwm99esyGhoUorYWnBv5dihi+sVz58gYYzwEgfz8yj8Trxsbb75ZBG32cWP3vb4ScqYXTB/NtvOG+XIRmXHgkuwlrJfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764684284; c=relaxed/simple;
-	bh=ak/Rt6uWiX+MT4pBJfZ+PD2Fezju7a0RibofMkxgxGI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tmv9vYZiE3oUhr6YL2JP6wpVSxtpfzyU4/YSqwuCrEJzBcw0pg209BBCG0YvTsLaqicsFPWqu85P3ZRAOcIgxjpAI7KMyiNRXQXJgH8XKUOfbYsPpuTUpH9rqSPL5AkCNlPscRTtsuea0JNAyUyvxK9j2HKP3xHY/wvwAaxvj4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7aae5f2633dso6545992b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 06:04:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764684283; x=1765289083;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1764683956; c=relaxed/simple;
+	bh=HmaqoQIuPwqbMuc4xvu1kJ7krWxxfT7T6CGXIcKTfPE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Herw2GrqhXdZ1qenpjH4fd7+J6itwio4qhLDC/dKiuy71xpw4ijWRq2Y6pF3Lz8hM6Fc3I/QQZ21ukzv5c/GBefF+hcVgAJEyqqAE6yjDz0DXW+QayV5S7bvS049LjFHX7QfCJ25gmOqN+WKHUJ27WK/G8SzTNBr4L0+cAcXj90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x00jzQT+; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37b9552618aso4084031fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 05:59:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764683953; x=1765288753; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DcG/XQXLp9HYcvharszf8uW0YuqvJnIwjKHOdBnLhz4=;
-        b=aLgYVGwTTEqnW+sWiOzjSYUfKKKAbUbZHguJkotW6uweQkgBR5E4mD8Aix8C86DowJ
-         LKn0dLmDF4jUWbBbvUBVL0DbJFyUwDvwdb9JXHMD/uv0/rVETHsK4OV8eqaRdGR/332S
-         M/UCBe2UOk4XyNWMYBO3V12YM91Yy9/vjif705SN9tVG4BSsGecNWBEJfgrBZLTfCpUd
-         wqpKcg+S/wViOQEa9a5z1aANaAdYGDXq6FjNPPEEsegTLkS6pmK7eE6kDsQ3htlYatwE
-         h3+0gVmqToYj+9mSvJ1F2U/zycxFftcNx56nxEUSxiyLCf5MtcG0vVxPxNTtTOnBcr+r
-         tUcw==
-X-Forwarded-Encrypted: i=1; AJvYcCUY5lUFLxqZDW4TR0XvPq9y+v9KAz2TVETU7SLY6bmRgsE+m8cX8Ks2J/aNTOtjNtxVIbNynmvPQLNUVNtM@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/KSLLDXP3L7HlFjkYMzaoZeb/5cCNm03M4s/z6UueSE3lTA3L
-	Bvl5r1GSclWG7b7Y/HGUZ/NGkAJC/nnxxGKd1DWmdNNp/sfTv2topH7HYv5O3sXN
-X-Gm-Gg: ASbGncvzmOO5+Okz0x7l+GgqoQlw34noBEvgn+Q3QuNBOsCXNpSw1mamJOqneTb2OkK
-	wMCPqIU+tJtrvYp4F8kCbQkDGGwaSDETEtSu6gi0uyFFgRkleNB2rBXbjotUr05KmIrETy1NiO/
-	AEmmuehxCCNOTHiPy04jbO6FPDw5KnYiw/4nX8ucEBoRPTov4X3OyMyIKCzM7WcU1YXSWpGHBjn
-	3Pw7SYWVlNc46uBg7HLqL8cpZgorPzxfULYs40jxkv9zC0/ACnSpHzZF6/MKWp4N616q5i70lYy
-	EQpYXtOKh/74Fm4MHgEHZIa9ysEoJOXFFs3lOUnkIFY08cv/wJEcoQhMicMHolxgDU02go94W1w
-	XO4faYVQy9JW3/vXviv4288eAxiiW8E/E0BVpYQEjFhjP1EMH9pnKHM1iS4Mnp8PrBO66VPFS6S
-	sCxGrbD050v2wk1oeKZXsgFr90TNR7TLIPcPfJVuapOJxpiTkSyAXiqzYxUrus9CE=
-X-Google-Smtp-Source: AGHT+IE5NbJ+QqpN8xUIm2eIJYfU4UFCYT3vDs5liqdtA6FTK6/T+qYfRyo29rojHxg8Y5qxmpOhhw==
-X-Received: by 2002:a05:6a20:2443:b0:34a:59ba:30dd with SMTP id adf61e73a8af0-3614eb7a125mr50990203637.20.1764684282443;
-        Tue, 02 Dec 2025 06:04:42 -0800 (PST)
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com. [209.85.215.171])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-be4fc5a0957sm15659175a12.16.2025.12.02.06.04.42
-        for <linux-arm-msm@vger.kernel.org>
+        bh=DNSMC7M9xl88C1slHGyNkETiEDgHYTw4VftIhWKCaB8=;
+        b=x00jzQT+JVQdt8pBJv9imkGZdpnyn/sGqUZFS5rwzM6m0m4g6s3SVOl7j9ATO4zDwa
+         YhXGzNth4l/foZpj2Vsvwhms+xYATWfCt2tEgpcj1neKYLHohXDGwQuum6MMyon2LPgl
+         GGFY3b4atMowb9AbQfuubuhq7VtHj4SvetHS2xKZxa8V0P2zcblbd8E2FP9jVeAP+vaD
+         06pHMQzQnuDBmu1C3pOigxYVDYMXXlEK5JGulh/VkIBRPh7pSwOEC4zZ2rXhiUEeXXVi
+         HB1trdJxXmL4FVJi+MkWTGigZ4/bE5ahtWP2NiJ/QlW8d/egp11tLWBGGTjg0PM3OIs6
+         l70Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764683953; x=1765288753;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DNSMC7M9xl88C1slHGyNkETiEDgHYTw4VftIhWKCaB8=;
+        b=ErcTUeJD5YxviUNl+zTTAkrkhtig5xjLUX8L3RvUiPhm/Zw+6SsiceC/fl9RiZXilG
+         Z5Y102mRyDVDhfBQDn1oOC1CoxXhkdEoqKn4kLRBascVAVQGTPrr9/ax1tujds29XFuK
+         tdfUBng+CzcdKUK1ZRXM45PPYzLCxLHsRvpNh1V7hhUdCxPPofyfoutewHUBqjEhetzc
+         vUsk1gXD89jymJ1OZRjAV1SMgB/F51UutmwpVaLvo6M8Qe5N4qJgANxx6Is+7pknt612
+         N6a/DFBvvjvHGHawqDN1afjZcY9HtGK+db99l4M7rtpI/rZxvFzZWX9IrJHk4JLWhYBr
+         g9Pg==
+X-Forwarded-Encrypted: i=1; AJvYcCUG5y5pA4Jgl511uqA4rDxFFRgv8pODzsiqy0NVqFTXroKnoBf0moElfkwGlE0kOXldZsPqlXZF/g29Scqx@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgidIzj3Dsh30TvxdjQtDIz8olfAymWIiEEctG7MfoS1TaeLQX
+	D0dQVN/f3UJEXbbLFW0TvkKtf4lCvUiWIFXQbA5FgNhUeok2MP9jO7RklFOO+We1Bzc=
+X-Gm-Gg: ASbGnct3Z4QlkwfqufGiKby4jPjn/aK75Rqajh0fM5PwjWpLFr4dhPWwMryP6KaoLAa
+	so8YyhPDqmdDQRF4riQq5Vwimta/oduOzkSuFvBw6Lt3/Q0U/v9rADQS0x0e6EVscJy8EgarLq6
+	WAICuEAAIXy6E/HbfbgoOVhzTvq0EjlJHPfjOQirWltZtxlmWmNfWvP1cqQINrzTlvPmOKfcwjk
+	2Q0qfwxMlibQAU5I2k8JWQq1bZ5JTLIg5N7gfMTGRr7I9rqNjGV2eveEc8nUbVwgYr0X2Jsbp0c
+	xB6SPkq13+lj123wxaTrDSrYT99dgwyJCoSAez7u+e5cV9EDAE1QdC4dvLBIXHcdMcvGQ6o2Gs+
+	DUvZrcuHu4LdBZGXiQPMFTeXuyn9SGhTgFZ0BGnbwYMsa6+BsWHnSpx0fCIAX/tL9BThti/vbG9
+	shH2JdrWJIwxOWh4PS9i/UMex9JatsVmcoWfiOkLfwVnpYXcCxMitblE4excWe0qkCAw==
+X-Google-Smtp-Source: AGHT+IFD4ygiTUwpVetjY+YcyYspKUcJU2+mn6x1QGz+FyWnrBex+TX+bFnUsxdCU1JKBbVgW8WtTQ==
+X-Received: by 2002:a05:651c:221f:b0:378:f0d6:8fb1 with SMTP id 38308e7fff4ca-37cdc416570mr63309411fa.5.1764683953036;
+        Tue, 02 Dec 2025 05:59:13 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37d2412a091sm38320371fa.50.2025.12.02.05.59.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Dec 2025 06:04:42 -0800 (PST)
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-bdb6f9561f9so4990058a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 06:04:42 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW9rBNa7R5KvUP61HfuaRZkLUpCqx30mYgdd/r9F165tFGguJUd4NScPEU99aAGz904cIEx8sWvfvmLOcKa@vger.kernel.org
-X-Received: by 2002:a05:6102:26c9:b0:5dd:89c1:eb77 with SMTP id
- ada2fe7eead31-5e1de39d9cemr17004298137.29.1764683823416; Tue, 02 Dec 2025
- 05:57:03 -0800 (PST)
+        Tue, 02 Dec 2025 05:59:12 -0800 (PST)
+Message-ID: <8ff6ab79-a3d3-48e3-9340-8b91a9ce1b27@linaro.org>
+Date: Tue, 2 Dec 2025 15:59:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-b4-of-match-matchine-data-v2-0-d46b72003fd6@linaro.org> <20251112-b4-of-match-matchine-data-v2-2-d46b72003fd6@linaro.org>
-In-Reply-To: <20251112-b4-of-match-matchine-data-v2-2-d46b72003fd6@linaro.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 2 Dec 2025 14:56:52 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdVJD4+J9QpUUs-sX0feKfuPD72CO0dcqN7shvF_UYpZ3Q@mail.gmail.com>
-X-Gm-Features: AWmQ_bnP_BfEGwKLqJN8UevZeVXg10-IsXC-lVqCY3H9e2HFkqZ11liOD_Kw768
-Message-ID: <CAMuHMdVJD4+J9QpUUs-sX0feKfuPD72CO0dcqN7shvF_UYpZ3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 02/11] cpufreq: dt-platdev: Simplify with of_machine_get_match_data()
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Daniel Lezcano <daniel.lezcano@kernel.org>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/3] arm64: dts: qcom: qcs8300: Add CCI definitions
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, nihalkum@qti.qualcomm.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Ravi Shankar <quic_rshankar@quicinc.com>,
+ Vishal Verma <quic_vishverm@quicinc.com>,
+ Suresh Vankadara <quic_svankada@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20251126081057.4191122-1-quic_vikramsa@quicinc.com>
+ <20251126081057.4191122-3-quic_vikramsa@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251126081057.4191122-3-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Krzystof,
+On 11/26/25 10:10, Vikram Sharma wrote:
+> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> 
+> Qualcomm QCS8300 SoC contains three Camera Control Interface (CCI).
+> Compared to Lemans, the key difference is in SDA/SCL GPIO assignments
+> and number of CCIs.
+> 
+> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
+> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
+> Co-developed-by: Vishal Verma <quic_vishverm@quicinc.com>
+> Signed-off-by: Vishal Verma <quic_vishverm@quicinc.com>
+> Co-developed-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>   arch/arm64/boot/dts/qcom/monaco.dtsi | 345 +++++++++++++++++++++++++++
+>   1 file changed, 345 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+> index 774255c3f6fc..7c575e1c5e10 100644
+> --- a/arch/arm64/boot/dts/qcom/monaco.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+> @@ -4776,6 +4776,117 @@ videocc: clock-controller@abf0000 {
+>   			#power-domain-cells = <1>;
+>   		};
+>   
+> +		cci0: cci@ac13000 {
+> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
+> +			reg = <0x0 0x0ac13000 0x0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +				 <&camcc CAM_CC_CCI_0_CLK>;
+> +			clock-names = "cpas_ahb",
+> +				      "cci";
+> +
+> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +
+> +			pinctrl-0 = <&cci0_0_default &cci0_1_default>;
+> +			pinctrl-1 = <&cci0_0_sleep &cci0_1_sleep>;
+> +			pinctrl-names = "default", "sleep";
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			status = "disabled";
+> +
+> +			cci0_i2c0: i2c-bus@0 {
+> +				reg = <0>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +
+> +			cci0_i2c1: i2c-bus@1 {
+> +				reg = <1>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +		};
+> +
+> +		cci1: cci@ac14000 {
+> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
+> +			reg = <0x0 0x0ac14000 0x0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 271 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +				 <&camcc CAM_CC_CCI_1_CLK>;
+> +			clock-names = "cpas_ahb",
+> +				      "cci";
+> +
+> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +
+> +			pinctrl-0 = <&cci1_0_default &cci1_1_default>;
+> +			pinctrl-1 = <&cci1_0_sleep &cci1_1_sleep>;
+> +			pinctrl-names = "default", "sleep";
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			status = "disabled";
+> +
+> +			cci1_i2c0: i2c-bus@0 {
+> +				reg = <0>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +
+> +			cci1_i2c1: i2c-bus@1 {
+> +				reg = <1>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +		};
+> +
+> +		cci2: cci@ac15000 {
+> +			compatible = "qcom,qcs8300-cci", "qcom,msm8996-cci";
+> +			reg = <0x0 0x0ac15000 0x0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 651 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			clocks = <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +				 <&camcc CAM_CC_CCI_2_CLK>;
+> +			clock-names = "cpas_ahb",
+> +				      "cci";
+> +
+> +			power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +
+> +			pinctrl-0 = <&cci2_0_default &cci2_1_default>;
+> +			pinctrl-1 = <&cci2_0_sleep &cci2_1_sleep>;
+> +			pinctrl-names = "default", "sleep";
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			status = "disabled";
+> +
+> +			cci2_i2c0: i2c-bus@0 {
+> +				reg = <0>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +
+> +			cci2_i2c1: i2c-bus@1 {
+> +				reg = <1>;
+> +				clock-frequency = <1000000>;
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
+> +		};
+> +
+>   		camss: isp@ac78000 {
+>   			compatible = "qcom,qcs8300-camss";
+>   
+> @@ -5071,6 +5182,240 @@ tlmm: pinctrl@f100000 {
+>   			#interrupt-cells = <2>;
+>   			wakeup-parent = <&pdc>;
+>   
+> +			cam0_avdd_2v8_en_default: cam0-avdd-2v8-en-state {
+> +				pins = "gpio73";
+> +				function = "gpio";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam0_default: cam0-default-state {
+> +				pins = "gpio67";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam1_avdd_2v8_en_default: cam1-avdd-2v8-en-state {
+> +				pins = "gpio74";
+> +				function = "gpio";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam1_default: cam1-default-state {
+> +				pins = "gpio68";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
 
-On Wed, 12 Nov 2025 at 11:37, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> Replace open-coded getting root OF node, matching against it and getting
-> the match data with two new helpers: of_machine_get_match_data() and
-> of_machine_device_match().
->
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+MCLK pad function declatarions has nothing in common with the CCI, thus it
+should be split into a separate commit.
 
-Thanks for your patch, which is now commit 6ea891a6dd370ab2
-("cpufreq: dt-platdev: Simplify with of_machine_get_match_data()")
-in dt-rh/for-next.
+> +
+> +			cam2_avdd_2v8_en_default: cam2-avdd-2v8-en-state {
+> +				pins = "gpio75";
+> +				function = "gpio";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
 
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -219,20 +219,13 @@ static bool __init cpu0_node_has_opp_v2_prop(void)
->
->  static int __init cpufreq_dt_platdev_init(void)
->  {
-> -       struct device_node *np __free(device_node) = of_find_node_by_path("/");
-> -       const struct of_device_id *match;
-> -       const void *data = NULL;
-> +       const void *data;
->
-> -       if (!np)
-> -               return -ENODEV;
-> -
-> -       match = of_match_node(allowlist, np);
-> -       if (match) {
-> -               data = match->data;
-> +       data = of_machine_get_match_data(allowlist);
-> +       if (data)
->                 goto create_pdev;
-> -       }
-
-I think this is a change in behavior:
-Before, the pdev was created immediately if the node's compatible
-value is found in allowlist, regardless of the value of data (which
-is always NULL, except on RK3399),
-After, the pdev is created immediately if the node's compatible value
-is found in allowlist, AND data is non-NULL.
-
->
-> -       if (cpu0_node_has_opp_v2_prop() && !of_match_node(blocklist, np))
-> +       if (cpu0_node_has_opp_v2_prop() && !of_machine_device_match(blocklist))
->                 goto create_pdev;
->
->         return -ENODEV;
-
-Gr{oetje,eeting}s,
-
-                        Geert
+All declarations of GPIOs to enable regulators shall be moved to a board
+specific .dts file.
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Best wishes,
+Vladimir
 
