@@ -1,213 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-84118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15808C9C762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 18:49:03 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id A20B8C9C98F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 19:20:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F24D74E103D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 17:49:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5BC3C4E34F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 18:20:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29D4B2C0F78;
-	Tue,  2 Dec 2025 17:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02D9229BDBC;
+	Tue,  2 Dec 2025 18:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WETxi9yl"
+	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="O2yvXUuN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AE12C0279;
-	Tue,  2 Dec 2025 17:48:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604DD1DB356;
+	Tue,  2 Dec 2025 18:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764697740; cv=none; b=C+Te0asazESwxxaPEkSgIXFCFAqQ4M6QxT5w3eNDmL+7cGa5KsDzkpz/uciAXwDvbnPP6/y475iOtVFTGD/zo/W/gGj0fjZxJpAOdDL4vS4JpY3psWU98n3mBJePOfAL8N65NY+nW8tCyALLXm6LlpRFh2fZk0JxsfIlWDx4fQc=
+	t=1764699597; cv=none; b=LaaPsp+viiPNuLGcS0lSpngZ7Cl5161nZbiFb9zxsB2KycUPcSFhis9mQT/WRBWfddiUeBw6CZZzEWqiim1xUbHZsHHVKfYtv/zsB0fCmt/rueQABZY7T+GWnvmRIlhBd8UKZ5L7k9G/RH28mXZuAmrQx2Dz7tFWZNJ08xTxRoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764697740; c=relaxed/simple;
-	bh=w+mga+o+tetqyVOBCkgEikxQuxEusTULiWyfjpvbTbQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qRFJdo6mejpDVhuS+LflbPEl0hk62nVd2e8fFNXj37vpoOwVqXQHMrA/5aYny9GsVNgyvcb2YSNcPJ3i6yMgkkSYyCz+dtPQl+QEI4zoTsOjHqL8Xzc4LNPpYpMBlK3NCqV68e//wYgVsSW2FRWh+bb6YRhvuDJzDQrsoskkUhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WETxi9yl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B6DC4CEF1;
-	Tue,  2 Dec 2025 17:48:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764697739;
-	bh=w+mga+o+tetqyVOBCkgEikxQuxEusTULiWyfjpvbTbQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WETxi9ylc7wJUJTf7ozJd7xoasuVhmHN+WD2CxuKTVo1LKFY4VRDfZxyWVCJ9TBFc
-	 8xJdytm+BzSskOR708bUT+ZWK1t8bQD+8+NNUDVs4oJjth+she6VT+9crwZqVGJ4oS
-	 UQFtGNWHq5KECzm8X6bdNeNtHlzmCsDqe7rHTAdVmUGhiHb/To2B2MGuyKXvdyiv4S
-	 Gq9rZXDXLZiI5yYlnFd3LfF4HMmgvtCamhZiMl3e63W1gCK+JB3yeDANpVNIkfeXO0
-	 DTYg+iWPdkytxz7PQ5MKERYq5C2g8Mf0aWrwHiYXuCFgM2QNw6vEENsXihanPtXtdo
-	 UZg64pVf0WVGA==
-Date: Tue, 2 Dec 2025 11:55:02 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] remoteproc: qcom: Fix NULL pointer issue
-Message-ID: <k7sao7ssrtkxufeegxl6kxcrydxbz3qvgdvywu7kt4c4ijojj3@z7hqohc7dhs2>
-References: <20251128103240.1723386-1-mukesh.ojha@oss.qualcomm.com>
- <o7txzvxy36nphtf5aybzb3z25zovhgtseubkyn2hbira3aorxo@vky3kzv7gvs3>
- <20251202111823.s7qgorpqalgaayn7@hu-mojha-hyd.qualcomm.com>
+	s=arc-20240116; t=1764699597; c=relaxed/simple;
+	bh=u+3XCDIXK0lDNht90YJ7AbRg9NnrHYFXthdbyWbjqNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cs9CGGeMcXe5WFgc8uZqkL7LXBMC2zUEni0CBfm7TDlpq9qzKt58fKupKeHwXI+dtxyC2QKBNr/1E2/1ocHGgm/VMxA3TJ0DZZa/sa0XEUxewRv+5C640XtnWVIi4TSKd4J1gw3+FR6noUiuy3uZNmRndDKQQkm0gB26UwwnN3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=O2yvXUuN; arc=none smtp.client-ip=157.90.84.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
+Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
+	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
+	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 822942FC0061;
+	Tue,  2 Dec 2025 19:19:51 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
+	s=default; t=1764699592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gbRu+GlX0px21xJv1xLY/Gx9mv3Wjfi8h3wuYaGAEKU=;
+	b=O2yvXUuNh+fi3fgqXCdOrJWn/3c1g44tCcEJowd2HwOQiKPvky2zk/2xuGq+fq1/XBTxMl
+	vZvjTxkzUZAYvmuEmlw2Nz+UoAMY7v21vonc74K791Pe0QpxOEikINxT2Jzx4xPqeAH0KT
+	JecyUoInmGh3mvDRvjNQ1LjybvWLU4M=
+Authentication-Results: mail.tuxedocomputers.com;
+	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=ggo@tuxedocomputers.com
+Message-ID: <02e37578-e8e3-4d12-a553-0d7a594f6c80@tuxedocomputers.com>
+Date: Tue, 2 Dec 2025 19:19:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251202111823.s7qgorpqalgaayn7@hu-mojha-hyd.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add Medion device
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Georg Gottleuber <ggo@tuxedocomputers.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
+References: <20251202143757.69817-1-ggo@tuxedocomputers.com>
+ <20251202143757.69817-3-ggo@tuxedocomputers.com>
+ <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
+Content-Language: en-US
+From: Georg Gottleuber <ggo@tuxedocomputers.com>
+In-Reply-To: <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 02, 2025 at 04:48:23PM +0530, Mukesh Ojha wrote:
-> On Sat, Nov 29, 2025 at 03:01:42PM -0600, Bjorn Andersson wrote:
-> > On Fri, Nov 28, 2025 at 04:02:40PM +0530, Mukesh Ojha wrote:
-[..]
-> > > diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> > > index 8c8688f99f0a..6480293d2f61 100644
-> > > --- a/drivers/remoteproc/qcom_common.c
-> > > +++ b/drivers/remoteproc/qcom_common.c
-> > > @@ -209,6 +209,9 @@ static void glink_subdev_stop(struct rproc_subdev *subdev, bool crashed)
-> > >  {
-> > >  	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
-> > >  
-> > > +	if (!glink->edge)
-> > > +		return;
-> > 
-> > This does make glink_subdev_stop() idempotent, but do we guarantee that
-> > the rest of the involved callstack handles this as well? Is it
-> > documented somewhere that any changes to the framework or remoteproc
-> > drivers need to maintain this property - or does it just happen to work
-> > today?
-> >
-> 
 
-Sorry, missed the "second half" of your reply.
 
-> This changes was not intended to enforce the check throughout the involved
-> callstack instead just put NULL check to avoid the kernel crash. Yes, it
-> works as in we don't see kernel crash after this.
-> 
-
-The way the kernel is written now, it's perfectly reasonable to expect
-that error handling happens and these pointers ends up in a state where
-we will perform a NULL pointer dereference. This is a bug and should be
-fixed.
-
-What I'm saying is that I don't think we have a clearly defined
-requirement of how error handling in stop() should be handled.
-
-You're patch is taking one swing at a game of whack-a-mole, but we
-haven't defined if that is the game we're playing.
-
-> I see, even after this there is no guarantee that it would not result
-> in kernel crash in future may be in some SSR notifier.
-> 
-
-Exactly, there's nothing saying that a remoteproc driver's stop()
-callback should be callable again after returning an error.
-
-The outcome today is undefined.
-
-I think we need to define the outcome, either by saying that stop() (and
-all involved parts) might be called again on an error, or by marking the
-remoteproc to be in an "undefined" state (what you called defunced in
-v3).
-
-> > 
-> > 
-> > The commit message needs to be rewritten so that a 3rd party can read it
-> > and understand what problem it solves.
-> > 
-> > Under what circumstance does qcom_pas_stop() fail, and in what
-> > circumstances would it work again a little bit later? Why do we get
-> > -EINVAL here?
-> 
-> I don't have information on whether it will recover later or not.
-> 
-> > 
-> > I fully agree with you that we should do our very best to recover the
-> > crashed remoteproc, to the point that I wonder who will actually trigger
-> > this bug? In what circumstance would a user go and manually enable
-> > recovery on a remoteproc with recovery already enabled, to dislodge it.
-> > 
-> > I think we should fix the root cause, because that's what all the users
-> > and 99% of the developers will hit. Very few will attempt a manual
-> > recovery.
+Am 02.12.25 um 17:09 schrieb Krzysztof Kozlowski:
+> On 02/12/2025 15:37, Georg Gottleuber wrote:
+>> Introduce new binding for the Medion SPRCHRGD 14 S1 notebook with
+>> X1E78100 SoC.
+>>
+>> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+>> ---
+>>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>>  1 file changed, 6 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index d84bd3bca201..95cc1d00fb1f 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -1067,6 +1067,12 @@ properties:
+>>            - const: qcom,x1e78100
+>>            - const: qcom,x1e80100
+>>  
+>> +      - items:
+>> +          - enum:
+>> +              - medion,sprchrgd14s1
 > 
 > 
-> This can be triggered from developer by seeing why my audio does not
-> work, that can lead to checking the state and triggering the recover
-> command and he may not have liked to see kernel crash just because
-> of this command. I know, there could be firmware bug but that firmware
-> did not crash the system and it happened much time later.
-> 
-> > 
-> > If we then consider attempting a manual recovery after the recovery has
-> > failed, then we need to document that all parts of the stop must be
-> > idempotent - in which case this patch would be part of that
-> > implementation.
-> 
-> 
-> Now, I agree with all of the points but leaving the device crash just
-> like that does not look fine either even if there is firmware bug, but it is
-> not crashing in firmware but in Kernel.
-> 
-> Do you think, I should still follow [1] - RPROC_DEFUNCT from framework +
-> setting to RPROC_DEFUNCT from qcom_pas_stop() ?
-> 
+> Your cover letter says this is based on Tuxedo laptop patches, thus just
+> squash it into that enum.
 
-I think we can get the Qualcomm platform into a state where things
-really are in an unknown state (like when some of the access control
-operations fails). So we might need to introduce that anyways.
+Yes, will add it in v2. But without the tuxedo vendor prefix, that
+probably doesn't make much sense. So I'll add it back in again.
 
-But there will be a category of recoverable errors, so I think we should
-handle these in a predictable way.
-
-> [1]
-> https://lore.kernel.org/all/20241016045546.2613436-1-quic_mojha@quicinc.com/
-> or 
-> 
-> Not solve this at all ?
-> 
-
-The current error path is broken, so we should certainly fix that (in
-some way).
-
-
-In parallel to that, I'd like qcom_pas_stop() not to fail with "Invalid
-argument" if we have a recoverable error - at least.
-
-I would also like to know what the frequency of this error is, so we can
-consider if rproc_trigger_recovery() should perform a delayed retry.
+> Best regards,
+> Krzysztof
 
 Regards,
-Bjorn
+Georg
 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > +
-> > >  	qcom_glink_smem_unregister(glink->edge);
-> > >  	glink->edge = NULL;
-> > >  }
-> > > @@ -320,6 +323,9 @@ static void smd_subdev_stop(struct rproc_subdev *subdev, bool crashed)
-> > >  {
-> > >  	struct qcom_rproc_subdev *smd = to_smd_subdev(subdev);
-> > >  
-> > > +	if (!smd->edge)
-> > > +		return;
-> > > +
-> > >  	qcom_smd_unregister_edge(smd->edge);
-> > >  	smd->edge = NULL;
-> > >  }
-> > > -- 
-> > > 2.50.1
-> > > 
-> 
-> -- 
-> -Mukesh Ojha
 
