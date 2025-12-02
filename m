@@ -1,198 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-84045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79834C9A72F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 08:31:27 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4540C9A762
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 08:36:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3E7E64E19EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 07:31:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 913824E2944
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 07:36:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 151BE22257E;
-	Tue,  2 Dec 2025 07:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 726532989B7;
+	Tue,  2 Dec 2025 07:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="bY3TTYiS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YPdnqScd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A7D36D508
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 07:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E78A4594A;
+	Tue,  2 Dec 2025 07:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764660685; cv=none; b=LrRF83pzIg57qRTuOuwWZhuAtI/naIMeZPP6ySygekHvUbsZjst0Ins0c304WpyFMvLLXnUPv7RBnTHT8OkhvqgH8h/tW83lcJYkZdITLWTQZnqjAz5c7TCrPUqZ7fh6n0jw9LM5fWTC4vFNklaiwwea+cix/2ZtlpVLEPkdzxY=
+	t=1764660972; cv=none; b=lf4g2bq/SzBBxrqQtuQkFKD9e0jv0v/YSXCzBz4u1dsvya97tQpVcEGlvSq0gUxIoA90QMcoLGg9BFxpUC8E7I4Xs7VwWXSbtVtzIHIkpUOGttlW3Nsp1q8io1BOnKNZgtelrGJxdp0lS+77Ba1wlUg5UbRzeOqPqTzntrSa7oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764660685; c=relaxed/simple;
-	bh=rWht80TdDMbsCZaWcUFcjjhYySkfTb93xasOXU5Ylxc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a3HLIaOZwrfYtozKIAvsRlYQuKmbwvbu3/ugjfxFd+JbYrkV1Tyie0uddKjBQoCh3IJ8WHloEvBYkoZfrb9wiAvmF37+zJqwTBmrms84+PInSdhFjG+fiS7iSux/HTMnR0dUovu8MwQp5D4aBiMXxzonx5FbvNXN7GTD65za+x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=bY3TTYiS; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id A7ACBC17B6C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 07:30:56 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id C3C60606E3;
-	Tue,  2 Dec 2025 07:31:19 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 403D9103C8F04;
-	Tue,  2 Dec 2025 08:30:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1764660676; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=gutkuk21iRBLBzb9hvOl6cUp6HFUU/VZ7OrEhTRZmwQ=;
-	b=bY3TTYiSLFXa5B94KQgeAayt80JXK78ig76Aq2SyfufNuWcT41c/auFS4kPqbVeYIZlJKX
-	QrXrN/qRIP4zNsj2m/7od8XOWVPza9ZQvvaa8nia4r3ByMuNdtTuF/t2v7gxBFCMMsW9RB
-	i0p/8OBYWY3+n3FRUeyswfCRhz6Fv2at184ftP1FUUlpPAnLeFkqXVNSm5O6zbN24Wre4+
-	N8LDjO5ty4mD4BpDEbuBV6eat2hrRdfThqf+Hnymm7a9OslgagnMsXhZ11fV4HVQz7RWeL
-	AMcHDMFpAB93S2dU0dURDWQPs1MVtcc1ZnrYa/w6k4129RIITI9OMaZRIN58Wg==
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: MyungJoo Ham <myungjoo.ham@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Guenter Roeck <linux@roeck-us.net>,
- Peter Rosin <peda@axentia.se>, Jonathan Cameron <jic23@kernel.org>,
- Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
- Andy Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
- Michael Hennerich <Michael.Hennerich@analog.com>,
- Mariel Tinaco <Mariel.Tinaco@analog.com>,
- Kevin Tsai <ktsai@capellamicro.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
- Hans de Goede <hansg@kernel.org>,
- Support Opensource <support.opensource@diasemi.com>,
- Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Matheus Castello <matheus@castello.eng.br>,
- Saravanan Sekar <sravanhome@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Casey Connolly <casey.connolly@linaro.org>,
- Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
- Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>,
- Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Olivier Moysan <olivier.moysan@foss.st.com>,
- Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- David Lechner <dlechner@baylibre.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH] iio: inkern: Use namespaced exports
-Date: Tue, 02 Dec 2025 08:30:58 +0100
-Message-ID: <5948030.DvuYhMxLoT@fw-rgant>
-In-Reply-To: <78240755-44dc-4835-aca5-99540cca0304@baylibre.com>
-References:
- <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
- <78240755-44dc-4835-aca5-99540cca0304@baylibre.com>
+	s=arc-20240116; t=1764660972; c=relaxed/simple;
+	bh=OuCY/niLmpmQulo1ZfCPrRb85Ew/nPqxWMoyL0eBSLA=;
+	h=Message-ID:Date:MIME-Version:Subject:References:From:To:CC:
+	 In-Reply-To:Content-Type; b=ojCSHZczAoz4Nny3ChjbY8M5mTKRNNielDGzylzLiwyFd3zokFJrCUWOxBied9k1nIJ1i7Mx/1fTYl0D2AkFFb88k8WEOLod4Wo7uervIwtMx1hpRORFsboOvpz8uUL8Ig4q/OW7TQt4wiBji178VWONu9QZ70v5kWluwcZ3a7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YPdnqScd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B24CIFh1590754;
+	Tue, 2 Dec 2025 07:36:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AWJFndHajcSihw89TvKE2v/cuACaYcbNWEULCywGGHI=; b=YPdnqScdQ+uRh4yb
+	+bWqqEk27APvALgnIomOKqBXICP760k84+M5/vNNofyGv3ahn+pEQ3apiZ1zUikS
+	Ad/2woiPLit3QLNhE/yacR16h+IITdVZVW3Kh/zrQDTnEoPjqrJrdzO0tbdkTg7H
+	hGlCWY+MbezGtxhOd3eITLbt4Z1XJs7ixEnaApXSd8PgPVwQkK0ah9qPuYHBSuqZ
+	Im4yW3d5Nkbw/GmpjSxBdiXLT5M78uUujdj3q/GiFMdmv/WEkxOeBymd7NxKTctf
+	F/k+jjL5voHO5Ew9cpDTe4K3ticaEENTPWlIJnsRxyiMu+Lyc6/YhxXGS3EJHUFG
+	0BscEw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4asrvr8htt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Dec 2025 07:36:00 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5B27Zx0d023017
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Dec 2025 07:35:59 GMT
+Received: from [10.216.33.247] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 1 Dec
+ 2025 23:35:52 -0800
+Message-ID: <3f1dbf91-f967-44dc-bb21-25fdcbbc8db2@quicinc.com>
+Date: Tue, 2 Dec 2025 13:05:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart6220005.lOV4Wx5bFT";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/3] arm64: dts: qcom: qcs8300: Add CCI definitions
+References: <DS0PR02MB11311CE33DFFE0739BE747590E3D8A@DS0PR02MB11311.namprd02.prod.outlook.com>
+ <d49920eb-0b4e-4042-b0c6-28d1ba348ddc@quicinc.com>
+Content-Language: en-US
+From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+To: Vikram Sharma <quic_vikramsa@quicinc.com>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: <bryan.odonoghue@linaro.org>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_svankada@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Ravi Shankar <quic_rshankar@quicinc.com>,
+        Vishal Verma <quic_vishverm@quicinc.com>
+In-Reply-To: <d49920eb-0b4e-4042-b0c6-28d1ba348ddc@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=D5VK6/Rj c=1 sm=1 tr=0 ts=692e96e0 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=yv61VyXJEuW5_bWReSAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 2IAK7mSb01TDkoV9MhbyA1W5jNtyE3u2
+X-Proofpoint-GUID: 2IAK7mSb01TDkoV9MhbyA1W5jNtyE3u2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAyMDA1OSBTYWx0ZWRfX/vpbMyslI4p8
+ 8E4vAY6on/WYnN6cpNLwRsYklKt1m8wXuD0w/NFAIv80E9g4cnJ9fzDgkhKpZau2IoX6Ye+pIcj
+ DCjyruI9UYr1D5ADHga6NmprfZcG2gamAz46NIO7KMCbhK1S82xz1EznUYzTtPoXmr1EF59Wltj
+ ZME+wKNu05Jt72XCfa0bugsq/j502odGRDQwCom3Pg/S+AXb4YDipr9cMn5QlbLGQWs6LhOx4hS
+ OmELr85DbSJmPGKfu8rLtCIFLLnBnpbOffShRrBZ8fjdfvvxNbdDc100VDBejrmhjJhu5r5wWi/
+ Ng/Wyy9iKDDYbVWvUHx5K/1i8JMXMlSXQkycnbdw3z5erAnlM6/MhTyaT60CWG0fDkxXyObzDqT
+ K4PB3yIQGkt6wIbY20raeNVfoOpymQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 spamscore=0
+ adultscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512020059
 
---nextPart6220005.lOV4Wx5bFT
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Romain Gantois <romain.gantois@bootlin.com>
-Subject: Re: [PATCH] iio: inkern: Use namespaced exports
-Date: Tue, 02 Dec 2025 08:30:58 +0100
-Message-ID: <5948030.DvuYhMxLoT@fw-rgant>
-In-Reply-To: <78240755-44dc-4835-aca5-99540cca0304@baylibre.com>
-MIME-Version: 1.0
 
-On Monday, 1 December 2025 18:15:54 CET David Lechner wrote:
-> On 12/1/25 4:59 AM, Romain Gantois wrote:
-> > Use namespaced exports for IIO consumer API functions.
-> > 
-> > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
-> > ---
+
+On 11/26/25 9:10 AM, Vikram Sharma wrote:
+>> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+>>
+>> Qualcomm QCS8300 SoC contains three Camera Control Interface (CCI).
+>> Compared to Lemans, the key difference is in SDA/SCL GPIO assignments
+>> and number of CCIs.
+> [...]
 > 
-> ...
+>> @@ -5071,6 +5182,240 @@ tlmm: pinctrl@f100000 {
+>>                       #interrupt-cells = <2>;
+>>                       wakeup-parent = <&pdc>;
+>>
+>> +                     cam0_avdd_2v8_en_default: cam0-avdd-2v8-en-state {
+>> +                             pins = "gpio73";
+>> +                             function = "gpio";
+>> +                             drive-strength = <2>;
+>> +                             bias-disable;
+>> +                     };
+> I'm not sure whether I was unclear, but my intention was to ask you to move the MCLK pin definitions to the SoC DTSI, because that comes from the design of the platform and doesn't vary between end products.
 > 
-> > diff --git a/drivers/iio/dac/ds4424.c b/drivers/iio/dac/ds4424.c
-> > index a8198ba4f98a..33d6692f46fe 100644
-> > --- a/drivers/iio/dac/ds4424.c
-> > +++ b/drivers/iio/dac/ds4424.c
-> > @@ -14,7 +14,6 @@
-> > 
-> >  #include <linux/iio/iio.h>
-> >  #include <linux/iio/driver.h>
-> >  #include <linux/iio/machine.h>
-> > 
-> > -#include <linux/iio/consumer.h>
-> 
-> Unrelated change?
+> GPIO_73 being related to a voltage regulator is strictly a property of the EVK.
 
-Indeed, I'll leave that out in v2.
+MCLK pin definitions are already present under the tlmm block in SoC dtsi(monaco.dtsi) as required by the pinctrl subsystem(qcom,qcs8300-tlmm.yaml).
+Are you suggesting they shouldn’t be part of TLMM in the SoC DTSI? This doesn’t align with the YAML file.
 
-> >  #define DS4422_MAX_DAC_CHANNELS		2
-> >  #define DS4424_MAX_DAC_CHANNELS		4
-> > 
-> > @@ -321,3 +320,4 @@ MODULE_AUTHOR("Ismail H. Kose
-> > <ismail.kose@maximintegrated.com>");> 
-> >  MODULE_AUTHOR("Vishal Sood <vishal.sood@maximintegrated.com>");
-> >  MODULE_AUTHOR("David Jung <david.jung@maximintegrated.com>");
-> >  MODULE_LICENSE("GPL v2");
-> > 
-> > +MODULE_IMPORT_NS("IIO_CONSUMER");
-> 
-> Is this actually needed if we don't use anything from consumer.h?
+Regarding GPIO_73: Noted. I will move it to monaco-evk.dts under the tlmm section.
 
-No, it's not.
+Below are the example snippets:
+In monaco.dtsi (SoC level):
+tlmm: pinctrl@... {
+    cam_mclk0_default: cam-mclk0-default-state {
+        pins = "gpio67"; 
+        function = "cam_mclk";
+        drive-strength = <2>;
+    };
+    ....
+};
 
-Thanks,
+In monaco-evk.dts (Board level):
+&tlmm {
+    cam0_avdd_2v8_en_default: cam0-avdd-2v8-en-state {
+        pins = "gpio73";
+        function = "gpio";
+        drive-strength = <2>;
+        bias-disable;
+    };
+    ...
+};
 
 -- 
-Romain Gantois, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
---nextPart6220005.lOV4Wx5bFT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEIcCsAScRrtr7W0x0KCYAIARzeA4FAmkulbIACgkQKCYAIARz
-eA6r+A//aMF01GyQ28Vt1qVRnR+uQNAhVi/B2aUu4XYyy1hc2lVzhHwvSjyYiXET
-h1jorSaLD9m5MsoTo9Scxhpu1d5KWIy5DaNATac1wmHh9t0IdE8gw1kNaUcNmefr
-NFOanFttvVt7e9cko6PsxmX9GOioawS3CVrJuObkGGftqR3KVD3WMOg+n551pkK4
-63Xbfe6PPADF06Lyu2kyyxUXLwIsuXQ8Z4dQ+kX4Bky34L0v4w0Yxos4Uhkwv5ur
-SOUtezyExAQTgAJi9KW5MPADpCdXfB3moTv29CdWRs1K8XLkxxLeprZnutXRFxOu
-CrmiA30lNs2pp7wut+8PfmeYX6btqOCMQ8KENXNV9StrRc9UqD6K6TbbJGE/Vbzg
-gxDVp9t0i0nxcQAwhtvnlmAjf3pxeJWXf1iII5ooXoxv2yW1G+FsL9RBztyEnTA1
-0iLFg1Yyx/28b7iZsf6oD5luqSRnQ7Qi0js5sAA3rVHfMtOlO/rGcUH1BprrpLPa
-m5jycApgp26OuCSxacOhlAZ6iXy1pyepTaDlS9wz1kbdwVJOf3IaWuRhDHrRugCd
-zya/579XFCsbobzejkSRHzgwylhuGsDMAniIn0MaeQw3E5wyBTCVJTXx9qebFj3v
-sUVcLNhFQBy/G8YWighvreSaPr43mWS4ueBmAMClqYmOzq2nF2k=
-=n+bE
------END PGP SIGNATURE-----
-
---nextPart6220005.lOV4Wx5bFT--
-
-
+Regards,
+Nihal Kumar Gupta
 
 
