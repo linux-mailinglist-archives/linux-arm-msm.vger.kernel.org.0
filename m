@@ -1,115 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-84119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A20B8C9C98F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 19:20:03 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23417C9C9BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 19:21:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5BC3C4E34F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 18:20:02 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3267A34869A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 18:21:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02D9229BDBC;
-	Tue,  2 Dec 2025 18:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E4DE2C0F7E;
+	Tue,  2 Dec 2025 18:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="O2yvXUuN"
+	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="S5T5zF2h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604DD1DB356;
-	Tue,  2 Dec 2025 18:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC2F2BDC27;
+	Tue,  2 Dec 2025 18:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764699597; cv=none; b=LaaPsp+viiPNuLGcS0lSpngZ7Cl5161nZbiFb9zxsB2KycUPcSFhis9mQT/WRBWfddiUeBw6CZZzEWqiim1xUbHZsHHVKfYtv/zsB0fCmt/rueQABZY7T+GWnvmRIlhBd8UKZ5L7k9G/RH28mXZuAmrQx2Dz7tFWZNJ08xTxRoc=
+	t=1764699697; cv=none; b=G2iJU8G3JGXSVclCoLCM0MPo9+Nv8Fqj9QDPxTIdl0havrn+YW1ceG3vtzcuwbqQ2JGq0HrGMK9otAmZfgJPkQbuZ/ZSrQvZug/7Rzjh5TsAI13+6a3q43+THUSTBbiqOTMpyGRLELxR6f810JJgKKi8Icc5gz3mrF3gOanO15U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764699597; c=relaxed/simple;
-	bh=u+3XCDIXK0lDNht90YJ7AbRg9NnrHYFXthdbyWbjqNw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cs9CGGeMcXe5WFgc8uZqkL7LXBMC2zUEni0CBfm7TDlpq9qzKt58fKupKeHwXI+dtxyC2QKBNr/1E2/1ocHGgm/VMxA3TJ0DZZa/sa0XEUxewRv+5C640XtnWVIi4TSKd4J1gw3+FR6noUiuy3uZNmRndDKQQkm0gB26UwwnN3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=O2yvXUuN; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.178.76] (business-24-134-207-61.pool2.vodafone-ip.de [24.134.207.61])
-	(Authenticated sender: g.gottleuber@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 822942FC0061;
-	Tue,  2 Dec 2025 19:19:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1764699592;
+	s=arc-20240116; t=1764699697; c=relaxed/simple;
+	bh=2eDSm0Qw8bf96YIiPD7vkQQjIuCqlZYZPZxfB7GZZCo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GbvQURltnIHnZ4hBmcI965aOwakyzT34rLZ9SQxD8GcomDIMAufcYeyeyzrnIRGxSVqV8lBhtdBiZr9AZciBgZvuVOG6sSD1VXZQ1urX8VOHW+XK38Bb4gb2RIJJeW2aHmHhu1nBs+eXGgLx/ZaWJZvnShSE5BZyC7Y3ENXWIWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=S5T5zF2h; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id CFD321C00AB; Tue,  2 Dec 2025 19:21:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+	t=1764699684;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=gbRu+GlX0px21xJv1xLY/Gx9mv3Wjfi8h3wuYaGAEKU=;
-	b=O2yvXUuNh+fi3fgqXCdOrJWn/3c1g44tCcEJowd2HwOQiKPvky2zk/2xuGq+fq1/XBTxMl
-	vZvjTxkzUZAYvmuEmlw2Nz+UoAMY7v21vonc74K791Pe0QpxOEikINxT2Jzx4xPqeAH0KT
-	JecyUoInmGh3mvDRvjNQ1LjybvWLU4M=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=g.gottleuber@tuxedocomputers.com smtp.mailfrom=ggo@tuxedocomputers.com
-Message-ID: <02e37578-e8e3-4d12-a553-0d7a594f6c80@tuxedocomputers.com>
-Date: Tue, 2 Dec 2025 19:19:51 +0100
+	bh=gGih/VOUJc9Am/6n+DHxiT7o43n8OgP3GSLGonGm+7g=;
+	b=S5T5zF2hPCvky8TQw1kwoE7khpUmsvB7z1+6hVfZJLHyVurn9tbNVUQnM3hiWjw9g2NE7t
+	uqYSvd5KsfN/m1eGep8nFT6BMkx/UQS7CYgfmoBCLehsUbEM2clzfbI9K7Y1p74WWkkG6j
+	BqPkq8105Nlp4HDnsIyixmuo1fVrJ9s=
+Date: Tue, 2 Dec 2025 19:21:24 +0100
+From: Pavel Machek <pavel@ucw.cz>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Manish Pandey <manish.pandey@oss.qualcomm.com>,
+	Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
+	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
+	Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
+	Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
+ device tree
+Message-ID: <aS8uJCnb0xOd6uby@duo.ucw.cz>
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add Medion device
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Georg Gottleuber <ggo@tuxedocomputers.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
- stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
-References: <20251202143757.69817-1-ggo@tuxedocomputers.com>
- <20251202143757.69817-3-ggo@tuxedocomputers.com>
- <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
-Content-Language: en-US
-From: Georg Gottleuber <ggo@tuxedocomputers.com>
-In-Reply-To: <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PNeephin7LD2VIJk"
+Content-Disposition: inline
+In-Reply-To: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
 
 
+--PNeephin7LD2VIJk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Am 02.12.25 um 17:09 schrieb Krzysztof Kozlowski:
-> On 02/12/2025 15:37, Georg Gottleuber wrote:
->> Introduce new binding for the Medion SPRCHRGD 14 S1 notebook with
->> X1E78100 SoC.
->>
->> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
->> ---
->>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index d84bd3bca201..95cc1d00fb1f 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -1067,6 +1067,12 @@ properties:
->>            - const: qcom,x1e78100
->>            - const: qcom,x1e80100
->>  
->> +      - items:
->> +          - enum:
->> +              - medion,sprchrgd14s1
-> 
-> 
-> Your cover letter says this is based on Tuxedo laptop patches, thus just
-> squash it into that enum.
+Hi!
 
-Yes, will add it in v2. But without the tuxedo vendor prefix, that
-probably doesn't make much sense. So I'll add it back in again.
+> Introduce the Device Tree for the recently announced Snapdragon SoC from =
+Qualcomm:
+> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdrago=
+n-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+>=20
+> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Pla=
+tform)
+> and QRD (Qualcommm Reference Device) are splited in three:
+>=20
+> - 1-3: MTP board boot-to-shell with basic function.
+> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, tse=
+nse, bus, crypto etc. Add QRD board support.
+> - 17-20: Multimedia features including audio, video and camss.
 
-> Best regards,
-> Krzysztof
+Thanks for doing this. I assume there devices available with this are
+quite expensive/hard to get at this point?
 
-Regards,
-Georg
+Please cc phone-devel@vger.kernel.org with phone related patches.
 
+Best regards,
+								Pavel
+--=20
+I don't work for Nazis and criminals, and neither should you.
+Boycott Putin, Trump, Netanyahu and Musk!
+
+--PNeephin7LD2VIJk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaS8uJAAKCRAw5/Bqldv6
+8nbTAJ4onO77ZAisVrnNQtsHSL0osqnikwCfWw+T/nFoAEa5YJx0N4+EZdZ/rvQ=
+=bSF+
+-----END PGP SIGNATURE-----
+
+--PNeephin7LD2VIJk--
 
