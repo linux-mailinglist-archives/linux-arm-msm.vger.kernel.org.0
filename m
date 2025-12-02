@@ -1,136 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-84056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEF7FC9AD36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 10:20:12 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 975A0C9AD4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 10:20:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACAD63A28B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 09:20:11 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3D3B5346E63
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 09:20:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C6830BB8A;
-	Tue,  2 Dec 2025 09:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61C32309F01;
+	Tue,  2 Dec 2025 09:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ri1ADWAY"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="G1sfA9sx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1B325D208
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 09:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE3030648F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 09:20:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764667210; cv=none; b=l/oyp4aJuXO5TM7wx/9ozSx9+Mq2HomR65ub4KBDTRBkYzRsIp4txmuvEu5nY7HtVfeIlfTZsSn6ySZp+9B3Ouqry+InDucKP7RffisnBgQQZacJ+ijFAyUhj9ZBjvrrr+ntS3xX0JfWRe9ySUfypUJD7guVZdSi+Dp5KvtvLqQ=
+	t=1764667255; cv=none; b=JvSG7N+yFlmrA2kMj3jDvSltjQZc93wPp6xoJaCGILnVxgIzkN5oHmmF6ttbYZ3yiWCYyNDG50EgRD8mPVm2E1+hwppW2I/G2SmXuGvT4WUv+DM6JhyuxBQmLhjLgq/eG8bT3cD7aK6nI1IDD7ez4lP6Xy5ko54Ws+g0yXI/ivA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764667210; c=relaxed/simple;
-	bh=p810/wFxt30+XMJuBKhOwELVApLhqTRZG35v7mtyi/I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S6jZcoxZjIPOIFDdbQ0W7pZncvq2BfyL8HdYVBcDc3no10BJIGRV95mfgkiXbjO1b83q/aYFgjVOtsC20hX41jNrxg6x1zazAFRxDpE6F6IF8otid4gHEL8uJ/eNta9YQIQBUFVbYLUJcxoLDsehV2yDjtqJpk1ZIbgmTY1Ak/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ri1ADWAY; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-640d4f2f13dso4945515d50.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 01:20:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764667207; x=1765272007; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6/G1G7V8+zBE1pKIYtM+52VzsDzHzaIGvsTpLD+gMEI=;
-        b=ri1ADWAYi2d17eMI8j/nh3hD1RWlbvfTM6l+fbC8huelJ3bWloMWT8G3nqz21W1wft
-         fjwKHp0lC5fHx503Yi4wwCw/EdRCGbC+LkbNdsHbd4H+oiBZyr3EzVpIq2m0QDIpIgwK
-         IhkRJV7AfHvq9y3pHaII0+zV5uCQY8zcM5N0cdDcW4YnhoDJs+HpboMzYG9nFtps4M4K
-         llOq6t61nxMpNY6XVNuFPIdCGjG3Qf780yBeeTCnCLxDCS/T0snfS2RnQRhLmEkKculO
-         VJzL4sAMsiLVBah7DC2ikpQAfG/lfoNencTiwiS6kLzwqZjQV+56W3HVCvqJBMDbWJY5
-         46rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764667207; x=1765272007;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6/G1G7V8+zBE1pKIYtM+52VzsDzHzaIGvsTpLD+gMEI=;
-        b=HtuLYawIIuUfEIAk3MzoA3+/Gf5a0iuYKKz0IgQhKq1OEv0aBYtXm7sy+DbDWoEQjQ
-         Ohu1B5x8nvLoLk7+aZ5gCjF+ten0KKdoiIwmzzu64P6W7eZlGZ0gViNUHPYGXnJz2Bb4
-         kuDy3RReQC+xJRBU2mAKOTTJ/4gkLF9aaDjaj/3988UITUVj1fDbRzJcUuKV72UwJ6kW
-         M+khtBtKKeqO3oukKvl6RJug9K9NumEGrQx0k5GYYJUyppW88MZsAdiffGbm6Wv3kYB8
-         zfTLsrBfiFLwOQRrBSufBzxw3e2C/nRqqo2oB17t5noICcw/lTzlnyZU24vd4HnPq4qj
-         DGuw==
-X-Forwarded-Encrypted: i=1; AJvYcCWvJSbJEMzulxRfRFLEGS2IrXnqgXOqPjVaIs8NrwcpJF2hUIU7+xDkqoIcWPlvTh6JeruBpKq0U7e2+AuL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHJ7P1S8D0yRYp+1F1S4/SnK5N6LTt2xnRVdlpq3Atq/49kDsH
-	TgvcPK90RmpaZXOT6JzmJ7c6vMpLA7/pPGZkmE/dQo4IhZU2C3FERlawybssbxmLZWfDJo7sDz9
-	FUmhfYTK61daxsvKDbRiRFoCL7koHEUMzdYvToC4+iw==
-X-Gm-Gg: ASbGnctsAg1rswZ37XLJL7ISJANKeCwhERRPS+12yt4RWISRK+RofslPAwKC5yNXs6w
-	WXrJv+D3FhErFJYbPUqIOqoVS+jFkLpv19R3NAw2u46I7pDX9ZY4p/BWewqGOivVbLsOChgx3Kl
-	Uh73QnD52Xd/fTjRrKMY0vPm/RmipwBOTMd/zZ+NgmS9WOh2URgEjIBRXoARYnTu3lpGnjhUUzd
-	+zszTCWvvtk6VBvVsWWgIjKuSjZBVlv/mGE58gAjjWq/f0yeuY8NxMRrKtXxYWU1YYX0D9l
-X-Google-Smtp-Source: AGHT+IGkuXbyoaToK4qQVOIq1jOXA5nA48QYY8kbFfQjrvu13g6Gdd42PllY5qa8o5Gb82O7qdj6GQJgrMUUbzFAi9U=
-X-Received: by 2002:a05:690e:1c5:b0:641:f5bc:699c with SMTP id
- 956f58d0204a3-6432938698amr16869251d50.74.1764667207316; Tue, 02 Dec 2025
- 01:20:07 -0800 (PST)
+	s=arc-20240116; t=1764667255; c=relaxed/simple;
+	bh=vH4vWkh7gbGhbWgaAEhQ1uS1OHOgO3gnXLvxNqqIsZ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iMyCrHkS1Lktg95AK+fixBo8MkkIP+xzhgsFm3dIxXXIoeDV7ms5WB1+IVb/OPCuGuPSoVQ93lTaygP2ZADfmmfOVGMG0Y/VFuUevVmZf+KH8Vi/sDHXhh5MSB1+XY7vBftHdKDH4sVAjHlOPhXllLxlBQRS56Y6YBdpqd0LtGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=G1sfA9sx; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1764667252;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fU8QCiuksw8tBhDpNDpp9KqQoaz5so+HUSNROIQdK5o=;
+	b=G1sfA9sxMJAYk89aBMWw9fShO2JlaTjqQPUDLC2Eoaiy7wxqdlh1Zrsa3IRvjI+R2r1K87
+	MBxQe0oy5cPJ8WtQKoeSslQU+kAVUMgXJmL4bxt176WCux1LxYZ4hQD+MqT0aP5MXPL5B6
+	9eEYEt52WucuGdye3Jwip8pNjIjd/iI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-VSlh5EwTOjGhsljq3MbErw-1; Tue,
+ 02 Dec 2025 04:20:49 -0500
+X-MC-Unique: VSlh5EwTOjGhsljq3MbErw-1
+X-Mimecast-MFC-AGG-ID: VSlh5EwTOjGhsljq3MbErw_1764667248
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id BD7B71800250;
+	Tue,  2 Dec 2025 09:20:47 +0000 (UTC)
+Received: from fedora (unknown [10.72.116.20])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id E98A130001A4;
+	Tue,  2 Dec 2025 09:20:42 +0000 (UTC)
+Date: Tue, 2 Dec 2025 17:20:32 +0800
+From: Ming Lei <ming.lei@redhat.com>
+To: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Cc: Jens Axboe <axboe@kernel.dk>, Daniel Wagner <dwagner@suse.de>,
+	Hannes Reinecke <hare@suse.de>, linux-arm-msm@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
+	pavan.kondeti@oss.qualcomm.com
+Subject: Re: [PATCH] blk-mq: Abort suspend when wakeup events are pending
+Message-ID: <aS6vYCg2Gks2BGHn@fedora>
+References: <20251202-blkmq_skip_waiting-v1-1-f73d8a977ce0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251104-topic-8280_mxc-v1-0-df545af0ef94@oss.qualcomm.com>
- <176418784438.1591314.8587929353938909456.b4-ty@kernel.org> <20251201201440.GA4041208-robh@kernel.org>
-In-Reply-To: <20251201201440.GA4041208-robh@kernel.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 2 Dec 2025 10:19:30 +0100
-X-Gm-Features: AWmQ_blwJAvHgHxPWpmsgj8k232zQrocoHHqDGTT9KF0aRc5ngfB3LfIo4gucIo
-Message-ID: <CAPDyKFoGQJA5UY-96HvfoA7WMb5wYFXFFfFREpMmK29GE7-Nag@mail.gmail.com>
-Subject: Re: (subset) [PATCH 0/5] Define VDD_MXC for SC8280XP
-To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251202-blkmq_skip_waiting-v1-1-f73d8a977ce0@oss.qualcomm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 
-On Mon, 1 Dec 2025 at 21:14, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, Nov 26, 2025 at 02:10:41PM -0600, Bjorn Andersson wrote:
-> >
-> > On Tue, 04 Nov 2025 20:31:05 +0100, Konrad Dybcio wrote:
-> > > This has somehow been omitted, leading to potentially stale votes.
-> > > On the flip side, the domain will now be powered off, which will
-> > > uncover any omissions we've made in the DTs so far.
-> > >
-> > > Reasonably tested on an x13s without pd_ignore_unused (camera still
-> > > works).
-> > >
-> > > [...]
-> >
-> > Applied, thanks!
-> >
-> > [2/5] dt-bindings: remoteproc: qcom,sc8280xp-pas: Fix CDSP power desc
-> >       commit: ca079ec3ebed19a12c1bf080496dacbc6fdfbb39
->
-> This has was picked up, but the .dts change was not, so there's a bunch
-> of new warnings. What's the plan? I know it's separate trees. Can you
-> please take binding and .dts changes like these together if there aren't
-> driver changes?
+On Tue, Dec 02, 2025 at 11:56:12AM +0800, Cong Zhang wrote:
+> During system suspend, wakeup capable IRQs for block device can be
+> delayed, which can cause blk_mq_hctx_notify_offline() to hang
+> indefinitely while waiting for pending request to complete.
+> Skip the request waiting loop and abort suspend when wakeup events are
+> pending to prevent the deadlock.
+> 
+> Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+> Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+> ---
+> The issue was found during system suspend with a no_soft_reset
+> virtio-blk device. Here is the detailed analysis:
+> - When system suspend starts and no_soft_reset is enabled, virtio-blk
+>   does not call its suspend callback.
+> - Some requests are dispatched and queued. After sending the virtqueue
+>   notifier, the kernel waits for an IRQ to complete the request.
+> - The virtio-blk IRQ is wakeup-capable. When the IRQ is triggered, it
+>   remains pending because the device is in the suspend process.
 
-I was planning to pick up the driver (pmdomain) and dt doc changes, as
-usual. Although, I was waiting for the discussion to reach consensus
-around dts patch (patch5), maybe it did?
+Can you explain a bit for above point? Why does the IRQ remains pending
+and not get handled?
 
-Bj=C3=B6rn, perhaps easier if you pick the series via your qc-soc tree and
-send them as fixes? If so, feel free to add my ack on patch4 (the
-pmdomain patch).
 
-Kind regards
-Uffe
+Thanks, 
+Ming
+
 
