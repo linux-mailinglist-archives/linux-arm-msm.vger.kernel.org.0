@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-84103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46DA7C9C208
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 17:10:44 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 823D7C9C26F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 17:12:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EB59D34A6CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 16:09:12 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DA9F94E47C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 16:10:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9B19279DA2;
-	Tue,  2 Dec 2025 16:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4E228CF49;
+	Tue,  2 Dec 2025 16:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jD4zv7Jn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRV0HM9R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B7A2727FD;
-	Tue,  2 Dec 2025 16:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012F6279903;
+	Tue,  2 Dec 2025 16:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764691719; cv=none; b=IkLZ9HL1l8Se8l2e83UCtbwI6WQemcxm56Vpl0TB7nYzz2vT7KXUtTXmdcONJcdxLs97vogvnDz7GjwMLQK9RQN8KmjbPnS6xg/3trWAMSE+8ojqJVtQbt6kYSjGruI45oQ5oAHiOD9s56nsXKWWy7MYjZcHPC/ck20QdyzklG4=
+	t=1764691805; cv=none; b=GNfMaOojGyZOcDgU/VZa3/FAo1Kyu3qKGsYXVlkwMvalEXRK0jaPo1UZxD93n8+0SDVQhwGRJtdzuTJM2SUYyYHBQReEU71VBUgXJ/rnvqUjtYOsKQMU/0P9GZTl7ObTMQILxikumJMCFCWOWYWeKDkIVKwwwWjAmu3HZ2baolg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764691719; c=relaxed/simple;
-	bh=IIdwFsVgEJVoBoKDlPJxl4Mb1DJh0mC/+BbTV4HrQlw=;
+	s=arc-20240116; t=1764691805; c=relaxed/simple;
+	bh=O+A0kLl0dXk3GMmduwTyEYiopuGLA9KVuNGd8qQ+n0A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MJHIl5pQIJe88OsmTCA6oHmuToQlHbPjt9E441w0mkAP3h1IiH+dWm45RVIe/Vx7fagZHSfWYOigPuNIbSkUSpL4X4eNVEspDRCYLqVEnDh4GEKjPJatFkfAiGoaYQBpkVuSAZ+cxFQUi6zU4pcTDNV0L5j/7aa77nBr/mIIA2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jD4zv7Jn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2EEC116B1;
-	Tue,  2 Dec 2025 16:08:35 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NC4DKpUckuVzg86oNqTPhUFZASH3cn+eTz1acTFlBF/0KXopafLO/HFdMhiERv8+2V8VVmKK7cIwm5CJvRC4/42l2lyytomBhvfcxXQu8wheUU90my70V+K8Jvt0B2OB+QBY/Rsu89rkBwH56kqas3dnInfHZH8AY3Nvkli/3As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRV0HM9R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD7BC116D0;
+	Tue,  2 Dec 2025 16:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764691719;
-	bh=IIdwFsVgEJVoBoKDlPJxl4Mb1DJh0mC/+BbTV4HrQlw=;
+	s=k20201202; t=1764691804;
+	bh=O+A0kLl0dXk3GMmduwTyEYiopuGLA9KVuNGd8qQ+n0A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jD4zv7JnV9YHoaXy9xnRLhCIMVaK/BCErfNlTI4yZ72DP3R1TwDFNGUh8oPmTa/qT
-	 FDYO5lXNk0zBy/vp1KMApj30NIz/aUMfoyzoB/EMLaZfmgu/EIWw7PcjkCMCFLSl9H
-	 gwMwJ5JUIYUaKNFL0FKgRIsYyTSNJ+od/NZnSrlKk5WjGOARS2YVFgeRIhkUSG8i+m
-	 tMqR2RFL7u812Gn/NlwPxTywVbQQYSqpMPWdckyKCRloNa96dSNoJk3NrYJVyT+6sf
-	 7LcMLBfi/8wIx3eUdcSnK23AZhA6baJGZcBDZApf/P9dwC8xXcU8pVbwvQjA7T0Zuf
-	 /G90VpPDILvJg==
-Message-ID: <d4bb970c-0ac5-4ef8-8245-b2cf331260b7@kernel.org>
-Date: Tue, 2 Dec 2025 17:08:34 +0100
+	b=LRV0HM9RvnXREKhXJrIGdksL4ybGTmrPfdGHmJU3araV8zO06Kzulm/5Fgl3hpGvs
+	 ZLFHSHKgf3iU/XGxqw/MrLG1fq++j+T6bEe9zR7JLXmhpSDEUrc2LgrKsf8gDLAkHF
+	 HbKH2VQ6YjX9luYBEptyCMXnHz7cZts8U8BpHxxDEk8ZLflAQnFljrROEZlVX0Y5xs
+	 bWUzGqL8629pZibL4qnzXDgYPyKhiFOLghjih1w+34YPrFtSBjmgun5HngelOtzHRF
+	 okZB7GduKpv5QbSpjZMDfgi43yOIMHHVA1YNwHwfxhDhFyvNKOxF/ZhXTRJbJsNW65
+	 4K8513FmRNHFQ==
+Message-ID: <e1cee0a8-6d13-4cb1-a422-b95ba558f4f0@kernel.org>
+Date: Tue, 2 Dec 2025 17:09:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: vendor-prefixes: Add Medion AG
+Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add Medion device
 To: Georg Gottleuber <ggo@tuxedocomputers.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
  stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
 References: <20251202143757.69817-1-ggo@tuxedocomputers.com>
- <20251202143757.69817-2-ggo@tuxedocomputers.com>
+ <20251202143757.69817-3-ggo@tuxedocomputers.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,23 +106,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251202143757.69817-2-ggo@tuxedocomputers.com>
+In-Reply-To: <20251202143757.69817-3-ggo@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 02/12/2025 15:37, Georg Gottleuber wrote:
-> Add Medion AG, a German electronics company, to the list of vendor
-> prefixes.
-> 
-> Link: https://www.medion.com/
+> Introduce new binding for the Medion SPRCHRGD 14 S1 notebook with
+> X1E78100 SoC.
 > 
 > Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
 > ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index d84bd3bca201..95cc1d00fb1f 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -1067,6 +1067,12 @@ properties:
+>            - const: qcom,x1e78100
+>            - const: qcom,x1e80100
+>  
+> +      - items:
+> +          - enum:
+> +              - medion,sprchrgd14s1
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Your cover letter says this is based on Tuxedo laptop patches, thus just
+squash it into that enum.
 
 Best regards,
 Krzysztof
