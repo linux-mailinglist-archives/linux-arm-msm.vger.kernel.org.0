@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-84102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26365C9C107
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 16:59:54 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46DA7C9C208
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 17:10:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E5F33A8751
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 15:59:37 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EB59D34A6CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 16:09:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00E20324703;
-	Tue,  2 Dec 2025 15:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9B19279DA2;
+	Tue,  2 Dec 2025 16:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHQML4dq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jD4zv7Jn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4BE3128A6;
-	Tue,  2 Dec 2025 15:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B7A2727FD;
+	Tue,  2 Dec 2025 16:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764691175; cv=none; b=ri0eYi5pOSCi0ty5VggnNj2npNuE51oXTkI5t50ShnxVQYW/atnNRGDMj3vg6Rs0fJc4SlDcEyR7zg27id5te4kpD7OqRela2ij327zM03eVIBdF2hA1FdWeqW7wNdO+oE4z7qod0KpmFDv/VGniI5idldQ/z4h6wzfu4JuEcwg=
+	t=1764691719; cv=none; b=IkLZ9HL1l8Se8l2e83UCtbwI6WQemcxm56Vpl0TB7nYzz2vT7KXUtTXmdcONJcdxLs97vogvnDz7GjwMLQK9RQN8KmjbPnS6xg/3trWAMSE+8ojqJVtQbt6kYSjGruI45oQ5oAHiOD9s56nsXKWWy7MYjZcHPC/ck20QdyzklG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764691175; c=relaxed/simple;
-	bh=y8UHDCear6g8zwmTOT4B5TcyW2sG2CGa9i3KDZDuCec=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lQnHuyFeIkdKBHE/c5xSaGgo1lk4DW+SsaEu/6/R2SYynWpUVM9NQ/EvqwCXCRINLJQhAKAD1BFass/mZKMhKhTx2lfLcsmZo5i4zJIpSW/0104lmTXrdskto52SX2rN5jfU2+sFMxk04Fo/1xxwveWXgV61FqS7LewOv/z0Kjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHQML4dq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05025C116B1;
-	Tue,  2 Dec 2025 15:59:31 +0000 (UTC)
+	s=arc-20240116; t=1764691719; c=relaxed/simple;
+	bh=IIdwFsVgEJVoBoKDlPJxl4Mb1DJh0mC/+BbTV4HrQlw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MJHIl5pQIJe88OsmTCA6oHmuToQlHbPjt9E441w0mkAP3h1IiH+dWm45RVIe/Vx7fagZHSfWYOigPuNIbSkUSpL4X4eNVEspDRCYLqVEnDh4GEKjPJatFkfAiGoaYQBpkVuSAZ+cxFQUi6zU4pcTDNV0L5j/7aa77nBr/mIIA2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jD4zv7Jn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2EEC116B1;
+	Tue,  2 Dec 2025 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764691175;
-	bh=y8UHDCear6g8zwmTOT4B5TcyW2sG2CGa9i3KDZDuCec=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
-	b=kHQML4dq55YsHdYiyq7+T4PXGLf0K/gZv5B+0VE+MbSlzEMEVWWLaDksx4kivbKM8
-	 Ac8T+VkA1kw8/rma0Pl1pOSUQH9GYbbmkjN3SDOZMe7j0gOWq4xAe1+/bdEPTQSxbz
-	 iC05jB66oPJr4RKPyIJ+m9JptIRut560mET8RLnNUUs09dSM9H8BUCpA0JrOgENyzj
-	 A7QKBIZcttlQAA6ZeGpkUSbS4Mi0qR/f3H/nArV/OdBesTXeI3gTuOUwCiUdZapqzt
-	 jQ6165iRkDP25MRweuh1v4stZY8cJkY2UXRCWE6HppnfguchOsHc3EBSRzf35admrB
-	 Vz8S6yaOMKDXA==
-Message-ID: <992d46b7-b053-4a9e-ba04-f5653525a891@kernel.org>
-Date: Tue, 2 Dec 2025 16:59:30 +0100
+	s=k20201202; t=1764691719;
+	bh=IIdwFsVgEJVoBoKDlPJxl4Mb1DJh0mC/+BbTV4HrQlw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jD4zv7JnV9YHoaXy9xnRLhCIMVaK/BCErfNlTI4yZ72DP3R1TwDFNGUh8oPmTa/qT
+	 FDYO5lXNk0zBy/vp1KMApj30NIz/aUMfoyzoB/EMLaZfmgu/EIWw7PcjkCMCFLSl9H
+	 gwMwJ5JUIYUaKNFL0FKgRIsYyTSNJ+od/NZnSrlKk5WjGOARS2YVFgeRIhkUSG8i+m
+	 tMqR2RFL7u812Gn/NlwPxTywVbQQYSqpMPWdckyKCRloNa96dSNoJk3NrYJVyT+6sf
+	 7LcMLBfi/8wIx3eUdcSnK23AZhA6baJGZcBDZApf/P9dwC8xXcU8pVbwvQjA7T0Zuf
+	 /G90VpPDILvJg==
+Message-ID: <d4bb970c-0ac5-4ef8-8245-b2cf331260b7@kernel.org>
+Date: Tue, 2 Dec 2025 17:08:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v8 0/2] Add support for Gunyah Watchdog
-To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>, Guenter Roeck <linux@roeck-us.net>,
- Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+Subject: Re: [PATCH 1/4] dt-bindings: vendor-prefixes: Add Medion AG
+To: Georg Gottleuber <ggo@tuxedocomputers.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-References: <20251118-gunyah_watchdog-v8-0-e5de12e2eef5@oss.qualcomm.com>
- <6a8f5d62-f6ea-44b3-9baf-acfbc1e58efe@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ettore Chimenti <ettore.chimenti@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>, stefan.schmidt@linaro.org,
+ stephan.gerhold@linaro.org, wse@tuxedocomputers.com, cs@tuxedo.de
+References: <20251202143757.69817-1-ggo@tuxedocomputers.com>
+ <20251202143757.69817-2-ggo@tuxedocomputers.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,38 +106,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <6a8f5d62-f6ea-44b3-9baf-acfbc1e58efe@oss.qualcomm.com>
+In-Reply-To: <20251202143757.69817-2-ggo@tuxedocomputers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/12/2025 12:23, Hrishabh Rajput wrote:
-> Hi Bjorn, Guenter, and Wim,
+On 02/12/2025 15:37, Georg Gottleuber wrote:
+> Add Medion AG, a German electronics company, to the list of vendor
+> prefixes.
 > 
-> Just a gentle ping on this series.
-
-It's merge window. There was no point in pinging just before merge
-window and is even worse to ping now. Nothing can happen with this
-patchset and such pings is only noise.
-
+> Link: https://www.medion.com/
 > 
-> Since the patches have received Reviewed-by tags from Dmitry and 
-> Guenter, I wanted to confirm the merge strategy.
-> 
-> Bjorn: Are you planning to pick the QCOM SCM changes separately through 
-> your tree, or would you prefer the whole series go through the Watchdog 
-> tree?
-> If the latter, do we need an explicit Acked-by from you for QCOM SCM patch?
+> Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+> ---
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Where did you document dependencies between patches and any non-obvious
-merging? I open cover letter and there is NOTHING. I look at patch
-changelog and also NOTHING.
 
-So if you tell us nothing, why would we care to think we need to do
-anything special here?
-
-You must explicitly document every dependency, both external and between
-patches, in the cover letter. At least cover letter, some people (e.g.
-mostly me) don't even read them...
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
