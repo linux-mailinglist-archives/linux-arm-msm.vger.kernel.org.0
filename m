@@ -1,179 +1,311 @@
-Return-Path: <linux-arm-msm+bounces-84121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0B26C9CA70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 19:34:46 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5BBAC9CAFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 19:51:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EBC0C3A76F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 18:34:29 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 51CD434A2CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 18:51:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905B52D6400;
-	Tue,  2 Dec 2025 18:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283D62D321B;
+	Tue,  2 Dec 2025 18:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Acg6qRaA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CHSvHRyW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BMq5mjw1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913092D593E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 18:33:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB6E2D1911
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 18:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764700391; cv=none; b=kmvOBGItIUaTU3U6dj/aQ+NgfZ1GtrMEZlCGpwLDTS92dSuI6+hcsI3qgdJARVrMGraaTfAf/3d/QkMTOoRP72CoCnGFvmztu2Y/xXh16+1eKHLoQ4W8GmtQWH+UUeNvnUf7RvX1OZecIcD1u0HVyQYc7a0Gu4pZFANurJInaVE=
+	t=1764701479; cv=none; b=kL4wm0m3jTPdiG0ng77ynB0qThiRyiS1cYsQt5XsQbBLHj8z3vQyyMPWnZriI3Ike+bX+bjOvoTSfMZZmTuksqGGF9g0oZC2wkwbTHXVL7UZHwhLA9il+24CJ/QiIG8DXLa1+TgE0qY1rgRkdvVYZtvcgMm0FXPR5hZQ5MOeXXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764700391; c=relaxed/simple;
-	bh=vI/iFNrR02atgpRqIRC1zd0lHXjUwRqtFowTFXLxs3I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E2ZgpqLDSThG4OhvFy88WtbWX8wS8EjGUDd0+QuLmhnDCs2Lvlrc2OS2lJtJzbVyEnhpVGW9Uwlb/NKwLm7khx3on8jWb/BbZcfPdwHCtBCER7D4TmpiPMzWtXIh5aSPqqDcf9NXEohJEMPzbkbNBRnAgeeAGuHcJjdTf3hvcAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Acg6qRaA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CHSvHRyW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B2AVNDN3660392
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Dec 2025 18:33:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UTZ9ezT7nyFnGD1bPqGMUcjxcyikL5GsbKDV2LwzjBQ=; b=Acg6qRaAnetxcTWZ
-	TKy3coOnI7/2Xqwkg+AlWVvbIXKoxxsl/ULSc2VRqXCZqOoRJleLZHLxlIQkNJjk
-	x+uni+QH94jBQ2QAl+nqkYH+K4h5nJCd9ZnK8l0Cy/MYUi7CDqhIZAahlOf6RSUV
-	VTbxvy2laynmqeUAIAuYOGRq7uP1TypTZUlQ7X+XkFbMPLC7gN88WuEZkHwiCvnD
-	axD8dvbx/4x8OQXMQoLt4wHiOnEEWxgN1pFyo/OWsahuMFufv9ZAbI0MuAi1yE19
-	af2ecIXqIL0rJMECxiQzI3y3ngvXRW2yb7ckavFilkj1TDy0W1Cbx1zqksPNafAf
-	lHLBJQ==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4asxeehj4w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 18:33:08 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-93526dc7403so102512241.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 10:33:08 -0800 (PST)
+	s=arc-20240116; t=1764701479; c=relaxed/simple;
+	bh=4XrTwBI6GfIcRlKGQ+9MIEdd1yoEj/TBavMaSsBEpoc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hIFyFKFro7XPgpn6YlErAGfhDbOvhS4qSF9dWcPW0kH2ryOD1TpLL0durzz0fkfD9XgX0HKpalKMfp7lZZ2EbwLM/HOM52oUPZjYl8hNPBTGJrZLCGGglZDdc32SSh45xINwpbbvBPFUINQ/2ghB+HFzJIPbIKWyoyj0AbZaPkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BMq5mjw1; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-882390f7952so63649486d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 10:51:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764700388; x=1765305188; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UTZ9ezT7nyFnGD1bPqGMUcjxcyikL5GsbKDV2LwzjBQ=;
-        b=CHSvHRyWqGt61SRVjsZKzQozZA7C3BezdwxIKye9rDRae+EwAGHNP1nkceHibv2kRB
-         dpOV4VlQopv0+zZROaZIkjDYZ52/uryF2jexcQh3w2mthrCLKjFjA5lIzlKsU+E2VmBy
-         k1RSpDu4Ek7NU5KSpf5Wi/PojnBNvLAP1Le5tO4LBDq18408ldMoBbUKwFwq5n7rqKL8
-         c6hWwtFaxZlxCV87jbVlrWthnj95GrQLCK3cnaKr/c16/oE+EcnqVXc4uIw7/QUu8zlr
-         f3idaNWcmel+8Njs3O1px9NJ14Vqgm6E6i2XKdYHtwRjZMep51lhJYOpBhU7oldRXfFP
-         acUA==
+        d=gmail.com; s=20230601; t=1764701476; x=1765306276; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0rNbv3ufEFl8Ti5k9F3QiiXqTVEJUcfBjegrAmdC674=;
+        b=BMq5mjw1WGkteKc19RRFE1eKia2GkfrqFgVe61wRHNy79OsUbksGrN/MFBG7eS1eJr
+         mQbGHXLBA1XH9OY8lqybdcD0ITIyFN+I9Up+NzkyS0JCY5Ct/ev1j20GANb7VKaJ3OZE
+         7zAzX1Qp1NdOlwcwbCmSmYDoDoHHXqSvnofi55dCeM3qzgTCIxyvH2EA+rOlqolCwMSJ
+         jrA18o3pQTmSdji5F3CWHaYsvWxZ28zAmwqs2zeumKFpl7X33h8CLAB3psbgtHl768v4
+         WmrVaOw6Ov9FRtBANH4xiBQX5Th/mrAZ+4NQ82of0pdehX9DjMPQjCLmJrP2vaZ5lQZ2
+         B+GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764700388; x=1765305188;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UTZ9ezT7nyFnGD1bPqGMUcjxcyikL5GsbKDV2LwzjBQ=;
-        b=RqApC4CULe+o2oRqPWMBmt/OEzywv+91ujPAH7KtFbQr9+HKoMwMAMyBWgj8+k93uc
-         SfM3F0drENZl/Yqzx54/gOKAS6OzlSkKF3E0Gg1Om1OBgeXX4A65XCl+H6P+/7rEtsqs
-         7nJADvp1JFc41Mk7MW4GFr83SsG2vPrQJJB5DCiqfQbVJeeyIRyfkBugftUyIT34wNyo
-         /q3DuONwitR/luzuG0V5VwtBe96FyTaLBFwZbknhBYEsBoD60nXfKAb9zZQEs9qRtMoz
-         3D0S+etmDO45ZQycO88BN0rRAMf1/cB4kDh4PpqW7R51qhw5xH0WX+aDSAyeSCUw+m6q
-         sQxA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpMjR9uFgj/NzEV1hHmBVy6zouxfWD2h9ascMvUTSnQIBzy0b5bxYV6fn7cNJGoxenE1b6UnvpYXaB3DxF@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlHxnLhN9Y5o4RNMRwMYzKJe/HrL1gQKwTIXVrPhtVuhnf9LLi
-	z6SOnBLk9xAt5HHd7Jt4nRZ0yWJ014MFdQAb6KmPPCpfT4vnoK36RXrr0o9675sXFkHRj7flws/
-	szyyP3wqHSNcvhzScSOH/7fhoMr1+/3xVo+gUjf7GCIWzRKTpA+JFQZgJl2rNCJ5lOPkc
-X-Gm-Gg: ASbGnct2Htb1o4RS/VO20Hcn7WavFbRkec2hUxdlIgkMR/2RTktbbvzIzkfwP8z2ghs
-	QsU7Fi04e6TKdPQfobXzpBPOJfqfh2OF5sjRSxaIr7ZFqgMLeDDldNq/iUkBg1Au7ZXdu7D2ZWX
-	T+a7s4Hb36wOhl6N39A6whDQO+k262JUe0HYD+TVve8NmChm+qSPGpsvXn46507DcEMGBn3ms2B
-	1lUHpMk03w7OUgD/L7NEwhj73EK3y7MGvylNRBFYoSZCvvoeljN5DSUB8Oob229/Sa9BPOWi3hg
-	8lwQ8q+qvdG+lEOF8RsBp45G+HlpqCxQ7ojG8q5lfFIKwaon9h3q6lPjVYZdDYDgO92rqaO7HNJ
-	J0VrZiertqS0ubrMNrBAbLQdUcc8GcnUTPLVOWNEBymKcmSHkLXYNbX+7ReG0lbFLOA==
-X-Received: by 2002:a05:6122:8b8b:b0:559:a30f:1648 with SMTP id 71dfb90a1353d-55b9a9358c4mr8858937e0c.0.1764700387749;
-        Tue, 02 Dec 2025 10:33:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpY9cKSl/V+gAyrouw/8QhAjwytVZCUeiBW2NObAM2TSyVQCYY8PvtHzcTjaPD2mc9GE5AYA==
-X-Received: by 2002:a05:6122:8b8b:b0:559:a30f:1648 with SMTP id 71dfb90a1353d-55b9a9358c4mr8858904e0c.0.1764700387244;
-        Tue, 02 Dec 2025 10:33:07 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-647509896d1sm16592100a12.0.2025.12.02.10.33.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Dec 2025 10:33:06 -0800 (PST)
-Message-ID: <9dabc745-1464-48f2-8687-2b849a7fca95@oss.qualcomm.com>
-Date: Tue, 2 Dec 2025 19:33:03 +0100
+        d=1e100.net; s=20230601; t=1764701476; x=1765306276;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=0rNbv3ufEFl8Ti5k9F3QiiXqTVEJUcfBjegrAmdC674=;
+        b=EJwcFOIha7JPF/f/JsS+REZpJYZkb5l19aq3pO3K0QqJsO3S+evVpCdmkNtPBBgC1w
+         a/EynIx64pyl4TW0+fs3IlHRo1MUyTFMoG5fodyLzrYOZT9b3yILVvFjiEjMU1IbC80g
+         8mm0LoayuSFxtEJFAdtSa9wUxKLUDpMsU4WBCVDCz0P8v/15oiHXve8XiCTEHzon80wY
+         uAvv6k3qwNALBI1yMyoSTOwFsycRHb+UFjz5xOjw/bH8hhq3WHg9HJy/hojnD6mnczV+
+         zx+DgG0ykbvh4N9Eruh8VllTRK6F3plWCwzgjXbp/xXNS+qqnX8VgSnwq0LEp1w9ORDm
+         01AA==
+X-Forwarded-Encrypted: i=1; AJvYcCW8DrdmtzDnHkVDTDij6kEUXvr+opR3xHduFk9pSPs5PQgzY8xAMiQIMRAjPM2RfALqoQ93IY+EhCcAqzyf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlBbwE3/fqCcQt0OWvkFYlUwNJJk2NaAWsraf5uCZx7+aODBh4
+	UgbPgE9LYwYYdeZf7dFmiHv8GwtEMWOnLiBHy+kjcqZnM63zTr8VZTrbA/nNz3RiMnesbsZN2Bp
+	T1YbWq+/O2rBo9/lIw6Udz4M1GHytmg==
+X-Gm-Gg: ASbGncsEIYfwgaUSpGPrSdFD3FtG7g5fOeU98e6uoQmHcG9DOblUCgwGKw5dq5kczg2
+	96qWD+RBQEBON3VE0dE3lLDL+3qGzMbu2ZHf1kMOU4T0a/NB+QEbHxG9cHXUbwyQu6eQHiNmejc
+	240R/MoszYM3HF3BZckk4TzNpsfFP64trvX9ppQjaXmYFcBLUk55pCIi3LaeMc35MyPjKC1GfSE
+	15ybX3iiJ4jd+6zhSCBaQ05oYEkM+IFof5vHnv8zMsZnQXpOQb5r2jlPr3isfrapvhuQuu6Yo4c
+	r+Wd09ApGDVjaCzvIRUzH0Z4Nfvs
+X-Google-Smtp-Source: AGHT+IH9XUQWzaUoTFbHz+Zo6M5rwIC9ydzn79MfP9yr6jRoN2zs0jgMYMamuKCtU+ElHFaojqhePC+3e2tFDlU4OjQ=
+X-Received: by 2002:a05:6214:e64:b0:880:4690:3bb8 with SMTP id
+ 6a1803df08f44-88817733618mr5732776d6.18.1764701476153; Tue, 02 Dec 2025
+ 10:51:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
- device tree
-To: Pavel Machek <pavel@ucw.cz>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-        Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
-        Qiang Yu <qiang.yu@oss.qualcomm.com>,
-        Manish Pandey <manish.pandey@oss.qualcomm.com>,
-        Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
-        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
-        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-        Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
-        Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
-        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <aS8uJCnb0xOd6uby@duo.ucw.cz>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <aS8uJCnb0xOd6uby@duo.ucw.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 2UiGzfAkLH2nyYhZ9S1mjwA0jtFzLibq
-X-Authority-Analysis: v=2.4 cv=TMRIilla c=1 sm=1 tr=0 ts=692f30e4 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=XELJwKCvV24u9bmaNtkA:9
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-ORIG-GUID: 2UiGzfAkLH2nyYhZ9S1mjwA0jtFzLibq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAyMDE0NyBTYWx0ZWRfX9DzHwsJHSAHW
- CttQmEJQSGvUJU21EE7YcDq8tVTMTheDAfoTtmlqPGkvteDAK4GAYTbh0gAGXn0gaLrZ4nuF7P+
- GkYBhPP3JuLXFNzIr8O0qvCJIXn6pbpACj4WP9/FWpL774nrwyXBMgYYCvMPCfpLTTUJdmp7HKx
- h2/hxBMv7vttN/HwSkzlkczRHOJW1ORbOW53tmtxyXB6pBgfab1Nxt/0LlVPMKye+2kxla4GbrS
- YfxEyvFAfAZXC9xEH02qKjyVPcemfM2LQ6FLdTiKv0T5BAhkuKFBuUBWH4vuj2LjfMGDhg5Gx+h
- zF9ITiDrgE316o133ovz7qoNnrd9mTGglA3rPmMG1CE9n155VYAeBjrwWaL2yNuKu9EYkZi9wTV
- BC9yeUgCqswuaQFkE1CQqeq0v1kwzA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-01_01,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512020147
+References: <20251201011457.17422-1-daleyo@gmail.com> <20251201011457.17422-5-daleyo@gmail.com>
+ <ae91cad5-5a0b-4c83-9eb0-6e7baf6a33d0@oss.qualcomm.com>
+In-Reply-To: <ae91cad5-5a0b-4c83-9eb0-6e7baf6a33d0@oss.qualcomm.com>
+From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
+Date: Tue, 2 Dec 2025 19:50:39 +0100
+X-Gm-Features: AWmQ_blh5y2GvhXqkrQ6R3Hgzm0jcCZOGyFUiFJ6is_KTAGGpRW-lBMZwLxab20
+Message-ID: <CA+kEDGHyx7C7PNxQ8votwABiQpKhAAh126os3OLu-W0kDo2ySQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] arm64: dts: qcom: Add support for Surface Pro 11
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dale Whinham <daleyo@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/2/25 7:21 PM, Pavel Machek wrote:
-> Hi!
-> 
->> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
->> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
->>
->> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
->> and QRD (Qualcommm Reference Device) are splited in three:
->>
->> - 1-3: MTP board boot-to-shell with basic function.
->> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, tsense, bus, crypto etc. Add QRD board support.
->> - 17-20: Multimedia features including audio, video and camss.
-> 
-> Thanks for doing this. I assume there devices available with this are
-> quite expensive/hard to get at this point?
+Hello,
 
-A number of them seem available at most shops now, but they just came out
-recently and they're all flagship phones so understandably it'll probably
-take some time before enthusiasts poke at them
+As discussed with Dale, I will take over the v3 submission since we've
+worked on this patchset together until now. Here is my feedback below.
 
-Konrad 
+Le lun. 1 d=C3=A9c. 2025 =C3=A0 16:35, Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> a =C3=A9crit :
+>
+> On 12/1/25 2:14 AM, Dale Whinham wrote:
+> > Add device trees for the Qualcomm X1E and X1P-based Microsoft Surface
+> > Pro 11 machines (codenamed 'Denali').
+> >
+> > This device is very similar to the Surface Laptop 7 ('Romulus').
+> >
+> > Use a similar strategy to x1-asus-zenbook-a14.dtsi so that we can creat=
+e
+> > x1e and x1p-specific flavors of the device tree without too much code
+> > duplication.
+>
+> [...]
+>
+> > +             pinctrl-0 =3D <&hall_int_n_default>;
+> > +             pinctrl-names =3D "default";in v3
+> > +
+> > +             switch-lid {
+> > +                     gpios =3D <&tlmm 2 GPIO_ACTIVE_LOW>;
+> > +                     linux,input-type =3D <EV_SW>;
+> > +                     linux,code =3D <SW_LID>;
+>
+> I.. don't think this device has a lid - what triggers this GPIO?
+
+When a Surface tablet is connected to a Surface keyboard, opening/closing
+the keyboard triggers a wakeup/suspend event. I will double-check if this
+entry is involved and will remove/keep it in v3 based on this check.
+
+> [...]
+>
+> > +     /*
+> > +      * TODO: These two regulators are actually part of the removable =
+M.2
+> > +      * card and not the CRD mainboard. Need to describe this differen=
+tly.
+> > +      * Functionally it works correctly, because all we need to do is =
+to
+> > +      * turn on the actual 3.3V supply above.
+>
+> There's not a M.2 card, the WLAN chip is soldered on board
+>
+> https://www.ifixit.com/Guide/Microsoft+Surface+Pro+11+Chip+ID/174016#s370=
+945
+
+Indeed, I will remove this comment as it is not applicable to this model.
+
+> > +     sound {
+> > +             compatible =3D "qcom,x1e80100-sndcard";
+> > +             model =3D "X1E80100-Microsoft-Surface-Pro-11";
+> > +             audio-routing =3D "SpkrLeft IN", "WSA WSA_SPK1 OUT",
+> > +                             "SpkrRight IN", "WSA WSA_SPK2 OUT",
+> > +                             "VA DMIC0", "vdd-micb",
+> > +                             "VA DMIC1", "vdd-micb";
+> > +
+> > +             wsa-dai-link {
+> > +                     link-name =3D "WSA Playback";
+> > +
+> > +                     cpu {
+> > +                             sound-dai =3D <&q6apmbedai WSA_CODEC_DMA_=
+RX_0>;
+> > +                     };
+> > +
+> > +                     codec {
+>
+> 'co'dec < 'cp'u
+>
+> please flip the order of the two
+
+Sure, will do in v3. For info, this is also in the wrong order in *romulus.=
+dtsi.
+
+> [...]
+>
+> > +&i2c0 {
+> > +     clock-frequency =3D <400000>;
+> > +
+> > +     status =3D "disabled";
+>
+> Is there anything connected to that controller?
+
+Not clear yet, maybe for the touchscreen and pen, still to be investigated.
+
+> If so, let's keep it enabled so that it's accessible through i2c-tools
+> It'd be even better if you could document (in a comment, like in romulus.=
+dtsi)
+> what and at what address that is
+
+I will enable it in v3, not sure if I'll find the right info to add a
+useful comment.
+
+> [...]
+>
+> > +&lpass_tlmm {
+> > +     spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+> > +             pins =3D "gpio12";
+> > +             function =3D "gpio";
+> > +             drive-strength =3D <16>;
+> > +             bias-disable;
+> > +             output-low;
+>
+> Please drop output-low from both definitions, the output state is
+
+Ok for v3.
+
+> controlled manually by the WSA driver. Although from the diff below
+> it looks like spkr_23_sd_n is unused and you only have 2 speakers
+
+Looking at the public specs, it only has 2 speakers indeed.
+
+> [...]
+>
+> > +&tlmm {
+> > +     gpio-reserved-ranges =3D <44 4>, /* SPI (TPM) */
+> > +                                                <238 1>; /* UFS Reset =
+*/
+>
+> Please ensure your tab width is set to 8
+
+I will fix this in v3.
+
+> [...]
+> > +     cam_indicator_en: cam-indicator-en-state {
+> > +             pins =3D "gpio225";
+> > +             function =3D "gpio";
+> > +             drive-strength =3D <2>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     wcn_sw_en: wcn-sw-en-state {
+> > +                     pins =3D "gpio214";
+> > +                     function =3D "gpio";
+> > +                     drive-strength =3D <2>;
+> > +                     bias-disable;
+> > +     };
+> > +
+> > +     wcn_wlan_bt_en: wcn-wlan-bt-en-state {
+> > +                     pins =3D "gpio116", "gpio117";
+> > +                     function =3D "gpio";
+> > +                     drive-strength =3D <2>;
+> > +                     bias-disable;
+> > +     };
+>
+> and here (+ these last 2 entries are out of order, GPIO num-wise,
+> please adjust that )
+
+Noted for the tabs here + the 2 entries to reorder based on GPIO.
+
+> [...]
+>
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-denali-oled.dts
+> > @@ -0,0 +1,20 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights rese=
+rved.
+> > + * Copyright (c) 2025 Dale Whinham <daleyo@gmail.com>
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "x1e80100.dtsi"
+> > +#include "x1-microsoft-denali.dtsi"
+> > +
+> > +/ {
+> > +     model =3D "Microsoft Surface Pro 11th Edition (OLED)";
+> > +     compatible =3D "microsoft,denali-oled", "microsoft,denali",
+> > +                  "qcom,x1e80100";
+>
+> Are the OLED models always X1E and the LCD ones always based on X1E80100
+> and LCD models always based on X1P64100?
+
+The OLED models are always with the X1E and the LCD ones with X1P64100,
+at least this is our understanding from the specs and online configurations=
+.
+
+> Konrad
+
+Thanks a lot for your review,
+J=C3=A9r=C3=B4me
+
+> > +};
+> > +
+> > +&panel {
+> > +     compatible =3D "samsung,atna30dw01", "samsung,atna33xc20";
+> > +};
+> > diff --git a/arch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dts b/a=
+rch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dts
+> > new file mode 100644
+> > index 000000000000..7c064ad49395
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dts
+> > @@ -0,0 +1,16 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights rese=
+rved.
+> > + * Copyright (c) 2025 Dale Whinham <daleyo@gmail.com>
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "x1e80100.dtsi"
+> > +#include "x1-microsoft-denali.dtsi"
+> > +
+> > +/ {
+> > +     model =3D "Microsoft Surface Pro 11th Edition (LCD)";
+> > +     compatible =3D "microsoft,denali-lcd", "microsoft,denali",
+> > +                  "qcom,x1p64100", "qcom,x1e80100";
+> > +};
 
