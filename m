@@ -1,213 +1,401 @@
-Return-Path: <linux-arm-msm+bounces-84053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E8D8C9AB59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 09:37:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C558C9AB89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Dec 2025 09:39:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C1C08344F98
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 08:37:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B18253A4828
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Dec 2025 08:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86A72305978;
-	Tue,  2 Dec 2025 08:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18E1A2580F2;
+	Tue,  2 Dec 2025 08:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mFqX+HK1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RNLc6ATG"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FdM6VjYG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f74.google.com (mail-ej1-f74.google.com [209.85.218.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1F830149C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 08:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CE8218827
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Dec 2025 08:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764664621; cv=none; b=TcfwIjhC5Q3S/PmwP3Q/TMTHN7FwJtK68uu3PpS1zz/MfUV85jcvKeT6Vhq8Umuv19QPvITXcikou77qYi/Z0VNccXXbDrSCqYAa2LiemH+U89A+IzD6uz/kORJcxbqEwNwMxPXmivnt42ow2Zvv6Iv83u6kpto6KCW0KjGzyKA=
+	t=1764664789; cv=none; b=cgQc8hD3mRb8UXynvEM/j36D8wsfmKSugt2tihFvnWVCXSgvWs1Rq+kCi1BB/pb3OmSJqksWK7ZQwckjDv/kRXn2g5Cw3CYhcjYst+Qo4402DDj4Fk5vOecpqDw7R2mGqBzQ5g1MQd51RBNqj88szZOssP6/Q+vMHEKzW1iy/p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764664621; c=relaxed/simple;
-	bh=2f+oyT22R6+ufw0lsSoxkkFhzOSzFUApxscYiZJh5yM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oC/O6G26SqSJE37qKLDjDQb3NZ7JzQWjEMTi8wgPjDnlNFxRhHVm7//SDVB7HEEf4jqbx0TYHyvOZeehIjJ9kZm9qH4kEm63sGqp4yQAqqZkL2rJtXMOaH1rZ8R/4nvi0hiuFonJxsw10IKlDx2BmBZQy4Dn+ZRL+RZc8BX2JVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mFqX+HK1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RNLc6ATG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B27LtES2692652
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Dec 2025 08:36:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cea5xRd2LAR6OP560Xpt2pLurPYWnXx5KGRmwEu0v84=; b=mFqX+HK1LRESWUFL
-	dEfgw2n39YSmuvs9JElkewYEoc2EQ9t2BkXAusfKpZfnSbgIqoOBT/eZddLkSlMA
-	TtK99/RmM4rZtenoMGtf1K8xamudSKOzafXR1HcoZ1zZs3MLWHuP0h34TZrzp7FL
-	AzXAw9GWIsQmsUx0r9JyGnNh1UO4izMiKHj73zmkdKgRPLUIj8PJ/rHrEglLH4gz
-	Mt0ywnkeDhr7v01zbByrxXY8BBcK3YTR146XxVs2xdx5EEgedcHdP0ACoTNGtZ/T
-	zy4l/8/BbSjgGEfrbmuiZOEfnX1SLEzkQt6AnIaZtyY2Ctx7gXdZmttEo/SBjyqo
-	yD1R3Q==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4asun907js-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 08:36:59 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7bb2303fe94so5154771b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 00:36:59 -0800 (PST)
+	s=arc-20240116; t=1764664789; c=relaxed/simple;
+	bh=FnPu6oEodlhWTX3WVxQt0S2ddEoHTO6hIuIzPBzl1QY=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=fmOfFQoY4M6cjOzN+OJtDUjXVkCVRuXSRGJb0D0fWacytyRVh+lj50xizAEaHSKJKaSiQidHQ3pK53/m3PhOmgR0w9s0vX10MK2gNSJmBlH2uR6mTcu/PePNc8MNS3CcgRQfBZegADNSctiJ+P9LdpOZim7N5D+wYY+SGHWjW/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FdM6VjYG; arc=none smtp.client-ip=209.85.218.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+Received: by mail-ej1-f74.google.com with SMTP id a640c23a62f3a-b733b21a138so559383066b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 00:39:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764664618; x=1765269418; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cea5xRd2LAR6OP560Xpt2pLurPYWnXx5KGRmwEu0v84=;
-        b=RNLc6ATGmjgLwrjqawWWK+LatoPTiZSGEJy3BcFFjEJsq94M4yjUwI0jMNHJIx/H9h
-         celBTltrzR2rc40mguqkZ650UyqVgtP5y10y9AmSsE4rmhAs4qtYKAjWHmGRaJjm4ncO
-         4ga0fmMfhGHSbX+8krKMI+SRzunDoZ7hXP7df+SJz0cJbEXTeaQ8zJDx87a1HZNQpZwZ
-         lQXSbj/GLgun9bBWTHGUYnZXjkcXzjL4qYkT0P08Wc+rBmoTSCvOzYSUEBsfWOz0wZpf
-         9eIym+brWZtsyewxsNkq41JOKaMbWr0gK3/w4679TAP/QPX2A6Ul70NFom0ecap/GsCo
-         lyfw==
+        d=google.com; s=20230601; t=1764664784; x=1765269584; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dQk6tHmJTUqAiCtnsgjTJG63u9eDINxbLO7NMykMICA=;
+        b=FdM6VjYG8lo+y14erHD7l68twFOpCQmQUfYYgQTIqIan99v3YeTin44VsbCWDyerDl
+         8q2lqLmRhsvYsdX1fpMCjL1y2SkwjzmeqNwq4zngODA+19pZ9ZnWXzQRTnL4XLCQK01Q
+         zSHuKXmDMIEd9QamJ8aYfcgxtHk2zkxBhlVohk5OGKxsZcAirxj9HJdCaJbl9BISsSV8
+         MJ4l0KnhYSVpTurzdJRC9R2beOSx8r3gamqb35e+3wdEvy13HymZHf+qj+gum+NnQ1BD
+         kEAg4YXtvwdjz24cDazXmkrfQkGbxgsMNLwaQebIowE/Fa/qZZxx5BdXm76rRgqPZtSW
+         4J7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764664618; x=1765269418;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cea5xRd2LAR6OP560Xpt2pLurPYWnXx5KGRmwEu0v84=;
-        b=QamBAuCQ6+I44s7HClR9CCtgMUKRhVhZ/sz4H88in9OasJiPa2Eo4XMn4//46pwZNm
-         UsKwyIylAdqGeo/ArRHq14pyoULL6vlTJsywtD3dWcDSvnh1PIbeMldqBvAY8agyjzil
-         wkjKi3kJIWceGnU6lDQTfbty5+y+lJXA8tvuYckkuYkCqGHyBaFurCH2M5sogV2jwn7k
-         hLhlOLwBPuamTHdh+lG9jfafMylTr3SL0+nrExkQ+Ofa1/TBcnGEdC/fnjpr66w2JfK1
-         wxwmNNufF9ZSqda64oHJ0RfoU6hDaTWv+n8GrsAIq4QU9ir4GvG27mVUBwlhOsaPU/52
-         yg7A==
-X-Forwarded-Encrypted: i=1; AJvYcCVgdrGOLn+JN7aP1C4go2CydqHHZb5ogdZoFxHmihlvbtbtR1aBiYEqNlDgdSgKlE77Zq095PKMDzYlvONQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgtDpTlTWxb5FLDOORVEv2wbD780qi6SnEzvafY5EaJwHdhlg0
-	JGxOUxwiDtL8CeZfBT6YswIPXzO7jMl7uQtZW9QaCzkSPHrGWJbECQH43iJgUaMLeV8OMXVFHTc
-	/LsV5ujJiZuyTdJv3wAhwREVQa62B3NxWYqjZ/++xMAzw5xvGTQlZf5cZxzztZS61WHpU
-X-Gm-Gg: ASbGncsOy+Km9VTj5nOeGo60XtYL5JIYeUPIIbLfJOX9hA3eSrKL4L5W8G4GEMzd0cd
-	0p40yrlYXDnxmjS+kvKxYauN+zWwkwe5KYw+K4TmXNiShG2U91L567TXLRGTBTVjv/YstW0r0c3
-	tYY41bGAaQiO8NE5DhhuCenJjZ0y4ucXbTfnUVWWRSGYp9calsfcS4yyfsOGOZDEvTqcObLoxi4
-	m5HVTsB8KAd8C6uprlzQo2WRWDxGXeQViJMY6RRA8SQk7VMSOIjcoPg3g3EH83N4xh6w4+TdcRZ
-	faJPX/Rx32K60dllNdPpscWlS4Xnxe94k+thSAfRl+d+TzZKEAWfS6yxFQzVYxt3m6GlMWLbuyN
-	e4e0d+5p6VjBNXbGtVPC8eQRAdXUGUDfWRBko
-X-Received: by 2002:a05:6a21:3395:b0:34e:e0ba:7bf with SMTP id adf61e73a8af0-36150e1fc24mr48387143637.1.1764664618253;
-        Tue, 02 Dec 2025 00:36:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFfcyGB74lclpQ93vXWzJfbznVZKLqfP1ZJZEp1qLtVB0QSTSWqyEngdybDcfSBj3gxxXBGQ==
-X-Received: by 2002:a05:6a21:3395:b0:34e:e0ba:7bf with SMTP id adf61e73a8af0-36150e1fc24mr48387111637.1.1764664617636;
-        Tue, 02 Dec 2025 00:36:57 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d150b684d7sm16158039b3a.7.2025.12.02.00.36.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Dec 2025 00:36:57 -0800 (PST)
-Date: Tue, 2 Dec 2025 14:06:50 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bryan O'Donoghue <bod@kernel.org>, vikash.garodia@oss.qualcomm.com
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v8 00/14] Peripheral Image Loader support for Qualcomm
- SoCs running Linux host at EL2
-Message-ID: <20251202083650.luk2jpcquq2pcf2r@hu-mojha-hyd.qualcomm.com>
-References: <20251121-kvm_rproc_v8-v8-0-8e8e9fb0eca0@oss.qualcomm.com>
- <0156c327-b867-481e-af24-679f037bfa56@linaro.org>
- <Ux4KioDAyhqgZYleT-eeeFKzuT_qadCIpP3RgyB40apZPX4I9_JwcfY9mebop4gmFcyh4LPw0KQvFzL4zzysJQ==@protonmail.internalid>
- <20251121113751.tnqw5abm5sd2rgr7@hu-mojha-hyd.qualcomm.com>
- <9dfe5343-824d-42c2-aab8-8389602601e9@kernel.org>
+        d=1e100.net; s=20230601; t=1764664784; x=1765269584;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dQk6tHmJTUqAiCtnsgjTJG63u9eDINxbLO7NMykMICA=;
+        b=SFD2Hv46O/ilLWOCdCACrk6TbiLYlUa074nLMwhc4vMm/BWvBpjeUHvUUqONHjZbp5
+         93hjtQIovIphRVkyhFC6prZTq2P7aVNK8U9QANMpyW+7itBRwRG3UXRj1tqocd7UX49Z
+         jQvIl4MwggnvRWzHmMyI7lfS9WzpreN4CqShP1RVxUdBghlhH2OpWNGxmBpuchEgNEgv
+         G6NJPOT9DSeBrIGfPuEQ8HzvNyGWEr0e49gumX+xAfo22dfl12Y+hJVlqFo2z+8GZnDH
+         UhfMCglnZHkA/vSttKCzM6K4CL6gKu1dvfXgeaD9i3CLSF36XMMy2J9Pkh27pkk8Zxre
+         X9SQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4aawQoBaQGD9EsPN5Sq4YLVDtzHPsHa8F4VKnFeBeiEMw4Ciu3DRkeube/0BTAeIFdxYv0BaqrvqTXfO6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgR6haS+iUcXdyuInP8DEpKqMe6RL7tqbmvEle4TnCpOX2v3O3
+	ktwOUxqTGt4S0nxZGQV1Amtf/fFExF213d7ALc2qdi3lSHaiR9Y4I5MT/3Jg3s3ksM6avap4SCC
+	40Jca5wEk8CbXIENP0Q==
+X-Google-Smtp-Source: AGHT+IEc/TxQUgIpfEK5sufEIaSnr0GleDnpyvkysthlI+sYkIIqMQnKrFBu1nj0yiVqQjAh/i5hvFwh+Kb6vzw=
+X-Received: from ejcvt4.prod.google.com ([2002:a17:907:a604:b0:b73:5918:6cd0])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:907:6eaa:b0:b6d:6f46:9047 with SMTP id a640c23a62f3a-b76718b4dcbmr4682286966b.59.1764664784573;
+ Tue, 02 Dec 2025 00:39:44 -0800 (PST)
+Date: Tue, 2 Dec 2025 08:39:43 +0000
+In-Reply-To: <3727982A-91A4-447C-B53C-B6037DA02FF9@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9dfe5343-824d-42c2-aab8-8389602601e9@kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAyMDA2OCBTYWx0ZWRfXyUKVEWs+aroV
- cbr3Hmi2fT2FnZEQ1FwXYmlOKDBmgh5gDg3Po/fptLnpJDygjuTISN027i12FZQk23kRPukfgM/
- U3iBVZnYDNInSvfJpZ4W8BfbSjDJChnADjcdi0KYGdD0KN8Q+QkDdl7MQXwjSBd7O23A0v2hWGQ
- bpPZKR+VjJ78YcPv6uERqnnEeuX6ipEJTIZ7YKseXRUalS4nJwSNqaok/t4Enm3S1D+9xSjHKy+
- rfFxxW+XSGQqPx8BDFkOAekl0OyY66fHNuLbu7Wb+sQQIoBALC6dv5hi8Qs9hJ+WcBSjcCX/QQh
- qJ/xotf4UZJEbQD+mo2qXtCxVYsygKGBe2L3IgD70BqYRt4rgjonfqF7o7NtupWjbRp6WpI+Ktc
- hqCsAQLQr1WgiaG+EGmz0xl2FoIcWA==
-X-Authority-Analysis: v=2.4 cv=DKOCIiNb c=1 sm=1 tr=0 ts=692ea52b cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=uEwPF_Y-ILqiIyH3WEEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: xyU22YUNdZRP8_r1zU8InySQsSAApXTz
-X-Proofpoint-ORIG-GUID: xyU22YUNdZRP8_r1zU8InySQsSAApXTz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-01_01,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 spamscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512020068
+Mime-Version: 1.0
+References: <20251128-gpuvm-rust-v1-0-ebf66bf234e0@google.com>
+ <20251128-gpuvm-rust-v1-4-ebf66bf234e0@google.com> <3727982A-91A4-447C-B53C-B6037DA02FF9@collabora.com>
+Message-ID: <aS6lz12BIysBVHSV@google.com>
+Subject: Re: [PATCH 4/4] rust: drm: add GPUVM immediate mode abstraction
+From: Alice Ryhl <aliceryhl@google.com>
+To: Daniel Almeida <daniel.almeida@collabora.com>
+Cc: Danilo Krummrich <dakr@kernel.org>, Matthew Brost <matthew.brost@intel.com>, 
+	"Thomas =?utf-8?Q?Hellstr=C3=B6m?=" <thomas.hellstrom@linux.intel.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, Steven Price <steven.price@arm.com>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Lyude Paul <lyude@redhat.com>, Lucas De Marchi <lucas.demarchi@intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sumit Semwal <sumit.semwal@linaro.org>, 
+	"Christian =?utf-8?B?S8O2bmln?=" <christian.koenig@amd.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org, 
+	Asahi Lina <lina+kernel@asahilina.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 27, 2025 at 10:25:23AM +0000, Bryan O'Donoghue wrote:
-> On 21/11/2025 11:37, Mukesh Ojha wrote:
-> > > Sorry.
-> > > 
-> > > Did we actually come up with a cogent reason to omit the video firmware
-> > > loading here ?
-> > > 
-> > > AFAIU it is required for Lemans and Glymur - leaving it out is blocking
-> > > getting video stuff done and storing up trouble.
-> > > 
-> > > What exactly is the blockage - is it something you want help with ?
-> > I replied to you here[1] and given my reason..till something concluded on
-> > "multi-cell IOMMU[2]", I can not add video and block what is working
-> > already.
-> > 
-> > [1]
-> > https://lore.kernel.org/lkml/20251105081421.f6j7ks5bd4dfgr67@hu-mojha-
-> > hyd.qualcomm.com/
-> 
-> Why though ?
-> 
-> You are mixing together the issue of multiple SIDs and the original loading
-> of firmware which could easily reuse the venus method of
-> 
-> &iris {
-> 	video-firmware {
-> 		iommus = <&apss_smmu hex>;
-> 	};
-> };
+On Mon, Dec 01, 2025 at 12:16:09PM -0300, Daniel Almeida wrote:
+> Hi Alice,
+>=20
+> I find it a bit weird that we reverted to v1, given that the previous gpu=
+vm
+> attempt was v3. No big deal though.
+>=20
+>=20
+> > On 28 Nov 2025, at 11:14, Alice Ryhl <aliceryhl@google.com> wrote:
+> >=20
+> > Add a GPUVM abstraction to be used by Rust GPU drivers.
+> >=20
+> > GPUVM keeps track of a GPU's virtual address (VA) space and manages the
+> > corresponding virtual mappings represented by "GPU VA" objects. It also
+> > keeps track of the gem::Object<T> used to back the mappings through
+> > GpuVmBo<T>.
+> >=20
+> > This abstraction is only usable by drivers that wish to use GPUVM in
+> > immediate mode. This allows us to build the locking scheme into the API
+> > design. It means that the GEM mutex is used for the GEM gpuva list, and
+> > that the resv lock is used for the extobj list. The evicted list is not
+> > yet used in this version.
+> >=20
+> > This abstraction provides a special handle called the GpuVmCore, which
+> > is a wrapper around ARef<GpuVm> that provides access to the interval
+> > tree. Generally, all changes to the address space requires mutable
+> > access to this unique handle.
+> >=20
+> > Some of the safety comments are still somewhat WIP, but I think the API
+> > should be sound as-is.
+> >=20
+> > Co-developed-by: Asahi Lina <lina+kernel@asahilina.net>
+> > Signed-off-by: Asahi Lina <lina+kernel@asahilina.net>
+> > Co-developed-by: Daniel Almeida <daniel.almeida@collabora.com>
+> > Signed-off-by: Daniel Almeida <daniel.almeida@collabora.com>
+> > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 
-I completely understand what you are saying, and it would be very easy
-for me to do that if it gets accepted. However, I doubt that the people
-who raised this concern would agree with the approach.
+> > +//! DRM GPUVM in immediate mode
+> > +//!
+> > +//! Rust abstractions for using GPUVM in immediate mode. This is when =
+the GPUVM state is updated
+> > +//! during `run_job()`, i.e., in the DMA fence signalling critical pat=
+h, to ensure that the GPUVM
+>=20
+> IMHO: We should initially target synchronous VM_BINDS, which are the oppo=
+site
+> of what you described above.
 
-I’m not sure if the video team would like to pursue pixel/non-pixel/firmware context
-banks separately. I’ll leave this to @Vikas to answer.
+Immediate mode is a locking scheme. We have to pick one of them
+regardless of whether we do async VM_BIND yet.
 
-Also, I do not want the video PIL discussion to be part of this series, as it could
-unnecessarily give the impression that this series depends on it.
+(Well ok immediate mode is not just a locking scheme: it also determines
+whether vm_bo cleanup is postponed or not.)
 
-> 
-> That binding got dropped because it was unused in Iris.
-> 
-> https://lore.kernel.org/lkml/05d40a3b-cc13-b704-cac7-0ecbeea0e59d@quicinc.com/
-> 
-> I still fail to see why we are waiting for multi-cell IOMMU to land, when it
-> is expected to and what the VPU enablement story is upstream in the
-> meantime.
-> 
-> Blocked it seems.
+> > +/// A DRM GPU VA manager.
+> > +///
+> > +/// This object is refcounted, but the "core" is only accessible using=
+ a special unique handle. The
+>=20
+> I wonder if `Owned<T>` is a good fit here? IIUC, Owned<T> can be refcount=
+ed,
+> but there is only ever one handle on the Rust side? If so, this seems to =
+be
+> what we want here?
 
-No, it is ongoing, there will be next version coming.
+Yes, Owned<T> is probably a good fit.
 
-> 
-> ---
-> bod
+> > +/// core consists of the `core` field and the GPUVM's interval tree.
+> > +#[repr(C)]
+> > +#[pin_data]
+> > +pub struct GpuVm<T: DriverGpuVm> {
+> > +    #[pin]
+> > +    vm: Opaque<bindings::drm_gpuvm>,
+> > +    /// Accessed only through the [`GpuVmCore`] reference.
+> > +    core: UnsafeCell<T>,
+>=20
+> This UnsafeCell has been here since Lina=E2=80=99s version. I must say I =
+never
+> understood why, and perhaps now is a good time to clarify it given the ch=
+anges
+> we=E2=80=99re making w.r.t to the =E2=80=9Cunique handle=E2=80=9D thing.
+>=20
+> This is just some driver private data. It=E2=80=99s never shared with C. =
+I am not
+> sure why we need this wrapper.
 
--- 
--Mukesh Ojha
+The sm_step_* methods receive a `&mut T`. This is UB if other code has
+an `&GpuVm<T>` and the `T` is not wrapped in an `UnsafeCell` because
+`&GpuVm<T>` implies that the data is not modified.
+
+> > +    /// Shared data not protected by any lock.
+> > +    #[pin]
+> > +    shared_data: T::SharedData,
+>=20
+> Should we deref to this?
+
+We can do that.
+
+> > +    /// Creates a GPUVM instance.
+> > +    #[expect(clippy::new_ret_no_self)]
+> > +    pub fn new<E>(
+> > +        name: &'static CStr,
+> > +        dev: &drm::Device<T::Driver>,
+> > +        r_obj: &T::Object,
+>=20
+> Can we call this =E2=80=9Creservation_object=E2=80=9D, or similar?
+>=20
+> We should probably briefly explain what it does, perhaps linking to the C=
+ docs.
+
+Yeah agreed, more docs are probably warranted here.
+
+> I wonder if we should expose the methods below at this moment. We will no=
+t need
+> them in Tyr until we start submitting jobs. This is still a bit in the fu=
+ture.
+>=20
+> I say this for a few reasons:
+>=20
+> a) Philipp is still working on the fence abstractions,
+>=20
+> b) As a result from the above, we are taking raw fence pointers,
+>=20
+> c) Onur is working on a WW Mutex abstraction [0] that includes a Rust
+> implementation of drm_exec (under another name, and useful in other conte=
+xts
+> outside of DRM). Should we use them here?
+>=20
+> I think your current design with the ExecToken is also ok and perhaps we =
+should
+> stick to it, but it's good to at least discuss this with the others.
+
+I don't think we can postpone adding the "obtain" method. It's required
+to call sm_map, which is needed for VM_BIND.
+
+> > +    /// Returns a [`GpuVmBoObtain`] for the provided GEM object.
+> > +    #[inline]
+> > +    pub fn obtain(
+> > +        &self,
+> > +        obj: &T::Object,
+> > +        data: impl PinInit<T::VmBoData>,
+> > +    ) -> Result<GpuVmBoObtain<T>, AllocError> {
+>=20
+> Perhaps this should be called GpuVmBo? That=E2=80=99s what you want to =
+=E2=80=9Cobtain=E2=80=9D in the first place.
+>=20
+> This is indeed a question, by the way.
+
+One could possibly use Owned<_> here.
+
+> > +/// A lock guard for the GPUVM's resv lock.
+> > +///
+> > +/// This guard provides access to the extobj and evicted lists.
+>=20
+> Should we bother with evicted objects at this stage?
+
+The abstractions don't actually support them right now. The resv lock is
+currently only here because it's used internally in these abstractions.
+It won't be useful to drivers until we add evicted objects.
+
+> > +///
+> > +/// # Invariants
+> > +///
+> > +/// Holds the GPUVM resv lock.
+> > +pub struct GpuvmResvLockGuard<'a, T: DriverGpuVm>(&'a GpuVm<T>);
+> > +
+> > +impl<T: DriverGpuVm> GpuVm<T> {
+> > +    /// Lock the VM's resv lock.
+>=20
+> More docs here would be nice.
+>=20
+> > +    #[inline]
+> > +    pub fn resv_lock(&self) -> GpuvmResvLockGuard<'_, T> {
+> > +        // SAFETY: It's always ok to lock the resv lock.
+> > +        unsafe { bindings::dma_resv_lock(self.raw_resv_lock(), ptr::nu=
+ll_mut()) };
+> > +        // INVARIANTS: We took the lock.
+> > +        GpuvmResvLockGuard(self)
+> > +    }
+>=20
+> You can call this more than once and deadlock. Perhaps we should warn abo=
+ut this, or forbid it?
+
+Same as any other lock. I don't think we need to do anything special.
+
+> > +    /// Use the pre-allocated VA to carry out this map operation.
+> > +    pub fn insert(self, va: GpuVaAlloc<T>, va_data: impl PinInit<T::Va=
+Data>) -> OpMapped<'op, T> {
+> > +        let va =3D va.prepare(va_data);
+> > +        // SAFETY: By the type invariants we may access the interval t=
+ree.
+> > +        unsafe { bindings::drm_gpuva_map(self.vm_bo.gpuvm().as_raw(), =
+va, self.op) };
+> > +        // SAFETY: The GEM object is valid, so the mutex is properly i=
+nitialized.
+>=20
+> > +        unsafe { bindings::mutex_lock(&raw mut (*self.op.gem.obj).gpuv=
+a.lock) };
+>=20
+> Should we use Fujita=E2=80=99s might_sleep() support here?
+
+Could make sense yeah.
+
+> > +/// ```
+> > +/// struct drm_gpuva_op_unmap {
+> > +/// /**
+> > +/// * @va: the &drm_gpuva to unmap
+> > +/// */
+> > +/// struct drm_gpuva *va;
+> > +///
+> > +/// /**
+> > +/// * @keep:
+> > +/// *
+> > +/// * Indicates whether this &drm_gpuva is physically contiguous with =
+the
+> > +/// * original mapping request.
+> > +/// *
+> > +/// * Optionally, if &keep is set, drivers may keep the actual page ta=
+ble
+> > +/// * mappings for this &drm_gpuva, adding the missing page table entr=
+ies
+> > +/// * only and update the &drm_gpuvm accordingly.
+> > +/// */
+> > +/// bool keep;
+> > +/// };
+> > +/// ```
+>=20
+> I think the docs could improve here ^
+
+Yeah I can look at it.
+
+> > +impl<T: DriverGpuVm> GpuVmCore<T> {
+> > +    /// Create a mapping, removing or remapping anything that overlaps=
+.
+> > +    #[inline]
+> > +    pub fn sm_map(&mut self, req: OpMapRequest<'_, T>) -> Result {
+>=20
+> I wonder if we should keep this =E2=80=9Csm=E2=80=9D prefix. Perhaps
+> =E2=80=9Cmap_region=E2=80=9D or =E2=80=9Cmap_range=E2=80=9D would be bett=
+er names IMHO.
+
+I'll wait for Danilo to weigh in on this. I'm not sure where "sm"
+actually comes from.
+
+> > +/// Represents that a given GEM object has at least one mapping on thi=
+s [`GpuVm`] instance.
+> > +///
+> > +/// Does not assume that GEM lock is held.
+> > +#[repr(C)]
+> > +#[pin_data]
+> > +pub struct GpuVmBo<T: DriverGpuVm> {
+>=20
+> Oh, we already have GpuVmBo, and GpuVmBoObtain. I see.
+
+Yeah, GpuVmBoObtain and GpuVmBoAlloc are pointers to GpuVmBo.
+
+> > +    #[pin]
+> > +    inner: Opaque<bindings::drm_gpuvm_bo>,
+> > +    #[pin]
+> > +    data: T::VmBoData,
+> > +}
+> > +
+> > +impl<T: DriverGpuVm> GpuVmBo<T> {
+> > +    pub(super) const ALLOC_FN: Option<unsafe extern "C" fn() -> *mut b=
+indings::drm_gpuvm_bo> =3D {
+> > +        use core::alloc::Layout;
+> > +        let base =3D Layout::new::<bindings::drm_gpuvm_bo>();
+> > +        let rust =3D Layout::new::<Self>();
+> > +        assert!(base.size() <=3D rust.size());
+>=20
+> We should default to something else instead of panicking IMHO.
+
+This is const context, which makes it a build assertion.
+
+> My overall opinion is that we=E2=80=99re adding a lot of things that will=
+ only be
+> relevant when we=E2=80=99re more advanced on the job submission front. Th=
+is
+> includes the things that Phillip is working on (i.e.: Fences + JobQueue).
+>=20
+> Perhaps we should keep this iteration downstream (so we=E2=80=99re sure i=
+t works
+> when the time comes) and focus on synchronous VM_BINDS upstream.
+> The Tyr demo that you=E2=80=99ve tested this on is very helpful for this =
+purpose.
+
+Yeah let's split out the prepare, GpuVmExec, and resv_add_fence stuff to
+a separate patch.
+
+I don't think sync vs async VM_BIND changes much in which methods or
+structs are required here. Only difference is whether you call the
+methods from a workqueue or not.
+
+Alice
 
