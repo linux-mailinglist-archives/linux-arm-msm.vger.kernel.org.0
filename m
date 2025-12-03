@@ -1,81 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-84219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id E88C0C9EEA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 12:58:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D25DC9EEE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 13:02:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B7CCD34B20D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 11:58:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A4D83A70C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 12:02:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 777802F60CC;
-	Wed,  3 Dec 2025 11:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FE9A284880;
+	Wed,  3 Dec 2025 12:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cl0oH+JJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="REK0Auuv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7532F60DA
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 11:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7122BE059
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 12:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764763062; cv=none; b=PTonSFnC8LQqLIYiCwZ/jFV5o4rvbMaKBYRJHH1VUD2y0rgB3uszYQjuwBcp6H5+I7ivxhvytuPQwaGaReI5qu9YoG+x47Ac7Lq+r5uaPiuveYIOUh7+HyOo71enejWufFSwSfSSAebikrtqyuki4q26XMTx3K7c5oG0o8+wUkI=
+	t=1764763334; cv=none; b=EpSTLz5jsw2ETzRCSVtOpeJLHsJho8aSdkEKCSwenEk/sMjXg4lo2cm5y6ft624CFMoxxiIaiVGmjJvFPYswI8LK72bxKf3Zei5nRgftwEN53hutdyUFGgYYl8ARNxCtak6Xt5tNgr6BZqmBC0qQ5kXsXFguV03r2EhtNE+Tslo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764763062; c=relaxed/simple;
-	bh=LPKwLwISED/VLZ+wyALuzSxuIRAJQmsGoVwD5UqGVRE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I5XF6njUZrickzisL1oErRdVkiqYVIgw4ie3foSbTh3D5XMBnkPd6gEbr2m7VlMalx26b9KGM8m/VBrK0YK2mE+LMzf/VU4jCVsz9w22qvBG/RtXjUittGCC4FaidxDSlT2oLEw6cMFihi0VUnGTQxfuhKDvDXZWXoYzL5vwsAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cl0oH+JJ; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1764763334; c=relaxed/simple;
+	bh=M7pOBNlBvwEuEtzmMJqbSg9r3cWAn7G/00Z/yVHCxbs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=i4Vi7e/5QFs9ne7dFjPQ5FCJHJDB35GqosyULzWFEHK/zhWCvPAxUe+pEkxtfu4vxOFfjevm7Li21GRCoUQuTxvCtD2E5IKnZf7XdKrFmNshNWnuyRobhyrvd2KZ46TlIRqyvp3Yho13Vjoi02PecNtvybNPWnvG0ptUMMeHi5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=REK0Auuv; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-59426dc96f2so553779e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 03:57:40 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4777771ed1aso44041265e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 04:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764763059; x=1765367859; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lmmz3wGYuAOnOg8QMFr0ARgUibgo3L//u7jYl7HIUsg=;
-        b=Cl0oH+JJ3vq8ZLraORHFhXpsAJl/8Cx+PyGnAcvU9MsEFuwmTB8LSp5SkjZ+8mours
-         NedaOQGFJQG6JEvHajUnr/FhizSgwN3yPBV2fLZvEQDMsunmlFVu2GOx+TE76A0hWY0B
-         GvET17M6dmO8TXp5BvCLf6xCh2WI9+jdc55B97igoR3GG/S4wwsJWRymf1/DlOR5eTmr
-         kT4mbFVRDRVS1R0aWHA+MhZYB1vgHejTALubZ6Zp/cHlfgSzkNXOYmXYgZpUTDAB2fWW
-         wJLy4wdNjjwd7jZb5B9kHJKRHcwxOA8SVkvxRebpOUvvWkBqKuNcVhVOIradAhzUDnfY
-         ldJw==
+        d=linaro.org; s=google; t=1764763330; x=1765368130; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CcGrXNB0QpTBnBRGs48XA92EnDcBTgYIPVqQfbDEykE=;
+        b=REK0AuuvurOuFLXL9IQu2U/YpYYORP8JsT6g4RmzRKYXQlLQzPl6iOqCFYnqMtUlF8
+         HJPkILbFYTdSTQpSiHsLosjeeCMCjsncmLUR0Xefqic7SNWwKIUbo7lYh0iKZ944U/Cw
+         ABoL+5IBUIO6qw1BIYxrUjtvc+c70whHVq/kVL9v0SuQby51wyzfIlciQ0seW9vfj/T2
+         UBBNILjBaaHeXU25igsTlkkAzElw/Kj75erwJdRK+yuGhUxPySZTNMc7eChBuJDzmT5N
+         Rqx3llbWEmAPaMh5XTJsiDQf9IFZjrwaLJCuckeB0wJqqTTjK6HSObawnAuJCRI4rGU1
+         7n8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764763059; x=1765367859;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lmmz3wGYuAOnOg8QMFr0ARgUibgo3L//u7jYl7HIUsg=;
-        b=kTWNGJtmz4HBc+NznJl5w/W7+oZjyrOEY+8WtlsPC6nYVK24m1akrVJR9lWP94B0QP
-         S0qDTnTv9Lw6eiV8hzHMejr9+EbMQiLdgrUGza3cxZrH4nTeVWILHXzFzi8dsreGS+wL
-         mrmSNJUDETgSrTpN8Wu0l3mhLwUaWBKWSWGlRRIoikFVKNRO+VO5b+X09zk2D8KqGSac
-         3hv/V4YxWa+egExlGQ0fS57I8/URvwfGVkQD6Ld9B8UhoR27V6P3AeVWDHHENNKXfsAj
-         ftJsA2oa2lt9IcrYJ8KL9oSunEa6eIpXPPH77GPNNmb/3DxKs1mvzTvmM9FUZzrggdUs
-         QEig==
-X-Forwarded-Encrypted: i=1; AJvYcCW/IGN0fJLsd6gNENccCoz5/5qe6OJx7mXr8px+0zOnZP6DaxAu1kG0Vi+cxqt6Juk3mT1PckNyHj0jhQm8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYXB/fwCPZ96tzrMKJ+CK4ADDKXlowjYvXDxOJL/Txo0DWWhb9
-	ffrhISV+EzVqrXVT0QxILeMfQ2vI4sH98q4R1+uyi+0AIcQ4/Acn6E//6kuFS4V7ZvI=
-X-Gm-Gg: ASbGncsiP/4dV2MhRXKRWqVImTclcuXlyiAjm8a0hJMgzJVDVber2Y2qR7llJBczzN7
-	2L/NF0VGWVjuphjmBj1SnAjtZqVJjmP+4neyIl8Z2Ywd7Tng7q/6Asq9r6lQXhpwKX0qNFr9L0f
-	oMajFyvSdRLRmXSH5I7j/rHrOIkir9HlvxnYuBWuaYAfayZEBuLITaM+jZ1mbNuO3TCZmXZTuT9
-	pKva4I5/UhQpG1Hw+GZkH9OW+itNIUT5n2FbkdZ2x6oDahTkwfKRQZfxZEUncnd/uZYukJGXqsg
-	F2NBlTpWBHsU1lAZTZ/O4bWWwxA38ud+LMdjP4JJ0oPguCT5FLggd5Xl+HHGWBKxpZTvx8vIGRY
-	DuhmhvIqPsgOuLJLe40x3bziI0RkGC7KaqCRmbTRDyvp+3GIQG9byrJCAX1XSeUSW4f8hXwHeZy
-	UcLzvuO6eO89RHmWK2oi193QNosGlXj4KkRTAMUoRDCWjraa6cc1sODYZLMw0SG6N1eQ==
-X-Google-Smtp-Source: AGHT+IGe2OQoXICFOyfigwG22HGnS3iFhKdt6cwRjTvC1hJEg3a+rMZEtqZi9qXjIGMgEvHgF14L4Q==
-X-Received: by 2002:a05:6512:3186:b0:594:2f72:2f78 with SMTP id 2adb3069b0e04-597d4b5efcfmr316636e87.8.1764763058582;
-        Wed, 03 Dec 2025 03:57:38 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-596bfa4406esm5630377e87.66.2025.12.03.03.57.37
+        d=1e100.net; s=20230601; t=1764763330; x=1765368130;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CcGrXNB0QpTBnBRGs48XA92EnDcBTgYIPVqQfbDEykE=;
+        b=EzeM2x8to5cqZqc0yxwB1veKOYLHS7iZgBWwJHZ6O79HaDN4HMfcxOTFNrY4/ug5Ll
+         qshD35sSaQpx+Nnjx85ziZjzBUGlr/JDH/fIn8mwA3ATsGuRd18ymoLhPPN4X1JWoya3
+         ZpkFFEFRQaRMoxNqRqwnathj54vTTi3Y3uVIefbBRIh0GE6CDKzmL5nmS7b7PY7Q29/s
+         TJKus8Ykc3kMMnp+l8TcFQl6ZGWpcIEmbvxdmDhfafXseQ5C3r2eDZV288lfxDFy2v+R
+         1p7WTbfCMfe1nnp8zOY9+nuRf+2CM1gPZoX7o78C0VaUAC0xh69eo5UL4fk6J/bKI1f1
+         D0wQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXtM0/q4BkfoND8lGQRAraNXlEhEpRYvAFh7bfdmnT6Njp8wvmJWdbGNIYb8U9hmVFo84lWr0oIYP8z1sT/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNgO4Ox1ez/357JRLQqtQlJyDRnFVckiXGgt1q7tDMRHn4/iR9
+	7t8o3toEQ/JNywWrsEmYpExwVkRJZ84xlzByZOhyP/xjyQX35LlLMjPbX+ZuH5c7Yj0=
+X-Gm-Gg: ASbGncvb602Mb4gNsCek+noM52YNfpcQpVpOI6wuXPUILIrLUL0gmSWaDxuyyjmY0L+
+	nUZyvJMD20P8dvpUE5rPpWnlMAWpD81drrYEfS+N1VGaoGGVym9rCo+W6Q6YFJ8rnCs5/sjqmAf
+	QoxCIZBCXdnnAVmguJ6+o3UIHspzyOAvjnGp09fy1nXlRAqoCU+SAWQ5tFTQ+hYAU/nJZi91bsi
+	qRT14nfiYPqocEeDjo8AynXgbNKCn6FpDFfmmW8bK7SXjE+U+kMXSZCQCMQjS3ZB+UfLd/VDEM9
+	r2HL/y9ZbRqU+jg5oYGbzcYFWYeLh/yX11QyHyCp2FXw1IiW6Lp1nBZxsIYeV+v1ByET8XCNzoD
+	CpN9pYFRl05AG0mGgJGyXbTCJnJ7TSTiGiS7nNbV19K/MsIAVnG2uN/zy993356C41Viq62Iy42
+	KonPu3eLcCMo2OTXKY1MxKgFn+j9KPoZ8uAUNn3H5WnKdnuhJ+pGdNw7lVMFXDvOrmuHRl48xP3
+	A==
+X-Google-Smtp-Source: AGHT+IFz2MTHOJgrReqmTi5hgRcl6UI1YsGGIf7RQ802UfMw3sStRfOkPuol816rACNh4tHXOZ43zg==
+X-Received: by 2002:a05:600c:3b26:b0:477:7f4a:44b4 with SMTP id 5b1f17b1804b1-4792aee39c5mr20575715e9.1.1764763330340;
+        Wed, 03 Dec 2025 04:02:10 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080:955c:3368:b15d:18c3? ([2a01:e0a:3d9:2080:955c:3368:b15d:18c3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4792b02e842sm14995815e9.1.2025.12.03.04.02.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Dec 2025 03:57:38 -0800 (PST)
-Message-ID: <5c163334-2ddd-4e52-8add-30652b34dc0f@linaro.org>
-Date: Wed, 3 Dec 2025 13:57:37 +0200
+        Wed, 03 Dec 2025 04:02:09 -0800 (PST)
+Message-ID: <1e5562ad-a53c-4a06-9428-f7c010cac85c@linaro.org>
+Date: Wed, 3 Dec 2025 13:02:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,64 +86,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sm8550-qrd: remove data-lanes
- property of image sensor
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8550-hdk-rear-camera-card: move
+ camss status property
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>
 Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20251203040538.71119-1-vladimir.zapolskiy@linaro.org>
- <20251203040538.71119-3-vladimir.zapolskiy@linaro.org>
- <9252338e-c775-46db-9376-53002edf429a@oss.qualcomm.com>
- <40980eac-9e9b-4293-8986-bff46f30a50b@linaro.org>
- <94d6d26e-8009-437d-af9f-0a3c69fe8ed3@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <94d6d26e-8009-437d-af9f-0a3c69fe8ed3@oss.qualcomm.com>
+ <20251203040538.71119-7-vladimir.zapolskiy@linaro.org>
+ <4149ccd0-0583-4d7b-a37a-df899b3e15fb@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <4149ccd0-0583-4d7b-a37a-df899b3e15fb@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/3/25 13:50, Konrad Dybcio wrote:
-> On 12/3/25 12:41 PM, Vladimir Zapolskiy wrote:
->> On 12/3/25 13:11, Konrad Dybcio wrote:
->>> On 12/3/25 5:05 AM, Vladimir Zapolskiy wrote:
->>>> Samsung S5K3M5 image sensor supports only 4-lane MIPI CSI-2 interface,
->>>> which makes the sensor data-lanes property redundant, and it can be
->>>> safely removed from the board dts file. Noteworthy that the property
->>>> value is incorrect, because conventionally lanes enumeration of image
->>>> sensors starts from index 1.
->>>
->>> This seems to vary between sensors
->>>
+On 12/3/25 09:32, Krzysztof Kozlowski wrote:
+> On 03/12/2025 05:05, Vladimir Zapolskiy wrote:
+>> Conventionally status property of device tree nodes is the last one in
+>> the list, move it there.
 >>
->> It should not, from Documentation/devicetree/bindings/media/video-interfaces.yaml
->> the clock lane has index 0, data lanes enumeration starts from 1:
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
 >>
->>    data-lanes:
->>    ....
->>      description:
->>        An array of physical data lane indexes. Position of an entry determines
->>        the logical lane number, while the value of an entry indicates physical
->>        lane, e.g. for 2-lane MIPI CSI-2 bus we could have "data-lanes = <1 2>;",
->>        assuming the clock lane is on hardware lane 0.
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>> index 21bfba6a1182..544cec93353a 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>> @@ -13,10 +13,9 @@
+>>   /plugin/;
+>>   
+>>   &camss {
+>> -	status = "okay";
+>> -
+>>   	vdda-phy-supply = <&vreg_l1e_0p88>;
+>>   	vdda-pll-supply = <&vreg_l3e_1p2>;
+>> +	status = "okay";
 > 
-> I interpret the last sentence as ">>if<< the clock lane is 0, then data lanes
-> start at 1. I'm not sure if the spec mandates that's the case though.
 > 
+> NAK, making such changes in multiple patches is absolute churn.
 
-Well, that's the absolute common practice for media devices, which I'd like
-to follow without a deviation from it or introducing a novation.
+While it may be a "churn" for you, the patch is perfectly valid
+and a NAK is not appropriate since Konrad asked this to be changed
+on the already merged original patchset.
 
-The dt bindings documentation of this S5K3M5 sensor device describes the value
-of the optional data-lanes property accordingly:
+While you're right we should group such changes, it happens that
+he sm8650 files already have an unified and clean style, and it's
+not a churn to keep the style unified.
 
-https://lore.kernel.org/linux-media/20251203040241.71018-2-vladimir.zapolskiy@linaro.org/
+Neil
 
-So, I belive, this change under review should be fine as is.
+> 
+> Best regards,
+> Krzysztof
 
--- 
-Best wishes,
-Vladimir
 
