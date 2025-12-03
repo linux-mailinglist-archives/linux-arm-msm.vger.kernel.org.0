@@ -1,151 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-84233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F374C9F322
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 14:54:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F229AC9F39A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 15:03:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 245F3348763
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 13:54:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8829C3A1973
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 14:03:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A532FBDE4;
-	Wed,  3 Dec 2025 13:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE9A82F5A03;
+	Wed,  3 Dec 2025 14:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKAty9kX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ddu3/wC6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1F12FB963
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 13:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F532309AB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 14:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764770047; cv=none; b=J/CWdmoDxM96w+l1qVjRP3lUeqdYNcDrIHUyraZnnoo1fwF81YFhEGMaE2+n30L4dhKKN/LB4qNHkfopIA1/WQikhK+3K7ptySKCmBl2zO59o12XyxbRbrfMCN80xlrz73P4pawNBpeBG+kbNOxJoNEwxrdeoN6cYzJogiWVOpU=
+	t=1764770612; cv=none; b=a03cpBjYrPRi4pN3IxYN7P8TF28WM41Y2AT8mvHDCC0q7jd9Xj7o1J5193z/xePJ2DyHsKVtpLgxrwZgEd98M8Qv2URTcHcwzHRXZNzKLLt79/Zyq49QS9LnKFmSSiRX9FHjGRb639jBdIaO7i4p9bbqZznk9+ItY7VK1DcgW5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764770047; c=relaxed/simple;
-	bh=DF6G/XFdIfJQ7qeQs0VYU3rAkTrUx9BZ15KmoHCPoLI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzNMcIa0yxn3G147TXr04vJwl+F1+RKL9/37c6+74UyXhjy6tJHbG7Q1WOSdBt78nI47m2ibWikARXhDgp6KxYBKQepKn0x0RmuRPSN2lLIKhvdO+eFKgR4Lj4ZxwsNENJScb3WDbZGBwPaXLC+qtN8Rr0LcYUpWGOkQ2RaTWR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKAty9kX; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-477aa218f20so47310925e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 05:54:05 -0800 (PST)
+	s=arc-20240116; t=1764770612; c=relaxed/simple;
+	bh=vqilaDFq7QMfW8MkOVgEv4SUxZeaRzQQ78fl47zNIKM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LYCtHndjGlxlHCVGagXckHlD9dcrJoJZlG8RduJsdamO+NQlxtJO54YNkhH1mbUXFgHXfgcdsOxoXAl47ttw5FpZ/0HOwK+vbcJXGgZwODjhqISpiieUqRprNxoaoEgcPMFcgHbPL1Z5ulmGaFvXp3Q+Zz5AYKSDkxoLl26gP/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ddu3/wC6; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37a5a3f6bc2so6901001fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 06:03:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764770044; x=1765374844; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1764770608; x=1765375408; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kU5E10zMYIkw7ZF/4aNGAYwgRL3UWcgkSyY4TJegpo0=;
-        b=jKAty9kXCw7FtGhUxU6i/YkBqAtihXDoZc+bYNU4BDccya2pAg/i6TkoOpSZzOdK3F
-         OF1ufFJl8uWYHedeIAwt0s7v/1uYizz5tUutcK7fHpwhNzAzqkBFJg+qs2NU7wQvm3pz
-         bn79LnenpiHDnUpnch270XbmBuFzdUa4TAeqJBHXQpr+8t2IzUOCKhniOUkg3HuoThqH
-         NEFatmw32+GrbfrkYq5Ew83bFM9obnTIPOqv2CGL4FQY4pqoTmCau63M8ZX0RYvPEeSz
-         0N68W7yInOPlJ9iwtTTIIT03zfOYO8p0Bb585d6asxYjuUqjSxzFuONFzdD7MgH9JvFH
-         Z8eA==
+        bh=xaodiixH7QwMZ6cHB6pQiSSb74/RAsiv51LwJjSi49k=;
+        b=Ddu3/wC6y4oEy4W8gAPnXiPLBdd+JQsQ1p3v8ZRrc1VYjEnHd7ED6+oMNHNjJYpMMd
+         hfBbxFZSVqr+2fw1JlB8ZubbbeggMts7qtISLCdD7Q0Nogb4li22Jq7pBQ+TikzxzZ1M
+         Ryqk7FAw1+2XBDw7343WFga5avlYaQXXJt09a/+Qd2DGNIiJjD+DnWca3Wsseao0ENj3
+         XVs3D9u7JNzb89bH3v5zLqebQGf6CA7z2CcfPYANqrfHPEWRryW8jZUYAi4zpTm7hF4C
+         yEJ4LNrYPMjmJN1Nw4YgnrnD0sGi+TwHIHuaE39hzrtAff+9IedJnGeA0c+GpDyd+GVD
+         1gzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764770044; x=1765374844;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kU5E10zMYIkw7ZF/4aNGAYwgRL3UWcgkSyY4TJegpo0=;
-        b=uBsZqkEaTA2gJ9HkO3lX6YtMNdS5Nj33y9sWLMJYLv7ZoQOOrENJ3p07J2xr+IIsTx
-         NilMaKEZ3aRaIKfda1WzrStLpVV9bdLNCcpK+K8vOqr8oo2L3pNgnOty26UKGExG4NJs
-         AE00WxLXqV+ERsl360wqMOmOMhUIqvv18Xw7fooWywoGPPCL/qLBGquJMMm/aDkT3Ha6
-         xQPxzUhbGN05SJzpETTYAikzz+g9eyxfBgFd2yqm7mF+dQ2duyIffHfUysNqg9hZjy6M
-         8RfKe8t0sny1S5JX6KW6MQGGr/eCZk+M0YRKB0WfcCP2hrtdnZ4Qn8A8RXt3uJUfkFE7
-         YCmg==
-X-Gm-Message-State: AOJu0YyGEp1i2OppmkUQS4if5Expljq2GySHyPV+jnKWxCaVwervJmzH
-	RGGDIvWov8pQP/XwSMHAsRe2MEILsCrvY6Rh0G/EnSdsy/sAsBthMiaU
-X-Gm-Gg: ASbGncvl8SJAG3hE5K2yuWk490rOQZjQfoy+86SfndW/E8KLprFy+VJEw3FWl9aPyZ8
-	y718orlcT91kJZ/nEvmb8taoqIR6Gdmvq5/CWsBQksusy8S4k2HVvRaOHwDPh8ylJddRXMRw1pQ
-	6bhRuHwo5iIjx8qaudBfst8Wq9dLvJhKC5774AXmi3s0ldI5LTN7YI1BRu+B62K9i5DRN3flc6A
-	Y5fStwWaZLEUzWRLlyY4QFpFARLlLXx5q+gvS5aZVZ73mPFmzBDEIl9BcVeV2EqpjNksRzMK0pG
-	9kNmNGkFAWSLyCmTFrJxsKiSkbV3A3OUVMeyw5AZSnrmpnOeZMNmnqUBCMuIvsLZQu0JOI4NekK
-	CJtsroA0QcMsRfNKrDL2XE/zaoKwLATe8ayOM5GD83tmZeYXGB+NuzkuH4JejlxU7m245HZLLe7
-	51MHnZb99DFp867d2XtqGMOOLlo6HL2IpMD9S/tNwtuP4xlQb4/w0B3ga7AV4oaueELX7YkU4as
-	m86y/CQ2coiCHOfdhbjw/wgALEN2mK3WtitYdNuQw==
-X-Google-Smtp-Source: AGHT+IFXgqjYg+s9C0ZBpSRfYz1JGeFjdbj2Fq/FubajeWelCOReDZbc8uwYFRx72hU/FuPHbhayig==
-X-Received: by 2002:a05:600c:524d:b0:477:333a:f71f with SMTP id 5b1f17b1804b1-4792af30ea0mr22550265e9.17.1764770043606;
-        Wed, 03 Dec 2025 05:54:03 -0800 (PST)
-Received: from labdl-itc-sw06.tmt.telital.com ([2a01:7d0:4800:a:8eec:4bff:febd:98b9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1ca8e00fsm40433575f8f.34.2025.12.03.05.54.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Dec 2025 05:54:03 -0800 (PST)
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
-To: stable@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	mhi@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Fabio Porcedda <fabio.porcedda@gmail.com>
-Subject: [PATCH 6.12 2/2] bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
-Date: Wed,  3 Dec 2025 14:53:53 +0100
-Message-ID: <5091bf715f9ecf449b270af23352be15e4560df7.1764769310.git.fabio.porcedda@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1764769310.git.fabio.porcedda@gmail.com>
-References: <cover.1764769310.git.fabio.porcedda@gmail.com>
+        d=1e100.net; s=20230601; t=1764770608; x=1765375408;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xaodiixH7QwMZ6cHB6pQiSSb74/RAsiv51LwJjSi49k=;
+        b=aVjS+uJyKioejKdxIDV7eYup2CCDP6YoFArhwGtwGU4Wvy3KDv1aYP1Wgwwenmh/6f
+         jJwSK1fxEz+PDhiBLyLAjcKpNdzvZda+LOd/0lVjNADXDY1f2eNsFToZU2O0Ts9jFVy3
+         OunYEy2jiERg2/1yz/FJhZRnFrC2dGZUci1MZ0a07SCuzA6mWw7GnGjvwlpeFv2QJF/Y
+         M3Z6CCLWkxLJ0EFoRW89jsmf/4XfkpEZFjfkjY/xkJOI7XwN7ms0tSfeNNzaq94CRnVm
+         FzDR7wV2Wbpor5UfJNCXaNn/sFnlYJnVwhBBsq2711PY5BYMZqkd/G7N04hCsjEVMDSg
+         ZMbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU802fbbqllNRB/EzyxOLxpnkCp3Mgx+SXjNx68tajBIg6QGwNpyAAIww7vG++KsEBwao5/y30+TOE2mFY3@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAOYxrPiUuY5ft2RDeLU6So9QGAoJORLHfQ4pVoxNAWPBYFbgb
+	RHcWxX2f4PO28QmD/NiiKQILMrvc8xKI9H5EqrbAWwv2f5vmxXGgwnYd27v+uF4YbpU=
+X-Gm-Gg: ASbGncuauwUDZCF1FzgekojJ6kuQcyIhNGDg3tlZ4+A8uJLNAhpUd5fEde/tMZtJEXr
+	EJ4u0zSKxa2s80p7NEGQnpGETNsqetmkJ9Wa88Y0cENKGGLx0EnE/DOr2lej6gDxCjdBsH9nVAy
+	b1kQF05QukmFqtEB78Q7oo7EUZmGg5CX5UKPXLKUv3vSSuQooBJ0a61/N6IDq3e1ySrrbg4nMDk
+	vbne+GynAY50alZlR/p0ARGroj07ljFHVhBVRazc6AQaHq+p1tnJMEhV0dAUthh3nyKoDKD8zx9
+	Szh8R90J6SYCGU+lhzntlDoCAPovnePJ/vBGOT/mgWEcG5H2DyQv+lRwBTAb92HGOmW0U0OPekS
+	kVrPxVIXXfVpvs0Is/5w5EJ2zTXH/TxqzuduvVNCSBfQpCE4kZpaXFBIOPpGiPn3mIIQj7Ur8HQ
+	fcJY5OarAmuDfAVhHkfKfKp5tDdzgtiPY3TiYWa5McM0n5zecJTjKEP0IjwWRN7kbVSw==
+X-Google-Smtp-Source: AGHT+IHtc5YwnEGlAelBln5DgnT0yCYtU5cwvHJhsh5XAEa37+7mKlypE9Zho7J98x0QunVjtiXWtw==
+X-Received: by 2002:a2e:8a9c:0:b0:37a:4fb0:69a6 with SMTP id 38308e7fff4ca-37e66c0ad62mr3653081fa.2.1764770607481;
+        Wed, 03 Dec 2025 06:03:27 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37d2369035dsm43222831fa.6.2025.12.03.06.03.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Dec 2025 06:03:27 -0800 (PST)
+Message-ID: <3e1d1dc4-7b94-47df-b4bd-f6ce4d7842dd@linaro.org>
+Date: Wed, 3 Dec 2025 16:03:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Add camera clock controller
+To: Taniya Das <taniya.das@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251203-sm8750_camcc_dt-v1-1-418e65e0e4e8@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251203-sm8750_camcc_dt-v1-1-418e65e0e4e8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Daniele Palmas <dnlplm@gmail.com>
+Hi Taniya.
 
-commit 00559ba3ae740e7544b48fb509b2b97f56615892 upstream.
+On 12/3/25 12:32, Taniya Das wrote:
+> Add the camcc clock controller device node for SM8750 SoC.
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8750.dtsi | 35 ++++++++++++++++++++++++++++++++++-
+>   1 file changed, 34 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> index 3f0b57f428bbb388521c27d9ae96bbef3d62b2e2..f09cec6358806f21827e68e365b492e563c0689a 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
+> @@ -2,7 +2,8 @@
+>   /*
+>    * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+> -
+> +#include <dt-bindings/clock/qcom,sm8750-cambistmclkcc.h>
+> +#include <dt-bindings/clock/qcom,sm8750-camcc.h>
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+>   #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
 
-Add SDX72 based modem Telit FN990B40, reusing FN920C04 configuration.
+Please keep the list of included headers ordered.
 
-01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
-        Subsystem: Device 1c5d:201a
+> @@ -2046,6 +2047,22 @@ aggre2_noc: interconnect@1700000 {
+>   			clocks = <&rpmhcc RPMH_IPA_CLK>;
+>   		};
+>   
+> +		cambistmclkcc: clock-controller@1760000 {
+> +		       compatible = "qcom,sm8750-cambistmclkcc";
+> +		       reg = <0x0 0x1760000 0x0 0x6000>;
+> +		       clocks = <&gcc GCC_CAM_BIST_MCLK_AHB_CLK> ,
+> +				<&bi_tcxo_div2>,
+> +				<&bi_tcxo_ao_div2>,
+> +				<&sleep_clk>;
+> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
+> +					<&rpmhpd RPMHPD_MX>;
+> +			required-opps = <&rpmhpd_opp_low_svs>,
+> +					<&rpmhpd_opp_low_svs>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-[mani: added sdx72 in the comment to identify the chipset]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20250716091836.999364-1-dnlplm@gmail.com
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
----
- drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+I've briefly checked the recently sent driver, and I didn't find that this
+clock controller serves as a reset controller or a power domain controller.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index b8520ca40e8c..abf070760d68 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -734,6 +734,16 @@ static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
- 	.edl_trigger = true,
- };
- 
-+static const struct mhi_pci_dev_info mhi_telit_fn990b40_info = {
-+	.name = "telit-fn990b40",
-+	.config = &modem_telit_fn920c04_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+	.mru_default = 32768,
-+	.edl_trigger = true,
-+};
-+
- static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
- 	.name = "netprisma-lcur57",
- 	.edl = "qcom/prog_firehose_sdx24.mbn",
-@@ -779,6 +789,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-+	/* Telit FN990B40 (sdx72) */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
+And if so, these properties shall be obviously removed.
+
+> +		};
+> +
+>   		mmss_noc: interconnect@1780000 {
+>   			compatible = "qcom,sm8750-mmss-noc";
+>   			reg = <0x0 0x01780000 0x0 0x5b800>;
+> @@ -2740,6 +2757,22 @@ usb_dwc3_ss: endpoint {
+>   			};
+>   		};
+>   
+> +		camcc: clock-controller@ade0000 {
+> +			compatible = "qcom,sm8750-camcc";
+> +			reg = <0x0 0xade0000 0x0 0x20000>;
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +				 <&bi_tcxo_div2>,
+> +				 <&bi_tcxo_ao_div2>,
+> +				 <&sleep_clk>;
+> +			power-domains = <&rpmhpd RPMHPD_MMCX>,
+> +					<&rpmhpd RPMHPD_MXC>;
+> +			required-opps = <&rpmhpd_opp_low_svs>,
+> +					<&rpmhpd_opp_low_svs>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>   		pdc: interrupt-controller@b220000 {
+>   			compatible = "qcom,sm8750-pdc", "qcom,pdc";
+>   			reg = <0x0 0x0b220000 0x0 0x10000>, <0x0 0x164400f0 0x0 0x64>;
+> 
+
 -- 
-2.52.0
-
+Best wishes,
+Vladimir
 
