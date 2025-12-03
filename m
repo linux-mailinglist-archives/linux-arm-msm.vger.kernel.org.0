@@ -1,54 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-84201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A93EC9EC23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 11:45:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3434C9EC4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 11:52:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 32F8C349FBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 10:45:21 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 63B2234AA25
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 10:52:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29C892F0C6B;
-	Wed,  3 Dec 2025 10:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49C242ED858;
+	Wed,  3 Dec 2025 10:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="gvsGqrq4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="peNi5Vc5";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DyQhdCIz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79B2F0690;
-	Wed,  3 Dec 2025 10:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B573B2DF13B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 10:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764758712; cv=none; b=HLGv/TmjI8SeWZRWzgjKra+URpofA2x4AAogmK1DjclfPGpi4NKotxdnS/ocNR7Gm9uDIxB7F3m2X9XtE8Yu4GPVn5DdxT+kvPGMTVRsHPFDV+1jma2BUF7GAhnP8+d+Bhof8sHyo9v0YJ8RnM58p4nhsMhN2gkmpDP7Ndr9MXY=
+	t=1764759144; cv=none; b=tk0/wpAgHB87VlQZVSsixKPgXKZ1jNTVJaE/Scb6lgv9jX1qgER/WVBLwgGVi46qjWAcLlHW4ZxJEOleeeDrXvtIBkAlTybavd5yeQAYBNsyWw2fpp/7gb+bg8lXuL+55Kz4JVkzc/B9Txyr7x8L+60akT6lnktjG+QGYDOkALk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764758712; c=relaxed/simple;
-	bh=6s+pcjrE0NotfBkJGQXYpCHD8GxTYctqoLsgNuvkf1E=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=owMdPFWcG1Aaqigur9I2YUS9wXrIS7XKZCUSluqojfCbWyrh7hv252zPhis0PpzTdr+vDaWV6tAsOojpOpTEjyON2pRSOD1SK8Dl26Kjn7xfVZMba0p6xMIgMGP9NquvSKddpvs/TD6cDDTPKQf5J8oNQdTA3qrKwof5XX4kSck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=gvsGqrq4; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 997865340E0C;
-	Wed, 03 Dec 2025 11:45:06 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764758706;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=CepgQPOvMfMw1D/IUCNpJz0Sal8k62OPjmjZqkX1G5g=;
-	b=gvsGqrq46mv6u2Juop5Z0349xvzSaNBemhqLPmVzgEB9yxC4i3Igdeh/S7JlWA04h2vaed
-	eH8/kguPmSqGBen7dkiu0bbv047C3o+1CPYRT0DBWwBhHiKOQMOdBjW8nn3vITh7DVWHG4
-	au8Ump2eGjFEHTJIY0Ky48o7wpLGlEs=
-Message-ID: <88d96898-3c83-438d-89e9-4bb2bd0dd98b@ixit.cz>
-Date: Wed, 3 Dec 2025 11:45:06 +0100
+	s=arc-20240116; t=1764759144; c=relaxed/simple;
+	bh=ztTdAKd1Kpr5YomVO8DRG2y5O30QjhJMIPeeeKWJX+I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cL5gy/XyFKdRfAoSis3bqKTm2yo2Wr31bwy54fctTHu3HppUwPnuxA+mCmgNoEVDwK41bzJ9qzqUe5zMF7iTnJuOlqZb1yAkrHjz2t+eUl1C/a4sgPa9frELTTY2G5zM3k3UvjgZHzSqlC3h92RX0Pt+zobA405n7AnvVyLZdgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=peNi5Vc5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DyQhdCIz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B3AhtJl3192118
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Dec 2025 10:52:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5vZ1VnRCXWcgnHJPtqVaYUCxuUng/cpM+q7cKSjAg/c=; b=peNi5Vc5bggo6gKA
+	DfST/T/TqhUlTAs+tCcAEOr7UIjv+nKXP8d3roSYVB6yfJzpJqSnZuvTA1VV5QFS
+	oqfUU0SEduGvZPP1ysSLTp249x02Y7gRwYF3zKwso3uBT/SAoTFrJgaFtEgHakEK
+	Sa0d6LCW//Ua3Yqlt8nPSJudi4NoCY+MqLjB88JDi7hgy6KwVg5wDcXqGOQZi4Qm
+	EXYXykqBYLY8RPI1sDffV6pioCaZCwh5ZPWSQT/50LxfVYoeaRgTwd6rUxGH/cbK
+	xboiRYqJZXiE0pZwm/nuXPiMgs3u4bfUEje03EK9b3dulvp5657JQByPkF0LUaFg
+	ICEUAw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4at3qjk22k-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 10:52:21 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-8823e9c63c6so19479626d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 02:52:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764759141; x=1765363941; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5vZ1VnRCXWcgnHJPtqVaYUCxuUng/cpM+q7cKSjAg/c=;
+        b=DyQhdCIzt/jL6g/UtzxdDLHRgTAIdZhT/FvvnhPdYRZUWMtYG9l5Z+WLtP77q9C9Ir
+         p8z8uDeUTAWwTYhD2lf7lBWJbIraK/5x0Dj2lmy2fBWNthqPKCqHf3GmzIVoSiR9D3aZ
+         RelAcFPXpB/UL5AAP9DrPhzsPpsVBOl96Oad9ALpbpKcn/jIzoqSKsdYl7KSI3dvwPkq
+         DXJFM2uY0LqPpKDwvVCEamP41Sk0LjfO9NzVsotumDZJ2o96kSp9H49jg2Ts1RR8gFYj
+         qgiX1R8sovgkH2KglE0AjZK90TnlvelhdzpfH4Crq1F4WZd3mFNk7ngcf0mUA7LJajj7
+         rR0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764759141; x=1765363941;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5vZ1VnRCXWcgnHJPtqVaYUCxuUng/cpM+q7cKSjAg/c=;
+        b=ny0DpPuDVqpJU44Nj+5ohsHhBmYjd6KCr2vaPP3CLXigNo3YD5mBxZiPvKzlcaaVu/
+         OY0ZQiq9wQnIBsrqUlcmjcJzXgEP1/JnLBR3HXxDVUOw9pgMjrySRCSiGVjfVfW+KZ2h
+         onWCTpRFZJNdyIauPoiK3jTavaavszY0ItcNkMNuX2flNzbtj7melIxu8CMF0tgnQK6Y
+         MxFHvYNxeYzKHNPpE9XlhnROLN+6L/zg4VJlK88PCLySNZ1btZHnaZ/hyPha1Euu0FEF
+         RcSDWGUuZRnwN+NbpHagsagvEZ2NwwsqEI6jJbaOlpVSzRSxbitUDt27xZl76A1fv4vt
+         Zypg==
+X-Gm-Message-State: AOJu0Yya+98TdB80/ZPiViP9KHYFFOZIx4j7992AVzCF+oJxk3BfkWDH
+	T2JXvd5Am7Cpq0J2kfH2+DsZfwdbqjapk2Mf+A9NMwdNYQ+dkJeHx9/L/Ki8Et2eGCKbBelyHHV
+	s+zUORuIs2eT4SR4uBTU+gvIc2/zLWYpQIH8dBDeop+xDEgU9vaS1E47wzVcbiJoJUQYR
+X-Gm-Gg: ASbGncu5bevWF+oPLflET+QwMSboFKB75QAgkNPfVT350oX1jtERNjBO9MfGqyqFmQv
+	TBkGovwVSr0o9x0Lzusx+m3ZfY+siUxAoyF8CkxfQZCj99ITt3bHtVeHDFu2U+T+2vupSVuznpS
+	OAqBS6FQf/OvIwC/6MCILPxpetnnXUG7+riChtucnzooff+M6PSXkMTTd5NQCqvfQkVNN/EaELn
+	UVcoidm+6iJxjtw+Vi5Vg9mxmI26iXElPYll8uylOEgkSnGJ533zYLG4uuiQFF6DdFVgVvNZY2w
+	wn7Z5VlKhJ0po01XQHFwOo9hHfwHZEN082e7qswDpmbBihjJKT/ZMalyLBH+MDlumforlZt6L3f
+	HwPN9Mbhlb9X364DXkWyKsjETJKiFuy8NVojAx1EtVxyWpyzzWFPPk0lOusD+NR7eSg==
+X-Received: by 2002:ac8:5aca:0:b0:4ed:6862:cdd0 with SMTP id d75a77b69052e-4f01b3c6537mr7755941cf.10.1764759140844;
+        Wed, 03 Dec 2025 02:52:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdWUGIoNIL31WiMD6DpVjL8veFOOnMngyL++n2fVxw+jql4LOvHqu1/kBYwXN7VlvemkiO8g==
+X-Received: by 2002:ac8:5aca:0:b0:4ed:6862:cdd0 with SMTP id d75a77b69052e-4f01b3c6537mr7755661cf.10.1764759140401;
+        Wed, 03 Dec 2025 02:52:20 -0800 (PST)
+Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b76f59e8612sm1706205766b.52.2025.12.03.02.52.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Dec 2025 02:52:19 -0800 (PST)
+Message-ID: <8d769fb3-cd2a-492c-8aa3-064ebbc5eee4@oss.qualcomm.com>
+Date: Wed, 3 Dec 2025 11:52:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,141 +103,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/12] arm64: dts: qcom: sdm845-lg-common: remove
- framebuffer reserved-mem
-From: David Heidelberg <david@ixit.cz>
-To: Paul Sajna <sajattack@postmarketos.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- Amir Dahan <system64fumo@protonmail.com>,
- Christopher Brown <crispybrown@gmail.com>
-References: <20251125-judyln-dts-v4-0-a5a60500b267@postmarketos.org>
- <20251125-judyln-dts-v4-12-a5a60500b267@postmarketos.org>
- <adcac270-3668-4b17-b430-d67ef311dd7c@oss.qualcomm.com>
- <803c48742755394d6eabc34ac73a42b36615cc01@postmarketos.org>
- <1d56eccf-1978-43c2-afcf-03ca88acc0e2@oss.qualcomm.com>
- <164f88c182ff8e17a0d544effc7d64cdd73cd4eb@postmarketos.org>
- <de30bfad-a28f-4cc0-9099-11877428070e@ixit.cz>
+Subject: Re: [PATCH] Revert "clk: qcom: cpu-8996: simplify the
+ cpu_clk_notifier_cb"
+To: Christopher Obbard <christopher.obbard@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251202-wip-obbardc-qcom-msm8096-clk-cpu-fix-downclock-v1-1-90208427e6b1@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <de30bfad-a28f-4cc0-9099-11877428070e@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251202-wip-obbardc-qcom-msm8096-clk-cpu-fix-downclock-v1-1-90208427e6b1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDA4NiBTYWx0ZWRfX1bRwOcZ6yrqo
+ 4gAnkNdLxa/j6prPc6SAGkCs6/Xlc6iKb/42VspMc7QzxAO1ruOofB2L0lI8qpc2ZzNCdissOno
+ 41J0vYa6f57EexO1TR8bmcC4NYYIeRyjlJgHQMdxbqiFEERTlX6A0fV56gnhZiJSunqOrDYqbX1
+ NO9Vvw7L1ZAFMO0gbhZqlinTht85GtNrBB0dqZF8rS9ziD6Fz7f/vK129EeYY8h0mvkH0Pj9Ha4
+ nRyAhaZ27AVnzMIQD1316Hn9p+4ag8nbGMSJ1DvHjnJX2Vnf3AKG+VaXrPQNaNdliwOpQM5LiRv
+ 4bao9v6WhmuuDQQRgnMfyyiHQoaTd5JuLGytE3W0o45ToB1xWpnIJUAybsCz98gUEW5n5JpKn+r
+ Xbsdk9+O080fsi69uQ9rjOVYvdLyVQ==
+X-Proofpoint-ORIG-GUID: 2jB1v95N4s_nlNjSRjyrMCMsX-TRgQhP
+X-Authority-Analysis: v=2.4 cv=QohTHFyd c=1 sm=1 tr=0 ts=69301665 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=sfOm8-O8AAAA:8 a=WelLum9FaPyErNbxTGEA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22 a=TvTJqdcANYtsRzA46cdi:22
+X-Proofpoint-GUID: 2jB1v95N4s_nlNjSRjyrMCMsX-TRgQhP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-02_01,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ bulkscore=0 clxscore=1015 priorityscore=1501 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030086
 
-On 03/12/2025 11:37, David Heidelberg wrote:
-> On 03/12/2025 09:42, Paul Sajna wrote:
->> December 2, 2025 at 10:34 AM, "Konrad Dybcio" 
->> <konrad.dybcio@oss.qualcomm.com mailto:konrad.dybcio@oss.qualcomm.com? 
->> to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > 
->> wrote:
->>
->>
->>>
->>> On 12/2/25 5:41 AM, Paul Sajna wrote:
->>>
->>>>
->>>> December 1, 2025 at 12:41 PM, "Konrad Dybcio" 
->>>> <konrad.dybcio@oss.qualcomm.com 
->>>> mailto:konrad.dybcio@oss.qualcomm.com? 
->>>> to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > 
->>>> wrote:
->>>>
->>>>>
->>>>> On 11/25/25 9:12 AM, Paul Sajna wrote:
->>>>>
->>>>   It causes this warning
->>>>   [ 0.000000] OF: reserved mem: OVERLAP DETECTED!
->>>>   framebuffer@9d400000 mailto:framebuffer@9d400000
->>>>   (0x000000009d400000--0x000000009f800000) overlaps with
->>>>   memory@9d400000 mailto:memory@9d400000 
->>>> (0x000000009d400000--0x000000009f800000)
->>>>   Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
->>>>   ---
->>>>
->>>>>
->>>>> It's defined for both devices that include this dtsi.. perhaps you
->>>>>   could remove it from there
->>>>>
->>>>>   Konrad
->>>>>
->>>>   I don't have a judyp to test with and prefer to limit scope.
->>>>
->>> This is a mechanical change
->>>
->>> Konrad
->>>
->>
->> Sorry, I tried to have a look at what you meant but didn't quite 
->> understand. In this patch I changed the dtsi that is included by both 
->> already. I don't see any other reserved-mem nodes in judyp. Do you 
->> mean I should remove the framebuffer from judyp? I don't think that's 
->> wise since a panel driver isn't added as far as I know.
+On 12/2/25 10:24 PM, Christopher Obbard wrote:
+> This reverts commit b3b274bc9d3d7307308aeaf75f70731765ac999a.
 > 
-> I think this warning likely comes from sdm845-mainline repo, as it has 
-> extra patches, which trying to abstract framebuffer into sdm845.dtsi, 
-> where it likely conflicts, have you tried against clean 6.18-rcX or next?
-
-... or sdm845-next repo [1]?
-
-I sent the patches moving framebuffer from sdm845-mainline repository as 
-RFC [2], but so far it's not clear to me if these should go in or not.
-
-David
-
-[1] https://gitlab.com/sdm845/sdm845-next/-/commits/sdm845-next
-[2] 
-https://lore.kernel.org/all/20251117-commonize-framebuffer-v1-1-e4c099b383c9@ixit.cz/
-
+> On the DragonBoard 820c (which uses APQ8096/MSM8996) this change causes
+> the CPUs to downclock to roughly half speed under sustained load. The
+> regression is visible both during boot and when running CPU stress
+> workloads such as stress-ng: the CPUs initially ramp up to the expected
+> frequency, then drop to a lower OPP even though the system is clearly
+> CPU-bound.
 > 
-> David
+> Bisecting points to this commit and reverting it restores the expected
+> behaviour on the DragonBoard 820c - the CPUs track the cpufreq policy
+> and run at full performance under load.
+> 
+> The exact interaction with the ACD is not yet fully understood and we
+> would like to keep ACD in use to avoid possible SoC reliability issues.
+> Until we have a better fix that preserves ACD while avoiding this
+> performance regression, revert the bisected patch to restore the
+> previous behaviour.
+> 
+> Fixes: b3b274bc9d3d ("clk: qcom: cpu-8996: simplify the cpu_clk_notifier_cb")
+> Cc: stable@vger.kernel.org # v6.3+
+> Link: https://lore.kernel.org/linux-arm-msm/20230113120544.59320-8-dmitry.baryshkov@linaro.org/
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+> ---
 
--- 
-David Heidelberg
+It may be that your board really has a MSM/APQ8x96*SG* which is another
+name for the PRO SKU, which happens to have a 2 times wider divider, try
 
+`cat /sys/bus/soc/devices/soc0/soc_id`
+
+see:
+
+https://lore.kernel.org/linux-arm-msm/20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com/
+
+https://lore.kernel.org/linux-arm-msm/kXrAkKv7RZct22X0wivLWqOAiLKpFuDCAY1KY_KSx649kn7BNmJ2IFFMrsYPAyDlcxIjbQCQ1PHb5KaNFawm9IGIXUbch-DI9OI_l73BAaM=@protonmail.com/
+
+Konrad
 
