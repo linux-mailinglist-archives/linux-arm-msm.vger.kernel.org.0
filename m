@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-84161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D456FC9E3A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 09:32:14 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 650CCC9E3AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 09:32:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A14883A177B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 08:32:09 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id D347E34A4E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 08:32:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AB822D3731;
-	Wed,  3 Dec 2025 08:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A0624DD09;
+	Wed,  3 Dec 2025 08:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L79DqlIZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f7tCgxdC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5A824DD09;
-	Wed,  3 Dec 2025 08:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E65F513;
+	Wed,  3 Dec 2025 08:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764750728; cv=none; b=Wln+kIdhc32iLoujPA2pyfdhCpWapEHuSvAZpACmHFHT3EGWbDPF1sbtWxUt/ciXatrSbG4/41a4Uu591mh7fzwCHHtEh9kbN6eZf5kuMfu6kQaLnwAiR+1cW4xi7RSTrSC6oKCEoZDJSdzJTwzFpqYnO0Rf2bGhNYuqVQGj9d0=
+	t=1764750772; cv=none; b=OnwKJkwiLu/2BMqNA9fLhHJABjECyka2yeN9PzbGTQMr14EtM+T+rfWbUYHOxTXUHqgiG8fhRbkrbMbfH+L28/4RuxXXpW+et/vff+Wl1YFR27PIkD6kU5fUopUQXOHJIyg1gSe4DzuAWS+2SqgsAZweHOG4+uGdoTsLCRVrNLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764750728; c=relaxed/simple;
-	bh=x3wRsMheoBQItNQS1rXnwJ/O8kGwx+VQhjT1EnnHT5Y=;
+	s=arc-20240116; t=1764750772; c=relaxed/simple;
+	bh=4LG/B/oGvM8BL2rSoNqngTWi8hMRXnQzx0QKmBDxd3c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AEic716LejUBzsmoxgJsLyy2KpiOzd1dhowl59f8g2p1ivVbdrKXN2LqMIQpuQ7AGJ5MoW8jp0MZlOHFUIMstTUy6LewtIC36zpCUovTVE2p/fLP3zQ2o5Y9EEDEcsAzMfXagN7eJXk/xvj5xm32VP7Szw3aLOqwpzXjYQXEYfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L79DqlIZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD340C4CEFB;
-	Wed,  3 Dec 2025 08:32:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UZIzPEUSmmuY+Dnn/9YRcsrF01MPEPO+7LGlFHM2zfRsaHPojD+9D93/LT9Hs+3AmnW9GBmAMg8J8Oj8KCpCG0HuIKaIka0PxTuLkcj/zhXnLwgouQCIAY4e3SwBC2M8WPRVvLHQumOeBLKMeEqRhnh5WH9TjR3aoGzwr2CuCoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f7tCgxdC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0499DC4CEFB;
+	Wed,  3 Dec 2025 08:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764750727;
-	bh=x3wRsMheoBQItNQS1rXnwJ/O8kGwx+VQhjT1EnnHT5Y=;
+	s=k20201202; t=1764750770;
+	bh=4LG/B/oGvM8BL2rSoNqngTWi8hMRXnQzx0QKmBDxd3c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L79DqlIZ5J31TUeWWlrcxlBjkBRu9Db5w6GqgF7drHOk6xn1n+5G4ZUmo0F3GUsHB
-	 F8HiY+JKi6/8B5tRFtwaMTm8qne6012ythogpDv6p8rRefMNRZeD1nTGbuXp71xklh
-	 44jtp5Q4twDdjC+WzoqUDEwmEod7+OeD+JK9B50PeZpS9qYCszXu7oTd0T27QMMuVv
-	 rFVu6AajFgQTQE3Ul946Mqlh/3dG0+3MAw7vgxUWgbe4NtikJmVdFEqynzvLuarBRA
-	 kg0fjLcheQE3sqVMNMQwnLoCiSUeyFc8xfhJXJE4npuoi51xxBMZkS50js8YmlQ3hE
-	 PyBZeKsLcMY/g==
-Message-ID: <3f8e8e3d-fb38-4e17-8a55-a22ed9329a9a@kernel.org>
-Date: Wed, 3 Dec 2025 09:32:03 +0100
+	b=f7tCgxdCU7vzgl9f4mx9WTeIWQ5nqURBZt2PRz+xtwLTGht7/PNKpxGPYW4pBLgbN
+	 eN2QKx03XaxbMoCoWq5DzKb50S4w9bFEG+XEOqhGk+d4UmBr+xMdoCFOREyisXoz/q
+	 uZHbUzeZceVEidRPuSQj1MjMpxGnSoAQeHtxVPUCfrkkEPhQinbZmJIyl3vg2azzgs
+	 lcZjF2isSKGg2IRdjhXp1ysQmjQ20/7SlooUZrcBoFbXgme5jeo5z6vkwUjF59hUGf
+	 sc4WosgtnAbP3+6v5UPiq8eOMiXPvTZx7NBywfchDphCmtgV3KM6WKnK60kVxvLWJa
+	 FBtyt377QiW1Q==
+Message-ID: <4149ccd0-0583-4d7b-a37a-df899b3e15fb@kernel.org>
+Date: Wed, 3 Dec 2025 09:32:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8550-qrd: move camss status
- property to the end
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8550-hdk-rear-camera-card: move
+ camss status property
 To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
@@ -60,7 +60,7 @@ Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
  Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20251203040538.71119-1-vladimir.zapolskiy@linaro.org>
- <20251203040538.71119-4-vladimir.zapolskiy@linaro.org>
+ <20251203040538.71119-7-vladimir.zapolskiy@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,24 +106,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251203040538.71119-4-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251203040538.71119-7-vladimir.zapolskiy@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2025 05:05, Vladimir Zapolskiy wrote:
-> Conventionally status property is the last one in the list, move it there.
+> Conventionally status property of device tree nodes is the last one in
+> the list, move it there.
 > 
 > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 3 +--
+>  arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso | 3 +--
 >  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> index 48af6d114161..b3eb0836c408 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> @@ -717,10 +717,9 @@ vreg_l7n_2p96: ldo7 {
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+> index 21bfba6a1182..544cec93353a 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+> @@ -13,10 +13,9 @@
+>  /plugin/;
 >  
 >  &camss {
 > -	status = "okay";
@@ -132,9 +133,8 @@ On 03/12/2025 05:05, Vladimir Zapolskiy wrote:
 >  	vdda-pll-supply = <&vreg_l3e_1p2>;
 > +	status = "okay";
 
-Please do not do such changes node by node. Fix many or all devices here
-or none. But actually even fixing all should be postponed - we discussed
-this many times, first proper linter is needed.
+
+NAK, making such changes in multiple patches is absolute churn.
 
 Best regards,
 Krzysztof
