@@ -1,189 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-84254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF11ECA0A28
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 18:48:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1147CA0A48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 18:48:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D068434D739A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 17:27:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8AE2E331A795
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 17:27:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E92349B0E;
-	Wed,  3 Dec 2025 16:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2221A34F24B;
+	Wed,  3 Dec 2025 16:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QWKM9Sb9";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ak9V+Nek"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="UStW5R2x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE5234C816
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 16:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32C034BA4E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 16:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780221; cv=none; b=mMpObmMXs9/G9JkdrOVU9Km1n11Uhzck3a0X4HlI+rE6ImI7hb4Fpt0bMkrV1WLLkkeTlsYL5fsDDydyYpp4kk7zNTwHpVPN9J16OvwqEEWhYjFUyMlqwWKuXoQDU/JVkbEbT3PNQZaJSPJm9o8oCOAAp/uGY417EmjcsOdieLM=
+	t=1764780238; cv=none; b=FFkI92+x9k//1scF48zXlgd7QZcvElbPSUdD8XIHyyy+KmFoSgAyekjhBSzjOr7MSlT0SjWbkXWsgxIKfaPZP5h/6NKUKMSvkZ9iVSZof00vwx2rXFDv/Vk4osdVv+Imtm5dPniEMUfDpA8GSamfKoXvyAiLUhXqEPr0nq03sQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780221; c=relaxed/simple;
-	bh=lGY+bwFWa0G7uMZdE3/NlDOuH6eTpB50wtnppYa70kw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=M9NLDviRxKY2fSdcUj9XyfwNkHsQp7lgYFsWTQxca4R5XabDrA6ulK4TG5RAt/lGEVr0icF+OK4oLPLkzO4BvJPVHySwTOc2F+D/pqJc1AwMPrCvDJ9kV0PK12/h7GzI0Kdy8mnOU0Tf7D7tzUla5du/R6sntv2yaBCcCwiuGSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QWKM9Sb9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ak9V+Nek; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B3Fue0h2114191
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Dec 2025 16:43:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=OkP3IkZdmqRrIqFEguV664dO01uM95ibM60
-	hwSK6r+U=; b=QWKM9Sb93aDcNwf+t/3AB7i+bAeFtIgJBuljpb/YFH6CmHTSfGM
-	A+Mh7EGpvtFo659xF2SSUbXtI6BdkfG39CV8DLJRnEeyMVLXn6FFoqD9IzJfzjGV
-	vfN9b0ZiVNOpw54Glq2/BhPBckCoMsBTjYU2SpqCfIqaHFL/TYCYAjxzNckK6Qak
-	iILPlh68gfMjjF/wcdQk/q49d+25Y5wJjjlDO/NPKRYLBLfaH9f0LM06C3DLbLg+
-	3gfMFhV4Pg5J6SHtp9xYIQ49Zumr+BWXTWctPxn+bfGSqbEKBhNqi5x5ZSBFUfUg
-	rX7QLe/WpBG2XQtO1Fhf+8MgxRVQaE4Cr7A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4atjhphdcs-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 16:43:35 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b2657cfcdaso836499085a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 08:43:35 -0800 (PST)
+	s=arc-20240116; t=1764780238; c=relaxed/simple;
+	bh=IAArZcm2wSkF6VtcJYsSwPQFosqWc4J2GeZQUSxMWAM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XVttMnbOqi+gpJUgj/gVn48SAbqsWNWnMBBXlRd+TTFx2WSraAJtl4VQuD0Y202HIR7tuzuHl7xUUZYPu8fnIl0bpVuyKiqPdKNb+FoK7qarxAlp8AA670LAnXc6y2r2D00EX06NXNJqozWyGUKn7BmYhXaT8zaKkBjP2H7q9vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=UStW5R2x; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-641677916b5so5083918a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 08:43:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764780214; x=1765385014; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OkP3IkZdmqRrIqFEguV664dO01uM95ibM60hwSK6r+U=;
-        b=Ak9V+NekRtQGHzHqOzdhknmHv1+S2zE+37L+d47fWw607ltge9fMiYD7m9MWIYpzU/
-         FnMB5Y6+veLCBDBTe4D072nNFUdYPMyuGNOSpD2NrjjNJgWlLOTW5EeeZ9fGE/o+CKqF
-         gsfb6aQjacUP5aDj8cdXoTQjQOstyWJfkc2JIODy1x8oLUulDFd/nYyzHAtavBYG1mAZ
-         l/6og2wYCDx32GXae6C3maP7IEmFNsTedtdkhWnslFrBM/ofMglUs777+c/f0wthCKW5
-         GGGD9RqqHd1Xd03M0E0hS5d/AMVP48RuWsc3dQ6q8x5Sjgw5OmNrlbaJH/qNnSPXUQQQ
-         gWXg==
+        d=linux-foundation.org; s=google; t=1764780234; x=1765385034; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tre/rf8HRcrussbSV2D3pHxXOcQLeC/eEv+L6zskgMA=;
+        b=UStW5R2xZjcxJB/mvUjZu8DmPgdA1g+d8BzVrFXKBNfLOBXHWy1MmxwU9MrQrO2mn3
+         igx4IQsSXsjEc4CGpsPRM4tJ9lEss1x5c3TblSfkHUIm4g+xsx9ODAII4v6YOUhH9P/e
+         iAxvRcFFSXLWbe96fVdkemhq60MvDhzf7xoGw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764780214; x=1765385014;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1764780234; x=1765385034;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OkP3IkZdmqRrIqFEguV664dO01uM95ibM60hwSK6r+U=;
-        b=QiJqDHVgJYUXA0jlPtCuY1ePL5xCVkUmR3kIlJ07wLXb8hXtxl9JNSjPc+gS3fJK4L
-         MUkOL5V3Gy/Nn8ZXYPdME415VsLclfAzeLjyZarHYQ1FnOGulSfkFJT6qU/MCeUaTyXu
-         aXYBS8NebtFYp+EO+pNNxsFOBfft6WtfRI+RAjD9J7kn2uxDKI4wCcsIcdi2iBDciE7z
-         MzIv32TjHCP3KNGvXHqi6u2WGw+WnW8ouOU0rZ7KUr3wUir3jAmOVL2Dafx+sjN1BrG8
-         h2lP0h0CoGbIlB9PbO8cklEODATZQcMjRif4d90kje8WA+AH++JClEsPz2aUaARM502h
-         sOwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWviIF1szKGBZEPCK0qmaH9sQLsQyChE7mhmD2+b85Croa0XTknSCGJmR16d3hazHWmGJQxigpcsNTZuIZL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxm0AiM0r8foAl+eWHqqJhzp21FAMm2dYVogkO/a6nyEcx+oH+g
-	U7Mq2GYyzrCXoffyW/njKLl3HxGpSrmO2s32D+QxeFqcDgUoyGq6Oj9sPkvt61ZH3VnyzktVvYG
-	WeP62HR1OvglLl3Ds34PQHsjH3ev97cLZaQlJqXN1MHxnnqwsHjIROoj8B39/Q1FEn9LO
-X-Gm-Gg: ASbGncv0hOUesa+fiKJUlPbPTJ9HLIDKfxi9FqpV138IgYzFxjaH3KA/w4KRjZCDiXh
-	TSFxzjRs21PuWV3ry2+Oio5bPUmOIMKdHZlPLVZEOTpKojwKMfpl+U0vEMWOL3O6FmMTLggOsBx
-	D9eGFaCsGfK241d88pGEFjraLehARsxZMEQztGjJbUA6AWxbel7ax/Pjmsg4At6Wc84X/3d4/LT
-	ReI4EtPmIEDtjthT9Dks4ntEFOklbk8C73/vOffhV/CImhx1jp488S2aivOwDemkA2jdB/F1jfH
-	GB6dWS/XKH3gpEK7l3cybDgDPbtNNsY1A0oZNY7ZQj0Uuq7CGZ9LLE1C/evBWgs2z5Vp5y/eZLv
-	7Zg7QPQF2kyI4O5N6w+KTa7cNM4hgOkYaSQrERLBxd2gn5Uwz9j8GM/m9QX2iNvy20ub2fIAjJ5
-	jx
-X-Received: by 2002:a05:620a:448e:b0:8b2:ec5c:20bf with SMTP id af79cd13be357-8b5e554d9c0mr420085085a.29.1764780214489;
-        Wed, 03 Dec 2025 08:43:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFATH5kDP0Nx3exJ0qGFEUjnnvN1Lsj89A4uDXXXVILJP1mG6NI8ske0cJlYlmyePqgjlfvqQ==
-X-Received: by 2002:a05:620a:448e:b0:8b2:ec5c:20bf with SMTP id af79cd13be357-8b5e554d9c0mr420080585a.29.1764780213992;
-        Wed, 03 Dec 2025 08:43:33 -0800 (PST)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:f840:4916:e7c3:a857])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4792a8ccbf3sm61195835e9.12.2025.12.03.08.43.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Dec 2025 08:43:33 -0800 (PST)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org,
-        mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH] media: qcom: camss: csid-340: Fix unused variables
-Date: Wed,  3 Dec 2025 17:43:30 +0100
-Message-Id: <20251203164330.1552-1-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        bh=Tre/rf8HRcrussbSV2D3pHxXOcQLeC/eEv+L6zskgMA=;
+        b=GLMGHlhHUFbhE+ZbJ0r0kpOL/r3c64nkrnULedcHsfNk/YB5OnwsAhMzdSwmI8DFiP
+         vzH7Hz0g7AfHYTDVl7UUH7AziycLslKPGbfK9kFehxRAiFfh7VEtZuQxo/hxb1k26Pyf
+         +Uh9N33xbMm2hkJ9Xut3iDF9gae7Dzq0xakc4R+ktanlw0jR0Om9QjxNVEP1kDVQo130
+         XQcQcHaA+zkxiVbf3SuMw/6RKuUPzX2BVmiu3WUdMQXD4rl9UfbOosGYriqGZu2u/Zqz
+         Q2S3zBsd/9/vYwJJsgnPvsu7xdU22GF16YLFfJGe2BxEcMqx3Pd5CuPsdDFQsYgXDOnC
+         cWEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCv6e67TGPagHWVghktFCYxhF3W0Nz1paw+qvHVE+/EbKqtYS/BRBdxv84XAI14l9wrqiRJ9t1Gmg9fkJf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYxKLuNvwK93grL43RJq4x8VRzryERW6RZ5LlzrfASxsVitVuo
+	DrUpRVxX1lZglQZKpk/YoHEEWSC/8mpLe092jXuXnhmtEQ3J1tU779OeSh3pk/2B1v1S64eMI5X
+	c3bEAtK8=
+X-Gm-Gg: ASbGncuiNNV/pJ/+Q+O5hDA7jHpnLgwrFrMuO7bWL2TvkWfrJ3HWcqxvVVdVvuI/Pj8
+	C/O0c4uJmAE8nD9pAL5rKlprKu0iUz/fkclxeIORStSHAy3bbfwL0aGVUvBGIea+Sm1F3KLJ01M
+	fealydGJikGdgYHKiUmt0uLsNpWvSkGGPOCDeXhp45NzVaRbODtPUE4bexRUOB/+b8Kw7KCzb+n
+	UH3mYUsrHkNTFhVRKTjW4c09MrHMRFEQ9hktx73ZizTftQYp4p1ueDAgLCgquPDSxx0cF1NwWj6
+	rq+By9UcVyUCQB+LpZuriR9OSgC+Cf22fwoAE0u+MJzrPTh+W5oKcVTR9z0a0FGZTS5RdM/1xy3
+	oZ45eBUVKQpJ+W0F5QiuUFHXuI5/rRt/UqRaQs/9da+5acYh6E4rxw36djSryqs+u2w79j8LKbj
+	f56ZYcl7M0o1jPetybwvdokXfJ06pC5V/1DJXbnxET6fJbZGcmMxwFgspaDd4QPDttlMjmOYM=
+X-Google-Smtp-Source: AGHT+IHcLTljSqEFxBBNySjMjhJKlnz5d+myd7NEBtyBbc0VEnMVYbhPnt/74ynlpVvgRhWGXWWBog==
+X-Received: by 2002:a17:907:6ea6:b0:b72:6ace:e5b6 with SMTP id a640c23a62f3a-b79dbe4877emr329933566b.10.1764780234259;
+        Wed, 03 Dec 2025 08:43:54 -0800 (PST)
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com. [209.85.218.43])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64750a6ea36sm18531420a12.2.2025.12.03.08.43.53
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Dec 2025 08:43:54 -0800 (PST)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b79e7112398so68053366b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 08:43:53 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV0t/nOwUMj61tU0hYw/RFLm4eGZsDMmsElwnYxpV2yQpT5jjX1V9kAT1/C2xijg4/PcoK430ZQmJIxmae3@vger.kernel.org
+X-Received: by 2002:a17:907:9706:b0:b76:3478:7d52 with SMTP id
+ a640c23a62f3a-b79dc51a4fcmr293870366b.38.1764780233541; Wed, 03 Dec 2025
+ 08:43:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=JJg2csKb c=1 sm=1 tr=0 ts=693068b7 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=wP3pNCr1ah4A:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=d6NsCnqxkaT3_V1LjFAA:9 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 4SWVKkIvDCw7BPBI4LJFMGZ8NfNPnxoQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDEzMiBTYWx0ZWRfX1KvMGOrEoudt
- zkJoJjaDqQ72XDV5f1pAr2Nr7vcv8dsIP2XY2HMMa/gIyZp0yE7MB8eCsIPEnTEqTN+JxD961hs
- 29uxWHJ4sNP7wX7w9EUdpCwl/A6f0M8p1ut9AO9yYiVawtFV+PzG7ZVqxKMdulOxQudw4ve02pD
- QUnZ+K+hHnrllCzEZfRS7KtzJE7kcdGediC/3ZFoG2DTLgXWeyDM9vPE2i5xnBV6+AQu1COEAJ1
- mCSV0497a2C0ElDf1GnWi1rbX05IkeEwLsFAqevV9gIQJPOuxqnFFxjajmvR2LoayB5lz3LrXjE
- FC25vD4zvFGKQ+hBdQB1aKJB6aFF8l0A4VO5q6cGu6iRQVyF4E0W+pSQCZxO8AzheDRbqdZRRay
- vUEvXndFIgafaZmSlpjKRi6WldlktA==
-X-Proofpoint-GUID: 4SWVKkIvDCw7BPBI4LJFMGZ8NfNPnxoQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-03_02,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030132
+References: <20251203152437.3751325-1-robh@kernel.org>
+In-Reply-To: <20251203152437.3751325-1-robh@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 3 Dec 2025 08:43:37 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wjLCSGkNMpcKd11EhrQJieXn7J-7px-d_sJ=o+2UT5g=g@mail.gmail.com>
+X-Gm-Features: AWmQ_bnLY8KW8oEzYYPFpNFQCtPmlo2omVWH0TluZ2sLvA-oifz7NT-KjCUAHKU
+Message-ID: <CAHk-=wjLCSGkNMpcKd11EhrQJieXn7J-7px-d_sJ=o+2UT5g=g@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: Remove invalid tab character
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Gaurav Kohli <quic_gkohli@quicinc.com>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The CSID driver has some unused variables and function parameters
-that are no longer needed (due to refactoring). This patch cleans
-up those unused elements:
+On Wed, 3 Dec 2025 at 07:24, Rob Herring (Arm) <robh@kernel.org> wrote:
+>
+> Commit 1ee90870ce79 ("dt-bindings: thermal: tsens: Add QCS8300
+> compatible") uses a tab character which is illegal in YAML (at the
+> beginning of a line).
 
-- Removing the `vc` parameter from `__csid_configure_rx()`.
-- Dropping the unused `lane_cnt` variable.
-- Adjusting calls to `__csid_configure_rx()` accordingly.
+Applied.
 
-Fixes: fb1c6b86d8ff ("media: qcom: camss: Add CSID 340 support")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- drivers/media/platform/qcom/camss/camss-csid-340.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+But I want to object to the garbage that is 'yaml' and 'invisible
+whitespace has semantics'.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-340.c b/drivers/media/platform/qcom/camss/camss-csid-340.c
-index 22a30510fb79..2b50f9b96a34 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-340.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
-@@ -55,8 +55,7 @@
- #define CSID_RDI_CTRL_HALT_AT_FRAME_BOUNDARY		0
- #define CSID_RDI_CTRL_RESUME_AT_FRAME_BOUNDARY		1
- 
--static void __csid_configure_rx(struct csid_device *csid,
--				struct csid_phy_config *phy, int vc)
-+static void __csid_configure_rx(struct csid_device *csid, struct csid_phy_config *phy)
- {
- 	u32 val;
- 
-@@ -81,13 +80,9 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8
- 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
- 								   csid->res->formats->nformats,
- 								   input_format->code);
--	u8 lane_cnt = csid->phy.lane_cnt;
- 	u8 dt_id;
- 	u32 val;
- 
--	if (!lane_cnt)
--		lane_cnt = 4;
--
- 	/*
- 	 * DT_ID is a two bit bitfield that is concatenated with
- 	 * the four least significant bits of the five bit VC
-@@ -120,10 +115,11 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
- {
- 	int i;
- 
-+	__csid_configure_rx(csid, &csid->phy);
-+
- 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
- 		if (csid->phy.en_vc & BIT(i)) {
- 			__csid_configure_rdi_stream(csid, enable, i);
--			__csid_configure_rx(csid, &csid->phy, i);
- 			__csid_ctrl_rdi(csid, enable, i);
- 		}
- 	}
--- 
-2.34.1
+Maybe we can have a "kernel yaml" that just turns tabs into spaces
+with 'expand -t 8' and make the rule be that kernel yaml files don't
+have to participate in the mindless garbage that is "yaml by the
+specs".
 
+Yes, I know it matters for 'make'. That was a mistake too. But at
+least we could *fix* the braindamage that is yaml, and we already have
+a defined tab width for the kernel anyway.
+
+          Linus
 
