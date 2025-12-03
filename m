@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95460CA124B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 19:48:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E28ECA1471
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 20:08:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4D04B3002B21
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 18:48:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 109CA32D76E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 18:42:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22C453254A0;
-	Wed,  3 Dec 2025 18:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94BCF33032F;
+	Wed,  3 Dec 2025 18:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ycfvd84m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8XtIFXD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2D231B108;
-	Wed,  3 Dec 2025 18:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C7933032B;
+	Wed,  3 Dec 2025 18:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764787227; cv=none; b=LrMLKkBScWOyjP9treQsN8raE9CwDtHk5yyOivvjBN++QoGRLf3cijeXfmG0AX1twMBy+0uXyLVmYioflaRcJ+UA5neyEEgzNdQpnHQk8Yevrk3uIP8CSW8jMO7J3aQYggdy5XH1tV5CaQ+3wxdHfqSU0Pu5A1dIeFDMmxUlcd4=
+	t=1764787327; cv=none; b=NYy+m4o5O3IsSzhUAIDF0MdtfII01RdAOS4YRh1GKDro31a2ZWq+HSUOHKB6Nlc/RHPzT2dxGr9fMbqnGJWTmgxYuZ4IKBvkod0c0nP0ZLe8i9uQez8NCY2uccajH9E5hmn63n43D0D6xJAkIF8bpzlzgReXIrW3KiB/GUivc+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764787227; c=relaxed/simple;
-	bh=mzUQN2VDRuA84vGfbFKTK41mYyYn5eHlebq9rSDWsq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZhsUq+ypipamHrMrG4gFeDE5MfgEdxT+VSLIjs8y+186ViVMZWHyhJPYoxgyJYZLn1kVwnI89AQdZS+hb3U2KLxlLXdwNc4E+3AUntCGZaPUtyVdLbgQQl05Oxlt9+NLhZEIyFUIxThvSy8lDvZRxW3Lz9izO7xPe0oXDkFmbYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ycfvd84m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950E9C4CEF5;
-	Wed,  3 Dec 2025 18:40:22 +0000 (UTC)
+	s=arc-20240116; t=1764787327; c=relaxed/simple;
+	bh=v2GDB0s3s0cZVuTWsSuGY7ixvDjcgjZf/hlVbhPsXPY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DfB3TZc095rcYuPAtXhLE3c0aoK4qPL6aIK2w/8QbXRAeBnMjs1nX0MmAQyCmL2AWt/Jvj6zdIimQ685y9/l6TaiwDfP7IHU73v+LtxL5z5aY1tTgs8EXG1f0RNcpCeIwSz7D5q908sE/nbySrFFPXGA9Djl9Cw4494XL37xib0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8XtIFXD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24795C4CEF5;
+	Wed,  3 Dec 2025 18:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764787227;
-	bh=mzUQN2VDRuA84vGfbFKTK41mYyYn5eHlebq9rSDWsq4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ycfvd84mCzOIGu86wWlgDMU38k1KvYgdBvzyD4PANjHFl2Au5HRsX99mse0oj3NyI
-	 Td58ZvweV3GjnxFlISaTfILhbVqE/vJeIGuTSobOdt1vvbV5Pjpb4j7Ns8BU95hPDZ
-	 7q6EOnnflv9KNVH7RSt6qqbHevxOmIB8pLMWq8JKYCd/xTeW/HR6xr1o99AhD+M6XW
-	 9gJZxZi+/0yeI9RIozCkmUsShQkrh3v/U+cwORbR3xb+XeGYK/6VNSdnT7i6XA/i1+
-	 NFL9drIKMJCtikVtncmCGlktRBYhP8ovoK0lzFyyR7emo/5xRXq4qB3FNqHtDu9mOv
-	 gGWrvzqMEyKKQ==
-Message-ID: <c1b24759-762f-4b97-8d3f-8a44a66b646b@kernel.org>
-Date: Wed, 3 Dec 2025 19:40:20 +0100
+	s=k20201202; t=1764787325;
+	bh=v2GDB0s3s0cZVuTWsSuGY7ixvDjcgjZf/hlVbhPsXPY=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=h8XtIFXDC8r652iTh1goBpdm8tyLscuIZUJFTZHlNFwR5BW3iheA845wfSbQteMua
+	 7LLVeN3HCxuVZuCWV89RBkuGKhsKrnQw1j+SyULIZX81WHh4NyHHYLx1EAQ4l5KQPr
+	 eVbSHre+g4MsLBYrCOrzF2KXDMzLTIKr1Bsj2M+KFGmwTv7SsqQgKau9/db2vhQIJv
+	 kWJ5Xla40QIXKbR72Q5eJb2oZ5YdEpsjmYYuoo0ZKfTNocX9rIJibIUKrFZPTVGnJb
+	 Z3oHlSZk1xvf27hhIzIxaPghrmXF8EFADCGL39B33sRGmU7rNKaqt1ZYJ2fp/1f+RD
+	 XMDG6eTHc0XsA==
+Message-ID: <db113021-f5be-4559-8ea5-719f8d7ec3ee@kernel.org>
+Date: Wed, 3 Dec 2025 19:41:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,6 +50,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
  device tree
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Pavel Machek <pavel@ucw.cz>
 Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -73,7 +74,7 @@ References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
  <aS8uJCnb0xOd6uby@duo.ucw.cz>
  <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
  <aTB8++UtSrhwtqdY@duo.ucw.cz>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <c1b24759-762f-4b97-8d3f-8a44a66b646b@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,43 +119,53 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aTB8++UtSrhwtqdY@duo.ucw.cz>
+In-Reply-To: <c1b24759-762f-4b97-8d3f-8a44a66b646b@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 03/12/2025 19:10, Pavel Machek wrote:
-> On Wed 2025-12-03 18:31:11, Krzysztof Kozlowski wrote:
->> On 02/12/2025 19:21, Pavel Machek wrote:
->>> Hi!
->>>
->>>> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
->>>> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+On 03/12/2025 19:40, Krzysztof Kozlowski wrote:
+> On 03/12/2025 19:10, Pavel Machek wrote:
+>> On Wed 2025-12-03 18:31:11, Krzysztof Kozlowski wrote:
+>>> On 02/12/2025 19:21, Pavel Machek wrote:
+>>>> Hi!
 >>>>
->>>> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
->>>> and QRD (Qualcommm Reference Device) are splited in three:
+>>>>> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
+>>>>> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+>>>>>
+>>>>> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
+>>>>> and QRD (Qualcommm Reference Device) are splited in three:
+>>>>>
+>>>>> - 1-3: MTP board boot-to-shell with basic function.
+>>>>> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, tsense, bus, crypto etc. Add QRD board support.
+>>>>> - 17-20: Multimedia features including audio, video and camss.
 >>>>
->>>> - 1-3: MTP board boot-to-shell with basic function.
->>>> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, tsense, bus, crypto etc. Add QRD board support.
->>>> - 17-20: Multimedia features including audio, video and camss.
+>>>> Thanks for doing this. I assume there devices available with this are
+>>>> quite expensive/hard to get at this point?
+>>>>
+>>>> Please cc phone-devel@vger.kernel.org with phone related patches.
 >>>
->>> Thanks for doing this. I assume there devices available with this are
->>> quite expensive/hard to get at this point?
->>>
->>> Please cc phone-devel@vger.kernel.org with phone related patches.
+>>> That's not even a phone, anyway contributors should not cc lists which
+>>> are not relevant to the posting and not pointed out by maintainers. You
 >>
->> That's not even a phone, anyway contributors should not cc lists which
->> are not relevant to the posting and not pointed out by maintainers. You
+>> People should Cc relevant lists, and yes, if it is called "Mobile Test
+>> Platform", it is relevant to phone development.
+
+... and btw, I know what MTP and QRD is and MTP IS NOT A PHONE. I work
+on this, I upstream this and it is not a phone, regardless how you call
+it. Just because we call our evalkit like that, does not make it a phone.
+
 > 
-> People should Cc relevant lists, and yes, if it is called "Mobile Test
-> Platform", it is relevant to phone development.
+> 
+> Almost everything in ARM64 is then relevant for "phone development".
+> People should use tools, not invent or try to guess whom to Cc. It's
+> impossible to btw keep guessing them - you will request phone-devel,
+> someone else will request desktop-devel, laptop-devel or
+> new-hardware-devel or whatever. No. People should use tools, not guess
+> the cc lists. Fix the tools if you miss any Cc.
+> 
+> Best regards,
+> Krzysztof
 
-
-Almost everything in ARM64 is then relevant for "phone development".
-People should use tools, not invent or try to guess whom to Cc. It's
-impossible to btw keep guessing them - you will request phone-devel,
-someone else will request desktop-devel, laptop-devel or
-new-hardware-devel or whatever. No. People should use tools, not guess
-the cc lists. Fix the tools if you miss any Cc.
 
 Best regards,
 Krzysztof
