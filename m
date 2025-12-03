@@ -1,126 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-84167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61ECFC9E482
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 09:42:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08FE0C9E504
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 09:55:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id D4CCD348E38
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 08:42:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C49F3A6152
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 08:55:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA3CE2D59F7;
-	Wed,  3 Dec 2025 08:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70F712D5937;
+	Wed,  3 Dec 2025 08:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="YiBP9WYk"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BczPEQLL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7482D593D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 08:42:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D932BDC1B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 08:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764751340; cv=none; b=Oz9ubIHUZ9gPoXkWhT1vCe42s3JceHC8ZuUGPXDQSnTIultlUb4H0XUdB3f1cD7iCsmuhSTKuA4F+wDvqEOM2l835VFIFEB2at3FkbVDQfo8mTek99i7blyTEAyV7xypzJRRpQb0kfOl//efj94hegkOTFed2rWgIdFv2Rf+/yc=
+	t=1764752141; cv=none; b=l/+v74CS6v17zchL97vn8LxLzLzBrVpAV6O+BpjhQZyPSpJiN8J0Qx63RHsIhaZJppNzmyGu9bI1KlafJBHT4rLf+sxcI/ksiph07T8SHPEr3hXpLBYI/7XZYLGB9CoZEZs4HIwhwkLkTuxFBPKPWrvcjE5wdAb+tb/+Ofnwqos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764751340; c=relaxed/simple;
-	bh=9Gtg9yrrdOx9RykPQgYvPeDHdGSuTO70GsVTYKk97VA=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=dn/hlyLM7ubwnULFlhSIZtzLQPh8dd5fCSfmIA79I1FbgBPbAdEtQa5wBtFpLaEmoKhhRQVqpcP4VGpmg27hfjVvWoZUXiZR6gEoB4KhUGcVNychaMRIXhAkD+PqMJnF7jdlzV+SN053X248tirxG3wzA95R/dlEbwyayuDToWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=YiBP9WYk; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+	s=arc-20240116; t=1764752141; c=relaxed/simple;
+	bh=WZwTc3WGipU1rxTNrNT9q0JuopH580L2gUZ5qc9A4bM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HbSQYcQA/TnKPm9zBVaORz3GJoJZhX2Jxo9boMmaZynyi9AB8vs412aTpRNXIOimkSYXFG2KPNAJlU7Yy07allqostgCRUNQBe04HPMFpnTbY6R2xIpGQfWY0ecFpdL+ymJmXuhYqKxIeXkAoRSayncbUXwgBkqG1cT2teM4Jy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=BczPEQLL; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5959105629bso6000372e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 00:55:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1764752138; x=1765356938; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nLEuON7y1u9cDHc+MoWFTkLv0fcCZt0Zegqxsu+jQjM=;
+        b=BczPEQLL7K9eG1OhP1XvbgvhWLu+ma8QxLl6c3Js09CIKt8o1hlW9zULnPOUF/QDc6
+         qzaX97VtDkN7xqiGB/TUw/G70+fyedGpRyKHacjqJLxsS47yhvnx/OEahD3omBXhDXEl
+         QE9a5Sjk8tCnh+5wer7eWih2tXxclpGYB+lkk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764752138; x=1765356938;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nLEuON7y1u9cDHc+MoWFTkLv0fcCZt0Zegqxsu+jQjM=;
+        b=hX85C6YaZqIb6NNA4paDUQEnJrZ9oRDZqW7tHVfBVVr2pDaeB6q5yBPZPEv/XLOO10
+         wYczA+484DWwsg4uRVjBNj2foixKCL4r3TyFa4GzrtX07/mOZathIlzKViWmTuM+KYpH
+         fYpUkY+GoX3ClXruYsBzo30bGi2hbYN5zMD4rpRk9Wm207yNwI4rpH7u9CBPFYuhqlCP
+         h2/C55UBchPru/sFNI5a607zLSNY6yB98LYt4265lrXaqoyM0fQ7/3T6SSI9ASWfgcV9
+         l+N03xen1pW/2z4fN6FPSUROuS9P/0TC8LXIAJUl2qpZ0kTvoKYQXIzaqqr7wDmIR115
+         M57g==
+X-Forwarded-Encrypted: i=1; AJvYcCUmaehNIvypCeyzPdRxcCUdbHVtgfMN+36lVWYt/cjEEjxlAs4HmqWYKI5ih6i7Zxq+6MoymK0U5zqtJx/p@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhLYh6H8BUQGZhubR7OSRbDsSbw777p1bD83xHmHqxWvrhXdbL
+	Mb/FemBuFsd7zdr+7fOaJen467/vBw7tlFuV5gkHhTLWCxSgqbEJC4EtzyrEJiSZsw==
+X-Gm-Gg: ASbGncvVPak03bgghVfltZrbXfXao6KE4hcF8oRV2Q5D+YPYaArYCuyEGgrzOpUy25V
+	L1aHtNcy/F7fdKQyykw9frueWUc8rWITr/v/CdoFhDRl95RaZBF5QwD8hKpSox9GGYdmAFufLNu
+	EnqZscCb4MhcldaeQ5LMGllbJJULXfGACg2DzwlvkLJdnwnk92AHVjIe1H708Sqvoq7I+3K93o/
+	webWJAcA9I2ky8rvphdqrcPQpYi9JtUg1J+pWuzDEwklE3+hAbePWnR6Bm+EcD3tXZO1e4mHx2Q
+	sB8epLxf+ong2rDG2Cnphj6OzvI2tmPbavBWEr3mIHz/97VuPe5SEpu9Y6rCUgEEQjx7xiMhlIF
+	3oMz2VOlaZUSa473RXbEwpQu/U186NKPtnRpzT0hcXpDLbA3vcJoloGvtqOGDvgzVn7LGmubk64
+	5PEH4/wyVR/2S534yEhqbGxGpd7wJzgYZBI0DSa7wdOan1Ucdr8BYJlrTEcEcurvwS1r9jZQ==
+X-Google-Smtp-Source: AGHT+IFJK3gmRvM23rF/5dH2NkTCVXsct0rPtygHdd/7NJo5i6wrVlVL9QhzHou3oQOeS0kXE48mpw==
+X-Received: by 2002:a05:6512:10c6:b0:595:8200:9f87 with SMTP id 2adb3069b0e04-597d3f63d64mr733419e87.17.1764752137618;
+        Wed, 03 Dec 2025 00:55:37 -0800 (PST)
+Received: from ribalda.c.googlers.com (165.173.228.35.bc.googleusercontent.com. [35.228.173.165])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-596bfa43f3esm5315377e87.47.2025.12.03.00.55.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Dec 2025 00:55:37 -0800 (PST)
+From: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH 0/3] media: Fix CI warnings for 6.19
+Date: Wed, 03 Dec 2025 08:55:33 +0000
+Message-Id: <20251203-warnings-6-19-v1-0-25308e136bca@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1764751326;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gKNtN35oFunegKJ9D5vKYukJNsyouuo6xWcGRsdsAOo=;
-	b=YiBP9WYkQoC8cLS/z0GOSoKnr+RC2XQbVROg2RZzG2uzhzXXzu8at2PxMYpOLYPqXfFQ6i
-	egxh7IaWIdmQvqmoWEYiRXqP37w1jPE0lpOdGRLNkcrMX+sl58OkOOI4Q30MhTaJyY+gpW
-	0jNqpf5PgJlkSQU2Es5fYY+6Tb+Go2l/bRKeTWLsXSsEdryOoKhDrSDn6SC+CzT4Lyy1RC
-	2jQhbRBOPOzwdF00svBinexahNUz4iEKCXKuKTpBzTT5O6umbzmfTMX71dlOtwwzyLCYUO
-	kMItNTu41+kEZP7BbW544kervk+CZ+oH+XY+VGWL7I3Jv6f2qJLelWUrxgryJw==
-Date: Wed, 03 Dec 2025 08:42:04 +0000
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Paul Sajna" <sajattack@postmarketos.org>
-Message-ID: <164f88c182ff8e17a0d544effc7d64cdd73cd4eb@postmarketos.org>
-TLS-Required: No
-Subject: Re: [PATCH v4 12/12] arm64: dts: qcom: sdm845-lg-common: remove
- framebuffer reserved-mem
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "David Heidelberg" <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, "Amir Dahan"
- <system64fumo@protonmail.com>, "Christopher Brown"
- <crispybrown@gmail.com>
-In-Reply-To: <1d56eccf-1978-43c2-afcf-03ca88acc0e2@oss.qualcomm.com>
-References: <20251125-judyln-dts-v4-0-a5a60500b267@postmarketos.org>
- <20251125-judyln-dts-v4-12-a5a60500b267@postmarketos.org>
- <adcac270-3668-4b17-b430-d67ef311dd7c@oss.qualcomm.com>
- <803c48742755394d6eabc34ac73a42b36615cc01@postmarketos.org>
- <1d56eccf-1978-43c2-afcf-03ca88acc0e2@oss.qualcomm.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAX7L2kC/x2MQQqAIBAAvxJ7bkGFJPtKdDBdbS8WChWIf0+6D
+ MxhpkKhzFRgGSpkurnwmbrIcQB32BQJ2XcHJdQkO/CxOXGKBTVKg0YLb3Y9axcC9ObKFPj9f+v
+ W2gf9dPQ/XwAAAA==
+X-Change-ID: 20251202-warnings-6-19-960d9b686cff
+To: Keke Li <keke.li@amlogic.com>, 
+ Jacopo Mondi <jacopo.mondi@ideasonboard.com>, 
+ Daniel Scally <dan.scally@ideasonboard.com>, 
+ Hans Verkuil <hverkuil+cisco@kernel.org>, 
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, 
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Ricardo Ribalda <ribalda@chromium.org>, 
+ Stephen Rothwell <sfr@canb.auug.org.au>, stable@vger.kernel.org
+X-Mailer: b4 0.14.2
 
-December 2, 2025 at 10:34 AM, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm=
-.com mailto:konrad.dybcio@oss.qualcomm.com?to=3D%22Konrad%20Dybcio%22%20%=
-3Ckonrad.dybcio%40oss.qualcomm.com%3E > wrote:
+New kernel version, new warnings.
 
+This series only introduces a new patch:
+media: iris: Document difference in size during allocation
 
->=20
->=20On 12/2/25 5:41 AM, Paul Sajna wrote:
->=20
->=20>=20
->=20> December 1, 2025 at 12:41 PM, "Konrad Dybcio" <konrad.dybcio@oss.qu=
-alcomm.com mailto:konrad.dybcio@oss.qualcomm.com?to=3D%22Konrad%20Dybcio%=
-22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > wrote:
-> >=20=20
->=20>=20=20
->=20>=20
->=20> >=20
->=20> > On 11/25/25 9:12 AM, Paul Sajna wrote:
-> > >=20
->=20>  It causes this warning
-> >=20=20
->=20>  [ 0.000000] OF: reserved mem: OVERLAP DETECTED!
-> >  framebuffer@9d400000 mailto:framebuffer@9d400000=20
->=20>  (0x000000009d400000--0x000000009f800000) overlaps with
-> >  memory@9d400000 mailto:memory@9d400000 (0x000000009d400000--0x000000=
-009f800000)
-> >=20=20
->=20>  Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> >  ---
-> >=20
->=20> >=20
->=20> > It's defined for both devices that include this dtsi.. perhaps yo=
-u
-> > >  could remove it from there
-> > >=20
->=20> >  Konrad
-> > >=20
->=20>=20=20
->=20>  I don't have a judyp to test with and prefer to limit scope.
-> >=20
->=20This is a mechanical change
->=20
->=20Konrad
->
+The other two have been already sent to linux-media or linux-next ML,
+but they have not found their way into the tree.
 
-Sorry, I tried to have a look at what you meant but didn't quite understa=
-nd. In this patch I changed the dtsi that is included by both already. I =
-don't see any other reserved-mem nodes in judyp. Do you mean I should rem=
-ove the framebuffer from judyp? I don't think that's wise since a panel d=
-river isn't added as far as I know.
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+Jacopo Mondi (1):
+      media: uapi: c3-isp: Fix documentation warning
+
+Ricardo Ribalda (2):
+      media: iris: Document difference in size during allocation
+      media: iris: Fix fps calculation
+
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 10 +++++++++-
+ drivers/media/platform/qcom/iris/iris_venc.c             |  5 ++---
+ include/uapi/linux/media/amlogic/c3-isp-config.h         |  2 +-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
+---
+base-commit: 47b7b5e32bb7264b51b89186043e1ada4090b558
+change-id: 20251202-warnings-6-19-960d9b686cff
+
+Best regards,
+-- 
+Ricardo Ribalda <ribalda@chromium.org>
+
 
