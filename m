@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-84229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96D39C9F2B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 14:45:09 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82964C9F2E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 14:48:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4CAAD3A43C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 13:45:08 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 01AAE347D76
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 13:48:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E25B2FBDEC;
-	Wed,  3 Dec 2025 13:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D06DB2EFD9C;
+	Wed,  3 Dec 2025 13:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="WZMNhYAE"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="SNxjUbhE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0362D63F8;
-	Wed,  3 Dec 2025 13:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348E02EDD7A;
+	Wed,  3 Dec 2025 13:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764769505; cv=none; b=hyLmC0GELJUN7pBSvKK8QvKeM0vfwuoGKLSonk3ac4cJ8hCa8mq3q5BH1ZjpB5VyWBi3hMxrSQJxfMXh9d56BpAQYAu+iPpsl4IwbhiOSOGDw3YmmxE9h41e3j0pXupn0sE9qJmo4OMxK8XZAQsraFtQ1M6kQvbhkKznIcdX3g4=
+	t=1764769683; cv=none; b=h+PKq/1ZICa3Da6ovz2eWIJZGctabVUdbUps7hzbPval8ltkt1fsnCar7gDGZhSqMIz90J2fPl2r925kpD4Yg/vXp7yUj8ZZteE84r5BM7jLOwlC3ELJLBmAgAZ5c1qXfJBis9+lDulcFyje11CW9Z1ydeGbn1WjzgjtZ4AxCUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764769505; c=relaxed/simple;
-	bh=/Ukp0Cgp/gHWjggw7rTNf+e9K1BWU9KF/kziE7e9CMo=;
+	s=arc-20240116; t=1764769683; c=relaxed/simple;
+	bh=Z6A2oGoEdf6X5p1kJWjdo4i1kmb95AUeoFMWsppUO7E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hbwn6W9k5URBb9lK6bIkXBKr5iBTh1W2GCOkwQddv1XFAtEielRByGaDFBgmy2AuEKXYeOWj0p/40KEJ8RqOK6rmxyGJoGwsWHboIO55mkNA7GS5mM8AJx9rDrH95K+vQXCGm3pK2IKx9zOqFxL38zCgKFI/urHVVULU8vT/Ug8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=WZMNhYAE; arc=none smtp.client-ip=94.112.25.9
+	 In-Reply-To:Content-Type; b=uXmhx18QE/9WYftB01VGzFZtko/uLyk1KbvmBKHJbCmKg5fyy4DaG/hcTQdggm5yrMHVnmFs/E7ra8vK3h/1E4rtfxupZtdBh4zOeMvhgCYXm9mW89L4TeKjNz0vS7G9QXr/IrFAC7V03dGWY0vgSkISLwhA6vF7fhgY/pk0UEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=SNxjUbhE; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [192.168.198.28] (89-24-57-208.nat.epc.tmcz.cz [89.24.57.208])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3AAEC534087C;
-	Wed, 03 Dec 2025 14:44:57 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 9A8565340D20;
+	Wed, 03 Dec 2025 14:47:57 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764769497;
+	t=1764769678;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=bv+LS4wHpdXHYbC/ic6uWGkcrCXEVQGxt1aY85tbaRY=;
-	b=WZMNhYAEOSZtj0GeGNRipbPXB4TdL2vLcXYQ5SDmRNAXhOS+8MIvL+cP+ud6r9uw+jZ7Ar
-	UYM4zSeWedG3tJpcIQot4JujAPmzGobHBOQqMz2iYugG/lBIUv0C+1C4r3IMirDjDa0R/n
-	IU494+/d7AiF/fjXk99ikngxE7y0g/I=
-Message-ID: <aa426c81-e9c1-46a7-9ab1-ca8947a3d937@ixit.cz>
-Date: Wed, 3 Dec 2025 14:44:56 +0100
+	bh=pZ/twsoKZsAyt3RQQYDWTYhHtCC8Om19340nx1x7gKQ=;
+	b=SNxjUbhE0KTTdEHB/lH4HHh6O8jXl6ODsNCOTTjykHtYYsdMYH+PgNpl9boOcYvWWNxf68
+	mPVk/2W9mgvpIgze2AdBTBEQn/IdxPNFWjyHVZvQI3LOxpg2dKQB+TrQBwFf2f7g62cwd2
+	vH84Ktyq7qS5eC6nxYuHFdmUi9YJAS0=
+Message-ID: <a9ba1f0a-bc98-4bcb-9062-026f604bc44e@ixit.cz>
+Date: Wed, 3 Dec 2025 14:47:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,8 +56,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/12] arm64: dts: qcom: sdm845-lg-common: Add uarts
- and Bluetooth
+Subject: Re: [PATCH v5 06/12] arm64: dts: qcom: sdm845-lg-judyln: Add firmware
+ nodes, change path
 To: Paul Sajna <sajattack@postmarketos.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -65,10 +65,9 @@ To: Paul Sajna <sajattack@postmarketos.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
  ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>,
- Christopher Brown <crispybrown@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ Christopher Brown <crispybrown@gmail.com>
 References: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
- <20251203-judyln-dts-v5-2-80c1ffca8487@postmarketos.org>
+ <20251203-judyln-dts-v5-6-80c1ffca8487@postmarketos.org>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -114,138 +113,46 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20251203-judyln-dts-v5-2-80c1ffca8487@postmarketos.org>
+In-Reply-To: <20251203-judyln-dts-v5-6-80c1ffca8487@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2025 10:40, Paul Sajna wrote:
-> uart9 is debug serial on USB SBU1/2
+> Add paths for Qualcomm firmware, including:
+> ipa, modem, bluetooth, venus, gpu
 > 
-> UART RX is SBU1 and UART TX is SBU2 of the USB-C port).
-> 1.8V Logic Level
-> Tested using pololu usb07a https://www.pololu.com/product/2585
-> and CH340 USB-UART
+> Enable adsp and cdsp nodes since their firmware is present
 > 
-> uart6 is bluetooth
+> GPU and bluetooth are confirmed working, others may need more
+> testing/fixes
 > 
-> Bluetooth: hci0: setting up wcn399x
-> Bluetooth: hci0: QCA Product ID   :0x0000000a
-> Bluetooth: hci0: QCA SOC Version  :0x40010214
-> Bluetooth: hci0: QCA ROM Version  :0x00000201
-> Bluetooth: hci0: QCA Patch Version:0x00000001
-> Bluetooth: hci0: QCA controller version 0x02140201
-> Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
-> Bluetooth: hci0: QCA Downloading qca/judyln/crnv21.bin
-> Bluetooth: hci0: QCA setup on UART is completed
+> But regardless they will need the firmware paths specified here
+> and firmware added upstream before they will work, so might as well
+> get started on it now.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 > ---
->   arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 39 ++++++++++++++++++++++++--
->   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  |  8 ++++++
->   2 files changed, 45 insertions(+), 2 deletions(-)
+>   arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 10 ++++++++++
+>   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 20 +++++++++++++++-----
+>   2 files changed, 25 insertions(+), 5 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> index b8ab64a8de1c..cbd57eee6ffc 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> @@ -27,10 +27,17 @@
->   /delete-node/ &wlan_msa_mem;
->   
->   / {
-> +	aliases {
-> +		serial0 = &uart9;
-> +		serial1 = &uart6;
-> +	};
-> +
->   	chosen {
->   		#address-cells = <2>;
->   		#size-cells = <2>;
->   		ranges;
-> +
-> +		stdout-path = "serial0:115200n8";
->   	};
->   
->   	reserved-memory {
-> @@ -540,6 +547,36 @@ &qupv3_id_1 {
->   	status = "okay";
+
+[...]
+
+>   &adsp_pas {
+> -	firmware-name = "qcom/sdm845/judyln/adsp.mbn";
+> +	firmware-name = "qcom/sdm845/lg/judyln/adsp.mbn";
 >   };
 >   
-> +&qup_uart9_rx {
-> +	drive-strength = <2>;
-> +	bias-pull-up;
-> +};
-> +
-> +&qup_uart9_tx {
-> +	drive-strength = <2>;
-> +	bias-disable;
-> +};
-> +
-> +&uart6 {
-> +	pinctrl-0 = <&qup_uart6_4pin>;
-> +
-> +	status = "okay";
-> +
-> +	bluetooth: bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +		vddxo-supply = <&vreg_l7a_1p8>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p3>;
-> +		max-speed = <3200000>;
-> +	};
-> +};
-> +
-> +&uart9 {
-> +	status = "okay";
-> +};
-> +
->   &ufs_mem_hc {
->   	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
->   
-> @@ -597,6 +634,4 @@ &wifi {
->   	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
->   
->   	qcom,snoc-host-cap-skip-quirk;
-> -
-> -	status = "okay";
->   };
 
-I'll not make you happy, but in the first patch [v5 01/12], you 
-accidentally introducing the wifi node, and here you removing part of it..
+Since you'll be rebasing again anyway, the current recommendation is using
 
-You need to rebase again :(
+sdm845/Vendor/codename, thus in case of LG being whole in uppercase I 
+would say it should look like:
 
-I recommend doing `git rebase -i next-202512XX` and go patch by patch 
-and check it really do what it's meant to be..
-
-rebasing is sometimes pain when larger changes are done.
+sdm845/LG/judyln/...
 
 David
 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> index 09bfcef42402..e530a08f5e27 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> @@ -43,6 +43,14 @@ &adsp_pas {
->   	firmware-name = "qcom/sdm845/judyln/adsp.mbn";
->   };
->   
-> +&bluetooth {
-> +	/*
-> +	 * This path is relative to the qca/
-> +	 * subdir under lib/firmware.
-> +	 */
-> +	firmware-name = "judyln/crnv21.bin";
-> +};
-> +
->   &cdsp_pas {
->   	firmware-name = "qcom/sdm845/judyln/cdsp.mbn";
->   };
-> 
-
--- 
-David Heidelberg
-
+[...]
 
