@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED458C9F6B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 16:23:40 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD48C9F701
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 16:27:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AC0723013A8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 15:22:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D11FF304A774
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 15:22:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F65331B138;
-	Wed,  3 Dec 2025 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AC20320A05;
+	Wed,  3 Dec 2025 15:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ew7wzlMw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTVwiF54"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6C1261B78;
-	Wed,  3 Dec 2025 15:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40783261B78;
+	Wed,  3 Dec 2025 15:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764774447; cv=none; b=OtXVlsu+Na98HcD5O9ZRm7AIJJInGioALFXwUe9zIbIHO5ASXtYR452BOLVce+uc95PKLuokliuGoiF8/pMm8y2oc6R2TrbkVSBN7yramARrDEL3MQ1yXfaTtTifUdpHZ0nX4NnLhw79ypZvSR7wPYY78b+aI0xOH9aSZw0J6Xk=
+	t=1764774463; cv=none; b=OJGro7zRdQ0OUyONqD00sa3Wk5hEkNNsklqChSGKtxdtXdmTmYvGftJIfEvY5BGaVFbEYveDF1beeA3kSJFtVVx2KoJiqNMw79ErgSbbG0RDGgXN63vhq0VZFkPKSSVaMK1wAEyEnNvaoiJ9cRpj8UgVb5PbO5ZEAE3pVY9IheE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764774447; c=relaxed/simple;
-	bh=pN4JjRpeQrJ2Nx7BwKEe5Gs0VhKs9M5abSOzTsod5/Q=;
+	s=arc-20240116; t=1764774463; c=relaxed/simple;
+	bh=sFG0pKRmf0ULG6hMJSXINseUZiqdkP8WjfQUdXw8u84=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nRNpOkrFUeI5R5J2ILYMXXCRTZHm5363SttG5GulN3Nd7/pwKPKd2KvX8oVQSOU2auzkhwA0MYlimPVijNLUjZD3uj4pIhm59zp28TGdlDmJhfO2UULg+KS6gHb4vENPqHuxUv6mwmpUWCB71SxDtKhT9CzFwP7Ntdz7eMwxvb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ew7wzlMw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A3AC4CEF5;
-	Wed,  3 Dec 2025 15:07:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=X647CBtSaqI9hyCrk9tPCIMH8JpGjT9qRd/O1wVuq73TelRm9qStYmhZevhwyM0PZLsR5LgEf/L84qCeWACSzt4JSmOFMYOuD7UzSz0bjQuFA49t8GVrqRTbmu++smcjw2z5AWWW4SevIWl60OOwrqy+UngdA+KTKFKDZhMtH4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTVwiF54; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BF9C4CEF5;
+	Wed,  3 Dec 2025 15:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764774446;
-	bh=pN4JjRpeQrJ2Nx7BwKEe5Gs0VhKs9M5abSOzTsod5/Q=;
+	s=k20201202; t=1764774462;
+	bh=sFG0pKRmf0ULG6hMJSXINseUZiqdkP8WjfQUdXw8u84=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ew7wzlMwnskM1yAJC6ynEdrwbVb882ZuWAW2z+TDt98QaCySS9cuPlhXkJ38eDNyC
-	 y8gP5HWTAMcAKmCw1uePhxQ+7UjtDXVWAY22hlojCkiXXoZPZWwvziGgsALeVLxkwe
-	 hM57o18HZLDeZNfPb7UX/4GHNBv4U6CvHf5sSJY7WqP4v1Ujc0KxZrS2C6pz6QVOce
-	 cmf4HLfBsolYV1PwZGhvZf+YEjt1oqrfy1xnYzaDNA8NP5/adiQu7E3D/TwZWb1BmP
-	 aT/lSj3emC18OsySVqzJz5wCguO8mF3FnV7C5Vu9hR2S6V1vN2e1TdqhT9lPIAEpxO
-	 wptCsnO/KJZhQ==
-Message-ID: <56c75c6c-e6b1-4acf-855d-c5d420d001f6@kernel.org>
-Date: Wed, 3 Dec 2025 16:07:22 +0100
+	b=jTVwiF54P096Q1ojbnV4ykICd6XpZrbK3pxJpol8+sA4qNebG6XeUAIcU6u1Bwhqv
+	 2+tNcism9e0/wP00bXxzdXRpJpJt8/mF7rsQK8H8LPLbuIyVhxP0ueVOOXFsopu0cp
+	 NW5FSRqh2VkhARFnDs9jkmR0c9rvh55qM/fnr3hfbTt+m5ftykSSTCf6k7MvW4DnRf
+	 Mm8we9WYfqtH9JkAfB0nlnYo5tz9jkKk4T1VKpT3SFoLrFO/owTwEsKvu2F7+GUjbx
+	 yLaYi+afEf2olHi2+AiL50QO3EbGPqM4Oe8U3OmDJh0Swc9TF1r15Lbs3CjxqqRRaZ
+	 WeCcbeAb1RGKg==
+Message-ID: <3b29618b-71bb-46f1-bd55-e7291effc8d1@kernel.org>
+Date: Wed, 3 Dec 2025 16:07:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,7 +48,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550: Fix compile warnings in USB
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Fix compile warnings in USB
  controller node
 To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -58,7 +58,7 @@ To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20251203144856.2711440-1-krishna.kurapati@oss.qualcomm.com>
- <20251203144856.2711440-2-krishna.kurapati@oss.qualcomm.com>
+ <20251203144856.2711440-3-krishna.kurapati@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,7 +104,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251203144856.2711440-2-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20251203144856.2711440-3-krishna.kurapati@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -116,12 +116,10 @@ On 03/12/2025 15:48, Krishna Kurapati wrote:
 > This is because the child node being removed during flattening and moving
 > to latest bindings.
 > 
-> Fixes: 33450878adfc ("arm64: dts: qcom: sm8550: Flatten the USB nodes")
+> Fixes: 77e1f16b9302 ("arm64: dts: qcom: sm8650: Flatten the USB nodes")
+> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> ---
 
-
-I don't fully understand that original commit - it explicitly changed
-address/size-cells from 2 to 1 and 0, so keeping address/size-cells was
-kind of intentional. Anyway, these should not be needed, so:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
