@@ -1,113 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-84196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912D7C9E8FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 10:45:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8552DC9E9ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 11:01:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BF8454E1711
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 09:45:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EA723A3F89
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 10:01:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADCF12EB873;
-	Wed,  3 Dec 2025 09:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04A4F2E1C7B;
+	Wed,  3 Dec 2025 10:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="pSS7IDXK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Lu+/qV1K";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MLz9MksL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B9E2E0B58
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 09:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFCD2DE70E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 10:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764754975; cv=none; b=P+a7Oh8hrWlpZgaeTSlDrn5mEVhMywuBt7fIpYG/qfoiFgvRVfWfND1F+0ezneSICTtMH7el4MnSYG6LBH+TyATPSnFLomh1iPIk9J1H2MqLRZyU9HPJuNlhW85ebp2e3uUPkV1hX04dmhXXi9aXdvsLTUAefDS0shLZ3zV+2p8=
+	t=1764756059; cv=none; b=USkcP4pJryuq6vlvRIUGiDy62cVQPPcvjCqDl4noLtw3NnCJWai6+D2qEB8sh2Uy8MuNI15SsGFANiy3Ve2wxU8OmtXeCIP0/ja5BtpXxZrn3jSA4OSYfd9n92tPxslWn5VVgiQlg2JfxROFU+jHD0YzDPMd3xhWtAOPIkRYHMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764754975; c=relaxed/simple;
-	bh=TZ/qzHmyomjfRELtYl9aiivLFrmu42zjg79Z6Ox7wVo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s9HQQzib3N5V9LNLJOaWP3pkm1vJ+FmjyZYJjSn5bxOWVsujd23RwG8kbrf861cgu59Ha0cJ2tme5LsK/rQBrs4j2Mz+48hWzhgbwS7xeOpgemHS/yIebxroJG3vUYQSzxu2t9ii4RURlWQTRlZIpWnuHiyYb0OV91XQIOe79EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=pSS7IDXK; arc=none smtp.client-ip=91.218.175.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1764754972;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gY5XInM0q/UvZEMt53Sph/f6jCFSFhWhpI/uLzw0IiQ=;
-	b=pSS7IDXKIOlj2wtBpZyo1c1h/7XwxMplKcL2FE0KwpnBWPyiN85CObfDIQJ9abQkMkj7Kj
-	znsD4rme/MWcsu2FSkWPtyGBulb3O/KuHBYdkc97YdR5716LJiknCelOmsWhNcxgmK4jsG
-	zIi9y+PBvaiA0sBjAfxcl6wHC3Rn1JjLJwrjF5Cs18rHThMHLQeYdnn7OD+wKDTUwuC/oO
-	n3FH1PD2iK7O45Tl5LSzpT8rYyPEU/qBY/aVIOGbPVfXAcEoRLbzG7T+1hcHIo5/RCNgN+
-	pX1y2G5VGwiprGBIMlCP4BvsM25tU90jk9j2qwoo6NtZas2e7yLnBf2PJtIxBw==
-From: Paul Sajna <sajattack@postmarketos.org>
-Date: Wed, 03 Dec 2025 01:41:01 -0800
-Subject: [PATCH v5 12/12] arm64: dts: qcom: sdm845-lg-common: remove
- framebuffer reserved-mem
+	s=arc-20240116; t=1764756059; c=relaxed/simple;
+	bh=cPfa/gPVnjQwhwX1zjDzSsjrR0ofZWs3Z13WOsxGQVM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cxHkexHjBhIgYayngO+3sQu2asr3j1Aa0U3qnrhmhw/t1Kw9m4AnbobEKX76od8l7Ccrtn4yNgx9KlU3IQRDo52MvgKirHYYEiJggeLdQHSQeLDfs2drdRIKM3U6aKFMy8+QZOG+KzgOY0Xs3WV3huhhc9xp7e6LhvH1dCzlpig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Lu+/qV1K; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MLz9MksL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B39Q4SO1969626
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Dec 2025 10:00:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9vb6nLHl9jv/CKWdouRDWsbD1SoT2Kye3kJmluOu4bA=; b=Lu+/qV1KWrQ/wH7W
+	XuRiY+K6/OAK2LcYQ2nt63+Le4SJxBULFXSwDYMgbC2+DzT86TKci3BeA4wRfw8U
+	g/6lrtaTkXR3ma2rGFrsXeCrBSFi+m8bKfLG8ajy7prDcQQYjk3t2apyK4dmZEuO
+	wddvrOPgHOrrf09qJtsUeAEvX6YLKPVwn5LTCm74Y2aHEMsyuRpVejXeSG1dlah4
+	6yDn9A5xMkVzXXi1sggG8FsEeDt4/fi90VRY+xmQI9nGVRmij0S9HtMuGAlhVECE
+	im9EK8gJ6ledKuGlMNe+fiMhlatKYIfF3di3wNWrvWJ6IINU5SVQOf9YSd/FtNj3
+	KkKGeg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4atjjs05h7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 10:00:56 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8846cb0b8afso180470316d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 02:00:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764756056; x=1765360856; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9vb6nLHl9jv/CKWdouRDWsbD1SoT2Kye3kJmluOu4bA=;
+        b=MLz9MksLvXCohLlDsjA9LOtL/i4+DbgQDqKvDK1NsuRo5z/3utK7XrFc6G0L/INGAk
+         UsuHwbwPerYijuYTt0GC12m64b2Cw/YpJNjRg1Ir/wL29uYn92Dmbhp3L30tIqF4Y9RK
+         Bt7LXylFPEWvYqg9UKgbpOWvOmmhKo7JVN0VDpEMLqPGo8sFVpvsaL2f744sTbN44WuT
+         Sc/ImBQMx2u+q75vkQroZafb24tCJhriNHAxAFTW/0x72imbiguhi0Rltwd/uU6BLZ7r
+         6tj+BgSbFlANLRdYSzsaeY3hAqA62k1DvCmQQJvPGADH3YrxEetieetkNbr8hUsQE0h9
+         ajsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764756056; x=1765360856;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9vb6nLHl9jv/CKWdouRDWsbD1SoT2Kye3kJmluOu4bA=;
+        b=qvIs81AXoEF1S4T7f/grmTcEFbb3WVX8y4lqLiq0agSMMHB7PKRR/a5NXs1836vfem
+         fktRYZ38RweFz71gp8bXk8wYHXfB+3GL6XlLCnDq1MP9A6YvvjCt6r0q2wXWhzhGym6d
+         9F8kNs4NF87wnAVkrPTl9vbX6AUd5GYy8gYy2bxFnBnL6Usq8linBl6ym+qkQL+KspuS
+         obRRWt2yq8/vDBx0aSSG8Sz9vxp3ngRW1vpFGdjwjOHwNCRYh4x+gaPQuQlk5QipOEoT
+         yR90+5Qrx1YO1XHBsx9R5MoBujXbrkEUraPuAmamKUQx90GNITiaHe3xBiRInuHG/qzT
+         u6TQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUJ63PC/hdIsEnZrkE217LsoKW4w0PnAOkWxsVxWJc7bN19sVqpe3gBsp9WFUUYTkF6qoamLh7CyUePPiSq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzN66toCdtKUxovuRcr/4Si+F5kYjIpA6pa6Lo4tYXKNOMUBB2k
+	VcLpARxEEklBCXNQH5M0I1WcDOnASnJ2ps5gHF61v/uESe70VxQHX3Z+t0KGqF3NGRHIqyR3FgS
+	l0tm8p3CVWoQ6/MGuUoHfqsEfCYDqEGLiA4esiJHnk5QhAPdp7IBxD8hBBOiCvyEMJitg80HOn3
+	y5vOe6FbMmaHcG1NCnx9m+qBpgCVyB519nGASA5qVh0AM=
+X-Gm-Gg: ASbGncuxV5BYvvyAqgzK217i9oSWYaL6AVma6RTwyjzu+I892GQ4DFwAxQnKnMWh07i
+	DIpWcxIekrsvQEs2m5YfeL2HH+VZHYLe/YU5uzIhFD1lB5EKI7rZzJucQO4g6Oxc1izSKxDKqvW
+	Dnvh9E5gEvMTicMSJxmiLIpQotnWUKbWM1Y3eaaq4mzWtmHIBOaTx2TmBsqKS/3dIgfBHAtUGk4
+	QoVlvGb9JWU52opMJnqu6gpOHU=
+X-Received: by 2002:a05:6214:5687:b0:87b:f369:35d2 with SMTP id 6a1803df08f44-88819589005mr18384196d6.39.1764756056183;
+        Wed, 03 Dec 2025 02:00:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGzFiJWchbuRF50Ht6AeNZ2DSTLZHKXmvxugZAtNJOcgrvKIBWrysaB495LbANaZu1vZzJoQAqh+PmnDJJON5M=
+X-Received: by 2002:a05:6214:5687:b0:87b:f369:35d2 with SMTP id
+ 6a1803df08f44-88819589005mr18383546d6.39.1764756055633; Wed, 03 Dec 2025
+ 02:00:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251203-judyln-dts-v5-12-80c1ffca8487@postmarketos.org>
-References: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
-In-Reply-To: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>, 
- Christopher Brown <crispybrown@gmail.com>, 
- Paul Sajna <sajattack@postmarketos.org>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764754921; l=918;
- i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=TZ/qzHmyomjfRELtYl9aiivLFrmu42zjg79Z6Ox7wVo=;
- b=Hx15hjzEhzEJQuVn0hUo+CDXDhVjKfm5JFjFR7efpLZdnhw8MdptmCwQ0d68KW8hQzZrvDjYz
- uBtEScHhXayBxOTeacNLxaltGagqrmbSinsX1slpJpn/0ThDo5gzn7P
-X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
- pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
-X-Migadu-Flow: FLOW_OUT
+References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
+ <20251114133822.434171-2-loic.poulain@oss.qualcomm.com> <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
+In-Reply-To: <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Wed, 3 Dec 2025 11:00:43 +0100
+X-Gm-Features: AWmQ_bkHfo8sietxEdBct9crfYv3t0yfWoNgbwZ482uTbUp-BloVJD00f4sEG5k
+Message-ID: <CAFEp6-1zoU2cfVU06MoeOtAwMYN+XAxCwc0ebwaQyo78VNBf2Q@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+        dave.stevenson@raspberrypi.com, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, mchehab@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-media@vger.kernel.org,
+        laurent.pinchart@ideasonboard.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-ORIG-GUID: 2A9Rq36weikuGx3OvMD8lu_cpS1WKtSy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDA3OSBTYWx0ZWRfXzRonrkmmuDih
+ qtK5WicG/oU6pbihlM/sTcV8aDZgxiATAjpUfBAPEEtds9h76lRZeqhhKufjGXW09BPurVwR/Bo
+ 8Jm01L998+FkRiKRQizRraXdxkYgSKK/fZWKj1JZYuu7V3TGEw6/tdiDqeAiNveCuhDoetxRWdN
+ FVT8qGqeYKAvGPGpFRT+eV/yZOmKgkHADw+BOnV15LZi3NY5ZI0N3h/a3ZOwJvX3GI/kCtIIGZs
+ HTqh6686m/e1RxturEUP7JXj+Qy6bFrcQ2Uecuh42g6ttkm3NJ4JOaKwdjQGOAHm/OEZWXVL7Zy
+ E2s6LFXYBlzCDDQBuD1t8u33sp9Pbkpp8uR1OPaQv243DQwWTpgmXjQMZ6mp4QFxDDRhHSHe3mf
+ TMC500N3GCP5uPLICQyHRgHkCwj+nQ==
+X-Proofpoint-GUID: 2A9Rq36weikuGx3OvMD8lu_cpS1WKtSy
+X-Authority-Analysis: v=2.4 cv=ZqDg6t7G c=1 sm=1 tr=0 ts=69300a58 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8
+ a=sUzC4GSqm1tOj9JvITsA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-02_01,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512030079
 
-It causes this warning
+Hi Laurent,
 
-[ 0.000000] OF: reserved mem: OVERLAP DETECTED!
-framebuffer@9d400000
-(0x000000009d400000--0x000000009f800000) overlaps with
-memory@9d400000 (0x000000009d400000--0x000000009f800000)
+On Mon, Nov 17, 2025 at 6:30=E2=80=AFPM Sakari Ailus
+<sakari.ailus@linux.intel.com> wrote:
+>
+> Hi Loic,
+>
+> On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
+> > Ensure reset state is low in the power-on state and high in the
+> > power-off state (assert reset). Note that the polarity is abstracted
+> > by the GPIO subsystem, so the logic level reflects the intended reset
+> > behavior.
+>
+> That's an interesting approach to fix DTS gone systematically wrong.
+>
+> I was thinking of the drivers that have this issue, too, but I would have
+> introduced a new GPIO under a different name (many sensors use "enable",
+> too). Any thoughts?
+>
+> Cc Laurent.
 
-Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
----
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 6 ------
- 1 file changed, 6 deletions(-)
+Do you have any feedback on this change?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index bfa0ecec82fd..5946d1e60b6e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -98,12 +98,6 @@ spss_mem: memory@99000000 {
- 			no-map;
- 		};
- 
--		/* Framebuffer region */
--		memory@9d400000 {
--			reg = <0x0 0x9d400000 0x0 0x2400000>;
--			no-map;
--		};
--
- 		qseecom_mem: memory@b2000000 {
- 			reg = <0 0xb2000000 0 0x1800000>;
- 			no-map;
-
--- 
-2.52.0
-
+>
+> >
+> > To maintain backward compatibility with DTS files that use an incorrect
+> > flag, we implement a mechanism similar to:
+> >   commit 738455858a2d ("ASoC: codecs: wsa881x: Use proper shutdown GPIO=
+ polarity")
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > ---
+> >  drivers/media/i2c/ov9282.c | 26 ++++++++++++++++++++++----
+> >  1 file changed, 22 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/media/i2c/ov9282.c b/drivers/media/i2c/ov9282.c
+> > index a9f6176e9729..e79b326cdd94 100644
+> > --- a/drivers/media/i2c/ov9282.c
+> > +++ b/drivers/media/i2c/ov9282.c
+> > @@ -160,6 +160,7 @@ struct ov9282_mode {
+> >   * @sd: V4L2 sub-device
+> >   * @pad: Media pad. Only one pad supported
+> >   * @reset_gpio: Sensor reset gpio
+> > + * @reset_gpio_val: Logical value to reset the sensor
+> >   * @inclk: Sensor input clock
+> >   * @supplies: Regulator supplies for the sensor
+> >   * @ctrl_handler: V4L2 control handler
+> > @@ -180,6 +181,7 @@ struct ov9282 {
+> >       struct v4l2_subdev sd;
+> >       struct media_pad pad;
+> >       struct gpio_desc *reset_gpio;
+> > +     unsigned int reset_gpio_val;
+> >       struct clk *inclk;
+> >       struct regulator_bulk_data supplies[OV9282_NUM_SUPPLIES];
+> >       struct v4l2_ctrl_handler ctrl_handler;
+> > @@ -1127,13 +1129,29 @@ static int ov9282_parse_hw_config(struct ov9282=
+ *ov9282)
+> >
+> >       /* Request optional reset pin */
+> >       ov9282->reset_gpio =3D devm_gpiod_get_optional(ov9282->dev, "rese=
+t",
+> > -                                                  GPIOD_OUT_LOW);
+> > +                                                  GPIOD_OUT_HIGH);
+> >       if (IS_ERR(ov9282->reset_gpio)) {
+> >               dev_err(ov9282->dev, "failed to get reset gpio %ld",
+> >                       PTR_ERR(ov9282->reset_gpio));
+> >               return PTR_ERR(ov9282->reset_gpio);
+> >       }
+> >
+> > +     /*
+> > +      * Backwards compatibility work-around.
+> > +      *
+> > +      * The reset GPIO is active-low, but the driver has always used t=
+he
+> > +      * gpiod API with inverted logic. As a result, the DTS had to
+> > +      * incorrectly mark the GPIO as active-high to compensate for thi=
+s
+> > +      * behavior. Changing the flag in the driver now would break back=
+ward
+> > +      * compatibility with existing DTS configurations. To address thi=
+s,
+> > +      * we add a simple value inversion so the driver works with both =
+old
+> > +      * and new DTS.
+> > +      */
+> > +     ov9282->reset_gpio_val =3D gpiod_is_active_low(ov9282->reset_gpio=
+);
+> > +     if (!ov9282->reset_gpio_val)
+> > +             dev_warn(ov9282->dev, "Using ACTIVE_HIGH for reset GPIO. =
+Your DTB might be outdated\n");
+> > +     gpiod_set_value_cansleep(ov9282->reset_gpio, ov9282->reset_gpio_v=
+al);
+> > +
+> >       /* Get sensor input clock */
+> >       ov9282->inclk =3D devm_v4l2_sensor_clk_get(ov9282->dev, NULL);
+> >       if (IS_ERR(ov9282->inclk))
+> > @@ -1237,7 +1255,7 @@ static int ov9282_power_on(struct device *dev)
+> >
+> >       usleep_range(400, 600);
+> >
+> > -     gpiod_set_value_cansleep(ov9282->reset_gpio, 1);
+> > +     gpiod_set_value_cansleep(ov9282->reset_gpio, !ov9282->reset_gpio_=
+val);
+> >
+> >       ret =3D clk_prepare_enable(ov9282->inclk);
+> >       if (ret) {
+> > @@ -1260,7 +1278,7 @@ static int ov9282_power_on(struct device *dev)
+> >  error_clk:
+> >       clk_disable_unprepare(ov9282->inclk);
+> >  error_reset:
+> > -     gpiod_set_value_cansleep(ov9282->reset_gpio, 0);
+> > +     gpiod_set_value_cansleep(ov9282->reset_gpio, ov9282->reset_gpio_v=
+al);
+> >
+> >       regulator_bulk_disable(OV9282_NUM_SUPPLIES, ov9282->supplies);
+> >
+> > @@ -1278,7 +1296,7 @@ static int ov9282_power_off(struct device *dev)
+> >       struct v4l2_subdev *sd =3D dev_get_drvdata(dev);
+> >       struct ov9282 *ov9282 =3D to_ov9282(sd);
+> >
+> > -     gpiod_set_value_cansleep(ov9282->reset_gpio, 0);
+> > +     gpiod_set_value_cansleep(ov9282->reset_gpio, ov9282->reset_gpio_v=
+al);
+> >
+> >       clk_disable_unprepare(ov9282->inclk);
+> >
+>
+> --
+> Kind regards,
+>
+> Sakari Ailus
 
