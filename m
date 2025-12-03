@@ -1,191 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-84141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C36A8C9DB3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 05:05:04 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74606C9DB4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 05:05:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3EADD349A19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 04:05:04 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 686C04E01D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 04:05:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E101E26FA6E;
-	Wed,  3 Dec 2025 04:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72ED526FDBF;
+	Wed,  3 Dec 2025 04:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kJnBLIS+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FbGqoE90"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854626ED2B;
-	Wed,  3 Dec 2025 04:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8770726F28F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 04:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764734700; cv=none; b=j03L5xyG6Qc53uSibJsC+Ka/3zXGp+K5nwVCnB+YuS2RJUwK1tsMwozz/T507xYSKFwoaUmAqAVfpndp85+Tj7DFVU7RB3Y2Xo6o7We4fUf1KBqzypiFLmCuOhsU8iUm2frzPK1hsr1QkC8+mDkMETYtUqABEsODzEbJ+xGvxIo=
+	t=1764734745; cv=none; b=CMYaRb2R1mKG4fCJ0pe95hUniZYHkZ9PAgyE7vJiBctSV1TcbwSJFCkONlUvIlHxGcHRZ0o8CjCfZguGaFe3xOk8LvdH3Hfpa2DNyHnz1+PDR/+9Uju36Fti+HD2GHlQ91/VSIi/0DBQEFdOP26CDL5MOtYnnfMphcbfcDqmZbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764734700; c=relaxed/simple;
-	bh=uMtfSAUUV+ZcEWZIa5Fy61QEHpt5VVmEFZQXxarzhf0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nx0lMX7i0Z9M+V12mzMRAH0VkIJFfaym9bDXuMytf2QEB3JHrdIB5UVoIlzeJUXpMA9Qy8gLWb/P9MNgGJLMMN8yfMSHfZsQTfw8yrsR5JNnz5uVmbDky69Wydlln2qS+RP4sZ+D2f4GEqZuMwBRXaDqzfeSzYZw3N8aivdfQuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kJnBLIS+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B2NatEc032836;
-	Wed, 3 Dec 2025 04:04:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hv48/EnBzO8Gx6035HWFAJ69RSH2Bc1teheiw9fp4qU=; b=kJnBLIS+sIU744nn
-	cUSjiKxRrqgHkrsogGtWe1KCkjr64+/vvcGIjMXKngjFB9bx19IOaTl0zIPFIkY1
-	PdWIYhjeh1ReUWgaKAYPyeFP6Xm8xkB8cjyOeBZg5Ypz7kL13sXcb+eWJa+He2ul
-	0K4ZYfnb96NDcwW4WeGXc9AYPsfXMpbDjGXUig47ipYJWKHYoTehaH+plI93rwtT
-	9Rx0GP4LmI4XtWl4Y0Kky3flnKBVNL5h0BX4mkxalLrNB7pcknutY5CUOLXbIWdr
-	YYlknG3O4QCq08+A/Hv4UF2RabOiAlWkysxjPMCBSzHHTWKjCGDh4XAG2+sl1vte
-	JVCikQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4at8d9gvnx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Dec 2025 04:04:54 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5B344sGR003057
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Dec 2025 04:04:54 GMT
-Received: from [10.253.33.57] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 2 Dec
- 2025 20:04:51 -0800
-Message-ID: <e0b97cf5-9812-4afb-8d76-96650997fb65@quicinc.com>
-Date: Wed, 3 Dec 2025 12:04:27 +0800
+	s=arc-20240116; t=1764734745; c=relaxed/simple;
+	bh=vtlK0ZhaxSVXO9xNTREVYiPCDU6CowvtSes4xTee6Zk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=avOYRgv20FlnijBwnl10gwJAtXT44oaLn+pp2jB01sj77zgNIjb49V49oqRXDCfv5/p9Z+nMNJW//6k/cu/NGX6/kkjPUjIYLvy/303C1pfxyuDAbrtMNtCX/oxb/1NN9ZSWkoZUK6HTF/zgbBik8gSPEIW2k3sBibdcBPBcV1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FbGqoE90; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-37a492d38e0so8197621fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Dec 2025 20:05:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764734742; x=1765339542; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AauXa/Y27Mbhc+rfU8RtO1F/i06XMMTsp7zJqho7aGU=;
+        b=FbGqoE90M+Pqqs/WZRd67z1odG1E6ztWufmgn1Lubu2OYeD9rKPK2kE2beEHysQFuX
+         BvHO51ALxwnCIUa9UQks5sRg97HE4Fc+BIWI0rpU12xX63CfELO2p41teJLn9KEDFR7P
+         s3VdsmymhBM3pCJgwBZtoW9emolncXhOKl/AKOZGwtynrq20tZM1f4BciDZzvDMeW+Hz
+         jvpyouESOwv8zaz7xiQDfsnBzS/tc3vBuUJJaFp0cuOnRr6WErO+ZAZy4A7On/XtJINd
+         hnabDLzr0MGUNjTRjGazIk/3g7G5OFemVwQExCEEU7POIHUrg05rHak1ofE7JhCF6kwh
+         uAbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764734742; x=1765339542;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AauXa/Y27Mbhc+rfU8RtO1F/i06XMMTsp7zJqho7aGU=;
+        b=fEhMZpGjkolLLVXhhXxt0mOmu//e9OVpqvw+qQ6+yhCtFXHhQA/AXzG5ZX6xwrlv+i
+         T2zYf4EC1cwXNxEYEjy/0K4rkiU3+0r6Os/dfDweFruBydYBJSjJr27keNsTYEjwnpqv
+         s3ZyySrnri6fJPNWhqb4TECmO1xPYSwDgRFSGhi9rcMSvBDkj82fxvBIog6mEouu1tYs
+         aQBEmqVyAZJ4Ln6tB316nCJVQ9j7WDeRha3BDf/qFwjNdn0AkRHbxR89gtffK6jnhtD+
+         c/s5xOshpgR8nOzK0+6Gps4KyBuBWFMT/fGoMSXpvOAPbf0gwXfnPaA02AZYhEKdypA2
+         cgbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWp+cVtMzIbg5WTr8qSTwpXARlyLTXFio3m1cdgsdM0cdkNyzDjCMXS8AdcNsluvIWfoDClXrv6no32WqFG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGKgyQPoijhj1tK7tX2ljer4E6EjU8JG1Tq7udH7Cst7p8GGjT
+	jwgu609bmkiHeROdL7UUuOE70HrO427QRNAnrFkGDVV/8fcu/Pi0kK+3mqqDjrbkiss=
+X-Gm-Gg: ASbGncuMUKGLcvomvxbMJn1yprMQAqU4TWaXiE5AyvYxZ5IkWuxSMsM2sLzwiJdCJXQ
+	8zRC4O7jLJgTC7edQuZDE8ZHzb1QRpacdP95sNPLqNL6PDHG3piLvKLNrOxh485yG8xd797SmLY
+	IwYJw8aCGEnz21FwlRSyOCXfrL1gH5GauflvSzg+agO262/oEleg3GlisTkt+0pLbS7vm3FOuAe
+	KQihKwmMsr268QdS2zdeSROtJLER+eDRVoJQbA5PA7jUsRWPgUCMgCoFdzB0pESbjx8mvueVFXY
+	ubTz+0+QNBZSs4rs8oD0thQTC4OQyMlY1UZGAfp+a4EyVUJA2d5yPkrcxWS4G6sNsn94kZ/sngx
+	3kFfKji7Of6vbw2ePTY4L/L9b5jIQFPdMoSXtV0zFBNiqemBWhXprydap2GlB05hrC7CbqLJHRb
+	12jHigt6XTX55hGoGWwFe08q9r0OpOXK0QOcEB5Fx9bLaFJnf/JE18rA==
+X-Google-Smtp-Source: AGHT+IGRM9PXFkTHzRIxS0LDgKxvTnnx4+Xizl6bO0aUh1UWcGFmB+QLnD7VuP6+znUk879iNlbbiw==
+X-Received: by 2002:a05:651c:220e:b0:37b:a65d:51c8 with SMTP id 38308e7fff4ca-37e66a254cbmr323011fa.0.1764734741591;
+        Tue, 02 Dec 2025 20:05:41 -0800 (PST)
+Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37d240981cbsm39505631fa.24.2025.12.02.20.05.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Dec 2025 20:05:41 -0800 (PST)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH 0/6] arm64: dts: qcom: sm8550-qrd/hdk: correct S5K3M5 properties
+Date: Wed,  3 Dec 2025 06:05:32 +0200
+Message-ID: <20251203040538.71119-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail
- when BT_EN is pulled up by hw
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        <marcel@holtmann.org>, <linux-bluetooth@vger.kernel.org>,
-        <stable@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_chejiang@quicinc.com>
-References: <20250916140259.400285-1-quic_shuaz@quicinc.com>
- <vipw44g3fmaf7yhv5xtaf74zbgbkwhjgyjtguwdxgkkk7pimy6@eauo3cuq3bgi>
- <c87533fc-768d-4b70-a1aa-2639e5329058@quicinc.com>
- <CABBYNZJ=C3fYy=SXQyv9x-49vGSjXd-06MsQJ2N3Ps0egMRCuQ@mail.gmail.com>
-Content-Language: en-US
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-In-Reply-To: <CABBYNZJ=C3fYy=SXQyv9x-49vGSjXd-06MsQJ2N3Ps0egMRCuQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDAyOCBTYWx0ZWRfX1GYgzkzpxmqp
- 0Kdp/XojogCyU04D9o7tTFJaB4ksK3JFASL17QkfZu7gMcVVjuSLG7rIBaO293yM3zKfXUklASw
- K/dQTprO735XdBnAZvAR+DdIH+sjYiPNh9+5rasePJtmeLy3Ebsu2y5KHREveb8f3Q3e7Sbp5dh
- q7J3LgVygrZEYaYB7hjHokXunTDC2gosbRj8XRb9IlyNdQNosIuknMOcpzJWYUtzkllrCODW+bN
- 4KXwcqlwkelAgje7TQA7TEzF+9EhG3GwvFZ76zU6e92QUiYiWwkEIGGCA/t1hHci+vgtZMnErvU
- kh/qE88o72jL8dphLdfZYrnDXlQbygpoKN3uzNAflw1B4zrFznkVdytHfIfjVkEDL1FwAfEm2fU
- B7rpSHhI9lPO92ha7pfzo5oOzIbS0Q==
-X-Authority-Analysis: v=2.4 cv=A7th/qWG c=1 sm=1 tr=0 ts=692fb6e6 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=QcVRgBLmt2abGhXxf9cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: -ku9x_6BKeaH08SWXDwUE9kXy8_kfQRn
-X-Proofpoint-GUID: -ku9x_6BKeaH08SWXDwUE9kXy8_kfQRn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-01_01,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030028
 
-Hi Luiz
+The changeset updates voltage regulator property names and removes
+an optional data-lanes property of Samsung S5K3M5 image sensor found
+on SM8550-QRD and SM8550-HDK with Rear Camera Card boards.
 
-On 12/2/2025 10:30 PM, Luiz Augusto von Dentz wrote:
-> Hi Shuai,
-> 
-> On Tue, Dec 2, 2025 at 4:08 AM Shuai Zhang <quic_shuaz@quicinc.com> wrote:
->>
->> Hi Luiz
->>
->> On 9/16/2025 11:01 PM, Dmitry Baryshkov wrote:
->>> On Tue, Sep 16, 2025 at 10:02:59PM +0800, Shuai Zhang wrote:
->>>> On QCS9075 and QCA8275 platforms, the BT_EN pin is always pulled up by hw
->>>> and cannot be controlled by the host. As a result, in case of a firmware
->>>> crash, the host cannot trigger a cold reset. Instead, the BT controller
->>>> performs a warm restart on its own, without reloading the firmware.
->>>>
->>>> This leads to the controller remaining in IBS_WAKE state, while the host
->>>> expects it to be in sleep mode. The mismatch causes HCI reset commands
->>>> to time out. Additionally, the driver does not clear internal flags
->>>> QCA_SSR_TRIGGERED and QCA_IBS_DISABLED, which blocks the reset sequence.
->>>> If the SSR duration exceeds 2 seconds, the host may enter TX sleep mode
->>>> due to tx_idle_timeout, further preventing recovery. Also, memcoredump_flag
->>>> is not cleared, so only the first SSR generates a coredump.
->>>>
->>>> Tell driver that BT controller has undergone a proper restart sequence:
->>>>
->>>> - Clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED flags after SSR.
->>>> - Add a 50ms delay to allow the controller to complete its warm reset.
->>>> - Reset tx_idle_timer to prevent the host from entering TX sleep mode.
->>>> - Clear memcoredump_flag to allow multiple coredump captures.
->>>>
->>>> Apply these steps only when HCI_QUIRK_NON_PERSISTENT_SETUP is not set,
->>>> which indicates that BT_EN is defined in DTS and cannot be toggled.
->>>>
->>>> Refer to the comment in include/net/bluetooth/hci.h for details on
->>>> HCI_QUIRK_NON_PERSISTENT_SETUP.
->>>>
->>>> Changes in v12:
->>>> - Rewrote commit to clarify the actual issue and affected platforms.
->>>> - Used imperative language to describe the fix.
->>>> - Explained the role of HCI_QUIRK_NON_PERSISTENT_SETUP.
->>>
->>> I'll leave having the changelog inside the commit message to the
->>> maintainer's discretion.
->>>
->>> Otherwise:
->>>
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>
->>>
->>
->> I noticed that this upstream patch has already been reviewed,
->> but it still seems not to have been accepted. Is there anything else I need to do?
-> 
-> My bad, please resend it so CI can pick it up for testing.
-> 
+This reflects the changes in the dt binding documentation of the sensor:
+- https://lore.kernel.org/linux-media/20251203040241.71018-1-vladimir.zapolskiy@linaro.org
 
-I have resubmitted a new patch, please help review it.
+In addition to the changes above Konrad asks to place 'status' property
+of camss device tree node as the last one on the list, do it as well.
 
->>>
->>>>
->>>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
->>>> ---
->>>>  drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
->>>>  1 file changed, 33 insertions(+)
->>>>
->>>
->>
->> Thanks,
->> Shuai
-> 
-> 
+Vladimir Zapolskiy (6):
+  arm64: dts: qcom: sm8550-qrd: rename image sensor supply properties
+  arm64: dts: qcom: sm8550-qrd: remove data-lanes property of image sensor
+  arm64: dts: qcom: sm8550-qrd: move camss status property to the end
+  arm64: dts: qcom: sm8550-hdk-rear-camera-card: rename supply properties
+  arm64: dts: qcom: sm8550-hdk-rear-camera-card: remove optional property
+  arm64: dts: qcom: sm8550-hdk-rear-camera-card: move camss status property
 
-Thanks,
-Shuai
+ .../boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso     | 10 ++++------
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts                | 10 ++++------
+ 2 files changed, 8 insertions(+), 12 deletions(-)
 
-> 
+-- 
+2.49.0
 
 
