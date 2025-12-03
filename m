@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-84200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C96FC9EBD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 11:38:14 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A93EC9EC23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 11:45:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 116934E1615
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 10:38:13 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 32F8C349FBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 10:45:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13C962EF654;
-	Wed,  3 Dec 2025 10:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29C892F0C6B;
+	Wed,  3 Dec 2025 10:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="XV1FGY3I"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="gvsGqrq4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16B52EE263;
-	Wed,  3 Dec 2025 10:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79B2F0690;
+	Wed,  3 Dec 2025 10:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764758289; cv=none; b=VLq2vgxUyRBh0I6Lu9+wYFs6vF75bsqVkWJe1iwHcCgm5bTKB3fORseNGOb8c/BR+9kcUsI1NREvbTf2rXnS3MQdtEvr1FMaMKHMLcmTbaGMjmcsT8pH0d5uw8HPdUzoJpSHFThv92fZ8B7vufyu/h2MlgaYruJ7C1Exu+uWG2E=
+	t=1764758712; cv=none; b=HLGv/TmjI8SeWZRWzgjKra+URpofA2x4AAogmK1DjclfPGpi4NKotxdnS/ocNR7Gm9uDIxB7F3m2X9XtE8Yu4GPVn5DdxT+kvPGMTVRsHPFDV+1jma2BUF7GAhnP8+d+Bhof8sHyo9v0YJ8RnM58p4nhsMhN2gkmpDP7Ndr9MXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764758289; c=relaxed/simple;
-	bh=laAGctb8EldgwncvnCZcyMBtrXDFrRNYGpXkGr2f7bM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WY4hK+ASIUPtmdgVP48lI/jSO7w+w3t4S+9H3kojxQEahZpKoLNeBf4s8VOVjAc4qHVMRm5zDirpNw+gizd+6ngvlcuTTq50tU+g4icR5JGCfi0LS78CRUWwzt/6Mx0oS/zZ8KH+KTdVxm6hXrE0oY27KiRy9icpdD2DJtAtHOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=XV1FGY3I; arc=none smtp.client-ip=94.112.25.9
+	s=arc-20240116; t=1764758712; c=relaxed/simple;
+	bh=6s+pcjrE0NotfBkJGQXYpCHD8GxTYctqoLsgNuvkf1E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=owMdPFWcG1Aaqigur9I2YUS9wXrIS7XKZCUSluqojfCbWyrh7hv252zPhis0PpzTdr+vDaWV6tAsOojpOpTEjyON2pRSOD1SK8Dl26Kjn7xfVZMba0p6xMIgMGP9NquvSKddpvs/TD6cDDTPKQf5J8oNQdTA3qrKwof5XX4kSck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=gvsGqrq4; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [10.0.0.200] (unknown [10.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 168205340E35;
-	Wed, 03 Dec 2025 11:37:56 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 997865340E0C;
+	Wed, 03 Dec 2025 11:45:06 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764758276;
+	t=1764758706;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=XtSJZKOk/ARJmerKjYP1OXJE3ik9PRoXffbMi+RL0oc=;
-	b=XV1FGY3IwT8yqntETVgEik9vBhEb3njjheikCmJm+9T7nZ9nEBFLqRy4p6DtP+g2MJdIX8
-	1T2QNDcwXpn03a8zTZiywHXs7LZggulfhy1XptdBowwJv38RnXQrQfHD47HyCvp3HGSy51
-	PIcyPQxGOfxp9bLsHpegetu/UgheOKo=
-Message-ID: <de30bfad-a28f-4cc0-9099-11877428070e@ixit.cz>
-Date: Wed, 3 Dec 2025 11:37:55 +0100
+	bh=CepgQPOvMfMw1D/IUCNpJz0Sal8k62OPjmjZqkX1G5g=;
+	b=gvsGqrq46mv6u2Juop5Z0349xvzSaNBemhqLPmVzgEB9yxC4i3Igdeh/S7JlWA04h2vaed
+	eH8/kguPmSqGBen7dkiu0bbv047C3o+1CPYRT0DBWwBhHiKOQMOdBjW8nn3vITh7DVWHG4
+	au8Ump2eGjFEHTJIY0Ky48o7wpLGlEs=
+Message-ID: <88d96898-3c83-438d-89e9-4bb2bd0dd98b@ixit.cz>
+Date: Wed, 3 Dec 2025 11:45:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,6 +58,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 12/12] arm64: dts: qcom: sdm845-lg-common: remove
  framebuffer reserved-mem
+From: David Heidelberg <david@ixit.cz>
 To: Paul Sajna <sajattack@postmarketos.org>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -73,8 +74,8 @@ References: <20251125-judyln-dts-v4-0-a5a60500b267@postmarketos.org>
  <803c48742755394d6eabc34ac73a42b36615cc01@postmarketos.org>
  <1d56eccf-1978-43c2-afcf-03ca88acc0e2@oss.qualcomm.com>
  <164f88c182ff8e17a0d544effc7d64cdd73cd4eb@postmarketos.org>
+ <de30bfad-a28f-4cc0-9099-11877428070e@ixit.cz>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
  xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
  9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
@@ -118,54 +119,78 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <164f88c182ff8e17a0d544effc7d64cdd73cd4eb@postmarketos.org>
+In-Reply-To: <de30bfad-a28f-4cc0-9099-11877428070e@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 03/12/2025 09:42, Paul Sajna wrote:
-> December 2, 2025 at 10:34 AM, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com mailto:konrad.dybcio@oss.qualcomm.com?to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > wrote:
+On 03/12/2025 11:37, David Heidelberg wrote:
+> On 03/12/2025 09:42, Paul Sajna wrote:
+>> December 2, 2025 at 10:34 AM, "Konrad Dybcio" 
+>> <konrad.dybcio@oss.qualcomm.com mailto:konrad.dybcio@oss.qualcomm.com? 
+>> to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > 
+>> wrote:
+>>
+>>
+>>>
+>>> On 12/2/25 5:41 AM, Paul Sajna wrote:
+>>>
+>>>>
+>>>> December 1, 2025 at 12:41 PM, "Konrad Dybcio" 
+>>>> <konrad.dybcio@oss.qualcomm.com 
+>>>> mailto:konrad.dybcio@oss.qualcomm.com? 
+>>>> to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > 
+>>>> wrote:
+>>>>
+>>>>>
+>>>>> On 11/25/25 9:12 AM, Paul Sajna wrote:
+>>>>>
+>>>>   It causes this warning
+>>>>   [ 0.000000] OF: reserved mem: OVERLAP DETECTED!
+>>>>   framebuffer@9d400000 mailto:framebuffer@9d400000
+>>>>   (0x000000009d400000--0x000000009f800000) overlaps with
+>>>>   memory@9d400000 mailto:memory@9d400000 
+>>>> (0x000000009d400000--0x000000009f800000)
+>>>>   Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+>>>>   ---
+>>>>
+>>>>>
+>>>>> It's defined for both devices that include this dtsi.. perhaps you
+>>>>>   could remove it from there
+>>>>>
+>>>>>   Konrad
+>>>>>
+>>>>   I don't have a judyp to test with and prefer to limit scope.
+>>>>
+>>> This is a mechanical change
+>>>
+>>> Konrad
+>>>
+>>
+>> Sorry, I tried to have a look at what you meant but didn't quite 
+>> understand. In this patch I changed the dtsi that is included by both 
+>> already. I don't see any other reserved-mem nodes in judyp. Do you 
+>> mean I should remove the framebuffer from judyp? I don't think that's 
+>> wise since a panel driver isn't added as far as I know.
 > 
-> 
->>
->> On 12/2/25 5:41 AM, Paul Sajna wrote:
->>
->>>
->>> December 1, 2025 at 12:41 PM, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com mailto:konrad.dybcio@oss.qualcomm.com?to=%22Konrad%20Dybcio%22%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > wrote:
->>>   
->>>   
->>>
->>>>
->>>> On 11/25/25 9:12 AM, Paul Sajna wrote:
->>>>
->>>   It causes this warning
->>>   
->>>   [ 0.000000] OF: reserved mem: OVERLAP DETECTED!
->>>   framebuffer@9d400000 mailto:framebuffer@9d400000
->>>   (0x000000009d400000--0x000000009f800000) overlaps with
->>>   memory@9d400000 mailto:memory@9d400000 (0x000000009d400000--0x000000009f800000)
->>>   
->>>   Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
->>>   ---
->>>
->>>>
->>>> It's defined for both devices that include this dtsi.. perhaps you
->>>>   could remove it from there
->>>>
->>>>   Konrad
->>>>
->>>   
->>>   I don't have a judyp to test with and prefer to limit scope.
->>>
->> This is a mechanical change
->>
->> Konrad
->>
-> 
-> Sorry, I tried to have a look at what you meant but didn't quite understand. In this patch I changed the dtsi that is included by both already. I don't see any other reserved-mem nodes in judyp. Do you mean I should remove the framebuffer from judyp? I don't think that's wise since a panel driver isn't added as far as I know.
+> I think this warning likely comes from sdm845-mainline repo, as it has 
+> extra patches, which trying to abstract framebuffer into sdm845.dtsi, 
+> where it likely conflicts, have you tried against clean 6.18-rcX or next?
 
-I think this warning likely comes from sdm845-mainline repo, as it has 
-extra patches, which trying to abstract framebuffer into sdm845.dtsi, 
-where it likely conflicts, have you tried against clean 6.18-rcX or next?
+... or sdm845-next repo [1]?
+
+I sent the patches moving framebuffer from sdm845-mainline repository as 
+RFC [2], but so far it's not clear to me if these should go in or not.
 
 David
+
+[1] https://gitlab.com/sdm845/sdm845-next/-/commits/sdm845-next
+[2] 
+https://lore.kernel.org/all/20251117-commonize-framebuffer-v1-1-e4c099b383c9@ixit.cz/
+
+> 
+> David
+
+-- 
+David Heidelberg
+
 
