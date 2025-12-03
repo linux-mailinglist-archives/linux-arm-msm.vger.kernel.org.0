@@ -1,95 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-84265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A45E8CA1870
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 21:13:10 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 789CBCA1982
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 21:52:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 91D2C3007E51
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 20:13:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 308343007FF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 20:52:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B1253081DF;
-	Wed,  3 Dec 2025 20:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D382BD5AF;
+	Wed,  3 Dec 2025 20:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="svOTou35"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5FzEliY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE2F27586C;
-	Wed,  3 Dec 2025 20:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B853255E43;
+	Wed,  3 Dec 2025 20:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764792788; cv=none; b=pi6b8mNQuT4/RHOySlYMvgBD8wXqplvsBUwwj+OMbn+D81Y1MDjoU5ri2u+igNY2zaloDzpctLWlcDMY7RtSVI0h7rRPz831GtRtun890hTb2LIR1VVV1c/NqAsEN2qZ/rka+4tHbOlisvbQYPU/lf3nWGkafEmLY/FzIcLatR4=
+	t=1764795136; cv=none; b=s8jIz2t+uyhK/9k7qhEZQ/WN30xGxPChLSA2HDwnbLjVP5MXugehAbUSuLmAtOmUo9E0S07MyM3LLL1URBR5x/AJI2qfz/iU18bv90RvcipBUTY77+qmRYTYSau6ynql4iw2mBrtfYbgNmjjSkRkTX9Iumoq//XZAB9j/bkkuYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764792788; c=relaxed/simple;
-	bh=DgnB0s/7+0WQvzp/ZgDb+DmQMmCwijxjQYhs3oVXbGY=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=WmABWXCIOV6SDh3VnoBnwxn+3R5pfjECvoDTbCEK5Bb/w2dS1jqyMeGLhzJh2xr5VJXYlAh68NLQ4byzPjd07tPI8vbFg4rAIf+GLYB0euUxcb1TqCD+Rc0j3ox8XV5qDGbGToxiqCxJ2aY2ZZR2MWYxyWm6L2ponFs2PwwTm3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=svOTou35; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A4FC4CEF5;
-	Wed,  3 Dec 2025 20:13:06 +0000 (UTC)
+	s=arc-20240116; t=1764795136; c=relaxed/simple;
+	bh=LnTu2ji+l83YsTdTn49ZGpJGygUyH5/D5vXQPwCH8cY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EckgjJrARqG7T8OUjns6PRty5iczXS4AgVOiqUhdKiyi+6WanrqJhdIH5qzBbLgnpM3X0WXxpWOYmFT9EmufMA3BuhH35bcGIJY5y4auqv3GEsUk75pTDoNABXfl8DShm0iq3W3jjxV6CYjpCDbuOzz/Rx6fOIuLZOVli3+4M5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5FzEliY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D13C4CEF5;
+	Wed,  3 Dec 2025 20:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764792786;
-	bh=DgnB0s/7+0WQvzp/ZgDb+DmQMmCwijxjQYhs3oVXbGY=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=svOTou353a1+ZIiiwpiFx/+pSZrRHIYVJE4qkOLeEXeABdRyXntvP+wQw5Uy7ao42
-	 ru2om1WMqkFg88cTgTYgLMXOg5hiYldreR6E2K4s2MBBD27+vbYfpmo26MDzCXwooz
-	 LvgpxfXTcTe5wAfCz0xlge9dYQzbROGWcdAVtJ+zVGb9GDaXDa+PjvYaoj6h9dnoRT
-	 mgOM/39wyFwV1TDD9ssJqSN+48zbtUbkWal2S7i4EYrNZedhZYDR7BnxMN3rYaV5jx
-	 uVD++eBbjJSHxXnwSlxWq0+TiSPd4vJMQ+dS0P+1Z5pNo639XPVsd+TGBNnr3X63Xm
-	 WoA/JagbP0//A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B669D3AA943C;
-	Wed,  3 Dec 2025 20:10:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1764795136;
+	bh=LnTu2ji+l83YsTdTn49ZGpJGygUyH5/D5vXQPwCH8cY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P5FzEliYaQeTKpmHr7tPUkJeMGKnfEhFYJVfZmjTjejQfbmuNemHtZbhwaxvTNAMv
+	 8HvV1MS5yc/YRoBWDdKMcSxGw2+1rDP7NamYpTXND6dXZBmFIPim5No2cfcDGxXER7
+	 mQppJMmI6XKE04E09v0h8yW/mSOWTivdnGxVZe9XBzzS5oudNTTWajzMCiiSW0VDwP
+	 /Bl6hSAX2ezXMiK/TqmlN71YAA48znyZi9L5byg1GQdCnyZ+RsicQgZET/mlGRCHFP
+	 d8pnY3M0Q23OPjs8y6SKEJCP3OAXJ3znUVI8AXpkmifBYOSpy5CkHvC50nh+qcEs+6
+	 EndF4EFb4Zi/Q==
+Date: Wed, 3 Dec 2025 21:52:11 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	jeyaprakash.soundrapandian@oss.qualcomm.com, Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
+Subject: Re: [PATCH 1/7] dt-bindings: i2c: qcom-cci: Document SM8750
+ compatible
+Message-ID: <saeejuf7gglmjgphx6ugw2a2f2he3rkypf52makk6r7z6lxnok@25cxdnw2kctl>
+References: <20251126-add-support-for-camss-on-sm8750-v1-0-646fee2eb720@oss.qualcomm.com>
+ <20251126-add-support-for-camss-on-sm8750-v1-1-646fee2eb720@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v13 0/1] Bluetooth: hci_qca: Fix SSR (SubSystem Restart)
- fail
- when BT_EN is pulled up by hw
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <176479260553.58993.16345476131618638097.git-patchwork-notify@kernel.org>
-Date: Wed, 03 Dec 2025 20:10:05 +0000
-References: <20251203033712.446632-1-shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <20251203033712.446632-1-shuai.zhang@oss.qualcomm.com>
-To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, linux-arm-msm@vger.kernel.org,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com,
- wei.deng@oss.qualcomm.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251126-add-support-for-camss-on-sm8750-v1-1-646fee2eb720@oss.qualcomm.com>
 
-Hello:
+Hi Hangxiang,
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
-
-On Wed,  3 Dec 2025 11:37:11 +0800 you wrote:
-> Changes in v13:
->  - Resending only to trigger CI, no code changes.
->  - V12 Link
->    https://lore.kernel.org/all/20250916140259.400285-1-quic_shuaz@quicinc.com/
+On Wed, Nov 26, 2025 at 01:38:34AM -0800, Hangxiang Ma wrote:
+> Add SM8750 compatible consistent with CAMSS CCI interfaces.
 > 
-> Shuai Zhang (1):
->   Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is
->     pulled up by hw
-> 
-> [...]
+> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 
-Here is the summary with links:
-  - [v13,1/1] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw
-    https://git.kernel.org/bluetooth/bluetooth-next/c/4746e2cd0e18
+Just this patch merged to i2c/i2c-host.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Thanks,
+Andi
 
