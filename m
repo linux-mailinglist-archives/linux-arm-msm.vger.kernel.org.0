@@ -1,98 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-84174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D310C9E5F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 10:03:10 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id B039AC9E60D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 10:03:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E765534AD55
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 09:02:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 39B2C4E42CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 09:03:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7583229B217;
-	Wed,  3 Dec 2025 09:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D119B2DC766;
+	Wed,  3 Dec 2025 09:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IDkTHQ4E";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bz9a6HOZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k6OkwySk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="U0J8Qsk1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F58E2D8377
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 09:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8837C2D8DB9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 09:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764752504; cv=none; b=CcKi+JRiVJSYb9lBCGu3cXJvOguRi1wlhvAO3RomwZo1pnk9txagrm8eS2xpeGpIekdbOhPERW9z1Mm5X7B0VuYNOvZiOcchq54M9SsXv6v0ZeJX9cv2p9JYZo7KQ2nFIpGVxi+wcatjU3AUcbA3lrR93Vk+ZhYimVYgzsFrMh0=
+	t=1764752507; cv=none; b=mtmXh4AoDuZCYGRECmi+ZJw2o8P4gYvgynYWvhNFTVaHFAtF1ztqvlUFciXABTFrerYBFtn2jiPO/qQbOncqKB3aPELRviC+y7zd4gmoXP4QBSTor8hu3Txpy5QSBOadL2YfTydeMGMRlqMp6fX4XO965qyqRAg+XuUZOmEPxFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764752504; c=relaxed/simple;
-	bh=/wB8K03Qe+c4rlberk6ek5Ojzv4VCmDj9foHAXM7V9w=;
+	s=arc-20240116; t=1764752507; c=relaxed/simple;
+	bh=kPA8tkUzzJkkfEhWOHhYfjcTlyPOGKKoZnbgBvnbE4U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g6Tg74haUyE+pmevjrRQWfcCLrruU9QGIVHt/H9KlLyc3DAbg/nANbQScnaBoQJfpBcZ2gmqnDCCaRSU479Ukvw8/USEdfA0FGz76sQKIrHPW0wPziw7w29bpy+PgFHKhMxF2/LsFCRXNpwnJb46LsrfXOVY3S0Dl1/Mui9nQDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IDkTHQ4E; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bz9a6HOZ; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=DyXKryUlfeWVWpVs14VV9/KlngG55ekJxSH5QwMaXiX9P64Kx/NpnEiiet7osGF+bhPBfIV9vp/Lv9lEsKjGXiGj6qQUm3M62nlccYEDX+mLjXiQq89E2pQLbz5GyGq1rABL/xDAz3NFfp0aWkKoO3NtklljKHxtRVFpTXNX6WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k6OkwySk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=U0J8Qsk1; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B34jJlb4130466
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Dec 2025 09:01:42 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B380CVP918617
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Dec 2025 09:01:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=YcpW6FT5Ml5
-	cqNh4K+ZAcJVN/SL/nqamGuWANGIsHQ8=; b=IDkTHQ4EeCZUvX3Q/Dn1kCvB9yP
-	GXOAXbZ4oG2DSNSasGeydwHopMVeGaMI7c4b7Sj+qDUCoQEGGGMe88ZsV+biXo1w
-	dv3CTMOP5qersqGJY00iKodSAn/EeTOGLFNMEd1nZlIxH6IOVUjBsiMoAudfNhXh
-	NJzOS8pTsWou7HbTGXoCYCWCdcIJSB3aP+sniU0ijGsmteLM3VYL46OXLvTw//x9
-	1m5MiOIfMJFgantvj2EAcTvvJkdG0MXkQMYw5OedxW8RwBTqavzoHsqWqfhv/+06
-	Wem12B6tYI//9T7ibC2p9hc3VFNwYx1eoESNbHS4Eh5GMRn2UM+CVsNZIHw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4at5e7a946-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=rZb3EW1uNwM
+	su2S9dYe6scZ6k0307Gw6CKtkdIY0tC4=; b=k6OkwySk9qOj4EZ3npkn9jT1uGa
+	j6PTV7FE3vcYSimVRazqSKF2WetGUsr5GCR3QSxhsMtGOHHU1Crz24HDYXf7S4rQ
+	Csj8PljBULMzDcY4N+Nqh0QzzofIXyoZbqjmesePiTd95UHIVpvrX7tWPl4lGpdX
+	lv2EovymBuvYAKvL/OQdpxtcSDb+UT4YrQZyN2pH0h0iT9E225ZQVwFY5myxqPFj
+	gk0uug+KSXiLHKxghDmqstsLosCNJfcV6MZ75LNDO41FSqWFnUVeQC8WeG5DTqZY
+	ljAjkLnoIN6zQOerCObKqaJgfGLCBBY96EBNzezhH8U5oZUrBT2enasf1BQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4at8eb1qgr-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 09:01:41 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2a45fea6efbso927677eec.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 01:01:41 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 09:01:44 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b6ce1b57b9cso6633176a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 01:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764752501; x=1765357301; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1764752503; x=1765357303; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YcpW6FT5Ml5cqNh4K+ZAcJVN/SL/nqamGuWANGIsHQ8=;
-        b=bz9a6HOZJthXMckxQBjhCHhFpEYuDwV8dxVzvP2YHna//PAzNE6wfy3fcZjUJKOa9d
-         Qu91EWxK5o2oGMcxyDGBOIBB0VtbPg926Ld/asSDg7szE0Dx9yJCNiCfWCnItF68gmi1
-         Bz7MM08fK8AvRT3AetVhCpqCG0SAAMFW6Jm2iEHnX2ZpaSSt3XwLAMhBOR307sAYmOi3
-         lA8MnsiHvsDmFZVMjezRmGNaBi0BxP4tfUypwqKuzCgApEDCZI+1y4p3ufHq3WpbM8Ct
-         nzvEdE8/zz93OThoDdWxR0b9GC7KguMA6WfrVYyu89pR2HRAkRAS9/qQqlKd+6Fe5sIw
-         g/MQ==
+        bh=rZb3EW1uNwMsu2S9dYe6scZ6k0307Gw6CKtkdIY0tC4=;
+        b=U0J8Qsk1hGFxdk9MGX0f8HHUwBrWCL1dPaWYsVAshOEOXswa0KC24gJQZi+L3wKgq0
+         GIyEB+qKw+KiXeAne/yyBqIyT92lGGUdCb4+LLQjWJURfsv5l497iaUW4tX8PAO0CVdV
+         YmWBZpZhhnDMl5LsNMXkkdvTYK21ZoDkdDO/C99hEEujESw5KgFF1cPoiurxUEPF0qQV
+         UvSzitx/bDMljuOjbjwwaBB9tT4AgF4HI2+q9T1OB64ytBOdxjkx+BxxXM7RekH3As+F
+         6BRRDyd8EtxuKm/C4Yz1Tgfe5cQvlBXBHI3AraiyL6xNu1NKh/3JX19QqfqtVCBXQkYB
+         yBmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764752501; x=1765357301;
+        d=1e100.net; s=20230601; t=1764752503; x=1765357303;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YcpW6FT5Ml5cqNh4K+ZAcJVN/SL/nqamGuWANGIsHQ8=;
-        b=wzl0sC69dvvSpokbFoJHeywkxAAlnri7Ggo///yMXp+PNI6Av6Rz9DInjo+4xL+j/H
-         MfEyOh5QJ9sCJ3b5K+E7lz62lO+MY9vBFvJI7UcKLFK4wzjccRx/m5tnnG7t9NV4jDCP
-         u0FU1NDro9+0HhxGEmRl6TBljvfU8oeOj2kdtfAiQ5lvXrqI5hL0vScFIFLsoMxWoWgO
-         eAe/RGAI9jJHz+OOtMwTk4iWKST2b17KJMCPFieDLTOSk7WQF103qr+5AKzN+A60Kfz6
-         xXqBKdW1J5QjL7pRkPEVWCN63n4qd5rxt1C0Xp987LGiMH52cSKBIYbxZXrnXXuGaDbt
-         gjiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUaj0w14k7mreLWLA377IWvSyCTLifYgmuzIgfklFj1T/4HeU9ao5gXIez93H/lv4ZnsY2W/450QTF8j4Cb@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOeQ51Gn9iGnPB73v+wZllkGEZ46Ux90dLpj6E+RbU/ZZYYgWT
-	iwKsZEt/cgaw3CnmR6KtInqAHRLKtCc5Yv20oqzQNNIWhf63hb2tjWe/0HHltD0wBCGejmqpyQI
-	pa27LfFbvbpN5SieNb2i7RiRTzq1pR/c+2oDdzM5cTSYZGQcqJ+mXI1QvmotGTKOm8gLj
-X-Gm-Gg: ASbGncu8H1OiHjOWrBas65z0zdZZOTcF3WBXVvXw05N8Zu7OYux4RPX8neW/gVRfXmB
-	YixRd4qZZfzO+QxTr/PMnkfJyzgyEN1OrjiIP7lxrOUU6b0pB/ODZRfzkNXmzAlVduHUr22M4Zi
-	eXSgrxuwA+JZYE3zElqXNAkN37T0b2J9cLrvlyH3xH4aLSQTI8HmEUIeg1PnzQVKx88WpFHUTYk
-	TwJuRoVh/d57we+CZlwjHi6NeyeNZLXl7+5cD1vUI5f7VkGkmvAyxvg2+pPuI3Q5KRhT3kaaFEo
-	TYdbpjlpr2Zsq70GMlyeZ5wXddhfjqHw1L0T5DdxY7FCJ+Y/npGby4ddqlwp7mI2H9NsW303L1F
-	q+8CkGm4o/Py/E5V84X393Zv/6v1vmxwzl2h5UgfdEqWLkEKStLFcgYv3qTcwaTgP
-X-Received: by 2002:a05:7022:3844:b0:119:e569:f875 with SMTP id a92af1059eb24-11df0c51742mr1342269c88.18.1764752500965;
-        Wed, 03 Dec 2025 01:01:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGczBS18cVnxW4Bd6f5klSTSp0HnIu7NJ00x9oYdzJHtAvarBMpszrTSCdZO4jtjV255/JWBQ==
-X-Received: by 2002:a05:7022:3844:b0:119:e569:f875 with SMTP id a92af1059eb24-11df0c51742mr1342242c88.18.1764752500343;
-        Wed, 03 Dec 2025 01:01:40 -0800 (PST)
+        bh=rZb3EW1uNwMsu2S9dYe6scZ6k0307Gw6CKtkdIY0tC4=;
+        b=nW0k8n82ZPGoujWCWRgKXiwgmsmFcQ9j3ML0L+KixoLwjoWoPxaQfj7LB1aHVyV/eY
+         Gbrautasa3WYPEBfu/ILnzFx6oto8W2QWfZHTdgheHQUfGpnHMsayfRF0QEsnPMcjEc+
+         Nkx9RdvyNfEliwq6kcgJWt+3HjsTSABRLPYxkq9AxnX8zyeaL/nnZ4MX4z4urI3KJ2Jk
+         ZUG29bwBVHatGBn73EG+plasb10Niy9PMuhC2yZlrbzRtEls7rrEHD8xqargIYDfRciY
+         Wef3u3E6AY8aID6tRLMjzwfsz4v6u2doioNwo3hrCtCYMkjgRfosqN4wV7K+mfgAx6C1
+         EeSw==
+X-Forwarded-Encrypted: i=1; AJvYcCXR1lRhhXWKTzJnfW/N5V9kM0Ic21jq96KCTVWOkxl8C7FVjvaLZzloHZa3ClQLWPJ5gnfMxxOkQ6dG36x6@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOT3e9dneN+y3XrsBGGrZqWFEwzB5pztBq2vSQnK0qEn5tyAl6
+	ZGPLS75Td4WEeMgriap+0h1XoQWYUdDvdifRzTF0awvY1K3RWhhVyrnpKabnmmwGjKkIit78qf5
+	Qh5xk71YPgqCMbMw9DVwhhC8Y2TZiC1OALVCJBhHY5Zhy34AIBokBtS5mBIacCsV7Qw+E
+X-Gm-Gg: ASbGnctX9OoYWxVOWFw6BZMeJFYE6Kzpw2tx4jminHe1hpfOTB9NLHisLBgOrABIBBk
+	8H3PFDI4CpC7wD4cDif84dJ38IzmrbJhPHNUF7bjYkVu2/Y6nYDmwnqfJMP3mq3cD8f76Fv9Z+I
+	2i0uOuBfz+j/TMrt15mgmqBLqUKRwNH4H7pBF2VhdgrR34rKCvSWafJ7MFGW551oRnbAyZq2KDC
+	xBdKkuvU1kkzIIw6IuJbfxPw3WOd4cYoq8zi6OWG7lTfPVsRIgZWw3zl98EP2IV9tNt7+gzc8Zf
+	+JvDFwLFPrT5gNnW76i4k3OtBo1Ffhk7pMVycDMYhzUZOH/tF5vFBx2zrGilLPmrKJxeZeFmURb
+	CmRNF4mbJqM/PBb6fQSIh7nTeP3ArvjTf5mHAXDtm0AkEeof5aX8K6hTdpTWRAOXM
+X-Received: by 2002:a05:7022:ec83:b0:11b:a8e3:847d with SMTP id a92af1059eb24-11df0bb9d06mr1217921c88.10.1764752503300;
+        Wed, 03 Dec 2025 01:01:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHRTVucGI3GGzp21cTOp6QOsgxS3LQHECPyM0SFamlg6Es8lmswhOq1Q4cj+Q0PrZl+gRpSfw==
+X-Received: by 2002:a05:7022:ec83:b0:11b:a8e3:847d with SMTP id a92af1059eb24-11df0bb9d06mr1217895c88.10.1764752502653;
+        Wed, 03 Dec 2025 01:01:42 -0800 (PST)
 Received: from hu-songchai-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcb057cb0sm100001866c88.9.2025.12.03.01.01.39
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcb057cb0sm100001866c88.9.2025.12.03.01.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Dec 2025 01:01:39 -0800 (PST)
+        Wed, 03 Dec 2025 01:01:41 -0800 (PST)
 From: Songwei Chai <songwei.chai@oss.qualcomm.com>
 To: andersson@kernel.org, alexander.shishkin@linux.intel.com,
         kernel@oss.qualcomm.com, mike.leach@linaro.org, suzuki.poulose@arm.com,
@@ -100,9 +100,9 @@ To: andersson@kernel.org, alexander.shishkin@linux.intel.com,
 Cc: Songwei Chai <songwei.chai@oss.qualcomm.com>, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         coresight@lists.linaro.org, devicetree@vger.kernel.org
-Subject: [PATCH v8 2/7] qcom-tgu: Add TGU driver
-Date: Wed,  3 Dec 2025 01:00:50 -0800
-Message-Id: <20251203090055.2432719-3-songwei.chai@oss.qualcomm.com>
+Subject: [PATCH v8 3/7] qcom-tgu: Add signal priority support
+Date: Wed,  3 Dec 2025 01:00:51 -0800
+Message-Id: <20251203090055.2432719-4-songwei.chai@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251203090055.2432719-1-songwei.chai@oss.qualcomm.com>
 References: <20251203090055.2432719-1-songwei.chai@oss.qualcomm.com>
@@ -113,375 +113,383 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDA3MCBTYWx0ZWRfX9NqcDiZyvadP
- C4LMvgV/1NkfiyJZV1Y7LAlV1D1VPCgAA5YQ1u9smrBSF6+WbvpQdD8Q996wLniq0QhHa4ohhIP
- Be9gCOKnJ3qF9AT01R12K0kvNS7EPkm2atqJPiD2taxkVg0j9GpyQZLxZNbNdCK7UPeTqW35ufX
- ggwtUZmJa1ictwJTvRiXcyGYRxTRwTDoEGlGT+2He5CNn/5otreR7J9zVsdINqLhdVdCecuuk4m
- 8zc/6vaTpCdpXvyPIl42hKh3lpT8eXAf66+8/f7/4jS7vDIAC3DmAuQx9qZgmVuUnU9p6fKArRg
- w4GhPMEDOl27/DLW0u0R5U5t0zLQhJ9YTVpZ+V5Z5zwJOkwJP0Pa8nduQlZkghsrGd3IIuDl+yL
- qAM8fZFhVpxDl9wc4iVpbhT2WXB3lg==
-X-Authority-Analysis: v=2.4 cv=KcrfcAYD c=1 sm=1 tr=0 ts=692ffc75 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=e98LiKp/ c=1 sm=1 tr=0 ts=692ffc78 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=h99DN6MNysFgGb7_OMAA:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: WK88BcU0M5CY8gCeEUdP0Ad1XS-eXsY7
-X-Proofpoint-ORIG-GUID: WK88BcU0M5CY8gCeEUdP0Ad1XS-eXsY7
+ a=EUspDBNiAAAA:8 a=HMmvC-cB1bDe2h_eLOYA:9 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: v51nwzsKln5JfZ9w0QtAEeLICZZreDTm
+X-Proofpoint-GUID: v51nwzsKln5JfZ9w0QtAEeLICZZreDTm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDA3MCBTYWx0ZWRfX2bqrZWrd+86M
+ R4hCIjLl+decH1pwgXGKQAkKnw3s0uM2V4/423E6okLnmG5GgqGB7mMGf5ffaWpfZSwpH0gsNX6
+ Bhi96GFSQPSsqXwIjvviYLlbemUQYellpvubiyaD9libbIts2sney5HAvOxsm7Eiiesbuwe16lB
+ clguw3FiNgfUJPFmKMd9CuLL/DCP1GpxQ1+RFfoUiox3AYSWz8RQXI2l99kCROKK9SqkabhOmUS
+ 9Lvwo2rv/MdHyoA/Uq94TziWvk9O5c6KVwpbuMpsVOdlQPMnEQZ6TiYrYTrkc9HXSkjv8VXJxFO
+ fNaw9pXL0woUwtmtmmxH+YXkACyN34ANzmTsg5PZY9qBe4AZHQK6WDzcK2zypwPZy2h5/+YjajH
+ TpNlV8DSzSaOebbPSwBcoozxEsT4vg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-02_01,2025-11-27_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 malwarescore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030070
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512030070
 
-Add driver to support device TGU (Trigger Generation Unit).
-TGU is a Data Engine which can be utilized to sense a plurality of
-signals and create a trigger into the CTI or generate interrupts to
-processors. Add probe/enable/disable functions for tgu.
+Like circuit of a Logic analyzer, in TGU, the requirement could be
+configured in each step and the trigger will be created once the
+requirements are met. Add priority functionality here to sort the
+signals into different priorities. The signal which is wanted could
+be configured in each step's priority node, the larger number means
+the higher priority and the signal with higher priority will be sensed
+more preferentially.
 
 Signed-off-by: Songwei Chai <songwei.chai@oss.qualcomm.com>
 ---
- .../testing/sysfs-bus-coresight-devices-tgu   |   9 +
- drivers/Makefile                              |   1 +
- drivers/hwtracing/Kconfig                     |   2 +
- drivers/hwtracing/qcom/Kconfig                |  18 ++
- drivers/hwtracing/qcom/Makefile               |   3 +
- drivers/hwtracing/qcom/tgu.c                  | 210 ++++++++++++++++++
- drivers/hwtracing/qcom/tgu.h                  |  33 +++
- 7 files changed, 276 insertions(+)
- create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
- create mode 100644 drivers/hwtracing/qcom/Kconfig
- create mode 100644 drivers/hwtracing/qcom/Makefile
- create mode 100644 drivers/hwtracing/qcom/tgu.c
- create mode 100644 drivers/hwtracing/qcom/tgu.h
+ .../testing/sysfs-bus-coresight-devices-tgu   |   7 +
+ drivers/hwtracing/qcom/tgu.c                  | 155 ++++++++++++++++++
+ drivers/hwtracing/qcom/tgu.h                  | 111 +++++++++++++
+ 3 files changed, 273 insertions(+)
 
 diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-new file mode 100644
-index 000000000000..ccc2bc92edcd
---- /dev/null
+index ccc2bc92edcd..eafb0e0dd030 100644
+--- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
 +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tgu
-@@ -0,0 +1,9 @@
-+What:		/sys/bus/coresight/devices/<tgu-name>/enable_tgu
+@@ -7,3 +7,10 @@ Description:
+ 		Accepts only one of the 2 values -  0 or 1.
+ 		0 : disable TGU.
+ 		1 : enable TGU.
++
++What:		/sys/bus/coresight/devices/<tgu-name>/step[0:7]_priority[0:3]/reg[0:17]
 +Date:		December 2025
 +KernelVersion	6.18
 +Contact:	Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Songwei Chai <songwei.chai@oss.qualcomm.com>
 +Description:
-+		(RW) Set/Get the enable/disable status of TGU
-+		Accepts only one of the 2 values -  0 or 1.
-+		0 : disable TGU.
-+		1 : enable TGU.
-diff --git a/drivers/Makefile b/drivers/Makefile
-index 20eb17596b89..46cd62aabfe8 100644
---- a/drivers/Makefile
-+++ b/drivers/Makefile
-@@ -176,6 +176,7 @@ obj-$(CONFIG_RAS)		+= ras/
- obj-$(CONFIG_USB4)		+= thunderbolt/
- obj-$(CONFIG_CORESIGHT)		+= hwtracing/coresight/
- obj-y				+= hwtracing/intel_th/
-+obj-y				+= hwtracing/qcom/
- obj-$(CONFIG_STM)		+= hwtracing/stm/
- obj-$(CONFIG_HISI_PTT)		+= hwtracing/ptt/
- obj-y				+= android/
-diff --git a/drivers/hwtracing/Kconfig b/drivers/hwtracing/Kconfig
-index 911ee977103c..8a640218eed8 100644
---- a/drivers/hwtracing/Kconfig
-+++ b/drivers/hwtracing/Kconfig
-@@ -7,4 +7,6 @@ source "drivers/hwtracing/intel_th/Kconfig"
- 
- source "drivers/hwtracing/ptt/Kconfig"
- 
-+source "drivers/hwtracing/qcom/Kconfig"
-+
- endmenu
-diff --git a/drivers/hwtracing/qcom/Kconfig b/drivers/hwtracing/qcom/Kconfig
-new file mode 100644
-index 000000000000..d6f6d4b0f28e
---- /dev/null
-+++ b/drivers/hwtracing/qcom/Kconfig
-@@ -0,0 +1,18 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+#
-+# QCOM specific hwtracing drivers
-+#
-+menu "Qualcomm specific hwtracing drivers"
-+
-+config QCOM_TGU
-+	tristate "QCOM Trigger Generation Unit driver"
-+	help
-+	  This driver provides support for Trigger Generation Unit that is
-+	  used to detect patterns or sequences on a given set of signals.
-+	  TGU is used to monitor a particular bus within a given region to
-+	  detect illegal transaction sequences or slave responses. It is also
-+	  used to monitor a data stream to detect protocol violations and to
-+	  provide a trigger point for centering data around a specific event
-+	  within the trace data buffer.
-+
-+endmenu
-diff --git a/drivers/hwtracing/qcom/Makefile b/drivers/hwtracing/qcom/Makefile
-new file mode 100644
-index 000000000000..5a0a868c1ea0
---- /dev/null
-+++ b/drivers/hwtracing/qcom/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+obj-$(CONFIG_QCOM_TGU) += tgu.o
++		(RW) Set/Get the sensed signal with specific step and priority for TGU.
 diff --git a/drivers/hwtracing/qcom/tgu.c b/drivers/hwtracing/qcom/tgu.c
-new file mode 100644
-index 000000000000..368bb196b984
---- /dev/null
+index 368bb196b984..a1ad8d97e9d2 100644
+--- a/drivers/hwtracing/qcom/tgu.c
 +++ b/drivers/hwtracing/qcom/tgu.c
-@@ -0,0 +1,210 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/amba/bus.h>
-+#include <linux/coresight.h>
-+#include <linux/device.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "../coresight/coresight-priv.h"
-+#include "tgu.h"
-+
-+DEFINE_CORESIGHT_DEVLIST(tgu_devs, "tgu");
-+
-+static void tgu_write_all_hw_regs(struct tgu_drvdata *drvdata)
+@@ -17,14 +17,120 @@
+ 
+ DEFINE_CORESIGHT_DEVLIST(tgu_devs, "tgu");
+ 
++static int calculate_array_location(struct tgu_drvdata *drvdata,
++				   int step_index, int operation_index,
++				   int reg_index)
 +{
-+	CS_UNLOCK(drvdata->base);
-+	/* Enable TGU to program the triggers */
-+	writel(1, drvdata->base + TGU_CONTROL);
-+	CS_LOCK(drvdata->base);
++	return operation_index * (drvdata->max_step) * (drvdata->max_reg) +
++		step_index * (drvdata->max_reg) + reg_index;
 +}
 +
-+static int tgu_enable(struct coresight_device *csdev, enum cs_mode mode,
-+		      void *data)
++static ssize_t tgu_dataset_show(struct device *dev,
++				struct device_attribute *attr, char *buf)
 +{
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	guard(spinlock)(&drvdata->lock);
-+	if (drvdata->enable)
-+		return -EBUSY;
-+
-+	tgu_write_all_hw_regs(drvdata);
-+	drvdata->enable = true;
-+
-+	return 0;
-+}
-+
-+static int tgu_disable(struct coresight_device *csdev, void *data)
-+{
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+
-+	spin_lock(&drvdata->lock);
-+	if (drvdata->enable) {
-+		CS_UNLOCK(drvdata->base);
-+		writel(0, drvdata->base + TGU_CONTROL);
-+		CS_LOCK(drvdata->base);
-+
-+		drvdata->enable = false;
-+	}
-+	spin_unlock(&drvdata->lock);
-+	return 0;
-+}
-+
-+static ssize_t enable_tgu_show(struct device *dev,
-+			       struct device_attribute *attr, char *buf)
-+{
-+	bool enabled;
++	int index;
 +	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
++	struct tgu_attribute *tgu_attr =
++			container_of(attr, struct tgu_attribute, attr);
 +
-+	spin_lock(&drvdata->lock);
-+	enabled = drvdata->enable;
-+	spin_unlock(&drvdata->lock);
++	index = calculate_array_location(drvdata, tgu_attr->step_index,
++					 tgu_attr->operation_index,
++					 tgu_attr->reg_num);
 +
-+	return sysfs_emit(buf, "%d\n", enabled);
++	return sysfs_emit(buf, "0x%x\n",
++			  drvdata->value_table->priority[index]);
 +}
 +
-+/* enable_tgu_store - Configure Trace and Gating Unit (TGU) triggers. */
-+static ssize_t enable_tgu_store(struct device *dev,
-+				struct device_attribute *attr,
-+				const char *buf,
-+				size_t size)
++static ssize_t tgu_dataset_store(struct device *dev,
++				 struct device_attribute *attr,
++				 const char *buf, size_t size)
 +{
-+	int ret = 0;
++	int index;
 +	unsigned long val;
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
 +
-+	ret = kstrtoul(buf, 0, &val);
-+	if (ret)
-+		return ret;
++	struct tgu_drvdata *tgu_drvdata = dev_get_drvdata(dev->parent);
++	struct tgu_attribute *tgu_attr =
++		container_of(attr, struct tgu_attribute, attr);
 +
-+	if (val) {
-+		ret = pm_runtime_resume_and_get(dev->parent);
-+		if (ret)
-+			return ret;
-+		ret = tgu_enable(drvdata->csdev, CS_MODE_SYSFS, NULL);
-+		if (ret)
-+			pm_runtime_put(dev->parent);
-+	} else {
-+		ret = tgu_disable(drvdata->csdev, NULL);
-+		pm_runtime_put(dev->parent);
-+	}
++	if (kstrtoul(buf, 0, &val))
++		return -EINVAL;
 +
-+	if (ret)
-+		return ret;
++	guard(spinlock)(&tgu_drvdata->lock);
++	index = calculate_array_location(tgu_drvdata, tgu_attr->step_index,
++					 tgu_attr->operation_index,
++					 tgu_attr->reg_num);
++
++	tgu_drvdata->value_table->priority[index] = val;
 +	return size;
 +}
-+static DEVICE_ATTR_RW(enable_tgu);
 +
-+static const struct coresight_ops_helper tgu_helper_ops = {
-+	.enable = tgu_enable,
-+	.disable = tgu_disable,
-+};
-+
-+static const struct coresight_ops tgu_ops = {
-+	.helper_ops = &tgu_helper_ops,
-+};
-+
-+static struct attribute *tgu_common_attrs[] = {
-+	&dev_attr_enable_tgu.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group tgu_common_grp = {
-+	.attrs = tgu_common_attrs,
-+	NULL,
-+};
-+
-+static const struct attribute_group *tgu_attr_groups[] = {
-+	&tgu_common_grp,
-+	NULL,
-+};
-+
-+static int tgu_probe(struct amba_device *adev, const struct amba_id *id)
++static umode_t tgu_node_visible(struct kobject *kobject,
++				struct attribute *attr,
++				int n)
 +{
-+	int ret = 0;
-+	struct device *dev = &adev->dev;
-+	struct coresight_desc desc = { 0 };
-+	struct coresight_platform_data *pdata;
-+	struct tgu_drvdata *drvdata;
++	struct device *dev = kobj_to_dev(kobject);
++	struct tgu_drvdata *drvdata = dev_get_drvdata(dev->parent);
++	int ret = SYSFS_GROUP_INVISIBLE;
 +
-+	desc.name = coresight_alloc_device_name(&tgu_devs, dev);
-+	if (!desc.name)
-+		return -ENOMEM;
++	struct device_attribute *dev_attr =
++		container_of(attr, struct device_attribute, attr);
++	struct tgu_attribute *tgu_attr =
++		container_of(dev_attr, struct tgu_attribute, attr);
 +
-+	pdata = coresight_get_platform_data(dev);
-+	if (IS_ERR(pdata))
-+		return PTR_ERR(pdata);
-+
-+	adev->dev.platform_data = pdata;
-+
-+	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-+	if (!drvdata)
-+		return -ENOMEM;
-+
-+	drvdata->dev = &adev->dev;
-+	dev_set_drvdata(dev, drvdata);
-+
-+	drvdata->base = devm_ioremap_resource(dev, &adev->res);
-+	if (!drvdata->base)
-+		return -ENOMEM;
-+
-+	spin_lock_init(&drvdata->lock);
-+
-+	drvdata->enable = false;
-+	desc.type = CORESIGHT_DEV_TYPE_HELPER;
-+	desc.pdata = adev->dev.platform_data;
-+	desc.dev = &adev->dev;
-+	desc.ops = &tgu_ops;
-+	desc.groups = tgu_attr_groups;
-+
-+	drvdata->csdev = coresight_register(&desc);
-+	if (IS_ERR(drvdata->csdev)) {
-+		ret = PTR_ERR(drvdata->csdev);
-+		goto err;
++	if (tgu_attr->step_index < drvdata->max_step) {
++		ret = (tgu_attr->reg_num < drvdata->max_reg) ?
++			attr->mode : 0;
 +	}
-+
-+	pm_runtime_put(&adev->dev);
-+	return 0;
-+err:
-+	pm_runtime_put(&adev->dev);
 +	return ret;
 +}
 +
-+static void tgu_remove(struct amba_device *adev)
-+{
-+	struct tgu_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+ static void tgu_write_all_hw_regs(struct tgu_drvdata *drvdata)
+ {
++	int i, j, k, index;
 +
-+	coresight_unregister(drvdata->csdev);
+ 	CS_UNLOCK(drvdata->base);
++	for (i = 0; i < drvdata->max_step; i++) {
++		for (j = 0; j < MAX_PRIORITY; j++) {
++			for (k = 0; k < drvdata->max_reg; k++) {
++				index = calculate_array_location(
++							drvdata, i, j, k);
++
++				writel(drvdata->value_table->priority[index],
++					drvdata->base +
++					PRIORITY_REG_STEP(i, j, k));
++			}
++		}
++	}
+ 	/* Enable TGU to program the triggers */
+ 	writel(1, drvdata->base + TGU_CONTROL);
+ 	CS_LOCK(drvdata->base);
+ }
+ 
++static void tgu_set_reg_number(struct tgu_drvdata *drvdata)
++{
++	int num_sense_input;
++	int num_reg;
++	u32 devid;
++
++	devid = readl(drvdata->base + CORESIGHT_DEVID);
++
++	num_sense_input = TGU_DEVID_SENSE_INPUT(devid);
++	if (((num_sense_input * NUMBER_BITS_EACH_SIGNAL) % LENGTH_REGISTER) == 0)
++		num_reg = (num_sense_input * NUMBER_BITS_EACH_SIGNAL) / LENGTH_REGISTER;
++	else
++		num_reg = ((num_sense_input * NUMBER_BITS_EACH_SIGNAL) / LENGTH_REGISTER) + 1;
++	drvdata->max_reg = num_reg;
 +}
 +
-+static const struct amba_id tgu_ids[] = {
-+	{
-+		.id = 0x000f0e00,
-+		.mask = 0x000fffff,
-+		.data = "TGU",
-+	},
-+	{ 0, 0, NULL },
-+};
++static void tgu_set_steps(struct tgu_drvdata *drvdata)
++{
++	u32 devid;
 +
-+MODULE_DEVICE_TABLE(amba, tgu_ids);
++	devid = readl(drvdata->base + CORESIGHT_DEVID);
 +
-+static struct amba_driver tgu_driver = {
-+	.drv = {
-+		.name = "qcom-tgu",
-+		.suppress_bind_attrs = true,
-+	},
-+	.probe = tgu_probe,
-+	.remove = tgu_remove,
-+	.id_table = tgu_ids,
-+};
++	drvdata->max_step = TGU_DEVID_STEPS(devid);
++}
 +
-+module_amba_driver(tgu_driver);
+ static int tgu_enable(struct coresight_device *csdev, enum cs_mode mode,
+ 		      void *data)
+ {
+@@ -122,6 +228,38 @@ static const struct attribute_group tgu_common_grp = {
+ 
+ static const struct attribute_group *tgu_attr_groups[] = {
+ 	&tgu_common_grp,
++	PRIORITY_ATTRIBUTE_GROUP_INIT(0, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(0, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(0, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(0, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(1, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(1, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(1, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(1, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(2, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(2, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(2, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(2, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(3, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(3, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(3, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(3, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(4, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(4, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(4, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(4, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(5, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(5, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(5, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(5, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(6, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(6, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(6, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(6, 3),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(7, 0),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(7, 1),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(7, 2),
++	PRIORITY_ATTRIBUTE_GROUP_INIT(7, 3),
+ 	NULL,
+ };
+ 
+@@ -156,6 +294,23 @@ static int tgu_probe(struct amba_device *adev, const struct amba_id *id)
+ 
+ 	spin_lock_init(&drvdata->lock);
+ 
++	tgu_set_reg_number(drvdata);
++	tgu_set_steps(drvdata);
 +
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Qualcomm TGU driver");
++	drvdata->value_table =
++		devm_kzalloc(dev, sizeof(*drvdata->value_table), GFP_KERNEL);
++	if (!drvdata->value_table)
++		return -ENOMEM;
++
++	drvdata->value_table->priority = devm_kzalloc(
++		dev,
++		MAX_PRIORITY * drvdata->max_reg * drvdata->max_step *
++			sizeof(*(drvdata->value_table->priority)),
++		GFP_KERNEL);
++
++	if (!drvdata->value_table->priority)
++		return -ENOMEM;
++
+ 	drvdata->enable = false;
+ 	desc.type = CORESIGHT_DEV_TYPE_HELPER;
+ 	desc.pdata = adev->dev.platform_data;
 diff --git a/drivers/hwtracing/qcom/tgu.h b/drivers/hwtracing/qcom/tgu.h
-new file mode 100644
-index 000000000000..1a55da90f521
---- /dev/null
+index 1a55da90f521..444804e52337 100644
+--- a/drivers/hwtracing/qcom/tgu.h
 +++ b/drivers/hwtracing/qcom/tgu.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
+@@ -9,6 +9,111 @@
+ /* Register addresses */
+ #define TGU_CONTROL 0x0000
+ 
++#define TGU_DEVID_SENSE_INPUT(devid_val) ((int) BMVAL(devid_val, 10, 17))
++#define TGU_DEVID_STEPS(devid_val) ((int)BMVAL(devid_val, 3, 6))
++#define NUMBER_BITS_EACH_SIGNAL 4
++#define LENGTH_REGISTER 32
++
 +/*
-+ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef _QCOM_TGU_H
-+#define _QCOM_TGU_H
-+
-+/* Register addresses */
-+#define TGU_CONTROL 0x0000
-+
-+/**
-+ * struct tgu_drvdata - Data structure for a TGU (Trigger Generator Unit)
-+ * @base: Memory-mapped base address of the TGU device
-+ * @dev: Pointer to the associated device structure
-+ * @csdev: Pointer to the associated coresight device
-+ * @lock: Spinlock for handling concurrent access
-+ * @enable: Flag indicating whether the TGU device is enabled
++ *  TGU configuration space                              Step configuration
++ *  offset table                                         space layout
++ * x-------------------------x$                          x-------------x$
++ * |                         |$                          |             |$
++ * |                         |                           |   reserve   |$
++ * |                         |                           |             |$
++ * |coresight management     |                           |-------------|base+n*0x1D8+0x1F4$
++ * |     registe             |                     |---> |prioroty[3]  |$
++ * |                         |                     |     |-------------|base+n*0x1D8+0x194$
++ * |                         |                     |     |prioroty[2]  |$
++ * |-------------------------|                     |     |-------------|base+n*0x1D8+0x134$
++ * |                         |                     |     |prioroty[1]  |$
++ * |         step[7]         |                     |     |-------------|base+n*0x1D8+0xD4$
++ * |-------------------------|->base+0x40+7*0x1D8  |     |prioroty[0]  |$
++ * |                         |                     |     |-------------|base+n*0x1D8+0x74$
++ * |         ...             |                     |     |  condition  |$
++ * |                         |                     |     |   select    |$
++ * |-------------------------|->base+0x40+1*0x1D8  |     |-------------|base+n*0x1D8+0x60$
++ * |                         |                     |     |  condition  |$
++ * |         step[0]         |-------------------->      |   decode    |$
++ * |-------------------------|-> base+0x40               |-------------|base+n*0x1D8+0x50$
++ * |                         |                           |             |$
++ * | Control and status space|                           |Timer/Counter|$
++ * |        space            |                           |             |$
++ * x-------------------------x->base                     x-------------x base+n*0x1D8+0x40$
 + *
-+ * This structure defines the data associated with a TGU device,
-+ * including its base address, device pointers, clock, spinlock for
-+ * synchronization, trigger data pointers, maximum limits for various
-+ * trigger-related parameters, and enable status.
 + */
-+struct tgu_drvdata {
-+	void __iomem *base;
-+	struct device *dev;
-+	struct coresight_device *csdev;
-+	spinlock_t lock;
-+	bool enable;
++#define STEP_OFFSET 0x1D8
++#define PRIORITY_START_OFFSET 0x0074
++#define PRIORITY_OFFSET 0x60
++#define REG_OFFSET 0x4
++
++/* Calculate compare step addresses */
++#define PRIORITY_REG_STEP(step, priority, reg)\
++	(PRIORITY_START_OFFSET + PRIORITY_OFFSET * priority +\
++	 REG_OFFSET * reg + STEP_OFFSET * step)
++
++#define tgu_dataset_rw(name, step_index, type, reg_num)                  \
++	(&((struct tgu_attribute[]){ {                                   \
++		__ATTR(name, 0644, tgu_dataset_show, tgu_dataset_store), \
++		step_index,                                              \
++		type,                                                    \
++		reg_num,                                                 \
++	} })[0].attr.attr)
++
++#define STEP_PRIORITY(step_index, reg_num, priority)                     \
++	tgu_dataset_rw(reg##reg_num, step_index, TGU_PRIORITY##priority, \
++			reg_num)
++
++#define STEP_PRIORITY_LIST(step_index, priority)  \
++	{STEP_PRIORITY(step_index, 0, priority),  \
++	 STEP_PRIORITY(step_index, 1, priority),  \
++	 STEP_PRIORITY(step_index, 2, priority),  \
++	 STEP_PRIORITY(step_index, 3, priority),  \
++	 STEP_PRIORITY(step_index, 4, priority),  \
++	 STEP_PRIORITY(step_index, 5, priority),  \
++	 STEP_PRIORITY(step_index, 6, priority),  \
++	 STEP_PRIORITY(step_index, 7, priority),  \
++	 STEP_PRIORITY(step_index, 8, priority),  \
++	 STEP_PRIORITY(step_index, 9, priority),  \
++	 STEP_PRIORITY(step_index, 10, priority), \
++	 STEP_PRIORITY(step_index, 11, priority), \
++	 STEP_PRIORITY(step_index, 12, priority), \
++	 STEP_PRIORITY(step_index, 13, priority), \
++	 STEP_PRIORITY(step_index, 14, priority), \
++	 STEP_PRIORITY(step_index, 15, priority), \
++	 STEP_PRIORITY(step_index, 16, priority), \
++	 STEP_PRIORITY(step_index, 17, priority), \
++	 NULL                   \
++	}
++
++#define PRIORITY_ATTRIBUTE_GROUP_INIT(step, priority)\
++	(&(const struct attribute_group){\
++		.attrs = (struct attribute*[])STEP_PRIORITY_LIST(step, priority),\
++		.is_visible = tgu_node_visible,\
++		.name = "step" #step "_priority" #priority \
++	})
++
++enum operation_index {
++	TGU_PRIORITY0,
++	TGU_PRIORITY1,
++	TGU_PRIORITY2,
++	TGU_PRIORITY3,
 +};
 +
-+#endif
++/* Maximum priority that TGU supports */
++#define MAX_PRIORITY 4
++
++struct tgu_attribute {
++	struct device_attribute attr;
++	u32 step_index;
++	enum operation_index operation_index;
++	u32 reg_num;
++};
++
++struct value_table {
++	unsigned int *priority;
++};
++
+ /**
+  * struct tgu_drvdata - Data structure for a TGU (Trigger Generator Unit)
+  * @base: Memory-mapped base address of the TGU device
+@@ -16,6 +121,9 @@
+  * @csdev: Pointer to the associated coresight device
+  * @lock: Spinlock for handling concurrent access
+  * @enable: Flag indicating whether the TGU device is enabled
++ * @value_table: Store given value based on relevant parameters.
++ * @max_reg: Maximum number of registers
++ * @max_step: Maximum step size
+  *
+  * This structure defines the data associated with a TGU device,
+  * including its base address, device pointers, clock, spinlock for
+@@ -28,6 +136,9 @@ struct tgu_drvdata {
+ 	struct coresight_device *csdev;
+ 	spinlock_t lock;
+ 	bool enable;
++	struct value_table *value_table;
++	int max_reg;
++	int max_step;
+ };
+ 
+ #endif
 -- 
 2.34.1
 
