@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 700B2CA0AE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 18:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5444FCA10F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 19:40:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BB1E6354463C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 17:34:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7ED9D3058A49
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 17:41:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FE0C32E125;
-	Wed,  3 Dec 2025 17:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8E73330301;
+	Wed,  3 Dec 2025 17:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEJ/p0u8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afV29PkZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D64932C317;
-	Wed,  3 Dec 2025 17:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E686320A20;
+	Wed,  3 Dec 2025 17:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764783079; cv=none; b=frWHMAxsxs3hnmPvZMul6byiB/PfGgoOmjCZLwZC4dzHGtdkddo7bCnCQkDf7dswKL+xz7HNU3rqkt8zqWYbKYRIR2tdlhF160ooIlq1qD/9ATgIrMXAdv0AgOULpkHlbEeJctZ6Zn4VyZ3jWkOS1Voww+cbmn+vyd7FSQCyi30=
+	t=1764783664; cv=none; b=GchdLR0+d/FkpRB6bkR3tWtGZeU290/8dFh8vU+vdEc0xZXMVbAXls5a8uSGPzIZwWdEZ3Ew3Rcnah8P3b3Ms0iUSin+RBNayKn0EoyuhRVTlvN+vZOI1B+S6lpx/RT51omQ4VKdJ5XBO7+CrgyVjY1jiB0q48edk8j0TnmLHMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764783079; c=relaxed/simple;
-	bh=Ibd7rUnepKLPpEkPNAHbIbgut2XMz2+0Lk8V8an6UWM=;
+	s=arc-20240116; t=1764783664; c=relaxed/simple;
+	bh=jTlU5J/98LTFa8J+R3k6ZqKjTL28tIJLoSC1pqUeBVg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fsDOhAkxcMsDyVyeDifthT/L834qZW9sIYCyZWPkS8RlcSZs3zA5zN01wjWShi2Ltulz1B09OViL8au1CearZO2UiSGAhjbvwVWB0JZXwXG34EdcagSiIJd6rUvjalR8P96UzfbMXGlz/6ec5jI1SvwkWxGbtrYeJt4IVefIlwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEJ/p0u8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72DBC4CEF5;
-	Wed,  3 Dec 2025 17:31:13 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=dlSDN9tuQMP5ApAFrOSjuBw6crT0iL5PGDs88yEN6hEMxme7ZADN0z4+SlXFQwMOSISS6463NCbjO5f6D6RtKkLbB865UBq+g9bbwnqQFeEh9vUk2LlOjweYgaOhujEdOwVsmx90Nb0Io17Es68sleFP20l/LIiUcSBcUT3C1fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afV29PkZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09DDC4CEF5;
+	Wed,  3 Dec 2025 17:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764783078;
-	bh=Ibd7rUnepKLPpEkPNAHbIbgut2XMz2+0Lk8V8an6UWM=;
+	s=k20201202; t=1764783663;
+	bh=jTlU5J/98LTFa8J+R3k6ZqKjTL28tIJLoSC1pqUeBVg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BEJ/p0u8HGiIHcb1bGNF2Tkn01m0REe5NdeEqnMl77yklJC8Quwh2Nq82YAS/hzEr
-	 ADCmXJ7STXzi2MPkokO6UlyY8++KHisCduMIqez20i6n5VkOentsGZ9yEsZ4EjuQ0d
-	 CRf8WvE03W08O046MNVv7qXGZRmOlKVHYqqYBHMpFbswbSZXYniQU1THvBxKapvoC0
-	 woCaWEjBPPnoXUzmeFFyDK8miCpA4Ty+q7RadbJJzyEBT3c46IDUxxgm9OnCXqT+cI
-	 J47eWYZC3dLK+fSWdvjr9Eibyqf/W+3D1q3Wo5450uCzwQ4D77aPlJblolcWvutuQt
-	 0zqTKsYGEx1aQ==
-Message-ID: <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
-Date: Wed, 3 Dec 2025 18:31:11 +0100
+	b=afV29PkZh6PtkLzFLM5H/qCAld/CW1SUQVF/GgdDg8vjppn8Xndbu+mk2PRefbPGw
+	 QG9Lz8tq2dN3s8kHLYZojZDA6vAMYy9Rv/SZ2ngoXtnirvPuYxZvr87qokNMLGyO7C
+	 YwQOfKx5ITn7YGt7I2pn8p2R4ffTlBS/eouv2DdyHi3G2zfbbqkrcdwknJqFy7SzKj
+	 fonkbiTPqUIBowuissvczes74oSOGLHUpz3LgtliwLOmxYem3wHaJwiljedhKbeP5f
+	 0SE+T2KyCZENGNFkKwq2ZyXL8WHU4it3luCmYjXHajgi3Li7xclgpCm/pmZ3VKJnnh
+	 yfPL1L3HB5KZA==
+Message-ID: <ce8acb9c-4cfc-4a4e-bbfb-05002c882f42@kernel.org>
+Date: Wed, 3 Dec 2025 18:40:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,28 +48,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
- device tree
-To: Pavel Machek <pavel@ucw.cz>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
- Qiang Yu <qiang.yu@oss.qualcomm.com>,
- Manish Pandey <manish.pandey@oss.qualcomm.com>,
- Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
- Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
- Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
- Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
- Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
- Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <aS8uJCnb0xOd6uby@duo.ucw.cz>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8550-hdk-rear-camera-card: move
+ camss status property
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251203040538.71119-1-vladimir.zapolskiy@linaro.org>
+ <20251203040538.71119-7-vladimir.zapolskiy@linaro.org>
+ <4149ccd0-0583-4d7b-a37a-df899b3e15fb@kernel.org>
+ <1e5562ad-a53c-4a06-9428-f7c010cac85c@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,32 +106,50 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aS8uJCnb0xOd6uby@duo.ucw.cz>
+In-Reply-To: <1e5562ad-a53c-4a06-9428-f7c010cac85c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/12/2025 19:21, Pavel Machek wrote:
-> Hi!
-> 
->> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
->> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+On 03/12/2025 13:02, Neil Armstrong wrote:
+> On 12/3/25 09:32, Krzysztof Kozlowski wrote:
+>> On 03/12/2025 05:05, Vladimir Zapolskiy wrote:
+>>> Conventionally status property of device tree nodes is the last one in
+>>> the list, move it there.
+>>>
+>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso | 3 +--
+>>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>>> index 21bfba6a1182..544cec93353a 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk-rear-camera-card.dtso
+>>> @@ -13,10 +13,9 @@
+>>>   /plugin/;
+>>>   
+>>>   &camss {
+>>> -	status = "okay";
+>>> -
+>>>   	vdda-phy-supply = <&vreg_l1e_0p88>;
+>>>   	vdda-pll-supply = <&vreg_l3e_1p2>;
+>>> +	status = "okay";
 >>
->> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
->> and QRD (Qualcommm Reference Device) are splited in three:
 >>
->> - 1-3: MTP board boot-to-shell with basic function.
->> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, tsense, bus, crypto etc. Add QRD board support.
->> - 17-20: Multimedia features including audio, video and camss.
+>> NAK, making such changes in multiple patches is absolute churn.
 > 
-> Thanks for doing this. I assume there devices available with this are
-> quite expensive/hard to get at this point?
+> While it may be a "churn" for you, the patch is perfectly valid
+> and a NAK is not appropriate since Konrad asked this to be changed
+> on the already merged original patchset.
 > 
-> Please cc phone-devel@vger.kernel.org with phone related patches.
+> While you're right we should group such changes, it happens that
+> he sm8650 files already have an unified and clean style, and it's
+> not a churn to keep the style unified.
 
-That's not even a phone, anyway contributors should not cc lists which
-are not relevant to the posting and not pointed out by maintainers. You
-cannot just ask people to keep posting before you wish to look at it.
-Please use lei for own filters or adjust maintainers file.
+We exactly had this discussion and the judgement expressed by Bjorn,
+which I general support, was don't change existing source code till we
+have the linter for that. And patch one-node-by-one is not valid. Such
+patch is still NAK.
 
 Best regards,
 Krzysztof
