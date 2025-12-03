@@ -1,158 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-84230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82964C9F2E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 14:48:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA065C9F316
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 14:54:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 01AAE347D76
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 13:48:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8DA33A4C30
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 13:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D06DB2EFD9C;
-	Wed,  3 Dec 2025 13:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81F7C2FB62A;
+	Wed,  3 Dec 2025 13:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="SNxjUbhE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TdoP35Ab"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348E02EDD7A;
-	Wed,  3 Dec 2025 13:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC862FB987
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Dec 2025 13:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764769683; cv=none; b=h+PKq/1ZICa3Da6ovz2eWIJZGctabVUdbUps7hzbPval8ltkt1fsnCar7gDGZhSqMIz90J2fPl2r925kpD4Yg/vXp7yUj8ZZteE84r5BM7jLOwlC3ELJLBmAgAZ5c1qXfJBis9+lDulcFyje11CW9Z1ydeGbn1WjzgjtZ4AxCUM=
+	t=1764770042; cv=none; b=tQF2XGBsvoKXIf6vHrzvJwvCVgofgC9Y1zhqTEUBBOnqp5jW6h+8meJVff8WfPh6HcTSMVsZ/sRtHzCJ4KaL0D2ibW1j4PIikuWr6RSTyoGWPGCKhRzervQhxWmVYkyZDiqLg/2vsz+7W7icA9uqUPBbGL7EKNNOn1gvd5hqE/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764769683; c=relaxed/simple;
-	bh=Z6A2oGoEdf6X5p1kJWjdo4i1kmb95AUeoFMWsppUO7E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uXmhx18QE/9WYftB01VGzFZtko/uLyk1KbvmBKHJbCmKg5fyy4DaG/hcTQdggm5yrMHVnmFs/E7ra8vK3h/1E4rtfxupZtdBh4zOeMvhgCYXm9mW89L4TeKjNz0vS7G9QXr/IrFAC7V03dGWY0vgSkISLwhA6vF7fhgY/pk0UEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=SNxjUbhE; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.198.28] (89-24-57-208.nat.epc.tmcz.cz [89.24.57.208])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 9A8565340D20;
-	Wed, 03 Dec 2025 14:47:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1764769678;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=pZ/twsoKZsAyt3RQQYDWTYhHtCC8Om19340nx1x7gKQ=;
-	b=SNxjUbhE0KTTdEHB/lH4HHh6O8jXl6ODsNCOTTjykHtYYsdMYH+PgNpl9boOcYvWWNxf68
-	mPVk/2W9mgvpIgze2AdBTBEQn/IdxPNFWjyHVZvQI3LOxpg2dKQB+TrQBwFf2f7g62cwd2
-	vH84Ktyq7qS5eC6nxYuHFdmUi9YJAS0=
-Message-ID: <a9ba1f0a-bc98-4bcb-9062-026f604bc44e@ixit.cz>
-Date: Wed, 3 Dec 2025 14:47:57 +0100
+	s=arc-20240116; t=1764770042; c=relaxed/simple;
+	bh=vMhda1+AxVHv3TrgQbdTvSItRk2i8ZQuMHNHAdy903M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bUCGXL9Yt95oLcETCzqg8nn+Zu/FMfLquIkEx4/i4oXyQmakTDuvthw3RngzVohUD5oE4+/H1YwXw7ml9D6nxMSWVvoidmEBaBziUje4He7dKMaE0dOPlaov/LOSXwJqSzeMuLiGKVQiIYVafN8bvgCNmXXNxjAaVwj0z3vZ2Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TdoP35Ab; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47775fb6c56so62562505e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 05:54:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764770039; x=1765374839; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aioLnfL0bmSCseYA1z3bCzauxJY/fb2sxvmbPwmSqFk=;
+        b=TdoP35AbQpGy6nTqpk4xTaaWx572rIhdgaXrFa93mJGDzNeu0lKDFllVEgg+BdBUMk
+         wdA7INALVZEZ26m13PhN+xjmqhB4Bz6BFVE4whC+eo4CnpI/dC15BQOM6R2VTkITtCyz
+         Wzrw1Zvk4izL7z9J4V4xVvaXicbeOntWwm0jJxClb9UtrIFOvDbty6/m5AgJVnp/bcMC
+         f6LyvO/OkNAioNFhPzaNVKUc9JC94nAxulhgkfgy/qT49yXeXn7Pp3PjC9iFD2SCdK74
+         x30OEQNPgjSMzheN99ui3YHYFHwN6g2wNigAUORM3/Dj1emenyrD0lkdIF2afFhwMGZC
+         SNVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764770039; x=1765374839;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aioLnfL0bmSCseYA1z3bCzauxJY/fb2sxvmbPwmSqFk=;
+        b=jnQeRzHZ25MuJzcsIrlyGU2IisfFle/UHgFiClfYMO8S0KWNtQmdf8qkK/B3EjV9HM
+         o8xUfLIRxtAZi32NYCGkbGKyF6HjfYl/a5dDwQXdE4kUPP39daUszKXTAmFX1BAFQAd0
+         uQgBmhi/d0tc2YAU8x5GyQfowzHY2DMeV0laxJ8D+NF46bQ35u3Xsety6oxwyEcwmk6i
+         tF0gd6LDMUBL+bz7mNjCf934bv6lO7gRad8K2+kV+WCVR9XHLzYGu+VExQVXLuGAFD+n
+         nNmFPn25FcF8cN6tMl8INQUfUn0YHpQG36HTa05Jmi2Zk9sQi3ztiOIjxs1iTHxic9AZ
+         NcdA==
+X-Gm-Message-State: AOJu0YxkIyqqoCU4I262xEzZke0L5Ka9G9e7lan4s7Cl7V51sXPlfb7Z
+	Ts8821xrKFkZofQNfj1F9UP7QXHTpm3dPLCZGwUDuvwW5LPfWtIHNB7h
+X-Gm-Gg: ASbGncvVcbi/iQV7cE/xjvPg0Phee7uXFrA3SFmr2SukfaQu2TWjq3OyLxSc6o+04iN
+	Mzm/D0GT+wxiBlB+4YQWPKjPCk3DRjW+qBCrwAA6/F5zQBWwi8q58qhVmoo6UCBItZ2BIIomaQH
+	UNINJD9oQxDb/rRUVEsrhpQplb+Sgx6Uzl1LFZF2ArHsLLQQk3xk/q+eQUFqKGHlCbzIGvHwdqR
+	qwASGVKuSlefmhALZV3IjHaWwpZptP2pPzsYmZnN4iw4sOZF09AntQWGBTssBHW6TpP5ZbTyAIF
+	5NXxSD3aOEIiMTv/QY+tZ8WuOTKKpBSIrzT6KN0W6KHxdbRv+y7C5jjm/g+xJefbKASqXw+ZqnQ
+	MutAIP9RhQPU20OMrCRgRVY0hKTZBWoQoeWNb+yhOZQgz5lFhg2yAZJyrv6qen0AVeTpI+8f6NY
+	miu1TeMumvDxqBLVUoQZdRuIftDC7GGaqnkzjLBmrGUxOY/MomgcvwPzFWZRn1ECKX5Vr5h6eVI
+	uIqUHzXvjbbZaFkbWISWd+1yCNhdPnwpSph9DFn2w==
+X-Google-Smtp-Source: AGHT+IHLG32qs9q4BIvUufo8fRRc6s9UdvNAPM7SZhhOitCuO55lRlGiuwa7xpNAuNetcMHEaEZUYw==
+X-Received: by 2002:a05:600c:3111:b0:46e:7e22:ff6a with SMTP id 5b1f17b1804b1-4792aef705bmr26681805e9.15.1764770038569;
+        Wed, 03 Dec 2025 05:53:58 -0800 (PST)
+Received: from labdl-itc-sw06.tmt.telital.com ([2a01:7d0:4800:a:8eec:4bff:febd:98b9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1ca8e00fsm40433575f8f.34.2025.12.03.05.53.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Dec 2025 05:53:58 -0800 (PST)
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
+To: stable@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev,
+	Fabio Porcedda <fabio.porcedda@gmail.com>
+Subject: [PATCH 6.12.y 0/2] Backport support for Telit FN920C04 and FN990B40 modems
+Date: Wed,  3 Dec 2025 14:53:51 +0100
+Message-ID: <cover.1764769310.git.fabio.porcedda@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/12] arm64: dts: qcom: sdm845-lg-judyln: Add firmware
- nodes, change path
-To: Paul Sajna <sajattack@postmarketos.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>,
- Christopher Brown <crispybrown@gmail.com>
-References: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
- <20251203-judyln-dts-v5-6-80c1ffca8487@postmarketos.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20251203-judyln-dts-v5-6-80c1ffca8487@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 03/12/2025 10:40, Paul Sajna wrote:
-> Add paths for Qualcomm firmware, including:
-> ipa, modem, bluetooth, venus, gpu
-> 
-> Enable adsp and cdsp nodes since their firmware is present
-> 
-> GPU and bluetooth are confirmed working, others may need more
-> testing/fixes
-> 
-> But regardless they will need the firmware paths specified here
-> and firmware added upstream before they will work, so might as well
-> get started on it now.
-> 
-> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> ---
->   arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 10 ++++++++++
->   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 20 +++++++++++++++-----
->   2 files changed, 25 insertions(+), 5 deletions(-)
-> 
+Hi,
+these two patches are backports for 6.12.y of the following commits:
 
-[...]
+commit d2b91b3097c693f784393a28801a3885778615df
+  bus: mhi: host: pci_generic: Add Telit FN920C04 modem support
 
->   &adsp_pas {
-> -	firmware-name = "qcom/sdm845/judyln/adsp.mbn";
-> +	firmware-name = "qcom/sdm845/lg/judyln/adsp.mbn";
->   };
->   
+commit 00559ba3ae740e7544b48fb509b2b97f56615892
+  bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
 
-Since you'll be rebasing again anyway, the current recommendation is using
+The cherry-pick of the original commits don't apply so I made this
+patches after fixing the conflict.
 
-sdm845/Vendor/codename, thus in case of LG being whole in uppercase I 
-would say it should look like:
+Regards
 
-sdm845/LG/judyln/...
+Daniele Palmas (2):
+  bus: mhi: host: pci_generic: Add Telit FN920C04 modem support
+  bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
 
-David
+ drivers/bus/mhi/host/pci_generic.c | 52 ++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-[...]
+-- 
+2.52.0
+
 
