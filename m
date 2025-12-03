@@ -1,133 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-84259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06E15CA1278
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 19:50:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 822B5CA0DB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Dec 2025 19:16:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7229530FF00B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 18:10:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 097F03014DE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Dec 2025 18:15:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D94430B520;
-	Wed,  3 Dec 2025 18:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="jEM+kmjZ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F3E72EDD7A;
+	Wed,  3 Dec 2025 18:14:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E0DEACD;
-	Wed,  3 Dec 2025 18:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E18823AB87;
+	Wed,  3 Dec 2025 18:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764785409; cv=none; b=hLewZRH79/u2Ca5lrAkgpOaVCyBY/pTKsDHVVqrh43iYkKNCdPA2Q+0/CvjH6AhlYtey8JuR2pCVoo3pS7Bg9EylC96gsdLiwdLQwjVQrjKds6zRJ5HJ+0uwsWlDv4gZaQGBbpxOIpGd2JZpD30E5RYFSAB7PfA9aBpG6piCjaQ=
+	t=1764785699; cv=none; b=aLfwllB15bHc0c3Xk8M8QU6WpgEAV4XWeagxinD3RAYcOKAV8juNfWmzcHDHHnyOgvEHS4KXArfeC2mjA/NwJZb+enCovZP1JleAj2f+Z4+obaOD8E6TBjxu3LZDPsfiAOmA8Bg55MwPj8Ibg41EfgQNfWM1QhUE9dKqcojPNLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764785409; c=relaxed/simple;
-	bh=vgv5xORL3p4GT1gXvTzzfTTjN2daLtNW/vnk70muwrs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LpfPGahlm85aKSY08GhsXR7I81bNoJL+GfHlL6+BqO/e0fyxPaFUZA9Q6DpNDkJOeCvMJclNTPT/NLXMKpYIJLrFdDZolGBmFaN1/41dC7PHME02pBG55i+6FvDCMa3WHBGesWBDzujg8quOJhvzkkDEbNhRnO/E8f+EhyJJzpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=jEM+kmjZ; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 0857C1C008F; Wed,  3 Dec 2025 19:10:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1764785404;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3sdTIGdSoayx9dZnp52z/h/u54VkPko1AY65aYWoYdk=;
-	b=jEM+kmjZzT9PM5UqOPaz/v1ieK1zXtJ6orv797Vgrjso0attg8FzJtB1xi7FZgB2efwtCm
-	3JojK0wfeFE/02I06FazoHc3Re7NjxATRjfaNaU/YkQz7Ns0UYo4V37rXG/JXdkHDCZlzP
-	YMpVGFVWKMprwBq6LvnwpA0hMlbOwsM=
-Date: Wed, 3 Dec 2025 19:10:03 +0100
-From: Pavel Machek <pavel@ucw.cz>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-	Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manish Pandey <manish.pandey@oss.qualcomm.com>,
-	Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
-	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
-	Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
-	Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
- device tree
-Message-ID: <aTB8++UtSrhwtqdY@duo.ucw.cz>
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <aS8uJCnb0xOd6uby@duo.ucw.cz>
- <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
+	s=arc-20240116; t=1764785699; c=relaxed/simple;
+	bh=wCOYtTUGwfcv+eaVP2qI2FhvFiT0ZfDvNzLgq+nbjpo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q+oG3YKlOaZppw95AAhx2+jX2A35poEcF2gQ8GeNVbFI9ElDJiu2YP+G0kQPjVgfdtFx0nkCCaPapl+0IbW+oRUszQVXriq/2x2MZCMfEAkRgX+gw9cqPe+/I5VjweNjiLfo5rVCU69uX06u/kRvA8E6xscJJX9lm1Pm9AylOmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 06345339;
+	Wed,  3 Dec 2025 10:14:49 -0800 (PST)
+Received: from [10.57.75.103] (unknown [10.57.75.103])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 48E2C3F66E;
+	Wed,  3 Dec 2025 10:14:53 -0800 (PST)
+Message-ID: <66d4488f-941a-4716-b81f-e0f9e1165931@arm.com>
+Date: Wed, 3 Dec 2025 18:14:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Ic9XkOl4csXwnGrR"
-Content-Disposition: inline
-In-Reply-To: <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 6/9] dt-bindings: arm: add an interrupt property for
+ Coresight CTCU
+Content-Language: en-GB
+To: Jie Gan <jie.gan@oss.qualcomm.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+ Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20250908-enable-byte-cntr-for-tmc-v6-0-1db9e621441a@oss.qualcomm.com>
+ <20250908-enable-byte-cntr-for-tmc-v6-6-1db9e621441a@oss.qualcomm.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20250908-enable-byte-cntr-for-tmc-v6-6-1db9e621441a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 08/09/2025 03:01, Jie Gan wrote:
+> Add an interrupt property to CTCU device. The interrupt will be triggered
+> when the data size in the ETR buffer exceeds the threshold of the
+> BYTECNTRVAL register. Programming a threshold in the BYTECNTRVAL register
+> of CTCU device will enable the interrupt.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> ---
+>   .../devicetree/bindings/arm/qcom,coresight-ctcu.yaml    | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> index 843b52eaf872..ea05ad8f3dd3 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> @@ -39,6 +39,16 @@ properties:
+>       items:
+>         - const: apb
+>   
+> +  interrupts:
+> +    items:
+> +      - description: Byte cntr interrupt for etr0
+> +      - description: Byte cntr interrupt for etr1
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: etr0
+> +      - const: etr1
+
+Why are they named "etr0" "etr1" ? That would be confusing, isn't it, 
+especially with the Linux driver naming things randomly for the TMC-ETRs.
 
 
---Ic9XkOl4csXwnGrR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What we want is the "port" number corresponding to the "TMC-ETR" being
+monitored ?
 
-On Wed 2025-12-03 18:31:11, Krzysztof Kozlowski wrote:
-> On 02/12/2025 19:21, Pavel Machek wrote:
-> > Hi!
-> >=20
-> >> Introduce the Device Tree for the recently announced Snapdragon SoC fr=
-om Qualcomm:
-> >> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdr=
-agon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
-> >>
-> >> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test =
-Platform)
-> >> and QRD (Qualcommm Reference Device) are splited in three:
-> >>
-> >> - 1-3: MTP board boot-to-shell with basic function.
-> >> - 4-16: More feature including PCIE, sdcard, usb, DSPs, PMIC related, =
-tsense, bus, crypto etc. Add QRD board support.
-> >> - 17-20: Multimedia features including audio, video and camss.
-> >=20
-> > Thanks for doing this. I assume there devices available with this are
-> > quite expensive/hard to get at this point?
-> >=20
-> > Please cc phone-devel@vger.kernel.org with phone related patches.
->=20
-> That's not even a phone, anyway contributors should not cc lists which
-> are not relevant to the posting and not pointed out by maintainers. You
+Have you explored other options, "port-0", "port-1" ?
 
-People should Cc relevant lists, and yes, if it is called "Mobile Test
-Platform", it is relevant to phone development.
+Suzuki
 
-								Pavel
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, Netanyahu and Musk!
+> +
+>     in-ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+>   
+> @@ -56,6 +66,8 @@ additionalProperties: false
+>   
+>   examples:
+>     - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+>       ctcu@1001000 {
+>           compatible = "qcom,sa8775p-ctcu";
+>           reg = <0x1001000 0x1000>;
+> @@ -63,6 +75,11 @@ examples:
+>           clocks = <&aoss_qmp>;
+>           clock-names = "apb";
+>   
+> +        interrupts = <GIC_SPI 270 IRQ_TYPE_EDGE_RISING>,
+> +                     <GIC_SPI 262 IRQ_TYPE_EDGE_RISING>;
+> +        interrupt-names = "etr0",
+> +                          "etr1";
+> +
+>           in-ports {
+>               #address-cells = <1>;
+>               #size-cells = <0>;
+> 
 
---Ic9XkOl4csXwnGrR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaTB8+wAKCRAw5/Bqldv6
-8pGoAJ4vwaWKRFCUjrjQkeIc4JPjOPjcgQCfbix0XbejMS7k0FwcfOPuWnmy6NY=
-=1WIj
------END PGP SIGNATURE-----
-
---Ic9XkOl4csXwnGrR--
 
