@@ -1,200 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-84273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50813CA220E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 02:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29034CA228E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 03:21:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F0CC530336A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 01:51:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6E3183024369
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 02:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4DB1FE471;
-	Thu,  4 Dec 2025 01:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0350E256C70;
+	Thu,  4 Dec 2025 02:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cvXTMHmS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p3/vsPGs";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="P8BOi/mB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11442212FAD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 01:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57108238C36
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 02:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764813072; cv=none; b=evIVObLJbP9NGDZMCAp5Ss9tP2McQj0dhfYkR9WD++7RV9ATR1NZK4lRt3Gl0Fp4hKUuJFUWqEECzwoqujL28hkp0LYE3yjqDvEtYUdzjVPusznY19JnKFCN9ytP9GZ27Od43Ksgx2Z5T4PoM+Z4rA/QkZAzMFYZCTTnjRE5UIk=
+	t=1764814883; cv=none; b=mbSgHOWQEuHfk8ap8dZqJDZnQX10EJSMIp7e2oISsxr5VxKIqms5b7w+3UrrTRBhFEn3Jgaai50KeQYSUOw/RIP38JyJbu05K7CC8tXHEVZjACm2H+36kSezilKIvQZab1BpktxaO+tD3rt6pGBvf+IXUxBOqL5o9SPpTkvxp1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764813072; c=relaxed/simple;
-	bh=TpUHAqE6UBhu4MruTFC47ZTyk/LHpXVEfQESeX+Zs/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D+1WoorDQ/UbjpRaymYE5VveWEdFNMZA7KFqmS9neRwbe2IXlGyP0ehxSTxwDwUweQWnTHL3xZRoQzaPQeeVwL23/CQTrLT59Pp871Au0ImvFiZurLdjmS7pzTp0l0VuHAjSGn4Ap7NruZxDJTcZ8StyAO9YqHWFcElJU4YxFTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cvXTMHmS; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-bf1b402fa3cso334119a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 17:51:09 -0800 (PST)
+	s=arc-20240116; t=1764814883; c=relaxed/simple;
+	bh=56HF3voykFa5HepGUA1JjmIGOi3GxhNIlIrojhTiado=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mxNDrhOpcWmsLUmx627KLdqlIrta7GwiUYIELYvttu+6YANcWsqM3VTpYAR9564Y9T3ukOx6nLzgs4bXNWZnvcNNi35UTl8Lk9Q8k7XBkIg1EZx35gUNFfWME7JiJT0lJtx9QBXNk3XeHr4pd9wm0JCj5guHjkWgYflFZHMZhaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p3/vsPGs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=P8BOi/mB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B3LdQi91536812
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Dec 2025 02:21:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	va0B/24zt2VTpkxr7ujhdnIO5+76ENbSqxQVq/6jEAA=; b=p3/vsPGsdz7IbScG
+	4kpULUSc+AlfrHo4HZJZzLZhOTgHo8a6YoOKGNERlOQzZ2bmcIEFk+TDXYYeOf+3
+	Tf5VfFRDsHO5dZDU1L7lJPhBTKSwLvtfSNt/kYubDi3JIVBAUDz3g/acihXYSZGV
+	LB8lyH/lk1EfZKsRlkgrpyBk1XxECC+WbIPkIACk9FvM3SwvnlKkuHhafL4GWOqH
+	wdm2DfM138AxK2+mzxia5f8CmRoTpghIXCUGx1DCfNG/B3p3RL2sft5BKjNG/d6T
+	xGOYnVBbke7409GMV/TlRMRL/K8XgQ7Gl45gv1LGto+FTog6MfodHmJ4A/qkSoFN
+	Yr/wAg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4atm0hth86-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 02:21:21 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3416dc5754fso745692a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Dec 2025 18:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1764813069; x=1765417869; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=99z3TXuiGKnUbdI716ISNYmEuYSPxRxRHOFkHrMKwBU=;
-        b=cvXTMHmSURRCSaXrLX/lOvWtr1Lc1MiCqLWpxR3J0OmERTnuX/dDdBl52gV+5IOTxW
-         /yxK9WBqD3QOltZKS+MDz1LAzPj5AVzbi1uz6LQKkGLLBpwulrMw1EOzOb8Be+9FJdDg
-         zotx5dlAwQyNR3lBnCnQwk+A22svDyB/dedOY=
+        d=oss.qualcomm.com; s=google; t=1764814881; x=1765419681; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=va0B/24zt2VTpkxr7ujhdnIO5+76ENbSqxQVq/6jEAA=;
+        b=P8BOi/mB7BTNeT1mIZ5YHLMPpgEeT/uL8vprrQVOFm6y0V82oANkre8N6v69z+H79E
+         HcYQPsQGxNBgR51KSxFJzXM57DxVGR/vLj48nv4cglMh/IYr2GEhxVTx0AAh70YVuBwR
+         g9BN6CbkyTQT0yW3KvSRH2ZvnjJghIiXOF94Zm8UMrlgXwvKUe8MFUcdhmeC6n4lSDfv
+         DrscCebHKttdkY2gMMpIac5fZg2PO4qa9B6qkVDXGVRg4Ml4A0EBXcCjvaBsnVZ+kjgt
+         5CCKDRl+YJ48rM5ksrBUfVqA+VHn/6KbEKTr5INSwF7pFntjD6wYl2JliQsuR263K8z+
+         94Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764813069; x=1765417869;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=99z3TXuiGKnUbdI716ISNYmEuYSPxRxRHOFkHrMKwBU=;
-        b=aAoPxpyBJMTsFnk3gLNi8/T8oZv+4ciUzbR8EaIWhzQbgwmz/+sle6bIy/zfK+m8wY
-         mX0XRp0I13M/js6dD9NjPnIRagZX501ezS8Wv7dO13B/9zwX5/waqL0KXKPJvvad9dsd
-         DX5wbFA4reLsjrmFBwyvWZizho38BghoYw1vr0iZCo4vm8SxdyqRD6dwqcNIhrWnz5gO
-         pjwBvpdl3LJgUQkw9Cp3OIx/wZhafFjQMxfiWMbuIKhc+XQGdQLRi/k2IzpgxFlDVUP2
-         45lMvW/pctK1hrM/zCzFIppC4I6vj8xw+y8gmHclgpIHToqwees6u0vr0OBqHm6Y+zbI
-         5uIw==
-X-Forwarded-Encrypted: i=1; AJvYcCVIlzBqxoUCmepAt1/YrukGY5y/V55KN/wyBh2vUUEb8Zh5R9nxJ0V753gRWA3qg2ghm9n9bnVIcEdIfDiv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8E8UDzphOWPlayGxv+5386EOOzPulHUYywEch7BP6loq+IHW+
-	oxlT2iBPbhoG0QB8MSlXodn6Gvl/NmhwIspB7+Na7brCcF6FyBu3ra3fh/0GCwd/aw==
-X-Gm-Gg: ASbGncvcw9DS00L65wE4Yx2u1Oo9f5PRgvVHlhLDleehQh2yfdHsf0Qhl92J686JRFn
-	dRaq/XNJjSz+u5mC6vmFuJ9rWJQNAHdg7yxlxOIcS+NEUOxety5wlMaqZPrvRT1ddQJWt+A8DJx
-	YSq59I3nbMJ1yeSGQfd/I580sPVm9VuDgkHYvowDuQXp26YOEZ4EDVKslMgddxqfVKlPT1RrAtH
-	xB0WIGxvV6WZmzWoYgBFJ+yYbneWVesHAf8FiOQdwztnxf64s1OX+WK9D37mWClrpMlrAI4QTPf
-	wLzKOqJpfw3Rp94OtDa7LFapnb/y4LDRxXHhTyGo0Jf3FiRFXI3j4NrMc8h4JiKiMSfbFIPTY9S
-	OsAhkWdmPm5RYLnvb/9ASYz+D1VX77Ha0XZXkwXZi1x/+ycbSX83U5tp359NaDtOHsGR8yVyHB2
-	HRBdLkiopjEiwwVsfoUY+q1s6KF7yOCc3nQl/Dm6Cajz1cX7W6Zw==
-X-Google-Smtp-Source: AGHT+IFvnri2mh9npGsPKxAY3C1HmUov4Cgkz8425q7v12Udu1UK+pVLvAsk8UXu+jiHgwDvDcmvpQ==
-X-Received: by 2002:a05:7300:dc8e:b0:2a4:3594:72d4 with SMTP id 5a478bee46e88-2ab92d545b0mr2673849eec.3.1764813069154;
-        Wed, 03 Dec 2025 17:51:09 -0800 (PST)
-Received: from localhost ([2a00:79e0:2e7c:8:e953:f750:77d0:7f01])
-        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-2aba83d2a5fsm712051eec.2.2025.12.03.17.51.08
+        d=1e100.net; s=20230601; t=1764814881; x=1765419681;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=va0B/24zt2VTpkxr7ujhdnIO5+76ENbSqxQVq/6jEAA=;
+        b=D8hNcEEwu94YDlWYpQkAnJP/mWI9CNjgdgwuO8XXvTyFzgF/TF0fUxRzGC0bH2HkAM
+         f1uj+4aBtT8ogR/7JRhgLteqDe99R5/EuHXz3pYCEsl2GweqW5QWENG9NeouVn9hG3ak
+         gYJZhvlnc4i1ZkoKn/IgVHM5y2wASZA0IDHx9Ttip0c9DyDJTmigRpsJZ7/VPZWbhW23
+         BeJ81Fa6biNUm19PyuS0B6eVrnMJRZYw47Wsy7ulEDXQApIhjuuqIFjgQjAHE87VhdBZ
+         ZAPkVCqWnvrsqo6PGqJW14xBjczx2DrMo3K8XPVGQ+HtaoKfbTsl/qlUbVVBcuOooXaN
+         n4Mg==
+X-Forwarded-Encrypted: i=1; AJvYcCWL4BLhsyKbje5FfR8ynmgtJ3yZ1STsI7HIKBf+N7jPFVzpsh/UaxE+JqZClquUxsaIBW9SFWg2nRJOi6qy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcwIIyyIK+XMnMZ5yA2fkAhGwiEs9mquk9LSJGWpYn5LIqmj3W
+	svt5+bu7fTtTqECuLNr4GdY9kp0Npb+y/oen4w8xWTt7mpVTq4fnvOmeVFWbbZeur3+VbQ4+RIq
+	3Ema453qGnoR0Egvl04aW5v5K0puOiRsrlBgwQ5t2KhewejLzI8WV/vMdb2maFfu72PAi
+X-Gm-Gg: ASbGncv758012BsHoOT8MPDHnvGElxMrRwVO7EkGch4QB6xr+SwgL8cuxxSBBQwtED3
+	0Iu3ZAAYqND4LgZgBGgQIE34O34StnKC4FaP4ftUefFzqAWJkrWjAW1EkSCaiaC2uIYeOQ5XVmA
+	O9fVVNTe3UpmaHr9xsDaqCXQBaAMbs7RINidY8Q0yIDZQqVjY3rGBXT0rPjwCSvScVF0ldDlCEX
+	SNb3msn2lv79eoIiN8BNi1UdfsqwExDF9gnjW7NsHRLAd1oSqcMlsW2lD0DGPqtfFecQUj+wHE2
+	PWvxI0xkFdDQi2kLlSUf5LrEibi594pLnmkcKJ5x247mBEj9LgkscQjWImkMaE8MHIXuQM22rSn
+	4XPEcq4Lx2RXYc5JJA0nWBy8k5H0L6ccMBd4Q/3X75JVdeMQIf+X5tmyj0wlClxsruzpxkuIl2i
+	swjLQ=
+X-Received: by 2002:a17:90b:4987:b0:343:e461:9022 with SMTP id 98e67ed59e1d1-349126d0d62mr5163166a91.24.1764814880660;
+        Wed, 03 Dec 2025 18:21:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFMNoZmTK0wGfsVGyP6QuNy19edOtKoDNuRGBIfu41xy2mxnqUIXA/acAvITRIR1wsDzetNrA==
+X-Received: by 2002:a17:90b:4987:b0:343:e461:9022 with SMTP id 98e67ed59e1d1-349126d0d62mr5163132a91.24.1764814880221;
+        Wed, 03 Dec 2025 18:21:20 -0800 (PST)
+Received: from [10.249.18.58] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3494f596810sm141723a91.10.2025.12.03.18.21.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Dec 2025 17:51:08 -0800 (PST)
-Date: Wed, 3 Dec 2025 17:51:06 -0800
-From: Brian Norris <briannorris@chromium.org>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/5] PCI: dwc: Remove MSI/MSIX capability if iMSI-RX is
- used as MSI controller
-Message-ID: <aTDpCpLUzxnAmvt6@google.com>
-References: <20251109-remove_cap-v1-0-2208f46f4dc2@oss.qualcomm.com>
- <20251109-remove_cap-v1-3-2208f46f4dc2@oss.qualcomm.com>
+        Wed, 03 Dec 2025 18:21:19 -0800 (PST)
+Message-ID: <5feaebe7-c5da-4f95-931c-edf3f51db584@oss.qualcomm.com>
+Date: Thu, 4 Dec 2025 10:21:15 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251109-remove_cap-v1-3-2208f46f4dc2@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Cc: wangao.wang@oss.qualcomm.com, quic_qiweil@quicinc.com,
+        Renjiang Han <renjiang.han@oss.qualcomm.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] media: qcom: iris: Add intra refresh support for gen1
+ encoder
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+References: <20251127-batch2_iris_encoder_enhancements-v1-0-5ea78e2de2ae@oss.qualcomm.com>
+ <20251127-batch2_iris_encoder_enhancements-v1-1-5ea78e2de2ae@oss.qualcomm.com>
+ <747f661f-1be3-59d3-0cec-71bb6a6e2fa6@oss.qualcomm.com>
+Content-Language: en-US
+From: Wangao Wang <wangao.wang@oss.qualcomm.com>
+In-Reply-To: <747f661f-1be3-59d3-0cec-71bb6a6e2fa6@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: YoLHmltroVyfFJ6o_-YSO1eqL6M_W3Me
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDAxNyBTYWx0ZWRfX0efW/JoK8Sf7
+ Suiw0RUXBlvbW3EeGzsLT2q+ACRr3GEoSuq7VJNUe/lm5DxpAWdpXcrA/DEh+SIVIKMZLSwMzmE
+ JQ1an1fZCBuKaKP1/QOPd8am4UAzmwyzS7w4XM9d8yo+rM1HNcKp46+F36S6joUHSfg0rbtMkce
+ tAx18lLHIFmxwfSLQAq6JvEWf7PD2VBbkrInE7cAPU5YD80Q1SgZneGT7abGCy4rejjgR6yOqzG
+ PECWmQIBSd7pAqtlBfkRkir8XhXrkKthzgWTXxfJbA2QNx/97JT92R/2EZM/+Tvz+9ZbKBodw6P
+ 4n6GWVJqP3IoTHsNVnaETlWjgN2vc1TDUcfOyBVykZqGKIpx6YjtaROw5FIfWiz4XadCnkHHZmn
+ 3mpKSOaLZawmokLTSD6zUuk9IlYSxQ==
+X-Proofpoint-GUID: YoLHmltroVyfFJ6o_-YSO1eqL6M_W3Me
+X-Authority-Analysis: v=2.4 cv=V5lwEOni c=1 sm=1 tr=0 ts=6930f021 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RKEO2VjmjER0VAT8CKIA:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-04_01,2025-12-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512040017
 
-Hi,
 
-On Sun, Nov 09, 2025 at 10:59:42PM -0800, Qiang Yu wrote:
-> Some platforms may not support ITS (Interrupt Translation Service) and
-> MBI (Message Based Interrupt), or there are not enough available empty SPI
-> lines for MBI, in which case the msi-map and msi-parent property will not
-> be provided in device tree node. For those cases, the DWC PCIe driver
-> defaults to using the iMSI-RX module as MSI controller. However, due to
-> DWC IP design, iMSI-RX cannot generate MSI interrupts for Root Ports even
-> when MSI is properly configured and supported as iMSI-RX will only monitor
-> and intercept incoming MSI TLPs from PCIe link, but the memory write
-> generated by Root Port are internal system bus transactions instead of
-> PCIe TLPs, so they are ignored.
+
+On 2025/12/3 12:28, Dikshita Agarwal wrote:
+>> +
+>> +#define HFI_INTRA_REFRESH_NONE			0x1
+>> +#define HFI_INTRA_REFRESH_CYCLIC		0x2
+>> +#define HFI_INTRA_REFRESH_ADAPTIVE		0x3
+>> +#define HFI_INTRA_REFRESH_CYCLIC_ADAPTIVE	0x4
 > 
-> This leads to interrupts such as PME, AER from the Root Port not received
-> on the host and the users have to resort to workarounds such as passing
-> "pcie_pme=nomsi" cmdline parameter.
+> HFI_INTRA_REFRESH_ADAPTIVE and HFI_INTRA_REFRESH_CYCLIC_ADAPTIVE are not
+> being used, do we need these macros here?
 > 
-> To ensure reliable interrupt handling, remove MSI and MSI-X capabilities
-> from Root Ports when using iMSI-RX as MSI controller, which is indicated
-> by has_msi_ctrl == true. This forces a fallback to INTx interrupts,
 
-But "has_msi_ctrl == false" does not necessarily mean it's using an
-external MSI controller, does it? It could just mean that there's some
-per-SoC customization needed via the .msi_init() hook.
+I referred to the Venus driver, which also defines it but does not use it.
 
-In practice, that's only pci-keystone.c though, and it's not really
-clear if that's some modified version of iMSI-RX, or something else
-entirely. At any rate, I suppose it's best to only tweak the things we
-know about -- unmodified DWC iMSI-RX support.
-
-> eliminating the need for manual kernel command line workarounds.
+>> +	{
+>> +		.cap_id = IR_PERIOD,
+>> +		.min = 0,
+>> +		.max = INT_MAX,
 > 
-> With this behavior:
-> - Platforms with ITS/MBI support use ITS/MBI MSI for interrupts from all
->   components.
-> - Platforms without ITS/MBI support fall back to INTx for Root Ports and
->   use iMSI-RX for other PCI devices.
+> is this value correct? please recheck.
 > 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..3724aa7f9b356bfba33a6515e2c62a3170aef1e9 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -1083,6 +1083,16 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->  
->  	dw_pcie_dbi_ro_wr_dis(pci);
->  
-> +	/*
-> +	 * If iMSI-RX module is used as the MSI controller, remove MSI and
-> +	 * MSI-X capabilities from PCIe Root Ports to ensure fallback to INTx
-> +	 * interrupt handling.
-> +	 */
 
-Personally, I'd suggest including more of the "why?" in this comment, as
-the "why?" is pretty perplexing to an uninitiated reader.
+This value is incorrect; I will fix it in v2.
 
-Maybe:
+-- 
+Best Regards,
+Wangao
 
-	/*
-	 * The iMSI-RX module does not support MSI or MSI-X generated by
-	 * the root port. If iMSI-RX is used as the MSI controller,
-	 * remove the MSI and MSI-X capabilities to fall back to INTx
-	 * instead.
-	 */
-
-> +	if (pp->has_msi_ctrl) {
-> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
-> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
-
-Removing the capability structure is a neat idea. I had prototyped
-solving this problem by adding a new PCI_MSI_FLAGS_* quirk, but that was
-a lot more invasive. I like this idea instead!
-
-This looks good to me, although maybe the comment could be updated. Feel
-free to carry my:
-
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-
-I'd also note, not all devices currently actually define their INTx
-interrupts (such as ... my current test devices :( ), and so
-pcie_init_service_irqs() / portdrv.c may fail entirely, since it can't
-really provide any services if there are no IRQs for those services.
-That does have at least one bad side effect: that the port won't be
-configured for runtime PM and won't ever enter D3.
-
-I wonder if we should allow pcie_port_device_register() to succeed even
-if it ends up with an empty 'capabilities' / no services.
-
-Brian
-
-> +	}
-> +
->  	return 0;
->  }
->  EXPORT_SYMBOL_GPL(dw_pcie_setup_rc);
-> 
-> -- 
-> 2.34.1
-> 
-> 
 
