@@ -1,204 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-84312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAE2BCA2D45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 09:33:45 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2627ECA2D77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 09:38:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4E876307EA95
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 08:33:02 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9591A3007D69
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 08:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA14133033A;
-	Thu,  4 Dec 2025 08:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZRrUQ6VD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A5B13254AD;
+	Thu,  4 Dec 2025 08:38:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD1A330313;
-	Thu,  4 Dec 2025 08:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0816C1D6BB;
+	Thu,  4 Dec 2025 08:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764837180; cv=none; b=SAL54p3KW3zq8K5sf6dJ/EWlPViOM+p9uN75xsiUzfcYErqERE1x58W0goQWfzBtZOKqy4qTC5FJY1F1N6Cd0KCszk87SlHH40II/r6pYBoegP2aVDJ86TdkrsWqvhyExLdTCMLr98kivYaKA0D8mAWwGLuEem0Yn5KiUSOvAgk=
+	t=1764837488; cv=none; b=h5lB/RvAhXKXznp6u4ywh3+hagk6P487Uiaff5vx5lOvGwcnCe0LOmU2Oa3ejNKhpeXvgOKkheRzeKf7jsLVOQl8Rnc+C+KxCQRjQnSPT+5DU08d5bSQWhgRLApuE7wHdUB00wmAVp5J80WCE4xPfJzz3yoAtknuLJH5qLkgG3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764837180; c=relaxed/simple;
-	bh=txeQahCKE+krMX/LtNieiFI2+qv4snCqFJUn18BzqVs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=amIULzzB+xtRr13YJmKjbvXj14xp3rMvImuByJ9McYi4GQb4b2uTcGx1y5EDD63P+ZCy2UrwwEfYcXbedlWODAPZGPvRuHjlscF2cOvwynIzQrn1J8ETTMRNLPBoYK2T2KneflWdUejK4IWkxHDasrnr827734azvMxT9yx1PzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZRrUQ6VD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B468sIW560341;
-	Thu, 4 Dec 2025 08:32:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=xFCNAMkfR71
-	awz1gSc9PbEUh7Cpo/k5wQcqvzvsVgDc=; b=ZRrUQ6VD+7HaOT+y5fA778obA35
-	hM8AGUFwIr1KVduD4Im4FukdfhjRby4PLipulaaXoM39PFJPMxM4vFQmqttLbL1V
-	rEnHksH6NfLGdq+rWbe0mODy8FjzV/4hG2H5K/cVGxemsa2YdZgL8pao19HYz3bT
-	pXV2uJGw1Dnv1lzIzCXmveUI6p0S03OgqN8TZuOcUwpRp8AOwKszX4aRDB+1l5l/
-	tRQuLmjrn1+FJc4r/FEJzCt4j+HCZW7Hb4OfQRW86gRTbTpdhGcpEG0z4RT47JIm
-	cntuhF4nRDyC81O1zAoAKxBimtYcqywaquQ1Od0rnWEha+YJYSnEGaibCDw==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4attmha3v8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:55 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B48WqY7008673;
-	Thu, 4 Dec 2025 08:32:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4aqswmctuc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:52 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5B48Wq7E008666;
-	Thu, 4 Dec 2025 08:32:52 GMT
-Received: from cse-cd01-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5B48Wpa0008662
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:52 +0000
-Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4531182)
-	id DAFD12101A; Thu,  4 Dec 2025 16:32:50 +0800 (CST)
-From: Le Qi <le.qi@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
-        Le Qi <le.qi@oss.qualcomm.com>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: talos-evk: Add sound card support with DA7212 codec
-Date: Thu,  4 Dec 2025 16:32:25 +0800
-Message-Id: <20251204083225.1190017-3-le.qi@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251204083225.1190017-1-le.qi@oss.qualcomm.com>
-References: <20251204083225.1190017-1-le.qi@oss.qualcomm.com>
+	s=arc-20240116; t=1764837488; c=relaxed/simple;
+	bh=9+uu5ZSlq66frF5wBW2nXLerWrCuBEamXfoAD0RNyp8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ve9wxznkuB+xCl72yXMWyPpFtS31r0htUyBhuqkBykqAAdernBGt0LbLtJKcgN1O54BVn2jVUpI4LGmTOXmBjIxTfC42pXCEQLv/GpB4SvSSRuPCaf5gmGMc0BCapk5JLTCFuEJS5BhDApZHwM6nFNjPlDXRL9n09SEJ+7dqEPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D7529339;
+	Thu,  4 Dec 2025 00:37:57 -0800 (PST)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C8ACB3F73B;
+	Thu,  4 Dec 2025 00:38:04 -0800 (PST)
+Date: Thu, 4 Dec 2025 08:38:02 +0000
+From: Leo Yan <leo.yan@arm.com>
+To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+	quic_yingdeng@quicinc.com, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+	Mao Jinlong <quic_jinlmao@quicinc.com>
+Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
+Message-ID: <20251204083802.GI724103@e132581.arm.com>
+References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com>
+ <20251202-extended_cti-v6-2-ab68bb15c4f5@oss.qualcomm.com>
+ <20251203182944.GG724103@e132581.arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: F6KYime_cun23Tv-4XPgQB2LkiMuGxHx
-X-Authority-Analysis: v=2.4 cv=NcTrFmD4 c=1 sm=1 tr=0 ts=69314737 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=NsbSkSjWJLNazAhNrCgA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDA2OCBTYWx0ZWRfX+8HX4mMdjC1u
- OWt84/UJKGKU1oElUixkvCjeq3OmG5pbgzThTYToDyWWafapodk/IfmEyT7O21BWWNBM1TahRO2
- iSMI+Vqw6ruedC/uzzle5DY4wz2skXQ8s1eEDrcG73zEmWnfF5HaYDgEVlR0m0w/e8F5jrUPHBl
- oy1GqpaCzc5KCVu6IqZnMCaClThE1eYa9FstyElpr5I40kIUW7ce0lBNr24wO6eIt2wGjRpT+/n
- sKgQaI3lq2Kko+O6PJMhbSg7lr3eqeMSCCWWeVTqcvcgENdJRazwljtybZHfPD+qT7QyRQ8gRyJ
- 77O0L0FbiivO/dA/0mTu4r64DgmrMNdoN8Ft5Qo28y5GurbycAM35yhrqjE3EMo7gtqX8NNJIm9
- 4VPLr4AKpxv+xJP9rOEP+ti+WZuShQ==
-X-Proofpoint-ORIG-GUID: F6KYime_cun23Tv-4XPgQB2LkiMuGxHx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-04_02,2025-12-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512040068
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251203182944.GG724103@e132581.arm.com>
 
-Add the sound card node for QCS615 Talos EVK with DA7212 codec
-connected over the Primary MI2S interface. The configuration enables
-headphone playback and headset microphone capture, both of which have
-been tested to work.
+On Wed, Dec 03, 2025 at 06:29:44PM +0000, Coresight ML wrote:
 
-Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/talos-evk.dts | 54 ++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+[...]
 
-diff --git a/arch/arm64/boot/dts/qcom/talos-evk.dts b/arch/arm64/boot/dts/qcom/talos-evk.dts
-index 02656bc3cdcb..7e8f7e7f1d5e 100644
---- a/arch/arm64/boot/dts/qcom/talos-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/talos-evk.dts
-@@ -5,6 +5,7 @@
- /dts-v1/;
- 
- #include "talos-evk-som.dtsi"
-+#include <dt-bindings/sound/qcom,q6afe.h>
- 
- / {
- 	model = "Qualcomm QCS615 IQ 615 EVK";
-@@ -40,6 +41,46 @@ hdmi_con_out: endpoint {
- 		};
- 	};
- 
-+	sound {
-+		compatible = "qcom,qcs615-sndcard";
-+		model = "TALOS-EVK";
-+
-+		pinctrl-0 = <&mi2s1_pins>;
-+		pinctrl-names = "default";
-+
-+		pri-mi2s-capture-dai-link {
-+			link-name = "Primary MI2S Capture";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_TX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		pri-mi2s-playback-dai-link {
-+			link-name = "Primary MI2S Playback";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+
- 	vreg_v1p8_out: regulator-v1p8-out {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg-v1p8-out";
-@@ -107,6 +148,19 @@ adv7535_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	status = "okay";
-+
-+	codec_da7212: codec@1a {
-+		compatible = "dlg,da7212";
-+		reg = <0x1a>;
-+		#sound-dai-cells = <0>;
-+		VDDA-supply = <&vreg_v1p8_out>;
-+		VDDIO-supply = <&vreg_v1p8_out>;
-+		VDDMIC-supply = <&vreg_v3p3_out>;
-+	};
-+};
-+
- &mdss_dsi0_out {
- 	remote-endpoint = <&adv7535_in>;
- 	data-lanes = <0 1 2 3>;
--- 
-2.34.1
+> > +/* Read registers with power check only (no enable check). */
+> > +static ssize_t coresight_cti_reg_show(struct device *dev,
+> > +				      struct device_attribute *attr, char *buf)
+> > +{
+> > +	struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> > +	struct cs_off_attribute *cti_attr = container_of(attr, struct cs_off_attribute, attr);
+> > +	u32 idx, val = 0;
+> > +
+> > +	pm_runtime_get_sync(dev->parent);
+> > +	raw_spin_lock(&drvdata->spinlock);
+> > +	idx = drvdata->config.ext_reg_sel;
+> > +	if (drvdata->config.hw_powered) {
+> > +		switch (cti_attr->off) {
+> > +		case INDEX_CTITRIGINSTATUS:
+> > +		case INDEX_CTITRIGOUTSTATUS:
+> > +		case INDEX_ITTRIGINACK:
+> > +		case INDEX_ITTRIGOUT:
+> > +		case INDEX_ITTRIGOUTACK:
+> > +		case INDEX_ITTRIGIN:
 
+I read again and now I understand why you need "config.ext_reg_sel"
+as an index for these expending registers.
+
+I think you should extend attrs for the new adding registers:
+
+  static struct attribute *coresight_cti_regs_attrs[] = {
+      ...
+      coresight_cti_reg(triginstatus, CTITRIGINSTATUS),
+      /* Qcom CTI only for triginstatus1/2/3 */
+      coresight_cti_reg(triginstatus1, CTITRIGINSTATUS + 0x4),
+      coresight_cti_reg(triginstatus2, CTITRIGINSTATUS + 0x8),
+      coresight_cti_reg(triginstatus3, CTITRIGINSTATUS + 0xc),
+      ...
+  }
+
+Then, you can add a is_visible() in coresight_cti_regs_group:
+
+  static umode_t coresight_cti_regs_is_visible(struct kobject *kobj,
+                  struct attribute *attr, int n)
+  {
+          struct device *dev = container_of(kobj, struct device, kobj);
+          struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+
+          /* Mute QCOM CTI registers for standard CTI module */
+          if (!drvdata->is_qcom_cti) {
+              if (attr == &triginstatus1.attr ||
+                  attr == &triginstatus2.attr ||
+                  attr == &triginstatus3.attr)
+                  return 0;
+          }
+
+          return attr->mode;
+  }
+
+  static const struct attribute_group coresight_cti_regs_group = {
+          .attrs = coresight_cti_regs_attrs,
+          .name = "regs",
+          .is_visible = coresight_cti_regs_is_visible,
+  };
+
+Thanks,
+Leo
 
