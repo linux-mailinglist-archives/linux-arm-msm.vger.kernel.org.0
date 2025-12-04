@@ -1,65 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-84310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2786CA2D27
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 09:32:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EE947CA2D3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 09:33:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 65BBC30221B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 08:32:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B82A1305BFED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 08:32:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4533074AA;
-	Thu,  4 Dec 2025 08:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18C7632D0FA;
+	Thu,  4 Dec 2025 08:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CfAvvCC6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D/2IOxrH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206ADDDAB;
-	Thu,  4 Dec 2025 08:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB2C2EC0BF;
+	Thu,  4 Dec 2025 08:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764837177; cv=none; b=WA6SCbSxuEzXZuDGLhV8wr7QGNKOn657W2T7ZQM06/blx3DGJNszNv4CEIeK63KxCokdBVzUQMmN2C6BKdxXaRf+M5ZhPEj1pyWGSp968o7g+7D6p8ukBa/Rq8N2xPgbHRccnjmj8uWNx7UFqG2gc7I8vDYl5XCPrc+cMHCwDYE=
+	t=1764837179; cv=none; b=c2bw8NnvaJtdQ6zCml6z8X2LFUnvNEl+TmC/J6rBRG/beHdwpdJLeBLYtXFcoaoRFkTSYVeNuQOB0jyHtSKP/zOCNBFj2a//N5+7riFyEA70f677OA1CbCYHmHYUVS+x8r3bPfrfBYmqURFxr2aT7EslwmE16yESVxPgbXjbH/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764837177; c=relaxed/simple;
-	bh=E1VUuvU6gWaTOENYKred3XK7wVwMj/xHiK8WIqsrNdY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JLVHfueWdPsxlTJVTz/u07L9x2XN4+ITvFFtrl4ck7xaYjIS0Cn2sjMCJn/yrykxolMVJpTyRAiDZpfP/Hei6a0K/o5ijW9r2V/Euhww1e/yh6Lbzu/KQlY3/SG1xxSEdF6f0K7Bof6VykRvNJ8Cb9MXVPQH9RljKsJTCI/P3iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CfAvvCC6; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1764837179; c=relaxed/simple;
+	bh=sns+f50RJEA4m5QuPY+c4X4rRIJQdkZ/oOoPST0JCSs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=N1xLBJ6muOiq2KgJKfN1CMLFsU6ehKU+k9437xGqQ3BW98O8M9ky307qurtFVOCjbZM8x1ayU5fSpoQGgXwm2F6YJz0GRnL0ROj287/wtq+NUMz6etyPbOnXVZxvFK+AVR15ht6ucTlI7YKfcO8oNBhxhtbjpQEf7MX1Jz9hnU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D/2IOxrH; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B4690Sw492343;
-	Thu, 4 Dec 2025 08:32:53 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B48V56E952071;
+	Thu, 4 Dec 2025 08:32:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=Iqt078CGEtzwzCFCKiSZIm0MkBz7/THl3ZX
-	qoOFzrLY=; b=CfAvvCC6BIUfxMa+F7dhaWdv7Vp7DnaMMAkNsGgSm+ox4g0h8m+
-	7VVoZYB2MyI2/BA+YIrofHKSfAHimXBiPQmxCW2Vx8DT388bmh8rn7NPpWuNk84X
-	7XW/4cxrBoruqqNFI6Nc4fr88m4oBug7MaidZRZhV9NHf6hrNqEmjNSC3VoSM4xy
-	9KApd9mYm+pOj8Cxv2rehFqe77y210mFoOE18kROacWaz3HkIQPsbgZB921znjAM
-	9uGM0j+vyVwrOFAq/Sym9UXNYVvtGu72q6Mvw/J1wo3mjjMDabODL8ohwAinYmuR
-	c+8fa0cKpJRYBt6ngtgyWEffpb7cmqJSE/A==
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=yGEQrRgs30n
+	h8rcUJjN1J8LEguU9wQzRiz5CajOESlU=; b=D/2IOxrH6rcrEaIAIQQpLTIN5Fk
+	eshQP8ul7RN+wHW/JpvPCYcCQDFFxGB0FQJvqEklEwpKihk7cGrYH/H+AiOp/nzM
+	vSv46sEq9IqgJ80EOiM5xyQhzHv9ib1gexJVI5aSo0VrYBfmeqMAMN98EqiVa9Xq
+	ULJYf5eW6V+nex3QAbQkN0YSnpp1ofJc+Fo6g45oSpcWCZ8jySujTT9U+V3OA8V6
+	1P3pW9BI9gEGcaQk1wr9f6gE5CqoF6JPBAudZ4xHqmUTqU+38zmdsKQbJBx/YG4j
+	hQh16mTKLcTPYLn8DJYE3Eo2JoIy7XEO0H18YEEhSOHmjNaja2OLgVLVegA==
 Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4atmbtke8m-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4au6v1g061-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:53 +0000 (GMT)
+	Thu, 04 Dec 2025 08:32:54 +0000 (GMT)
 Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B48WoBx009722;
-	Thu, 4 Dec 2025 08:32:51 GMT
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B48WqJR009741;
+	Thu, 4 Dec 2025 08:32:52 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4aqswmd3yx-1
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4aqswmd407-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:51 +0000
+	Thu, 04 Dec 2025 08:32:52 +0000
 Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5B48WoOc009713;
-	Thu, 4 Dec 2025 08:32:50 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5B48Wqkl009733;
+	Thu, 4 Dec 2025 08:32:52 GMT
 Received: from cse-cd01-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5B48WoxE009712
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5B48Wp3M009728
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Dec 2025 08:32:50 +0000
+	Thu, 04 Dec 2025 08:32:52 +0000
 Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4531182)
-	id 1032B2101A; Thu,  4 Dec 2025 16:32:49 +0800 (CST)
+	id 733E9226DD; Thu,  4 Dec 2025 16:32:50 +0800 (CST)
 From: Le Qi <le.qi@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -67,11 +68,14 @@ To: Bjorn Andersson <andersson@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
-        Le Qi <le.qi@oss.qualcomm.com>
-Subject: [PATCH v3 0/2] arm64: dts: qcom: QCS615 Talos EVK audio support
-Date: Thu,  4 Dec 2025 16:32:23 +0800
-Message-Id: <20251204083225.1190017-1-le.qi@oss.qualcomm.com>
+        Le Qi <le.qi@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH v3 1/2] arm64: dts: qcom: talos: Add GPR node, audio services, and MI2S1 TLMM pins
+Date: Thu,  4 Dec 2025 16:32:24 +0800
+Message-Id: <20251204083225.1190017-2-le.qi@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251204083225.1190017-1-le.qi@oss.qualcomm.com>
+References: <20251204083225.1190017-1-le.qi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,62 +87,114 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=KNBXzVFo c=1 sm=1 tr=0 ts=69314735 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDA2OCBTYWx0ZWRfX709OIdt8B6Ml
+ i71PLmLYtDtRuv7zRRZeVSbpEWQKdv1PMQipAiUXazHYmrbUGzJwEF34T9xSBs1NvbOc+EYKsmU
+ 6bgX/WvcfYZauNg3380DpjU6qNLdDEssyoWzNV6EPSJ1KyMMV67zrBoVqoSIc38n1CIjauh8QO5
+ oWRwDFFzAze0mePN+L3GakP/a3AxKFeS9fXCJgcQ2SayJ/8uabWYnb1wzJqPH62SJzDGLT7lPnK
+ PC2oJAgCVD6br+3dPTgsvphyDYac5zdpYcgMc2pkCv2L9lzQMNQz2DeCDmjeWZv3IyZeSLsBscp
+ hvg3onzOiJcW5KWP+Mvmd6D38l2FlzRqQlyP93D4N4unpJ4hppsScLRZCoRGfezKXg5CV7xLDuM
+ zuxQHdqTYPrt8BSE2Drpn4mwWBl/7w==
+X-Proofpoint-GUID: yRKUnHkYXqeu0nEoQUI-dlQG3sKnqExR
+X-Proofpoint-ORIG-GUID: yRKUnHkYXqeu0nEoQUI-dlQG3sKnqExR
+X-Authority-Analysis: v=2.4 cv=KY7fcAYD c=1 sm=1 tr=0 ts=69314736 cx=c_pps
  a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=pGLkceISAAAA:8 a=iGxVMBivTTxaZTGGaQcA:9
-X-Proofpoint-GUID: 2zZq3ENNixm9Xp1QQ15MmRIeTemSTwr2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDA2OCBTYWx0ZWRfX9hOebtmzTdyD
- MtacBOHaee0jz37/V3i3uW71XrKIPDzrDvOOL08astcF12vyl6rXRfIQ/JGxXOY1vWI8Am2gJjg
- jc4jQ7JPcWAuaS3ko9C7q73zwGe8S9aikc3355E2oKooH+M1WxI1Of+GVHVquvxELFccYaTLldy
- ZMk0LmwkjIbtGZfVJVlKFhT+OcNHTdGjpjf+CNK+4QvOCMthKNEqWbPpR9A96OPXz/aTO5v7G8j
- BW4Y1ow1EpuUgjw4lLyuDR1zOCSY7zu7SBDZvPI8z6q7r26MThDG6SpXk94x2eZkJVOb170tiNT
- RAc3WuKNRAoQPzcG5fBe2BjAUl5/plruaLqAfJLxRrH6iMy1YL/QXcRTiYgjRF03h+jJUvOabrB
- 1YBXO2lKAxd8iEGVE+T7QJJXdSQ57Q==
-X-Proofpoint-ORIG-GUID: 2zZq3ENNixm9Xp1QQ15MmRIeTemSTwr2
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=ZmyhYFDlZrQhgxRmxmAA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-04_02,2025-12-03_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
- bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512040068
+ clxscore=1015 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512040068
 
-This series adds initial audio support for the QCS615-based Talos EVK
-platform. It introduces the GPR (Generic Pack Router) node in the SoC
-device tree and enables a sound card node with the DA7212 codec on the
-Talos EVK board.
+This patch adds the Generic Pack Router (GPR) node together with
+Audio Process Manager (APM) and Proxy Resource Manager (PRM)
+audio service nodes to the Talos device tree description.
 
-With these changes, playback through headphones and capture from the
-headset microphone have been tested and verified to work.
+It also introduces MI2S1 pinctrl states for data0, data1, sck,
+and ws lines, grouped into a single entry at the SoC-level DTSI
+for better reuse and clarity.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
 ---
-Changelog:
+ arch/arm64/boot/dts/qcom/talos.dtsi | 47 +++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-v3:
-  - Updated sound card model name to "TALOS-EVK".
-  - v2-link: https://lore.kernel.org/all/20251125033311.254869-1-le.qi@oss.qualcomm.com/
-
-v2:
-  - Address Konrad's comment to modify the commit message and
-    group GPIO pins together into a single entry, moved to the
-    SoC-level DTSI for reuse.
-  - v1-link: https://lore.kernel.org/all/20251024023720.3928547-1-le.qi@oss.qualcomm.com/
-
-Le Qi (2):
-  arm64: dts: qcom: talos: Add GPR node, audio services, and MI2S1 TLMM
-    pins
-  arm64: dts: qcom: talos-evk: Add sound card support with DA7212 codec
-
- arch/arm64/boot/dts/qcom/talos-evk.dts | 54 ++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/talos.dtsi    | 47 ++++++++++++++++++++++
- 2 files changed, 101 insertions(+)
-
-
-base-commit: bc04acf4aeca588496124a6cf54bfce3db327039
-prerequisite-message-id: <20251201172222.3764933-1-tessolveupstream@gmail.com>
+diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+index d1dbfa3bd81c..71db4d019853 100644
+--- a/arch/arm64/boot/dts/qcom/talos.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+@@ -18,6 +18,7 @@
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/power/qcom,rpmhpd.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
++#include <dt-bindings/soc/qcom,gpr.h>
+ 
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -1549,6 +1550,13 @@ tlmm: pinctrl@3100000 {
+ 			#interrupt-cells = <2>;
+ 			wakeup-parent = <&pdc>;
+ 
++			mi2s1_pins: mi2s1-state {
++				pins = "gpio108", "gpio109", "gpio110", "gpio111";
++				function = "mi2s_1";
++				drive-strength = <8>;
++				bias-disable;
++			};
++
+ 			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+ 				pins = "gpio4", "gpio5";
+ 				function = "qup0";
+@@ -4572,6 +4580,45 @@ compute-cb@6 {
+ 						dma-coherent;
+ 					};
+ 				};
++
++				gpr: gpr {
++					compatible = "qcom,gpr";
++					qcom,glink-channels = "adsp_apps";
++					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
++					qcom,intents = <512 20>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					q6apm: service@1 {
++						compatible = "qcom,q6apm";
++						reg = <GPR_APM_MODULE_IID>;
++						#sound-dai-cells = <0>;
++						qcom,protection-domain = "avs/audio",
++									 "msm/adsp/audio_pd";
++
++						q6apmbedai: bedais {
++							compatible = "qcom,q6apm-lpass-dais";
++							#sound-dai-cells = <1>;
++						};
++
++						q6apmdai: dais {
++							compatible = "qcom,q6apm-dais";
++							iommus = <&apps_smmu 0x1721 0x0>;
++						};
++					};
++
++					q6prm: service@2 {
++						compatible = "qcom,q6prm";
++						reg = <GPR_PRM_MODULE_IID>;
++						qcom,protection-domain = "avs/audio",
++									 "msm/adsp/audio_pd";
++
++						q6prmcc: clock-controller {
++							compatible = "qcom,q6prm-lpass-clocks";
++							#clock-cells = <2>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
 -- 
 2.34.1
 
