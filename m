@@ -1,46 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-84365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D87DCA3B99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 14:09:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C428CA3C10
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 14:16:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E05C83007A0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 13:09:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EDA073121F4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 13:10:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C0D73376B8;
-	Thu,  4 Dec 2025 13:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674BB342512;
+	Thu,  4 Dec 2025 13:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlz44Z6s"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dqFv3iHA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="P3WNQ8ku"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CF92E8B8A;
-	Thu,  4 Dec 2025 13:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78A633F377
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 13:10:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764853745; cv=none; b=T6vZLORuDSvqTBCTYcl4bCyhGaLQL9imHPZzHU1XMlM0NATdtmzOEtga0oRe8zIy8OeDCCDmBTSaePm+PKh1xXyTVYAxDDvtbsgorRHX5SFo3nuimnF0e8F4Z5L5qIta99eF5O7nKUzb0T+zfuDKEwjgAL0QlV/tefqHwRzqUVg=
+	t=1764853843; cv=none; b=hsgVrboXjqz9hmGK6kbesyhI0OF8zNh35nUmAQbDX1pfr6w2I0XvqcQfgyRCw7BgCp+uTtOLw6XnMdQwaPfeJJ11wJucWXuyAeKlPVLqDO52BKxJX1lgM58+nn3Gtme+WGz2t3OJ6iR79CqiAB2JXJSWEo2EV3llESgJK8pH4Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764853745; c=relaxed/simple;
-	bh=r+6PbvOAlWHb/KEl+VEcP1a3KOUVK/8vH5QiDzA19wM=;
+	s=arc-20240116; t=1764853843; c=relaxed/simple;
+	bh=gGu+paqPdC7mnHt9rPYBqZXYrdM76LcBZv7bVEm5vA4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fr/Y9PflzbChmyDx4XTmTJp/pJ6yaHInlxOyne9APRVRERDFRNmDxXLmNSqQ/GixEkUpnCutCLf7t01W9pGmSsNrQuqQPJSKThNXSND3HEPT4mS0qsEGvuigqq6ktQP70Qpi/iSWz+R7USqtnsPm9aQdnEkApO9AFjCp9yPJ8sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlz44Z6s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30254C4CEFB;
-	Thu,  4 Dec 2025 13:09:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764853744;
-	bh=r+6PbvOAlWHb/KEl+VEcP1a3KOUVK/8vH5QiDzA19wM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dlz44Z6sUzz4BJvUNkoOnq4XpqaPpGxkvqA6pIK2PQPEsTFSP5rr+FREodCqR9EIs
-	 de9Zov2Z5OwHrm0oMx17uDPdruzugz/X9mfsD4GXYlwQ8KJRKGtzla96bNl1OH70aY
-	 mfoASP6a/2JsOSIV1CgGahXQksn+BDVYVMuv0GqhqpG5xBZbtADOm9XhVrSx52nbgS
-	 /S52g6p3bHlKNliMN/pELdoh3cE8DoNRbOqYuiva9WvOL0mHBA8TxU4c5X94Itxi1V
-	 Ou8/JORU2C953xbbi9RcuRfqFyVPp7pQX5oKMk7UlJfCPgbgzk+jDGC3YjRy1uNN3m
-	 A0NvRpMmN3M+A==
-Message-ID: <04534c03-a1fd-4f2b-aed7-600a2efe2da5@kernel.org>
-Date: Thu, 4 Dec 2025 14:09:00 +0100
+	 In-Reply-To:Content-Type; b=p9brRfaAxVi2+AapYQUscSS395z0aJy/KKnm0p8fK0bGF++MCFeks1c+5Hb2IOEjfuJmvkWPunoevte23srN+hJVLass9EIFQQHZ1r12SbyzP7jeoDd4jsIYKL+YFx28xLjw+XeC8RycqrGduZBoga0SsHyJ4FG+AuN1Hp2sI38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dqFv3iHA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=P3WNQ8ku; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B4AEuWC926199
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Dec 2025 13:10:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	m2K2dG+OAFsTlsLCX6kJRr1wk8NbZkGqj6db/5frYcE=; b=dqFv3iHA/AWscMfT
+	XmV19C7dBQ51O2gGGN34PlVrHuNtuzY8+B2hwucwHavQrm5v16imz0tw6bpj57Vt
+	uWSS0rOW+k6gcl9g2uYjYGm2O5ViPSo6laRXs9OJXLG1a6R9RRP7TzhbjR+IeZqk
+	TWV5OO67yFhGmmLLVpJGpA7NmUSpjRdwTGX1X/McdTEJ6s7oCdY5D7Fumy0Q3zvJ
+	Tpm6CpzdoX4nIQBLBPWrkD+H8eO294HbdJTm6FsdUaPgYJkqIF2w6sG0GnG7Eh1N
+	4aKbNx3rTrn0toEA564IFjRufwuzzlhO8gkbgaKJ9dAh956qPO6j7dzC1qpCm2hy
+	siq0Mw==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4au5m312s3-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 13:10:40 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7b8973c4608so2512431b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 05:10:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764853839; x=1765458639; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m2K2dG+OAFsTlsLCX6kJRr1wk8NbZkGqj6db/5frYcE=;
+        b=P3WNQ8kuwrXceDP1Rk4PITfDO9IMT3fPuAscWJYXiG2WTnc0exrKQuAu8uqvbHAhaY
+         oFHLyRJ1zjCUTrf9d469DDHosacuuEPtT20exnyWcvbCqE/y+ttuA8576Nuln1jneyQe
+         2Y97/kkA+5GCfD3mME4/VTOTG1hiBtleaqxPyXDJ6rupbMxRRERY9U4feDN68WxOjd0R
+         7xXr1Wjg1HYyhf0L2VUDDhPVI2B3OGOAnXWDE6u4pkpl3/+pWsPl85cF43IW+vU+fd4A
+         IlL/3pQkrQZXZnNyGZ14YIZ8++L0rWUMV06orAawFEK+tJkEZibq5wW9qI4tvXqPo6bp
+         a8Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764853839; x=1765458639;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m2K2dG+OAFsTlsLCX6kJRr1wk8NbZkGqj6db/5frYcE=;
+        b=CtWVzjZb1owQNQDzg/TbCqRoLeUdxJkByWYhvYon+5j3x8mFg+gMtTc1Ss24RL2dlW
+         wO5dpu0eFbxQ5Npz0/luKmdz0iatskDTmz0MrnAyWnWTiX9NmAXJWQZaSIhW2ZvuhC52
+         l77yyqkbr9YwYveXVrH9094gEE07wqRS4hYY5VMikho/Bn15+JIwqg0BRg87P58IPVsN
+         q35/en7dL1gZ5lNEylNtkYs3ztMABux3nBCw/MTzdd1n/nuXqrazgC5qvBgBSL8YFkYV
+         5meM5sfV/8bcUG6tQ0iQANANpeiW4xIa3aWUZcr45p5c7iL4e1A6kossVcMr8aNphlTd
+         vc2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUGoFKGvTfqASZHEDxxVLsif2YI2M2cMUGzmSV3vpTKTbRx+lxgqnBQU8ohTRJYPYU5MKevmcuoN8AC6sJY@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5jFwv7S9Gy+TK1CCeFLNBaTn1ERniUoZtkleBvSrakutSGpC8
+	Nn+2cbF8yEj71qqfR7j3L4xaCGk7taO3QXK2RouXDc3jSfhaGYV9N/TdhXFGWKu0p8vyHTt1uhe
+	kOWc//cIzucLAQkA4/q1PmX/uwVHNe2/HklNhEg0mRJQbzMzjqIshzQKOZmaF+u0QC9pI
+X-Gm-Gg: ASbGncvjyIrQU+g4991nr9nvl4nbcDbxzoeSs6gxoQbvg3sxUoMDV6+4xR2yaNkppBP
+	NV4tfwNreCK7yJRQ/7It+iVB9NNAuAGHOshZFd+7mvGAJqh6wih264ZqTBCiKaOgZf5NPRpgLkR
+	W2uMU7vSOyVydvfXB6n6Em5m/abU+W/r6n18iygVWlFi1uD+RTASodUcwPdIOBMbkaSxXXQXr9n
+	11AjulvbThBUiq8z1/JTSvWXjeW07gP42c2/MR83or61xYskgaYYoatkr8EQKJn6644M3piMEnU
+	0yRHa0wInm60l8rW2Ura3OAYjbi6+jQ65o9E+8wW7R8IvHNuaDP0ViQSlDpLjURSDCY1A6kPYV1
+	2RZNvsrx2/5xCcKBnD1sICn7WY5yxNuXJhg==
+X-Received: by 2002:a05:6a00:3a1c:b0:7a9:c21a:559a with SMTP id d2e1a72fcca58-7e226e2de0bmr3219786b3a.8.1764853839416;
+        Thu, 04 Dec 2025 05:10:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHzWjvtqQGT91E8vkBQvMcAoAvWRgDe3oW5gq4ULEbuYC5TSGRTZv0nuedZ7pKUKHPPmAwtCw==
+X-Received: by 2002:a05:6a00:3a1c:b0:7a9:c21a:559a with SMTP id d2e1a72fcca58-7e226e2de0bmr3219746b3a.8.1764853838937;
+        Thu, 04 Dec 2025 05:10:38 -0800 (PST)
+Received: from [192.168.1.4] ([106.222.235.197])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7e2ade44a4asm2174039b3a.36.2025.12.04.05.10.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Dec 2025 05:10:38 -0800 (PST)
+Message-ID: <936b6a48-a5e5-4efb-be7c-215ac670677d@oss.qualcomm.com>
+Date: Thu, 4 Dec 2025 18:40:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,92 +102,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: input: Add Awinic AW86938
-To: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>
-Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20251204-aw86938-driver-v1-0-ebd71868df3a@fairphone.com>
- <20251204-aw86938-driver-v1-1-ebd71868df3a@fairphone.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 1/6] drm/msm/a6xx: Retrieve gmu core range by index
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20251122-qcs615-spin-2-v3-0-9f4d4c87f51d@oss.qualcomm.com>
+ <20251122-qcs615-spin-2-v3-1-9f4d4c87f51d@oss.qualcomm.com>
+ <9cc55934-6980-4673-8501-2d1efe2f816e@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251204-aw86938-driver-v1-1-ebd71868df3a@fairphone.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <9cc55934-6980-4673-8501-2d1efe2f816e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: hKQLC4nuu5Z-7_Hhh7HyKM5V3fDfEvNc
+X-Proofpoint-ORIG-GUID: hKQLC4nuu5Z-7_Hhh7HyKM5V3fDfEvNc
+X-Authority-Analysis: v=2.4 cv=esHSD4pX c=1 sm=1 tr=0 ts=69318850 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=jBSxni06C9HboLYAjQ55wg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=8zqzhdr9uPwxYiBKMiUA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDEwNyBTYWx0ZWRfX32RV65OYoNmt
+ lo10MsctupN5flWF+Rk72p8EgiU0tb64ChodbRmS37xQUAVUQj8g3uCEO1sMIV2w9DKEm1V3up8
+ o/kbIXJ2tCkUuocKjRjlderL2PI1ep3NQ3gimnJixzLOdcnmK5t3PbPTdbYBFEHQJD4V+Ni67qW
+ DChZ3uQLqvapUKjPO9K7iMbM9KlJDezO9SPTnqfy2Tks3R9775qy+l0NkbhNSYf0iTSgI8yG5wt
+ M3Wzr1REPqlIElOQMKWLPZvdmFkkCst/YxdQNc4FVkFcc8YG5z0jyeeZyGKOgNNyUSK+P6qJmIg
+ IP8QZmbN2u4OLdqUuwDgCksJOllC2k1pyQDNy4YIrCBtQEoBtm67J9by9NFKjg2QMgRzCZ2qBnD
+ oGbnYgRyyanz5pDuLFdC3og8OQo5qQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-04_03,2025-12-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 adultscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512040107
 
-On 04/12/2025 13:29, Griffin Kroah-Hartman wrote:
-> Add bindings for the Awinic AW86938 haptic chip which can be found in
-> smartphones.
+On 11/22/2025 7:08 PM, Konrad Dybcio wrote:
+> On 11/21/25 10:52 PM, Akhil P Oommen wrote:
+>> Some GPUs like A612 doesn't use a named register range resource. This
+>> is because the reg-name property is discouraged when there is just a
+>> single resource.
+>>
+>> To address this, retrieve the 'gmu' register range by its index. It is
+>> always guaranteed to be at index 0.
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>> ---
+>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 14 ++++++--------
+>>  1 file changed, 6 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> index 5903cd891b49..9662201cd2e9 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> @@ -2029,21 +2029,19 @@ static int cxpd_notifier_cb(struct notifier_block *nb,
+>>  	return 0;
+>>  }
+>>  
+>> -static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+>> -		const char *name, resource_size_t *start)
+>> +static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev, resource_size_t *start)
 > 
-> Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/input/awinic,aw86927.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> Can we drop this and just use devm_platform_get_and_ioremap_resource()?
+
+This API seems to lock the io region and fails with -EBUSY if the region
+is already in use. I am worried it may regress other chipsets. So, I
+dropped this idea at the last moment.
+
+-Akhil
+
 > 
-> diff --git a/Documentation/devicetree/bindings/input/awinic,aw86927.yaml b/Documentation/devicetree/bindings/input/awinic,aw86927.yaml
-> index b7252916bd727486c1a98913d4ec3ef12422e4bd..c3dee660422192720da3cf63851cea27db819742 100644
-> --- a/Documentation/devicetree/bindings/input/awinic,aw86927.yaml
-> +++ b/Documentation/devicetree/bindings/input/awinic,aw86927.yaml
-> @@ -11,7 +11,9 @@ maintainers:
->  
->  properties:
->    compatible:
-> -    const: awinic,aw86927
-> +    enum:
-> +      - awinic,aw86927
-> +      - awinic,aw86938
+> Konrad
 
-
-Your driver change suggests these are compatible, so please express it
-here with compatibility and fallback (see exampe-schema or most of other
-bindings) or explain in commit msg why devices are not compatible.
-
-Best regards,
-Krzysztof
 
