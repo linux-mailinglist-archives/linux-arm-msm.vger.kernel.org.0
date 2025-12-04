@@ -1,214 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-84405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73CCECA4837
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 17:33:06 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33E53CA49DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 17:56:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E01513007745
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 16:33:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C969B3005007
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 16:55:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63B7D2F25E7;
-	Thu,  4 Dec 2025 16:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2CEE27EFEF;
+	Thu,  4 Dec 2025 16:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ROBf9lFo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Lx/3WszR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A6V77igw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75F92FBDE2;
-	Thu,  4 Dec 2025 16:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A042F0C7F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 16:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764865968; cv=none; b=C/6aZn+iutr+CPIWscOtNiou/tMeMeoVc5EVbz2nLvJ22p4Ghuoz/ya7XzEDzYUqvUZfbwkboa0U7soz+8vJyKnU+vPZwjLdCNverEI9Ujc40IwgsBWMiIImwMqbNe88Cw5BliGEdFvIcPBnCq3We/rWXgvGmf/N8+rqX0JwDaE=
+	t=1764867358; cv=none; b=uqey/mAP+vppa9pLAvRXBjAu+p6Dzl0Gc3to+OkX+sMozHRg5qBDcfJe5yViHnZW8O72WnU6bdta5IuXGGeTRc0T6tX5FqOpq58EvXp4qHunF+DBHHbtSvpNJmPy+e+KdstSKcnJrI3+4RUlxnvZ3l1nZKR3Rnx35Zv9MsRldVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764865968; c=relaxed/simple;
-	bh=Lzd+d6ieW5CartjptTmOhf3AJteTtZmGLAkDwoaVU0U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u5hUGfbyX+IOLm210ucnv4NvdEqiDDUERhkP0iwK4U5/saBahOOUFOiSDN81Dt85ZyB7iSg99i4zpEqqVet9ShbEuVeGbtkpBZhAWhXRoa0Igcz1Cl057V/8Wknm7WnSgtomqZLwVYhCPLMmZcNIHJVyD171MKeAdQZFtlZ6bc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ROBf9lFo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 887EAC19423;
-	Thu,  4 Dec 2025 16:32:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764865967;
-	bh=Lzd+d6ieW5CartjptTmOhf3AJteTtZmGLAkDwoaVU0U=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ROBf9lFoPcawAKsxMzsTVMIHfKh4Tg86EKtBSlXIKlY6rfvc6jl3CYkuj7zaCyXbc
-	 QML2HJlI7E8DSyuRWDWPBYlYVBwmK3MB2dGxQowEr/1oTOybQc7IvM7FXLmoVY3xkf
-	 HnpZpi6C+StWeA5BDhQMtGPgXvtxB9QqCM7dmhxh1sQwBQFyITKH/JCOPRWTPF/Ibw
-	 6K6gSnpWKiTRPdr2ody4gow1K5TFjo0R6oeKJdnNvAQPBOwGkbvVBdorsxzTvE5BrV
-	 SbCPfkN2tzXsiwN3JmfBWnkWedDODiU5zk/y5ldowDxGtnxVu7eX2BjsxulAtD6Y5j
-	 RYI4kBmCkh24Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F31DD216AE;
-	Thu,  4 Dec 2025 16:32:47 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 04 Dec 2025 17:32:42 +0100
-Subject: [PATCH WIP v2 8/8] media: qcom: camss: Account for C-PHY when
- calculating link frequency
+	s=arc-20240116; t=1764867358; c=relaxed/simple;
+	bh=LNv5TI85gy11omWpvq7gecqV6xK4Rwr6W62Jp8lV1iQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lzkU8OUxs59AHzz2z/ZwZ/k7/gFoSU6JreTPw7fMMAWXoRA22KcFlakKjlJy48UUJpKEawMadtP010yhFprP4XC7azpL1U0F4SpvpxdnPgojPlH+DkZ8zXMm+zCbVdzaabe9bLSj8pKQ85+4qJYWBwJaiFmLcZXjJixL8TiaHZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Lx/3WszR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A6V77igw; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B4AEumx1159676
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Dec 2025 16:55:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=696GRQQxqyCN41tUvMfT2OP6
+	gr0o5pHGbrT8RfFEnEc=; b=Lx/3WszRZx71yC9TsS/SJ7/ziL4tv233rDSVnAVW
+	qOu8Ig0lpdfpIRipphLvIWnQjOvJzPk9SjcKVieiVGjfBCVQIWUDLCygmvfsNjz8
+	Zo+/6QFqQut8jnDJmDaukOqg/wAbGL7dqd+E56N9It+RONcEMee6WZ9xFpwBJP7I
+	zq8iBjeeG16yZPg1Hv12Mv/JCAxlFu75VU31gmBeuMI7KRgLv/63eZamGs6GB1Sq
+	zzh/lIk7zP6Hc9OhYDwaHMT73gaCObhXHuMhHogl2uaHVuzb1JK8INKNohQfirG/
+	gagyvGpktQIbqIKj1j4DbEceUtiC59OtUrSyD/KCRuqVAg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4atu3h3kaq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 16:55:49 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7b89c1ce9cfso1116655b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 08:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764867349; x=1765472149; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=696GRQQxqyCN41tUvMfT2OP6gr0o5pHGbrT8RfFEnEc=;
+        b=A6V77igw1BVriZuxfXnpwUDQOwiDuCEaXICJ9Bf6+9kE5hsyEgy4UQTW0PVnKF0zwC
+         GIHjEgMdsJe9QtMA++SzJg4Zm7DZTBSQdO1hkcmaDHCzSrfPyOgpPsNANo2uFZ90iOBv
+         h8dEKC3Q1BCQZIZkcfEjxzcQN39wk4PJXdWu7GssuJzapVKJ/1CGzLaaGtETAV9q+5jH
+         SW4Uo3L3WdMrgqS6wPqadaqb2V7X1eK3OIDim3+WKWi5YoFHDimhfvltHQKTaX5XGXnL
+         A60RPBfYrjSHZOzwIL/klP1olRsBYVMjpTFOjq7NEojn0ccbiwGmqrkVhuCLf8liKIBS
+         o/Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764867349; x=1765472149;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=696GRQQxqyCN41tUvMfT2OP6gr0o5pHGbrT8RfFEnEc=;
+        b=joF7mGdReO7Gg8GiH9VvoaICZa5GwgnpNuGufjn5THCcgH8Y7gaLOmIEIR+tLGt7WF
+         bSXsTKLe4s7guhKQGJAj/m/DWzFaK1niD/kKBhhlqYzgGxCeui705NaA9LtRZkyQG31r
+         QZiMhhVg/c0iYktL5v9lc9nzsnTgJQolT3l17yYE89WsTg6dynLXDQOhpOJTnBnzZSxB
+         NqiCa10E6fdZBAjz1Mw0k165R7sOLZX9okv1MLodf425jxYAmZxGmZbqBhS9GSbaZrkU
+         g4TjwFp6ctpMbDK8OghmtQhjGJHNmo1hWw9d5SNsu3xraT2Aj9VdA0nGkr8LvsJk39vh
+         kWjA==
+X-Forwarded-Encrypted: i=1; AJvYcCU2CrgqBd6XmlIpWNr2I0Sd8ORKOQDyDn6Gfi/4nw9kT89HVT/rTBB1SJwsqBbThqxtR/94wuZ/cy9kxb5s@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3t7FzfEgTqOHDwL3LWbiRN5ryVlPQc0IUN1zYhrDuycWA8QMh
+	ulwU8OjLVL/JZdCKuk6fOqFokYmSaYtaG9B8Lz6CEj6XXo+f/RNg28yhlbGH1ClMPTcReZixUEq
+	HCUxMvGHxsgwdtgebzUuZ7420fiRMRZavnj8bXCqJJcTaGngMji26z1+ftLMZLBTKw5HV
+X-Gm-Gg: ASbGnctxBaZxFtNnCyIAiYYMV/ahjbFKTr8nhGJhZjA1F0+i9uN/tMrOW3B3REpofAg
+	qVNqYopbXlN/0tcsRGsgPl0JVHINzSP/sv24sQjRO9JooBI+II94l6h7s7ZRwx6X4El5KnHvkgb
+	eGWUtqUhsjAb4ZGyKMHryPqSQkYuLIodeHWWpGkmeaKHKQnbEOVWiMAFTnJKND3Eetq3HCgKIwF
+	7TRUHtq/nZD6pPWmV9i99uwKXyGDdSyEaFy3h7X/BmcTp10sbGhiIutG+nNDIBWkVi/IQmc+fOO
+	07rH3TmoT0bhsDyBrQKjJEnTP2hUyQU0wayAZJQsAQpCOn3xtZNJspLQ5/HuGOYODLScLE2gIr6
+	FpFh3yfJv/B4IWCWCGe8ZGWrRjC53JGWx3gGZVWFC3Aw=
+X-Received: by 2002:a05:6a20:7f9a:b0:35f:27d:2ded with SMTP id adf61e73a8af0-364037bbe31mr4323545637.25.1764867349089;
+        Thu, 04 Dec 2025 08:55:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHw2kT6hEWnd272sKBcT9eqh7v0Rt/OEQRgifO1zaMD5O5RJ8rQVzs+BV0eYAiBOr9b7Fd7zw==
+X-Received: by 2002:a05:6a20:7f9a:b0:35f:27d:2ded with SMTP id adf61e73a8af0-364037bbe31mr4323517637.25.1764867348579;
+        Thu, 04 Dec 2025 08:55:48 -0800 (PST)
+Received: from hu-pkondeti-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7e29ff6b56esm2702035b3a.20.2025.12.04.08.55.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Dec 2025 08:55:48 -0800 (PST)
+Date: Thu, 4 Dec 2025 22:25:43 +0530
+From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+To: Mark Rutland <mark.rutland@arm.com>
+Cc: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        rsalveti@oss.qualcomm.com
+Subject: Re: Alternative to arm64.nopauth cmdline for disabling Pointer
+ Authentication
+Message-ID: <33ab9112-39c5-4dba-9e56-089b7e8a7243@quicinc.com>
+References: <3fcf6614-ee83-4a06-9024-83573b2e642e@quicinc.com>
+ <86ecpappzi.wl-maz@kernel.org>
+ <adc22b19-7dcc-4c38-9319-d979f1e3886a@quicinc.com>
+ <aTF42v5dpTuCe7r3@J2N7QTR9R3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251204-qcom-cphy-v2-8-6b35ef8b071e@ixit.cz>
-References: <20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz>
-In-Reply-To: <20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, 
- Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-Cc: Joel Selvaraj <foss@joelselvaraj.com>, 
- Kieran Bingham <kbingham@kernel.org>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5230; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=b1nclvoHacIkz7OV2Q02X6ymuveqnuBFG4Fw6qspG18=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpMbetO8v9IP/fCl+iBxVyeBnOtgKMpCe6yBF3S
- wFhmEpWu5qJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTG3rQAKCRBgAj/E00kg
- cl+9EACfXP/Tbp6aGoowpOVft73F4HARvALH0Cr4oFK3BECz02pgSBIq1Huv9OWvV9xwd8jDNv7
- 8Ofzv2dqg1MNzlc+B24wGsh9gBCvexmRtC/MARlAcS9gzNd8dDk+S6fOU2gO7IRklOisRIyDGMu
- hkSIZlJnvKlXW/vi25ndaI5VY9hrg18OXGWDtosCn4pNYfIWaax+iUxndE9GNGrm7gIxQiYdC+R
- 4Y/vgVX7VtfrR4PF6ZR25DsE381R0/n5fJt2tXTuoBxaBhKufAbbwn7v2SuVVH3VejZheCr8jOh
- fQbh+YTeDED8Z6jPSNggCmHbYFhWWsDX1n5FgFIhQINEbyJ80k/Ihp5Qg0U5S0efOFxnnsvnsP8
- mSkBCrCgGtpKyJ7Vz0fNsY+rCpyGGq8EW9fkQztzQYy7BDosIvuNzrDG1BNFHDEwC0uN12rl3hg
- Afe9lHXD4qZEPaGBhWrLkHBJx5uIOprgnt75vETEkJGtxGpv+/RPf1RI8Ja/M7w6HfR81MvBW+r
- SJxOKZAxyPx59BUXNVZ2mKGwiE7+OiQbiFcNmlmnlMOEEgbmVOfgiwdq6PtkO3KukqySNsDWdab
- 5iLrT5waOzglhzAajmBQolnj4Amwna9w9Bo3gmCKuvM4vvWEKFGzuAyc1GDV3eLSVGqnBH0Pzlb
- 3s9/bzkunvFTUrw==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aTF42v5dpTuCe7r3@J2N7QTR9R3>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDEzNiBTYWx0ZWRfXzU3usi/NhVKb
+ 7X2eQ9PGMUEf/cDyZQfN3fZKJWA77Li5D87niJWUupQ7VL3Krhm+UVX+iMEjOrJWfa8SJBRS8hN
+ 8qB/8fhaYP9KELQSTbi2RaCYsIJA6y5Kw0IPQ/AzcFWbpSveweRDqGRgPOaOsIMjOFjbqUhyUzE
+ MmxsVNbZcE9vSPG3KWn+0hojeenuTDrPI/AOAmJG//zmj2cH5E89JsCAl8TEheYQpsK190r3mnz
+ rJtWGZBHBeY/A7m4Tf7+SHjfI8jSlTPSE7XeKmZ7UHc8k5ytWfHhz2pEWbjfy7K909cD0RcLaDj
+ 0d3MJsfqneLNEFum+s0WSzvGny5BC34YpzCGGUFdW7RHgheT6fgmamlsR7/2dZ5v4U2AwMuuR8v
+ XWoR/U+h5yN5Yu41qdd6HPPandlJzw==
+X-Proofpoint-GUID: DyTHZxyOlv0eobYktMbi2CqX-sskrsLC
+X-Authority-Analysis: v=2.4 cv=KJxXzVFo c=1 sm=1 tr=0 ts=6931bd15 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=Hg61_yuSoULxYLHEoxwA:9 a=CjuIK1q_8ugA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: DyTHZxyOlv0eobYktMbi2CqX-sskrsLC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-04_04,2025-12-04_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512040136
 
-From: David Heidelberg <david@ixit.cz>
+On Thu, Dec 04, 2025 at 12:04:42PM +0000, Mark Rutland wrote:
+> Hi Pavan, Marc,
+> 
+> On Thu, Dec 04, 2025 at 04:06:12PM +0530, Pavan Kondeti wrote:
+> > On Thu, Dec 04, 2025 at 09:15:29AM +0000, Marc Zyngier wrote:
+> > > On Thu, 04 Dec 2025 04:07:15 +0000,
+> > > Pavan Kondeti <pavan.kondeti@oss.qualcomm.com> wrote:
+> > > > Hi
+> > > > 
+> > > > The pointer authentication feature (PAuth) is only supported on
+> > > > 0-3 CPUs but it is not supported on 4-7 CPUS on QCS8300.
+> 
+> > > On what grounds? Hardware incompatibility? I seriously doubt it,
+> > > since nobody glues pre-8.3 CPUs to anything more modern.
+> 
+> Marc, it seems like that's exactly that's happened here. :/
+> 
+> > I see that Linux runs at EL2 and AA64ISAR1 register values on CPU#0
+> > (A78) indicates that PAuth is supported but not for CPU#4 (A55). I am
+> > told, there are no other controls outside EL2 (trap) to manipulate
+> > this feature. So, I am assuming that this is indeed reflecting the HW.
+> 
+> Cortex-A78 doesn't have pointer authentication, but Cortex-A78C does, so
+> maybe you actually have Cortex-A78C?
+> 
+> What are the MIDRs on this SoC? e.g. the output of:
+> 
+>   cat /sys/devices/system/cpu/cpu*/regs/identification/midr_el1 | sort | uniq
+> 
+> If this SoC has both Cortex-A78C and Cortex-A55, that's a rather
+> unfortunate combination that should have been caught at the SoC design
+> phase, as Marc alluded to.
 
-Ensure that the link frequency divider correctly accounts for C-PHY
-operation. The divider differs between D-PHY and C-PHY, as described
-in the MIPI CSI-2 specification.
+Yes. The MIDR register indicate the same. A78C + A55
 
-For more details, see:
-https://docs.kernel.org/driver-api/media/tx-rx.html#pixel-rate
+root@v8a-arm64:~# cat /sys/devices/system/cpu/cpu*/regs/identification/midr_el1
+0x00000000410fd4b2
+0x00000000410fd4b2
+0x00000000410fd4b2
+0x00000000410fd4b2
+0x00000000412fd050
+0x00000000412fd050
+0x00000000412fd050
+0x00000000412fd050
 
-Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- drivers/media/platform/qcom/camss/camss-csid.c   |  2 +-
- drivers/media/platform/qcom/camss/camss-csiphy.c |  6 ++++--
- drivers/media/platform/qcom/camss/camss.c        | 16 +++++++++++++---
- drivers/media/platform/qcom/camss/camss.h        |  2 +-
- 4 files changed, 19 insertions(+), 7 deletions(-)
+> 
+> [...]
+> 
+> > > > This patch [2] from Catalin adds a devicetree property under memory {}
+> > > > to disable MTE.
+> 
+> Catalin's patch was a bit different. It described whether the memory
+> range supported tags (and was actually a property of the memory). That
+> patch didn't make it into mainline AFAICT.
+> 
+> [...]
+> 
+> > I understand that this does not fall under errata but is
+> > there a possiblity to introduce an Errata targeting CPU#0 MIDR and
+> > disabling the Pointer authentication? I understand that if there is
+> > another Qualcomm SoC that exists with all CPUs supporting pointer
+> > authentication with same MIDR, we may be disabling the feature but this
+> > is something I can check internally.
+> 
+> I strongly suspect we cannot use the MIDR for this. Per:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=53a52a0ec7680287b170b36488203b5822e6da2d
+> 
+> ... Qualcomm's Kryo {Prime,Gold,Silver} parts seem to identify
+> themselves as Arm ltd implementations, and those will appear in other
+> non-Qualcomm SoCs.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index d9026fd829d61..437f51dc86f9f 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -545,7 +545,7 @@ static int csid_set_clock_rates(struct csid_device *csid)
- 	fmt = csid_get_fmt_entry(csid->res->formats->formats, csid->res->formats->nformats,
- 				 csid->fmt[MSM_CSIPHY_PAD_SINK].code);
- 	link_freq = camss_get_link_freq(&csid->subdev.entity, fmt->bpp,
--					csid->phy.lane_cnt);
-+					csid->phy.lane_cnt, csid->phy.cphy);
- 	if (link_freq < 0)
- 		link_freq = 0;
- 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index a734fb7dde0a4..bac3a9fa3be50 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -144,8 +144,9 @@ static int csiphy_set_clock_rates(struct csiphy_device *csiphy)
- 	u8 bpp = csiphy_get_bpp(csiphy->res->formats->formats, csiphy->res->formats->nformats,
- 				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
- 	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
-+	bool cphy = csiphy->cfg.csi2->lane_cfg.phy_cfg == V4L2_MBUS_CSI2_CPHY;
- 
--	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
-+	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes, cphy);
- 	if (link_freq < 0)
- 		link_freq  = 0;
- 
-@@ -270,9 +271,10 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
- 	u8 bpp = csiphy_get_bpp(csiphy->res->formats->formats, csiphy->res->formats->nformats,
- 				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
- 	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
-+	bool cphy = csiphy->cfg.csi2->lane_cfg.phy_cfg == V4L2_MBUS_CSI2_CPHY;
- 	u8 val;
- 
--	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
-+	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes, cphy);
- 
- 	if (link_freq < 0) {
- 		dev_err(csiphy->camss->dev,
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 414646760ae6b..6333f5dd73b53 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -32,6 +32,14 @@
- #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
- #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
- 
-+/*
-+ * C-PHY encodes data by 16/7 ~ 2.28 bits/symbol
-+ * D-PHY doesn't encode data, thus 16/16 = 1 b/s
-+ */
-+#define CAMSS_COMMON_PHY_DIVIDENT 16
-+#define CAMSS_CPHY_DIVISOR 7
-+#define CAMSS_DPHY_DIVISOR 16
-+
- static const struct parent_dev_ops vfe_parent_dev_ops;
- 
- static const struct camss_subdev_resources csiphy_res_8x16[] = {
-@@ -3912,20 +3920,22 @@ struct media_pad *camss_find_sensor_pad(struct media_entity *entity)
-  * camss_get_link_freq - Get link frequency from sensor
-  * @entity: Media entity in the current pipeline
-  * @bpp: Number of bits per pixel for the current format
-- * @lanes: Number of lanes in the link to the sensor
-+ * @nr_of_lanes: Number of lanes in the link to the sensor
-  *
-  * Return link frequency on success or a negative error code otherwise
-  */
- s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
--			unsigned int lanes)
-+			unsigned int nr_of_lanes, bool cphy)
- {
- 	struct media_pad *sensor_pad;
-+	unsigned int div = nr_of_lanes * 2 * (cphy ? CAMSS_CPHY_DIVISOR :
-+						     CAMSS_DPHY_DIVISOR);
- 
- 	sensor_pad = camss_find_sensor_pad(entity);
- 	if (!sensor_pad)
- 		return -ENODEV;
- 
--	return v4l2_get_link_freq(sensor_pad, bpp, 2 * lanes);
-+	return v4l2_get_link_freq(sensor_pad, CAMSS_COMMON_PHY_DIVIDENT * bpp, div);
- }
- 
- /*
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index 9d9a62640e25d..0ab908b0c037f 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -162,7 +162,7 @@ int camss_enable_clocks(int nclocks, struct camss_clock *clock,
- void camss_disable_clocks(int nclocks, struct camss_clock *clock);
- struct media_pad *camss_find_sensor_pad(struct media_entity *entity);
- s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
--			unsigned int lanes);
-+			unsigned int lanes, bool cphy);
- int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
- int camss_pm_domain_on(struct camss *camss, int id);
- void camss_pm_domain_off(struct camss *camss, int id);
+Thank you for explaining this. Agree that we can't use MIDR based
+workaround here. 
+> 
+> Without know *exactly* which MIDRs you have on this part, we cannot say.
+> 
+> Regardless, I strongly suspect that we have to live with the command
+> line option for these parts.
+> 
 
--- 
-2.51.0
+Got it. 
 
-
+Thanks,
+Pavan
 
