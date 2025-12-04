@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C18CCA4486
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 16:36:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77687CA44B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 16:39:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A53AF309B122
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 15:32:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8925431365FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 15:35:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CBC287247;
-	Thu,  4 Dec 2025 15:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5296E2DC76C;
+	Thu,  4 Dec 2025 15:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mCuPz+eW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tjS5frsI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B8B23D2AB;
-	Thu,  4 Dec 2025 15:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EC626C39E;
+	Thu,  4 Dec 2025 15:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764862323; cv=none; b=EuI+7uUYRFLbU+RCmJuYGW6FTI23++gIjRQEWy0vgYwIKMhGSvQ2bR0tNKJoJIIX1sXhZElInqS5XeOID8/q7C9TAZ1qXb3btJkOMEATF02LXjin0MulGrMNg5iCVLztj17dU8y/iIktrL+WS6xIHP3ADIMhPmBGNFIsJKJereM=
+	t=1764862501; cv=none; b=J7fUg/IYFDCoech3en6jN3BzgFozJ8U/MmCgQVNT3OIBDO3ycSzuJI0aRW7FkmUizr5WZ4WHcpxem37yUWl39zSMHnjpKJLf75VChqA7OpkoA9soopdtSQBIlr/6Tcd6Fj8263MPCm0XFo2j9Ynd56qQ32AamJCmBBejPeDMu1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764862323; c=relaxed/simple;
-	bh=w1Q6VFwrOC3dS9CSpG3G+OIpgCbwXEUvXqb5bD63Llw=;
+	s=arc-20240116; t=1764862501; c=relaxed/simple;
+	bh=Uv/Wv3BW0tXKZnbn86uYnmTRmLoSXzOusKBbGjFBOlk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kcupsZyplENfFK1M9GS7bfOGLEGd/CEGtYZ0YRtwD8oOtyMCRwIprnhp5e28/pp7jZA2+VGS5hPK8nZl5iRmEr0YajMGou8CrmYbuics44cWZtxKJfZK1Z/QkyPQuDSHhOR6/I0BDcV41bxAyckoPMMcdAgKy6kd1yt212JZFfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mCuPz+eW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3113EC4CEFB;
-	Thu,  4 Dec 2025 15:31:58 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hxKFpjJjnFEoDOzMawapM3jp9q0SruTDz3pGHqWreN36KAGvZLT3COZ0dVVr+3PP7vYn4ZNP8i6OF35IEg0iU3GS8iXSd2+DLsbHaSCfKOuUQT8sB9dbJAqTN30+EA02b/3YGDiQPGeZfRjRzoHU86iYFP9+7NlgJeB/MKbuIdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tjS5frsI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9ABC19422;
+	Thu,  4 Dec 2025 15:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764862323;
-	bh=w1Q6VFwrOC3dS9CSpG3G+OIpgCbwXEUvXqb5bD63Llw=;
+	s=k20201202; t=1764862500;
+	bh=Uv/Wv3BW0tXKZnbn86uYnmTRmLoSXzOusKBbGjFBOlk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mCuPz+eWxH8vs21Qg2kgA0XVOUWEIfo+Fki4gxS+RDfB0YE0UO3U8ieXlCMiOQwvu
-	 9schcaqbV5/5SSuY0vWyTA5DYwF9ZGMxPpstlm1OvxOXX8fYikoLpYOPVZIBd4YaYI
-	 DtWUBffhyI568Tb+f8E1372x+I+cGsiFa1LdElENwnDm6r9bz/KtCjO/0Hs9ffhj6Y
-	 eDmb7o5ErvsZkCYG/B3UkjvgYBo3MLpazh1wlZYcB2p08aLVSrjF/3yi4uQPcVi/uz
-	 YxUb2O3TJAe6GADlZvdFya9+C3n8kk2LM0lWgJmeXuKBT2OF02O/VcDtbrn2360hAi
-	 zuOqLtJkpI4Kg==
-Message-ID: <f7d1650f-3431-4370-a20f-cce0ca6667e8@kernel.org>
-Date: Thu, 4 Dec 2025 16:31:56 +0100
+	b=tjS5frsIp1F4dcYNCbq24JF8l6VOUjUvg8NN8SKko0x5KxvhHmH5nhf/NRJickh2M
+	 Jwj7sStMAifG3H2jGOQbOSEB6XF70fUefXsOWaDZO3RyIZIQ81N3oUs73JumeKY5xm
+	 35epJ/J2mSbwIzCTGwzJNOS1CdPkku+4bhZhnybvYACgUsZ3jPhAhrG75v+/g9JeAx
+	 9wxTlNWdOu6mxtZceWbHFbx417UTBtIp7UoKgngfUI2/Ck6tEdBJAVUJN0A0Tje4Ci
+	 gWfgUGi4oDDsBT3+Xi1VySx8StulvzyIkssuiGlD3yzv9J66yKt/HC8e7exi59hgGL
+	 pxhzFkXa4a5wg==
+Message-ID: <e8243a84-a7bd-4087-87d7-2795d6bc7595@kernel.org>
+Date: Thu, 4 Dec 2025 16:34:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] dt-bindings: display/msm: gpu: Simplify
- conditional schema logic
+Subject: Re: [PATCH v4 3/8] dt-bindings: display/msm: gpu: Document A612 GPU
 To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
  Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
  Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
@@ -67,7 +66,7 @@ Cc: Dan Carpenter <dan.carpenter@linaro.org>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  Jie Zhang <jie.zhang@oss.qualcomm.com>
 References: <20251204-qcs615-spin-2-v4-0-f5a00c5b663f@oss.qualcomm.com>
- <20251204-qcs615-spin-2-v4-2-f5a00c5b663f@oss.qualcomm.com>
+ <20251204-qcs615-spin-2-v4-3-f5a00c5b663f@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,23 +112,56 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251204-qcs615-spin-2-v4-2-f5a00c5b663f@oss.qualcomm.com>
+In-Reply-To: <20251204-qcs615-spin-2-v4-3-f5a00c5b663f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/12/2025 14:21, Akhil P Oommen wrote:
-> JSON Schema conditionals can become complex and error-prone when combined
-> with regex patterns. To improve readability and maintainability, replace
-> nested if-else blocks with a flattened structure using explicit enums.
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/display/msm/gpu.yaml       | 56 ++++++++++++++--------
->  1 file changed, 36 insertions(+), 20 deletions(-)
-> 
+>  
+>    clocks:
+> -    minItems: 2
+> +    minItems: 1
+>      maxItems: 7
+>  
+>    clock-names:
+> -    minItems: 2
+> +    minItems: 1
+>      maxItems: 7
+>  
+>    reg:
+> @@ -388,6 +388,32 @@ allOf:
+>          - clocks
+>          - clock-names
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,adreno-612.0
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: GPU Core clock
+> +
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +
+> +        reg-names:
+> +          minItems: 1
+> +          items:
+> +            - const: kgsl_3d0_reg_memory
+> +            - const: cx_mem
+> +            - const: cx_dbgc
 
+The patch overall gets better, thanks, but I think I asked about this
+already - why you don't have the list strict? I don't see reason for
+making list flexible and I don't see the explanation in the commit msg.
+Either this should be fixed-size (so minItems: 3 and same for reg:) or
+you should document reasons WHY in the commit msg. Otherwise next time I
+will ask the same. :(
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
