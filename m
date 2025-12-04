@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A248CA38BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 13:08:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03176CA390C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 13:12:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C07AA305A81B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 12:07:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0ED84300E3DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 12:10:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A2633ADA1;
-	Thu,  4 Dec 2025 12:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA707334C0A;
+	Thu,  4 Dec 2025 12:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSHS2TRC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GaYnUn/c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005E0337103;
-	Thu,  4 Dec 2025 12:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA6930EF92;
+	Thu,  4 Dec 2025 12:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764850053; cv=none; b=bgSzHQaITRXLSCoRcbmu4iXhaY81zgGQ/ZsKASYafDNMlD7N47raF62HBIlD9c5isNYFsj65Dd8ij93By9en5cFW5UDLMxTIeAAhfTgZgPjYWzb877xOJ6ufmqyKETHkwLin8m075wohovGH8BOSrR+NkSHaewohJLkVXA38gBM=
+	t=1764850219; cv=none; b=URQNM5DC8CUVP2vM36htLPTIJS4wXNzGx6JauKURUbBbXNNukfsXkNpdMBF0L4sull9DJdDciPk4/F7mNOn7iwwEvV6u44nSvD/eAe6L5EdnKFeNb/b5AmI8OvEUIl/9YE7IqHlR1TmMvgBvOtZoRsFxeLWBLU3Mh6UB2tWLQf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764850053; c=relaxed/simple;
-	bh=748HOGa8ve8TWGL1XTnPCWvbZBqViADKpM3/8r9uZ7c=;
+	s=arc-20240116; t=1764850219; c=relaxed/simple;
+	bh=4duG8Bg0llyGmoxo2Gs3asXDtFyfKaOzn1Fk3SgDz70=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rfud1yriEo9ehr1O5CRMUXF7mcjqCWYZi5e5VgtHoyR0lWA6FgxxvhsowTP1xTYy38if5yptgXUesxiSrC+rmeiBb/JOsygWUCYszJ9wP0DaZkjNDDwBh49oGBIQe0guZg5CGsIl0y4XUG55KaACbjmrD7plIcFnmW+ms+8fmPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSHS2TRC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88601C4CEFB;
-	Thu,  4 Dec 2025 12:07:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=i4H4Hs2k5xSw6iRsjvKaja0rZhDDsBGnZrLNm5tufntMh3dZpSn9eU/emm8sizPpjJF8RLq7ZLI0Oc7p1jzw+taSDun3GPJKMT7qClp3oU2pQHE6QV+h902gl9eYfgxKBIjH/2vnvGpY0qVxLFdkgX+oiccnlWIe784ZybHQ+ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GaYnUn/c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEA6C4CEFB;
+	Thu,  4 Dec 2025 12:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764850052;
-	bh=748HOGa8ve8TWGL1XTnPCWvbZBqViADKpM3/8r9uZ7c=;
+	s=k20201202; t=1764850219;
+	bh=4duG8Bg0llyGmoxo2Gs3asXDtFyfKaOzn1Fk3SgDz70=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YSHS2TRCxm59+V0DSS28deSw5hnMaCY+lEniriYRpD/A0zjcTrL1ukKCx/6LZ/L4Q
-	 AnoN108QZM+b5S0deCO+2/XGBXGRHPTvQWeeOoD3pqXS+fZnTG6e+BWSDUu8PvLkpl
-	 ojESUBcI9VCH6z+hGdbveEs622fGFZ75sCWYXzBCCHdat+9LsaAZBiXKqIndl+UeKA
-	 xmy6JTmBj8a5JtYASfd6JLgAjBZYFuWsevfe8bAmIBI3mtxVJer/r8xAy+lJ/Wp3Oi
-	 6q7WmovBkUxSWo+pXtYwSHS1cZ+Yc7830IyVHyOk6FkUHIAFZTsjqy95qvjMKnBe2B
-	 UYglkeUPZr2Mg==
-Message-ID: <e9b5f1f1-b33e-4bc4-a040-6b42bb95b054@kernel.org>
-Date: Thu, 4 Dec 2025 13:07:25 +0100
+	b=GaYnUn/c/7ttjqg+dVQDX4NgIcj8DUTFMGYweJKPhpugPHyZ7pAgGKLFtBB4qrZQI
+	 sqf2S6Y/LENLcUVQLPxy2XGksTK65c7Awd3Va/NH+e5douuso0Se5PKHqKwANLBjmd
+	 EPBfmJILOKLQtMcFhazUC6mi9lRljyzqaWXlsPtHgBaYk5PLv33I6Az/T5MhPF0qir
+	 Fedqe94d8Mj39C+FioTqn6/cGi3qVupRdNQSDpihKG/rSwKdvlM8WlKjfco6i9vF9j
+	 AP1QXvqiAUluw5oS05WVScrYGakSye4eMFd4ekhjgzfrykTZN/QzRgo8B4hfowyx/h
+	 oZBxjUDLgG2zw==
+Message-ID: <d9220bda-6704-4e37-9243-d7a4529afdf8@kernel.org>
+Date: Thu, 4 Dec 2025 13:10:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,9 +74,10 @@ References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
  <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
  <aTB8++UtSrhwtqdY@duo.ucw.cz>
  <c1b24759-762f-4b97-8d3f-8a44a66b646b@kernel.org>
- <aTFRCzVQfXyJQt/Q@duo.ucw.cz>
- <785fb4be-22b2-4881-8900-e7001945f929@kernel.org>
- <aTF0KKFq0Ibyymz+@duo.ucw.cz>
+ <db113021-f5be-4559-8ea5-719f8d7ec3ee@kernel.org>
+ <aTFP1w48bWgto7wr@duo.ucw.cz>
+ <2fa188c3-f5c3-4145-9cae-3587f3bb23cc@kernel.org>
+ <aTFzmm3fyxC1MAzk@duo.ucw.cz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -122,39 +123,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aTF0KKFq0Ibyymz+@duo.ucw.cz>
+In-Reply-To: <aTFzmm3fyxC1MAzk@duo.ucw.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/12/2025 12:44, Pavel Machek wrote:
-> Hi!
+On 04/12/2025 12:42, Pavel Machek wrote:
 > 
->> No, there is no rule of Cc-ing phone-devel. No one has to do it and you
->> need to stop coming with the impression that it is sanctioned rule by
->> any platform or architecture maintainer.
+>>>>>>>>> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
+>>>>>>>>> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
 > 
-> Yes, people need to cc relevant mailing lists, that's why we have the
-
-And it was done here.
-
-> lists, and that's how kernel development works. You want relevant
-> developers, well, to review the patch.
-
-They can review the patch because all the necessary lists were Cc-ed here.
-
+>>>>>>>>> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
+>>>>>>>>> and QRD (Qualcommm Reference Device) are splited in three:
 > 
-> "You should also normally choose at least one mailing list to receive a copy
-> of your patch set.  linux-kernel@vger.kernel.org should be used by default
-> for all patches, but the volume on that list has caused a number of
-> developers to tune it out."
+>>>> ... and btw, I know what MTP and QRD is and MTP IS NOT A PHONE. I work
+>>>> on this, I upstream this and it is not a phone, regardless how you call
+>>>> it. Just because we call our evalkit like that, does not make it a
+>>> phone.
+>>>
+>>> So what is it?
+>>
+>> evalkit for SoC. Just like every other NXP evalkit board is.
+> 
+> ...products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms...
+> ...Mobile Test Platform...
+> 
+> Clearly not phone related.
 
-And above was fulfilled. Nothing, no single rule says some
-"foo-devel-whatever" should be cc-ed. This patchset touches specific
-subsystems and concept, and all these were cc-ed.
+so you never had it in your hands, never heard about it before, know
+nothing about it, but you correct people and you claim it is "phone
+related" thus some fake new rule should be followed on cc-ing
+non-documented address (just git grep for it...).
 
-You really need to stop inventing own rules about undisclosed and hidden
-phone-devel (just git grep for phone-devel).
-
+I think this concludes the discussion.
 
 Best regards,
 Krzysztof
