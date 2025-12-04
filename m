@@ -1,191 +1,405 @@
-Return-Path: <linux-arm-msm+bounces-84337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5840ACA311C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 10:46:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D02F6CA31D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 10:58:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6A476300339B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 09:46:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 393A9301CEA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 09:54:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7C562D3731;
-	Thu,  4 Dec 2025 09:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D1952C0F7C;
+	Thu,  4 Dec 2025 09:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QgAp/swa";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CGw7BB04"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Epnnmd+A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741162BEC32
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 09:46:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942592C026F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 09:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764841610; cv=none; b=TpsqhxnTlRyMa1AXsJNE8Q273qxeseZJaCdXyDvMwYVdbeA9HJD8/803Kre8vBaduLTS9VqHSv1qIWPtKK4KG+UZ0KLJA4M87nVCls9E6I7LM4eWA4CBetidD5uRQXMkfx5Hn51VsjGzrDuT1y2pkD20YMsZiIIuOJSWlmSYNhk=
+	t=1764842085; cv=none; b=PENlZNL6O5vkbPlPjI/yu/jXPwup0WUAh8rR5HSaKMOGbrqeuLHBdM5B+7MhY2YrWsTdbOwxpX/Gdp3N2f7DiffqhZMbedQ96dTTIE2UhcEZAfVblYEEKQWh3n5Btkh/8lhCLwu9JsPQ5/yGSYNBv/NtJdbHpvm38eT2bx8zmL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764841610; c=relaxed/simple;
-	bh=1J+vabWwmiDRAuhYdJwbD2m979iNY01SmBoY6o0IfpA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TcXQoWud24FTlMlCWjqlxbH0qo+7FVVr3MtM6EkkZd6UjIZ6B9GsVHn4Im9gQhs+vIMHKNy+/X7wnoXvz0++w20ID7LGHlFnGMGVQ4QAuRcthrQQGhCTKusPtNusjBDtjoLxJShyQMlt+LI0gf456LCqARabk8Sl8s6MOVIkIpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QgAp/swa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CGw7BB04; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B48Uo0I1046845
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Dec 2025 09:46:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7Z/HfXyX0h3h8yE4qzxHIWyVY2HabPVYbfFHG1no/2M=; b=QgAp/swaJ0IDrkam
-	xgFJVbyHR+m2S39k2olMMZEB7mKImEqRUh1FsllKFWMlaG3pksXDXclIbHnuwmC7
-	5KRoMaekP6Dl9KUrxBPFtugJsiuDBtaBlKyUKlOgh0BGcJK9/0fdpsl3fdjOw7x1
-	WUvv1R3/jcXa+USJazKQrfEW/zB/O8Hm6MKl8JNcXjwpJYwlQhu9XZMNOe3fZLHl
-	RBiz32hL0Ax51A1JhqVwSPWX3VybRQFjO5wOUJCFo8jW6CptS+A5agK/vYLpX6CR
-	0kUy6rlyfNquRCHCWH84taqraO6OOfhgwvMWYeGyTjQRKiEXfGPZr4LkRx8ZqirH
-	hnv0pg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4au6uvrajk-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 09:46:48 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b24a25cff5so153077885a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 01:46:48 -0800 (PST)
+	s=arc-20240116; t=1764842085; c=relaxed/simple;
+	bh=KpE7if/LBUnYA2jlY5ImmZTMIlqBufFgfFy+hhG/NNY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YXUWmJH3d9J0ZqynAWooOZGGHcBn37qOcGLHPuaHUEn1trv3dLI9ELkGKVySFy/sFYV07HMYXdS2+1nBL3LnTHjZ2yQlOnNyCHU5JLrPY+GkN90MwS1dr7f8sYkyaQtxUEROyWy6jciMP48uD51LAy6Cs9h1Ig9KHG9nAGWFLyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Epnnmd+A; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8b28f983333so69487585a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 01:54:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764841608; x=1765446408; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7Z/HfXyX0h3h8yE4qzxHIWyVY2HabPVYbfFHG1no/2M=;
-        b=CGw7BB04ATP6w5yXv6Qsj2bD1Z1LTJI6ZURCfkvd+QZbX/PgfxA6lVCCd1asXKq7y3
-         oGszVL+HSHwLe3Ug3Ku25j0oETxDigtmUtyVc8lo2yivm1AFZbXf60b2SlFQjifVdtJf
-         uxQ7+GDUWhprtyel+UFXFpM51Pi8XVFibRBZfQAoWsJjVx99Th3LmVbTNtKvfpetpAdQ
-         QBabL1a73EaXTHdRDFhRExWXsmyKD3Dflgl++d3VrrR/AEKRy/Cz6AXbQuULnTLwlzii
-         Si+Y1csBy0h7fauZyZhDXkP9Xe8/ehowmCqW7YHDmNhmzb1bT+hj1RNbm2yH2KLcn01L
-         mdPw==
+        d=linaro.org; s=google; t=1764842082; x=1765446882; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/W96S/N3029Rq8qBLDoGrRPYujtbY8X5bO1sCHgsBb0=;
+        b=Epnnmd+AjrWLpi8OdWwDykdsZdKgCQTi26gAvgvqbDD+wqmmlxwCItzvBQ1LlF0yOX
+         OWQ0i4s6fvNbatASqvcF4UhL/LrOyYnvTr7Y0JDse5+dYQ3CsgiSC1oCwdVcM4X7gkMA
+         +6hcjv9LTwj2gNlJjY1QDO/jx4QerodNii0sU5AOqnHpGocYAnK2Bxkn1MoCt09uVy47
+         X48d8tOIZw3Y6FLwvjw5Jy8K5S0Fwv3PpYGxRVWxBJNcYOIIFhkvyMK0Qy436xbT4k6L
+         jw/bE+gb0Xz+tZXGllMqryVYMibNbRjGJKK2eJKnZAFh1rrZDz6SQKXCgfGcjYYTCYic
+         h/uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764841608; x=1765446408;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Z/HfXyX0h3h8yE4qzxHIWyVY2HabPVYbfFHG1no/2M=;
-        b=Yw9ZQ6LkN669qLvvk8A4dT1xBW0nLmhj61VOKr/tCxegXqX9+j7oYAZnW/ZR+u+3Lh
-         /Lww+Uf4Zl1IM+5+GFSBl4tffMj9qTNQ6y+mhNmDE3AAIIubrxIyVAGCNn+FKMBFHNoU
-         HkOG7Ngiow0ptZCljjfyK5NhLNKCEZsd7J0o+C9oUGMI1BbPD2ryGrzNOVfe8Jir5Q95
-         pcl6K+q5ZiYmfPd4HmSnmb9srfJI/ENyisPJcPNGjFpHVg08WDwESKIySeQDo/KID7Wv
-         j3Cnc6W0P7exXgELuezysRWS7yzNm+Y9oyZTIo10M9QZXEsDA/AbeJdc30LjeiB9zre1
-         M4nA==
-X-Forwarded-Encrypted: i=1; AJvYcCUwUCdXwzAKYlE3dlD3x/+gCtso8orBKmQPJVpHE4VtGk34dMFbMuB3rzw/j+DnAfC8gtjKHslZkz73JYrX@vger.kernel.org
-X-Gm-Message-State: AOJu0YynRySLwHyd1mhhHI9JJb/p4JHou/9XqnaEHNE3Rej5aAM9vgP7
-	4DxMhjnamtwO5ENxN+Xv2a1VVTGA989wcer3usM8AY9ZG61f0Y2Z1qU5usbGYlfOyAxuw1qd+7t
-	pcX8q4S4wRakKu7S6XxCz90hJbicyYeKaOInEcNfbFe/XDnKlbU+A9mKWljcNTOSmwoZ6
-X-Gm-Gg: ASbGncsxcHwJCyggJ02QkJEQlIrXN2c2Bo6C7v2+FtsOKMdhIf6DoH/q3U3SWE7xOQe
-	x0vs0aYJpumCr94OOqVGl9njZzLhNray/MNDFm0RiwgHFQPsvJbP6/Oc8waSj+QlWFc/nRAVsJm
-	EX3/GGmXfrVIXwYixJnBHkT+Qo579/0Tsx7rDjIutrs2vTxQ2rJp/hcou8gpLk+BnMXziSIlyI/
-	QcO/vs3Ly5MUr5onu7kEH0CSs1WqanRuRobMCoIivdUgqKYH3IF285MdVWny7jHthiTf8WjWWk4
-	sZKUi3A2O8hJxMbkYNCiuCv7wuO19+zrF/av459wQua1+67auyZDtCDvFWPzqrtA0MENogY/Tl9
-	vtWnd/leBaxbRUA4UWQCeWMyVQlB6GO1zU4hbZQ9av1BXmyUF6amfCoOHcuSXBDjjTJe62/L8BA
-	Y35rRPFrBsCGEZIwxfLKqMkig=
-X-Received: by 2002:a05:620a:46a9:b0:8b2:eae0:bc02 with SMTP id af79cd13be357-8b5e77339bfmr840432285a.88.1764841607327;
-        Thu, 04 Dec 2025 01:46:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHdzqWVxp5iXvWLw/Xt83XL2+yu0WboXvnBGeW5ESLenPupRJ5hZEkM33PPmCIfET4k+FdNPg==
-X-Received: by 2002:a05:620a:46a9:b0:8b2:eae0:bc02 with SMTP id af79cd13be357-8b5e77339bfmr840429685a.88.1764841606828;
-        Thu, 04 Dec 2025 01:46:46 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7b2495dsm344869e87.38.2025.12.04.01.46.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Dec 2025 01:46:46 -0800 (PST)
-Date: Thu, 4 Dec 2025 11:46:44 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dale Whinham <daleyo@gmail.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        =?utf-8?B?SsOpcsO0bWU=?= de Bretagne <jerome.debretagne@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 5/8] drm/msm/dp: Add dpcd link_rate quirk for Surface
- Pro 11 OLED
-Message-ID: <i46ywpjpe5ujrokpssqwaf2hcu4lwm5k3t3okyk25rfor3mhfj@hxl7zmpdgzte>
-References: <20251201011457.17422-1-daleyo@gmail.com>
- <20251201011457.17422-6-daleyo@gmail.com>
+        d=1e100.net; s=20230601; t=1764842082; x=1765446882;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/W96S/N3029Rq8qBLDoGrRPYujtbY8X5bO1sCHgsBb0=;
+        b=bhnpUoGr/C+Q4s3gyr1/mmhkgAJdI6zIn2p6Lbo30ghoiikAgORnQ8omJp7+EhmOD6
+         Dz9quHN+Sc60mNY5OzZTbMTJIy/uMeYh6gnDU4EBHKWdnCzuJ88oUZjW9DEU6vw/uwJS
+         Ho/h1Cszl5TeMJOcqKjQli2vEUbK3wz0TK3l8ET2XAKzjZO2+c923fH2him9AzwroR8q
+         0WtR7LCrLl5m2X2FewaSuuXquIKbewfOgI4xccVTt4gX3d78MmdUSRnnqHwg1jJx2J32
+         CDOaPAgS+gF/pIaAYvwNLj/crf896oiQEG9H0iXkSecQpt95T/hILLURkMCFwy2+UGjA
+         G4fw==
+X-Forwarded-Encrypted: i=1; AJvYcCXU6msu3QaLZs51sXVkanaoBaJO8S0mSpzYols+0B4uxas8OYms36gMgXUxNhbpx+WIwqwKaYKXnyr8xN9n@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+BkthmkqHE/j1gjC2ApyAntAbtdBj08B+yh1Hw93qREWHrEXZ
+	4SI7ypfi1hm7z5omi04kjii3eYFt/c9sXghzzQ3jn3Hnf8hNhc00i4e3jtcYAQSo++odC8HoZpN
+	v6RIrXsco7ov3/7BvLK/M7A9HKMjO6xOp3qZ2yhFzhQ==
+X-Gm-Gg: ASbGnct/q7sHOg0KpChe9InF+e4ineSfhiYmZaO9a4yhtAOodzvrN1y92pLG9WTACiA
+	Fe78auN+fK1XuqRruYJ2jo45YSeVizkorrZuu59Mnl+pfGmWEbinQuGyXTzQnV/+x968qLShwfq
+	b/32/4PA28HmDtVk2TjLz7tA+Y8zfOfuFVpnYu1MhlgFvB9p9b8cpD9eR+D5iTv3VGsaN3KDYEj
+	4fiDar15cIfp542mDOETNupeS3ugBdawK/+eR2jAiqQog2gWsNbaQi1k9UKcWrpuMcaHp78I5Dd
+	eGV8XwtQL9Ou8cAPPo8AnzlVumyq
+X-Google-Smtp-Source: AGHT+IHVPoKuCDiQDMIKDwgXMsdw4PFV9Q9xFqfJYR2G5mPxVUURRiMSOc+yG3P5AHHBPpBAAPCYVeto4hVkP6GdHw8=
+X-Received: by 2002:a05:620a:450e:b0:84e:2544:6be7 with SMTP id
+ af79cd13be357-8b618215117mr296629385a.65.1764842082218; Thu, 04 Dec 2025
+ 01:54:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251201011457.17422-6-daleyo@gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDA3OSBTYWx0ZWRfX158/rLSY0FbQ
- hNSNzwWAc0lL4F+38ZxuEkZGJwNHheK0GOegkSqs3OADzbR7VqpsCSPWbKpupPjKYIzazUJlL8+
- o/c1+hMXVm1cmcYDbNU4a3oeSes4D6P3f4qbOlHojQxydrCpZtILPLnqsc6A9AJYKA9uTgaKMQA
- 7UpHdQTiDm0945D6vV7jl/jiawulIxqj+TKcJ4Z+7C6RaWrHD2/9FFd8wwIZ75APA5CEdLAOhlI
- 1P6t7LyokrTjuvwQ2Fug6IqDzan8LLrY5opKv750007YYkWvryYEyGKOFwTyJ3ZRZuZcFL/MXkm
- +ULgPf4Cqr6PDjKdiIr/eAdQLLX2whi4JVCu2qadL01vu3y7JwzbWpFIC8WP2U4fz7j85pUNel+
- 4pJ4uHQmzKaM2lhhdq1boLuxshCiDQ==
-X-Authority-Analysis: v=2.4 cv=d7n4CBjE c=1 sm=1 tr=0 ts=69315888 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=6PeS3r3LZKgS9momG3EA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 0_LilYueAnq_ZeLTRr_vuk_znx_UCNJX
-X-Proofpoint-GUID: 0_LilYueAnq_ZeLTRr_vuk_znx_UCNJX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-04_02,2025-12-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512040079
+References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com> <20251202-extended_cti-v6-1-ab68bb15c4f5@oss.qualcomm.com>
+In-Reply-To: <20251202-extended_cti-v6-1-ab68bb15c4f5@oss.qualcomm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Thu, 4 Dec 2025 09:54:31 +0000
+X-Gm-Features: AWmQ_bm1xRAoFwY8gg1s9h_ZEC5c9HS0iRseWXWx7t4meew-I-EB2Go6OBUsa5Q
+Message-ID: <CAJ9a7ViMU0hp1ot9XavWGuZtoiH8sO_Oih4TqWFubVp=aNiLEw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] coresight: cti: Convert trigger usage fields to
+ dynamic bitmaps and arrays
+To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, quic_yingdeng@quicinc.com, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Jinlong Mao <jinlong.mao@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Dec 01, 2025 at 01:14:46AM +0000, Dale Whinham wrote:
-> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> 
-> The Samsung ATNA30DW01-1 OLED panel in Microsoft Surface Pro 11 (Denali)
-> reports a max link rate value of 0 in the DPCD register, causing the
-> panel to fail to probe.
-> 
-> Add a quirk for this panel during DPCD read to set the max link rate
-> to 8.1Gbps (HBR3), which is the expected value as reported by the
-> "EDPOverrideDPCDCaps" block found in the DSDT (0x1E).
-> 
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> Tested-by: Dale Whinham <daleyo@gmail.com>
+You are missing the review-by on this patch I sent for v5
+
+On Tue, 2 Dec 2025 at 06:43, Yingchao Deng
+<yingchao.deng@oss.qualcomm.com> wrote:
+>
+> Replace the fixed-size u32 fields in the cti_config and cti_trig_grp
+> structure with dynamically allocated bitmaps and arrays. This allows
+> memory to be allocated based on the actual number of triggers during probe
+> time, reducing memory footprint and improving scalability for platforms
+> with varying trigger counts.
+> Additionally, repack struct cti_config to reduce its size from 80 bytes to
+> 72 bytes.
+>
+> Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/display/drm_dp_helper.c |  2 ++
->  drivers/gpu/drm/msm/dp/dp_panel.c       | 14 ++++++++++++++
->  include/drm/display/drm_dp_helper.h     |  7 +++++++
->  3 files changed, 23 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-> index 4aaeae4fa03c..a533fbb2988d 100644
-> --- a/drivers/gpu/drm/display/drm_dp_helper.c
-> +++ b/drivers/gpu/drm/display/drm_dp_helper.c
-> @@ -2543,6 +2543,8 @@ static const struct dpcd_quirk dpcd_quirk_list[] = {
->  	{ OUI(0x00, 0x0C, 0xE7), DEVICE_ID_ANY, false, BIT(DP_DPCD_QUIRK_HBLANK_EXPANSION_REQUIRES_DSC) },
->  	/* Apple MacBookPro 2017 15 inch eDP Retina panel reports too low DP_MAX_LINK_RATE */
->  	{ OUI(0x00, 0x10, 0xfa), DEVICE_ID(101, 68, 21, 101, 98, 97), false, BIT(DP_DPCD_QUIRK_CAN_DO_MAX_LINK_RATE_3_24_GBPS) },
-> +	/* Samsung ATNA30DW01-1 OLED panel in Microsoft Surface Pro 11 reports a DP_MAX_LINK_RATE of 0 */
-> +	{ OUI(0xBA, 0x41, 0x59), DEVICE_ID_ANY, false, BIT(DP_DPCD_QUIRK_CAN_DO_MAX_LINK_RATE_8_1_GBPS) },
-
-NAK, DP_MAX_LINK_RATE = 0 is a part of the eDP standard. The driver
-should use alternative method (Link Rate Table) to identify supported
-link rates.
-
+>  drivers/hwtracing/coresight/coresight-cti-core.c   | 58 ++++++++++++++++------
+>  .../hwtracing/coresight/coresight-cti-platform.c   | 16 +++---
+>  drivers/hwtracing/coresight/coresight-cti-sysfs.c  | 10 ++--
+>  drivers/hwtracing/coresight/coresight-cti.h        | 17 ++++---
+>  4 files changed, 65 insertions(+), 36 deletions(-)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
+> index bfbc365bb2ef..f9970e40dd59 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+> @@ -214,8 +214,8 @@ void cti_write_intack(struct device *dev, u32 ackval)
+>  /* DEVID[19:16] - number of CTM channels */
+>  #define CTI_DEVID_CTMCHANNELS(devid_val) ((int) BMVAL(devid_val, 16, 19))
+>
+> -static void cti_set_default_config(struct device *dev,
+> -                                  struct cti_drvdata *drvdata)
+> +static int cti_set_default_config(struct device *dev,
+> +                                 struct cti_drvdata *drvdata)
+>  {
+>         struct cti_config *config = &drvdata->config;
+>         u32 devid;
+> @@ -234,12 +234,33 @@ static void cti_set_default_config(struct device *dev,
+>                 config->nr_trig_max = CTIINOUTEN_MAX;
+>         }
+>
+> +       config->trig_in_use = devm_bitmap_zalloc(dev, config->nr_trig_max, GFP_KERNEL);
+> +       if (!config->trig_in_use)
+> +               return -ENOMEM;
+> +
+> +       config->trig_out_use = devm_bitmap_zalloc(dev, config->nr_trig_max, GFP_KERNEL);
+> +       if (!config->trig_out_use)
+> +               return -ENOMEM;
+> +
+> +       config->trig_out_filter = devm_bitmap_zalloc(dev, config->nr_trig_max, GFP_KERNEL);
+> +       if (!config->trig_out_filter)
+> +               return -ENOMEM;
+> +
+> +       config->ctiinen = devm_kcalloc(dev, config->nr_trig_max, sizeof(u32), GFP_KERNEL);
+> +       if (!config->ctiinen)
+> +               return -ENOMEM;
+> +
+> +       config->ctiouten = devm_kcalloc(dev, config->nr_trig_max, sizeof(u32), GFP_KERNEL);
+> +       if (!config->ctiouten)
+> +               return -ENOMEM;
+> +
+>         config->nr_ctm_channels = CTI_DEVID_CTMCHANNELS(devid);
+>
+>         /* Most regs default to 0 as zalloc'ed except...*/
+>         config->trig_filter_enable = true;
+>         config->ctigate = GENMASK(config->nr_ctm_channels - 1, 0);
+>         config->enable_req_count = 0;
+> +       return 0;
+>  }
+>
+>  /*
+> @@ -270,8 +291,10 @@ int cti_add_connection_entry(struct device *dev, struct cti_drvdata *drvdata,
+>         cti_dev->nr_trig_con++;
+>
+>         /* add connection usage bit info to overall info */
+> -       drvdata->config.trig_in_use |= tc->con_in->used_mask;
+> -       drvdata->config.trig_out_use |= tc->con_out->used_mask;
+> +       bitmap_or(drvdata->config.trig_in_use, drvdata->config.trig_in_use,
+> +                 tc->con_in->used_mask, drvdata->config.nr_trig_max);
+> +       bitmap_or(drvdata->config.trig_out_use, drvdata->config.trig_out_use,
+> +                 tc->con_out->used_mask, drvdata->config.nr_trig_max);
+>
+>         return 0;
+>  }
+> @@ -293,12 +316,20 @@ struct cti_trig_con *cti_allocate_trig_con(struct device *dev, int in_sigs,
+>         if (!in)
+>                 return NULL;
+>
+> +       in->used_mask = devm_bitmap_alloc(dev, in_sigs, GFP_KERNEL);
+> +       if (!in->used_mask)
+> +               return NULL;
+> +
+>         out = devm_kzalloc(dev,
+>                            offsetof(struct cti_trig_grp, sig_types[out_sigs]),
+>                            GFP_KERNEL);
+>         if (!out)
+>                 return NULL;
+>
+> +       out->used_mask = devm_bitmap_alloc(dev, out_sigs, GFP_KERNEL);
+> +       if (!out->used_mask)
+> +               return NULL;
+> +
+>         tc->con_in = in;
+>         tc->con_out = out;
+>         tc->con_in->nr_sigs = in_sigs;
+> @@ -314,7 +345,6 @@ int cti_add_default_connection(struct device *dev, struct cti_drvdata *drvdata)
+>  {
+>         int ret = 0;
+>         int n_trigs = drvdata->config.nr_trig_max;
+> -       u32 n_trig_mask = GENMASK(n_trigs - 1, 0);
+>         struct cti_trig_con *tc = NULL;
+>
+>         /*
+> @@ -325,8 +355,9 @@ int cti_add_default_connection(struct device *dev, struct cti_drvdata *drvdata)
+>         if (!tc)
+>                 return -ENOMEM;
+>
+> -       tc->con_in->used_mask = n_trig_mask;
+> -       tc->con_out->used_mask = n_trig_mask;
+> +       bitmap_fill(tc->con_in->used_mask, n_trigs);
+> +       bitmap_fill(tc->con_out->used_mask, n_trigs);
+> +
+>         ret = cti_add_connection_entry(dev, drvdata, tc, NULL, "default");
+>         return ret;
+>  }
+> @@ -339,7 +370,6 @@ int cti_channel_trig_op(struct device *dev, enum cti_chan_op op,
+>  {
+>         struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>         struct cti_config *config = &drvdata->config;
+> -       u32 trig_bitmask;
+>         u32 chan_bitmask;
+>         u32 reg_value;
+>         int reg_offset;
+> @@ -349,18 +379,16 @@ int cti_channel_trig_op(struct device *dev, enum cti_chan_op op,
+>            (trigger_idx >= config->nr_trig_max))
+>                 return -EINVAL;
+>
+> -       trig_bitmask = BIT(trigger_idx);
+> -
+>         /* ensure registered triggers and not out filtered */
+>         if (direction == CTI_TRIG_IN)   {
+> -               if (!(trig_bitmask & config->trig_in_use))
+> +               if (!(test_bit(trigger_idx, config->trig_in_use)))
+>                         return -EINVAL;
+>         } else {
+> -               if (!(trig_bitmask & config->trig_out_use))
+> +               if (!(test_bit(trigger_idx, config->trig_out_use)))
+>                         return -EINVAL;
+>
+>                 if ((config->trig_filter_enable) &&
+> -                   (config->trig_out_filter & trig_bitmask))
+> +                   test_bit(trigger_idx, config->trig_out_filter))
+>                         return -EINVAL;
+>         }
+>
+> @@ -892,7 +920,9 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
+>         raw_spin_lock_init(&drvdata->spinlock);
+>
+>         /* initialise CTI driver config values */
+> -       cti_set_default_config(dev, drvdata);
+> +       ret = cti_set_default_config(dev, drvdata);
+> +       if (ret)
+> +               return ret;
+>
+>         pdata = coresight_cti_get_platform_data(dev);
+>         if (IS_ERR(pdata)) {
+> diff --git a/drivers/hwtracing/coresight/coresight-cti-platform.c b/drivers/hwtracing/coresight/coresight-cti-platform.c
+> index d0ae10bf6128..4bef860a0484 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti-platform.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti-platform.c
+> @@ -136,8 +136,8 @@ static int cti_plat_create_v8_etm_connection(struct device *dev,
+>                 goto create_v8_etm_out;
+>
+>         /* build connection data */
+> -       tc->con_in->used_mask = 0xF0; /* sigs <4,5,6,7> */
+> -       tc->con_out->used_mask = 0xF0; /* sigs <4,5,6,7> */
+> +       bitmap_set(tc->con_in->used_mask, 4, 4); /* sigs <4,5,6,7> */
+> +       bitmap_set(tc->con_out->used_mask, 4, 4); /* sigs <4,5,6,7> */
+>
+>         /*
+>          * The EXTOUT type signals from the ETM are connected to a set of input
+> @@ -194,10 +194,10 @@ static int cti_plat_create_v8_connections(struct device *dev,
+>                 goto of_create_v8_out;
+>
+>         /* Set the v8 PE CTI connection data */
+> -       tc->con_in->used_mask = 0x3; /* sigs <0 1> */
+> +       bitmap_set(tc->con_in->used_mask, 0, 2); /* sigs <0 1> */
+>         tc->con_in->sig_types[0] = PE_DBGTRIGGER;
+>         tc->con_in->sig_types[1] = PE_PMUIRQ;
+> -       tc->con_out->used_mask = 0x7; /* sigs <0 1 2 > */
+> +       bitmap_set(tc->con_out->used_mask, 0, 3); /* sigs <0 1 2 > */
+>         tc->con_out->sig_types[0] = PE_EDBGREQ;
+>         tc->con_out->sig_types[1] = PE_DBGRESTART;
+>         tc->con_out->sig_types[2] = PE_CTIIRQ;
+> @@ -213,7 +213,7 @@ static int cti_plat_create_v8_connections(struct device *dev,
+>                 goto of_create_v8_out;
+>
+>         /* filter pe_edbgreq - PE trigout sig <0> */
+> -       drvdata->config.trig_out_filter |= 0x1;
+> +       set_bit(0, drvdata->config.trig_out_filter);
+>
+>  of_create_v8_out:
+>         return ret;
+> @@ -257,7 +257,7 @@ static int cti_plat_read_trig_group(struct cti_trig_grp *tgrp,
+>         if (!err) {
+>                 /* set the signal usage mask */
+>                 for (idx = 0; idx < tgrp->nr_sigs; idx++)
+> -                       tgrp->used_mask |= BIT(values[idx]);
+> +                       set_bit(values[idx], tgrp->used_mask);
+>         }
+>
+>         kfree(values);
+> @@ -331,7 +331,9 @@ static int cti_plat_process_filter_sigs(struct cti_drvdata *drvdata,
+>
+>         err = cti_plat_read_trig_group(tg, fwnode, CTI_DT_FILTER_OUT_SIGS);
+>         if (!err)
+> -               drvdata->config.trig_out_filter |= tg->used_mask;
+> +               bitmap_or(drvdata->config.trig_out_filter,
+> +                         drvdata->config.trig_out_filter,
+> +                         tg->used_mask, drvdata->config.nr_trig_max);
+>
+>         kfree(tg);
+>         return err;
+> diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> index 572b80ee96fb..a9df77215141 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> +++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
+> @@ -711,10 +711,8 @@ static ssize_t trigout_filtered_show(struct device *dev,
+>         struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>         struct cti_config *cfg = &drvdata->config;
+>         int size = 0, nr_trig_max = cfg->nr_trig_max;
+> -       unsigned long mask = cfg->trig_out_filter;
+>
+> -       if (mask)
+> -               size = bitmap_print_to_pagebuf(true, buf, &mask, nr_trig_max);
+> +       size = bitmap_print_to_pagebuf(true, buf, cfg->trig_out_filter, nr_trig_max);
+>         return size;
+>  }
+>  static DEVICE_ATTR_RO(trigout_filtered);
+> @@ -926,9 +924,8 @@ static ssize_t trigin_sig_show(struct device *dev,
+>         struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
+>         struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>         struct cti_config *cfg = &drvdata->config;
+> -       unsigned long mask = con->con_in->used_mask;
+>
+> -       return bitmap_print_to_pagebuf(true, buf, &mask, cfg->nr_trig_max);
+> +       return bitmap_print_to_pagebuf(true, buf, con->con_in->used_mask, cfg->nr_trig_max);
+>  }
+>
+>  static ssize_t trigout_sig_show(struct device *dev,
+> @@ -940,9 +937,8 @@ static ssize_t trigout_sig_show(struct device *dev,
+>         struct cti_trig_con *con = (struct cti_trig_con *)ext_attr->var;
+>         struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>         struct cti_config *cfg = &drvdata->config;
+> -       unsigned long mask = con->con_out->used_mask;
+>
+> -       return bitmap_print_to_pagebuf(true, buf, &mask, cfg->nr_trig_max);
+> +       return bitmap_print_to_pagebuf(true, buf, con->con_out->used_mask, cfg->nr_trig_max);
+>  }
+>
+>  /* convert a sig type id to a name */
+> diff --git a/drivers/hwtracing/coresight/coresight-cti.h b/drivers/hwtracing/coresight/coresight-cti.h
+> index 4f89091ee93f..e7b88b07cffe 100644
+> --- a/drivers/hwtracing/coresight/coresight-cti.h
+> +++ b/drivers/hwtracing/coresight/coresight-cti.h
+> @@ -68,7 +68,7 @@ struct fwnode_handle;
+>   */
+>  struct cti_trig_grp {
+>         int nr_sigs;
+> -       u32 used_mask;
+> +       unsigned long *used_mask;
+>         int sig_types[];
 >  };
->  
->  #undef OUI
+>
+> @@ -146,20 +146,21 @@ struct cti_config {
+>         bool hw_enabled;
+>         bool hw_powered;
+>
+> -       /* registered triggers and filtering */
+> -       u32 trig_in_use;
+> -       u32 trig_out_use;
+> -       u32 trig_out_filter;
+>         bool trig_filter_enable;
+>         u8 xtrig_rchan_sel;
+>
+>         /* cti cross trig programmable regs */
+> -       u32 ctiappset;
+>         u8 ctiinout_sel;
+> -       u32 ctiinen[CTIINOUTEN_MAX];
+> -       u32 ctiouten[CTIINOUTEN_MAX];
+> +       u32 ctiappset;
+>         u32 ctigate;
+>         u32 asicctl;
+> +       u32 *ctiinen;
+> +       u32 *ctiouten;
+> +
+> +       /* registered triggers and filtering */
+> +       unsigned long *trig_in_use;
+> +       unsigned long *trig_out_use;
+> +       unsigned long *trig_out_filter;
+>  };
+>
+>  /**
+>
+> --
+> 2.43.0
+>
+
 
 -- 
-With best wishes
-Dmitry
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
