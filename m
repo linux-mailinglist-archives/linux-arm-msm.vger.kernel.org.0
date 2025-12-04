@@ -1,192 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-84320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C083CA2E65
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 10:05:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AC47CA2E6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 10:05:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2AB363071AAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 09:03:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B0F7430847A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 09:04:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FDE43346AA;
-	Thu,  4 Dec 2025 09:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C462EC090;
+	Thu,  4 Dec 2025 09:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I3FVCiU8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ApMZslYY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wJnEZcFx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3032256C8B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 09:03:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221DB34CDD
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 09:04:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764839012; cv=none; b=H+tdGhq+NDh31HzyO1d+OZWHpv6ynjmPrFAl84GbN+B/g0o4GQIb1BWU69UFL+JCOGAzolTvX7jE4+/2lurocgau1VqNGtKauW1CeOg3y91zoSmyoNZxHXCBTtcjw1J8/X0eu/QS0eXdFW7ugBs1NYAwtnQswW3L8CZApHmQu34=
+	t=1764839056; cv=none; b=sOBe6NfNch4FOiJ7biMN57OHwfAu6i/hXNEYU7783z3ALfVMZ1WKVTiW5E9c0Ve7AM0O6yz/xMOYfwOhKGOZHEoaZ7rWJ+HJnhSO98yAa7E4vffuIvai3C0PctfXiH3rKxmYS5z26/Qmk5gTVXDV6BqOyior9E+gd4V4phU/kuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764839012; c=relaxed/simple;
-	bh=wsc+Oe3Sx9BWvselyA5E0E9rZE33s5bP3hYuZZv4orA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=B+mpMiH+12RObenFXoC9okZZ52azHsqzFgKQL5Fx5dnQhOO2rjyKngGKXoleiNLiD8xi+kgRKL4Yh0UyvpKXef/zXMy+tpXe7hXItJj10emADhncbwNmPGlO/MXPZKOXKh9Mnk62blA4UbCyDDzGlx8+HLvbfN3+m60vnIQaVVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I3FVCiU8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ApMZslYY; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B468lF2599201
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Dec 2025 09:03:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=zguyslqrcaP5wEteKasvoSc/KQMTcZmC2hc
-	vKR1cr8g=; b=I3FVCiU86gA2940V1w51Zt5ZMXfvlImoQlsyNRfO99SR1IPYooO
-	UeIWPboUa2O1cWQPQkLCfP9Tmhp/8DjbNRLwJIPf4Jc5vjxamUW1YwicKv6dZ+ji
-	8ErQOvidcjWssZsFI5NojmI6MSasuG2nwILlEE2plihuoBY2lGU6o1RBK1M1BK0D
-	9zKYwKP2BqLl4t1tSML4fkXrpg5IB0j+WUSi0Hgfr6I+hioohoLlVeIa6/t2tAtx
-	VXDA4ylYEGoKEo2cPZO3dtlPcixfZ5y9VsVC8jrUMM8zHgRXnhSwlprnEh9CwquR
-	Jx/BPLw3OsS57287ZdHedGSOTYTbqkbwhxA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4au1f0118g-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 09:03:28 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b2e235d4d2so239639785a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 01:03:28 -0800 (PST)
+	s=arc-20240116; t=1764839056; c=relaxed/simple;
+	bh=FOTBr4uwLu6qUeGRr5ZvumQV0EDRBfMk6TIFt5HGSdw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bioz9L7gGDreHuid9PQ9gLLqLvhDmS/liCT28mVrnyBQ+H74AQAsPbggD6GtM8EsjnfTkVgLHKEuxIIF6GjptxDrmhGzF0cjiyTiDHRnFnfqQ+GhgG51k0+8dwtMqxtzAH6PvbhBvdROatYJwimjYI3AehWd0UYE9C8fZv4EzZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wJnEZcFx; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8b5c81bd953so59021985a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 01:04:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764839008; x=1765443808; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zguyslqrcaP5wEteKasvoSc/KQMTcZmC2hcvKR1cr8g=;
-        b=ApMZslYYd+/Ex2Z9uCAFqLZYjm3ox+j8Q+wr6K4g9E6FL08Sksu0ceEo+tAjTRJvO1
-         f62WzEyN54IXkEAKfK3YCLDyrFL7g5rR1+iOozs/zFnJ64Rmy4zVTZYShpfxg+6CLZpT
-         FbN8/NJJXYcu6BsT1BG+YyocEpZfxD4RMhZF1qMImDPlgPzqmx7EZRRjqD/dQvOxu74Q
-         sZfODzcaZ+0xKAv62NFj3mzmZd7Tq6ylWW1U22uBxpj6A1ebRQMR6gs6TAnWFptMUrOW
-         uh9BHzhxTGCChn5Q5pDD/UArNE74/mXxu7p/SoVo5GaR4Rhhi7MuoA10l1t70U9vbx6e
-         xFlw==
+        d=linaro.org; s=google; t=1764839054; x=1765443854; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVHCpHtQVW7oVknV3GXOrLI7oUUH5Agyd8+pzjccO1Q=;
+        b=wJnEZcFxFL0ffL8f86QptJHSN+r+pczD2k/4h67W2eeeklpjIlwwD79jcBoVpbyWMy
+         aOi6yefDK9pDvN4x+WXuKFBAZrX8zLa8Tq9OBTbR73+OazONKFfsTvna73roqqpa/dSR
+         MxjEfGm3D4o5u3hRvi8wW5/xhX+yxQAZK/yFJ+rHswN2urNmHO+G/q5q9gZbGo7rw9+L
+         tVBn0ul5xkXTqCau9nwN8DCl+F5nQs/xwyAY8LxwJPikXKbSTU5c8oPcbMuS9+OxicGg
+         1NS59u1Zg9Yah+qbE+Y7lXNQEQHG9fYSFwdjVC5WI/OvmtMXUps5xGZg+FlVjeUM5iG7
+         Qkcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764839008; x=1765443808;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1764839054; x=1765443854;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zguyslqrcaP5wEteKasvoSc/KQMTcZmC2hcvKR1cr8g=;
-        b=FlvRY75n+SYpZRQdI4NCtENnBmFiydXk8Rufr+agnlT36AfknrPTflQJ0xonujFe0A
-         +FeTZlDuj2KiewLQ1siJK+5Xsz/Ft2I5DqohWjc8n/NivGT96kU5Lt041lMUfRR68IuS
-         5VA7wI3ynMOYxv1+pWazA4/86OjtRd3G5kpPfjDVRb6YFbgpwcgHy8lcKSnC8hvNRIJc
-         cmX/oSs6BUUawePEyqd6NrIyqNM3yY40lAjpq5OiFBvqaNsCas4E9hTYZwNeNr186Npe
-         WvJJiwsF+0MrRlMt0MHJc76wWbxZePkCrWPGPdA1nOP+uWFWTwz8j4+P4yqCTlT/vnHS
-         WqDA==
-X-Forwarded-Encrypted: i=1; AJvYcCXyo+xhJfgK0syRbeH8StOgKWsN9c4yskQplnvPwkLGCmnvJKu9Jan72D0KWnxAe8SDUNo17ajMUH2tf/o0@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVyI+couh5V2XoR5GbflXxCjXH3Kif2UQRKWy0dhYeR1E7CHEx
-	XecFUUWtFfE4rFmfcPlrCtaIudypzai34mInsORdwtOYi5G5ooAVLT8xcuLODmFUGrWw4nQBMJg
-	B10HXFzlYEDhco+svp9twX96WLuqabCXeHHMiCeK30A7zTXcrnVWmWeZ7wx+HxiNWzBs7
-X-Gm-Gg: ASbGnctGQtnJNgDrEpQ8muRKL+Z/pcAiVdkJP2YaY3nQ2VwWBRSEAsQG0AK+aH0VnWD
-	KwzdFzTPrVs8cgqrToTLcgk8Ejc6fqX1QTL933C6FDe+xMFW9BkPuwgKN3GnJQxpf7tDEJbGh6w
-	ygGN7FFM2ecSaY/Exu0/hiTApfuPLb2GQaw7+RhdDHkyCnIVaAAEu09hnElM2h+jmC5YofayWIU
-	qrO0sKa0oM9yDCIB/ez5HuCx0T/lGFqjyySljxt8xF0pdj7aFT+RAttu9tvxLSe7adb6f1SglaY
-	+nUwurgu1o4XzZTnLzQBz5I9akPfekz8mD1iNSEkBorLY0D07l9htlhnTJ3NCzvsXgV9HbKvRNI
-	bcWf1M79jV8awPb5DMPOh7LwGWkDKiizdDFpiVkG/84POwgdiuXvyX8ovvcnbsGSu5Yn21YSaaX
-	ny
-X-Received: by 2002:a05:620a:440a:b0:8a3:b6a9:d3c2 with SMTP id af79cd13be357-8b5e6a92271mr710544185a.44.1764839008078;
-        Thu, 04 Dec 2025 01:03:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLArSQz+yioi16kVc+PO9ATH8eO3eiC7xSnXodgZ8Suwlzg6CqzZbOPtnw1VcLj2LpabJQdw==
-X-Received: by 2002:a05:620a:440a:b0:8a3:b6a9:d3c2 with SMTP id af79cd13be357-8b5e6a92271mr710542285a.44.1764839007671;
-        Thu, 04 Dec 2025 01:03:27 -0800 (PST)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:f840:4916:e7c3:a857])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47930cb6a96sm21146195e9.15.2025.12.04.01.03.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Dec 2025 01:03:27 -0800 (PST)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: bryan.odonoghue@linaro.org, mchehab@kernel.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vladimir.zapolskiy@linaro.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v2] media: qcom: camss: csid-340: Fix unused variables
-Date: Thu,  4 Dec 2025 10:03:25 +0100
-Message-Id: <20251204090325.82140-1-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        bh=AVHCpHtQVW7oVknV3GXOrLI7oUUH5Agyd8+pzjccO1Q=;
+        b=t6a/YurF8eJJOvwDpOsrtLMM0so7kncnRWwPdl0lhe8MK++aPmOMwR+vfCwQUupp3Q
+         yq7rWEr8QjKn5yAXSSYTv78BH0fRkt/ioNgDeGFFzf3TQPjYCTW6rsfsamwkgD4DxWJL
+         2noJXH1vzhUukxYUIwRx9gkmitN2CxBouyGOqJR9CsZ0gLao5a9MNbNk7FFKbMkmMitD
+         SlhhIbHEMV+YcXpKoELIE3FI+fViuBgq/onuXuyo6tyd8xEpYGPF4RdAtyf11UQvpsVB
+         tnYODGPa+QzgGxY2M92HRX/reLhUwT1p/06L3l/4qr/JzEIXmiIYNL2FV4kT4MakTzbr
+         rSKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUELvdokH16zj/flZmutSOj/leqZhm5rPfyedEL6HXGUIdUqZElZOp1/3exM06uu5Z7nXtTizRY3P0KW2eu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+VKT6R44KhTZC2mFEvmdicl3e2M6CAWa2/2dNUAqVZ0yui5K+
+	5vydFeEizkTO8rJ3bFdB5s/HBFF71ofaHogyTjTWa2q/Igu6siCLjbR9jkqHpeHbEIsDAyZRMHc
+	+hwxmtvnZSYn3CzHi4qfDD8RQ2OJE2xfDji8Pyut1kg==
+X-Gm-Gg: ASbGncsMoZe8R61eNYLJCee2mDZTsLeoZLi3+laOQN5tX2DHo3Qvv9DN5nVhx/wHEks
+	EOX2s6mphWr4eq2VecBz2CaEI6OPSqhw5Ebrpl1wLbh6XHjpImmUP70Lp1SytbnIWvqht93oUXx
+	EeRX8nRHDhCY40VtBjIAjAu+yyWTFAnFrUQNpzJT56KBNfQJLJ5WEijVGFphu6eLtizfWqFI+a1
+	A8/qCrV9CwwUdqvRSH4riaBBUGzPzh91f1YHwcRFYLFS0emeuh/y3puDxTaFKeyOoDSH0QuL3H1
+	kEQVdTwtyzQONYHtYU03HXbZw1tx
+X-Google-Smtp-Source: AGHT+IHAefwJNrPXIdvcD0VC8H+/6pCL2G+K3lmWUTMCJWZonyOLlPRSIG/rYZOBua+bNHZe4bQwsh7kr7hshZa3Yug=
+X-Received: by 2002:a05:620a:472c:b0:8b1:7c0c:e292 with SMTP id
+ af79cd13be357-8b61817298cmr291244285a.38.1764839053919; Thu, 04 Dec 2025
+ 01:04:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 2id0uQ6YHA_M2nYjbIdkHvfofV84t4gy
-X-Proofpoint-ORIG-GUID: 2id0uQ6YHA_M2nYjbIdkHvfofV84t4gy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA0MDA3MyBTYWx0ZWRfX2FUAf38eepMk
- 3ezWJ1iFyaNFZdr67V8jtVNnTswoVfB80CjH4wXYxIyMOhS7CsFvNeqQ4tic8qR5QR3dRcpQorw
- yCHM3EQRWgCNAIjNuZKj9r9fXKnAAwAdJeixlmWTSrdjQDvEgT97c9969CgVb1J7btjnrk2r9Op
- kbpFAihbTuqEtC/65bBWKZ/jTXBJIUb5ByjupQ9YkADzaKn81ajJvkELzTAD+q96oxnwMC5rCaG
- /NsIhTMykqm/uj094usQTjhzKzSMKRkJ8LLSWoJZi7GBgAqip1DEE8JVb8UWA/AHxBW4VzRIUeW
- kuwi3k0f5n/W1sqkFfoIihId/Mu2FrMTU+x4NdWCmHFnPm3TUIgELPF030Na6mZGujbLiZ2N0E1
- ux/wAaoA8PL5X82ayAgjvLHwtRoNyA==
-X-Authority-Analysis: v=2.4 cv=Scz6t/Ru c=1 sm=1 tr=0 ts=69314e60 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=wP3pNCr1ah4A:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=KTbTtSzwl6QXNmdirioA:9 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-04_02,2025-12-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 impostorscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512040073
+References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com>
+ <20251202-extended_cti-v6-2-ab68bb15c4f5@oss.qualcomm.com>
+ <20251203182944.GG724103@e132581.arm.com> <20251204083802.GI724103@e132581.arm.com>
+In-Reply-To: <20251204083802.GI724103@e132581.arm.com>
+From: Mike Leach <mike.leach@linaro.org>
+Date: Thu, 4 Dec 2025 09:04:03 +0000
+X-Gm-Features: AWmQ_bk3JsrCv_qVCQKeYV3ob7uzVgQRApMkr_SYTS_68B4wgVQYuo_3fUOblcg
+Message-ID: <CAJ9a7VhNW6cQt_O6NX+99LXfo-t3mFTejzdNjWcyssbMrXR4OQ@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
+To: Leo Yan <leo.yan@arm.com>
+Cc: Yingchao Deng <yingchao.deng@oss.qualcomm.com>, James Clark <james.clark@linaro.org>, 
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, quic_yingdeng@quicinc.com, 
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Mao Jinlong <quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The CSID driver has some unused variables and function parameters
-that are no longer needed (due to refactoring). This patch cleans
-up those unused elements:
+Hi,
 
-- Removing the `vc` parameter from `__csid_configure_rx()`.
-- Dropping the unused `lane_cnt` variable.
-- Adjusting calls to `__csid_configure_rx()` accordingly.
+On Thu, 4 Dec 2025 at 08:38, Leo Yan <leo.yan@arm.com> wrote:
+>
+> On Wed, Dec 03, 2025 at 06:29:44PM +0000, Coresight ML wrote:
+>
+> [...]
+>
+> > > +/* Read registers with power check only (no enable check). */
+> > > +static ssize_t coresight_cti_reg_show(struct device *dev,
+> > > +                                 struct device_attribute *attr, char *buf)
+> > > +{
+> > > +   struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> > > +   struct cs_off_attribute *cti_attr = container_of(attr, struct cs_off_attribute, attr);
+> > > +   u32 idx, val = 0;
+> > > +
+> > > +   pm_runtime_get_sync(dev->parent);
+> > > +   raw_spin_lock(&drvdata->spinlock);
+> > > +   idx = drvdata->config.ext_reg_sel;
+> > > +   if (drvdata->config.hw_powered) {
+> > > +           switch (cti_attr->off) {
+> > > +           case INDEX_CTITRIGINSTATUS:
+> > > +           case INDEX_CTITRIGOUTSTATUS:
+> > > +           case INDEX_ITTRIGINACK:
+> > > +           case INDEX_ITTRIGOUT:
+> > > +           case INDEX_ITTRIGOUTACK:
+> > > +           case INDEX_ITTRIGIN:
+>
+> I read again and now I understand why you need "config.ext_reg_sel"
+> as an index for these expending registers.
+>
 
-Fixes: f0fc808a466a ("media: qcom: camss: Add CSID 340 support")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- v2: Correct the commit ID in the Fixes: tag
+Having this index for these extended registers matches what we do for
+the INEN and OUTEN registers. This gives the user a consistent
+approach. We do not want the unnecessary attributes as  it will
+increase the memory footprint for all cti instances, not just the qcom
+ones.
 
- drivers/media/platform/qcom/camss/camss-csid-340.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+The first patch in this series works to reduce the memory footprint by
+only allocating resource based on the actual configuration. For
+example for an ARM designed CTI with 8 trigger registers, we no longer
+declare static 128 x 32 bit arrays for each of INEN and OUTEN which
+were required by the original design.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-340.c b/drivers/media/platform/qcom/camss/camss-csid-340.c
-index 22a30510fb79..2b50f9b96a34 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-340.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
-@@ -55,8 +55,7 @@
- #define CSID_RDI_CTRL_HALT_AT_FRAME_BOUNDARY		0
- #define CSID_RDI_CTRL_RESUME_AT_FRAME_BOUNDARY		1
- 
--static void __csid_configure_rx(struct csid_device *csid,
--				struct csid_phy_config *phy, int vc)
-+static void __csid_configure_rx(struct csid_device *csid, struct csid_phy_config *phy)
- {
- 	u32 val;
- 
-@@ -81,13 +80,9 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8
- 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
- 								   csid->res->formats->nformats,
- 								   input_format->code);
--	u8 lane_cnt = csid->phy.lane_cnt;
- 	u8 dt_id;
- 	u32 val;
- 
--	if (!lane_cnt)
--		lane_cnt = 4;
--
- 	/*
- 	 * DT_ID is a two bit bitfield that is concatenated with
- 	 * the four least significant bits of the five bit VC
-@@ -120,10 +115,11 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
- {
- 	int i;
- 
-+	__csid_configure_rx(csid, &csid->phy);
-+
- 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
- 		if (csid->phy.en_vc & BIT(i)) {
- 			__csid_configure_rdi_stream(csid, enable, i);
--			__csid_configure_rx(csid, &csid->phy, i);
- 			__csid_ctrl_rdi(csid, enable, i);
- 		}
- 	}
+Given that there can be 10s or 100s of CTIs in a large multicore
+system, reducing the footprint to match the actual configuration, and
+offering a level of compression by using an index + single file to
+access a set of registers improves the efficiency of the driver.
+
+Regards
+
+Mike
+
+> I think you should extend attrs for the new adding registers:
+>
+>   static struct attribute *coresight_cti_regs_attrs[] = {
+>       ...
+>       coresight_cti_reg(triginstatus, CTITRIGINSTATUS),
+>       /* Qcom CTI only for triginstatus1/2/3 */
+>       coresight_cti_reg(triginstatus1, CTITRIGINSTATUS + 0x4),
+>       coresight_cti_reg(triginstatus2, CTITRIGINSTATUS + 0x8),
+>       coresight_cti_reg(triginstatus3, CTITRIGINSTATUS + 0xc),
+>       ...
+>   }
+>
+> Then, you can add a is_visible() in coresight_cti_regs_group:
+>
+>   static umode_t coresight_cti_regs_is_visible(struct kobject *kobj,
+>                   struct attribute *attr, int n)
+>   {
+>           struct device *dev = container_of(kobj, struct device, kobj);
+>           struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>
+>           /* Mute QCOM CTI registers for standard CTI module */
+>           if (!drvdata->is_qcom_cti) {
+>               if (attr == &triginstatus1.attr ||
+>                   attr == &triginstatus2.attr ||
+>                   attr == &triginstatus3.attr)
+>                   return 0;
+>           }
+>
+>           return attr->mode;
+>   }
+>
+>   static const struct attribute_group coresight_cti_regs_group = {
+>           .attrs = coresight_cti_regs_attrs,
+>           .name = "regs",
+>           .is_visible = coresight_cti_regs_is_visible,
+>   };
+>
+> Thanks,
+> Leo
+
+
+
 -- 
-2.34.1
-
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
 
