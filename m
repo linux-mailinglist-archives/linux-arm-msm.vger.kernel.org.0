@@ -1,194 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-84398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2AF2CA487F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 17:35:45 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAC1CCA482E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 17:32:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 810EC315EAA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 16:28:06 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 182EC3005A7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 16:32:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32604346A12;
-	Thu,  4 Dec 2025 16:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1368F2FC009;
+	Thu,  4 Dec 2025 16:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jx1R+rrO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DVbmeC8y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468F5345CCA
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Dec 2025 16:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8002F6928;
+	Thu,  4 Dec 2025 16:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764865071; cv=none; b=Emew4kdN1yKZz8jFekH0YltPGtbnETBgbgLi3koEzBgWE3bctPW2p41J4wQNYxq7GWOj+oi2ex68uJ9Nc+PQZUE4TWyd9JYZHCD4qHXsekazLGRLO3gW9o66xeaXF/BpV+yG3WmR30hhKgYqiwfVCPTQ7AOrdygrjwXzeESYb8A=
+	t=1764865967; cv=none; b=kHf4PIfeNb7Nq8rSWJ8BdyN/lIgSFGkSNFAcDBZgaTDAibPHr6YcANT/i3zc+YAJNnQYWd2vfG/0hiIgkpsGKA0ATyGdfACQ3muz7aRBa/hLqlKKXSDfVjcB32nZrP3+livAT+RelSnGCxLYn3Dhco0tyNTwh0bmfx8/6xWi9uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764865071; c=relaxed/simple;
-	bh=f6cXDym/XHWZi3CuqadiD/m2CKUVMYnKrDQ5ZA6ODZA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ITIbscw14KC6CEHouY1ISbZnd5VOU67WcvZ9XqFFNw9NxslKLEwwMcyj3D257j3ZRjaIlGmOYETZVh2kRbPDUDR8U6nbPet2q7ZuxLS0vOOEWnao+dXcWt/u/e/zw76WNhEwwjej84dD7TYU/2S/wpHBE/NdB8qH9wDLfCtugHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jx1R+rrO; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-88059c28da1so10043156d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Dec 2025 08:17:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764865067; x=1765469867; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TcYtubvKcGoSq4YWnqE43T9j+Qij7FD/s8vUU4QGez4=;
-        b=Jx1R+rrO8AD7pE2U8YrEGuMCNxgQWTjmvuSPjxXn2QlswgmiiYreS+qk9pdSFFjsJH
-         Jq3QCEBFupUKMY58LYzQLIBLUp140oZkR1M8E3nS9ali9uOLM/xSCVH53yBBG2cOvETa
-         2usHvSD4ifFmiomOxRxiK53ReTW/ajE1slmOSaOKRD4xub/wfcP1mTKqFLoFlgz0D32R
-         +ETXM5IicMvDmF8luCapG3WlvEIFHrf6D+vxneXymUSQvQAWHLNw3M3Fgsjd3IgVR76R
-         2lhJzPONZPrTRT75+StXxFRP/2E2m2srjHpslFzduwLTxONyW8NSbO/g6naE/liX6F5u
-         XAdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764865067; x=1765469867;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TcYtubvKcGoSq4YWnqE43T9j+Qij7FD/s8vUU4QGez4=;
-        b=wWprFrN8qW1qrmahjVC+5ve0G2Ju770r9IxXYGBHj+pLcv+JDW2GQY+DBZfIvFV73X
-         u3ND+Uwsvpif8W9xqh2VSg92rONjtwyH/w5j47iDDVqnXACTs6BlltIvuVMMqHws0unH
-         BaCcdb9basHrqRjG+6RgiwI3hDKTTtwZnR25253dce2muHkvz+Lhabuf/teGr/i69qzk
-         Vcdmt1rCre0C0g2EREMlmC/igAJoqtJ1t9n2b/t9swK1P5EEQwP3LowrlXNsJncYguko
-         LpTjOUJBh8Vf5ldwAZr0Mvl6I+ohoQ1UyVpr+3lprrKhB9/sB/XQ08pztfnkjsyJ/+wb
-         fTEA==
-X-Forwarded-Encrypted: i=1; AJvYcCWW9EFcjZ2KTY0HmHeaB2Oe2x7G2n8/bgu47XwYVvL5+DRZcng9EmpLxlJk8jVoJiCwhp0KM6C6uO/kOnnM@vger.kernel.org
-X-Gm-Message-State: AOJu0YycdY6SB/MyZBaW8sZ/yY+MxzxhM0MLQ5c8V4GWrFaLtdnSnwRk
-	ziBY7yqDQvsiOTqJZjASGRqG5+2RYYr/SHSEG+cjGkwi+IxrXeFWdbB8r1a7WzJW/FCSHAu9o87
-	i7iPjOlW6knpEDPmJjD6kQ/imHM5E0HIX2tK7DY2Ic3XqMaolPh1n
-X-Gm-Gg: ASbGnct1tX/qgTeIPMv+tIwx0j5PlpKqtQYLUi+tyWNrt5yz9sP+e3i6lV/0W8V8sBW
-	ArcUbqda2lXbM1jAk+arXs8O2PTOUb27LYCE1Lq8QjPgCClfuRkAkQLxrMm96st2YnJmOfkcwL5
-	RiVQK/Re5mSSpjRcagrLOl2dShVoVYebMwK4tbM7Lw5t5xLimmSOOXGeLg4qh7zD4MDD0Im0nns
-	VBD+T37fcf7Cpagq0EvNk762Kkgqnj3dADFl3K69agCQdpFR8aBFQdb5J5vVRsxfZtQydGODAZk
-	SGtFnd1XS2kgAMbvb7R27mEO5eU7
-X-Google-Smtp-Source: AGHT+IF8z11XLGfYzUm91CMdZf4GezIwYVVnF1KmzD5fxiCI7uZI3auSv7HjayTXTjcC2dCJDroO2z1dhzcB1niqEsc=
-X-Received: by 2002:a05:6214:21ee:b0:87c:2360:d404 with SMTP id
- 6a1803df08f44-88819483e38mr101446386d6.7.1764865066864; Thu, 04 Dec 2025
- 08:17:46 -0800 (PST)
+	s=arc-20240116; t=1764865967; c=relaxed/simple;
+	bh=9XD/qJL6eCwajB0X8fOBOZaDsiRuG8CojS+Mt+P85VY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Guuf+PyTcDdwnAvIwovBiEttUxe8s2zTO/9zKAuw/RbWGMJwLTrALORMliby+yrKHvm7BEsvI3AhNbJlAk1TRFiEYwVnlyyY2ZANdFIwsSxKOT+NjSQX511QMP0WYMYiiyPdxDFV4Ci5vJK3JZIDrIqb5tQremODYHH6uUjLUYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DVbmeC8y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D6DAFC4CEFB;
+	Thu,  4 Dec 2025 16:32:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764865966;
+	bh=9XD/qJL6eCwajB0X8fOBOZaDsiRuG8CojS+Mt+P85VY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=DVbmeC8y8VWOjoO47SKyhardGdgNt1wudX9iJEmcfOCQaFyhkWu6JIsqWYk/zuU5h
+	 30dvCNVzRfplb/cS4FeU9THYJQjIt+C5jOZdz9OaVmTwnIONuyvpjuTykGuzx0/GES
+	 CfaMZQ+FaKvHCZ7h5tGEJefmIQErCO+SnOOp7w0DAMazdnnhq5M+gObJYL5Wj0E5sp
+	 VO04klOpnFU8uOBItTta7jOWXv5c/Un+SdWdl3pteyQcpobMUdX5F9G7KWJA2NPEHA
+	 FGVd4x7vz2Tr8vUAOY3cqBjH1e0M3tla3XW2LqA6bkqAGRKh5QFrITKC++p49VBgRA
+	 X/O6A4ze0lAlA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C23D216AA;
+	Thu,  4 Dec 2025 16:32:46 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH WIP v2 0/8] media: camss: Add support for C-PHY
+ configuration on Qualcomm platforms
+Date: Thu, 04 Dec 2025 17:32:34 +0100
+Message-Id: <20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com>
- <20251202-extended_cti-v6-2-ab68bb15c4f5@oss.qualcomm.com>
- <20251203182944.GG724103@e132581.arm.com> <CAJ9a7VjWDBEwdmMf53geACBWGusC8BC3pJuOLETeecw24+N35Q@mail.gmail.com>
- <20251204103151.GK724103@e132581.arm.com>
-In-Reply-To: <20251204103151.GK724103@e132581.arm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Thu, 4 Dec 2025 16:17:35 +0000
-X-Gm-Features: AWmQ_blm_2rs2si_vAcMXoW5zZu2s4mytZpslYby8tsAcsAdu9x6GoUJ81x6Q9c
-Message-ID: <CAJ9a7VjHHkkTz9XJqjdQ+11_XX9zXuY0ZcQzPtq=Zvi4CN__0A@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
-To: Leo Yan <leo.yan@arm.com>
-Cc: Yingchao Deng <yingchao.deng@oss.qualcomm.com>, 
-	Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, quic_yingdeng@quicinc.com, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Mao Jinlong <quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKK3MWkC/22Muw6CQBBFf4VM7ZidDQ+xorWzszAU7DLIFALuE
+ gKS/Xc31Jbn3pOzg2cn7OGa7OB4ES/jEEGfErB9M7wYpY0MWumMSJX4seMb7dRvaMzFmrYhm6c
+ pRH9y3Ml6tJ7wuN2hjmMvfh7ddvQXOq4/qYVQIeVZV3BRGsVUySrz2X6hDiH8ADFsCEulAAAA
+X-Change-ID: 20251109-qcom-cphy-bb8cbda1c644
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, 
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+Cc: Joel Selvaraj <foss@joelselvaraj.com>, 
+ Kieran Bingham <kbingham@kernel.org>, 
+ Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3959; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=9XD/qJL6eCwajB0X8fOBOZaDsiRuG8CojS+Mt+P85VY=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpMbesegKeN7A2ZNvAYwRK3TZ+YUHLMWn2RGl73
+ 6xKZq8YxqKJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTG3rAAKCRBgAj/E00kg
+ cvWeD/0e1kBDFXZtcoDJOmU/MjKGcSP99Nv+6yV6h3+Rh7tbZ/gw/Q7vxrFTS4j8Q+trEx2lqno
+ mUz2ncBTmLKDOGxH4hjeVLFliLlV97+D9CfNpMZtHzq1AEM9gV1RHYkKSYt6u69wU5L/L8gwD25
+ tKv4cerLfV9cEgLTnQjib+7xYb6b5X1N6o91/lQAM9C82B/AuohRwqsHJeQo6JsIf0tiq+hdQ/R
+ 5/uwUYsu1JKJnKk9P5DqwNI/WTvZlL823DL2PVN7VfS5i7wOKYcRmkgKLwLbb3krYzP7RyFBNof
+ 7aH6xLD+GNNIbwp+mxk8QOvWP8mt1T6UDf7G1eARbQg/U/tMHNXeEuYROid01tgwEVaiTPYuI/l
+ 5uprBfJKWl9QG83SNZsYauzepZp5LEFDuk25/5S3ix2QboxlKY5bxrtR+2z8qeHwOLg6yTcAQNX
+ eoA1mX/oXML6ylbG9Zi1yl3edX+iPkHIg/9BYYIDjoHUFRPpfnT4ijOG5IsHqjCEhIu0DbCv/S6
+ rL5nhoYP5e99xh38yk0s8bW2GffYDXC+AuvS89Y/k1M9mc44tMYDLWusRl7cy0hWxk+tM8AK/cz
+ 2RT7bPQ0dGfPM+HumnUCOa5sF33dsaK+dRMNF5uLonV65zqFXT0R5m6/h0aT9IhSHLU4mxmYjNt
+ AU2nNmpyG75IglA==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-Hi Leo
+# Short summary
 
-On Thu, 4 Dec 2025 at 10:31, Leo Yan <leo.yan@arm.com> wrote:
->
-> On Thu, Dec 04, 2025 at 09:07:56AM +0000, Mike Leach wrote:
->
-> [...]
->
-> > > I saw CTI registers are within 4KiB (0x1000), we can don't convert
-> > > standard regiserts and only convert to QCOM register based on the
-> > > standard ones.  So you can drop the cti_normal_offset strucuture and
-> > > only have a cti_reg_qcom_offset[] struct:
-> > >
-> > >   static const u32 cti_extended_offset[] = {
-> > >         [CTIINTACK]             = QCOM_CTIINTACK,
-> > >         [CTIAPPSET]             = QCOM_CTIAPPSET,
-> > >         [CTIAPPCLEAR]           = QCOM_CTIAPPCLEAR,
-> > >         [CTIAPPPULSE]           = QCOM_CTIAPPPULSE,
-> > >         [CTIINEN]               = QCOM_CTIINEN,
-> > >         ...
-> > >   };
-> > >
-> >
+This patch series extends the Qualcomm CAMSS (Camera Subsystem),
+including CSID and CSIPHY components, to support C-PHY mode configuration.
 
-The tables in the patch are
+# Background and motivation
 
-    [reg_type_array_index] = offset_address;
+Modern smartphone cameras increasingly rely on MIPI C-PHY rather than D-PHY,
+thanks to its higher data throughput and signal efficiency. As a result,
+many OEMs adopt C-PHY interfaces for main (rear) cameras on Qualcomm-based
+devices.
 
-e.g.
+Until now, mainline Linux lacked C-PHY configuration support for Qualcomm
+chipsets, preventing bring-up of primary camera sensors on several
+Snapdragon platforms. This series closes that gap.
 
-  [INDEX_CTIINTACK]  = QCOM_CTIINTACK
+ - Introduces C-PHY configuration support for the CAMSS driver stack,
+   covering both CSID and CSIPHY blocks.
+ - Successfully enables C-PHY operation on the Snapdragon 845 platform.
+ - Tested on OnePlus 6 and 6T phones running mainline Linux,
+   using the Sony IMX519 main camera sensor.
+ - The new configuration allows other chipsets versionsto enable C-PHY by
+   simply adding corresponding sensor driver support and csiphy
+   initialization data, following the example set for sdm845.
 
-which resolves to
+With this patch series, mainline Linux gains working C-PHY support for
+Snapdragon 845, paving the way for improved main camera functionality
+across many Qualcomm-based devices. The groundwork also simplifies
+future enablement efforts for additional SoCs and sensors.
 
- [1] = 0x020
+Until merged, the series will be also available at:
+  https://gitlab.com/sdm845/sdm845-next/-/commits/b4/qcom-cphy
 
-where index is constant for a given register type,
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v2:
+- [NOTE] This is still WIP patch series, thus I wanted to publish already
+  changed parts to get feedback regarding to the direction of patchset.  [/NOTE]
+- When switch to using odd bits, zeroed val which was left unitialized in v1.
+- Accidentally missed archs added back in the commit moving lane regs to
+  new location.
+- Remove commit with reverting check for only D-PHY is supported and
+  adjusted the check to also account for C-PHY.
+- Documented link frequency calculation with defines. (Casey)
+- Changed the cphy boolean to phy_cfg enum in the camss/camss-csiphy.
+  (Brian)
+- Added patch for csiphy-3ph enablement for sm7280 from Luca as I'm
+  meanwhile trying to bring up the C-PHY sensor on FairPhone 5.
+- Merged these two commits together
+    csiphy-3ph: Enable sdm845 C-PHY sequence
+    csiphy-3ph: Add Gen2 v1.1 MIPI CSI-2 CPHY init
+  merged R-b.
+- Link to v1: https://lore.kernel.org/r/20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz
 
-As far as I can tell what you have suggested above is a table that is
+---
+Casey Connolly (1):
+      media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 MIPI CSI-2 CPHY init
 
-  [std_addr_offset] = qcom_addr_offset;
+David Heidelberg (5):
+      media: qcom: camss: csiphy: Introduce PHY configuration
+      media: qcom: camss: csiphy-3ph: Use odd bits for configuring C-PHY lanes
+      media: qcom: camss: Prepare CSID for C-PHY support
+      media: qcom: camss: csiphy-3ph: C-PHY needs own lane configuration
+      media: qcom: camss: Account for C-PHY when calculating link frequency
 
-e.g.
+Luca Weiss (1):
+      media: qcom: camss: csiphy-3ph: Add Gen2 v1.2.1 MIPI CSI-2 C-PHY init
 
-[CTIINTACK]             = QCOM_CTIINTACK,
+Petr Hodina (1):
+      media: qcom: camss: Initialize lanes after lane configuration is available
 
-which resolves to
+ .../media/platform/qcom/camss/camss-csid-gen2.c    |   1 +
+ drivers/media/platform/qcom/camss/camss-csid.c     |   3 +-
+ drivers/media/platform/qcom/camss/camss-csid.h     |   1 +
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 318 ++++++++++++++++++---
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |   6 +-
+ drivers/media/platform/qcom/camss/camss-csiphy.h   |   2 +
+ drivers/media/platform/qcom/camss/camss.c          |  34 ++-
+ drivers/media/platform/qcom/camss/camss.h          |   2 +-
+ 8 files changed, 312 insertions(+), 55 deletions(-)
+---
+base-commit: bc04acf4aeca588496124a6cf54bfce3db327039
+change-id: 20251109-qcom-cphy-bb8cbda1c644
 
-[0x10]  = 0x020
-
-which does not appear to work correctly?
-
-The registers are sparsely spread across the memory map, so a simple
-mapping does not work, even if we divide the original offset by 4 to
-create a register number.
-
-The largest standard offset we have is ITTRIGIN = 0xEF8, so assuming
-the compiler allows us to sparselly populate the array (which I think
-it does, along with some padding), we end up with an array of at least
-0xEF8 elements, rather then the indexed 21?
-
-Regards
-
-Mike
-
-> > I suggested the dual offset approach a couple of patchset revisions
-> > ago as it actually simplifies the code & makes it more efficient. The
-> > offset array in use is set during probe and the remaining code is then
-> > common to both without lots of "if qcom else " occurences.
->
-> AFAICS, we will handle the QCOM CTI particularly in three cases:
->
->   1) The register access;
->   2) The claim tag;
->   3) Sysfs attr is visible.
->
-> Now we are discussing the reigster access.  As suggested, the
-> "if qcom / else" is encapsulated (e.g., in cti_reg_addr_with_nr()), it
-> will not spread out.
->
-> I'd use standard registers by default and convert to non-standard ones
-> only when needed.  A new "neutral" index layer seems redundant, as the
-> existing standard register indexes already serve this purpose.
->
-> For the sysfs attrs, it makes sense to use a central place to decide
-> which knobs are only visible for QCOM CTI, otherwise, we also will not
-> spread the condition check.
->
-> I will reply separately for claim tag issue.
->
-> Thanks,
-> Leo
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
 
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
 
