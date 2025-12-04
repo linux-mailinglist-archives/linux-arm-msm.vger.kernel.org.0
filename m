@@ -1,74 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-84355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03176CA390C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 13:12:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55EC5CA396D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 13:26:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0ED84300E3DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 12:10:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F2C2E301AF47
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 12:26:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA707334C0A;
-	Thu,  4 Dec 2025 12:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A05FD337103;
+	Thu,  4 Dec 2025 12:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GaYnUn/c"
+	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="QOnhxcyj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA6930EF92;
-	Thu,  4 Dec 2025 12:10:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFC2398FB6;
+	Thu,  4 Dec 2025 12:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764850219; cv=none; b=URQNM5DC8CUVP2vM36htLPTIJS4wXNzGx6JauKURUbBbXNNukfsXkNpdMBF0L4sull9DJdDciPk4/F7mNOn7iwwEvV6u44nSvD/eAe6L5EdnKFeNb/b5AmI8OvEUIl/9YE7IqHlR1TmMvgBvOtZoRsFxeLWBLU3Mh6UB2tWLQf8=
+	t=1764851175; cv=none; b=UsyUf2LcX+09N76AKkzkWdUE/L0BredfMbFF99h8CYhjVLwESetXRzQNFIFnxktEnR58O4xYfU9PqlZBCVUcv1aUzBUymN0Mrfxu4/PQ59l9XV6biyllUxDERvuaOET7tmjrWNUmUuEWV74YXA9bpbxlilitE31BZkHnmAynqWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764850219; c=relaxed/simple;
-	bh=4duG8Bg0llyGmoxo2Gs3asXDtFyfKaOzn1Fk3SgDz70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i4H4Hs2k5xSw6iRsjvKaja0rZhDDsBGnZrLNm5tufntMh3dZpSn9eU/emm8sizPpjJF8RLq7ZLI0Oc7p1jzw+taSDun3GPJKMT7qClp3oU2pQHE6QV+h902gl9eYfgxKBIjH/2vnvGpY0qVxLFdkgX+oiccnlWIe784ZybHQ+ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GaYnUn/c; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEA6C4CEFB;
-	Thu,  4 Dec 2025 12:10:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764850219;
-	bh=4duG8Bg0llyGmoxo2Gs3asXDtFyfKaOzn1Fk3SgDz70=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GaYnUn/c/7ttjqg+dVQDX4NgIcj8DUTFMGYweJKPhpugPHyZ7pAgGKLFtBB4qrZQI
-	 sqf2S6Y/LENLcUVQLPxy2XGksTK65c7Awd3Va/NH+e5douuso0Se5PKHqKwANLBjmd
-	 EPBfmJILOKLQtMcFhazUC6mi9lRljyzqaWXlsPtHgBaYk5PLv33I6Az/T5MhPF0qir
-	 Fedqe94d8Mj39C+FioTqn6/cGi3qVupRdNQSDpihKG/rSwKdvlM8WlKjfco6i9vF9j
-	 AP1QXvqiAUluw5oS05WVScrYGakSye4eMFd4ekhjgzfrykTZN/QzRgo8B4hfowyx/h
-	 oZBxjUDLgG2zw==
-Message-ID: <d9220bda-6704-4e37-9243-d7a4529afdf8@kernel.org>
-Date: Thu, 4 Dec 2025 13:10:12 +0100
-Precedence: bulk
-X-Mailing-List: linux-arm-msm@vger.kernel.org
-List-Id: <linux-arm-msm.vger.kernel.org>
-List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+	s=arc-20240116; t=1764851175; c=relaxed/simple;
+	bh=I0obHLer8DGqhfP+Jz8M0rv2nrUWrNdeaQDFSV0i6Nk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D7uVd2rgS+0tMtBwTdKfdy+uJKiR8qj8JHT0AS+4FmjZ4dco1m/Ce7nWVQYuPCttdI90u6Sk7nnijRy2Ax+qd4eUf8azy8Y1YrR2f2q/Iop+YTbCyqz6ow6UVboerlRmSwbChkINEsHgspEjQY+60wsmhWGdwVb8GN5iXPb1d5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=QOnhxcyj; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 81FF51C008F; Thu,  4 Dec 2025 13:26:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+	t=1764851170;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C4gKYecV5j+q0y/UOby/NlMGGrlawumSOrnnyOto9GI=;
+	b=QOnhxcyjbjuDJxGn9hNDbOS2xefZ33OgBtd2n45WbX5931LRwBnj2aKj/LDZ5QvRMwzUiO
+	VtVbsUZulh0h7s0B5COMJCqZRLKIngc4lqagSd7+kd1vbXfpt98pw751A3qScUP26UdNv3
+	HP4TCIG6yTQsipYZocwa130n2Wpwlvs=
+Date: Thu, 4 Dec 2025 13:26:10 +0100
+From: Pavel Machek <pavel@ucw.cz>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Manish Pandey <manish.pandey@oss.qualcomm.com>,
+	Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
+	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
+	Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
+	Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 Subject: Re: [PATCH 00/20] arm64: dts: qcom: Introduce Kaanapali platform
  device tree
-To: Pavel Machek <pavel@ucw.cz>
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
- Qiang Yu <qiang.yu@oss.qualcomm.com>,
- Manish Pandey <manish.pandey@oss.qualcomm.com>,
- Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
- Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
- Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
- Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
- Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
- Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Message-ID: <aTF94rM3/7ChMs5L@duo.ucw.cz>
 References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
  <aS8uJCnb0xOd6uby@duo.ucw.cz>
  <081a2038-e798-4cc0-96ff-b7f11e346831@kernel.org>
@@ -78,84 +74,86 @@ References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
  <aTFP1w48bWgto7wr@duo.ucw.cz>
  <2fa188c3-f5c3-4145-9cae-3587f3bb23cc@kernel.org>
  <aTFzmm3fyxC1MAzk@duo.ucw.cz>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aTFzmm3fyxC1MAzk@duo.ucw.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <d9220bda-6704-4e37-9243-d7a4529afdf8@kernel.org>
+Precedence: bulk
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="mg2Znaa5HtGTKNpz"
+Content-Disposition: inline
+In-Reply-To: <d9220bda-6704-4e37-9243-d7a4529afdf8@kernel.org>
 
-On 04/12/2025 12:42, Pavel Machek wrote:
-> 
->>>>>>>>> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
->>>>>>>>> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
-> 
->>>>>>>>> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobile Test Platform)
->>>>>>>>> and QRD (Qualcommm Reference Device) are splited in three:
-> 
->>>> ... and btw, I know what MTP and QRD is and MTP IS NOT A PHONE. I work
->>>> on this, I upstream this and it is not a phone, regardless how you call
->>>> it. Just because we call our evalkit like that, does not make it a
->>> phone.
->>>
->>> So what is it?
->>
->> evalkit for SoC. Just like every other NXP evalkit board is.
-> 
-> ...products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms...
-> ...Mobile Test Platform...
-> 
-> Clearly not phone related.
 
-so you never had it in your hands, never heard about it before, know
-nothing about it, but you correct people and you claim it is "phone
-related" thus some fake new rule should be followed on cc-ing
-non-documented address (just git grep for it...).
+--mg2Znaa5HtGTKNpz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think this concludes the discussion.
+On Thu 2025-12-04 13:10:12, Krzysztof Kozlowski wrote:
+> On 04/12/2025 12:42, Pavel Machek wrote:
+> >=20
+> >>>>>>>>> Introduce the Device Tree for the recently announced Snapdragon=
+ SoC from Qualcomm:
+> >>>>>>>>> https://www.qualcomm.com/products/mobile/snapdragon/smartphones=
+/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+> >=20
+> >>>>>>>>> Bindings and base Device Tree for the Kaanapali SoC, MTP (Mobil=
+e Test Platform)
+> >>>>>>>>> and QRD (Qualcommm Reference Device) are splited in three:
+> >=20
+> >>>> ... and btw, I know what MTP and QRD is and MTP IS NOT A PHONE. I wo=
+rk
+> >>>> on this, I upstream this and it is not a phone, regardless how you c=
+all
+> >>>> it. Just because we call our evalkit like that, does not make it a
+> >>> phone.
+> >>>
+> >>> So what is it?
+> >>
+> >> evalkit for SoC. Just like every other NXP evalkit board is.
+> >=20
+> > ...products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-pl=
+atforms...
+> > ...Mobile Test Platform...
+> >=20
+> > Clearly not phone related.
+>=20
+> so you never had it in your hands, never heard about it before, know
+> nothing about it, but you correct people and you claim it is "phone
+> related" thus some fake new rule should be followed on cc-ing
+> non-documented address (just git grep for it...).
 
-Best regards,
-Krzysztof
+I have not heard of it, and that's why I want people to cc the list,
+so I don't have to pick it up from lkml. There are other people on the
+list, maybe not following lkml, and likely interested in chipset
+OnePlus 15 is based on.=20
+
+We do have guidance about cc-ing the lists, and somehow I don't see "git
+grep" in those rules, nor it says "if get_maintainers does not know
+about it, it does not exist". In fact, it says:
+
+"Many kernel-related lists are hosted on vger.kernel.org; you can find a
+list of them at http://vger.kernel.org/vger-lists.html.  There are
+kernel-related lists hosted elsewhere as well, though."
+
+Why don't you click on the link?
+								Pavel
+--=20
+I don't work for Nazis and criminals, and neither should you.
+Boycott Putin, Trump, Netanyahu and Musk!
+
+--mg2Znaa5HtGTKNpz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaTF94gAKCRAw5/Bqldv6
+8r/IAJ0QQK/2Z0TjNu8K2b010IuW+1UUGwCdEgVCbpw8FGrvwR5Pe28lrsTLZ84=
+=cGA2
+-----END PGP SIGNATURE-----
+
+--mg2Znaa5HtGTKNpz--
 
