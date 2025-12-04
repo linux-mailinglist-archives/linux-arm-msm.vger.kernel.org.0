@@ -1,205 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-84363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42499CA3B3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 14:03:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4CB8CA3B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Dec 2025 14:06:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D43323073A3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 13:01:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3848B3081839
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Dec 2025 13:04:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DB2434214F;
-	Thu,  4 Dec 2025 13:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499312E8DFA;
+	Thu,  4 Dec 2025 13:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5FfdSKv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="At6Ecatu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3312934028D;
-	Thu,  4 Dec 2025 13:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED882AD2B;
+	Thu,  4 Dec 2025 13:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764853304; cv=none; b=UTv8BSERuHWK+Mwf0tuVux0qsKYCYzZt9YM/2bS3JuP2dMyNpqPzsPYjEDh/ii0911xUih33X6qd6Cfnl+wjj6WY03IdSXEFAXF5ywqXJsDKdrwzGlAJ7le4RDv65Olw4sC1vCb/ITEMRRQTt4lAOD7Olv4mFeYaZZlL0tyQU/k=
+	t=1764853459; cv=none; b=FoTJa78qBBAi6rUj6ENEu2Ryh3BVjxv96MHEX48kOs1mBwHgcVV8a/vWmzSVNC80DIXps3LmNo0tWFDLoCE5EaoyzSUQ4xBegBKxoleOsDem+TV8lD5JBm/7B9z2Vsi41Ks4Sw9UMytDnBYHAXqV4cJvFYwO3EN56ZO0sMwHdJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764853304; c=relaxed/simple;
-	bh=y8Dpxq/qac2yfhGme+RbqjKcFBbu3jxAWjEWDiTog8I=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j6Szsgn4ZEW09pqxsYSIlMbKaFKzV3iORMhnmxyLaiU4blG99sujn7LId9uzO/GEtCwROngnEIsDElIDi8BVSr6khx6kapY1K2LShK86bTBTBih+VHTcA9zt8M6DaaRyy//m0SWqaF498D7xf1LmAHR1wg6brUWrB86bG5Lu2mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5FfdSKv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD33C4CEFB;
-	Thu,  4 Dec 2025 13:01:43 +0000 (UTC)
+	s=arc-20240116; t=1764853459; c=relaxed/simple;
+	bh=3fDmVixiURReJZYPnTB2ray1Fg6XTd6Acttcjq2EZqQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kYyAUegiQUTCMTItQply1pzbdP0Y8VqH+9f3s82AAJsr9+8q9I2YPVWrMigSP8RNp91MvO9IUssIccUnsj9ZaV3eZeWQ//r///TlspwRnEHrHnQXzz4eLfePaU+VJcR4Vmr6PviLR5DmLZabTdU/0ewb3bm74HDw89f3GrvCf/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=At6Ecatu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8C6C4CEFB;
+	Thu,  4 Dec 2025 13:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764853303;
-	bh=y8Dpxq/qac2yfhGme+RbqjKcFBbu3jxAWjEWDiTog8I=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Q5FfdSKvDj+KHCLkDd+HBIGhhv+z8ttkvqzxPm5TJQMqguHwvlGI3lndWXSFKnc9X
-	 Zhx4BTsYRKWgI+lW3LdgWUmIIn1ZMLj/FO9l/icI2DKYTO92LkmDXYU3GerC7cQQMF
-	 /i6RA+QlFVyn8Z/lBEzuBFkbTOlDutRvw4jIT15kdeL7iHqdiiKAfqI7dJMWpdJwN6
-	 mND5pWkZfIAlN5/Vpan/QiAePMeCiO4NtDqL+UlebuxWKX/rk1mmUl32PSIn8HYBJF
-	 4aqp2TrCOINjVFL+6nq9mEiQsBh+uod8LI3qTG7F5+jJOO2rJ3/R5FP8nMpMfQMmxK
-	 PlVQSrG8F+pqA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1vR8xp-0000000AS1y-1ZLD;
-	Thu, 04 Dec 2025 13:01:41 +0000
-Date: Thu, 04 Dec 2025 13:01:40 +0000
-Message-ID: <868qfipfij.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: Alternative to arm64.nopauth cmdline for disabling Pointer Authentication
-In-Reply-To: <adc22b19-7dcc-4c38-9319-d979f1e3886a@quicinc.com>
-References: <3fcf6614-ee83-4a06-9024-83573b2e642e@quicinc.com>
-	<86ecpappzi.wl-maz@kernel.org>
-	<adc22b19-7dcc-4c38-9319-d979f1e3886a@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=k20201202; t=1764853458;
+	bh=3fDmVixiURReJZYPnTB2ray1Fg6XTd6Acttcjq2EZqQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=At6Ecatua4V1QEIYFUylJ0KOepGmbdMIqIxznbtQTzxQoIugq6rU5SKp5hsKSEWJe
+	 ZBq/VQGdbCzAqYuQ/APswRH5bcx7julZoF0egjdF13vaFT1/tN7ei3bkkPRR7y2163
+	 iBBKIHwcLWgs5579H1tZYGbGf+dw02FtsgImOLbn2u1AfqWBs8OQc0vU6rCrhPtDc/
+	 gshau3lYU3cmNPMYJwzbeyIwXdN5N98m161W8t4qaCc/3ookCc9v2mWUK5c/diLYJ9
+	 /69NqLCDYE8MZAaH0QocqhdypDUGi41XGxDwaejiqC7vNJl4DTYd0c/A6LtZE+mf8B
+	 6Vrf8d2jeeNWA==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srini@kernel.org>, Johan Hovold <johan@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20251201093419.24474-1-johan@kernel.org>
+References: <20251201093419.24474-1-johan@kernel.org>
+Subject: Re: [PATCH 0/3] ASoC: codecs: wcd93xx: fix OF node leaks on probe
+ failure
+Message-Id: <176485345691.29556.7069249740822339004.b4-ty@kernel.org>
+Date: Thu, 04 Dec 2025 13:04:16 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pavan.kondeti@oss.qualcomm.com, catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-88d78
 
-[dropping Ricardo, as his address bounces]
-
-On Thu, 04 Dec 2025 10:36:12 +0000,
-Pavan Kondeti <pavan.kondeti@oss.qualcomm.com> wrote:
+On Mon, 01 Dec 2025 10:34:16 +0100, Johan Hovold wrote:
+> The original wcd938x driver has a couple of OF node reference leaks
+> which have been reproduced in the two later added drivers.
 > 
-> Hi Marc,
+> Johan
 > 
-> On Thu, Dec 04, 2025 at 09:15:29AM +0000, Marc Zyngier wrote:
-> > On Thu, 04 Dec 2025 04:07:15 +0000,
-> > Pavan Kondeti <pavan.kondeti@oss.qualcomm.com> wrote:
-> > > 
-> > > Hi
-> > > 
-> > > The pointer authentication feature (PAuth) is only supported on
-> > > 0-3 CPUs but it is not supported on 4-7 CPUS on QCS8300.
-> > 
-> > On what grounds? Hardware incompatibility? I seriously doubt it, since
-> > nobody glues pre-8.3 CPUs to anything more modern. Or, as I expect it,
-> > a firmware implemented with little understanding of what is required?
 > 
-> I don't know the answer to this question. I will talk to folks who may
-> know answer to this question and get back.
+> Johan Hovold (3):
+>   ASoC: codecs: wcd937x: fix OF node leaks on probe failure
+>   ASoC: codecs: wcd938x: fix OF node leaks on probe failure
+>   ASoC: codecs: wcd939x: fix OF node leaks on probe failure
 > 
-> Can you please elaborate on the firmware part you are talking here? I
-> see that Linux runs at EL2 and AA64ISAR1 register values on CPU#0 (A78)
-> indicates that PAuth is supported but not for CPU#4 (A55). I am told, there
-> are no other controls outside EL2 (trap) to manipulate this feature. So,
-> I am assuming that this is indeed reflecting the HW.
+> [...]
 
-Neither A78 nor A55 have PAuth. They are both firmly ARMv8.2 CPUs, and
-predate this functionality. So I guess that there are only two possible
-outcomes:
+Applied to
 
-- either the FW is indeed not at fault, but that you have a *third*
-  type of CPU that is at least 8.3 in the mix
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-- or that you misidentified the CPUs that are on your system, they
-  have PAuth, and the firmware is borked
+Thanks!
 
-Which one is it?
+[1/3] ASoC: codecs: wcd937x: fix OF node leaks on probe failure
+      commit: 22a03ca7c20c4ed3a75047709b0ad15160e29d58
+[2/3] ASoC: codecs: wcd938x: fix OF node leaks on probe failure
+      commit: 32ae6ebe171aca9ce10f5790523a9865b6c08b02
+[3/3] ASoC: codecs: wcd939x: fix OF node leaks on probe failure
+      commit: 3ef4d9ede20db39bff34a559b04a1938fb31251e
 
-> 
-> > 
-> > > The ARM64 cpufeature discovery code expects late CPUs to have
-> > > this feature if boot CPU feature has it since PAuth is enabled
-> > > early. When a conflict like this is detected, the late CPUs are
-> > > not allowed to boot. It is expected that system will continue
-> > > to be functional with CPUs with Pauth feature supported and enabled.
-> > > This is not a desired behavior in production.
-> > 
-> > What is even less desirable is to produce this sort of contraption.
-> > 
-> > > We started seeing this problem when Linux is booted in EL2. When Linux
-> > > is running under Gunyah (Type-1 hypervisor), Pointer Authentication
-> > > feature is hidden from EL1 via HCR_EL2.TID3. 
-> > > 
-> > > arm64.nopauth can be passed on kernel cmdline to disable the feature
-> > > in kernel so that all all CPUs can boot on QCS8300. I am told 
-> > > maintaining a custom kernel commandline per SoC in a Generic OS 
-> > > distribution is not recommended and asked to discuss the problem with
-> > > the comunity [1]
-> > 
-> > Well, you get to own the problem you have created for yourself. You
-> > build hardware/firmware that cannot run generic SW, and yet you want
-> > generic SW to run seamlessly on it. Spot the issue?
-> > 
-> > > This patch [2] from Catalin adds a devicetree property under memory {}
-> > > to disable MTE. I believe this work predates the id-reg override
-> > > mechanism. However, this made me think if workarounds like this can be
-> > > detected via devicetree, for example a property under cpu { } node.
-> > 
-> > Not only it predates it, but it also doesn't work in general. For a
-> > start, it is DT specific. How are you going to make that work for
-> > ACPI? I know you don't care, but I do.
-> 
-> Point taken. I understand that this does not fall under errata but is
-> there a possiblity to introduce an Errata targeting CPU#0 MIDR and
-> disabling the Pointer authentication? I understand that if there is
-> another Qualcomm SoC that exists with all CPUs supporting pointer
-> authentication with same MIDR, we may be disabling the feature but this
-> is something I can check internally.
-> 
-> > 
-> > > Given that what we put in `chosen { bootargs="" }` kernel under
-> > > respective SoC devicetree can be overridden by bootloader, should we
-> > > have a **sticky** cmdline to specify critical workarounds like this?
-> > > This would be more generic than introducing any new parameters.
-> > 
-> > You already have a way to have a sticky command-line, by building it
-> > into the kernel. Yes, I understand that this isn't what you want, but:
-> > 
-> > (1) a user should be allowed to pass the kernel command-line *they*
-> >     want, not what someone has decided for them
-> 
-> Agreed. This is what made me to ask the question. Should kernel have a
-> sticky command line which may have critical workarounds like this?
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Absolutely *not*. You are not in charge of defining what is good for
-the user. If the user themselves want that, they have plenty of ways
-to achieve that particular goal already. Put it in the bootargs
-string, in the kernel build, in a grub config file, as a u-boot
-hack... There is an infinite number of choices already, and we don't
-need an extra one to hide how ugly their HW is.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-> > (2) the generic mechanism exists, doesn't rely on additional firmware
-> >     specifications, and is used for a whole lot of other QC platforms
-> >     suffering from the same issue of broken firmware.  What are you
-> >     going to do for these?
-> 
-> The generic mechanism, you mean bootloader passing the kernel cmdline
-> with `arm64.nopauth`? or something else.
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-Exactly that. This is the mechanism by which we instruct the kernel
-not to use a particular feature if it can avoid it. It is easy to add,
-doesn't depend on new esoteric firmware interfaces, and is a constant
-reminder that you are dealing with stuff that isn't fit for purpose.
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-> > (3) what if you, by miracle, happened to *fix* the firmware?
-> 
-> As I have asked above, the firmware part is not clear. 
+Thanks,
+Mark
 
-Well, your description of the root cause of the problem isn't clear
-either, so we're even! ;-)
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
 
