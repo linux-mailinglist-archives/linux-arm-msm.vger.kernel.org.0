@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57AF7CA6F18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 10:37:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37118CA6F3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 10:39:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8A3B535E3698
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:27:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F31F538A7551
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:28:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C26734028F;
-	Fri,  5 Dec 2025 07:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6FB342CBD;
+	Fri,  5 Dec 2025 07:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqNDmLbc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W4B1+xMg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E39303A1B;
-	Fri,  5 Dec 2025 07:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E83339B4E;
+	Fri,  5 Dec 2025 07:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764921392; cv=none; b=e8QypJ6lBp8bHlO1X6RgTRd4dYkPS9jDdmpYKga2OynkSokoeEX19U/xbkRRNg2ZfMssWqQYGb1edXe0YnW2d35FR7QD8YFiLq0aIiRJHO/U2X9O+aqIkKK4g1ltarnyJYv0L9v21QbI4wEdXVP6oehEk0xjuq2mjz8K0q+LITg=
+	t=1764921523; cv=none; b=KqDqnhJkrzUZulvbQML5v86HZP4yi80anxAWeVNtu3wkApWrEOUYTjpDnD4IAgMnXZD50q8aPrUffvb4RiI+/D1C9eDTUgTSjs4b/CSZ+DGlh0juKC/6yRD2JOaxPlTGEZZVMd6IyRYMEos6DKDyNk634z84BkWChiNQrKoUY7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764921392; c=relaxed/simple;
-	bh=9GBplQZ/57134UI/B19clZsAtbriogT/ZgPFurtrGcs=;
+	s=arc-20240116; t=1764921523; c=relaxed/simple;
+	bh=B0CzrYRc+ZuUPPQfTJv6AcZHjlbfKuKmGgGvDdmGbrg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EmyhZsVndqOmhFcx4u/5g1njwsN8lLBj+GeyKwS7aS41R2fuaXx2y0ZRqBM62IgHmv5sQ38rI1Ykw4RfHZ6e1e2x4JvMPqVHOcLy1SIm700OvLCp0RALxt4yqhdjjYvAlShPebczHLSMqTkoSRpEo9ppncYPeVwMCsD/isQZXn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqNDmLbc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C3C4CEF1;
-	Fri,  5 Dec 2025 07:56:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eRayY5Z5O0Vw6GsfVxQ41QmLJEmNuWpQ2zhpkSKboI8cYndl3aPcEnWtCiCXV38+47k+1vQT5sJqqDb0Qpv0E0rSi3acCMZAfyPQy2zs/eTcM+NqqWIwOCCIJBbNRFMegZLo3HTBpWFAqGIskgLTeVeOUUeYIPcLnnF9eW1sHf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W4B1+xMg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491B9C4CEF1;
+	Fri,  5 Dec 2025 07:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764921391;
-	bh=9GBplQZ/57134UI/B19clZsAtbriogT/ZgPFurtrGcs=;
+	s=k20201202; t=1764921521;
+	bh=B0CzrYRc+ZuUPPQfTJv6AcZHjlbfKuKmGgGvDdmGbrg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eqNDmLbcNNG8NLYTAk0aTUViPkcRmxUAN5vA5ewvY9o7V28NIwmurWmR2mjbTAXam
-	 Dc58InG+/fdDnGaTOzxpi5vRnRO/bW0HpfUhy1xZhI3Es0XDBlr3lmCP8/iuOjuxb9
-	 AAwnUGGIlDMnPD+DiJMmk13XfLnnjbZ11W9LS0OvCr/3vRbfi6HfkHxuyHkSvOKnmS
-	 PLFck4xfMn6+YeBT+P/jBGXetAbdhgMgLKnMoy0sHN49ClG6Ut3DdEcphBAgSqAwPG
-	 Tzm+aCTc0dkFVmZ1qz90SNnlKUtEigvQH6hl4+JqGiu41oBnyQ4AsSNTzkdK5otMNF
-	 PdFa6Jkpo5USw==
-Message-ID: <6f19b980-5e8d-4674-809c-49321c54d834@kernel.org>
-Date: Fri, 5 Dec 2025 08:56:26 +0100
+	b=W4B1+xMgLwwh230SEZBF17iuDQ5kMdLMNAjBic9MzXDOBrTwGhaRXCvhffty7hfmQ
+	 CEEki1yWQZWqNaJBVtgLTMqf9M3ioSA8zrMDtNn0H0xhkuANBR682dxIwhIpW+khQs
+	 X5KJkhbtvJG2bfHnTkWbvQjO5TGBIgHDXTPOTo30gLO98pdnrG2W1K5iKQhmUaWPDE
+	 S6E/kL5xnooeQDFmSHsvwdXXpQudybF92XGxlFkv7EM5bB9270DhwTYEQZWeij1mqW
+	 EnYzTH1D15re8CwOs9rO41rJnLpthegxw89cCPSrolStlBOVhYFyLPPUYT6j7B/3Fz
+	 wc85dBBGHZCzQ==
+Message-ID: <4785aa56-2911-4a85-bcdd-a581b8bc9c9c@kernel.org>
+Date: Fri, 5 Dec 2025 08:58:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] dt-bindings: arm: qcom: Document Kaanapali SoC and
- its reference boards
+Subject: Re: [PATCH v2 2/5] arm64: defconfig: enable clocks, interconnect and
+ pinctrl for Qualcomm Kaanapali
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -59,7 +59,7 @@ Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
 References: <20251204-knp-dts-v2-0-596d8398c6d3@oss.qualcomm.com>
- <20251204-knp-dts-v2-1-596d8398c6d3@oss.qualcomm.com>
+ <20251204-knp-dts-v2-2-596d8398c6d3@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,19 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251204-knp-dts-v2-1-596d8398c6d3@oss.qualcomm.com>
+In-Reply-To: <20251204-knp-dts-v2-2-596d8398c6d3@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/12/2025 07:31, Jingyi Wang wrote:
-> Document the Kaanapali SoC binding and the boards which use it.
+> Enable necessary drivers for booting Qualcomm Kaanapali QRD and MTP
+> boards. The serial engine must be properly setup before kernel reach
+> "init", so UART driver and its dependencies needs to be built in, enable
+> its dependency GCC, interconnect and pinctrl as built-in meanwhile enable
+> TCSRCC as module.
 > 
 > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  arch/arm64/configs/defconfig | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
