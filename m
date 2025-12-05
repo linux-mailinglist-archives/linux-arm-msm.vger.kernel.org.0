@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-84428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C30BCA6C7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 09:57:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 320B2CA6E23
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 10:23:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 498343034130
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:57:14 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4F842301E992
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 09:20:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFAA431328F;
-	Fri,  5 Dec 2025 08:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B42D325719;
+	Fri,  5 Dec 2025 09:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NDxUs0et"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uG0ULiwA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF6B28695;
-	Fri,  5 Dec 2025 08:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC94302CCD;
+	Fri,  5 Dec 2025 09:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764925030; cv=none; b=XDQ9V0lBk4IWR3xM6wqQiGHf7ZUlpMbhsyT9VXU+k/jFKEVMIOWYiw72JOHqJ+Uccl5zQqn7SlwXrUR8UlPZY6mZzGPoXP42XrK6HDBcu2SRyUmTPynDK2c71D+HZR6ONvjsTcOfL1DqUewH3NoIOM+hjCxJrfokBP+DVCnzWN4=
+	t=1764925808; cv=none; b=I9mzBq0JjaTm2uMB3Vrh/RnC9Q1gX2AUnMKvxsWcL9tgliF7V23DVENA+kHoxDUSNMRv03uNZIu1C7YoqMpjEOUTiNi5OyJ+elzN6uuilRhOR0hvTJg03dGt9fkeSkAHKhp06S6+ksM4SMH6hq6DSrLy5tF9LgpWGv0Wst6AP4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764925030; c=relaxed/simple;
-	bh=lpKjmPXsQUzMI0XuJPHsR3L6oiyQDFc+I3FpnEdPT1w=;
+	s=arc-20240116; t=1764925808; c=relaxed/simple;
+	bh=Bd62zbHU2BePIz0Xlc1pmmWFKrZ7qs2n6x+uksr8tnI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pkUZPsMLEuS4lBCvsqEgv85bPS18Qk5Y0csnlDoQ4Qgq/h5jpF8sMfntR4OPZaYZqaxXQ8sgOfV/nOuDZs/xrqi22umTI8jZPwQ+EeQHjwolqn6V+xxZZ4b7qOqNL7w6ys/K/VYsmvrenaWVLvObPa2ZYWH/a+/EMGd2qBJI8Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NDxUs0et; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FADC4CEF1;
-	Fri,  5 Dec 2025 08:57:08 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bac7zQztbaE2xyQLuyV6kWdUv6slx+RvkKk403iRuiwMDDwFCvSRmZFMv5JhAH92FH7E6POXSKOLEo74Sc0nHBX57QfWdxmQcrYzjbg6ESeIGG9RDmY48T81b4p9wP3GpUAbexuGc9izLHTkYhkD0YSxsJiuXwIJu5PYqrVOt6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uG0ULiwA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25920C4CEF1;
+	Fri,  5 Dec 2025 09:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764925028;
-	bh=lpKjmPXsQUzMI0XuJPHsR3L6oiyQDFc+I3FpnEdPT1w=;
+	s=k20201202; t=1764925805;
+	bh=Bd62zbHU2BePIz0Xlc1pmmWFKrZ7qs2n6x+uksr8tnI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NDxUs0etU8IbVRvDA6aOScBeSCgpwgo4oT6E6DP6lXnCBzOnffiA8MeDNO43RzgQr
-	 sTJRawv80B2CsPkRXMi9/LelqzOkaS9PDauJ8vyX9iGWvDsL+iGo2swCxp7z+fUWhM
-	 JsdMCNbsuxxvFc45rtPknRU/YUnCCsl+pPQsj7euTkm2V6FeVx6S/u04s/qheTIidD
-	 6eYoxlZ+6DckRflmFoN+uCHVmU84uccZgaGWBQ9XzXLPzqURqAFmmrsyXpBEZJZLXG
-	 7TUU9QiLNT7zNA55gRQcHLcRJz9siyCoW/J78P77UfwSJzvITuKHKVD1HnFfuIsVNq
-	 j2TgtSpairqDw==
-Date: Fri, 5 Dec 2025 09:57:06 +0100
+	b=uG0ULiwAIiTZ/5qcf5gv9N5g+TOi1hSWKarFbirpGYMwHqIdObod7U1rHcsp0E59N
+	 T8W7mYKgZZXF6EU+YG8qd11G2pJggGSNbGqECuqjrkdVq0peYDTydBL3fnu7cjulQ9
+	 gCC9way2rX2c2FcVomDKneLZ6PgcvOEf92H700hmPS4ny5JbH1k6WRDBbd3Jw3gUUc
+	 R7InTnQnWzPGz7PEZbgn0lXAvJDfTeIq2chIukhMQ9heS/1HG4i5sa7XfcBMC3GBmc
+	 EtVLQNXDOcybtP1Yvz7BmHOj5Bu286CpUEiOQywgS8GzYgMomIlyb41mKmFIRsq6q5
+	 Y50VlBGz9NNtw==
+Date: Fri, 5 Dec 2025 10:10:03 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: jic23@kernel.org, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org, 
-	lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org, 
-	daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com, 
-	lee@kernel.org, rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com, 
-	david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com, 
-	kamal.wadhwa@oss.qualcomm.com, rui.zhang@intel.com, lukasz.luba@arm.com, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org, 
-	quic_kotarake@quicinc.com, neil.armstrong@linaro.org, stephan.gerhold@linaro.org, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH V8 2/4] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-Message-ID: <20251205-savvy-festive-lyrebird-96bfa0@quoll>
-References: <20251127134036.209905-1-jishnu.prakash@oss.qualcomm.com>
- <20251127134036.209905-3-jishnu.prakash@oss.qualcomm.com>
+To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com, konrad.dybcio@oss.qualcomm.com, 
+	Rama Krishna <quic_ramkri@quicinc.com>, Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, 
+	Nitesh Gupta <quic_nitegupt@quicinc.com>
+Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p: Document
+ firmware managed PCIe endpoint
+Message-ID: <20251205-majestic-guillemot-of-criticism-80c18b@quoll>
+References: <20251203-firmware_managed_ep-v1-0-295977600fa5@oss.qualcomm.com>
+ <20251203-firmware_managed_ep-v1-1-295977600fa5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,26 +65,123 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251127134036.209905-3-jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <20251203-firmware_managed_ep-v1-1-295977600fa5@oss.qualcomm.com>
 
-On Thu, Nov 27, 2025 at 07:10:34PM +0530, Jishnu Prakash wrote:
-> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
-> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+On Wed, Dec 03, 2025 at 06:56:47PM +0530, Mrinmay Sarkar wrote:
+> Document the required configuration to enable the PCIe Endpoint controller
+> on SA8255p which is managed by firmware using power-domain based handling.
 > 
-> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
-> going through PBS(Programmable Boot Sequence) firmware through a single
-> register interface. This interface is implemented on SDAM (Shared
-> Direct Access Memory) peripherals on the master PMIC PMK8550 rather
-> than a dedicated ADC peripheral.
-> 
-> Add documentation for PMIC5 Gen3 ADC and update SPMI PMIC bindings to
-> allow ADC5 Gen3 as adc@ subnode.
-> 
-> Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
 > ---
+>  .../bindings/pci/qcom,pcie-ep-sa8255p.yaml         | 114 +++++++++++++++++++++
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Filename must match the compatible. In your case, the filename is
+correct but you wanted old format for the compatible (so compatible
+should be rewritten to match filename).
+
+>  1 file changed, 114 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..970f65d46c8e2fa4c44665cb7a346dea1dc9e06a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+> @@ -0,0 +1,114 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/qcom,pcie-ep-sa8255p.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm firmware managed PCIe Endpoint Controller
+> +
+> +description:
+> +  Qualcomm SA8255p SoC PCIe endpoint controller is based on the Synopsys
+> +  DesignWare PCIe IP which is managed by firmware.
+> +
+> +maintainers:
+> +  - Manivannan Sadhasivam <mani@kernel.org>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sa8255p-pcie-ep
+> +
+> +  reg:
+> +    minItems: 6
+
+Why is this flexible?
+
+> +    items:
+> +      - description: Qualcomm-specific PARF configuration registers
+> +      - description: DesignWare PCIe registers
+> +      - description: External local bus interface registers
+> +      - description: Address Translation Unit (ATU) registers
+> +      - description: Memory region used to map remote RC address space
+> +      - description: BAR memory region
+> +      - description: DMA register space
+> +
+> +  reg-names:
+> +    minItems: 6
+> +    items:
+> +      - const: parf
+> +      - const: dbi
+> +      - const: elbi
+> +      - const: atu
+> +      - const: addr_space
+> +      - const: mmio
+> +      - const: dma
+> +
+> +  interrupts:
+> +    minItems: 2
+
+And this/
+
+> +    items:
+> +      - description: PCIe Global interrupt
+> +      - description: PCIe Doorbell interrupt
+> +      - description: DMA interrupt
+> +
+> +  interrupt-names:
+> +    minItems: 2
+> +    items:
+> +      - const: global
+> +      - const: doorbell
+> +      - const: dma
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  reset-gpios:
+> +    description: GPIO used as PERST# input signal
+> +    maxItems: 1
+> +
+> +  wake-gpios:
+> +    description: GPIO used as WAKE# output signal
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  dma-coherent: true
+> +
+> +  num-lanes:
+> +    default: 2
+
+Isn't this deducible from the compatible? Do you have have different
+PCIe controllers with different lanes?
+
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - reset-gpios
+> +  - power-domains
+> +
+> +additionalProperties: false
 
 Best regards,
 Krzysztof
