@@ -1,129 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-84425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37118CA6F3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 10:39:21 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 794C1CA715B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 11:08:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F31F538A7551
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:28:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 55A3A327A732
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6FB342CBD;
-	Fri,  5 Dec 2025 07:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47D2A33AD99;
+	Fri,  5 Dec 2025 08:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W4B1+xMg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IC8oLUOB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E83339B4E;
-	Fri,  5 Dec 2025 07:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9148733030A;
+	Fri,  5 Dec 2025 08:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764921523; cv=none; b=KqDqnhJkrzUZulvbQML5v86HZP4yi80anxAWeVNtu3wkApWrEOUYTjpDnD4IAgMnXZD50q8aPrUffvb4RiI+/D1C9eDTUgTSjs4b/CSZ+DGlh0juKC/6yRD2JOaxPlTGEZZVMd6IyRYMEos6DKDyNk634z84BkWChiNQrKoUY7M=
+	t=1764923602; cv=none; b=rENUGAK/hcTF1wq2oZSAK33XbY/Jt4pcI6UhiqUWkQMLlEiDj+J14oj+7HoCYRmAlsf2HroIM16/1b1UPZp01kHujMqHWCYV+NxrWAmbRV1fCDuijXRky+b8nkbOHR8KFakld+RWBrBg8qUcei35Fj03No7QJAnilW26C1VMGIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764921523; c=relaxed/simple;
-	bh=B0CzrYRc+ZuUPPQfTJv6AcZHjlbfKuKmGgGvDdmGbrg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eRayY5Z5O0Vw6GsfVxQ41QmLJEmNuWpQ2zhpkSKboI8cYndl3aPcEnWtCiCXV38+47k+1vQT5sJqqDb0Qpv0E0rSi3acCMZAfyPQy2zs/eTcM+NqqWIwOCCIJBbNRFMegZLo3HTBpWFAqGIskgLTeVeOUUeYIPcLnnF9eW1sHf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W4B1+xMg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491B9C4CEF1;
-	Fri,  5 Dec 2025 07:58:38 +0000 (UTC)
+	s=arc-20240116; t=1764923602; c=relaxed/simple;
+	bh=6FLIs79yqeUX+yeui13nYw2jSCWzh1jd9U8YZ/owWi4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cYRfZkOAbr7DGTIHv5FdipohEu2jPw5j9EUun5JvQeZt6SzFBqcLocFpdPzDt5HVHiYW907vix3drEPvXrbGGdqC1FqtgJy/VXOMsuxengcJwJdXqu5syodezD+6YEyp/V9q7UXqrh91AaSXb0gAiYzkfzERRibd+d2ADzKUP00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IC8oLUOB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78EBC4CEF1;
+	Fri,  5 Dec 2025 08:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764921521;
-	bh=B0CzrYRc+ZuUPPQfTJv6AcZHjlbfKuKmGgGvDdmGbrg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=W4B1+xMgLwwh230SEZBF17iuDQ5kMdLMNAjBic9MzXDOBrTwGhaRXCvhffty7hfmQ
-	 CEEki1yWQZWqNaJBVtgLTMqf9M3ioSA8zrMDtNn0H0xhkuANBR682dxIwhIpW+khQs
-	 X5KJkhbtvJG2bfHnTkWbvQjO5TGBIgHDXTPOTo30gLO98pdnrG2W1K5iKQhmUaWPDE
-	 S6E/kL5xnooeQDFmSHsvwdXXpQudybF92XGxlFkv7EM5bB9270DhwTYEQZWeij1mqW
-	 EnYzTH1D15re8CwOs9rO41rJnLpthegxw89cCPSrolStlBOVhYFyLPPUYT6j7B/3Fz
-	 wc85dBBGHZCzQ==
-Message-ID: <4785aa56-2911-4a85-bcdd-a581b8bc9c9c@kernel.org>
-Date: Fri, 5 Dec 2025 08:58:36 +0100
+	s=k20201202; t=1764923601;
+	bh=6FLIs79yqeUX+yeui13nYw2jSCWzh1jd9U8YZ/owWi4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IC8oLUOBy+kGiJRb5BvZsJ9aAcoM3x/OHWhf56X2GAXlFZZa2CxM6+Bv5Y2Zi0095
+	 up64MIePMwSzz4DSzq7XkxThvgJYm2PJCnH0Ghppz8PUY0TTGA8aGKZYGA57hiNahb
+	 Uhggo6IeBLIB7xkVa0E/6EqpQbe6BAyIZ/LpU9K1KgHz1O681DYkahlBAvTeM79HcY
+	 eqbqMPg3amofx9FOB2jzyLlZJx9dUifWsLfZE8ZX6HKSTkrPds2WeNFlKqpghvLteV
+	 7oi1jEepcF3wwUNbaIqSSEmA6nou7bNeQRUwByv/XiVPGm3EuueMXPAJEP/cMbnS6j
+	 BRk1zDVWrHH/g==
+Date: Fri, 5 Dec 2025 09:33:19 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, quic_bkumar@quicinc.com, ekansh.gupta@oss.qualcomm.com, 
+	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, jingyi.wang@oss.qualcomm.com, 
+	aiqun.yu@oss.qualcomm.com, ktadakam@qti.qualcomm.com
+Subject: Re: [PATCH v5 1/4] dt-bindings: misc: qcom,fastrpc: Add compatible
+ for Kaanapali
+Message-ID: <20251205-silky-uncovered-panda-82b0bc@quoll>
+References: <20251202060628.1869967-1-kumari.pallavi@oss.qualcomm.com>
+ <20251202060628.1869967-2-kumari.pallavi@oss.qualcomm.com>
+ <191e6be9-5e61-43b7-a75b-e2d211bc6630@kernel.org>
+ <ab942177-a8a7-4047-9b6a-634aa3d15b21@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] arm64: defconfig: enable clocks, interconnect and
- pinctrl for Qualcomm Kaanapali
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20251204-knp-dts-v2-0-596d8398c6d3@oss.qualcomm.com>
- <20251204-knp-dts-v2-2-596d8398c6d3@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251204-knp-dts-v2-2-596d8398c6d3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ab942177-a8a7-4047-9b6a-634aa3d15b21@oss.qualcomm.com>
 
-On 05/12/2025 07:31, Jingyi Wang wrote:
-> Enable necessary drivers for booting Qualcomm Kaanapali QRD and MTP
-> boards. The serial engine must be properly setup before kernel reach
-> "init", so UART driver and its dependencies needs to be built in, enable
-> its dependency GCC, interconnect and pinctrl as built-in meanwhile enable
-> TCSRCC as module.
-> 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  arch/arm64/configs/defconfig | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+On Tue, Dec 02, 2025 at 03:31:17PM +0530, Kumari Pallavi wrote:
+> > I asked last time to drop the unnecessary items. Wasn't here before.
+> >=20
+>=20
+> I=E2=80=99ll update the schema in the next patch series to remove the unn=
+ecessary
+> items. The revised version will look like this:
+>=20
+> properties:
+>   compatible:
+>     oneOf:
+>       - items:
+>           - enum:
+>               - qcom,kaanapali-fastrpc
+>           - const: qcom,fastrpc
+>       - const: qcom,fastrpc
+>=20
+>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Yes.
 
 Best regards,
 Krzysztof
+
 
