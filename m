@@ -1,157 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-84469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 782B8CA7AC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 14:01:52 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9701CA8040
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 15:47:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 75D1032163B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 12:58:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B03C23331751
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 13:08:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C39EF313294;
-	Fri,  5 Dec 2025 12:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A432330308;
+	Fri,  5 Dec 2025 12:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JS5waypy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mnC9gLEw";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MudkPAM8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3EB331210;
-	Fri,  5 Dec 2025 12:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331192EC081
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Dec 2025 12:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764938902; cv=none; b=WYyFcTQrlaWLDBqBWbuIAainzDGd+31zGZI8sG7g6yfrmEp4AoiYFkIH1thEghTYc81mKStQJyJLpz7OX01mUruUQWVM/rQyWlMZvUCB3i6LCM0FEFOB+aCANCgLBPhGnBr3PLQJQgDLKoNDnsv363EooyKeACgrcHTU3K0VAyY=
+	t=1764939544; cv=none; b=AcXCuFk69U+7GHbtyYesGlA/uKDgPhHog9YB1UKFs0ab9nP/26pxpWoPsXvGubGegXCxwatYOoO4M4chGUUjFMA+2iAz285vIHmDSn3LGhUGjMFEQ/4HgeueUnTDJfKpslrus+i+m9ASuLoQoRf2jhPxD3udRzI/jd6zZp6QoQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764938902; c=relaxed/simple;
-	bh=Ai0XL/rEqdg4fKzx1hPzCDfZgmgmHN7GcRLB+pKSxyc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mcHXhZpJbuukIPPLbgfsqdW9X8x2wO/4Gy5BMdtrAINnAO1Ma4x1nMfbkgvUqiYrGxoYWWcb5sjCBfXfZ8F5kl0u/aRkjX60LUdiUBMKUqWeuUkce6Wl6+gGaraPHx2zejDrZEdFAEhv6huM/pIIrm0bz4TvfrxSDjVq3Wn4zn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JS5waypy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A692C4CEF1;
-	Fri,  5 Dec 2025 12:48:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764938898;
-	bh=Ai0XL/rEqdg4fKzx1hPzCDfZgmgmHN7GcRLB+pKSxyc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=JS5waypy9prkYwOZQf/O3E7RqqEyPgExfLlXyX1vf4F6EIYhFaH2lK2ktrR+/b118
-	 aJfQLCtvZl4Ul8MjEpXNC+Dn+n/o2PqqKvxUHCHPPLIJW1dV1gWBE/3EeX+WfIBLcZ
-	 t3JJwjbSbMOlGYV+T3T8jP/6WtgLj72JaSrgUIKoxbpdAr0WaKH3+2LU6c08wckSd/
-	 f/f9eFLftvXE1jRCmRrvJMvW0yB9hwVZO93sp+LwsbtqH8FoAVXHRqWhamv6KPFiwc
-	 0axRjfXP9txEMrniiuq1b0Xde/HDM7ILWQ6GHTI6aqDi3gpx0RqoItdco0BskSuFPA
-	 QBcfOacuhyR4A==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Fri, 05 Dec 2025 13:47:29 +0100
-Subject: [PATCH 10/10] arm64: dts: qcom: lemans-ride-common: Fix up WCN
- power grid
+	s=arc-20240116; t=1764939544; c=relaxed/simple;
+	bh=3nhPu7uGGAKvjMDa6wZEceEP4NWaf5SOIzC+ISjssto=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PeK6APJ5X7fu/Iov6GCghXjqI2e8IrOpKFSZ7k1/Oao6zKusFNcsEhkfGveAMEW1f09R4SB1o/5YQTIhD2EiDJ9aHNU5M1Tv8gmKT+THjod7TEg0+a8Y6k8u9YNI8o0kLaBEs1zPnaUnv3/n2bbr+NRMUKLVtSJmRi7BQSmCbP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mnC9gLEw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MudkPAM8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B5AOaI1067787
+	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Dec 2025 12:58:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wr0bffDeE2XKS7jveHkF95o8NukW1ng51i85fFXfXtY=; b=mnC9gLEwEBFJrwti
+	SDlp5lPdk4XIoclOwT6bQqPsLchAJQwMffB5mdnFiUYU3I2ISrhynwILl7iuYWiZ
+	fPm99PYZaVMgqn+oVk7mdN2geMf4PAwYr57bHsNSWKoLumGBU5oTQwnO5wMA1tG5
+	2W01Ot2OfK1qFPmzaKJN55M2831PAdYsgFwIeMcT42uUPswVNf7cFFydeC9hPFba
+	8zfwrhT9rSLEfuXPEPjPIueqL2HZsCxLOwWh2nZhrP+u8G7HteBzB+ONYEHk256d
+	F4hZYrOh3BSwvkdD4isnjGAA6If2zNl6+YUNir1QGKXkmp/1it+eCBOfxZ/NCjq7
+	Q4uk0g==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4auwm4gcm2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 12:58:59 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-45396d397e0so81700b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 04:58:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1764939538; x=1765544338; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wr0bffDeE2XKS7jveHkF95o8NukW1ng51i85fFXfXtY=;
+        b=MudkPAM8qDtkavYPFiyF/560CGwwEq5FNsM4uHtCH72+ZPe1kBggBpuZep9dKfx/an
+         JlAcg5iSAHg9woyzkL3+tolZ8i2UuRv8MAlrJe4TFg8EtzrhvWGoe2qOi8+SEoslDtIr
+         EmcAHz8XYtPiZ8dU/8+EmVALLlM5aPnpkaAYM/T7qCjlcGh67RwkV+smfLNWel+IaGsw
+         8x73Os6voww/hHJ6i4ZS7OLV2/ayacUS7RE5LJsa4gL1w56AzpH3ETJhwWfudMqaAtjr
+         UohzhNCHwxs5WtM9jgsI2xbKLY86nk5mj+Wyfl2pVgWQayS6DeqL0juA4lboNzwOVbMZ
+         wxMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764939538; x=1765544338;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wr0bffDeE2XKS7jveHkF95o8NukW1ng51i85fFXfXtY=;
+        b=wuks98KHao1LlwhmRo5zHJ7ENknlKxim3oCq9CQRKWgjRMq6Y1aHjABoP+QRhGEhh5
+         Iq+cSZw8olSwgeNmUD2W1DQnzO5aNwrpIXLReBPlqXJG91+Ey4q/CYI5UX7vpV6tMxGv
+         e5XypweIOLA62L2lt7J/F1yBZH6/HlMIvM4UQj5k21VX0wCMJT6JxiPOIxfK029PlpD/
+         LXmH91ZQA+q8IldPhHBsq4QZcenLNLVB5QMSSvd2LCA4GIkJUfJymEWxliTAZt4sP02c
+         engv1T1QKXOn8KUe53McBLxhcNcmHDs2RVyq2jL7WIHE+yK6SEPpfyEjJLS/3qDn5eTX
+         ydwA==
+X-Forwarded-Encrypted: i=1; AJvYcCXOJAp4Qf1NahcX7se+dN6umJ989x4Y7+f4uueZ7yr/OYIlNdKBQDY700d2zLL1bb1Tpj76LiDYdVDqKZXc@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH5Iy/H+v9wafSdKpyFA7b3/x2Faoc0EIsT8RX1We0Zv/r/5fg
+	yn+noJJBjFFaex0/1dnJ9XCx0lEqOj9wAfYKLV7TgXhnNUjFXfF+NgZ903M4sxVetbNdlVmjxMS
+	oZhCuMxmv2PPGnKj52VoSIwSUfPEpPJPh9CLVo7kK3LzVxhvWZdqWWQpn8b5D7w+urOJYdRxH9T
+	3quAfpZfwoWqSlKpgijva2IDwaAEOGBj6Q6va1g+YE88imOWs3acgTrQ==
+X-Gm-Gg: ASbGnct29ioc6Bd3JD5eWqZCSQmlfIjm3emuDXyHXQLkrAePB8Kd0GduI4Gkm40ADQ7
+	QS5lDs3socpuSvfrW4zpJ2ExO3npCZoMkvouYyagjwRGONETYLLlPIupUKyysGODPMosBuOBscM
+	IAdfFKyA2XhPAhg3p9n9fNl/XEWkRJ/T7AGvFY4MCmupV+7V7aLzlPtZqMDmWatpTVl5zP
+X-Received: by 2002:a05:6808:1509:b0:441:cf96:934f with SMTP id 5614622812f47-4536e56bd71mr4967746b6e.47.1764939538550;
+        Fri, 05 Dec 2025 04:58:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFobXPGDIAhxNEOvgOxaoua4CnGH+RHwN6g+zzfSEptfxMbnlM28+uGrHvQR3k+s8mHzqp7iBEBxHuR53atTFM=
+X-Received: by 2002:a05:6808:1509:b0:441:cf96:934f with SMTP id
+ 5614622812f47-4536e56bd71mr4967727b6e.47.1764939538159; Fri, 05 Dec 2025
+ 04:58:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251205-topic-wcn6855_pmu_dtbdings-v1-10-165611f687c8@oss.qualcomm.com>
-References: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
-In-Reply-To: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
- Rocky Liao <quic_rjliao@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, 
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764938851; l=2322;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=3dp5C5HMXp/1Z+9Y4SVZNMQFZXiUBgxXrgev7YSQma0=;
- b=kpS9agG2WNK3VYAqHsavDbymkBGzvMGZGB37LEthnF+VOKmBZucGJUDnf3gYAxernEd6790G5
- 7X5Nbl5Q/anBlDdWAh4VA64Kz3erE2PtO08O9AL85n2cK7LuiY4GaVH
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+References: <20251203-firmware_managed_ep-v1-0-295977600fa5@oss.qualcomm.com>
+ <20251203-firmware_managed_ep-v1-1-295977600fa5@oss.qualcomm.com> <20251205-majestic-guillemot-of-criticism-80c18b@quoll>
+In-Reply-To: <20251205-majestic-guillemot-of-criticism-80c18b@quoll>
+From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+Date: Fri, 5 Dec 2025 18:28:47 +0530
+X-Gm-Features: AWmQ_bl-6LGnAWWBpQGplyvtMYtPJabWL3Qzt4TbuX3TbwJUmWa_VxNUCnCChDw
+Message-ID: <CAMyL0qO2FPBe7N6Q=hW-ymeiGDhABsU+VCj25jzcoQRhBoWbDA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p: Document
+ firmware managed PCIe endpoint
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com,
+        konrad.dybcio@oss.qualcomm.com, Rama Krishna <quic_ramkri@quicinc.com>,
+        Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>,
+        Nitesh Gupta <quic_nitegupt@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=T92BjvKQ c=1 sm=1 tr=0 ts=6932d713 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=Y2liBin7rq7SVpFgswsA:9 a=QEXdDO2ut3YA:10
+ a=efpaJB4zofY2dbm2aIRb:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-GUID: I-_b5OAstGuxjbl-pSAJ6fZN9McXS_mt
+X-Proofpoint-ORIG-GUID: I-_b5OAstGuxjbl-pSAJ6fZN9McXS_mt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA1MDA5MiBTYWx0ZWRfXydJw06m/7oLH
+ Lte27g/ylBIlfg5YWlF23fSYFuhLn6E/7zDiFP4p8r3grlySjB3/nPlwCHBj1D7SuscnBesF4JA
+ /j4sDDhH7O9QFuNudIIiM7aydTIqEQQSQoSPTpJm8wvSZCe2f5ml2juTwVf0ejY+hIYHINTmFip
+ wDPOQm7LeRN+swMoAAg5O6bFetOAdL4lZfRP3opfr5TnTSZOmmM27wu3kv1aivpLnm/xo6PGkGO
+ FFe33cwEyr3tuYlecmAqHafjba1ZlxKekj2RthYk0ICyrJnI2snoToQlL716rTIq/Tep01tUZB+
+ 3ACTaWTXIZa2JHuRE+Ngh1Dv58dPn61ZRatyx1P466oxFRiQpFejZXAlftsu/yJJkDSs4fsDPah
+ S3eC7oOFMBA6Py+woH//xHqeAD9u/g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-05_04,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512050092
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Fri, Dec 5, 2025 at 2:40=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.org=
+> wrote:
+>
+> On Wed, Dec 03, 2025 at 06:56:47PM +0530, Mrinmay Sarkar wrote:
+> > Document the required configuration to enable the PCIe Endpoint control=
+ler
+> > on SA8255p which is managed by firmware using power-domain based handli=
+ng.
+> >
+> > Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> > ---
+> >  .../bindings/pci/qcom,pcie-ep-sa8255p.yaml         | 114 +++++++++++++=
+++++++++
+>
+> Filename must match the compatible. In your case, the filename is
+> correct but you wanted old format for the compatible (so compatible
+> should be rewritten to match filename).
 
-Make the dt checker happy by filling out the required properties in
-line with the schematics.
+Thanks Krzysztof for the review.
+I will fix the compatible string to match the filename (`qcom,pcie-ep-sa825=
+5p`).
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi | 32 ++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+>
+> >  1 file changed, 114 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p=
+.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..970f65d46c8e2fa4c44665c=
+b7a346dea1dc9e06a
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+> > @@ -0,0 +1,114 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pci/qcom,pcie-ep-sa8255p.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm firmware managed PCIe Endpoint Controller
+> > +
+> > +description:
+> > +  Qualcomm SA8255p SoC PCIe endpoint controller is based on the Synops=
+ys
+> > +  DesignWare PCIe IP which is managed by firmware.
+> > +
+> > +maintainers:
+> > +  - Manivannan Sadhasivam <mani@kernel.org>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,sa8255p-pcie-ep
+> > +
+> > +  reg:
+> > +    minItems: 6
+>
+> Why is this flexible?
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-index c69aa2f41ce2..069d58e6b6c5 100644
---- a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-@@ -79,6 +79,18 @@ vreg_3p0: vreg-3p0-regulator {
- 		vin-supply = <&vreg_12p0>;
- 	};
- 
-+	vreg_3p3: vreg-3p3-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_3P3";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
- 	vreg_conn_1p8: vreg_conn_1p8 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_conn_1p8";
-@@ -95,6 +107,22 @@ vreg_conn_pa: vreg_conn_pa {
- 		gpio = <&pmm8654au_1_gpios 6 GPIO_ACTIVE_HIGH>;
- 	};
- 
-+	/*
-+	 * TODO: These two regulators are actually part of the removable M.2
-+	 * card and not the mainboard. Need to describe this differently.
-+	 * Functionally it works correctly, because all we need to do is to
-+	 * turn on the actual 3.3V supply above.
-+	 */
-+	vreg_wcn_0p95: vreg-wcn-0p95-regulator {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_WCN_0P95";
-+		regulator-min-microvolt = <950000>;
-+		regulator-max-microvolt = <950000>;
-+
-+		vin-supply = <&vreg_3p3>;
-+	};
-+
- 	wcn6855-pmu {
- 		compatible = "qcom,wcn6855-pmu";
- 
-@@ -104,6 +132,8 @@ wcn6855-pmu {
- 		vddio-supply = <&vreg_conn_pa>;
- 		vddaon-supply = <&vreg_l2c>;
- 		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddpmumx-supply = <&vreg_wcn_0p95>;
-+		vddpmucx-supply = <&vreg_wcn_0p95>;
- 		vddrfa0p95-supply = <&vreg_l2c>;
- 		vddrfa1p3-supply = <&vreg_l6e>;
- 		vddrfa1p9-supply = <&vreg_s5a>;
-@@ -974,6 +1004,8 @@ bluetooth {
- 		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
- 		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
- 		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
- 	};
- };
- 
+The reason for `minItems: 6` is that the DMA register space can be
+skipped if DMA is not used.
 
--- 
-2.52.0
+>
+> > +    items:
+> > +      - description: Qualcomm-specific PARF configuration registers
+> > +      - description: DesignWare PCIe registers
+> > +      - description: External local bus interface registers
+> > +      - description: Address Translation Unit (ATU) registers
+> > +      - description: Memory region used to map remote RC address space
+> > +      - description: BAR memory region
+> > +      - description: DMA register space
+> > +
+> > +  reg-names:
+> > +    minItems: 6
+> > +    items:
+> > +      - const: parf
+> > +      - const: dbi
+> > +      - const: elbi
+> > +      - const: atu
+> > +      - const: addr_space
+> > +      - const: mmio
+> > +      - const: dma
+> > +
+> > +  interrupts:
+> > +    minItems: 2
+>
+> And this/
 
+Similarly, DMA interrupt can be skipped if DMA is not used.
+
+>
+> > +    items:
+> > +      - description: PCIe Global interrupt
+> > +      - description: PCIe Doorbell interrupt
+> > +      - description: DMA interrupt
+> > +
+> > +  interrupt-names:
+> > +    minItems: 2
+> > +    items:
+> > +      - const: global
+> > +      - const: doorbell
+> > +      - const: dma
+> > +
+> > +  iommus:
+> > +    maxItems: 1
+> > +
+> > +  reset-gpios:
+> > +    description: GPIO used as PERST# input signal
+> > +    maxItems: 1
+> > +
+> > +  wake-gpios:
+> > +    description: GPIO used as WAKE# output signal
+> > +    maxItems: 1
+> > +
+> > +  power-domains:
+> > +    maxItems: 1
+> > +
+> > +  dma-coherent: true
+> > +
+> > +  num-lanes:
+> > +    default: 2
+>
+> Isn't this deducible from the compatible? Do you have have different
+> PCIe controllers with different lanes?
+
+SA8255p has 2 pcie controllers(pcie0 and pcie1).
+pcie0 supports 2 lanes, and pcie1 supports 4 lanes.
+
+-Mrinmay
+>
+>
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reg-names
+> > +  - interrupts
+> > +  - interrupt-names
+> > +  - reset-gpios
+> > +  - power-domains
+> > +
+> > +additionalProperties: false
+>
+> Best regards,
+> Krzysztof
+>
 
