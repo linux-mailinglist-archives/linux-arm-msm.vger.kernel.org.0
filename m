@@ -1,198 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-84521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C761DCA9687
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 22:41:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F027CA97C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 23:23:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 99F1D3053B17
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 21:39:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5C488322EB59
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 22:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E12CF2620E4;
-	Fri,  5 Dec 2025 21:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 536B72BE64F;
+	Fri,  5 Dec 2025 22:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvBoFEjv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMH97vsg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33DF23D7E3;
-	Fri,  5 Dec 2025 21:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580E2D3A75;
+	Fri,  5 Dec 2025 22:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764970763; cv=none; b=i8ofIdLBxRbKBOGiOn4Kig6g8/MNRFROT6nroVpacklRj655YGgHyfJMjby0iRKIkops2pvHPTSFtAW+7J0zVYVWjDoDJ6IHjjrMYT223nefONEG6RBKHZWiY/TBy3YykBl3aJ3u8rD98Kln6heyg+RgHP7VCRJN3upHNxppu18=
+	t=1764972698; cv=none; b=Pb07Xc0ptCKLWwf6B/uvoi8bHF5sccb+yZRLQ8jC19qqbqSyBl8SgRmtFFiaZkk2NnmFy+1oHkz8uBUEmXwEPUHytJR/6XbjAuE+Fa7a+ECNnDwupzEqzMihdjRyNt4l9GiXJFyQkAfPuTDac/hBrQdze4H8ZRqId5lm/jaRdkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764970763; c=relaxed/simple;
-	bh=QYHnT+hnZKyl/RV/TDGgSpQIEW2zxWv5r5EZe45DxdE=;
+	s=arc-20240116; t=1764972698; c=relaxed/simple;
+	bh=lHyqbDdgdcNYjY6N4964Cgh5lPOaTiSxWYqRzyPiSWA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uurTUmkMFx4ZlYJhyipnjjNjk+++WMrbvLFjdKit28ZsGTNkFpD8YZA5uVR4pJOFhTqlqP6v3W4SmUaSWq5vd2sUkyKEcTRrgBiuHz8zIyE+NbTFu4FmbeYsjTj4CLSrAuvsO63/QYYMr8+NdSdoZsKDxmJtI7Er2p7CzelIFv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvBoFEjv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F9CC4CEF1;
-	Fri,  5 Dec 2025 21:39:22 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZWpgocycTCmgaqfqS2cfoKQCKVD+F++6BvIFmDrD0QPiK0voqGZdPZVuIYzAKYfHZrepGR8/3aefzz3lqnTnjPkvI4L02DwR2G5AlDK5l8ihufTB1YhZ4UEaxztsfYD7Ts6GKv93JZ8WNRFhBPEmT8NqDBlKNlOnPNvbwZETb+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMH97vsg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11FEC4CEF1;
+	Fri,  5 Dec 2025 22:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764970763;
-	bh=QYHnT+hnZKyl/RV/TDGgSpQIEW2zxWv5r5EZe45DxdE=;
+	s=k20201202; t=1764972697;
+	bh=lHyqbDdgdcNYjY6N4964Cgh5lPOaTiSxWYqRzyPiSWA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nvBoFEjvGBfTjNvTZj23WTqF0/SruWk/kXq79xnqhF/oD7hHuC8o8K0Rm0siRosDN
-	 c4NQtqddXUcJfAfeVbsBT/btMqAcMgZBUHQfs5IC4d9/agnWp+k1UXU1M8aQIeHVf/
-	 sCViRAuZW3ajZJwl/J+gXV+DbG46SZ2CgyCHRU0WczfdtjGDaX2i3wYkvQU/1YVup+
-	 r4XR94mS8GTcvaH/p8Rbg0WBwDuCf/7RvoYiVCbZy/BIL8c+Q8TtSfMSBUc7ENEBo0
-	 sIS4GsbpLTmA8vvj/pkZI3iLdNecoH0E+gU6pSZViuXwPC9DmRseIP8RuhQDnm8sm7
-	 o7VBATHBE4+bw==
-Date: Fri, 5 Dec 2025 15:45:41 -0600
+	b=MMH97vsgdDkWsquQuik3Rb98UOubOHcaWCC1/9ysVMt7kU7dKbWifVt4diOgYIxhI
+	 jEPmm4HahM0lbmXFzB2+PUCWZzu17T34yOkk6gwbhG/O9Di0/g8Fn3uHcLNYQb//qv
+	 BHkw1mIGu6v5H45+ktrigfDbjzuXATl3n5MP70D8dt+wPSKTtBplawAVX+cJcBRwuE
+	 mKpX4+qYL9CFdLjNqXGGBY1Cv5QUSQAWn3XX0GC+Sx/wXJmumrsCEMWgAGdE8GJh55
+	 HSfyJPTwEOGrXXqGsPbBbNzt05pK4We2DWPFS2V3u1vrPZvrjRUbtM/9E60GcZz1Tr
+	 P3hidVSPV19eg==
+Date: Fri, 5 Dec 2025 16:17:56 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
-	Bryan O'Donoghue <bod@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
 	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Manivannan Sadhasivam <mani@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v8 00/14] Peripheral Image Loader support for Qualcomm
- SoCs running Linux host at EL2
-Message-ID: <xrsqapdjfl7ghfmg56f7pxubd7ldvj7jzvcx5yzo4eanpope3b@hbgwwbt4v2fq>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 11/14] firmware: qcom_scm: Add
+ qcom_scm_pas_get_rsc_table() to get resource table
+Message-ID: <sysdgcspvxhytyudknnyj4hu6lc47we5ijkrsssi6askysqyo2@bdzl5cvzc4be>
 References: <20251121-kvm_rproc_v8-v8-0-8e8e9fb0eca0@oss.qualcomm.com>
- <0156c327-b867-481e-af24-679f037bfa56@linaro.org>
- <Ux4KioDAyhqgZYleT-eeeFKzuT_qadCIpP3RgyB40apZPX4I9_JwcfY9mebop4gmFcyh4LPw0KQvFzL4zzysJQ==@protonmail.internalid>
- <20251121113751.tnqw5abm5sd2rgr7@hu-mojha-hyd.qualcomm.com>
- <9dfe5343-824d-42c2-aab8-8389602601e9@kernel.org>
- <20251202083650.luk2jpcquq2pcf2r@hu-mojha-hyd.qualcomm.com>
- <623225c2-166a-49a1-9856-d02ed55f1e47@oss.qualcomm.com>
- <bds552pvggsf6jgfyghyigp2fb6zb6hucwqirwye5puctnrhdi@tqw4b2nc3mkg>
- <64dbe824-a94c-4394-8cbe-ebdb7a3c42fd@oss.qualcomm.com>
+ <20251121-kvm_rproc_v8-v8-11-8e8e9fb0eca0@oss.qualcomm.com>
+ <86f3cb9f-e42d-40f9-9103-1a4953c66c71@oss.qualcomm.com>
+ <20251124152538.wt3kzztqmpr76hsx@hu-mojha-hyd.qualcomm.com>
+ <4376b7cf-7088-412b-8596-bdec5bdc273d@oss.qualcomm.com>
+ <20251204122806.s7lnqffgcrd7usem@hu-mojha-hyd.qualcomm.com>
+ <e78feaff-0b48-42b6-a824-0f102a6ac9cc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <64dbe824-a94c-4394-8cbe-ebdb7a3c42fd@oss.qualcomm.com>
+In-Reply-To: <e78feaff-0b48-42b6-a824-0f102a6ac9cc@oss.qualcomm.com>
 
-On Wed, Dec 03, 2025 at 10:48:14AM +0530, Vikash Garodia wrote:
+On Fri, Dec 05, 2025 at 02:15:00PM +0100, Konrad Dybcio wrote:
+> On 12/4/25 1:28 PM, Mukesh Ojha wrote:
+> > On Wed, Dec 03, 2025 at 01:36:32PM +0100, Konrad Dybcio wrote:
+> >> On 11/24/25 4:25 PM, Mukesh Ojha wrote:
+> >>> On Mon, Nov 24, 2025 at 12:48:31PM +0100, Konrad Dybcio wrote:
+> >>>> On 11/21/25 12:01 PM, Mukesh Ojha wrote:
+> >>>>> Qualcomm remote processor may rely on Static and Dynamic resources for
+> >>>>> it to be functional. Static resources are fixed like for example,
+> >>>>> memory-mapped addresses required by the subsystem and dynamic
+> >>>>> resources, such as shared memory in DDR etc., are determined at
+> >>>>> runtime during the boot process.
+> >>>>>
+> >>>>> For most of the Qualcomm SoCs, when run with Gunyah or older QHEE
+> >>>>> hypervisor, all the resources whether it is static or dynamic, is
+> >>>>> managed by the hypervisor. Dynamic resources if it is present for a
+> >>>>> remote processor will always be coming from secure world via SMC call
+> >>>>> while static resources may be present in remote processor firmware
+> >>>>> binary or it may be coming qcom_scm_pas_get_rsc_table() SMC call along
+> >>>>> with dynamic resources.
 > 
-> On 12/3/2025 2:54 AM, Bjorn Andersson wrote:
-> > On Tue, Dec 02, 2025 at 03:43:17PM +0530, Vikash Garodia wrote:
-> > > 
-> > > On 12/2/2025 2:06 PM, Mukesh Ojha wrote:
-> > > > On Thu, Nov 27, 2025 at 10:25:23AM +0000, Bryan O'Donoghue wrote:
-> > > > > On 21/11/2025 11:37, Mukesh Ojha wrote:
-> > > > > > > Sorry.
-> > > > > > > 
-> > > > > > > Did we actually come up with a cogent reason to omit the video firmware
-> > > > > > > loading here ?
-> > > > > > > 
-> > > > > > > AFAIU it is required for Lemans and Glymur - leaving it out is blocking
-> > > > > > > getting video stuff done and storing up trouble.
-> > > > > > > 
-> > > > > > > What exactly is the blockage - is it something you want help with ?
-> > > > > > I replied to you here[1] and given my reason..till something concluded on
-> > > > > > "multi-cell IOMMU[2]", I can not add video and block what is working
-> > > > > > already.
-> > > > > > 
-> > > > > > [1]
-> > > > > > https://lore.kernel.org/lkml/20251105081421.f6j7ks5bd4dfgr67@hu-mojha-
-> > > > > > hyd.qualcomm.com/
-> > > > > 
-> > > > > Why though ?
-> > > > > 
-> > > > > You are mixing together the issue of multiple SIDs and the original loading
-> > > > > of firmware which could easily reuse the venus method of
-> > > > > 
-> > > > > &iris {
-> > > > > 	video-firmware {
-> > > > > 		iommus = <&apss_smmu hex>;
-> > > > > 	};
-> > > > > };
-> > > > 
-> > > > I completely understand what you are saying, and it would be very easy
-> > > > for me to do that if it gets accepted. However, I doubt that the people
-> > > > who raised this concern would agree with the approach.
-> > > > 
-> > > > I’m not sure if the video team would like to pursue pixel/non-pixel/firmware context
-> > > > banks separately. I’ll leave this to @Vikas to answer.
-> > > 
-> > > Not exactly as a separate sub-node, but i do like the idea of introducing a
-> > > simple iommu property, something like this, which Stephan proposed earlier
-> > > in the discussion [1]
-> > > 
-> > > firmware-iommus = <&apps_smmu ...>;
-> > > 
-> > > I understand that we are doing the iommu-map thing, but a property
-> > > exclusively for firmware like above look much simpler to me.
-> > > 
+> [...]
+> 
+> > Just to avoid iteration, are you suggesting that we can keep this
+> > guesswork as part of __qcom_scm_pas_get_rsc_table() and start with
+> > something smaller than SZ_16K?
 > > 
-> > "We know we need to find a generic solution to this very problem, but
-> > while we work on that let's add this quick hack to the ABI"?
+> > I kind of agree with the first part, but SZ_16K was the recommended size
+> > from the firmware for Lemans to start with, in order to pass the SMC
+> > successfully on the first try. However, the same size was failing for
+> > Glymur, and it required a second attempt with the correct size.
 > 
-> I would not call that as hack, rather a simpler solution instead of packing
-> everything into the generic iommu-map.
-> 
-
-The solution might not be a hack, throwing it in there quickly as a
-one-off is a hack.
-
-> "firmware-iommus" is much more readable to interpret something running in
-> el2 mode, than digging into function ids inside iommu-map and then matching
-> it up with specific SIDs to confirm.
+> It depends on the payload, which you're probably much more familiar with.
+> If 95% of them will be closer to e.g. 1K in size, it perhaps makes sense
+> to use up the additional few dozen cycles on our amazingly fast CPUs and
+> retry as necessary, instead of blindly reserving a whole bunch of memory.
 > 
 
-Your argument is sensible, I would need to see (or write) the code
-you're referring to, in order to be able to form an opinion. But having
-two separate ways to express the "same" thing deserves more
-consideration.
+Those "few dozen cycles", is tasked with sending messages to RPMh for
+voting and unvoting the buses, then tzmem will hopefully hit the
+genpool, twice, and then radix updates, and then more genpool updated
+and more radix tree work. And then of course there's the one context
+switch to secure world.
 
-Looking at how the SMMU configuration will look in the next generation
-might even speak in favor of what you're suggesting. Let's sync up after
-Plumbers.
+If we don't have space in the genpool, we're going to grow
+dma_alloc_coherent, extend the genpool, call secure world to register
+the new tzmem. And then for all those cases where the allocation wasn't
+enough, the retry (with updated size) will not fit in the
+PAGE_ALIGN(size) genpool that was created, so we'll do this twice.
+
+Fortunately the tzmem growing should only happen on first remoteproc
+boot, but I think it's a bit optimistic to say "a few dozen"...
+
+
+The drawback with making it 16KB is that we're not going to test that
+error path very often. But the more idiomatic form of first calling with
+a size of 0, then allocate and pass the proper size, seems a bit
+wasteful to me as well - in particular if we do it anew each subsystem
+boot.
+
+PS. 16KB is 0.03% of the ADSP carveout (or 3% of the ADSP DeviceTree
+carveout...).
 
 Regards,
 Bjorn
 
-> > > Dmitry/ Bryan/ Krzysztof if you are good with this, we can bring back video
-> > > in this series. Please share your thoughts on this.
-> > > 
-> > 
-> > Please let's keep these concerns separate, so that we don't hold this
-> > series up further. Even if we choose to go by the subnode approach, in
-> > the same time frame, it's better to discuss it separately.
-> > 
-> 
-> ACK.
-> 
-> > Regards,
-> > Bjorn
-> > 
-> > > Regards,
-> > > Vikash
-> > > 
-> > > [1] https://lore.kernel.org/lkml/aKooCFoV3ZYwOMRx@linaro.org/
-> > > 
-> > > > 
-> > > > Also, I do not want the video PIL discussion to be part of this series, as it could
-> > > > unnecessarily give the impression that this series depends on it.
-> > > > 
-> > > > > 
-> > > > > That binding got dropped because it was unused in Iris.
-> > > > > 
-> > > > > https://lore.kernel.org/lkml/05d40a3b-cc13-b704-cac7-0ecbeea0e59d@quicinc.com/
-> > > > > 
-> > > > > I still fail to see why we are waiting for multi-cell IOMMU to land, when it
-> > > > > is expected to and what the VPU enablement story is upstream in the
-> > > > > meantime.
-> > > > > 
-> > > > > Blocked it seems.
-> > > > 
-> > > > No, it is ongoing, there will be next version coming.
-> > > > 
-> > > > > 
-> > > > > ---
-> > > > > bod
-> > > > 
-> > > 
-> 
+> Konrad
 
