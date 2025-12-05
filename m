@@ -1,205 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-84458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB464CA78A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 13:13:42 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B56DCA7FEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 15:41:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 787583181B1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 12:12:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9413C32EE162
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 12:47:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13AD729D26C;
-	Fri,  5 Dec 2025 12:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4A18330312;
+	Fri,  5 Dec 2025 12:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l7BD2kD+";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hYVGLOBO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAWxfKED"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A210290D81
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Dec 2025 12:12:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14B331B81B;
+	Fri,  5 Dec 2025 12:47:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764936736; cv=none; b=UAsvEAwUw8u6CqQA2FBWbpIE1evsfVs3xWdahpyuESJGxvsGMaQwyggP0QqR4DyWDTM69BeWDytMGnDEouIyLGlcAKYqmmhLk57pY7C0bmmeLL16CvPlhxGATxVL6s5UCKn1zHtj2V8yykawjRz6sEsfUhHngev5drAk5e9yRiY=
+	t=1764938855; cv=none; b=hCa9RLhDQeTumUTRIrsbBM+lTwNWQ7uZ50H9EmTWI4YcmdxV0X02DRjShul/h5Skttn0QB1pJXNGX2DF0Temfuz+i172+kbM/BQYUycm9Al/JHkXdDoTmIRs94cwsHQlCoUG4jpSkwavnF+1ZDG6bE0RfBDZMMQNnn4J8X2SWp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764936736; c=relaxed/simple;
-	bh=aVwn2y330HaQw1xOwfB3lS9U454n+YnID4doe2Cu3gU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F4dBz48UZ89vzwVbzCjbWC7kO0ZU8hPor/w8Q70h7WJPCYNMnlAMwqK9M9vWEpz/o0qsSwP6tXLF7Z2y/UzQakuOHngDYk69uJKTL0JBTOENuM3n048V3EUx3r2NRij6qBZkrBn8PWF9/Uw+J5z0UIggy9HuBUsV4anu0xZB1bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l7BD2kD+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hYVGLOBO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B54Jxoj3643664
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Dec 2025 12:12:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UXe/ESWLSpyiDTiiz1o6w1zfmo3SmKepSqEQzhZ9jiw=; b=l7BD2kD+vxvbmFIC
-	hi/L52M51x7bTjnKUQ4upCp8Y0acd0yOqqn+bijb6vBz5LI6bcAShJ96d2U2EM/N
-	Eiamn/yZ18H4PdQUfc72DJwKpuHIGRe9+y0e2Lgf8WcbLKYMA08gG/GBA81LeLeo
-	x72QxEeNOcjorerdDHg74lVjTQkk1XsyFjvQFjwkVhGqYBHDH0xMaQrgfARl7kO0
-	GRrCQ0WcJZsLbL510YSVwgfsCwijohJP1G8nzuuTIJZaZdliZb72iPQiXII5H3cF
-	iocRiahK2bpi0O2HkvOL0F4f7vvfzHa//m7vEKeVbwjrQohM7iS+1l61i6M3GSjJ
-	Mp1EjQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aur9as8v8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 12:12:10 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b8a12f0cb4so2323442b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 04:12:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764936729; x=1765541529; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UXe/ESWLSpyiDTiiz1o6w1zfmo3SmKepSqEQzhZ9jiw=;
-        b=hYVGLOBO/8Avh1cmQoIPseyLu34nUAXBA5Ggzu1KKUalcs2TzWxabn782yVyNjaeVu
-         HErAxyAx4M6KirZTxAxuferjI15W6YIVOdft/IkiNuzAytD0dXeXSgpROe+f9tuNnVIn
-         fF6hdYITH9uPZ1PUxaKgKza8g024JA3Wqs3jlrxOsrnCL7TjcA5rQXU/zEotzEzI2Fo6
-         6RxEn01z2/esELa+GUw6V1tqgTC5jaZy7NDosJdbASWuGxKzGfYC+4223A2DLI9p9/1L
-         q+OS2+3gpUqTTdsU8yoghHiM8+YO+FXCWdeiTHIEDITGgo5diJP8mhbvmfuPxLEFb2Z1
-         BFNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764936729; x=1765541529;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UXe/ESWLSpyiDTiiz1o6w1zfmo3SmKepSqEQzhZ9jiw=;
-        b=FBtU5qXXFglAbYOoCKDO71qybF5RGFf4gZldxdQ8VBqcQ7ZLTku6NvCLUSgEkvmkF1
-         4+7CkflYwTwokUomwlM99NmqCenNGmKV5Zz1ld93ejRzelyvQrZaeKyn8Rf4MUb6HaAz
-         0POBbDqmNbLHACOa6vGq0s6Jo4fUUO+JjgTIdZLhgfxEFF/z4Fecq4bvVcDORj46cp9T
-         0zqZU+N0wSrOn9hUQUct/fbUkN3dNYTteO4vJBC+EPts/+H8A4NPembwwSntoUEL+XkX
-         n3idbaisGlEkfmXGn1XKkxb73iHQsQOibIwI7M8f2b8MUdT1/6EiPNAqafOAeHo/wBli
-         NdoQ==
-X-Gm-Message-State: AOJu0Yz+gxZk2NkhCKVwEinEyqp/VOkhEtJkYW+qDhUrjaiXb9lv8mDt
-	2AvGVsBvAqoYjhB/c3N1Eion5wOAXhmmjjUyxYNZRlUF5grAUrbrC0Nn27bDCmVGAn2HEBhAGYk
-	zDhIeeIQ0Py3nW79fa0W5dSpdUFYT3hK5sHWiRDql1+6yZ7LydIn6dzWw69csYjh7IFnDbZI458
-	uLrV0=
-X-Gm-Gg: ASbGnctFHVcIOc3Si7UdE5qY+bRq0hAJvNfAPyQWPnYm2OvwgNulimtVfVaB1DAqVzk
-	SPF5yUs6xnodsplFjvc0Zvtz+eETse1KrpmL77xDZ+oq4tXqkgV7IRJYYKjZI84IxvbUmyF6k4T
-	1HgdLX8dhy88u6rLwUOJkAqDCuh9kvLA7PmRu3ChPHo4gB/YMqsseJkXTZZBB0ShmOJ+xLZmEnC
-	e/MWt2/dzNhnX+SBgqULJ+2sSiv9Xlv8Xw3kFCw/wy1TZCpHuOajrYsGXleCfQGiuSkEvtQd591
-	aLIejLT921kFI98s5k3q/QtPS1ezeSQBl8+nmLRptt5bmZZV0/FNgFla7hH6bR4rMjgZTWuCW4i
-	uIjUzR6kDl5+VkZGd77Elv+oUWRR9VEq6qVaulaU3ZvVXivingvFfFvCkwczlviArye3VeA780V
-	M=
-X-Received: by 2002:a05:6a00:c87:b0:7ac:acc:1da with SMTP id d2e1a72fcca58-7e22b97f52bmr6933397b3a.25.1764936729444;
-        Fri, 05 Dec 2025 04:12:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHQGzsbV3F4h3oMJrcer/uaLOYOw/gOuUSGKFkmONiPaPx6GSGi3mUcqUkgXbtMW7h7XsDUVQ==
-X-Received: by 2002:a05:6a00:c87:b0:7ac:acc:1da with SMTP id d2e1a72fcca58-7e22b97f52bmr6933360b3a.25.1764936728956;
-        Fri, 05 Dec 2025 04:12:08 -0800 (PST)
-Received: from [10.133.33.167] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7e2af658d84sm5030638b3a.60.2025.12.05.04.12.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Dec 2025 04:12:07 -0800 (PST)
-Message-ID: <a548702e-c509-48bf-b3c3-97f67a95bcac@oss.qualcomm.com>
-Date: Fri, 5 Dec 2025 20:11:56 +0800
+	s=arc-20240116; t=1764938855; c=relaxed/simple;
+	bh=8EgbZMEXFu7PLpsGK+9LxeqsxwDrPgQHGchH0MUjxdY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IAyNUp31QyOcl+WeTZ2w3NG3txE5vXYn3e2ZfxfQ9T1PWXjFFIEAiO8oWJhEzbSnNNK9vPqtwXvoDjNHB4wKO6PNKz03rHlZ4WpmZojMDzpXDQ2OaP/+hs4vSSXeUgeTqjlp/JWw+HdAnBZCow8cSEbm5MYPqPInLQCLOJLbwJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAWxfKED; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF1CC4CEF1;
+	Fri,  5 Dec 2025 12:47:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764938855;
+	bh=8EgbZMEXFu7PLpsGK+9LxeqsxwDrPgQHGchH0MUjxdY=;
+	h=From:Subject:Date:To:Cc:From;
+	b=HAWxfKEDsM+Qvoow49KV/HYzmFJg7fFxE5IFtMzbf2f9BseWIOIUVM5GRLBBvYfzs
+	 5hZaaysExcEBYbh0STRLGh2FjRS0wn2pp3aDKiHsM8OBop23c2VvvCt/lpcU1J+tOy
+	 EB8ZoP4/p8Wh0UennYBNBOLGLAdtR5bvloGMULXtbpfNLPKPPIwv1LJUDuYV1SZ9zt
+	 0T5g1LakPs+luATft0s3q7k3rl29N7dpyLNlsH0TVYtpjdqruKniHfU0heQw659vgX
+	 rDO1PUeAae/Ba73WhOwfetiLO+jdA/O9bKDk8iYCqeryxENsSZp+KWuZBEJrQckQ/n
+	 uewWXCn9OYP8Q==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH 00/10] Fix up WCN6855 RFA power supply name
+Date: Fri, 05 Dec 2025 13:47:19 +0100
+Message-Id: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] clk: qcom: cmnpll: Add IPQ5332 SoC support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-        quic_leiwei@quicinc.com, quic_pavir@quicinc.com,
-        quic_suruchia@quicinc.com
-References: <20251128-qcom_ipq5332_cmnpll-v1-0-55127ba85613@oss.qualcomm.com>
- <20251128-qcom_ipq5332_cmnpll-v1-3-55127ba85613@oss.qualcomm.com>
- <6e12f446-7792-44da-9e06-99729c3b066d@oss.qualcomm.com>
- <a3077c95-e6c3-420a-b65e-e4e584009c6c@oss.qualcomm.com>
- <898e5a54-3a79-4fdc-bb51-f1eb6a79dc0e@oss.qualcomm.com>
-Content-Language: en-US
-From: Jie Luo <jie.luo@oss.qualcomm.com>
-In-Reply-To: <898e5a54-3a79-4fdc-bb51-f1eb6a79dc0e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Veb6/Vp9 c=1 sm=1 tr=0 ts=6932cc1a cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=9yv6RJPhSQAcbpPXtOcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-GUID: 4rMeDZueEuoJYWhwbdj3N7uDpoyGL-Hs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA1MDA4NyBTYWx0ZWRfX1ePMlIzIynjm
- Q8l+R68xA1D3UD7EkXWkJhqMRxX6h/EnZvIBHrkRGjaeN4Oi1B8jSSpjiw+RZ3UWKfWeMlH/tv7
- b95sFn2898MTqGa0Ie5dLnHbEDf0qKIWivI3Q3QMS2JTcDPbhDqyGgqbTMc1o+5eAE2d4mfQWEM
- KEF28g07lqgkKxjrO67R/mpt9m7PwOKyPXapwfdwBzg/mJgdvI32HDZwH32ra3Js8KvxUA9ToE1
- jMgZUkrydSO0LH7bigSCp8SBJYUett87Kwu3sNc87yLbxZEZXFI7Gf4gU1L1ohY4Q5MHLGO3cb2
- Fi8seaAXzSNbaMApdtZZxGm6kzuBDM85jjkZ1Mv4B8eCOberOBQm10pUwzK6XElX1O5D9/uqcxE
- woDi9SoEuy8GzBJWk/8k3VYaJsFkKw==
-X-Proofpoint-ORIG-GUID: 4rMeDZueEuoJYWhwbdj3N7uDpoyGL-Hs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-05_04,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512050087
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFjUMmkC/y2NQQ6DIBAAv2I4dxvE0qqn/qMxBmGrmygooG1i/
+ HuN9jhzmFlZQE8YWJmszONCgZzdIb0kTHfKtghkdmaCC5lywSG6kTR8tL3nUtbjMNcmNoZsG6A
+ QJr9lMhcaM7YHRo9v+h7xV3Wyx2neH/GUbMAQ1PEok/+hABOhIXsmJ+0GaPoZo3Oxg0UAB2PyB
+ y8kT1Glz56s8u7qfMuqbfsBl78b6s8AAAA=
+X-Change-ID: 20251020-topic-wcn6855_pmu_dtbdings-92d843582ce3
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+ Rocky Liao <quic_rjliao@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, 
+ linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764938851; l=3325;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=8EgbZMEXFu7PLpsGK+9LxeqsxwDrPgQHGchH0MUjxdY=;
+ b=MJNpzGJnS6TmltZTFSMvPQZefThCv2IEbmBz7nVF64z/NIYOlFFCc2T9rP4Sx7HXblcSr/uNa
+ Lwoq8tWZ4k6DJ38LKGrEGHLuGvcwa5zWIVy/Gg7+nY2N8M8+Au0bEGW
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+Commit 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description
+closer to reality for wcn6855") renamed the supply representing the
+VDD17_PMU_RFA leg to mention "1p8" instead.
 
+While the supply's voltage is normally 1.8 V, the bindings should
+reflect the actual naming of the pin. Moreover, almost all DTs define
+the output as 1p7, so that ends up looking a little odd..
 
-On 12/4/2025 9:48 PM, Konrad Dybcio wrote:
-> On 12/4/25 9:09 AM, Jie Luo wrote:
->>
->>
->> On 12/1/2025 9:52 PM, Konrad Dybcio wrote:
->>> On 11/28/25 9:40 AM, Luo Jie wrote:
->>>> The CMN PLL in IPQ5332 SoC produces different output clocks when compared
->>>> to IPQ9574. While most clock outputs match IPQ9574, the ethernet PHY/switch
->>>> (50 Mhz) and PPE clocks (200 Mhz) in IPQ5332 are different.
->>>>
->>>> Add IPQ5332-specific clock definitions and of_device_id entry.
->>>>
->>>> Signed-off-by: Luo Jie <jie.luo@oss.qualcomm.com>
->>>> ---
->>>
->>> [...]
->>>
->>>> +static const struct cmn_pll_fixed_output_clk ipq5332_output_clks[] = {
->>>> +	CLK_PLL_OUTPUT(IPQ5332_XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
->>>> +	CLK_PLL_OUTPUT(IPQ5332_SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
->>>> +	CLK_PLL_OUTPUT(IPQ5332_PCS_31P25MHZ_CLK, "pcs-31p25mhz", 31250000UL),
->>>> +	CLK_PLL_OUTPUT(IPQ5332_NSS_300MHZ_CLK, "nss-300mhz", 300000000UL),
->>>> +	CLK_PLL_OUTPUT(IPQ5332_PPE_200MHZ_CLK, "ppe-200mhz", 200000000UL),
->>>> +	CLK_PLL_OUTPUT(IPQ5332_ETH_50MHZ_CLK, "eth-50mhz", 50000000UL),
->>>
->>> I can't really find the source for most of these, but I see that there's both
->>> a 200 and a 300 MHz output to NSS
->>>
->>> Konrad
->>
->> Both IPQ5332_XO_24MHZ_CLK and IPQ5332_SLEEP_32KHZ_CLK are intended to be
->> used as the input clocks to the GCC block. IPQ5332_PCS_31P25MHZ_CLK
->> provides the reference clock for the Ethernet PCS, and
->> IPQ5332_ETH_50MHZ_CLK is the source clock for the PCS PLL on IPQ5332.
->> On this platform the Ethernet clocking path is:
->> CMN PLL ETH 50 MHz output → PCS PLL (divider + gate) → attached PHY or
->> switch.
-> 
-> What about that 200 MHz NSS output? Is it just renamed to PPE?
-> 
-> Konrad
+Ultimately, this is a "fake" regulator that is consumed for the sake
+of DT sanity and this series is meant to bring uniformity and squash
+checker errors.
 
-On the IPQ5332 platform, the PPE operates at 200 MHz.
-IPQ5332_PPE_200MHZ_CLK is the 200 MHz reference clock for the Packet
-Processing Engine (PPE), sourced via the NSS clock controller.
+The last patch fixes up a less-trivial warning.
+sc8280xp-microsoft-arcata is left out because I don't know whether the
+mounting of the chip is on-board or as an M.2-y card (although I would
+guesstimate the prior).
 
-The IPQ5332_NSS_300MHZ_CLK refers to the 300 MHz clock that is supplied
-to other NSS blocks, for example, crypto (EIP) block. This is also
-sourced via the NSS clock controller.
+Depends on the long-ready-for-the-merge series by Krzysztof (per-chip
+bindings split of qualcomm-bluetooth.yaml), mentioned below
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+Konrad Dybcio (10):
+      dt-bindings: net: bluetooth: qualcomm: Fix WCN6855 regulator names
+      arm64: dts: qcom: qcs615-ride: Fix BT RFA supply name
+      arm64: dts: qcom: sc8280xp-crd: Fix BT RFA supply name
+      arm64: dts: qcom: sc8280xp-gaokun3: Fix BT RFA supply name
+      arm64: dts: qcom: sc8280xp-x13s: Fix BT RFA supply name
+      arm64: dts: qcom: sc8280xp-blackrock: Fix BT RFA supply name
+      arm64: dts: qcom: sm8450-hdk: Fix BT RFA supply name
+      arm64: dts: qcom: x1-omnibook-x14: Fix BT RFA supply name
+      arm64: dts: qcom: x1-zenbook-a14: Fix BT RFA supply name
+      arm64: dts: qcom: lemans-ride-common: Fix up WCN power grid
+
+ .../bindings/net/bluetooth/qcom,wcn6855-bt.yaml    |  7 ++---
+ arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi   | 32 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  2 +-
+ .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts      |  2 +-
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  2 +-
+ .../boot/dts/qcom/sc8280xp-microsoft-blackrock.dts |  2 +-
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            |  2 +-
+ arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi   |  2 +-
+ .../boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi   |  2 +-
+ 10 files changed, 42 insertions(+), 13 deletions(-)
+---
+base-commit: 273ff909549f26994285d18a1cd64240fb4b1bcd
+change-id: 20251020-topic-wcn6855_pmu_dtbdings-92d843582ce3
+prerequisite-message-id: 20251029-dt-bindings-qcom-bluetooth-v2-0-dd8709501ea1@linaro.org
+prerequisite-patch-id: 94fd78eaa971a5c3585eabbd21ccc05fb60c8904
+prerequisite-patch-id: 2968d14edc5f5dacf235b4ef32037a9ce9e58239
+prerequisite-patch-id: 1daa41f8558029206cc94670586243629c53cec5
+prerequisite-patch-id: 6adfe843aad05ad4e2e0f44f98520c4c19c0ca2b
+prerequisite-patch-id: 4a2980108d9a07403483c41fc7ce1ac7ca0e4f98
+prerequisite-patch-id: 5102d8402848e79fe5c63c0ecd54371851cccb9a
+prerequisite-patch-id: 98ecb5c776956077591e261ef7483b826cc09037
+prerequisite-patch-id: 4bbe8f1d81fec797c060c9c0c9ba09e1322a881a
+prerequisite-patch-id: f7b59700b4d3e2270b6e9bcfc798468b630c730a
+prerequisite-patch-id: eaafe809885578a46cc78b086b53aa3abe03710c
+prerequisite-patch-id: c069f2734d3fd0007ccfa84662d35ade1645d199
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
