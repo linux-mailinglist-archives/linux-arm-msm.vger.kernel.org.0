@@ -1,100 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-84456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D47DCA7818
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 13:04:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E80CDCA7887
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 13:12:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9106C313C1E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 12:03:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9F95C3049590
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 12:11:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 244991E1C02;
-	Fri,  5 Dec 2025 12:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8AFB309F14;
+	Fri,  5 Dec 2025 12:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HLiHqHen";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZYleLIDG"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="ZbgpSJWp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF96326D55
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Dec 2025 12:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF3031A046;
+	Fri,  5 Dec 2025 12:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764936201; cv=none; b=NVWt/WgrTh7kedSm6uHoSxp7QudZvKI0yUkYAxXaqvTdYuuNy+KOS5Zhow0jN4H0smLKyV1RsAIawmrlnQ1Tec62Y7HxGAAy6V7YtJYEa90OJ4+yedzVrOEUDkkhrGymAJOtAlBYsVxsWhK0YSPr3ZCJelcSrKunKeYdENFPSLc=
+	t=1764936704; cv=none; b=pTFzD3ocU/Wmmz43mqWfLWSmM3FL3aMP7PBvjblZVRQGLcNl+GPKNM/WqozoY0XoXjKOwz1MmwcRtysV/OdBTvCOKavRuQ/LX23ufzf4L0jFCsFFCDt56JJcXywzgXChUcIib0BH7IQjdhyWnu3HEs3fDJrETCz0JOTaBuCwgUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764936201; c=relaxed/simple;
-	bh=v9h+kkuk56zMsB4Du/PwkY7JPFHXv/drmxI+Nn0ItY4=;
+	s=arc-20240116; t=1764936704; c=relaxed/simple;
+	bh=48k4AgX+q3IBIkf0IGLJcXM2KiZiFNbkddmehWxWCIo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LrQKenF7ErGU/2R8qrsyUUAQHSMebzHdDHdycICB030XAbq01j0taORKmbuhzj4DEZSDY4OJNmo/Va3Patr1huzwMw2AqD6haVdlmIyrr50ldw6i6jGFch1hm9MvLfz6Ob/v+tRckkU+/ikdKboKGWyVpoeKNKy5vbNjUN5w7y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HLiHqHen; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZYleLIDG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B597iVb2896539
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Dec 2025 12:03:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7ibRns9NpT7LfaypmozZ00h9uMW/vCu+51UfOTwa4xw=; b=HLiHqHen3PiMkldG
-	650qsThVHMEsBaLSxlhAqqxkXk9hyckjX3twAM+eVhqgQPo+buHuUVkViDY4U5M3
-	x4mjcu+QuAVSXxAJEZGIFzlwFJ9A3urUPBK89UyW0aOYcdMl2LXBtqoutVl/xLX3
-	2YMDjUDdmcQPNNiezzjWfbzFc8+/40uzOfO++SQdqu+doThtkmzU/kdxoJnMC0UF
-	3/sti3IUArB9nsozpPc3e39+uHwWfGA/UzaDY2yoFuetG2l6+MhdxTpYJVEupz49
-	qI1eJlXHXr9ppj2MGZucS7ebu3RbhBoMRClYC0uTfHBrOs2tcBYCmDWZFh4qRH/I
-	K2knPQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aukmj1wd7-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 12:03:15 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee05927208so6262121cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 04:03:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764936195; x=1765540995; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7ibRns9NpT7LfaypmozZ00h9uMW/vCu+51UfOTwa4xw=;
-        b=ZYleLIDG4nAxGsMeG6j4nUxbKEPAFpcQqY1HtzYYUxjIqM6mkVZpkCLCCqBBVoB6g3
-         nWoZ3ab7dwO94sYhKvrqHAbetitDUy7yOkK7JB1RySZetRtd3+OOxKxEoH1hiYCmJe9E
-         q8p2udcbu6/9fm18C3cuYO0BAxOz+qSpA/FySTBl7CrtOIw5LCjKDayh+e1DvYK/sWwn
-         hvT0xzLAY7zSa+aM8HaADx2259aR7Vj5wLUbkbYUd8xFE7/nkqTnJ03Fibr9sbqZH1uc
-         BdZDQI2CVgJ8++f15fhXYIeK0rQz621rQoyT4+bbC7mZRGRAmrWNzKywyHMHFqmZdf5X
-         VNHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764936195; x=1765540995;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7ibRns9NpT7LfaypmozZ00h9uMW/vCu+51UfOTwa4xw=;
-        b=P9VCRHVOaq18isXUM+aL8+GtKlGQx8/JGBKsrn9srFBkVLsbNjq5l4ctL1r4sXGeIl
-         cUE9JUwf1eZv5vL3C1VAGQlRzz/tWZoIdYonwx2dzTxJUkGLd24XRXlgmR+q7Hd1jiXy
-         ZS8ayPbGpRrfcSKiKeNatozToJI580FI57eDerlukl5D2wDRln6B7ZULg/dLDNyGLUgC
-         PcgxWcHZxpHldo01qDHGqCDtm1UFKaiIYYUWNJpsjxjRvH4xwDQq037LOLVJHYqCrkdT
-         PZuKGCGG1rIAgeE9L0Csw002INFk/8Bfit6XyU0iOdEWI5fqP1z3c5RiBIxXzJzYGaXf
-         81sg==
-X-Forwarded-Encrypted: i=1; AJvYcCXE7tgEUDHWagDbtA2R/CmyeaK5pofAXs+IzYrG2aUtG02Ob+LQkXAO58Fp0awD8zth/xoX3gx+r+0PZ+Pk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyrt1fuylkQp0VxPpWFkOsYFmZ0feu3v0ei/DRq+x3n2C0KH7sq
-	ep2cZeLEOMMHJrgXXvh3o5MSjnfgHR2UyAgAt1/XDbPiykp8D0/qeXHfJQ4hTWsKQZ/i2hlAgIr
-	tj7hNaLwQ3ZHSsYDUJuE8vsXuNVkCXMs1pCgvi8tn8tkHyp8LITM8alptJ4WAwWAhv2/L
-X-Gm-Gg: ASbGncteI/+re1fx66fghm/d702JzHjkeXFISe+kImVKMhMYiwAkukWgSC9HL5uk2Qk
-	RY0zOFp0tt7h6gARv3kU4dRgPM3Wh9gOfrcUavzRRU8DMr0mWZ7aTDUVFTCDtbgqyqyCiArM0aw
-	6SPiCbnkEQqJbBtdXaj2kYv+upkJBlABOZZjwz1BFi/FCX31wZsTNJiRk7Sik0cTr8LVHxpARG5
-	zBBAqUoTOX3xCyHBuQbzsmF7DanppYddHTohsCGqYFdPaU+2wDg+JwPbH+/Kk8aoNkqshw8gdVw
-	EKuPQfiO58dntFMQhiBchwtsvpRVSLRXyoKT0l4XzsWkmIRkz2rryJGJzUA7m39iUEMweqw+emS
-	xRmvjlPyDCHQ2npOgaQch/JcxsJEioi1kbms4Qqox/kjBoTMO6Ag=
-X-Received: by 2002:ac8:7f54:0:b0:4ee:1588:6186 with SMTP id d75a77b69052e-4f0176844ddmr100919621cf.11.1764936195070;
-        Fri, 05 Dec 2025 04:03:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHDtA69UwRIJoySS2OMMEYNqbCpINvG3hPdksp1reab8w5GlGFxHYYfb5cJEmOse38qlA5hXQ==
-X-Received: by 2002:ac8:7f54:0:b0:4ee:1588:6186 with SMTP id d75a77b69052e-4f0176844ddmr100918911cf.11.1764936194568;
-        Fri, 05 Dec 2025 04:03:14 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b79f4975dc1sm345503666b.32.2025.12.05.04.03.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Dec 2025 04:03:13 -0800 (PST)
-Message-ID: <551b45ae-0980-4bd5-bb83-2fac6d7e2ce7@oss.qualcomm.com>
-Date: Fri, 5 Dec 2025 13:03:11 +0100
+	 In-Reply-To:Content-Type; b=KdtmHM+iJ0uquDKnovSlWir+p3/D75r4yl/JFo5djInt5BRhhswoRK28ZDWpEOjSI8WR/TZdxk4lVbkjh8xbt4fCD2Op22QXeTO0IjxQK6Mbghr//TIQdekBWLBIfMtLlVMYI8kX5CXszowsQQCfq3wD4riFB9atXT4Cb/zUul4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=ZbgpSJWp; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 4EAA653400DF;
+	Fri, 05 Dec 2025 13:11:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1764936697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=9K3BaIAz1YO5eT1F/Xdh0sXF5lL51JkibNNOPjMJcng=;
+	b=ZbgpSJWpOBwS4UeAc0/p6zmcwnX+1JzC94XEZoFKNFCfqR19SzV+PWWHzZi0D0+KTEmRG3
+	9ffTmXDX73KnoswkhtzNK3a7liIqCMhgPA202Y3tWFBiXL46Ey4ylMGUuzle4nui977W/j
+	0vEpEI3qGjX4naySG+Y6MWZCvip8eDs=
+Message-ID: <df1ce093-163d-4d80-a27a-fe42e5cfea53@ixit.cz>
+Date: Fri, 5 Dec 2025 13:11:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,104 +54,152 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] drm/msm/a6xx: Retrieve gmu core range by index
-To: rob.clark@oss.qualcomm.com
-Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Dan Carpenter <dan.carpenter@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20251122-qcs615-spin-2-v3-0-9f4d4c87f51d@oss.qualcomm.com>
- <20251122-qcs615-spin-2-v3-1-9f4d4c87f51d@oss.qualcomm.com>
- <9cc55934-6980-4673-8501-2d1efe2f816e@oss.qualcomm.com>
- <936b6a48-a5e5-4efb-be7c-215ac670677d@oss.qualcomm.com>
- <7b4bcb6e-fbb1-45f6-921e-dd1340a8cece@oss.qualcomm.com>
- <CACSVV03buEzs9UyDaDpamyAXwM8vrkp2P_N67Wqt3oRjhdc-sw@mail.gmail.com>
+Subject: Re: [PATCH WIP v2 5/8] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1
+ MIPI CSI-2 CPHY init
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+Cc: Joel Selvaraj <foss@joelselvaraj.com>,
+ Kieran Bingham <kbingham@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz>
+ <20251204-qcom-cphy-v2-5-6b35ef8b071e@ixit.cz>
+ <b7fac86c-15fd-400b-955a-c331c8bc681d@oss.qualcomm.com>
+ <03c137aa-bd31-43d7-aea8-489ec0102ab3@ixit.cz>
+ <f04d27a2-88c9-44ac-b4fa-33059a9806b2@oss.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CACSVV03buEzs9UyDaDpamyAXwM8vrkp2P_N67Wqt3oRjhdc-sw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
+ 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
+ lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
+ 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
+ dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
+ F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
+ NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
+ 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
+ AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
+ k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
+ ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
+ AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
+ AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
+ afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
+ loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
+ jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
+ ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
+ VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
+ W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
+ zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
+ QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
+ UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
+ zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
+ 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
+ IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
+ jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
+ FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
+ aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
+ NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
+ AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
+ hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
+ rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
+ qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
+ 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
+ 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
+ 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
+ NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
+ GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
+ yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
+ zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
+ fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
+ ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
+In-Reply-To: <f04d27a2-88c9-44ac-b4fa-33059a9806b2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=bYtmkePB c=1 sm=1 tr=0 ts=6932ca03 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=QGPp5zjhHj0ErSlcMgEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: LTieep7qlx172Z_wadeFLpCrDVWRc9XX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA1MDA4NiBTYWx0ZWRfX7GX+gkTRWXbW
- RY4ZOorJ13ny5fhwG60tNgtJBT4cCijJfrCfdA3GeJkzKgaS1h6igwFTQcgCp8kNUzYqLV3EPMe
- mDiifwaj+vruzx0WtxuRk3jOtgmfbDRMH1bW6wcDs4w7K/p/8+ac1WepULhXl+Q/UTszPEqLB0i
- dkibIyySVy/wbPlE+gLF759Oo48HBHLBpAGOCWngglLVh0ZAv+ExPTHo2LutqSXAJ8hkSVjV3HA
- zLAA620nHhvC3FmqkY8crRuA8xwizNmDF7+mWWdxDovGbOPdJqwoCOPhItb4JdVuMt5WC6xK3sn
- ndbfork5WMdiE6W95pRtECvau8YCDLe2IyUCEKYbB5Le8m5IgmAjOGU9d68H896Uhfo2C1jrEZx
- iaLWdAwH51VcRTx9IM0flkJ0MrXtnA==
-X-Proofpoint-GUID: LTieep7qlx172Z_wadeFLpCrDVWRc9XX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-05_04,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512050086
 
-On 12/4/25 3:34 PM, Rob Clark wrote:
-> On Thu, Dec 4, 2025 at 5:30 AM Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
->>
->> On 12/4/25 2:10 PM, Akhil P Oommen wrote:
->>> On 11/22/2025 7:08 PM, Konrad Dybcio wrote:
->>>> On 11/21/25 10:52 PM, Akhil P Oommen wrote:
->>>>> Some GPUs like A612 doesn't use a named register range resource. This
->>>>> is because the reg-name property is discouraged when there is just a
->>>>> single resource.
->>>>>
->>>>> To address this, retrieve the 'gmu' register range by its index. It is
->>>>> always guaranteed to be at index 0.
->>>>>
->>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>>> ---
->>>>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 14 ++++++--------
->>>>>  1 file changed, 6 insertions(+), 8 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>>> index 5903cd891b49..9662201cd2e9 100644
->>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>>> @@ -2029,21 +2029,19 @@ static int cxpd_notifier_cb(struct notifier_block *nb,
->>>>>     return 0;
->>>>>  }
->>>>>
->>>>> -static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
->>>>> -           const char *name, resource_size_t *start)
->>>>> +static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev, resource_size_t *start)
+On 05/12/2025 13:00, Konrad Dybcio wrote:
+> On 12/5/25 12:56 PM, David Heidelberg wrote:
+>> On 05/12/2025 10:54, Konrad Dybcio wrote:
+>>> On 12/4/25 5:32 PM, David Heidelberg via B4 Relay wrote:
+>>>> From: Casey Connolly <casey.connolly@linaro.org>
 >>>>
->>>> Can we drop this and just use devm_platform_get_and_ioremap_resource()?
+>>>> Add a PHY configuration sequence for the sdm845 which uses a Qualcomm
+>>>> Gen 2 version 1.1 CSI-2 PHY.
+>>>>
+>>>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+>>>> mode. This configuration supports three-phase C-PHY mode.
+>>>>
+>>>> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+>>>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>> Co-developed-by: David Heidelberg <david@ixit.cz>
+>>>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>>>> ---
+>>>>    .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 74 +++++++++++++++++++++-
+>>>>    1 file changed, 72 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>>>> index 3d30cdce33f96..7121aa97a19c4 100644
+>>>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>>>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>>>> @@ -145,6 +145,7 @@ csiphy_lane_regs lane_regs_sa8775p[] = {
+>>>>    };
+>>>>      /* GEN2 1.0 2PH */
+>>>> +/* 5 entries: clock + 4 lanes */
+>>>>    static const struct
+>>>>    csiphy_lane_regs lane_regs_sdm845[] = {
+>>>>        {0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>>> @@ -219,6 +220,69 @@ csiphy_lane_regs lane_regs_sdm845[] = {
+>>>>        {0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>>>    };
+>>>>    +/* GEN2 1.0 3PH */
+>>>> +/* 3 entries: 3 lanes (C-PHY) */
+>>>> +static const struct
+>>>> +csiphy_lane_regs lane_regs_sdm845_3ph[] = {
 >>>
->>> This API seems to lock the io region and fails with -EBUSY if the region
->>> is already in use. I am worried it may regress other chipsets. So, I
->>> dropped this idea at the last moment.
+>>> Here's a downstream snippet which seems to have more up-to-date settings
+>>> (checked against a doc and it seems to have changes made at the time of
+>>> the last edit of the doc)
+>>>
+>>> You'll notice it's split into 3 arrays of register sets - that's because
+>>> it applies setting for each lane.. something to keep in mind we could
+>>> optimize upstream data storage for (they are identical per lane in this
+>>> instance) one day
 >>
->> Is there any specific platform where this would be an issue?
+>> see 87c2c2716523 ("media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence control loop")
+>>
+>> for the reason to flatten the regs array (thou outside the scope of this patchset).
+>>
+>> Regarding to the different value, I can test them, can you point to docs regarding why these regs has been changed and what the values means?
+>>
+>> I thought it's some default seq, but as you show there is multiple versions, it make sense to properly document what these regs do.
 > 
-> IIRC we've had this problem before and ended up reverting a similar
-> change, due to gpucc and gpu overlap
+> I'll make that point to the relevant folks when they get around to refreshing
+> this driver, I'm not sure I can just tell you what all the magic sequences do..
+> 
+> The high-level description for all post-release PHY sequence updates is pretty
+> much always improves robustness as a result of "more better" electrical tuning.
+> It's also the case this time around.
 
-Argh, sm8350.dtsi for example seems to be affected..
+Since the original version works, but maybe it could work better (I'll 
+do testing), I would do "upgrade" commit, so at least we know tho regs 
+setups which works and someone can try deduct or document it in the future.
 
-Hopefully one day we can fix that..
+If you try to poke the right people, that would be awesome.
 
-Konrad
+Thank you for noticing the new regs! :)
+
+David
+
+> 
+> Konrad
+
+-- 
+David Heidelberg
+
 
