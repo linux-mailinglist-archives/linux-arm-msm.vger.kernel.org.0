@@ -1,156 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-84472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAED9CA7B44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 14:13:10 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1D7DCA804C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 15:49:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 71594323D933
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 13:09:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 797733107B8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 13:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB75433B6F5;
-	Fri,  5 Dec 2025 13:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06F7C302166;
+	Fri,  5 Dec 2025 13:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kkw4sTxd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WmiUxdK/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B5F33A715;
-	Fri,  5 Dec 2025 13:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953222F7ADE;
+	Fri,  5 Dec 2025 13:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764939656; cv=none; b=C46th7U9dhZnHGxO+bmvGZiXnIs4UpRcJUL5yAP+Fq11TQjHvOHgilwdOcFmG5YA7+AJQt4WbU4KQowV5q5vJXZPQIDqPsqYKWEgZ1t6fIns6G3JkycZR3M+iSVOPrd2hTINS+X+uKne9rc/GBsEcKO29ojr+Ad/4Pv9eW36vAU=
+	t=1764940484; cv=none; b=TCXKIENTDluDHkWBaB2BX0uyDZv/dQwBqu0I2FgBregjNedliKxRFT5y4lt1Jfu0UMAYXAWFm8btUS7H7S7PZ+NkL/853P+JBKBfzT0CVB2MbIECqcoOevxME9IPs8VlYwzNhOo7gXFQZfCThG9CwGaICJbfvCPPJdUljTKZlhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764939656; c=relaxed/simple;
-	bh=Hjh2q7YGF3G7TKCnljODy8o4LA7T6Xj3FX5bucukiG4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WJ3J4WsTGj/Dl6gMGdlS4vQggay0/Pco1Q95QikCnwMd1rhpOYd0HLklPX0phGKox1w1mcwgnP4LzpqDsLPQxIxEYwl46GlSseTySRaedJKMDKIYOrS5X23m7kYV1ZPqBl+N+cKuwVguWxjUeUoTgtMzRZl/vHRxgkyLCkMv1wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kkw4sTxd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B21FCC2BC86;
-	Fri,  5 Dec 2025 13:00:55 +0000 (UTC)
+	s=arc-20240116; t=1764940484; c=relaxed/simple;
+	bh=OnFV8M52MQ1fx9QsvZL97MqSp+jVOb4a/O9yUSS0J4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qhgqs3BtS6M35JXDGKQI/GrhxuRaKFnuCbBRu6y5OSIZMA+JO5KMqdjn9dPv0v4YTO2ccJs1TkgGAcZ+Tc38VWQU7MX3iSb44k8ZFCgqpQrTM0DZryvuhdk38ki5jLZnNykDYJr3f8bijtPkv3I52f37kkSF4/d73NelO+6Zv/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WmiUxdK/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6E9C113D0;
+	Fri,  5 Dec 2025 13:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764939655;
-	bh=Hjh2q7YGF3G7TKCnljODy8o4LA7T6Xj3FX5bucukiG4=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Kkw4sTxd2ZlZl1Ioj2PV4GFspqRQKXr+0HDEX6g4KAxW73wEHLEBltbZXYO/ZJVVl
-	 RZz5yfPRBCRB7DwuHena76iRWBQe2xtJ+cDNiwYp7ccgHgdbzc2eF+ycJNGgP0m75h
-	 vz00QYjQLraW3TIZ0tU1uaMbmGUbwGB83JEL1TsjODCp2AsOVzvt2PgAQRKxXljsUP
-	 3PPl9g7WzDnALpXBATOk2XYErMLU3KuZ2mqKYaOH9bHNnetYJ0AWmLvi3Mgwh4fWW6
-	 6R7afG6n3SHzgeG3eGZu4Zng0caPpjamvJbeXIW75qbnk/nWX5ccwSBKCaweMl0bCL
-	 FTHQjO37ZXqgA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A38BDD2F7EF;
-	Fri,  5 Dec 2025 13:00:55 +0000 (UTC)
-From: Robert Eckelmann via B4 Relay <devnull+longnoserob.gmail.com@kernel.org>
-Date: Fri, 05 Dec 2025 22:00:06 +0900
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add
- placeholders and sort
+	s=k20201202; t=1764940484;
+	bh=OnFV8M52MQ1fx9QsvZL97MqSp+jVOb4a/O9yUSS0J4E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WmiUxdK/26naJtIeK2IEsnq8Olgez6IpwDc5AuWUlbSftCuXjWB6qvP019Cly7ZK8
+	 NzTrlqBci73zhCclAuOjmHJOJ37lzvZtoVvF1VO6CnFqioDhIpyCm4MmQgVVlj6O8U
+	 D/giq3p5IfnVjLTF9jrDu5GOZ+eCBmO28R6tWbADiNiruWmLKRMWxMzhKSdWPbc6JL
+	 r32uxx9U39Vfvsp5Bp2uqjHruV8C3wz4Flpm/od/23FH4TG7iXuyfbanGCDu3fQefr
+	 Dn7wXKatYT6OGRWPTO8KuGtrBZYOblZSc0mbwfe9rBEbj3ZUaXybe/VYK0nTWhZzz9
+	 g1cKqEBrKoiSQ==
+Message-ID: <8bb852ac-1736-49db-be94-f6be9e500f74@kernel.org>
+Date: Fri, 5 Dec 2025 14:14:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p: Document
+ firmware managed PCIe endpoint
+To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@oss.qualcomm.com,
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com,
+ konrad.dybcio@oss.qualcomm.com, Rama Krishna <quic_ramkri@quicinc.com>,
+ Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>,
+ Nitesh Gupta <quic_nitegupt@quicinc.com>
+References: <20251203-firmware_managed_ep-v1-0-295977600fa5@oss.qualcomm.com>
+ <20251203-firmware_managed_ep-v1-1-295977600fa5@oss.qualcomm.com>
+ <20251205-majestic-guillemot-of-criticism-80c18b@quoll>
+ <CAMyL0qO2FPBe7N6Q=hW-ymeiGDhABsU+VCj25jzcoQRhBoWbDA@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <CAMyL0qO2FPBe7N6Q=hW-ymeiGDhABsU+VCj25jzcoQRhBoWbDA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251205-slpi-v2-3-dfe0b106cf1a@gmail.com>
-References: <20251205-slpi-v2-0-dfe0b106cf1a@gmail.com>
-In-Reply-To: <20251205-slpi-v2-0-dfe0b106cf1a@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org, david@ixit.cz, 
- Robert Eckelmann <longnoserob@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1758;
- i=longnoserob@gmail.com; h=from:subject:message-id;
- bh=NKSrjVKl6hmHb40HZ/gBpdJQQYkkXd4Osh0NjPVYeDk=;
- b=owGbwMvMwCVmcOAq9/vk/SGMp9WSGDKNrrel/Z8mJPmG95tYyxzte84mbnz3TI4Fb3og4f3rX
- OxZpVc5HaUsDGJcDLJiiiw73I7pZLoujdi4e38ZzBxWJpAhDFycAjAR636GP9w3VXXeOR7udg6b
- zvys0H256rzZO3lfc7vtb40s/lZ9LIXhf9KeOoHZf9bzpnFFfX18lLl6l5ax7kWJjfGul8SCJKS
- 7GQE=
-X-Developer-Key: i=longnoserob@gmail.com; a=openpgp;
- fpr=B846C62C6945A558B1BBBF7630C0D50BEF63BF54
-X-Endpoint-Received: by B4 Relay for longnoserob@gmail.com/default with
- auth_id=569
-X-Original-From: Robert Eckelmann <longnoserob@gmail.com>
-Reply-To: longnoserob@gmail.com
 
-From: Robert Eckelmann <longnoserob@gmail.com>
+On 05/12/2025 13:58, Mrinmay Sarkar wrote:
+>>>  1 file changed, 114 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+>>> new file mode 100644
+>>> index 0000000000000000000000000000000000000000..970f65d46c8e2fa4c44665cb7a346dea1dc9e06a
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.yaml
+>>> @@ -0,0 +1,114 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/pci/qcom,pcie-ep-sa8255p.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm firmware managed PCIe Endpoint Controller
+>>> +
+>>> +description:
+>>> +  Qualcomm SA8255p SoC PCIe endpoint controller is based on the Synopsys
+>>> +  DesignWare PCIe IP which is managed by firmware.
+>>> +
+>>> +maintainers:
+>>> +  - Manivannan Sadhasivam <mani@kernel.org>
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,sa8255p-pcie-ep
+>>> +
+>>> +  reg:
+>>> +    minItems: 6
+>>
+>> Why is this flexible?
+> 
+> The reason for `minItems: 6` is that the DMA register space can be
+> skipped if DMA is not used.
 
-We know these devices are present, most of them are supported by
-downstream and close to the mainline kernels.
+But the hardware has this anyway, so this must be here. You do not write
+bindings depending how drivers use them in your use case.
 
-This is very handy when rebasing the integration tree with the support.
+Either drop minItems (fixed size of array) or provide rationale in terms
+of hardware in commit msg.
 
-No functional changes.
-
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
----
- .../dts/qcom/sdm845-xiaomi-beryllium-common.dtsi   | 29 ++++++++++++++++------
- 1 file changed, 22 insertions(+), 7 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index 8ce592cabd35..8df5311f4afd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -227,6 +227,12 @@ vreg_l26a_1p2: ldo26 {
- 	};
- };
- 
-+&cci_i2c0 {
-+	status = "okay";
-+
-+	/* IMX363 @ 10 */
-+};
-+
- &cdsp_pas {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/Xiaomi/beryllium/cdsp.mbn";
-@@ -261,6 +267,22 @@ &ibb {
- 	qcom,discharge-resistor-kohms = <300>;
- };
- 
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sdm845/beryllium/ipa_fws.mbn";
-+
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	/* TAS2559 @ 4C */
-+};
-+
- &lab {
- 	regulator-min-microvolt = <4600000>;
- 	regulator-max-microvolt = <6000000>;
-@@ -312,13 +334,6 @@ &mss_pil {
- 	"qcom/sdm845/Xiaomi/beryllium/modem.mbn";
- };
- 
--&ipa {
--	qcom,gsi-loader = "self";
--	memory-region = <&ipa_fw_mem>;
--	firmware-name = "qcom/sdm845/Xiaomi/beryllium/ipa_fws.mbn";
--	status = "okay";
--};
--
- &pm8998_gpios {
- 	vol_up_pin_a: vol-up-active-state {
- 		pins = "gpio6";
-
--- 
-2.52.0
+...
 
 
+>>> +
+>>> +  dma-coherent: true
+>>> +
+>>> +  num-lanes:
+>>> +    default: 2
+>>
+>> Isn't this deducible from the compatible? Do you have have different
+>> PCIe controllers with different lanes?
+> 
+> SA8255p has 2 pcie controllers(pcie0 and pcie1).
+> pcie0 supports 2 lanes, and pcie1 supports 4 lanes.
+
+That's ok, thanks.
+
+
+Best regards,
+Krzysztof
 
