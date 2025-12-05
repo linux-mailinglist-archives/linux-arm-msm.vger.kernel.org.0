@@ -1,109 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-84423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69E9DCA63F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 07:39:55 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57AF7CA6F18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 10:37:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3F30A302E058
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 06:39:33 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8A3B535E3698
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 08:27:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CBB3248881;
-	Fri,  5 Dec 2025 06:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C26734028F;
+	Fri,  5 Dec 2025 07:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="wfFdxhQB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqNDmLbc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.48])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C310398F97;
-	Fri,  5 Dec 2025 06:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E39303A1B;
+	Fri,  5 Dec 2025 07:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764916772; cv=none; b=lWi+c0nnsdIuKCyAL6rJRwQHFW0yQesnKXi3Sq3tlHCPeAAx/nCuLXqs2SV+OI/ImeZ9E97vGdex5WSm4JNxDLXgb/JDuorJsGe8Zg+SMneObbFfzu3DHGJnY3AWqQBlFK00ibA0nP7cRXaA8nEaz0hKajEiyusMdw/KEKdZx8k=
+	t=1764921392; cv=none; b=e8QypJ6lBp8bHlO1X6RgTRd4dYkPS9jDdmpYKga2OynkSokoeEX19U/xbkRRNg2ZfMssWqQYGb1edXe0YnW2d35FR7QD8YFiLq0aIiRJHO/U2X9O+aqIkKK4g1ltarnyJYv0L9v21QbI4wEdXVP6oehEk0xjuq2mjz8K0q+LITg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764916772; c=relaxed/simple;
-	bh=yUy1BcJmLHMHOtA7yp6N1OrwEjmA5sFJVnjeWgswAlo=;
-	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=Enqn+5ugPLjJht0wbo60GOxjtZqoZhAOn06txuI2l5UbENi8m7hgtNV/0FTZapm/HlnWKkApBaLivO3ZyN3KVUAVono4LhM6KPEuy7aMo+ldOQvvm3cz+1iO3C5o13b1dzN+VahoJOejXf+vyPJsnKmJESGBEvGP3QUguJJNXtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=wfFdxhQB; arc=none smtp.client-ip=43.163.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1764916758;
-	bh=sDGhZw2pqYBSJZt6Ld3KRRGaUSTB5fcV7do0o7atRso=;
-	h=From:To:Cc:Subject:Date;
-	b=wfFdxhQBtOgYwB8Og2HhKRb0NIDBagUHKY+9xsRUNP6zf5pY/OjyD5MmZKd3fRuBw
-	 o4TkyB+JnkMz0c8bluMSqRiOymdWfvnMr2hXKJ5/8p8jt9itAvvkN/765n+kcwbv83
-	 t5hShouO/alTFAYOdCwtyN2k1/ZSoiXmW1W7Q0+w=
-Received: from localhost.localdomain ([116.128.244.169])
-	by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
-	id 9D113065; Fri, 05 Dec 2025 14:39:17 +0800
-X-QQ-mid: xmsmtpt1764916757tpecw65lz
-Message-ID: <tencent_D85C91225CB9F5A85A2141BD8C4E12E6D009@qq.com>
-X-QQ-XMAILINFO: N0qCj8+K5YsT9nj3/JJo+WgnP6ClXTcIHdVDjaglMYAhRHiZfb+19Xr9h23f96
-	 siPLgZ/lhi9WD5VYwUexiAea8XqlsfSK/rL1l6z+9rpQmkz7C3EQPVtnSay3rMmM5vZeka+zd1Bt
-	 VfoYz4YkZXEFJTKtzOB90x2S5WxKdXEajxYYReMc2PluesyaNSJDFYYoZbkes6UH9bn4W2eAFJ/V
-	 WiGapnIHJRDcggPUFsgcmJTCwPaTYgsxKxROAN+vW3NlxqIF+VsSng8gf0gLQA/vBNtCOhIx9dK9
-	 dvH1+0vKopdj5DgfIp/ljV8Gyxb374jPeoEcFq2/Q1AOlU5X8UzCI2RELtmn7n9nQqJRWpPSx0Cx
-	 yE1ZHAsZeYETKEG6Fln7IMYJyEzrpO0WRGgQRdB8TpjLEHBXQwNvmYrBJ/lyYpyyu8MblrvU1VFP
-	 2GjCjUfX1bF96rASuo8BOGpQbYia7dFAkt1ze0yDveyW049jT0kbZ0FJxirloMZ98yUu7vVYoPMl
-	 q4Si/cpSZnD0SbJFtkTeYzoSwnUD62wox3O5SwS2EQQR9l+AIFG3gEJgeDderWLdLgQ7Co5ddl1j
-	 g7q0X9AWZl86we6fVgBeWUlGVU7LClnHIVL0tDqLy8uLxJM7N6UglB0D+AWhDPyLGkqM/9XMEuvx
-	 t5aTn1IxISCOkSkEngBzNJGC01AEvAN9yCiMS/pUYpihRieExA5Nx+0z4JY4MzW/EpktrJGlk+In
-	 splidqBW2cFoZnLEXXSxx/CRXTCaR4rtP7wy7ZbMOXpHlnqhK53mESd/uYkNeLLf3ZBgpOBgwY3G
-	 bPFz/Bt/RZ94QOA8Grk0sjeJLOUXLS4vbMWFrsVLCBBm2Uxr9R8L/xdnxDbqa7Vudv+vQmmtR5GQ
-	 1gCaLDU4FtSQd0Dw+Vv+wAiJzlC2WN+iT0P8Wja/DFbHpGJ4FXNCLTXXKGrTh3rL/SCSVYBW1Zz6
-	 p7gFXA8QUffjdgW83JGvGvNm7FhbVUtirDqIjeC39ubhz8+ujvTQNyNge4sgzVZAIyEuo8rtp4Xq
-	 kpfeosJQ==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-From: xiaopeitux@foxmail.com
-To: ansuelsmth@gmail.com,
-	ilia.lin@kernel.org,
-	rafael@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Pei Xiao <xiaopei01@kylinos.cn>
-Subject: [PATCH] cpufreq: qcom-nvmem: add sentinel to qcom_cpufreq_ipq806x_match_list
-Date: Fri,  5 Dec 2025 14:38:55 +0800
-X-OQ-MSGID: <d68ab9328bfac6aeaca0c3b0e8f333f0bbd91208.1764916628.git.xiaopei01@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1764921392; c=relaxed/simple;
+	bh=9GBplQZ/57134UI/B19clZsAtbriogT/ZgPFurtrGcs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EmyhZsVndqOmhFcx4u/5g1njwsN8lLBj+GeyKwS7aS41R2fuaXx2y0ZRqBM62IgHmv5sQ38rI1Ykw4RfHZ6e1e2x4JvMPqVHOcLy1SIm700OvLCp0RALxt4yqhdjjYvAlShPebczHLSMqTkoSRpEo9ppncYPeVwMCsD/isQZXn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqNDmLbc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C3C4CEF1;
+	Fri,  5 Dec 2025 07:56:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764921391;
+	bh=9GBplQZ/57134UI/B19clZsAtbriogT/ZgPFurtrGcs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=eqNDmLbcNNG8NLYTAk0aTUViPkcRmxUAN5vA5ewvY9o7V28NIwmurWmR2mjbTAXam
+	 Dc58InG+/fdDnGaTOzxpi5vRnRO/bW0HpfUhy1xZhI3Es0XDBlr3lmCP8/iuOjuxb9
+	 AAwnUGGIlDMnPD+DiJMmk13XfLnnjbZ11W9LS0OvCr/3vRbfi6HfkHxuyHkSvOKnmS
+	 PLFck4xfMn6+YeBT+P/jBGXetAbdhgMgLKnMoy0sHN49ClG6Ut3DdEcphBAgSqAwPG
+	 Tzm+aCTc0dkFVmZ1qz90SNnlKUtEigvQH6hl4+JqGiu41oBnyQ4AsSNTzkdK5otMNF
+	 PdFa6Jkpo5USw==
+Message-ID: <6f19b980-5e8d-4674-809c-49321c54d834@kernel.org>
+Date: Fri, 5 Dec 2025 08:56:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] dt-bindings: arm: qcom: Document Kaanapali SoC and
+ its reference boards
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20251204-knp-dts-v2-0-596d8398c6d3@oss.qualcomm.com>
+ <20251204-knp-dts-v2-1-596d8398c6d3@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251204-knp-dts-v2-1-596d8398c6d3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+On 05/12/2025 07:31, Jingyi Wang wrote:
+> Document the Kaanapali SoC binding and the boards which use it.
+> 
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-The of_device_id table is expected to be NULL-terminated. Without the
-sentinel, the traversal of the array can lead to out-of-bound access,
-causing undefined behavior.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-This adds the missing sentinel to the qcom_cpufreq_ipq806x_match_list
-array.
-
-Fixes: 58f5d39d5ed8 ("cpufreq: qcom-nvmem: add compatible fallback for ipq806x for no SMEM")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 81e16b5a0245..66d3169b2331 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -263,6 +263,7 @@ static const struct of_device_id qcom_cpufreq_ipq806x_match_list[] __maybe_unuse
- 	{ .compatible = "qcom,ipq8066", .data = (const void *)QCOM_ID_IPQ8066 },
- 	{ .compatible = "qcom,ipq8068", .data = (const void *)QCOM_ID_IPQ8068 },
- 	{ .compatible = "qcom,ipq8069", .data = (const void *)QCOM_ID_IPQ8069 },
-+	{ /* sentinel */ },
- };
- 
- static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
--- 
-2.25.1
-
+Best regards,
+Krzysztof
 
