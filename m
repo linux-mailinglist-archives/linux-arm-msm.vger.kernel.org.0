@@ -1,238 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-84437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8391CCA7201
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 11:19:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66C49CA7276
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Dec 2025 11:29:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DC9A8304AC91
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 10:16:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6C5313020CD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 10:27:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00E6A31A076;
-	Fri,  5 Dec 2025 10:16:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="etK+P1+c"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1804A31A818;
+	Fri,  5 Dec 2025 10:27:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470112836BE;
-	Fri,  5 Dec 2025 10:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526C131B11C;
+	Fri,  5 Dec 2025 10:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764929806; cv=none; b=D4kSne+y1DzFbE8tJjDsUqN7CQFgantaCc1lAdExObt7yiUn53BEAFe+zjyyRVs6x9dz+e/JZwbCeyfDj4Ka6O5/frg5BtDyrWQeENkdlzDWiETvqmdJZoZnR3qCXNTSr8eO8ooYmydPqpOtE7XNaz8hmISl8DJtF5QUWhF/Q3A=
+	t=1764930452; cv=none; b=j037xrpNSXhrxlBXSQl9SqjouFR96ZWlEBJB9HQcNBO3MmavTzrpUCPMd5AAUj2BvFWCpyMgMNtHTqN/QllmF6+QSWpyMDgCp+BowcxV+BB1+oYU2FyDdGCsNa695PU1Rxd1kJy96tK0knez90TsLRTRnvn6XSLOqNDr+ylRwYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764929806; c=relaxed/simple;
-	bh=MaI8IZsaB50roRDHgSsWkLNVdEW09lgAOc08QCyiKfo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pu5bQtCkq4Kb3txx1iURT/5IwuSZC2oRdVEpU5hr2oszXEYtR4MSsriIBQgmbz6nZbYAoDfB6IN7PNz7d8SHAnZQ0WjAPye7TFZxY5fpkd2W5+Q8Y7GcHnKphZ8L6et1Sq6R8uF3rZ6nDTuqMV9MxrDVtPsmlwSfXJCE3y8tivg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=etK+P1+c; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 69BC0C4CEF1;
-	Fri,  5 Dec 2025 10:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764929805;
-	bh=MaI8IZsaB50roRDHgSsWkLNVdEW09lgAOc08QCyiKfo=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=etK+P1+cWGP3K0/B3fDDI4m0zBha9nhnPjfN/GS2c2jPgs9oOANTKRbkZE8NeQyNF
-	 Y/eYNsGVrrNrUOq9ceqdr9yOmqZWKAfcBMLTCPUycaIwegBoKvRSPOQKJKiR9ibbMl
-	 p7ANoLkCoqh6MOHMvVHv2utr+EV3SOEKWPdAqLtSqDA4DOGPt5I99lVnnPfy8vF5RM
-	 a94fvFlUxmFpDqTIxudRgVcHHktSWoHwIXGQSR2rNWoULVlxlo0Y90o4IylybvY2Lt
-	 EfCWsCni5P5XHdQTZnUS0ayLNvzCRl+EybMir3CLeqYTYJ3HNCTgim7Ckp8479hc2T
-	 cvsVMZekOVeew==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C4A8D216B3;
-	Fri,  5 Dec 2025 10:16:45 +0000 (UTC)
-From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Date: Fri, 05 Dec 2025 02:16:45 -0800
-Subject: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add
- coreriver,tc360-touchkey
+	s=arc-20240116; t=1764930452; c=relaxed/simple;
+	bh=BSLEaDs+9w3y6ZayfxqlLO8Z9nmk0zeJ4OJvijpuB4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hWvjD1wnCY84B8cLUkDOK5nCo9lgzMFI9d2mB/ps7rKZmFtucec7BHomsUWSmFoYJ8deKYnIP8ZrejJuy4N9TvkAon2ddMfrApZW0NwMV63TMqAgzByX6KYDbgxxAB65VyBIZV6SpSq8sFOw3oqEQupzjcBu8pZ50TNfOIrVnoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 43C0F339;
+	Fri,  5 Dec 2025 02:27:15 -0800 (PST)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 30DC73F86F;
+	Fri,  5 Dec 2025 02:27:22 -0800 (PST)
+Date: Fri, 5 Dec 2025 10:27:20 +0000
+From: Leo Yan <leo.yan@arm.com>
+To: Mike Leach <mike.leach@linaro.org>
+Cc: Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+	quic_yingdeng@quicinc.com, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+	Mao Jinlong <quic_jinlmao@quicinc.com>
+Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
+Message-ID: <20251205102720.GP724103@e132581.arm.com>
+References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com>
+ <20251202-extended_cti-v6-2-ab68bb15c4f5@oss.qualcomm.com>
+ <20251203182944.GG724103@e132581.arm.com>
+ <CAJ9a7VhcSxTTaxMR4SS+GbHoPHXm0honykjXy92fbv0HG=1o4Q@mail.gmail.com>
+ <20251204104713.GL724103@e132581.arm.com>
+ <CAJ9a7VgV6chvWmeG2xta11YqyNpdRZqx4=EF7vC7k=J2utpRYQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAyxMmkC/03MQQ6DIBCF4auYWZcEUIp6lcYQQgcltdgCGhvj3
- Ut00S7/ybxvg4jBYYS22CDg4qKbfA52KcAM2vdI3D03cMoF41QQXF8BY9QpkTTNZnjghzBZSSN
- oqbktIS/zh3Xrod66swO+54yn8/iz2+KQGWv+ZOWtUdoYHNVT916Nrh8SsbJGyutGsvraLhV0+
- /4F2xSEIr8AAAA=
-X-Change-ID: 20251205-expressatt-touchkey-1747c503a2f3
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764929805; l=5243;
- i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=bVqnx5maQ2+0asrPWYudZakdqnY0csCZUYY5fznTxHc=;
- b=vV9FXcHwDs8xcyZwCAhkS1lDBXWwNWso6YRMP8HJC1ShPXQo+PQr2Cm/OUqbLQZVwNDiRQKoe
- /c0OqzGawwqDjPvq3UBmBYchzbEnMfM4tAIJk4jvMAr9Iuey168raXz
-X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
- pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
-X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
- auth_id=211
-X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
-Reply-To: guptarud@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJ9a7VgV6chvWmeG2xta11YqyNpdRZqx4=EF7vC7k=J2utpRYQ@mail.gmail.com>
 
-From: Rudraksha Gupta <guptarud@gmail.com>
+On Thu, Dec 04, 2025 at 03:07:10PM +0000, Mike Leach wrote:
 
-Add the tc360 touchkey. It's unknown if this is the actual model of the
-touchkey, as downstream doesn't mention a variant, but this works.
+[...]
 
-Link:
-https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
+> > > > > +             /*
+> > > > > +              * QCOM CTI does not implement Claimtag functionality as
+> > > > > +              * per CoreSight specification, but its CLAIMSET register
+> > > > > +              * is incorrectly initialized to 0xF. This can mislead
+> > > > > +              * tools or drivers into thinking the component is claimed.
+> > > > > +              *
+> > > > > +              * Reset CLAIMSET to 0 to reflect that no claims are active.
+> > > > > +              */
+> > > > > +             writel_relaxed(0, drvdata->base + CORESIGHT_CLAIMSET);
+> > > >
+> > > > I am confused for this.  If QCOM CTI does not implement claim tag,
+> > > > then what is the designed register at the offset CORESIGHT_CLAIMSET?
+> > > >
+> > > > Should you bypass all claim tag related operations for QCOM CTI case?
+> > > > (I don't see you touch anything for claim and declaim tags).
+> > > >
+> > >
+> > > The patch I have created to handle systems without correct claim tag
+> > > operation is a dependency for this patch set. Thus no need for
+> > > override here as the core code will handle this correctly.
+> > >
+> > > The only issue is ensuring the non-CTI spec implementation will result
+> > > in the correct detection of no claim tags present.
+> >
+> > Your patch works only when a module has implemented claim registers.
+> >
+> 
+> Per the Coresight spec - unimplemented registers must be RAZ/WI- so
+> this still works for non implemented claim registers.
 
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
-Add the tc360 touchkey. It's unknown if this is the actual model of the
-touchkey, as downstream doesn't mention a variant, but this works.
+QCOM CTI does not follow the spec in two aspects:
 
-Link:
-https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
+- Given the patch's comment: "QCOM CTI does not implement Claim tag
+  functionality as per CoreSight specification", I am suspect the CLAIM
+  registers are not implemented at all in QCOM CTI.
 
-Test:
-=============
-- LEDs:
-samsung-expressatt:/sys/class/leds/tm2-touchkey$ echo heartbeat > trigger
-// Flashes LEDs :)
+- It neither follows up the "unimplemented registers must be RAZ/WI" -
+  the patch says its reset value is 0xF and then even can write 0 to it.
 
-- Touching buttons:
-samsung-expressatt:/sys/class/leds/tm2-touchkey$ evtest
-No device specified, trying to scan all of /dev/input/event*
-Not running as root, no devices may be available.
-Available devices:
-/dev/input/event0:      pmic8xxx_pwrkey
-/dev/input/event1:      gpio-keys
-/dev/input/event2:      tm2-touchkey
-/dev/input/event3:      Atmel maXTouch Touchscreen
-Select the device event number [0-3]: 2
-Input driver version is 1.0.1
-Input device ID: bus 0x18 vendor 0x0 product 0x0 version 0x0
-Input device name: "tm2-touchkey"
-Supported events:
-  Event type 0 (EV_SYN)
-  Event type 1 (EV_KEY)
-    Event code 139 (KEY_MENU)
-    Event code 158 (KEY_BACK)
-  Event type 4 (EV_MSC)
-    Event code 4 (MSC_SCAN)
-Properties:
-Testing ... (interrupt to exit)
-Event: time 1761059686.899755, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-Event: time 1761059686.899755, type 1 (EV_KEY), code 139 (KEY_MENU), value 1
-Event: time 1761059686.899755, -------------- SYN_REPORT ------------
-Event: time 1761059687.113489, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-Event: time 1761059687.113489, type 1 (EV_KEY), code 139 (KEY_MENU), value 0
-Event: time 1761059687.113489, -------------- SYN_REPORT ------------
-Event: time 1761059688.764757, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-Event: time 1761059688.764757, type 1 (EV_KEY), code 158 (KEY_BACK), value 1
-Event: time 1761059688.764757, -------------- SYN_REPORT ------------
-Event: time 1761059688.817516, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-Event: time 1761059688.817516, type 1 (EV_KEY), code 158 (KEY_BACK), value 0
-Event: time 1761059688.817516, -------------- SYN_REPORT ------------
----
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 55 ++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+> > This leads to two issues: we end up clearing an unknown register in the
+> > CTI driver, and then the coresight core layer assumes it is reading a
+> > claim register even though it is not.
+> 
+> Again RAZ will simply read 0x0 - which is an indication that there are
+> no claim bits implemented.
+> 
+> >
+> > For QCOM CTI, combined with your patch, I would suggest directly
+> > setting csdev->access.claim_tag_impl to false (perhaps using a helper).
+> 
+> That would be a better solution, though as Qcom appear to have
+> implemented a pair of standard RW registers rather than the claim tag
+> functionality, the write solution works for this particular
+> implementation.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-index 5a39abd6f3ce..c4b98af6955d 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-@@ -52,6 +52,41 @@ key-volume-down {
- 			linux,code = <KEY_VOLUMEDOWN>;
- 		};
- 	};
-+
-+	touchkey_enable: touchkey-enable {
-+		compatible = "regulator-fixed";
-+		regulator-name = "touchkey_enable";
-+		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-boot-on;
-+	};
-+
-+	i2c-gpio-touchkey {
-+		compatible = "i2c-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchkey_i2c_pins>;
-+		status = "okay";
-+		i2c-gpio,delay-us = <2>;
-+
-+		touchkey@20 {
-+			compatible = "coreriver,tc360-touchkey";
-+			reg = <0x20>;
-+
-+			interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&touchkey_irq_pin>;
-+
-+			vddio-supply = <&touchkey_enable>;
-+			vdd-supply = <&pm8921_l29>;
-+			vcc-supply = <&pm8921_l29>;
-+
-+			linux,keycodes = <KEY_MENU KEY_BACK>;
-+		};
-+	};
- };
- 
- &gsbi2 {
-@@ -198,6 +233,20 @@ firmware-pins {
- 			bias-disable;
- 		};
- 	};
-+
-+	touchkey_i2c_pins: touchkey-i2c-state {
-+		pins = "gpio71", "gpio72";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchkey_irq_pin: touchkey-irq-state {
-+		pins = "gpio52";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
- };
- 
- &pm8921 {
-@@ -420,6 +469,12 @@ pm8921_l25: l25 {
- 			bias-pull-down;
- 		};
- 
-+		pm8921_l29: l29 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+			bias-pull-down;
-+		};
-+
- 		/* Low Voltage Switch */
- 		pm8921_lvs1: lvs1 {
- 			bias-pull-down;
+If an IP violates both the rules for implemented claim registers and
+the rules for non-implemented claim registers, how can we rely on
+these registers to detect the claim feature?
 
----
-base-commit: 0ccd3ddf45c93ab06c9b1a9d266dcab1e52bf3d2
-change-id: 20251205-expressatt-touchkey-1747c503a2f3
-prerequisite-change-id: 20251119-expressatt_nfc_accel_magn_light-f78e02897186:v4
-prerequisite-patch-id: 6fdd0efa5eda512b442b885df80774d1a7037df7
-prerequisite-patch-id: 12d296f83ccb1bdfb8d06a72e476bf51ae5f4e6c
-prerequisite-patch-id: a970acf2080143f41ae0935dd2c57bb71f5bf338
-prerequisite-patch-id: fd25fef58503c5e5cf742e79b124948c7f6b98d9
-prerequisite-patch-id: 966ae746687ebf8eb29c6185a8909b047e70dbb1
-prerequisite-patch-id: 68603a680b24921759425fc289e61fc4435e5ccd
+My feeling is we are building a house on sand - these registers are not
+used for claim tags purpose at all.
 
-Best regards,
--- 
-Rudraksha Gupta <guptarud@gmail.com>
-
-
+Thanks,
+Leo
 
