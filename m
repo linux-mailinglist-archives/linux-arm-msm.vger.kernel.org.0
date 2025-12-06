@@ -1,72 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-84550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54D02CAA00B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 05:00:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 669ACCAA01A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 05:00:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9E8863196FE2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 03:59:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 208553251622
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 03:59:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A5D529B8DB;
-	Sat,  6 Dec 2025 03:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FA9B2BD012;
+	Sat,  6 Dec 2025 03:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkCkgvZy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ukkmd+3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27438299A8A;
-	Sat,  6 Dec 2025 03:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFBF296BD6;
+	Sat,  6 Dec 2025 03:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764993592; cv=none; b=QZ3c0LdM3ssvTN3/DE+fd2brTzuR7eDZoP0+KPbbLcoOiT0Su5EQGCPo6FCqIT+oPDziXLv5WLfxiOjSrANqbef5DuSim4Ra0RcZ5cat/Z9PccWTqKoss8rkhynpe7zByCUsmDhNzwcSTx4sZkXH3UxrC86gNLs8dBYKz3oSz+g=
+	t=1764993594; cv=none; b=kBv9wpHN46kn+/av/kwGBJahJARe2B+yaTnCSrPOLuOIN40e0fPv3nocDsZ18jttREJrWXy2Mwn5Dy9+ZYLHJf6w3aA4+bTQ1NkiZkMK52C3+tdbpQxELfJMZrRYEyNcmmnc3I/XNw1sKYQZeRzDwzYkG2PR3a2flcSSiC4B38Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764993592; c=relaxed/simple;
-	bh=Yp+h4dlCyljGscNsyg/vjo3+xpYcb64d7JYudiRzfp8=;
+	s=arc-20240116; t=1764993594; c=relaxed/simple;
+	bh=+uq+QxkkNnADYHAyHPkaa9Tz9K/l+B6LhYrUK7N/CSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B1YWBkhLWB8oIqgF+WaBoaMOTZZJobp76a+4E5wQ6PTrPLfZuCXlkBen/DsH5qCTFY1IY0HprvIWRJzi5OAhZmWPJTYnFhkJqcpP7Jtc3uSyD9O9FcrB6a5Bhd1sRA0j1oSMwRrCavyF+VOfcpCI1vQ5PKK8nZ4ISM8X+blWFbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkCkgvZy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D93C116D0;
-	Sat,  6 Dec 2025 03:59:50 +0000 (UTC)
+	 MIME-Version:Content-Type; b=QNeeckcHz6NlqzRzeQ1Hx65NrT75ASIH1eyfMyFkM6wJWvzWIlWZPNPqQAJE29UF3knuTu03sAjkFrI4DXg0L6dBk1uTuKhjas/j5nosZEv64Atwm0dvtYpzeTBwA0MziPXwOQzqIOzlCKcBPrV666Jrx96ItI0rJr/hIklktF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ukkmd+3K; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC387C113D0;
+	Sat,  6 Dec 2025 03:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764993591;
-	bh=Yp+h4dlCyljGscNsyg/vjo3+xpYcb64d7JYudiRzfp8=;
+	s=k20201202; t=1764993593;
+	bh=+uq+QxkkNnADYHAyHPkaa9Tz9K/l+B6LhYrUK7N/CSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkCkgvZydo552dqIhZSMUa22B6nbA4hWiZy/1qRlUooHHb9bDEQUns65d/CuvPx6B
-	 VA5tP48awwY3zOtpJ+USU+Qtzv9nFK98FyxUZEwVu6Bj2nzIZIKloaITUAH5Oich2W
-	 SQutnK07It7XpF8LnyHAz5GIdRVpAkZ40t50DRqu9N9U3OUJoHLHDg8aW6cEG6DgUO
-	 +cikYW8et8GZRcaF5FPslwK27weGO8cflJbUNb0xxA3a5ABNVUXAdXIdjSYQStfauU
-	 FqHFzh1TbqpnNbVRSu6Fra/mTuUArvnQXeXLyvBVwwuf2XJWhf7lGKlYnfiQtZ3ovM
-	 UaZoIJ6+hR8ZQ==
+	b=ukkmd+3KFD0GknD7DU0nnmaVMl5vA/1pjIf4ITt3AxrjzQvamGGUenDMTFd6dZS8H
+	 X/hYbcySzN9mR0faVianX9ww9CJl1zQjtRwgPAwQ8Cazvzutqbbg71Ov07myp2nCxg
+	 zRSD9wJeJp9dbixVPbctOGPAp7OwSzhANknogSd445Xov/4SYTeYJ/TOrpxwOjAZmV
+	 Ft6CIAyV1TpjvQg9ajTsVTI7WY60rnS55ROo3qgWAIOSsizAIr9BXzy2N4H2VhIimE
+	 cGHGvZLka0mPDUGWUgTX5IhUkxAb55e8W1NZw07+ZZ27nAQVMqq/lnPBVOotV4vHAK
+	 Xvni98nUwm8Gw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	David Heidelberg <david@ixit.cz>
-Cc: dri-devel@lists.freedesktop.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	phone-devel@vger.kernel.org
-Subject: Re: [PATCH v4] arm64: qcom: sdm845-oneplus-enchilada: Specify panel name within the compatible
-Date: Fri,  5 Dec 2025 22:06:05 -0600
-Message-ID: <176499396482.224243.10120913853765639507.b4-ty@kernel.org>
+	linux-remoteproc@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/3] Define VDD_MXC for SC8280XP
+Date: Fri,  5 Dec 2025 22:06:06 -0600
+Message-ID: <176499396490.224243.15580177530806530343.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251204-sofef00-rebuild-v4-1-7f6e030ae5b7@ixit.cz>
-References: <20251204-sofef00-rebuild-v4-1-7f6e030ae5b7@ixit.cz>
+In-Reply-To: <20251202-topic-8280_mxc-v2-0-46cdf47a829e@oss.qualcomm.com>
+References: <20251202-topic-8280_mxc-v2-0-46cdf47a829e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,20 +81,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 04 Dec 2025 11:41:24 +0100, David Heidelberg wrote:
-> sofef00 is name of the DDIC, it doesn't contain name of the panel used.
-> The DDIC is also paired with other panels, so make clear which panel is
-> used.
+On Tue, 02 Dec 2025 18:36:19 +0100, Konrad Dybcio wrote:
+> This has somehow been omitted, leading to potentially stale votes.
+> On the flip side, the domain will now be powered off, which will
+> uncover any omissions we've made in the DTs so far.
 > 
-> New device-tree will work with old driver as expected, due to secondary
-> compatible.
+> Reasonably tested on an x13s without pd_ignore_unused (camera still
+> works).
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: qcom: sdm845-oneplus-enchilada: Specify panel name within the compatible
-      commit: d60e51cbae7e92c4a00cddb2750129094760da60
+[1/3] dt-bindings: power: qcom,rpmpd: Add SC8280XP_MXC_AO
+      commit: 01e17231b051b9392f93d1c7a7adfec5a7d4d72d
+[2/3] pmdomain: qcom: rpmhpd: Add MXC to SC8280XP
+      commit: 2dac255225ece85cf38c9557a413ac324e3a6651
+[3/3] arm64: dts: qcom: sc8280xp: Add missing VDD_MXC links
+      commit: 3e12e2ec598b90e8f6af8b455ceeba8cd58123ad
 
 Best regards,
 -- 
