@@ -1,121 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-84564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD5FACAA210
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 07:56:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6956CCAA432
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 11:36:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D06F3111C0B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 06:55:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 33D31307978A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 10:36:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBE012D877C;
-	Sat,  6 Dec 2025 06:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3662D8360;
+	Sat,  6 Dec 2025 10:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jqgsbzj+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EbFDulp3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB362D837E;
-	Sat,  6 Dec 2025 06:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED91F28D83F
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 10:36:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765004152; cv=none; b=SjR5ayupbu2bFyB3Y27wE9ffqmaUTjm/frqKtCK2GaBw62aUANUAmahwBNPXTS8aCwt0hyPzcqXihBFHUvPjflzLUu5/hf5ybEPoROVlrlZi2v4MF1Zam/QeKXcSUZ1L1T5OdEosdfBaVS63k6T1vTKiohXGhMcuuCEAdWscptY=
+	t=1765017379; cv=none; b=OLLMKC2oivvfGuRAiEW97Oj50/UDNKSVmHo+zwDHh1FRokYIwjMG4ISAEH/BP2tNlPh4mq4JgOYsGTMlejgNHmkzpQFkbsyxtX1Oq2NFkDKSy/2hB4RMRtleW1GQHm+0+rp9i6x01c1ldfcUo9yxd1VNNNWtzhGo5JoDklbGYYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765004152; c=relaxed/simple;
-	bh=GXFNWKU7EpQDMWxUoTAxizG31A/gD1pqyuzXmG3Azi8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qs45hl31PvwVoKSgOWyHGaNBdAJJSFgVUyPQI9lbZs/t2J5x8Z/GfPO91QYrd+UJDKWY1a3iKrEWA0+PoM31Z/NfdBM2TixgIdpIWMwQpQSxbQrOlPAjD6ibBZpwqC+CgzHZNKUwMYfqGNcsUU2O70pgnTXtxAbWt2HDdS5Iv4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jqgsbzj+; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765004152; x=1796540152;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GXFNWKU7EpQDMWxUoTAxizG31A/gD1pqyuzXmG3Azi8=;
-  b=jqgsbzj+WlMcuGz3fdlqhH4OgBRWn3EYtNRKbJ/s6goouphLCJCPJkUB
-   /ki5irpvlW3gDHRjjXbMwlusTbrigCwHqEA6O/P9rKiepTAzHNuROygfW
-   CR2tt5SYlk2xoYL99hleyJlbwN8eDsOW4FLLamNqX5rZBM1X449aUwiIh
-   1dOhNrO3bDx3eWRm47922lTFDoxFwn9/zu9o2tris7sJaxxEvaUtZLZ3Q
-   YFmhO4Q1eBb10aoCMEZ1HjBYz2GDE4kX0d4wNHJQpl1Rr8zWRXcUj92Pp
-   hvb94+QN5yzoYvlc9zKRH2cQUPqt1zURz9/4jWZGLtUi1bZtaAO8JejsE
-   Q==;
-X-CSE-ConnectionGUID: L0dcVvUbSkSbyYhOccJnag==
-X-CSE-MsgGUID: zojrJ4oXRNOwy4HSdpvEjQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11633"; a="77353532"
-X-IronPort-AV: E=Sophos;i="6.20,254,1758610800"; 
-   d="scan'208";a="77353532"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2025 22:55:51 -0800
-X-CSE-ConnectionGUID: JfK9f9K0RUuGfn8c8Z/W0Q==
-X-CSE-MsgGUID: x8IeWcC9Rf6xIbCOhqfozA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,254,1758610800"; 
-   d="scan'208";a="195548765"
-Received: from lkp-server01.sh.intel.com (HELO 4664bbef4914) ([10.239.97.150])
-  by orviesa008.jf.intel.com with ESMTP; 05 Dec 2025 22:55:47 -0800
-Received: from kbuild by 4664bbef4914 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vRmCm-00000000FxV-1CGg;
-	Sat, 06 Dec 2025 06:55:44 +0000
-Date: Sat, 6 Dec 2025 14:55:19 +0800
-From: kernel test robot <lkp@intel.com>
-To: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>,
-	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Petr Hodina <phodina@protonmail.com>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	"Dr. Git" <drgitx@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
-	Joel Selvaraj <foss@joelselvaraj.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH WIP v2 8/8] media: qcom: camss: Account for C-PHY when
- calculating link frequency
-Message-ID: <202512061404.uEUcsCh1-lkp@intel.com>
-References: <20251204-qcom-cphy-v2-8-6b35ef8b071e@ixit.cz>
+	s=arc-20240116; t=1765017379; c=relaxed/simple;
+	bh=gpVV63iDglnfpaEWSXD1aX6VXDo3O9ua7snWNryoF3E=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YrW2ag762ZHWsRMkbd4q3dj+Ub+Rh9/MQ+7/++GEqbNAjaF67GYDlsXsMHwic3yeePKapaDC4YuDkjw6jomdcznw7Q6KNVia0jf7BvLy1siEdBHb6crraE/b5G4b23Fe9wBYSlIJABG9cdTWlzrO5L1tdckfL+9vmMZLT+xqRSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EbFDulp3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B94C4CEF5
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 10:36:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765017378;
+	bh=gpVV63iDglnfpaEWSXD1aX6VXDo3O9ua7snWNryoF3E=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=EbFDulp33Na/XwDV8Rj+879IbM/RrrGGlifCyfnX1JMWpyYjydOGCz8miKqhE9Pfd
+	 R3CLkdrN+Sb9GSB7jNMq/hCCkcmPVuR7uB3L7noF6DCXamUVjKFeWzrScPGyUiFm80
+	 XifYXEuPppSsfLsBL4awLeaxM5YuS5YFUrQbbUtcGOaZ3x8XQQdNkbjc+X65Mpu87G
+	 NNdZNzswphu+3+CjmKBclsKbG9Oo8LnLeCCHxmcqI7wkfjxSi5pU7qSRtW35X3OkxQ
+	 RyFUgw3NH26/fxcXdzMMYIUgV7ikowqijQ9dq23eHk22fSr0WQUHy+4ZedXm91Zy3S
+	 6dUAtln6UMP3Q==
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5959d9a8eceso3302427e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Dec 2025 02:36:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU79QjiLuwiAX8ua2EVVHzcFA8gg9HdOPIosyHuoCPlVva7dScGYzd1HO/KSoPKHTKK/EJiIylOqWN8A1NZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZxoE1XHjZtNQ3qufcVMtPAfturBHLSQkMygf/36H9AE4K56GH
+	WqCbD04L+bd4ypcouYka+ehYt9jo9INdPasIMQ2rgmNbsvOfGvCaFPpmwonTGc2pS4861DqO1iA
+	9Bo6WZoF1z5cipl84va1CN6HZUHKPJCCXPprd3pBi4g==
+X-Google-Smtp-Source: AGHT+IF6DtV7OW+BejuKVtdzjK3twTb49WoGKkQvitpJR/41yEScXdRbSXUcqvOsFNEJ72Er9XF4YpUdDXF5/uploMQ=
+X-Received: by 2002:a05:6512:3044:b0:592:f5f9:f5a9 with SMTP id
+ 2adb3069b0e04-598853c29f9mr536908e87.36.1765017377296; Sat, 06 Dec 2025
+ 02:36:17 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 6 Dec 2025 02:36:15 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 6 Dec 2025 02:36:15 -0800
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251204-qcom-cphy-v2-8-6b35ef8b071e@ixit.cz>
+References: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
+Date: Sat, 6 Dec 2025 02:36:15 -0800
+X-Gmail-Original-Message-ID: <CAMRc=Mcx1E3w7roY55HhKZg6pqV+NRkp87KYa5=BUEVJHOXVLw@mail.gmail.com>
+X-Gm-Features: AQt7F2oWdedln7_1XCoDS6sUsiV3R704Mi2gnvY4_t_P0x5kXui4g-3uZj4PJtM
+Message-ID: <CAMRc=Mcx1E3w7roY55HhKZg6pqV+NRkp87KYa5=BUEVJHOXVLw@mail.gmail.com>
+Subject: Re: [PATCH 00/10] Fix up WCN6855 RFA power supply name
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi David,
+On Fri, 5 Dec 2025 13:47:19 +0100, Konrad Dybcio <konradybcio@kernel.org> said:
+> Commit 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description
+> closer to reality for wcn6855") renamed the supply representing the
+> VDD17_PMU_RFA leg to mention "1p8" instead.
+>
+> While the supply's voltage is normally 1.8 V, the bindings should
+> reflect the actual naming of the pin. Moreover, almost all DTs define
+> the output as 1p7, so that ends up looking a little odd..
+>
+> Ultimately, this is a "fake" regulator that is consumed for the sake
+> of DT sanity and this series is meant to bring uniformity and squash
+> checker errors.
+>
+> The last patch fixes up a less-trivial warning.
+> sc8280xp-microsoft-arcata is left out because I don't know whether the
+> mounting of the chip is on-board or as an M.2-y card (although I would
+> guesstimate the prior).
+>
+> Depends on the long-ready-for-the-merge series by Krzysztof (per-chip
+> bindings split of qualcomm-bluetooth.yaml), mentioned below
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
 
-kernel test robot noticed the following build warnings:
+I want to belive there was a reason for it but I no longer remember. :( Is it
+possible the schematics for the lenovo X13s laptop had it described as 1p7?
 
-[auto build test WARNING on bc04acf4aeca588496124a6cf54bfce3db327039]
+Well, anyway:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/David-Heidelberg-via-B4-Relay/media-qcom-camss-csiphy-Introduce-PHY-configuration/20251205-004233
-base:   bc04acf4aeca588496124a6cf54bfce3db327039
-patch link:    https://lore.kernel.org/r/20251204-qcom-cphy-v2-8-6b35ef8b071e%40ixit.cz
-patch subject: [PATCH WIP v2 8/8] media: qcom: camss: Account for C-PHY when calculating link frequency
-config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20251206/202512061404.uEUcsCh1-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251206/202512061404.uEUcsCh1-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202512061404.uEUcsCh1-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> Warning: drivers/media/platform/qcom/camss/camss.c:3928 function parameter 'cphy' not described in 'camss_get_link_freq'
->> Warning: drivers/media/platform/qcom/camss/camss.c:3928 function parameter 'cphy' not described in 'camss_get_link_freq'
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
