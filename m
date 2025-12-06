@@ -1,108 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-84529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E71F7CA9A16
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 00:28:47 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1CFFCA9E30
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 03:15:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A5D693021DC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Dec 2025 23:28:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DD06E301356B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 02:09:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4F803002B4;
-	Fri,  5 Dec 2025 23:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4BC121885A;
+	Sat,  6 Dec 2025 02:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kNMmNd4g";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IjnDopn+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jvIysLLX";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KrdCpjLg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA3A2FFDD8
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Dec 2025 23:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED7C1E0B86
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 02:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764976920; cv=none; b=rqjuQkgWrQTUwqzkWOHt+qh6NX5GGRoInWLQYwn4HFfnbGCEHFBl1NuYaQMiqcO/Wa8W+yvb16Y1hqlQTRHJYA3kND869I2f1WK5JHqsx4Vv2m7ZO+1m/I7bD3rJcoBnJBhTwHjcMhH0s+/lPyCe9uysHQZSeFiilDjAT2HvabM=
+	t=1764986986; cv=none; b=DWZfjRo3J9BGWsogVfKVu9HxSkZkTicp+O5oN4vJyl6ktuShwIb5vBs5DF5CcGkaIDHLOED2u691rFgL3xVIRK0Jf5XEqIV3N1uyV9/rEW5pSKW6iA+FhcJqh+anTno1i6z1I5viznHNvyhccgqkzZeYrI2t6feeKDNJsvlRxtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764976920; c=relaxed/simple;
-	bh=fxF4LT7povdUWy7AiM9pmjK1lFqnzQfOVBrXF1Iacm8=;
+	s=arc-20240116; t=1764986986; c=relaxed/simple;
+	bh=X2AxqvaiKco3eVtL/7cd6xh4H+ydSodFgp97N1NLT8w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D9P0wt0pVgtIc9mVsfkaQccFEqBWbQMZoBm9CjQP7z3X8afUOId/ktJoyP6J+CGSPUgVD85theCiUmakOepf4V/AD0gGPpvLV+arJa6IGKZ7wQtNQsUpKHsVh8FLMSD+4+x3n7i5Z9CuvcTrpl8+jkyfkje0TKtZSd3iPyexS4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kNMmNd4g; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IjnDopn+; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=nyddESHSAbm5RmqoFkLuZTk9n0qOluPyPTA8hQ/jzHHMDGvYFnnmviJZn/B9f+g3N3QWbbalKaqYE0lub8vBPIr+c/zrdLOIKdTLz2+s2Amo8YmaDPk3TKCXBpxDq51veOuhDM5Sjq5jvz9mOWXI0AVPxqrR9lUc/0fOLss4MJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jvIysLLX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KrdCpjLg; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B5FBMJU887446
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Dec 2025 23:21:58 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B5FBKxT4177172
+	for <linux-arm-msm@vger.kernel.org>; Sat, 6 Dec 2025 02:09:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=m0UsgMm+T+nyKTxHDccgY7aD
-	S1jgJ7lqRr6xFjYRgRg=; b=kNMmNd4g7i2UfUCMUw78PawwSwRQI5G0jGk7NbuB
-	nglnGe98fPFQ+jBDkoJ/0CauXdMgapWT0hhgFecee2h/Ko/MJp8cbbSqrKhn4yie
-	WVkPGXUZhoHPicPMCgr/OrY8pngjgL/d0OpAIDByo9uSmA8lWCQ+GTf5CTTo3KjB
-	RhJuRmm/5BXI45l7hGmUA+Xuvvgax87C7dHXYNSa3VwHvAH4qyHdSb7F9fcRDJ8Q
-	n4bI1I/cb/vJf89ZEO4Z5qFOwwm9N2DFMuYfdI5yaaCO6xRWssOE2vp/9annfNO2
-	xMzXtUFoODVQT6aBlG8AOCjrDSCOjUuVg7DdNok382I0SQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aurwvju8v-1
+	:references:subject:to; s=qcppdkim1; bh=wBjDcRm8AWQxoXh1lQ0ooLMx
+	3oOAtlTuUPKtvzrTSOA=; b=jvIysLLX1crJJUEI4GCs93i+sMqMi9D1z3l7BL73
+	LAv0p/L0wIzzZ4abQheIG85K0a8EOMz8zlr3NPIEjhw1Z38K9A4dGSvK7TBElqqn
+	Bf/9LcO7DF1T5cuG27awNXUFbdiUp1h/IZ+pDW4O3mO/JBSWwWdb+I1qYMzF6CH/
+	od2F+jay1WeI4Ug0M/fVBPgZYSBNJ0Dk4OAXQXm7EDI79kpOzc42/mtPbjuN7B1J
+	WjIha3WWJACT3/eLD+Dy06hI/6cXKY94+z7AsoaWYd9/bbcmaY7gsS5Gd8NtPx6q
+	cP/rv0ZhgXXKleLLtsul3pzpOlPDVExgzllt71zz80LhMg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4auwm5a9vk-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 23:21:58 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b2e235d4d2so855292985a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 15:21:57 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 06 Dec 2025 02:09:43 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-880441e0f93so74492766d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 18:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764976917; x=1765581717; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1764986983; x=1765591783; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=m0UsgMm+T+nyKTxHDccgY7aDS1jgJ7lqRr6xFjYRgRg=;
-        b=IjnDopn+F+wgC0lCXjDvmLJ4vrMNIG5K+ryUOJ7uznEqouyadB5DjonYs1wlPWG3hL
-         +sK4ln3+3xNXwvt9Pj2mr5MmmOiW+HI/L4xQvOCDpqGqmN4unHrXl4MoB2EbF7J47EnA
-         ez87CLNptOIUYrflmke6cUlEFNDPVMfndWRU+DAw1zXjGuraeT5JAb+ec9kaSD5YPBmt
-         a93BOADVcBfNr4A0JGS/Q72mZNygE58wHd/Sibsek+jpYPFDTt7XoxbMAk3bbcEbE7PO
-         skuGRQxc+B67M75JvENyg2Vn4KEhcdbys7iWAVPWYRfXZLZZN9yFXAFPuQyYscy8hohi
-         cwlg==
+        bh=wBjDcRm8AWQxoXh1lQ0ooLMx3oOAtlTuUPKtvzrTSOA=;
+        b=KrdCpjLg4h8mcjundANFU3gke3hmdszJyu+0N5rqPIo5pOHADpsSaEwuI/lyUCw0j7
+         pQbJnorg0BsO01NsxUIH4587QLXKgd2rbxySKeKzR3vU5A1WIF3u0tHLkGsnWub6ifS2
+         jrOrYbsrf2bUl6LGEfHogdanGy5ansVIc3t2O/mlUQeRnYJnJ/BTqJYqq6qXMwpu1NTZ
+         4vdrQQEI8MEhQufUvRGwFSMXCmaXzaKzgh6PrG1i3cA+yizD7NkJGjBx47HT8sF10IuU
+         6EJq0wEP++9RDJipbuyMLZvNe0vzP6SxUPf2kEq+di6niE2uUqqrl2s5PSKYU2JNEZ1A
+         6f2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764976917; x=1765581717;
+        d=1e100.net; s=20230601; t=1764986983; x=1765591783;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m0UsgMm+T+nyKTxHDccgY7aDS1jgJ7lqRr6xFjYRgRg=;
-        b=CKB8F9NomoDvAet8oDYxowpSQhZM3fywOcLRjJEiQKAK36RoMherO9m00ZarDBNPF3
-         OmM/rMbeotG03B75IZ4OtjMjNQ4xsFMBU8Wpwvafw4uJQu+G7OOTbQTDLHRM+Nuhl4NB
-         WaVSxFm8njOCJ2IEw63llWjtOBgk2HeXpGKiA1yKMZKYlEeOrE7OJYUgLCCseQTPJ7ro
-         /CFv7bVj9M++QNZVP/EHvd01sIRH9hai9a3gvbji9r8bv+M1rLfjkbtYDcoCcvig6vcY
-         XMXb8vDya3Ano73L4oLunM7FZfXWWVJ1vla25E+f/n03MtXLb01Zi+m4ECI/jNhiEkGE
-         vBFw==
-X-Forwarded-Encrypted: i=1; AJvYcCVBFG5nMMlumu/4+ahApzLbHl8iupqBYc2wiVoldrOpbfS+E1O0H7BN6ZPRZ8rqxr9qJTov08grkuuRc30v@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLCaBWszautA9UM88HZOMgbFLq9jNMw+JWQG1Fp9mOPW5TAWyZ
-	ayNWQf3jNbccORIveTOcvflXcNcXExC0QsLcpKz7sWgn0cqBU/Vtrf9VOaICzLCjv0JCM61gNnT
-	/uh9k4daNb3V9pGn7Xq09584S4UpYGHgn1MTZWCH2XGKS3S0VNBbArZ18q/NSTfURr0YurUYrkC
-	lV
-X-Gm-Gg: ASbGnct+O6mTHICmqi7C4RCV1MJ/epNe/BP0aBmRkyil/ZvBvynyukky0v+srSmcNP1
-	7vI/9wlWbHqAZY93dtRmqCi3seL0Zr9LtHpKojgEWkEmj65qbUHlxNPFbFe0gRCgdkIC4mGxDFo
-	t8/tCp+5BwZ8PMl9JEGU2KfXEsAbLg56obopBvLmwEiWqoesFuQgepYiGVttocSNxAKxo1YINf0
-	sBNr6WPPCuRnCy5jM/mj0NTFyrkmxa91J+0t3HgWxw4wsYLJlx+prwdbgOmfEW+RA/SnU678MfE
-	tYGYdfA98zHOd2y2cioDus52ObxKtaifVIXVWRAhPIMgQVOCNB2Kz5DUYJCBN4JWA/htH5ykU9p
-	qLeifmAryXXw8AnnwzEbYyTXlpWTRXKjyj8yAnZNFvaXAZZhJpThbNNQs9HwM6Xe24hEa1q59IR
-	CLDRPMIwe6yPF/m+gmgcKsOsE=
-X-Received: by 2002:a05:620a:318c:b0:8b3:aa:f61d with SMTP id af79cd13be357-8b6a256a53emr123736485a.49.1764976917180;
-        Fri, 05 Dec 2025 15:21:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEMqOeexM/myZ1qAWlSYGoxWNCb6fWZLj8B6NOPrklR7Z33k8wZzxmb95gkeV3tIp0hcJ2vkg==
-X-Received: by 2002:a05:620a:318c:b0:8b3:aa:f61d with SMTP id af79cd13be357-8b6a256a53emr123734385a.49.1764976916664;
-        Fri, 05 Dec 2025 15:21:56 -0800 (PST)
+        bh=wBjDcRm8AWQxoXh1lQ0ooLMx3oOAtlTuUPKtvzrTSOA=;
+        b=fZWRV6AukiJgkWU8wqVhDAkfiBZo1mnA7Xc+8iMWnRy+OR4ADvvuddKHjzBcllxXUw
+         srM+2Kz22SIYUxWWVZVkf4NiUbjlAAdf9ukhFsJKlkg44/qlQ6pW11OXzPLpbyP3ayV9
+         ZkxVC3LH8Hlk8MIKO8OLi+C+FtMd+atVk+p2f3M+HSI0Z6Kk28GzBYAPHe3Zj4SkmIdZ
+         5fT6+kvoy53YUUsxZg7sRRjUIUm7547TVfHdcZ4A7HfckutvR8VYnQCgD9U0f5bRI2vS
+         +EMFFebKbrgDTpV3yxiREvK83LqAE07c+SjwR6CIUG4YP57tq3TCc/1JHcuTzmzHEvdW
+         kc1w==
+X-Forwarded-Encrypted: i=1; AJvYcCXJOCF6GQ/cdFLXtuUadd6jCqxxFh9RIWiBlmROR2owLy8ysPlA2uyWcoUdGVo+maeAG2+3mOaFMaxAS0wW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0+uL7Iqy6Y0GOpwGkl/5hUbHvHui4pq8Fdu66sUwgNyiS/Pbe
+	tf1cITjPEgV/AY++JFNIld7ySv6x+77FOBZxpF/4910NKw90uRTqo8U6la8DvhRONC+NakYcOwD
+	hzFuqPJkH2KvECU0me1xyI8o3KRirGFXiOgz1dOvOPmrAu+mjmZkZUombqxGIfD5F3+uR
+X-Gm-Gg: ASbGnctlj8vhNRjCnGKQDJ8Qh0GLnHMxTi+VBovB0DgyU4GZNUudhii4NBsL2Dkb0jP
+	V02EAXiaAK/v3/O2bID56lqrS1C9p/GYv/pm0Z7QZFg8rENM/DtotuTIg5FRuJ7ivsSu8UgB02q
+	5rjS1QpMyoC6sgqNfr4BmYnvey4EqfDofZduDbqgDeP668hlB0q6o8rIdbCUlPjP2JyR64B+arG
+	tDzml2S3WRsU9qPg+kLoz3xGa3t81/BvgFDDLQbqYZsL6v9+JnEH/mVebpWnA86Pcw99UWA8Nky
+	FnfFy5ApogD0YPx3GUyhZoyv7D2YgK5itc0jzdIjDbw9y6LeYzw2nJoikzm1sB4K0wojqpKDgoU
+	dq49Tqc3DShzFJmS8W2mMt11p5lj+g28PZ5T9E12gyaxmD6vaEfbUEu3vXm5oCuD3O1ZYi3pS/r
+	CY/HW+VZasbGuXLAHauUEbUdI=
+X-Received: by 2002:a05:6214:dc6:b0:880:5883:4d24 with SMTP id 6a1803df08f44-8883ced9f16mr21832196d6.9.1764986982686;
+        Fri, 05 Dec 2025 18:09:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGnX5LHkP/rg2bYvj21olLIjxKJGEG5reSqObxwn9P80vOMoPc/ue0NZyAE02vyCjWEwdmhIg==
+X-Received: by 2002:a05:6214:dc6:b0:880:5883:4d24 with SMTP id 6a1803df08f44-8883ced9f16mr21831976d6.9.1764986982227;
+        Fri, 05 Dec 2025 18:09:42 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7c2703bsm1890182e87.70.2025.12.05.15.21.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597dfc08b25sm425882e87.6.2025.12.05.18.09.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 15:21:55 -0800 (PST)
-Date: Sat, 6 Dec 2025 01:21:53 +0200
+        Fri, 05 Dec 2025 18:09:40 -0800 (PST)
+Date: Sat, 6 Dec 2025 04:09:37 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Sudarshan Shetty <tessolveupstream@gmail.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 2/2] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-Message-ID: <q63bdon55app4gb2il5e7skyc6z2amcnaiqbqlhen7arkxphtb@3jejbelji2ti>
-References: <20251201172222.3764933-1-tessolveupstream@gmail.com>
- <20251201172222.3764933-3-tessolveupstream@gmail.com>
+To: Paul Sajna <sajattack@postmarketos.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Amir Dahan <system64fumo@tuta.io>,
+        Christopher Brown <crispybrown@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 05/12] arm64: dts: qcom: sdm845-lg-judyln: Add display
+ panel
+Message-ID: <w2gtfgvbx5ujyfbilhyqblhlwo4ewybpmsrdl2gyafcx5etbnl@apze5qpd4okw>
+References: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
+ <20251203-judyln-dts-v5-5-80c1ffca8487@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,152 +117,175 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251201172222.3764933-3-tessolveupstream@gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA1MDE3NiBTYWx0ZWRfX7JUfAANWtvHH
- fT20gI/LJwCYUc2wKhSRnvJ/vI4dz3d9ZwV0yLt6AgkAQ2B+hN+eCVxOSaYrLKzKcJGU3fg5O7m
- jKX015/iX3P/SYU69E7osCv9337xXK8IaeCp2dmrltiZeNLglA/xbaRFlDrLRXgfjGY7GsQjHSP
- CxlG4SxZCjjKDqW2MbTCL1Lk+SiqF7kPE1KNJpIJXnXaRhp7geBxcoLZrxjOivEovf22Cs95M72
- i0fLuM3VcwpuvNqB5yvlnrF1tWvibiirMJs6tlto7suEz3nZS8En6oXVAqmEUW09Ssl+lfVr2z9
- URq536q/eBnRSVa+Z3h/8f9GbqsSNrinxGdgDAb/APLxypsFgGq9NGirWL/IfaqgeIwLeo3/4Ki
- Eg2GEL3eIqNlMUFmUv/2d4K2Vrq84Q==
-X-Authority-Analysis: v=2.4 cv=Yd2wJgRf c=1 sm=1 tr=0 ts=69336916 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+In-Reply-To: <20251203-judyln-dts-v5-5-80c1ffca8487@postmarketos.org>
+X-Proofpoint-GUID: GH3mGhirGopL-zQnJAI9l8rZGcTbczRW
+X-Proofpoint-ORIG-GUID: GH3mGhirGopL-zQnJAI9l8rZGcTbczRW
+X-Authority-Analysis: v=2.4 cv=XeOEDY55 c=1 sm=1 tr=0 ts=69339067 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=YrivFFqYjvNrT_tbTFIA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: WNAUVgKL8QxWmaMPWXmvTD1MjEvDcQdn
-X-Proofpoint-ORIG-GUID: WNAUVgKL8QxWmaMPWXmvTD1MjEvDcQdn
+ a=EUspDBNiAAAA:8 a=Gbw9aFdXAAAA:8 a=uCEot8vDWxj3b5wlwVUA:9 a=CjuIK1q_8ugA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=9vIz8raoGPyDa4jBFAYH:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAxNCBTYWx0ZWRfX9zpmDvXxR270
+ +kXFLdiWrFtui1yK8JIOGzbtDUHA3wPBPkcEf0rK6MCwkXHbpQTLhKGcY5rAWjAuYJHIhZqXpZp
+ Hryp6ks9KY5Uf934WK8W5O2zWw63cYPkiDVMoWiiNeeLrBb7KDyTZzUykFonbmTqtAKCshWr91p
+ 40eh0u3REz9PadlhZrt2u/Gr8CxWXpauFSe9Uk4Vy1YboBTlmkkFr845WCE4daqVp0zalCX2JGo
+ oaNc1jv47M6NnxVYYnpVJKFbuQLpbzK/kgQBcVc6H7RUBnOvOm4q63oHsvXphby5OphSoWno7+C
+ DfoB4spYVWQT2E3Pw0kjbg3HK+nfCyACqiObK+PkONwFuqhQEcKPvb/RPBpu1KI8rWltvJaM5N4
+ 1w6QMrZH3CHHbxDUV/a/Ba9SoWULiQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-05_08,2025-12-04_04,2025-10-01_01
+ definitions=2025-12-05_09,2025-12-04_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512050176
+ phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512060014
 
-On Mon, Dec 01, 2025 at 10:52:22PM +0530, Sudarshan Shetty wrote:
-> Add the device tree for the QCS615-based Talos EVK platform. The
-> platform is composed of a System-on-Module following the SMARC
-> standard, and a Carrier Board.
+On Wed, Dec 03, 2025 at 01:40:54AM -0800, Paul Sajna wrote:
+> Also include other supporting msm drm nodes, including backlight
 > 
-> The Carrier Board supports several display configurations, HDMI and
-> LVDS. Both configurations use the same base hardware, with the display
-> selection controlled by a DIP switch.
-> 
-> Use a DTBO file, talos-evk-lvds-auo,g133han01.dtso, which defines an
-> overlay that disables HDMI and adds LVDS. The DTs file talos-evk
-> can describe the HDMI display configurations.
-> 
-> The initial device tree includes support for:
-> - CPU and memory
-> - UART
-> - GPIOs
-> - Regulators
-> - PMIC
-> - Early console
-> - AT24MAC602 EEPROM
-> - MCP2515 SPI to CAN
-> - ADV7535 DSI-to-HDMI bridge
-> - DisplayPort interface
-> 
-> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+> Co-developed-by: Amir Dahan <system64fumo@tuta.io>
+> Signed-off-by: Amir Dahan <system64fumo@tuta.io>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |   3 +
->  .../qcom/talos-evk-lvds-auo,g133han01.dtso    | 131 +++++
->  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 447 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/talos-evk.dts        | 137 ++++++
->  4 files changed, 718 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  8 +--
+>  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 75 +++++++++++++++++++++-----
+>  2 files changed, 66 insertions(+), 17 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 5b52f9e4e5f3..94c20074397c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -305,6 +305,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
-> +talos-evk-lvds-auo,g133han01-dtbs	:= talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtb
->  x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
->  x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
-> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
-> new file mode 100644
-> index 000000000000..2a90d61892e7
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
-> @@ -0,0 +1,131 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +/dts-v1/;
-> +/plugin/;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> index 165523db4d49..50921af83a51 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> @@ -450,10 +450,6 @@ &cdsp_pas {
+>  	status = "okay";
+>  };
+>  
+> -&dispcc {
+> -	status = "disabled";
+> -};
+> -
+>  &gcc {
+>  	protected-clocks = <GCC_QSPI_CORE_CLK>,
+>  			   <GCC_QSPI_CORE_CLK_SRC>,
+> @@ -517,6 +513,10 @@ led@5 {
+>  	};
+>  };
+>  
+> +&pmi8998_wled {
+> +	status = "okay";
+> +};
 > +
-> +#include <dt-bindings/gpio/gpio.h>
-> +
-> +&{/} {
-> +	backlight: backlight {
-> +		compatible = "gpio-backlight";
-> +		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
-> +		default-on;
-> +	};
-> +
-> +	hdmi-out {
-> +		status = "disabled";
-> +	};
-> +
-> +	lcd-pwm-en {
-> +		compatible = "gpio-backlight";
-> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
-> +		default-on;
-> +	};
+>  &sdhc_2 {
+>  	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> index 55bfddab3afd..506e6fe8e798 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> @@ -13,19 +13,6 @@ / {
+>  	model = "LG G7 ThinQ";
+>  	compatible = "lg,judyln", "qcom,sdm845";
+>  
+> -	chosen {
+> -		framebuffer@9d400000 {
+> -			compatible = "simple-framebuffer";
+> -			reg = <0x0 0x9d400000 0x0 (1440 * 3120 * 4)>;
+> -			width = <1440>;
+> -			height = <3120>;
+> -			stride = <(1440 * 4)>;
+> -			format = "a8r8g8b8";
+> -			lab-supply = <&lab>;
+> -			ibb-supply = <&ibb>;
+> -		};
+> -	};
 
-I really don't like the idea of describing two separate backlight
-devices here. We have a single backlight on the panel, controlled by two
-GPIOs. I think, using GPIO instead of a PWM is a sensible enough usecase
-to let DT use two GPIOs in gpio-backlight (with corresponding changes to
-the bindings and the driver).
+I think, you can leave simple-fb in place. MSM driver should be able to
+replace it once it is loaded.
 
+> -
+>  	/* Additional ThinQ key */
+>  	gpio-keys {
+>  		pinctrl-0 = <&vol_up_pin_a &thinq_key_default>;
+> @@ -67,6 +54,47 @@ &gpu_zap_shader {
+>  	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
+>  };
+>  
+> +&mdss {
+> +	status = "okay";
+> +};
 > +
-> +	panel-lvds {
-> +		compatible = "auo,g133han01";
-
-backlight = <&backlight>;
-
+> +&mdss_dsi0 {
+> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
 > +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
+> +	status = "okay";
 > +
-> +			/* LVDS A (Odd pixels) */
-> +			port@0 {
-> +				reg = <0>;
-> +				dual-lvds-odd-pixels;
+> +	display_panel: panel@0 {
+> +		reg = <0>;
+> +		compatible = "lg,sw49410-lh609qh1", "lg,sw49410";
 > +
-> +				lvds_panel_out_a: endpoint {
-> +					remote-endpoint = <&sn65dsi84_out_a>;
-> +				};
-> +			};
+> +		backlight = <&pmi8998_wled>;
+> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+> +		width-mm = <65>;
+> +		height-mm = <140>;
 > +
-> +			/* LVDS B (Even pixels) */
-> +			port@1 {
-> +				reg = <1>;
-> +				dual-lvds-even-pixels;
+> +		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
+> +		pinctrl-1 = <&sde_dsi_sleep &sde_te_active_sleep>;
+> +		pinctrl-names = "default", "sleep";
 > +
-> +				lvds_panel_out_b: endpoint {
-> +					remote-endpoint = <&sn65dsi84_out_b>;
-> +				};
+> +		port {
+> +			panel_in: endpoint {
+> +				remote-endpoint = <&mdss_dsi0_out>;
 > +			};
 > +		};
 > +	};
 > +};
 > +
+> +&mdss_dsi0_phy {
+> +	vdds-supply = <&vdda_mipi_dsi0_pll>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0_out {
+> +	remote-endpoint = <&panel_in>;
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+>  &mss_pil {
+>  	firmware-name = "qcom/sdm845/judyln/mba.mbn", "qcom/sdm845/judyln/modem.mbn";
+>  };
+> @@ -85,4 +113,25 @@ thinq_key_default: thinq-key-default-state {
+>  		drive-strength = <2>;
+>  		bias-pull-up;
+>  	};
+> +
+> +	sde_dsi_active: sde-dsi-active-state {
+> +		pins = "gpio6";
+> +		function = "gpio";
+> +		drive-strength = <8>;
+> +		bias-disable;
+> +	};
+> +
+> +	sde_dsi_sleep: sde-dsi-sleep-state {
+> +		pins = "gpio6";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +
+> +	sde_te_active_sleep: sde-te-active-sleep-state {
+> +		pins = "gpio10";
+> +		function = "mdp_vsync";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+>  };
+> 
+> -- 
+> 2.52.0
+> 
 
 -- 
 With best wishes
