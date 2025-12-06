@@ -1,60 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-84552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D24ACCAA023
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 05:01:13 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA375CAA008
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 05:00:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DC48E32663B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 03:59:57 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3AFAE3027860
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 04:00:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB5AD2BE04F;
-	Sat,  6 Dec 2025 03:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF2F2BEC28;
+	Sat,  6 Dec 2025 03:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOJoRIm3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDYXetbw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F16A29C338;
-	Sat,  6 Dec 2025 03:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB55325785D;
+	Sat,  6 Dec 2025 03:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764993594; cv=none; b=q7zVK7dCG2TvaKUlcsJYUxrBPPwKVLulaw2K9wguSYcGe/Rq3AyoKCF/Cy+R3r2ZmFp7efOnoxyzO7/fb3YwxSM8boHy/SvdJh0mn6yA4IEpqCJHuocm74oB04bdsfGMfLSnktVf/vIj2rL6N9VNSLALE57WTYuFffHKwLOq+t0=
+	t=1764993595; cv=none; b=aCEeIgO1Iamu3gYmFbwcaJlwro2kQHReTmRworGn86YLdPofTLI39LYw9iwPxIPnYB7yNp3cfiE5a5rKm8StaTCm8HHv4uApV5QpWO+giIscC3mAen5rpyFlpVhKFb2SRxg4kqeKrKufLg/qUradsBBGO6f7YjDn4gl4ty+s+iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764993594; c=relaxed/simple;
-	bh=2DZJeLeeyjOyimMtAm8m8Hshzz7OTC7uUcZqmvjYJVM=;
+	s=arc-20240116; t=1764993595; c=relaxed/simple;
+	bh=pEPt3HWjY7ucCmubfRLXzLpIWQ5q9hgoRVtNASqK7Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pw0jcBxJxcFU3GfjgrrA6Yyf283nGsgDMg3bSCfTbc1ETb7YHz4NU7fJMrbAFiLWvSnrm8Z439sHXX2YLSRL7fXR25V7aN4kv9IbVr77zbi+AhhTDWj1uSRYmepfxoLm+lgHU/fOOZgO2mq9M0QNR3JBpGRWX9dwBjOW0nUqbVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOJoRIm3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE95C19422;
-	Sat,  6 Dec 2025 03:59:53 +0000 (UTC)
+	 MIME-Version:Content-Type; b=I7ZTj0xCWMjsgxgG0TKCoV3BVi6HslHwEAqnHMllI/4xGLSiSOh8Aq45vLsEnu3owN/5m/K1Sclt8G4QTwNNuMgIFpDySj8GiSD3ob7/HeNKgEzTdP5u4e9501KKZ2rWrrZnTbXpf3YVbBhHRZbkTjgyrey20nulm1IUzJ4VwMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDYXetbw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6C8C2BCB3;
+	Sat,  6 Dec 2025 03:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764993594;
-	bh=2DZJeLeeyjOyimMtAm8m8Hshzz7OTC7uUcZqmvjYJVM=;
+	s=k20201202; t=1764993595;
+	bh=pEPt3HWjY7ucCmubfRLXzLpIWQ5q9hgoRVtNASqK7Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOJoRIm398krv7wuSBNpdPKMrq74+Qx+gOfE/zrqZ8jU2NKggrdt5uF5+6+gNFRd2
-	 XYE+Rvu9rK67AwssA1sYxL5Pv9GIelkb4Y1z3woFDjk7AVzVGkBYfUnUNSxpwvZb5Y
-	 vtu3LO5jcmohNykqZWvqaE4oeevTdZYJU0KyeZPNZ297rI+XU/vSbyl5jaC8F7F/eR
-	 Rx3BcFUIK1CvGXBkuIzQktGfkC6EtBri8kSYWeF6I7m/GoXS15CDpSD9CHuaSpNLQi
-	 P0nemW9jTdSVn3YJpiqZUmKt4W4j+WgyA/NdE8SknvDdOV/da6RECw0nw4DLB5wAXB
-	 rAhBxb3nBniDw==
+	b=rDYXetbwG8rYwJvMZsec3bXyR4eq4MONW1gnGfMDcanX+gOp2m8KZ4kpccJzE7Sww
+	 TdRRJkKVxgMAzTPeLEBjYZqjnVYgzbNJ0pASHV11n58pfD8TefW0QFK/crCmlemknZ
+	 fxu4jjfo9r87xA5um+3mzFsz8RDoVDViuv5tTvqOHnj1oaroFyzB00NSszDnIWgejD
+	 kB21MqVE1cRtthlvajHUnTq4+FxP/fml9FvFlpyXrW5ALgcjNBIHrn+2Sq9PwbbeIG
+	 NlC7qmKsX4Hvb5fkse5aKSnvWYc3USaHcKWsVHR6kOWd+ebRWljt/uE4GlpBnbIl7z
+	 1x/ccbGIhwM/Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+	Luca Weiss <luca@lucaweiss.eu>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Fix compile warnings for SM8550 and SM8650
-Date: Fri,  5 Dec 2025 22:06:07 -0600
-Message-ID: <176499396492.224243.6226641533387065460.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH 0/4] Start using rpmpd for power domains on MSM8974
+Date: Fri,  5 Dec 2025 22:06:08 -0600
+Message-ID: <176499396494.224243.12900669334147776741.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251203144856.2711440-1-krishna.kurapati@oss.qualcomm.com>
-References: <20251203144856.2711440-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
+References: <20250621-msm8974-rpmpd-switch-v1-0-0a2cb303c446@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,23 +69,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 03 Dec 2025 20:18:54 +0530, Krishna Kurapati wrote:
-> arch/arm64/boot/dts/qcom/sm8550.dtsi:4133.22-4223.5: Warning (avoid_unnecessary_addr_size): /soc@0/usb@a600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
+On Sat, 21 Jun 2025 15:19:55 +0200, Luca Weiss wrote:
+> Switch over the ADSP PIL to use power-domains instead of a regulator,
+> and have one commit switching over the MSM8974 SoC plus all the devices
+> to use power-domains.
 > 
-> arch/arm64/boot/dts/qcom/sm8650.dtsi:5086.22-5177.5: Warning (avoid_unnecessary_addr_size): /soc@0/usb@a600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
-> 
-> Fix them up accordingly.
-> 
-> This series has only been compile tested.
+> Note, that I'm aware that these changes are not backwards compatible and
+> not really bisectable, but since it only affects the ADSP on these
+> pretty old boards, I say it's fine to have this. Get all the patches
+> into the same release (6.17?) and then we're good again.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sm8550: Fix compile warnings in USB controller node
-      commit: 2d0165726d20395cb700546b1528df3fa614e5a3
-[2/2] arm64: dts: qcom: sm8650: Fix compile warnings in USB controller node
-      commit: 825db404fbed0580deb19f587d69b9f75980055a
+[3/4] ARM: dts: qcom: msm8974: Sort header includes alphabetically
+      commit: cc09be7d644063334634baa6bb8f3860d6e05dcc
+[4/4] ARM: dts: qcom: msm8974: Start using rpmpd for power domains
+      commit: ce1799781200529149cc9e013ae1fdd6eb04b2b5
 
 Best regards,
 -- 
