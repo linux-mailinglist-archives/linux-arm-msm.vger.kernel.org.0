@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-84574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8896BCAA631
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 13:37:54 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11751CAA6C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 14:27:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7D384300CA03
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 12:37:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D3B7A302E138
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 13:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C7C92F2914;
-	Sat,  6 Dec 2025 12:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6EC42FBDFF;
+	Sat,  6 Dec 2025 13:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="ZbCTQkm2"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="M+fSDBQ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D7725C80D;
-	Sat,  6 Dec 2025 12:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3592F0685;
+	Sat,  6 Dec 2025 13:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765024672; cv=none; b=glx08B5OwCy0PYi5caaTFQXG0uJWMgdOXWEwRvDqaSIcCNSVNiBpjJukxJXXaIjYTeTOoZ3uISUzia9LSBxvftmju+DNvByJS1M50dZYV8M4F5V4OC/LL/r2Pqt28O4jrXZ1ujva/PCKsOku/PJUhT1dK86PkZuaTtytHv9q5TI=
+	t=1765027667; cv=none; b=h22787bGH97pae5AHzCmC5begx+z4P6qCoOZXXGhChmUiypHkBXJYwy4m9kpV7r29bgHFbXwt06h7vSuc+zhb8TX4NNB1IqiAf4sbIZ8HKEgWM35sHwVmIrbcS0/jzdour5QRHTKq+GrhY2lcx3yC63FNn4Xcf8ia9b9uenYoEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765024672; c=relaxed/simple;
-	bh=9maxv1acR/yryo1GRfYMSMJ/91xyurIpzPHN62q6LEc=;
+	s=arc-20240116; t=1765027667; c=relaxed/simple;
+	bh=L8C9IajdTO1rufS9q9mJyGzpe6Gqn9zrWft4O5UDepk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Df5uUOtU6/KAtQElKRVS+BGkZqbbIlu6dmOTGLBwUCVOJQHXssVB6mKKqvdRKJ0NHSZNjjZU3vl4X6o+/ip8jlrPBk6OcmlNZrueNwWXSgIZysgKwV9iVnnoh44UJUF6jFSatX9wV1bkJAN2aTUqnbHFBsK1DHzsiJE+8fw0KUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=ZbCTQkm2; arc=none smtp.client-ip=94.112.25.9
+	 In-Reply-To:Content-Type; b=jdjhliCTZSk85rUysXFyH5C7zzIrds59B0hm7445E21AnFZ/L+QRjcBWEi1pBVeD/CxP3hLAYdeo1lDoFa35Z9l4kh94ZpaNgAVKcKn6CWSNGITqp8awONuip0WiukU/VYkYvwS92O1j6Zc3iKxQgW7W/JlHlBVzGyw7xUabd5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=M+fSDBQ4; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [10.0.0.200] (unknown [10.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id BE6A95341183;
-	Sat, 06 Dec 2025 13:37:43 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id B24C1534133B;
+	Sat, 06 Dec 2025 14:27:40 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765024663;
+	t=1765027660;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eiB20EW9j/rll6ktjVsMZWMFIzICPofcEDG3mMeyo+c=;
-	b=ZbCTQkm2YTHLCnKogOT8QnaERO/CA3laLaoIQYVBZrthVDwGooAZAHKUCZ2kPUaWTpneNl
-	GhpSdrkEjhyhJ/rOqfi/5/Nuqeq0TeEkIS8C3oS8FoakL1VcdBeP7N72L2Giw7tDPwgYt8
-	kIka172HX5P4vCpOAEwknzkTZF1Ho+8=
-Message-ID: <a586680c-086d-4f4f-85f2-ab21d675c5a1@ixit.cz>
-Date: Sat, 6 Dec 2025 13:37:43 +0100
+	bh=sZdq4gxaolsxBSx4iJmE12v6O/aktDjJEPRe00ipAWQ=;
+	b=M+fSDBQ4XWTbyMo0hYXXR9dZ86tw+1YKWlXB+++S1UeTIXbExH+lPuFmeNbDIVIB1ZB9yl
+	cz22NKZkmTKn98ESmFqpTA+Kynk/G//gKYWU+jVxzKnyLGeA+5aWLh89Y0cJ6Sp4afm20b
+	LSbOctrubSUUStekr1vythRlrq7LMgs=
+Message-ID: <c3022e57-1cc4-4805-94ba-d98e2016ee80@ixit.cz>
+Date: Sat, 6 Dec 2025 14:27:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,21 +54,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/12] arm64: dts: qcom: sdm845-lg-judyln: Add display
- panel
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Paul Sajna <sajattack@postmarketos.org>, Sam Day <me@samcday.com>
+Subject: Re: [PATCH v4 4/8] drm/panel: sw43408: Add enable/disable and reset
+ functions
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
+ Casey Connolly <casey.connolly@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ phodina@protonmail.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Amir Dahan <system64fumo@tuta.io>, Christopher Brown
- <crispybrown@gmail.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org>
- <20251203-judyln-dts-v5-5-80c1ffca8487@postmarketos.org>
- <w2gtfgvbx5ujyfbilhyqblhlwo4ewybpmsrdl2gyafcx5etbnl@apze5qpd4okw>
+ phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20251125-pixel-3-v4-0-3b706f8dcc96@ixit.cz>
+ <20251125-pixel-3-v4-4-3b706f8dcc96@ixit.cz>
+ <jqgwmjet2ncit5bqilvuqldxrtcapiozmpbk5klc5tybwbfezi@4muxgno7do45>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -114,189 +120,33 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <w2gtfgvbx5ujyfbilhyqblhlwo4ewybpmsrdl2gyafcx5etbnl@apze5qpd4okw>
+In-Reply-To: <jqgwmjet2ncit5bqilvuqldxrtcapiozmpbk5klc5tybwbfezi@4muxgno7do45>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/12/2025 03:09, Dmitry Baryshkov wrote:
-> On Wed, Dec 03, 2025 at 01:40:54AM -0800, Paul Sajna wrote:
->> Also include other supporting msm drm nodes, including backlight
+On 06/12/2025 05:25, Dmitry Baryshkov wrote:
+> On Tue, Nov 25, 2025 at 09:29:39PM +0100, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
 >>
->> Co-developed-by: Amir Dahan <system64fumo@tuta.io>
->> Signed-off-by: Amir Dahan <system64fumo@tuta.io>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  8 +--
->>   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 75 +++++++++++++++++++++-----
->>   2 files changed, 66 insertions(+), 17 deletions(-)
+>> Introduce enable(), disable() and reset() functions.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
->> index 165523db4d49..50921af83a51 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
->> @@ -450,10 +450,6 @@ &cdsp_pas {
->>   	status = "okay";
->>   };
->>   
->> -&dispcc {
->> -	status = "disabled";
->> -};
->> -
->>   &gcc {
->>   	protected-clocks = <GCC_QSPI_CORE_CLK>,
->>   			   <GCC_QSPI_CORE_CLK_SRC>,
->> @@ -517,6 +513,10 @@ led@5 {
->>   	};
->>   };
->>   
->> +&pmi8998_wled {
->> +	status = "okay";
->> +};
->> +
->>   &sdhc_2 {
->>   	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
->>   
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> index 55bfddab3afd..506e6fe8e798 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> @@ -13,19 +13,6 @@ / {
->>   	model = "LG G7 ThinQ";
->>   	compatible = "lg,judyln", "qcom,sdm845";
->>   
->> -	chosen {
->> -		framebuffer@9d400000 {
->> -			compatible = "simple-framebuffer";
->> -			reg = <0x0 0x9d400000 0x0 (1440 * 3120 * 4)>;
->> -			width = <1440>;
->> -			height = <3120>;
->> -			stride = <(1440 * 4)>;
->> -			format = "a8r8g8b8";
->> -			lab-supply = <&lab>;
->> -			ibb-supply = <&ibb>;
->> -		};
->> -	};
+>> The enable() and disable() callbacks keep the symmetry in the commands
+>> sent to the panel and also make a clearer distinction between panel
+>> initialization and configuration.
 > 
-> I think, you can leave simple-fb in place. MSM driver should be able to
-> replace it once it is loaded.
+> This also makes those to to be executed after starting the DSI stream.
+> Is it fine?
+> 
 
-Any chance, do you know if the issue OnePlus had is then resolved?
+Yes, the panel works same way as before without patchset.
+Still not recovering from panel off, we tried to debug, not there yet, 
+but the sequences are verified to work fine).
 
-===
-/**
-  * HACK:
-  * Fake panel node for simple-framebuffer to calculate DPI from. Only
-  * needs width & height specified. This allows us to break device link
-  * from simplefb to mdss (implicitly via panel->mdp->mdss) to fix drm
-  * device probe ordering. Without this, simpledrm would probe second
-  * after msm-drm, and confuse userspace with 2 GPUs in /dev/dri.
-  * Alternative workaround is to boot with kernel parameter
-  * `fw_devlink=permissive`, which is worse, because it can hide other
-  * issues with device dependencies.
-  */
-panel = <&fb_panel>;
+Reset sequence or/and regulators may not be correct enough to recover.
 
-fb_panel: fb-panel {
-         width-mm = <68>;
-         height-mm = <145>;
-};
-===
-
-Ref: 
-https://gitlab.com/sdm845/sdm845-next/-/commit/6a0a09c4dddc1b973209f5ffea086eb7a3fc24b9
-
-Add Sam into CC.
+I'm sending another series with moved _enable function and all R-Bs.
 
 David
 
-
-> 
->> -
->>   	/* Additional ThinQ key */
->>   	gpio-keys {
->>   		pinctrl-0 = <&vol_up_pin_a &thinq_key_default>;
->> @@ -67,6 +54,47 @@ &gpu_zap_shader {
->>   	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
->>   };
->>   
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
->> +
->> +	status = "okay";
->> +
->> +	display_panel: panel@0 {
->> +		reg = <0>;
->> +		compatible = "lg,sw49410-lh609qh1", "lg,sw49410";
->> +
->> +		backlight = <&pmi8998_wled>;
->> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->> +		width-mm = <65>;
->> +		height-mm = <140>;
->> +
->> +		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
->> +		pinctrl-1 = <&sde_dsi_sleep &sde_te_active_sleep>;
->> +		pinctrl-names = "default", "sleep";
->> +
->> +		port {
->> +			panel_in: endpoint {
->> +				remote-endpoint = <&mdss_dsi0_out>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&mdss_dsi0_phy {
->> +	vdds-supply = <&vdda_mipi_dsi0_pll>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0_out {
->> +	remote-endpoint = <&panel_in>;
->> +	data-lanes = <0 1 2 3>;
->> +};
->> +
->>   &mss_pil {
->>   	firmware-name = "qcom/sdm845/judyln/mba.mbn", "qcom/sdm845/judyln/modem.mbn";
->>   };
->> @@ -85,4 +113,25 @@ thinq_key_default: thinq-key-default-state {
->>   		drive-strength = <2>;
->>   		bias-pull-up;
->>   	};
->> +
->> +	sde_dsi_active: sde-dsi-active-state {
->> +		pins = "gpio6";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-disable;
->> +	};
->> +
->> +	sde_dsi_sleep: sde-dsi-sleep-state {
->> +		pins = "gpio6";
->> +		function = "gpio";
->> +		drive-strength = <2>;
->> +		bias-pull-down;
->> +	};
->> +
->> +	sde_te_active_sleep: sde-te-active-sleep-state {
->> +		pins = "gpio10";
->> +		function = "mdp_vsync";
->> +		drive-strength = <2>;
->> +		bias-pull-down;
->> +	};
->>   };
->>
->> -- 
->> 2.52.0
->>
-> 
-
--- 
-David Heidelberg
-
+[...]
 
