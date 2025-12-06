@@ -1,158 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-84548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 468B5CA9FE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 04:49:04 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A744ACA9FF3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 04:55:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 40E33304F105
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 03:49:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0EBDC300DBA6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 03:55:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A34731487F6;
-	Sat,  6 Dec 2025 03:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6211F23816C;
+	Sat,  6 Dec 2025 03:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LqUKy4KO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ay+Pb9Yt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fvr3tZmN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313D927707
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 03:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFB51E9B1A
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 03:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764992939; cv=none; b=hXNvvQRtXSf2nNK+QluZ3xLoqo9PRbowf4m5IKpIWZB2hWv6dhffYzpJd8hDJ+WpXmy0qEK6VVKgrm8/lAgmpBlfgDjnj1TEUO08qsZ5z5kvyu5zFdln48wmzQU2aa+/LeaSfsdvvcPI0TW+ll312wgkyoT9lKpipWBpJ3yUT5o=
+	t=1764993299; cv=none; b=MEv0BystIJZpI/PzaMyjZ2QT8etfdQRgpI5iMezcl0pI+AUYKBSvi26jSj8sOoDwtIkQaeOED7DhbKm697KDjb7fClvH8Upp97dy5o5o1no72Sp8jKJXQKeXhoet+sDKBBj9HIT67EuhVfALI8Yzi/puxDE/7gaZKW2n5hLYI58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764992939; c=relaxed/simple;
-	bh=x+9cqPLCKW4K0GKwhFelsaYmydnMqWc0ZhRT9opzhR0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PR5zW7z99LKaKJtb3wZkz1pG/O1xVXmVenYOVuzjL9ZM0Hi2tR5R0nayxiHtvzZ8NRgLYZ50W5QZEQ+AQM4irk//zZ6m70bTYdNOlVyhK+DEvzpPSX3QRYr5SRmmnHygpDBEzhckmIwYGVAARGUMM0glsW4CgiUiLRbwjWQSr1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LqUKy4KO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ay+Pb9Yt; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B60gx561692220
-	for <linux-arm-msm@vger.kernel.org>; Sat, 6 Dec 2025 03:48:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=05nIEVTH/I6ehlNORXgT9VtO
-	AtvZr13dqFzv01ipRhM=; b=LqUKy4KOWAcy1a7ncySj2gSHLMiHssL0R6GVAo9r
-	Gl18qZ2MnTMNwsfMlcRvi3OQfQDt94CSHmqi1g40BwAws5OhgbnPWXyk2gTTetBH
-	nWuMwYfDv65V+faGua8rQmW2SE2NRJHCEfq4BISKIeCVlW/D3Fygcb/dBp7BMzST
-	zVUjX0LJpXtWb6TQKtt34w38FPX5xfg5szSHi7FqZ+8KaVTk1+IXmDu80JDWL6ZT
-	X0s8d1sHuhjFZJ4F2GAH9RCfkq8cwdMowXdv7a+c2eoO1lrln9ykGqqu6m2c1SfG
-	H78zvnnyh2iDCWNqil3r5VfCd4xOvN1bo14IqgM7bt5OnA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ava6f88xg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 06 Dec 2025 03:48:57 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b2217a9c60so407540285a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 19:48:57 -0800 (PST)
+	s=arc-20240116; t=1764993299; c=relaxed/simple;
+	bh=J8uprbH8ZrtQtllNe0ANd6MXhGs3gViM8cbLJX7l2CQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=thA/a4sIGS2TKd0UgGw3ZbOMM2qz7dffMZKf0mpv/8gmpK/kyRcQ8Ktm9IMv4n+XDCg6oIKJGnSib4xrMr1cI3sb49gKOeWOa0VgOkNX74eSrhVck2R0UQE88dCj9D83A1NcFkPCXRK2jK+LdVFccyH8v9+a1WS6jxkk+oPrKgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fvr3tZmN; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-29ba9249e9dso38993745ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 19:54:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764992936; x=1765597736; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=05nIEVTH/I6ehlNORXgT9VtOAtvZr13dqFzv01ipRhM=;
-        b=ay+Pb9YtJ54e1Rl1XcIhYpatSVZWPITICMnHrdu+s6Y9P0kE77BreJ/0E/Sd6Xkrlz
-         M/nI2b5Jss3sobCi6b9sQi6LLmYi5p2fwGSafqWpwAE6xPj4R0Cgoxu7WmdBR4P9bCea
-         vEUxyLBRi0kGpv1Iw4tyg5oVHzOaVUuz0YwJtC6qIHhq5vW3ZkNiEbQp0Oxm6LdulAR0
-         RGXooVOtsMV4eZQ4d7IbvcG99PFN6AriViKhTKy8DloITHjKV2ES+v3IXToqbMG13rvQ
-         AhRCuoM4KZjpE8WBNeHuwZgH1oGCFssIbV40wkkCc2dUQ51eenYC+qA0Ng2mS2wjCwcL
-         et7g==
+        d=gmail.com; s=20230601; t=1764993297; x=1765598097; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ng59e0pypFuKOiBmMzueIT3kCDd4YPpY7yGIqW1d8Wo=;
+        b=Fvr3tZmNcY75sCVDGmJt1MQGqjGZyverZQS+na2pljj4YMs7T+Vek+cn39H25HF8FG
+         XkL6+A/yKS+r77vZLwdBT+FQ7S9FznrjJH8cAOwpxaSeR7Mv/I9i7cRXNA0u4k8IiCc2
+         2NNELkAELaX3SseLC4bIoaMiiNbY6HfN1yxJwbBlkh0j4wmCKwfOa1mDiEIY9QRECOKA
+         XMpyoB4Degxv8c6CuR7QcYgyWiDeTUZ3+ByyAyn7YaMHAWC7uxTnM5ELM6BjzfU5P8HR
+         CK2ZtaFkHd2QjH/uFVzroHuhEQHgrG1XCalI2kRbi8EZMaM1uCF2gE7rWZOs+krKfEQN
+         Ozpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764992936; x=1765597736;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=05nIEVTH/I6ehlNORXgT9VtOAtvZr13dqFzv01ipRhM=;
-        b=SaP4L3DW51MGVaMCzy/5tqUNkgXzaK1J2MrJ1Cf9jZsPAX4XL4rX/Agd7YBUeQ6eCv
-         s7ivKQnNWXWu3J0jIU58S5dyrhIiMlXM7d6jA7+bedcLh3nP/oF9eJ29bUgcHtBAS0g4
-         pGL4IHKV33Hs2yneE1weVr3xy/LI69PBgHVt9M2VB4dnwxiA6j95W3mXYDLi6/tjV7jd
-         GhiD4UDZQgm/xL/P4UrazxqspXj2YERZHI0WfzBTxrNM4DBJmoNRG8IH9rB0j3TBAXkH
-         4HI+wrjCobqQTz7D51L9H4y14Ub8JMSLU8ot80DBrd0hFY6YHzXjKWKmD6B70D+TCtnZ
-         HaCw==
-X-Forwarded-Encrypted: i=1; AJvYcCX6EHnanYAbkWhc6e3ssR8Nj3cDhoWtCG+ezrfAny9Mp+DkZqicD7x9swVh6hA1n1CIoaARTnmU1XrbqnvV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxwgL9SgDir+jkFZ0dUzq5x1iIoeGDc8pycS9NY4ZSndYpHeLps
-	0ouJPjxjUmJ6m2+piNKjdFZ/Kl861qcHt5udg81KgrTRylf+LFUL1tbhSR8fctc5Ym4IeLknA3v
-	Rf1f9oJUHvsc/Si9sRxnO3ZMWGtKGofHLsR53S48G84yu/qklfj+cQpMQtxdoHkwLeAqz
-X-Gm-Gg: ASbGncuX+kfKXqehQa0JZJdAt9/7RZOaVjGuWlO0mN645+5WO/HnnYPHemm68jtDRmN
-	eR8lKeRcc5dK0RnIyOQzFQC03nE+wn1tP4hHj408yCxqxl4NYaxnc/SQ4tlORjeVFKWpb5pMqbQ
-	iUPfib2qaNGtuoXmggeTuPk2hKSxTB1xOCOgM26qNrZBXBn1zU/wq2aBk+b8bpWVktnd788bRVt
-	wzdojx0JvwUO9XqQvYSWTAY2lc1ihkyDz1mQac222lcf8SMZ0TFefV4uXl/EQP58HZqJpgi9q3d
-	yTo3IzWnd75FxEcvnpHEq+UycGQG5ceL9niZaBnGiIy7fc3S/zru5GL3DKstWoqlW5/fHVB54X8
-	vmhF7/N8Jnj9s8P/Ll1FR3NxTvZ3o2c3pqR62jU7R7czqKzL6H2VBl5St1dJPXkvJmuJNcCu3NC
-	IYxv14P5d7h0t1f9pUuZ9wJ0Q=
-X-Received: by 2002:a05:620a:4515:b0:8b2:e5da:d310 with SMTP id af79cd13be357-8b6a2332c66mr181348785a.9.1764992936315;
-        Fri, 05 Dec 2025 19:48:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF93lWjddbirMGOfjDSwFVrDvnZOh98/DfM2siqrj7J5NATC0XYA3TxsVHkWUdjITrz5J/VKA==
-X-Received: by 2002:a05:620a:4515:b0:8b2:e5da:d310 with SMTP id af79cd13be357-8b6a2332c66mr181347585a.9.1764992935876;
-        Fri, 05 Dec 2025 19:48:55 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37e6feab896sm18951691fa.17.2025.12.05.19.48.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 19:48:55 -0800 (PST)
-Date: Sat, 6 Dec 2025 05:48:53 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: bryan.odonoghue@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vladimir.zapolskiy@linaro.org
-Subject: Re: [PATCH v2] media: qcom: camss: csid-340: Fix unused variables
-Message-ID: <o7i53tr4glcpahvinghklmltbeepqdpye47bfcwd32tltp36jp@nhnedmhdtnmv>
-References: <20251204090325.82140-1-loic.poulain@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1764993297; x=1765598097;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ng59e0pypFuKOiBmMzueIT3kCDd4YPpY7yGIqW1d8Wo=;
+        b=l9TlL//vLiUCl73y6EJfQ2jhjiZoHDoWpmspp1flvXtOw3VfvDePkIC89hnewR8lGz
+         FF4dPpCHdNzhhujbWEz+wrNrkoeIzz6m5X1oqUfDYsSaY1DXjZuy+/fN1hqGEMlUV6GG
+         cdqOfGOYtboOZtFlxmlpjrUtFWoT+mfL2JMobykAUH93CFeGj2j+xKAeiSyO1Cyhrh6K
+         n0QCRKdOlLX8A5Y3oIbZggxWQT/uhMe9bzdW9Xdfn4Hdwsrmn9VZUeBWtxsFPKbMkQN0
+         2c2GNBGqx5h6iwZ5Q6HDA/+iQgwWbJd/Tga3OJbzmmjD9JZt/n9PD671VYWvtU8KEDq5
+         CO1A==
+X-Forwarded-Encrypted: i=1; AJvYcCWfIiBw+FpCZboA6NFOD6gC7xm0wCQCpzeNJZQ0EhucwGabv+SI2bClk+DlFnEoSJ+OK2DXjKpToDn6Rlmm@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXKcTFQ8B55Do3Lail8uKHqRSBFnadPC7gjyq+jcgszc0czgN+
+	Vi3nHoaHkw4nGFohviNZZ3j1TGIh6FCy2Stuu4wjT6gNmmLOrSoURNgP
+X-Gm-Gg: ASbGncsuiO9ktJ7d/NG40+bzLMMZ5weRh4etCUSApUdOOd5FmzFVMPthbPZGcBaRj6a
+	BK09JTPE8iukKHh6bXqJNiouDu38oS/CzagM+1lqTVfJAGC0A9hSsf1V5EYLTwmq3G34DJjEuzK
+	SRcOUCHnsKxgC5vGl6AUT4GHEhdYG12IEyE0l8W+j6d5x7JQJdVp2voXfLAA9xgeDryUKX5CqMC
+	CfKX3UdQqdqf6rJ/qkLiNFcEDfx17mpeMvIJlEj/Gp7dejoObZMNOmxO3ilrRbdXtXTWwzdZ4wv
+	AVYaUq9uq9eHSquvTqw5pY2s6OEPzZN0qLnNxdQWeC9L2vieqoqi53Pm3MCmGOYhcypUfcbl9wk
+	ar6RTq46rY+Y0sunEGpZFIk9AoQ/8Pg02V0PcUr0NmDLf5rokIU1aGDAtUSQf1WG6sNpApB2qLp
+	skV5gZi6awvcjfaQ1dzFHR2GyHiRSjyiTqdzsBnTpabC9Z1n+dvjhl+1p3BL1wAKS7Zg==
+X-Google-Smtp-Source: AGHT+IFG/hzUjar5fFu8j9ERHWWpR9Pv5VwyPV0sXgp2FH3uasyw4TvbU/VvQYbRn3w2rYfGGhYing==
+X-Received: by 2002:a05:7022:a93:b0:119:e569:f277 with SMTP id a92af1059eb24-11e032b330emr1036342c88.32.1764993296945;
+        Fri, 05 Dec 2025 19:54:56 -0800 (PST)
+Received: from [192.168.68.63] (104-12-136-65.lightspeed.irvnca.sbcglobal.net. [104.12.136.65])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11df76e2eefsm24165193c88.6.2025.12.05.19.54.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Dec 2025 19:54:56 -0800 (PST)
+Message-ID: <7c54fd46-d17a-4ee8-ad9f-e98546958dd5@gmail.com>
+Date: Fri, 5 Dec 2025 19:54:55 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251204090325.82140-1-loic.poulain@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Bq0Ut6NZNSwI_CPcGuVkbzY3Y45jrVRO
-X-Authority-Analysis: v=2.4 cv=NYXrFmD4 c=1 sm=1 tr=0 ts=6933a7a9 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=a11_dG-raeqLMxrPIc4A:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Bq0Ut6NZNSwI_CPcGuVkbzY3Y45jrVRO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAyOCBTYWx0ZWRfX6Zd8U3spoupm
- G/weS2QQ49d+DpcW/nyWMNqgIEasfzmkVAd0dcQJ69O/OPszef2bqu6k6Xa2JxeDOh2J5BghOPX
- yrU2YN+Npjdjo5PWA7Ky1m4/SB4xd/7l6tcAsRZpMsDP92B7gqYU0XLukmU+DKEumQhTa8+z3Fb
- 2jAzHP5qa8au7Ygm+mkjPpxE5Wz3n7m5VbmEyrsZCBUBvnY69Pqj0KZkYVtA1ZdHftXB0m8p76S
- +uoOx9YyNrglm8rb1ype9+PvmeY/pp9piMCa4VKIl4p1s011/4+aLBsabqKwaauVg49MnhWjLrS
- wbQNNKuvj0jXgghbpSwyb2/VZoN1AMdHpyg4dW+kkIyUL81jAqbKD55ig71ZOfStf71I7H5aVyT
- NS6kGt+gZgPOy/o70UUkNLL63dUqhw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-05_09,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512060028
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add
+ coreriver,tc360-touchkey
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
+ <arocrbzcwvyb2te3gcujeo7jaiaisgh3wuketqkif7xvkvmbct@r26gqpw6gb43>
+Content-Language: en-US
+From: Rudraksha Gupta <guptarud@gmail.com>
+In-Reply-To: <arocrbzcwvyb2te3gcujeo7jaiaisgh3wuketqkif7xvkvmbct@r26gqpw6gb43>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 04, 2025 at 10:03:25AM +0100, Loic Poulain wrote:
-> The CSID driver has some unused variables and function parameters
-> that are no longer needed (due to refactoring). This patch cleans
+>> +		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+>> +		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> I don't have docs at hand, but it looks like these pins belong to
+> GSBI10. Have you tried using it directly?
 
-See Documentation/process/submitting-patches.rst, "This patch"
+This is the log when I use GSBI10:
 
-> up those unused elements:
-> 
-> - Removing the `vc` parameter from `__csid_configure_rx()`.
-> - Dropping the unused `lane_cnt` variable.
-> - Adjusting calls to `__csid_configure_rx()` accordingly.
-> 
-> Fixes: f0fc808a466a ("media: qcom: camss: Add CSID 340 support")
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  v2: Correct the commit ID in the Fixes: tag
-> 
+samsung-expressatt:~$ dmesg | grep tm2
+[   79.555802] input: tm2-touchkey as 
+/devices/platform/soc/1a200000.gsbi/1a280000.i2c/i2c-4/4-0020/input/input3
+[  110.242881] leds tm2-touchkey: Setting an LED's brightness failed (-110)
+[  167.074920] tm2-touchkey 4-0020: failed to read i2c data: -110
+[  182.435009] tm2-touchkey 4-0020: failed to read i2c data: -110
 
--- 
-With best wishes
-Dmitry
+I could be doing something wrong, so here are the changes I made on top 
+of this diff
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts 
+b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+index c4b98af6955d..fde5f739a314 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+@@ -60,33 +60,6 @@ touchkey_enable: touchkey-enable {
+          enable-active-high;
+          regulator-boot-on;
+      };
+-
+-    i2c-gpio-touchkey {
+-        compatible = "i2c-gpio";
+-        #address-cells = <1>;
+-        #size-cells = <0>;
+-        sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+-        scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&touchkey_i2c_pins>;
+-        status = "okay";
+-        i2c-gpio,delay-us = <2>;
+-
+-        touchkey@20 {
+-            compatible = "coreriver,tc360-touchkey";
+-            reg = <0x20>;
+-
+-            interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
+-            pinctrl-names = "default";
+-            pinctrl-0 = <&touchkey_irq_pin>;
+-
+-            vddio-supply = <&touchkey_enable>;
+-            vdd-supply = <&pm8921_l29>;
+-            vcc-supply = <&pm8921_l29>;
+-
+-            linux,keycodes = <KEY_MENU KEY_BACK>;
+-        };
+-    };
+  };
+
+  &gsbi2 {
+@@ -572,3 +545,28 @@ magnetometer@2e {
+          /* TODO: Figure out Mount Matrix */
+      };
+  };
++
++&gsbi10 {
++    qcom,mode = <GSBI_PROT_I2C>;
++
++    status = "okay";
++};
++
++&gsbi10_i2c {
++    status = "okay";
++
++    touchkey@20 {
++        compatible = "coreriver,tc360-touchkey";
++        reg = <0x20>;
++
++        interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&touchkey_irq_pin>;
++
++        vddio-supply = <&touchkey_enable>;
++        vdd-supply = <&pm8921_l29>;
++        vcc-supply = <&pm8921_l29>;
++
++        linux,keycodes = <KEY_MENU KEY_BACK>;
++    };
++};
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi 
+b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+index fd28401cebb5..c598fb324e7d 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
+@@ -223,7 +223,7 @@ i2c8-pins {
+
+              i2c10_default_state: i2c10-default-state {
+                  i2c10-pins {
+-                    pins = "gpio73", "gpio74";
++                    pins = "gpio71", "gpio72";
+                      function = "gsbi10";
+                      drive-strength = <8>;
+                      bias-disable;
+@@ -232,7 +232,7 @@ i2c10-pins {
+
+              i2c10_sleep_state: i2c10-sleep-state {
+                  i2c10-pins {
+-                    pins = "gpio73", "gpio74";
++                    pins = "gpio71", "gpio72";
+                      function = "gpio";
+                      drive-strength = <2>;
+                      bias-bus-hold;
+diff --git a/arch/arm/configs/qcom_defconfig 
+b/arch/arm/configs/qcom_defconfig
+index 29a1dea500f0..49baa91937ca 100644
+--- a/arch/arm/configs/qcom_defconfig
++++ b/arch/arm/configs/qcom_defconfig
+@@ -321,3 +321,4 @@ CONFIG_MAGIC_SYSRQ=y
+  CONFIG_DEBUG_FS=y
+  # CONFIG_SLUB_DEBUG is not set
+  # CONFIG_SCHED_DEBUG is not set
++CONFIG_KEYBOARD_TM2_TOUCHKEY=m
+\ No newline at end of file
+
 
