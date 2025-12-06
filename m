@@ -1,306 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-84533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39C0ECA9E59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 03:21:42 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E357ACA9E50
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 03:20:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B56823060F02
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 02:18:39 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D18A23045D40
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 02:20:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D23425B1DA;
-	Sat,  6 Dec 2025 02:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C28C23D7CF;
+	Sat,  6 Dec 2025 02:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k236bMne";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MRUqLALd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLuia54g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91CF259CA9
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 02:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13B517B50F
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 02:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764987517; cv=none; b=cytS8ITedwj8Q5kWW2G0szS/hkfUYJyFnVDOrrkCUdSJLqK3gES3u8KH+yCXgeE9LnZgLQqnjQstemF3/yHUlh58BV48Yu3udK49tS4oYy/Xqtz5Z3IOozh8cBXLgEb7flOgmJEDE9tezLluAYpu3abKJWHeIgAGpAwzxxx9dJ0=
+	t=1764987604; cv=none; b=dCSXiGZRU4JWtSPByYM1BTJzgHMxQnmXSchFhzIbcoIIAMXI7+C1hSccUWJYlkQEq0miXV5fTnVcACy7qgaTI4oaillXKzxsgsjfQMBEAfpo7pcJrtbQi0uVflGW3hXdN8avl8/9QWuf4zx2r8Od6jwfV21RrFecDC/oYMB6J1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764987517; c=relaxed/simple;
-	bh=zQH6Y2thqTFD1/7ihGNg5izxMSqSeZgtIzAF9bOUMS0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=itikTT0g/+QyRq6QI2JX4Su6q+y26j0ApoDEAmiE0I8j1y8OlNGpyjOGLqmDQNHkSg02RNUxwENJRxuveZheNCTH12fgOOY4UONDI8RAbIoitcg3AHTb+IuCuHeRjd/kSDwtUWgtpXc8fTC3Wdx6urP6PyEa/bVo5mU4n/xAXFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k236bMne; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MRUqLALd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B5FBKAV4177201
-	for <linux-arm-msm@vger.kernel.org>; Sat, 6 Dec 2025 02:18:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=kkzU5i3thP5jZhkyiy8X8cip
-	wrbG15cjXunYoj7ejAM=; b=k236bMneyoCWQrDuILc5Vv8p7JOl7gqYRoJqFO0D
-	vo+5hQOsi6jIdy5uGtE2fIIgT0XQ9X6MPkKlJ8OdWjr1QFp7c9BkwZ7EbjidU1a8
-	CsNXF54tazAF2/NpFxWisT13DY0B8T3rYOSbh9Vqu56Uu1E7UBCFNfDCb0wqMrvZ
-	htgMSJ2c/3Aw7Iiz8xwGsW2XD11CZdMnfvd/zoAzrxzgLsVWR7kjRAvrNmYjCiYp
-	vkmL15KzAng3EKvKEL1PPbGdgXOqDbMe0t9EM5jkRFK5tp7NyIu5/fARTPKl7cDa
-	0JapdtFbzSE14jIIN1ZE6NT4OBtR8J/Y7lEGUCMR+8i4Nw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4auwm5aabs-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 06 Dec 2025 02:18:34 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b2f0be2cf0so835826285a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 18:18:34 -0800 (PST)
+	s=arc-20240116; t=1764987604; c=relaxed/simple;
+	bh=ucRnLknwryHZfMGiNt/y+Eq0A74SbtM3SP6W65Y7ZRc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VBhxvcwaXlMuNfMXaCXYE2Leh3aE1gpU9fSBsJCDarTIenYhbDLLE7Gi5f+OBh9ZO8hNoCxv+Gpq3BGmSLvJGjmciV46oMtESMq4KOAF4Rzq6UuVbA60ji9PHa/0Fd9zRMiOMDeJoC61Z7w+tAyLS83ibVM2wjIi7qTngfeh0Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLuia54g; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6597cf49101so1475117eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Dec 2025 18:20:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1764987514; x=1765592314; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kkzU5i3thP5jZhkyiy8X8cipwrbG15cjXunYoj7ejAM=;
-        b=MRUqLALdkWNXeTgqwbVrlYaMuElVzh4EqELjowOZiJubadmCua+UdTQIb9bpG6/aYo
-         qjcNeNFFsLyo8AQ1bP+YWkqr/EhNexYvCfP4a5cSPTToU4RnA2Qj+ClZz6PajUWzGHfA
-         PI5DJxBz2tPQ+D2M0rV0bikC0gkqUmaES4P3uV5p4bsrM6k+jxZpKp9ZvjMANWygpOYJ
-         io1N+7ur6IKO1Mk8OceaInlcFuIEeWEhnqnIh4lItFwQ9/VFg16IRfx9TWlesfEVCLKd
-         KNOS4U6CFzEr7rwa+G5NyQnosaww3lHaMNb6l43rcL8y7l+w1zqLbkcqv5+4MxJRftSd
-         lEoQ==
+        d=gmail.com; s=20230601; t=1764987602; x=1765592402; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9JahXlNGOzmOtepmb3hjjXqZtJUWdt6w28IBWBns70o=;
+        b=JLuia54gDaPXRjdsk/zHNPMat/FacIEaDiKICE4IOPhuXO2dyvE3A7HGOqK9gyE+T1
+         S1sw8bHQmVJqmBKeyhOH4d+M0xPwP54F3QUDWz4s35kgI7KT7Ikud3aRLTfXXLjo54nk
+         nwfzO+SRdCWg8EMITJ/Ky3j85s0KFvgZk5V1FvcYaCj4CyODq/OGHhm7ZYiSSE3cVzAX
+         62bxA89u7UZcq2cTQ5Y2i3lXIoCjmwewDTgAHJEeI0y6Nso0A8M1+5mZLiVwmSedFlTB
+         +Yrct6Z6hqlm9SVh0o2RXt8KKucyobUhFSY7kLb/2W70bfi6lvImjGyzjRG4FVNxsFDs
+         C6hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764987514; x=1765592314;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kkzU5i3thP5jZhkyiy8X8cipwrbG15cjXunYoj7ejAM=;
-        b=ChL8cyFXS4YQ4oI3FeC2hmPr+IbUfnA/z015gNv085norrhNwfChpEbXc04cwoFp05
-         2eaaeb3H/WQ4YWaR+aVFAAAbFOQb2t0uIyJnjmcQCuq42xX9GUe5R+R9NYhAA6fujHxV
-         cL1687oi4wy1g2B/ltNc3RvgBG5O/inEfNC0zOVbUTyBQd3F8yx/Al/SC3VTdXv77u3/
-         jxMdzUu089HbfUPo2++qVBJJxfK4TLMRXsH8geHs9JtQBJ+mp5C38Ygd9LYf4R/iWqDK
-         tcyjwxN4+UGa8to4KviFgsiLX4JqAw04TW7LEQ4Pbp+qCfMFcsBNuNkycm6eVraOBXBm
-         LTFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEzMByAKNEYxjD8nY57ZLGgUPcuctzFDNeGoFVD9QV9aYqI8u3KTNu7+1RZbZxUnaLyqXdgYEcUKCYGif+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx54XBJ3WcyYBNekeEr6ZRF5GL/Du1MSSU9mX+yPJCI8xo8zZGO
-	hIZB6lkjZ0otA/HUUSJ2Nt8GXJU5YPTEf2z09TyGzk4lPPTjV4q61QHOSnlXhhYrVUvUlcboO1O
-	Dkk0AfEK0MLCiWA+S3EkL77k7qYsd0fAPvotwymmPV8tAMRGN7PZWL1BxW7fG4spBIC9kx8Otx2
-	FU
-X-Gm-Gg: ASbGncuzF62CiPSq4SVBxmRNH1VXh1Mg/ZFUqtQ7pY3/52d/UnzcYH30PNqNF+uzzQd
-	51s1UxvwbYI9BH4z5wxzMxpSXPlamaChUGjLBRE9lD5UOIK7VJrf6KUwmJiVaprKSztsvbtsZ8P
-	zP1G/6qy2iAZGEUcCSZ0ebOBlkXSuTB6hVPOc3c0bhvUGit/Z83PijMfsIkH7PcRcx4C2b5fkb6
-	mDu5fmUB6Z8Ax1aHseNZxxuS5vG6Kfvd9s5eDhIGw0ir79MIWVvEJzeunPf6gWeyPFntL4j8ez7
-	hKXGpWiPld/EFZp+mpvtznvOb3YUazs5npqv42Xc2aFS0tKOuUu73Fmlh2BoEDuG6qM3SZcuRiW
-	0cj2STi/UTmoGn8IpdiCZhYpZrAvsKdqjIJ1cWiFZxxpX5y9EQ2rXl6Zp8q5PnjU5Q3t9vWX76l
-	Rp803qLyi/+k31IVk9/ujq+1M=
-X-Received: by 2002:a05:620a:45a4:b0:8b2:6ac7:aa4f with SMTP id af79cd13be357-8b6a23dc063mr172257085a.68.1764987513598;
-        Fri, 05 Dec 2025 18:18:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgZLS4Ouz6l9rVGqlv9XKPunnmD1T1zKyOm+Jj5FrvCO5/UnVQORkYjq75KaWQtvr7FnzB7w==
-X-Received: by 2002:a05:620a:45a4:b0:8b2:6ac7:aa4f with SMTP id af79cd13be357-8b6a23dc063mr172255085a.68.1764987513121;
-        Fri, 05 Dec 2025 18:18:33 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37e6febaec4sm17923311fa.22.2025.12.05.18.18.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 18:18:31 -0800 (PST)
-Date: Sat, 6 Dec 2025 04:18:29 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: guptarud@gmail.com
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add
- coreriver,tc360-touchkey
-Message-ID: <arocrbzcwvyb2te3gcujeo7jaiaisgh3wuketqkif7xvkvmbct@r26gqpw6gb43>
-References: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
+        d=1e100.net; s=20230601; t=1764987602; x=1765592402;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9JahXlNGOzmOtepmb3hjjXqZtJUWdt6w28IBWBns70o=;
+        b=CrmT3C5O8+NvPI0vXaUOBx8kl/dFAlE/f9ujpI2hXg68K44dZD1Zwh3YnJaEQlLj/Z
+         YzWU3KPXk0BQuFJ5Sz1dzB8C4GBK0BNlbRz9e2V0u6YhU0chewbyePsMHGhO15a8IbK/
+         Dx0MhIE1gjSbCec5lIxiK2uIY7ImxksK1i3SYgsskG9Ej+QeWghvhFOz1PJuILDoBNHl
+         xRL1TFMoL73dTuXuZfcnpkRVIl/WY8OveYjoBljr/36ExWDPr8N1LrkE7CH8EPu33wvB
+         bgMurnUDRgY7HXtK6V5cOf44KdZ/xAHJt1ECvvhZMJ5PB7aN8UeFXb0MCwxhLjM1Ai1c
+         F4iQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXHFpHZJfesD3JxcOTMkmdicOEhQd/eOpxuDcfbi043VPmG4PIuZneuC6hhw5PM+Ax0NK661uce6OEWaJqj@vger.kernel.org
+X-Gm-Message-State: AOJu0YydIAQyYw1HAxpnnZjB4bjpfbzGMbI9C/ytfzINgqonXActum+D
+	zWWavwz1flK8NhqH3gSRYxShXHrO/dHRRToAVVDjU0kquPkfbc8gnlp03XztEQ==
+X-Gm-Gg: ASbGncsUu323PYLP/AtpYZbMHdegve7omlv97GIkuzKG+TxwrWhILebQLpMsBayLKNS
+	nvbfDFfZ4yGFpqqYsDCkasSXFd/kaqS22+WI4eFk5oChFQ8XC4NaT3rR5RRj1ulrv5kyAT4nP6Y
+	oIf8KIXtngiNS4B7NDFYkQTdzxmzur/uTUV65yCCkzWNwbd9KD1Bjx49xnM7No0I/adUItxYdEo
+	57MFUpgZLQQwMr3jHVO7mZLU9ivs4aePaPDfSuDiIKvNBMIrqZti/LjWSnRo3Uv8jl5OGxnCKmN
+	xnwG5zx0Fge7zQpHRPtdUK+6wsC42ecBKe36Za3D3TeyCW1OfuCmBe1THdUM+xSIhBTY2NZuFVe
+	x7KYSE2bYUlpdQ1P9hMSlV7HMnITgqGqMT49xf8K2N8bMiGd5MQoPFBrYj1mn+uBVMG1y6RMV1f
+	3r96DzZleFcknSnQ75Tgr48PRfr3uJL0caKDZ4XkFZacJJp3B2v4EZaGtiVfVAdGfnlriyr5XaL
+	Cj79E+OfTwidjuphitlTpiHpi0+1mndsxUFnwIwm3YA
+X-Google-Smtp-Source: AGHT+IEWBhvnN9trUkCXBUglev7/nK9T0ViIWvkFNjwoS8rBmSHJ8DmdMU3UapAV+bEQ6qMMvhOLrg==
+X-Received: by 2002:a05:6820:2226:b0:659:9a49:8e87 with SMTP id 006d021491bc7-6599a8a05c6mr548224eaf.11.1764987601877;
+        Fri, 05 Dec 2025 18:20:01 -0800 (PST)
+Received: from [192.168.7.226] (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6597ef0ca05sm3047121eaf.11.2025.12.05.18.19.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Dec 2025 18:20:00 -0800 (PST)
+Message-ID: <87ba595e-353b-4c8c-b398-9f8245336f05@gmail.com>
+Date: Fri, 5 Dec 2025 20:19:57 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
-X-Proofpoint-GUID: DJyWyO5ETBbyqnaZYercc2G3Rx8RO6du
-X-Proofpoint-ORIG-GUID: DJyWyO5ETBbyqnaZYercc2G3Rx8RO6du
-X-Authority-Analysis: v=2.4 cv=XeOEDY55 c=1 sm=1 tr=0 ts=6933927a cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=OQN141zOAAAA:20 a=pGLkceISAAAA:8 a=qrFJLkbEr44D1RwudJ0A:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAxNiBTYWx0ZWRfX6J2Lq+YZs25z
- FSvB+aQnFHwkftGD7lnpG0obkcpnx+5iBlUnS7EZ1q0V/fTReYQKLEBWSiydEAPD2463tszZCvg
- 3/gkt7AxVkUrRNjQI3N+B9EZj8S2wxhtVhvTWUqk7aY0o1IwcusRy6h/ApzWemEFcx8Sym1VsKB
- FwuNckdGusrsdj+SiYa8y6KSuoLToeVwtRiBB1jWkV93I3KdxM0Us2Hvw1om+z2TqgEqobCA/t/
- Xwn6TrHfC78Oh1lCkdsGuUvLmVEmiRvZAgcN6+tXyYQqaqLa60GhgnMFb6cOhpAcFcj79iuMfS/
- eNec5+O17KKmx1RHtc+bvLTwqyCBP45MvEDuaqiSo7Gb2zOqQ0lvIYKyZfk+UiteSDQqjeyBLIG
- nXGKLtvvk9FYze1clvNOnSIOKMRWUw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-05_09,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512060016
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_wcss: fix parsing of
+ qcom,halt-regs
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org, p.zabel@pengutronix.de,
+ linux-kernel@vger.kernel.org, konrad.dybcio@oss.qualcomm.com
+References: <20251129013207.3981517-1-mr.nuke.me@gmail.com>
+ <qszmet2vcmricxze56b5p2jegmqwc4io7fewhhniqskyic636v@lnswyat7577p>
+Content-Language: en-US
+From: "Alex G." <mr.nuke.me@gmail.com>
+In-Reply-To: <qszmet2vcmricxze56b5p2jegmqwc4io7fewhhniqskyic636v@lnswyat7577p>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 05, 2025 at 02:16:45AM -0800, Rudraksha Gupta via B4 Relay wrote:
-> From: Rudraksha Gupta <guptarud@gmail.com>
+On 11/29/25 3:18 PM, Bjorn Andersson wrote:
+> On Fri, Nov 28, 2025 at 07:32:05PM -0600, Alexandru Gagniuc wrote:
+>> The "qcom,halt-regs" consists of a phandle reference followed by th
+>> three offsets within syscon for halt registers. Thus, we need to
+>> request 4 integers from of_property_read_variable_u32_array(), with
+>> the halt_reg ofsets at indexes 1, 2, and 3. Offset 0 is the phandle.
+>>
+>> With MAX_HALT_REG at 3, of_property_read_variable_u32_array() returns
+>> -EOVERFLOW, causing .probe() to fail.
+>>
+>> Increase MAX_HALT_REG to 4, and update the indexes accordingly.
+>>
 > 
-> Add the tc360 touchkey. It's unknown if this is the actual model of the
-> touchkey, as downstream doesn't mention a variant, but this works.
+> Good catch, thanks
 > 
-> Link:
-> https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
-> 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
-> Add the tc360 touchkey. It's unknown if this is the actual model of the
-> touchkey, as downstream doesn't mention a variant, but this works.
-> 
-> Link:
-> https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
-> 
-> Test:
-> =============
-> - LEDs:
-> samsung-expressatt:/sys/class/leds/tm2-touchkey$ echo heartbeat > trigger
-> // Flashes LEDs :)
-> 
-> - Touching buttons:
-> samsung-expressatt:/sys/class/leds/tm2-touchkey$ evtest
-> No device specified, trying to scan all of /dev/input/event*
-> Not running as root, no devices may be available.
-> Available devices:
-> /dev/input/event0:      pmic8xxx_pwrkey
-> /dev/input/event1:      gpio-keys
-> /dev/input/event2:      tm2-touchkey
-> /dev/input/event3:      Atmel maXTouch Touchscreen
-> Select the device event number [0-3]: 2
-> Input driver version is 1.0.1
-> Input device ID: bus 0x18 vendor 0x0 product 0x0 version 0x0
-> Input device name: "tm2-touchkey"
-> Supported events:
->   Event type 0 (EV_SYN)
->   Event type 1 (EV_KEY)
->     Event code 139 (KEY_MENU)
->     Event code 158 (KEY_BACK)
->   Event type 4 (EV_MSC)
->     Event code 4 (MSC_SCAN)
-> Properties:
-> Testing ... (interrupt to exit)
-> Event: time 1761059686.899755, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-> Event: time 1761059686.899755, type 1 (EV_KEY), code 139 (KEY_MENU), value 1
-> Event: time 1761059686.899755, -------------- SYN_REPORT ------------
-> Event: time 1761059687.113489, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-> Event: time 1761059687.113489, type 1 (EV_KEY), code 139 (KEY_MENU), value 0
-> Event: time 1761059687.113489, -------------- SYN_REPORT ------------
-> Event: time 1761059688.764757, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-> Event: time 1761059688.764757, type 1 (EV_KEY), code 158 (KEY_BACK), value 1
-> Event: time 1761059688.764757, -------------- SYN_REPORT ------------
-> Event: time 1761059688.817516, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-> Event: time 1761059688.817516, type 1 (EV_KEY), code 158 (KEY_BACK), value 0
-> Event: time 1761059688.817516, -------------- SYN_REPORT ------------
-> ---
->  .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 55 ++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> index 5a39abd6f3ce..c4b98af6955d 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> @@ -52,6 +52,41 @@ key-volume-down {
->  			linux,code = <KEY_VOLUMEDOWN>;
->  		};
->  	};
-> +
-> +	touchkey_enable: touchkey-enable {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "touchkey_enable";
-> +		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	i2c-gpio-touchkey {
-> +		compatible = "i2c-gpio";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-> +		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+> Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
 
-I don't have docs at hand, but it looks like these pins belong to
-GSBI10. Have you tried using it directly?
+Hi Bjorn,
 
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&touchkey_i2c_pins>;
-> +		status = "okay";
-> +		i2c-gpio,delay-us = <2>;
-> +
-> +		touchkey@20 {
-> +			compatible = "coreriver,tc360-touchkey";
-> +			reg = <0x20>;
-> +
-> +			interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&touchkey_irq_pin>;
-> +
-> +			vddio-supply = <&touchkey_enable>;
-> +			vdd-supply = <&pm8921_l29>;
-> +			vcc-supply = <&pm8921_l29>;
-> +
-> +			linux,keycodes = <KEY_MENU KEY_BACK>;
-> +		};
-> +	};
->  };
->  
->  &gsbi2 {
-> @@ -198,6 +233,20 @@ firmware-pins {
->  			bias-disable;
->  		};
->  	};
-> +
-> +	touchkey_i2c_pins: touchkey-i2c-state {
-> +		pins = "gpio71", "gpio72";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	touchkey_irq_pin: touchkey-irq-state {
-> +		pins = "gpio52";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
->  };
->  
->  &pm8921 {
-> @@ -420,6 +469,12 @@ pm8921_l25: l25 {
->  			bias-pull-down;
->  		};
->  
-> +		pm8921_l29: l29 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			bias-pull-down;
-> +		};
-> +
->  		/* Low Voltage Switch */
->  		pm8921_lvs1: lvs1 {
->  			bias-pull-down;
-> 
-> ---
-> base-commit: 0ccd3ddf45c93ab06c9b1a9d266dcab1e52bf3d2
-> change-id: 20251205-expressatt-touchkey-1747c503a2f3
-> prerequisite-change-id: 20251119-expressatt_nfc_accel_magn_light-f78e02897186:v4
-> prerequisite-patch-id: 6fdd0efa5eda512b442b885df80774d1a7037df7
-> prerequisite-patch-id: 12d296f83ccb1bdfb8d06a72e476bf51ae5f4e6c
-> prerequisite-patch-id: a970acf2080143f41ae0935dd2c57bb71f5bf338
-> prerequisite-patch-id: fd25fef58503c5e5cf742e79b124948c7f6b98d9
-> prerequisite-patch-id: 966ae746687ebf8eb29c6185a8909b047e70dbb1
-> prerequisite-patch-id: 68603a680b24921759425fc289e61fc4435e5ccd
-> 
-> Best regards,
-> -- 
-> Rudraksha Gupta <guptarud@gmail.com>
-> 
-> 
+I noticed that v1 of this series is included in the pull for v6.19 [1], 
+even though there is a v2 [2] with some of your and Konrad's feedback 
+included. I wanted to check if this is your intention. I am okay to go 
+with v1, and am happy to submit any further improvements after the merge 
+window.
 
--- 
-With best wishes
-Dmitry
+Alex
+
+[1] 
+https://lore.kernel.org/linux-remoteproc/20251205200342.119676-1-andersson@kernel.org/T/#u
+[2] 
+lore.kernel.org/linux-remoteproc/20251202162626.1135615-1-mr.nuke.me@gmail.com/#r> 
+Regards,
+> Bjorn
+> 
+>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>> ---
+>>   drivers/remoteproc/qcom_q6v5_wcss.c | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+>> index 07c88623f5978..23ec87827d4f8 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+>> @@ -85,7 +85,7 @@
+>>   #define TCSR_WCSS_CLK_MASK	0x1F
+>>   #define TCSR_WCSS_CLK_ENABLE	0x14
+>>   
+>> -#define MAX_HALT_REG		3
+>> +#define MAX_HALT_REG		4
+>>   enum {
+>>   	WCSS_IPQ8074,
+>>   	WCSS_QCS404,
+>> @@ -864,9 +864,9 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	wcss->halt_q6 = halt_reg[0];
+>> -	wcss->halt_wcss = halt_reg[1];
+>> -	wcss->halt_nc = halt_reg[2];
+>> +	wcss->halt_q6 = halt_reg[1];
+>> +	wcss->halt_wcss = halt_reg[2];
+>> +	wcss->halt_nc = halt_reg[3];
+>>   
+>>   	return 0;
+>>   }
+>> -- 
+>> 2.45.1
+>>
+
 
