@@ -1,214 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-84589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCBE1CAAB08
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 18:20:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB32DCAAB68
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 18:48:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7123530836FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 17:20:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 45CFE30517DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 17:45:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81D2118A93F;
-	Sat,  6 Dec 2025 17:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A0B62222D2;
+	Sat,  6 Dec 2025 17:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="icEUVdY+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hj4UyjLB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A58728695;
-	Sat,  6 Dec 2025 17:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AFF502BE;
+	Sat,  6 Dec 2025 17:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765041647; cv=none; b=I7W3bcOia7jo7KuUTkW5KIxvEPeOHMOOsCfCkbJ4j//eaY2HdXjMcn1gDH8rXVoPJOsPgdBQbLByaEAEV9cC/tOQkV65Gn+n98D0pTT7xEyVtHulSR3DYPG22Oik/jtNyOUplphKRqfwm89XAYb0HU/3+8kQnB76cXrakwJPyJ4=
+	t=1765043146; cv=none; b=CryX6faKnNXGoO3L5HD2kmpKVUKa/vJ0XjB/3IXq58C2qMysT7WBF35AXm2lYNbdPmAlyktwDM4SFnAvbSkRyiyu9gileXnUU6ncAEDiTTYD+q9xbs6wErr9OB+A26/79FChAjfe/vcYnaM3rWYbT6vyOh0pw1Tip9Y+kd6JiIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765041647; c=relaxed/simple;
-	bh=EGo/v7W382KfVSCLHzD1MM7hxHiuR4Bevqu59jNGYwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kVxvYXnjBZoyNwtqTYFNBS5WYZCr19QtLkAQODeyTFw5+HHNdXpNlJVuOjARY2Ybd2MbgXzG5zU6N+qG2SjpvcikBl7LcUSyurOLE2tftalIELlwv7ccJuJGxYNGsiKOIR2Pln7P/EqkxlnelMuba2GjfSy7CjoU80cT3apqStE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=icEUVdY+; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 373FE5340EBE;
-	Sat, 06 Dec 2025 18:20:35 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765041635;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=WxSGLhUTyzYWcZS5r6yaEVq8VXG1wutgwgZvpnbYHHs=;
-	b=icEUVdY+2TERURlOOdeG7+5X8aPc2w56N9X9ITTsmpLx+HZEFTicnGO3Frb6xih2dPPm0Y
-	UyVs1vIQQxgnIkZxiITr4w0r0Xzft0qAyZPPBmgLLHk3/wMgFz8JAKqdXzVQiqnRfIfEWT
-	/CCW426ecWfhnoQh5JJeSP19nqPVrZg=
-Message-ID: <e0be618c-4224-45a4-9cd5-00001510fdec@ixit.cz>
-Date: Sat, 6 Dec 2025 18:20:35 +0100
+	s=arc-20240116; t=1765043146; c=relaxed/simple;
+	bh=CtDjl9Ll7B/5YngbUltP1j/RQ93MbGy3LfdGklrzF4M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RvMXrA8hMyhga6A7fjul4n+bfm15Q2R/WwoykaXFUHIozzXW2M0OHgtCXiijltpjE+ZEvjrkEPLEzjMALeDu/T1jbrAgo0uce8AX2x3j5/+85Wy74l/BX4eH/x1sqVNK1bDntKx9mfNCvxZ4gp7sLy0fZ9z4tnFfez5ncUJf2Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hj4UyjLB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C836C4CEF5;
+	Sat,  6 Dec 2025 17:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765043145;
+	bh=CtDjl9Ll7B/5YngbUltP1j/RQ93MbGy3LfdGklrzF4M=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Hj4UyjLB0pi7Vpi0Ra9d02BGQRajL09/VhMBKx5eqGwuSmAIQVPTW0sefIJOmnaUo
+	 jjZNOwDzK3Vt8UkQt49rlADXExrHQTa4/MV7qKurxihjJ7QYyWyIZ8TLjwpqyb9q1u
+	 dGAh/kJq+xerKrHBP1jX+MmTURQjFE5iw/Mzhq/+asDiQMB93mupNxksvxSvHbYLTp
+	 +tnsJILhdXm8b6cu3YInsGEfW1uw1FwJ4cv0HrR6kkSn7pQuhUJYglceZK8TMOe0wN
+	 uMlXKWy30OeWYgMt3aKKRmYEXH4C7W6S2hdzTI9Dp1RrntjqSBo7tmIRoAQ7hO64E5
+	 MG8naotj1rvhA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BEC5D3B7DB;
+	Sat,  6 Dec 2025 17:45:45 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/2] Introduce framebuffer for Oneplus 6 and 6T
+Date: Sat, 06 Dec 2025 18:45:41 +0100
+Message-Id: <20251206-sdm845-oneplus-fb-v1-0-19b666b27d6e@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/8] arm64: dts: qcom: Add support for Pixel 3 and
- Pixel 3 XL
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
- Casey Connolly <casey.connolly@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- phodina@protonmail.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- Amit Pundir <amit.pundir@linaro.org>, Casey Connolly <casey@connolly.tech>,
- Joel Selvaraj <foss@joelselvaraj.com>
-References: <20251125-pixel-3-v4-0-3b706f8dcc96@ixit.cz>
- <20251125-pixel-3-v4-8-3b706f8dcc96@ixit.cz>
- <shhew6wy236saj52trqb2367tq7kgk3jks3cjcaqrvpgiysud4@wweya32qwtbb>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <shhew6wy236saj52trqb2367tq7kgk3jks3cjcaqrvpgiysud4@wweya32qwtbb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMVrNGkC/x3MwQpAQBCA4VfRnE2x7QivIgfLLFMs7URK3t3m+
+ B3+/wHlKKzQZg9EvkRlDwllnsG4DGFmlCkZTGGoNEWFOm21JdwDH+up6B0SW2poJO8qC6k7Inu
+ 5/2fXv+8HiEz182MAAAA=
+X-Change-ID: 20251206-sdm845-oneplus-fb-5e4595c5fb64
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sam Day <me@samcday.com>, 
+ David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=762; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=CtDjl9Ll7B/5YngbUltP1j/RQ93MbGy3LfdGklrzF4M=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpNGvI+l27B99XrsDAgoE3ZXy+foHpa+RsziqyT
+ fR2yS/4SuqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTRryAAKCRBgAj/E00kg
+ chMsD/9fiQz06dEn+/w6tyigbkoqUEFZjH3HXlNh4KllDeRf5wRzyeQk7xDysVmNVu6NTolWB6M
+ PeVAgCDL+8OdfZCC71K6ih85EAyUQgcEs3j6vobYT5FHHMJPGgOWL3KlspJRBtx6nu3oa8VCw3N
+ TlgLpwEPTwNs/Cx2zFYKZbBeh++XjpNdzP9BnyqZe+CX7w3jz4mB44XocwXPGI04Mm/c+otGcP9
+ b0uPtLbVgiuJLpwrknRKUj6PipRfKsXBCOtCxSef+5rnwdR7WU8diB4Q+WohME4+ETb6qgyeVMA
+ 7WSetWoitL3c6ASiBy/APkXpoPbvCJ5INpCxPueC3WcrPs4n6RIJyoS6cGQP1q4/MqNIUUB1hQO
+ 3JuwtlcI9p8RauU5VIkTnMfElu+/HMQZWVj1NTqp1/oDdy2fvEXV+7o75DxBvFrE0189u0Hb0Es
+ UeOfWrvvUAGDXey88f58CvQIVSrLYneQ4sP+uTL1nzSbWvypj41frme1+AKaOw5olAAuv3/AMlR
+ CMHg7AFYp1YSg2pDd/ZMbQrTx2xeH6y+U2rxcSjxAH+RFYx5IWZ6VYfYnXhO7iqPfoor10csVwj
+ gzLDHorwK4uZy1jsNNA1Ge852HkGteKvqMzVNmjNfmuu0aahlRiekEbo3YyaUcLHyVSMCQzIR9A
+ IEi9IIg0/CtSHMg==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
+
+Unfinished bits of framebuffer support was laying long enough in
+downstream forks, let's push it.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (1):
+      arm64: qcom: sdm845-oneplus-enchilada: Sort nodes alphabetically
+
+Sam Day (1):
+      arm64: dts: qcom: sdm845-oneplus: Add framebuffer
+
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi   | 18 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dts |  8 ++++++--
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts    |  4 ++++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
+---
+base-commit: a5841f413dd0173a0648408827719fab7838a1c2
+change-id: 20251206-sdm845-oneplus-fb-5e4595c5fb64
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
 
-
-On 06/12/2025 17:56, Bjorn Andersson wrote:
-> On Tue, Nov 25, 2025 at 09:29:43PM +0100, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> This adds initial device tree support for the following phones:
->>
->>   - Google Pixel 3 (blueline)
->>   - Google Pixel 3 XL (crosshatch)
->>
->> Both phone boards use the same identifiers and differ only slightly
->> in their connected peripherals.
->>
->> Supported functionality includes:
->>   - Debug UART
->>   - UFS
->>   - USB-C (peripheral mode)
->>   - Display (Pixel 3 only, and the driver needs improvements)
->>   - GPU
->>   - Bluetooth
->>   - Wi-Fi
->>
->> The rmtfs region is allocated using UIO, making it technically "dynamic."
->>
->> Its address and size can be read from sysfs:
->>
->> $ cat /sys/class/uio/uio0/name
->> /sys/class/uio/uio0/maps/map0/addr
->> 0x00000000f2701000
->>
->> $ cat /sys/class/uio/uio0/maps/map0/size
->> 0x0000000000200000
->>
->> Like the OnePlus 6, the Pixel 3 requires 1 kB of reserved memory on either
->> side of the rmtfs region to work around an XPU bug that would otherwise
->> cause erroneous violations when accessing the rmtfs_mem region.
->>
->> Co-developed-by: Amit Pundir <amit.pundir@linaro.org>
->> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
->> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Did I really co-author this patch? Perhaps I contributed parts to it?
-> Perhaps I've just forgotten?
-
-The patch and it's parts I used contained your S-off-by, so I added 
-Co-developed-by as I assumed parts of it was written by you.
-
-That's hard about seeing patches downstream, as the history is not so clear.
-
-> 
-> Either way, I don't think I can say that I certify origin of the whole
-> patch.
-
-Should I drop your the Signed-off-by then (and eventually all people who 
-didn't worked on the series I sent to upstream)?
-> 
-> 
-> Any parts that I did contribute, would have met the criteria, so you're
-> free to use those.
-
-Thanks!
-
-David
-
-> 
-> Regards,
-> Bjorn
-> 
->> Co-developed-by: Casey Connolly <casey@connolly.tech>
->> Signed-off-by: Casey Connolly <casey@connolly.tech>
->> Co-developed-by: Joel Selvaraj <foss@joelselvaraj.com>
->> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
->> Co-developed-by: Sumit Semwal <sumit.semwal@linaro.org>
->> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
->> Co-developed-by: Vinod Koul <vkoul@kernel.org>
->> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile                  |   2 +
->>   .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  77 +++
->>   arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 528 +++++++++++++++++++++
->>   .../boot/dts/qcom/sdm845-google-crosshatch.dts     |  28 ++
->>   4 files changed, 635 insertions(+)
->>
 
