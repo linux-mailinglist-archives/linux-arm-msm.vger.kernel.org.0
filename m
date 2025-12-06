@@ -1,111 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-84565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6956CCAA432
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 11:36:29 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF0ADCAA4B7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Dec 2025 12:03:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 33D31307978A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 10:36:21 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 29B903019B37
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Dec 2025 11:02:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3662D8360;
-	Sat,  6 Dec 2025 10:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1674286422;
+	Sat,  6 Dec 2025 11:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EbFDulp3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aYkWNJld"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED91F28D83F
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 10:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A448E25A2A2;
+	Sat,  6 Dec 2025 11:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765017379; cv=none; b=OLLMKC2oivvfGuRAiEW97Oj50/UDNKSVmHo+zwDHh1FRokYIwjMG4ISAEH/BP2tNlPh4mq4JgOYsGTMlejgNHmkzpQFkbsyxtX1Oq2NFkDKSy/2hB4RMRtleW1GQHm+0+rp9i6x01c1ldfcUo9yxd1VNNNWtzhGo5JoDklbGYYQ=
+	t=1765018973; cv=none; b=H//df1H4w6TKhHpJiGIewVLd0Mxsb3aQW2BinZk5KxMFR7L/Vc9eB5NkGaai01x+uaIjoSwY8Do8BuPvtXOE0mIH8LMUlL8+0315OTK44sGLA4IKOYMYOzaVzy/vpHlkaByzWAk2WX493CUei3IfDjwB9YciztS0HhmZcqXd120=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765017379; c=relaxed/simple;
-	bh=gpVV63iDglnfpaEWSXD1aX6VXDo3O9ua7snWNryoF3E=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YrW2ag762ZHWsRMkbd4q3dj+Ub+Rh9/MQ+7/++GEqbNAjaF67GYDlsXsMHwic3yeePKapaDC4YuDkjw6jomdcznw7Q6KNVia0jf7BvLy1siEdBHb6crraE/b5G4b23Fe9wBYSlIJABG9cdTWlzrO5L1tdckfL+9vmMZLT+xqRSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EbFDulp3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B94C4CEF5
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Dec 2025 10:36:18 +0000 (UTC)
+	s=arc-20240116; t=1765018973; c=relaxed/simple;
+	bh=aiIm2ihKF9KH0Ql0TXM+ChbNjKe5WJGE6SmNEuY845s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l9+WYpVguWPTV1t4tnAlUWTbK4g3QqbHqT8ZDPT885mX0Ll0QDINTkOj+zEaB4KHHlpTc+HMVr7M4A2YFV4QlENvklCvKAu1Dnz8HzDLaH8YOfI59j7lfDfUSO7rCX4tlPRi72yHjS+LIn7yWN1JM2M0+Ou1FGDP4YJ3ntF3VPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aYkWNJld; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C0BC4CEF5;
+	Sat,  6 Dec 2025 11:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765017378;
-	bh=gpVV63iDglnfpaEWSXD1aX6VXDo3O9ua7snWNryoF3E=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=EbFDulp33Na/XwDV8Rj+879IbM/RrrGGlifCyfnX1JMWpyYjydOGCz8miKqhE9Pfd
-	 R3CLkdrN+Sb9GSB7jNMq/hCCkcmPVuR7uB3L7noF6DCXamUVjKFeWzrScPGyUiFm80
-	 XifYXEuPppSsfLsBL4awLeaxM5YuS5YFUrQbbUtcGOaZ3x8XQQdNkbjc+X65Mpu87G
-	 NNdZNzswphu+3+CjmKBclsKbG9Oo8LnLeCCHxmcqI7wkfjxSi5pU7qSRtW35X3OkxQ
-	 RyFUgw3NH26/fxcXdzMMYIUgV7ikowqijQ9dq23eHk22fSr0WQUHy+4ZedXm91Zy3S
-	 6dUAtln6UMP3Q==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5959d9a8eceso3302427e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Dec 2025 02:36:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU79QjiLuwiAX8ua2EVVHzcFA8gg9HdOPIosyHuoCPlVva7dScGYzd1HO/KSoPKHTKK/EJiIylOqWN8A1NZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZxoE1XHjZtNQ3qufcVMtPAfturBHLSQkMygf/36H9AE4K56GH
-	WqCbD04L+bd4ypcouYka+ehYt9jo9INdPasIMQ2rgmNbsvOfGvCaFPpmwonTGc2pS4861DqO1iA
-	9Bo6WZoF1z5cipl84va1CN6HZUHKPJCCXPprd3pBi4g==
-X-Google-Smtp-Source: AGHT+IF6DtV7OW+BejuKVtdzjK3twTb49WoGKkQvitpJR/41yEScXdRbSXUcqvOsFNEJ72Er9XF4YpUdDXF5/uploMQ=
-X-Received: by 2002:a05:6512:3044:b0:592:f5f9:f5a9 with SMTP id
- 2adb3069b0e04-598853c29f9mr536908e87.36.1765017377296; Sat, 06 Dec 2025
- 02:36:17 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 6 Dec 2025 02:36:15 -0800
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 6 Dec 2025 02:36:15 -0800
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
+	s=k20201202; t=1765018973;
+	bh=aiIm2ihKF9KH0Ql0TXM+ChbNjKe5WJGE6SmNEuY845s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aYkWNJldsrnNv81VMX6+rzdSL0NiO8sepwEMOy+Mgp9Gj2AjQwS7RIU6tKzznMOeI
+	 OkMNNxhmo0bDyAm2ShN3UWpKQoPhHo3F0hBATpBFxvMbz0fSFyO/qwqFsQ9MdvGQ1l
+	 QRMUkZGeNKSXF5ZSCOic64wggdvCqFTX/eS32s0d8VsGv6jxFitJvkDBbJewm7Xh3b
+	 VgH6e3LxRlXAcwxkzMJiJW282dpI+kuFjrYwm/1oxtfXfwpNaQEdNRPzrq4Ho0si2g
+	 8v0e+40nU8U+Wft/Dv5eTy48jhZsyTpXnBBrNYIhQGfOKHb5ON31Mb3f0NGxG2nPBC
+	 xKk0ni2HMyyUg==
+Date: Sat, 6 Dec 2025 12:02:50 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Pengyu Luo <mitltlatltl@gmail.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,snps-eusb2-repeater: Add
+ squelch param update
+Message-ID: <20251206-efficient-tireless-dragonfly-c5d2ff@quoll>
+References: <20251204044644.3072086-1-krishna.kurapati@oss.qualcomm.com>
+ <20251204044644.3072086-2-krishna.kurapati@oss.qualcomm.com>
+ <fxf66ulont7wnmozqww2cklpp3djkzsgvc3znew4m7t47qlye7@32hxp3yze7h5>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
-Date: Sat, 6 Dec 2025 02:36:15 -0800
-X-Gmail-Original-Message-ID: <CAMRc=Mcx1E3w7roY55HhKZg6pqV+NRkp87KYa5=BUEVJHOXVLw@mail.gmail.com>
-X-Gm-Features: AQt7F2oWdedln7_1XCoDS6sUsiV3R704Mi2gnvY4_t_P0x5kXui4g-3uZj4PJtM
-Message-ID: <CAMRc=Mcx1E3w7roY55HhKZg6pqV+NRkp87KYa5=BUEVJHOXVLw@mail.gmail.com>
-Subject: Re: [PATCH 00/10] Fix up WCN6855 RFA power supply name
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fxf66ulont7wnmozqww2cklpp3djkzsgvc3znew4m7t47qlye7@32hxp3yze7h5>
 
-On Fri, 5 Dec 2025 13:47:19 +0100, Konrad Dybcio <konradybcio@kernel.org> said:
-> Commit 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description
-> closer to reality for wcn6855") renamed the supply representing the
-> VDD17_PMU_RFA leg to mention "1p8" instead.
->
-> While the supply's voltage is normally 1.8 V, the bindings should
-> reflect the actual naming of the pin. Moreover, almost all DTs define
-> the output as 1p7, so that ends up looking a little odd..
->
-> Ultimately, this is a "fake" regulator that is consumed for the sake
-> of DT sanity and this series is meant to bring uniformity and squash
-> checker errors.
->
-> The last patch fixes up a less-trivial warning.
-> sc8280xp-microsoft-arcata is left out because I don't know whether the
-> mounting of the chip is on-board or as an M.2-y card (although I would
-> guesstimate the prior).
->
-> Depends on the long-ready-for-the-merge series by Krzysztof (per-chip
-> bindings split of qualcomm-bluetooth.yaml), mentioned below
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
+On Fri, Dec 05, 2025 at 10:55:36PM +0200, Dmitry Baryshkov wrote:
+> On Thu, Dec 04, 2025 at 10:16:42AM +0530, Krishna Kurapati wrote:
+> > Add squelch detect parameter update for synopsys eusb2 repeater.
+> > 
+> > Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> > ---
+> >  .../devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+> > index 5bf0d6c9c025..f2afcf0e986a 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+> > @@ -59,6 +59,14 @@ properties:
+> >      minimum: 0
+> >      maximum: 7
+> >  
+> > +  qcom,squelch-detector-bp:
+> 
+> -uV? -mV?
 
-I want to belive there was a reason for it but I no longer remember. :( Is it
-possible the schematics for the lenovo X13s laptop had it described as 1p7?
+If thi sis adjustment in ratio, then bp is correct. Some sort of
+explanation in commit msg would be nice, but I don't want to stall the
+patchset for that.
 
-Well, anyway:
+Assuming this is indeed ratio without actual SI units:
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
 
