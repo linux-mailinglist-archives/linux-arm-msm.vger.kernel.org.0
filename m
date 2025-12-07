@@ -1,105 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-84600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F693CAB38A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Dec 2025 11:36:01 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26CADCAB5B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Dec 2025 15:01:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 48C09303AEB6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Dec 2025 10:35:56 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D107F300616A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Dec 2025 14:01:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D2832877C3;
-	Sun,  7 Dec 2025 10:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC4325F7B9;
+	Sun,  7 Dec 2025 14:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="bEa+QCu6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EsCx8mM8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A190E3B8D61;
-	Sun,  7 Dec 2025 10:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DCA16132F;
+	Sun,  7 Dec 2025 14:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765103755; cv=none; b=TowJ7d7/KBJriXwoxaXYkEAj5hkQ3fdWQkHOoudSkMTbpClR4PwbLDOB7EQr9634ueMDdbH1ftLUzwjov28qdan1QKjZbKpcNaZc4e0wu0nNRKtIMy/QOOYzzCTwawH85sMGteLa1m30Dk4yjZ9RRJiWToi5CMmdN48BmbzkJ04=
+	t=1765116074; cv=none; b=G1Q79u0ZNVqScYkzk7jDB/QTdoX8s2g0FbBfWbiTT/xsX4dNdYXgPBJBGUy9oychWtPifJ/6v10goNsgFzBAkNhFLPUlecFnWh3GIBfUiQLkW7PbweoKMvHa/FwAPVSAvfjHJF2T30OnQnz4lSgUw4UWrNBz/aWfqSA4rEwxTf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765103755; c=relaxed/simple;
-	bh=cdxgLhluKDpR93tBLWRmMFNEs4dqL66QD+PPzLUtjGQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Tr1a01TjyAFqNRH8joBuSozeKS1NlHQPHGTi31ZB4d5rFTLaFAAPqf5BGfywqEDd99AY6dvyVigDbMjw72ISY8VmDGiC4heRP7JeZNltOeX46OgsgpSRymG6vrozzscVK697BWj1xWIkXRUYr9gnngGVFK1379k2WmnavYsjZM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=bEa+QCu6; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1765103745; bh=cdxgLhluKDpR93tBLWRmMFNEs4dqL66QD+PPzLUtjGQ=;
-	h=From:Date:Subject:To:Cc;
-	b=bEa+QCu6YYXBn6wLwNYGqjP6N6oSU7HpHtfyX/D93R/0sKgdZoo0wG5Ib3LRC1fl5
-	 czQqQ4b2r9pDaVhRZYSCBzP6fetEmcLt99oE04BaM/Bf/o3OxWdKtAd0pSm/WhmtFr
-	 asmu8DVnKNUvWF3WLbw/notJXm1WH/4XhpcY6+zA=
-From: Luca Weiss <luca@lucaweiss.eu>
-Date: Sun, 07 Dec 2025 19:35:35 +0900
-Subject: [PATCH] dt-bindings: remoteproc: qcom,adsp: Re-add cx-supply
+	s=arc-20240116; t=1765116074; c=relaxed/simple;
+	bh=XIPzPHGdu9MVAiWYzmLVkJFzpk/+VDBaaF5v6Z7S21s=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ce4FcUxQ1282a91kbMuMJ3xs1MO0Vu5NJ+DKabqD9sgv2tuywNwEutXWhartsJ5TTS8iCWsuYdMEaAyXLkNrftercW7VS9Ng70vfhrLlzE2WPBc87zESMPFC1msWa8D3c7VodcZSSEtsCPwAC/6GYbTm5OY9b+gIQCSPnCHoTG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EsCx8mM8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD22C4CEFB;
+	Sun,  7 Dec 2025 14:00:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765116073;
+	bh=XIPzPHGdu9MVAiWYzmLVkJFzpk/+VDBaaF5v6Z7S21s=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=EsCx8mM87A8HyrcrJI3CQaCEoWdzjxwjyxeqqWomtZPKX5oKnNhnVYczlV7yr+api
+	 h1nrsAZDZtwq8anuESeyBIikhqAGux8Sco7E2Rn/vfqVt3PrLc2LEXvN4NSCJv8VNd
+	 QVVaCfRbNh41EPha2La8wU9XYpzaRw5oeg/WKfl2DGoA8/1tRRDfQAYNuQDEo9c9yk
+	 dqBAsLPZNDc43gMPXaP5nnzCsVtGWyKsl2w7so4uosQ6fq9FfMfKiMuPsd2YnYkyMA
+	 RKvB9A/O4JQAg0lFIEGn3i1jJw/CzAX645QjvGuZeOKfDEgbv9poaPspTv29soMaUq
+	 UJU9YlFfffWtg==
+Date: Sun, 7 Dec 2025 14:00:46 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Romain Gantois <romain.gantois@bootlin.com>
+Cc: MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi
+ <cw00.choi@samsung.com>, Guenter Roeck <linux@roeck-us.net>, Peter Rosin
+ <peda@axentia.se>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Michael
+ Hennerich <Michael.Hennerich@analog.com>, Mariel Tinaco
+ <Mariel.Tinaco@analog.com>, Kevin Tsai <ktsai@capellamicro.com>, Linus
+ Walleij <linus.walleij@linaro.org>, Dmitry Torokhov
+ <dmitry.torokhov@gmail.com>, Eugen Hristev <eugen.hristev@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>, Hans de
+ Goede <hansg@kernel.org>, Support Opensource
+ <support.opensource@diasemi.com>, Paul Cercueil <paul@crapouillou.net>,
+ Iskren Chernev <me@iskren.info>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Matheus Castello
+ <matheus@castello.eng.br>, Saravanan Sekar <sravanhome@gmail.com>, Matthias
+ Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, Casey Connolly
+ <casey.connolly@linaro.org>, Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, Amit
+ Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
+ <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
+ <lukasz.luba@arm.com>, Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Sylwester
+ Nawrocki <s.nawrocki@samsung.com>, Olivier Moysan
+ <olivier.moysan@foss.st.com>, Arnaud Pouliquen
+ <arnaud.pouliquen@foss.st.com>, Maxime Coquelin
+ <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, David Lechner <dlechner@baylibre.com>,
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH] iio: inkern: Use namespaced exports
+Message-ID: <20251207140046.56322d6f@jic23-huawei>
+In-Reply-To: <5948030.DvuYhMxLoT@fw-rgant>
+References: <20251201-iio-inkern-use-namespaced-exports-v1-1-da1935f70243@bootlin.com>
+	<78240755-44dc-4835-aca5-99540cca0304@baylibre.com>
+	<5948030.DvuYhMxLoT@fw-rgant>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251207-adsp-cx-fixup-v1-1-0471bf2c5f33@lucaweiss.eu>
-X-B4-Tracking: v=1; b=H4sIAHdYNWkC/x2MQQqAIBAAvyJ7bsEWK+kr0UF0q72UKIUg/T3pO
- AwzFTIn4QyzqpD4kSzX2aDvFPjDnTujhMZAmoae9IQu5Ii+4CbljmgMWUvGjuwHaE1M3MT/W9b
- 3/QDuSC2EXwAAAA==
-X-Change-ID: 20251207-adsp-cx-fixup-442882486ec5
-To: Bjorn Andersson <andersson@kernel.org>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca@lucaweiss.eu>
-X-Mailer: b4 0.14.3
 
-Some boards (e.g. sdm845-samsung-starqltechn) provide a cx-supply
-reference for the SLPI PAS.
+On Tue, 02 Dec 2025 08:30:58 +0100
+Romain Gantois <romain.gantois@bootlin.com> wrote:
 
-The Linux driver unconditionally tries getting "cx" and "px" supplies,
-so it actually is used.
+> On Monday, 1 December 2025 18:15:54 CET David Lechner wrote:
+> > On 12/1/25 4:59 AM, Romain Gantois wrote:  
+> > > Use namespaced exports for IIO consumer API functions.
+> > > 
+> > > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+> > > ---  
+> > 
+> > ...
+> >   
+> > > diff --git a/drivers/iio/dac/ds4424.c b/drivers/iio/dac/ds4424.c
+> > > index a8198ba4f98a..33d6692f46fe 100644
+> > > --- a/drivers/iio/dac/ds4424.c
+> > > +++ b/drivers/iio/dac/ds4424.c
+> > > @@ -14,7 +14,6 @@
+> > > 
+> > >  #include <linux/iio/iio.h>
+> > >  #include <linux/iio/driver.h>
+> > >  #include <linux/iio/machine.h>
+> > > 
+> > > -#include <linux/iio/consumer.h>  
+> > 
+> > Unrelated change?  
+> 
+> Indeed, I'll leave that out in v2.
 
-Fixes: 3d447dcdae53 ("dt-bindings: remoteproc: qcom,adsp: Make msm8974 use CX as power domain")
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
----
-There's literally one board using this upstream, judging from that I'm
-not sure this is a misuse of cx-supply or what exactly. An alternative
-to this patch is of course removing the usage in
-sdm845-samsung-starqltechn, but as it stands right now the patch under
-"Fixes" introduces a dtbs_check warning.
----
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Please spin a precursor patch that makes that change.
+That way we can easily check all files either both include that header
+and have the namespace enabled, or neither.
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 137f95028313..bde138716873 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -32,6 +32,9 @@ properties:
-   reg:
-     maxItems: 1
- 
-+  cx-supply:
-+    description: Phandle to the CX regulator
-+
-   px-supply:
-     description: Phandle to the PX regulator
- 
+I might merge this is a slightly funny way that leave it initially
+not meeting that rule so that the precursor isn't in the immutable branch
+for other subsystems but lets keep it logical in the patch set!
 
----
-base-commit: 37bb2e7217b01404e2abf9d90d8e5705a5603b52
-change-id: 20251207-adsp-cx-fixup-442882486ec5
+Jonathan
 
-Best regards,
--- 
-Luca Weiss <luca@lucaweiss.eu>
+> 
+> > >  #define DS4422_MAX_DAC_CHANNELS		2
+> > >  #define DS4424_MAX_DAC_CHANNELS		4
+> > > 
+> > > @@ -321,3 +320,4 @@ MODULE_AUTHOR("Ismail H. Kose
+> > > <ismail.kose@maximintegrated.com>");> 
+> > >  MODULE_AUTHOR("Vishal Sood <vishal.sood@maximintegrated.com>");
+> > >  MODULE_AUTHOR("David Jung <david.jung@maximintegrated.com>");
+> > >  MODULE_LICENSE("GPL v2");
+> > > 
+> > > +MODULE_IMPORT_NS("IIO_CONSUMER");  
+> > 
+> > Is this actually needed if we don't use anything from consumer.h?  
+> 
+> No, it's not.
+> 
+> Thanks,
+> 
 
 
