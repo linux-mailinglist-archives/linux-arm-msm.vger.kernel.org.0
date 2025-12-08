@@ -1,367 +1,538 @@
-Return-Path: <linux-arm-msm+bounces-84636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D47DCAC533
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 08:28:07 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DC76CAC611
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 08:40:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BA4A53050BB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 07:26:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3285B304FB82
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 07:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F6CD2459D1;
-	Mon,  8 Dec 2025 07:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD90275AFF;
+	Mon,  8 Dec 2025 07:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nypYuYi2";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NdgSjgZk"
+	dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b="O3+6SsJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11020093.outbound.protection.outlook.com [40.93.198.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A18E22D4C8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 07:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765178788; cv=none; b=RR6RdG3UIQZjcuvqrnnYZLANjPhGcT2msHcvFBRegEAEpXIIDOU6+z5wtdholPjjmbe5aHBVx4G/L1vUmgR+6o3KZS6QK90lZkXQKYCw6wU0HtAtG1QTf9bfMILc+BYuKokYXaKPj8NOcGw9cqRXfhL9Jm6AZ27AWY7p+hNtBic=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765178788; c=relaxed/simple;
-	bh=ksmgttzQLFh3OuBHy84l3+sgG/orybEsGuEn+HuOuQ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=swCXA2E5dzvuqPumVclsHfboBCcRPPAqvdmTKgjiSCrt6s5E0oXFZfpsk7PR+QV4TIM+eHAbxALUlgMy8IbZkn3ReaAp/IwxLTSvz3bqxRTpjF8qhLwKe/3+F08v1xZjaP2/ynT3uC8O28vve/E6Qs/FCsc8A31olL9IiFyBFZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nypYuYi2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NdgSjgZk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B7Murcg2928399
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Dec 2025 07:26:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2h/9s5/6yuANhhb+4rM83nToq2nw6PNRAP/thpKEdn8=; b=nypYuYi2PJkd/rEX
-	SXLNA4AiYWXHklByR+7kfPQ/uytnZYtZ4hD97v4CqeAiNAzxwlY4bfWibsrMlmUY
-	+Qc/o0Swz7Ras2QRZgVNk56GHoSSd+RcHd78XSU7Ldq6RRpYAwmbBEEgox+HU2/r
-	/QsnqR4w0Bia7OgFjBi3RfcQR5LGlcbELwfZFjDbap+VRbwiBfggyGxmQaBay5cd
-	jnSYK+ITDVz7Eyd2ANhYuLZ/JCFvOOA5aMCK9hPcffJc2ofUS7hOiJfQYd7gzp/B
-	AaUM63NoEPwupv9SC/fbvA56tH9wQ4tRo2MZGo0y8bPP8V7qXEYKVloIuyv3TVAV
-	OESPsA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4awhaqs1cf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 07:26:25 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3437f0760daso8185979a91.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Dec 2025 23:26:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765178785; x=1765783585; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2h/9s5/6yuANhhb+4rM83nToq2nw6PNRAP/thpKEdn8=;
-        b=NdgSjgZknqhhYUvLpdWYEPAtm2BDmR4knqf0F9RbAk5gOVLF1sfGchMd7swiZSnAuF
-         a5pdwJzVidqYg8vzynUqlUegN2w1ONdnMSNVSvbNuS3vHxgCBuIX+Tm3TZIKpY/XnA04
-         Zcj/LYwyo6S6VmFnR+0FRak9PvC3VWkl3n5AM2tCq/B7xr3jI0bepjxjcF2ivaQGZVbr
-         G9k15Ygx5RYU0XczAQqfegzGr/nWd5y/t7avNckjclzRCQTgElfI3kK0/S28bNRCG/vb
-         BKR1ucQobQdIQhOedxnj2afuX2RvR5O5mQmYWVbXo0Y08hCRD/3dr6n7Z5rTAxHBkeR1
-         1+Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765178785; x=1765783585;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2h/9s5/6yuANhhb+4rM83nToq2nw6PNRAP/thpKEdn8=;
-        b=fhM4JVArsXibuerapbAru1IKd8kux7tCs0av1/nbUMdi5uQlGw+tzAv6QMaQVBoyBP
-         4TAgdll5Wk0JZyzSkd8olks4h2AtGOWSIjjn6XL9V4AdMJ/FMXo5DtlSZBiMfsaq/KJb
-         FurljITjN+gqK578OvjuScyM8Kfgtc0pU5R4sjK7W+hORK8Fo4fVjPy+30TWKoU17yym
-         7CCVCO4X1Z5ARUkgBJsquDxIH7Lb9dfbkvRV06QzC5bg6YSdXymUnecQWqdc4PQeWECA
-         6QX5DSlUmGnotFHmROmWXQTKWtHi1hEXsujq7EoKRq1sAC4kRbrYGb/HvCkUg8rpk3tt
-         K//w==
-X-Forwarded-Encrypted: i=1; AJvYcCWIdkEJR6PY8HsKtV0c1HhpN/T3F1eMD5ILUjkzmW6ceDAcg8KwR52yaP1DAmsv7NAe/mbJoyiCn92+mY2f@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxgQ0iLhfVCHRWbXbZ1ZpssDSkpZmnKSQmAzwRW9b5N+NRIuqI
-	5mIpd9YEBHwRZDJXBeO+S92i0+J7k15ALoMelTic837f7KnXwhNbr3XR0dpQcsffo1Bm/mWIb5b
-	AFX1zWvy8V+UOCgJ8UuPxLN5Ykd6MSdbCtXpxiO8u6FoZldr3eI7nTNI39BpuhLb1D9+t
-X-Gm-Gg: ASbGncvIit0d1v9aEbzbwVK9cn1iwoO5wjviSAVsBHJAwPxHiWukZCFrUluV13uRx4W
-	qzC7HAIU/cyM3AJs/5/vdz1cfYQ6oODxdux4vIgbHfCvrvIZ03GsLRzUAIS6E1eu8RGkBA/ANrM
-	1Ymq/WXPEJhU/jAvIgJwFQKqHpC5tjP1ushRBR0TukvX91kfH+rJaPHYtB5Z0KeYx0Sq6dekDoI
-	LJ57iI95T5EVQ9xqBOiXdUZMnsvP9lSR5NYOhau3Dch9v4c+0YnPKSDZ8lSZTO6pX0jptxP49ah
-	KwFS9kYOaQJ18pisM+fnnR8bGLRyWCeaQ0R6cicZsEcH61g9AEfJcPKQmbohZh6vkoyiSgIM5kV
-	3Zc5QOpiVuoT7jukZaVKy2UN635DY9F5PuxiiV2qQ
-X-Received: by 2002:a05:6a20:1611:b0:35e:521b:f488 with SMTP id adf61e73a8af0-36617e6fc2emr7346569637.25.1765178784737;
-        Sun, 07 Dec 2025 23:26:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEvKeeA4DXCmYUvwrhih0Cu9+rs4tlldWdh2NkFE2P+F8QEKjsONEnnopM4FdT0qAkXdvE1Pg==
-X-Received: by 2002:a05:6a20:1611:b0:35e:521b:f488 with SMTP id adf61e73a8af0-36617e6fc2emr7346522637.25.1765178784199;
-        Sun, 07 Dec 2025 23:26:24 -0800 (PST)
-Received: from [10.204.86.50] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29daeae6b3csm113773845ad.101.2025.12.07.23.26.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Dec 2025 23:26:23 -0800 (PST)
-Message-ID: <18c6b95a-961d-4544-856d-7dc08f7d5d74@oss.qualcomm.com>
-Date: Mon, 8 Dec 2025 12:56:18 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061E626ED4F;
+	Mon,  8 Dec 2025 07:37:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.93
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765179456; cv=fail; b=lA2M2SssIKtQ35/ikj+XYNO/R2m+FTOBl3RzmEDAFNN+bBv6q2b7YhkIGAjAGYaRyxGbigTz0aCrEv4FT4bsKzNnxyH1fZQlEQyfNjkmnvMUIliNgOA7iyxTbW1nQ+nCo/PhJjpPYwa4K3EvtCkrWVtnmsZk2P6sGMJVL2EuXjo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765179456; c=relaxed/simple;
+	bh=Gptr2A37PqIP7c4pTkrlKNjrGaBoE2eGoadFjIPvpuI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=DqUV7hSP0QKx9hHarqbTBkgRVlBidM95romKODOElwtBbCGnHuHqOoBtjEdef9cONqnLPah6O0HqXdRIPxFUSpwUTJN4MU4beje8r6AWq6Y6nx/6tzD5+6W3zedGxSswsPGt3TfS0nbtpkBZwaU0cAIpkWlH6z7ZXUdQLvsrW7w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com; spf=pass smtp.mailfrom=analogixsemi.com; dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b=O3+6SsJf; arc=fail smtp.client-ip=40.93.198.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analogixsemi.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DRXXi44TR7hhsZL6a2YKFOKBqtcSO3TPZKy+gc9GQIvwiI71pTnXv/DR0DWeb/eepXMagWGl6j6ncdIzT1yvYZ+zjkN1DnryGcwGDDPBN9/JrYZH2JOZdTdNS3R2Wlbpj9jqTqSJ9tzLp6e4HLKwoGEFHIBi5OI7GmwRcuC1Iib8ncCz7TwTvtlU7OHX4ZXA9eYze0ZDYcPsqTYWx6kbt4WddMmdisttlUHHlNV+9JUJpNSAaUaz94wj64WYYP+aAa/H63wbujnLmUoezNYR3cN40XxqwM6irjkYMN+OAez4UO9YZAaJS3Hpy45Npkr/50Lz65q/0AlmhqKcbZOcGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FM6MkPjoQ2kp8kRjgvQqWnYQJJz+3tVXmV4xZDYBuEg=;
+ b=nXyz0nN8SMhn8JHS8RabunHl3Ynkz0ZrsVKNbD0yqsL96qkiHueGerCwunE3WfupokHYteksluS+quJ6UsToq+RbfGCyfD7wGE3jEA6FceoWVLIO8TCEBvC0quv3kRIgHiHUaRdBgjapPiSg3Bey2VUTC20yHzKXZCgGeR6VpDvCQMHhqkn6ra53DC7kHbsimtyRIAxTxGa3EE/SjjOvmoxUUW+WYFWoTk+xB6vKT92OdeHZK3sV8zNu777fdKLi6YzIb5PGghu2FoAV8Zr49H5eiJ+ZvA6sXYD/k57iPsCtUFKUQde/+4d78RkpC6v4jI/xvjSg7XXfuLuL96weYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=analogixsemi.com; dmarc=pass action=none
+ header.from=analogixsemi.com; dkim=pass header.d=analogixsemi.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analogixsemi.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FM6MkPjoQ2kp8kRjgvQqWnYQJJz+3tVXmV4xZDYBuEg=;
+ b=O3+6SsJfByTL0EX7q+1Q0S4FPgpduyhnBAjxDCOzTpaN3RiOYnpEIrV9v+I8wPRhumpFl+nxn1ILM9w1o0aMx/ljE9dYRGCDo+QcJ+vUmzgij1QzR+SqRjyV+qd6ffhCFdqAG0TzYQeYHoZIJs/mzg1G3F9UsgWnP2SdGzxdARc=
+Received: from BY5PR04MB6739.namprd04.prod.outlook.com (2603:10b6:a03:229::8)
+ by BY5PR04MB6488.namprd04.prod.outlook.com (2603:10b6:a03:1d1::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.14; Mon, 8 Dec
+ 2025 07:37:30 +0000
+Received: from BY5PR04MB6739.namprd04.prod.outlook.com
+ ([fe80::d0a9:7455:cb02:ca08]) by BY5PR04MB6739.namprd04.prod.outlook.com
+ ([fe80::d0a9:7455:cb02:ca08%4]) with mapi id 15.20.9388.013; Mon, 8 Dec 2025
+ 07:37:30 +0000
+From: Xin Ji <xji@analogixsemi.com>
+To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>
+CC: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong
+	<neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Laurent Pinchart
+	<Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, Jernej
+ Skrabec <jernej.skrabec@gmail.com>, David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH RFC 2/2] drm: bridge: anx7625: implement minimal Type-C
+ support
+Thread-Topic: [PATCH RFC 2/2] drm: bridge: anx7625: implement minimal Type-C
+ support
+Thread-Index: AQHcXrjt6airW14k7Eq2XOw6vcl4hLURgpQAgAXoBbA=
+Date: Mon, 8 Dec 2025 07:37:30 +0000
+Message-ID:
+ <BY5PR04MB673939B585B2419534D48E77C7A2A@BY5PR04MB6739.namprd04.prod.outlook.com>
+References: <20251126-anx7625-typec-v1-0-22b30f846a88@oss.qualcomm.com>
+ <20251126-anx7625-typec-v1-2-22b30f846a88@oss.qualcomm.com>
+ <aTGJXAnlkK5vQTzk@kuha>
+In-Reply-To: <aTGJXAnlkK5vQTzk@kuha>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=analogixsemi.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY5PR04MB6739:EE_|BY5PR04MB6488:EE_
+x-ms-office365-filtering-correlation-id: 1d47cf60-f2fb-4896-96c1-08de362ca4b5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|7416014|38070700021;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?IAnJjImTCR/8WCSTRuYPWjDvcyC9Jg9TpKmpxejNgENoK2CpDjGsCQL5z63e?=
+ =?us-ascii?Q?AgI5ieAhKTQsY8IbON9zxShWCBbzeaSaEih69ozFjQqNhTkWzGzWTvqgGdl8?=
+ =?us-ascii?Q?u20XSwFCoQ1w3VbX3wxht6NfzwhmFWNU+3V+9RDxQfU6gTzMDtxAa93J+uyp?=
+ =?us-ascii?Q?A46Tp63WjklLL9uMjqtNuipnsc1l67Ov1AiQ3m0h2PstW1UnNpafTT6DCm1G?=
+ =?us-ascii?Q?6ryIPPIjmTDjO0MIBxSt5R//2Zu525OwIBEGmWMlsw1npn31W9ibGRVkFRqX?=
+ =?us-ascii?Q?uQuTLZqhrRfv5N6lr4p4YEtOQ9UBROehZpHg2qkUGWTg/h3iVSTh5qKwkEik?=
+ =?us-ascii?Q?fyQM158t4VomI2wpyjP39ASQW6ayF5kJv2RKaArAc6azWUVrI00rE4TM+7yC?=
+ =?us-ascii?Q?yDsaEncEPI1RVoW/alV2Z91CCREtvlp+uH1jajg0iaI0W40meK6obGq4qzmk?=
+ =?us-ascii?Q?Tlwp+1o6EBEE9Ygr7ZiBfo9pra3pHz8L0UgsKTpOUO47JnjAUl1+uGkXH7Qp?=
+ =?us-ascii?Q?IUhRVZ9ws7ArEV3cso3tHQfADJVUIIA51hAE9Y0xZ9o6uVRYem6QxHbLdd5O?=
+ =?us-ascii?Q?Hl6D3cmqKbcEQb9/taFOMqIF9V9w09ZYKzmiAxZ4BpYIM98lXO0J6M/GZjdK?=
+ =?us-ascii?Q?opIq/GRXl8mbQ7luuLCv2eMlKBuFR+3KB7zxC9aotD0bO6HPjsErpdh1gcHm?=
+ =?us-ascii?Q?JiOCNIhZyzohLRvSK2KHqcOTL3fTSawCveJwPfdG0nwkcAowd1tr4BcbNKQj?=
+ =?us-ascii?Q?PTmy7EWR9eO2G9b8IFcg1qzgJBOC8XebPGPuwKIaLUjUUTywWtrNm9MBMYJw?=
+ =?us-ascii?Q?Nl6jc2V1ZgN9pNA4TmhNqv9uWXIcSSJKoyQr5I5l+JnSUX9fefotg4qjEoOt?=
+ =?us-ascii?Q?DOlWh1RYlDtkswMNyzfj38/wyM/7GmMRQYQOkLqZ+2Sg95UFk3MC9ntvkHlQ?=
+ =?us-ascii?Q?iPUf8fpsUNzbOmN697A1JnzrLuY2exeK1S02X4evaviGsPGWFRtMp/YupiU5?=
+ =?us-ascii?Q?/kd32u7eLCMnFj+CBbd618kmSsxreR7eQmgEqhVb2l66IqnVuyGrZBfFweAp?=
+ =?us-ascii?Q?Gt3YQt38ypVcLyU2TyXfU2R0PICktUHU+2h1TneWzyx4e6ZZcw/wuXrH4lwK?=
+ =?us-ascii?Q?tEepC0CcD1T7hVpiZDqk2RdCKcoM4rKGby5ZMLgJH5Xoh2SuAPzuwYuWwWdK?=
+ =?us-ascii?Q?K78KTf7GEuaGFhPPY1/ZMcpqcl/cTSrvThHWXMa14R0SjwQyHjyg94Itt96H?=
+ =?us-ascii?Q?FJNz7Kghr6bR2qkC8Q67gRhFXYzGH5/o5o4Cj6OORDSMw0Wvy4IYZF7gLA7o?=
+ =?us-ascii?Q?1SIRSB+VSmTqjdx5fG9u/ihKVE6uq319lCQYeafK18dupiekK93rCGNVa8H4?=
+ =?us-ascii?Q?o92gV7qfRjj94cHoO+pzNbzlHYuUjB/TufOvxQ/wrE1szXDudgo9ENv/Ji1x?=
+ =?us-ascii?Q?AKJXXdQroa2MgeGHfYJVFKOGMrbt97mN?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR04MB6739.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7416014)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?midMdQGzP9q44gMkOxnG9CAxdPXU5WPhl5ZCjnX8XKonwpGSDKymk3JWBAfW?=
+ =?us-ascii?Q?LqdKkElCGBBp32MxsR32ybDeRi9ea6iqAXV3bMCPz56t99FTd581DQJRpLMW?=
+ =?us-ascii?Q?n0Ix0HW/24iXp+bG/yeAZ+bJdZjLkKLGXGmiiUxLCQWuwAoOaLMIMNw61ruP?=
+ =?us-ascii?Q?muihii6J5ilLfsln0GZSvkYlpS5Tw6HkVD0jRKCnIC3VwPsUvlqGU13Lc4ql?=
+ =?us-ascii?Q?MhE1nfe7CCandIk5nA5nNmenpCdBv48yH1OTSLKGQir3KUGbFx6tO/Afglxv?=
+ =?us-ascii?Q?9EVvRm5bx96MycvHM91UbQFD96zTnR+x8fm161YeJWbHsDiV0/9owcR9AQWm?=
+ =?us-ascii?Q?OW22yafMixw8gZNp1mgzx6EM0cQ2xFcJq7yHDdVlW6jAv+LuvuxjeHoF3Ih4?=
+ =?us-ascii?Q?bZe/msi3UKrNPqEkyKRNU0tV96rkclhq6LmFU+Zh3Pb1hnacnZ6vOmURi4Pr?=
+ =?us-ascii?Q?y3InhsTEj8oaDHinbOgcKERYdMW0EHVhF0EtGmg3kbJkL2gPg1P6ERVEKM3r?=
+ =?us-ascii?Q?xFDrFZ1xXcmw8o4Z/vPGrWnvj5wisI2NpDPiTTSnkldnum0KrmN0Sic/gw8l?=
+ =?us-ascii?Q?RYk1tv8K3gnFOW175JGHhEbrDRAxJT6RmgTtd7j9fh4hHrqlJXbmlGJOtujQ?=
+ =?us-ascii?Q?jwLLODx0iSnEQkkmb2tEwoWWgf6xR7LrB5W0SP1eJPobbZI2bpeaA3Zn6fkb?=
+ =?us-ascii?Q?IxbIoRXeoFQuzOAPAqa/nF5bX++798jRUDZRoeCuL/sr68jHYC2mJYRDMsnf?=
+ =?us-ascii?Q?t0un6SzIK9u1MY4DQ4g19rcErCMfPodCBV6b8tKYA8SBWtnV5VZKcbyeXUlA?=
+ =?us-ascii?Q?Zx+EURJ7FCVWrNp4lIwS/QWVCCm6vzP0meeG8M3d+ex21eZ1SpuBETAFa0QH?=
+ =?us-ascii?Q?6MWOiKB8Jb06MfcikhITVNPI+M9iQGxKh1tqjSrdA5QSz+qHoy6nvA0SUTwo?=
+ =?us-ascii?Q?h65ZnGAaBf8zLOMNTuakw3sMmIWga7K49g8JwfwloqImR6zuRskGseroGiv1?=
+ =?us-ascii?Q?mwF4dcD1kL9flUOI7D0FcYWmmQcBN2CjMp+gOv7ohYkt8nzLATQCfNfA69qC?=
+ =?us-ascii?Q?kc9jDoFVF8NH6b+1T3D5UghfJtAaobgqnhUlZnfA0qPqKs+GWO3+ifaG7K4I?=
+ =?us-ascii?Q?dOTVLsxaiJMABh4n7D8WaJl9s8rR4i9hVRmUvMKcuFthqSNGiFnkIEudyXWQ?=
+ =?us-ascii?Q?vwCjuZNmq38OR6t1s60Inxk3MOYI+td8fNGw83wV365+FCpbCOMmmTXMCp7e?=
+ =?us-ascii?Q?Njdqn4hSYR6RRyKTfNN85Zl6aK+l2lrscCnRv1/B+lbUymuWAauv/pn1GlAz?=
+ =?us-ascii?Q?lUaLXdK/DRfbkf1UHMyXkBp5mZW7tq9zGI5CRj9vaFEkVoGOwcao/LWsnlPP?=
+ =?us-ascii?Q?4d+jhfE9hHBNjQuBdHeD5/rfxT4vAxYmVt2GBvzNvmC8M+mAotM3EhBMCO51?=
+ =?us-ascii?Q?qdJbSyY1CvcK2x+jInXyf2PUsyeHm0X6dSNLFXPKQyv/24V7E4ZAMGcgT3A+?=
+ =?us-ascii?Q?pvvKu+ZGyv2OpJYy37ABtWhe43Tn1zSxGKdATAwpp/zAhl/pg0sNuzDNesiS?=
+ =?us-ascii?Q?ZNuTivLp2AYPUz9hxOfYWf+grwqrNV1zUP0oUCCj?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] misc: fastrpc: Add support for new DSP IOVA
- formatting
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: kpallavi@qti.qualcomm.com, srini@kernel.org, amahesh@qti.qualcomm.com,
-        arnd@arndb.de, gregkh@linuxfoundation.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, quic_bkumar@quicinc.com,
-        ekansh.gupta@oss.qualcomm.com, linux-kernel@vger.kernel.org,
-        quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        jingyi.wang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com,
-        ktadakam@qti.qualcomm.com
-References: <20251202060628.1869967-1-kumari.pallavi@oss.qualcomm.com>
- <20251202060628.1869967-4-kumari.pallavi@oss.qualcomm.com>
- <mlyaklczl4ngeckk7nle2xwmmzmqlphi6d47octomc5tewohh7@ipc2ik3kqj6q>
-Content-Language: en-US
-From: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-In-Reply-To: <mlyaklczl4ngeckk7nle2xwmmzmqlphi6d47octomc5tewohh7@ipc2ik3kqj6q>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDA2MiBTYWx0ZWRfX8qwu4aQAUVqh
- csdG6bI4lPNHgEWhPkr0ponLs/XqB9GdYFtzLpzjSwGSYwQsximqUBk4XIcvEMNFk/fSx9MdJwu
- 5tglGJuOnxzdWmCT37QCXcWV8qG7mfgNnRdVV7kkly0t2ToOMMgIrujno0cmMt3pg3WYz2W4K7M
- tzDXg/C1sRC+nm75QWBHvjQEPEHoQeIbWBdQtqO+jYz7VAiyzomDMDv3BgXMNVRljvd6YE9Msu9
- Pqlkm4a3Y0klUz/TF3lEEGoO6ywZNf2DlrN5qQy7SyGQGtWKoI4e8Xdr8JvaIZOEMKMoPPPRUIZ
- LmODZpWxv0D1O7hZGzKeRGaNSZcH2dCcNdAQ7AJ+Y/3j6iac2ZX08BI+PGVr7XQ8YRuUa4CWyxS
- 0RxjNXt4q10d4D8FP9lL9Oo+6Bt8vg==
-X-Proofpoint-GUID: nceAmrdjqcX7_vYz_P4XOxVVt0o8yNYX
-X-Authority-Analysis: v=2.4 cv=ItUTsb/g c=1 sm=1 tr=0 ts=69367da1 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=Qodh5YlAHioYhAOXRRMA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: nceAmrdjqcX7_vYz_P4XOxVVt0o8yNYX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512080062
+X-OriginatorOrg: analogixsemi.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR04MB6739.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d47cf60-f2fb-4896-96c1-08de362ca4b5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Dec 2025 07:37:30.2733
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b099b0b4-f26c-4cf5-9a0f-d5be9acab205
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 43Pg+LcM88ZVdGwOdwwV5/DnF90gvtaSJkGjHW3FkvVG6cDbykpsSHJdcHTfSz9KYizKOINBaduOS7B4yBoQVQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR04MB6488
 
+Hi Dmitry, I found there is another patch "Register USB Type-C mode switche=
+s" which provided by Pin-yen Lin <treapking@chromium.org>, but I didn't fin=
+d it in the v6.18, is it obsolete?.
+https://patchew.org/linux/20221124102056.393220-1-treapking@chromium.org/20=
+221124102056.393220-6-treapking@chromium.org/
 
-
-On 12/6/2025 8:00 AM, Dmitry Baryshkov wrote:
-> On Tue, Dec 02, 2025 at 11:36:27AM +0530, Kumari Pallavi wrote:
->> Implement the new IOVA formatting required by the DSP architecture change
->> on Kaanapali SoC. Place the SID for DSP DMA transactions at bit 56 in the
->> physical address. This placement is necessary for the DSPs to correctly
->> identify streams and operate as intended.
->> To address this, set SID position to bit 56 via OF matching on the fastrpc
->> node; otherwise, default to legacy 32-bit placement.
->> This change ensures consistent SID placement across DSPs.
->>
->> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
->> ---
->>   drivers/misc/fastrpc.c | 48 ++++++++++++++++++++++++++++++++++++------
->>   1 file changed, 41 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index eb9501fe79bc..6a67daafeaa1 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -33,7 +33,6 @@
->>   #define FASTRPC_ALIGN		128
->>   #define FASTRPC_MAX_FDLIST	16
->>   #define FASTRPC_MAX_CRCLIST	64
->> -#define FASTRPC_PHYS(p)	((p) & 0xffffffff)
->>   #define FASTRPC_CTX_MAX (256)
->>   #define FASTRPC_INIT_HANDLE	1
->>   #define FASTRPC_DSP_UTILITIES_HANDLE	2
->> @@ -105,6 +104,17 @@
->>   
->>   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->>   
->> +/* Extract smmu pa from consolidated iova */
-> 
-> Nit: SMMU, PA, IOVA
-> 
-
-ACK
-
->> +#define IPA_TO_DMA_ADDR(iova, sid_pos) (iova & ((1ULL << sid_pos) - 1ULL))
-> 
-> GENMASK?
-> 
-
-Thanks for the suggestion. I’ve updated the macro to use GENMASK_ULL 
-instead of the hand‑rolled (1ULL << sid_pos) - 1ULL.
-The new version looks like this:
-
-#define IPA_TO_DMA_ADDR(iova, sid_pos) \
-         ((sid_pos) ? ((iova) & GENMASK_ULL((sid_pos) - 1, 0)) : 0)
-
-
->> +/*
->> + * Prepare the consolidated iova to send to dsp by prepending the sid
-> 
-> Nit: DSP, SID, PA
-> 
-
-ACK
-
->> + * to smmu pa at the appropriate position
->> + */
->> +static inline u64 fastrpc_compute_sid_offset(u64 sid, u32 sid_pos)
->> +{
->> +	return sid << sid_pos;
->> +}
->> +
->>   struct fastrpc_phy_page {
->>   	dma_addr_t addr;	/* dma address */
->>   	u64 size;		/* size of contiguous region */
->> @@ -257,6 +267,10 @@ struct fastrpc_session_ctx {
->>   	bool valid;
->>   };
->>   
->> +struct fastrpc_soc_data {
->> +	u32 sid_pos;
->> +};
->> +
->>   struct fastrpc_channel_ctx {
->>   	int domain_id;
->>   	int sesscount;
->> @@ -278,6 +292,7 @@ struct fastrpc_channel_ctx {
->>   	bool secure;
->>   	bool unsigned_support;
->>   	u64 dma_mask;
->> +	const struct fastrpc_soc_data *soc_data;
->>   };
->>   
->>   struct fastrpc_device {
->> @@ -390,7 +405,7 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
->>   static void fastrpc_buf_free(struct fastrpc_buf *buf)
->>   {
->>   	dma_free_coherent(buf->dev, buf->size, buf->virt,
->> -			  FASTRPC_PHYS(buf->dma_addr));
->> +			  IPA_TO_DMA_ADDR(buf->dma_addr, buf->fl->cctx->soc_data->sid_pos));
->>   	kfree(buf);
->>   }
->>   
->> @@ -440,7 +455,8 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
->>   	buf = *obuf;
->>   
->>   	if (fl->sctx && fl->sctx->sid)
->> -		buf->dma_addr += ((u64)fl->sctx->sid << 32);
->> +		buf->dma_addr += fastrpc_compute_sid_offset((u64)fl->sctx->sid,
-> 
-> Drop type conversion
-> 
-
-ACK
-
->> +				 fl->cctx->soc_data->sid_pos);
->>   
->>   	return 0;
->>   }
->> @@ -685,7 +701,8 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
->>   		return -ENOMEM;
->>   
->>   	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
->> -			      FASTRPC_PHYS(buffer->dma_addr), buffer->size);
->> +			      IPA_TO_DMA_ADDR(buffer->dma_addr,
->> +					      buffer->fl->cctx->soc_data->sid_pos), buffer->size);
->>   	if (ret < 0) {
->>   		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
->>   		kfree(a);
->> @@ -734,7 +751,8 @@ static int fastrpc_mmap(struct dma_buf *dmabuf,
->>   	dma_resv_assert_held(dmabuf->resv);
->>   
->>   	return dma_mmap_coherent(buf->dev, vma, buf->virt,
->> -				 FASTRPC_PHYS(buf->dma_addr), size);
->> +				 IPA_TO_DMA_ADDR(buf->dma_addr,
->> +						 buf->fl->cctx->soc_data->sid_pos), size);
->>   }
->>   
->>   static const struct dma_buf_ops fastrpc_dma_buf_ops = {
->> @@ -789,7 +807,8 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
->>   		map->dma_addr = sg_phys(map->table->sgl);
->>   	} else {
->>   		map->dma_addr = sg_dma_address(map->table->sgl);
->> -		map->dma_addr += ((u64)fl->sctx->sid << 32);
->> +		map->dma_addr += fastrpc_compute_sid_offset((u64)fl->sctx->sid,
-> 
-> Drop type conversion. Hmm. Looking at it, would it be better:
-> 
-> map->dma_addr = fastrpc_compute_dma_addr(fl->sctx, sg_dma_address(map->table->sgl))
-> 
-
-Thanks for the suggestion. To confirm: you’re proposing that the call 
-site use a single helper returning the final DMA address, i.e.
-
-map->dma_addr = fastrpc_compute_dma_addr(fl,
-                                          sg_dma_address(map->table->sgl));
-I can implement fastrpc_compute_dma_addr() as a thin wrapper that 
-internally calls our existing fastrpc_compute_sid_offset() and composes 
-the consolidated IOVA (SID in upper bits, base DMA/PA in lower bits)
-?
-
-
->> +				 fl->cctx->soc_data->sid_pos);
->>   	}
->>   	for_each_sg(map->table->sgl, sgl, map->table->nents,
->>   		sgl_index)
->> @@ -2290,6 +2309,14 @@ static int fastrpc_get_domain_id(const char *domain)
->>   	return -EINVAL;
->>   }
->>   
->> +static const struct fastrpc_soc_data kaanapali_soc_data = {
->> +	.sid_pos = 56,
->> +};
->> +
->> +static const struct fastrpc_soc_data default_soc_data = {
->> +	.sid_pos = 32,
->> +};
->> +
->>   static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   {
->>   	struct device *rdev = &rpdev->dev;
->> @@ -2298,6 +2325,11 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   	const char *domain;
->>   	bool secure_dsp;
->>   	unsigned int vmids[FASTRPC_MAX_VMIDS];
->> +	const struct fastrpc_soc_data *soc_data;
->> +
->> +	soc_data = device_get_match_data(rdev);
->> +	if (!soc_data)
->> +		soc_data = &default_soc_data;
-> 
-> Define it for all the entries, drop if-check.
-> 
-
-ACK
-
->>   
->>   	err = of_property_read_string(rdev->of_node, "label", &domain);
->>   	if (err) {
->> @@ -2350,6 +2382,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   
->>   	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
->>   	data->secure = secure_dsp;
->> +	data->soc_data = soc_data;
->>   
->>   	switch (domain_id) {
->>   	case ADSP_DOMAIN_ID:
->> @@ -2487,7 +2520,8 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
->>   }
->>   
->>   static const struct of_device_id fastrpc_rpmsg_of_match[] = {
->> -	{ .compatible = "qcom,fastrpc" },
->> +	{ .compatible = "qcom,kaanapali-fastrpc", .data = &kaanapali_soc_data },
->> +	{ .compatible = "qcom,fastrpc", .data = &default_soc_data },
->>   	{ },
->>   };
->>   MODULE_DEVICE_TABLE(of, fastrpc_rpmsg_of_match);
->> -- 
->> 2.34.1
->>
-> 
 Thanks,
-Pallavi
+Xin
+
+
+> ANX7625 can be used as a USB-C controller, handling USB and DP data=20
+> streams. Provide minimal Type-C support necessary for ANX7625 to=20
+> register the Type-C port device and properly respond to data / power=20
+> role events from the Type-C partner.
+>=20
+> While ANX7625 provides TCPCI interface, using it would circumvent the=20
+> on-chip running firmware. Analogix recommended using the higher-level=20
+> interface instead of TCPCI.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+FWIW:
+
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+
+> ---
+>  drivers/gpu/drm/bridge/analogix/Kconfig   |   1 +
+>  drivers/gpu/drm/bridge/analogix/anx7625.c | 163=20
+> ++++++++++++++++++++++++++++-- =20
+> drivers/gpu/drm/bridge/analogix/anx7625.h |  21 +++-
+>  3 files changed, 175 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/bridge/analogix/Kconfig=20
+> b/drivers/gpu/drm/bridge/analogix/Kconfig
+> index=20
+> 4846b2e9be7c2a5da18f6a3cdec53ef5766455e0..f3448b0631fea42e7e7ab1036877
+> 7a93ce33cee7 100644
+> --- a/drivers/gpu/drm/bridge/analogix/Kconfig
+> +++ b/drivers/gpu/drm/bridge/analogix/Kconfig
+> @@ -34,6 +34,7 @@ config DRM_ANALOGIX_ANX7625
+>  	tristate "Analogix Anx7625 MIPI to DP interface support"
+>  	depends on DRM
+>  	depends on OF
+> +	depends on TYPEC || !TYPEC
+>  	select DRM_DISPLAY_DP_HELPER
+>  	select DRM_DISPLAY_HDCP_HELPER
+>  	select DRM_DISPLAY_HELPER
+> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c=20
+> b/drivers/gpu/drm/bridge/analogix/anx7625.c
+> index=20
+> 6f3fdcb6afdb9d785bc4515300676cf3988c5807..a44405db739669dfd2907b0afd41
+> 293a7b173035 100644
+> --- a/drivers/gpu/drm/bridge/analogix/anx7625.c
+> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+> @@ -3,6 +3,7 @@
+>   * Copyright(c) 2020, Analogix Semiconductor. All rights reserved.
+>   *
+>   */
+> +#include <linux/cleanup.h>
+>  #include <linux/gcd.h>
+>  #include <linux/gpio/consumer.h>
+>  #include <linux/i2c.h>
+> @@ -15,6 +16,9 @@
+>  #include <linux/regulator/consumer.h>  #include <linux/slab.h> =20
+> #include <linux/types.h>
+> +#include <linux/usb.h>
+> +#include <linux/usb/pd.h>
+> +#include <linux/usb/role.h>
+>  #include <linux/workqueue.h>
+> =20
+>  #include <linux/of_graph.h>
+> @@ -1325,7 +1329,7 @@ static int=20
+> anx7625_read_hpd_gpio_config_status(struct anx7625_data *ctx)  static=20
+> void anx7625_disable_pd_protocol(struct anx7625_data *ctx)  {
+>  	struct device *dev =3D ctx->dev;
+> -	int ret, val;
+> +	int ret;
+> =20
+>  	/* Reset main ocm */
+>  	ret =3D anx7625_reg_write(ctx, ctx->i2c.rx_p0_client, 0x88, 0x40); @@=20
+> -1339,6 +1343,11 @@ static void anx7625_disable_pd_protocol(struct anx762=
+5_data *ctx)
+>  		DRM_DEV_DEBUG_DRIVER(dev, "disable PD feature fail.\n");
+>  	else
+>  		DRM_DEV_DEBUG_DRIVER(dev, "disable PD feature succeeded.\n");
+> +}
+> +
+> +static void anx7625_configure_hpd(struct anx7625_data *ctx) {
+> +	int val;
+> =20
+>  	/*
+>  	 * Make sure the HPD GPIO already be configured after OCM release=20
+> before @@ -1369,7 +1378,9 @@ static int anx7625_ocm_loading_check(struct =
+anx7625_data *ctx)
+>  	if ((ret & FLASH_LOAD_STA_CHK) !=3D FLASH_LOAD_STA_CHK)
+>  		return -ENODEV;
+> =20
+> -	anx7625_disable_pd_protocol(ctx);
+> +	if (!ctx->typec_port)
+> +		anx7625_disable_pd_protocol(ctx);
+> +	anx7625_configure_hpd(ctx);
+> =20
+>  	DRM_DEV_DEBUG_DRIVER(dev, "Firmware ver %02x%02x,",
+>  			     anx7625_reg_read(ctx,
+> @@ -1472,6 +1483,115 @@ static void anx7625_start_dp_work(struct anx7625_=
+data *ctx)
+>  	DRM_DEV_DEBUG_DRIVER(dev, "Secure OCM version=3D%02x\n", ret);  }
+> =20
+> +#if IS_REACHABLE(CONFIG_TYPEC)
+> +static void anx7625_typec_set_orientation(struct anx7625_data *ctx) {
+> +	u32 val =3D anx7625_reg_read(ctx, ctx->i2c.rx_p0_client,=20
+> +SYSTEM_STSTUS);
+> +
+> +	if (val & (CC1_RP | CC1_RD))
+> +		typec_set_orientation(ctx->typec_port, TYPEC_ORIENTATION_NORMAL);
+> +	else if (val & (CC2_RP | CC2_RD))
+> +		typec_set_orientation(ctx->typec_port, TYPEC_ORIENTATION_REVERSE);
+> +	else
+> +		typec_set_orientation(ctx->typec_port, TYPEC_ORIENTATION_NONE); }
+> +
+> +static void anx7625_typec_isr(struct anx7625_data *ctx,
+> +			      unsigned int intr_vector,
+> +			      unsigned int intr_status)
+> +{
+> +	if (intr_vector & CC_STATUS)
+> +		anx7625_typec_set_orientation(ctx);
+> +	if (intr_vector & DATA_ROLE_STATUS) {
+> +		usb_role_switch_set_role(ctx->role_sw,
+> +					 (intr_status & DATA_ROLE_STATUS) ?
+> +					 USB_ROLE_HOST : USB_ROLE_DEVICE);
+> +		typec_set_data_role(ctx->typec_port,
+> +				    (intr_status & DATA_ROLE_STATUS) ?
+> +				    TYPEC_HOST : TYPEC_DEVICE);
+> +	}
+> +	if (intr_vector & VBUS_STATUS)
+> +		typec_set_pwr_role(ctx->typec_port,
+> +				   (intr_status & VBUS_STATUS) ?
+> +				   TYPEC_SOURCE : TYPEC_SINK);
+> +	if (intr_vector & VCONN_STATUS)
+> +		typec_set_vconn_role(ctx->typec_port,
+> +				     (intr_status & VCONN_STATUS) ?
+> +				     TYPEC_SOURCE : TYPEC_SINK);
+> +}
+> +
+> +static int anx7625_typec_register(struct anx7625_data *ctx) {
+> +	struct typec_capability typec_cap =3D { };
+> +	struct fwnode_handle *fwnode __free(fwnode_handle) =3D NULL;
+> +	u32 val;
+> +	int ret;
+> +
+> +	fwnode =3D device_get_named_child_node(ctx->dev, "connector");
+> +	if (!fwnode)
+> +		return 0;
+> +
+> +	ret =3D typec_get_fw_cap(&typec_cap, fwnode);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	typec_cap.revision =3D 0x0120;
+> +	typec_cap.pd_revision =3D 0x0300;
+> +	typec_cap.usb_capability =3D USB_CAPABILITY_USB2 | USB_CAPABILITY_USB3;
+> +	typec_cap.orientation_aware =3D true;
+> +
+> +	typec_cap.driver_data =3D ctx;
+> +
+> +	ctx->typec_port =3D typec_register_port(ctx->dev, &typec_cap);
+> +	if (IS_ERR(ctx->typec_port))
+> +		return PTR_ERR(ctx->typec_port);
+> +
+> +	ctx->role_sw =3D fwnode_usb_role_switch_get(fwnode);
+> +	if (IS_ERR(ctx->role_sw)) {
+> +		typec_unregister_port(ctx->typec_port);
+> +		return PTR_ERR(ctx->role_sw);
+> +	}
+> +
+> +	val =3D anx7625_reg_read(ctx, ctx->i2c.rx_p0_client, SYSTEM_STSTUS);
+> +	anx7625_typec_set_orientation(ctx);
+> +	usb_role_switch_set_role(ctx->role_sw,
+> +				 (val & DATA_ROLE_STATUS) ?
+> +				 USB_ROLE_HOST : USB_ROLE_DEVICE);
+> +	typec_set_data_role(ctx->typec_port,
+> +			    (val & DATA_ROLE_STATUS) ?
+> +			    TYPEC_HOST : TYPEC_DEVICE);
+> +	typec_set_pwr_role(ctx->typec_port,
+> +			    (val & VBUS_STATUS) ?
+> +			    TYPEC_SOURCE : TYPEC_SINK);
+> +	typec_set_vconn_role(ctx->typec_port,
+> +			     (val & VCONN_STATUS) ?
+> +			     TYPEC_SOURCE : TYPEC_SINK);
+> +
+> +	return 0;
+> +}
+> +
+> +static void anx7625_typec_unregister(struct anx7625_data *ctx) {
+> +	usb_role_switch_put(ctx->role_sw);
+> +	typec_unregister_port(ctx->typec_port);
+> +}
+> +#else
+> +static void anx7625_typec_isr(struct anx7625_data *ctx,
+> +			      unsigned int intr_vector,
+> +			      unsigned int intr_status)
+> +{
+> +}
+> +
+> +static int anx7625_typec_register(struct anx7625_data *ctx) {
+> +	return 0;
+> +}
+> +
+> +static void anx7625_typec_unregister(struct anx7625_data *ctx) { }=20
+> +#endif
+> +
+>  static int anx7625_read_hpd_status_p0(struct anx7625_data *ctx)  {
+>  	return anx7625_reg_read(ctx, ctx->i2c.rx_p0_client, SYSTEM_STSTUS);=20
+> @@ -1566,7 +1686,7 @@ static void dp_hpd_change_handler(struct anx7625_da=
+ta *ctx, bool on)
+>  	}
+>  }
+> =20
+> -static int anx7625_hpd_change_detect(struct anx7625_data *ctx)
+> +static int anx7625_intr_status(struct anx7625_data *ctx)
+>  {
+>  	int intr_vector, status;
+>  	struct device *dev =3D ctx->dev;
+> @@ -1593,9 +1713,6 @@ static int anx7625_hpd_change_detect(struct anx7625=
+_data *ctx)
+>  		return status;
+>  	}
+> =20
+> -	if (!(intr_vector & HPD_STATUS_CHANGE))
+> -		return -ENOENT;
+> -
+>  	status =3D anx7625_reg_read(ctx, ctx->i2c.rx_p0_client,
+>  				  SYSTEM_STSTUS);
+>  	if (status < 0) {
+> @@ -1604,6 +1721,12 @@ static int anx7625_hpd_change_detect(struct anx762=
+5_data *ctx)
+>  	}
+> =20
+>  	DRM_DEV_DEBUG_DRIVER(dev, "0x7e:0x45=3D%x\n", status);
+> +
+> +	anx7625_typec_isr(ctx, intr_vector, status);
+> +
+> +	if (!(intr_vector & HPD_STATUS))
+> +		return -ENOENT;
+> +
+>  	dp_hpd_change_handler(ctx, status & HPD_STATUS);
+> =20
+>  	return 0;
+> @@ -1622,7 +1745,7 @@ static void anx7625_work_func(struct work_struct *w=
+ork)
+>  		return;
+>  	}
+> =20
+> -	event =3D anx7625_hpd_change_detect(ctx);
+> +	event =3D anx7625_intr_status(ctx);
+> =20
+>  	mutex_unlock(&ctx->lock);
+> =20
+> @@ -2741,11 +2864,29 @@ static int anx7625_i2c_probe(struct i2c_client *c=
+lient)
+>  	}
+> =20
+>  	if (!platform->pdata.low_power_mode) {
+> -		anx7625_disable_pd_protocol(platform);
+> +		struct fwnode_handle *fwnode;
+> +
+> +		fwnode =3D device_get_named_child_node(dev, "connector");
+> +		if (fwnode)
+> +			fwnode_handle_put(fwnode);
+> +		else
+> +			anx7625_disable_pd_protocol(platform);
+> +
+> +		anx7625_configure_hpd(platform);
+> +
+>  		pm_runtime_get_sync(dev);
+>  		_anx7625_hpd_polling(platform, 5000 * 100);
+>  	}
+> =20
+> +	if (platform->pdata.intp_irq)
+> +		anx7625_reg_write(platform, platform->i2c.rx_p0_client,
+> +				  INTERFACE_CHANGE_INT_MASK, 0);
+> +
+> +	/* After getting runtime handle */
+> +	ret =3D anx7625_typec_register(platform);
+> +	if (ret)
+> +		goto pm_suspend;
+> +
+>  	/* Add work function */
+>  	if (platform->pdata.intp_irq) {
+>  		enable_irq(platform->pdata.intp_irq);
+> @@ -2759,6 +2900,10 @@ static int anx7625_i2c_probe(struct i2c_client=20
+> *client)
+> =20
+>  	return 0;
+> =20
+> +pm_suspend:
+> +	if (!platform->pdata.low_power_mode)
+> +		pm_runtime_put_sync_suspend(&client->dev);
+> +
+>  free_wq:
+>  	if (platform->workqueue)
+>  		destroy_workqueue(platform->workqueue);
+> @@ -2774,6 +2919,8 @@ static void anx7625_i2c_remove(struct i2c_client=20
+> *client)  {
+>  	struct anx7625_data *platform =3D i2c_get_clientdata(client);
+> =20
+> +	anx7625_typec_unregister(platform);
+> +
+>  	drm_bridge_remove(&platform->bridge);
+> =20
+>  	if (platform->pdata.intp_irq)
+> diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.h=20
+> b/drivers/gpu/drm/bridge/analogix/anx7625.h
+> index=20
+> eb5580f1ab2f86b48b6f2df4fa4d6c3be603ad48..f9570cd6d22e55fd70a12c159607
+> 14cbb783d059 100644
+> --- a/drivers/gpu/drm/bridge/analogix/anx7625.h
+> +++ b/drivers/gpu/drm/bridge/analogix/anx7625.h
+> @@ -51,9 +51,21 @@
+>  #define INTR_RECEIVED_MSG BIT(5)
+> =20
+>  #define SYSTEM_STSTUS 0x45
+> +#define INTERFACE_CHANGE_INT_MASK 0x43
+>  #define INTERFACE_CHANGE_INT 0x44
+> -#define HPD_STATUS_CHANGE 0x80
+> -#define HPD_STATUS 0x80
+> +#define VCONN_STATUS	BIT(2)
+> +#define VBUS_STATUS	BIT(3)
+> +#define CC_STATUS	BIT(4)
+> +#define DATA_ROLE_STATUS	BIT(5)
+> +#define HPD_STATUS	BIT(7)
+> +
+> +#define NEW_CC_STATUS 0x46
+> +#define CC1_RD                  BIT(0)
+> +#define CC1_RA                  BIT(1)
+> +#define CC1_RP			(BIT(2) | BIT(3))
+> +#define CC2_RD                  BIT(4)
+> +#define CC2_RA                  BIT(5)
+> +#define CC2_RP			(BIT(6) | BIT(7))
+> =20
+>  /******** END of I2C Address 0x58 ********/
+> =20
+> @@ -447,9 +459,14 @@ struct anx7625_i2c_client {
+>  	struct i2c_client *tcpc_client;
+>  };
+> =20
+> +struct typec_port;
+> +struct usb_role_switch;
+> +
+>  struct anx7625_data {
+>  	struct anx7625_platform_data pdata;
+>  	struct platform_device *audio_pdev;
+> +	struct typec_port *typec_port;
+> +	struct usb_role_switch *role_sw;
+>  	int hpd_status;
+>  	int hpd_high_cnt;
+>  	int dp_en;
+>=20
+> --
+> 2.47.3
+
+--
+heikki
 
