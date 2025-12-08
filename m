@@ -1,99 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-84677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E7ECAD349
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 13:55:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF7BDCAD48D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 14:35:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 440D23061EB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 12:54:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D7095304B222
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 13:32:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D81B4311C30;
-	Mon,  8 Dec 2025 12:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB91F314D26;
+	Mon,  8 Dec 2025 13:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BN/V7dPq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Hjm6pa9g"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="OVZ7XTtt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767431A3178
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 12:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306B11EE033;
+	Mon,  8 Dec 2025 13:32:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765198474; cv=none; b=Chj8mnS3xWwqOZ1sM55sm/xLKVyfNm70hZFPv3v2u8sDy7T/ROOCQ8rfUXFDhCV/k9oLV8O2f+pL1Ulpc4YSx4injTDVQ8tElwM0bIfHFcsBm5KZL45oS9/Azt1XU0ReSnxnS1HOPrcBQvnuOF0hC+s0PjkUK+FVP/uQ0+xMRfE=
+	t=1765200746; cv=none; b=lbaIWedNZ1JIae3pdPN03rhM/IUf1WnF60AtaonX2Vm7foaDORzCUd/aIOtNxePTQD+acm99S/qEfrmmmZeEz6ozmAIxettvTo8uwWmKsAX48P0ngxV91fCqE8FUidMzl8UGoGwPGCR0RmbAhNCypYaZEp46sqiv3/Z1n5m/JLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765198474; c=relaxed/simple;
-	bh=/Sp5/ezr/jzNevVrEIBiDL1TzMgf9rJ4FcX2YNgjUXU=;
+	s=arc-20240116; t=1765200746; c=relaxed/simple;
+	bh=eUYewcQyzKdMXmwFTKSfaJeFA1I03PQncb1KG3clHA4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CQoJ/FerlBc0cSOTIbeMpGK7ZK2KsXh/XuaWOu8cJ8n6qnuxvg3v3LmbDUKTdBO5MJcMJeo28qtSYA2B8XimPaGBq1CQYZVH7koL0WPKVqMmHC5R4OvFOjzx2jXvsHdv5FvxpZ3bJ/OWgy4CIt0TMAS+W5uvaafYdhgp8rWaWLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BN/V7dPq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Hjm6pa9g; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B88acIC096385
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Dec 2025 12:54:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DynSpd4KFfYO1sk2F294Gqbq8wFKDDPMSoUlpXNI9s0=; b=BN/V7dPqmQC9jA2l
-	IRTU196kIEPTxOZc9KjsiqFibOPwrZAx8CNrO4ucRh8CDCZNPrTcrStK9gP6MQWQ
-	q/LUj384d5sSVNXeGIp4AJpfvryvRpF6ObGHzcjcZLGCU5rjeNbi34aOWOaSXrkB
-	ChTu7EmLKz6Y9DrBWBeQQisFoE99fCJsmPX8yrdYTe86FSgWJKZfEm/4Oe1u6Lvh
-	B/shU+iKu3faxk97qwkg5En1XJeYI/l0wTmYFf+4q9eQpIzZLldggwlpwDqTx4Ol
-	RHOQAc/YBkW8B2NYs1AA/DtondkrwadudTB+eIJjfThOqsOqesWNW7dnLIno46st
-	YWjCYg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4awuafrqnu-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 12:54:31 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-882416e9d9fso9681946d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 04:54:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765198470; x=1765803270; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DynSpd4KFfYO1sk2F294Gqbq8wFKDDPMSoUlpXNI9s0=;
-        b=Hjm6pa9gtd62yrxEQiBzRlitMqilJY5wb06EbGp8w1WuyHaYO3eFgK5hKqCd6kMsx+
-         8PhNp3laXErcQRbl6znkODe8tRIFjMXxNfB5tbapGEmGiA5OcFTba33PecGLpI4wBgNA
-         ggqDMDyMYp8aNpkvFIR1t4YbQcQGLIm/jT7lUk8h9Mrg2L2f4TuYBto+w9voReGBWqG5
-         AN+XFh6hebi25xW+paEonQiL794fLtR+5cpYpM1oHrdrrKvRNJFgzUj/Ed+12nBqCy8F
-         bP8tBEMdm+Hn06BFcTt2Surx33feU6FtTo86DJkvreq2lAiPOBaT7SCWkJh3HTSEYYV/
-         Yvww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765198470; x=1765803270;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DynSpd4KFfYO1sk2F294Gqbq8wFKDDPMSoUlpXNI9s0=;
-        b=mo1PSKGm5LpkduGR5dgebMIDYIZ/FfhVrBN42B14jPWWjJRHMGm096qHa4HMeNYdwt
-         XcANCDJaHH0xyoAHcIS6ldxFmhqul0cQkvESevhLyDRUD/S8a13QnvWczF/BvUkc6aLM
-         oT6XbjieCf4pDUU7F1Nh0MpfwOhU9AjYVi1pM8v5QewC+Wj7Ehpz64HtA0V69T6FuSMB
-         CaxVYEJcJxS0fLEfVSho2aCwXuzctpBDbbis+zWL5fK5gtKGxcrhjfUDMcDdBg+Di0D5
-         OW38hN7LurSQZCbQB1HefUMbUDive30NlGXSPQjtuWDoIqAnXJssRY7ypXaAyXRNBtgt
-         gNzA==
-X-Gm-Message-State: AOJu0YxnOPnZLoAWDOAkSPewXGtjthCucMORKnWolDjFraJP7h6diLpI
-	9rhBwCnAyjV8py/rAWJDhTPLd7ULq850CHFjJ7PqbnzlMMIzXN2WUJlS6naSgjNSc5ihzKJVLhU
-	AJyZFoES7PJbFQMA/Gi6K8nmqRq+DSUQOHDsfFEu7AxuYogVzicfZKnR+7mw9KQnqWokU
-X-Gm-Gg: ASbGncutXxXBpuL9uGf2KfMNoNs0xkRpNyZctQ59RBXkxzHzho2IXdnx1bgt+qD6rGu
-	HHlS74m9aX1zjbL0/6rkCnzeV6fOJn4sOWi+3arQyK3z7FYSHiabhtavoXz+p7//9TfIF9Y+NAp
-	HWnFKGJwFWr0nzfJiQsX9j2wVB3A6Ou/hbxCgoKKEoB8KRsUxC+iq5XSf98cbRAYnAZzqcTnBjZ
-	Vu3HPiHhT1I+WbvFV54k/sEJRiIKA7m/jOlDPX4UsWa2URNu1Pc6UYyI4xJOFHpFWLXVMqu2IWj
-	nJJpZnTHHr6m+2JR9eATn9QKbToGY2dntVwxf59OZG+0lXgD1fD6NjTYLv5G8bYbZTawW84q93I
-	XJc6Z1rS8tMsHQevxDZ/ylivU0r4aLHo/Yw/WqcHB3M41PMF8ty3TUIO4OgvDUR7Lkw==
-X-Received: by 2002:a05:622a:1105:b0:4f0:2b7e:c5c3 with SMTP id d75a77b69052e-4f03fc876a7mr89445621cf.0.1765198470544;
-        Mon, 08 Dec 2025 04:54:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0gW5HREx87/vjahlRMbtYsg+iw5KQvZGmCzt+n533CjTg5/76ejBvrrzJ+IipzoGePsVXmA==
-X-Received: by 2002:a05:622a:1105:b0:4f0:2b7e:c5c3 with SMTP id d75a77b69052e-4f03fc876a7mr89445281cf.0.1765198470018;
-        Mon, 08 Dec 2025 04:54:30 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-647b2edf72asm10759405a12.11.2025.12.08.04.54.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Dec 2025 04:54:29 -0800 (PST)
-Message-ID: <65efffcc-195d-41c9-953c-e3f6c0b0ed5d@oss.qualcomm.com>
-Date: Mon, 8 Dec 2025 13:54:26 +0100
+	 In-Reply-To:Content-Type; b=b1lUNRy83bNazJkh6evXbKGtAM1tl6XXsPitFVyYKc+O0GB56S+Ri0+d4kEU1ZuqYgn4rHlm9R8B2tpZikW/ySCAMgKOVVagVghHZTDmCdwAf9L8wf365/N3VcwjFz2WpgxmR83v7r7dYTNnSMIMkuEwFLsEUXqbBLKgYGycF1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=OVZ7XTtt; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id C32DE5341140;
+	Mon, 08 Dec 2025 14:32:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1765200731;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=dnVoTyfwYS0LuPFoVb6qfSqVMRaPB+lLWfOFmpj5q5M=;
+	b=OVZ7XTtthnNHeqyGWpdst6puRgUdN2XAvvc5640eCeKSndNSZpLZDGgrFDOhmTQeJxipKF
+	m1GYy8UTIwi+avbptSaix+VLpraVzqKgt3XdY/E4t/7c93Uft3tO4ck2I6onWWIdk1YZgy
+	vRChbZm1zHXGUvHK6KlAxab8bYRNsfg=
+Message-ID: <648bdb71-fef9-4762-9f05-330457fda0b0@ixit.cz>
+Date: Mon, 8 Dec 2025 14:32:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,92 +54,109 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] phy: qualcomm: phy-qcom-eusb2-repeater: Add
- squelch detect param update
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Luca Weiss
- <luca.weiss@fairphone.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Pengyu Luo <mitltlatltl@gmail.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251204044644.3072086-1-krishna.kurapati@oss.qualcomm.com>
- <20251204044644.3072086-3-krishna.kurapati@oss.qualcomm.com>
- <755b7579-757f-4ced-b3c4-39c20e6b25a7@oss.qualcomm.com>
- <b772d61e-ba75-4f45-946d-211a0bb755d0@oss.qualcomm.com>
+Subject: Re: [PATCH] ARM: dts: qcom: msm8974-hammerhead: Update model property
+To: Luca Weiss <luca@lucaweiss.eu>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jens Reidel <adrian@mainlining.org>,
+ Bhushan Shah <bshah@kde.org>
+Cc: phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251208-msm8974-hammerhead-model-v1-1-88975f30cbaa@lucaweiss.eu>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <b772d61e-ba75-4f45-946d-211a0bb755d0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=ep7SD4pX c=1 sm=1 tr=0 ts=6936ca87 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=805bfMFN-6O86olI7_EA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-ORIG-GUID: MfSI1HzUentl7Njig3zOG0XfoiCcgJCG
-X-Proofpoint-GUID: MfSI1HzUentl7Njig3zOG0XfoiCcgJCG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDEwOSBTYWx0ZWRfX9mWOXp88Hx99
- fUcwnCos8ULKQ+mFb4qFlH+BeZp89600/L/RfJHcHEEpYuuQVaCf1zji41HVYUomlZIjg/ieMeF
- oa4cL86w5b6ZKOXkq/iYPwX846ECQtc+X1zk8cMNFUJA/UXGe17Ug/9P5TcvmSE0FUI2EsQmzB3
- NwDgVKp3gn8XHgCXUPhQ10aeFEMCcswvjr7k5knDC1/+SZJK2CRvdr3lgS7OBwRfOJO8BKfVXRQ
- 66WIBr/NsAVZ7OXMvmYIXLg9i5JO1l4V2KKA2MQZeAJliLGaBHEbDQwGVOtbDJVxFbrvCQcZ6po
- 0uty8cX5Teje+r2/4JQqXNOxaTnojvb93wtbXqfyCtkVyuk/3eeEkdJgyDZrsost/jMyCG5RPzN
- iahFh0mOHRSTxioB3WctF9P7NK+b5A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512080109
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20251208-msm8974-hammerhead-model-v1-1-88975f30cbaa@lucaweiss.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 12/6/25 5:12 PM, Krishna Kurapati wrote:
+On 08/12/2025 13:41, Luca Weiss wrote:
+> Many years have passed (more than 9 actually) since the introduction of
+> the Nexus 5 dts to Linux and it's high time to update the model property
+> to be a proper model name and thereby bringing it to the standards of
+> the 2020s.
 > 
+> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> ---
+> The phone was manufactured by LG and sold by Google. Some sources call
+> it LG Nexus 5, some Google Nexus 5. I think it was mostly marketed as
+> just Nexus 5, but consensus in upstream dts seems to be to use the
+> manufacturer, see Nexus 5X, Nexus 6P, Nexus 4.
 > 
-> On 12/5/2025 7:01 PM, Konrad Dybcio wrote:
->> On 12/4/25 5:46 AM, Krishna Kurapati wrote:
->>> Add support for overriding Squelch Detect parameter.
->>>
->>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->>> ---
->>>   .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 22 +++++++++++++++++++
->>>   1 file changed, 22 insertions(+)
->>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
->>> index 651a12b59bc8..a75b37d4e16d 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
->>> @@ -37,6 +37,17 @@
->>>   #define EUSB2_TUNE_EUSB_EQU        0x5A
->>>   #define EUSB2_TUNE_EUSB_HS_COMP_CUR    0x5B
->>>   +static const int squelch_detector[] = {
->>> +    [0] = -6000,
->>> +    [1] = -5000,
->>> +    [2] = -4000,
->>> +    [3] = -3000,
->>> +    [4] = -2000,
->>> +    [5] = -1000,
->>> +    [6] = 0,
->>> +    [7] = 1000,
->>> +};
->>
->> I forgot to ask, do these values apply to all of the supported repeaters?
->>
+> Arguments could also easily be made to change the compatible to
+> "lg,hammerhead" and rename the dts, since lge (LG Electronics) is not
+> even documented in vendor-prefixes and doesn't really appear anywhere
+> else in the kernel and lg, (for LG Corporation, the parent of LG
+> Electronics from what I can tell) is used. But that's more invasive so
+> I'm leaving this out in favor of this simple patch.
+> ---
+>   arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> I checked smb2360/pmih010x_eusb2_repeater and pm8550b repeaters (SM8{5/6/7}50/ Kaanapali/ Hamoa). For all of them, the above table is same.
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
+> index b3127f0383cf..8f4a1fda9276 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8974-lge-nexus5-hammerhead.dts
+> @@ -7,7 +7,7 @@
+>   #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>   
+>   / {
+> -	model = "LGE MSM 8974 HAMMERHEAD";
+> +	model = "LG Nexus 5";
+>   	compatible = "lge,hammerhead", "qcom,msm8974";
+>   	chassis-type = "handset";
+>   
+> 
+> ---
+> base-commit: 7d0a66e4bb9081d75c82ec4957c50034cb0ea449
+> change-id: 20251208-msm8974-hammerhead-model-fa3aca1fda0e
+> 
+> Best regards,
 
-Thanks
+Hehe, definitely an improvement.
 
-Konrad
+Reviewed-by: David Heidelberg <david@ixit.cz>
+
 
