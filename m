@@ -1,288 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-84642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21875CAC925
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 09:58:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CC91CACC20
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 10:53:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3ABD33004209
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 08:57:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EC8D5301E6FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 09:53:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D92C22DC349;
-	Mon,  8 Dec 2025 08:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16DE930FC26;
+	Mon,  8 Dec 2025 09:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="2T3KfPwN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9GAR7TU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E5D23A9AE;
-	Mon,  8 Dec 2025 08:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC5C25C802;
+	Mon,  8 Dec 2025 09:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765184274; cv=none; b=BFSdkHxoMcwR1rzSsQvjeGnQ7trdhq0sY7yrQ4FV8c+kmnPFwfcKZNbryj8SJ60IhQVk8enUuNwf/ptUxIbIb1rsECORZ9VA5YcmWaKxfqU6Z0NIbxAq8z2zYQh6msN/FRKqhuBnBmK6rT6ZvbzF7NKTIRccEInRiVX38MgaRMY=
+	t=1765186946; cv=none; b=rHdl/e9G78O6699A0cOOMowmIjZ/6HVU6uy0J9nGzHvFamntrCN2r1R22vgTd4sCJeWY98s/Vjn0gxCb5cA+9Kvgw0AlLqQ/HAsESXOjtRNzMH7xpE+4DzyQGF7gsqs33zhtMX8nsNDNupYz6QKuK1rZb888OhcU/cA2WVMYBY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765184274; c=relaxed/simple;
-	bh=zmlKMgzkanVWDnk0Lc30Gqgw66DMVuf2sBnpcY3VYEY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDu3XgT0nAfJxN2cLE+Cu1II6s+q0wkdpH4wE8sV0Wyj+hDXXyEJeYWck+uEkASt8A9jWYipXeCWHy0XogfVrvTf9wQJsxX3uAGwAlyi8LHPpCHJRIOvBNODTmchAZxjhOLZu1bUjKFG6E0FPfiQyCVVeiZhOX3XzNENxWyKVBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=2T3KfPwN; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 04B8EC10191;
-	Mon,  8 Dec 2025 08:57:27 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A16AD6070C;
-	Mon,  8 Dec 2025 08:57:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2F238102F0A9B;
-	Mon,  8 Dec 2025 09:57:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1765184267; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=3fg1zW3LOXIPMYWNiGMqZlYLtPRdk9K2q2GNC8WmibM=;
-	b=2T3KfPwNwUmq9Lt4oZRqOtwhda6Flnt0QwmI6YflOV7VPGQxgDkBWZm1p3eQ/328i7qyeT
-	vHLZNvI6W9Ak5hYLXJXSXXc0CBXXjO270B+alVG9LDd2+bg0vChABDbMJnDLkQgk250BSW
-	yETa/SIv6h41p8o1hAExIjtLVPVZ8RV5Bgg8+LV/GzKtTKyzW0yIMTclkHFszqC3bHv039
-	X+wfJkbAvLGpj6OWpG1D1daow8IER2MeouFk0gESqQfoiPEYAoa5xH1Wkl2fWCRa8FpKv2
-	BXH9ELHLTcGyZhCZ6+8r5UDmwKTwkGbxTWIG2Ke1rzoMYicClzlETWMJoL40mA==
-From: Romain Gantois <romain.gantois@bootlin.com>
-To: Guenter Roeck <linux@roeck-us.net>, Jonathan Cameron <jic23@kernel.org>
-Cc: "H. Nikolaus Schaller" <hns@goldelico.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, David Lechner <dlechner@baylibre.com>,
- Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
- Andy Shevchenko <andy@kernel.org>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-iio@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>,
- MyungJoo Ham <myungjoo.ham@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Peter Rosin <peda@axentia.se>,
- Mariel Tinaco <Mariel.Tinaco@analog.com>,
- Lars-Peter Clausen <lars@metafoo.de>,
- Michael Hennerich <Michael.Hennerich@analog.com>,
- Kevin Tsai <ktsai@capellamicro.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
- Support Opensource <support.opensource@diasemi.com>,
- Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Matheus Castello <matheus@castello.eng.br>,
- Saravanan Sekar <sravanhome@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Casey Connolly <casey.connolly@linaro.org>,
- Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
- Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>,
- Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Olivier Moysan <olivier.moysan@foss.st.com>,
- Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Dixit Parmar <dixitparmar19@gmail.com>, linux-hwmon@vger.kernel.org,
- linux-input@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-pm@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: Re: [PATCH v4 0/6] Add support for the LTM8054 voltage regulator
-Date: Mon, 08 Dec 2025 09:57:24 +0100
-Message-ID: <2024471.PYKUYFuaPT@fw-rgant>
-In-Reply-To: <20251207184818.2ad7cef7@jic23-huawei>
-References:
- <20251124-ltm8054-driver-v4-0-107a8a814abe@bootlin.com>
- <9b43da0b-61e1-49bb-acc2-392de3817db7@roeck-us.net>
- <20251207184818.2ad7cef7@jic23-huawei>
+	s=arc-20240116; t=1765186946; c=relaxed/simple;
+	bh=yqbCSGhD5k2lVUISfIm2sNs+NvrZA6pd3Nvs2Ab90Ps=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=O6Dq/7MX4B6EeueoV3KBkVv4HGH+LH/wQKCjVCO/ZYw6JBTDJUcpfPCLHhwV5uvimgnbtok9ur2Ms2mAZcRNjp8G2148mN4eY6P5VMD9gly1JAI7Pn6mgrs19gE45/VV6WH6SKEus+7+2M5klqwmScI79ggn0CwyLX7lB63t7yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9GAR7TU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6C1B7C4CEF1;
+	Mon,  8 Dec 2025 09:42:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765186945;
+	bh=yqbCSGhD5k2lVUISfIm2sNs+NvrZA6pd3Nvs2Ab90Ps=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=A9GAR7TUo6VJb7YgIenKX2RBPF148sO0eO7hNn8lSYwAf6bMcjc9ox5FBmZGSJIiX
+	 YQViGmQ4U5pI3LIDuSp5BFzcrzugWcLFbWmfuOgAAZL5XdkVpqY2hFADYsBE9KvM/R
+	 ucA3aaDSpxUUfHZ3JehlquzDIprpg58xFRAWOiAy1ePV1BkhCQuNrRT0/OXhz11RGU
+	 I/cEEzly782fIEJVV64yTVkN41WP4V4Sconme8+RGaT/3ONdPjIem7VkstOBaG8vtn
+	 7pwhpNytDVsApijhkkQFDSFdHq8pLc0cp0+AZCHwmnBP2w4fCI5ksjr+tzZwpH9ixG
+	 xV9KOEfd5iQmQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED49D3B7E1;
+	Mon,  8 Dec 2025 09:42:25 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v6 0/8] Add support for Pixel 3 and Pixel 3 XL
+Date: Mon, 08 Dec 2025 10:41:53 +0100
+Message-Id: <20251208-pixel-3-v6-0-e9e559d6f412@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart7885096.EvYhyI6sBW";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Last-TLS-Session-Version: TLSv1.3
-
---nextPart7885096.EvYhyI6sBW
-Content-Type: multipart/alternative; boundary="nextPart22929280.EfDdHjke4D";
- protected-headers="v1"
-Content-Transfer-Encoding: 7Bit
-From: Romain Gantois <romain.gantois@bootlin.com>
-Date: Mon, 08 Dec 2025 09:57:24 +0100
-Message-ID: <2024471.PYKUYFuaPT@fw-rgant>
-In-Reply-To: <20251207184818.2ad7cef7@jic23-huawei>
-MIME-Version: 1.0
-
-This is a multi-part message in MIME format.
-
---nextPart22929280.EfDdHjke4D
-Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGGdNmkC/1XQy07DMBAF0F+pvMZoxm+z4j8QCz8m1BJqixOiQ
+ pV/xykIJ8tr+1xZ98ZGqoVG9nS4sUpzGcv51IJ5OLB0DKc34iW3zAQIDQo9v5QrvXPJNSLlJII
+ yYFl7fak0tKu16eW15WMZp3P9uhfPuJ7eOxBA/3fMyIGH6KLTg0Eph+dyLdNj+mZrwyw2SkJXo
+ imXQs6RwIrk90p2hei6kk1JtEFEBZBd2Cu1UWLzQ7WqaMEMLqfkzV7prgSYrnRTOXlvpSCbpe5
+ q+Z2q0sdn23r622tZfgDNuctaiQEAAA==
+X-Change-ID: 20250419-pixel-3-511edc2a4607
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
+ Casey Connolly <casey.connolly@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Petr Hodina <phodina@protonmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, David Heidelberg <david@ixit.cz>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Amit Pundir <amit.pundir@linaro.org>, Casey Connolly <casey@connolly.tech>, 
+ Joel Selvaraj <foss@joelselvaraj.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Bjorn Andersson <andersson@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4629; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=yqbCSGhD5k2lVUISfIm2sNs+NvrZA6pd3Nvs2Ab90Ps=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpNp1/Lcq/JRf3ZEjIEknLcqxSE1Z0idlyDVOEF
+ ViITX2VgFGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTadfwAKCRBgAj/E00kg
+ crisEADNFrss5l85fkAk0/vUnrw0pdq0daTkaLDLMsDC4DpiR4tVjr2QrP6R4V6itpHMg5O1KvX
+ TV77J5xLS7fklDwr5NMlIfcE2yGSVTV6/4xrM4GivzcnP4BijKPvK8yzHFWNM4OX+TlW8XMPwkt
+ MSuI9JXY48wH88StR0TDLus6aUaso6cWcc7j83HqkUCJzHAjSH9ZmGxiA6SrBqmYVmIc2uctqcl
+ JDpiUcTVVs2ZNctnpSfNJs1InRxQPiXkieMSMkDuoNURF7zh1RwIVaJMWtxAixbgAqHrXv+iPFF
+ 4v2Dpt68m3CBKXjIryHMVdu6Gi23rzUEMl9KFA3KyD5/blFNg8hc4OwSsX/57EHQ2m7GVhwMeNh
+ r1sfmU+ztMxUkJmkBDqjxkLiS1hk/pfEueJ6hGpJYsmMxfP+vVv+qzVL8l9W5zOcyfU5Zr8H+45
+ eV8M3t+gAmWMrUJ8D8HYbHuux1IJ/QLVn17jhGlzqidlJ1hA4PAGfk5YLUFlss3Ym9Bwa1fLCO9
+ K3JuxLfjPsiKf6SqMz3dTfKtRXlwG8TkNZV0bpnroUJECbNZddiJQdDkudcFH6GvrU6h0QL+//k
+ ZHD0ylk9k/nG+nCTy5tDe/DRVhZH1C/V9ZemTRelxiHECaPvqe7xEVTe2EgLaNiyxZwNDwkn4u/
+ cQgOoMNrKR9nmmA==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On Sunday, 7 December 2025 19:48:18 CET Jonathan Cameron wrote:
-> On Tue, 25 Nov 2025 08:37:20 -0800
-> 
-> Guenter Roeck <linux@roeck-us.net> wrote:
-> > On 11/25/25 02:25, H. Nikolaus Schaller wrote:
-> > ...
-> > 
-> > > Another suggestion: what extending the "regulator-fixed",
-> > > "regulator-gpio",
-> > > "regulator-fixed-clock" pattern by some
-> > > "regulator-gpio-iio-dac-current-limiter" driver to make it independent
-> > > of your specific chip?
-> > 
-> > The name is terrible ;-), but that is what I would have suggested as well.
-> > I don't see anything chip specific in this code. If there is a need for
-> > a regulator driver which uses gpio to enable it and a DAC for current
-> > limiting, it should be made generic.
-> 
-> Agreed - something generic is the ideal way to go.
-> 
-> However, before going too far it is worth exploring what are common circuits
-> with these things to identify what parameters we need to describe how the
-> DAC channel is used - e.g is linear scaling enough?  You'll need to that to
-> define a DT binding. If it turns out to be too complex, then fallback to
-> specific compatibles in a generic driver to cover the ones that don't fit
-> with a common scheme.  A similar case we already have is discrete
-> components as analog front ends for ADCs - mostly they fall into a few
-> categories and we have drivers covering those, but some are very odd indeed
-> and for those ones we do have a driver even though they don't have anything
-> to control as such - most extreme case being when it's a non linear analog
-> sensor.
-> 
+This adds initial device tree support for the following phones:
 
-I actually did use a modified version of iio-rescale in my downstream code. My 
-use case includes an OpAmp inverter circuit placed in front of a DAC, and it's 
-useful for me to be able to describe this in a modular fashion, as two IIO 
-device tree nodes representing respectively the DAC and the OpAmp circuit 
-front-end.
+ - Google Pixel 3 (blueline)
+ - Google Pixel 3 XL (crosshatch)
 
-Moreover, the LTM8054 takes a voltage on its CTL pin and infers a current 
-limit from it. This is also something which could be represented as a sort of 
-AFE node.
+Both phone boards use the same identifiers and differ only slightly
+in their connected peripherals.
 
- LTM8054 output voltage control:           
-+---+ +------------+ +--------------------+
-|DAC+->Inverter AFE+->Feedback circuit AFE|
-+---+ +------------+ +--------------------+
-                                           
- LTM8054 output current limit control:     
-+---+ +--------------------+               
-|DAC+->Voltage-controller  |               
-+---+ |current limiter AFE |               
-      +--------------------+               
+This is mainly focused to get the base functionality of the board and
+being able to use the upstream DTS within Linux and u-boot.
 
-Thanks,
+Booting
+-------
+For older Pixel 3 bootloaders, bootloader-compatible board and MSM IDs are
+required for the kernel to boot, so these have been added.
 
+For recent Pixel 3 bootloaders,
+a) you want chainloaded proper bootloader (f.e. u-boot),
+b) you can also boot kernel when adding back TEXT_OFFSET
+   (partial revert of 120dc60d).
+
+This series is a beggining of cleaning up and transitioning support from
+sdm845 close to mainline tree to the mainline.
+
+Until merged, available at:
+  https://gitlab.com/sdm845/sdm845-next/-/commits/b4/pixel-3
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v6:
+- Disabled dispcc on Pixel 3 XL to keep framebuffer reliably working
+  after the boot. Previously I used framebuffer only in u-boot.
+- Link to v5: https://lore.kernel.org/r/20251206-pixel-3-v5-0-dc99732e7d35@ixit.cz
+
+Changes in v5:
+- Document 1 MHz frequency for i2c2 on blueline and add placeholder for
+  the touchscreen.
+- Rename vreg_l14a_1p88 regulator to vreg_l14a_1p8 as it's 1.80V.
+- Move panel _enable() function below _program(). (Dmitry)
+- Link to v4: https://lore.kernel.org/r/20251125-pixel-3-v4-0-3b706f8dcc96@ixit.cz
+
+Changes in v4:
+- Updated panel device-tree example to contain the both compatibles.
+- Put panel pins into the panel-default-state and drop the suspend state
+  as it's not yet used.
+- Also, sort the pins. (Konrad)
+- Move the framebuffer format to common, as it's UEFI standard. (Konrad)
+- Improve commit descriptions and add Fixes tag. (Dmitry)
+- Link to v3: https://lore.kernel.org/r/20251118-pixel-3-v3-0-317a2b400d8a@ixit.cz
+
+Changes in v3:
+- dropped Documentaion: prefix from 1st commit (Krzysztof)
+- Extended the compatible for panel driver.
+- Document reserved GPIOs.
+- Drop some useless statuses, sort pinctrl. (Konrad)
+- Add placeholders for the known i2c devices.
+- Link to v2: https://lore.kernel.org/r/20251030-pixel-3-v2-0-8caddbe072c9@ixit.cz
+
+Changes in v2:
+- rebased on next-20251030
+- generalize chosen to -common (Dmitry)
+- demystify rmtfs_mem qcom,vmid
+- use qcom,use-guard-pages instead of lower/upper guard block
+- merge port@1 endpoint into label mdss_dsi0_out
+- sort pinctrl
+- sorted the nodes inside root
+- put status as a last property into mdss_dsi0 block
+- rename volume-keys to gpio-keys   
+- removed LS-UART1 label
+- removed gmu block, already enabled
+- removed accidentally introduced WIP crosshatch panel support
+- removed useless panel_pmgpio_pins (Dmitry)
+- removed usb_2 as it's unused on production units (only devkit)
+- move mdss node into the -common and disable in crosshatch (Dmitry)
+- move battery node into the -commonm
+- move framebuffer into the -common (Dmitry)
+- add all firmwares (Dmitry)
+- add Wi-Fi support
+- add Bluetooth support
+- add missing gpi_dma1 node
+- renamed regulators to follow regulator-foo-bar BCP (Dmitry)
+- adapt to recent cleanup GPU's zap-shader node
+- Link to v1: https://lore.kernel.org/r/20251005-pixel-3-v1-0-ab8b85f6133f@ixit.cz
+
+---
+David Heidelberg (8):
+      dt-bindings: arm: qcom: Add Pixel 3 and 3 XL
+      dt-bindings: panel: sw43408: adjust to reflect the DDIC and panel used
+      drm/panel: sw43408: Introduce LH546WF1-ED01 panel compatible
+      drm/panel: sw43408: Add enable/disable and reset functions
+      drm/panel: sw43408: Remove manual invocation of unprepare at remove
+      drm/panel: sw43408: Switch to devm_regulator_bulk_get_const
+      drm/panel: sw43408: Improve wording when reset-gpios aren't available
+      arm64: dts: qcom: Add support for Pixel 3 and Pixel 3 XL
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +
+ .../bindings/display/panel/lg,sw43408.yaml         |  13 +-
+ arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+ .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  85 ++++
+ arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 524 +++++++++++++++++++++
+ .../boot/dts/qcom/sdm845-google-crosshatch.dts     |  33 ++
+ drivers/gpu/drm/panel/panel-lg-sw43408.c           |  86 ++--
+ 7 files changed, 709 insertions(+), 36 deletions(-)
+---
+base-commit: 3ee7acd1ad2603a7acbed6692661f853065d7007
+change-id: 20250419-pixel-3-511edc2a4607
+
+Best regards,
 -- 
-Romain Gantois, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
---nextPart22929280.EfDdHjke4D
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/html; charset="utf-8"
-
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-<body><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">On Sunday, 7 December 2025 19:48:18 CET Jonathan Cameron wrote:</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; On Tue, 25 Nov 2025 08:37:20 -0800</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; Guenter Roeck &lt;linux@roeck-us.net&gt; wrote:</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; On 11/25/25 02:25, H. Nikolaus Schaller wrote:</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; ...</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; &gt; Another suggestion: what extending the &quot;regulator-fixed&quot;,</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; &gt; &quot;regulator-gpio&quot;,</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; &gt; &quot;regulator-fixed-clock&quot; pattern by some</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; &gt; &quot;regulator-gpio-iio-dac-current-limiter&quot; driver to make it independent</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; &gt; of your specific chip?</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; The name is terrible ;-), but that is what I would have suggested as well.</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; I don't see anything chip specific in this code. If there is a need for</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; a regulator driver which uses gpio to enable it and a DAC for current</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; &gt; limiting, it should be made generic.</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; Agreed - something generic is the ideal way to go.</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; However, before going too far it is worth exploring what are common circuits</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; with these things to identify what parameters we need to describe how the</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; DAC channel is used - e.g is linear scaling enough?&nbsp; You'll need to that to</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; define a DT binding. If it turns out to be too complex, then fallback to</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; specific compatibles in a generic driver to cover the ones that don't fit</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; with a common scheme.&nbsp; A similar case we already have is discrete</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; components as analog front ends for ADCs - mostly they fall into a few</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; categories and we have drivers covering those, but some are very odd indeed</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; and for those ones we do have a driver even though they don't have anything</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; to control as such - most extreme case being when it's a non linear analog</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; sensor.</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&gt; </p>
-<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">I actually did use a modified version of iio-rescale in my downstream code. My </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">use case includes an OpAmp inverter circuit placed in front of a DAC, and it's </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">useful for me to be able to describe this in a modular fashion, as two IIO </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">device tree nodes representing respectively the DAC and the OpAmp circuit </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">front-end.</p>
-<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Moreover, the LTM8054 takes a voltage on its CTL pin and infers a current </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">limit from it. This is also something which could be represented as a sort of </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">AFE node.</p>
-<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&nbsp;LTM8054 output voltage control:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">+---+ +------------+ +--------------------+</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">|DAC+-&gt;Inverter AFE+-&gt;Feedback circuit AFE|</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">+---+ +------------+ +--------------------+</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&nbsp;LTM8054 output current limit control:&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">+---+ +--------------------+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">|DAC+-&gt;Voltage-controller&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">+---+ |current limiter AFE |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------------------+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Thanks,</p>
-<br /><p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">-- </p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Romain Gantois, Bootlin</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">Embedded Linux and Kernel engineering</p>
-<p style="margin-top:0;margin-bottom:0;margin-left:0;margin-right:0;">https://bootlin.com</p>
-<br /></body>
-</html>
---nextPart22929280.EfDdHjke4D--
-
---nextPart7885096.EvYhyI6sBW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEIcCsAScRrtr7W0x0KCYAIARzeA4FAmk2kvQACgkQKCYAIARz
-eA7Dhw/9GfGpoHhSNiYoLEY8BU6ezNDIJRsccNjENK6KoL3UN7ypRE+gcLa0bNqe
-WOOtbaVjjBeF7GFKMzJ+nR6jiMzUM+qwAc1Tv4ShuhXjG07gC/seUciBiywn+Bmg
-QuEm40+vr+C5/U6sB5NGm78ns25z5Ek9xNsqGpugLstBb8gntze+VSH1d78aZA+w
-ygVLP/T9s4nxR/0abtoiKwumEuw6gmo/4Qhp1WW5WD9w6O83DlBMlt+/kl5fDC31
-sxpFYgNfqmqAppD6gzuvmpF058IihWRpjUTrD/NjcOnVkq7Vq371YAirJJsLFJoz
-eyggKZkmrUPLJc6jhjqy5AMq5g+hN+gkppuDvMg7NRYAwSqu8j9J3x6+EiHjm6oN
-NAFVOzw1KPrGAEfxLLRWWubm/61UD7i/S2nS6cr/r2AeN/wfIXA6W+dQIEWQEnOx
-6KJm925Bs3jjBqPcyL2NQ04H02mhuUzIb5Q3aH56o/gRA8IR3yVuRgTgFkNoOogI
-xoZeteDlq6fyune2SC1YlPsh1BOOn71qWvJg8kVjfhuEVzRvG5g7bXNUAoZ6fReY
-lkPXNIHe9Tgp/76WA+D0sJCTWXtYR+mkrUKHig5TVEszW67+zyfH5l1cVdQY6Izo
-ui99LBQWUI+OunYO2iIEevgn+n92e13HFNZmzIb89ZE/4VWcrvM=
-=oqy9
------END PGP SIGNATURE-----
-
---nextPart7885096.EvYhyI6sBW--
-
+David Heidelberg <david@ixit.cz>
 
 
 
