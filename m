@@ -1,314 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-84711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3441DCAE282
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 21:28:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D54ECAE2A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 21:30:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D20E1303E659
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 20:28:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4A12B3034A0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 20:30:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E54F2C2368;
-	Mon,  8 Dec 2025 20:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1D1C1F30A9;
+	Mon,  8 Dec 2025 20:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cKSQiL3F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oDf4WUwg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAA226056D;
-	Mon,  8 Dec 2025 20:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750FA1A9FA7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 20:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765225687; cv=none; b=d+dHHiLrBMiGRgTnrypxhlhPVa6MF5dqQS7v7Tqy64DGWNY9z7VPdXcDp3FuDlhyrSlrATlGhe4vEuembI0oyWEBwPdEtHE8wsXhlUQJkwE9SgGtXUdYv+LfCbH1qXO9fNVABAxmts7eNW7hGmnb4wT3K40NzR0JRPNAY0y5jpc=
+	t=1765225827; cv=none; b=NCtfR1tkC4bGNsJ1YxOBVwUVhSXiBSVsJAvVI4XMMlPNmjWOnX4TQ4CnMgill+RVWPrg43D520Ag/+K7WUSjQ0FsA+DOo+Zo9EH4pKg1P79jN3Q4RjziiCCemahnbITH7cbVgsrOntxN5lHA041JJi+V4s3PFeCncGXOJrrcWtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765225687; c=relaxed/simple;
-	bh=YIXliSchTOGG+1D3mmfdvl+VICDaZKaTzDSnNx+OpKw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CW2gyI8ypjI0lkE+Eidni43MS5rea9Oe7HXS7yYIHmQEb6kp4T2tZnJEFnLVC1VwKkWPdY74ONVfZp4AFdwF8p16utjn5LhEzig3ccNVMxbW3q1RJH9X+NLrK3zndL9CBsp0yC/E4/OnqujQQBckOl2nFC5e0mqLxKpoq9RbIOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cKSQiL3F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B46C4CEF1;
-	Mon,  8 Dec 2025 20:28:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765225686;
-	bh=YIXliSchTOGG+1D3mmfdvl+VICDaZKaTzDSnNx+OpKw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cKSQiL3F7jbs9gE3oqTSJIXkLb7tk+tk91qixKYoK8qtGJAUSs5aJ9ePUjh2Qyia8
-	 nHuumMDiLGW1aiPxpaKX3WZKl+PSFWJ2IZJf5qmM9A3ntp+DnWf4EWqg8Mt20FNsiV
-	 o/BElrDBTbH82vMlXrixaqJYwwWoybic9v8tQbVhKn8pHPN5/PLJU3eAYfXUA78Zi4
-	 +tyZs8g1KoMMLqcFIe1M/jPs4Gp2QwLh9hKNINqnMoqyHy+KrNjxUG/R7NNuh/CfU2
-	 gqOTAR3nA/ZFH8fqhudoLG513fmgCYvOOeMyYP8VijHvl6qcbVorCvBQWiAJErnTbN
-	 mrFyypLkTFIww==
-Date: Mon, 8 Dec 2025 14:28:03 -0600
-From: Rob Herring <robh@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Hans de Goede <hansg@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 08/10] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key E connector
-Message-ID: <20251208202803.GA2541017-robh@kernel.org>
-References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
- <20251125-pci-m2-e-v2-8-32826de07cc5@oss.qualcomm.com>
+	s=arc-20240116; t=1765225827; c=relaxed/simple;
+	bh=4gTfSSNqg+fvlBo7JqVvlKuZT3uQYmbGh0OanIIst0M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XAhb1j9jh1rbPO61s1pKlTmv6+XDMc3AB+KAfY0VPThzkf8gIh0m0Vv3zdPRZYhfOk1CgR53NyGdBGTD/Pu0mGylceQMPGSmXUGcnF3n4NhEmTJzJtlf8ejCcrv6tQC09E9nV2gv7FVX3pLXNVRB4ao6nD3h/MyiFx4qcvtyMvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oDf4WUwg; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-34a4079cfaeso381971a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 12:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1765225826; x=1765830626; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hVqzapAai2jDs56ozffuGy89QQ/pBXghFLoEyD3GTBM=;
+        b=oDf4WUwgGJRuZqQ2/CtTrVYwXogogPtF/dAoeHynN5Y5QEfHaq5L0SYMyXWjaHLoHq
+         mC9BEjru4ve3V0whQVjf8dXGj9cd260y6U2nEv5A3Q3WWxLv1opnuafIjxRIV+lxwSlE
+         +P6wTNrytlI+QrHxV8B2AU6Ae+7IcNFY30uWzpNKSP/PTAKRJWNaDUlJaudLTSgOOwji
+         z+ZwG+QVoh2C4Qt/j1nHyr1vqV6ghmale/kW7SjFwYQUhdKjZd8srwhoFj6x+qB+uiNQ
+         Z6qPObQWCPr2scQIK9C12ZhYuhK3snSHp9We4KOuzAXnDcipLTCTOADmHQ1EQeEWuIYk
+         YieQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765225826; x=1765830626;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hVqzapAai2jDs56ozffuGy89QQ/pBXghFLoEyD3GTBM=;
+        b=ComGUuk37qaedUPNqzTAh+LNLqfdLFKrWODdpSr/shooj3uXBZd4lFFgydGPNxmQur
+         wA5sY/XKvKscG3rK85DQuk+oBuzHktl4DF1YhG7ODxOsCGPL78okv9lHlXr7vLJvs8Du
+         c1U1u3nTi+Lidwc0GKm8BX3AKJ0cJQukH2sYSclwgSJdRGdfzhYkxh8WZ52JptoyOiRS
+         OsMNAum2JilUdQfkveVawn5Nx+8bL5hDAOIDMJ1InNR7bHUh39koTcKun711qviPOnLH
+         FHql4xif8um/7kCAS4vleNhhjNmEQxQHYxeVR43W5t2pgPq8L+JoiYPtofxbJWYgsASL
+         b8lA==
+X-Forwarded-Encrypted: i=1; AJvYcCUPM7msZCFvecXeXCnmFalf1fFtf1JsAdhNM8S88sJ+fGKLJHg6nboD5TmDrivvDsgQf5G6wbeQf0vq4Jba@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFNtSV2nopunsbCcV4FJm2DvPmTHdW1zVA7uvgAjD9Vz0jEAX4
+	hAqvRvFI37jXNany2yb5nT/fyX6JzR7XxU2EVHfjsHpmsau/FRA36THhcEwTfwOkRjs=
+X-Gm-Gg: ASbGnctXwuZ2GKxv71akFNQh/+BEQZZU/BdbkH471pmXEmYhaSpfjLMZNWx7QRL+pav
+	p1iqiqGB+et71ltWoB76r1eQgTv9aVr8SYQDIR6C/Kb3DohJRIgrQUaU9WsB6FOp+hDgYJTbGfs
+	0EsQY78qFZDHpAd9/+V1xf5ewjH1cDPd5BCdtRfYooOgEagqq3uUGq7vlLXZsJs49/Cz3/Ymeed
+	ThMtOkkZ9gCnwG2/bADD6d9KTnTqDDW7f69IqsmMupOWSBDiq6xAJiq4ms99dqVeDMIlxHZXHH+
+	oDXhACQ/h9XEK3ENhMo8wuphCu6R/h/rgPV0kKkIRgxquK78r5rIt1AQzGxwq5lNNIQtCM84oOV
+	5D5j94e+cKTdAmmf1mOxXywYS9wKX0OnZm5cP1cIlHtVVUyRc1D9AitfG+gi3W03nBaAhkRtvOM
+	f/kis5KQbq+7ihwbZrvRlXOpdKa0U7nTm8w2onUKh/rGeZyA9yG27M+fReDLOKNQ==
+X-Google-Smtp-Source: AGHT+IEjP0E9NwWrnpIVACYqpa/sxffjy6AzRkSkorC++ujr05swS59yo9HQ4/sJ5bqizoD9pIsRYQ==
+X-Received: by 2002:a17:90b:1c03:b0:34a:e9b:26b1 with SMTP id 98e67ed59e1d1-34a0e9b2796mr3171417a91.26.1765225825562;
+        Mon, 08 Dec 2025 12:30:25 -0800 (PST)
+Received: from [192.168.0.178] (p96936b06.osaknt01.ap.so-net.ne.jp. [150.147.107.6])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34a47ab9d1asm92643a91.0.2025.12.08.12.30.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Dec 2025 12:30:25 -0800 (PST)
+Message-ID: <b1894dcf-4c57-449c-8cd5-8a55be780138@linaro.org>
+Date: Mon, 8 Dec 2025 20:30:14 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251125-pci-m2-e-v2-8-32826de07cc5@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/5] media: dt-bindings: Add CAMSS device for Kaanapali
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>
+References: <20251130-add-support-for-camss-on-kaanapali-v8-0-143a8265e6e8@oss.qualcomm.com>
+ <20251130-add-support-for-camss-on-kaanapali-v8-1-143a8265e6e8@oss.qualcomm.com>
+ <f4d29f9b-98ce-4e57-9916-5a37927db2a7@linaro.org>
+ <2tvkcuipfaa7cn7goynt6jfzlcxg2d7yvvjqizb6p7sf5oqwuj@drqiyr3khoyf>
+ <dc0da45b-165c-455a-8e03-7cdd2d2d2ba0@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <dc0da45b-165c-455a-8e03-7cdd2d2d2ba0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 25, 2025 at 08:15:12PM +0530, Manivannan Sadhasivam wrote:
-> Add the devicetree binding for PCIe M.2 Mechanical Key E connector defined
-> in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
-> provides interfaces like PCIe or SDIO to attach the WiFi devices to the
-> host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
-> devices along with additional interfaces like I2C for NFC solution. At any
-> point of time, the connector can only support either PCIe or SDIO as the
-> WiFi interface and USB or UART as the BT interface.
-
-AFAICT, there's no muxing of interfaces. Maybe that's a defacto 
-limitation on x86 systems? There's no reason to encode that into the 
-binding if the pins aren't mux'ed on the connector.
-
+On 08/12/2025 05:41, Vijay Kumar Tumati wrote:
 > 
-> The connector provides a primary power supply of 3.3v, along with an
-> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> 1.8v sideband signaling.
-> 
-> The connector also supplies optional signals in the form of GPIOs for fine
-> grained power management.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
->  .../bindings/connector/pcie-m2-e-connector.yaml    | 178 +++++++++++++++++++++
->  MAINTAINERS                                        |   1 +
->  2 files changed, 179 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
-> new file mode 100644
-> index 000000000000..fe2c9a943a21
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
-> @@ -0,0 +1,178 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/connector/pcie-m2-e-connector.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: PCIe M.2 Mechanical Key E Connector
-> +
-> +maintainers:
-> +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> +
-> +description:
-> +  A PCIe M.2 E connector node represents a physical PCIe M.2 Mechanical Key E
-> +  connector. Mechanical Key E connectors are used to connect Wireless
-> +  Connectivity devices including combinations of Wi-Fi, BT, NFC to the host
-> +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and I2C.
-> +
-> +properties:
-> +  compatible:
-> +    const: pcie-m2-e-connector
-> +
-> +  vpcie3v3-supply:
-> +    description: A phandle to the regulator for 3.3v supply.
-> +
-> +  vpcie1v8-supply:
-> +    description: A phandle to the regulator for VIO 1.8v supply.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    description: OF graph bindings modeling the interfaces exposed on the
-> +      connector. Since a single connector can have multiple interfaces, every
-> +      interface has an assigned OF graph port number as described below.
-> +
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: Connector interfaces for Wi-Fi
-> +
-> +        properties:
-> +          endpoint@0:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: PCIe interface
-> +
-> +          endpoint@1:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: SDIO interface
-> +
-> +        anyOf:
-> +          - required:
-> +              - endpoint@0
-> +          - required:
-> +              - endpoint@1
-> +
-> +      port@1:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: Connector interfaces for BT
-> +
-> +        properties:
-> +          endpoint@0:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: USB 2.0 interface
-> +
-> +          endpoint@1:
-> +            $ref: /schemas/graph.yaml#/properties/endpoint
-> +            description: UART interface
-> +
-> +        anyOf:
-> +          - required:
-> +              - endpoint@0
-> +          - required:
-> +              - endpoint@1
-> +
-> +      port@2:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: PCM/I2S interface
+> Hi Bryan, we are addressing the things that makes sense for KNP as well 
+> in the next revision. Btw, couple things like a separate CSIPHY DT node 
+> and ordering of the resources (that were to be added at the end as you 
+> advised), I believe are not relevant for KNP. As for the GDSC names, we 
+> preferred the module name and it's GDSC name to be consistent so changed 
+> the latter as well to VFE. Hope that's ok. Please let us know if you 
+> would suggest any further changes to KNP v9 bindings and we can move 
+> forward accordingly.
 
-Does this work with any existing DAI bindings? Or conflict with the 
-audio graph card binding?
+I think its reasonable to omit the CSIPHY split but the other things - 
+clock names, namespace consistency with previous version should be 
+maintained.
 
-> +
-> +      port@3:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: I2C interface
-
-Like the other one, use i2c-parent.
-
-> +
-> +    oneOf:
-> +      - required:
-> +          - port@0
-> +
-> +  clocks:
-> +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the host system to
-> +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.1 for
-> +      more details.
-> +    maxItems: 1
-> +
-> +  w-disable1-gpios:
-> +    description: GPIO controlled connection to W_DISABLE1# signal. This signal
-> +      is used by the system to disable WiFi radio in the M.2 card. Refer, PCI
-> +      Express M.2 Specification r4.0, sec 3.1.12.3 for more details.
-> +    maxItems: 1
-> +
-> +  w-disable2-gpios:
-> +    description: GPIO controlled connection to W_DISABLE2# signal. This signal
-> +      is used by the system to disable BT radio in the M.2 card. Refer, PCI
-> +      Express M.2 Specification r4.0, sec 3.1.12.3 for more details.
-> +    maxItems: 1
-> +
-> +  viocfg-gpios:
-> +    description: GPIO controlled connection to IO voltage configuration
-> +      (VIO_CFG) signal. This signal is used by the M.2 card to indicate to the
-> +      host system that the card supports an independent IO voltage domain for
-> +      the sideband signals. Refer, PCI Express M.2 Specification r4.0, sec
-> +      3.1.15.1 for more details.
-> +    maxItems: 1
-> +
-> +  uim-power-src-gpios:
-> +    description: GPIO controlled connection to UIM_POWER_SRC signal. This signal
-> +      is used when the NFC solution is implemented and receives the power output
-> +      from WWAN_UIM_PWR signal of the another WWAN M.2 card. Refer, PCI Express
-> +      M.2 Specification r4.0, sec 3.1.11.1 for more details.
-> +    maxItems: 1
-> +
-> +  uim-power-snk-gpios:
-> +    description: GPIO controlled connection to UIM_POWER_SNK signal. This signal
-> +      is used when the NFC solution is implemented and supplies power to the
-> +      Universal Integrated Circuit Card (UICC). Refer, PCI Express M.2
-> +      Specification r4.0, sec 3.1.11.2 for more details.
-> +    maxItems: 1
-> +
-> +  uim-swp-gpios:
-> +    description: GPIO controlled connection to UIM_SWP signal. This signal is
-> +      used when the NFC solution is implemented and implements the Single Wire
-> +      Protocol (SWP) interface to the UICC. Refer, PCI Express M.2 Specification
-> +      r4.0, sec 3.1.11.3 for more details.
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - vpcie3v3-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # PCI M.2 Key E connector for Wi-Fi/BT with PCIe/UART interfaces
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    connector {
-> +        compatible = "pcie-m2-e-connector";
-> +        vpcie3v3-supply = <&vreg_wcn_3p3>;
-> +        vpcie1v8-supply = <&vreg_l15b_1p8>;
-> +        w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-> +        w-disable2-gpios = <&tlmm 116 GPIO_ACTIVE_LOW>;
-> +
-> +        ports {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            port@0 {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                reg = <0>;
-> +
-> +                endpoint@0 {
-> +                    reg = <0>;
-> +                    remote-endpoint = <&pcie4_port0_ep>;
-> +                };
-> +            };
-> +
-> +            port@1 {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                reg = <1>;
-> +
-> +                endpoint@1 {
-> +                    reg = <1>;
-> +                    remote-endpoint = <&uart14_ep>;
-> +                };
-> +            };
-> +        };
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9b3f689d1f50..f707f29d0a37 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -20478,6 +20478,7 @@ PCIE M.2 POWER SEQUENCING
->  M:	Manivannan Sadhasivam <mani@kernel.org>
->  L:	linux-pci@vger.kernel.org
->  S:	Maintained
-> +F:	Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
->  F:	Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
->  F:	drivers/power/sequencing/pwrseq-pcie-m2.c
->  
-> 
-> -- 
-> 2.48.1
-> 
+---
+bod
 
