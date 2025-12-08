@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-84672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DA3ACAD2E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 13:41:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06A9CCAD2E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 13:42:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 58D233065AED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 12:40:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A7F4C306CA09
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 12:40:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC8D3148B5;
-	Mon,  8 Dec 2025 12:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FFE7314A6D;
+	Mon,  8 Dec 2025 12:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mlAEWkiy";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AKpmn/xi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VTYd4kC2";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HlH99W2S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAC5313538
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 12:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C612F549D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 12:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765197606; cv=none; b=GVkmf16r1xnCL9oQWMUCGCdRS9k1w6/rRp+e/byy4qN+ngTgkrwMFls7ubojNwu75i9bvTogTQmTWnCwbkC6RZ9xmCSRBfoLwzr2IGQ9NievSG6fQeEE2qIZH+4sjZ5JJzDjgVBQuEY93jJlJ+lhxcUrv9oWs+qZq0eb1JznyVU=
+	t=1765197609; cv=none; b=KnG4NWYVGyZ1lgLLeRDQE0mBRoPzu+1R8rOfts+XWp82loKNgvGuviOUkY30rQUB4eV3eF2KTV2wE7dL22gN7eVUZdsm3V+LY1hD4TJs5nkLPl/vffKqjrsTbFQrSwBpWmdxlg6JmUa6/HBaDREWsEQ69q7Sam70f0fNW4YVz7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765197606; c=relaxed/simple;
-	bh=+gxgbEOHzsNICZCbdl59pNQ1Ay3SKdMD0DsOHCEKbu4=;
+	s=arc-20240116; t=1765197609; c=relaxed/simple;
+	bh=bB0+2Yg9ljlfaobj78jXqxjpvrk3e1lZxwMTvpedRms=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ghHHLTOQqh6mhsLEmMNWtxDIsIGsBHAtoNyiRG1SpttW4nfz5VR+BYN34Fciqlhzt6/zWh8J4r50pV4r3wVvG1J9bZpzFaTbSiPqOWqku5KvAoOCghGvlQtw+u9fVQC7xFUguJFnaxdt8HPbiBkR0zNDzpOHdQQIZq19QJR2rAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mlAEWkiy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AKpmn/xi; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=XkerXQxgsuXqnrL9q2H8NEP0GlBBEBmq6aBFJkwrFM42Etv045piUL+QV6mHBiniUJxF1kwSnBzgvXpgEROqy41gAsXcj4oqXE87A9ZCxX0tCPpaMkzEQJMsG6HXtEp0mHcWpiUn6sJ69Twhlfdi1fHerMK+CEv444tv4Mhs2L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VTYd4kC2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HlH99W2S; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B87u7RJ410427
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Dec 2025 12:40:02 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B8B49i81130480
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Dec 2025 12:40:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2opbQC/5YUTui4Ivak+D2EP8wBjZJjMCjrltzrfHzyE=; b=mlAEWkiyiGJI7WHX
-	QEnN1dNx5U4Rz2r91MpV8w6es4380Scz0j3owRMUWzT1tZjMBn/Oqpt+IsEMKDYZ
-	wk/+IMzs8HCYIAYZMYBqJ95xiUOEVKIZVXptSrEewr+bZD4RgLQdrXIlJ7obh67p
-	zS349QGgT4VzWdCucln1Izm2cxoRgtW+fayzfVv2mc8zsqT6cCfMSaoJy6+o6Yw0
-	nM08D2KHGtaPzaS5o5qmjQqYilsPbYX1De3DmzdMZNQh30tdycDoGZakuiGEF6E2
-	vVN38kneeV/bwAG+Ey47ohZBr/h038O+XnxHfOBjPt7Tr9vqeDIV95umxJ+g3XZa
-	f5ayVA==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4awtqg8vjh-1
+	nQGHjzNps1vchDuNxs5pIo9gFLs/Yv2G+BGy/TeQu2M=; b=VTYd4kC2P5aIoMdZ
+	10FnFoCbWqxqeSI0NrcW5GkHEvnGyBPbKPlmkbm2Mkv0i8/2YQlSNZ4xfbguWAV7
+	6ABDZInkKF7Bv2QuCDJsEfbPqQXnIxyiDGBo0lbKqODfKR5GqAfhAL2aZcal+cDT
+	iL3TxlVFdKDfUBIBiqAfrrj3OjGmZrIaurAhDazXO5bfPmSLzykanADxnFzCjtSH
+	aPC9+Sp2TqCGVJFq2Y9e4GSmWC+Oaar2BCJgCCyTFMO2OlFS0bh9JFcuv7Mb9wJQ
+	yxtlfshdmE6cw8jqS3OPVl1KILV2GQ9KsZq73bw/DvU2iAgweRRpPtxsIc0AG/Cj
+	mgOvtQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4awwfr889e-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 12:40:02 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-bddf9ce4935so3868299a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 04:40:02 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 12:40:03 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b99d6bd6cc9so9234255a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 04:40:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765197601; x=1765802401; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765197603; x=1765802403; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2opbQC/5YUTui4Ivak+D2EP8wBjZJjMCjrltzrfHzyE=;
-        b=AKpmn/xibHo2vDqX2mWowXbSlmfVVveekoxO8H7DWTDQVHZycPUOv85HPBrL/O58mv
-         DfhwPGnUpWUdFfOb+n+tR6dNPmnGric0gGfQPpSf3x5v5Pe0atkfuXs+KqFfo7j8EFWI
-         2GeWhAyRsQQFU1Q0Yklyr5s2C2/c8ZOcoVOhZTwKbaSRUXhzIJSMh6qxGm6v3FAKY/Mo
-         imhvDr91+i2NKhYvmw2+Lknwt66e2skjdpEEZJJtzluGK1lKR8p9XJkcFe6L2d6tbu/c
-         znjcvzayEeFGXQ0PJfR9/EaiQJSF84i6vcnj+iWPQG1HUBHjej7/gJWAK38Jj1Jl2joO
-         hT8Q==
+        bh=nQGHjzNps1vchDuNxs5pIo9gFLs/Yv2G+BGy/TeQu2M=;
+        b=HlH99W2S24Vqsgc4ZJZDUgpOn5TksYYFDjCKeiQhz594dV72QcqlvCo4J7WDqaJKxH
+         RndUunEv7ynqmhVFxwNrJDA9Gr4PwD+9bo03C2Mxupkk46ZGahib9AJBcJUdZOmRTF99
+         UtNXUZR7F0HuVZt344uKhKkHiReLiS7s8oLgYn5x5zB5qqXVxJwgGUjGiRVdW7loZRkx
+         Eud2smo6rGcVd+TBYw9GAFaxTiwWjDMNXG9KQ/KoNeGQ3Z5w4IcsckLqNGCkozMiUazn
+         nSkCsuj7ZGdDv6NvtvBKELjI4IWDsn66thD3H4SDYtCHtoDB3U4CUl3apCJ6KyWshK1X
+         bloA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765197601; x=1765802401;
+        d=1e100.net; s=20230601; t=1765197603; x=1765802403;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2opbQC/5YUTui4Ivak+D2EP8wBjZJjMCjrltzrfHzyE=;
-        b=pbumh3ljH4Q/0lTsOF+FZD/aoihVLLKT73Fkz4it/eeNic9xhfaINoQ+V28WkTRkAj
-         lFVNsZSK3cfsFJzTWtywQ3QK1Hx/kGfEwuK7Fwj1cYk6/PLuhI/XqTrJrf2IjeNF6s7u
-         l87223a45K2CxSYwBlMTViGZf1KztXhHoG0HcX7S2JG9N4hZHcJMZWeedfxRPjmwfvUX
-         +LeVhboh+D5uBDYzFCVkOZmrTxmwyZ43dxUomLOgwnLDH9mJD/k2Y71VXWfCWV4D51Zo
-         OXFcenglYxyON9NjhVam314zV/wGWzu/9jfJe0N2W7GEf0xIapix+LCWI8KKQdNPuvGy
-         82DQ==
-X-Gm-Message-State: AOJu0YzAmclg+2N4DaG9cDjIlWGMZWzmg4sHxh0HF1egWpvz0NVj+kUl
-	fES9I4dJiCCvbITNOkcqA7bgI0eoDhYv4nk1Nmt8oGMnhjBbImLCJI86kJSB4EGgQq+7tm48eIa
-	l79fr9o/d9M+bvnbggh7t4ZYBJjyNsKoDyceJus2DlyWMWSM2I2qOUkoXTDzvFsHEwzD1
-X-Gm-Gg: ASbGncsOJqijcfojNd17ta6F43bX+CN/pq2qgbHOvSHUWmKISFcjbwciddnIAlwxVA9
-	leFHejiqgfYsIJvZUTr/uL8bzvEZxk4uO7eXl8GGcbEbaKHfvgcwCY1TMPTAaoNR6DLYShVVxf3
-	3A/h8kW2Nq1f+phpm35qmQldBuGzWwNHInn5m3IZFfHpZ5+LpvfIaIfw1RWKDzdlzD8931+pZIR
-	x0tsXtOHvISyI4b5fY4gmdB2RKUKBis5RtXeel4BxYsoDINI+pf1WWUel9XUFyKMMqm0RRRttE0
-	aOqrjv68dBXoZcXD+N8I4Zw5ug9ou5YF07QOvvoUrLeJEyNwk9b7IAgXdqMLUMYF3AF3fp2GHiG
-	YpzoZXtJdhrHIDOZPdIYq/jHs2XC9Kxea8TvEpsIq+1SMaLU1x1G+3cfr68vUzpoB
-X-Received: by 2002:a05:7301:4d10:b0:2a4:3593:4664 with SMTP id 5a478bee46e88-2abc6f570a4mr3235800eec.0.1765197601312;
+        bh=nQGHjzNps1vchDuNxs5pIo9gFLs/Yv2G+BGy/TeQu2M=;
+        b=ZvuYXnNUM6pZ3VlH1LLhdKGmJm7qGeiKc52WwR3516c9UsNG2JokNfH4C9Old4cJrL
+         GHT6L0OWbMo7KZiVMCUKE3/W4saaGHUFXxG3CRay1ER1rnySJJ/tkIZ1s1XU+h4iGcO+
+         vRbc2vfwGmgocCj5ygJHjsTT6H9Fi4CpOk5fb9ff2/Ouz1zfvxoYI4wVetBfjJCLNrBM
+         mtYF6eLTrU1xCkvIZutUSmV+QokMwvS+lSHCcfX9Vove6vL29qLwAYaEjGt4vE69P+o+
+         jZtB7lsLa4GOZOxlpEBZqwN7C7slCTwmiAkZ0oFG54xlla8go8hAXecFw63b6ESZu/RW
+         HxIA==
+X-Gm-Message-State: AOJu0YwhtqtMu5Kvyrz9JP7P5WyKil1sd0oKftGbwNe4Ij4BzmBI8dmt
+	eWKgYvHmRCkarlO+b/hdpj2WY1V+DbMRtldHaCJnNaw7rLcBI2IdIJ1BlknBCWkdvinoPwEDfTa
+	Eh9wHqC0zXEWhCzYR7vxyQg9mhLwDZMlk6H5c5BFc3f/55lOyHD3889mOkZLhEliCEnE426O2hb
+	vpQOU=
+X-Gm-Gg: ASbGncv0V9JDR+x99/6naKFs4LlqOPBLT0ydxQSHRjDJG8MUJQdKxTgKCK0B8xcLWoI
+	tMN5gW1Cuxk0Kbi3jWmHDBLGBUwmFTJWIcFyk7euCFBYO8p+CTZqxu8mTGZnz9qli14o0XCbHP9
+	8IVgoRT4BrO85Xmku4/lFDlIYKJhltveKiAWOsjaNRhOQ5jX5g21oYhYJl/DKSkeuBbzzYc71Pj
+	uctNv236EadnvdPmfB8Mv50A/HYUyIRZtlmVDed/rVaaKq22+jt4nbl8fy+MWYwhPzaYPXu5Xnz
+	vwevYW4aWJChEPy6NHvmWyoGM+jdQFkJJTgmybEKxRE/K00a/Ua4UiJ8vVSkLCOH1yBbN7lEfO6
+	1Q8tlouGagJMTE+AZr1CsYjx4T9P/VvNRPsOMnb5ZgXMg1hsvoDs23yW7CNae//m5
+X-Received: by 2002:a05:7300:2b19:b0:2a4:3594:d53f with SMTP id 5a478bee46e88-2abc71554a4mr3783920eec.12.1765197602413;
+        Mon, 08 Dec 2025 04:40:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHus/TMEMj3agHENbunWC2z1wAVd7x38GAtJ0LyZ1/f1nC19ynlrFwHOb3dtxyKPhEpTe7FRw==
+X-Received: by 2002:a05:7300:2b19:b0:2a4:3594:d53f with SMTP id 5a478bee46e88-2abc71554a4mr3783893eec.12.1765197601614;
         Mon, 08 Dec 2025 04:40:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQ6xfN1VY3MDB+zuqJHUhiah537ofbKTIOiG4Qj97LHr8X/NNs8k7TcVeSUlFjFCnn7K2wFg==
-X-Received: by 2002:a05:7301:4d10:b0:2a4:3593:4664 with SMTP id 5a478bee46e88-2abc6f570a4mr3235785eec.0.1765197600685;
-        Mon, 08 Dec 2025 04:40:00 -0800 (PST)
 Received: from hu-hangxian-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba87aa5fcsm34902515eec.3.2025.12.08.04.39.59
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba87aa5fcsm34902515eec.3.2025.12.08.04.40.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 04:40:00 -0800 (PST)
+        Mon, 08 Dec 2025 04:40:01 -0800 (PST)
 From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-Date: Mon, 08 Dec 2025 04:39:49 -0800
-Subject: [PATCH v9 3/5] media: qcom: camss: csiphy: Add support for v2.4.0
- two-phase CSIPHY
+Date: Mon, 08 Dec 2025 04:39:50 -0800
+Subject: [PATCH v9 4/5] media: qcom: camss: csid: Add support for CSID gen4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,7 +103,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251208-add-support-for-camss-on-kaanapali-v9-3-3fcd31258415@oss.qualcomm.com>
+Message-Id: <20251208-add-support-for-camss-on-kaanapali-v9-4-3fcd31258415@oss.qualcomm.com>
 References: <20251208-add-support-for-camss-on-kaanapali-v9-0-3fcd31258415@oss.qualcomm.com>
 In-Reply-To: <20251208-add-support-for-camss-on-kaanapali-v9-0-3fcd31258415@oss.qualcomm.com>
 To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
@@ -116,317 +116,607 @@ To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+        Atiya Kailany <atiya.kailany@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Proofpoint-ORIG-GUID: lsGA1a0Jq1MEw1CidnHOouhyZcxByoi3
-X-Authority-Analysis: v=2.4 cv=Ks1AGGWN c=1 sm=1 tr=0 ts=6936c722 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDEwNiBTYWx0ZWRfX3wvgLjpVWZS2
+ 76vEtbhii7SvsxzECHAfznyvTQ+2P5vR4emeJILtHq3Etv1kjA2tLA7rjueUu8yio1X5fn3wfhy
+ pLxYLzUPZI/f56ni/qn9nvQLE0FkcG2JGK3eOTLe4bMG9TaoVborAhBYTpNy11kOyFk1+9ZzZhX
+ QcUIcIrwLYh8u2hPbSGlSKdFCeeHBwiMiNaw0SAzE9LbR1XTti2+I6tCD9HG+29jygdFYWf/V6K
+ yBVPt5VCWzmdc4OkJN0xgKMtNlgN2A7hYoxv6JsJAGU+PE/4bWxp+eMTygLoqGqVruXeTdrcoyk
+ 6kpX6+sXHkx/rf7Qzu3oRjuU/Pl5S4XRzKw+ynhYdMxxl31hRO2WEvbvpzEprl3gaO4zibCfRH1
+ 4bMlQJdPKW4dmHgwiJJcCoxstit6gQ==
+X-Proofpoint-ORIG-GUID: -IFw1JnSSc2ncKjDZElBGNzlB7ngJ2sD
+X-Proofpoint-GUID: -IFw1JnSSc2ncKjDZElBGNzlB7ngJ2sD
+X-Authority-Analysis: v=2.4 cv=fsXRpV4f c=1 sm=1 tr=0 ts=6936c723 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=fxCOb-bM6HI3QnfcwHgA:9 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: lsGA1a0Jq1MEw1CidnHOouhyZcxByoi3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDEwNiBTYWx0ZWRfX1QD6PevRo/Sg
- R1VR0Tv2+k7EmcgLXoj0wfJ7+KaWxBXIgflozzbPJPHlA5q/HbSTlxHgs2xAFMAvsHc7wLSstrn
- 65IeSClroKBVvWXGK9Hz3nbXQmt0M50S8K0uoXhiRgElFZ+WLP9x5q0DvBvkaXz3FzguteFzndQ
- L/+EL/pWK0CgStssvQ7D428/rDTbl/n94RhI0H7IeSYT9Ixv9bgTR7yfq0PgHVVtO7PV6ImPxkO
- EntTaglp0g+VYMU8GxKqWZs0HZAOWpE2+BQyJ1g9odGtTqrCj+UujfdO3aecDRVrTQUB1Z4N58B
- SNHZk+cn6J6z1nBBPvJsT7+lTufolW4LZ1BjhaNbkf2DzJIrK+QYIHZLKaj0RXePEuT0DVP1kKe
- Ysc3vjhxFPm7tczxxh/DdQwWk7HoHA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=FsTJpaSC_kWcQGXz8SoA:9
+ a=4Q4zU7iZy6iiv8wZ:21 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0
- impostorscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512080106
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512080106
 
-Add more detailed resource information for CSIPHY devices in the camss
-driver along with the support for v2.4.0 in the 2 phase CSIPHY driver
-that is responsible for the PHY lane register configuration, module
-reset and interrupt handling.
+Add more detailed resource information for CSID devices along with the
+driver for CSID gen4 that is responsible for CSID register configuration,
+module reset and IRQ handling for BUF_DONE events. And aggregate a common
+definition 'CSI2_RX_CFG0_PHY_SEL_BASE_IDX' into csid header file.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In this CSID version, RUP and AUP update values are split into two
+registers along with a SET register. Accordingly, enhance the CSID
+interface to accommodate both the legacy combined reg_update and the
+split RUP and AUP updates.
+
+Co-developed-by: Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+Signed-off-by: Atiya Kailany <atiya.kailany@oss.qualcomm.com>
 Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 ---
- .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 124 +++++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.c          | 107 ++++++++++++++++++
- 2 files changed, 231 insertions(+)
+ drivers/media/platform/qcom/camss/Makefile         |   1 +
+ drivers/media/platform/qcom/camss/camss-csid-680.c |   1 -
+ .../media/platform/qcom/camss/camss-csid-gen3.c    |   1 -
+ .../media/platform/qcom/camss/camss-csid-gen4.c    | 376 +++++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-csid.h     |  11 +-
+ drivers/media/platform/qcom/camss/camss.c          |  80 +++++
+ 6 files changed, 467 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index 9b6a0535cdf8..5499f4141294 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -588,6 +588,123 @@ csiphy_lane_regs lane_regs_sm8550[] = {
- 	{0x0C64, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
- };
+diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+index 23960d02877d..738d57214056 100644
+--- a/drivers/media/platform/qcom/camss/Makefile
++++ b/drivers/media/platform/qcom/camss/Makefile
+@@ -10,6 +10,7 @@ qcom-camss-objs += \
+ 		camss-csid-680.o \
+ 		camss-csid-gen2.o \
+ 		camss-csid-gen3.o \
++		camss-csid-gen4.o \
+ 		camss-csiphy-2ph-1-0.o \
+ 		camss-csiphy-3ph-1-0.o \
+ 		camss-csiphy.o \
+diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/drivers/media/platform/qcom/camss/camss-csid-680.c
+index 3ad3a174bcfb..86134a23cd4e 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid-680.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
+@@ -101,7 +101,6 @@
+ #define		CSI2_RX_CFG0_DL2_INPUT_SEL			12
+ #define		CSI2_RX_CFG0_DL3_INPUT_SEL			16
+ #define		CSI2_RX_CFG0_PHY_NUM_SEL			20
+-#define		CSI2_RX_CFG0_PHY_SEL_BASE_IDX			1
+ #define		CSI2_RX_CFG0_PHY_TYPE_SEL			24
  
-+/* 3nm 2PH v 2.4.0 2p5Gbps 4 lane DPHY mode */
-+static const struct
-+csiphy_lane_regs lane_regs_kaanapali[] = {
-+	/* LN 0 */
-+	{0x0094, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x00A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0090, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0098, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0094, 0x07, 0xd1, CSIPHY_DEFAULT_PARAMS},
-+	{0x0030, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0000, 0x8C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0038, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x002C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0034, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x001C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0014, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x003C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0004, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0008, 0x19, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-+	{0x0010, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0094, 0xD7, 0x00, CSIPHY_SKEW_CAL},
-+	{0x005C, 0x54, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0060, 0xFD, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0064, 0x7F, 0x00, CSIPHY_SKEW_CAL},
+ #define CSID_CSI2_RX_CFG1					0x204
+diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+index 664245cf6eb0..f09b5575572a 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+@@ -103,7 +103,6 @@
+ #define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)	(csid_is_lite(csid) && IS_CSID_690(csid) ?\
+ 							(0x34C + 0x100 * (rdi)) :\
+ 							(0x54C + 0x100 * (rdi)))
+-#define CSI2_RX_CFG0_PHY_SEL_BASE_IDX	1
+ 
+ static void __csid_configure_rx(struct csid_device *csid,
+ 				struct csid_phy_config *phy, int vc)
+diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen4.c b/drivers/media/platform/qcom/camss/camss-csid-gen4.c
+new file mode 100644
+index 000000000000..b000bd3e9c2e
+--- /dev/null
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen4.c
+@@ -0,0 +1,376 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * camss-csid-gen4.c
++ *
++ * Qualcomm MSM Camera Subsystem - CSID (CSI Decoder) Module
++ *
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++#include <linux/completion.h>
++#include <linux/delay.h>
++#include <linux/interrupt.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/of.h>
 +
-+	/* LN 2 */
-+	{0x0494, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x04A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0490, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0498, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0494, 0x07, 0xd1, CSIPHY_DEFAULT_PARAMS},
-+	{0x0430, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0400, 0x8C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0438, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x042C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0434, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x041C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0414, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x043C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0404, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0408, 0x19, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-+	{0x0410, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0494, 0xD7, 0x00, CSIPHY_SKEW_CAL},
-+	{0x045C, 0x54, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0460, 0xFD, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0464, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++#include "camss.h"
++#include "camss-csid.h"
++#include "camss-csid-gen3.h"
 +
-+	/* LN 4 */
-+	{0x0894, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x08A0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0890, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0898, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0894, 0x07, 0xd1, CSIPHY_DEFAULT_PARAMS},
-+	{0x0830, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0800, 0x8C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0838, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x082C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0834, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x081C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0814, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x083C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0804, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0820, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0808, 0x19, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-+	{0x0810, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0894, 0xD7, 0x00, CSIPHY_SKEW_CAL},
-+	{0x085C, 0x54, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0860, 0xFD, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0864, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++/* Reset and Command Registers */
++#define CSID_RST_CFG				0x108
++#define		RST_MODE				BIT(0)
++#define		RST_LOCATION				BIT(4)
 +
-+	/* LN 6 */
-+	{0x0C94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0CA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C90, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C94, 0x07, 0xd1, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C00, 0x8C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C38, 0xFE, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C08, 0x19, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-+	{0x0C10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0C94, 0xD7, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0C5C, 0x54, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0C60, 0xFD, 0x00, CSIPHY_SKEW_CAL},
-+	{0x0C64, 0x7F, 0x00, CSIPHY_SKEW_CAL},
++/* Reset and Command Registers */
++#define CSID_RST_CMD				0x10C
++#define		SELECT_HW_RST				BIT(0)
++#define		SELECT_IRQ_RST				BIT(2)
++#define CSID_IRQ_CMD				0x110
++#define		IRQ_CMD_CLEAR				BIT(0)
 +
-+	/* LN CLK */
-+	{0x0E94, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0EA0, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E90, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E94, 0x07, 0xd1, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E30, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E28, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E00, 0x80, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E0C, 0xFF, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E38, 0x1F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E2C, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E34, 0x0F, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E1C, 0x0A, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E14, 0x60, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E3C, 0xB8, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E04, 0x0C, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E20, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
-+	{0x0E08, 0x19, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
-+	{0x0E10, 0x52, 0x00, CSIPHY_DEFAULT_PARAMS},
++/* Register Update Commands, RUP/AUP */
++#define CSID_RUP_CMD				0x114
++#define CSID_AUP_CMD				0x118
++#define		CSID_RUP_AUP_RDI(rdi)			(BIT(8) << (rdi))
++#define CSID_RUP_AUP_CMD			0x11C
++#define		RUP_SET					BIT(0)
++#define		MUP					BIT(4)
++
++/* Top level interrupt registers */
++#define CSID_TOP_IRQ_STATUS			0x180
++#define CSID_TOP_IRQ_MASK			0x184
++#define CSID_TOP_IRQ_CLEAR			0x188
++#define		INFO_RST_DONE				BIT(0)
++#define		CSI2_RX_IRQ_STATUS			BIT(2)
++#define		BUF_DONE_IRQ_STATUS			BIT(3)
++
++/* Buffer done interrupt registers */
++#define CSID_BUF_DONE_IRQ_STATUS		0x1A0
++#define		BUF_DONE_IRQ_STATUS_RDI_OFFSET		16
++#define CSID_BUF_DONE_IRQ_MASK			0x1A4
++#define CSID_BUF_DONE_IRQ_CLEAR			0x1A8
++#define CSID_BUF_DONE_IRQ_SET			0x1AC
++
++/* CSI2 RX interrupt registers */
++#define CSID_CSI2_RX_IRQ_STATUS			0x1B0
++#define CSID_CSI2_RX_IRQ_MASK			0x1B4
++#define CSID_CSI2_RX_IRQ_CLEAR			0x1B8
++#define CSID_CSI2_RX_IRQ_SET			0x1BC
++
++/* CSI2 RX Configuration */
++#define CSID_CSI2_RX_CFG0			0x880
++#define		CSI2_RX_CFG0_NUM_ACTIVE_LANES		0
++#define		CSI2_RX_CFG0_DL0_INPUT_SEL		4
++#define		CSI2_RX_CFG0_PHY_NUM_SEL		20
++#define CSID_CSI2_RX_CFG1			0x884
++#define		CSI2_RX_CFG1_ECC_CORRECTION_EN		BIT(0)
++#define		CSI2_RX_CFG1_VC_MODE			BIT(2)
++
++#define MSM_CSID_MAX_SRC_STREAMS_GEN4		(csid_is_lite(csid) ? 4 : 5)
++
++/* RDI Configuration */
++#define CSID_RDI_CFG0(rdi) \
++	((csid_is_lite(csid) ? 0x3080 : 0x5480) + 0x200 * (rdi))
++#define		RDI_CFG0_RETIME_BS			BIT(5)
++#define		RDI_CFG0_TIMESTAMP_EN			BIT(6)
++#define		RDI_CFG0_TIMESTAMP_STB_SEL		BIT(8)
++#define		RDI_CFG0_DECODE_FORMAT			12
++#define		RDI_CFG0_DT				16
++#define		RDI_CFG0_VC				22
++#define		RDI_CFG0_EN				BIT(31)
++
++/* RDI Control and Configuration */
++#define CSID_RDI_CTRL(rdi) \
++	((csid_is_lite(csid) ? 0x3088 : 0x5488) + 0x200 * (rdi))
++#define		RDI_CTRL_START_CMD			BIT(0)
++
++#define CSID_RDI_CFG1(rdi) \
++	((csid_is_lite(csid) ? 0x3094 : 0x5494) + 0x200 * (rdi))
++#define		RDI_CFG1_DROP_H_EN			BIT(5)
++#define		RDI_CFG1_DROP_V_EN			BIT(6)
++#define		RDI_CFG1_CROP_H_EN			BIT(7)
++#define		RDI_CFG1_CROP_V_EN			BIT(8)
++#define		RDI_CFG1_PACKING_FORMAT_MIPI		BIT(15)
++
++/* RDI Pixel Store Configuration */
++#define CSID_RDI_PIX_STORE_CFG0(rdi)		(0x5498 + 0x200 * (rdi))
++#define		RDI_PIX_STORE_CFG0_EN			BIT(0)
++#define		RDI_PIX_STORE_CFG0_MIN_HBI		1
++
++/* RDI IRQ Status in wrapper */
++#define CSID_CSI2_RDIN_IRQ_STATUS(rdi)		(0x224 + (0x10 * (rdi)))
++#define CSID_CSI2_RDIN_IRQ_MASK(rdi)			(0x228 + (0x10 * (rdi)))
++#define CSID_CSI2_RDIN_IRQ_CLEAR(rdi)		(0x22C + (0x10 * (rdi)))
++#define		INFO_RUP_DONE				BIT(23)
++
++static void __csid_aup_rup_trigger(struct csid_device *csid)
++{
++	/* trigger SET in combined register */
++	writel(RUP_SET, csid->base + CSID_RUP_AUP_CMD);
++}
++
++static void __csid_aup_rup_clear(struct csid_device *csid, int port_id)
++{
++	/* Hardware clears the registers upon consuming the settings */
++	csid->aup_update &= ~CSID_RUP_AUP_RDI(port_id);
++	csid->rup_update &= ~CSID_RUP_AUP_RDI(port_id);
++}
++
++static void __csid_aup_update(struct csid_device *csid, int port_id)
++{
++	csid->aup_update |= CSID_RUP_AUP_RDI(port_id);
++	writel(csid->aup_update, csid->base + CSID_AUP_CMD);
++
++	__csid_aup_rup_trigger(csid);
++}
++
++static void __csid_reg_update(struct csid_device *csid, int port_id)
++{
++	csid->rup_update |= CSID_RUP_AUP_RDI(port_id);
++	writel(csid->rup_update, csid->base + CSID_RUP_CMD);
++
++	__csid_aup_rup_trigger(csid);
++}
++
++static void __csid_configure_rx(struct csid_device *csid,
++				struct csid_phy_config *phy)
++{
++	int val;
++
++	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
++	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
++	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX)
++	       << CSI2_RX_CFG0_PHY_NUM_SEL;
++	writel(val, csid->base + CSID_CSI2_RX_CFG0);
++
++	val = CSI2_RX_CFG1_ECC_CORRECTION_EN;
++	writel(val, csid->base + CSID_CSI2_RX_CFG1);
++}
++
++static void __csid_configure_rx_vc(struct csid_device *csid, int vc)
++{
++	int val;
++
++	if (vc > 3) {
++		val = readl(csid->base + CSID_CSI2_RX_CFG1);
++		val |= CSI2_RX_CFG1_VC_MODE;
++		writel(val, csid->base + CSID_CSI2_RX_CFG1);
++	}
++}
++
++static void __csid_ctrl_rdi(struct csid_device *csid, int enable, u8 rdi)
++{
++	int val = 0;
++
++	if (enable)
++		val = RDI_CTRL_START_CMD;
++
++	writel(val, csid->base + CSID_RDI_CTRL(rdi));
++}
++
++static void __csid_configure_rdi_pix_store(struct csid_device *csid, u8 rdi)
++{
++	u32 val;
++
++	/* Configure pixel store to allow absorption of hblanking or idle time.
++	 * This helps with horizontal crop and prevents line buffer conflicts.
++	 * Reset state is 0x8 which has MIN_HBI=4, we keep the default MIN_HBI
++	 * and just enable the pixel store functionality.
++	 */
++	val = (4 << RDI_PIX_STORE_CFG0_MIN_HBI) | RDI_PIX_STORE_CFG0_EN;
++	writel(val, csid->base + CSID_RDI_PIX_STORE_CFG0(rdi));
++}
++
++static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
++{
++	u32 val;
++	u8 lane_cnt = csid->phy.lane_cnt;
++
++	/* Source pads matching RDI channels on hardware.
++	 * E.g. Pad 1 -> RDI0, Pad 2 -> RDI1, etc.
++	 */
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
++	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
++								   csid->res->formats->nformats,
++								   input_format->code);
++
++	if (!lane_cnt)
++		lane_cnt = 4;
++
++	val = RDI_CFG0_TIMESTAMP_EN;
++	val |= RDI_CFG0_TIMESTAMP_STB_SEL;
++	val |= RDI_CFG0_RETIME_BS;
++
++	/* note: for non-RDI path, this should be format->decode_format */
++	val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
++	val |= vc << RDI_CFG0_VC;
++	val |= format->data_type << RDI_CFG0_DT;
++	writel(val, csid->base + CSID_RDI_CFG0(vc));
++
++	val = RDI_CFG1_PACKING_FORMAT_MIPI;
++	writel(val, csid->base + CSID_RDI_CFG1(vc));
++
++	/* Configure pixel store using dedicated register in gen4 */
++	if (!csid_is_lite(csid))
++		__csid_configure_rdi_pix_store(csid, vc);
++
++	val = 0;
++	writel(val, csid->base + CSID_RDI_CTRL(vc));
++
++	val = readl(csid->base + CSID_RDI_CFG0(vc));
++
++	if (enable)
++		val |= RDI_CFG0_EN;
++
++	writel(val, csid->base + CSID_RDI_CFG0(vc));
++}
++
++static void csid_configure_stream(struct csid_device *csid, u8 enable)
++{
++	u8 i;
++	u8 vc;
++
++	__csid_configure_rx(csid, &csid->phy);
++
++	for (vc = 0; vc < MSM_CSID_MAX_SRC_STREAMS_GEN4; vc++) {
++		if (csid->phy.en_vc & BIT(vc)) {
++			__csid_configure_rdi_stream(csid, enable, vc);
++			__csid_configure_rx_vc(csid, vc);
++
++			for (i = 0; i < CAMSS_INIT_BUF_COUNT; i++)
++				__csid_aup_update(csid, vc);
++
++			__csid_reg_update(csid, vc);
++
++			__csid_ctrl_rdi(csid, enable, vc);
++		}
++	}
++}
++
++static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
++{
++	return 0;
++}
++
++static void csid_subdev_reg_update(struct csid_device *csid, int port_id,
++				   bool clear)
++{
++	if (clear)
++		__csid_aup_rup_clear(csid, port_id);
++	else
++		__csid_aup_update(csid, port_id);
++}
++
++/**
++ * csid_isr - CSID module interrupt service routine
++ * @irq: Interrupt line
++ * @dev: CSID device
++ *
++ * Return IRQ_HANDLED on success
++ */
++static irqreturn_t csid_isr(int irq, void *dev)
++{
++	struct csid_device *csid = dev;
++	u32 val, buf_done_val;
++	u8 reset_done;
++	int i;
++
++	val = readl(csid->base + CSID_TOP_IRQ_STATUS);
++	writel(val, csid->base + CSID_TOP_IRQ_CLEAR);
++
++	reset_done = val & INFO_RST_DONE;
++
++	buf_done_val = readl(csid->base + CSID_BUF_DONE_IRQ_STATUS);
++	writel(buf_done_val, csid->base + CSID_BUF_DONE_IRQ_CLEAR);
++
++	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS_GEN4; i++) {
++		if (csid->phy.en_vc & BIT(i)) {
++			val = readl(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(i));
++			writel(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(i));
++
++			if (val & INFO_RUP_DONE)
++				csid_subdev_reg_update(csid, i, true);
++
++			if (buf_done_val & BIT(BUF_DONE_IRQ_STATUS_RDI_OFFSET + i))
++				camss_buf_done(csid->camss, csid->id, i);
++		}
++	}
++
++	val = IRQ_CMD_CLEAR;
++	writel(val, csid->base + CSID_IRQ_CMD);
++
++	if (reset_done)
++		complete(&csid->reset_complete);
++
++	return IRQ_HANDLED;
++}
++
++/**
++ * csid_reset - Trigger reset on CSID module and wait to complete
++ * @csid: CSID device
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++static int csid_reset(struct csid_device *csid)
++{
++	unsigned long time;
++	u32 val;
++	int i;
++
++	reinit_completion(&csid->reset_complete);
++
++	val = INFO_RST_DONE | BUF_DONE_IRQ_STATUS;
++	writel(val, csid->base + CSID_TOP_IRQ_CLEAR);
++	writel(val, csid->base + CSID_TOP_IRQ_MASK);
++
++	val = 0;
++	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS_GEN4; i++) {
++		if (csid->phy.en_vc & BIT(i)) {
++			/*
++			 * Only need to clear buf done IRQ status here,
++			 * RUP done IRQ status will be cleared once isr
++			 * strobe generated by CSID_RST_CMD
++			 */
++			val |= BIT(BUF_DONE_IRQ_STATUS_RDI_OFFSET + i);
++		}
++	}
++	writel(val, csid->base + CSID_BUF_DONE_IRQ_CLEAR);
++	writel(val, csid->base + CSID_BUF_DONE_IRQ_MASK);
++
++	/* Clear all IRQ status with CLEAR bits set */
++	val = IRQ_CMD_CLEAR;
++	writel(val, csid->base + CSID_IRQ_CMD);
++
++	val = RST_LOCATION | RST_MODE;
++	writel(val, csid->base + CSID_RST_CFG);
++
++	val = SELECT_HW_RST | SELECT_IRQ_RST;
++	writel(val, csid->base + CSID_RST_CMD);
++
++	time = wait_for_completion_timeout(&csid->reset_complete,
++					   msecs_to_jiffies(CSID_RESET_TIMEOUT_MS));
++
++	if (!time) {
++		dev_err(csid->camss->dev, "CSID reset timeout\n");
++		return -EIO;
++	}
++
++	return 0;
++}
++
++static void csid_subdev_init(struct csid_device *csid)
++{
++	csid->testgen.nmodes = CSID_PAYLOAD_MODE_DISABLED;
++}
++
++const struct csid_hw_ops csid_ops_gen4 = {
++	.configure_stream = csid_configure_stream,
++	.configure_testgen_pattern = csid_configure_testgen_pattern,
++	.hw_version = csid_hw_version,
++	.isr = csid_isr,
++	.reset = csid_reset,
++	.src_pad_code = csid_src_pad_code,
++	.subdev_init = csid_subdev_init,
++	.reg_update = csid_subdev_reg_update,
 +};
-+
- /* 4nm 2PH v 2.1.2 2p5Gbps 4 lane DPHY mode */
- static const struct
- csiphy_lane_regs lane_regs_x1e80100[] = {
-@@ -921,6 +1038,7 @@ static bool csiphy_is_gen2(u32 version)
- 	case CAMSS_845:
- 	case CAMSS_8550:
- 	case CAMSS_8775P:
-+	case CAMSS_KAANAPALI:
- 	case CAMSS_X1E80100:
- 		ret = true;
- 		break;
-@@ -1030,6 +1148,12 @@ static int csiphy_init(struct csiphy_device *csiphy)
- 		regs->lane_regs = &lane_regs_sa8775p[0];
- 		regs->lane_array_size = ARRAY_SIZE(lane_regs_sa8775p);
- 		break;
-+	case CAMSS_KAANAPALI:
-+		regs->lane_regs = &lane_regs_kaanapali[0];
-+		regs->lane_array_size = ARRAY_SIZE(lane_regs_kaanapali);
-+		regs->offset = 0x1000;
-+		regs->common_status_offset = 0x138;
-+		break;
- 	default:
- 		break;
- 	}
+diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+index aedc96ed84b2..75a113050eb1 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid.h
++++ b/drivers/media/platform/qcom/camss/camss-csid.h
+@@ -27,6 +27,8 @@
+ /* CSID hardware can demultiplex up to 4 outputs */
+ #define MSM_CSID_MAX_SRC_STREAMS	4
+ 
++/* CSIPHY to hardware PHY selector mapping */
++#define CSI2_RX_CFG0_PHY_SEL_BASE_IDX 1
+ #define CSID_RESET_TIMEOUT_MS 500
+ 
+ enum csid_testgen_mode {
+@@ -154,7 +156,13 @@ struct csid_device {
+ 	void __iomem *base;
+ 	u32 irq;
+ 	char irq_name[30];
+-	u32 reg_update;
++	union {
++		u32 reg_update;
++		struct {
++			u32 rup_update;
++			u32 aup_update;
++		};
++	};
+ 	struct camss_clock *clock;
+ 	int nclocks;
+ 	struct regulator_bulk_data *supplies;
+@@ -217,6 +225,7 @@ extern const struct csid_hw_ops csid_ops_340;
+ extern const struct csid_hw_ops csid_ops_680;
+ extern const struct csid_hw_ops csid_ops_gen2;
+ extern const struct csid_hw_ops csid_ops_gen3;
++extern const struct csid_hw_ops csid_ops_gen4;
+ 
+ /*
+  * csid_is_lite - Check if CSID is CSID lite.
 diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 658d9c9183d4..77ec9453d0a4 100644
+index 77ec9453d0a4..a1c2dacd5e5f 100644
 --- a/drivers/media/platform/qcom/camss/camss.c
 +++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -34,6 +34,111 @@
+@@ -139,6 +139,84 @@ static const struct camss_subdev_resources csiphy_res_kaanapali[] = {
+ 	},
+ };
  
- static const struct parent_dev_ops vfe_parent_dev_ops;
- 
-+static const struct camss_subdev_resources csiphy_res_kaanapali[] = {
-+	/* CSIPHY0 */
++static const struct camss_subdev_resources csid_res_kaanapali[] = {
++	/* CSID0 */
 +	{
-+		.regulators = { "vdd-csiphy0-0p8", "vdd-csiphy0-1p2" },
-+		.clock = { "csiphy0", "csiphy0_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
++		.regulators = {},
++		.clock = { "csid", "csid_csiphy_rx" },
 +		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy0" },
-+		.interrupt = { "csiphy0" },
-+		.csiphy = {
-+			.id = 0,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
++				{ 400000000, 480000000 } },
++		.reg = { "csid0" },
++		.interrupt = { "csid0" },
++		.csid = {
++			.is_lite = false,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.hw_ops = &csid_ops_gen4,
++			.formats = &csid_formats_gen2
 +		}
 +	},
-+	/* CSIPHY1 */
++	/* CSID1 */
 +	{
-+		.regulators = { "vdd-csiphy1-0p8", "vdd-csiphy1-1p2" },
-+		.clock = { "csiphy1", "csiphy1_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
++		.regulators = {},
++		.clock = { "csid", "csid_csiphy_rx" },
 +		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy1" },
-+		.interrupt = { "csiphy1" },
-+		.csiphy = {
-+			.id = 1,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
++				{ 400000000, 480000000 } },
++		.reg = { "csid1" },
++		.interrupt = { "csid1" },
++		.csid = {
++			.is_lite = false,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.hw_ops = &csid_ops_gen4,
++			.formats = &csid_formats_gen2
 +		}
 +	},
-+	/* CSIPHY2 */
++	/* CSID2 */
 +	{
-+		.regulators = { "vdd-csiphy2-0p8", "vdd-csiphy2-1p2" },
-+		.clock = { "csiphy2", "csiphy2_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
++		.regulators = {},
++		.clock = { "csid", "csid_csiphy_rx" },
 +		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy2" },
-+		.interrupt = { "csiphy2" },
-+		.csiphy = {
-+			.id = 2,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
++				{ 400000000, 480000000 } },
++		.reg = { "csid2" },
++		.interrupt = { "csid2" },
++		.csid = {
++			.is_lite = false,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.hw_ops = &csid_ops_gen4,
++			.formats = &csid_formats_gen2
 +		}
 +	},
-+	/* CSIPHY3 */
++	/* CSID_LITE0 */
 +	{
-+		.regulators = { "vdd-csiphy3-0p8", "vdd-csiphy3-1p2" },
-+		.clock = { "csiphy3", "csiphy3_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
++		.regulators = {},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
 +		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy3" },
-+		.interrupt = { "csiphy3" },
-+		.csiphy = {
-+			.id = 3,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
++				{ 400000000, 480000000 } },
++		.reg = { "csid_lite0" },
++		.interrupt = { "csid_lite0" },
++		.csid = {
++			.is_lite = true,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.hw_ops = &csid_ops_gen4,
++			.formats = &csid_formats_gen2
 +		}
 +	},
-+	/* CSIPHY4 */
++	/* CSID_LITE1 */
 +	{
-+		.regulators = { "vdd-csiphy4-0p8", "vdd-csiphy4-1p2" },
-+		.clock = { "csiphy4", "csiphy4_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
++		.regulators = {},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
 +		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy4" },
-+		.interrupt = { "csiphy4" },
-+		.csiphy = {
-+			.id = 4,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
++				{ 400000000, 480000000 } },
++		.reg = { "csid_lite1" },
++		.interrupt = { "csid_lite1" },
++		.csid = {
++			.is_lite = true,
++			.parent_dev_ops = &vfe_parent_dev_ops,
++			.hw_ops = &csid_ops_gen4,
++			.formats = &csid_formats_gen2
 +		}
-+	},
-+	/* CSIPHY5 */
-+	{
-+		.regulators = { "vdd-csiphy5-0p8", "vdd-csiphy5-1p2" },
-+		.clock = { "csiphy5", "csiphy5_timer",
-+			   "cpas_ahb", "cpas_fast_ahb" },
-+		.clock_rate = { { 400000000, 480000000 },
-+				{ 400000000 },
-+				{ 0 },
-+				{ 0 } },
-+		.reg = { "csiphy5" },
-+		.interrupt = { "csiphy5" },
-+		.csiphy = {
-+			.id = 5,
-+			.hw_ops = &csiphy_ops_3ph_1_0,
-+			.formats = &csiphy_formats_sdm845
-+		}
-+	},
++	}
 +};
 +
  static const struct resources_icc icc_res_kaanapali[] = {
  	{
  		.name = "ahb",
-@@ -4308,8 +4413,10 @@ static void camss_remove(struct platform_device *pdev)
- static const struct camss_resources kaanapali_resources = {
+@@ -4414,9 +4492,11 @@ static const struct camss_resources kaanapali_resources = {
  	.version = CAMSS_KAANAPALI,
  	.pd_name = "top",
-+	.csiphy_res = csiphy_res_kaanapali,
+ 	.csiphy_res = csiphy_res_kaanapali,
++	.csid_res = csid_res_kaanapali,
  	.icc_res = icc_res_kaanapali,
  	.icc_path_num = ARRAY_SIZE(icc_res_kaanapali),
-+	.csiphy_num = ARRAY_SIZE(csiphy_res_kaanapali),
+ 	.csiphy_num = ARRAY_SIZE(csiphy_res_kaanapali),
++	.csid_num = ARRAY_SIZE(csid_res_kaanapali),
  };
  
  static const struct camss_resources msm8916_resources = {
