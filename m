@@ -1,263 +1,464 @@
-Return-Path: <linux-arm-msm+bounces-84718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 348ACCAE54F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 23:36:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65544CAE5B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Dec 2025 23:49:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A0B2F30577F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 22:36:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1C1D5306D8D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Dec 2025 22:49:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F68C2BE62E;
-	Mon,  8 Dec 2025 22:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B533B8D59;
+	Mon,  8 Dec 2025 22:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e4nvfd6V"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HQXK94Rz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N9aSk2Cs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AFE2264BB
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 22:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6EA1F418F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Dec 2025 22:48:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765233385; cv=none; b=B76w8VEDBzT906mBFgaQrwca+x6Kt7rQNoFvJToCHfX9UzcZa3g0XSl+UE96yaz2v1y4s3+nFwLjMQSlIWK5zbBaSmYO0x+14lzr1yrdBH2dRjKdaYtZ04IHjATzbjdz+4e7ONjsh1y5HiEapAY0IY2PM2RxIGQnhVmvKq3FEw8=
+	t=1765234142; cv=none; b=H59NyufHOqf4isybsQkYfu1bc2wZiBlYMRJLeCJrvA4/XHAOnBOVgK96phYLTauhNo9/Yb8UHFwdYUNgMxjPu5WGUGOZmIaIUMnZI26KT2VE/PL5K4acssGc2h3drYBU6SZPqaxZ6yb3z3jZ7abDDrF/gnF3e2SwJgjvqTJnEnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765233385; c=relaxed/simple;
-	bh=Q2G/MZtVBoEaCJauZ/cHmYZaRZTZNUt7d4RLedJ+aMU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dD3f4N944fEUfsktEqn1O2X1GYwZ7LY3y8EifNLaDUcgbHsHOoiTzQg3DlkeHFVz6+rPTcBsIlPvaRvF3ow19PQOhrDto1tvKiW901+b15Drl0HusrKZImch/wW6/dr1+e9S/il1nI9Dvz0os8N6Lut9tA+m/9QZfGklWw+qq+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e4nvfd6V; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-42e2e3c0dccso2699026f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 14:36:22 -0800 (PST)
+	s=arc-20240116; t=1765234142; c=relaxed/simple;
+	bh=rE+k/ohXzCO4XjNBDkfOdHWkWESNi5mtHWAtrCguaKg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BSb6mKpCrWI527eM50hZYckAYlitmLzwnS+AN6g56vsFFZh+DiDMIiqvpknLZ9fRLSeiWYUdeT8l+BNR2WBAGmsR89E5iuhQ7Y3rCxEN6IDkF3CfdVyBZIy9HhaPDtwBBQktnohl/doN70aNqe95mKbrwwesnnyiq9A/3zRAVHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HQXK94Rz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N9aSk2Cs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B8ChZxF850717
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Dec 2025 22:48:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=1g9jwcmodcP81FH8//i4RIKb
+	Nb7l9koEu3bPM/xcURE=; b=HQXK94RzA/xD4QwqIZEWU9i0En+rja/84qgXHRjc
+	urBEoaCuNa3FL/83xeo16d+meIREy++3eviezr9T5ClsbD2Lo7Bq3BCsixMiNjkH
+	lYPFPMCTAFl9nPxWEM8yPQLyQiulLnF/GWNv4WUvrjlZCgQ33kPMr7Rw34haghEt
+	OjPOStL5PiEGA9KXa0tqFHpB7YJgIA2wDWvzxqJ3PNo7uU4A6gsF+1LBDZILQziO
+	z5t2BPM9lMzLhILSYjumwP/R7BbdKlmQ6Xhq47sGaTNHh5x4u7qiQNm/AU7rWu4D
+	1twZfqexBeENkbkFMtPe7qYSTHmJW/pezihkVpAjPtrG1A==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4awxxc1my9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 22:48:58 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ee0995fa85so159597951cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 14:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765233381; x=1765838181; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D4KD06lq2sAdPsV4RkTZMMEkkcHicyQ03NbVW7+GTqc=;
-        b=e4nvfd6V20myoyx4sPbWfL/RXP1rQwdmAdq2qF8mYdpLIh62GRQVcC3qZmJsVNs0ZT
-         uhfXlCn1Q/1vOm+PKY7kabAAXGhG/u6swFcnKnZMssTWtaAa0v9F+FzU8Uoxx5CNXi4x
-         FhbUWb60nBjum44ZsVEysnD20tJVsotnFiEALa9rcDQaTIQc4IoPSevYFWwa1/3bKweT
-         Wdb3djLiXPLqzDuZvPCHIlciRnDOPQ3eVcd8t58RNBjj1/1Yc8VJeluNEROlbRK9JVKM
-         l9d6QJOrDkj4kanm7TJC7wrmIRWPbCg1n3eb9s8WOArCX7odCy1xAmK7v0dpM/Vri2iE
-         0UHg==
+        d=oss.qualcomm.com; s=google; t=1765234138; x=1765838938; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1g9jwcmodcP81FH8//i4RIKbNb7l9koEu3bPM/xcURE=;
+        b=N9aSk2CspXgXIHiSDzA0VI9tQIPefAbVwqxdwWq/Xj5pMf/uMlEb2MfArLAQyXfK4o
+         poWEQ7v3/VAq3kvokdhlyqcwxOIYoZwQXs9DgBpDgizRza9g/W0Y4w4uUAokWo746P8S
+         opqPD3K4epcnCxvZfIfsWEdVoxZh2TbFAxgQ46K41yxQSmyNVxt8+5f6I3VDaDzq/ZR2
+         Q6CjWjLehOC2Ku2mTVwu1Tz5U1u+GxbvyPw9bhGYUWNABuXbwI0pYHsP87rnXld2Y4r5
+         j//Qt5EE+txC02HpSeOT3VNb67ONKyqKk4IFW590X1hQBw7/o1+qvedLvYPZAkv2LdnG
+         9ZiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765233381; x=1765838181;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=D4KD06lq2sAdPsV4RkTZMMEkkcHicyQ03NbVW7+GTqc=;
-        b=EShDNEvjsU265QPgdMcPp0i3YmNNYHrQh5MgxxD+v1u/wTpPq2qQafWe8EuvgZhI/D
-         srsCW1fvcOVgfJ9GP9Lsl2xo010FggAnF4jI8vxJMV5cZREtpwA13EGqxUowGs1noJ6+
-         Cu+C8y2+TN05QEr8fKLDlAzeF350D58/fkm26Q0NGfJQbiI+SsT5pCVdJxOF5Q7LcDV8
-         TCTMEfNOZS6aPj/3+pOBSMBRpM0VQhvDPuHPMaj4r55J3Dp7rSxwr+voWsNDw5jufApO
-         p0Zv6YEac5xQ9ko0had0fQnLpS/aKHpRjabdjwY8K+u7fW4rTiibUS96UOKQtGzIjPAO
-         dXNw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+3PVxidtvmdBky53F+B1Voj1C7ZGTUT9FIIEBtplVy5PB3KdKgfLEwz/YcQ5EAStkn0CtRlMtKvN6xeO8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUNuFES7R5UUV7WM9G951ObIrrfWkQqtP4VmQM52sKmsVqj0P9
-	fH7ORzMQ0TOkpvTLdPtw25RWI0QbEr8IEHY1XZiPycGUaT0AzvwD63/uQk5GfU9x+rWC8AGQKAw
-	5ZfJZ/LTJl7UfaGzwlVcmZy3R48Ci4V2fMDQbyubUBw==
-X-Gm-Gg: ASbGncsYC1GFC2Jc3aART0A9d5JcbMDI/lcu6394tgUXicUtHEpQ1T3ewZ5WuAm4rLp
-	2jCCGr/GYBnU0ZIoSrCe35djmy/zuz7UNbAZfBVRdy8Uvsqm68slUM2BTc6Qj88CsK/6WZ6ixcX
-	HFcn3TKGkCxAcuoC4bWOTinxfbaQWw4JLdHcp+qdOBuzd8toPPykzm6Z62gzcMO+R30b03lES7p
-	JJu6Mdz/Bpoc7by91B3jBSuE1/Hwxnj7vMqJoqaiFMHzmyBegagHfV74CTU5kLZLyIsj70=
-X-Google-Smtp-Source: AGHT+IHdENdqQ5ZpfGKlDmPBmXNvBchycFRz1S91lwgqXoJLXzAP6AzIRd2MqCvVDm4uYekNJP736gqsi3Ttoiy1uEE=
-X-Received: by 2002:a05:6000:26ca:b0:3ff:17ac:a34b with SMTP id
- ffacd0b85a97d-42f89f7f743mr10799228f8f.42.1765233380524; Mon, 08 Dec 2025
- 14:36:20 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765234138; x=1765838938;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1g9jwcmodcP81FH8//i4RIKbNb7l9koEu3bPM/xcURE=;
+        b=L9urRz3nzz40IEezOD2PJJu4H6uwSj39Jq0f9BgRMq5kiiG9yi4aYyXM9NHxx+Mwsm
+         KHmiRzNHhrEa6/emHvGUXYIrqzl13bGTItQv0euIsX0nYmkgaVkS/eXQooOCt3kuIIdt
+         x0+6KJg9sTP3NkzyJQ9h5jF9KPqbLvS3LEXERATLfVYHtAkSdwIgu2EwR/u0RjhbkA5Z
+         c7CmsqgxNsURiqj+/vfqiPq7dJCKyX46HMzyJro9ItoEYdzPCtEq0uRztpkJHXgLeZ9m
+         avKeEpmFJ3MI9zTxN1Fasx10uj6DazqmHbRUz97kW65kk35V0d9C+u7/GjnDfAAJoWTx
+         vjzw==
+X-Forwarded-Encrypted: i=1; AJvYcCW2cr0yhv0w4SX/ngiQCMxV8dS8ksqgfAyJ3/BBksximvku+owNBW3unnsKiRINoQI5vaEODm9onoVLXQQ8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8vTbieHvh4iL0ZiQCaaknac7D7pN5Qo1hhRJYST9HiJSxEX0Y
+	mk2HCxjw0Qvx2h2TQgyJF5Ow2RIXpvPgaZpk1gDPXpwnGCyH9fwKk0ZkQeDbMh1ZcGlllyfbHP2
+	7t0OR/2QbbnRhr8tDyP1tXDhh3GmnWDhBTtcSu8zD0ZGFvazm/UOWCADd9zJzeq/FkdUt
+X-Gm-Gg: ASbGncvHoJN/Hm32PJn4LhhHHJPnG53pRGjy4v8lVYp4iir9jK4/4vOKs0bWW5NdlrZ
+	Ovv2SAlBobcPLgFtu76YsJ2wghOSgfyuWBP9e3kPuqsKXh9bV+jaH8+eWEl7I2x/1IFOA2li5Y9
+	rbP08xYEDod+bZaKkPb4xYskEKUZob4XMFeOmxxvQ626DCjuh+DvpYEmlNCFJOAMS3jJ7AxVweW
+	DZSCG+K3wOHEi3h9/HuRvggA708NZNMbE39mkxuSJ6/7I6HhBc7nx3h3NRKfAfgxiKxuHdJg3bn
+	YiA/IRi8WP3/Hp5bihgmzyNbEQs5gGJ1q9EcAdK6Lj985X7aemRwFX8cDq96eAOPxXpZd/+MfBX
+	bmt7bTmHrZ98+I4zHGbzAOpFm4ZhG78iEQJM5GLaQ0RjuUDdGLkoafE2HWvhamGQ75eyk9otqh4
+	MJE/GebLjdvzrZM1+0tS74Duo=
+X-Received: by 2002:ac8:5c96:0:b0:4ee:2845:40f8 with SMTP id d75a77b69052e-4f03fd72cb2mr152095551cf.12.1765234138208;
+        Mon, 08 Dec 2025 14:48:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF23wv38f30pZk8g9ARoQZnzyYNzhgoOtnkSb7aCARTdHUXi+lnpe6QmtZe12VFDgvtykkGXw==
+X-Received: by 2002:ac8:5c96:0:b0:4ee:2845:40f8 with SMTP id d75a77b69052e-4f03fd72cb2mr152095261cf.12.1765234137711;
+        Mon, 08 Dec 2025 14:48:57 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7c2726csm4560055e87.67.2025.12.08.14.48.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Dec 2025 14:48:56 -0800 (PST)
+Date: Tue, 9 Dec 2025 00:48:55 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
+Cc: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v9 1/5] media: dt-bindings: Add CAMSS device for Kaanapali
+Message-ID: <puv24qramoiq4qq3i4bibatg5ihnrv6hdloul5ajbblvasvwk3@nbse2m6aftkh>
+References: <20251208-add-support-for-camss-on-kaanapali-v9-0-3fcd31258415@oss.qualcomm.com>
+ <20251208-add-support-for-camss-on-kaanapali-v9-1-3fcd31258415@oss.qualcomm.com>
+ <scnexmcrpemu6vcms3dmq7qjvx54h5pyumjvgqduospao4x2kt@hoi7zfygjq4f>
+ <458a7841-e422-4cad-83de-f5b5c1b683a6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251202-wip-obbardc-qcom-msm8096-clk-cpu-fix-downclock-v1-1-90208427e6b1@linaro.org>
- <8d769fb3-cd2a-492c-8aa3-064ebbc5eee4@oss.qualcomm.com>
-In-Reply-To: <8d769fb3-cd2a-492c-8aa3-064ebbc5eee4@oss.qualcomm.com>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Mon, 8 Dec 2025 22:36:09 +0000
-X-Gm-Features: AQt7F2pyLxXm2GWb6gtwnpa1Ns2Gi_xPr5Pdfa1W2vBee9eceYgn1z1DZ-WxUWw
-Message-ID: <CACr-zFD_Nd=r1Giu2A0h9GHgh-GYPbT1PrwBq7n7JN2AWkXMrw@mail.gmail.com>
-Subject: Re: [PATCH] Revert "clk: qcom: cpu-8996: simplify the cpu_clk_notifier_cb"
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <458a7841-e422-4cad-83de-f5b5c1b683a6@oss.qualcomm.com>
+X-Proofpoint-GUID: WZARGNZioupBcXcMkXojvHpdHvUm67iV
+X-Proofpoint-ORIG-GUID: WZARGNZioupBcXcMkXojvHpdHvUm67iV
+X-Authority-Analysis: v=2.4 cv=AKf9OaRj c=1 sm=1 tr=0 ts=693755da cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=gEfo2CItAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=m4P3dgLYvQVqBC5gywwA:9 a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDE5MyBTYWx0ZWRfX9z6PGM42g6pk
+ fZOjXACbOCxCHXXNl/wUqH055BSiQz6TEuHu4Wg2ynqVP3bipM3XyihqRzd8WfYX1Z9ahXPEwyM
+ KSwSopXoXSLc7zG66p2E3b3K0eUofBaO4b1q74lQl7c3ezumbvysA7RrWYGiHUV8GcpGTHaOjX1
+ H72/KzEu7BiMfpvCKgDdmWDvSrpvclwg0YqmVYbHEXTJpyCvP0FKviNYRDeTJWAYvywlMdkX51s
+ IuK1P0Kets/BjDKQH45hqmzhMPkK25I02qSkdUkO7E2oPHrT2HkL44KyAP6YNMe/b/icMmdaS4Z
+ i24cVPoDXY2sMtUrjePv6WzrCM2VD1rmjMnC6DjgIqeqA9EDGYUhe7kvewDNCIGSbVILsOd5uqa
+ NyMFw3GBIh/88hs59X6PLOEWI4RDZw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 phishscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512080193
 
-Hi Konrad,
+On Mon, Dec 08, 2025 at 01:03:06PM -0800, Vijay Kumar Tumati wrote:
+> 
+> On 12/8/2025 11:53 AM, Dmitry Baryshkov wrote:
+> > On Mon, Dec 08, 2025 at 04:39:47AM -0800, Hangxiang Ma wrote:
+> > > Add bindings for qcom,kaanapali-camss to support the Camera Subsystem
+> > > (CAMSS) on the Qualcomm Kaanapali platform.
+> > > 
+> > > The Kaanapali platform provides:
+> > > 
+> > > - 3 x VFE, 5 RDI per VFE
+> > > - 2 x VFE Lite, 4 RDI per VFE Lite
+> > > - 3 x CSID
+> > > - 2 x CSID Lite
+> > > - 6 x CSIPHY
+> > > - 2 x ICP
+> > > - 1 x IPE
+> > > - 2 x JPEG DMA & Downscaler
+> > > - 2 x JPEG Encoder
+> > > - 1 x OFE
+> > > - 5 x RT CDM
+> > > - 3 x TPG
+> > Please describe the acronyms.
+> Ack.
+> > > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > > Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> > > Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> > > ---
+> > >   .../bindings/media/qcom,kaanapali-camss.yaml       | 646 +++++++++++++++++++++
+> > >   1 file changed, 646 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
+> > > new file mode 100644
+> > > index 000000000000..3b54620e14c6
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/media/qcom,kaanapali-camss.yaml
+> > > @@ -0,0 +1,646 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/media/qcom,kaanapali-camss.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm Kaanapali Camera Subsystem (CAMSS)
+> > > +
+> > > +maintainers:
+> > > +  - Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> > > +
+> > > +description:
+> > > +  Kaanapali camera subsystem includes submodules such as CSIPHY (CSI Physical layer)
+> > > +  and CSID (CSI Decoder), which comply with the MIPI CSI2 protocol.
+> > > +
+> > > +  The subsystem also integrates a set of real-time image processing engines and their
+> > > +  associated configuration modules, as well as non-real-time engines.
+> > > +
+> > > +  Additionally, it encompasses a test pattern generator (TPG) submodule.
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    const: qcom,kaanapali-camss
+> > > +
+> > > +  reg:
+> > > +    items:
+> > > +      - description: Registers for CSID 0
+> > > +      - description: Registers for CSID 1
+> > > +      - description: Registers for CSID 2
+> > > +      - description: Registers for CSID Lite 0
+> > > +      - description: Registers for CSID Lite 1
+> > > +      - description: Registers for CSIPHY 0
+> > > +      - description: Registers for CSIPHY 1
+> > > +      - description: Registers for CSIPHY 2
+> > > +      - description: Registers for CSIPHY 3
+> > > +      - description: Registers for CSIPHY 4
+> > > +      - description: Registers for CSIPHY 5
+> > > +      - description: Registers for VFE (Video Front End) 0
+> > > +      - description: Registers for VFE 1
+> > > +      - description: Registers for VFE 2
+> > > +      - description: Registers for VFE Lite 0
+> > > +      - description: Registers for VFE Lite 1
+> > > +      - description: Registers for ICP (Imaging Control Processor) 0
+> > > +      - description: Registers for ICP 0 SYS
+> > > +      - description: Registers for ICP 1
+> > > +      - description: Registers for ICP 1 SYS
+> > > +      - description: Registers for IPE (Image Processing Engine)
+> > > +      - description: Registers for JPEG DMA & Downscaler
+> > > +      - description: Registers for JPEG Encoder
+> > > +      - description: Registers for OFE (Offline Front End)
+> > > +      - description: Registers for RT CDM (Camera Data Mover) 0
+> > > +      - description: Registers for RT CDM 1
+> > > +      - description: Registers for RT CDM 2
+> > > +      - description: Registers for RT CDM 3
+> > > +      - description: Registers for RT CDM 4
+> > > +      - description: Registers for TPG 0
+> > > +      - description: Registers for TPG 1
+> > > +      - description: Registers for TPG 2
+> > > +
+> > > +  reg-names:
+> > > +    items:
+> > > +      - const: csid0
+> > > +      - const: csid1
+> > > +      - const: csid2
+> > > +      - const: csid_lite0
+> > > +      - const: csid_lite1
+> > > +      - const: csiphy0
+> > > +      - const: csiphy1
+> > > +      - const: csiphy2
+> > > +      - const: csiphy3
+> > > +      - const: csiphy4
+> > > +      - const: csiphy5
+> > > +      - const: vfe0
+> > > +      - const: vfe1
+> > > +      - const: vfe2
+> > > +      - const: vfe_lite0
+> > > +      - const: vfe_lite1
+> > > +      - const: icp0
+> > > +      - const: icp0_sys
+> > > +      - const: icp1
+> > > +      - const: icp1_sys
+> > > +      - const: ipe
+> > > +      - const: jpeg_dma
+> > > +      - const: jpeg_enc
+> > > +      - const: ofe
+> > > +      - const: rt_cdm0
+> > > +      - const: rt_cdm1
+> > > +      - const: rt_cdm2
+> > > +      - const: rt_cdm3
+> > > +      - const: rt_cdm4
+> > > +      - const: tpg0
+> > > +      - const: tpg1
+> > > +      - const: tpg2
+> > > +
+> > > +  clocks:
+> > > +    maxItems: 60
+> > > +
+> > > +  clock-names:
+> > > +    items:
+> > > +      - const: camnoc_nrt_axi
+> > > +      - const: camnoc_rt_axi
+> > > +      - const: camnoc_rt_vfe0
+> > > +      - const: camnoc_rt_vfe1
+> > > +      - const: camnoc_rt_vfe2
+> > > +      - const: camnoc_rt_vfe_lite
+> > > +      - const: cpas_ahb
+> > > +      - const: cpas_fast_ahb
+> > > +      - const: csid
+> > > +      - const: csid_csiphy_rx
+> > > +      - const: csiphy0
+> > > +      - const: csiphy0_timer
+> > > +      - const: csiphy1
+> > > +      - const: csiphy1_timer
+> > > +      - const: csiphy2
+> > > +      - const: csiphy2_timer
+> > > +      - const: csiphy3
+> > > +      - const: csiphy3_timer
+> > > +      - const: csiphy4
+> > > +      - const: csiphy4_timer
+> > > +      - const: csiphy5
+> > > +      - const: csiphy5_timer
+> > > +      - const: gcc_axi_hf
+> > This clock (and gcc_axi_sf below) still have the gcc_ prefix and GCC name. Why?
+> > It was pointed out in the previous review: clock names should be
+> > describing their purpose, not their source.
+> Hi Dmitry, let me add a bit more detail on this clock. As confirmed by the
+> HW team, the logic that runs based on this clock is still inside the
+> CAMNOC_PDX, just that it is on the CX / MMNOC domain side. Do you think
+> "axi_hf_cx" and "axi_sf_cx" makes sense?
 
-On Wed, 3 Dec 2025 at 10:52, Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 12/2/25 10:24 PM, Christopher Obbard wrote:
-> > This reverts commit b3b274bc9d3d7307308aeaf75f70731765ac999a.
-> >
-> > On the DragonBoard 820c (which uses APQ8096/MSM8996) this change causes
-> > the CPUs to downclock to roughly half speed under sustained load. The
-> > regression is visible both during boot and when running CPU stress
-> > workloads such as stress-ng: the CPUs initially ramp up to the expected
-> > frequency, then drop to a lower OPP even though the system is clearly
-> > CPU-bound.
-> >
-> > Bisecting points to this commit and reverting it restores the expected
-> > behaviour on the DragonBoard 820c - the CPUs track the cpufreq policy
-> > and run at full performance under load.
-> >
-> > The exact interaction with the ACD is not yet fully understood and we
-> > would like to keep ACD in use to avoid possible SoC reliability issues.
-> > Until we have a better fix that preserves ACD while avoiding this
-> > performance regression, revert the bisected patch to restore the
-> > previous behaviour.
-> >
-> > Fixes: b3b274bc9d3d ("clk: qcom: cpu-8996: simplify the cpu_clk_notifie=
-r_cb")
-> > Cc: stable@vger.kernel.org # v6.3+
-> > Link: https://lore.kernel.org/linux-arm-msm/20230113120544.59320-8-dmit=
-ry.baryshkov@linaro.org/
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> > ---
+Why? You are again describing the source. What is the function of?
+bus_hf / bus_sf?
 
+> > > +      - const: vfe0
+> > > +      - const: vfe0_fast_ahb
+> > > +      - const: vfe1
+> > > +      - const: vfe1_fast_ahb
+> > > +      - const: vfe2
+> > > +      - const: vfe2_fast_ahb
+> > > +      - const: vfe_lite
+> > > +      - const: vfe_lite_ahb
+> > > +      - const: vfe_lite_cphy_rx
+> > > +      - const: vfe_lite_csid
+> > > +      - const: qdss_debug_xo
+> > > +      - const: camnoc_ipe_nps
+> > > +      - const: camnoc_ofe
+> > > +      - const: gcc_axi_sf
+> > > +      - const: icp0
+> > > +      - const: icp0_ahb
+> > > +      - const: icp1
+> > > +      - const: icp1_ahb
+> > > +      - const: ipe_nps
+> > > +      - const: ipe_nps_ahb
+> > > +      - const: ipe_nps_fast_ahb
+> > > +      - const: ipe_pps
+> > > +      - const: ipe_pps_fast_ahb
+> > > +      - const: jpeg
+> > > +      - const: ofe_ahb
+> > > +      - const: ofe_anchor
+> > > +      - const: ofe_anchor_fast_ahb
+> > > +      - const: ofe_hdr
+> > > +      - const: ofe_hdr_fast_ahb
+> > > +      - const: ofe_main
+> > > +      - const: ofe_main_fast_ahb
+> > > +      - const: vfe0_bayer
+> > > +      - const: vfe0_bayer_fast_ahb
+> > > +      - const: vfe1_bayer
+> > > +      - const: vfe1_bayer_fast_ahb
+> > > +      - const: vfe2_bayer
+> > > +      - const: vfe2_bayer_fast_ahb
+> > > +
+> > > +  interrupts:
+> > > +    maxItems: 30
+> > > +
+> > > +  interrupt-names:
+> > > +    items:
+> > > +      - const: csid0
+> > > +      - const: csid1
+> > > +      - const: csid2
+> > > +      - const: csid_lite0
+> > > +      - const: csid_lite1
+> > > +      - const: csiphy0
+> > > +      - const: csiphy1
+> > > +      - const: csiphy2
+> > > +      - const: csiphy3
+> > > +      - const: csiphy4
+> > > +      - const: csiphy5
+> > > +      - const: vfe0
+> > > +      - const: vfe1
+> > > +      - const: vfe2
+> > > +      - const: vfe_lite0
+> > > +      - const: vfe_lite1
+> > > +      - const: camnoc_nrt
+> > > +      - const: camnoc_rt
+> > > +      - const: icp0
+> > > +      - const: icp1
+> > > +      - const: jpeg_dma
+> > > +      - const: jpeg_enc
+> > > +      - const: rt_cdm0
+> > > +      - const: rt_cdm1
+> > > +      - const: rt_cdm2
+> > > +      - const: rt_cdm3
+> > > +      - const: rt_cdm4
+> > > +      - const: tpg0
+> > > +      - const: tpg1
+> > > +      - const: tpg2
+> > > +
+> > > +  interconnects:
+> > > +    maxItems: 4
+> > > +
+> > > +  interconnect-names:
+> > > +    items:
+> > > +      - const: ahb
+> > > +      - const: hf_mnoc
+> > > +      - const: sf_icp_mnoc
+> > > +      - const: sf_mnoc
+> > You know... Failure to look around is a sin. What are the names of
+> > interconnects used by other devices? What do they actually describe?
+> > 
+> > This is an absolute NAK.
+> 
+> Please feel free to correct me here but, a couple things.
+> 
+> 1. This is consistent with
+> Documentation/devicetree/bindings/media/qcom,qcm2290-camss.yaml. no?
 
-Apologies for the late response, I was in the process of setting some
-more msm8096 boards up again in my new workspace to test this
-properly.
+I see that nobody noticed an issue with Agatti, Lemans and Monaco
+bindings (Krzysztof?)
 
+Usually interconnect names describe the blocks that are connected. Here
+are the top results of a quick git grep of interconnect names through
+arch/arm64/dts/qcom:
 
-> It may be that your board really has a MSM/APQ8x96*SG* which is another
-> name for the PRO SKU, which happens to have a 2 times wider divider, try
->
-> `cat /sys/bus/soc/devices/soc0/soc_id`
+    729 "qup-core",
+    717 "qup-config",
+    457 "qup-memory",
+     41 "usb-ddr",
+     41 "apps-usb",
+     39 "pcie-mem",
+     39 "cpu-pcie",
+     28 "sdhc-ddr",
+     28 "cpu-sdhc",
+     28 "cpu-cfg",
+     24 "mdp0-mem",
+     17 "memory",
+     14 "ufs-ddr",
+     14 "mdp1-mem",
+     14 "cpu-ufs",
+     13 "video-mem",
+     13 "gfx-mem",
 
-I read the soc_id from both of the msm8096 boards I have:
+I hope this gives you a pointer on how to name the interconnects.
 
-Open-Q=E2=84=A2 820 =C2=B5SOM Development Kit (APQ8096)
-```
-$ cat /sys/bus/soc/devices/soc0/soc_id
-291
-```
-(FWIW this board is not in mainline yet; but boots with a DT similar
-enough to the db820c. I have a patch in my upstream backlog enabling
-that board; watch this space)
+> 
+> 2. If you are referring to some other targets that use, "cam_" prefix, we
+> may not need that , isn't it? If we look at these interconnects from camera
+> side, as you advised for other things like this?
 
-DragonBoard=E2=84=A2 820c (APQ8096)
-```
-$ cat /sys/bus/soc/devices/soc0/soc_id
-291
-```
+See above.
 
+> 
+> > 
+> > > +
+> > > +  iommus:
+> > > +    items:
+> > > +      - description: VFE non-protected stream
+> > > +      - description: ICP0 shared stream
+> > > +      - description: ICP1 shared stream
+> > > +      - description: IPE CDM non-protected stream
+> > > +      - description: IPE non-protected stream
+> > > +      - description: JPEG non-protected stream
+> > > +      - description: OFE CDM non-protected stream
+> > > +      - description: OFE non-protected stream
+> > > +      - description: VFE / VFE Lite CDM non-protected stream
+> > This will map all IOMMUs to the same domain. Are you sure that this is
+> > what we want? Or do we wait for iommu-maps to be fixed?
 
-> see:
->
-> https://lore.kernel.org/linux-arm-msm/20251111-db820c-pro-v1-0-6eece16c5c=
-23@oss.qualcomm.com/
->
-> https://lore.kernel.org/linux-arm-msm/kXrAkKv7RZct22X0wivLWqOAiLKpFuDCAY1=
-KY_KSx649kn7BNmJ2IFFMrsYPAyDlcxIjbQCQ1PHb5KaNFawm9IGIXUbch-DI9OI_l73BAaM=3D=
-@protonmail.com/
-
-Thanks for the pointers. Interesting, but it does look like my boards
-are msm8096 (and not the pro SKU). Can you confirm that at all from
-the soc_id above?
-
-Another bit of (hopefully useful) information is that the db820c boot
-firmware log sthe following, which is different to the logs I saw from
-the pro SKU (BUT the firmware could also be outdated?):
-```
-S - QC_IMAGE_VERSION_STRING=3DBOOT.XF.1.0-00301
-S - IMAGE_VARIANT_STRING=3DM8996LAB
-S - OEM_IMAGE_VERSION_STRING=3Dcrm-ubuntu68
-S - Boot Interface: UFS
-S - Secure Boot: Off
-S - Boot Config @ 0x00076044 =3D 0x000001c9
-S - JTAG ID @ 0x000760f4 =3D 0x4003e0e1
-S - OEM ID @ 0x000760f8 =3D 0x00000000
-S - Serial Number @ 0x00074138 =3D 0x14d6d024
-S - OEM Config Row 0 @ 0x00074188 =3D 0x0000000000000000
-S - OEM Config Row 1 @ 0x00074190 =3D 0x0000000000000000
-S - Feature Config Row 0 @ 0x000741a0 =3D 0x0050000010000100
-S - Feature Config Row 1 @ 0x000741a8 =3D 0x00fff00001ffffff
-S - Core 0 Frequency, 1228 MHz
-B -         0 - PBL, Start
-B -     10414 - bootable_media_detect_entry, Start
-B -     50197 - bootable_media_detect_success, Start
-B -     50197 - elf_loader_entry, Start
-B -     51760 - auth_hash_seg_entry, Start
-B -     51863 - auth_hash_seg_exit, Start
-B -     85147 - elf_segs_hash_verify_entry, Start
-B -     87651 - PBL, End
-B -     89700 - SBL1, Start
-B -    185684 - usb: hs_phy_nondrive_start
-B -    186050 - usb: PLL lock success - 0x3
-B -    189039 - usb: hs_phy_nondrive_finish
-B -    193156 - boot_flash_init, Start
-D -        30 - boot_flash_init, Delta
-B -    200263 - sbl1_ddr_set_default_params, Start
-D -        30 - sbl1_ddr_set_default_params, Delta
-B -    208254 - boot_config_data_table_init, Start
-D -    317169 - boot_config_data_table_init, Delta - (60 Bytes)
-B -    529968 - CDT Version:3,Platform ID:24,Major ID:1,Minor ID:0,Subtype:=
-0
-B -    534665 - Image Load, Start
-D -     22448 - PMIC Image Loaded, Delta - (37272 Bytes)
-B -    557143 - pm_device_init, Start
-B -    562908 - PON REASON:PM0:0x60 PM1:0x20
-B -    599294 - PM_SET_VAL:Skip
-D -     40016 - pm_device_init, Delta
-B -    601216 - pm_driver_init, Start
-D -      2897 - pm_driver_init, Delta
-B -    607834 - pm_sbl_chg_init, Start
-D -        91 - pm_sbl_chg_init, Delta
-B -    614575 - vsense_init, Start
-D -         0 - vsense_init, Delta
-B -    624670 - Pre_DDR_clock_init, Start
-D -       396 - Pre_DDR_clock_init, Delta
-B -    628208 - ddr_initialize_device, Start
-B -    631899 - 8996 v3.x detected, Max frequency =3D 1.8 GHz
-B -    641537 - ddr_initialize_device, Delta
-B -    641567 - DDR ID, Rank 0, Rank 1, 0x6, 0x300, 0x300
-B -    645410 - Basic DDR tests done
-B -    714157 - clock_init, Start
-D -       274 - clock_init, Delta
-B -    717543 - Image Load, Start
-D -      4331 - QSEE Dev Config Image Loaded, Delta - (46008 Bytes)
-B -    723002 - Image Load, Start
-D -      5307 - APDP Image Loaded, Delta - (0 Bytes)
-B -    731603 - usb: UFS Serial - a28415ce
-B -    735965 - usb: fedl, vbus_low
-B -    739594 - Image Load, Start
-D -     55449 - QSEE Image Loaded, Delta - (1640572 Bytes)
-B -    795043 - Image Load, Start
-D -      2043 - SEC Image Loaded, Delta - (4096 Bytes)
-B -    802607 - sbl1_efs_handle_cookies, Start
-D -       488 - sbl1_efs_handle_cookies, Delta
-B -    811117 - Image Load, Start
-D -     14365 - QHEE Image Loaded, Delta - (254184 Bytes)
-B -    825482 - Image Load, Start
-D -     14091 - RPM Image Loaded, Delta - (223900 Bytes)
-B -    840397 - Image Load, Start
-D -      3172 - STI Image Loaded, Delta - (0 Bytes)
-B -    847107 - Image Load, Start
-D -     34800 - APPSBL Image Loaded, Delta - (748620 Bytes)
-B -    881999 - SBL1, End
-D -    796569 - SBL1, Delta
-S - Flash Throughput, 94000 KB/s  (2958928 Bytes,  31192 us)
-S - DDR Frequency, 1017 MHz
-Android Bootloader - UART_DM Initialized!!!
-[0] BUILD_VERSION=3D
-[0] BUILD_DATE=3D00:29:31 - Dec  4 2023
-[0] welcome to lk
-...
-```
-
-
-Cheers!
-
-Chris
+-- 
+With best wishes
+Dmitry
 
