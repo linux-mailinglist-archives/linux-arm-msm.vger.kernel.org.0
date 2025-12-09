@@ -1,120 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-84777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AA3ACB0206
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 14:59:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C14E3CB02F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 15:08:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 013C63014ABE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 13:59:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 03ADB3065018
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 14:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECC98263F5D;
-	Tue,  9 Dec 2025 13:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189DF2D23B8;
+	Tue,  9 Dec 2025 14:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oJeb7uxi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C93C722A7E4;
-	Tue,  9 Dec 2025 13:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AB92D5A14;
+	Tue,  9 Dec 2025 14:03:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765288752; cv=none; b=tCjSrV07BoUH+ep2Dmvq+Ee17QgkwqW4xwO2SvzNXGR6KHobHpvs411sxgDMTVxejfWBZXPzTdM7hbtoeuqJtL9USTyVOKlrqPKHPpWIab7UIVJuvMmOmgAbXGF6HXLNJobXJ9vURdr92zwP3BA/lOnhpFJrLzAcVOrFHHbC+hE=
+	t=1765289038; cv=none; b=GNUrjMQTZwdc+X70ERnYUuAsMSCLHdNqH3tWElBFRw6/swz4JPPs+28LuJjRFP3LBEdh1KMVgMB/W9LW1czfJrbdfEK6xF30UFGEKlkd92rB0/VSqSed1bSEFgLhVm/6mhi5TFrOUE7gvBYWJJj24YXun6C5gTwB3wxgnqjSnyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765288752; c=relaxed/simple;
-	bh=3s7a7psH61+zrjZz4QaWdew8h4qnk8NnNjdq+5zLUKY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=llJwUqTPLa9ZOB+x6CFe9zmcQiwZ2CNYsCjnKJ7qfwLpiK6hCje6DwB0QpRnsiKkWFBEYO4xl3Eah3RHHjZH/x8lK69yoDoWdg2So9TBkcv7m4Pf2uTNF3zBs4FCksCCQrC6JlImFyQ3quBzHYJtBZx6M4lYTeigy8B1oUuGxoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C0DF2175D;
-	Tue,  9 Dec 2025 05:59:02 -0800 (PST)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9B1623F740;
-	Tue,  9 Dec 2025 05:59:09 -0800 (PST)
-Date: Tue, 9 Dec 2025 13:59:07 +0000
-From: Leo Yan <leo.yan@arm.com>
-To: Mike Leach <mike.leach@linaro.org>
-Cc: Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-	quic_yingdeng@quicinc.com, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
-	Mao Jinlong <quic_jinlmao@quicinc.com>
-Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
-Message-ID: <20251209135907.GU724103@e132581.arm.com>
-References: <20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com>
- <20251202-extended_cti-v6-2-ab68bb15c4f5@oss.qualcomm.com>
- <20251203182944.GG724103@e132581.arm.com>
- <CAJ9a7VjWDBEwdmMf53geACBWGusC8BC3pJuOLETeecw24+N35Q@mail.gmail.com>
- <20251204103151.GK724103@e132581.arm.com>
- <CAJ9a7VjHHkkTz9XJqjdQ+11_XX9zXuY0ZcQzPtq=Zvi4CN__0A@mail.gmail.com>
- <20251205100432.GO724103@e132581.arm.com>
- <CAJ9a7Vg9Efi-5eecfiUF82_Qq8Jg9imN5q1-VKYZoPVUxNpjhA@mail.gmail.com>
+	s=arc-20240116; t=1765289038; c=relaxed/simple;
+	bh=+mN5an9diG7bR76g4jZGjKg7N8HQ17p8lSsVL91Hotw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Fp+bg30Kdy6Ll03lwSUm/gQJFSIIyT0kLvr1Gs4CUY+Nj/Am6ZEs86+kSUTBGTpHS3m2AcPYSZrMR4Dtl3lYLpZtDYBLPxQuF7OZlL1n32nTyYdzu3uaTaaG7wL9TsldYu52Ct8guDrRVu+vVXubshwubvXzr/GHC1Uq76+3fPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oJeb7uxi; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B99N0IK2992079;
+	Tue, 9 Dec 2025 14:03:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=jInow6dFN/wx1W92249bMrHB3odea764Tv8
+	McjHJ2l8=; b=oJeb7uxiydlpd4J7rpYXjOFDmBAwpeUxdC2j/L1XA3eiHIpdceR
+	LDysRPEqfyBs+O+gJ5qVP5VzVZYA99V/ttCy0EOmg8Pg6dhlY/cETU3T03XcacMA
+	+/yz+O0bqD4VbpIC9l5qMO/L3I9yRVAqQI2N/xjR2JjuvrNkAnqQcvFuVIan1hsZ
+	keO2ULLn4JueXPSIcItuReVMEwG5dVQHKMbkXgFH9lvh8bgZVys9//uA4x7rGSEE
+	kd0bzN7SooA5cXAcYDef6rt8mecAavRgfDK2w3B9xmhx0uzk+kc02C3bDEOFhBQI
+	kM2YLcia8S7KZzc1KJG54QmtXy1j7DrvuCQ==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axgqr8xdw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Dec 2025 14:03:52 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B9E3oGe025450;
+	Tue, 9 Dec 2025 14:03:50 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4avdjm1hup-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Dec 2025 14:03:50 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5B9E3nwi025444;
+	Tue, 9 Dec 2025 14:03:49 GMT
+Received: from shuaz-gv.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5B9E3nsu025441
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Dec 2025 14:03:49 +0000
+Received: by shuaz-gv.ap.qualcomm.com (Postfix, from userid 4467449)
+	id 8C06E5AE; Tue,  9 Dec 2025 22:03:48 +0800 (CST)
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
+        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
+        shuai.zhang@oss.qualcomm.com
+Subject: [PATCH v1] Bluetooth: hci_sync: Fix not clearing cmd_sync_work_list on power off
+Date: Tue,  9 Dec 2025 22:03:47 +0800
+Message-Id: <20251209140347.2816326-1-shuai.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ9a7Vg9Efi-5eecfiUF82_Qq8Jg9imN5q1-VKYZoPVUxNpjhA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Ll4vqRGp8P8NcuPR0ifpyAgLOwMJMIP6
+X-Authority-Analysis: v=2.4 cv=UrBu9uwB c=1 sm=1 tr=0 ts=69382c48 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=_4_lt5sjua-W6scmGk8A:9
+X-Proofpoint-ORIG-GUID: Ll4vqRGp8P8NcuPR0ifpyAgLOwMJMIP6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDEwMyBTYWx0ZWRfX3KTQ/9+GnTjB
+ aJRTmWa5QnFXA0rvm3ikLrYYUbvR8JhzUtQ8iY956FaccvL6dLuc/TczJa4Py6SVjTIECp2efW5
+ ULtJW/jna23SlqE7wSYGjIXg+pCw7NOWfQr21v7ryzdhCeyHqoADuqOqE18WgZIHKRDXNhfDpzr
+ m2dHG6VuM7N2JBrxluBH7p3SmCYK5TyekS4omc1InqvVqp9OZzlq2rd2D4UpX1FgLpeCqfmZ/wN
+ wA+72wB2s1sXHN9Fwhmwq5gNczyX+ud7wSB3WLKIz9PMM8tWwe/saAqzsdF0JWad3z9XllbEWvc
+ /1GiFNZvhhtakELuLiB3M+H/DUlDfL56JSmfKUMsTgbMCFIyBlcUPLpI+y3Fkk5eG4OPaV1Owk6
+ +C0+VI8CmV80GT0kRpLW4824wNy/+Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-09_04,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512090103
 
-Hi Mike,
+When powering off the cmd_sync_work_list may contain items which shall
+be cleared during power off as they shouldn't be run during power off
+sequence.
 
-On Mon, Dec 08, 2025 at 02:47:21PM +0000, Mike Leach wrote:
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+---
+ net/bluetooth/hci_sync.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-[...]
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index a9f5b1a68..45b593ec7 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -648,16 +648,22 @@ static void _hci_cmd_sync_cancel_entry(struct hci_dev *hdev,
+ 	kfree(entry);
+ }
+ 
+-void hci_cmd_sync_clear(struct hci_dev *hdev)
++/* Clear remaining entries in cmd_sync_work_list */
++static void hci_cmd_sync_list_clear(struct hci_dev *hdev)
+ {
+ 	struct hci_cmd_sync_work_entry *entry, *tmp;
+ 
++	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list)
++		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
++}
++
++void hci_cmd_sync_clear(struct hci_dev *hdev)
++{
+ 	cancel_work_sync(&hdev->cmd_sync_work);
+ 	cancel_work_sync(&hdev->reenable_adv_work);
+ 
+ 	mutex_lock(&hdev->cmd_sync_work_lock);
+-	list_for_each_entry_safe(entry, tmp, &hdev->cmd_sync_work_list, list)
+-		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
++	hci_cmd_sync_list_clear(hdev);
+ 	mutex_unlock(&hdev->cmd_sync_work_lock);
+ }
+ 
+@@ -678,6 +684,7 @@ EXPORT_SYMBOL(hci_cmd_sync_cancel);
+  *
+  * - Set result and mark status to HCI_REQ_CANCELED
+  * - Wakeup command sync thread
++ * - Clear cmd_sync_work_list if the interface is down
+  */
+ void hci_cmd_sync_cancel_sync(struct hci_dev *hdev, int err)
+ {
+@@ -692,6 +699,9 @@ void hci_cmd_sync_cancel_sync(struct hci_dev *hdev, int err)
+ 
+ 		wake_up_interruptible(&hdev->req_wait_q);
+ 	}
++
++	if (err == EHOSTDOWN || err == -EHOSTDOWN)
++		hci_cmd_sync_list_clear(hdev);
+ }
+ EXPORT_SYMBOL(hci_cmd_sync_cancel_sync);
+ 
+@@ -5260,14 +5270,14 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+ 		disable_delayed_work(&hdev->power_off);
+ 		disable_delayed_work(&hdev->ncmd_timer);
+ 		disable_delayed_work(&hdev->le_scan_disable);
++		hci_cmd_sync_cancel_sync(hdev, ENODEV);
+ 	} else {
+ 		cancel_delayed_work(&hdev->power_off);
+ 		cancel_delayed_work(&hdev->ncmd_timer);
+ 		cancel_delayed_work(&hdev->le_scan_disable);
++		hci_cmd_sync_cancel_sync(hdev, EHOSTDOWN);
+ 	}
+ 
+-	hci_cmd_sync_cancel_sync(hdev, ENODEV);
+-
+ 	cancel_interleave_scan(hdev);
+ 
+ 	if (hdev->adv_instance_timeout) {
+-- 
+2.34.1
 
-> > I tested locally and did not see the GCC complaint for this approach.
-> > And this is a global structure with about 16KiB (~4K items x
-> 
-> Which is precisely the issue - why use 16k bytes of space when a pair
-> of indexed tables will use 21 x 32bit locations per table -> 168 bytes
-> - 100x smaller!
-> 
-> This space matters little to high end server systems but is much more
-> important in smaller embedded systems.
-
-For the concern of performance and footprint, my approach can
-avoid any conversion for standard registers, we end up need to
-convert registers for non-standard registers anyway.
-
-I understand your concern for using an array for conversion, this is
-cost 16KiB memory but this can benefit a bit performance.  It is a
-trade-off between memory and speed.  As said, we can use a static
-function for register conversion, the side effect is this might cause
-more time.
-
-Given the CTI MMIO register access, I don't think an extra branch
-instruction (checking the flag) would cause significant panelty,
-given the flag is set once at init and never changed afterwards.
-
-> Moreover the table + inline helper is more efficient at extracting the
-> correct offset value. The helper is a simple de-reference - whereas
-> the helper functions you suggest require the code to make the
-> comparison at every register access.
-> The "if qcom ..." may be contained in one place in the source code,
-> but is called and executed for every access.
-> 
-> Why add inefficiencies, either in footprint or execution?
-
-This is about how we design a driver that supports both a standard IP
-and non-standard implementations.
-
-Because the standard IP is well defined, its register layout should be
-the default; it keeps the code simple and makes future CTI extensions
-easier.  For non-standard IPs, we only apply the register translations
-needed.
-
-TBH, the optimization topic is a bit over design for me now.  The CTI
-module is configured once and remains untouched until it is disabled,
-so it is not a hot path.
-
-Thanks,
-Leo
 
