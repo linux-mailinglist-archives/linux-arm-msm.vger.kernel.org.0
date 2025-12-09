@@ -1,128 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-84779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1927CB03C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 15:18:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F0078CB043D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 15:24:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BC91B303CF5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 14:17:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9D005305D429
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 14:24:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B68D5299929;
-	Tue,  9 Dec 2025 14:17:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJcDhqP6"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A19B2C158D;
+	Tue,  9 Dec 2025 14:24:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2296A29ACFC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 14:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53C8626E6F2;
+	Tue,  9 Dec 2025 14:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765289858; cv=none; b=gCxXZP20Wtfxp9DTqH2EQNKpZAX6TzZRIf10umqwsS2EOiXkQ+5hSxK6jZzi2U+RaGJuOsuvIFb0bGzE+tm0nLfTtyvNDX8kFGeK8MXinla6sV2XF5LnGdNvtBLYNirRREOETNSsqZYatZDdwKO8dyjXNKK0Ot3ZzrSeOsuPkcc=
+	t=1765290283; cv=none; b=sg8VwoIQ1HkO5QxYYcWr1N7BqyX2JgoNsTaZnLhLX63c5N/2/78zZcCznkzHrnqLDJ6nAvlkrLeNDv0h6TCn0eKV7NiLezslgsShq6TwvK0b6W9sFO6z9NoEBz9xb6l+02PJ2CyCsGmZSuzJpbkskoN5H3pI4/mlUepS0ZJJQ9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765289858; c=relaxed/simple;
-	bh=unuZ6P3b7Yxjaa+0itPHl4nXBL7mIF6rtwXPOxCWtX4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XFfgSJFv4UxVbQzyKzy25xBH9J4+eWRRVg5fwoAkCYKUEsaXElP3vkPcBMV471KgWaMKvbflGILOiODuOO0SgPZdDWxsap0zMgqDKFOVa7FeNLxDD6AYLAhZOYRfR5CjxMu6RwgmqtGCzrvwq3+bDPT464zGTC7HJH1Rd6TlQtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJcDhqP6; arc=none smtp.client-ip=74.125.82.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2a484a0b7cfso7230277eec.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 06:17:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765289856; x=1765894656; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GqGl05z99jHp2ShgOvgQgByFBkkP2VElXGK/JMHVdj4=;
-        b=EJcDhqP6gkSRYJwsSv2k0z0JKn9iv5hcbelmELr2P3lxWCRnlk0lbADGeEpal6NB4p
-         wYuuoo9+s5zqMnCoWq40Dd4sWemsqp+oOEPWUbqAl3J/GbjdVKnH/2NbJbU7hong+gjQ
-         sawD3lVJ6BJcqYA9eu75o9Gnka3/Z5vxcEXy8NS4ZouORDBysJdlvLwaNm208Z74YZBe
-         +Tyl8ln2f+b5tVxwpZFY2dly7V0+LHt4ezeVsRejV5mAkwpMOJRd2rH97TzHkb/iBjcc
-         amJ7UUeOBoZvlsLphZZunoALUwUDvoFN8NbYLerIHWjUqFLqCkBtu2i6Ww45VwuZtD5E
-         h/2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765289856; x=1765894656;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GqGl05z99jHp2ShgOvgQgByFBkkP2VElXGK/JMHVdj4=;
-        b=JGFfUFxcMnsDp0FjgRcr8IfHyIgP40uTaDc1HXxb4uijWjapX6Grj6aZcmTnxT0AOC
-         7riumLy6fB1CD3LhQ2NcaCpvE2qbuqx9Pf21OnweCX3F0XPHR90iGj+XfbvpbkEL8BFo
-         L2f87Sjgpn1r8HNl/icWNT5V4hMIgVwvktzcdyiczJZXBiMjfpvS7jGOfxpiMCf28iAm
-         1zmJxpGoikTqDlnGrff7sKZlM7W+PTST9KcMKj3vE8BjxMp+ngEJ91Ze86gWs1Tsp95H
-         UDi4zye2rvyn8b+qLlAKOyyJGIiAqPac8mM2lRVLbzt4il5EIsL+jaiiPKU4QvB4b9/3
-         DqoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXHQJSn++S3PozbCT/L2EnGZ+fDWblhZx6bOI1Ral8dLxv9Mo2+V8/kIMRUp9psXSXLFM9i5ndQOS+3HR7n@vger.kernel.org
-X-Gm-Message-State: AOJu0YyICU81DKM4QlZJ60VigyIGlxc8liCig1LpganQtR3kACzZNV5j
-	BZJ9zWHuESqxeIEQNTui2KCMsooo+XG/NuVqb0odUinQ/yRvoPMJARTkMG+vKVX4cvbb/pkFg/j
-	aYG//gNovA8XdxT4yfz+RDA2acNPXMWQ=
-X-Gm-Gg: AY/fxX5pm7AOLF+36SOYu2W/XnC8pPcppRnIFOPP+D2LXtmJPgvpYIau3VkeR7/Gct/
-	i5G63tFqdr0ac6Bk4WN6FDMamBMx/7isFRriMsrcZfVB8bcq/rE3s0nMtdKUQzWkQkat4YdHwBL
-	wAGeURU9E80vITrB6ifmIjPauCMap+6/cX/zcLX+fRB4UL/5SLbySKrCHOhT/VtSl+mZNvcz/Ut
-	Zl/qUL/1GOVt927w9y4ezMUuCGM2ZnYf0T4NLyAGY1Mwmi+UVPUpwCNWi4BYgWLPh6yd19gMgTI
-	4y05V+sUfu56lH0ljMZtgASrq3pboh05Zbx1xsK+8HM5Dmp7/y8j6jhCQhTyJ0iCBZyWxMl38VC
-	ne5tjfqzw6w==
-X-Google-Smtp-Source: AGHT+IHJSK7Qp1zb5om02W592OqiY5udTEsk9nBSftpZyGmqI0e9P/OjwE7rDiAyfrBX382yq5jBhBWzuWKkJmGaXh4=
-X-Received: by 2002:a05:7301:f25:b0:2a4:50c2:a74c with SMTP id
- 5a478bee46e88-2abf8dee655mr691583eec.8.1765289856143; Tue, 09 Dec 2025
- 06:17:36 -0800 (PST)
+	s=arc-20240116; t=1765290283; c=relaxed/simple;
+	bh=5bLN5yOVWXjBMNEIxFlBFEFxKg0L9cjEMdCcLhdefTM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g91iIWk/JscIC3x2ZX1AsCtOOqOgfKjjeKc6esz+ARlSm7f7q1zAKJxH7fufPD3CB57vHAf/RcdlH2sEqRZXQz2324Jz4cd5XBxn4IjZmtFitGT0Wc5JHWZL0Oy9KH+AEYkZKhRgJ800LWdhE78SN3k6icBbSWf23Abobn6HptI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 87635175D;
+	Tue,  9 Dec 2025 06:24:33 -0800 (PST)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 635FA3F740;
+	Tue,  9 Dec 2025 06:24:40 -0800 (PST)
+Date: Tue, 9 Dec 2025 14:24:38 +0000
+From: Leo Yan <leo.yan@arm.com>
+To: "Yingchao Deng (Consultant)" <quic_yingdeng@quicinc.com>
+Cc: mike.leach@linaro.org, alexander.shishkin@linux.intel.com,
+	coresight@lists.linaro.org, james.clark@linaro.org,
+	jinlong.mao@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_jinlmao@quicinc.com, suzuki.poulose@arm.com,
+	tingwei.zhang@oss.qualcomm.com
+Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
+Message-ID: <20251209142438.GV724103@e132581.arm.com>
+References: <CAJ9a7Vg9Efi-5eecfiUF82_Qq8Jg9imN5q1-VKYZoPVUxNpjhA@mail.gmail.com>
+ <20251209081649.105623-1-yingchao.deng@oss.qualcomm.com>
+ <20251209121916.GT724103@e132581.arm.com>
+ <1fbe140c-b960-4f13-83e2-b0a0733a67bc@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251124182751.507624-1-robh@kernel.org> <CGME20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c@eucas1p1.samsung.com>
- <20251124182751.507624-2-robh@kernel.org> <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
- <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
-In-Reply-To: <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
-From: Daniel Baluta <daniel.baluta@gmail.com>
-Date: Tue, 9 Dec 2025 16:20:03 +0200
-X-Gm-Features: AQt7F2rjwQKc_bRBeYsxUFhD_YJR9U-Y3qN6s4VMgPax1Na8ykfHoapTIdM-w18
-Message-ID: <CAEnQRZDBZ52FoNRBJa1qScbkcEYKwbyP_ephutdkYFaY5b1yLw@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] remoteproc: qcom: Use of_reserved_mem_region_*
- functions for "memory-region"
-To: Rob Herring <robh@kernel.org>
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, 
-	Beleswar Padhi <b-padhi@ti.com>, linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1fbe140c-b960-4f13-83e2-b0a0733a67bc@quicinc.com>
 
-> Other platforms (non-QCom) were tested also use
-> devm_ioremap_resource_wc(). So something else is claiming the same
-> region? Can you dump out /proc/iomem?
->
-> The region is dynamically allocated, so maybe that has something to do with it.
+On Tue, Dec 09, 2025 at 08:51:38PM +0800, Yingchao Deng (Consultant) wrote:
 
-We noticed a related issue with imx_dsp_rproc.
+[...]
 
-Because:
-imx_dsp_rproc_prepare:
- -> imx_dsp_rproc_add_carveout
-     -> /*... */ and this calls devm_ioremap_resource_wc
--> pm_runtime_get_sync
+> >    void cti_write_single_reg(struct cti_drvdata *drvdata,
+> >                              int offset, u32 value)
+> >    {
+> >            CS_UNLOCK(drvdata->base);
+> >            writel_relaxed(value, cti_reg_addr(drvdata, offset));
+> >            CS_LOCK(drvdata->base);
+> >    }
+> 
+> However, since we also need to handle cti_reg_addr_with_nr, it will be
+> necessary to add an additional parameter "nr" to cti_write_single_reg?
 
-imx_dsp_rproc_unprepare:
- ->pm_runtime_put_sync
+I expect the argument "offset" has already containted the nr in
+bits[31..28], so don't need to pass "nr" parameter to
+cti_write_single_reg().
 
-There is no easy way to manually undo devm_ioremap_resource_wc so I have
-sent a patch to use devm_ioremap_wc.
+You will change inen_store() / outen_store(), e.g.,:
 
-https://lore.kernel.org/imx/20251209140425.766742-1-daniel.baluta@nxp.com/T/#u
+    cti_write_single_reg(drvdata, CTI_REG_SET_NR(CTIINEN, index),
+                         value);
 
-In your case Marek at least you need to understand which driver
-reserves    8dc00000-8e7fffff : reserved and why.
+Just remind, this might be a separate refactor for common code and you
+need to write a patch for this, then is followed by QCOM CTI support
+patch.
 
-thanks,
-Daniel.
+Thanks,
+Leo
 
