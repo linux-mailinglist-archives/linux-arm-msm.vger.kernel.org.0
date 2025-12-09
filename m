@@ -1,46 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-84799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90441CB13B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 22:48:42 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD884CB141D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 22:59:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 57E473064E6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 21:48:41 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 051043025E2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 21:59:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CF982DC786;
-	Tue,  9 Dec 2025 21:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AAA52DF710;
+	Tue,  9 Dec 2025 21:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sNyVSVQ9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MPqpmiBI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128B73B8D48;
-	Tue,  9 Dec 2025 21:48:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B267A2DF12F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 21:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765316919; cv=none; b=TrPPblFhIHuAywxI9ML7Wdy4xNn21joCkg7r36c8cgPbO5c7JL7ttNem/gWJzFJkbSfCXIWwm7PQZwE5MKm2+y5vB3bXYIXQI2+X8YN0COiFhyqjiV0fQjI8bdEVDy7lDEQz41uPxNmhk+cTBLjJIBgkvezu5wkWmv2sUZs/aWM=
+	t=1765317581; cv=none; b=XtUgn8MngHezVvFqF/ehoyeRJGPAowPosBHRPyqCoMM+94MAJLBnK0RxaPUbc+VNX3hEBeWNEzxG9AaOlfzYIvtZu3t1OjAwdFgzZ5FKvOk9kB3zTjVM1cqbE0/2C0pfrRf2rtu/S7MjSTf6vRWLXwPO0IbuWequhcy4do6Msjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765316919; c=relaxed/simple;
-	bh=sw7S6QNKpq51+MdDwVHRffGRclK4L0Mr3fF++ONOOAc=;
+	s=arc-20240116; t=1765317581; c=relaxed/simple;
+	bh=RZD2/pljY97pmtmDsBmNKwERTDH+7KpDHpokSEfLiR4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fVJg0NXPaJzxJaoijbfaplG2ENrkUsBEEevxp7sPLDfDWxbMbI0/fkczCBNFNbm+jdbHduUagZKVPA+S1pVOYpJf5UWUr9c2W2EhchQq9C2WXmqGVysUWbio0kAXsY17KGC0lfXcaSYNGBVk56sFOdNDTtUiFCsrGrYHUK0EHaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sNyVSVQ9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5B3C4CEF5;
-	Tue,  9 Dec 2025 21:48:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765316918;
-	bh=sw7S6QNKpq51+MdDwVHRffGRclK4L0Mr3fF++ONOOAc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sNyVSVQ9EkHUtESGUHILAWmW1MJXdhT+XR3sshHDKDLiDZqHyg03iumtYT/Y7ijZu
-	 WLR6M1azvUn0DvF2KUgyxDOHQjQCpUtpGeXWbyGBksqBA4SF8QWVVu9Bc6oRqvEOWk
-	 EG4pdaLIRWKQVUjlqI0oBaBWZmoitOeXFSbWEg7iG4uEGwlZf9axGHxKpEvAjRSt+w
-	 uFUZj9evWqE6zYJh0gJ9utd3OyLwTFYxE10sncn7nQNYeBoZSkVJJjars1NPF4RDgr
-	 OqiQljNhOJ8MeXxjENW+KwepY215tikqdfvQnhyhoXAW9rH0RZFp31vrJ/6Lugsd/R
-	 04Uj/LyS8j5bA==
-Message-ID: <959b3e2a-c11e-47b3-8d8a-03dd9ae18254@kernel.org>
-Date: Tue, 9 Dec 2025 22:48:34 +0100
+	 In-Reply-To:Content-Type; b=RPbg7gdUKe5aII6G9zg4/XTUyl5EQqgcpbiho57CGcknmHTZpg3QmZrEG/DyNkRrN2e6qvAdfsjhgKy2EbUYrm7mQ80R/C/cKLLtoEpwSpLjzyawacWSwc1ZIUGoWKL0vnL8GKnptPWh00Tg4UxqXM/7jvcOhdwFU7r3ovgKGzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MPqpmiBI; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-3ec47e4c20eso4067572fac.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 13:59:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765317579; x=1765922379; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DuZ2z2VCQmq7QpmkoDn96+JZ2qZdKN3RWULcV8zKlvo=;
+        b=MPqpmiBIK3/7ZXuXExLpLLolXAc8q7t5BEZGbnJ+1gDwtOvzsS3Vxvojjz4o926QHa
+         TaG8RJ/Nb2N/NYDjv6VZzbY7GgQBXEbRvZkkBugPB3/ztP03LlYl9CE/+0+90kii0H13
+         oUWOQHj41wwCDVhJrcC2RP3DmuHqYZX4X308nGEkd7b5OelezX5w5lxwp4DmjbWr6J5m
+         MtcdJhf8J/EsDd7x9QicdzArcD57np40linX2bWNFAfIaM47ILD88DLSkk5/kbw89Qcf
+         2bMQOJgdt0br5YnziieWhJZSxtgtAfTYmDhrw4+Pi3cr5M2406CDsvwVEbtdb45wbomZ
+         KrgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765317579; x=1765922379;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DuZ2z2VCQmq7QpmkoDn96+JZ2qZdKN3RWULcV8zKlvo=;
+        b=tO+gszknW2ou/pBjLedJPbDvl3039FutgMiwfTUpy1ygYoo/dJxJLyM+q5+qRtcAWs
+         sQXrAKD6VNclkAgnoRDs1FhkXdApNEE5zRKtM3/NA0nNrPJD1XAwX3vT+6u1uruXfanO
+         f5gO7mYDld76KCPD4Ti+CXXFJWL6b63m3OWizYytT4KqNErEZpZhs6kzCpOdNSWNd5b8
+         eq5Z/HP7xNKGUFvkTvt4m79HtvpwJCcd8Wp4sISrvuNEZfiPvjZ9ZF7FAgg1P4Dp6i0N
+         S3n1mlqTrT15yhGXnGpIJj7yRTqBqYxR1sK6ZiNQKrJo7hDRD+A/GozGzz2+4ET9PXLC
+         Zrjw==
+X-Forwarded-Encrypted: i=1; AJvYcCV+7Dn4kDPIJEh7Cbc730PXHRRkD7kb30ced4oOEephp6D2yblri/Hczg5ldpp93EC/6LTxB47h+CCGz3da@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAyA+jjnIve88pBORraeK7Ih1kswlMRi7K7+7qm0LobLC/+6ve
+	AnA2xQI2z2Q72K6f+hKQKnnmTGOAJWCQasXpkk1tWCiQ3J8SuPlar5df
+X-Gm-Gg: ASbGnct38et+I0jNUAAcvmDJUPaMSyTPzjv/x2e9erTJkw6QiN7u2PUKF4REiVdJcbZ
+	OMMFoFs2LmPtIcMot7fon6rZBQXy9MQJTz3nCdZu95tGS+LmK4OQ9hRQ7PZC46/XmIiyvf6JSIr
+	E5BY1koJv7slmPupRqCozrAd36MEfI7RS1a0Z4nDmBHEtT/CbhQifkhsvfmB0PVsGH9kp8h6477
+	2oEVXMBU4FM4Az1ISKcnOefFUJF7Pn6YrsneQJ3qun8DUMZAsIeIP8skk08ijVDqb9VWRdeskG1
+	4oQJnvXL/+PSHinBjlqAfIyWaTfpluV26dbY+5nzimVbWxpvDDeNPE2b7n5NeA8xhtALymoGH3R
+	FiVhymYYFPw1zi1MwAAx1XwbioIflHUy+o76We17LAI7jFqLh6f+vDBr/fLIKrRhsKrccDqIqYj
+	mYaILbrsfgiLk2+c7EoKVpy4NsgWU5OR4mdE911b4ir0VsNiG2pzEEhSOabCmRL14A2E/8MGBXL
+	ofyOvy3jok7l5iQ5eJQjMktzpcRXP+GR3J/46LcWcus
+X-Google-Smtp-Source: AGHT+IE4Gbwa3W9A/LyUYK0KU0rzXxcf4YOHEus7H8/fV0hevhduGimk6KLCjCZwgujIyaa2uRoaZA==
+X-Received: by 2002:a05:6820:2224:b0:659:9a49:8ffc with SMTP id 006d021491bc7-65b2ad359bfmr187014eaf.41.1765317578652;
+        Tue, 09 Dec 2025 13:59:38 -0800 (PST)
+Received: from [192.168.7.203] (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f50b5ed5a7sm11327996fac.22.2025.12.09.13.59.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Dec 2025 13:59:38 -0800 (PST)
+Message-ID: <b167f406-c5e6-437d-bb34-57f253258f54@gmail.com>
+Date: Tue, 9 Dec 2025 15:59:37 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +84,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Use 'usb-phy' for node names
-To: mr.nuke.me@gmail.com, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -58,70 +94,32 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 References: <20251209160755.3878878-1-mr.nuke.me@gmail.com>
  <xmserprghzwpcxt7ionh2ju7o3cudj5emtkycvurbz5obztzr5@lkllnnsag6ri>
  <23d3bc82-0909-42a4-b4a9-742834faec76@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <959b3e2a-c11e-47b3-8d8a-03dd9ae18254@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <23d3bc82-0909-42a4-b4a9-742834faec76@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: mr.nuke.me@gmail.com
+In-Reply-To: <959b3e2a-c11e-47b3-8d8a-03dd9ae18254@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 09/12/2025 17:26, mr.nuke.me@gmail.com wrote:
-> On 12/9/25 10:17 AM, Dmitry Baryshkov wrote:
->> On Tue, Dec 09, 2025 at 10:07:54AM -0600, Alexandru Gagniuc wrote:
->>> The devicetree spec allows node names of "usb-phy". So be more
->>> specific for the USB PHYs, and name the nodes "usb-phy" instead of
->>> just "phy".
+
+
+On 12/9/25 3:48 PM, Krzysztof Kozlowski wrote:
+> On 09/12/2025 17:26, mr.nuke.me@gmail.com wrote:
+>> On 12/9/25 10:17 AM, Dmitry Baryshkov wrote:
+>>> On Tue, Dec 09, 2025 at 10:07:54AM -0600, Alexandru Gagniuc wrote:
+>>>> The devicetree spec allows node names of "usb-phy". So be more
+>>>> specific for the USB PHYs, and name the nodes "usb-phy" instead of
+>>>> just "phy".
+>>>
+>>> Why? "phy" is more generic.
 >>
->> Why? "phy" is more generic.
+>> Hi Dmitry,
+>>
+>> The goal is to be more specific. I find usb-phy, ethernet-phy and others
 > 
-> Hi Dmitry,
-> 
-> The goal is to be more specific. I find usb-phy, ethernet-phy and others
+> We do not have such goal. Where did you find that goal documented?
 
-We do not have such goal. Where did you find that goal documented?
+If the goal isn't to be specific, clear, and readable, what is it? Why not be generic, and call subnodes node@, or dev@ ?
 
-Best regards,
-Krzysztof
+Alex
 
