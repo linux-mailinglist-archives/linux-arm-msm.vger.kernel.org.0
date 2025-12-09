@@ -1,269 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-84758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C2EFCAF527
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 09:48:52 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64173CAF542
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 09:49:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9980A3013EBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 08:48:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D6CAF301618A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 08:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D88820E6E2;
-	Tue,  9 Dec 2025 08:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 524CF2D5924;
+	Tue,  9 Dec 2025 08:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HTVzP5Ms"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EtYEUWXz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PPFR3oyb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EE0257827
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 08:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C911A9FA8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 08:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765270125; cv=none; b=AzgBxs6BQgKJCBVxjbOCX8qMe596XVZcfvQldAAc+WJCsaA7QYCsWCaGxOa1tmMGptXiBzlnelUBdFmbwexymAWP2bocesn9SDTurYFSzEttiMSv5Q6AVovQQIRtnJqFsrP+5ByvvG3zKGGMJiQNbL+IclluPDjSXPzUTKADBL4=
+	t=1765270179; cv=none; b=YNUt5pergLo+DHVu2sVs/FzXTwU2vIGwZzk0dbXKVdhA6qaYyZtDJsss44KZxP8GXsndz5fOiQHoyPiA2Yus1VDm43bdJoKwTXWpc+vWLwqSSJeuva/x/1Ld9o6k3rgJ7tkV8MTzzo8fAX2ovY7eY/h6KEZnh3Q/49vOXsy1OGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765270125; c=relaxed/simple;
-	bh=xxXWsfhWpFA1GJp9c27igTe9TDJA5SsjtabW2SCAI7o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Phl7HSLYJlujrDPcoKAU5urRzEwhZZAIxlYQPC2tKZh91Ky1cYXFURsLZ7xJ0Bt6amd/tdREvVweVewSQXOE05BSRv4iOazqa0ta7JCIjOEifhE2xK0AoTTnyYlFOhW4Q1rDbpGKZfT8marvag1byMx5XI7zQN0+DBpmlqlC+8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HTVzP5Ms; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47774d3536dso50361085e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 00:48:43 -0800 (PST)
+	s=arc-20240116; t=1765270179; c=relaxed/simple;
+	bh=a5Vim0BrbcwPv8QgKJG+3wBLnVVhBbQ9TN0/S48DZIc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pCKHVQkBAkvKXsw09dcjs6l3hLETvXO7uuO6bjwrsCALqm49fXPupVyCsvXpMdt9aVegd5ofaHzQ4tciTVE6gQhYygN01a5E8KxFy/yUXZNLJWBV42P6ko9Vl4PKzg3G8J4YExWV7rZsCdoNdKVnR+SOm79h21V6P+PaHs/V608=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EtYEUWXz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PPFR3oyb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B98jVbG2474961
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Dec 2025 08:49:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=X46Wu3saShZQkcIo66VWxt
+	Gdqg36MXA2fn1P6BA7hFM=; b=EtYEUWXzjvEzDi0qfA2QLcfPiLqWzSeSkuNNDZ
+	R0CuOEtRXgMKxkrCofiNEZ1Q4A9yJ+2KOYEe6Okc5e/B7xPPCZLmPqaOiKu7C/Lp
+	7fdefeQjrFaeTAplpaF7Sl16BtZgA5aZHGjLnIMyvB2wudzbuppVWtwlQhOvExXP
+	YHAoG8z8qFzwrGY2h31dMhTIA6FPYfBq85jAeOPQw5WR3zkODehE4LkYCTsZmgSo
+	xsAIwOsaNJJgzzK96xs9xRppNWDQLjSJ3o0xHC2Mw/2xM5/34tSexnuiMCHSDvDf
+	k6/f7PzRdkbAx8gT09UOTaTY7K6tUwBtbSlgmZQS7XbGRV7Q==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axesf0b32-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 08:49:36 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-29806c42760so160845295ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 00:49:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765270122; x=1765874922; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l/9hlXudcKRpY6hrJvKE8N2TDVYcPTRVJwW6FEeBPqA=;
-        b=HTVzP5MsBCly6vDTk9YynTinMV5UCQtRAeP1RJe4Ds/O26/sAYfittEtLDk0EgnAsT
-         Nu+mQ3grhRkBe0jYUsgojZ1X7eD/2uwjEHfvQTqlJ8FPRY6VTfxW0muWg2PFnRjo+BcR
-         PyWvvnRmSKti/dfZcXdlwULqBc/i7Bcd/HPvs3Jsy9sGSsSwbeeWwk64TXmekhAzU1Ko
-         bbsejDnnUvh4XF3S/bBuM6W8yM2eG93+pedgeb9sQ77FQi1kY6GY2/sQPS8gpdA8mlcA
-         esWfiiusUdp7Nzpzk33wgm9j7Zz+E+nWd7pY8crDygr2BKu6mH1Q0M2o7SghUUJdMTHC
-         aS1Q==
+        d=oss.qualcomm.com; s=google; t=1765270176; x=1765874976; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=X46Wu3saShZQkcIo66VWxtGdqg36MXA2fn1P6BA7hFM=;
+        b=PPFR3oybR6MBdQxLvqKZgXREN1f9xk/3A9y1f9771U949/dAILsk+HoQsxKd0gsKd0
+         HTr0UZTks1EJ58L66GZI98g2ZXfMRUGGV+SJZ2N0+2QANM+pqLOlxfBv16jJMOB9p/Yk
+         ysCVlA9UI2xd/+qCNuG9bWuGoxsOpvLmk6HkTl6AvLgQsYhDpZZOEYjsW/u/WCxZkrCA
+         1hgw7RDR1zHb0/izkUO3iVVNADGMFG4mx+/C6p4MZ13CH7w48PgfLIhzPSK8g3YS3R02
+         pTSd0qVIh7r37Z059nBZG9C5zlJIacZ6m97fJV4YLYSsGFL9GiuR2mSqNNSNQe2NFZLH
+         /CpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765270122; x=1765874922;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1765270176; x=1765874976;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l/9hlXudcKRpY6hrJvKE8N2TDVYcPTRVJwW6FEeBPqA=;
-        b=V0ci9NYdKXZD5dHqmBqUS8LR8Lr3TxSIFHk7he4hV3Uxl9I8DKGapt3SAaB/3lfyMD
-         gcO/WPW7JS/iMs/PBuDO360cbpJRCS+vPYpGI2k7zEqkpBuTMj+fJ9jmCmMzcRy0htZr
-         EGRjxpK9/SEUHd3s1RQSV4t0QFupJfVCDWMV/d+0Ry2pOOasDbyFwcqCt1vYUZUZ5d1w
-         TrfUn6cfYs7xAfyu3R7vbAHMyiLK7l/m20vwthvrgIQqa4pQJlvRDOXvNv74ZyndsAuu
-         ZUNPV68Gy14yKV7J+T+tw52En9m1rD7OQO9XgAizyfb3CKOSwHkX5RqeZGYyvGfkKh2q
-         L44A==
-X-Forwarded-Encrypted: i=1; AJvYcCXFf52uYgz91P92hbN0orOclBphkEivqyfngCGfC7saA92+LMe7FkLxXgAtIQ/bJ8OuvY0Etc2U5HYlzH4B@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD8aQ/NtG+vNjE11MUZrxrgeUkMpMBg1gDYXwGuV0nPAaMpCSF
-	jF6K5l+oySgOPWBmBnnK/+n36krONqEGEbtuhzDqnm0cyPnXhbJ2/m7/tLPULxB1USc=
-X-Gm-Gg: ASbGncvH5RA+KRzTdcyL5Vm0hnFdbVoXiZmJKrJ8KpugyJXO6MHs34viISutbqcpBfR
-	F94MD34Tci/BtHHxS93hPy4S9BRXLkMSQ742pe/WnpvreJoDSR8MUrNrW3obFlaIbnpfh+PFMWq
-	8sarQZVQgBl8my+lIQKeDVW15BGa+1AKZM2a0Dx6gO4ogQjHNTaVN/gqT4bvibJPxZw+yqYhUTV
-	ydvC4QR5cP8PO9MLDyU76f0zHhh4LU4kG1d+mDursXF0ZlZVI35dGvltLMbK2mWK7MNHy2amlbx
-	w3t347MzHStuTCUnA9Pqdc7dZ87U90nkmB8RBaTcns1GclXYGzoBHcXaua5OBLu0jCCKtNf3Pk1
-	3AV+RPNhUqREQHe73Prt9BRyQ5fyp/JRtvzQDPBix1ZZSpQEdYXGPRZ5/aidECPQtNk5j4KDZMG
-	Yk+boObMHM6A3rW722
-X-Google-Smtp-Source: AGHT+IEyUdXVoGKJ6G1vggWr7AbmYX2zJ5dyUaV8iLG3jzVKrJy/wBKa5LULXZdnqeSVsi3fwgMy3w==
-X-Received: by 2002:a05:600c:4fcd:b0:46f:a2ba:581f with SMTP id 5b1f17b1804b1-47a7fa4d3a5mr7260845e9.16.1765270121392;
-        Tue, 09 Dec 2025 00:48:41 -0800 (PST)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d222478sm29846951f8f.20.2025.12.09.00.48.40
+        bh=X46Wu3saShZQkcIo66VWxtGdqg36MXA2fn1P6BA7hFM=;
+        b=M6rhXlfE04yNv7EWYfb/TZsmnsC0kLs7bn6kSLgbCA6KutKEJm8OZBwXpJCIlK4xlO
+         X697/UwB2De+m+jIFCUNPuPrAXPrXdHV3N/NchxaJVHZQzxMAGplxbcXkw/tDvjF57Z5
+         57oYzlxcobZvCpXk419mZoOv6EABrH54vf5CN3tOcTi4G19y8xT1AZa1mqVxhatCcrNp
+         r0upCXMQ0xOsB0nS3Qu2ITJe0GR0Mmm/d2iD6fp/8z2TReyqRHdtz9cXtgXcD2XeZs+h
+         KwOkxJwvcfN51LzWJxjACuWS+iKjww69w11BKTXe1px39a4htrZzX8bQD0ljgUpL5mKx
+         RpnA==
+X-Forwarded-Encrypted: i=1; AJvYcCVFAIPpIvVdy+fSvicP/OSBElwVa5zmBlJXZq4w4jVYWMPkyeuZYJrEVJQ0w3elOy8/idlXouMXDKgXw65Y@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR6Be4Tz+8NPD/pXY21WuoM0FM5rw4nQ6htQTz5Ce9o1t7iwL4
+	qW2IsIqbZggQZ4l2ZhbTwPDG+/mNp9L5xxNrRWs04Zt3UPgfZTjCYdBB/x1fG6+XbyGhC02Bive
+	+cQ0ffjRHbnMA73C3fadiFcmcKeVJm+QpZpFaHuhocKqc7ku21oHYnvkkopXnpMyq2x55
+X-Gm-Gg: AY/fxX6kPGdZYvHMDSOHj6mjpspAwYqPJqEPsE6zttPyAp03xSHnnaj0D+4ulspo5bW
+	3VGjf4dTMhwcUqRZBPYRUgKLz1+MtTzJHndKqeuglVG/NZfGPNE+r+610iP8dThRDIw8uDwGXGl
+	3pYNRUzosYHw85UhaqEvBBRTb8Sjv1xthk3jy3nxpik2uXKQ/fjYnPigUJE1sHhDprcuyqT7ncP
+	Yr/VTh/aFPIjs79n7TGxKcjmMY6L0t1dv97PLdxpLivxMBilS51GkoRSWixGhyvz531ISrxUT1U
+	lEpHS09DK0BsEV/XTyQMWtmaMS++xEWIrnakCbML9Ol7f9FvV0nbFm3qZugLVjV0Ct9amCLjtHL
+	OTfbqHM73e3y8gn9f/UgdBtB/hGpApFeRYg==
+X-Received: by 2002:a17:902:ce06:b0:290:c516:8c53 with SMTP id d9443c01a7336-29df5deb202mr110515535ad.40.1765270176049;
+        Tue, 09 Dec 2025 00:49:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNWr1TINzdKiqUQJUgVV9jp3nBa/qM+wfoA5AKaoT1hxzDBA//SZsVb7LDQkMOU7ySs0gVvQ==
+X-Received: by 2002:a17:902:ce06:b0:290:c516:8c53 with SMTP id d9443c01a7336-29df5deb202mr110515285ad.40.1765270175577;
+        Tue, 09 Dec 2025 00:49:35 -0800 (PST)
+Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29dae99f1cfsm148615065ad.55.2025.12.09.00.49.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 00:48:40 -0800 (PST)
-Date: Tue, 9 Dec 2025 11:48:37 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev, Sriram Dash <sriram.dash@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
-	jack.pham@oss.qualcomm.com, faisal.hassan@oss.qualcomm.com,
-	krishna.kurapati@oss.qualcomm.com, andersson@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Sriram Dash <sriram.dash@oss.qualcomm.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Shazad Hussain <shazad.hussain@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] usb: dwc3: qcom: Support firmware-managed resource
- states for power management
-Message-ID: <202512060556.pgIgFNxx-lkp@intel.com>
+        Tue, 09 Dec 2025 00:49:35 -0800 (PST)
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+Subject: [PATCH v5 0/4] Add support for Clock controllers for Kaanapali
+Date: Tue, 09 Dec 2025 14:19:23 +0530
+Message-Id: <20251209-gcc_kaanapali-v3-v5-0-3af118262289@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251127-controller_scmi_upstream-v1-2-38bcca513c28@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJPiN2kC/33N0QqDIBQG4FcJr2doqdNd7T3GGCezklU23WQje
+ vdZV7uIweHA/8P5zoyC8dYEdMpm5E20wboxBX7IkO5gbA22dcqoIAWntKC41fp2Bxhhgt7iWGK
+ oFDWUCF7VDKWzyZvGvjfyck25s+Hp/Gf7EMu1/YOlIVgq4IopyYGJswshf7yg124Y8rTQakb26
+ 4gdhyWHNOZY1kIqadSOsyzLF9xpjTL/AAAA
+X-Change-ID: 20251121-gcc_kaanapali-v3-ab91e1065bd4
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-aa3f6
+X-Proofpoint-ORIG-GUID: 2SWjwA5qsqtPWTs9l8JII7AQILOxu28w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDA2MSBTYWx0ZWRfX6eft3kyNax/i
+ vXL/O7CireWbQYH8Q4nuG2uma02Lu5higCR8irPbR33yH/YGTDOm4yALjJZ61TNeV1s6efUDSiq
+ zt75MZtO5j1okE/o5mb/UWNeH24vdWBfmQOlJt/2gJiHozEfpUGam8WE2AKShgzaKBzcmjo4/gp
+ o0yJzg+/hJua1hLE1wetg84IDJDhgv6LD/XokJ6ZqOjPJh4Cm0kYYWnF1hClAgJM8hEUFYO33KR
+ /ud+/XqKAM6IjXpzGtWQZ5LnF4T0mxUNjXsGJ4Aq8O16Gj7RArZXipz9WYREPA27DOpCHSkPHqb
+ a6hw0eWryYcwOPJ26Dv9wQ8WSwwBVTDS6pZ6+83y8lNYMeKcHVxf1wVTcTMkU6HiLtFKLkn2tMr
+ hTVi7Rvqcdcf9U8YlVjLI9E++Ki1Rg==
+X-Authority-Analysis: v=2.4 cv=fMc0HJae c=1 sm=1 tr=0 ts=6937e2a0 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=Loy5EBZihN6W5EKTTqQA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: 2SWjwA5qsqtPWTs9l8JII7AQILOxu28w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-09_02,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512090061
 
-Hi Sriram,
+Add support for Global clock controller(GCC), TCSR and the RPMH clock
+controller for the Qualcomm Kaanapali SoC.
 
-kernel test robot noticed the following build warnings:
+Kaanapali(Snapdragon SoC from Qualcomm):
+https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sriram-Dash/dt-bindings-usb-qcom-snps-dwc3-Add-support-for-firmware-managed-resources/20251127-183548
-base:   c77a6544d8a2364e4bee1b52890f577be27b7296
-patch link:    https://lore.kernel.org/r/20251127-controller_scmi_upstream-v1-2-38bcca513c28%40oss.qualcomm.com
-patch subject: [PATCH 2/2] usb: dwc3: qcom: Support firmware-managed resource states for power management
-config: nios2-randconfig-r071-20251204 (https://download.01.org/0day-ci/archive/20251206/202512060556.pgIgFNxx-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 8.5.0
+Changes in v5:
+ - update the commit message for the glymur clock pmic resources to
+   describe the problem statement. [Dmitry].
+ - Move the clock definitions for clk1 & clk2 before the clk3.
+ - Add RB-by tag from [Konrad] for RPHCC for Glymur and Kaanapali
+ - Link to v4: https://lore.kernel.org/r/20251126-gcc_kaanapali-v3-v4-0-0fe73d6898e9@oss.qualcomm.com
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202512060556.pgIgFNxx-lkp@intel.com/
+Changes in v4:
+ - Add the patchset from https://lore.kernel.org/lkml/20251125-glymur_rpmhcc_fix-v1-1-60081b3cce7f@oss.qualcomm.com
+   to this series.
+	- Remove the 'fixes' tag comment [Dmitry]
+	- update the clock names in the glymur desc.
+ - Update 'max_register' for tcsrcc to 0x3d000.
+ - Add RB-by tag from [Konrad, Dmitry, Abel] for TCSRCC
+ - Link to v3: https://lore.kernel.org/r/20251121-gcc_kaanapali-v3-v3-0-89a594985a46@oss.qualcomm.com
 
-smatch warnings:
-drivers/usb/dwc3/dwc3-qcom.c:801 dwc3_qcom_probe() error: uninitialized symbol 'ret'.
+Changes in v3:
+ - Update the new RPMH clocks to use 'clkN' convention which was not
+   moved completely in v2 patchset [Dmitry].
+ - Use lower case of the target name in Kconfig and Driver code [Dmitry]
+ - Update the TCSRCC clock offsets as per the latest discussion for
+   mapping the TCSR base to '0x1fc0000'.
+ - Add RB tag from [Konrad] for GCC
+ - Link to v2: https://lore.kernel.org/r/20251030-gcc_kaanapali-v2-v2-0-a774a587af6f@oss.qualcomm.com
 
-vim +/ret +801 drivers/usb/dwc3/dwc3-qcom.c
+Changes in v2:
+  - Update the commit message for all dt-bindings to incorporate
+    "SoC/platform" inplace of drivers [Krzysztof]
+  - Add RB tag from [Krzysztof] for dt-bindings
+  - Split the TCSRCC to a new driver instead of reusing the SM8750
+    driver with offset updates [Dmitry]
+  - Update the new RPMH clocks to use 'clkN' convention [Dmitry]
+  - Add RB tag from [Dmitry] for GCC
+  - This series does not have any strict PLL code dependencies [Bjorn], thus
+    drop them and will be added in the Multimedia clock controller
+    series. Drop the following patches.
+	- Update the PLL support for cal_l
+	- Add support for controlling Pongo EKO_T PLL
+	- Add support for controlling Rivian PLL
+  - Link to v1: https://lore.kernel.org/lkml/20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com/
 
-21188e8d6d7590 Krishna Kurapati   2025-09-07  668  
-2bc02355f8ba2c Lee Jones          2019-06-17  669  static int dwc3_qcom_probe(struct platform_device *pdev)
-2bc02355f8ba2c Lee Jones          2019-06-17  670  {
-1881a32fe14df8 Bjorn Andersson    2025-04-14  671  	struct dwc3_probe_data	probe_data = {};
-2bc02355f8ba2c Lee Jones          2019-06-17  672  	struct device		*dev = &pdev->dev;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  673  	struct dwc3_qcom	*qcom;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  674  	struct resource		res;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  675  	struct resource		*r;
-e33ebb133a245a Bjorn Andersson    2025-05-08  676  	int			ret;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  677  	bool			ignore_pipe_clk;
-e3fafbd8e36530 Johan Hovold       2022-08-04  678  	bool			wakeup_source;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  679  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  680  	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  681  	if (!qcom)
-a4333c3a6ba9ca Manu Gautam        2018-05-09  682  		return -ENOMEM;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  683  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  684  	qcom->dev = &pdev->dev;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  685  
-79456073227880 Sriram Dash        2025-11-27  686  	qcom->fw_managed = device_get_match_data(dev);
-79456073227880 Sriram Dash        2025-11-27  687  	if (qcom->fw_managed) {
-79456073227880 Sriram Dash        2025-11-27  688  		ret = dev_pm_opp_set_level(qcom->dev, DWC3_QCOM_FW_MANAGED_INIT);
-79456073227880 Sriram Dash        2025-11-27  689  		if (ret < 0)
-79456073227880 Sriram Dash        2025-11-27  690  			return ret;
-79456073227880 Sriram Dash        2025-11-27  691  	}
-79456073227880 Sriram Dash        2025-11-27  692  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  693  	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  694  	if (IS_ERR(qcom->resets)) {
-79456073227880 Sriram Dash        2025-11-27  695  		dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
-60d5b71933c4f1 Andrew Halaney     2023-06-05  696  			      "failed to get resets\n");
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+---
+Taniya Das (4):
+      clk: qcom: rpmh: Update the clock suffix for Glymur
+      clk: qcom: rpmh: Add support for Kaanapali rpmh clocks
+      clk: qcom: Add TCSR clock driver for Kaanapali
+      clk: qcom: Add support for Global clock controller on Kaanapali
 
-ret = dev_err_probe()
+ drivers/clk/qcom/Kconfig            |   17 +
+ drivers/clk/qcom/Makefile           |    2 +
+ drivers/clk/qcom/clk-rpmh.c         |   60 +-
+ drivers/clk/qcom/gcc-kaanapali.c    | 3541 +++++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/tcsrcc-kaanapali.c |  141 ++
+ 5 files changed, 3751 insertions(+), 10 deletions(-)
+---
+base-commit: 88cbd8ac379cf5ce68b7efcfd4d1484a6871ee0b
+change-id: 20251121-gcc_kaanapali-v3-ab91e1065bd4
 
-79456073227880 Sriram Dash        2025-11-27  697  		goto resources_off;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  698  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  699  
-e33ebb133a245a Bjorn Andersson    2025-05-08  700  	ret = devm_clk_bulk_get_all(&pdev->dev, &qcom->clks);
-e33ebb133a245a Bjorn Andersson    2025-05-08  701  	if (ret < 0)
-e33ebb133a245a Bjorn Andersson    2025-05-08  702  		return dev_err_probe(dev, ret, "failed to get clocks\n");
-e33ebb133a245a Bjorn Andersson    2025-05-08  703  	qcom->num_clocks = ret;
-e33ebb133a245a Bjorn Andersson    2025-05-08  704  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  705  	ret = reset_control_assert(qcom->resets);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  706  	if (ret) {
-a4333c3a6ba9ca Manu Gautam        2018-05-09  707  		dev_err(&pdev->dev, "failed to assert resets, err=%d\n", ret);
-79456073227880 Sriram Dash        2025-11-27  708  		goto resources_off;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  709  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  710  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  711  	usleep_range(10, 1000);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  712  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  713  	ret = reset_control_deassert(qcom->resets);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  714  	if (ret) {
-a4333c3a6ba9ca Manu Gautam        2018-05-09  715  		dev_err(&pdev->dev, "failed to deassert resets, err=%d\n", ret);
-ef8abc0ba49ce7 Krishna Kurapati   2025-07-09  716  		return ret;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  717  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  718  
-e33ebb133a245a Bjorn Andersson    2025-05-08  719  	ret = clk_bulk_prepare_enable(qcom->num_clocks, qcom->clks);
-e33ebb133a245a Bjorn Andersson    2025-05-08  720  	if (ret < 0)
-ef8abc0ba49ce7 Krishna Kurapati   2025-07-09  721  		return ret;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  722  
-1881a32fe14df8 Bjorn Andersson    2025-04-14  723  	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-4c0fca65d10548 Dan Carpenter      2025-04-23  724  	if (!r) {
-4c0fca65d10548 Dan Carpenter      2025-04-23  725  		ret = -EINVAL;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  726  		goto clk_disable;
-4c0fca65d10548 Dan Carpenter      2025-04-23  727  	}
-1881a32fe14df8 Bjorn Andersson    2025-04-14  728  	res = *r;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  729  	res.end = res.start + SDM845_QSCRATCH_BASE_OFFSET;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  730  
-1881a32fe14df8 Bjorn Andersson    2025-04-14  731  	qcom->qscratch_base = devm_ioremap(dev, res.end, SDM845_QSCRATCH_SIZE);
-4c0fca65d10548 Dan Carpenter      2025-04-23  732  	if (!qcom->qscratch_base) {
-4c0fca65d10548 Dan Carpenter      2025-04-23  733  		dev_err(dev, "failed to map qscratch region\n");
-4c0fca65d10548 Dan Carpenter      2025-04-23  734  		ret = -ENOMEM;
-41717b88abf1ca Krishna Kurapati   2024-03-05  735  		goto clk_disable;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  736  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  737  
-2dc9f137e19426 Bjorn Andersson    2025-04-14  738  	ret = dwc3_qcom_setup_irq(qcom, pdev);
-2bc02355f8ba2c Lee Jones          2019-06-17  739  	if (ret) {
-2bc02355f8ba2c Lee Jones          2019-06-17  740  		dev_err(dev, "failed to setup IRQs, err=%d\n", ret);
-41717b88abf1ca Krishna Kurapati   2024-03-05  741  		goto clk_disable;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  742  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  743  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  744  	/*
-a4333c3a6ba9ca Manu Gautam        2018-05-09  745  	 * Disable pipe_clk requirement if specified. Used when dwc3
-a4333c3a6ba9ca Manu Gautam        2018-05-09  746  	 * operates without SSPHY and only HS/FS/LS modes are supported.
-a4333c3a6ba9ca Manu Gautam        2018-05-09  747  	 */
-a4333c3a6ba9ca Manu Gautam        2018-05-09  748  	ignore_pipe_clk = device_property_read_bool(dev,
-a4333c3a6ba9ca Manu Gautam        2018-05-09  749  				"qcom,select-utmi-as-pipe-clk");
-a4333c3a6ba9ca Manu Gautam        2018-05-09  750  	if (ignore_pipe_clk)
-a4333c3a6ba9ca Manu Gautam        2018-05-09  751  		dwc3_qcom_select_utmi_clk(qcom);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  752  
-21188e8d6d7590 Krishna Kurapati   2025-09-07  753  	qcom->mode = usb_get_dr_mode(dev);
-21188e8d6d7590 Krishna Kurapati   2025-09-07  754  
-21188e8d6d7590 Krishna Kurapati   2025-09-07  755  	if (qcom->mode == USB_DR_MODE_HOST) {
-21188e8d6d7590 Krishna Kurapati   2025-09-07  756  		qcom->current_role = USB_ROLE_HOST;
-21188e8d6d7590 Krishna Kurapati   2025-09-07  757  	} else if (qcom->mode == USB_DR_MODE_PERIPHERAL) {
-21188e8d6d7590 Krishna Kurapati   2025-09-07  758  		qcom->current_role = USB_ROLE_DEVICE;
-21188e8d6d7590 Krishna Kurapati   2025-09-07  759  		dwc3_qcom_vbus_override_enable(qcom, true);
-21188e8d6d7590 Krishna Kurapati   2025-09-07  760  	} else {
-21188e8d6d7590 Krishna Kurapati   2025-09-07  761  		if ((device_property_read_bool(dev, "usb-role-switch")) &&
-21188e8d6d7590 Krishna Kurapati   2025-09-07  762  		    (usb_get_role_switch_default_mode(dev) == USB_DR_MODE_HOST))
-21188e8d6d7590 Krishna Kurapati   2025-09-07  763  			qcom->current_role = USB_ROLE_HOST;
-21188e8d6d7590 Krishna Kurapati   2025-09-07  764  		else
-21188e8d6d7590 Krishna Kurapati   2025-09-07  765  			qcom->current_role = USB_ROLE_DEVICE;
-21188e8d6d7590 Krishna Kurapati   2025-09-07  766  	}
-21188e8d6d7590 Krishna Kurapati   2025-09-07  767  
-21188e8d6d7590 Krishna Kurapati   2025-09-07  768  	qcom->dwc.glue_ops = &dwc3_qcom_glue_ops;
-21188e8d6d7590 Krishna Kurapati   2025-09-07  769  
-1881a32fe14df8 Bjorn Andersson    2025-04-14  770  	qcom->dwc.dev = dev;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  771  	probe_data.dwc = &qcom->dwc;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  772  	probe_data.res = &res;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  773  	probe_data.ignore_clocks_and_resets = true;
-7298c06d58e23c Frank Li           2025-09-29  774  	probe_data.properties = DWC3_DEFAULT_PROPERTIES;
-1881a32fe14df8 Bjorn Andersson    2025-04-14  775  	ret = dwc3_core_probe(&probe_data);
-2bc02355f8ba2c Lee Jones          2019-06-17  776  	if (ret)  {
-1881a32fe14df8 Bjorn Andersson    2025-04-14  777  		ret = dev_err_probe(dev, ret, "failed to register DWC3 Core\n");
-41717b88abf1ca Krishna Kurapati   2024-03-05  778  		goto clk_disable;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  779  	}
-a4333c3a6ba9ca Manu Gautam        2018-05-09  780  
-bea46b9815154a Sandeep Maheswaram 2020-07-27  781  	ret = dwc3_qcom_interconnect_init(qcom);
-bea46b9815154a Sandeep Maheswaram 2020-07-27  782  	if (ret)
-1881a32fe14df8 Bjorn Andersson    2025-04-14  783  		goto remove_core;
-bea46b9815154a Sandeep Maheswaram 2020-07-27  784  
-e3fafbd8e36530 Johan Hovold       2022-08-04  785  	wakeup_source = of_property_read_bool(dev->of_node, "wakeup-source");
-e3fafbd8e36530 Johan Hovold       2022-08-04  786  	device_init_wakeup(&pdev->dev, wakeup_source);
-d9be8d5c5b032e Sandeep Maheswaram 2022-06-13  787  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  788  	qcom->is_suspended = false;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  789  
-a4333c3a6ba9ca Manu Gautam        2018-05-09  790  	return 0;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  791  
-1881a32fe14df8 Bjorn Andersson    2025-04-14  792  remove_core:
-1881a32fe14df8 Bjorn Andersson    2025-04-14  793  	dwc3_core_remove(&qcom->dwc);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  794  clk_disable:
-e33ebb133a245a Bjorn Andersson    2025-05-08  795  	clk_bulk_disable_unprepare(qcom->num_clocks, qcom->clks);
-a4333c3a6ba9ca Manu Gautam        2018-05-09  796  
-79456073227880 Sriram Dash        2025-11-27  797  resources_off:
-79456073227880 Sriram Dash        2025-11-27  798  	if (qcom->fw_managed)
-79456073227880 Sriram Dash        2025-11-27  799  		dev_pm_opp_set_level(qcom->dev, DWC3_QCOM_FW_MANAGED_EXIT);
-79456073227880 Sriram Dash        2025-11-27  800  
-a4333c3a6ba9ca Manu Gautam        2018-05-09 @801  	return ret;
-a4333c3a6ba9ca Manu Gautam        2018-05-09  802  }
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Taniya Das <taniya.das@oss.qualcomm.com>
 
 
