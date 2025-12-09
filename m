@@ -1,191 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-84744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1F80CAF2C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 08:39:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34F74CAF2CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 08:40:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 54E0B308DADA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 07:38:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4041030281A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 07:39:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51F6F2BD587;
-	Tue,  9 Dec 2025 07:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6921D2868A2;
+	Tue,  9 Dec 2025 07:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tPfrjgpN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XTWGrODb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IWgM7Vq/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4353E27B348
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 07:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC011DE3AD
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 07:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765265889; cv=none; b=n6/nX5amnEegXezEJes+fUuezQKckSw1d95e49TyJIqqeLDW1hXQ5IiqjK+o6ApJqe1Id07ukbr/pOQ3YSgKifInGw7uGJFHXBTkpIN33ZUTNY7CLZhTvkGRMuhUCM5RE+yDTQMp/Q5JzsJeKtZCkOk3rcIClk0QB1+RPAX+CfQ=
+	t=1765265952; cv=none; b=tC/BK8SFJ0iI5pdByj8KlmaAIDsG62xHYZuY+w+ZEmspntvS3guVqXzJGJD22JUJ06m/nKnNPq6UKuoCJfLgpfU5pdH6WUTQ1gJ8fc6m2JZ4mi7roiwdfph2QgR1KqOgOCF+MKrGb50F97rYhos6Zzo0AmXGsjcOtatqcEVhFko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765265889; c=relaxed/simple;
-	bh=5FWnBXgBAAFC2ePZdJTm6XZI7J4x7B4/eMd/mKz3FbI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L1tRbHHoLqObgWf1/+oDwnHk8aEhO1C3l3p2VQFui45B0IasPIvFz+uR4Amjeixj2mVDZH6EIv9A/nucTG5mjbzHDTu3cm0aWa2XOmAwEW0FzpuNsD4UrouuDXhZsKjWpCUp4a+uIw2b+Nryg+MUTpkzZEcnlfCjfNR3AfomXx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tPfrjgpN; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-477ba2c1ca2so68759425e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 23:38:06 -0800 (PST)
+	s=arc-20240116; t=1765265952; c=relaxed/simple;
+	bh=ah6wP3SZ0f93WP2kXQrQnRBuajnyB96mNLahnVyoto0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WkqoeGNuwd3n3hUfSB7xHDHUndPWKHrtUst/bJDjBTzSGLo1NpJu/F/TeAiWGOZxfrxgr19MsusrwXJa4DyeHYPKNBWhNRKiUpmlJTKKPkaI2UEMlhuBTmVNdqJSTV/9zWn4UYgSdIMv1ucfuRkvSeyn3YlawFeT37jtfQx16oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XTWGrODb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IWgM7Vq/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B8NXCNZ2618913
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Dec 2025 07:39:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=EjJz1tRuwtN5atCq/+7pA7hs
+	dVbohxKB1T3yS1TzF14=; b=XTWGrODbCINES9+1Dp2U+4EybrfIMuIXZZhLpuu3
+	GsY/aXuTdbczirkcr6pD40Xvg+MMRwDXqjd9vFHiTwr1wC5iZxXkCF7Ay44qNre6
+	Debca2OLvZ1Zlz+XwfPYQfdqo7LeLHDMz6FY5G3lcFBNJJrJZdpNjofFT4QmYKZH
+	SDoRV6eDOeqBXmGl8CA8U2Whni936wNn1wBtgMu8sY1xuCWl9QNInM21C7j0op54
+	d5fNweaWh5keN95q3sA48QCAtNLx0ZUDs7zxzD1Dv0FDtpaCs35aCh8X/S2EEfj6
+	agBheqENWOLiqYo0OaIJczaazd3+6ArIKH+udpqWgcpX8g==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ax76u1cc1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 07:39:09 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-55b0cfe81afso9587608e0c.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 23:39:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765265885; x=1765870685; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xq55UvTaHMmJFp6V55KmSaDw+pSQzH+YqvUppFex2wQ=;
-        b=tPfrjgpNjguKFAdaCDgQG5zSrQITbu6ZdzqFUoEAoqa+rfn826IthG2dlMwMAOyaiY
-         mn94pmjvQcYdGVE+OFNoBzWJ4mGxgoxPZQ3DKVmrX12zy73X1YPzfpPK4G1CKs4vOLyh
-         DR5W4Uc8bOXgjdGP3tHmnwEny7Zv7o8bAdN9oIOt7IbUlmXwDgDti2Vo8wtYgPVsf36Q
-         GLo6el7gw5tuQChdxJIqKH8pgRgn+DOkvACNf+ejhsBpJW2GXr0bO7c3eNcstDwxC+bo
-         gwZVt2sztulUa5q/By9iCJLB4xkAC2eEcvozr60rJxjYHcpHqJ5oG3Kg9grifCCvnsiC
-         eYNw==
+        d=oss.qualcomm.com; s=google; t=1765265949; x=1765870749; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EjJz1tRuwtN5atCq/+7pA7hsdVbohxKB1T3yS1TzF14=;
+        b=IWgM7Vq/gm+ubE66mbI9X/jlWLxJOpreNUfUUm1ri+g7ljLu5CmEP+qDKGbnqzkE2/
+         p7uYEM8TpdUVEnmjpbAND35B9AFk3qOW2lWvDrTz5EvJiZEl43qQBwx+o0gTIwOgPlOt
+         tAgHcFo1+B3Z06ywbZNZQezD8WPeeiPJ9IcW9am3ACZrCUyXdVyst/RLhLAy4JAvmTbS
+         3+dIKpgS0MGWZKQGAHdEKEFhCZgiSUmBPgqpb50MQJ06kBBwvKwsioDQTwb6A8rnH1td
+         QydZyx24OeeVt8mrnsZCmox6SpZoyFVl17l0hnUOglITHSf5nOjvcGYt/Fjc7HO81FmY
+         5NTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765265885; x=1765870685;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xq55UvTaHMmJFp6V55KmSaDw+pSQzH+YqvUppFex2wQ=;
-        b=ZjwB95TVTyKLd4gXhN2U13Hjsr3hoG2sI7iO5n1ZvWjQAubwthfLlPcMPel3jUYqcV
-         zPUq1Qk0AHPikoI6KrToyFH9yjGZPjL9/daf3XxDdncZC01YDfR/MpE1x4vwHpXHlFoY
-         EuTMi9RMLLCIpglYRaOIj2WY8x8rWbJeqY7JbhdNEr/hKloc2powNcM/8rTbXjx+apqi
-         XDQOycC1zlMky0wgj3Sz/tqDRAqoVCKaVGR35Q7qy6E15w6jw+lPWiCmkiqXo+hlS1Ap
-         2mUxOtpj4OW2rYhX1KnMQYWi7KeaXEwTnCbzcjIQjG6PqnzjEXuR107tBc/tQ0EfhL6L
-         VSOg==
-X-Gm-Message-State: AOJu0YxaieDivABAeWycgYUto+7qd393QGXIsNEVIoLSV2p0G9C29BU/
-	vw2aJU9EMEyouuSEBqYRqH79LyFWxUdHP3VwvOLBT2IIG5nuTQt5GnUm1thLhxnAl4I=
-X-Gm-Gg: ASbGncuyRCks/gXxpv1zRIozKgLKejI6LfNTkfKrJ9Iun1+irVQCUo5MXgxmcR2Lj5C
-	zR2MNLjJ92CC/ZYyDDqH++Ni7ks9XLw4+HLyS1pqy1yD7LrtapzfR1Ql4QnkBi9c6rpvgtP/zSU
-	/uAsZdT/BcZZ/hsx4oHiAYmSVJy2WX8JoIe06fxYBLqNFW546cTM6rszlhGS+bnWMB0YBR6azG6
-	2cmA0BiQhEPi3hZlBykKXMxdQ7VJLrF2PNAsHDbHcbAV1PkyP8OVTzzO4Fne9gzpFNsrKVmVtpO
-	OyCPDOun64PNv2pPUQpR44QE4m7t6rvsa0iID87anvMAr5oSog1bKHgJJLHdZTVrjlU3CTieYnG
-	YjVB9MMMAbES2qrewlGmN89X/aDOkrdW3/tBCP/t89ml7Hy85ewhLlk1wJHln1AlOh5BrxJVGvK
-	2Oc92m2HvOrh6SK1eGpA==
-X-Google-Smtp-Source: AGHT+IGWg3iRoB87s0k83hrF3/oQIOag62oRtZ0NZx8Xeg+BiyDiUvjjoJNVRT7AvNIF69rAbVtyYg==
-X-Received: by 2002:a05:600c:1991:b0:477:9e8f:dae8 with SMTP id 5b1f17b1804b1-47939c8bb40mr119687785e9.0.1765265885579;
-        Mon, 08 Dec 2025 23:38:05 -0800 (PST)
-Received: from orion.home ([2a02:c7c:5e34:8000:c69d:7dc4:d0c1:9de5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a7d707702sm27851935e9.9.2025.12.08.23.38.04
+        d=1e100.net; s=20230601; t=1765265949; x=1765870749;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EjJz1tRuwtN5atCq/+7pA7hsdVbohxKB1T3yS1TzF14=;
+        b=MJAPgciAx3UZL20A8ulQc74YNrw/SYNhwB1+uL2afYXNddoK2Cm1Cl07KBe7DvNYbC
+         j2FK8h4WVceZLEO0yy9ctkjalrYMyh0jSi4stqi5Dj1dFJpmWDRqWwNHxM73iWpBnKyz
+         x15SwE+euXV9hnqFLMipuqiyS0tVgRz3XQnCYxj6yKPAlEwDbNzNNchMP4RdLLfxSPLa
+         EEGAbcCt4JASSxJRua8wSaJlqsbqFzfTb0WUsP8/t3vMX8M1DSXHkeWP4jxloGWDnyrT
+         eOIIUBhEaKnUoBGl15vUWr8+pp2nJrxhXr+OQ7py5gCvarhWjJzeYQ4rJxvzyIWBLlsD
+         WMpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUwB3gk21wBMibih5nqQPhkeYvPvpus7HlR/gih/PqUcX7z36w1V9p2Aa3IS1XFRYPi03zrtezyzguXt679@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyh5NtKogp6AFHQsZ9uMHRecmpjAJ94BjeszUUtoBsLcnx36iIN
+	o70Jhf8iBxwtlmDqBYQ2uefvGJUz+P9I88h2U0VT8t1+aupENTIcFai2JI+l+EsGxPJs7baHmcR
+	Bhfq9tGHVWHtLGDGmvU6kMMG8+87RldNPb3Sjmii7jMrmvFnUw8oq2EYsrEdASVtL9Has
+X-Gm-Gg: ASbGncumL7eSD0x6/IZr9E3eYDRx9/wRZUVBEYJh7vCkrLiAhAbTqHexq/YPFktptlZ
+	Oj6zEZl1/sxQTS+sP8AJGRROXHNOpLsrqaAP76p10rbqlFKGKZ9a/ozdwfFwi2kz+Vd8o0fHyTg
+	AGdH7vEyeJfSjBnOOdQAu/3/9ypjLhbtmQRY5+EGzwsSTor8Mr3mGjUe3jIu5sy/A71TLx9/23O
+	IZyQ4rdEUSVqmS89sVV4hNQth2hNMZGRwdWnRuEjyf5P9EABVhA2wbGVxy9VH12Ki7SZwnESJ6V
+	44ZxLIpd1BylwGPxm62DY4FM3sHz/BNbvowSW+elA96y7/R3Xf10RrlXCkt5rCWRC8eTABTBc3M
+	ulAF5RcmaT6HrsFjOvxje9jcsC1V9tJK3uWPcz8RAynYqvDNcAVrEvBx0GeFw9qJXDQ74dGHWd4
+	6uGuPfmRjN5vGqg10CVWax16I=
+X-Received: by 2002:a05:6122:4f93:b0:55b:305b:51b7 with SMTP id 71dfb90a1353d-55e84743ae5mr2931632e0c.20.1765265948950;
+        Mon, 08 Dec 2025 23:39:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFyA+UzcZItQsnVtRuB0AxpSrAsjx3CIvnk3VhGYHYn7aFiUrngUEJCmwR5ZKqOshFA/bZhnA==
+X-Received: by 2002:a05:6122:4f93:b0:55b:305b:51b7 with SMTP id 71dfb90a1353d-55e84743ae5mr2931625e0c.20.1765265948473;
+        Mon, 08 Dec 2025 23:39:08 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37e6fe6bb67sm44053611fa.6.2025.12.08.23.39.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 23:38:05 -0800 (PST)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Tue, 09 Dec 2025 07:38:00 +0000
-Subject: [PATCH RFT v3 2/2] arm64: dts: qcom: sm8750: add ADSP
- fastrpc-compute-cb nodes
+        Mon, 08 Dec 2025 23:39:07 -0800 (PST)
+Date: Tue, 9 Dec 2025 09:39:05 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Val Packett <val@packett.cool>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Udit Tiwari <quic_utiwari@quicinc.com>,
+        Neeraj Soni <quic_neersoni@quicinc.com>
+Subject: Re: [PATCH v4] arm64: dts: qcom: x1e80100: Add crypto engine
+Message-ID: <vvbtsf4qw7c7ymshxjdxlprtw3s3fctldvpw6zw4h5ny43wmju@ln7ecfh7y34j>
+References: <20251208-crypto_dt_node_x1e80100-v4-1-f5d03bb2c501@oss.qualcomm.com>
+ <2cf32f08-99e9-48c2-ad0f-2e579d50f7a9@oss.qualcomm.com>
+ <e51d4fd8-80bf-4774-ba93-66d9a6761654@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251209-sm8750-fastrpc-adsp-v3-2-ccfff49a8af9@linaro.org>
-References: <20251209-sm8750-fastrpc-adsp-v3-0-ccfff49a8af9@linaro.org>
-In-Reply-To: <20251209-sm8750-fastrpc-adsp-v3-0-ccfff49a8af9@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>, 
- Ekansh Gupta <quic_ekangupt@quicinc.com>, 
- Alexey Klimov <alexey.klimov@linaro.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e51d4fd8-80bf-4774-ba93-66d9a6761654@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDA1NiBTYWx0ZWRfX4luG4lkUlPdX
+ muAeCjcVCmXW01BMOacanVj6pTCDeQL+WZNoHLcbuxfUQVFi2PUkUHkRkYmOP36MIVVzEdojcYs
+ b/njauDv9Py0mGuYAAiRMAbbvDI0pkQYlcPjDXo5BNkOuQdw86BRcE7aywJHzd7kWtr09Tg4IY+
+ B95C+Kl+bkiP88AYpL6OHZoL7ZiLSxFHjbdKMulgjwsQigezHYRWBv4xKTJr0A4ISlQSTPTt2Sh
+ BAL5DOfT+mCz5YxUFV25ppR+/YQLLgpkSnPyXu/hhcMitcZx75gjegLqoNagdzJmQ9MxsWwqczD
+ sTLBmitT90s+Rj8JZG0khgLfWenmUjHih18hwNlrsgHwNCi3G/2Hxnk887PitD4Wra4yqC4z0ia
+ LRn9eTbYhHNSsgKAFt5VBbHfNcvNAA==
+X-Proofpoint-ORIG-GUID: fNUgVlr2azl9SBnx5oZgBXqFiKVnHr_4
+X-Authority-Analysis: v=2.4 cv=PYTyRyhd c=1 sm=1 tr=0 ts=6937d21d cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=MGR1qwUY5ZYSrk9h1QEA:9
+ a=CjuIK1q_8ugA:10 a=tNoRWFLymzeba-QzToBc:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: fNUgVlr2azl9SBnx5oZgBXqFiKVnHr_4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-09_01,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ bulkscore=0 clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512090056
 
-Add ADSP fastrpc nodes for sm8750 SoC.
+On Tue, Dec 09, 2025 at 12:57:29PM +0530, Harshal Dev wrote:
+> Hi,
+> 
+> On 12/8/2025 9:26 PM, Konrad Dybcio wrote:
+> > On 12/8/25 1:32 PM, Harshal Dev wrote:
+> >> On X Elite, there is a crypto engine IP block similar to ones found on
+> >> SM8x50 platforms.
+> >>
+> >> Describe the crypto engine and its BAM.
+> >>
+> >> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+> >> ---
+> >> The dt-binding schema update for the x1e80100 compatible is here
+> >> (already merged):
+> >>     
+> >> https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
+> >> ---
+> > 
+> > 
+> >> +		cryptobam: dma-controller@1dc4000 {
+> >> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+> >> +			reg = <0x0 0x01dc4000 0x0 0x28000>;
+> >> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+> >> +			#dma-cells = <1>;
+> >> +			iommus = <&apps_smmu 0x480 0x0>,
+> >> +				 <&apps_smmu 0x481 0x0>;
+> >> +			qcom,ee = <0>;
+> >> +			qcom,controlled-remotely;
+> >> +			num-channels = <20>;
+> >> +			qcom,num-ees = <4>;
+> >> +		};
+> >> +
+> >> +		crypto: crypto@1dfa000 {
+> >> +			compatible = "qcom,x1e80100-qce", "qcom,sm8150-qce", "qcom,qce";
+> >> +			reg = <0x0 0x01dfa000 0x0 0x6000>;
+> >> +			dmas = <&cryptobam 4>, <&cryptobam 5>;
+> >> +			dma-names = "rx",
+> >> +				    "tx";
+> >> +			iommus = <&apps_smmu 0x480 0x0>,
+> >> +				 <&apps_smmu 0x481 0x0>;
+> >> +			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
+> >> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> >> +			interconnect-names = "memory";
+> >> +		};
+> >> +
+> >>  		cnoc_main: interconnect@1500000 {
+> > 
+> > Right as I hit enter for the rb message, I noticed the nodes you're
+> > adding are not sorted - please sort them wrt the unit address (@foo)
+> > and retain my tag then
+> >
+> 
+> Not sure if I understand you Konrad.. I believe the nodes are already sorted
+> since address (crypto) @1dfa000 > address (cryptobam) @1dc4000? Do let me know what
+> I'm missing.
 
-Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 61 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+0x01dfa000 > 0x1500000, so no, your nodes are not properly sorted.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index be89c65163bf0480100c09c883b68d03455c1870..b45c627c77a6194cf075a39707ea82bde4808e81 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,sm8750-gcc.h>
- #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
-@@ -2243,6 +2244,66 @@ q6prmcc: clock-controller {
- 						};
- 					};
- 				};
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					memory-region = <&adsp_rpc_remote_heap_mem>;
-+					qcom,vmids = <QCOM_SCM_VMID_LPASS
-+						      QCOM_SCM_VMID_ADSP_HEAP>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1003 0x80>,
-+							 <&apps_smmu 0x1043 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1004 0x80>,
-+							 <&apps_smmu 0x1044 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1005 0x80>,
-+							 <&apps_smmu 0x1045 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+						iommus = <&apps_smmu 0x1006 0x80>,
-+							 <&apps_smmu 0x1046 0x20>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+						iommus = <&apps_smmu 0x1007 0x40>,
-+							 <&apps_smmu 0x1067 0x0>,
-+							 <&apps_smmu 0x1087 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+						iommus = <&apps_smmu 0x1008 0x80>,
-+							 <&apps_smmu 0x1048 0x20>;
-+						dma-coherent;
-+					};
-+				};
- 			};
- 		};
- 
+> 
+> Thanks,
+> Harshal
+>  
+> > Konrad
+> 
 
 -- 
-2.47.3
-
+With best wishes
+Dmitry
 
