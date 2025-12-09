@@ -1,223 +1,352 @@
-Return-Path: <linux-arm-msm+bounces-84737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC3D8CAF183
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 08:10:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDAD8CAF19B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 08:12:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6B2293015ECD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 07:10:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D8ED23017EDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 07:11:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4305D245008;
-	Tue,  9 Dec 2025 07:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6422721C9FD;
+	Tue,  9 Dec 2025 07:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nFWS9MoU"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ndlrwZmQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6623625EFAE
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 07:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D32262FD0;
+	Tue,  9 Dec 2025 07:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765264207; cv=none; b=uiKtk1GMl7NJI8PUHrFUV8AT8Si89PyVDqezTWuF/F1nZZFXW0k/vd0kVQ05xftVCLvocRD1Q2+gB/nRtHpE4xM2Wea/P9YIer66EadJPst3Ura7mZXJZgganFdScqPtP6pyJ1WGIn9Q9eWNaTLwZxzp3h5pwQNxng8o54CGizQ=
+	t=1765264308; cv=none; b=RjguWYB26kpkA4xXGMGYV0pKhfrGEJLf0tNQIdfwxQp8s0ChDrOuXg+Lmzk+LgHc7AnASuvHPieAEwpdxrCsK30gNyjKhaNlTWb5mO2wGrgoOqZ30nNySwhBpriLJCZM9bB4mwtF2MyznT36LlQpjRWoYrzJZ2C7Fyh/U0GWmRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765264207; c=relaxed/simple;
-	bh=GWUPZWPx87d+R5G1pL0rdruViGt7Dva8i9gC5jM5GW0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZumWunR+gbmo9/cVW2XNNFy8KZV51/m+jBRbmZNsSEzddP3FtK5NgO4apr+PHmwmrpDg2vcjJdVB1AxWSV26EeSwcVWOXwa3ZR91MFLD3/0cp/ye4MXvUMK/kYxp3yh9yLVRjMFD/BsLuq2TW4RXLqegcLyhc+T37vDlFeV0POY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nFWS9MoU; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-ba2450aba80so3054355a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Dec 2025 23:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765264205; x=1765869005; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xg55Tln+6DnfF2kSPt4sxJR4WZV7mWdktIHdBzmSnGA=;
-        b=nFWS9MoU9pXA1gTpWehV9xHBECs5mi0WXUevYAb72p4x08+jCsKm4BKTR1EDu1uNYW
-         kbcHwqwtUJuOG15IVFlkuVClGCTtdcYifMk9/ya77a0DDxs2KwNgemGjweRd5afWkcqi
-         xXstyYMoPJ7/QtxhytwHXPranF2bzyYhO02hS2b8rJbZm6ztV/MosXo5TSOiKxDxwsap
-         oIQ+i91T3T5WYx9HIs9fpnZ0LaCG6IMzWtF9wjVy4ERRY59u3V69gTSdmbQ08wF/Apez
-         bE9S35xp4lz4rotyGTS/NoYorhgNl7Lv2kIGaZAlPnT8EghSFULTeMt0yT+UCryUUAbV
-         K/fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765264205; x=1765869005;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xg55Tln+6DnfF2kSPt4sxJR4WZV7mWdktIHdBzmSnGA=;
-        b=HYMHvCjdqOUUCFcVQzhOitcg1UtQRU+zRcH/kKroNWt4ccc6NDLQLd+tzEeNBJgyL2
-         uvT16vxi9OiXe486uXxfE83EP7cO475g4oyGw5z3PGyKLwFgxeLXMZNLjMnc42eWxsTx
-         e9jG24XCmfsQZYsVq+3H/4FH+9AxuB1ZYyAewmDQRvDfHwUHDh+Eou4gQsG8HgIshWHq
-         XRLT8HEIJ6VllqfdHdKSNzoh+RYb+bfehEfDdj3AgBVbFr5KsV4/ooEkiv1dyKXhL5kV
-         3P78ijd4Mi9npoNEsd3KOujSYpSo0qZWo3ZUV1GiBjJ4mDGIimPQUUj6V1QSXOGcljFD
-         9Sxw==
-X-Gm-Message-State: AOJu0Ywf1j73GEo9IFsKuDgLwiWLT/dzc89C5ociwCLv3cD8eUrQ7bRN
-	5w3p+1i7s4PGdVDeFt/vM9cz7NiyMAAoLyqmfDzWyDY2RGYu2wNu33rP
-X-Gm-Gg: ASbGncv77Kvyk/WeSPrkBXeAd6ZlP8wD1KZW6BXx/V4xhyuv3e4sfPAbcko6nn8IHzl
-	jNcoHGN/dUuNc/UaQ8N8XO3H7lELOFvZWmLycECMP40Y5M/fjIT5nomkAQVyG2BrQlLHxZczSa3
-	DOqjyV0Vdap4AlHnqH3uVjltPU6AdYEDyI0uEO0vyQziqcpm9+GV8HI+c0nxfaMUPw0CAg3Cstp
-	bQZ5MAx0GolYQw7IAU561MTLSbX0AZPZ0PGyZxtKwRzp+iM5Vadk6mXujJNijwg5fNDaidhbTj6
-	aUpRjxia/UWdaJxFQgmbcqFJTXZIG1iPTv1qo//X/gSq+SePk95MnkxHWqUVvWV7n3Bh2Ak706w
-	4+cCu+InohIVbcZsFdlBujipMypIz9xZOLMBN09TmcLFs3sn+zUxUvpIHvQTUGY46P4OX0ojH3l
-	CVMEuY5HYXHC+WgByTxhi4D+rOmL/C1DTWy36ojgUCr62oynDi3S+H3Xd8WITOklzB8Q==
-X-Google-Smtp-Source: AGHT+IH4xWkk+8tkFcAvGOYvd9507+UkaXMACCKUvjqSLoxEHfx36eSz/8egBxn9noqBt1eeILK0/Q==
-X-Received: by 2002:a05:701a:c952:b0:119:e56b:98b1 with SMTP id a92af1059eb24-11e032aa4a3mr5974342c88.24.1765264204406;
-        Mon, 08 Dec 2025 23:10:04 -0800 (PST)
-Received: from [192.168.68.65] (104-12-136-65.lightspeed.irvnca.sbcglobal.net. [104.12.136.65])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11df7552211sm69916005c88.1.2025.12.08.23.10.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Dec 2025 23:10:04 -0800 (PST)
-Message-ID: <1e74b956-a45a-4d3e-b7fa-e4d5dc0390db@gmail.com>
-Date: Mon, 8 Dec 2025 23:10:03 -0800
+	s=arc-20240116; t=1765264308; c=relaxed/simple;
+	bh=SH8eXOb4vxle56Oueo5T+yDS2KBqYJ4WT8/+V5Dz+Cc=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=SPNKPDadBQC+plNRbGRjiJ53HHikV9+R4DaN+Jj12DRBQ4Cc824dmO3LoPv9YHjIDXnmF2OD//2oztn5W2dvYdX7SaEkoj+NU1JGRGWqu2u0kwOx4GtHHAA9Scv5+nco4+lQoXyUS5dHP989Cru77ylDdQ5+irgMvIYcwI36YUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ndlrwZmQ; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1765264306; x=1796800306;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=SH8eXOb4vxle56Oueo5T+yDS2KBqYJ4WT8/+V5Dz+Cc=;
+  b=ndlrwZmQ3kzso9KuSgpKLS9P8e3vJtMZtEGcq9RCE1wi0MmoFGAcTEaB
+   YCUZtVtHvLNWWy4MJizVU4m/QPt+IuRvVcL9WlWuESAH5rBpC65Pl6RDK
+   CIbxo2CaqRfH+562c4jf3uC67p4OUIA+RGi6hbr+DyIPjMuY0YLo0XFwO
+   VpPEbWlnYN1nBNum5A05inDBmZYZOOxuLh1fCPEJvgZh8b5sZS1Q3ysMd
+   aEZOXa7S2IU+N6aK6uVRcRGoQwUjwNI/q5EuB5UPcdVTGR3ua7JEHFjKm
+   cPnwmr0LFOLpZSKjDml+vshFvH2V0ovOPJeuldioqYChW4WGmQxKa5tzC
+   g==;
+X-CSE-ConnectionGUID: d28d+GD1R6S3H5ZLge8x2Q==
+X-CSE-MsgGUID: xKoOlaDcQ2OcuIbbdVollg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11636"; a="66398918"
+X-IronPort-AV: E=Sophos;i="6.20,260,1758610800"; 
+   d="scan'208";a="66398918"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2025 23:11:45 -0800
+X-CSE-ConnectionGUID: Bh+IhTC0Tmyq8zAUnVNylg==
+X-CSE-MsgGUID: GQpBTE6wQgqBadg7vVHgBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,260,1758610800"; 
+   d="scan'208";a="196439851"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.139])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2025 23:11:40 -0800
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Tue, 9 Dec 2025 09:11:37 +0200 (EET)
+To: Niklas Cassel <cassel@kernel.org>
+cc: Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
+    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+    Heiko Stuebner <heiko@sntech.de>, FUKAUMI Naoki <naoki@radxa.com>, 
+    linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+    linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] PCI: dwc: Make Link Up IRQ logic handle already
+ powered on PCIe switches
+In-Reply-To: <20251201063634.4115762-2-cassel@kernel.org>
+Message-ID: <5cdf685c-5a37-1b65-3e87-9262f3ed7bd4@linux.intel.com>
+References: <20251201063634.4115762-2-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: msm8960: expressatt: Add
- coreriver,tc360-touchkey
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, beomho.seo@samsung.com, jcsing.lee@samsung.com
-References: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
- <532531d2-8f26-4ffa-9355-7821a4d64200@oss.qualcomm.com>
-Content-Language: en-US
-From: Rudraksha Gupta <guptarud@gmail.com>
-In-Reply-To: <532531d2-8f26-4ffa-9355-7821a4d64200@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
->> Add the tc360 touchkey. It's unknown if this is the actual model of the
->> touchkey, as downstream doesn't mention a variant, but this works.
->>
->> Link:
->> https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
-> This driver mentions a register called CYPRESS_MODULE_VER - maybe
-> it could help confirm the model?
->
-> Konrad
+On Mon, 1 Dec 2025, Niklas Cassel wrote:
 
+> The DWC glue drivers always call pci_host_probe() during probe(), which
+> will allocate upstream bridge resources and enumerate the bus.
+> 
+> For controllers without Link Up IRQ support, pci_host_probe() is called
+> after dw_pcie_wait_for_link(), which will also wait the time required by
+> the PCIe specification before performing PCI Configuration Space reads.
+> 
+> For controllers with Link Up IRQ support, the pci_host_probe() call (which
+> will perform PCI Configuration Space reads) is done without any of the
+> delays mandated by the PCIe specification.
+> 
+> For controllers with Link Up IRQ support, since the pci_host_probe() call
+> is done without any delay (link training might still be ongoing), it is
+> very unlikely that this scan will find any devices. Once the Link Up IRQ
+> triggers, the Link Up IRQ handler will call pci_rescan_bus().
+> 
+> This works fine for PCIe endpoints connected to the Root Port, since they
+> don't extend the bus. However, if the pci_rescan_bus() call detects a PCIe
+> switch, then there will be a problem when the downstream busses starts
+> showing up, because the PCIe controller is not hotplug capable, so we are
+> not allowed to extend the subordinate bus number after the initial scan,
+> resulting in error messages such as:
+> 
+> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
+> 
+> While we would like to set the is_hotplug_bridge flag
+> (quirk_hotplug_bridge()), many embedded SoCs that use the DWC controller
+> have synthesized the controller without hot-plug support.
+> Thus, the Link Up IRQ logic is only mimicking hot-plug functionality, i.e.
+> it is not compliant with the PCI Hot-Plug Specification, so we cannot make
+> use of the is_hotplug_bridge flag.
+> 
+> In order to let the Link Up IRQ logic handle PCIe switches that are already
+> powered on (PCIe switches that not powered on already need to implement a
+> pwrctrl driver), don't perform a pci_host_probe() call during probe()
+> (which disregards the delays required by the PCIe specification).
+> 
+> Instead let the first Link Up IRQ call pci_host_probe(). Any follow up
+> Link Up IRQ will call pci_rescan_bus().
+> 
+> The IRQ name in /proc/interrupts for the pcie-qcom driver is renamed in
+> order to not dereference pp->bridge->bus before it has been assigned.
+> 
+> Fixes: ec9fd499b9c6 ("PCI: dw-rockchip: Don't wait for link since we can detect Link Up")
+> Fixes: 0e0b45ab5d77 ("PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ")
+> Reported-by: FUKAUMI Naoki <naoki@radxa.com>
+> Closes: https://lore.kernel.org/linux-pci/1E8E4DB773970CB5+5a52c9e1-01b8-4872-99b7-021099f04031@radxa.com/
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
 
-Here are the changes that Claude made to the tm2-touchkey driver, which 
-seems to do what you asked and matches downstream (I have never written 
-a driver before, so please free to provide corrections if necessary):
+Hi Niklas,
 
+Now this patch looks interesting (and managed to catch my attention 
+despite being a controllers/ patch).
 
-diff --git a/drivers/input/keyboard/tm2-touchkey.c 
-b/drivers/input/keyboard/tm2-touchkey.c
-index 55d699d9037d..d1f435dc6b05 100644
---- a/drivers/input/keyboard/tm2-touchkey.c
-+++ b/drivers/input/keyboard/tm2-touchkey.c
-@@ -33,6 +33,9 @@
-  #define TM2_TOUCHKEY_LED_VOLTAGE_MIN    2500000
-  #define TM2_TOUCHKEY_LED_VOLTAGE_MAX    3300000
+You're only talking about bus number allocations here but we did hit a 
+similar problem with bridge window allocations where not enough 
+information is available at the time of the initial scan + resource 
+allocation (currently it is one of the issues that prevents fixing one 
+resource overlap bug):
 
-+#define CYPRESS_FW_VER            0x01
-+#define CYPRESS_MODULE_VER        0x02
-+
-  struct touchkey_variant {
-      u8 keycode_reg;
-      u8 base_reg;
-@@ -180,6 +183,53 @@ static irqreturn_t tm2_touchkey_irq_handler(int 
-irq, void *devid)
-      return IRQ_HANDLED;
-  }
+https://lore.kernel.org/linux-pci/8f9c9950-1612-6e2d-388a-ce69cf3aae1a@linux.intel.com/
 
-+static ssize_t module_version_show(struct device *dev,
-+                    struct device_attribute *attr, char *buf)
-+{
-+    struct i2c_client *client = to_i2c_client(dev);
-+    struct tm2_touchkey_data *touchkey = i2c_get_clientdata(client);
-+    int module_ver;
-+
-+    if (touchkey->variant->no_reg) {
-+        /* Aries variant doesn't support register reads */
-+        return sysfs_emit(buf, "unknown\n");
-+    }
-+
-+    module_ver = i2c_smbus_read_byte_data(touchkey->client, 
-CYPRESS_MODULE_VER);
-+    if (module_ver < 0)
-+        return module_ver;
-+
-+    return sysfs_emit(buf, "0x%02x\n", module_ver);
-+}
-+static DEVICE_ATTR_RO(module_version);
-+
-+static ssize_t fw_version_show(struct device *dev,
-+                   struct device_attribute *attr, char *buf)
-+{
-+    struct i2c_client *client = to_i2c_client(dev);
-+    struct tm2_touchkey_data *touchkey = i2c_get_clientdata(client);
-+    int fw_ver;
-+
-+    if (touchkey->variant->no_reg) {
-+        /* Aries variant doesn't support register reads */
-+        return sysfs_emit(buf, "unknown\n");
-+    }
-+
-+    fw_ver = i2c_smbus_read_byte_data(touchkey->client, CYPRESS_FW_VER);
-+    if (fw_ver < 0)
-+        return fw_ver;
-+
-+    return sysfs_emit(buf, "0x%02x\n", fw_ver);
-+}
-+static DEVICE_ATTR_RO(fw_version);
-+
-+static struct attribute *tm2_touchkey_attrs[] = {
-+    &dev_attr_module_version.attr,
-+    &dev_attr_fw_version.attr,
-+    NULL
-+};
-+ATTRIBUTE_GROUPS(tm2_touchkey);
-+
-  static int tm2_touchkey_probe(struct i2c_client *client)
-  {
-      struct device_node *np = client->dev.of_node;
-@@ -354,6 +404,7 @@ static struct i2c_driver tm2_touchkey_driver = {
-          .name = TM2_TOUCHKEY_DEV_NAME,
-          .pm = pm_sleep_ptr(&tm2_touchkey_pm_ops),
-          .of_match_table = tm2_touchkey_of_match,
-+        .dev_groups = tm2_touchkey_groups,
-      },
-      .probe = tm2_touchkey_probe,
-      .id_table = tm2_touchkey_id_table,
+(Please check also Mani's reply that relates to pwrctrl.)
 
-When run on mainline, this is what was outputted:
+So I definitely like the general direction this patch goes (though I'm a 
+bit worried though if the downstream busses trickle in, the resource 
+allocation problems will not be fully solved but maybe that fear is not 
+warranted, I don't know).
 
-samsung-expressatt:~$ cat /sys/bus/i2c/devices/0-0020/module_version
-0x06
-samsung-expressatt:~$ cat /sys/bus/i2c/devices/0-0020/fw_version
-0x09
+-- 
+ i.
 
-
-fw_version matches downstream ClockworkMod Recovery dmesg:
-
-~ # dmesg | grep "FW Ver"
-<3>[    2.201312] cypress_touchkey 16-0020: Touchkey FW Version: 0x09
-<3>[    2.206317] cypress_touchkey 16-0020: Touchkey FW Version: 0x09, 
-system_rev: 8
-
-
-Unfortunately, I'm not to sure what the other variant versions are, so I 
-will CC the driver's maintainers:
-
-MODULE_AUTHOR("Beomho Seo <beomho.seo@samsung.com>");
-MODULE_AUTHOR("Jaechul Lee <jcsing.lee@samsung.com>");
-
-
-It also seems like I forgot to mention that this patch was assisted with 
-Claude and cleaned up by me. Will update the patch's description if I 
-need to send a v2.
-
+> ---
+> Changes since v1:
+> -Rename the IRQ on pcie-qcom to not depend on pp->bridge->bus (Mani)
+> -Make sure that ret is initialized in dw_pcie_host_init() error path (Dan)
+> 
+>  .../pci/controller/dwc/pcie-designware-host.c | 71 ++++++++++++++++---
+>  drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
+>  drivers/pci/controller/dwc/pcie-dw-rockchip.c |  5 +-
+>  drivers/pci/controller/dwc/pcie-qcom.c        |  9 +--
+>  4 files changed, 71 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index e92513c5bda51..bed7b309f6d9e 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -565,6 +565,59 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+>  	return 0;
+>  }
+>  
+> +static int dw_pcie_host_initial_scan(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct pci_host_bridge *bridge = pp->bridge;
+> +	int ret;
+> +
+> +	ret = pci_host_probe(bridge);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (pp->ops->post_init)
+> +		pp->ops->post_init(pp);
+> +
+> +	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
+> +
+> +	return 0;
+> +}
+> +
+> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
+> +{
+> +	if (!pp->initial_linkup_irq_done) {
+> +		int ret;
+> +
+> +		ret = dw_pcie_host_initial_scan(pp);
+> +		if (ret) {
+> +			struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +			struct device *dev = pci->dev;
+> +
+> +			dev_err(dev, "Initial scan from IRQ failed: %d\n", ret);
+> +
+> +			dw_pcie_stop_link(pci);
+> +
+> +			dw_pcie_edma_remove(pci);
+> +
+> +			if (pp->has_msi_ctrl)
+> +				dw_pcie_free_msi(pp);
+> +
+> +			if (pp->ops->deinit)
+> +				pp->ops->deinit(pp);
+> +
+> +			if (pp->cfg)
+> +				pci_ecam_free(pp->cfg);
+> +		} else {
+> +			pp->initial_linkup_irq_done = true;
+> +		}
+> +	} else {
+> +		/* Rescan the bus to enumerate endpoint devices */
+> +		pci_lock_rescan_remove();
+> +		pci_rescan_bus(pp->bridge->bus);
+> +		pci_unlock_rescan_remove();
+> +	}
+> +}
+> +
+>  int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -669,18 +722,18 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  	 * If there is no Link Up IRQ, we should not bypass the delay
+>  	 * because that would require users to manually rescan for devices.
+>  	 */
+> -	if (!pp->use_linkup_irq)
+> +	if (!pp->use_linkup_irq) {
+>  		/* Ignore errors, the link may come up later */
+>  		dw_pcie_wait_for_link(pci);
+>  
+> -	ret = pci_host_probe(bridge);
+> -	if (ret)
+> -		goto err_stop_link;
+> -
+> -	if (pp->ops->post_init)
+> -		pp->ops->post_init(pp);
+> -
+> -	dwc_pcie_debugfs_init(pci, DW_PCIE_RC_TYPE);
+> +		/*
+> +		 * For platforms with Link Up IRQ, initial scan will be done
+> +		 * on first Link Up IRQ.
+> +		 */
+> +		ret = dw_pcie_host_initial_scan(pp);
+> +		if (ret)
+> +			goto err_stop_link;
+> +	}
+>  
+>  	return 0;
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index e995f692a1ecd..a31bd93490dcd 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -427,6 +427,7 @@ struct dw_pcie_rp {
+>  	int			msg_atu_index;
+>  	struct resource		*msg_res;
+>  	bool			use_linkup_irq;
+> +	bool			initial_linkup_irq_done;
+>  	struct pci_eq_presets	presets;
+>  	struct pci_config_window *cfg;
+>  	bool			ecam_enabled;
+> @@ -807,6 +808,7 @@ void dw_pcie_msi_init(struct dw_pcie_rp *pp);
+>  int dw_pcie_msi_host_init(struct dw_pcie_rp *pp);
+>  void dw_pcie_free_msi(struct dw_pcie_rp *pp);
+>  int dw_pcie_setup_rc(struct dw_pcie_rp *pp);
+> +void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp);
+>  int dw_pcie_host_init(struct dw_pcie_rp *pp);
+>  void dw_pcie_host_deinit(struct dw_pcie_rp *pp);
+>  int dw_pcie_allocate_domains(struct dw_pcie_rp *pp);
+> @@ -844,6 +846,9 @@ static inline int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>  	return 0;
+>  }
+>  
+> +static inline void dw_pcie_handle_link_up_irq(struct dw_pcie_rp *pp)
+> +{ }
+> +
+>  static inline int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>  {
+>  	return 0;
+> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> index 3e2752c7dd096..8f2cc1ef25e3d 100644
+> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> @@ -466,10 +466,7 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
+>  		if (rockchip_pcie_link_up(pci)) {
+>  			msleep(PCIE_RESET_CONFIG_WAIT_MS);
+>  			dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+> -			/* Rescan the bus to enumerate endpoint devices */
+> -			pci_lock_rescan_remove();
+> -			pci_rescan_bus(pp->bridge->bus);
+> -			pci_unlock_rescan_remove();
+> +			dw_pcie_handle_link_up_irq(pp);
+>  		}
+>  	}
+>  
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c48a20602d7fa..04f29cd8d8881 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1617,10 +1617,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+>  	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+>  		msleep(PCIE_RESET_CONFIG_WAIT_MS);
+>  		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+> -		/* Rescan the bus to enumerate endpoint devices */
+> -		pci_lock_rescan_remove();
+> -		pci_rescan_bus(pp->bridge->bus);
+> -		pci_unlock_rescan_remove();
+> +		dw_pcie_handle_link_up_irq(pp);
+>  
+>  		qcom_pcie_icc_opp_update(pcie);
+>  	} else {
+> @@ -1937,8 +1934,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_phy_exit;
+>  	}
+>  
+> -	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_global_irq%d",
+> -			      pci_domain_nr(pp->bridge->bus));
+> +	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_global_irq_%pOFP",
+> +			      dev->of_node);
+>  	if (!name) {
+>  		ret = -ENOMEM;
+>  		goto err_host_deinit;
+> 
 
