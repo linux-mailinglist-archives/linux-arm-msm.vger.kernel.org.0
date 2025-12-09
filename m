@@ -1,647 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-84767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C42AACAFB6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 12:04:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EBDECAFC2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Dec 2025 12:26:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 45B323010CC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 11:04:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 57190301F5C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Dec 2025 11:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 433D928642D;
-	Tue,  9 Dec 2025 11:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 063D3320A10;
+	Tue,  9 Dec 2025 11:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bfJ1kTHV";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Q+klZXwx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ed3abrwY";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HDwDOYiH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270B12046BA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 11:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DF7306D4A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Dec 2025 11:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765278245; cv=none; b=iwlR8iojV2qjROMHKQAhYODNDGDyW15Ct6xHdsX34OZYZdvj2Uht215Uk8bQOfFPP0tbz5QA4xm4xApROeZf6LesG/Z+bRHJdSwjClFwEVcUty6E3TdY4OyDh9JfnerVdW4Fn60ZrzaE9lh7mLFpFYmblzR8fFGVgE91gLXfzTw=
+	t=1765279549; cv=none; b=TJe8GfHFzv8izcNf4NhkG+y/pe6jb8F8uPnrqGSkvrg5WNNzDwMXSSzG+gPFzCHqDUV0EAvvxeCQ3pW84mg8ZzOib/z5KcfHMdhXQms0YRzaa/jiWj8yAlZngeg3syawoOT8GXJHZw4i8zleZOKJFnADRMQqOINTleLTiSbncLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765278245; c=relaxed/simple;
-	bh=UGa6UH14rEZRjYg+SZGMKlFm9FdN/6Jr0Mg8NtRiD3s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gEsDqk7egWZ5EShyMX14CZpeUzTcsexXGONqmMvwuVXm8b7qTCWnZdA2RQ43LiGAYELsm9cV45LLTMYf/dy/oChzKJWLhIFX8dyBQwfXrxmzkD5HzgD4hqcnSTLb/pXF2fQX7nUyFaAscowxDb/os75CHzZgkUEvsm5FADAaGnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bfJ1kTHV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Q+klZXwx; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1765279549; c=relaxed/simple;
+	bh=DsiJN+x8Fqjt+HlhEmfCrebctPNMtUSyNZcOLLpnAeg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CZH7eI5qdx7Xx+8dzxqR7RAJbDOI+yX6JIgkKFOfsJc2VLPx+Ny4PE35J0tB8EGOES21w3IrpweLV3d4ivtfw+Snp4HCwpzcry0fc28af3z+qslnBRTSjk99O2idiiD+btRbsr1o1OnBpL+OJ3p8Yh8JVEMARvnEokzsKptTu5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ed3abrwY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HDwDOYiH; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B99N3Es3106529
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Dec 2025 11:04:02 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B99NDP22559530
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Dec 2025 11:25:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oc+3pxPK4/zduf7px0u+hfnTMnwf8bLLpB6v5TUS3gA=; b=bfJ1kTHViNSYIwS2
-	8SpzZ2SrWS7bG/IyDlh3V2SApUDhedOQjDAJ0T8uJlJgSMAeXUblRVaw7kmDgU45
-	vpgKs08LD94stWyhFppDuV8VJe6QWnUL2LD6w4AY8VyU71AEO8SWZdMQiNs3d7Q/
-	OcuO+9vZviWu289CTE75q93lNgx+u7cMJ+GMWU71gzz1IH0gESzjyj8UdlL4JkGc
-	BYyceKpWHd4pzKHgVWt19XTJFh4agv0T7WZD6rOozyui+HruU4q9tTzuYX86HY+Z
-	PdlJCU7OBlJ6Nu1F90RdgfHFOErlKTeySaVAEh1skBvlSIaL/rmQMG91APaHOsmm
-	uqIisg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ax63va4sv-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=VsBgdJ+ubxIlMlId0qH8F8
+	slq+A2hSv7BDe8MHbvG64=; b=ed3abrwYdom/+eT1rno8AvMC74c5yHWsG9C/hy
+	ho3/zxuCilqP6vk0IaIj4UhPnEIrbjC/EQ/HTJ+HcQRXnnBk+0533y4WYJRfTWNG
+	LEJ8Pd5Pkjo8yLBT7Gg2y052xsc/ZdEGS1XnxpktY4/vgzGnqdkC/FOVvppg01gb
+	5L4YO4rqqrE2KbmDwR0LCxiwtrt+UMRmCYILJ2kvgqjmLbHHuJZYh326nx3t2eJB
+	UjBGQlKGe1X+l6pVQKs+HaD2QSyUN2X3FULbgFlg2+EEGbahcmQ97GzHRkAQz4tv
+	6m4Yba7fjpPHgERsLoXX6jtntdM5vNB5+rFKjwHU2SqxH9AA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axesf0t6m-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 11:04:02 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-343daf0f488so5550232a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 03:04:02 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 11:25:46 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3493fe3185cso6586573a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 03:25:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765278241; x=1765883041; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oc+3pxPK4/zduf7px0u+hfnTMnwf8bLLpB6v5TUS3gA=;
-        b=Q+klZXwx/wIMQA/hUhQsqq1bjBv5kWLJXZTH0vBBbSrXtLxPIhJdOyqT9dwWCPhF19
-         qoxzTv6+4IHqk7dbJvvbh1zTs9c8kwGmftUiEQbwuvw0EjceZzFGO9YTkYAysRBm8F9y
-         hMkRLhrpGmFOSlZJB5sOxUB1RkzPxn1nxG5jY7MksGZqBWbEKAs2PzorxnfmxrlaMb0Z
-         Tf3Qw0+k1APBqqeZwmfpCDxaZ0Xs4ltUyI+fCwoxtuBJruUnUn93LclpHCc6DhDfGAH6
-         zZQS7qdJorpZpyyEeZ0CeZ48LtGWtROtmluBPIO4rjJFZB993rv77jBi1EwYqM9t2vLu
-         yynw==
+        d=oss.qualcomm.com; s=google; t=1765279545; x=1765884345; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VsBgdJ+ubxIlMlId0qH8F8slq+A2hSv7BDe8MHbvG64=;
+        b=HDwDOYiHC2orU/L7HEOWOJnTUx+VLRek6QfFJ7EDPhfotu8v9rzWsyEQwR5MTO8pfG
+         Lagbmpnff9q/PNb4nYFgNJaZrjK0QrqhzjzM7p7nowLHMnZKxzuWg0l4qaS3tgnCXnZF
+         +QY6B80jdSTuNdf1P+ArPIFHjgXqFpWLDMJ79aa75MnFNRamR1/3aucb0mDzQRxIIU+v
+         Xx02HINnEzZLPDJIKXnRZxGZvYm76/OYTTu+EXqGh7hO3rsxfurcy5VFhFMYGGWTA96J
+         hm8CQOCFAhS419vUgWCdmkl8QGaLLk4BfJoE/5EpFFKufxRwRmIMfYtOOZWXga7Qa9jE
+         WSHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765278241; x=1765883041;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oc+3pxPK4/zduf7px0u+hfnTMnwf8bLLpB6v5TUS3gA=;
-        b=K/sfL1sshXzi9tcDf4wHzibpIu951FGbh4YdpZzvv1xNEFA624aSZx4aKxF8kdpehL
-         8Qv0qOEQRWII+XrAU19X7ilyzaHdLPuohnUhdQ7Ac5dxTSj5Bp4LL0JzKi/T6ZdU350O
-         blP/m+jf6UhbdP7THKIFCgaFp70/XWtZCZbWGisf0habDlIAoUfTryAgWZwqPCeNdYX7
-         SIImVXMa3WX93cPjIec9GGBlXcft2QY16p3HFzCnL5FiUOsohupfWL3rDJC7tZX5UnJM
-         9kYlIjgKWowHqUq326E8kyUZASYpjnEJJlNqVn56omnzgclwZFehszW2cQZ4nyTNfM+8
-         cjyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXv/qKHu6UqWpoMOxgY6HiikGu5hcGEOYFH/8a0tlLjW+S/LYUOGYEGKrhZZZCGZyFpOT1oQjiBYaPIu9Td@vger.kernel.org
-X-Gm-Message-State: AOJu0YxltV+/HnqJau5ymPQPUbNbBoBIcgzCFooa/E0hHsDhYOHv1XjE
-	quMcaYI7W57gin686E4AKVvR+I6EhC9ddrH0tmkqOFHFayeMFW/eB3xzY1u+za4bE/RkvQm3Dpc
-	tBl8Y0cRLz/zLQOMHPkziVWJcvgxULP0s0WKKE0f019QDz3uwgoB2G+Vt9U5ihFMSvDb+gi3Pkt
-	d9
-X-Gm-Gg: ASbGnct9Pz7sNhyAu32xCS7DYINiRc/62eObg+sCVhpoI7l/jx6pk5RhZezWvKlfTBS
-	fMobw1kSyp7TXb75d12eJihR0dVu0N0eZdOJO1inHTCnfLCg1y//wheJjgNWb5bxXzpgiXRW10K
-	a6uZXg6N6B0QwuaKEexd1X2JFtvqmFr8E/fODXHjqL/eS2GRM4PVaXanxIwIzOY/J8senetcEOi
-	UIcIlOB8vR7pLc/Yi/lD1ROgCANC22TQ47CQTz2FYcqBNB92iiXshvFbZ808cvM0W6JywHCJE0y
-	62i8eoY9FkkKXdRDEEbaRx6ydNBqie5NweS2Uj5UbveYHfFKtsFLl7MZO8n4LOfR1M3kRtyqQy0
-	ojgRVJGvDWnnkkCN8h9swnfFLS76ZowJ9jF1EbIr6aV/L3+dRdz4v4s1+tplk1KIlNOVOtbhDL/
-	E=
-X-Received: by 2002:a17:90b:278e:b0:349:3fe6:ab8b with SMTP id 98e67ed59e1d1-349a26ea32emr7946238a91.36.1765278241056;
-        Tue, 09 Dec 2025 03:04:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQD+GkDi7gmzfW1M1uVkreFxWwahJKixhXKtBc3bkOk08PwFi5K/18nEstI8waODaDuahREA==
-X-Received: by 2002:a17:90b:278e:b0:349:3fe6:ab8b with SMTP id 98e67ed59e1d1-349a26ea32emr7946195a91.36.1765278240447;
-        Tue, 09 Dec 2025 03:04:00 -0800 (PST)
-Received: from [10.133.33.123] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34a499f3615sm2037408a91.12.2025.12.09.03.03.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Dec 2025 03:03:59 -0800 (PST)
-Message-ID: <d55ed203-b0f4-4453-81cf-1d8dcd6494ed@oss.qualcomm.com>
-Date: Tue, 9 Dec 2025 19:03:51 +0800
+        d=1e100.net; s=20230601; t=1765279545; x=1765884345;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VsBgdJ+ubxIlMlId0qH8F8slq+A2hSv7BDe8MHbvG64=;
+        b=U2BGVpAvkEBVEbUucgoYMEMHmKW13L0v81XROQPaKx1Qg5uHGARqJH6BjktxLawNB3
+         V2a6yHJMrS94Cq9Bi+5uJIzHIO9znlNowB/iPdgBZU3m5yvK+41ckQh3DzU9/5MyEMrK
+         VIEtetFddo7f9xPKgECMuTRUWbQ0DZR0WZQDXj7ImDOEaeCSnWs32gwmzJM+7SJJTxd9
+         WUHti3BiWHVvtocxkNlq18CO6tSyino0ObSInptRaD0eXQF5fnZcDY+l6skeHKsT2wni
+         nDudPRXeyed4/fSczwSGBCF/isIFJhMtlVnr3HsPP6Ngrn5t3Ge5uW/EC5UJP2ZaFfvZ
+         M0VQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxWwlNrMPLukpnEp3zqA8wC4hWhHPlumNxV3vG8bRK/wxMewiL9hN9q4yvJ1FJqq0oCrpbGsd2h6jW4kXr@vger.kernel.org
+X-Gm-Message-State: AOJu0YywQou7dG5KwkHwHNfA4gUPJaxamjElk+rqyT+03kIdBOgvUhuh
+	O41qLPPDvdVDEOP09gqCyfD7xzi2SL+nVCFMW6r/A81JvpYcF6Itv/gTRyMkoKIUVOi6qGfMNWO
+	4HZb/liQZuM7QBwnEjavEoqtxRU2eJ6R25EhG7xHCrpNAxo8+Xy1Qdvw4F4QJFz3u8T+u
+X-Gm-Gg: AY/fxX4jLp/SpzwqYXWct+BxOZAID8peWdibdgEjwbHDz0NzBpYLBgRaPH1SFyoISqI
+	TKr9obd/umNZQ1us82HCkOHyNTcOiaZBAIFOZJ52gmc/WEa+D4nWBE0FHC5j431GenI8apQAq4p
+	fF4F3k3yT2KTa0zwIll9Cp1Cjlj72/LVAn3NAq2VFrSkzRTEKEbSW+M7LYS5PCl8rmb+ZcKHxRv
+	UHyOTwq0iJSwjNAqVYZqwyoYVtYByxLTrrOH/kCIvKWqp7LwCIVWRWS5eezaWMhFp2kzpdakPBw
+	BIPUVKdjTvb2o1ckrktne7Ro6XYzHDIVACT1dyuJp2FOtDodh4XbEQc/mOOmn8kGRpvyn+VLZDf
+	nl3anYTs32VpKyk99wGCwfhr+wXPvPl4x6nku
+X-Received: by 2002:a17:90b:1f87:b0:349:7f0a:38e0 with SMTP id 98e67ed59e1d1-34a4f8bc3d6mr942783a91.17.1765279545543;
+        Tue, 09 Dec 2025 03:25:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGczqed4JYXeBh97lxyTB5anIJMDGPxDqMP+bWLrjssFzZu758BmfhApm7fzoyy9+J7HleFog==
+X-Received: by 2002:a17:90b:1f87:b0:349:7f0a:38e0 with SMTP id 98e67ed59e1d1-34a4f8bc3d6mr942765a91.17.1765279545080;
+        Tue, 09 Dec 2025 03:25:45 -0800 (PST)
+Received: from hu-vpernami-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34a49b9178csm2135964a91.12.2025.12.09.03.25.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Dec 2025 03:25:43 -0800 (PST)
+From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+X-Google-Original-From: Vivek Pernamitta
+Subject: [PATCH v6 0/2] net: mhi: Add support to enable ethernet interface
+Date: Tue, 09 Dec 2025 16:55:37 +0530
+Message-Id: <20251209-vdev_next-20251208_eth_v6-v6-0-80898204f5d8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] coresight: cti: Add Qualcomm extended CTI support
-To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>, mike.leach@linaro.org
-Cc: alexander.shishkin@linux.intel.com, coresight@lists.linaro.org,
-        james.clark@linaro.org, jinlong.mao@oss.qualcomm.com, leo.yan@arm.com,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_jinlmao@quicinc.com,
-        quic_yingdeng@quicinc.com, suzuki.poulose@arm.com,
-        tingwei.zhang@oss.qualcomm.com
-References: <CAJ9a7Vg9Efi-5eecfiUF82_Qq8Jg9imN5q1-VKYZoPVUxNpjhA@mail.gmail.com>
- <20251209081649.105623-1-yingchao.deng@oss.qualcomm.com>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <20251209081649.105623-1-yingchao.deng@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=dKarWeZb c=1 sm=1 tr=0 ts=69380222 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADEHOGkC/y2MQQqAIBQFrxJ/nWCWUV0lQiKf9TcWGhJEd0+i5
+ QzM3BQRGJGG4qaAxJF3n6EtC1q22a8QbDOTkkpXSvYiWSTjcZ3iV53BuZnUiqWReoatagdLuT8
+ CHF/fe5ye5wW+OMAHawAAAA==
+X-Change-ID: 20251209-vdev_next-20251208_eth_v6-c405aed13fed
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765279540; l=2389;
+ i=<quic_vpernami@quicinc.com>; s=20241114; h=from:subject:message-id;
+ bh=DsiJN+x8Fqjt+HlhEmfCrebctPNMtUSyNZcOLLpnAeg=;
+ b=yCEy1+3+fTCjhl2Y2Mp6zaC9Tm+MeaGfiLGbPV1B2s+Yc6xPUPOrHwQ3WONSqCqgIxIk9Lv5t
+ TKTiGS9px4PC4bCbXD84RTbn8ojO9JSsFabbiY8oCUER/apsllhZMPP
+X-Developer-Key: i=<quic_vpernami@quicinc.com>; a=ed25519;
+ pk=HDwn8xReb8K52LA6/CJc6S9Zik8gDCZ5LO4Cypff71Y=
+X-Proofpoint-ORIG-GUID: 0yd3H450RIapcrx-mbJBei7xb37OMNIU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDA4MSBTYWx0ZWRfXxtIr632H5m5n
+ 9XN2JgGoWgd2vFC6tQlGV8BO7VqdOTogGO9y3QC9GBEH8Bzc7k7y17xub4r6Cpv6MGnJZnoQ2+d
+ ATl9z2cNuXYMQFsLgP4JttXBMoC+uWL1lRbtt4htn4Yuh4UXRXfEH0JLWFXKAOKiWSnCAEcWV5p
+ MgZC7ekOjRqY28jYrSHLS1ToGfm66OqUQKsrIu3goIboKI3x0OdKf5WSiG2x6CrOp3Uuc4R29r2
+ JXatByIHa1Xdkvx/xjgQlIxrtoAUiODylJ2JKefNHtNNdmhSur0Y9C9YPcuHG6I1n5ndOfGR2LM
+ HDnzljQNp7y/6tZR+RzcWi3UFMHqh4H3PLjrto66ayksL1xgQwkGOElx+LhK21PG/k79d3/tzG2
+ kKdQWI9Baq6yc2uU95H0iILu8VDdrQ==
+X-Authority-Analysis: v=2.4 cv=fMc0HJae c=1 sm=1 tr=0 ts=6938073a cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=blTVWHW_CT15h6qA4UAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: d4lAkywdkHYz7HtkhmzEOC3b2JPlbv5c
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDA3NiBTYWx0ZWRfXyf0BcVAzg5er
- N1MSEJny4Gkr2dqDUC5fBGTPZbheMQ/QlnIwBncLkRDEguHMS74gJWQAbb35WaK35epZOtU6qf7
- 1LrJTSwcpLkBQf8R4pY03fME5MABDJtuDhPMwQojSPMfjLNepAbcgLfWT+Dc/mMgjfyX1OuGIS3
- rM5fJi7p3X83FuF8WbND3gRzqB+szABo+oM8TYqe//kASSX2GgD4MClQV1OEqrcVRxtWezwLgxf
- BENpwm74Jkmu91BTjdZpAM52tQ4TOR8ws0z9HDBvlRluAEVGkuVtHN1MRTI78vVZeQZH2BAfNfC
- koD2PLZLMR6DVstxcVx4jZGXqsL1c0qdOvhzHdU1xehqPZlGaBGodGgQW3Ff1DAB052OMPUDs40
- vc93C3uu+31ouB3WsxjP+/dfueNavA==
-X-Proofpoint-GUID: d4lAkywdkHYz7HtkhmzEOC3b2JPlbv5c
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=QULB0W7ECN1Zqye5N6MA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 0yd3H450RIapcrx-mbJBei7xb37OMNIU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-09_02,2025-12-04_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 suspectscore=0 spamscore=0 impostorscore=0
+ impostorscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512090076
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512090081
 
+Add support to configure a new client as Ethernet type over MHI by
+setting "mhi_device_info.ethernet_if = true". Create a new Ethernet
+interface named eth%d. This complements existing NET driver support.
 
+Introduce IP_SW1, ETH0, and ETH1 network interfaces required for
+M-plane, NETCONF, and S-plane components.
 
-On 12/9/2025 4:16 PM, Yingchao Deng wrote:
-> Hi Leo & Mike
-> 
-> Based on Leo’s suggestions, I created a new patch, but there are three points that do not fully align with his recommendations:
-> 
->      1. The helper function for returning the register address now returns only the offset, because returning the full address would conflict with cti_write_single_reg.
->      2. For registers such as triginstatus1...3, I defined additional macros CTITRIGINSTATUS1...3. This is because CTITRIGINSTATUS + 0x4 equals CTITRIGOUTSTATUS, and to avoid conflicts with existing macros, I chose numbers starting from 0x1000 for the new definitions.
->      3. Regarding the visibility of attributes for triginstatus1...3, since coresight_cti_reg produces an anonymous variable that cannot be directly referenced, I used coresight_cti_regs_attrs[i] to obtain the attribute corresponding to triginstatus1.
-> 
-> I appreciate both suggestions. After reviewing them, I lean toward Mike's approach.
-> 
-> Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
-> ---
->   .../hwtracing/coresight/coresight-cti-core.c  |  52 +++++--
->   .../hwtracing/coresight/coresight-cti-sysfs.c |  72 ++++++++--
->   drivers/hwtracing/coresight/coresight-cti.h   |   3 +-
->   drivers/hwtracing/coresight/qcom-cti.h        | 136 ++++++++++++++++++
->   4 files changed, 238 insertions(+), 25 deletions(-)
->   create mode 100644 drivers/hwtracing/coresight/qcom-cti.h
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
-> index f9970e40dd59..d2b0b46f2846 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
-> @@ -21,7 +21,7 @@
-> 
->   #include "coresight-priv.h"
->   #include "coresight-cti.h"
-> -
-> +#include "qcom-cti.h"
->   /*
->    * CTI devices can be associated with a PE, or be connected to CoreSight
->    * hardware. We have a list of all CTIs irrespective of CPU bound or
-> @@ -70,15 +70,16 @@ void cti_write_all_hw_regs(struct cti_drvdata *drvdata)
-> 
->       /* write the CTI trigger registers */
->       for (i = 0; i < config->nr_trig_max; i++) {
-> -        writel_relaxed(config->ctiinen[i], drvdata->base + CTIINEN(i));
-> +        writel_relaxed(config->ctiinen[i],
-> +                drvdata->base + cti_reg_addr_with_nr(drvdata, CTIINEN(0), i));
->           writel_relaxed(config->ctiouten[i],
-> -                   drvdata->base + CTIOUTEN(i));
-> +                drvdata->base + cti_reg_addr_with_nr(drvdata, CTIOUTEN(0), i));
->       }
-> 
->       /* other regs */
-> -    writel_relaxed(config->ctigate, drvdata->base + CTIGATE);
-> -    writel_relaxed(config->asicctl, drvdata->base + ASICCTL);
-> -    writel_relaxed(config->ctiappset, drvdata->base + CTIAPPSET);
-> +    writel_relaxed(config->ctigate, drvdata->base + cti_reg_addr(drvdata, CTIGATE));
-> +    writel_relaxed(config->asicctl, drvdata->base + cti_reg_addr(drvdata, ASICCTL));
-> +    writel_relaxed(config->ctiappset, drvdata->base + cti_reg_addr(drvdata, CTIAPPSET));
-> 
->       /* re-enable CTI */
->       writel_relaxed(1, drvdata->base + CTICONTROL);
-> @@ -201,7 +202,7 @@ void cti_write_intack(struct device *dev, u32 ackval)
->       raw_spin_lock(&drvdata->spinlock);
->       /* write if enabled */
->       if (cti_active(config))
-> -        cti_write_single_reg(drvdata, CTIINTACK, ackval);
-> +        cti_write_single_reg(drvdata, cti_reg_addr(drvdata, CTIINTACK), ackval);
->       raw_spin_unlock(&drvdata->spinlock);
->   }
-> 
-> @@ -214,6 +215,9 @@ void cti_write_intack(struct device *dev, u32 ackval)
->   /* DEVID[19:16] - number of CTM channels */
->   #define CTI_DEVID_CTMCHANNELS(devid_val) ((int) BMVAL(devid_val, 16, 19))
-> 
-> +/* DEVARCH[31:21] - ARCHITECT */
-> +#define CTI_DEVARCH_ARCHITECT(devarch_val) ((int)BMVAL(devarch_val, 21, 31))
-> +
->   static int cti_set_default_config(struct device *dev,
->                     struct cti_drvdata *drvdata)
->   {
-> @@ -394,9 +398,8 @@ int cti_channel_trig_op(struct device *dev, enum cti_chan_op op,
-> 
->       /* update the local register values */
->       chan_bitmask = BIT(channel_idx);
-> -    reg_offset = (direction == CTI_TRIG_IN ? CTIINEN(trigger_idx) :
-> -              CTIOUTEN(trigger_idx));
-> -
-> +    reg_offset = (direction == CTI_TRIG_IN ? cti_reg_addr_with_nr(drvdata, CTIINEN(0), trigger_idx):
-> +                         cti_reg_addr_with_nr(drvdata, CTIOUTEN(0), trigger_idx));
->       raw_spin_lock(&drvdata->spinlock);
-> 
->       /* read - modify write - the trigger / channel enable value */
-> @@ -452,7 +455,7 @@ int cti_channel_gate_op(struct device *dev, enum cti_chan_gate_op op,
->       if (err == 0) {
->           config->ctigate = reg_value;
->           if (cti_active(config))
-> -            cti_write_single_reg(drvdata, CTIGATE, reg_value);
-> +            cti_write_single_reg(drvdata, cti_reg_addr(drvdata, CTIGATE), reg_value);
->       }
->       raw_spin_unlock(&drvdata->spinlock);
->       return err;
-> @@ -479,19 +482,19 @@ int cti_channel_setop(struct device *dev, enum cti_chan_set_op op,
->       case CTI_CHAN_SET:
->           config->ctiappset |= chan_bitmask;
->           reg_value  = config->ctiappset;
-> -        reg_offset = CTIAPPSET;
-> +        reg_offset = cti_reg_addr(drvdata, CTIAPPSET);
->           break;
-> 
->       case CTI_CHAN_CLR:
->           config->ctiappset &= ~chan_bitmask;
->           reg_value = chan_bitmask;
-> -        reg_offset = CTIAPPCLEAR;
-> +        reg_offset = cti_reg_addr(drvdata, CTIAPPCLEAR);
->           break;
-> 
->       case CTI_CHAN_PULSE:
->           config->ctiappset &= ~chan_bitmask;
->           reg_value = chan_bitmask;
-> -        reg_offset = CTIAPPPULSE;
-> +        reg_offset = cti_reg_addr(drvdata, CTIAPPPULSE);
->           break;
-> 
->       default:
-> @@ -895,6 +898,7 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
->       struct coresight_desc cti_desc;
->       struct coresight_platform_data *pdata = NULL;
->       struct resource *res = &adev->res;
-> +    u32 devarch;
-> 
->       /* driver data*/
->       drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> @@ -981,9 +985,27 @@ static int cti_probe(struct amba_device *adev, const struct amba_id *id)
->       drvdata->csdev_release = drvdata->csdev->dev.release;
->       drvdata->csdev->dev.release = cti_device_release;
-> 
-> +    /* check architect value*/
-> +    devarch = readl_relaxed(drvdata->base + CORESIGHT_DEVARCH);
-> +    if (CTI_DEVARCH_ARCHITECT(devarch) == ARCHITECT_QCOM) {
-> +        drvdata->is_qcom_cti = 1;
-> +
-> +        /*
-> +         * QCOM CTI does not implement Claimtag functionality as
-> +         * per CoreSight specification, but its CLAIMSET register
-> +         * is incorrectly initialized to 0xF. This can mislead
-> +         * tools or drivers into thinking the component is claimed.
-> +         *
-> +         * Reset CLAIMSET to 0 to reflect that no claims are active.
-> +         */
-> +        drvdata->csdev->claim_tag_info = CS_CLAIM_TAG_NOT_IMPL;
-> +        //writel_relaxed(0, drvdata->base + CORESIGHT_CLAIMSET);
-> +    }
-> +
->       /* all done - dec pm refcount */
->       pm_runtime_put(&adev->dev);
-> -    dev_info(&drvdata->csdev->dev, "CTI initialized\n");
-> +    dev_info(&drvdata->csdev->dev, "%s CTI initialized\n",
-> +                    drvdata->is_qcom_cti ? "QCOM" : "");
->       return 0;
-> 
->   pm_release:
-> diff --git a/drivers/hwtracing/coresight/coresight-cti-sysfs.c b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> index a9df77215141..5d23a138b4a7 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> +++ b/drivers/hwtracing/coresight/coresight-cti-sysfs.c
-> @@ -13,7 +13,7 @@
->   #include <linux/sysfs.h>
-> 
->   #include "coresight-cti.h"
-> -
-> +#include "qcom-cti.h"
->   /*
->    * Declare the number of static declared attribute groups
->    * Value includes groups + NULL value at end of table.
-> @@ -183,7 +183,7 @@ static ssize_t coresight_cti_reg_show(struct device *dev,
->       pm_runtime_get_sync(dev->parent);
->       raw_spin_lock(&drvdata->spinlock);
->       if (drvdata->config.hw_powered)
-> -        val = readl_relaxed(drvdata->base + cti_attr->off);
-> +        val = readl_relaxed(drvdata->base + cti_reg_addr(drvdata, cti_attr->off));
->       raw_spin_unlock(&drvdata->spinlock);
->       pm_runtime_put_sync(dev->parent);
->       return sysfs_emit(buf, "0x%x\n", val);
-> @@ -204,7 +204,7 @@ static __maybe_unused ssize_t coresight_cti_reg_store(struct device *dev,
->       pm_runtime_get_sync(dev->parent);
->       raw_spin_lock(&drvdata->spinlock);
->       if (drvdata->config.hw_powered)
-> -        cti_write_single_reg(drvdata, cti_attr->off, val);
-> +        cti_write_single_reg(drvdata,  cti_reg_addr(drvdata, cti_attr->off), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       pm_runtime_put_sync(dev->parent);
->       return size;
-> @@ -267,7 +267,7 @@ static ssize_t cti_reg32_show(struct device *dev, char *buf,
->       raw_spin_lock(&drvdata->spinlock);
->       if ((reg_offset >= 0) && cti_active(config)) {
->           CS_UNLOCK(drvdata->base);
-> -        val = readl_relaxed(drvdata->base + reg_offset);
-> +        val = readl_relaxed(drvdata->base + cti_reg_addr(drvdata, reg_offset));
->           if (pcached_val)
->               *pcached_val = val;
->           CS_LOCK(drvdata->base);
-> @@ -300,7 +300,7 @@ static ssize_t cti_reg32_store(struct device *dev, const char *buf,
-> 
->       /* write through if offset and enabled */
->       if ((reg_offset >= 0) && cti_active(config))
-> -        cti_write_single_reg(drvdata, reg_offset, val);
-> +        cti_write_single_reg(drvdata,  cti_reg_addr(drvdata, reg_offset), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       return size;
->   }
-> @@ -389,7 +389,7 @@ static ssize_t inen_store(struct device *dev,
-> 
->       /* write through if enabled */
->       if (cti_active(config))
-> -        cti_write_single_reg(drvdata, CTIINEN(index), val);
-> +        cti_write_single_reg(drvdata, cti_reg_addr_with_nr(drvdata, CTIINEN(0), index), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       return size;
->   }
-> @@ -428,7 +428,7 @@ static ssize_t outen_store(struct device *dev,
-> 
->       /* write through if enabled */
->       if (cti_active(config))
-> -        cti_write_single_reg(drvdata, CTIOUTEN(index), val);
-> +        cti_write_single_reg(drvdata, cti_reg_addr_with_nr(drvdata, CTIOUTEN(0), index), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       return size;
->   }
-> @@ -470,7 +470,7 @@ static ssize_t appclear_store(struct device *dev,
-> 
->       /* write through if enabled */
->       if (cti_active(config))
-> -        cti_write_single_reg(drvdata, CTIAPPCLEAR, val);
-> +        cti_write_single_reg(drvdata,  cti_reg_addr(drvdata, CTIAPPCLEAR), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       return size;
->   }
-> @@ -491,7 +491,7 @@ static ssize_t apppulse_store(struct device *dev,
-> 
->       /* write through if enabled */
->       if (cti_active(config))
-> -        cti_write_single_reg(drvdata, CTIAPPPULSE, val);
-> +        cti_write_single_reg(drvdata,  cti_reg_addr(drvdata, CTIAPPPULSE), val);
->       raw_spin_unlock(&drvdata->spinlock);
->       return size;
->   }
-> @@ -513,18 +513,36 @@ static struct attribute *coresight_cti_regs_attrs[] = {
->       &dev_attr_appclear.attr,
->       &dev_attr_apppulse.attr,
->       coresight_cti_reg(triginstatus, CTITRIGINSTATUS),
-> +    coresight_cti_reg(triginstatus1, CTITRIGINSTATUS1),
-> +    coresight_cti_reg(triginstatus2, CTITRIGINSTATUS2),
-> +    coresight_cti_reg(triginstatus3, CTITRIGINSTATUS3),
->       coresight_cti_reg(trigoutstatus, CTITRIGOUTSTATUS),
-> +    coresight_cti_reg(trigoutstatus1, CTITRIGOUTSTATUS1),
-> +    coresight_cti_reg(trigoutstatus2, CTITRIGOUTSTATUS2),
-> +    coresight_cti_reg(trigoutstatus3, CTITRIGOUTSTATUS3),
->       coresight_cti_reg(chinstatus, CTICHINSTATUS),
->       coresight_cti_reg(choutstatus, CTICHOUTSTATUS),
->   #ifdef CONFIG_CORESIGHT_CTI_INTEGRATION_REGS
->       coresight_cti_reg_rw(itctrl, CORESIGHT_ITCTRL),
->       coresight_cti_reg(ittrigin, ITTRIGIN),
-> +    coresight_cti_reg(ittrigin1, ITTRIGIN1),
-> +    coresight_cti_reg(ittrigin2, ITTRIGIN2),
-> +    coresight_cti_reg(ittrigin3, ITTRIGIN3),
->       coresight_cti_reg(itchin, ITCHIN),
->       coresight_cti_reg_rw(ittrigout, ITTRIGOUT),
-> +    coresight_cti_reg_rw(ittrigout1, ITTRIGOUT1),
-> +    coresight_cti_reg_rw(ittrigout2, ITTRIGOUT2),
-> +    coresight_cti_reg_rw(ittrigout3, ITTRIGOUT3),
->       coresight_cti_reg_rw(itchout, ITCHOUT),
->       coresight_cti_reg(itchoutack, ITCHOUTACK),
->       coresight_cti_reg(ittrigoutack, ITTRIGOUTACK),
-> +    coresight_cti_reg(ittrigoutack1, ITTRIGOUTACK1),
-> +    coresight_cti_reg(ittrigoutack2, ITTRIGOUTACK2),
-> +    coresight_cti_reg(ittrigoutack3, ITTRIGOUTACK3),
->       coresight_cti_reg_wo(ittriginack, ITTRIGINACK),
-> +    coresight_cti_reg_wo(ittriginack1, ITTRIGINACK1),
-> +    coresight_cti_reg_wo(ittriginack2, ITTRIGINACK2),
-> +    coresight_cti_reg_wo(ittriginack3, ITTRIGINACK3),
->       coresight_cti_reg_wo(itchinack, ITCHINACK),
->   #endif
->       NULL,
-> @@ -1153,6 +1171,41 @@ int cti_create_cons_sysfs(struct device *dev, struct cti_drvdata *drvdata)
->       return err;
->   }
-> 
-> +  static umode_t coresight_cti_regs_is_visible(struct kobject *kobj,
-> +                  struct attribute *attr, int n)
-> +  {
+M-plane:
+Implement DU M-Plane software for non-real-time O-RAN management
+between O-DU and O-RU using NETCONF/YANG and O-RAN WG4 M-Plane YANG
+models. Provide capability exchange, configuration management,
+performance monitoring, and fault management per O-RAN.WG4.TS.MP.0-
+R004-v18.00.
 
-I was thinking can we create a separate attribute_group for added Qcom 
-regs? Let devarch to determine whether to create these sysfs nodes?
+Netconf:
+Use NETCONF protocol for configuration operations such as fetching,
+modifying, and deleting network device configurations.
 
-Thanks,
-Jie
+S-plane:
+Support frequency and time synchronization between O-DUs and O-RUs
+using Synchronous Ethernet and IEEE 1588. Assume PTP transport over
+L2 Ethernet (ITU-T G.8275.1) for full timing support; allow PTP over
+UDP/IP (ITU-T G.8275.2) with reduced reliability. as per ORAN spec
+O-RAN.WG4.CUS.0-R003-v12.00.
 
-> +    struct device *dev = container_of(kobj, struct device, kobj);
-> +    struct cti_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +    /* Mute QCOM CTI registers for standard CTI module */
-> +    if (!drvdata->is_qcom_cti) {
-> +        if (attr == coresight_cti_regs_attrs[10]
-> +         || attr == coresight_cti_regs_attrs[11]
-> +         || attr == coresight_cti_regs_attrs[12]
-> +         || attr == coresight_cti_regs_attrs[14]
-> +         || attr == coresight_cti_regs_attrs[15]
-> +         || attr == coresight_cti_regs_attrs[16]
-> +#ifdef CONFIG_CORESIGHT_CTI_INTEGRATION_REGS
-> +         || attr == coresight_cti_regs_attrs[21]
-> +         || attr == coresight_cti_regs_attrs[22]
-> +         || attr == coresight_cti_regs_attrs[23]
-> +         || attr == coresight_cti_regs_attrs[26]
-> +         || attr == coresight_cti_regs_attrs[27]
-> +         || attr == coresight_cti_regs_attrs[28]
-> +         || attr == coresight_cti_regs_attrs[32]
-> +         || attr == coresight_cti_regs_attrs[33]
-> +         || attr == coresight_cti_regs_attrs[34]
-> +         || attr == coresight_cti_regs_attrs[36]
-> +         || attr == coresight_cti_regs_attrs[37]
-> +         || attr == coresight_cti_regs_attrs[38]
-> +#endif
-> +         )
-> +                  return 0;
-> +          }
-> +
-> +          return attr->mode;
-> +  }
-> +
->   /* attribute and group sysfs tables. */
->   static const struct attribute_group coresight_cti_group = {
->       .attrs = coresight_cti_attrs,
-> @@ -1166,6 +1219,7 @@ static const struct attribute_group coresight_cti_mgmt_group = {
->   static const struct attribute_group coresight_cti_regs_group = {
->       .attrs = coresight_cti_regs_attrs,
->       .name = "regs",
-> +    .is_visible = coresight_cti_regs_is_visible,
->   };
-> 
->   static const struct attribute_group coresight_cti_channels_group = {
-> diff --git a/drivers/hwtracing/coresight/coresight-cti.h b/drivers/hwtracing/coresight/coresight-cti.h
-> index e7b88b07cffe..413d5ef483e8 100644
-> --- a/drivers/hwtracing/coresight/coresight-cti.h
-> +++ b/drivers/hwtracing/coresight/coresight-cti.h
-> @@ -57,7 +57,7 @@ struct fwnode_handle;
->    * Max of in and out defined in the DEVID register.
->    * - pick up actual number used from .dts parameters if present.
->    */
-> -#define CTIINOUTEN_MAX        32
-> +#define CTIINOUTEN_MAX        128
-> 
->   /**
->    * Group of related trigger signals
-> @@ -181,6 +181,7 @@ struct cti_drvdata {
->       struct cti_config config;
->       struct list_head node;
->       void (*csdev_release)(struct device *dev);
-> +    bool is_qcom_cti;
->   };
-> 
->   /*
-> diff --git a/drivers/hwtracing/coresight/qcom-cti.h b/drivers/hwtracing/coresight/qcom-cti.h
-> new file mode 100644
-> index 000000000000..aa41f9425b36
-> --- /dev/null
-> +++ b/drivers/hwtracing/coresight/qcom-cti.h
-> @@ -0,0 +1,136 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +#include "coresight-cti.h"
-> +
-> +#define ARCHITECT_QCOM 0x477
-> +
-> +#define CTITRIGINSTATUS1 0x1000
-> +#define CTITRIGINSTATUS2 0x1001
-> +#define CTITRIGINSTATUS3 0x1002
-> +
-> +#define CTITRIGOUTSTATUS1 0x1003
-> +#define CTITRIGOUTSTATUS2 0x1004
-> +#define CTITRIGOUTSTATUS3 0x1005
-> +
-> +#define ITTRIGIN1 0x1006
-> +#define ITTRIGIN2 0x1007
-> +#define ITTRIGIN3 0x1008
-> +
-> +#define ITTRIGOUT1 0x1009
-> +#define ITTRIGOUT2 0x100A
-> +#define ITTRIGOUT3 0x100B
-> +
-> +#define ITTRIGINACK1 0x100C
-> +#define ITTRIGINACK2 0x100D
-> +#define ITTRIGINACK3 0x100E
-> +
-> +#define ITTRIGOUTACK1 0x100F
-> +#define ITTRIGOUTACK2 0x1010
-> +#define ITTRIGOUTACK3 0x1011
-> +/* CTI programming registers */
-> +#define    QCOM_CTIINTACK        0x020
-> +#define    QCOM_CTIAPPSET        0x004
-> +#define    QCOM_CTIAPPCLEAR    0x008
-> +#define    QCOM_CTIAPPPULSE    0x00C
-> +#define    QCOM_CTIINEN        0x400
-> +#define    QCOM_CTIOUTEN        0x800
-> +#define    QCOM_CTITRIGINSTATUS    0x040
-> +#define    QCOM_CTITRIGINSTATUS1    0x044
-> +#define    QCOM_CTITRIGINSTATUS2    0x048
-> +#define    QCOM_CTITRIGINSTATUS3    0x04C
-> +#define    QCOM_CTITRIGOUTSTATUS    0x060
-> +#define    QCOM_CTITRIGOUTSTATUS1    0x064
-> +#define    QCOM_CTITRIGOUTSTATUS2    0x068
-> +#define    QCOM_CTITRIGOUTSTATUS3    0x06C
-> +#define    QCOM_CTICHINSTATUS    0x080
-> +#define    QCOM_CTICHOUTSTATUS    0x084
-> +#define    QCOM_CTIGATE        0x088
-> +#define    QCOM_ASICCTL        0x08c
-> +/* Integration test registers */
-> +#define    QCOM_ITCHINACK        0xE70
-> +#define    QCOM_ITTRIGINACK    0xE80
-> +#define    QCOM_ITTRIGINACK1    0xE84
-> +#define    QCOM_ITTRIGINACK2    0xE88
-> +#define    QCOM_ITTRIGINACK3    0xE8C
-> +#define    QCOM_ITCHOUT        0xE74
-> +#define    QCOM_ITTRIGOUT        0xEA0
-> +#define    QCOM_ITTRIGOUT1        0xEA4
-> +#define    QCOM_ITTRIGOUT2        0xEA8
-> +#define    QCOM_ITTRIGOUT3        0xEAC
-> +#define    QCOM_ITCHOUTACK        0xE78
-> +#define    QCOM_ITTRIGOUTACK    0xEC0
-> +#define    QCOM_ITTRIGOUTACK1    0xEC4
-> +#define    QCOM_ITTRIGOUTACK2    0xEC8
-> +#define    QCOM_ITTRIGOUTACK3    0xECC
-> +#define    QCOM_ITCHIN        0xE7C
-> +#define    QCOM_ITTRIGIN        0xEE0
-> +#define    QCOM_ITTRIGIN1        0xEE4
-> +#define    QCOM_ITTRIGIN2        0xEE8
-> +#define    QCOM_ITTRIGIN3        0xEEC
-> +
-> +static noinline u32 cti_qcom_reg_off(u32 offset)
-> +{
-> +    switch (offset) {
-> +        case CTIINTACK:        return QCOM_CTIINTACK;
-> +        case CTIAPPSET:        return QCOM_CTIAPPSET;
-> +        case CTIAPPCLEAR:    return QCOM_CTIAPPCLEAR;
-> +        case CTIAPPPULSE:    return QCOM_CTIAPPPULSE;
-> +        case CTIINEN(0):    return QCOM_CTIINEN;
-> +        case CTIOUTEN(0):    return QCOM_CTIOUTEN;
-> +        case CTITRIGINSTATUS:    return QCOM_CTITRIGINSTATUS;
-> +        case CTITRIGINSTATUS1:    return QCOM_CTITRIGINSTATUS1;
-> +        case CTITRIGINSTATUS2:    return QCOM_CTITRIGINSTATUS2;
-> +        case CTITRIGINSTATUS3:    return QCOM_CTITRIGINSTATUS3;
-> +        case CTITRIGOUTSTATUS:    return QCOM_CTITRIGOUTSTATUS;
-> +        case CTITRIGOUTSTATUS1:    return QCOM_CTITRIGOUTSTATUS1;
-> +        case CTITRIGOUTSTATUS2:    return QCOM_CTITRIGOUTSTATUS2;
-> +        case CTITRIGOUTSTATUS3:    return QCOM_CTITRIGOUTSTATUS3;
-> +        case CTICHINSTATUS:        return QCOM_CTICHINSTATUS;
-> +        case CTICHOUTSTATUS:    return QCOM_CTICHOUTSTATUS;
-> +        case CTIGATE:        return QCOM_CTIGATE;
-> +        case ASICCTL:        return QCOM_ASICCTL;
-> +        case ITCHINACK:        return QCOM_ITCHINACK;
-> +        case ITTRIGINACK:    return QCOM_ITTRIGINACK;
-> +        case ITTRIGINACK1:    return QCOM_ITTRIGINACK1;
-> +        case ITTRIGINACK2:    return QCOM_ITTRIGINACK2;
-> +        case ITTRIGINACK3:    return QCOM_ITTRIGINACK3;
-> +        case ITCHOUT:        return QCOM_ITCHOUT;
-> +        case ITTRIGOUT:        return QCOM_ITTRIGOUT;
-> +        case ITTRIGOUT1:    return QCOM_ITTRIGOUT1;
-> +        case ITTRIGOUT2:    return QCOM_ITTRIGOUT2;
-> +        case ITTRIGOUT3:    return QCOM_ITTRIGOUT3;
-> +        case ITCHOUTACK:    return QCOM_ITCHOUTACK;
-> +        case ITTRIGOUTACK:    return QCOM_ITTRIGOUTACK;
-> +        case ITTRIGOUTACK1:    return QCOM_ITTRIGOUTACK1;
-> +        case ITTRIGOUTACK2:    return QCOM_ITTRIGOUTACK2;
-> +        case ITTRIGOUTACK3:    return QCOM_ITTRIGOUTACK3;
-> +        case ITCHIN:               return QCOM_ITCHIN;
-> +        case ITTRIGIN:            return QCOM_ITTRIGIN;
-> +        case ITTRIGIN1:        return QCOM_ITTRIGIN1;
-> +        case ITTRIGIN2:        return QCOM_ITTRIGIN2;
-> +        case ITTRIGIN3:        return QCOM_ITTRIGIN3;
-> +        default:
-> +                    WARN(1, "Unknown offset=%u\n", offset);
-> +                    return 0;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static u32 cti_reg_addr_with_nr(struct cti_drvdata *drvdata,
-> +                                          u32 reg, u32 nr)
-> +{
-> +    /* convert to qcom specific offset */
-> +    if (unlikely(drvdata->is_qcom_cti))
-> +        reg = cti_qcom_reg_off(reg);
-> +
-> +    return reg + sizeof(u32) * nr;
-> +}
-> +
-> +static u32 cti_reg_addr(struct cti_drvdata *drvdata, u32 reg)
-> +{
-> +        return cti_reg_addr_with_nr(drvdata, reg, 0);
-> +}
-> +
-> 
-> 
+Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+---
+patchset link for V5 : https://lore.kernel.org/all/20251106-vdev_next-20251106_eth-v5-0-bbc0f7ff3a68@quicinc.com/
+patchset link for V1 (first post) : https://lore.kernel.org/all/20250724-b4-eth_us-v1-0-4dff04a9a128@quicinc.com/
+
+changes to v6:
+- Removed interm variable useage as per comments from Simon and Dmirty.
+- Squashed gerrits 1 and 2 in single gerrit.
+- Added more description for M-plane, Netconf and S-plane.
+
+changes to v5:
+- change in email ID from "quic_vpernami@quicinc.com" to "vivek.pernamitta@oss.qualcomm.com"
+- Renamed to patch v5 as per comments from Manivannan
+- Restored to original name as per comments from Jakub
+- Renamed the ethernet interfce to eth%d as per Jakub
+---
+
+---
+Vivek Pernamitta (2):
+      net: mhi: Enable Ethernet interface support
+      bus: mhi: host: pci: Enable IP_SW1, IP_ETH0 and IP_ETH1 channels for QDU100
+
+ drivers/bus/mhi/host/pci_generic.c |  8 ++++
+ drivers/net/mhi_net.c              | 75 +++++++++++++++++++++++++++++++-------
+ 2 files changed, 70 insertions(+), 13 deletions(-)
+---
+base-commit: 82bcd04d124a4d84580ea4a8ba6b120db5f512e7
+change-id: 20251209-vdev_next-20251208_eth_v6-c405aed13fed
+
+Best regards,
+-- 
+Vivek Pernamitta <<quic_vpernami@quicinc.com>>
 
 
