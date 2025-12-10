@@ -1,225 +1,415 @@
-Return-Path: <linux-arm-msm+bounces-84829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C08ECB1837
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 01:38:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A498ACB1861
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 01:40:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 957E9310333C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 00:37:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A2C3830E54D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 00:39:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F87D1DEFF5;
-	Wed, 10 Dec 2025 00:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB011DFD96;
+	Wed, 10 Dec 2025 00:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ek/7y7xT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Um1w8Pt+";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hXf4YqZj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952E419309C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 00:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612521A9FB4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 00:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765327066; cv=none; b=EjwfsagsH43gK4QInem1GgBcE/tSRwFJ2R2m5o+PGSRZEuT+10nU3FyiSNhXBLlyBB19jshb2Fzmkif/RmBPovN3y5Iw9koHaDIYvKN/JYpe2WnNDb69Q/XpRP4hy/t88K+YZJgRZhNEoAJZra0SCNHdFLkhYhUEFE/BZd7C+LY=
+	t=1765327184; cv=none; b=Bu3FShIr0IBTJtTUg/2h0rkYqDL2m6WNL6UwAF2m1O/HNUoTr/ez2MmPwaT8eA37Z+Z72bwwCjmc8UhQDmYNvrh6UbJEjUTxoO7wMvU4GCV+Pb7QnN3pwK01234NtXJ+y6u4cOUBnMcN7yjHEt1eU/SPe3eTqtyLXTXX0QY0HgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765327066; c=relaxed/simple;
-	bh=kMV2klR1DStzeKF01dgOaxxEEFLWBWwy94a3z1Sv2lM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0OdkYgD4BsBE8MdVQwjCtGqYJrBlLJm/NSLwUgmL0AQ/RjS1xBzDuS7ouRdaWIWZaa35PAkN7D7ugF0r9IDxWI29VHDzIfxp2TH2c7d/Ablg0Zfqi3e6X1puQdLL8d09tfjRyadGMtTlr1AYvSSY2F+TsaTccMXeIOCukoICb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ek/7y7xT; arc=none smtp.client-ip=209.85.160.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-3e89d226c3aso3617295fac.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 16:37:44 -0800 (PST)
+	s=arc-20240116; t=1765327184; c=relaxed/simple;
+	bh=BGbxCJlmWxg+xIT8uALL3Wh6xOCMobTPgr2YpnAkwSI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bA8il4/WNqVhMnquB91YIZ+48ntyaMtE6yM4WNpaIa6zNKT0Cy29EwUduKBK1ZjCweF8YkUaaGcL2a6zFyi/zE3hLbKbu41UoTAvrgfZZ0JF4JWmkGdWu4pCTyIkKnwcF7wu10YcI/tDC9A52pOePBRM8ljAxLCPqFD6p/OKKPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Um1w8Pt+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hXf4YqZj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BA0OPpq1438193
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 00:39:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=WqNyv6hVlOMsVxijAYxgb2
+	i2xC3pl6O1AWGedXx4pkU=; b=Um1w8Pt+VPj2p5zdUqYPKSPJdUYD04Dx7BnhJT
+	caLUPisD7qqAqyPVAtUKwRT5jLK3Hy78FvRBdPNYY1GttuzhexEmFBy0h0tQksFG
+	nzl6R9Okbp0WFgq8KL/RwcAc92pk/inURH2B9CZu/irLKb7ykwHpQBuRLOUV7Yvy
+	Ul8TwPZuakoE+3iv50OnmtlbnVm5TE+HEsSobQXojvUpf9rH7Vq1KPbNogEKMaF4
+	gtfvfD1WB5Ksvt3xzr6DMDrW6C4NsKZ6VW14HjUi1Z64bg3AsPQZgLdeipw2Y2D6
+	MwthyhFJxq6W+lGOKKrikibJg1eR7Gh/g43bGW5fmf4Yzjmw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axm9ca3xs-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 00:39:41 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b633babe5b9so296651a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 16:39:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765327063; x=1765931863; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cTnBfhCPlftBcGJdY/ReLgnu94bb7n8RiqGchanYiDU=;
-        b=Ek/7y7xTnPtM6ZvYYrhiuJ8zoWIsOh3W8CvyjYjorDjpDgW44/80kZ1pWAG6BJmQPh
-         DAt1bYMzjvvHFzVVQoQGv4xY0s5FDeEXl8ziMZ2g8qj1y21Dd4GnEaQIfVki7G5XyJqL
-         Z6nmEvtglTzAUlmjz2z7p7N9V7DJygqwM4NnFnzMc4QSvqXvzsTJMOuHPxS5DUScxkH1
-         xXrz2Frv6f90hedYiA9daM+9ohmOP69aZfvYVzOOfMa4i9UXF3KmGbznC+XCnIHRQXDs
-         npz46EcfWgxeA26I0i6vHJFvKs1Fmue2/0HFE/qN9MrbbAErr2WEuwnhoIWAd1UwF6dO
-         OOEQ==
+        d=oss.qualcomm.com; s=google; t=1765327180; x=1765931980; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WqNyv6hVlOMsVxijAYxgb2i2xC3pl6O1AWGedXx4pkU=;
+        b=hXf4YqZjTv1mUri1br6ZyrlXPUjh78V6l6PeSvgvPiw4mpdhxLlLwRpYJFSb4yQGDz
+         mNPfRDYAbOtGTkWnyvEt0bOZW+W53bVvW5Bb+KB5t9Zvxebzk9Uhjf/Bpmkhg/UK4OeK
+         N5pgQ9phlhyVUtLnHIc/+h0g0vKGombT3Y6MRrXc9CzXexkS5t+jIOlup4wwKedFF87D
+         QiEB9K70KctV9Fhkh3IFUji96fwwzGBvJt4WiUSBXULd3q/uz35680XxqI1FdSklCjXa
+         L3z8Af/c2VkDP2QIZG+1X9E3VXNtLKBLclvebFbcYKGM/8lh9FUem5DRFTmXHBZPYtdR
+         yjfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765327063; x=1765931863;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cTnBfhCPlftBcGJdY/ReLgnu94bb7n8RiqGchanYiDU=;
-        b=nGdfdISU7+WWPvckF8X7sYXAr8W/BnW8Ty6ZqeRwkz93wV9Fg9oK88HZara/OZqEn9
-         3aQBMZHx8qbgkKMJsQF+UhtNR824lM+xgJxkmhOsO5sCu+PiUJFW6BVmapL2PO3+HD94
-         vTGW1pBMSx+FMeGBKtyn3bl9oKig8d3/hN0YgF2apmSk6mLSdqVSRRB/3xGQI0SvlIAk
-         /ee1Y8ClyQrKC+WgnhRRSjcVydnJsBHka0sFwsINd5n4T6sWChIsELNrVmLZTur1DDba
-         tV1Oy+u3MuAhV8CQtcjZOJ6JUnZZGaNc/0LSdEjyGldSiOQ8f8mIubhGP87MS4inZYZr
-         FidQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXdX8tMMooM/9vH4halPYB3Lg+B0e/FekS/3a5VjkYPX+EGChHGQWMLt+rnl+AxSoh6+7Zj17eV36OcBXpA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3IC6e3p9SkdMuE0QZkRL+VXmNugWLhVptHrrL0/5AMl0mJNZf
-	Xr3XyhGjUUBY4dPoDeNb9fBE/+CvwouxMiDY2dT7SJ1X64lSqNbVZX4V
-X-Gm-Gg: ASbGncskthVbsG8tiI9KRdE63PSljvuIRGaBDvioHu2ZQqw0pLT211vNIHyxNWxobXV
-	ry2sCk4LpLGnfEF3Gv210IMWb9l1fgugd66q4o/qlxs6jBNLufE63W4xG4Vu0/uW7SvEMu6VgWS
-	O/U2bz0uo9wOyhORPraHiofsaozEv8Nn+BKgnI4JqMU+Ie5DwCXQ2dBepEBlCuZtij1dgKwkdl8
-	m8j1BKd3vU+PO2Q5gdpVeup7hbKYO+qk5SNtA9uZ//HymQT5eH+bGIsyy7CeES75ONc30PkTBBP
-	FW/kjpPu93qUUZ9gE33WZw3LeyxAXEZHds1NvrAsE3NOwd/8/sx7I7DgaHFzM1I2brC4gIRqWQg
-	AelVF5NLlctLrvrS9debvzmW1/PtEerWxC6t/XnnSjVT7yGjflkfFNGmX+9A9+PCviJoJvENdu7
-	a7+Zn8bo1M9E/ipR28wVuOClDrh8VhK3ZxB1yveC/VY+2RP1Q4Upk45Azd8OY6QqfXczmnLJmZm
-	V7eV4NWInciyjqIY6bd2ve473fb
-X-Google-Smtp-Source: AGHT+IFXtFBZQ4Phs+DA2gIk8zEB/PSTinPp9kLxq66H0kohPSDEsTuKzeL4L4ahy6FStdu0aIQDxw==
-X-Received: by 2002:a05:6820:168a:b0:659:9a49:8eba with SMTP id 006d021491bc7-65b2ad5bca7mr509385eaf.62.1765327063516;
-        Tue, 09 Dec 2025 16:37:43 -0800 (PST)
-Received: from nukework.lan (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6597ea6807esm8588826eaf.0.2025.12.09.16.37.42
+        d=1e100.net; s=20230601; t=1765327180; x=1765931980;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WqNyv6hVlOMsVxijAYxgb2i2xC3pl6O1AWGedXx4pkU=;
+        b=v40xHneCIMNF7iF4TjykTH/dZP1919mF5Nw2T1IaJFz8xA3jReaw8ZJPJmiT9JXb2o
+         AZ2YAyYcNjUtLgzzFnMZCKvkjbw1iLDA2/6Q+Ufetis7yoLIMvNfmaEc16B4oGaiYYpB
+         DENCn6l0LX/lMufVe2Q0mXZQeXwiHo7i1svraVMlmAVPfj/SH/edOYIX7FluMJN2SQXD
+         mswPTUP+zAj2Vv+ahP85l7mAYijaE3p8A3cK/xY+mt/T1eE/1nFf9nd+mn2PTLUKV2lc
+         Ru1br8kkdTAunMdmnXXW0dMAZnmerzPUEzJ8baZeuLS7zyFeXxT9P+hi5Mo+OtsF6449
+         OuYA==
+X-Forwarded-Encrypted: i=1; AJvYcCU2gHfpwRabRtgg6ajGqTMwZ0jl1FJqfw5QoYbPcXt3oenOO8HxCOENuBU+vvIWduBTHBneuTCdv5ig38AT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp2TlPZtqzmAySC1TVvwY2ZL5C1/t0qzwRBYqGOm8Qa1fbFQR6
+	jYw/WNXIJMBWp5zgFDUTlQhisxujp5MLiNIqne2Ach63MUosdx9HG/+peL1SeZ7JA7TwCv8+ztW
+	EkpHtarPPLdAUM1rmR+lICOrRB1E+IkHnJf7jLwjbVyD9G0rx/zpA8wm2uFlfzWzuPJx7
+X-Gm-Gg: AY/fxX5JxVZRl2jveBgBn7zjt68vVgf605jgnwWmWeD5VWda84saXCjIML4YQnI4hMg
+	UNCqHxebp/3Bqg1wvfts4eTNqh12S4NCDW1v/waR7dajsSBx6xT+NUxuYJ4Ht69q/mj7Niyqp7/
+	/HucYN4XA+WCXEqfmEg9DUkTIJVye7TDHiem471cL2z5H82nEs5Zm85QlEyUfPt2ogaKag3Gox3
+	fHYUet9bEu8gvzLoSvwLjFsJmZdDKnZfJ1eOF687hxkZ3dU1BSJ+KuCYN8E6yLbU9vlL/D5AGWp
+	cgQd/KnPSXu8pch3mtVWdtr8aO/S8G0B72+JmaRMjkLAvGqTierqLDx1J21FeJUOBhZvL8R08v+
+	08ohhaGyFioXuIZV05DcDGxNS36Q6+ciHWrEogAc3rz8zEsjxTxgd8KOqE+cEZazH7vFhcQ==
+X-Received: by 2002:a05:693c:800b:b0:2ab:ca55:8942 with SMTP id 5a478bee46e88-2ac05595d3emr236630eec.9.1765327179654;
+        Tue, 09 Dec 2025 16:39:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHflFMaUjgQhIGNnlJTK13Jw3ANG8y0obPGsOUXTC2h1dVoOieZarEGfXFiHE5srdizJUD2Bg==
+X-Received: by 2002:a05:693c:800b:b0:2ab:ca55:8942 with SMTP id 5a478bee46e88-2ac05595d3emr236621eec.9.1765327178807;
+        Tue, 09 Dec 2025 16:39:38 -0800 (PST)
+Received: from gu-dmadival-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba822b615sm46666784eec.0.2025.12.09.16.39.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 16:37:42 -0800 (PST)
-From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: mathieu.poirier@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Subject: [PATCH RFC 3/3] arm64: dts: qcom: ipq8074: add remoteproc nodes
-Date: Tue,  9 Dec 2025 18:37:25 -0600
-Message-ID: <20251210003729.3909663-4-mr.nuke.me@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20251210003729.3909663-1-mr.nuke.me@gmail.com>
-References: <20251210003729.3909663-1-mr.nuke.me@gmail.com>
+        Tue, 09 Dec 2025 16:39:38 -0800 (PST)
+From: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+Subject: [PATCH v9 0/5] Enable support for AV1 stateful decoder
+Date: Tue, 09 Dec 2025 16:39:33 -0800
+Message-Id: <20251209-av1d_stateful_v3-v9-0-718e3b3934b1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEbBOGkC/3XQ22rDMAwG4Fcpvl5KfYrtXu09xiiKLa+GtlnjJ
+ GyUvPuUbpDAHDAC/cifQA+WsUuY2XH3YB2OKaf2Ro172TF/htsHVilQz8RBaH4QroKRh1Puocc
+ 4XE6jrHwTXcTAOQTP6NtnhzF9Pcm399++w/tAcr+E55T7tvt+rh3lnP5tkIf/G+hRyrlVAbWIX
+ r22Oe/vA1x8e73uqbDZHNXiEFRwFDlSes8RwMooNhy9dkzB0bOjea1FA8r5sOHUa6dwubEmR4F
+ rAtqapmDDMSuHl+5jyHGOS+BaSudxw7GLQ6XgWHJENAosN0Y2pTtP0/QDkGedhjQCAAA=
+X-Change-ID: 20251029-av1d_stateful_v3-cbf9fed11adc
+To: Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>,
+        Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765327177; l=9174;
+ i=deepa.madivalara@oss.qualcomm.com; s=20250814; h=from:subject:message-id;
+ bh=BGbxCJlmWxg+xIT8uALL3Wh6xOCMobTPgr2YpnAkwSI=;
+ b=qaSCm+A/BiAGLNrDfXXJDgf8NhniWKfM0Y6HbRDoOtrduAzcTWmopzhlt2g3RM7my70ANVu+L
+ g01+niX9UdRDYLCbjIFW03kbLYooA/3Bsu+VWx3x3iWNKviode3tf83
+X-Developer-Key: i=deepa.madivalara@oss.qualcomm.com; a=ed25519;
+ pk=MOEXgyokievn+bgpHdS6Ixh/KQYyS90z2mqIbQ822FQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDAwMyBTYWx0ZWRfX4apQYN4j0Dvt
+ oxmN5a/L4zkY/iDK/pXIiJ80aCpXLJypdArJy6tNyaEXdODjIaTfiCLdqktjErZQ3cFGEfPuckO
+ JvStUkuh0xqwPbGQTnxA7o37WyuCp7AJQ5fdAjoND7XQ5OkYGgrcXaC11/k9WXP8RsQiuSFduku
+ cmOguKiHCkEWpoTiFapV772pWFUKEZIyYj39bbXokWhYUDCDCFR8M8L4PfKxI41cEFiQA+6ZHU8
+ 9wxcZFV8jJpDHJrDjXIXgtam8r7YM6nHSQ4Xsjd2HvvZEXkR3mpzphnbmpY4LksqbNdaItqxHwM
+ D+LMwZus7wga4sqQQtdzt6dP4AlyJ12NyeqAqt4djyACqg+Aq4jxUPiccH+Mbto4pE57AGLFTxt
+ lsByhc7p3sHHmgRPrlesndfqCUSsuQ==
+X-Proofpoint-ORIG-GUID: st6GXkBKVf7zrbrb_hkqu1WcYPlHs-YF
+X-Authority-Analysis: v=2.4 cv=Vcj6/Vp9 c=1 sm=1 tr=0 ts=6938c14d cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QyXUC8HyAAAA:8
+ a=e5mUnYsNAAAA:8 a=rSFLfVtXdW1OZ3NksNsA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-GUID: st6GXkBKVf7zrbrb_hkqu1WcYPlHs-YF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 malwarescore=0 impostorscore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100003
 
-Add the nodes for the WCSS remoteproc loader on IPQ8074, so that there
-a use case for the DT bindings. GCC_WCSSAON_RESET is not implemented
-by the GCC reset controller, so use a placeholder value for now. Leave
-the node disabled so that remoteproc doesn't start up with the missing
-reset.
+Hi all,
 
-Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+This patch series adds initial support for the AV1 stateful decoder
+codecs in iris decoder. Also it adds support for AV1 stateful decoder
+in V4l2. The objective of this work is to extend the Iris decoder's
+capabilities to handle AV1 format codec streams, including necessary
+format handling and buffer management.
+
+These patches also address the comments and feedback received from the
+patches previously sent. I have made the necessary improvements
+based on the community's suggestions.
+
+Changes in v9:
+- Add inst_iris_fmts tp all the platforms in gen2 (Wangao)
+- Spaces to tabs (Bryan)
+- Link to v8: https://lore.kernel.org/r/20251202-av1d_stateful_v3-v8-0-2f74a81773b4@oss.qualcomm.com
+
+Changes in v8:
+- Rebase to latest
+- Link to v7: https://lore.kernel.org/r/20251110-av1d_stateful_v3-v7-0-9913a15339ce@oss.qualcomm.com
+
+Changes in v7:
+- Updated Documentation (Nicolas)
+- Link to v6:
+  https://lore.kernel.org/r/20251109-av1d_stateful_v3-v6-0-4a9bde86025a@oss.qualcomm.com
+
+Changes in v6:
+- Fix for kernel test robot failure
+- Link to v5:
+  https://lore.kernel.org/r/20251107-av1d_stateful_v3-v5-0-351652ba49cd@oss.qualcomm.com
+
+Changes in v5:
+- Updated Documentation (Hans, Nicolas)
+- Link to v4:
+  https://lore.kernel.org/r/20251103-av1d_stateful_v3-v4-0-33cc1eaa83f2@oss.qualcomm.com
+
+Changes in v4:
+- Reuse sm8550_vdec_output_config_params (Dikshita)
+- Add definition for 256 (Bryan)
+- Fix identation (Bryan)
+- Link to v3:
+  https://lore.kernel.org/r/20251030-av1d_stateful_v3-v3-0-a1184de52fc4@oss.qualcomm.com
+
+Changes in v3:
+- Updated fourcc could be to match the ISO specification (Nicolas)
+- Addressed comments and rebased changes to resolve potential merge
+  conflicts (Dikshita)
+- Updated GST MR
+- Link to v2:
+  https://lore.kernel.org/r/20251017-av1_irisdecoder-v2-0-964a5478139e@oss.qualcomm.com
+
+Changes in v2:
+- Updated documentation to target AV1 codec, not just AV1 decoder
+  (Nicolas)
+- Updated description for V4L2_PIX_FMT_AV1 (Nicolas)
+- Simplified buffer calculations and replaced numbers with relevant
+  enums (Bryan, Nicolas)
+- Improved commit text for patch 5/5
+- Fix for kernel test robot failure
+  Reported-by: kernel test robot <lkp@intel.com>
+  Closes:
+  https://lore.kernel.org/oe-kbuild-all/202510021620.4BVCZwgf-lkp@intel.com/
+- Link to v1:
+  https://lore.kernel.org/r/20251001-av1_irisdecoder-v1-0-9fb08f3b96a0@oss.qualcomm.com
+
+Changes since RFC:
+- Addressed CRC issues seen during fluster testing which
+  are fixed with firmware fix [1]
+- Added Documentation for AV1 stateful uapi [Nicholas]
+- Resolved issues reported by static tool analyzers
+- RFC:
+  https://lore.kernel.org/linux-media/20250902-rfc_split-v1-0-47307a70c061@oss.qualcomm.com/
+
+[1]:
+https://lore.kernel.org/linux-firmware/ff27f712-a96e-4fa6-7572-a0091537d8ac@oss.qualcomm.com/
+
+These patches are tested on SM8550 for AV1 decoder while
+ensuring other codecs are not affected.
+
+Gstreamer testing:
+Gstreamer MR for enabling AV1 stateful decoder:
+https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/9892
+
+Fluster testing:
+Test suite: AV1-TEST-VECTORS
+The result of fluster test on SM8550:
+135/242 testcases passed while testing AV1-TEST-VECTORS with
+GStreamer-AV1-V4L2-Gst1.0
+
+failing tests:
+unsupported content with bitdepth 10 (66 tests)
+Iris decoder supports only 8bit NV12
+av1-1-b10-00-quantizer-*
+
+Unsupported resolution (36 tests).
+Iris hardware decoder supports min resolution of 96x96
+av1-1-b8-01-size-*
+
+Unsupported colorformat (1 test)
+av1-1-b8-24-monochrome
+
+Unsupported SVC tests (2tests)
+av1-1-b8-22-svc-L2T1
+av1-1-b8-22-svc-L2T2
+
+Bitstream corruption issue: (2tests)
+av1-1-b8-03-sizeup
+av1-1-b8-03-sizedown
+
+Testsuite: CHROMIUM-8bit-AV1-TEST-VECTORS
+13/13 testcases passed while testing CHROMIUM-8bit-AV1-TEST-VECTORS with
+GStreamer-AV1-V4L2-Gst1.0
+
+Following the RFC feedback, focused on only IVF/MKV content
+as AV1 parser lacks support for below content
+AV1-ARGON-PROFILE0-CORE-ANNEX-B
+AV1-ARGON-PROFILE0-NON-ANNEX-B
+AV1-ARGON-PROFILE0-NON-ANNEX-B
+
+Unsupported test suites:
+Iris Decoder supports only PROFILE0/V4L2_MPEG_VIDEO_AV1_PROFILE_MAIN
+and 8 bit, 420 only
+AV1-ARGON-PROFILE1-CORE-ANNEX-B
+AV1-ARGON-PROFILE1-NON-ANNEX-B
+AV1-ARGON-PROFILE1-STRESS-ANNEX-B
+AV1-ARGON-PROFILE2-CORE-ANNEX-B
+AV1-ARGON-PROFILE2-NON-ANNEX-B
+AV1-ARGON-PROFILE2-STRESS-ANNEX-B
+CHROMIUM-10bit-AV1-TEST-VECTORS
+
+Compliance test for iris_driver device /dev/video0:
+
+Driver Info:
+		Driver name      : iris_driver
+		Card type        : Iris Decoder
+		Bus info         : platform:aa00000.video-codec
+		Driver version   : 6.17.0
+		Capabilities     : 0x84204000
+				Video Memory-to-Memory Multiplanar
+				Streaming
+				Extended Pix Format
+				Device Capabilities
+		Device Caps      : 0x04204000
+				Video Memory-to-Memory Multiplanar
+				Streaming
+				Extended Pix Format
+		Detected Stateful Decoder
+
+Required ioctls:
+		test VIDIOC_QUERYCAP: OK
+		test invalid ioctls: OK
+
+Allow for multiple opens:
+		test second /dev/video0 open: OK
+		test VIDIOC_QUERYCAP: OK
+		test VIDIOC_G/S_PRIORITY: OK
+		test for unlimited opens: OK
+
+Debug ioctls:
+		test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+		test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+		test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not
+Supported)
+		test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+		test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+		test VIDIOC_ENUMAUDIO: OK (Not Supported)
+		test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+		test VIDIOC_G/S_AUDIO: OK (Not Supported)
+		Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+		test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+		test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+		test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+		test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+		test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+		Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+		test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+		test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not
+Supported)
+		test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+		test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+		test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+		test VIDIOC_QUERYCTRL: OK
+		test VIDIOC_G/S_CTRL: OK
+		test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+		test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+		test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+		Standard Controls: 12 Private Controls: 0
+
+Format ioctls:
+		test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+		test VIDIOC_G/S_PARM: OK (Not Supported)
+		test VIDIOC_G_FBUF: OK (Not Supported)
+		test VIDIOC_G_FMT: OK
+		test VIDIOC_TRY_FMT: OK
+		test VIDIOC_S_FMT: OK
+		test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+		test Cropping: OK
+		test Composing: OK
+		test Scaling: OK (Not Supported)
+
+Codec ioctls:
+		test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+		test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+		test VIDIOC_(TRY_)DECODER_CMD: OK
+
+Buffer ioctls:
+		test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+		test CREATE_BUFS maximum buffers: OK
+		test VIDIOC_REMOVE_BUFS: OK
+		test VIDIOC_EXPBUF: OK
+		test Requests: OK (Not Supported)
+		test blocking wait: OK
+
+Total for iris_driver device /dev/video0: 48, Succeeded: 48, Failed: 0,
+Warnings: 0
+
+Thanks,
+Deepa
+
+Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 79 +++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+Deepa Guthyappa Madivalara (5):
+      media: uapi: videodev2: Add support for AV1 stateful decoder
+      media: v4l2: Add description for V4L2_PIX_FMT_AV1 in v4l_fill_fmtdesc()
+      media: iris: Add support for AV1 format in iris decoder
+      media: iris: Define AV1-specific platform capabilities and properties
+      media: iris: Add internal buffer calculation for AV1 decoder
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 256e12cf6d544..86369fa680553 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -108,6 +108,11 @@ memory@4ac00000 {
- 			reg = <0x0 0x4ac00000 0x0 0x400000>;
- 			no-map;
- 		};
-+
-+		q6_region: wcnss@4b000000 {
-+			reg = <0x0 0x4b000000 0x0 0x03700000>;
-+			no-map;
-+		};
- 	};
- 
- 	firmware {
-@@ -390,6 +395,11 @@ tcsr: syscon@1937000 {
- 			reg = <0x01937000 0x21000>;
- 		};
- 
-+		tcsr_q6: syscon@1945000 {
-+			compatible = "qcom,tcsr-ipq8074", "syscon";
-+			reg = <0x01945000 0xe000>;
-+		};
-+
- 		spmi_bus: spmi@200f000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0200f000 0x001000>,
-@@ -1003,6 +1013,50 @@ pcie@0 {
- 				ranges;
- 			};
- 		};
-+
-+		q6v5_wcss: remoteproc@cd00000 {
-+			compatible = "qcom,ipq8074-wcss-pil";
-+			reg = <0x0cd00000 0x4040>,
-+			      <0x004ab000 0x20>;
-+			reg-names = "qdsp6",
-+				    "rmb";
-+
-+			interrupts-extended = <&intc GIC_SPI 325 IRQ_TYPE_EDGE_RISING>,
-+					      <&wcss_smp2p_in 0 0>,
-+					      <&wcss_smp2p_in 1 0>,
-+					      <&wcss_smp2p_in 2 0>,
-+					      <&wcss_smp2p_in 3 0>;
-+			interrupt-names = "wdog",
-+					  "fatal",
-+					  "ready",
-+					  "handover",
-+					  "stop-ack";
-+
-+			resets = <&gcc 0xffff>, /* GCC_WCSSAON_RESET */
-+				 <&gcc GCC_WCSS_BCR>,
-+				 <&gcc GCC_WCSS_Q6_BCR>;
-+
-+			reset-names = "wcss_aon_reset",
-+				      "wcss_reset",
-+				      "wcss_q6_reset";
-+
-+			memory-region = <&q6_region>;
-+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-+
-+			qcom,smem-states = <&wcss_smp2p_out 0>,
-+					   <&wcss_smp2p_out 1>;
-+			qcom,smem-state-names = "shutdown",
-+						"stop";
-+
-+			status = "disabled";
-+
-+			glink-edge {
-+				interrupts = <GIC_SPI 321 IRQ_TYPE_EDGE_RISING>;
-+				label = "rtr";
-+				qcom,remote-pid = <1>;
-+				mboxes = <&apcs_glb 8>;
-+			};
-+		};
- 	};
- 
- 	timer {
-@@ -1182,4 +1236,29 @@ wcss-phyb1-crit {
- 			};
- 		};
- 	};
-+
-+	wcss: smp2p-wcss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupt-parent = <&intc>;
-+		interrupts = <GIC_SPI 322 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 9>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		wcss_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		wcss_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
- };
+ .../userspace-api/media/v4l/pixfmt-compressed.rst  |   8 +
+ drivers/media/platform/qcom/iris/iris_buffer.h     |   2 +
+ drivers/media/platform/qcom/iris/iris_ctrls.c      |   8 +
+ drivers/media/platform/qcom/iris/iris_hfi_common.h |   3 +
+ .../platform/qcom/iris/iris_hfi_gen2_command.c     |  85 +++++-
+ .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   9 +
+ .../platform/qcom/iris/iris_hfi_gen2_response.c    |  22 ++
+ drivers/media/platform/qcom/iris/iris_instance.h   |   1 +
+ .../platform/qcom/iris/iris_platform_common.h      |  13 +
+ .../media/platform/qcom/iris/iris_platform_gen1.c  |  20 +-
+ .../media/platform/qcom/iris/iris_platform_gen2.c  | 159 +++++++++++
+ drivers/media/platform/qcom/iris/iris_vdec.c       |  23 +-
+ drivers/media/platform/qcom/iris/iris_vidc.c       |   1 +
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 299 ++++++++++++++++++++-
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.h | 116 ++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c               |   1 +
+ include/uapi/linux/videodev2.h                     |   1 +
+ 17 files changed, 745 insertions(+), 26 deletions(-)
+---
+base-commit: 1f2353f5a1af995efbf7bea44341aa0d03460b28
+change-id: 20251029-av1d_stateful_v3-cbf9fed11adc
+
+Best regards,
 -- 
-2.45.1
+Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 
 
