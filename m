@@ -1,168 +1,454 @@
-Return-Path: <linux-arm-msm+bounces-84867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B580CB1DC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 05:05:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59BBBCB1F0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 06:11:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E62613007CB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 04:05:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6986B303C9E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 05:10:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F03C30DEBD;
-	Wed, 10 Dec 2025 04:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F7AB2F83DE;
+	Wed, 10 Dec 2025 05:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OqCGoGs1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EgHtploL"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="US9eSX2G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FA1224AF1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 04:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC8C2D738B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 05:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765339536; cv=none; b=tJ60G4pVjQqB3hMjsCFTUpqGqknh4ax9MYlqIL84kiO6AVdhu9aHxvERUkSmTtiL09HZUkOUtaqsE+t0OiRabVGgbxds95Pj1t/leiz2GOkWpYLEicu0lRP39YXclhPNpIcDqt9VAQGqTjrLhb8G4RhfXF5DjzLowwHrBGxQzJk=
+	t=1765343422; cv=none; b=YdIOyKKfHVq8obSZkqgM+pzz7va4izxIGqgQKrRmcNJ849DqS3bosEaraYi24wMOzG7Z4wPJb6xIVL5H6l8HoutQLspCQnTUR+6P1vYZz14qV2IvrTcWJN0f3+lkSKh4HFJhKA9DJaVxsiOHO5O8RxmZSTpuZ8Ua9AHglVqcyNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765339536; c=relaxed/simple;
-	bh=e+g3dqOZ2PcVFKzAealcv2hz8SQ64WuoXheOf32dpoA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o2+AvhM2qJ1siS6Qsn9uPVc4pxG2DO+38ibGgB2SACyLxpY1ucxWRuWuBZ29q3xOzKa5FtpzXAV52CE726Izv+S7Q5YTe8YX43Fgiy69MDDxi8TRq0paWhYM5yuz5n+3lh8GwLMqm6iiMhHwVD4IJ5og3xYRtNzF82G4n6DF/mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OqCGoGs1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EgHtploL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BA3LdSh2095481
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 04:05:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=BaIaRANy3uqkRwMb/m3PyK/b
-	+TpFVtVKhaShgO/WNgs=; b=OqCGoGs1J9YjOB6IR9+X/KbZ87o35AwVJOD40MOI
-	ojMQm9YRXKf1GfNN6Hbx5navLzkS9TWpKrqeUEbPfmSJYUFQ9EPCA4do8btHVgGw
-	W5hoXl74Y8HhrT8tAE1c8HXpHrolHCw1Ko/KEJCjlkmkWSjss2+bfn3v/Z8cvlRq
-	btxzqFDeQnXeX1WyKbXOCojq3zqOFLrtSBamFV/E0Xb7Xjb+nhyF36IpABC2ITE1
-	ey2D6IJYa/yvxh48cnw4JBoj9HvXi0e9dDbeyMxLyk/bbAbdgrGyjDqC/KzTNEFr
-	v+Dnkb6l9/9ERO5qeGcc+r4tIK1ZgEvfs0DpUQoGRfUjSw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axqu59wwb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 04:05:33 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ee3296e984so116429181cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 20:05:33 -0800 (PST)
+	s=arc-20240116; t=1765343422; c=relaxed/simple;
+	bh=bTa6N8dDPhiUcCHPgHGvCiaKmQpQ67AqcDF4d+4yiiA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=CGOwp5P2KATx2Sp6+lqDQFuejEUzxY8QMo0+6zftbSy9XhpgfqvbyaVY9V/AIdDBpfufeOpKTRvPJXt2VrolWLb5dKt194HnOm88Vldh/uxO6WItEERiQrrC4+iXohWf223LTaIQlAWA/enu5HNyg2YDeNHSXLTpYUGfKJblbfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=US9eSX2G; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-47795f6f5c0so41374745e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 21:10:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765339533; x=1765944333; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BaIaRANy3uqkRwMb/m3PyK/b+TpFVtVKhaShgO/WNgs=;
-        b=EgHtploLIulnljaSLPxsrxUEqMIla7CnTQUlg+sez2tqm2WjGjhGiJgsaB+qJJuBdp
-         9yDCwisToiV5Gh2bhxQBEs7ElP3gbBT/SiNW0c59NNatTYL6V8QQJTjYyY2HdATxvNeg
-         Q/xXX7EemHnnG349pG97Huzoo3nZPEaS1vG3Wdu1gsKoLF8dLyTdys3/P8iVsue6ZMrm
-         YdOBRN53huTwhn5W/l0W8njXr6MrOv77CQAQPpulgh6gHdZeR8uNj/P6kH+MQsogZ0qO
-         pj+PsMD7WYNp5Q5/tpwy5h88r6ZqKoIl/+1xitSDhXOcvU4IkdLUaECwU4zV4fKdHwMy
-         BuRA==
+        d=fairphone.com; s=fair; t=1765343418; x=1765948218; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7XEAFrvxTFkX/hsHogJSu8gbmrA35vtUoTfUZCahOAo=;
+        b=US9eSX2Gux3qtYiKAzrV/ClG5/x5hWpJRhW54VTuMWaZmR5+UIMXNvR2hWC+eD9+nH
+         ECp7MbUqGxucNT3BGJE/KUnIviyMgu9g772ZvxwGB5URNtN/g7TbUZHOPIAR/b0ybtLm
+         mvQjfP4GA2D/E8JTZL/f2VNgITeFuGlE1DWTAUfBDaMg8NTRSHCxluZQKz9pR+9Q5l3R
+         hJ0mpHopyaPdOpjtz8Tsd0G5XGJWR7x7BmuQRziXEbPnjZBSCCb2h+Jk04raAcScgBKQ
+         F02EreWWmfqhYs/8fJkw4Jx2NMig+1BqnlaJVEGUuE/Etq0bbjtOBxik/Dn6o+abZN4j
+         0jzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765339533; x=1765944333;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BaIaRANy3uqkRwMb/m3PyK/b+TpFVtVKhaShgO/WNgs=;
-        b=N9T+bcry/QnIlU7SdxSc0RwQwm/bjIjsxPUAR3D/vLJKSGmub4DCFdJs0BxpXhWcmd
-         zUU8/xKjIURTPKMrEP3kh/zELoWgBu67emMReTlh2HiftIARv+28xtYvyc3Ov1Va06oO
-         VAxf+oWF0djpMsyxwt8IGKrCHav10dpU5F42MK9N8C9nDIYCdvNa5ejykJC3JVAqiJjc
-         aEY7dP6RZII6+eqRIubae54FwsdJo7tdWzllpcBEwoy2Z3E9PJ1fW8uEJytodYT5cLHt
-         VDknw+hfX4t6tBOIudu+4rYnopDefwi3mEwCLjF3wVKpmxOpa8aAO/jwpZpUU2vhwATc
-         aPYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWn25FW3LXNKi/diE6nMLb3pxPd/vuE2BmoM5DfkpTV0IBm76dZJmdtxsebJZWT3M2ZDboJYgB1XDaONChV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzn8cxlETgxNQjjjNuPXjaMrnRP7RW12ZZ5k8XgES48rxFN0wvV
-	tnEqgXTru3eBNOR7BVTBqfXiYk9q7Ic6ZmHBR9xcqjx2o4rRAJZ1cebKORe9rXkyRAwhQQVtjj9
-	RKjPKtFppTQg3WPzW+MezTGYNb+iic5hwaXq6gJOaW8BHyEJUk9YMYB2PoUNDsQwuubLj
-X-Gm-Gg: ASbGncsyhJLLMHWBZRO0CVnA4+psUPYLNCd+XMcVuXYNBDcZiM7cnLwXcVBUclrkTsT
-	5Ukl7/L9ghrejjVeqcodzw5VjQtcKzvcdncgTydTp6tY46S0ErygRCfF1e70X03vWBwjPoTELy9
-	aIAEgWvgGg0oVjNB/8UOJ5FWyRJUVMW6Sg7hwubNYQzOxuJCmEhcmeNfncPgAN63UWHKFdvb+Sx
-	g0de9Tmp5GqRbepXRL+zsMzGJeqMGo4ZSU1gVhpXUYm5QTSrU5blkMXk+tkwUKNU/XmWojASy1j
-	dfklkNaW/VJblzGjQydUxzL27M5Z7y1oA2Ekdb3CB3+iFQrw2wjrOK1+6+UWXkpq8ZB6nqPtVTr
-	meMxN8LJj821N7Mp3aXwBV+9FEMazmGWIw268zVekbjQc/9tIBYykiUpe3cPYxVsdCbNQp4w4QZ
-	9nOBJRYuGDbpDGUlFtJScAot0=
-X-Received: by 2002:a05:622a:1990:b0:4eb:9ea0:cc3b with SMTP id d75a77b69052e-4f1b1a31be3mr13947591cf.11.1765339532869;
-        Tue, 09 Dec 2025 20:05:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHkHSfkrOLAxJ5L1yij91ofOJjggiNdYtSat5qOrz5N2u0warmpPcwiROaiBMBHLGo/LWAr9Q==
-X-Received: by 2002:a05:622a:1990:b0:4eb:9ea0:cc3b with SMTP id d75a77b69052e-4f1b1a31be3mr13947351cf.11.1765339532485;
-        Tue, 09 Dec 2025 20:05:32 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7b24730sm5940027e87.33.2025.12.09.20.05.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 20:05:31 -0800 (PST)
-Date: Wed, 10 Dec 2025 06:05:28 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-Cc: krzk+dt@kernel.org, abel.vesa@linaro.org, conor+dt@kernel.org,
-        vkoul@kernel.org, robh@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Abel Vesa <abelvesa@kernel.org>
-Subject: Re: [PATCH v8 9/9] phy: qualcomm: qmp-combo: Add DP offsets and
- settings for Glymur platforms
-Message-ID: <ukl7rhthpfz5pw7pdeacplnaybq7txrkcnji5v5md6lazkw5bm@in5q3lilm5ug>
-References: <20251209-linux-next-12825-v8-0-42133596bda0@oss.qualcomm.com>
- <20251209-linux-next-12825-v8-9-42133596bda0@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1765343418; x=1765948218;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7XEAFrvxTFkX/hsHogJSu8gbmrA35vtUoTfUZCahOAo=;
+        b=th/Efugnsu7DVRfrT5siBD67GNSD5p1M/pdU+EeMwlb0sAqqVTzPqI/ZNlq6MgnuvQ
+         /2FbaU/rZ9fS7015JYmOr2E/HeEUHTsU7LNlY/W7ZHjxjsB+yB4g3sQaWj5GkyZxNE8n
+         u+ww6IZgUbItBW1rVCwzuSujo2DWFcTxCJ0qg9tYAvMnC2sfwz6TYWgKNsKsfdW7UcHP
+         34RE3SJA6irVsPQIh+OdQusz+SScH/GtGpZYmlX45x6rt4gNWyxi4gWlnhp7KY2xf21H
+         Oo1FurQsz3bzg/jWkq3tqr2jgyRkCwGg20cvd+6m2f+gz4M+lXCPIEbWo43gO4M1aF+l
+         IVFA==
+X-Forwarded-Encrypted: i=1; AJvYcCWGD/U1imH9mfzUXZ59A9Tut4qCXTfpeSiTxyz65pcecKroaxxW3RiqG5eplP/YzkJ/Nd3A660G20OlTL2+@vger.kernel.org
+X-Gm-Message-State: AOJu0YySzJ9EUS1rBRl8Y2zu/uALvNIP5YqoOVaParOx6vIj8dh38FNs
+	G2MX0slcKQ2+jndnBaIY4pD5uHTH1KoATKG0kStzpBql5dsR9uTZrwiGHbvpNGP+ZFs=
+X-Gm-Gg: ASbGnct3nVEtiQhszd2zpDKecirijoJI/4ULxw87FJMfaNrGnRkDyRX91x4Uzlusr2r
+	2bs0xCEZR2XQklZOnGNKd2LK0VIzO1HVSWx5VIoHOBD+ufmKc+0UHsp+Jodv6KteKn5axOWRiby
+	SrmIkhftM3NnHRZGW11pfTLY1M9WxEcvH907grfb9h9F4N7iv3hlrhrQD2lLQqDjfCmg9qAcJ//
+	7NsPiUNuOa44XLohuxcAruxC7B0gmf6RUOI6ut/DBSuku1g56V04fIqUcv5Tk1YRZiOYZbbRSe8
+	YwQ6aNSD/wkGdlxIOQEI1HZqUNN3/KzJyFuwbs39l137A/xStg3KQye1nZyeWba6n7ATilcmWhp
+	vyrEQaTBDAKPfnXhimRDRWLPHbzu/iZ3mozO5X9yOO7jUNBMjt7niK1us+U+haTOeNsXW0z2nP8
+	yED8WDkrZD86CdNn6JIpoiexBZ+Z0Z+KlZXFJUiOuD6XIuo3/GykNk0cC8
+X-Google-Smtp-Source: AGHT+IFStEHj4aPWOmBIPigikYjX84huKXBNQQdaiQ5/PB/m10ZW9YmQM7+d11ZDgrKcwq+XC/p6Dg==
+X-Received: by 2002:a05:600c:a48:b0:477:9c73:2680 with SMTP id 5b1f17b1804b1-47a838064fbmr7353855e9.23.1765343418405;
+        Tue, 09 Dec 2025 21:10:18 -0800 (PST)
+Received: from localhost (fs96f9c361.tkyc007.ap.nuro.jp. [150.249.195.97])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7e2a0dd6c28sm17688049b3a.30.2025.12.09.21.10.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Dec 2025 21:10:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251209-linux-next-12825-v8-9-42133596bda0@oss.qualcomm.com>
-X-Proofpoint-GUID: a61ikMxke36S0f587d1vyka_It2v3PfQ
-X-Authority-Analysis: v=2.4 cv=Y7/1cxeN c=1 sm=1 tr=0 ts=6938f18d cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=2SJS8p1ZE3BWaHnukEQA:9
- a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: a61ikMxke36S0f587d1vyka_It2v3PfQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDAzMiBTYWx0ZWRfX9f0gLk0ZI1xI
- F17BJhwRY4G80XCh7kpNaV4LcU7ZWPUtCmP+2OSc81cqU3p7/GnJLiOU9Ao+umaXRQAyeNwV524
- kWqJNFBnozu0lWFqHvKlLi/aSOs//u5hxeYoUk6EBCqKVFbanIzk2hoCZveD03vfnE6nC57ZF0f
- v6cWxiJ/5vhmqo/lKzQf0ar7Tmr8IZQmAt5rUaKYJjsuIn0RlPnFUjn/OCP+ZCYTYvkqQKHFndt
- RHUv1c4LuOxkVMPY2EfUxbKmtvPlMmmFrv5+zNHtWB9uIQOwStoV+z5m4/sy/8y55kwXS5IqpNi
- NsdEAt+xXfVXzU2HipZWgtalLCL5AhIh8bMzUdP74LA0IfH/cM58i14rHCcSgJJvE26VoPFbHre
- Zdjs2WiEGXZ4z/QwkLNnctQEkEiSbQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- phishscore=0 bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100032
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 10 Dec 2025 14:10:10 +0900
+Message-Id: <DEUA0F5Q4TJH.2A7A0WJE6UH6Y@fairphone.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Viresh Kumar"
+ <viresh.kumar@linaro.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
+ <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Vinod Koul" <vkoul@kernel.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, <~postmarketos/upstreaming@lists.sr.ht>,
+ <phone-devel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>, "Konrad
+ Dybcio" <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 5/9] arm64: dts: qcom: pm8550vs: Disable different
+ PMIC SIDs by default
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
+ <20251210-sm7635-fp6-initial-v4-5-b05fddd8b45c@fairphone.com>
+ <jyyamotpswptzirtido6iufroxpdu3dyqkf4zs3hkfqj6mt6f2@sklyrpyahzjb>
+In-Reply-To: <jyyamotpswptzirtido6iufroxpdu3dyqkf4zs3hkfqj6mt6f2@sklyrpyahzjb>
 
-On Tue, Dec 09, 2025 at 03:09:45PM -0800, Wesley Cheng wrote:
-> From: Abel Vesa <abelvesa@kernel.org>
-> 
-> Starting with Glymur, the PCIe and DP PHYs qserdes register offsets differ
-> for the same version number. So in order to be able to differentiate
-> between them, add these ones with DP prefix.
-> 
-> Add the necessary PHY setting tables for enabling the DP path within the
-> QMP subsystem.  Introduced some new callbacks for v8 specific sequences,
-> such as for clock configurations based on the different link speeds.
-> 
-> Wesley Cheng added some updated settings from the hardware programming
-> guides on existing PHY tables and clock settings.
-> 
-> Co-developed-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 355 ++++++++++++++++++++-
->  drivers/phy/qualcomm/phy-qcom-qmp-dp-phy-v8.h      |  25 ++
->  .../phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h  |  52 +++
->  3 files changed, 428 insertions(+), 4 deletions(-)
-> 
+On Wed Dec 10, 2025 at 10:55 AM JST, Dmitry Baryshkov wrote:
+> On Wed, Dec 10, 2025 at 10:43:29AM +0900, Luca Weiss wrote:
+>> Keep the different PMIC definitions in pm8550vs.dtsi disabled by
+>> default, and only enable them in boards explicitly.
+>>=20
+>> This allows to support boards better which only have pm8550vs_c, like
+>> the Milos/SM7635-based Fairphone (Gen. 6).
+>>=20
+>> Note: I assume that at least some of these devices with PM8550VS also
+>> don't have _c, _d, _e and _g, but this patch is keeping the resulting
+>> devicetree the same as before this change, disabling them on boards that
+>> don't actually have those is out of scope for this patch.
+>>=20
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/pm8550vs.dtsi                   |  8 ++++++++
+>>  arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi             | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8550-hdk.dts                  | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8550-mtp.dts                  | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts                  | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts          | 16 +++++++++=
++++++++
+>>  .../boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts     | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8650-hdk.dts                  | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8650-mtp.dts                  | 16 +++++++++=
++++++++
+>>  arch/arm64/boot/dts/qcom/sm8650-qrd.dts                  | 16 +++++++++=
++++++++
+>>  10 files changed, 152 insertions(+)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi b/arch/arm64/boot/dt=
+s/qcom/pm8550vs.dtsi
+>> index 6426b431616b..7b5898c263ad 100644
+>> --- a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+>> @@ -98,6 +98,8 @@ pm8550vs_c: pmic@2 {
+>>  		#address-cells =3D <1>;
+>>  		#size-cells =3D <0>;
+>> =20
+>> +		status =3D "disabled";
+>> +
+>
+> Would it be better to split pm8550vs into 4 files rather than disabling
+> irrelevant bits?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Maybe, but imo that's a different discussion, here I'm just making sure
+I don't need three status =3D "disabled" properties in my milos-fp6 dts.
 
+Regards
+Luca
 
--- 
-With best wishes
-Dmitry
+>
+>>  		pm8550vs_c_temp_alarm: temp-alarm@a00 {
+>>  			compatible =3D "qcom,spmi-temp-alarm";
+>>  			reg =3D <0xa00>;
+>> @@ -122,6 +124,8 @@ pm8550vs_d: pmic@3 {
+>>  		#address-cells =3D <1>;
+>>  		#size-cells =3D <0>;
+>> =20
+>> +		status =3D "disabled";
+>> +
+>>  		pm8550vs_d_temp_alarm: temp-alarm@a00 {
+>>  			compatible =3D "qcom,spmi-temp-alarm";
+>>  			reg =3D <0xa00>;
+>> @@ -146,6 +150,8 @@ pm8550vs_e: pmic@4 {
+>>  		#address-cells =3D <1>;
+>>  		#size-cells =3D <0>;
+>> =20
+>> +		status =3D "disabled";
+>> +
+>>  		pm8550vs_e_temp_alarm: temp-alarm@a00 {
+>>  			compatible =3D "qcom,spmi-temp-alarm";
+>>  			reg =3D <0xa00>;
+>> @@ -170,6 +176,8 @@ pm8550vs_g: pmic@6 {
+>>  		#address-cells =3D <1>;
+>>  		#size-cells =3D <0>;
+>> =20
+>> +		status =3D "disabled";
+>> +
+>>  		pm8550vs_g_temp_alarm: temp-alarm@a00 {
+>>  			compatible =3D "qcom,spmi-temp-alarm";
+>>  			reg =3D <0xa00>;
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi b/arch/arm64/b=
+oot/dts/qcom/qcs8550-aim300.dtsi
+>> index e6ac529e6b72..e6ebb643203b 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+>> @@ -366,6 +366,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &sleep_clk {
+>>  	clock-frequency =3D <32764>;
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/d=
+ts/qcom/sm8550-hdk.dts
+>> index 599850c48494..ee13e6136a82 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+>> @@ -1107,6 +1107,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &pon_pwrkey {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/d=
+ts/qcom/sm8550-mtp.dts
+>> index f430038bd402..94ed1c221856 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+>> @@ -789,6 +789,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &qupv3_id_0 {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/d=
+ts/qcom/sm8550-qrd.dts
+>> index 05c98fe2c25b..3fd261377a0c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+>> @@ -1003,6 +1003,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &pon_pwrkey {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm6=
+4/boot/dts/qcom/sm8550-samsung-q5q.dts
+>> index b4ef40ae2cd9..81c02ee27fe9 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+>> @@ -533,6 +533,22 @@ volume_up_n: volume-up-n-state {
+>>  	};
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &pon_pwrkey {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts=
+ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+>> index d90dc7b37c4a..0e6ed6fce614 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+>> @@ -661,6 +661,22 @@ focus_n: focus-n-state {
+>>  	};
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &pm8550vs_g_gpios {
+>>  	cam_pwr_a_cs: cam-pwr-a-cs-state {
+>>  		pins =3D "gpio4";
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/d=
+ts/qcom/sm8650-hdk.dts
+>> index 5bf1af3308ce..eabc828c05b4 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+>> @@ -1046,6 +1046,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &pon_pwrkey {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/d=
+ts/qcom/sm8650-mtp.dts
+>> index c67bbace2743..bb688a5d21c2 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+>> @@ -692,6 +692,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &qupv3_id_1 {
+>>  	status =3D "okay";
+>>  };
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/d=
+ts/qcom/sm8650-qrd.dts
+>> index b2feac61a89f..809fd6080a99 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+>> @@ -1002,6 +1002,22 @@ &pm8550b_eusb2_repeater {
+>>  	vdd3-supply =3D <&vreg_l5b_3p1>;
+>>  };
+>> =20
+>> +&pm8550vs_c {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_d {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_e {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pm8550vs_g {
+>> +	status =3D "okay";
+>> +};
+>> +
+>>  &qup_i2c3_data_clk {
+>>  	/* Use internal I2C pull-up */
+>>  	bias-pull-up =3D <2200>;
+>>=20
+>> --=20
+>> 2.52.0
+>>=20
+
 
