@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 666B6CB2010
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 06:44:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CDF6CB20B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 07:03:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1F2653028F46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 05:44:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B0129303A1A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 06:03:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EFDB2F5472;
-	Wed, 10 Dec 2025 05:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E46DA226863;
+	Wed, 10 Dec 2025 06:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izCD0M55"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BIdFskNg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F85327FB35;
-	Wed, 10 Dec 2025 05:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF41510E3;
+	Wed, 10 Dec 2025 06:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765345468; cv=none; b=SaRumZ7AEl20EK5bAZfhrINuVJxm5HXfdCGTrzGuv8gepTR8To9+XnwYnuqklu2l3vjc+GxNZcaRCTOr0Y/xABhI2eAySh+C/aQmVjbDalyggtcfzl+rbNbyxC4gICKEUkgURcZCJFtgtLii0RI9Ewf8+PFc0STUVnkjpEVpYNs=
+	t=1765346631; cv=none; b=ChMd3orXO+gq7XGpqlEw2xMh9eiAmwQnA40LFd6ggN3slD9lVErpn8Ha5oIco3eSnyrpy2ZkI0l8RtZCQHiW70jyYpS2wU/HgzJ49BfrDXplo0M7EdwdhpkIz2QbzFCXoMUY+MOfKip5wo6McAe89w8NDB+G8fU9PEsZjfwhmjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765345468; c=relaxed/simple;
-	bh=qJ/T6QVtpFF62iLiJb5+ZJOVheEIhAUNwE1/JmLj9jY=;
+	s=arc-20240116; t=1765346631; c=relaxed/simple;
+	bh=hCAkVg0RLOqfEUN+e+usW3KapVHoWv3TqT/R2omwI70=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q7yMnK6kELRdKngJRecMQXMhEarq2SnCBebQ9dg6+Gx5unMvDZJDmLgMZPjl7OFc7Ec22N+s48yb1gmahF2I31+n6DH9rt3hGRarwgOXcKNvEz0/QD24Pd8ZAYqiu4GC/cbhqaGB5KYv0YDCYl1S0eeqVDVjBNsBQu/C+29vi1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izCD0M55; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F67C4CEF1;
-	Wed, 10 Dec 2025 05:44:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=J+h/SSlYp9oYOuEfyJGmsTR+NiNO6Y1hd2FmhLtT47lmAzk1zA57cERdhnVEI+roI1BjdD/LWWYOgPxP640K2NrXy4289M86TE0gyEiLiw8Yn6+sIvkCIo2iSEcqqAzw3N+Z1GyQrd0a3In+5Qkbcy+ls77qoJMlsOzTZHLFXgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BIdFskNg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DB7C4CEF1;
+	Wed, 10 Dec 2025 06:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765345467;
-	bh=qJ/T6QVtpFF62iLiJb5+ZJOVheEIhAUNwE1/JmLj9jY=;
+	s=k20201202; t=1765346631;
+	bh=hCAkVg0RLOqfEUN+e+usW3KapVHoWv3TqT/R2omwI70=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=izCD0M55DPLDWulBZXoycWXeWi7aN1H55LLIfoUe0y2FuIxOW88+8vvGrgZPa/VN0
-	 GV/7Vi4X+ITu6VTywhwkxX2/DIaE6fo/ZyTRx0zrMBbMP/GGcvTlQaL2WmUGTc9Izn
-	 iOKrlup4HVQsGWVS7f2U8xu3i7jp1WcT5+gxQs/rlTCepDH+CguamkVrYOf41ZTR6F
-	 EF28WIx1EDsYll2tnqj2tSmu2A9Qv34vjLppJ7UVXK+XNCXfhfK+lakVmsVMsGsHNz
-	 EA26UkmE3SEktRKC0Di3C8pbeBorN6FcHf2YYGqzKlls+6X6nSqKaRz2dWTovgG7NG
-	 zAOD51qlIUSaA==
-Message-ID: <bd5e550a-bd31-4785-ae95-f14b28c6ff7f@kernel.org>
-Date: Wed, 10 Dec 2025 06:44:24 +0100
+	b=BIdFskNgnzgPO+PGiu2SMJHB/kvLMzZGxJF3m/WJI6MRXHXC/91B51i2/IR4Wzbpa
+	 s7URtjY/MtJ0UGylRvbCaDdADKRb9QvcrQvTcAAcA8+jl3cSsjpAOMaqELxLIChPRR
+	 4TBDkjgx6DtRpWsO2rvqHONlncUEKCR1XXuxlPePAhQLP2WhteNgPLnHzWVS7cI52N
+	 poXrYe+wMwTjxxZhie5Fd6/wqfm8MZDIfsXoBUKSZwVjdJn8MKpLhj0CwHGBUl/Mh8
+	 0OvDd2XfAKPP56HCfmgzhMB+IfBDxyT/XcZdiW7RsstXqYK7+3SWY91xSAdM4vtfZd
+	 7bAxxUK+jkzyQ==
+Message-ID: <ca3934c2-532f-4744-bf7c-2480048c7fef@kernel.org>
+Date: Wed, 10 Dec 2025 07:03:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,20 +48,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: crypto: qcom,prng: document x1e80100
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Use 'usb-phy' for node names
+To: mr.nuke.me@gmail.com, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-References: <20251210-trng_dt_binding_x1e80100-v2-0-f678c6a44083@oss.qualcomm.com>
- <20251210-trng_dt_binding_x1e80100-v2-1-f678c6a44083@oss.qualcomm.com>
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251209160755.3878878-1-mr.nuke.me@gmail.com>
+ <xmserprghzwpcxt7ionh2ju7o3cudj5emtkycvurbz5obztzr5@lkllnnsag6ri>
+ <23d3bc82-0909-42a4-b4a9-742834faec76@gmail.com>
+ <959b3e2a-c11e-47b3-8d8a-03dd9ae18254@kernel.org>
+ <b167f406-c5e6-437d-bb34-57f253258f54@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,19 +105,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251210-trng_dt_binding_x1e80100-v2-1-f678c6a44083@oss.qualcomm.com>
+In-Reply-To: <b167f406-c5e6-437d-bb34-57f253258f54@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/12/2025 06:36, Harshal Dev wrote:
-> Document x1e80100 compatible for the True Random Number Generator.
+On 09/12/2025 22:59, mr.nuke.me@gmail.com wrote:
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
+> 
+> On 12/9/25 3:48 PM, Krzysztof Kozlowski wrote:
+>> On 09/12/2025 17:26, mr.nuke.me@gmail.com wrote:
+>>> On 12/9/25 10:17 AM, Dmitry Baryshkov wrote:
+>>>> On Tue, Dec 09, 2025 at 10:07:54AM -0600, Alexandru Gagniuc wrote:
+>>>>> The devicetree spec allows node names of "usb-phy". So be more
+>>>>> specific for the USB PHYs, and name the nodes "usb-phy" instead of
+>>>>> just "phy".
+>>>>
+>>>> Why? "phy" is more generic.
+>>>
+>>> Hi Dmitry,
+>>>
+>>> The goal is to be more specific. I find usb-phy, ethernet-phy and others
+>>
+>> We do not have such goal. Where did you find that goal documented?
+> 
+> If the goal isn't to be specific, clear, and readable, what is it? Why not be generic, and call subnodes node@, or dev@ ?
 
 
-How did you test a binding? To remind - kernel tools and make is not
-testing.
+Did you read the spec you referred to? What sort of class of devices
+represents "node"?
+
 
 Best regards,
 Krzysztof
