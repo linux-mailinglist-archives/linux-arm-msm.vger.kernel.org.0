@@ -1,90 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-84931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15BE7CB3D0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 20:06:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FC44CB3DA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 20:22:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E724B300BA38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 19:05:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A45B73064ACD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 19:22:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6B4E329386;
-	Wed, 10 Dec 2025 19:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A5A0329C5F;
+	Wed, 10 Dec 2025 19:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kRryjixB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UH+SgwBr";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TtSeIk6+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002E5322B70;
-	Wed, 10 Dec 2025 19:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B72319855
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 19:22:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765393555; cv=none; b=AMBoUA9Z8OHj8iRo7BzAmH7Ond2YdTW7iq5nDH++/TJ5N3mFF7iZRt91IRe/2jX/k5pvwRU7vsZ1oNrKGe9RI+BRrTRGyd0LYcw1G1sEa4pCtJfVXVZr+RCSYwTZCyISBRAI0cLU3aTy/c/25jX6Mguyd58fwF/+uSn+VRNmbLA=
+	t=1765394531; cv=none; b=OXqxLlW2pyfeJhv2+B/eq+co1I24KDYZjBtqK9YdUfKB+niZW+a9vM9mMDhPVu/kTB73T/T8obPaaj0M1XsRdVfTST9WGmtqYBSm2UMIDX9zTr5wbqetlln2gukhs+tA0NxHTMHB8dEsH9pPCs47FKC7eD6W/JgH/cLNbaN1W2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765393555; c=relaxed/simple;
-	bh=boHYArrLfilo5Sv64y0CaCmooWdnIhESwdLtZzAruxg=;
+	s=arc-20240116; t=1765394531; c=relaxed/simple;
+	bh=oe0ikDlQL5bopTGzWrLt1VG+7xt6JUgMFE7e02yEg4M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tcxFAs0PcwvyClifw9u0BNVFWVrt24cGQ1bO93C5jFMvZv2xJY5lEg+TzeqPKXDYnboD+mYuKJqRxHT4jOz6hX73eNyYfnCO6OvvvKXsZWUFuMg6UatkvZDMFQXZsJhD3yL2zbZHnLlIItnogCiWLNiaoEl1Fmd4WNTpT28NjSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kRryjixB; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765393554; x=1796929554;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=boHYArrLfilo5Sv64y0CaCmooWdnIhESwdLtZzAruxg=;
-  b=kRryjixBx4Lyl7USgenNJp/9MqGyhQlolc/mC8xpfkEOnPv8ll6LL+3m
-   JugCuq5xsu7ZAI0DPeWrDoMDoH4G7VoLzzSvmAcNB+J78wawa4YvGepsS
-   jJtyM51cLDjhrLYkocDP8Gqbc+PEwXbZXiRialRQf2eYVv6YuDZs/tkjs
-   W8Sc773J/X0gDEGB6tDiSqOZqQx6TTuUTp9Ba+I/4GIAutsVWbR5Ix0vf
-   CVPWBjYbBk0D8VCBkRHtuqTczvUma1el0ivsVn3BF8LfGa+fMLDSRwakQ
-   xZ06ML+QGyucrwdU6M5f/t8E0NRy6NHQTrdxQWeh+tSpQbNRxG4uMlbC+
-   g==;
-X-CSE-ConnectionGUID: kTjcXKyJSMOEYdeBEmMDjQ==
-X-CSE-MsgGUID: nBa5C+UTSWKCVL6MPO3NtA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="54917266"
-X-IronPort-AV: E=Sophos;i="6.20,264,1758610800"; 
-   d="scan'208";a="54917266"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 11:05:53 -0800
-X-CSE-ConnectionGUID: Etk4k57vSziwm/yZiYAtjg==
-X-CSE-MsgGUID: h4VcFQvCTOSLNUrttT2hvw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,264,1758610800"; 
-   d="scan'208";a="201029660"
-Received: from lkp-server01.sh.intel.com (HELO d335e3c6db51) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 10 Dec 2025 11:05:48 -0800
-Received: from kbuild by d335e3c6db51 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vTPVR-000000003fJ-2YeN;
-	Wed, 10 Dec 2025 19:05:45 +0000
-Date: Thu, 11 Dec 2025 03:05:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <helgaas@kernel.org>, Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Koichiro Den <den@valinux.co.jp>, Niklas Cassel <cassel@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH 6/8] nvmet: pci-epf: Use
- dmaengine_prep_slave_single_config() API
-Message-ID: <202512110249.kCiMC4sb-lkp@intel.com>
-References: <20251208-dma_prep_config-v1-6-53490c5e1e2a@nxp.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=icanUsiJTjgALu4n3l3XfktNwx2KQUBXdeae9WW8zXWKM8sCxLWoa4BGNjypm6XiGb/+8fBxj6M9JIzkS8Yh4tHKENUvXYqzR/qly+3QW6CFwHF/YPmBKdBWhZgjHDPa+J39ToCRmX396D3LKUVjoXHvQsvpvbxPS23RqitZo3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UH+SgwBr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TtSeIk6+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BAIRXgv3178227
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 19:22:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=+ULRL24+CGFWPlPz7XFfWJtJ
+	J6lfhUn+g/U4fOUb+O0=; b=UH+SgwBrrGkbCVfU6Q0sryaxb9yjOouEQ/3xnWB1
+	qRcwg9STMULjyrezUVms86QZ4JWoRXUPcwDEs1/2ReUbMZcn+CRl4obvD/2SbgUJ
+	KbbWUAtwUfWeFtTIEKHh4GdtXdZaltJL/Xn6OQAjnVwcmtNj24kuIqzK3Kmd8HYH
+	Y6lyGDu1kcj7BmtWMPYJYXBCCZ6tnUED+8n3gaQXufsSirBEMUY91G5zr3dGyQjc
+	jUkACmSIPH+1PndvKAW1B0pzOXpOYW1ACQVtjJLyPtviylXRr8HYdPW45Jq/+zNH
+	6QnI3tErufvAL0o948kxUiwRVVk3p2Xm+fBzCMVmaVtFZQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ay1xp2uj8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 19:22:07 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ed6e701d26so2966091cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 11:22:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1765394527; x=1765999327; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ULRL24+CGFWPlPz7XFfWJtJJ6lfhUn+g/U4fOUb+O0=;
+        b=TtSeIk6+wcpYeMOxn4LV90kcmDif7+9rpTz5+YOrTlsaWZo8XrBiHETv2PjizEp8ar
+         l5R09qNxrCb4EtIlEaJUsrI3NjX19+or1QIeQmJokNS70x38geG38xfOgRtPJl/8q3hn
+         RcxadFD+K7q17p/AulrOs/CRDv7m2LNBwydYVpUq2IVQD4ew8lrsB2VRbu2AZvMPG3Qg
+         JmHhO1sceSmXRmidHFys6sd1vQ0oH5GeXZ/OdZfz6F9/ZpmVEMYBQnW/n8CwEzNy9mu3
+         hAArU48XvMpZ6ddyJVshYLtfA/cg9N27gBEM5ObYolDiWZ098NiqdVuASpNhG/SaSlfG
+         yOZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765394527; x=1765999327;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+ULRL24+CGFWPlPz7XFfWJtJJ6lfhUn+g/U4fOUb+O0=;
+        b=AVtLISYWE9GR4kceJOWEILwAdMJGJVHy6YBW8yTbyuiBP4bWew0FsUl5rrTwDbK10t
+         YjlnLCgo7CODcKFub5Y5mwikE0D94eaKp99qwo+Q69D/Ou0fMbcT09JEk0aIaFZ//i2d
+         S8k3/OFZ8jvJQxvLBGXLk+WU2hRoAQIpLEmkoeafc+Px81O570xf0d+1egPGHATv4bkH
+         gwLvR0vAlZs6ahmzCt8FUPyKtb+figTWC5/lnW64kO10nno7F7mBwBlct+2LLaepCsdJ
+         eXtFtKb/0pNLPIzGiU9vLlN0k+yXSZBUBNie3/hbCgwKG6poh0n5/yLqHMqGNxglf2k5
+         AJ3g==
+X-Forwarded-Encrypted: i=1; AJvYcCVR2DR8dwSH/0UgP3K+Q05s3iHq1/Uwuac4XegzeAJoqKG+APPtl33wcMHDPah/uA9ltjAnMa5dpnF72pKp@vger.kernel.org
+X-Gm-Message-State: AOJu0YwW4U3HR+8RggUM/ZoORZI30NMJEhMbe0n9V8LjgJrzjrcgWvfg
+	vRTEbM9oM979z3+k+9nwrssU30U+TwGoQMEDRmGQ/9kAi6oVDeB0RglP8rpjjTbawv/ZYLB9bHf
+	V608oYAu6NRebYvE6uZlZbriBgxdWyLQ6n2AxRe2G8uBk9MNqNDefHi4aVF06NjPf4mD1
+X-Gm-Gg: ASbGncvlSoPJjynZkWnIlfPgIBH49PNKoeT8JcperVDcimfUKyl7FTrIRDUV6ZDG8ot
+	2OmnXEtAAVyGawTXw3woOmbQ6ihm5/yagYCVtxD2qK0twxriECIYkJQhXIsZ9xMQTJo8EFV5nAN
+	+YivcBExqqdXqM7orS+WRzOsHHRHU+6n3ztGfC7VUiX9fXpOfjSGCR6v0iZXUYuiReAn+o2WFRA
+	hiFL/Li3ZDBNXfFfQssae6LeIW5T2nBIeCwQeF8Cq3GFZFigDDGhH0d+NbmeouJbn/k7DMDXniD
+	nx7+xBRvlNDoGcYBX/AIeAbVopu3CIkOwkHg093GJPbOJfzW9aszsPZc1YOaRoj00l6hdUwbUyY
+	dUMImYqgl1OGuoyAr3CfpjKC4Mnps78+Xy90ZCjHD0tK9bIkDPE94Fa/Fj1aZWniAxxhhgPxdO/
+	2gCqYulNHODWqrDUingssuVyc=
+X-Received: by 2002:a05:622a:316:b0:4ee:bac:e3a9 with SMTP id d75a77b69052e-4f1b1b6cedamr47953781cf.68.1765394526934;
+        Wed, 10 Dec 2025 11:22:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0WlKrRbiz1bgd5geeM4IgW8G7fHVtBYUl0TqwUi0xGuXadXsl+K0/jc2lOlX7+ZBfvL6i4w==
+X-Received: by 2002:a05:622a:316:b0:4ee:bac:e3a9 with SMTP id d75a77b69052e-4f1b1b6cedamr47953201cf.68.1765394526362;
+        Wed, 10 Dec 2025 11:22:06 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f3199e7bsm89696e87.97.2025.12.10.11.22.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Dec 2025 11:22:05 -0800 (PST)
+Date: Wed, 10 Dec 2025 21:22:03 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Cc: Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: SM8750: Enable CPUFreq support
+Message-ID: <4cuvkuf4tsrt4orx7um5pcscy4ynzc73up4sukoun24eijhoag@4wld35m5rfox>
+References: <20251211-sm8750-cpufreq-v1-0-394609e8d624@oss.qualcomm.com>
+ <20251211-sm8750-cpufreq-v1-2-394609e8d624@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,105 +117,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251208-dma_prep_config-v1-6-53490c5e1e2a@nxp.com>
+In-Reply-To: <20251211-sm8750-cpufreq-v1-2-394609e8d624@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDE1OCBTYWx0ZWRfX6BFslYKMa54Z
+ UJzew7Q+ng6/uZh/OIpuRyCKnNNlEbrCwK1o3yquSoRgSah1gdFNLXXoC+Pt+R+uJTAyjH3b2lI
+ iosVbnOSP9Bs+lewPYbA6b9QZb+KDUZfO2KgThTn3kXmOyLulWWR9Eb+WDhcJbZqbDBQRKwsVcL
+ TYF8VJteOpbFu1/f50lgQfVPDy+LQc0+yCLTf63+8+HjsZ16/ZFJOx1+7k/b5RoydKVrJkYibAT
+ uNMWXu69wFE53Jg0dsPUCte63w7CKnTB+HJgN+2TfYkuYMSr+UbmMjBCmzbogTPww/yWZueXk2Q
+ J+RBnKK/+grvMh/4cmtWHHbca5x/ErgJdWjxx4o7Oj1yPkpmjZbzNqhfb6BZipoRY9ehYh24kVq
+ UodgdcuaUCoWALIPo2lUvL74DHI0RA==
+X-Proofpoint-ORIG-GUID: L7d87KPhZQKzj7oRCrq27WCLpTTzqoc0
+X-Proofpoint-GUID: L7d87KPhZQKzj7oRCrq27WCLpTTzqoc0
+X-Authority-Analysis: v=2.4 cv=A/Zh/qWG c=1 sm=1 tr=0 ts=6939c85f cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=PptT_Mh96ff8s3TZVEoA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-10_02,2025-12-09_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100158
 
-Hi Frank,
+On Thu, Dec 11, 2025 at 12:32:24AM +0530, Jagadeesh Kona wrote:
+> Add the cpucp mailbox, sram and SCMI nodes required to enable
+> the CPUFreq support using the SCMI perf protocol on SM8750 SoCs.
+> 
+> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 73 ++++++++++++++++++++++++++++--------
+>  1 file changed, 57 insertions(+), 16 deletions(-)
+> 
 
-kernel test robot noticed the following build warnings:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[auto build test WARNING on bc04acf4aeca588496124a6cf54bfce3db327039]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Frank-Li/dmaengine-Add-API-to-combine-configuration-and-preparation-sg-and-single/20251209-011820
-base:   bc04acf4aeca588496124a6cf54bfce3db327039
-patch link:    https://lore.kernel.org/r/20251208-dma_prep_config-v1-6-53490c5e1e2a%40nxp.com
-patch subject: [PATCH 6/8] nvmet: pci-epf: Use dmaengine_prep_slave_single_config() API
-config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20251211/202512110249.kCiMC4sb-lkp@intel.com/config)
-compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251211/202512110249.kCiMC4sb-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202512110249.kCiMC4sb-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/nvme/target/pci-epf.c: In function 'nvmet_pci_epf_dma_transfer':
->> drivers/nvme/target/pci-epf.c:369:23: warning: variable 'lock' set but not used [-Wunused-but-set-variable]
-     369 |         struct mutex *lock;
-         |                       ^~~~
-
-
-vim +/lock +369 drivers/nvme/target/pci-epf.c
-
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  357  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  358  static int nvmet_pci_epf_dma_transfer(struct nvmet_pci_epf *nvme_epf,
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  359  		struct nvmet_pci_epf_segment *seg, enum dma_data_direction dir)
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  360  {
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  361  	struct pci_epf *epf = nvme_epf->epf;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  362  	struct dma_async_tx_descriptor *desc;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  363  	struct dma_slave_config sconf = {};
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  364  	struct device *dev = &epf->dev;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  365  	struct device *dma_dev;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  366  	struct dma_chan *chan;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  367  	dma_cookie_t cookie;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  368  	dma_addr_t dma_addr;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04 @369  	struct mutex *lock;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  370  	int ret;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  371  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  372  	switch (dir) {
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  373  	case DMA_FROM_DEVICE:
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  374  		lock = &nvme_epf->dma_rx_lock;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  375  		chan = nvme_epf->dma_rx_chan;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  376  		sconf.direction = DMA_DEV_TO_MEM;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  377  		sconf.src_addr = seg->pci_addr;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  378  		break;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  379  	case DMA_TO_DEVICE:
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  380  		lock = &nvme_epf->dma_tx_lock;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  381  		chan = nvme_epf->dma_tx_chan;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  382  		sconf.direction = DMA_MEM_TO_DEV;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  383  		sconf.dst_addr = seg->pci_addr;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  384  		break;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  385  	default:
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  386  		return -EINVAL;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  387  	}
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  388  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  389  	dma_dev = dmaengine_get_dma_device(chan);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  390  	dma_addr = dma_map_single(dma_dev, seg->buf, seg->length, dir);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  391  	ret = dma_mapping_error(dma_dev, dma_addr);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  392  	if (ret)
-f9f42a84df49d9 Frank Li       2025-12-08  393  		return ret;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  394  
-f9f42a84df49d9 Frank Li       2025-12-08  395  	desc = dmaengine_prep_slave_single_config(chan, dma_addr, seg->length,
-f9f42a84df49d9 Frank Li       2025-12-08  396  						  sconf.direction,
-f9f42a84df49d9 Frank Li       2025-12-08  397  						  DMA_CTRL_ACK,
-f9f42a84df49d9 Frank Li       2025-12-08  398  						  &sconf);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  399  	if (!desc) {
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  400  		dev_err(dev, "Failed to prepare DMA\n");
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  401  		ret = -EIO;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  402  		goto unmap;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  403  	}
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  404  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  405  	cookie = dmaengine_submit(desc);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  406  	ret = dma_submit_error(cookie);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  407  	if (ret) {
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  408  		dev_err(dev, "Failed to do DMA submit (err=%d)\n", ret);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  409  		goto unmap;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  410  	}
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  411  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  412  	if (dma_sync_wait(chan, cookie) != DMA_COMPLETE) {
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  413  		dev_err(dev, "DMA transfer failed\n");
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  414  		ret = -EIO;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  415  	}
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  416  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  417  unmap:
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  418  	dma_unmap_single(dma_dev, dma_addr, seg->length, dir);
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  419  
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  420  	return ret;
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  421  }
-0faa0fe6f90ea5 Damien Le Moal 2025-01-04  422  
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
