@@ -1,113 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-84856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A9FFCB1A7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 02:51:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79C29CB1ACA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 02:57:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7A13D30056C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 01:51:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 50421300A373
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Dec 2025 01:55:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C926838F9C;
-	Wed, 10 Dec 2025 01:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0202922A4EB;
+	Wed, 10 Dec 2025 01:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aMFCwmN8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WsHBODSz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jo40O+Zp";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ETfZ9yPX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1B6244671
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7331FBC8C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765331483; cv=none; b=tWJg4L5VoeaVzX/aMYMM1h/0ryVi5ps7kU21g4SlSDBkj9ss4fri8pkPnvhBp4/STIIC28RWQrxzS3q160fn62qXoEOrLlQj3/jeSDojub60sv6Ct2vlgbd3iW/gONXR+FDEBpszI5Lk8oTApltDPqJSq6XVlUbv3sal1Qpciao=
+	t=1765331756; cv=none; b=Hq/hI+hplge8JAybDaBlir4f6sEVFo+6h6/mCvCFZ+teJab0xWSlsi6Jtfph98ybXoBb3jZ3GUhOjpRc8CLDvSv2XIPppcyBBnuOUHFP8F/DqcL1q63eHuUUeMChTnwM+WrqSM9AcdyMYvSKejmo256eiSRvjg7VygLwDxB3ydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765331483; c=relaxed/simple;
-	bh=Zlg/Hp012kGo5BAhJ/R1EBEd7rcNl8kLBQJYHiXNXn4=;
+	s=arc-20240116; t=1765331756; c=relaxed/simple;
+	bh=DKLuJf/JXfx0yQ4P8Pqgx98d6NTEQ2xj8uZxS47Qf88=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OM88tw4qh7bEypKcgEU/1UvWW+l6e5v23AIO7ebyjiOQDgEUaPWmg1+BX/n2vA3OOHbdRUekzETpzGyb+1Xn0Na7Yx+4YhqXTQx65uGYJ9/mjYwlDrVFOU1a0dL76+61OAJvFi/5ZBJe2Qpmu6sJ9n8B6xPKLkwaoMGdfCna1dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aMFCwmN8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WsHBODSz; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZmBEup+ohE1StwS0/0nplu9+E9qKfnXfYSqy4Pq3EZm/GlKn8QtdhRSKb+MJJPzfcO/pHaCWJstBVNK0pgPo/KOnWh+akTaeM6EcNfh/rJL/W1i1BUue7P/IpYiTWQFex5WE0wYDxQ83Eie4dL1Bq/NWGwyhbJZd8e6S5x9LJ7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jo40O+Zp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ETfZ9yPX; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BA0O7BN311014
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:51:21 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BA0OSb91373551
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:55:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=BN6Y3dRzDAB252tWRqYve+DU
-	r56IWk9EkE0pgVLLGis=; b=aMFCwmN80io33E3/NmsQd0JF+gqa0aGe7UDu8wDZ
-	SBQeLPhUVcysxYIEatZIcVjQ/eIWRdeNuGVs1f1OaYvMxezsn+r+i61Z2im3fE2u
-	soMT5iFr4BfmBRSC9pUDq2YfmDYeUf0NJlDLNx2QZtV0JRghFLXy3idYJ3eTiqyt
-	Xb0jaHVep9Fri/tlnCO9Q1FaGKN38Ra404HrbzHGn6OX7Rim69PNQhwfESxoSDgm
-	wAsSpu14lDgK3X6Xknf7Cq1Bnfhqa054sanAhZPbnwXqGWIpK0aNukNcUBF9xjWQ
-	gK2NlQNa6FuwuKjVUNgSt5gWGzZEGRMGOG7FtW1/cmanCA==
+	:references:subject:to; s=qcppdkim1; bh=qAgt24CjLNqR+WvXK3Cl+58W
+	cP9a5/vRqB+dhz4UKy4=; b=jo40O+ZpP1Pkrn5fAs9YrBw17xorA6CAwjXi5Omk
+	vUEpsooiyknXzmZP+Cha5FQ62VA4z6sBJKISUdYHmr9nBL5yrGOtEZ9NFZ8Z7hSG
+	i1ABh52icIy4JlPaNqwc+ATLc0Iv8VOWHczWfX1d97V9WWGVkzZ1rtqtdBNRtnzO
+	jrhH4dqmqh4Pk9pmeN6EWGE5IsPQjr4xq+1CWpqcN4XiCjtygXybDOOCq3UIbMlC
+	IzoDv5CmzyRka+ug9fktIR5f0/UsNt2ddLGP0Pejo4KohjDN3DFRPn6WpSlbW2f5
+	XhSVnDbMtjodA/0njMo3eMJ1XjGprwRH1+ZVs6mG7NhWzg==
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axwbf0fj7-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axvm68pd8-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:51:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ee168a520bso128485961cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 17:51:20 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Dec 2025 01:55:53 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ee0c1d1b36so8394321cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Dec 2025 17:55:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765331479; x=1765936279; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765331753; x=1765936553; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BN6Y3dRzDAB252tWRqYve+DUr56IWk9EkE0pgVLLGis=;
-        b=WsHBODSz/Wih6zAecbue6QzOvlTHl2YOCtF9aoxUW3lnwReaiKQ1O5qOZ+e1z1sxtn
-         I+KBs+1sGPMZ8lJvMjDWwifKTz+sSYZNIinreREajfzyt2UcIAk2YrBAnFpyEd0W/sa7
-         8psURkjyc6c5lzC+xgvl5b4RM4fISPunBUnvmPTbFj350HMtUBVrPrV5HWM3/T9v9U+L
-         5EHGSjFDju8CAhtNdosvC+0MqwRqMN5ngyD5e9F71pnHk/QhzNIQoLnDafbIBmWHXHel
-         14VK34qS6kPT0/UzIJuZabQa1MdL8r/chhX9NdrsfzV3xFi8oSZnlypOIODwHeTMVGeF
-         rpXA==
+        bh=qAgt24CjLNqR+WvXK3Cl+58WcP9a5/vRqB+dhz4UKy4=;
+        b=ETfZ9yPXYw3dPyrcpl1sRKTSwwbzbMdInN1GTYQFJG3d42EB59JMfUuIjzJMvBGY65
+         PEMe++vuWzIRifxyCHoH6mvowD07zvGL4wifBL+d9FvrH1PhbB+2e0EV5f0uhXuyKSGA
+         XiCc5K9avQg4yXByddnqTpy5KXFskbZfQXkcM/NRle711ZiONx9+1yfB9SKtfOWSNRek
+         YqgiF7CrqBlvAphqBzgAS/Gj/pep3o2f3BTKTr3so5VS6mPGVhEThKF7nwdSoIfxWtDs
+         D6HiF6JOpM/P3gRRIEMni+FAUT16OJxAuEi4givZm49J3GJm9i/xl60Mzu7K+2Mk4mi0
+         Zcbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765331479; x=1765936279;
+        d=1e100.net; s=20230601; t=1765331753; x=1765936553;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BN6Y3dRzDAB252tWRqYve+DUr56IWk9EkE0pgVLLGis=;
-        b=CDtrlhjPQLkRajH33HV5Tsftu4SUr0WgaCRGdtFHDFKhBY32JwSNrOCmiv0vgp9vZR
-         lxK14u1XiFfNfBzF+F7vHq6WKTmsY7KOuPM7bU0NsyvvhZeHSMYm6PjLCZ2B0t1547lR
-         Kzy5EMsQjQPerdFznwA3MUwFGXEqlFUvTLFCL4+npXcoh0LOXXNxNp7ZdcYOcr9PUnaq
-         E9n9eFr0tknnbm9R8fme6FX6GFDGERBVj+MJTLl8NVn6zG3wYEMHgTtdzkF0aFPcB3hi
-         t6s/zDHbwBkCX92VmNtZ+hIN+sZfneKMo20brlB103NpvaWOdA/fCzL7t8HnlWeSyTM4
-         xDEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWIQCdN83QmMgi6qGSbHxkM0aht3nyi3rMTomkIraloUTUS+2Y03ZPb6hdrYuDrSXiRVZ8yxsQUgNrCzREc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWsiOT05qL6sgus8Yice0EFL9vTZdsYZsmnTIpPylnCAFgfhkw
-	YD1gQKi1cAGHnXKHtOaB/vmEACsedufT1zrzoc5JWuD8gmhVwUJGOFdDhahnhnz18YnQSvpQv/y
-	yHkE8Hc7Ca1yejlh23xvfjmom3RCP6SLEmWxSp/QwDWeMrNWzsHX3x+9Et/O0eKUf9nly
-X-Gm-Gg: ASbGncvIu/2DEYKKf/dnviMj/zevXTvQbOzvPq9itapmda7+9sYhIhO/WhPwgt4h94u
-	ESswNsOZr3JVETIXlFfItY58KF/KrcJs2FG4VbYHkP3paTZ6k6qxRueAShM4xabR+A2Kgrs/yt+
-	koX8vylSxk9wbfy1k3BB4ftc3Ehx6bVzNFRK6zFC69ZrO7cT2Jv+/hhpU9x+daVw3PWZEBYcmQo
-	xfkSd8aEgwN3UvLIg0fhA2pjUQ/bhwqYRuqCjyvvSrXP/kBETPs27wiRjtrllM5FXqgkrnfzKJC
-	ffELv3nWjSQSQ3CO1V7bNH2PY2ayJP97666HgXOH6wW3YscaP5iTx1rjZARsihYfAr8FnWyUELt
-	61P2DxtTE8MauVsCjtnl6+j1JuSMxfJGvpeEiXW/FmgcUvLgVjP7Il3ppT03S/knd1+p3PFWA1s
-	Nbr5u+pPfM2W7zti0XVnawsqE=
-X-Received: by 2002:ac8:5810:0:b0:4ee:5aa:9c28 with SMTP id d75a77b69052e-4f1b1ac9555mr11516561cf.70.1765331479397;
-        Tue, 09 Dec 2025 17:51:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGKDZfAbJZWDgNFtvZu50UhNEANWHUxZjw1ARuiOSUMkTBFY/KeHIBYtgGNZZYv/UykqneyFA==
-X-Received: by 2002:ac8:5810:0:b0:4ee:5aa:9c28 with SMTP id d75a77b69052e-4f1b1ac9555mr11516331cf.70.1765331478854;
-        Tue, 09 Dec 2025 17:51:18 -0800 (PST)
+        bh=qAgt24CjLNqR+WvXK3Cl+58WcP9a5/vRqB+dhz4UKy4=;
+        b=OThKpHTsD55c61YSfwF0xgYvXpLL8LMpuvX5P4avaJyvRKUG+DxfCq3P7ff18SKl5H
+         cf0kLvyWUfVkLZgntzl19vmrRGl8oJPjk4bFIsPS8evcueC0btl6p1mYUEkhF7jg7ohW
+         Oz7OMvctzTtqcDX6ysP4BGnpGvEgB7jmdifTAiFqZYGqhoydvKc0vpx6KRs0CF59FOtk
+         biUbCLVS9B/seBz3B5CKd0/yeCkOuOxJdV+O1DWNYQDgKJu8HOkEVHxvVZFBE9npLxvs
+         CrUn7SE7RP3GKWfIjIayHlB891mBYUsLFPgjqKaqgH5QLSOhL0YJVqt0GuZKQjfTkF5c
+         2u5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU1fnshIqkGT5BUUtiRggqsDH+cDOtGMBaR1FS9rUsxWyImxlotncf9ihz5pk6SkcJ+KGt+GXLHon5kNrnZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy57EyYQV7BgJAjaevZRsRJFDIaNvz9TW8sR/9bnmtRwJrdhTqA
+	b95PUoQsL0qStw8daxFH0Voi6530WkO76Fa1tZHoLfky+0BMHLyc8aVvM/oBTfEiVVVc20g6qOb
+	+uc8/rB7ODESjRCn0YGYWXAA2m4TeaAfae3LbEkUdkV1OimZkqEHb2gKV08Xbl/eemK0Z
+X-Gm-Gg: ASbGncv/bT63vGiPyQF4uZA/u6B46+mDItUjX0pIK0/q9nmRPHCh7Vx28re3Tbl+5rt
+	RW1ajOepIH8tYSljp/T1b5QbsbJcCu5A/xaQ4+HRrCr0KGFoTTaev52G3BuWWNzZqu8vm3SVItf
+	5gpm3KUEFRkQg0/95E2MizB7rbSwUpOqOsfmongKxJZkqwvhgYCNfojQoErYkf/M0CvnNm85+rq
+	XZrYntCdlGnQEcDh7oOUIOklaX8kFdiUVI8qt/f7XOcbF5sL97Yvj7AobHa3pKuaFz5kixVMWCN
+	x0fvs+H3/FHf2DUOHR6hjdL8eIE2H0k0DxNphlV6ZGnDyNRbcQbh9eszyqEJo7D6HycZRjFEhm+
+	6zZVHjpY7I80liHZiLkc35G8t+2sslLItOnKFIu0SDsHbiEskm/XzVVUAaaaq2QbJqwAiAKe7Ic
+	oo+47HyG8dZ8POMNhwSrJZVqc=
+X-Received: by 2002:a05:622a:241:b0:4ee:27a9:958d with SMTP id d75a77b69052e-4f1a9aefc6dmr52953291cf.16.1765331752987;
+        Tue, 09 Dec 2025 17:55:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGK5XK3i3G3Us0uj0x5snz5jiGDnyHy4S/JJpNtTObFaEy+FoqP2sYHhTDnJM9LoVKGdlTvXA==
+X-Received: by 2002:a05:622a:241:b0:4ee:27a9:958d with SMTP id d75a77b69052e-4f1a9aefc6dmr52953131cf.16.1765331752469;
+        Tue, 09 Dec 2025 17:55:52 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7b24907sm5807764e87.37.2025.12.09.17.51.16
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-597d7c1e2c2sm5815838e87.63.2025.12.09.17.55.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 17:51:17 -0800 (PST)
-Date: Wed, 10 Dec 2025 03:51:15 +0200
+        Tue, 09 Dec 2025 17:55:51 -0800 (PST)
+Date: Wed, 10 Dec 2025 03:55:50 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 5/5] phy: qcom: qmp-pcie: add QMP PCIe PHY tables for
- Kaanapali
-Message-ID: <mudq7gmqs62osuarvflmemt2a2gnuloywabtr4w5oyyddp4b7v@eynaurtfrnyt>
-References: <20251124-kaanapali-pcie-phy-v4-0-d04ee9cca83b@oss.qualcomm.com>
- <20251124-kaanapali-pcie-phy-v4-5-d04ee9cca83b@oss.qualcomm.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 5/9] arm64: dts: qcom: pm8550vs: Disable different
+ PMIC SIDs by default
+Message-ID: <jyyamotpswptzirtido6iufroxpdu3dyqkf4zs3hkfqj6mt6f2@sklyrpyahzjb>
+References: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
+ <20251210-sm7635-fp6-initial-v4-5-b05fddd8b45c@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -116,116 +122,348 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251124-kaanapali-pcie-phy-v4-5-d04ee9cca83b@oss.qualcomm.com>
-X-Proofpoint-GUID: MLt9MJ38BjRSvdtMAn46570PqmhX7pqT
-X-Proofpoint-ORIG-GUID: MLt9MJ38BjRSvdtMAn46570PqmhX7pqT
-X-Authority-Analysis: v=2.4 cv=f/dFxeyM c=1 sm=1 tr=0 ts=6938d219 cx=c_pps
+In-Reply-To: <20251210-sm7635-fp6-initial-v4-5-b05fddd8b45c@fairphone.com>
+X-Proofpoint-GUID: ZK2f9P6H6Ys2VY9n21_kLLzBJIT4OLmW
+X-Proofpoint-ORIG-GUID: ZK2f9P6H6Ys2VY9n21_kLLzBJIT4OLmW
+X-Authority-Analysis: v=2.4 cv=Ztbg6t7G c=1 sm=1 tr=0 ts=6938d329 cx=c_pps
  a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=JfrnYn6hAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=prjBgqm01r1IDouUtvIA:9
- a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22 a=1CNFftbPRP8L7MoqJWF3:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDAxNCBTYWx0ZWRfX4HxND/4MXEmj
- 8r8zTSwT5PHYzaCmyc1xDp4LuPjHg8U+wkKM7oBWuVQirwG62ByySkQ2GEM55C5iBsxg9lq0KxX
- yeC0HETRdNJAVy+rwmUv0jLoOHITlsyJn7j4CKOHZBhHD8O0G02JoclYxv4lKeotbPNVOc9thrW
- YX+bEPec034dSVK1fnlrTexyHpZljJhEGiZoM23BK6ChumJLv8pK2Esl6hvfRUVlLSZUZmdeW+5
- Xo16mTsyrAt+i7Wc6SXMcpErmvslvirdalbu4PGFkLPLbtt44Gz40HWHSFvu5dxbBVVzi3mnoiS
- LZijsjXqiFhPrHRks5NMQHdQJ0JPrHR/9+X/A1YMlwxygob3bmE2gmYoj03xodqDRpX1Uzo5klb
- edKEmubmC5rKHP4DLDvUXhdNf0PXgw==
+ a=EUspDBNiAAAA:8 a=6H0WHjuAAAAA:8 a=BWpuR-d3BRky3lTXAc8A:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDAxNSBTYWx0ZWRfX5xt+FkDVUq4+
+ RIeqLDOuB25NXD65cIjeJ+SsFL2HpfXaKMDybmx4h4t4b/0VN6kh1Lw7jVb8hl3VsZB78EMboAm
+ 155S2hgN5hU0jiIlJaQhcFodcZdERz8ABCLPqDbuTGdWLGjX43tFRhAC/l51kdgMo7o4Jk4NGnW
+ JmiKR5o0dtSypMcezJlH2Zt98FiRE+D/V3XtxEsDO4dALvKcp4ZWvz6a3KyCaYcSQNjeThqHn8j
+ H2RHZIqy1jEFmPqXRw46/bPyHJVcPEWMkx+qtdjyKry5tzDY+BF8A4xbjoD4lcegdp6aJvkdNjS
+ md7ahBC06PeQdDiCp9ETV0jfxNCYMPr1z8UQ9Y7gVuThIoy0HFmA1NMk8Ggm85DxoSh0TY8slf1
+ 7N2Wzabv56oN5lbTl+vkINCqgsdQ2A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 adultscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100014
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100015
 
-On Mon, Nov 24, 2025 at 02:24:38AM -0800, Qiang Yu wrote:
-> Add QMP PCIe PHY support for the Kaanapali platform.
+On Wed, Dec 10, 2025 at 10:43:29AM +0900, Luca Weiss wrote:
+> Keep the different PMIC definitions in pm8550vs.dtsi disabled by
+> default, and only enable them in boards explicitly.
 > 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> This allows to support boards better which only have pm8550vs_c, like
+> the Milos/SM7635-based Fairphone (Gen. 6).
+> 
+> Note: I assume that at least some of these devices with PM8550VS also
+> don't have _c, _d, _e and _g, but this patch is keeping the resulting
+> devicetree the same as before this change, disabling them on boards that
+> don't actually have those is out of scope for this patch.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 194 +++++++++++++++++++++++++++++++
->  1 file changed, 194 insertions(+)
+>  arch/arm64/boot/dts/qcom/pm8550vs.dtsi                   |  8 ++++++++
+>  arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi             | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8550-hdk.dts                  | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8550-mtp.dts                  | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts                  | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts          | 16 ++++++++++++++++
+>  .../boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts     | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8650-hdk.dts                  | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8650-mtp.dts                  | 16 ++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8650-qrd.dts                  | 16 ++++++++++++++++
+>  10 files changed, 152 insertions(+)
 > 
-> @@ -3363,6 +3516,16 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_30 = {
->  	.ln_shrd	= 0x8000,
+> diff --git a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi b/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+> index 6426b431616b..7b5898c263ad 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+> @@ -98,6 +98,8 @@ pm8550vs_c: pmic@2 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		status = "disabled";
+> +
+
+Would it be better to split pm8550vs into 4 files rather than disabling
+irrelevant bits?
+
+>  		pm8550vs_c_temp_alarm: temp-alarm@a00 {
+>  			compatible = "qcom,spmi-temp-alarm";
+>  			reg = <0xa00>;
+> @@ -122,6 +124,8 @@ pm8550vs_d: pmic@3 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		status = "disabled";
+> +
+>  		pm8550vs_d_temp_alarm: temp-alarm@a00 {
+>  			compatible = "qcom,spmi-temp-alarm";
+>  			reg = <0xa00>;
+> @@ -146,6 +150,8 @@ pm8550vs_e: pmic@4 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		status = "disabled";
+> +
+>  		pm8550vs_e_temp_alarm: temp-alarm@a00 {
+>  			compatible = "qcom,spmi-temp-alarm";
+>  			reg = <0xa00>;
+> @@ -170,6 +176,8 @@ pm8550vs_g: pmic@6 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		status = "disabled";
+> +
+>  		pm8550vs_g_temp_alarm: temp-alarm@a00 {
+>  			compatible = "qcom,spmi-temp-alarm";
+>  			reg = <0xa00>;
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+> index e6ac529e6b72..e6ebb643203b 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+> @@ -366,6 +366,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
 >  };
 >  
-> +static const struct qmp_pcie_offsets qmp_pcie_offsets_v8_0 = {
-
-Is it really 8.0 or 8.20?
-
-> +	.serdes		= 0x1000,
-> +	.pcs		= 0x1400,
-> +	.pcs_misc	= 0x1800,
-> +	.tx		= 0x0000,
-> +	.rx		= 0x0200,
-> +	.tx2		= 0x0800,
-> +	.rx2		= 0x0a00,
+> +&pm8550vs_c {
+> +	status = "okay";
 > +};
 > +
->  static const struct qmp_pcie_offsets qmp_pcie_offsets_v8_50 = {
->  	.serdes     = 0x8000,
->  	.pcs        = 0x9000,
-> @@ -4425,6 +4588,34 @@ static const struct qmp_phy_cfg qmp_v6_gen4x4_pciephy_cfg = {
->  	.phy_status             = PHYSTATUS_4_20,
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &sleep_clk {
+>  	clock-frequency = <32764>;
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> index 599850c48494..ee13e6136a82 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> @@ -1107,6 +1107,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
 >  };
 >  
-> +static const struct qmp_phy_cfg qmp_v8_gen3x2_pciephy_cfg = {
-> +	.lanes = 2,
-> +
-> +	.offsets		= &qmp_pcie_offsets_v8_0,
-> +
-> +	.tbls = {
-> +		.serdes			= kaanapali_qmp_gen3x2_pcie_serdes_tbl,
-> +		.serdes_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_serdes_tbl),
-> +		.tx			= kaanapali_qmp_gen3x2_pcie_tx_tbl,
-> +		.tx_num			= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_tx_tbl),
-> +		.rx			= kaanapali_qmp_gen3x2_pcie_rx_tbl,
-> +		.rx_num			= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_rx_tbl),
-> +		.pcs			= kaanapali_qmp_gen3x2_pcie_pcs_tbl,
-> +		.pcs_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_pcs_tbl),
-> +		.pcs_misc		= kaanapali_qmp_gen3x2_pcie_pcs_misc_tbl,
-> +		.pcs_misc_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_pcs_misc_tbl),
-> +	},
-> +
-> +	.reset_list		= sdm845_pciephy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.regs			= pciephy_v8_regs_layout,
-> +
-> +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> +	.phy_status		= PHYSTATUS_4_20,
+> +&pm8550vs_c {
+> +	status = "okay";
 > +};
 > +
->  static const struct qmp_phy_cfg glymur_qmp_gen5x4_pciephy_cfg = {
->  	.lanes = 4,
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &pon_pwrkey {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> index f430038bd402..94ed1c221856 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
+> @@ -789,6 +789,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
+>  };
 >  
-> @@ -5209,6 +5400,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
->  	}, {
->  		.compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy",
->  		.data = &ipq9574_gen3x2_pciephy_cfg,
-> +	}, {
-> +		.compatible = "qcom,kaanapali-qmp-gen3x2-pcie-phy",
-> +		.data = &qmp_v8_gen3x2_pciephy_cfg,
->  	}, {
->  		.compatible = "qcom,msm8998-qmp-pcie-phy",
->  		.data = &msm8998_pciephy_cfg,
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+> index 05c98fe2c25b..3fd261377a0c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+> @@ -1003,6 +1003,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &pon_pwrkey {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+> index b4ef40ae2cd9..81c02ee27fe9 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
+> @@ -533,6 +533,22 @@ volume_up_n: volume-up-n-state {
+>  	};
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &pon_pwrkey {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+> index d90dc7b37c4a..0e6ed6fce614 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
+> @@ -661,6 +661,22 @@ focus_n: focus-n-state {
+>  	};
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &pm8550vs_g_gpios {
+>  	cam_pwr_a_cs: cam-pwr-a-cs-state {
+>  		pins = "gpio4";
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> index 5bf1af3308ce..eabc828c05b4 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
+> @@ -1046,6 +1046,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &pon_pwrkey {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> index c67bbace2743..bb688a5d21c2 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
+> @@ -692,6 +692,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &qupv3_id_1 {
+>  	status = "okay";
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> index b2feac61a89f..809fd6080a99 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+> @@ -1002,6 +1002,22 @@ &pm8550b_eusb2_repeater {
+>  	vdd3-supply = <&vreg_l5b_3p1>;
+>  };
+>  
+> +&pm8550vs_c {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_d {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_e {
+> +	status = "okay";
+> +};
+> +
+> +&pm8550vs_g {
+> +	status = "okay";
+> +};
+> +
+>  &qup_i2c3_data_clk {
+>  	/* Use internal I2C pull-up */
+>  	bias-pull-up = <2200>;
 > 
 > -- 
-> 2.34.1
+> 2.52.0
 > 
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
 
 -- 
 With best wishes
