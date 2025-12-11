@@ -1,119 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-85041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73BF0CB5B8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 13:00:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71CE1CB5BD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 13:04:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 724173009C05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 12:00:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9D9C030155FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 12:03:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5271830F551;
-	Thu, 11 Dec 2025 12:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCCA630BF6F;
+	Thu, 11 Dec 2025 12:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="nm6UdxKS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DU+1OWJb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="extZinPM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B7930F547
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 12:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2A430BF59
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 12:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765454443; cv=none; b=E+VBGdXOa1CUIDuZwOOfOjN1p/5ZGzl+TiTluAeEEx4+8K9wkeRULprj73Eyd93ClnBPt07lDTJSS2raB9ZTseXrNdnekpi4gzsb8EKqRIskjtaeWz2Ytcu6SCkxOALVITQgGY9P3Bo84eL1bygHc3yPYKElaQhe/gXuXRxVhyg=
+	t=1765454630; cv=none; b=MS07oBnKU/7Kk6VrgM7gcSB9QDSictvSyGVFsVpwGyvPY4gzJx1vmK0f2Rgbg2oQxoR0hwy96/ciy+dW6Yc1jRUPZkZu3xHQW5930mAM6vTL2PCdhIGTjWusCyQA1tkyOWV//AFETADS4Sl3byyxvSTUJS+3R9yVds+bMYeoh8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765454443; c=relaxed/simple;
-	bh=+ZsiVHVuvlmElCfiJh8VswoYYUYXDQoGo/7vAi2FBsE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r3JOgQQNHQjTVdOjsvnt5RSskkPFq4yYJ92jm1QtmRe3kncFyJvyDM+nfx4yTitK5llbDjBnSEywRuB3Z5+nga5vrSddCgZV/KzELEIYYiSrLeChSP1JBbRmfpjs6QAwZbOhoBg3fjTr/ReW5yORsgGSCIwJwpWoukrjD1EFTdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=nm6UdxKS; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-Message-ID: <3d1c6ffa-6c32-48f7-b8de-a2e7e0e43fbe@postmarketos.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1765454428;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wcANbySnm/3IxhDfwAZaRbD9tP3Ny+4TLXwMj7cHLrw=;
-	b=nm6UdxKSYMIYHr9CaMo6avv3lmC9scnh8DGbt/oP6TX7+TAKgt3O1gUKwzfotaZLDZ+FM1
-	F/1A/dmWboBC+glEFH3rD2kV7ixKdDR8vZj0Y741vP1ptrMq//wpNS1UqlLTmqS5fhU6Fn
-	Oqq7dsZn0V8lBMAVysV+lC+0O4cvnEBtEVnb6a2k+0iSSTTccp1Svm55RR2r2nkL1sUj62
-	dOyXwvefcaihb32y13bSI1Bk/A2QwXqOarJJezvDiPafnTYqU0ku60Hcenx84rjcOAoWvV
-	NwtTWLMuFQILyRO7ojvD+QCPm2dfC1ciQ2Wh+nTgtB9Gi/3fJaPE4B/E0FqU1g==
-Date: Thu, 11 Dec 2025 15:00:24 +0300
+	s=arc-20240116; t=1765454630; c=relaxed/simple;
+	bh=+WK8HK+awYHYgckuaEH0kk55HcjmJEKwrLfnKA+nY3s=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nv8Ge8VlOYn95xTUjDViF4Vthgcswj5Ru+jWkgIHo5Wsa/Rc2rfTbfpjeBmA5idhEglv4asiMwWn3lBrL+0WykIh82LnhSBmSBAFhqm2ueY1A/UJsgcokfuBIDsR1vtRgUNMamGtgEw+/Yh5koZkbUFcaA21MvAqhgjGubr5A5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DU+1OWJb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=extZinPM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BBAXo97470501
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 12:03:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=vMt8wP1i2zzi4a8HI4lPUK
+	6OgJaDfh4wND+e12sQiGk=; b=DU+1OWJbu6Cj5ssrPwliDRlHOnrRRcBx9tLBdo
+	3S7f7CxotiRZeFV2AjGX9G0xObmY4a+tm07ZPudGrX+45eUxA6DQoC3hmCN94NRm
+	MJqaraAeN1228JP7UIerTi2mobqzz5EMEOsYeCwMsMxJnji97edimIjjzAfSgcXO
+	qqGnAZbSC7zXqtCoYbyxFIHUglJgqwg6/5S+pNQZ0CbuB30kICypjVOTNiwVGTRx
+	Izh7ujlRJmA8j1czh6zJIimKkIMXfKDIF7D9+YOHrcXeGW+n2f9rMu7Zueb8DPpM
+	4iuJjGZOLTEBzpDS2Pki2Gm4znB68ctGhNAe/ndSTvpEG4TA==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aynpvshqn-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 12:03:48 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-11ddcc9f85eso19523c88.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 04:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1765454628; x=1766059428; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vMt8wP1i2zzi4a8HI4lPUK6OgJaDfh4wND+e12sQiGk=;
+        b=extZinPMuRZHD0UXKRmyZraV9rieqsG/vHyZ6UMdkiARvEsKY1Yq/OVl55gaCD5eAd
+         UANzNx8A0WVWJEV0ks7foEHXYsiT8xe5jRzFk42X5fkxo3VGVsY0jfOWPlUEHEVwc+5U
+         5OavxmCn6xUyr0MwiHuGTX0vsMp9TgMIr7sXENY2YAvOR7KlccPLMCsfXckTS2zPGRJ4
+         Fzb6kFdK12Xcc0nvQnKYozEVKYAU73ca6mXhZzNRl7u7l4qcHXN4h40X9iTU+q10Jdz1
+         UjXNI2NkIejZpf1jKaoj89rVvMOVCt9E+likatoE6L9yKWNRYAakMXW94cIS6oFP3Nrr
+         /BdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765454628; x=1766059428;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vMt8wP1i2zzi4a8HI4lPUK6OgJaDfh4wND+e12sQiGk=;
+        b=AQr710aZspab6NO3OQyphsQjXCmOBTGIWAYXNiS1o+prwIeU5IWpQaWdEABIxnECEt
+         1c1A/ZFEDzf0OfhzHPcspnbPAlyQdLnjDdu73tdlefFUTHmetUpSaDgDXz0g+vrFkuRy
+         hjuIiMpalHNjQx2ZNw+4u48jqcIzqczXkJ/Tt7fprzQ2RfKBeQnmq4gIms7hqVwAPLZK
+         vLHeU0VM+v8au8br5SXnYpUK+N6NK0DqQID5w1PNYfeH3xtHqHNQ1Oh3fE6pR8BoXQZl
+         DDUIeRi+C/ywtY0KS6LrJSeQSLD0MGeRcH+rzxsEvHL1LMpfCO/0HzRMFzmcErG1ckCS
+         36TQ==
+X-Gm-Message-State: AOJu0YwMHcSyEVHDZq73h1uNloSs95DD983yjUdyTEQ4a8966LsrG8E9
+	cwfSYItWy0JrBJMBSj7S87YOH/cNlC2WTUZbsKSZwJ0bLCIJ0ISe9dVhTwfKs/7wokxdTKUIX+m
+	Hu54/QowDAU8ypHc6phJYOQET2iwF23O2eWthgMYGF9Ila4uLxEG1ejnavgy5YMMFpb90
+X-Gm-Gg: AY/fxX4uT1DGkoUCMxUjHd2sku+8fA7LhT0SG8xFW/aF6eJ5pb6vZnZSCBKw7MOoW7C
+	jwH53U0hO5sn0CHkFIrQzDy9YNGYLfxsEKiejl4FhpwQavqfoPwJs9t66ZSoiPJZfrsvOsNiL2a
+	3djHDZVTP3ObgBoGSTz2BESKevD4XEVCkq6eaFQlOFTQXCmc5Gm53KUieuE/ixmzqRe5cC9fIeG
+	Hum4N5U2eYHVMoWEDI+C+rWtF6d13iEBJM5srzFRc+viHEu20oTr7Wu6CP0hF1mub0fTTuhXys5
+	rc8mH2eb/H2t9YgKHoibJdkEWsRdMv2E+EUdAPBkSQiEEtgZhgtcYaMKwVDgk9DkAgc7M4Bq9HB
+	FrFYVhQaF7kQ4VafsKDMEHqLsM9sVVuIzii3NV+PQPXyTlJaErQjDQXuf9U+EveCw
+X-Received: by 2002:a05:7022:306:b0:11b:9386:a38f with SMTP id a92af1059eb24-11f2edf7c3bmr1708071c88.22.1765454627212;
+        Thu, 11 Dec 2025 04:03:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1lDLrvDA+J3guslZLGNaf3A93fEcVmHQgAEn/LkgLAD9+g+vloax3IlLWh60Un5moV38qfQ==
+X-Received: by 2002:a05:7022:306:b0:11b:9386:a38f with SMTP id a92af1059eb24-11f2edf7c3bmr1708045c88.22.1765454626534;
+        Thu, 11 Dec 2025 04:03:46 -0800 (PST)
+Received: from hu-hangxian-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f2e2ffae2sm5924073c88.9.2025.12.11.04.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Dec 2025 04:03:46 -0800 (PST)
+From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+Subject: [PATCH v10 0/5] media: qcom: camss: Add Kaanapali support
+Date: Thu, 11 Dec 2025 04:03:42 -0800
+Message-Id: <20251211-add-support-for-camss-on-kaanapali-v10-0-39e8874dcd27@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm630: fix gpu_speed_bin size
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <konradybcio@gmail.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251211-sdm630-fix-gpu-v2-1-92f0e736dba0@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Alexey Minnekhanov <alexeymin@postmarketos.org>
-In-Reply-To: <20251211-sdm630-fix-gpu-v2-1-92f0e736dba0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+X-B4-Tracking: v=1; b=H4sIAB+zOmkC/43U326bMBQG8FeJuN6p/N8mmqa9x7QL2xw3KAFTD
+ KxV1XffIa1apA2JixBhwc8nH3x5rQqOLZbqfHqtRlza0uaeTjj7dqrixfePCG1DC5VgQnPGHPi
+ mgTIPQx4nSHmE6LtSIPdw9b73g7+1gDqYJjRasBorgoYRU/t83+XXbzq/tGXK48t904Wvq3ee1
+ ULBtR9WEhYODIIVjWkQPdPqZy7l4Wn2t5i77oEO1Uot4vN2zrg6Mt0iSE7aKh28aFKqd2S5kYU
+ 8JEuSmfAh1p4zG9KOrLbyoUQXRbLFoJyKrtZO78h6I0t2SNZrGg65COhlw8SObL5kzo+lYUjma
+ Jh01mnvcEe2G1kcm9mS3KCwqfbGRjQ7stvIB9Nw68xKeieMRoNuR66/ZHGsE0tNskyxkVxop/j
+ /nuDbe1dGfJqpiNN7Yb5qeD59vOYC5oLQ+TFmmDIl0eeJLug8XRbmlHCEfu4CfcWAkVkenJLmT
+ FXbtnrDrfP3+AfiLccrtD0safWneGn7R7hRXUHoFDhK66KqP6QOS/Ef1PfPlDt/RYilHS4vUCY
+ /zYWW4piBPhTKcPMTRXQvOAcplTEqmpgs+yeQH+smwdNPXVfa6Xzq8Zkmuf9VcEt5vf0FAghyB
+ MAEAAA=
+X-Change-ID: 20251008-add-support-for-camss-on-kaanapali-e5b6dbd5209e
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDA5MiBTYWx0ZWRfX1cGNOOPPszet
+ rUoPsOYvT80IYK46TB0nFETbQkbTKnkYK1767Lhu7BG/bpYO4fqumVlIgolBS/CJFVgwm/HPuFh
+ GLXKT8QG7t0zzy6RMV6ybESWQpZBB0YJKF6Lf8iYF144iKosE/dChDDweihZ4lh4Dqv4tstP604
+ vRwK5lNXdf1SPfqUEyvSZDGRLKQ3f19YmfBEZqEB3I+bznRQDu6z60MdsIbTkylI+ZREWANgygw
+ 7aFynsIdlltMrP1OrMtiNEufU7iEqWH39HfAxiT89B/yntAVByyvgvnJO5UcR8/F9BLHrO5cGAe
+ wvBGP0dyaMM7A4S8mPpNzNqnUZ3mUkkFZAFvKmhM+Zx6q8itEKalSiYGN/aWdBVUul/tuoRNm/+
+ fJBqb7Br1t+mH1MGjxMNRPXhip8HdA==
+X-Proofpoint-GUID: Lbe8CPsFXESN4mJ5pAjW9jSjmOYMtLlF
+X-Authority-Analysis: v=2.4 cv=C6nkCAP+ c=1 sm=1 tr=0 ts=693ab324 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=d-Za1eDmXPogXgNBA_QA:9 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: Lbe8CPsFXESN4mJ5pAjW9jSjmOYMtLlF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-10_03,2025-12-09_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512110092
 
-On 11.12.2025 04:27, Dmitry Baryshkov wrote:
-> Historically sdm630.dtsi has used 1 byte length for the gpu_speed_bin
-> cell, although it spans two bytes (offset 5, size 7 bits). It was being
-> accepted by the kernel because before the commit 7a06ef751077 ("nvmem:
-> core: fix bit offsets of more than one byte") the kernel didn't have
-> length check. After this commit nvmem core rejects QFPROM on sdm630 /
-> sdm660, making GPU and USB unusable on those platforms.
-> 
-> Set the size of the gpu_speed_bin cell to 2 bytes, fixing the parsing
-> error. While we are at it, update the length to 8 bits as pointed out by
-> Alexey Minnekhanov.
-> 
-> Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - Update cell length to 8 bits (Alexey)
-> - Link to v1: https://lore.kernel.org/r/20251006-sdm630-fix-gpu-v1-1-44d69bdea59a@oss.qualcomm.com
-> ---
->   arch/arm64/boot/dts/qcom/sdm630.dtsi | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> index 8b1a45a4e56e..b383e480a394 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> @@ -598,8 +598,8 @@ qusb2_hstx_trim: hstx-trim@240 {
->   			};
->   
->   			gpu_speed_bin: gpu-speed-bin@41a0 {
-> -				reg = <0x41a2 0x1>;
-> -				bits = <5 7>;
-> +				reg = <0x41a2 0x2>;
-> +				bits = <5 8>;
->   			};
->   		};
->   
-> 
-> ---
-> base-commit: 008d3547aae5bc86fac3eda317489169c3fda112
-> change-id: 20251004-sdm630-fix-gpu-f9786db8049a
-> 
-> Best regards,
+Add support for the RDI only CAMSS camera driver on Kaanapali. Enabling
+RDI path involves adding the support for a set of CSIPHY, CSID and TFE
+modules, with each TFE having multiple RDI ports. This hardware
+architecture requires 'qdss_debug_xo' clock for CAMNOC to be functional.
 
-Thanks for the fix! FWIW,
+Kaanapali camera subsystem provides:
 
-Reviewed-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+- 3 x VFE, 5 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE Lite
+- 3 x CSID
+- 2 x CSID Lite
+- 6 x CSI PHY
+- 2 x ICP
+- 1 x IPE
+- 2 x JPEG DMA & Downscaler
+- 2 x JPEG Encoder
+- 1 x OFE
+- 5 x RT CDM
+- 3 x TPG
 
---
-Regards,
-Alexey Minnekhanov
+This series has been tested using the following commands with a
+downstream driver for S5KJN5 sensor.
+
+- media-ctl --reset
+- media-ctl -V '"msm_csiphy2":0[fmt:SGBRG10/4096x3072]'
+- media-ctl -V '"msm_csid0":0[fmt:SGBRG10/4096x3072]'
+- media-ctl -V '"msm_vfe0_rdi0":0[fmt:SGBRG10/4096x3072]'
+- media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+- media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+- yavta  --capture=20 -I -n 5 -f SGBRG10P -s 4096x3072 -F  /dev/video0
+
+Dependencies:
+- https://lore.kernel.org/all/20251014-use-marco-to-denote-image-buffer-number-v1-1-f782e4cc622d@oss.qualcomm.com/
+- https://lore.kernel.org/all/20251014-add-new-clock-in-vfe-matching-list-v1-1-0d965ccc8a3a@oss.qualcomm.com/
+- https://lore.kernel.org/all/20251023-make-csiphy-status-macro-cross-platform-v1-1-5746446dfdc6@oss.qualcomm.com/
+
+Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+---
+Changes in v10:
+- Update interconnect and CX domain AXI clock names to be consistent with
+  previous generations - bod
+- Update the struct name for csiphy lane register settings to make it reusable
+  for other compatible chipsets
+- Updated power domain names to IFE for consistency - Krzysztof
+- Add description for acronyms listed in binding commit message - Dmitry
+- Link to v9: https://lore.kernel.org/r/20251208-add-support-for-camss-on-kaanapali-v9-0-3fcd31258415@oss.qualcomm.com
+
+Changes in v9:
+- Updates the names of some of the resources in DT bindings to be consistent
+  with previous generations and improve the commit its message. The name
+  changes are also applied to csiphy and vfe camss resource lists - bod
+- Link to v8: https://lore.kernel.org/r/20251130-add-support-for-camss-on-kaanapali-v8-0-143a8265e6e8@oss.qualcomm.com
+
+Changes in v8:
+- Change csid and vfe driver file names as 'gen4' to reuse for other SOCs - bod
+- Add missing register descriptions to binding and cover letter commit log - bod
+- Link to v7: https://lore.kernel.org/r/20251120-add-support-for-camss-on-kaanapali-v7-0-de27f9a67ce6@oss.qualcomm.com
+
+Changes in v7:
+- Add ICP SYS registers to camss binding - bod
+- Rename 'is_deferred' to 'reg_update_after_csid_config' to do rup/aup
+  after csid config to make it clearer and simplify its call path - bod
+- Remove unnecessary bitwise AND while configuring image address to bus- bod
+- Tidy up a comment and a couple of hex values and csid/vfe - bod
+- Link to v6: https://lore.kernel.org/r/20251113-add-support-for-camss-on-kaanapali-v6-0-1e6038785a8e@oss.qualcomm.com
+
+Changes in v6:
+- Modified the bindings to represent the whole of the camera hardware on
+  KNP than just what is exercised by the CAMSS driver by extending the
+  descriptions and the properties, the regs, clocks, interrupts, power
+  domains, iommus etc. In addition, use the word 'vfe' everywhere in the
+  bindings to be clear that all of those resources are referring to the
+  same front end modules. - Krzysztof/bod
+- Change camss vfe power domain names to align with the binding file
+- Link to v5: https://lore.kernel.org/r/20251030-add-support-for-camss-on-kaanapali-v5-0-f8e12bea3d02@oss.qualcomm.com
+
+Changes in v5:
+- Refine v4 change log - Krzysztof
+- Fix typo by removing redundant numerical version in kaanapali camss binding
+  comment description - Krzysztof
+- Add missing tags that should be posted with v4 revision - Krzysztof/Andi
+- Link to v4: https://lore.kernel.org/r/20251028-add-support-for-camss-on-kaanapali-v4-0-7eb484c89585@oss.qualcomm.com
+
+Changes in v4:
+- Add detailed hardware descriptions and revise message title to follow the
+  standard comment format for kaanapali camss binding file - Krzysztof
+- Format kaanapali camss binding file to keep style consistency, by reverting
+  power domain name from TFE to IFE and keeping clocks name order as last
+  generation - Krzysztof
+- Separate the 1.2 and 0.9 voltage supply DT flags for each CSIPHY to allow
+  for arbitrary board design with common or unique supplies to each of the PHYs
+  in kaanapali camss binding example, based on v2 comments - bod/Vladimir
+- Link to v3: https://lore.kernel.org/r/20251023-add-support-for-camss-on-kaanapali-v3-0-02abc9a107bf@oss.qualcomm.com
+
+Changes in v3:
+- Use the name 'ahb' for 'cam_top_ahb' clock in cci binding file - Vladimir
+- Reduce and simplify CSIPHY supply, port properties in camss bindings - Vladimir
+- Resolve the dependency issues in the camss bindings file using ephemeral
+  DT nodes - Vladimir/Dmitry
+- Update hf mnoc name and bandwidth values for icc module - bod
+- Split CSIPHY status macro changes into a separate patch series - bod
+- Add clear functions for AUP/RUP update in csid and vfe for consistency - bod
+- Clarify why the RUP and AUP register update process is deferred - bod
+- Clarify the necessity to keep NRT clocks for vfe - Vijay
+- Link to v2: https://lore.kernel.org/r/20251014-add-support-for-camss-on-kaanapali-v2-0-f5745ba2dff9@oss.qualcomm.com
+
+Changes in v2:
+- Aggregate CSI2_RX_CFG0_PHY_SEL_BASE_IDX definition into 'camss-csid.h' - bod
+- Remove 'camss-csid-1080.h' and use 'camss-csid-gen3.h' header instead - bod
+- Remove redundant code in 'camss-csid-1080.c' and align the namespaces - bod
+- Slipt 'camnoc_rt_axi' clock in vfe matching list into a single patch - bod
+- Add whole vfe write engine client mappings in comment - bod
+- Remove hardcoded image buffer number but use 'CAMSS_INIT_BUF_COUNT' - bod
+- Remove SoC specific logic for vfe ops->reg_update and add a new variable
+  to determine whether ops->reg_update is deferred or not - bod
+- Add description to explain why 'qdss_debug_xo' should be retained - bod
+- Add the procss node in csiphy register list comment - bod
+- Rename the variable 'cmn_status_offset' to 'common_status_offset' and
+  align this with macro in csiphy register structure to avoid ambiguity - bod
+- Aggregate Kaanapali items into the definition that introduced by
+  'qcom,qcm2290-cci' in cci binding file - Loic
+- Format 'kaanpali-camss.yaml' binding file
+- Link to v1: https://lore.kernel.org/r/20250924-knp-cam-v1-0-b72d6deea054@oss.qualcomm.com
+
+---
+Hangxiang Ma (5):
+      media: dt-bindings: Add CAMSS device for Kaanapali
+      media: qcom: camss: Add Kaanapali compatible camss driver
+      media: qcom: camss: csiphy: Add support for v2.4.0 two-phase CSIPHY
+      media: qcom: camss: csid: Add support for CSID gen4
+      media: qcom: camss: vfe: Add support for VFE gen4
+
+ .../bindings/media/qcom,kaanapali-camss.yaml       | 646 +++++++++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile         |   4 +-
+ drivers/media/platform/qcom/camss/camss-csid-680.c |   1 -
+ .../media/platform/qcom/camss/camss-csid-gen3.c    |   1 -
+ .../media/platform/qcom/camss/camss-csid-gen4.c    | 376 ++++++++++++
+ drivers/media/platform/qcom/camss/camss-csid.h     |  11 +-
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 124 ++++
+ drivers/media/platform/qcom/camss/camss-vfe-gen4.c | 197 +++++++
+ drivers/media/platform/qcom/camss/camss-vfe.c      |   9 +-
+ drivers/media/platform/qcom/camss/camss-vfe.h      |   2 +
+ drivers/media/platform/qcom/camss/camss.c          | 352 +++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 12 files changed, 1718 insertions(+), 6 deletions(-)
+---
+base-commit: b09b832c719df5e10f2560771fd38146f2b3fd7c
+change-id: 20251008-add-support-for-camss-on-kaanapali-e5b6dbd5209e
+prerequisite-change-id: 20251012-use-marco-to-denote-image-buffer-number-cbec071b8436:v1
+prerequisite-patch-id: 3ac5d6703a9530eda884720c146b9444f90cf56b
+prerequisite-change-id: 20251012-add-new-clock-in-vfe-matching-list-25fb1e378c49:v1
+prerequisite-patch-id: aacb03b359fdf95977805f42918c0b6c39889e32
+prerequisite-message-id: <20251130-make-csiphy-status-macro-cross-platform-v1-1-334664c6cf70@oss.qualcomm.com>
+prerequisite-patch-id: 27c2ef96f0e747ec6b4bcf316d8802356e4cc3f4
+
+Best regards,
+-- 
+Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+
 
