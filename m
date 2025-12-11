@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-84989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-84990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47006CB4DFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 07:30:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BA6FCB4E19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 07:34:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 00BC13009AA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 06:30:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A24EA300BBAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 06:34:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD2721FBC8C;
-	Thu, 11 Dec 2025 06:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B487D28C2A1;
+	Thu, 11 Dec 2025 06:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uzU1pF7r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzUI9Y0l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B792C181;
-	Thu, 11 Dec 2025 06:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFEC2773FC;
+	Thu, 11 Dec 2025 06:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765434648; cv=none; b=QnIN1mNKPcBSulYQKWympANdxRU7HzKxitVQ9ANeUj8FSPje/wHgf55TJ0ECHHUH+nKBjOyseGk2Y+b57aYak7jUALR+CLi557GFNYg/Oz9gt0hkFUa26/laijL6H4JY88TP2QNColxSAeAWnVym5+6hk//O3Kusye+nUmT8qFU=
+	t=1765434846; cv=none; b=M1GOgfplGaCFYxYaXIE89hv83acULssAmLmW12LuOxzpA0JJ8f3uv+XHrKFIYndvj2BzLJU+AcuCS/K/uugPRz1Xgb4Z5uXR5JrSQP+S2jTjiY9UEEMLKVt7JG/gdydWGVoK5t5pAi7AaRmurMGKRQUjDz2AiP5Foq6FZiQCBCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765434648; c=relaxed/simple;
-	bh=9B49z4mSQq2fdk45EC2zWM3dpwpqmAWVUVEHlhsXyz4=;
+	s=arc-20240116; t=1765434846; c=relaxed/simple;
+	bh=L8TmhCS6/HQwSaXkcRn/gHUSMLStOdTx7fJ9A7mq98g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JuaDycfGB+0ceDi3GDXVraDLhuH8M0ZnJB522qZra0zCaxVCrN62X6gofiVPNXAP/0YB7vyjrwCEgwvuK80glbob26fOb1z/pYrEJHcgt6YWwYplCbwDTJ835GD+uAflSLI/jFIf28OiHGfu293/BdG5rgDSUQLRnPmEMtnCnXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uzU1pF7r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620FEC4CEFB;
-	Thu, 11 Dec 2025 06:30:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=VVL3FtH8moKwIgp0HQXFe9KJFiM+4sBlLs0wC6zH1jodLVmTOi607xf636nT23uA/h5GPmhUOMwYEnBnB4MbvzvcuiB4/eqpl2vCTCk2qA3SP3wuEuCxanGbjLmjWqelDAZ3hm3Q9xZYVjzWh2rBLxRtySLa8etW/+OUUKO/8Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzUI9Y0l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7A2C4CEFB;
+	Thu, 11 Dec 2025 06:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765434648;
-	bh=9B49z4mSQq2fdk45EC2zWM3dpwpqmAWVUVEHlhsXyz4=;
+	s=k20201202; t=1765434846;
+	bh=L8TmhCS6/HQwSaXkcRn/gHUSMLStOdTx7fJ9A7mq98g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uzU1pF7r1qyGz755+VDjMeOc17yjx6PmbwBP7c8kht62DYAK4neisJlxyRG6zAI0/
-	 g0VyN0V8NsJoY/otbm8/XK/AHDtUfsqbqWZzYWxMLANbCwSZLUDk1jC4l5pwM9awAJ
-	 dSjQGixcx6Cphf0dG3mzkNyYaYmaXS9QCehaS7XOypZzEdCDzyq7mi2q3kq3dViPhS
-	 ix9sIKIwbEl22pZWUAH1LxSVRkjmais+ngK/N7oeJ4DkHzNc8ZHFBU2Is8ZCYAq9tn
-	 gAX+mYkQwarUuG68BTBBuO6xpZAnc8qiRF+Jgrz06QJ6HQzzsbW+OMin6i+3nud+0g
-	 qj/NXrzCSDurw==
-Message-ID: <e56989f9-c2a1-4103-8471-a8e550f940ef@kernel.org>
-Date: Thu, 11 Dec 2025 07:30:41 +0100
+	b=BzUI9Y0l4VhG2oYoZmk+s+1GxCXzKTW/wg3Q0rrxdQUqZY+9UrOuy7kUVuYVkAjmZ
+	 DRBKgz6XpspS+olEPIVUhYD7bgN965yroK3K7YiZBfm2V8BH2GsBsU0Xta07WsMxLQ
+	 Y2RrVVgeTuXmnmuUaU6iJk6vc8//6rd6nJC7HVVdrV79YYBPWY/q8WDAQ5UXQULmsl
+	 fLwtshCDGQQ/OVHzsDL9DpjsdpNhGULS/lUAR6ZX+hCiTcAcrSBOhpV1W8ShRqojT9
+	 Fa6YiBzFy1lx3BJm1oCx93cKV/PoX49DYrRKotUlCHWC7HWMJ0WNoqXb1EMALavswh
+	 xP2pYNzofbX1A==
+Message-ID: <3813487a-4618-4c14-9536-cc9f721b12d1@kernel.org>
+Date: Thu, 11 Dec 2025 07:34:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,20 +48,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/3] dt-bindings: ufs: Document bindings for SA8255P
+Subject: Re: [PATCH V2 2/3] dt-bindings: ufs: Document bindings for SA8255P
  UFS Host Controller
-To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
- bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, James.Bottomley@hansenpartnership.com,
- martin.petersen@oracle.com, quic_ahari@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>, mani@kernel.org,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com,
+ anjana.hari@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
- <20251114145646.2291324-3-ram.dwivedi@oss.qualcomm.com>
- <p6a5nazgd74fwbo6c3ctgvwifcigwwn4azkiu7nrmovrn5cmqn@nxzryxyx4oao>
- <23580203-3aa7-45af-872f-4bd86f39877b@oss.qualcomm.com>
+References: <20251210155033.229051-1-ram.dwivedi@oss.qualcomm.com>
+ <20251210155033.229051-3-ram.dwivedi@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,37 +104,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <23580203-3aa7-45af-872f-4bd86f39877b@oss.qualcomm.com>
+In-Reply-To: <20251210155033.229051-3-ram.dwivedi@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/12/2025 16:56, Ram Kumar Dwivedi wrote:
->>> +unevaluatedProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> +
->>> +    soc {
->>> +        #address-cells = <2>;
->>> +        #size-cells = <2>;
->>> +
->>> +        ufshc@1d84000 {
->>> +            compatible = "qcom,sa8255p-ufshc";
->>> +            reg = <0x0 0x01d84000 0x0 0x3000>;
->>
->> Drop the two 0x0 and you don't need to change address/size-cells.
-> 
-> Hi Bjorn,
-> 
-> All current Qualcomm chipsets, including lemans, sm8550, sm8650,sm8750,
-> use a 2-cell format (#address-cells = <2>; #size-cells = <2>;) at the 
-> SoC level, so I followed the same pattern here for consistency. 
-> We plan to use the same 2-cell format in the device tree for 
-> this chipset as well. Please let me know your opinion.
+On 10/12/2025 16:50, Ram Kumar Dwivedi wrote:
+> +
+> +allOf:
+> +  - $ref: ufs-common.yaml
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
 
-That's not relevant. Read Bjorn's response again, till you agree and
-change your code.
+Not much improved... Same comments. And if you repeat "we plan" or
+"something else is something else" than answer will be the same - that
+something else does not matter and we do not care about plans.
+
+By useless disagreements you just postpone the acceptance of this
+patchset. Especially about such nits... patch could have been reviewed
+already :/
+
+> +
+> +        ufshc@1d84000 {
+> +            compatible = "qcom,sa8255p-ufshc";
+> +            reg = <0x0 0x01d84000 0x0 0x3000>;
+
 
 Best regards,
 Krzysztof
