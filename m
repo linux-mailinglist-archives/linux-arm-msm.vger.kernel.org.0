@@ -1,101 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-84999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B865CB50E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 09:10:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62BCCCB50F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 09:10:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C06F4302D5D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 08:08:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DF97430341F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 08:08:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93F592D5C68;
-	Thu, 11 Dec 2025 08:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADBC22D5C68;
+	Thu, 11 Dec 2025 08:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iyMnuQ7I";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WCTzXgmw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z6qSWSVV";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FBzgtkiM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E87D2D1907
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355F729B8C7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765440487; cv=none; b=J2gUAUnnbHWoTncdlDYMd2nZcsW2vEQ1hT4chbHJiVS/aG4ysNFpFdbilaM9R+9T95LPhtXgaKaH8EudpCM9yupUmZF5DeJCLrRic3p/KL9GG+OXqj6pCUG/opy6BqI5lip4a7pbNkW1quVw0fcbCmC0OyY4qiovlscgTwe4Kfo=
+	t=1765440491; cv=none; b=ox052zkrGMvez1guow+cMjCCHKlT8Dm/H8TtVsVtdlgwXbCrqwvcTLJW5ONzJT60trj4h5qei/HxORiWTJCG9b8NT4ewdHzOAREbHLfe3Bv7U1052qkbgIVtxFv4xseCImRcLo4gLvDmjCS4JXO1+LSr9yoTYJurb5v7tdHXelc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765440487; c=relaxed/simple;
-	bh=EUy5+o9ctuwHtsvHKuRoH4GAI5s52zWgfYjcIQa0QvU=;
+	s=arc-20240116; t=1765440491; c=relaxed/simple;
+	bh=r1dgzFXv0adBb2kXX4eYZgSjO4M/Wakct1U6I89VE+s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nq6d8Mm6JsIekirNIss56wtSjXXsg9KOHfADZQuLx4bAEW9pztipXJMVIDhslTWDR7XNJwlV/BVRESaudaNIg+IdvONUzm1mU+dByUAWlZevfajSoIxrZcjrOB3zWQNCx0OzhkyxLWynOvc7hRvH51p7dBCqy6PilMgnE+iRThk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iyMnuQ7I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WCTzXgmw; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=UPLh/HJ3hDVAPbCb0Aj+7ygtuaEVhSU9UnpzIHmkF46u/UQGAMLbQVsQsVFWmTQd58FfMFZ2zYnubYtdk1Vogq1DZrYwCBuqaxFtP7p2rdtrD5hw3yO48RxF2gkoh4n8u/2t1h8eYPfLqNPw7ku8umribI9ivotarOY9kOF/OHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z6qSWSVV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FBzgtkiM; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BALROFX3701203
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:04 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BB32f893682248
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u/9ZfPqzgF6DCfy5LrWQ+wzKhawBTN4QpQZmQLYFRHw=; b=iyMnuQ7IaK7yrFoS
-	UbXvhk+dPRc5NfEhgX3mUS1dG3ptXbolnF2p1Z7muDVNLREwLNGzMEy2K7Pu5/Pg
-	9GZxz3wc1Xqdryp9RHMpghyFqdYBNfx3L4324//p2kOlpRlV2uNI1vUGYWH8jxSM
-	nQUA1q3UqxzzJ4an5X9VdGxJrlAwSkFm96VKED09HDiecgrF+2kS7FIXpWKq6j2e
-	Ikjpv+1PO3wM4fT9lR7ID8CGU5pGBGtQS0FXdRSaDXx0XSa/TexzHAsgdCnboEhJ
-	TlDwbFyUpezy1aPJ3tZ9REUGybFWUYDbapNF12V4LyTB1c16mNC1bJnvVq5RAx39
-	msoqvA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aygsx1j30-1
+	sLC9AKIzTPo5A0hcA9nTuNNa40XqXMlTf9DM5xLPSZU=; b=Z6qSWSVViE1Oic6q
+	s4vfwMBd4+x/U/K9o1UDjSQHV4VbH7LygP1abfPxp4pvN1d+3hQ0MOgex6fXF461
+	tw0PDllpYLXsbKIkE3YyCPopYnXiMib3sY28yFKLNfT+aHJqpdGD+hynr21lBgD5
+	F+O7u+vfgTy2WC5+5B/J+dJ7QAjQ8+1HTslaYBbu8GC/+N9L9G0Mh7cwpCD5kdNt
+	Zxxt5Jzwf1qX6AdUnkIwk1QzzNWT0kZnuHWXRdflisJAib+eqmj07THVNydZeroS
+	vWzXFpaw59+DNnsoTonjRAxb9K8M6JUYPl32N+rg45fVPgq5DHLKmmeyFinBt6YW
+	xnToqQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aynpvrs3t-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:04 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b895b520a2so899954b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 00:08:04 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:08 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b80de683efso1222932b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 00:08:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765440484; x=1766045284; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765440488; x=1766045288; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=u/9ZfPqzgF6DCfy5LrWQ+wzKhawBTN4QpQZmQLYFRHw=;
-        b=WCTzXgmwngZ0JWkt8M6c75mRn9Dn14zo8xeJvSspUvpDtJnqQVNTQ0QOSGAUJ8hjz8
-         Z7FEVwHMoFl3kXW763fayHbfNg5RSBsdjRW//RxNWcx4fHrEexZ/pNNHV/qwBrXevGR0
-         qyULwWBuncT237XuuvdPujrM7gLL/74skgJ/8EKKFT3koLxF8ya6RZy/8mim2pXwkl3n
-         A5B4XOIErwEf60TVK9qDVq7NxIygPZsyagoCXJvhn5M2DuNQvEVF1XR/z6GDj7d5whPd
-         8FA/EOCK9kgN75FFDE/l9b/B37IRZFw4wP4sgKFsPgOjwvUwWKf4UaJABCRWclVZFbCC
-         1KZQ==
+        bh=sLC9AKIzTPo5A0hcA9nTuNNa40XqXMlTf9DM5xLPSZU=;
+        b=FBzgtkiMkaa7JSwZzMAdLRIDgPbukT5/lL/DmgXjk+iA66esJCVYuqKnD8gnD4lcwX
+         lFGB6VwtLP95hjZ7mqtHc2GOgMeiAZZZtREHzInvNsfh3ywEEaIeD1hE7Q4KQ+kf81Ue
+         z69rhXQ6cF/0GgqYl0EEzqCA1dAp4rsBzk40nSbJxx1ev/g7lXNB/d8vRNfnDjpSZpGZ
+         akhouFXJoVRTksEMrS/FM6ltr/2EFUxFniFg/CzM/+0cm767HVWjWYhUa3/oJbFRn92F
+         zBw9+q0pN4N+vuHZME3nOL1Q9u7LoEm+UYXw5WwmeBMWQniUqVMuLM+RPHG0lPsjCPnt
+         edlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765440484; x=1766045284;
+        d=1e100.net; s=20230601; t=1765440488; x=1766045288;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=u/9ZfPqzgF6DCfy5LrWQ+wzKhawBTN4QpQZmQLYFRHw=;
-        b=gXeY2uxa9sIVH98RwLtuZgmfO0/gg6FgVPlOefEf3Vd6naJ+P7XEZoH+qEcDyyZYtz
-         sq8yAWPZf0n/7nMVojFTcmNJcKmdhV8O6l0fB35z9nORcKN3GG2IPC5mQTiUKCwVXkFG
-         SdfVQR/NHw0SQovX1GnPYQWJODFu2usnrt2i2h6JHj+CXQjBYgb2VV1qpSPc3yg2I5wM
-         +3OxocqKVE2k6BNKyE/jdntnOOlO8YCp5sEZEF+DYewSO29DNn6OTqvgdrdzTJY1e0eB
-         eNCaK8d0H5QPgWZYaS3Fk3f+trmM+bQS0DV1PNfqYV++I/k9SmTcpAkYseFXHIXgNpI2
-         Tqww==
-X-Forwarded-Encrypted: i=1; AJvYcCU96xFQl1VNU1oK8cZzqfimqVIZeGdtx42U7Ca7GiSn8wEbMKdjYtN2NvuBxYbcjcdl4v3iXandymlBqfgE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkSBZe8Glg0w4u7mJR4B78A3aJtYrWV5PZ22aIKRUDy0kBfgwu
-	l2A2xcSJdok/4d1bQ7R9XULd3DmdzUF0tC3uRzN12rt0R+CN8g/ZJPAvLiWOMO6YPg1m9KMm9yr
-	v4yolmMxQB0vMF7gyWp8K1LvtM8DJ1swgvR0zse/Na8tRd3/vuqekpoylMdcI6TCrB8Iq
-X-Gm-Gg: AY/fxX7pRDo/5gsG37Nh7lAxbwLtvA1fX9mQjqVKBHiawixwij+iYUuObVUe6dSOmkw
-	jhc4HLnrJRriDm9XJEDWP2rVEOwmG+JQPM4PyUOokr5dMdT4TKCWvxg4bAPLXZAh5i+vvF+MY7j
-	sO42xyCxL14SLxDfoSvI7U1jZGcW31IHtYaAfe5E2R3dvZIU/26Kn9sujcCINSWtRFgw0SLNKL8
-	sOEEc49luUbLKDNej3vFVK+1ESEgC5/FN0j2Jyl3Gl/rBAqPvaM4r1NSJT4GHoTrg7eKSloWXPG
-	Xe/U3MPA5+drVo4J18+f6pr0x96aN/pGjXnKWSsG8vFJ0twl0Fx/MI1rhuldPXNsKl+i/lxPYG1
-	U2Vx7HrNFxvZR94tzInfzxBKL5bkH0mFCbw==
-X-Received: by 2002:a05:6a00:3a0b:b0:7e8:4587:e8bf with SMTP id d2e1a72fcca58-7f22ed5e757mr4987704b3a.50.1765440483916;
-        Thu, 11 Dec 2025 00:08:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUs0/qZCjwhM7lX53s2z5+FW36UFQs4JEXJJA+T+nSHigm9/IZWx2EY6j4guwOqOJKLlyfcA==
-X-Received: by 2002:a05:6a00:3a0b:b0:7e8:4587:e8bf with SMTP id d2e1a72fcca58-7f22ed5e757mr4987671b3a.50.1765440483433;
-        Thu, 11 Dec 2025 00:08:03 -0800 (PST)
+        bh=sLC9AKIzTPo5A0hcA9nTuNNa40XqXMlTf9DM5xLPSZU=;
+        b=jZiktdloM/uCWae8WEw5MT9Fzf0lE8rkEgG3S44eysOC1nE9/qBBEnNw0BwHd49TUL
+         OvF0IzKfiGcmsqnhr5eKs00kwW89u5MwxjqgFSst0kqgs5qVaHf/6LNvsTKd5IfWZq2q
+         c8vVlX0rTYwwOthjWjDtkUlQFgigbNqdugf71xVG4RFbEiMcG7u5eANZKAVo3j/rSqvv
+         9WB9zreGVO6lfQGQ/9zcZgYHOM0lwhSB2TAR+KXH4omsqeQd9peU69UdMWtrqfE7N1DU
+         gatbeq6+3od3u9JlzIy+Qmvd8bJUJxi/fYco5+irgRzj5BNIC5xFLDoB5t2TAHI+cGcw
+         OLmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVhLBhuTw5aSsW/qa0eDVsKZi1AaUv9EP3ymiLtrm8/nrT1XQF4OQ7JhSv7xsfpfshHNjoYzvgeNgewZKuf@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEERNoi9Ja7P3CWd8VpFLMeRwuFC6WrOC/g5sR1VWVtpcUZFDN
+	w1zXhXpFvDnNfPnF/XH6R/N/DzftqbRw8SH/pJcNJ8zQG6iZoKOInpMPD7xU10cx/kTraBQBnVF
+	f+GNzEwKKKxXhOam/KD/8INPe9smgsgXNj+HAfgXs83L+21RXJdllgHHSkLdqyzqi4g6R
+X-Gm-Gg: AY/fxX7mMvFH+ynPuhhIuKwGawfobF8UvqQo+04bvj4dKWxxnoJRRgDxvmjF+BLhECb
+	boP+0BsLsqfrxBuk32Lr9SRF32O/g/VVMaH9gb/U0M2JC+exFQ62ipdvd1rBr6M7Xo0IpEUgFgd
+	DhTh8fbPK3FSCI+/q5XKPiqnhelYJlFzcRGXO3GuY9fMWFsuuE/w8pEUyNsV9TLg/WzkNa8KvWF
+	cSh9NOyVFUKrqAgn5ZpklKWvA44TI8bZfhAHU3yvU6oKATvQUXcQw73V+fSDbyk630YFWeZ4ftI
+	qkuqCRaJz7qFlMnX9I7WfwonhYvE1kry6iLO77aR1R8GGaObIrATrAjoetZwJgmciSEetd5J8oL
+	0ikvvcmeKYjN7EiqA/pRUowUAdS3JA7C8wg==
+X-Received: by 2002:a05:6a00:1814:b0:7e8:450c:61b8 with SMTP id d2e1a72fcca58-7f22f907705mr5238404b3a.40.1765440487578;
+        Thu, 11 Dec 2025 00:08:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFingzOIjru3J81q2erQBMyS2PWI3+c1Y5IB5yB+eIOJ0eOlN1+F/PswuqWRrS3BjNZ5xkmYQ==
+X-Received: by 2002:a05:6a00:1814:b0:7e8:450c:61b8 with SMTP id d2e1a72fcca58-7f22f907705mr5238370b3a.40.1765440487075;
+        Thu, 11 Dec 2025 00:08:07 -0800 (PST)
 Received: from [10.213.102.126] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c22848a7sm1706651b3a.3.2025.12.11.00.08.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c22848a7sm1706651b3a.3.2025.12.11.00.08.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Dec 2025 00:08:03 -0800 (PST)
+        Thu, 11 Dec 2025 00:08:06 -0800 (PST)
 From: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
-Date: Thu, 11 Dec 2025 13:37:38 +0530
-Subject: [PATCH 06/11] bus: mhi: host: pci: Add overflow disable flag for
- QDU100 H/W channels
+Date: Thu, 11 Dec 2025 13:37:39 +0530
+Subject: [PATCH 07/11] bus: mhi: host: core: Add overflow disable flag
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +103,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251211-siva_mhi_dp2-v1-6-d2895c4ec73a@oss.qualcomm.com>
+Message-Id: <20251211-siva_mhi_dp2-v1-7-d2895c4ec73a@oss.qualcomm.com>
 References: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
 In-Reply-To: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
@@ -117,78 +116,119 @@ Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>,
         Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-47773
-X-Proofpoint-GUID: ZZcj-D5OyRs-1QJoQWSc2V5Z5dciivtY
-X-Authority-Analysis: v=2.4 cv=d974CBjE c=1 sm=1 tr=0 ts=693a7be4 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDA1OSBTYWx0ZWRfXwmJFpK63TWbH
+ zT+1JH3WLx7FKsaxx3b2NzN3LO8+A4ryM/C8H5iQzZrxXwxWgSOkHd8hhtKkv8Ed4ky6SWnyAQ7
+ 2XN7fsi7+wY+GvrpYgwZeG2UZMHcc4jR7sjJhkalR3I/CV+lay1PNUOlKm5+daMPSkT4cmQjA8F
+ u2POQG2JG5fIdjnzqIJw3KeICKqgrwNKI/gUumuiZvyyXo4rqT7fbSaiBvvtFApJ2HzweSYjFkB
+ PnkQq7Ht2cWMnwM1CbMbUl+o53ARVA9yiVjY7h2t98ASgxZo6qJjT5Rg8RUAaDTtcC9zm0zVGJn
+ Kp5+uDmEBg0pKRXPAxOalOkQc7kjKIXkO0cswSLFaZRdvCAt+8fCSshxNDJEbsF2vDDh+tZUjfm
+ m4pSf8L02qVdBoMQ2CCdS90nbgqkHQ==
+X-Proofpoint-GUID: bIS_u9ujQXOAneMxcTCaOQXRMPLoFG_N
+X-Authority-Analysis: v=2.4 cv=C6nkCAP+ c=1 sm=1 tr=0 ts=693a7be8 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=bAolQom50hykzV7YMrMA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDA1OSBTYWx0ZWRfX39ZJ2y+2dXJS
- gBgBDjS5x51mkmmlNPOk7lahkSCBGM4kwmGfpPMQimgM8YDJTCH2aijjm/BO7j6p8kwDNM64jyX
- KNPQXilSElSdPNg4TXq5GVaZYZoFR55QY93g6kKnv82x2OQ5fU3MPhNHEAxN4Ll1Y4LrOpY6y5K
- cug+ZpSmPQp3zMqtVGzStqa5tvuo/5luufjisv2vaaadM3Vilo9U9yJkdxzoNpUS+vjyUgxAiy4
- 3XClzoMXnZu2EFP2EBaakl+hbL2j1UtHZbNHgs+jvs8GWNUFN43iSgLEubbFRHNjznHpKniRxOb
- UJ5MPjMmMDfDVxeVW5pCZF3gPXDjz7emv/XC2EdTM3hA+ErwsFt1uwFkGzBYZksMUE3dwy9o6pR
- Y0Jao2mtThOS9qDthXplWm90beCuTA==
-X-Proofpoint-ORIG-GUID: ZZcj-D5OyRs-1QJoQWSc2V5Z5dciivtY
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=CZodSWM9tNyhDDhyKpoA:9
+ a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: bIS_u9ujQXOAneMxcTCaOQXRMPLoFG_N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-10_03,2025-12-09_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1011 phishscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512110059
 
 From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 
-Add overflow disable flag for QDU100 H/W channels.
+When the client transfers a large packet, the host may set
+overflow events if the packet size exceeds the transfer ring
+element size. Add a flag to disable overflow events.
+
+Scenario: A device sends a packet of 5000 bytes. The host has
+buffers of 2048 bytes, so the packet is split across three
+buffers. The host expects one event for the entire packet, but
+three events are generated: two marked as overflow and the
+third as end of packet. The client driver wants only one
+callback for the EOT event, not for overflow events. This
+change prevents host channels from generating overflow events.
 
 Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
 ---
- drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/common.h        | 3 ++-
+ drivers/bus/mhi/host/init.c     | 3 +++
+ drivers/bus/mhi/host/internal.h | 1 +
+ include/linux/mhi.h             | 2 ++
+ 4 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index bb3c5350a462..814f8fdae378 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -94,6 +94,22 @@ struct mhi_pci_dev_info {
- 		.doorbell_mode_switch = false,		\
- 	}
+diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
+index 58f27c6ba63e..31ff4d2e6eba 100644
+--- a/drivers/bus/mhi/common.h
++++ b/drivers/bus/mhi/common.h
+@@ -282,7 +282,8 @@ struct mhi_event_ctxt {
+ #define CHAN_CTX_CHSTATE_MASK		GENMASK(7, 0)
+ #define CHAN_CTX_BRSTMODE_MASK		GENMASK(9, 8)
+ #define CHAN_CTX_POLLCFG_MASK		GENMASK(15, 10)
+-#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 16)
++#define CHAN_CTX_OVF_DISABLE_MASK	GENMASK(17, 16)
++#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 18)
+ struct mhi_chan_ctxt {
+ 	__le32 chcfg;
+ 	__le32 chtype;
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 4c092490c9fd..50f96f2c823f 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -340,6 +340,8 @@ static int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+ 		tmp |= FIELD_PREP(CHAN_CTX_BRSTMODE_MASK, mhi_chan->db_cfg.brstmode);
+ 		tmp &= ~CHAN_CTX_POLLCFG_MASK;
+ 		tmp |= FIELD_PREP(CHAN_CTX_POLLCFG_MASK, mhi_chan->db_cfg.pollcfg);
++		tmp &= ~CHAN_CTX_OVF_DISABLE_MASK;
++		tmp |= FIELD_PREP(CHAN_CTX_OVF_DISABLE_MASK, mhi_chan->db_cfg.ovf_dis);
+ 		chan_ctxt->chcfg = cpu_to_le32(tmp);
  
-+#define MHI_CHANNEL_CONFIG_DL_OVF_DISABLE(ch_num, ch_name, el_count, ev_ring) \
-+	{						\
-+		.num = ch_num,				\
-+		.name = ch_name,			\
-+		.num_elements = el_count,		\
-+		.event_ring = ev_ring,			\
-+		.dir = DMA_FROM_DEVICE,			\
-+		.ee_mask = BIT(MHI_EE_AMSS),		\
-+		.pollcfg = 0,				\
-+		.ovf_disable = true,			\
-+		.doorbell = MHI_DB_BRST_DISABLE,	\
-+		.lpm_notify = false,			\
-+		.offload_channel = false,		\
-+		.doorbell_mode_switch = false,		\
-+	}
-+
- #define MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(ch_num, ch_name, el_count, ev_ring) \
- 	{						\
- 		.num = ch_num,				\
-@@ -295,9 +311,9 @@ static const struct mhi_channel_config mhi_qcom_qdu100_channels[] = {
- static const struct mhi_channel_config mhi_qcom_qdu100_vf_channels[] = {
- 	/* HW channels */
- 	MHI_CHANNEL_CONFIG_UL(104, "IP_HW1", 2048, 1),
--	MHI_CHANNEL_CONFIG_DL(105, "IP_HW1", 2048, 2),
-+	MHI_CHANNEL_CONFIG_DL_OVF_DISABLE(105, "IP_HW1", 2048, 2),
- 	MHI_CHANNEL_CONFIG_UL(106, "IP_HW2", 2048, 3),
--	MHI_CHANNEL_CONFIG_DL(107, "IP_HW2", 2048, 4),
-+	MHI_CHANNEL_CONFIG_DL_OVF_DISABLE(107, "IP_HW2", 2048, 4),
- };
+ 		chan_ctxt->chtype = cpu_to_le32(mhi_chan->type);
+@@ -870,6 +872,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
  
- static struct mhi_event_config mhi_qcom_qdu100_events[] = {
+ 		mhi_chan->ee_mask = ch_cfg->ee_mask;
+ 		mhi_chan->db_cfg.pollcfg = ch_cfg->pollcfg;
++		mhi_chan->db_cfg.ovf_dis = ch_cfg->ovf_disable;
+ 		mhi_chan->lpm_notify = ch_cfg->lpm_notify;
+ 		mhi_chan->offload_ch = ch_cfg->offload_channel;
+ 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 97bf6a70b9fa..db00ede0aa48 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -189,6 +189,7 @@ struct db_cfg {
+ 	bool reset_req;
+ 	bool db_mode;
+ 	u32 pollcfg;
++	bool ovf_dis;
+ 	enum mhi_db_brst_mode brstmode;
+ 	dma_addr_t db_val;
+ 	void (*process_db)(struct mhi_controller *mhi_cntrl,
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 299216b5e4de..926a20835467 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -215,6 +215,7 @@ enum mhi_db_brst_mode {
+  * @ee_mask: Execution Environment mask for this channel
+  * @pollcfg: Polling configuration for burst mode.  0 is default.  milliseconds
+ 	     for UL channels, multiple of 8 ring elements for DL channels
++ * @ovf_disbale: Overflow disable flag
+  * @doorbell: Doorbell mode
+  * @lpm_notify: The channel master requires low power mode notifications
+  * @offload_channel: The client manages the channel completely
+@@ -232,6 +233,7 @@ struct mhi_channel_config {
+ 	enum mhi_ch_type type;
+ 	u32 ee_mask;
+ 	u32 pollcfg;
++	bool ovf_disable;
+ 	enum mhi_db_brst_mode doorbell;
+ 	bool lpm_notify;
+ 	bool offload_channel;
 
 -- 
 2.34.1
