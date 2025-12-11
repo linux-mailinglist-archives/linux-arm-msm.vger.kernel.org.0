@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-85001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2039FCB50C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 09:08:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04854CB50FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 09:11:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9628930019DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 08:08:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D454E303A8DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Dec 2025 08:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85322D660D;
-	Thu, 11 Dec 2025 08:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C308F230BF6;
+	Thu, 11 Dec 2025 08:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z/5qX8T4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ln/QdlnR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="olOjqX+r";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CCTwSFnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775352D130C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0862D8DDD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765440495; cv=none; b=FbC1qkm6iYsTyl1VpvxxJ+ZQhs8KlzW10MZ8ihp8Zi7A0/0mghGpji9uKv8Hjovibcfkacn/mA7UPHrDx6Dt8SvqznUzX8mHgN6k1YTAuA2xKR/qAgaGQxmy8TH3xzFd7L5BS1TO9M4IN8MzV1/9Rqmn88BEier2dMrkW5iSmLI=
+	t=1765440497; cv=none; b=K8XmrlHd5Y3CcBP6z/vpwOnqD703i8nlpIGQ4V53XFmUGpQ2A/m2QHq3V0B8LAwCDSekl1Bi07OAdlK3oWVY65/IEXyIEoN4FOaUSUF/1I1SNYui9T8GstpowPT87D/5JdVu8Z3N4/6BIWCJB+9hCjEDRfXBiT5WT5FwMQwNbzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765440495; c=relaxed/simple;
-	bh=s+FNB++v7IfGmf57Pqig2HTWZMYlY6YEcAX7CTQhXX8=;
+	s=arc-20240116; t=1765440497; c=relaxed/simple;
+	bh=hLaP/rRnDWhv9osvquE39GRTiumvprN4V5xd/SF1WuA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NGABb51rxM6cmGMInFm2DcrfFlkff2k8lvxDnlF6cdN0lToN+A8ZSrV558vFLONW9qYLPlQY1+qwNY4rPtVqymUKrZ5Ma7n3cwq15XqFBM1PJAGWwQ7yIJZgtD4JkMC1CxUT8877nrCchEMxN1W650N/QvfOObTAs7XQa0BI4jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z/5qX8T4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ln/QdlnR; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=tfmHPWEdb0Sj7Zyx6Q1G4zxBKVUx/3hugGBL6VsZ/ugk/Zu9uOlD/g9DwZH5yanY+L7QkjYdUH6HwWWdR3zr3oMBDqkqEpykltLPH6mO3/I1pMGKeVIK9liIu3lC/5GsAG83yGLRg3SAaTYO0kJ1VKCdSl8qy/ckV3Ogow0QTnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=olOjqX+r; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CCTwSFnR; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BALTc9u3565194
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:12 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BB337Zi3683971
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	111IfXca0zE2+PdPVy3i5zCq9JodBmxBq5+evWFRlUQ=; b=Z/5qX8T4FLcEclx8
-	JG8wMJ5nYYmY5bOsEEypymJ/cXbOPjpNUAb9AUiLyVrCNo7gqnEaCTD0rejtIdOe
-	nZMotvjm+Mgu/kflqEBiDE1Adn3hvTx64FKWPlOi7n+JKD3yIkqZ/7CiXiWIRxaM
-	nnAKSrR92Q0UgfD2PWy0N06WGL9UVcpTmflPz0T3/s8lwPluIETzQQ+UDVAXwOC8
-	Cp2l85P9RuFahleqatPqF3Cqm1lPUyLOH2Jt+PB9lFFmadWD52o4l9lUN5sbxeSN
-	6Lfy9uRkNeBCR0RTdntUHCv5PsDo/CCAbrHOzgHKnJmtnZqhMvzru+6NNTxpK9wK
-	yLDs7w==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aygtfhgtj-1
+	ImStdCUl9v/lFzBzrTEFzPiSnZ8dfVBQSUixUFSZIjM=; b=olOjqX+r6bn4F//n
+	AWfj76fT19jbMwfdq+A4hP8QE/tCRgc93qRwIf/HHgM7/iUdBJH2sH2R/K4pePz7
+	dEVaDzAO7x8AC9hmMA1ezPNxV+yROj+aiohkOYZYNkq+tktLL7fhlr5lHsAtyTrm
+	1hh0leYAmnDdmjjHguA31I+SvWGLRdOwepVjuwZktg1VyUjge7X2u/YyFqAs/oDG
+	8B9rtQ1xPUsJhj3rR0dTfaCUynhBx1e0aWSfFcHYieAiV12MK0tgqhvpIsx6EozX
+	L0DvOVbiGIYJQC65jpKdO7MUJrki7HSFSqkXKfxVTuLF1GZLsf76nVTSwl1tWCTT
+	ikpk5g==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4aynpvrs49-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:11 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7ba9c366057so2109190b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 00:08:11 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 08:08:15 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7aa9f595688so1139328b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 00:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765440491; x=1766045291; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765440495; x=1766045295; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=111IfXca0zE2+PdPVy3i5zCq9JodBmxBq5+evWFRlUQ=;
-        b=Ln/QdlnRuZKzcQDqmHwV65/HbJLyiTecbu6GeKgrBFpOU7mPNZtF0Ystc3I0UqVLDN
-         BCrRJjsL2+H2XA1D54uuqcVzrIvGypZKw83ZCFD453CnZN5JV8QRwm1NIrhcyvMqNe2X
-         sgI1TlTiU+zQU9m9mnM5dw+97XlnuaaVvyhLl7T+G+ZCg5YarDX7i1ZECHJit642ckxA
-         TCSyBSjd602p3EgcNiDJL7m+hKS864vs+6kODr1fQeAVlpYAXRCixS9j06G+oYQyP9z7
-         GxzcLxVKQdRidE7Shd9maJ9fc7+cOMSYFAYK1liBo3o5Is1FewQweEhaKfD+93NgJRZP
-         a91Q==
+        bh=ImStdCUl9v/lFzBzrTEFzPiSnZ8dfVBQSUixUFSZIjM=;
+        b=CCTwSFnRuiTMiQ9HSZHK8VETZqPYe+apX9OFNvizn3EIDkFCE+aNRvdMhvvnlU0GXV
+         B0ZQfrkPq/YIinMruTqjehh2bSgLYKjIIuYvqnBm8wHZCVd7usqx/g/9edmbLUQq85qA
+         fF3UaqOUziC7K/c371SHHPaJgakxWtVSqhGYwMb/g1bKRn8ihCvuKMY6b+KklKWiISU6
+         kyKIKIol3TtVIOvCIU46MUnUldpuXCsUdwQrFovYKBIMeSDeOx9QXvqOiUuOMlK7yexh
+         MLAKFo61l36JfrRFC27yuXpX1LI0QTwwiRysrV9ZemWd/SzMtrtrf/99OvbJS9wkXj1g
+         G1Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765440491; x=1766045291;
+        d=1e100.net; s=20230601; t=1765440495; x=1766045295;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=111IfXca0zE2+PdPVy3i5zCq9JodBmxBq5+evWFRlUQ=;
-        b=aaTfpDHdylkbH3eQ3irZOwjY6YOPSIO/3E2PMwng5k2xYKAAGJlGCcPhmtFU2PoopF
-         2pQeDeoU+BU3vbFWLSsy5YUXuLcuNkI/Feiw89WRcPIUadSp5VCXA5w4oZ+OvWlkICSz
-         2ta6tf2/cYY9aXjtiwJnAIuFvrAj1WYb8PMjSPf64s9h+3FCyqM5T6XDTYMJZdWbWWXX
-         E8oxo/c132u8ejpKMt5aLxuP/0XxFCITm7p34dB5OSHLeEmIjKN9hu57SGK/U97X2b3G
-         XEvaXTBbBGuq01xL2cRewWU9CB5tGf1AJchr7nCbo68SniwN0b8t/VbfOTJUkn0xLTxI
-         X5dw==
-X-Forwarded-Encrypted: i=1; AJvYcCVeU6w5j2pOaGJlndqsoor82TK8oobvnGDkGWIXfspj4jmcurl5W9ELUVh/9P3bsnS1OshN76SM6wLdj5qp@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywpq9FEcnG/O41JV+tgh5EskberfFBMi/zNgxuREfchFqZvv6xg
-	DSx3ERAsq7ODBJohzaFIAeOFqo4N11QljV96yKyJUPK/HzCV8uXTABu+LZ78PgZZJeCAhvBVbEx
-	yiicL1RyhgQIROvjX093qeR3cCRCyXWuLKZttZet60Pi3DONj+kyIF8AJJgXyw1FYeqac
-X-Gm-Gg: AY/fxX4RCBbgFshixJVyYqtJWesEkcMm2XCFfAWRpDFTx/oagVQdXhtRSEoup5BzqmP
-	fgu4Xyy0t3dt1eKLkbkLaBd2Q5XuMwtoxWnZugdIyngHa9hrlSEtuVArmnmTcl4zyot2aGYGPH/
-	KXrTFLD39jUVyG1bdiMrKCGMNc8aHhqRAJxS/h2brSePFuMbma7ynOq30if8kBR6pjssphKEiFC
-	uWZr9SN3BvEzJKgFg835pYBNahjKr7RGIt0Fcp27L00WS5pwwsdySNFaa09PzbBru9EMzPsHlTC
-	mstv4IbJHLxGgBKcHJYI8bAbsySRhjL0hmIMyFPgbvkvsp1rhqc3BJUK2zqlPs4i67BkWxDPNtT
-	QDnoPx+xMIx3JsnEoVfBDxPQl/fAmVHO73g==
-X-Received: by 2002:a05:6a00:92a2:b0:7e8:450c:618c with SMTP id d2e1a72fcca58-7f22e48b131mr4569286b3a.35.1765440491183;
-        Thu, 11 Dec 2025 00:08:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEIAYwm+z0TOG32ljWatFrX0eU4zdDhayjbHFyD4F3Q46utf+Lqzc0bk70UaOPpXBIVgiVOFw==
-X-Received: by 2002:a05:6a00:92a2:b0:7e8:450c:618c with SMTP id d2e1a72fcca58-7f22e48b131mr4569257b3a.35.1765440490686;
-        Thu, 11 Dec 2025 00:08:10 -0800 (PST)
+        bh=ImStdCUl9v/lFzBzrTEFzPiSnZ8dfVBQSUixUFSZIjM=;
+        b=RsqMa4c8dejee4SVKZHDuX7/OCK5F1xpQUjyCPO3dDWq0bocta53oKhzw+oeyD1QfV
+         SuK8dT5Z04/fO/ECgjOBDibdrPAg0t5SP6LRzAk9JnVpSnCvek/NvaFQJdi+h+1oWXRe
+         csdKtP1PfinBRlDRNp3ibcDVKibyKBbgoO1ChUc32+f7EwKwRdOtJdMGNfu065xhzSfU
+         8iZfiQnMaTZ7AdB9Vo9kP+pPw78ZiYk6kQk7omsiNoLbtGCV8ihwxSPbBpvaq6UgiTTi
+         DGM+bIs90qVZUtASLaMkAUQN0xbvm9+BFPT2RbFO7bd8rwo8I7Pa+qMVjWropqE0HfmF
+         S0tA==
+X-Forwarded-Encrypted: i=1; AJvYcCVapNV11xIVUmC41PfID8a3oUOncg4x18WCRZiXNoEWBW5+yKhR7Hx33zNxXoyWpyb3nN917B2A0vEH/hDX@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGAFFtB7URJCVw0xTz7/OAPiiOXxul9+FH0df6yBfaF2hxzlBG
+	SnBYDh4tvDr1RQk/Lil9PzJotJm+HWYXIXxgsJM5DRf7dsExFVJPIC54PlGmD2kMb8YNVJhTGUQ
+	YIJ7Z7IV2l1hsftUZodHZgnD+iU4Ibv82EUcRKBBhj2TbPqjSmuXkqXs9wyuq/dyQaSI3mecNoR
+	sJ
+X-Gm-Gg: AY/fxX7Rn7TW76hmUnEGLneOzRx+ddz/2GfOUwaTDE+ywe08ICRqIkS+n7BA3iZaBUI
+	KfS/miqKM493eo4jZEVscDitKqYkmZ3tW/q61XhCNdUdS/+ik8fuT9CgRo1l4yV3FntgY7ogsWI
+	24QkXJkn0BZXAz0PNbAIf7J0R0SlwSK0Um0mNFK6bXkM3QdXnkLqJdwqTQGH46QltvfJJgSHUTl
+	TjN9AVYGJyx6XYbFuLQGRslZtUOzbV2fOdlfuVoVZ2V1SeaPZW2kcJGe7YbDzI+R46edUcxNdR2
+	tHFShg9wuzx5yXwqfylzgSlY2AydF11o4+S9DnPhInYYNJ1fv5S3UaS/WTp2l1Ydg8OIxcUvZj4
+	/iBs6+QvzjtX3gb9Ys2s931ROXVGsNaKO4g==
+X-Received: by 2002:a05:6a00:1a8d:b0:7b8:d607:41a3 with SMTP id d2e1a72fcca58-7f22dac06e5mr5622550b3a.13.1765440494733;
+        Thu, 11 Dec 2025 00:08:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlrPwfKh3HROdgsMqlLzKbw9DtY9zM+Aqjuc41a9ui3a+yx6HrhJ4ykGZ3B3q0XkDcWNWOvg==
+X-Received: by 2002:a05:6a00:1a8d:b0:7b8:d607:41a3 with SMTP id d2e1a72fcca58-7f22dac06e5mr5622527b3a.13.1765440494258;
+        Thu, 11 Dec 2025 00:08:14 -0800 (PST)
 Received: from [10.213.102.126] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c22848a7sm1706651b3a.3.2025.12.11.00.08.07
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c22848a7sm1706651b3a.3.2025.12.11.00.08.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Dec 2025 00:08:10 -0800 (PST)
+        Thu, 11 Dec 2025 00:08:13 -0800 (PST)
 From: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
-Date: Thu, 11 Dec 2025 13:37:40 +0530
-Subject: [PATCH 08/11] bus: mhi: MHI CB support for Channel error
- notification
+Date: Thu, 11 Dec 2025 13:37:41 +0530
+Subject: [PATCH 09/11] bus: mhi: host: Get total descriptor count
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251211-siva_mhi_dp2-v1-8-d2895c4ec73a@oss.qualcomm.com>
+Message-Id: <20251211-siva_mhi_dp2-v1-9-d2895c4ec73a@oss.qualcomm.com>
 References: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
 In-Reply-To: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
@@ -117,119 +117,83 @@ Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>,
         Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 X-Mailer: b4 0.15-dev-47773
-X-Authority-Analysis: v=2.4 cv=At7jHe9P c=1 sm=1 tr=0 ts=693a7beb cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=sWKEhP36mHoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=H6w75S3OD7A-s3ocmMQA:9
- a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: oepjW-v5wusj4KY1zVIcahcgrx5hFfhX
-X-Proofpoint-GUID: oepjW-v5wusj4KY1zVIcahcgrx5hFfhX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDA1OSBTYWx0ZWRfXw8A7Mhg351/7
- 5Sk94JIux1+uRbgnefPxSWuCbHl+A9jKNNDq8P/H0UBiEb0EbSjZpOMlydgByOUHsgDkGNesH9t
- Hnx9w6n1T1gF9RK5MedNx+lvK9e4gNJkkD4swt9lavc2p5ss3hTszfw7NVApFjl9QGmZp6qU/1I
- w4Tmq8CZ8FQT28PpMaYbEYJq3zdY3vEChLtcOGS1+m86BMPJKaV9wXMTPz4OsJBP2vXyTG+hcuJ
- 4OeRDIMVVumRYplibMZ3kQCO6VpbfRJEqkhWp0WiudShFr1iV4VbtBlRXggK1OX1b6aUmC9IY0m
- PDWQb4/B063J+h84fVbi1ByeDQEvSWyuQWGz0LQe4R7UctoPoBJ26led18B8dxd2vljg3WxwQ62
- 4VStyfDG7Zm3+SYHyVcxDzecCylRYA==
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDA1OSBTYWx0ZWRfX98TT494Sf6F5
+ Z6M5eBvAVgfjptVuOGiQtpRKWP+a3HpYgSAyfRILWT44BH1tDv6U3v+rk5X7yimXxF46hP3rGzJ
+ zXPlWtBFDJIwdmBLn3D1fHcm3OSlhTwSBza700QtEQlhpGvBOW7RJVPFrD0B22OQv+BJ61Xz4Rx
+ r/xGWrKtQxbKHSxSJsU9+oRTW5Nx5L0FkGGdYut1bxp48/OXFa4Rf1LkRMUwYUdQhdwFMo399xZ
+ yvN6698v6DrDGHLKAmyRBchbEv48hD1yiYoLyjb1l+W16lyan+xf9cULFzh69wnrYWFim7V/UuA
+ g8x9aC1i/2h3XDw5S7kfHSYO+4su5mZPqq/MudHDizKnFylAMMDOK8CrbegAEzpRmE0WRfwjkqk
+ Ds9JZnstG8ND3CTQpfSIaYUWyzSa1w==
+X-Proofpoint-GUID: 7u90xTudJ3o_kTIqq-enyXTkYQnPK4h5
+X-Authority-Analysis: v=2.4 cv=C6nkCAP+ c=1 sm=1 tr=0 ts=693a7bef cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=kBv2GRQmL64bnbioCYQA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: 7u90xTudJ3o_kTIqq-enyXTkYQnPK4h5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-10_03,2025-12-09_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- phishscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512110059
 
 From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 
-If a device reports an error on any channel, it sends a
-CH_ERROR_EVENT over the control event ring. Update the host to
-parse the entire channel list, check the channel context ring
-for CH_STATE_ERROR, and notify the client. This enables the
-client driver to take appropriate action as needed.
+Introduce a new API to retrieve the length of a transfer ring.
+This API allows clients to query the ring length.
 
 Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
 ---
- drivers/bus/mhi/common.h    |  1 +
- drivers/bus/mhi/host/main.c | 24 ++++++++++++++++++++++++
- include/linux/mhi.h         |  2 ++
- 3 files changed, 27 insertions(+)
+ drivers/bus/mhi/host/main.c | 11 +++++++++++
+ include/linux/mhi.h         |  9 +++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-index 31ff4d2e6eba..3b3ecbc6169f 100644
---- a/drivers/bus/mhi/common.h
-+++ b/drivers/bus/mhi/common.h
-@@ -230,6 +230,7 @@ enum mhi_pkt_type {
- 	MHI_PKT_TYPE_TX_EVENT = 0x22,
- 	MHI_PKT_TYPE_RSC_TX_EVENT = 0x28,
- 	MHI_PKT_TYPE_EE_EVENT = 0x40,
-+	MHI_PKT_TYPE_CH_ERROR_EVENT = 0x41,
- 	MHI_PKT_TYPE_TSYNC_EVENT = 0x48,
- 	MHI_PKT_TYPE_BW_REQ_EVENT = 0x50,
- 	MHI_PKT_TYPE_STALE_EVENT, /* internal event */
 diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 53bb93da4017..9772fb13400c 100644
+index 9772fb13400c..6be15297829d 100644
 --- a/drivers/bus/mhi/host/main.c
 +++ b/drivers/bus/mhi/host/main.c
-@@ -798,6 +798,27 @@ static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
- 	return 0;
+@@ -345,6 +345,17 @@ int mhi_get_free_desc_count(struct mhi_device *mhi_dev,
  }
+ EXPORT_SYMBOL_GPL(mhi_get_free_desc_count);
  
-+static void mhi_process_channel_error(struct mhi_controller *mhi_cntrl)
++int mhi_get_total_descriptors(struct mhi_device *mhi_dev,
++			      enum dma_data_direction dir)
 +{
-+	struct mhi_chan *mhi_chan;
-+	struct mhi_chan_ctxt *chan_ctxt;
-+	struct mhi_device *mhi_dev;
-+	int i;
++	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ?
++				    mhi_dev->ul_chan : mhi_dev->dl_chan;
++	struct mhi_ring *tre_ring = &mhi_chan->tre_ring;
 +
-+	mhi_chan = mhi_cntrl->mhi_chan;
-+	for (i = 0; i < mhi_cntrl->max_chan; i++, mhi_chan++) {
-+		chan_ctxt = &mhi_cntrl->mhi_ctxt->chan_ctxt[mhi_chan->chan];
-+
-+		if ((chan_ctxt->chcfg & CHAN_CTX_CHSTATE_MASK) == MHI_CH_STATE_ERROR) {
-+			dev_err(&mhi_cntrl->mhi_dev->dev,
-+				"ch_id:%d is moved to error state by device", mhi_chan->chan);
-+				mhi_dev = mhi_chan->mhi_dev;
-+			if (mhi_dev)
-+				mhi_notify(mhi_dev, MHI_CB_CHANNEL_ERROR);
-+		}
-+	}
++	return tre_ring->elements;
 +}
++EXPORT_SYMBOL(mhi_get_total_descriptors);
 +
- static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
- 				       struct mhi_ring_element *tre)
+ void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason)
  {
-@@ -961,6 +982,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 
- 			break;
- 		}
-+		case MHI_PKT_TYPE_CH_ERROR_EVENT:
-+			mhi_process_channel_error(mhi_cntrl);
-+			break;
- 		case MHI_PKT_TYPE_TX_EVENT:
- 			chan = MHI_TRE_GET_EV_CHID(local_rp);
- 
+ 	struct mhi_driver *mhi_drv;
 diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 926a20835467..66fd83bed306 100644
+index 66fd83bed306..013bc2d82196 100644
 --- a/include/linux/mhi.h
 +++ b/include/linux/mhi.h
-@@ -34,6 +34,7 @@ struct mhi_buf_info;
-  * @MHI_CB_SYS_ERROR: MHI device entered error state (may recover)
-  * @MHI_CB_FATAL_ERROR: MHI device entered fatal error state
-  * @MHI_CB_BW_REQ: Received a bandwidth switch request from device
-+ * @MHI_CB_CHANNEL_ERROR: MHI channel entered error state from device
-  */
- enum mhi_callback {
- 	MHI_CB_IDLE,
-@@ -45,6 +46,7 @@ enum mhi_callback {
- 	MHI_CB_SYS_ERROR,
- 	MHI_CB_FATAL_ERROR,
- 	MHI_CB_BW_REQ,
-+	MHI_CB_CHANNEL_ERROR,
- };
+@@ -620,6 +620,15 @@ void mhi_notify(struct mhi_device *mhi_dev, enum mhi_callback cb_reason);
+ int mhi_get_free_desc_count(struct mhi_device *mhi_dev,
+ 				enum dma_data_direction dir);
  
++/**
++ * mhi_get_total_descriptors - Get total transfer ring length
++ * Get # of TD available to queue buffers
++ * @mhi_dev: Device associated with the channels
++ * @dir: Direction of the channel
++ */
++int mhi_get_total_descriptors(struct mhi_device *mhi_dev,
++			      enum dma_data_direction dir);
++
  /**
+  * mhi_prepare_for_power_up - Do pre-initialization before power up.
+  *                            This is optional, call this before power up if
 
 -- 
 2.34.1
