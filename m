@@ -1,153 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-85111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9286CB928B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 16:39:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7F70CB9303
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 16:50:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C9BAA30080C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 15:39:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9A1A4301D670
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 15:50:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D09903203BE;
-	Fri, 12 Dec 2025 15:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19A0D2BD035;
+	Fri, 12 Dec 2025 15:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="LZHXqd+G"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lrzv641n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43123B615;
-	Fri, 12 Dec 2025 15:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B4C2BCF43
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 15:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765553970; cv=none; b=Vqtwh8ZGQ3WsqtQBw6R81XxyBPW1xoKNT+b9CkegxKDX+7MVE/Fd5APA8bHeQv1eD1lq9sdeDP3dbAz9V3y7pHbZGOHF4vTRNrCMHHgjccEhNWvAQjvkUu7Rnz4htd6UovTfTO2h+gjO20xa4ygUsGQVbughdRN//1tIa2WVvBg=
+	t=1765554637; cv=none; b=WoBTB9AHJi5k5HVvO8HCPt+kQ3vphnL8rjChqeR+6ieVdxPpRMUJBM6jq5Pv2br9rld0om/8kzAbxJIGBEAqIFS3kOhRiodieqMOi6Gzvh5c3iPCfqD5jy0m90v3oxHmcXNMTU6RsxprUVrwxf0rZUACmVujKDfEIHitPoNsKGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765553970; c=relaxed/simple;
-	bh=i+StYMH5DiClQd8CdLEc/WxSielRjql9cTA17RW2Gzs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kfZhIT75Ru9Gvw95+YxPKv9wgqOiQ/WupGZKZuiASkzkaSQ4ydmwzxthHlxCuvFtj4ZddR42P6fDMYf5zduRUR2EpGRrTZf4e7NAl1xIDQhz+78FUmeUo0BuzSrkxEjAmbKYIDgoQZrQCLXZRplNtYzJFA6FDGQqI37nm0L1oyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=LZHXqd+G; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 46D3F53400FC;
-	Fri, 12 Dec 2025 16:39:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765553964;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=qoFlOLYfVlGGDdW12N9r5ZtwHxJ3NpUpyJPN67jy810=;
-	b=LZHXqd+G0AcQYPIygP+oh5JEc6XWcR6wn13rdAPY3pTM4bXLUT083yzq9veWTFWYGuYc/g
-	WTKf32XZr0gEJDrb0kq5wWX0GjqbcmjyJLC2iaN/YE68raIX24Zfi/C/PJ5pF8CDonXh4u
-	spZ2mQMeCBThGJMfh2w6ib9k4KjOREw=
-Message-ID: <eb5106b4-6beb-471f-92c6-f5f4bba4d9ff@ixit.cz>
-Date: Fri, 12 Dec 2025 16:39:23 +0100
+	s=arc-20240116; t=1765554637; c=relaxed/simple;
+	bh=xidLXrNa10nnExBVsh244pTe4JLAL7pUNNuqAQh1B+s=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=aGpWg8yZlt/x1iSbdWEPQpJLba6+3XP93VoZhWLA6IjrMISUkm0McQtHWhilrBArI8SQUI3ZViPU++2zfN5SEztpkheJYWNHqTOu6o/HR6/F0RqlS2OLPeW2/LfOUF3G9hptsMwzmaEk3Zc/WiVjCOOF5EgiilJxGVtFQ3o432I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lrzv641n; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47789cd2083so8113775e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 07:50:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1765554633; x=1766159433; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2cnX0JUa95FLcaYhHWNtkfg7XDY9jpTe5UGPxP4s3pY=;
+        b=Lrzv641ntsVsANySf4CGLJ+nq/wOMZVcpWp/Hx3TfA7oQ/flPsEZ4ccvHXOt9c5QLz
+         BsY9DGLYGK8aiAZlSnvL08ToRj+ZB0/663kgEbXh0BQ6wNd6iJRwpXcOZqgOx7Ck7DKl
+         rEx2LSNwG8u8Yo7fRU7FccwnU4goEBiZ3an0SVGnFq0dhs5CRhH5geqQrK6dExJtgLBT
+         WgQLfOmLIORZTp4iw45DWbBoDTUZKS8VLmLZY9OsycVcJTfhDc5brKuyhA+GLs9Jmg+t
+         8lc1mfC8tb7322G56gsBA7EhLDWsbFUbnVaY1pEiBHIRIiylQffiGTHrn/HU2S+qbvyL
+         oJtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765554633; x=1766159433;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2cnX0JUa95FLcaYhHWNtkfg7XDY9jpTe5UGPxP4s3pY=;
+        b=ZMob4rxne+1wz0iUdBtyUCYGzwrWZGkuP+Q4iB8q1If3+4CxVq4OKGcRrHwROyy7B2
+         84L7udbGdfdXee7W7k2D7pu7kJhqpP2XJODfIhGhZyaKaDpNpqfqMKqJdFxouN48x5HZ
+         rZ773LOxKs0sV6Bj9MJFoimedk1sEsPBjG4VEBOb6a6KzIbirlKEqM799ubLZeaJ5UZa
+         AGl6Y/guGkKVr1EXe4e7SpMUiIDeKcu76jIH97wxUoGnwMRLmPgib9efuoZYib3BpIY6
+         KiSJ3AnEHrgAIzQ12mDtT7gHGP8Imt5JotiXmK+k6dto/yXOfd62OQMCyfMcJKw8XqUR
+         t8MQ==
+X-Gm-Message-State: AOJu0Yyl3vMKZipskRS8AZ9FuI2+gj/L0/GHGveT0ac02ENPc1uRboKC
+	JOBgKEWNfWlyl5YDB5scwV05Od7fDJZ5motI8O2i4sDtP97n137knH5cbRWc5qOg8i4=
+X-Gm-Gg: AY/fxX7IO8MLJ4qv3pqJKhS+fMNaORWZ9RVp0MqcB4bbl9iwgrf9/AhFHNq4ystDNLR
+	uB3j2eXvgDPkFpxB8O5PfTjrIElPgjCKRnWt9c3VGirPJtLlXKUecyy/DXm775I2DpbFROGAqrF
+	dKvle85IH+Qr6ULRGCnmqCDhbITUyJhQh2HayTRb6+Qcja1nZgU3HyOUUkyD/6QrFa7Qf9UNuw9
+	5p2WwfvlOUoaeIYQxXnr4MhI1q9YITudKAPUFPs9DpQ/nfXAP6Ek8wc5fZC3DHTKkNci5H7EF/X
+	6pNMB3ZJ7reTAO8KdY0lBfCcF6kG1YMjdtFWB3fFeZ7tpFmrGZnEwzyoJYoQfuF3dEKO1V9r4iD
+	BFP9jPV7Z3hZb6HceVOeK5/hZkoZ3LsiyPL3JapICBFt2+Mq9qrgnyVSagHjxwuo9+2hLsaywV5
+	T2x9k7JMiQMrppnXGm
+X-Google-Smtp-Source: AGHT+IGUrxu+irDcADrK5/MU4ibUgqq1smXSNe2wq3NuGG1J4xPo6RgE6cmVyk8cYeI2BK0AXvmmWA==
+X-Received: by 2002:a05:600c:83cd:b0:477:7af8:c8ad with SMTP id 5b1f17b1804b1-47a8f90eed3mr29356995e9.31.1765554633376;
+        Fri, 12 Dec 2025 07:50:33 -0800 (PST)
+Received: from localhost ([2a02:c7c:5e34:8000:2e63:1f69:14f0:7314])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f8f3894sm37853785e9.15.2025.12.12.07.50.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Dec 2025 07:50:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/8] drm/panel: sw43408: Add enable/disable and reset
- functions
-From: David Heidelberg <david@ixit.cz>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
- Casey Connolly <casey.connolly@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Petr Hodina <phodina@protonmail.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20251208-pixel-3-v6-0-e9e559d6f412@ixit.cz>
- <20251208-pixel-3-v6-4-e9e559d6f412@ixit.cz>
- <lilbxguznfzupg2gpfb6xuj4ickffgtuwwlve5g4d22lzr3bsm@slkmhn4agvgr>
- <b171d4d1-9426-49aa-b69b-339fdb78c85d@ixit.cz>
-Content-Language: en-US
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <b171d4d1-9426-49aa-b69b-339fdb78c85d@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 12 Dec 2025 15:50:32 +0000
+Message-Id: <DEWCVSWNA1MN.10IT82HICKO8K@linaro.org>
+Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>
+Subject: Re: [RFT PATCH v3 0/2] Adsp fastrpc support for sm8750
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srini@kernel.org>, "Ekansh Gupta"
+ <quic_ekangupt@quicinc.com>, <vkatoch@qti.qualcomm.com>,
+ <ekansh.gupta@oss.qualcomm.com>, <chennak@qti.qualcomm.com>,
+ <srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: aerc 0.20.0
+References: <20251209-sm8750-fastrpc-adsp-v3-0-ccfff49a8af9@linaro.org>
+In-Reply-To: <20251209-sm8750-fastrpc-adsp-v3-0-ccfff49a8af9@linaro.org>
 
-On 09/12/2025 23:51, David Heidelberg wrote:
-> On 09/12/2025 23:37, Dmitry Baryshkov wrote:
->> On Mon, Dec 08, 2025 at 10:41:57AM +0100, David Heidelberg via B4 
->> Relay wrote:
->>> From: David Heidelberg <david@ixit.cz>
->>>
->>> Introduce enable(), disable() and reset() functions.
->>>
->>> The enable() and disable() callbacks keep the symmetry in the commands
->>> sent to the panel and also make a clearer distinction between panel
->>> initialization and configuration.
->>
->> It's not just it. There is a difference between commands being sent in
->> en/disable and prepare/unprepare.
-> 
-> Thanks, I didn't know. Is there good rule how to distinguish, which 
-> command should go where?
+(adding more Qcom folks to To: header, who asked to send this as soon
+as possible)
 
-How about I would "reduce" this patch to putting reset sequence into own 
-function, so Pixel 3 support could get merged?
+On Tue Dec 9, 2025 at 7:37 AM GMT, Alexey Klimov wrote:
+> Please test these changes therefore RFT tag. The fastrpc testing
+> application under linux doesn't work for me but I was told there
+> is a setup available somewhere in Qualcomm where this can be tested
+> (perhaps android?).
 
-The display will need more work anyway, would you be fine with this 
-approach?
+I found time to compile and run the testing application. Currently it
+seems to be untested under Linux (mainly strlcpy thingy and no manual
+where files are expected to be found), there are also a lot of compilation
+warnings.
 
-David
+https://github.com/qualcomm/fastrpc/tree/development/test
+
+root@linaro-developer:~/github/fastrpc/test# fastrpc_test -d 0 -U 0 -t linu=
+x -a v68
+Test PASSED
+Please look at the mini-dm logs or the adb logcat logs for DSP output
+[PASS] libmultithreading.so
+
+
+Allocate 4000 bytes from ION heap
+Creating sequence of numbers from 0 to 999
+Compute sum on domain 0
+
+Call calculator_sum on the DSP
+Sum =3D 499500
+
+Call calculator_max on the DSP
+Max value =3D 999
+[PASS] libcalculator.so
+
+
+Demonstrating FARF run-time logging
+
+hap_example function PASSED
+Please look at the mini-dm logs or the adb logcat logs for DSP output
+
+Demonstrating HAP_mem.h APIs
+Error Code 0x4e : returned from hap_example_mem_dmahandle(handle, fd, offse=
+t, buffer_length)
+
+hap_example function FAILED
+Please look at the mini-dm logs or the adb logcat logs for DSP output
+Error occurred with selector MEM (id: 1): 78
+
+Demonstrating HAP_perf.h APIs
+
+hap_example function PASSED
+Please look at the mini-dm logs or the adb logcat logs for DSP output
+[FAIL] libhap_example.so (error code: 0x4e)
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Test Summary:
+  Total tests run:    3
+  Passed:             2
+  Failed:             1
+  Skipped:            0
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+RESULT: 1 test(s) FAILED
+
+But the result is the same for CDSP (was it tested prior merging?).
+The same results are for v75.
+
+Adsprpcd works with audio_pd though. Maybe Qualcomm can help with this?
+I don't think I will have enough time to debug this and narrow it down,
+also very soon I will lose access to the device.
+
+Best regards,
+Alexey
+
+
 
