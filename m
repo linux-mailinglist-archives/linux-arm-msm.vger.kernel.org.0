@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-85110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C429CB9180
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 16:22:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9286CB928B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 16:39:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 14E5A301F8E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 15:22:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C9BAA30080C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 15:39:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C9BD224AF7;
-	Fri, 12 Dec 2025 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D09903203BE;
+	Fri, 12 Dec 2025 15:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="onT3DUAd"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="LZHXqd+G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517E719F40A;
-	Fri, 12 Dec 2025 15:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC43123B615;
+	Fri, 12 Dec 2025 15:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765552950; cv=none; b=kCj/l9ZbN0VBPejhdmYdifghCX4sCGnxyUXQZrMSRX4usof6tjYX2JfFg9DkKEvLglihes9VO9QdXC5dIRh5EYbSmr4Up8/JqdO0g8aSHZoXHrnhFGSqQfoks24CwNtgOLVD5vw/fbr2lt4UFBaUcLCsWvNa9eeWyjHIlcQH3q4=
+	t=1765553970; cv=none; b=Vqtwh8ZGQ3WsqtQBw6R81XxyBPW1xoKNT+b9CkegxKDX+7MVE/Fd5APA8bHeQv1eD1lq9sdeDP3dbAz9V3y7pHbZGOHF4vTRNrCMHHgjccEhNWvAQjvkUu7Rnz4htd6UovTfTO2h+gjO20xa4ygUsGQVbughdRN//1tIa2WVvBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765552950; c=relaxed/simple;
-	bh=+IblNVT1S6CLR1JEjL42CUwdGpM2anjc5n8A6MmD+2c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QmLGr6l0qQb1X+/Lvzowzp2Vk0hUaWv/qa1lmc9DhJ5XW3bPzFsnj3mLM9YyVit8nYA8ThEuqmAm45irmU1SblJbstlN/+69IH3891rdjYQXUCFUASQCiKrZcE37a5lzUQGnr/gOcfwaqGcfrWq8tX5xrVl/P6Ooaq3XtVJVGwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=onT3DUAd; arc=none smtp.client-ip=94.112.25.9
+	s=arc-20240116; t=1765553970; c=relaxed/simple;
+	bh=i+StYMH5DiClQd8CdLEc/WxSielRjql9cTA17RW2Gzs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kfZhIT75Ru9Gvw95+YxPKv9wgqOiQ/WupGZKZuiASkzkaSQ4ydmwzxthHlxCuvFtj4ZddR42P6fDMYf5zduRUR2EpGRrTZf4e7NAl1xIDQhz+78FUmeUo0BuzSrkxEjAmbKYIDgoQZrQCLXZRplNtYzJFA6FDGQqI37nm0L1oyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=LZHXqd+G; arc=none smtp.client-ip=94.112.25.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [10.0.0.200] (unknown [10.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 4EAE25340C9A;
-	Fri, 12 Dec 2025 16:22:14 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 46D3F53400FC;
+	Fri, 12 Dec 2025 16:39:24 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765552934;
+	t=1765553964;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=McnJ1LW6C8Q5h1Cv7cup4coDzbIea7AHQdJ49VdSV+U=;
-	b=onT3DUAdQorz+yRSuqdKQfS8xkjPf1ykFsOZYdBVONlTfgGMokO5k/6iQBysAeQnqWc1KH
-	OyiM628thmrYuCQncLqjkvIS5jdvDtgQl5b2q32wTtqLe+d/TTQ0s7t90OCdnPRHaswTF+
-	4CTWHELiVFYQfYiLjy3m99zCGUds2cM=
-Message-ID: <d84c25d7-62c7-433d-9978-dd6b20f5681c@ixit.cz>
-Date: Fri, 12 Dec 2025 16:22:14 +0100
+	bh=qoFlOLYfVlGGDdW12N9r5ZtwHxJ3NpUpyJPN67jy810=;
+	b=LZHXqd+G0AcQYPIygP+oh5JEc6XWcR6wn13rdAPY3pTM4bXLUT083yzq9veWTFWYGuYc/g
+	WTKf32XZr0gEJDrb0kq5wWX0GjqbcmjyJLC2iaN/YE68raIX24Zfi/C/PJ5pF8CDonXh4u
+	spZ2mQMeCBThGJMfh2w6ib9k4KjOREw=
+Message-ID: <eb5106b4-6beb-471f-92c6-f5f4bba4d9ff@ixit.cz>
+Date: Fri, 12 Dec 2025 16:39:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,28 +54,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/8] power: supply: Add driver for Qualcomm PMI8998
- fuel gauge
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Casey Connolly <casey.connolly@linaro.org>,
- Casey Connolly <casey@connolly.tech>, Joel Selvaraj <foss@joelselvaraj.com>,
- Yassine Oudjana <y.oudjana@protonmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alexander Martinz <amartinz@shiftphones.com>,
- =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Richard Acayan <mailingradian@gmail.com>,
- Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251124-pmi8998_fuel_gauge-v1-0-dd3791f61478@ixit.cz>
- <20251124-pmi8998_fuel_gauge-v1-2-dd3791f61478@ixit.cz>
- <5d6c3dda-71cd-4684-8546-bc4918b560de@oss.qualcomm.com>
-Content-Language: en-US
+Subject: Re: [PATCH v6 4/8] drm/panel: sw43408: Add enable/disable and reset
+ functions
 From: David Heidelberg <david@ixit.cz>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
+ Casey Connolly <casey.connolly@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Petr Hodina <phodina@protonmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20251208-pixel-3-v6-0-e9e559d6f412@ixit.cz>
+ <20251208-pixel-3-v6-4-e9e559d6f412@ixit.cz>
+ <lilbxguznfzupg2gpfb6xuj4ickffgtuwwlve5g4d22lzr3bsm@slkmhn4agvgr>
+ <b171d4d1-9426-49aa-b69b-339fdb78c85d@ixit.cz>
+Content-Language: en-US
 Autocrypt: addr=david@ixit.cz; keydata=
  xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
  9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
@@ -119,73 +121,33 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <5d6c3dda-71cd-4684-8546-bc4918b560de@oss.qualcomm.com>
+In-Reply-To: <b171d4d1-9426-49aa-b69b-339fdb78c85d@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 27/11/2025 16:28, Konrad Dybcio wrote:
-> On 11/24/25 10:53 PM, David Heidelberg via B4 Relay wrote:
->> From: Joel Selvaraj <foss@joelselvaraj.com>
+On 09/12/2025 23:51, David Heidelberg wrote:
+> On 09/12/2025 23:37, Dmitry Baryshkov wrote:
+>> On Mon, Dec 08, 2025 at 10:41:57AM +0100, David Heidelberg via B4 
+>> Relay wrote:
+>>> From: David Heidelberg <david@ixit.cz>
+>>>
+>>> Introduce enable(), disable() and reset() functions.
+>>>
+>>> The enable() and disable() callbacks keep the symmetry in the commands
+>>> sent to the panel and also make a clearer distinction between panel
+>>> initialization and configuration.
 >>
->> Ths driver supports the fuel gauge hardware available on PMICs known as
->> 3rd generation fuel gauge hardware available on PMI8998.
->>
-[...]
-
-> Downstream checks if the address is > 0xBA which is what you want
-> at least for pmi8998
-
-My downstream [1] checks this value.
-
-[1] 
-https://github.com/LineageOS/android_kernel_xiaomi_sdm845/blob/lineage-22.2/drivers/power/supply/qcom/qpnp-fg.c#L760> 
-
-> You can de-abbreviate this to 'secure_access' (not to be confused
-> with 'secondary' or so). There's a locking mechanism which needs a
-> 0xa5 byte written to the base+0xd0 register (applies to all FG
-> peripherals with the 'last non-secure register' value possibly
-> varying).
+>> It's not just it. There is a difference between commands being sent in
+>> en/disable and prepare/unprepare.
 > 
-> [...]
-> 
->> +	u8 sec_addr_val = 0xa5;
->> +	int ret;
->> +
->> +	if (((chip->base + addr) & 0xff00) == 0)
-> 
-> The 'fuel gauge' consists of:
-> 
-> FG_BATT_SOC @ 0x4000 (state of charge monitor)
-> FG_BATT_INFO @ 0x4100 ("general fg minus SoC")
-> FG_BCL @ 0x4200 (battery current limiter)
-> FG_LMH @ 0x4300 (limits management hardware)
-> FG_MEM_IF @ 0x4400 (DMA engine)
-> RRADC @ 0x4500 (today handled by its own driver)
-> 
-> and a couple other peripherals that Linux doesn't need to worry about
-> 
-> Each one of them should have its own 'reg' entry (which is assumed
-> to be 0x100-long), which will let you skip such interesting checks
-> and rely on the regmap framework disallowing address spillover (or
-> you can just then make the addr argument a u8)
+> Thanks, I didn't know. Is there good rule how to distinguish, which 
+> command should go where?
 
-Sounds good.
+How about I would "reduce" this patch to putting reset sequence into own 
+function, so Pixel 3 support could get merged?
 
-> 
-> It would be good to keep in mind their relationship and think about how
-> to model them together. I don't think they must all necessarily be part
-> of a single big "fg" dt node, particularly the LMH/BCL part seems to be
-> rather self-contained
+The display will need more work anyway, would you be fine with this 
+approach?
 
-Would you recommend some readings to prepare for this task?
-
-I see the FG_BATT* + FG_MEM_IF seems to be pretty relying on each other, 
-so I assume I need to take good care of that relation, when spliting 
-pieces up.
-
-Thanks
 David
-
-
-[...]
 
