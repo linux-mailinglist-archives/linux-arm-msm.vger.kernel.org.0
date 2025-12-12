@@ -1,50 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-85121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0A9ECB9FF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 23:56:43 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81D11CBA04B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 00:08:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DD8E43053B2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 22:55:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 28669300A6F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 23:08:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22A512F28F5;
-	Fri, 12 Dec 2025 22:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED1CD30BB80;
+	Fri, 12 Dec 2025 23:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJQiAb5/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AHT1nYkC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6613FFD;
-	Fri, 12 Dec 2025 22:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3722FE567;
+	Fri, 12 Dec 2025 23:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765580159; cv=none; b=c/iphP4TChiTW70TyrzZJQJc0P5p3VpUskRojEQ+GDmqQ4eidW7/1nz8fapq1EUkXq/iNVdVphW3M5YkUaz0OP6VjGAKrf1NfuTUPqSxbewHTK8ehlRT2LL7EKgbE21cw6F6OTXQtF4JDKHsQz/HUSIxXzmkxD4N0FtsvBlHiis=
+	t=1765580902; cv=none; b=buK0PKFsZ+8GZskCS4Gq/ANSIy3rE942I0NXQAZ500wCFsPaZ4CCwYvpJH3lmo+uU2EQ3gy7qoaVWFPx8DCy/D3AXhDQXmSyWKK8wTONkURvbaRRBvtunB1tj7Y1W4wuh5v4bQFKmIDfnfOBax7wGbL9iKYUf6SvmnoPne0jee0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765580159; c=relaxed/simple;
-	bh=Z69HFHhLeuWwH+CGK1nhOtAp3UyvN+1Q71kH7nxiK7g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UlKvo9BckOZSeoiF+wWeIRUTO6oEJnmVjijRCr5kIuLi3s7TGmQvSQEQaZ/T7R2Cn7xroK6dlK+sIZi+X+/A61FCf97DEWqsSLFsdErvkU1KCkzvfRp+743Y73VyUTf2Ts3A+qa8L7WSWp7yUIEJmbOMZ35fVm1+gnbVD4iOZzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJQiAb5/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3AE5CC4CEF1;
-	Fri, 12 Dec 2025 22:55:58 +0000 (UTC)
+	s=arc-20240116; t=1765580902; c=relaxed/simple;
+	bh=t/gPYURpCIZBNgfRI56GeCxQSBGj8q9bKnexQg5Wajc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=G0bHluphOEJtSFlFNx2CzI4hGQoBKDA3j5YOMzzTW97sI0+JqzbbV4QLegES/23OSeRwMoce3AbOCNLtlqhXc8sifkNnIO78HwI/iVXgsnA4pPKYe8zZLjxA9L5MLG5yEqMZqYOwkJ/HcJPqwJlzRBVSSWGgdRDHpS98pOE8Lk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AHT1nYkC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4961DC4CEF1;
+	Fri, 12 Dec 2025 23:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765580158;
-	bh=Z69HFHhLeuWwH+CGK1nhOtAp3UyvN+1Q71kH7nxiK7g=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=PJQiAb5/unCdAIPRLyHrtm+krBIqawMi/+tKCckZSotwcV1T416A29tCosEXTWcDo
-	 ld1Yts1GUmqbS1IQe78Xljl/hnLx4FIxJI/B9qKZhOd5fR6fwBmhUjlrnonVCRC2ID
-	 ddbyLq6Pi2LDO4LGmmdOteVwNIihk8Ob5ajj46+js2LC+YfwS7YMfqBxtSpt3qvPl9
-	 fhWF4gIPK8bDqA/35Gnd7y5l8H8I5mGj5fn2pQr8wDtAslzQoNTA0PeDDakuxNqsRi
-	 V1AdEP3Z+DnH15UG0FZJePnF1kGaF88nzraTKPGyLApmpWHbog9qOCiX+8XrqoCuiD
-	 QZ4Hh3nFpDrbw==
+	s=k20201202; t=1765580902;
+	bh=t/gPYURpCIZBNgfRI56GeCxQSBGj8q9bKnexQg5Wajc=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=AHT1nYkCOCkFFJXCm0HxYFzzDULfbsMBjoRUJWc6Xdm3mh17veX4GN/F6ZkalhTdx
+	 UFmSfqGkOlgj1N2UYYMJFBbkTOtW9cK50VIrveqYhlx5rMQKBGQyQTipsw5OsgPocG
+	 Vw2UeHO8m4o3Ft5mFVl5felqbJSru44bpR9TZpKb7SxyPdQEHCWvDvv+JbTRSFBrxa
+	 MIcAboUoS6SBJyCn5d/suvovQk5zRjzTigba6U40gfeX9tsOYzuhomqzC3lk3kkqA7
+	 1Krt3r5eWF1+KOomzDV74yy90qTMByLYGoY3AGeJ2DnbYjBHArFlDMnTTWxl3a1gE+
+	 ZS4bwsW61MCTA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 299C3D59D7D;
-	Fri, 12 Dec 2025 22:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C3DD59F52;
+	Fri, 12 Dec 2025 23:08:22 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Fri, 12 Dec 2025 23:55:57 +0100
-Subject: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
- description
+Subject: [PATCH 0/2] Addressing stability issues on SDM845 with the -next
+ tree
+Date: Sat, 13 Dec 2025 00:08:15 +0100
+Message-Id: <20251213-stability-discussion-v1-0-b25df8453526@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,147 +54,74 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
-X-B4-Tracking: v=1; b=H4sIAHydPGkC/x3LMQqAMAxA0atIZgNNoIheRRxKTTWDrTQggnh3i
- +Pj8x8wqSoGU/dAlUtNS26gvoO4h7wJ6toM7NgTE+NaomEMhxkmvcXQpeDZ80CjJ2jbWeUP7Zq
- X9/0AgZgaumIAAAA=
-X-Change-ID: 20251212-docs-camss-fixes-0fa525271951
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Vikram Sharma <quic_vikramsa@quicinc.com>, 
- Kapatrala Syed <akapatra@quicinc.com>, 
- Hariram Purushothaman <hariramp@quicinc.com>, 
- Richard Acayan <mailingradian@gmail.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-B4-Tracking: v=1; b=H4sIAF+gPGkC/x2MQQqAIBAAvxJ7TsiFhPpKdDDdaiEqXIsi/HvWc
+ WBmHhAKTAJt8UCgk4W3NYMuC3CzXSdS7DMDVlhr1Kgk2oEXjrfyLO6QL1Bem9FYl42qgZzugUa
+ +/m3Xp/QC2Q9zMmYAAAA=
+X-Change-ID: 20251212-stability-discussion-d16f6ac51209
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Petr Hodina <petr.hodina@protonmail.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4488; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1233; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=qHMgX4yIAZfT5HLJApJFTrMsi2e0Zb8+cULYJUs4ldc=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpPJ19rhf2Bu4oI6wDHizm+ItUDiSmkginGNU4W
- h8yd9I5zFqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTydfQAKCRBgAj/E00kg
- corlD/0Xs0msufVJBrB5kVHvPM6tRGweLZPmBRHdC2oJCgJr6zNu3k4CJmEeQTqLZvsEQIozH5J
- 0w0Y5IWbujAOXk6HfY16QUQhE8aS1kw/gGfVV1od1FNuKQS5bm6lqZ1wbZf67vlX9En/ZgxfVOe
- Nb8ke6kJ1gVjsbKprAJb4HLr01haX2MCjUKSlfwuJ7ny8C00pmrLi1ZN2y/Yo11zJmRnbWSC3ri
- i0dPwPK70fww0rK+hXVKS7DJ84TJ7bG3ovXjbs+oa0a9sXKeDd3lFvJ7hvLc7ooStsn0Tmec2nf
- iJGYf545z6AZRrqHAhaZ8LYdzmtJ/0XHjEjV1wyBazeUBG8ruU23ruWW03x08Us2/IcjGS7WA+r
- MDEJ5M23rvb7Ye0RFotYLTOcWMyiQyMX0fKVTNl+UtTwbMYKrSUqmHEoKjtcEcw+DHZ3jspMZ78
- eAyiR8aexLiTnzi8ZnEXUGBFb/NwNIumbHg0n+Ze7zvqdXn5/yQ9TeikB4j+f8HDAk1s1UjTuKX
- XexS7mqyKLBinAO3VdJQH6XQoFHi9A8bNchUWaOVBlsyUiK9JCG2JzXighwCqkn8b08/hrnutbv
- UEuj+GsBJAl8bnE0S/RvtIT9BuHLLaz6ONMrjlNSFcQ7kQd9rXpPUrOBrUIyXrfWzHYVDMCM6Sc
- 4YD/MIMIf5EZu1Q==
+ bh=t/gPYURpCIZBNgfRI56GeCxQSBGj8q9bKnexQg5Wajc=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpPKBkB2JjOkLEDvLoj+opcqGrxXdDaMtPpKgXR
+ tIhrpqt6CKJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaTygZAAKCRBgAj/E00kg
+ ciasEAC8eJf5uz/aiExjP/zuDTvmZ+Q/9/jQZ/uI9bGKZSexHfyJu4YMqro6ZTVo3SzDg3SWTaF
+ 24OWJcbC/P8DY7hVRrfin2Z/mA00+pd1IJ6G2i4FSQDpaDn9BPIfNiJdkTNGgii8yB7eNnFXwBj
+ UrtDPm2bKMP3mSJS3NpCkUQ54HbNPvqoNJO4lG/b2tJBfE/HxZMEiLUaB+jsMhu3v2FNDfFkt0m
+ Xph3VXqtYaPX01DE4jCxKf1dCtCWwbtzvwH2vX86sNcjzX4vm6FaBlUAI5Wpp67HTy2DlidGRU4
+ Ncb0Uorh8heu/IwqgEx6ddqdJCVaRkQruZWbmlGIE5wcEBRt6Om1BN4JCJfZeqrNNp24GofJSKj
+ GpQz4OdFzDYdT8FWrrLI+001CMvZlvb+gV4FwJ1yw+CprB5KzVXtAN/MJOtvD4h44gs8hiM2eKa
+ X73+CfPOmkquTopYj+osYkXWDtt63O+HQAvzhuSsUlZr7kMQiQ1rLFErxAOYhj08s8mG4VpLfSQ
+ fznB/LyXN+uRb+833vcA3rqgJVhU5HSahR/xtxDSB9iONwR8CQ2aIG6nivPw3Mx7TnUR55OVWkZ
+ e9TxEJVwNsa5NHxWrokz8tmE1Mt8pzh0PZy5J0oVZEdimPfgRysNP8JVLxOQvFiLQ/LosNkGUNA
+ y1iP73Gps7znU+Q==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
 X-Original-From: David Heidelberg <david@ixit.cz>
 Reply-To: david@ixit.cz
 
-From: David Heidelberg <david@ixit.cz>
+We are currently running the latest linux-next snapshots (next-202511*
+and next-202512*) and have encountered random freezes and crashes on the
+Pixel 3, as well as crash dumps on the OnePlus 6 and 6T.
 
-Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
-voltage from the description.
+The two commits included below appear to fix, or at least work around,
+the issues in our testing. We assume, however, that the underlying root
+cause may still be unresolved.
 
-Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda regulator descriptions sdm845")
+We would appreciate any guidance on how best to proceed, or confirmation
+that these patches are sufficient to move forward.
+
+Thank you for your time and assistance.
+
+Kind regards,
+David and Petr
+
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-Added only Fixes tag for the initial commit, not all the copy-paste
-propagated ones.
----
- Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
- Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
- Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
- Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
- Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
- Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+Petr Hodina (2):
+      drm/msm/dpu: Add NULL pointer check in dpu_crtc_duplicate_state()
+      clk: qcom: rcg2, msm/dsi: Fix hangs caused by register writes while clocks are off
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-index 019caa2b09c32..9009cfe993d75 100644
---- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-@@ -130,7 +130,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-index ee35e3bc97ffd..cb922f90fe900 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-@@ -129,7 +129,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-index c99fe4106eee9..2231d7216f62a 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-@@ -268,7 +268,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
- required:
-   - clock-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-index 35c40fe223767..8e6ca94c88695 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-@@ -95,7 +95,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-index 82bf4689d3300..d50e096b900db 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-@@ -211,7 +211,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
- required:
-   - clock-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-index ebf68ff4ab961..ccd2d024bfd10 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-@@ -300,7 +300,7 @@ properties:
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      Phandle to regulator supply to PHY refclk pll block.
- 
- required:
-   - clock-names
-
+ drivers/clk/qcom/clk-rcg2.c              | 18 ++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c |  7 ++++++-
+ drivers/gpu/drm/msm/dsi/dsi_host.c       | 13 +++++++++++++
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 ---
 base-commit: d9771d0dbe18dd643760431870a6abf9b0866bb0
-change-id: 20251212-docs-camss-fixes-0fa525271951
+change-id: 20251212-stability-discussion-d16f6ac51209
 
 Best regards,
 -- 
