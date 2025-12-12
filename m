@@ -1,197 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-85107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CFAFCB8CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 13:39:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96A8ACB8D6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 13:57:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A65F63011338
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 12:39:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 70B98300B82C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 12:55:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44DDD320A17;
-	Fri, 12 Dec 2025 12:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9982130EF6A;
+	Fri, 12 Dec 2025 12:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b="VUfu42TI"
+	dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.b="SIDmzhaa";
+	dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.b="SIDmzhaa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11021109.outbound.protection.outlook.com [52.101.52.109])
+Received: from mail.mleia.com (mleia.com [178.79.152.223])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015933C38;
-	Fri, 12 Dec 2025 12:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.109
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765543182; cv=fail; b=eYFqLlBqkmSYeozoTqDA5OwgDrnZQ/WLPJq/UlMHgxxXBD02/IHXy1JW9gHX3U+5pwoWtnAjTdM/DJVSWgcI9CAui7jV+dZBJpjXtnczSakvVBynjcqodNAwnsJ3Hehj8fjipc2Nc9p7RFjRdbQ3n81o8DUrHPLhJfA48fhN3jM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765543182; c=relaxed/simple;
-	bh=uJLGEbNuQq9T1u/tTvPKaW/OAn0jBC75o3FjJEbjl3A=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=sJBPhwffq9VY25HQ0oGwTBpF8ktSnLDRGT4Ys3Bg+M9wNLMm6XAbFQY5wvGMZSL+0siyFCb50xTtEQZzNUABRo5kBlyrWvg7YKaabW5WY/FYD8XSIvMG9fyP9Tk9/ly71O3qgqxopgBmCP0OvQBD1hsYZyTRAIPbilUpzIpMLYs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com; spf=pass smtp.mailfrom=analogixsemi.com; dkim=pass (1024-bit key) header.d=analogixsemi.com header.i=@analogixsemi.com header.b=VUfu42TI; arc=fail smtp.client-ip=52.101.52.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=analogixsemi.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analogixsemi.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PHGSjro3osblpQCDjJtBcrft+u+fC22KLJS5NSb6O1wVJGCDvEW7dcrz0iyWKjfqXvx5f2q8DXW6CopHT59wsG5KPReQaNC11sx+00/X59A2c/IaMbKzcZBmeVYmneS4cj04g6i5nKnqCxhuW7AV/SCU3NXRonr9hGTeS98XDTfTMejdRjG8xil+6mlYxEDeEZd7QwPLj7O6m9dXMEL7J+jEbNoPM6sr1DWfI5jcqDArKiSpWSeHoeyFMH188VEle7GDiB2xw2znRf83XgDSdbtoJfnsCMe2CWflaG59cwwJN1udcDIdre4OMy6NBJ9ZBrfwLm6/IGE6ISQ9DBcV6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uJLGEbNuQq9T1u/tTvPKaW/OAn0jBC75o3FjJEbjl3A=;
- b=LMztrtYpGvmQdtit2/bP+0h4B3+xYshW8iORTXpn0Yz/7Up/phOhcIhkiQ9K57Ayk9btqTE81uCoXKNFv9R/zn5X5D5dlJ/CLJ9mHjKqb2cN1u5vJJLvwPCv6DjyIxJxdL5hg33Hkaid37/kiH6qgUuWAOWFPHIw1RJ/kQ0NzCYSPWrPHvbJgNhb8jciBvNx7dcSEI8cDdvW+NNure4E+IMWKx72drx9chzkgYB1xuS9P/jRrNwXeSW+b4mgSIbOJJCLnVJTBO6qiXekuA7IWJbUTQeIHMZUZeaow7r779qXoiYVNy6QDLnwcQN3oF0Ir6TKyQil9v3lJYrOGV8e4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analogixsemi.com; dmarc=pass action=none
- header.from=analogixsemi.com; dkim=pass header.d=analogixsemi.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analogixsemi.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uJLGEbNuQq9T1u/tTvPKaW/OAn0jBC75o3FjJEbjl3A=;
- b=VUfu42TIlld4P6+Y27EBeRqouDD8sZC+7Jq05Dby/sbomsnmursf5ld4E7X69mMbBnT7+qPET8dhkzO0RcJyrTp1X5ulur+RRBve3xyj77RGzch1JapfiyXCFFN2XmJRgLyttvuWDCIkfEoD9S3TblaV0nNpGjgnGdAMG11orJ4=
-Received: from BY5PR04MB6739.namprd04.prod.outlook.com (2603:10b6:a03:229::8)
- by LV2PR04MB9833.namprd04.prod.outlook.com (2603:10b6:408:34f::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.14; Fri, 12 Dec
- 2025 12:39:35 +0000
-Received: from BY5PR04MB6739.namprd04.prod.outlook.com
- ([fe80::d0a9:7455:cb02:ca08]) by BY5PR04MB6739.namprd04.prod.outlook.com
- ([fe80::d0a9:7455:cb02:ca08%4]) with mapi id 15.20.9412.005; Fri, 12 Dec 2025
- 12:39:35 +0000
-From: Xin Ji <xji@analogixsemi.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Pin-yen Lin
-	<treapking@chromium.org>
-CC: Heikki Krogerus <heikki.krogerus@linux.intel.com>, Andrzej Hajda
-	<andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, Robert
- Foss <rfoss@kernel.org>, Laurent Pinchart
-	<Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, Jernej
- Skrabec <jernej.skrabec@gmail.com>, David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>, Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH RFC 2/2] drm: bridge: anx7625: implement minimal Type-C
- support
-Thread-Topic: [PATCH RFC 2/2] drm: bridge: anx7625: implement minimal Type-C
- support
-Thread-Index: AQHcXrjt6airW14k7Eq2XOw6vcl4hLURgpQAgAXoBbCAApSLAIAECqYw
-Date: Fri, 12 Dec 2025 12:39:35 +0000
-Message-ID:
- <BY5PR04MB6739715B26DCF794FBD34993C7AEA@BY5PR04MB6739.namprd04.prod.outlook.com>
-References: <20251126-anx7625-typec-v1-0-22b30f846a88@oss.qualcomm.com>
- <20251126-anx7625-typec-v1-2-22b30f846a88@oss.qualcomm.com>
- <aTGJXAnlkK5vQTzk@kuha>
- <BY5PR04MB673939B585B2419534D48E77C7A2A@BY5PR04MB6739.namprd04.prod.outlook.com>
- <7wp25rctnwydxa3zfpbmddgygyxmg5eg5crv4yuo45k6ovvww2@bnvcw3yorqw2>
-In-Reply-To: <7wp25rctnwydxa3zfpbmddgygyxmg5eg5crv4yuo45k6ovvww2@bnvcw3yorqw2>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=analogixsemi.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY5PR04MB6739:EE_|LV2PR04MB9833:EE_
-x-ms-office365-filtering-correlation-id: b0d88c35-885a-418e-7a7e-08de397b81f8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|7416014|366016|1800799024|38070700021;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?QALQjdpdqJ9h8VX/u7or9Mvv5SssPP5XRfKtxHG7Gsfn4DiHcYIcwFdAQrBA?=
- =?us-ascii?Q?x1ePZoCCo+vmK32dooY2hmNFgArrPpx8hQzr50FC2/Mc4S4xM77vCcauscVv?=
- =?us-ascii?Q?0wfuxLZohj8g7JgwdlbnPAYskEAasKbcMiTjbyo+RvcchLrstuBC6+Kh5DaF?=
- =?us-ascii?Q?jzRyuBKUpkmu+zOrRSeA8QxhsEHMRzCjFMo+cyTMzyix4P1fPGx2Dy6CCZSO?=
- =?us-ascii?Q?kxKEYOu3aSQd2aJgSSSfQudmg7TrxnpInT26vESRCg/bp9KxuQrpS0uPErP9?=
- =?us-ascii?Q?zSKZ1FLVmm4WdywW69gF5OBRLA+df5r1YNFwqtN7PAbpuOJdd7Edcmyru9zs?=
- =?us-ascii?Q?EagKFzuK+lPWrio4eFD6zwWZ58MMe8Fsd8bOqSu9MTv558Y1o4T1vv0WquEI?=
- =?us-ascii?Q?u9xPRIidbWhjtrtaON7llGaFc+pOdSEVF74ZKMRWI79E/JYnVGv0lYuq8HGE?=
- =?us-ascii?Q?dtvSgrn7LrO5M6ceianpyy2BX/GqYLPvJFzM8l/EAbYfWL5lnKjLFtbz/lZW?=
- =?us-ascii?Q?KE2Qw4M0fL5YD3hDIJBrIW0gDumNOIOrLKE9bUV2i80PNs/iC5rPiiMxIgrM?=
- =?us-ascii?Q?+50JgT/Dcounvd96Lg3N4uhOKEoHaFrlg+vfrmP1bmbnvC6c8WIj6MmprQHq?=
- =?us-ascii?Q?7bF3EwMniy5zlzyuRuckejGQWlBKX4pnjX9qYQKXE9MqOHTZnYPls9PNl62x?=
- =?us-ascii?Q?09QWDmU5TLEe4An2pmghfzplfwplXPLpRf2aR8ecGZlnvIlXI6qnoh1CMBr2?=
- =?us-ascii?Q?FtmUPbchePGSlYWLDNJP2ipxT4GK1zYcs6SgNj//YBh4HsGcI9L6kdkS/KjM?=
- =?us-ascii?Q?GMnMoGTzmA4zv9XSZMasCHJEhDSsfWiPJgRMt79h9ntacfqAtVFPRhprh3RX?=
- =?us-ascii?Q?QsNitGuNKkE3By/481tV/SwQAEv/xXjWbz2ShYE+PugooUULRGVxfpj7UmFi?=
- =?us-ascii?Q?zFFcDuNKkV8MSoEZw8yg6Np9WBwoap9a2bY2gCKHoFdix9jmOXyB+71HDQBV?=
- =?us-ascii?Q?4jLnG5Zi/bVvD9dFWB69JZLTB4ia0MQWrwNVRxt+gVGD8WlPBwE7GqqqJ828?=
- =?us-ascii?Q?yxelFTM3jT+f0RrEMUXfTCb9uUHfGOiZDXxtOyZCpgulrrmRJ9gXaYqNXt0R?=
- =?us-ascii?Q?CVrU/EGPZn5CI5e2pjdp7bNvgrMmCloT1Z10gfK203eWs79kKg/p8M+THCs5?=
- =?us-ascii?Q?zfA6luZjrYLo9JVJnwoPAsBERLvYYj3luKdoJkaaFFPLf22gvto+3fe986oR?=
- =?us-ascii?Q?V2C4v6/y3O1wTMA2RltFrAOP09HD0G9OO8KquI6LSuY4n0nsbllpL3k460Yk?=
- =?us-ascii?Q?XmSBuvdsfkv+Riv9nhxhZ0Px3loVCFL/bx1Wk4bnnGGCM2gMP2/ZB6iQh5g/?=
- =?us-ascii?Q?Yrkq9EhG+EPlZogPn4ePbxzgz3aX94fTl2GcV38V8ZEjtBQsj0MYBTrwEOsz?=
- =?us-ascii?Q?tL6ZIwtNpPMCwdTkW2beukOsyo+XZMpu8PYrlYmX5lfULM2ZenbnXQ=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR04MB6739.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700021);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ckc94TiQg9VFHlDtzNMmcM3WFzy4JXdzyd1E+OOVdPDYoUUM2/1bTtQjZ931?=
- =?us-ascii?Q?S9l4eKSig2GUc13TnCoxNjfTSbIKHxTy+NtWkIhJ3sf7v95bbbKWeg+3e3tH?=
- =?us-ascii?Q?zwSWWocPru3f/7Vf5FDSc942tDVZLs9nFGIYyBC+AiKs4+WPdyzd2O2ndZO/?=
- =?us-ascii?Q?EgL6JYyyl2ce8NUwpim7gK37yMvYTAZgqQofkyJ++xj0c9OI4cr6MrMy95Cy?=
- =?us-ascii?Q?8Yj1i49zcUzdh4HSI8mbk7o6FFS/6D9KRy/6HpCji/n2IuRhR9gyaRpXw/Js?=
- =?us-ascii?Q?tXnQTpbeanZgVvkGaNvz0KCV5fIELHkZ1BGDrI2uypz6Kc0TyTWOtKanaqS9?=
- =?us-ascii?Q?lZ7domQFzDqUpVaG1fB11QhZMaWlDQPE8dyCfpPLKCmEGvsUiGwN+SJAU2Bw?=
- =?us-ascii?Q?oB3O42xBL8AOoQQXfM/kSSONYYhyQOgdglgnOKf8CtwzKCkoHlcfoMOLgNv8?=
- =?us-ascii?Q?zLsAFMsCthiRYwLuTHVeTb76aufUSKJ1F/IxlboOBm8wblNgXghHqXkT++7M?=
- =?us-ascii?Q?o+3URLzYWPiUT6yrTN1kYUQZyWg0Of2cvK4ZTyygLksYUXErREOb5C9OsrDs?=
- =?us-ascii?Q?sHOl6TtHYFVjDUk66jPJ/QeDUfPc1PmZLNBM8zjJhcY7KLY5VvSq5cl737k+?=
- =?us-ascii?Q?c1Rx5obWkp8ov5cj6hEkl9jIG25cJupa5sbTgu2GwNziMaq68eONklBcHhK3?=
- =?us-ascii?Q?nkXRbFL6mfvAIToK8vroWSYGdOug/E7r87XE8hjQHdYEBZphsaMxuurwshRL?=
- =?us-ascii?Q?FJCgBVmyGhurqbQh12jECbAjG5AlxOJrBG4YVafYKN+ESIxWAmVuX9O0rOIu?=
- =?us-ascii?Q?0qoXeD3eAxUq5Mzxbml0IKJdDsrBbdl6SlSz5n8FxUij7gtb+CVJvpCwVlie?=
- =?us-ascii?Q?bShgjU0EKo+y12eoIQdI9i78EY+23IeZx+eJXhhrmVOU22xfkleTe1VtUsIG?=
- =?us-ascii?Q?OM+Xq/fdmAkWXK2QNFssC3hdJr3L7QK4NRnkoARojSqHeT1igZVj6OtvaaUM?=
- =?us-ascii?Q?yEFOXOcl2zlpkB5C3VOo2vkz6rfVgshSPGalyKU/16EuxcNL3wUNtAdrVxi7?=
- =?us-ascii?Q?TCWfl61Aht/QALBIO1HjvEfxBZbvv3ByQ07mf0SfZoO5ytq2T2rSXXfs2w/l?=
- =?us-ascii?Q?SLvkOnOC+ns6RG8ETnvPUFbjZP4G6+PHks49r339lz2sGMEHzqXagX6yFM2e?=
- =?us-ascii?Q?KY9SVZWlkKa+jN7vBl1NeKErCb6jn8Yiq3OmXt+2yG+oPmjD+UjbwCIQwRyG?=
- =?us-ascii?Q?LYctJDnbLgjic3qLuFHH2YVKOvyjB9nJ3Ik3Kl6qVST6h9t7jadw0lqamkvF?=
- =?us-ascii?Q?yxBEBC9niSxY3ycEZBFwkE08jG1+lq445bSZlRaZmw98FAE1TIMUUPZeKtKZ?=
- =?us-ascii?Q?yKAjYD8I8oSEVesfWYgY7bQ0mFTBei2CAVcZTDhNeBdu8pcdDw+7Pufb4jHD?=
- =?us-ascii?Q?8kP27KyzKri548BabSwtVG4sNWFRtbRHNNPWaNyLJK6vFC1lVfeiz35V0Ui0?=
- =?us-ascii?Q?E6Vp2Q6NVtDJhdZPWBrVIB7oY4+wfFsGgXNdlfI8b3Y+VglGXRMlWUdqQPtE?=
- =?us-ascii?Q?y26TkkPzAL35V+BASa4sBxzW/+ukij5g2+cSFu5T?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDAB2DEA7E;
+	Fri, 12 Dec 2025 12:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.79.152.223
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765544128; cv=none; b=D7KntCtAB8cFSDDB/1efRVlsQkxDiuYA6prsQL21ZPvGDRD2jdHxwKWy8LpZTTgK/Qjg8tCeDLTpIm7Jk6VWmvIpU16uLdAOs7M0WuHvtmdXb0LRiQg/h+Qwok2fOp2E6ITt3i5ZOt5NOTMBiIGiLSYRxB/btW4yCf7vEa3VGdI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765544128; c=relaxed/simple;
+	bh=E9TnXrsnB7lsT6PhDe9c6feEUyEWweothBeOpCejcwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AP9FRViIrfLQpOoCs+n0UTYXb4lVInkpEqzZuwYIsn+cKk3CHm1/7iH9P6UOD3EB8b0hwm77KWzsXLxxSduR+2ae53Ly0f0aOxxWL1TlodtRz+YNzcpvXUZQIrLsmaI3Ws7sJPzJ6KuTbcwq41h93WPTZuP+6xGdQGf5AC3oBLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mleia.com; spf=none smtp.mailfrom=mleia.com; dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.b=SIDmzhaa; dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.b=SIDmzhaa; arc=none smtp.client-ip=178.79.152.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mleia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mleia.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mleia.com; s=mail;
+	t=1765543769; bh=E9TnXrsnB7lsT6PhDe9c6feEUyEWweothBeOpCejcwI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SIDmzhaa8CmrTH/GoppH0Vf10xyiAFOjjuKM5MM801ZUi7s3tHT8V/w6gY3Qjmd16
+	 9i4+G4PauDUcGs+54tlbJB93w8L2eFCuvAqTvK3nlFlmFI6QpyTxXUSS8UWQHLK7+W
+	 qS7TM4dp+UKCPaYEFnbS/5tRAPEPaf/XT5rzihuHGNgkg/O8sx6BEXoidtCSglweI3
+	 IomN5f1bnomdpCrKXcdK+zm7l0MnQ8mRmpnlAb6aZkl+QMAEfX6esYhmAAfN+YyQdF
+	 QIXxEo1Pmi3xp1EG3598lhSYj11SctxlBfo3mlC8uhYMTxtOSRp/uaP5QQmQcQM1Ij
+	 DRjUCf4JieV6w==
+Received: from mail.mleia.com (localhost [127.0.0.1])
+	by mail.mleia.com (Postfix) with ESMTP id 85D2A3E64F8;
+	Fri, 12 Dec 2025 12:49:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mleia.com; s=mail;
+	t=1765543769; bh=E9TnXrsnB7lsT6PhDe9c6feEUyEWweothBeOpCejcwI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SIDmzhaa8CmrTH/GoppH0Vf10xyiAFOjjuKM5MM801ZUi7s3tHT8V/w6gY3Qjmd16
+	 9i4+G4PauDUcGs+54tlbJB93w8L2eFCuvAqTvK3nlFlmFI6QpyTxXUSS8UWQHLK7+W
+	 qS7TM4dp+UKCPaYEFnbS/5tRAPEPaf/XT5rzihuHGNgkg/O8sx6BEXoidtCSglweI3
+	 IomN5f1bnomdpCrKXcdK+zm7l0MnQ8mRmpnlAb6aZkl+QMAEfX6esYhmAAfN+YyQdF
+	 QIXxEo1Pmi3xp1EG3598lhSYj11SctxlBfo3mlC8uhYMTxtOSRp/uaP5QQmQcQM1Ij
+	 DRjUCf4JieV6w==
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi [91.159.24.186])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.mleia.com (Postfix) with ESMTPSA id 5C76C3E5F59;
+	Fri, 12 Dec 2025 12:49:28 +0000 (UTC)
+Message-ID: <ceeee542-a319-4ad9-ada8-3dc769599dec@mleia.com>
+Date: Fri, 12 Dec 2025 14:49:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: analogixsemi.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR04MB6739.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0d88c35-885a-418e-7a7e-08de397b81f8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2025 12:39:35.7094
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b099b0b4-f26c-4cf5-9a0f-d5be9acab205
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: pH6GAGeZxbWzdN6K2LpSRlcBGeeFBxIBiHkaR0ZS0F5HmMXZRlKS+yua+Zkid98T/IYC8jXVbDaadzRbcir8BQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR04MB9833
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/5] media: dt-bindings: Add CAMSS device for Kaanapali
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Atiya Kailany <atiya.kailany@oss.qualcomm.com>
+References: <20251113-add-support-for-camss-on-kaanapali-v6-0-1e6038785a8e@oss.qualcomm.com>
+ <20251113-add-support-for-camss-on-kaanapali-v6-1-1e6038785a8e@oss.qualcomm.com>
+ <bd899586-f714-4d2e-95e3-6abf124e75a4@linaro.org>
+ <37d0f89f-69be-45a7-90fa-347d6a3800bf@oss.qualcomm.com>
+ <2d7ac7e8-ab69-44a6-b732-3657abf3a5a6@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vz@mleia.com>
+In-Reply-To: <2d7ac7e8-ab69-44a6-b732-3657abf3a5a6@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-49551924 
+X-CRM114-CacheID: sfid-20251212_124929_579574_BBD90668 
+X-CRM114-Status: GOOD (  11.70  )
 
->> Hi Dmitry, I found there is another patch "Register USB Type-C mode swit=
-ches" which provided by Pin-yen Lin <treapking@chromium.org>, but I didn't =
-find it in the v6.18, is it obsolete?.
+On 11/18/25 20:44, Konrad Dybcio wrote:
+> On 11/18/25 7:25 PM, Vijay Kumar Tumati wrote:
+>>
+>> On 11/18/2025 7:00 AM, Bryan O'Donoghue wrote:
+>>> On 14/11/2025 03:29, Hangxiang Ma wrote:
+>>>> +                  <0x0 0x0900e000 0x0 0x1000>,
+>>>
+>>> Why aren't you starting @ 0x0900e000 ? seems to be omitting some of the registers in the ICP block. Should start at +0xd000 not +0xe000 ?
+>>>
+>>>> +                  <0x0 0x0902e000 0x0 0x1000>,
+>>>
+>>> Same here.
+>> Hi Bryan, HLOS does not have access to those registers. They are configured by the Hyp.
+> 
+> If that's hyp, please add them. We already have platforms without
+> Gunyah. Remember, bindings are defined once and for good and I wouldn't
+> call it impossible that someone would want to run that configuration on
+> Kaanapali some day
+> 
 
->It has been posted 2 years ago, it has not been reposted since that time, =
-it targets a very specific ChromeOS usecase. I can't call it obsolete, but =
-it wasn't merged.
+If the ICP register block is added now, then it will practically exclude
+an option to run hardware demosaic on Kaanapali. There were notorious
+and still unresolved problems with CSIPHY blocks, which shall be split
+from CSID/VFE CAMSS on device tree level also, for similar reasons the
+same should be done with ICP or other blocks. It makes exactly zero
+sense to pile everything into a monolythic device tree node, and doing
+so undermines any future advances in CAMSS support in the upstream
+Linux, the hardware description in downstream is done thoughtfully better,
+and not for no reason.
 
-OK, thanks!
-Xin
-
->> https://patchew.org/linux/20221124102056.393220-1-treapking@chromium.o
->> rg/20221124102056.393220-6-treapking@chromium.org/
-=20
-
->>=20
->> Thanks,
->> Xin
-
+-- 
+Best wishes,
+Vladimir
 
