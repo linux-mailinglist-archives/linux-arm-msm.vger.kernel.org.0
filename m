@@ -1,169 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-85083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8992ECB778D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 01:45:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64A29CB77D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 01:55:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3CADF300F588
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 00:45:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B2F7B301E5B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 00:55:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC9819D074;
-	Fri, 12 Dec 2025 00:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A034246BB9;
+	Fri, 12 Dec 2025 00:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozBOwH9J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RjzBSwah"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBA226299;
-	Fri, 12 Dec 2025 00:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31009246762;
+	Fri, 12 Dec 2025 00:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765500325; cv=none; b=BTXuVAUPuvgSOZ8ybmTmwtiIheAAYKH/j6f4mS9HE/S4ggbvFlLkrusuZW2UhLk9w4eFB4nvfWBkZh8xP0PaIymPcNkxOvEkh5qKXaeQtzTzLCHAxkgik/gcNno9gAC6vYXkSOIbQCQqKxQ6xEnR3No3tRtKGwSUXgkrMVutsnE=
+	t=1765500930; cv=none; b=nS/jxCSMrnDtbpjVAVDKfTzFKSdm++IxiWbATKB7SiJ+LV1YSkBMpZpoRLat16QTw4Kc3+T8Kb02rZc3qkouHPu6s1FX62Fe97amkFFZKZP8mjZBCy5f4OijAUF9+flvw9aw7yJnJYzlhV7UBPjxe+YUqUB6QjrJ2DXpmpktn6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765500325; c=relaxed/simple;
-	bh=f6cB55aVH6/c0pD1Bfy2lcpivDC0tLdR4mIpekoOwMM=;
+	s=arc-20240116; t=1765500930; c=relaxed/simple;
+	bh=ImNiUJg9EtXcUshmWqXKE8CX1Seb/doZFlOMj0aesag=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SLxSG5dU0u8W0pUXm+5XQMSS6m/OYivsHE3WMw/2HF5aWkq64tln84y6TBnmFnyMSBYEt4C0VRhsQYgF40v7+0vqUdFIJ4+IiKSZWkHP9oO06IUopgd8AswTczWQlfp2jwzj2eUj0gx6t8ChU4/w0MdFb4kSbuhv2iqpF7jQMow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozBOwH9J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E968C4CEF7;
-	Fri, 12 Dec 2025 00:45:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=QL9R4YcAirPfDrfBolPt6iWYBBYB5lY0ZNXUI/2EJoEnXxo327wD7AR9p0NpqOkfU/U7eifnUPooc7p1DqASvEr9PpbmahvxBFvwyicY7aXSvsDGCJY2mTIwYbeE71DEQASImuIhFQG5ReNU8vge+2mwpuz/FqcW3Jq7fBf8GVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RjzBSwah; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26265C4CEF7;
+	Fri, 12 Dec 2025 00:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765500325;
-	bh=f6cB55aVH6/c0pD1Bfy2lcpivDC0tLdR4mIpekoOwMM=;
+	s=k20201202; t=1765500929;
+	bh=ImNiUJg9EtXcUshmWqXKE8CX1Seb/doZFlOMj0aesag=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ozBOwH9JktWNiBkOOEGDQcxNLTSIJBAWSmLL0HGPUpKOEaRC5+yF3OJuYYEkx6K1j
-	 dmDIkR1LYX4lgJo6E0JQ/s1+Y1snpoUU28BKeqOoUDqp07vUC3858q/NZGD8MyLlVs
-	 7S4hlZ4+a9ACB2IK1YOpT4eoyWL16vMT/teNmIDi0n65JsW6iHImAV/IAqxluG3fcb
-	 L2uNOmxLUhsZq9OUcppxxpcxOYVBdjU4bxcFvRz/wAMrlmx/Pt3R4M/BKIpXIZMaHU
-	 c22dppDN2cPUzsVxJGiC79ybn6F0ZhdAtK+ohRZSe9ZPNibtLbduoaWcKp+DR6w9bt
-	 ttf4wPdvqEn6w==
-Date: Fri, 12 Dec 2025 09:45:10 +0900
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
-Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, quic_ahari@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH V1 3/3] ufs: ufs-qcom: Add support for firmware-managed
- resource abstraction
-Message-ID: <64hjdpdc745gazdzz7vuauhl5cohbfz2cgxb2yz2bt6mpezyb7@i2fyze7ozbc4>
-References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
- <20251114145646.2291324-4-ram.dwivedi@oss.qualcomm.com>
- <avpwp57yqkljxkld7dsqdsc7m26wvmwwhvph6ljv43yjjdyqof@szlfmik6betd>
- <fcdeea3b-f20e-4b6c-9c64-5479f75b05b9@oss.qualcomm.com>
+	b=RjzBSwahr1WYnQkSMxhNcq3KXkm9k4+BcQKk4iKKm75+eBjmj0hNJ7X510XvwFMIH
+	 zv8iqY33hJyGA8kELK6fIjy9sQwnELpxZvw7Geq8W913rCk8PTqYOHKICuc4MQWfy7
+	 mXYkDujbs66Ld/fZTGurUaqTb6g5peENujt5OG+vKN+fBndoRwIBjR5dlGAP309R3j
+	 OXM1fxGHWjN28Ce2MV3snluLG9PBAHCxcmCI02X3xqfNKgNv45ydg/j7hW2orHzURR
+	 lop8Sr644vAEN8ySbD89aZmAzyUOJ1vGI6mS/0Opz04/I8DMjlJkJ4SfAQ3D4Sump8
+	 wfD5V1cc7J9vg==
+Date: Fri, 12 Dec 2025 09:55:23 +0900
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] tee: qcomtee: call: Fix confusing cleanup.h syntax
+Message-ID: <aTtn-x0hh18V7n7J@sumit-X1>
+References: <20251208020844.5310-4-krzysztof.kozlowski@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fcdeea3b-f20e-4b6c-9c64-5479f75b05b9@oss.qualcomm.com>
+In-Reply-To: <20251208020844.5310-4-krzysztof.kozlowski@oss.qualcomm.com>
 
-On Wed, Dec 10, 2025 at 09:33:08PM +0530, Ram Kumar Dwivedi wrote:
+On Mon, Dec 08, 2025 at 03:08:45AM +0100, Krzysztof Kozlowski wrote:
+> Initializing automatic __free variables to NULL without need (e.g.
+> branches with different allocations), followed by actual allocation is
+> in contrary to explicit coding rules guiding cleanup.h:
 > 
+> "Given that the "__free(...) = NULL" pattern for variables defined at
+> the top of the function poses this potential interdependency problem the
+> recommendation is to always define and assign variables in one statement
+> and not group variable definitions at the top of the function when
+> __free() is used."
 > 
-> On 20-Nov-25 11:23 AM, Manivannan Sadhasivam wrote:
-> > On Fri, Nov 14, 2025 at 08:26:46PM +0530, Ram Kumar Dwivedi wrote:
-> >> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> >>
-> >> Add a compatible string for SA8255p platforms where resources such as
-> >> PHY, clocks, regulators, and resets are managed by firmware through an
-> >> SCMI server. Use the SCMI power protocol to abstract these resources and
-> >> invoke power operations via runtime PM APIs (pm_runtime_get/put_sync).
-> >>
-> >> Introduce vendor operations (vops) for SA8255p targets to enable SCMI-
-> >> based resource control. In this model, capabilities like clock scaling
-> >> and gating are not yet supported; these will be added incrementally.
-> >>
-> >> Co-developed-by: Anjana Hari <quic_ahari@quicinc.com>
-> >> Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
-> >> Co-developed-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> >> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> >> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> >> ---
-> >>  drivers/ufs/host/ufs-qcom.c | 161 +++++++++++++++++++++++++++++++++++-
-> >>  drivers/ufs/host/ufs-qcom.h |   1 +
-> >>  2 files changed, 161 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> >> index 8d119b3223cb..13ccf1fb2ebf 100644
-> >> --- a/drivers/ufs/host/ufs-qcom.c
-> >> +++ b/drivers/ufs/host/ufs-qcom.c
-> >> @@ -14,6 +14,7 @@
-> >>  #include <linux/of.h>
-> >>  #include <linux/phy/phy.h>
-> >>  #include <linux/platform_device.h>
-> >> +#include <linux/pm_domain.h>
-> >>  #include <linux/reset-controller.h>
-> >>  #include <linux/time.h>
-> >>  #include <linux/unaligned.h>
-> >> @@ -619,6 +620,27 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
-> >>  	return err;
-> >>  }
-> >>  
-> >> +static int ufs_qcom_fw_managed_hce_enable_notify(struct ufs_hba *hba,
-> >> +						 enum ufs_notify_change_status status)
-> >> +{
-> >> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> >> +
-> >> +	switch (status) {
-> >> +	case PRE_CHANGE:
-> >> +		ufs_qcom_select_unipro_mode(host);
-> >> +		break;
-> >> +	case POST_CHANGE:
-> >> +		ufs_qcom_enable_hw_clk_gating(hba);
-> >> +		ufs_qcom_ice_enable(host);
-> >> +		break;
-> >> +	default:
-> >> +		dev_err(hba->dev, "Invalid status %d\n", status);
-> >> +		return -EINVAL;
-> >> +	}
-> >> +
-> >> +	return 0;
-> >> +}
-> >> +
-> >>  /**
-> >>   * ufs_qcom_cfg_timers - Configure ufs qcom cfg timers
-> >>   *
-> >> @@ -789,6 +811,38 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
-> >>  	return ufs_qcom_ice_resume(host);
-> >>  }
-> >>  
-> >> +static int ufs_qcom_fw_managed_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-> >> +				       enum ufs_notify_change_status status)
-> >> +{
-> >> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> >> +
-> >> +	if (status == PRE_CHANGE)
-> >> +		return 0;
-> >> +
-> >> +	if (hba->spm_lvl != UFS_PM_LVL_5) {
-> >> +		dev_err(hba->dev, "Unsupported spm level %d\n", hba->spm_lvl);
-> >> +		return -EINVAL;
-> >> +	}
-> > 
-> > You should consider moving this check to ufs-sysfs.c where the sysfs write is
-> > handled. Failing due to unsupported suspend level at the last moment could be
-> > avoided.
-> 
-> Hi Mani,
-> 
-> We have planned to support other spm levels also in follow up series
-> once the basic UFS SCMI functionality is upstreamed.  This spm_lvl check
-> is intended as a temporary safeguard while we only support SPM level 5. 
-> If you'd still prefer a change, I caupdate this in the next patchset.
-> 
+> Code does not have a bug, but is less readable and uses discouraged
+> coding practice, so fix that by moving declaration to the place of
+> assignment.
 
-Please do it now as I don't see it logical to error out in suspend callback.
+Okay I see but..
 
-- Mani
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> ---
+>  drivers/tee/qcomtee/call.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
+> index 65f9140d4e1f..8f8830f0df26 100644
+> --- a/drivers/tee/qcomtee/call.c
+> +++ b/drivers/tee/qcomtee/call.c
+> @@ -395,9 +395,7 @@ static int qcomtee_object_invoke(struct tee_context *ctx,
+>  				 struct tee_ioctl_object_invoke_arg *arg,
+>  				 struct tee_param *params)
+>  {
+> -	struct qcomtee_object_invoke_ctx *oic __free(kfree) = NULL;
+>  	struct qcomtee_context_data *ctxdata = ctx->data;
+> -	struct qcomtee_arg *u __free(kfree) = NULL;
+>  	struct qcomtee_object *object;
+>  	int i, ret, result;
+>  
+> @@ -412,12 +410,14 @@ static int qcomtee_object_invoke(struct tee_context *ctx,
+>  	}
+>  
+>  	/* Otherwise, invoke a QTEE object: */
+> -	oic = qcomtee_object_invoke_ctx_alloc(ctx);
+> +	struct qcomtee_object_invoke_ctx *oic __free(kfree) =
+> +		qcomtee_object_invoke_ctx_alloc(ctx);
+>  	if (!oic)
+>  		return -ENOMEM;
+>  
+>  	/* +1 for ending QCOMTEE_ARG_TYPE_INV. */
+> -	u = kcalloc(arg->num_params + 1, sizeof(*u), GFP_KERNEL);
+> +	struct qcomtee_arg *u __free(kfree) = kcalloc(arg->num_params + 1, sizeof(*u),
+> +						      GFP_KERNEL);
 
--- 
-மணிவண்ணன் சதாசிவம்
+..this makes the code less readable with variable declarations floating
+within the function. I would rather favor to not use the cleanup.h construct
+but use explicit kfree() invocations instead like it's done in all other
+allocations in the TEE subsystem.
+
+-Sumit
+
+>  	if (!u)
+>  		return -ENOMEM;
+>  
+> @@ -562,9 +562,8 @@ static int qcomtee_supp_send(struct tee_context *ctx, u32 errno, u32 num_params,
+>  
+>  static int qcomtee_open(struct tee_context *ctx)
+>  {
+> -	struct qcomtee_context_data *ctxdata __free(kfree) = NULL;
+> -
+> -	ctxdata = kzalloc(sizeof(*ctxdata), GFP_KERNEL);
+> +	struct qcomtee_context_data *ctxdata __free(kfree) = kzalloc(sizeof(*ctxdata),
+> +								     GFP_KERNEL);
+>  	if (!ctxdata)
+>  		return -ENOMEM;
+>  
+> @@ -645,12 +644,12 @@ static void qcomtee_get_version(struct tee_device *teedev,
+>  static void qcomtee_get_qtee_feature_list(struct tee_context *ctx, u32 id,
+>  					  u32 *version)
+>  {
+> -	struct qcomtee_object_invoke_ctx *oic __free(kfree) = NULL;
+>  	struct qcomtee_object *client_env, *service;
+>  	struct qcomtee_arg u[3] = { 0 };
+>  	int result;
+>  
+> -	oic = qcomtee_object_invoke_ctx_alloc(ctx);
+> +	struct qcomtee_object_invoke_ctx *oic __free(kfree) =
+> +		qcomtee_object_invoke_ctx_alloc(ctx);
+>  	if (!oic)
+>  		return;
+>  
+> -- 
+> 2.51.0
+> 
 
