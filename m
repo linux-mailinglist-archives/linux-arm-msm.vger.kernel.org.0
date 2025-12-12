@@ -1,151 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-85082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55F95CB776C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 01:41:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8992ECB778D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 01:45:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C2659301FF6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 00:41:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3CADF300F588
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 00:45:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D591D21CC5B;
-	Fri, 12 Dec 2025 00:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DC9819D074;
+	Fri, 12 Dec 2025 00:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kPxsSGrk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozBOwH9J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DD9223705
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 00:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBA226299;
+	Fri, 12 Dec 2025 00:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765500087; cv=none; b=e+VCTyHcSvfB5+gLV1ZJG+stkzna2s2aUOpmJwY8vLVcePFMz/BE7P7XCBYo+PXBnJ67gj0LYYMEKD9bWVYJi6IFRw7Rce9GniwQS3hdoQWFVl44EoRE2EQ8IEKfH2YnFNLGcx5/eOHfVDxgK3rnCH225XbNdqai/8zKIQUoOt8=
+	t=1765500325; cv=none; b=BTXuVAUPuvgSOZ8ybmTmwtiIheAAYKH/j6f4mS9HE/S4ggbvFlLkrusuZW2UhLk9w4eFB4nvfWBkZh8xP0PaIymPcNkxOvEkh5qKXaeQtzTzLCHAxkgik/gcNno9gAC6vYXkSOIbQCQqKxQ6xEnR3No3tRtKGwSUXgkrMVutsnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765500087; c=relaxed/simple;
-	bh=DHD/lZHvN8tPqWWfOwqXtmcNxX6Jp50gNz2N0sxd6BY=;
+	s=arc-20240116; t=1765500325; c=relaxed/simple;
+	bh=f6cB55aVH6/c0pD1Bfy2lcpivDC0tLdR4mIpekoOwMM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZKJTzBl9ASTUcVd0L9IGcU1KAbCQRIwE5G8Ejd6px0Qa2oQNUCVEy0A4uZFNr5v/F+8f/jy2ZKN+BCQkpq7gDmZcjRQoc9GAJuBRzFg2soz2d8gWwXmBaj0IdfWyunVR5utqAWcfoPPnvWnq72gpkMoT1fOzJuvTkhpsnbr7FVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kPxsSGrk; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8b1bfd4b3deso57374485a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Dec 2025 16:41:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765500084; x=1766104884; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ITpyggKEhw2+s5AdOrWLt8yqrU4pVMFBZVM7vpDrXUk=;
-        b=kPxsSGrk2hrgtCq8L+zd27mOU1I8UbZn9MExxOta19/8F1gomHw47RH6GOyGROfdh8
-         7NnDyxDT1H4THnqJqYLQN5SrJCVJfEEF2uWHsJjTU7G0hlid++SHUdAh13ts9Xdu1xaw
-         wj8uDc+kaB7Rmwe9Kk1FfhjVBCOi3hRFFLLQYBdd4jTnWZUEnpA5/LpH01LtwSYmqlJe
-         JEjMf6v48lh62bgy7zfYp/r5Ec7T0ae2pTL46Yo6FFhhbFsk7vJEqWGskSv4YtufFpbc
-         UePg6HV1GVRAhxT97/xyuiCMPyHLMrZEhIHejUXStGAlxqvKfoKFeX8hhB6UCoTyWaW4
-         L07w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765500084; x=1766104884;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ITpyggKEhw2+s5AdOrWLt8yqrU4pVMFBZVM7vpDrXUk=;
-        b=nCgJKFncDKNADhs966Nn3BNdjihmkXKvbwEvZJuZtO2IE23AsnUsHyL28gzYFGHX6d
-         krEiQBipjlhkxuUfWbYyN83O1RE6BSTpL05SwyL0c67kHds1qQ5wVc5go81rJm76tdQN
-         PvK3t0AZfBD1ogPHQAC9usDNHjRXLeC6LbmZxVrm/5Uxl+KdQ325Um33XXov54awtQvs
-         F1FpFjpbFpbfH3WMBN75OJJtUI/TuWijesUZdZ5jUFwchIFmYf7sRio4IZQnEFWQ9Je1
-         Njb8gfqNRfi4BGpcsXxEuZsJLJ4YipKRb5Fec7h+EnphVsS+t/QWuvUOvrk4ky+KZwSC
-         LpOA==
-X-Forwarded-Encrypted: i=1; AJvYcCWxXPZw6rKta6wRxxcScOFQCbY2l34AeYqIlNZVDJLZdisZBnbg62y7P43+Pd4kHp/L36bpfe1I81GyWMe+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVDrUEHTJc1vVGXjV24iTXPHdwn31Y6fTJYue0hZlDZxj9EqOc
-	vk6jAah/4opuNAfjHGZcoxC0+58ZmlvIxppYsuJ8Ln/QX4myJr1Su8d3QlPI/A==
-X-Gm-Gg: AY/fxX4pBsVFbXPFKYbrjnKXz3j1OB8FtEutC7pJVqs97I0g7KsZOQn/MWNixY4vLPI
-	qxzoGyloV28VnWlLe0nRkIPgb958F2X65wMmKQIWsZ+obc9vBNzcxlZv6upewviU1+cQfW2MAFW
-	W8Xx4/65tlV8kdW5LVbJoLbbIME13fI/XZ5zt0HzNB8+ifB36A4xoTOjOjlvAeoVSDIJM6qVZHB
-	1sPDG3j7fBbGLwXl1qWfiIeJIBP69N0ZisbYsY/ch4jqajwAPtuX43lzbploPK2BVdGjHtDPTi+
-	sFinKx9h78mja2Kov1s9MC1wKwSwy+KffXssaIfAT+wzKJEOOolK2wl2qq8f8FkgYTUYiyTV8sh
-	+raLJOLv3adcdP8/mb284Muv9tUpFU3Kz0h7Ij9g88+zbkRjn2CiEVooAi+GmRJVIeBBsancJBA
-	2cVUsIkMITDDQA6Q==
-X-Google-Smtp-Source: AGHT+IFqGwlA1Aoece/i0Mb65MshHc5N2WWOb7PZJ8AvXpskJF5JitQBe/NZIOlberhGhCtjhAltkg==
-X-Received: by 2002:a05:620a:1791:b0:8b2:dd5b:fe80 with SMTP id af79cd13be357-8bb3a39ba05mr56594185a.79.1765500083610;
-        Thu, 11 Dec 2025 16:41:23 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8886ec2ff9fsm35002926d6.12.2025.12.11.16.41.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Dec 2025 16:41:23 -0800 (PST)
-Date: Thu, 11 Dec 2025 19:41:37 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Robert Mader <robert.mader@collabora.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-Message-ID: <aTtkwQb2gOeWAFuv@rdacayan>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-6-mailingradian@gmail.com>
- <wwpqaecvz42jopgaboasbh353ieelctpvgo3yj6y5tnxoem5oz@j5sbx3yxntot>
+	 Content-Type:Content-Disposition:In-Reply-To; b=SLxSG5dU0u8W0pUXm+5XQMSS6m/OYivsHE3WMw/2HF5aWkq64tln84y6TBnmFnyMSBYEt4C0VRhsQYgF40v7+0vqUdFIJ4+IiKSZWkHP9oO06IUopgd8AswTczWQlfp2jwzj2eUj0gx6t8ChU4/w0MdFb4kSbuhv2iqpF7jQMow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozBOwH9J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E968C4CEF7;
+	Fri, 12 Dec 2025 00:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765500325;
+	bh=f6cB55aVH6/c0pD1Bfy2lcpivDC0tLdR4mIpekoOwMM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ozBOwH9JktWNiBkOOEGDQcxNLTSIJBAWSmLL0HGPUpKOEaRC5+yF3OJuYYEkx6K1j
+	 dmDIkR1LYX4lgJo6E0JQ/s1+Y1snpoUU28BKeqOoUDqp07vUC3858q/NZGD8MyLlVs
+	 7S4hlZ4+a9ACB2IK1YOpT4eoyWL16vMT/teNmIDi0n65JsW6iHImAV/IAqxluG3fcb
+	 L2uNOmxLUhsZq9OUcppxxpcxOYVBdjU4bxcFvRz/wAMrlmx/Pt3R4M/BKIpXIZMaHU
+	 c22dppDN2cPUzsVxJGiC79ybn6F0ZhdAtK+ohRZSe9ZPNibtLbduoaWcKp+DR6w9bt
+	 ttf4wPdvqEn6w==
+Date: Fri, 12 Dec 2025 09:45:10 +0900
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+Cc: alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, quic_ahari@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Shazad Hussain <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH V1 3/3] ufs: ufs-qcom: Add support for firmware-managed
+ resource abstraction
+Message-ID: <64hjdpdc745gazdzz7vuauhl5cohbfz2cgxb2yz2bt6mpezyb7@i2fyze7ozbc4>
+References: <20251114145646.2291324-1-ram.dwivedi@oss.qualcomm.com>
+ <20251114145646.2291324-4-ram.dwivedi@oss.qualcomm.com>
+ <avpwp57yqkljxkld7dsqdsc7m26wvmwwhvph6ljv43yjjdyqof@szlfmik6betd>
+ <fcdeea3b-f20e-4b6c-9c64-5479f75b05b9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <wwpqaecvz42jopgaboasbh353ieelctpvgo3yj6y5tnxoem5oz@j5sbx3yxntot>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fcdeea3b-f20e-4b6c-9c64-5479f75b05b9@oss.qualcomm.com>
 
-On Thu, Dec 11, 2025 at 07:16:30AM +0200, Dmitry Baryshkov wrote:
-> On Wed, Dec 10, 2025 at 08:48:46PM -0500, Richard Acayan wrote:
-> > The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
-> > mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
-> > support for it.
-> > 
-> > Co-developed-by: Robert Mader <robert.mader@collabora.com>
-> > Signed-off-by: Robert Mader <robert.mader@collabora.com>
-> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> > ---
-> >  .../boot/dts/qcom/sdm670-google-sargo.dts     | 107 ++++++++++++++++++
-> >  1 file changed, 107 insertions(+)
-> > 
-> > @@ -392,6 +420,64 @@ vreg_bob: bob {
-> >  	};
-> >  };
-> >  
-> > +&camss {
-> > +	vdda-phy-supply = <&vreg_l1a_1p225>;
-> > +	vdda-pll-supply = <&vreg_s6a_0p87>;
-> > +
-> > +	status = "okay";
-> > +
-> > +	ports {
-> > +		port@1 {
-> > +			camss_endpoint1: endpoint {
-> > +				clock-lanes = <7>;
-> > +				data-lanes = <0 1 2 3>;
-> > +				remote-endpoint = <&cam_front_endpoint>;
-> > +			};
-> > +		};
-> > +	};
+On Wed, Dec 10, 2025 at 09:33:08PM +0530, Ram Kumar Dwivedi wrote:
 > 
-> This would be much better:
 > 
->   &camss_endpoint1: {
->       clock-lanes, data-lanes, remote-endpoint here
->   };
+> On 20-Nov-25 11:23 AM, Manivannan Sadhasivam wrote:
+> > On Fri, Nov 14, 2025 at 08:26:46PM +0530, Ram Kumar Dwivedi wrote:
+> >> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> >>
+> >> Add a compatible string for SA8255p platforms where resources such as
+> >> PHY, clocks, regulators, and resets are managed by firmware through an
+> >> SCMI server. Use the SCMI power protocol to abstract these resources and
+> >> invoke power operations via runtime PM APIs (pm_runtime_get/put_sync).
+> >>
+> >> Introduce vendor operations (vops) for SA8255p targets to enable SCMI-
+> >> based resource control. In this model, capabilities like clock scaling
+> >> and gating are not yet supported; these will be added incrementally.
+> >>
+> >> Co-developed-by: Anjana Hari <quic_ahari@quicinc.com>
+> >> Signed-off-by: Anjana Hari <quic_ahari@quicinc.com>
+> >> Co-developed-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> >> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> >> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> >> ---
+> >>  drivers/ufs/host/ufs-qcom.c | 161 +++++++++++++++++++++++++++++++++++-
+> >>  drivers/ufs/host/ufs-qcom.h |   1 +
+> >>  2 files changed, 161 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> >> index 8d119b3223cb..13ccf1fb2ebf 100644
+> >> --- a/drivers/ufs/host/ufs-qcom.c
+> >> +++ b/drivers/ufs/host/ufs-qcom.c
+> >> @@ -14,6 +14,7 @@
+> >>  #include <linux/of.h>
+> >>  #include <linux/phy/phy.h>
+> >>  #include <linux/platform_device.h>
+> >> +#include <linux/pm_domain.h>
+> >>  #include <linux/reset-controller.h>
+> >>  #include <linux/time.h>
+> >>  #include <linux/unaligned.h>
+> >> @@ -619,6 +620,27 @@ static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+> >>  	return err;
+> >>  }
+> >>  
+> >> +static int ufs_qcom_fw_managed_hce_enable_notify(struct ufs_hba *hba,
+> >> +						 enum ufs_notify_change_status status)
+> >> +{
+> >> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> >> +
+> >> +	switch (status) {
+> >> +	case PRE_CHANGE:
+> >> +		ufs_qcom_select_unipro_mode(host);
+> >> +		break;
+> >> +	case POST_CHANGE:
+> >> +		ufs_qcom_enable_hw_clk_gating(hba);
+> >> +		ufs_qcom_ice_enable(host);
+> >> +		break;
+> >> +	default:
+> >> +		dev_err(hba->dev, "Invalid status %d\n", status);
+> >> +		return -EINVAL;
+> >> +	}
+> >> +
+> >> +	return 0;
+> >> +}
+> >> +
+> >>  /**
+> >>   * ufs_qcom_cfg_timers - Configure ufs qcom cfg timers
+> >>   *
+> >> @@ -789,6 +811,38 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+> >>  	return ufs_qcom_ice_resume(host);
+> >>  }
+> >>  
+> >> +static int ufs_qcom_fw_managed_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+> >> +				       enum ufs_notify_change_status status)
+> >> +{
+> >> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> >> +
+> >> +	if (status == PRE_CHANGE)
+> >> +		return 0;
+> >> +
+> >> +	if (hba->spm_lvl != UFS_PM_LVL_5) {
+> >> +		dev_err(hba->dev, "Unsupported spm level %d\n", hba->spm_lvl);
+> >> +		return -EINVAL;
+> >> +	}
+> > 
+> > You should consider moving this check to ufs-sysfs.c where the sysfs write is
+> > handled. Failing due to unsupported suspend level at the last moment could be
+> > avoided.
+> 
+> Hi Mani,
+> 
+> We have planned to support other spm levels also in follow up series
+> once the basic UFS SCMI functionality is upstreamed.  This spm_lvl check
+> is intended as a temporary safeguard while we only support SPM level 5. 
+> If you'd still prefer a change, I caupdate this in the next patchset.
+> 
 
-I'm not sure what you mean, there might be some typo.
+Please do it now as I don't see it logical to error out in suspend callback.
 
-If this is about using the commonly-defined endpoints, Vladimir broke it
-in commit dcf6fb89e6f7 ("media: qcom: camss: remove a check for
-unavailable CAMSS endpoint"). If I do this again and go full circle, I'm
-afraid this could break a second time before even making it to
-linux-next.
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
