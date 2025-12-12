@@ -1,150 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-85095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6368CB79EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 03:08:17 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0883CCB7A6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 03:16:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 346E83004459
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 02:08:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 09D41301103D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 02:16:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A8C229B1F;
-	Fri, 12 Dec 2025 02:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1C629405;
+	Fri, 12 Dec 2025 02:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mP5r74DD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3ONK9M+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E901990C7;
-	Fri, 12 Dec 2025 02:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72FCAD24;
+	Fri, 12 Dec 2025 02:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765505296; cv=none; b=VBtntxHNP+bEywE6icQx8Gq2G2s3ucSGEiFEUMdVqMoKnSSK3QG8RP1gHxlCwlmVoL2OOhlBEOu2poNWJgJV1JU1Oqyl/IMy8qk+mZ7algfIv/50LS5iSEZZ/nwxtVb1L1AmCuxQ3vNU3YsEqfcXQdLJrED19ZY4Ft2z0Wr9A3I=
+	t=1765505760; cv=none; b=DA1z1w7EkocWRjzATHKYU13Mb94Jo8eM4bkz6HMDeEitBft6bHZcnVdpn1Yirg6y9ZaUvNO2qSugyHNNeTee3NjbW8hwYsG+ZqfXu3KXX867Xzq3eOTFHKQ13uCf4aT/a+uaTKLwDjqiiheIP+CdwUnzMuHddEk0i1hoAvNjjR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765505296; c=relaxed/simple;
-	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=REKBYCqwBtRxSDEduEkao9Y6MtBKPgUOzaqD1+zZUAZyvP+vBUAYPyM3ZRYC6+1IEH2Kpmc/6DZcmFq09khBCs1h4bwcOtZZ8Jbow7iNMMSCeDl6YWTAIFdspfEwpVncgC33R12NpYtr2BkYtuwI/1ofnJkpU038d0yxPkfABTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mP5r74DD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D6AC4CEF7;
-	Fri, 12 Dec 2025 02:08:14 +0000 (UTC)
+	s=arc-20240116; t=1765505760; c=relaxed/simple;
+	bh=stIB81eeipJUREm+3QBOT4GGS9SJRH1LC1y24qIMnmo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pr152a+WldsxuwvVtmY6c+lD+Vw+WTDbGxytQJ3TFU83J7eXzaUk7fbHwXX7sJ4ifnWSkzyYD3SSqlupw7etzXDA++Zp7B88SyluKLCJGmtYIg7NeLGrdXPheoyjLSKaiUOQTHxysgz3398kF55GsaspNfZ48nuNMGcyVefTQME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z3ONK9M+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02553C4CEF7;
+	Fri, 12 Dec 2025 02:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765505295;
-	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=mP5r74DDRf35AErWYYisduSvezaiQuPRHUPupsL/OTh+ctDZI7reGr/ZezPw+iRfR
-	 3PfgTa1/e/Hgbi9aQR04jXFqE3sFHGUmKXLUuaqfCOSOMDoG90ZQS4NRRgc4dPH8QT
-	 sVD6fWp0ZF8rqqGRRTISMCL3Q7mnlfxpi/WMcvauuWwZID7IDYbXPBv0tZk8fFVdHN
-	 +AKZbQ+hASzE9vFmvUzBBO0leXtDyq73MylLv9EKR0/lNiBWDVOb4rH6fc54lG7nHZ
-	 AGT2gx7zPYVKqsYTb6GYZYDVnABAbtWpvhq4anfmvJCy67ATxDTRpdvtQE4kDeo23l
-	 O7gu+iezCKzyA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jens Reidel <adrian@mainlining.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src
-Date: Thu, 11 Dec 2025 21:08:11 -0500
-Message-ID: <20251212020812.4153432-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
+	s=k20201202; t=1765505759;
+	bh=stIB81eeipJUREm+3QBOT4GGS9SJRH1LC1y24qIMnmo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Z3ONK9M+N327N3vWfT5DkdKPX/dIYvQ2koNFAKJxSUivwemUVzkbEBEobjSSh0P0H
+	 F8g7qbCu2ZFfFTgkuKPg6jxTWSDhZds1Tohx4UlxwtyX8LsEj6aJaic+0Q3NpKgfzf
+	 oTQlCO0h9gVvIpqb8JMMF8MqBxAO8lh/C+hdMewM8NUoulXDYM9YflZzqqC2ht476n
+	 X65c4oaaMnCsXwNJex2fdxnNLz+2LnQgWbevnaJ5u9mV5Cr6TKdbShVOBlxuwDAfTO
+	 z6M8tWbXeYvNsDl/OjKTa1aNJZq07WwUSFooG+xqn1PbGZH7Fhrt9uh1zMCekyPTq4
+	 hPVs77+D9/b4g==
+Message-ID: <784ded76-227c-4968-a9f2-eb97822404bf@kernel.org>
+Date: Fri, 12 Dec 2025 02:15:56 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] media: venus: vdec: fix error state assignment for
+ zero bytesused
+To: Renjiang Han <renjiang.han@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <ZnqX0ohHNwseFNet2fDemk0YpzeQraqTE3Qsd8r2HhjD-eG8CDMirTjuQ70kKtSs3NkgGOaPrxgChDdVu0wTpQ==@protonmail.internalid>
+ <20251211-fix-error-state-v3-1-b429262d151c@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <20251211-fix-error-state-v3-1-b429262d151c@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Jens Reidel <adrian@mainlining.org>
+On 11/12/2025 09:50, Renjiang Han wrote:
+> When hfi_session_flush is issued, all queued buffers are returned to
+> the V4L2 driver. Some of these buffers are not processed and have
+> bytesused = 0. Currently, the driver marks such buffers as error even
+> during drain operations, which can incorrectly flag EOS buffers.
+> 
+> Only capture buffers with zero payload (and not EOS) should be marked
+> with VB2_BUF_STATE_ERROR. The check is performed inside the non-EOS
+> branch to ensure correct handling.
+> 
+> Fixes: 51df3c81ba10b ("media: venus: vdec: Mark flushed buffers with error state")
+> Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+> ---
+> The error state assignment in the Venus vdec driver for Qualcomm
+> platforms is updated to ensure that VB2_BUF_STATE_ERROR is applied
+> only to non-EOS capture buffers with zero bytesused. Ensures false
+> error reports do not occur during drain operations.
+> ---
+> Changes in v3:
+> - 1, Update commit message.
+> - 2, Move empty line between tags.
+> - 3, Update cover letter message.
+> - Link to v2: https://lore.kernel.org/r/20251208-fix-error-state-v2-1-255b62ee2eb6@oss.qualcomm.com
+> 
+> Changes in v2:
+> - 1. Update commit message.
+> - 2. Add a Fixes tag.
+> - Link to v1: https://lore.kernel.org/r/20251126-fix-error-state-v1-1-34f943a8b165@oss.qualcomm.com
+> ---
+>   drivers/media/platform/qcom/venus/vdec.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4a6641fdffcf79705893be58c7ec5cf485e2fab9..d0bd2d86a31f9a18cb68b08ba66affdf8fc5092d 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1440,10 +1440,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>   				inst->drain_active = false;
+>   				inst->codec_state = VENUS_DEC_STATE_STOPPED;
+>   			}
+> +		} else {
+> +			if (!bytesused)
+> +				state = VB2_BUF_STATE_ERROR;
+>   		}
+> -
+> -		if (!bytesused)
+> -			state = VB2_BUF_STATE_ERROR;
+>   	} else {
+>   		vbuf->sequence = inst->sequence_out++;
+>   	}
+> 
+> ---
+> base-commit: 663d0d1af3faefe673cabf4b6b077149a87ad71f
+> change-id: 20251126-fix-error-state-24183a8538cd
+> 
+> Best regards,
+> --
+> Renjiang Han <renjiang.han@oss.qualcomm.com>
+> 
 
-[ Upstream commit e3c13e0caa8ceb7dec1a7c4fcfd9dbef56a69fbe ]
+Dikshita, Vikash.
 
-Set CLK_OPS_PARENT_ENABLE to ensure the parent gets prepared and enabled
-when switching to it, fixing an "rcg didn't update its configuration"
-warning.
+This change makes sense to me. If you are NAKing please do so now.
 
-Signed-off-by: Jens Reidel <adrian@mainlining.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250919-sm7150-dispcc-fixes-v1-3-308ad47c5fce@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-
-LLM Generated explanations, may be completely bogus:
-
-### 3. Technical Understanding
-
-The `CLK_OPS_PARENT_ENABLE` flag (BIT(12) in clk-provider.h) ensures
-that "parents need enable during gate/ungate, set rate and re-parent."
-Without this flag, when the pixel clock source tries to switch to a new
-parent clock, the parent might not be enabled, causing the RCG (Root
-Clock Generator) to fail to update its configuration.
-
-This is a well-known pattern in Qualcomm clock drivers - pixel clocks
-dynamically switch parents during display panel initialization, and the
-parent must be running for the configuration switch to complete.
-
-### 4. Scope and Risk Assessment
-- **Lines changed**: 1 line (adding a single flag)
-- **Files touched**: 1 file
-- **Complexity**: Very low
-- **Risk**: Very low - this is an established pattern used across many
-  Qualcomm dispcc/gcc drivers
-
-### 5. User Impact
-- Affects SM7150-based devices (mobile phones)
-- The warning indicates clock configuration issues that could affect
-  display initialization
-- Limited scope - only SM7150 platform users
-
-### 6. Stable Tree Applicability
-- Driver was added in **v6.11** (commit 3829c412197e1)
-- Only applicable to v6.11.y, v6.12.y, and newer stable trees
-- NOT applicable to LTS kernels: 6.6.y, 6.1.y, 5.15.y (driver doesn't
-  exist)
-
-### 7. Key Observations
-
-**Against backporting:**
-1. **No "Cc: stable@vger.kernel.org" tag** - The maintainers did not
-   request stable backport
-2. **No "Fixes:" tag** - Doesn't reference the original commit where the
-   bug was introduced
-3. **Very new driver** - SM7150 dispcc was added in v6.11, limiting
-   stable applicability
-4. **Not a critical issue** - A warning message, not a crash, panic, or
-   data corruption
-5. **Mobile SoC** - Users running stable kernels rarely use cutting-edge
-   mobile phone support
-
-**For backporting:**
-1. Valid bug fix with proven pattern
-2. Extremely small and low-risk change
-3. Has proper review from Qualcomm clock maintainers
-
- drivers/clk/qcom/dispcc-sm7150.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/clk/qcom/dispcc-sm7150.c b/drivers/clk/qcom/dispcc-sm7150.c
-index bdfff246ed3fe..ddc7230b8aea7 100644
---- a/drivers/clk/qcom/dispcc-sm7150.c
-+++ b/drivers/clk/qcom/dispcc-sm7150.c
-@@ -356,7 +356,7 @@ static struct clk_rcg2 dispcc_mdss_pclk0_clk_src = {
- 		.name = "dispcc_mdss_pclk0_clk_src",
- 		.parent_data = dispcc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(dispcc_parent_data_4),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
--- 
-2.51.0
-
+bod
 
