@@ -1,175 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-85094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2FF3CB7936
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 02:49:54 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6368CB79EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 03:08:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F120A3004446
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 01:49:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 346E83004459
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Dec 2025 02:08:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68F9D218AAD;
-	Fri, 12 Dec 2025 01:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A8C229B1F;
+	Fri, 12 Dec 2025 02:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ki65VuYC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mP5r74DD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9A41E487;
-	Fri, 12 Dec 2025 01:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E901990C7;
+	Fri, 12 Dec 2025 02:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765504192; cv=none; b=Cn3S4hDWd6jvuJ1GRUHRxvhmFaqd/hiqyGL00uASo/3LZOkMdF/Og4bq+5xa21d9WKUjvpDkNbxgw5yZEva/sGEarLzuOP6LFvCLH7skXnUJ7h7foMqfcylFRVFEv+wwwp3vtmm6eP7fSMIvU0DLVLTp/l0zAm3NayqpisKanOU=
+	t=1765505296; cv=none; b=VBtntxHNP+bEywE6icQx8Gq2G2s3ucSGEiFEUMdVqMoKnSSK3QG8RP1gHxlCwlmVoL2OOhlBEOu2poNWJgJV1JU1Oqyl/IMy8qk+mZ7algfIv/50LS5iSEZZ/nwxtVb1L1AmCuxQ3vNU3YsEqfcXQdLJrED19ZY4Ft2z0Wr9A3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765504192; c=relaxed/simple;
-	bh=BHw/RutHHZ4jE7W6Xa1RAaTNTX1OqWmUtXNlhThVYeQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fR7uTytgUhOos/ADQQWEeg+OzOj+rNk16V713AHeMDb0Wc0s5y+Z0rXI9tdhX5MVXY3C6hgmbcdaLxZeL/eGGqByLY7KQhUDbse3HrhAp+0A7ZDxIconu6TmiXpQSgdnzxPwSRcV1IymNUUtn/n2+btRDNKQ2SrOQYE5BXtpcw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ki65VuYC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D555BC4CEF7;
-	Fri, 12 Dec 2025 01:49:45 +0000 (UTC)
+	s=arc-20240116; t=1765505296; c=relaxed/simple;
+	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=REKBYCqwBtRxSDEduEkao9Y6MtBKPgUOzaqD1+zZUAZyvP+vBUAYPyM3ZRYC6+1IEH2Kpmc/6DZcmFq09khBCs1h4bwcOtZZ8Jbow7iNMMSCeDl6YWTAIFdspfEwpVncgC33R12NpYtr2BkYtuwI/1ofnJkpU038d0yxPkfABTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mP5r74DD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D6AC4CEF7;
+	Fri, 12 Dec 2025 02:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765504191;
-	bh=BHw/RutHHZ4jE7W6Xa1RAaTNTX1OqWmUtXNlhThVYeQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ki65VuYC+s9J9CponjDL4tqn1qrG3awCQ5xucFAUErPKDnmR+i1boFmnmc2nBeBeI
-	 E4RnT5j5Gw1AhVJMeCd+nHvzdlOnlX2Vjnoa6upXCEiOEOegpi+oZhwmm/DYVuJUKY
-	 kfP21fAOv8VZM3eNfWjpWD5NIsqC/R8Gaq3yY6PtQNN/cVue0K3QFSMZ41kq+m/xlI
-	 2/xjEsbMLjzsTG5WibiYwbbXOfRigf2w5uxQ9FfY1P4HLGP1+ltTS3Fj4UXdHKSOFX
-	 1p4Bdy8/P9jGif5ozGwehlQL42Qzu1hztlku8RgfrGBvTcX7dbQJS3qmU8eLHMpkPq
-	 6kI2Wr9MVIpUQ==
-Message-ID: <6d6c3c08-5e99-4cfa-bf85-b664770f00bc@kernel.org>
-Date: Fri, 12 Dec 2025 01:49:43 +0000
+	s=k20201202; t=1765505295;
+	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mP5r74DDRf35AErWYYisduSvezaiQuPRHUPupsL/OTh+ctDZI7reGr/ZezPw+iRfR
+	 3PfgTa1/e/Hgbi9aQR04jXFqE3sFHGUmKXLUuaqfCOSOMDoG90ZQS4NRRgc4dPH8QT
+	 sVD6fWp0ZF8rqqGRRTISMCL3Q7mnlfxpi/WMcvauuWwZID7IDYbXPBv0tZk8fFVdHN
+	 +AKZbQ+hASzE9vFmvUzBBO0leXtDyq73MylLv9EKR0/lNiBWDVOb4rH6fc54lG7nHZ
+	 AGT2gx7zPYVKqsYTb6GYZYDVnABAbtWpvhq4anfmvJCy67ATxDTRpdvtQE4kDeo23l
+	 O7gu+iezCKzyA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Jens Reidel <adrian@mainlining.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src
+Date: Thu, 11 Dec 2025 21:08:11 -0500
+Message-ID: <20251212020812.4153432-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] media: i2c: imx355: Support devicetree and power
- management
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Cc: Robert Mader <robert.mader@collabora.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <oX9MH9S_YbvFY2xsd7jV6mW7fOQelIb017TSAlCIyunLezBkBasAcuVmvP-CURoqU__oSSH3483zd7AjVdQ3nA==@protonmail.internalid>
- <20251211014846.16602-3-mailingradian@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <20251211014846.16602-3-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18
+Content-Transfer-Encoding: 8bit
 
-On 11/12/2025 01:48, Richard Acayan wrote:
-> A device tree compatible makes it possible for this driver to be used on
-> Open Firmware devices. Initialization of power-managed resources such as
-> the reset GPIO and voltage regulators can be specified in the device
-> tree and handled by the driver. Add support for this so the Pixel 3a can
-> use the driver.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   drivers/media/i2c/imx355.c | 118 ++++++++++++++++++++++++++++++++++---
->   1 file changed, 110 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/media/i2c/imx355.c b/drivers/media/i2c/imx355.c
-> index 776107efe386..c225bb8959bd 100644
-> --- a/drivers/media/i2c/imx355.c
-> +++ b/drivers/media/i2c/imx355.c
-> @@ -3,9 +3,13 @@
-> 
->   #include <linux/acpi.h>
->   #include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/gpio/consumer.h>
->   #include <linux/i2c.h>
->   #include <linux/module.h>
-> +#include <linux/of.h>
->   #include <linux/pm_runtime.h>
-> +#include <linux/regulator/consumer.h>
->   #include <linux/unaligned.h>
-> 
->   #include <media/v4l2-ctrls.h>
-> @@ -125,6 +129,15 @@ struct imx355 {
->   	 * Protect access to sensor v4l2 controls.
->   	 */
->   	struct mutex mutex;
-> +
-> +	struct gpio_desc *reset_gpio;
-> +	struct regulator_bulk_data supplies[3];
-> +};
-> +
-> +static const char * const imx355_supply_names[] = {
-> +	"avdd",
-> +	"dvdd",
-> +	"dovdd",
->   };
-> 
->   static const struct imx355_reg imx355_global_regs[] = {
-> @@ -1515,6 +1528,54 @@ static const struct v4l2_subdev_internal_ops imx355_internal_ops = {
->   	.open = imx355_open,
->   };
-> 
-> +static int imx355_power_off(struct device *dev)
-> +{
-> +	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-> +	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-> +	struct imx355 *imx355 = to_imx355(sd);
-> +
-> +	gpiod_set_value_cansleep(imx355->reset_gpio, 0);
-> +
-> +	regulator_bulk_disable(ARRAY_SIZE(imx355->supplies), imx355->supplies);
-> +	clk_disable_unprepare(imx355->clk);
-> +
-> +	return 0;
-> +}
-> +
-> +static int imx355_power_on(struct device *dev)
-> +{
-> +	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-> +	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-> +	struct imx355 *imx355 = to_imx355(sd);
-> +	int ret;
-> +
-> +	ret = clk_prepare_enable(imx355->clk);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable clocks: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = regulator_bulk_enable(ARRAY_SIZE(imx355->supplies),
-> +				    imx355->supplies);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable regulators: %d\n", ret);
-> +		goto error_disable_clocks;
-> +	}
-> +
-> +	usleep_range(5000, 5100);
-> +	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-> +	usleep_range(8000, 8100);
-> +
+From: Jens Reidel <adrian@mainlining.org>
 
-I'd suggest taking the chip through an explicit reset sequence - 
-including appropriate delays here.
+[ Upstream commit e3c13e0caa8ceb7dec1a7c4fcfd9dbef56a69fbe ]
 
-The code as-is assumes the reset line is logic 0, which it may not be.
+Set CLK_OPS_PARENT_ENABLE to ensure the parent gets prepared and enabled
+when switching to it, fixing an "rcg didn't update its configuration"
+warning.
 
-Better to whack reset, give some reasonable amount of time for reset to 
-complete, unwhack - delay and then off you go.
-
-That way you've put the chip into a known state and probably you don't 
-have the documentation but, if you had the documentation you'd see the 
-chip mandates such a start-up sequence anyway.
-
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250919-sm7150-dispcc-fixes-v1-3-308ad47c5fce@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-bod
+
+LLM Generated explanations, may be completely bogus:
+
+### 3. Technical Understanding
+
+The `CLK_OPS_PARENT_ENABLE` flag (BIT(12) in clk-provider.h) ensures
+that "parents need enable during gate/ungate, set rate and re-parent."
+Without this flag, when the pixel clock source tries to switch to a new
+parent clock, the parent might not be enabled, causing the RCG (Root
+Clock Generator) to fail to update its configuration.
+
+This is a well-known pattern in Qualcomm clock drivers - pixel clocks
+dynamically switch parents during display panel initialization, and the
+parent must be running for the configuration switch to complete.
+
+### 4. Scope and Risk Assessment
+- **Lines changed**: 1 line (adding a single flag)
+- **Files touched**: 1 file
+- **Complexity**: Very low
+- **Risk**: Very low - this is an established pattern used across many
+  Qualcomm dispcc/gcc drivers
+
+### 5. User Impact
+- Affects SM7150-based devices (mobile phones)
+- The warning indicates clock configuration issues that could affect
+  display initialization
+- Limited scope - only SM7150 platform users
+
+### 6. Stable Tree Applicability
+- Driver was added in **v6.11** (commit 3829c412197e1)
+- Only applicable to v6.11.y, v6.12.y, and newer stable trees
+- NOT applicable to LTS kernels: 6.6.y, 6.1.y, 5.15.y (driver doesn't
+  exist)
+
+### 7. Key Observations
+
+**Against backporting:**
+1. **No "Cc: stable@vger.kernel.org" tag** - The maintainers did not
+   request stable backport
+2. **No "Fixes:" tag** - Doesn't reference the original commit where the
+   bug was introduced
+3. **Very new driver** - SM7150 dispcc was added in v6.11, limiting
+   stable applicability
+4. **Not a critical issue** - A warning message, not a crash, panic, or
+   data corruption
+5. **Mobile SoC** - Users running stable kernels rarely use cutting-edge
+   mobile phone support
+
+**For backporting:**
+1. Valid bug fix with proven pattern
+2. Extremely small and low-risk change
+3. Has proper review from Qualcomm clock maintainers
+
+ drivers/clk/qcom/dispcc-sm7150.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/dispcc-sm7150.c b/drivers/clk/qcom/dispcc-sm7150.c
+index bdfff246ed3fe..ddc7230b8aea7 100644
+--- a/drivers/clk/qcom/dispcc-sm7150.c
++++ b/drivers/clk/qcom/dispcc-sm7150.c
+@@ -356,7 +356,7 @@ static struct clk_rcg2 dispcc_mdss_pclk0_clk_src = {
+ 		.name = "dispcc_mdss_pclk0_clk_src",
+ 		.parent_data = dispcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(dispcc_parent_data_4),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
+-- 
+2.51.0
+
 
