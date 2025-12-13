@@ -1,130 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-85130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E19E6CBA3B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 04:01:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47210CBA3B8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 04:02:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3F7AB306731D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 03:01:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 08D033062903
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 03:02:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 296E0274FCB;
-	Sat, 13 Dec 2025 03:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C849754763;
+	Sat, 13 Dec 2025 03:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3nhlJCo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6zHvKjC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E8354763;
-	Sat, 13 Dec 2025 03:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438292F28EA
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 03:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765594884; cv=none; b=DkcUKLVh27jlMrgEvELkmIYpwEePhMaAj0uFoBWJuEO5BKQMaa6JvuobKL+Y4Qh2pj0kUnvcldTphqKZaUDbuvI3vlVt33/eII/SZXNUXYMMgqQtIcB2cPyja1sO0iBT42Hrr45ncn5Sv58SyVZjzYWW2HoA8OplKG+coeHLLTQ=
+	t=1765594918; cv=none; b=kteXfPSVu4HbcjHKhWFa4je1uQJZicE03tL7YfWeYaIm+t1wrUvA9koKD2qxu2LhBuUfARbLJgTCaFpLUlwWbQDdb7DoQflLhWOYteoX+4wjbkMRnNKgBPn6getS0UBv0h8VXQhRjIe/NF8E8boVqzFgTaXDqNAm5JWXtaMb5bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765594884; c=relaxed/simple;
-	bh=u4uC+opD9/GDpFJsYurkfVKTjIdwkKonZMXbeLIgp5E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ycxte6eVEDoDTVr4fOL0Lgn08HmeKi1bB4Bsz7TssGbDQuksHmOx/D8uehCeGv3cKbxcuOYEvIKJVxd0pFGDMJCgY9kvCIDv+ofTLok2Qo66jbQX/PlfkSkm6VOf057rVO4XuM7ElDGfs/CVyzmkcVyK7k2lXQxMUKaI0t/gMIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3nhlJCo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD92C4CEF5;
-	Sat, 13 Dec 2025 03:01:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765594883;
-	bh=u4uC+opD9/GDpFJsYurkfVKTjIdwkKonZMXbeLIgp5E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=G3nhlJCoMGvmOz+XiMZc/DcR6HIW5jKCvJVIs1tjc0OQBqIbqU2hRHpQOfjfRhtNF
-	 IgbI6VXcef8yOWWk5ik0IBpVRTS/+jzGGw5jDQoKUtY35IRtJNy6fmDtUAPGEjLEEq
-	 QbsjSXnjCE00gd8GzeygvC1Gdw90e4t2YrFBtERJ+AbTAP9uPM+yaP/++sibFxJcnq
-	 LPlw98k+NlL5dvbWpIzE9HQKvbWvFtvFwqUJF1Yr/4sqg0Flj90dgP1DImTese0a50
-	 QhM6qH8F/NZHqML2xcG3TLQplB754leenZbK95FHsPAo8zouQBkbLXK/ySETrb3l5B
-	 oschu81Pdykow==
-Message-ID: <eb752290-0eb3-4817-b3ca-91a4f423dac4@kernel.org>
-Date: Sat, 13 Dec 2025 04:01:17 +0100
+	s=arc-20240116; t=1765594918; c=relaxed/simple;
+	bh=8DLWEW+6/Plo2HI7utmjs3YcRZsLSZTXnIBVmpLJzjc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IBbjGPcB5kMWzStYGhpyLqb5J2ESpmc3K3/huD+UryY6nPsZQYu0ZO3ercHrGoQYn0iaMawiRcr5OHjlTvNfmWZHtiSC7Pv3T5AVj+9IE+fSDETgzBKBtOEIXIzlyo17OzkhwB7kVPOBB2aMrqfjhv7EHbE43L+pDv9N6TtlBqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6zHvKjC; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-29ec714c68cso3149975ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 19:01:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765594916; x=1766199716; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mzgFslyRQT3tNKKqy2atflV8jLYXX5INdtLIJCwHm14=;
+        b=L6zHvKjC+K4/fkUrng2qqeOUuTnQMH/dEWD0rj5hApTXCOqpYag1PUpuFisOUSZFX5
+         +4vwy0Fmqt/RDXIDTJrR3qjPqJhelPdskNPBr7Y/bfSKHPKhHLOwC8kq4aavBrCdoYjB
+         5TZzstTw6tU59/jlOigEP17cTWekaXolNF3nWhEk3o0iO8pdnri1GsDZIfIzYYlFbrwd
+         rz6lUVULVJS/Yj5NCyhCS+a0vHc0IODZipau4Cj2Cz/pHcuxwO5uArwkVjIvsD5IxItU
+         Olgq7OC6eqa/whDq2mFY8t42T++Vdd0bfibJIU16lKTaCrJuR13wYYbxgNtg+1f3qIo1
+         ElmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765594916; x=1766199716;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=mzgFslyRQT3tNKKqy2atflV8jLYXX5INdtLIJCwHm14=;
+        b=oflTf2e/FwIWde0Arj3UhWF18cxFVTWHb7KpCI0/5MTywFn7tWqxg1zoe+z/pVaSeP
+         xV9bWdX+NP2shjW6g81iD0gpCdFX7fmcdOJ10TJfa2U+IdMKlQj+vL3U7zlkQd20rPE7
+         6D9SdJ0snkERu4Sb6jHdYywrh0xUpXcdkPKWFSGl1Zc/gLIcSnuNyvzQQexCpuI4NnWV
+         +oSYe0SNuEdmcIbNw7iQOGu8BL+hZ2dzm03GXBbN2EMB4wc7mVCtSqE2/OE9CFPL+OrK
+         KK4HjnjKwwJXAwhF4mU8HvSYfkbuFUggrVGVmeLqOop59fdjCzMIQl0Wghyb67rlWnaL
+         jooA==
+X-Forwarded-Encrypted: i=1; AJvYcCVaWMgMdXPdMeU3Ia2C02Glgh5oSa77GH4XlWWXJMw+BIuQZ/TUXxkK1GCqm4kxdw+SblGxy8pXBca59ACz@vger.kernel.org
+X-Gm-Message-State: AOJu0YygJK59yiP+/6Pf3fip1afG8MVwQ2fRSmEIK5Vh5/ewHga/SW/d
+	Kxo0VwJ3zQq8SCc7M4mUuuugWLWdfPjm4ymUMPFAWHaX87yYr9ipYOMZFP4WsjCHO/XuKxOgaqo
+	Dv62iYqz4dnZIjDaWJCl+kx86PxkhHc8=
+X-Gm-Gg: AY/fxX5qRGYTj4lJUY+O4xUa+Qk5gD7mzqUyFlKrWLxrGJ59CYT1DypsnkRDMt4bObk
+	RLfB/N6ggnq8rpRd/0ldh+3cyifhzvfEWyYUCquPt0du5944eowkERHR+q7DkGjsqKXtdFkbW2s
+	xGeovjXbeF1Xrvu5/jT06oNC7f9tX24nU5MuytEXg7YzqFDKRl9eE7hTF8S+kRRffNHGGrzLr+m
+	Esh0tc7wRSy6XMtjeQSfAIGwLARhUXGgurZ7Ep4UPYzvQmk4/CxzHXsprp75XfmQmPPEMZNpRO2
+	B2rIXXSF5Vfbeh2Lx2cxRuzHd3EXHiKTKHHMPF1WzxYpbsOitv66c+an2JA89ocvqz5vHAIptCX
+	LJbtPN2t9oRc=
+X-Google-Smtp-Source: AGHT+IGW78XZa5/2VDasceTMSE4VJJ7rKpipV8SujJ9QH9yIekKh3vbj9WOZbrMAK8t7nis05J8ZIlLBOBVS5rirk3w=
+X-Received: by 2002:a05:693c:631b:b0:2ab:ca55:893e with SMTP id
+ 5a478bee46e88-2ac3011164dmr1476279eec.5.1765594916477; Fri, 12 Dec 2025
+ 19:01:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm/arm64: dts: st: Drop unused .dtsi
-To: "Rob Herring (Arm)" <robh@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Viresh Kumar <vireshk@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-renesas-soc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- soc@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-msm@vger.kernel.org
-References: <20251212203226.458694-3-robh@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251212203226.458694-3-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <x2HszWYqUaRfzLW8I1wOegJRSBRXVUzqafU9O_QLG1E-OjqkyUPQKn-jM9dzhvsgMW_M0NGXvrgEkN0p9mV7ww==@protonmail.internalid>
+ <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com> <5fbecf9c-b8bc-4027-ae30-d7c49212bc56@kernel.org>
+In-Reply-To: <5fbecf9c-b8bc-4027-ae30-d7c49212bc56@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 13 Dec 2025 04:01:44 +0100
+X-Gm-Features: AQt7F2pGWEkoftLbj3HdIPSVKdW9IS-cMV1GM6-4S0dD63vv_8Sj36l-zgYUNRM
+Message-ID: <CANiq72=Dtss4xkYYZ0Abkx3=WWqPwbQsFbJA8HG-MLggXcM7aQ@mail.gmail.com>
+Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
+To: "Bryan O'Donoghue" <bod@kernel.org>
+Cc: Matthew Maurer <mmaurer@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, rust-for-linux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/12/2025 21:32, Rob Herring (Arm) wrote:
-> These .dtsi files are not included anywhere in the tree and can't be
-> tested.
-> 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->  arch/arm/boot/dts/st/spear320s.dtsi           | 24 -------
->  .../boot/dts/st/stm32mp15xxab-pinctrl.dtsi    | 57 ---------------
->  arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi    | 63 ----------------
+On Sat, Dec 13, 2025 at 3:50=E2=80=AFAM Bryan O'Donoghue <bod@kernel.org> w=
+rote:
+>
+> One thing I notice is that, in C we alphabetise the includes.
+>
+> What is the normative coding standard for rust stuff I'm not sure. Is
+> there any technical reason not to do the same as C includes alphabetising=
+ ?
+>
+> You appear to sort these kernel:: use statements earlier on in the patch.
 
+They should be sorted, yeah (`rustfmt` takes care of that
+automatically). In addition, recently we define the style for imports
+(even if not all code follows it yet) -- please see:
 
-This should go to the qcom one.
+    https://docs.kernel.org/rust/coding-guidelines.html#imports
 
-Best regards,
-Krzysztof
+Thanks for taking a look, and I hope that clarifies.
+
+Cheers,
+Miguel
 
