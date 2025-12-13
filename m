@@ -1,137 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-85147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BBCACBA850
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 12:01:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A97B3CBA88B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 13:00:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D78B330BAFD5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 11:01:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5BB3A309D038
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 12:00:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E4A2E6CC5;
-	Sat, 13 Dec 2025 11:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26D80238C0D;
+	Sat, 13 Dec 2025 12:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Ni/a3Mpq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bNcD5k/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B5021D3CC;
-	Sat, 13 Dec 2025 11:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B8418DB0D;
+	Sat, 13 Dec 2025 12:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765623713; cv=none; b=dr4ZrZzEVgVorx8x5qtH167Why97BPvNzAWOF0QNGxhW0U7kg+Q22Xg72HGFueIU5D9lu/sSbKeOAlfF0UwqNmf56Pj1OnLJlA8JdAM8gae+alAuDkiWVBLxR7/g/jtjGV2aI8dl0CXVLjOnLHb030ASjfk8Q0nGajLqsc4CTY0=
+	t=1765627223; cv=none; b=It6CHzcjN/k9uo6C+PjMW4ewNoNMJDw5wtukP8V+PdAulUhYZ4ReGLH1/o9bUY8vg7v2ZRzQnQe2u3Fg0tSv/N6/0K/FkdIxU1BfeUirBBmZVoF6+3Z8SAIU+u5tOqVUSKe9tu41cb4KorweQ0GMHqixu9r4Nrk/L3EJTC+g6kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765623713; c=relaxed/simple;
-	bh=LHuax+9UV7AYi9SwyqUv11/ssW3n/7zu5oAQRs8lVo0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pCBqFf6hadhiJJ8JCIZkeBBYX1vkdl0igUeTXkQ50O8wzKJaYoO/DbfXcFdSCTULlhfzhz2nnR3PMBkxEcCA1j1jazEBaK0X5rBgL2GaAb5pTG+yyJZ9Hu13d/ibw6SJBW66h59sRT5cxYbv8YocxIXC5rLS8EQW2Adi8mIvqAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Ni/a3Mpq; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 1A94E5340EBE;
-	Sat, 13 Dec 2025 12:01:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765623705;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=eWrsVo/60025czWfNNOajTcsxwgSJF8DRN7yclYl+6w=;
-	b=Ni/a3MpqTM6LEBxJaCmzC5Xl4GnJewfhPTImW1EU83hC9RbNj6okL5VJ6qsifGPAg+7Qke
-	2BGog+WDDwTGqGYUf/IFEF7nLjDrDmM8ukpt0SKFOkEuvQkhxLEiR48WythbyRySNG0o/w
-	TpgLw8QBlNdgCAf3TkLUhsqZ9I3mt+0=
-Message-ID: <e43ff45b-3539-451a-b832-f4f4da9da87c@ixit.cz>
-Date: Sat, 13 Dec 2025 12:01:44 +0100
+	s=arc-20240116; t=1765627223; c=relaxed/simple;
+	bh=63XuyAt3Hq0F57+SA31YuHpdBuIPGjstOhaQOX2ZYXQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MO7htfetijhd60U46T5WkyPWOy67yzVOlow7nDX5QuelJTvv3xUgmkMFuRWl64PVYKY6wxW3nO4wXuUi0KiPzfVAJPxEm2Rs41QpKoyDj8IAuo6Xzh9ePmDLHxIkAjSJKydOt+SQWEdHuyQwcf//23/Ji8Odugfl0UP7tIakUw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bNcD5k/X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B5284C4CEF7;
+	Sat, 13 Dec 2025 12:00:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765627222;
+	bh=63XuyAt3Hq0F57+SA31YuHpdBuIPGjstOhaQOX2ZYXQ=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=bNcD5k/X/JcDsWeCFwdg/V08XhLlyDxwh3WIV7L088I40JRumHceQm2Vu+mEYX7ch
+	 t8uxcpxq8BBJFWn8G7dg6ItXtI3BwXMgZRzzCNIE1PUHZ48yEddSlWFP0KdNHeABVy
+	 5ebHAhUHqZ4lS4QPrgXtLzlEx7tPsw+hISxkiRCTGev7IcnwCSpOUGKQ1/X59xFsgd
+	 5aKvSjGogIJpebX5FDwMeYEkKgDGOp1dmAXC6mwha830y+zz4vx17do6jRSjXxUSrB
+	 XfZkEOX704+Af+0BLDVFVKXOXM34Gm6fFl4wLtC+NVDp4aD6IaTCN3qrPcB8/CKQMK
+	 2rhI+OqZjQhiQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A12DDD5AE41;
+	Sat, 13 Dec 2025 12:00:22 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/2] Commonize pinctrl for camera master clock on Qualcomm
+ SDM845
+Date: Sat, 13 Dec 2025 13:00:19 +0100
+Message-Id: <20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] arm64: dts: qcom: sdm670: add camera mclk pins
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Cc: Robert Mader <robert.mader@collabora.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-5-mailingradian@gmail.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20251211014846.16602-5-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFNVPWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDI0Nj3eKUXAsTU93c5JxsXQMTwzSjREtTo1RjQyWgjoKi1LTMCrBp0bG
+ 1tQCvJsaeXQAAAA==
+X-Change-ID: 20251213-sdm845-mclk-041f2a952e31
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1041; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=63XuyAt3Hq0F57+SA31YuHpdBuIPGjstOhaQOX2ZYXQ=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpPVVVryo+SCUdri61vJQT7ECSguj8+prZd9pLs
+ 0UsbDBCAt2JAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaT1VVQAKCRBgAj/E00kg
+ cjrED/4wsLEjsQFUxo5GQPRV4lroh1eHac1XUGYk53KuCgPuy8uPzJC/G0NTZyDkLdcglXgtKWL
+ tRQHYQ2PumcvnoKVFI0aIQreytNSKjMvljey+yWnI7LwN1Enw9xEMXosCVSW2h/IeFG012kBdRs
+ U8lQNUcSUTMA7At8UiAv24em5Y7aVDo55hm3krcXWrwf65EK/cBq0c/iBy6M+55itYk2nVy5Jen
+ Cx9j6xSwey20DxhNDa438kzOzfHkYTvM/wyF1KwdE+xKYgLLkUaGzyghmQfRIG0Dv0WMgbGEKMx
+ JvpFyHB+9UNRPkk2OZTHIqHyoBqKRvb6YHlu+Pk1PM7+tG5QlGG8ohJkPMPTY3hiwxkK+KudWGU
+ gWmTixLuA8YSPj7qp0EYFjDNt736aF5I9p723oRpSchGrzbjyFTsSqMkydQ7b9maH2hii2LEo2L
+ nfPXFsill/Zn9vqO8wl/3N6cEgQQ0noex8Qw9DJtam9Wk3hItYUoUwvOnhEui2TpBvok2ltv+81
+ Pg/j1W84cRjt+/uJDk+ptLbri7TKD9hV9OEAqEYQRKfBxlDVdILrPiRn2XKezgu7ibQYoXym93N
+ HMzB82wdiVpdrhQMOmnV2LlqAIbr1/Cqns50UxHFYBfMd3OIx8x6um1zmrbMECAcOHxLkoMBUIT
+ H9iFXIyCJKe/rPg==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 11/12/2025 02:48, Richard Acayan wrote:
-> The camera subsystem is added for the SoC common devicetree, but the
-> mclk pins should also be common across the SoC. Add the mclk pins for
-> the cameras.
-> 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Link: https://lore.kernel.org/r/5135823c-f2e4-4873-9e3a-9d190cac0113@oss.qualcomm.com
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/sdm670.dtsi | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
+Inspired by Richard's patch set for SDM670, I noticed that SDM845
+follows the same pattern. This change prepares for enabling
+additional cameras.
 
-Reviewed-by: David Heidelberg <david@ixit.cz>
+These pinctrl settings have been verified against the downstream
+SDM845 kernel.
 
+Since most of these are not yet used in mainline, testing was done
+on sdm845-next using OnePlus 6 cameras with downstream drivers.
+
+Thank you
+David
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (2):
+      arm64: qcom: sdm845: Introduce camera master clock pinctrl
+      arm64: dts: qcom: sdm845-db845c: Use introduced platform wide cam_mclk0_default
+
+ .../qcom/sdm845-db845c-navigation-mezzanine.dtso   |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts         |  8 ----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               | 43 ++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 9 deletions(-)
+---
+base-commit: d9771d0dbe18dd643760431870a6abf9b0866bb0
+change-id: 20251213-sdm845-mclk-041f2a952e31
+
+Best regards,
 -- 
-David Heidelberg
+David Heidelberg <david@ixit.cz>
+
 
 
