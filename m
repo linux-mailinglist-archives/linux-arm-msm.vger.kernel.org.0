@@ -1,80 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-85139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF16FCBA627
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 07:48:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AED40CBA648
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 07:57:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3221F30011B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 06:48:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 517BD307F8E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 06:57:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E5E1DF25C;
-	Sat, 13 Dec 2025 06:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4021A222575;
+	Sat, 13 Dec 2025 06:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V/rv/PvX"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="2Wp77FJW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FFA70808
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 06:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D1C19E992;
+	Sat, 13 Dec 2025 06:57:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765608525; cv=none; b=NqLdwl+q8ye25a1zLhCbtbZfyHGv85rzxCde2X1Jh/QD3g4yqIJowXJJ0r+l9OO0XNnSzJWHoNIqi5UG6ZUtH2gi5+NxbyI/TGvjT+/RR4F4GjmuJxPGD1lFB8Ckf+sAEWpaS+0EmyTS4xMeikrYfiz8cpmovA8htdMlBm1SizY=
+	t=1765609042; cv=none; b=TaIX2YSN9nsNUc/XREgZNaEVFx/XeAiUbzfta1zMJK8ALvQW7ArEthighigLlw1o49ZekqEdFHXetDzXwDBbPrK7kGGK6lmQPxHhxEYbhkSX4PgtyTTRncxyk5s9ddJO6KeH8j69AgWtjoDMWknGhR+RJ30+fqg9LzL7ZJVtF1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765608525; c=relaxed/simple;
-	bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
+	s=arc-20240116; t=1765609042; c=relaxed/simple;
+	bh=Qj0khJmUFOHX1x+G6h6dTnfGsEgUD6DX7A42tG3lZz4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nmTfwaRrsK5yIW5UVa02fAUIQWUZtfXfUSCVz9nVcV/bvyVI/jRGareeys770LZwc2sXCG6kb57FgTcSMhQ9Yc9d3JA6HHOuyFBVrlvOqn917k3B9CCIN7UTXZ3gPQKn3wNxuJFOIOh69f8KDq70MR2buEifuuR7FP0AyG7/k8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V/rv/PvX; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7b89c1ce9easo2211580b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 22:48:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765608523; x=1766213323; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
-        b=V/rv/PvXawv5NhhkAlMigL5A3ymTVqMjUYFcMQfTez04D7GoxsMFc3nHxvrRxu0+Bx
-         q/ag4Oils+4vYzzLAYkocXSctwh95tJIk7AfzCjE9g4pD/crZacOKcamExzMPbbSjgdU
-         KpahdKnZjsNP57dPYv7jaInJnq5iLcW9+0ZWmvT2OozAB0E1wIJitV0Dv73h8kHCl6Je
-         gm6vdMhqnhnrGP6jyc/R+pcvBWKNWf5P9e8+76Dii1eOMderlpgnbFv5KVQKR9ZZP1Q2
-         +7GgkROGYw6lLjhmPRcJU5vV3NKGCV2mkB6SwBClNERHoV9nzTfyhH/Rn2nie3gdTSjk
-         kIXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765608523; x=1766213323;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
-        b=hjkpHbbffozDd/asyUxhYLcCDWAgM5Oh9rtwBgPswm7zLUWKmBnYtx/uyU1eTsdoff
-         fds6E5P6KUp4t1ipKULlrxvM+JhF4FceOMm3bwNFAY8/thmXOpHFDJYl7gsYbkMhoAW1
-         2fXv1wPGPleMkwr04ygRFrBxndVwIIOQBYw4Nd6ys/b67kEJGK8iSxbfG6SLWV8OP6Wd
-         HqYRckGkqg9hP9ZHiO2BWwa42g76079IGNbFS3yYRUtPAuoqoeNHvb5hkajUUte8PcZ5
-         DWTzazgeoICcJLxyzoDkA+iXMkCOYYznMZODvQDTOJXS8RTc69RTUmFtMTLNCtvnvoHC
-         ZeDg==
-X-Gm-Message-State: AOJu0YyI3zSKr1WM8XKUJvXPx7sehPhplm0Rv9KUJ0AOTafb8ZVfUenI
-	riyOAykxjCtNsUp1BLBYcu/I5PabOZsSRAb8kGae127GaRjXl2yfHw+srHfsCUWcy/YB9RXgnLj
-	kN3py1g8=
-X-Gm-Gg: AY/fxX5DXR6srJUUGO3OVBHgBrmEJCLJKNLy/Tsm/rApT1ueInFN2+f23i3qSuDYOYq
-	GcyBSzTVxapcb7Fp8Q2WnabqjBbCOGccfToEY68aX5928b75TBzeLp4mQPE75NZ7i19gpKAL+Um
-	otZK+iMK9uDAwBaitUsv2U5Kg+MqVLRktOIc8R1CJwfZInysQZfAze5FaAz9oPMFfOwLIe9a7Km
-	tMMe/nO1Bb23/f1lfvXN7Gd6DU510FzlTCNbhoQMknmT3gvAv2f0ozUQknKgXTYQpB+nu2DSkq8
-	b/7mgKOXaM94Uv09p27TjAxZk3Tcwo1KliHIX+/4fHjxpgZmp4KFecX24iyQep4IQWU8bqT6Kl2
-	1pXhovIgV/H4GfMJqpbLUdczPo3+Q8QFLbpZsOoad2Rp5E9l0BOvTzqm8xPueCCER5jNwrMWUio
-	laNpuoUnvSM07vu+b2Z1G6KHgQ/Gxp1l8otFGJPEWfQ345LB4tBqJ7TQQ2lL85FQ==
-X-Google-Smtp-Source: AGHT+IHwMXPg7Qn0Ef9xWbq83SFpsB1sFhZLa5C8vjkRdWjkXJZFN6bz1qhctibBoHiLjB/xaNqEfg==
-X-Received: by 2002:a05:6a00:1c99:b0:7e8:4471:ae56 with SMTP id d2e1a72fcca58-7f6694a964bmr3530338b3a.34.1765608522549;
-        Fri, 12 Dec 2025 22:48:42 -0800 (PST)
-Received: from [10.200.3.203] (p99250-ipoefx.ipoe.ocn.ne.jp. [153.246.134.249])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c4ab52aasm6927000b3a.38.2025.12.12.22.48.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Dec 2025 22:48:41 -0800 (PST)
-Message-ID: <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
-Date: Sat, 13 Dec 2025 08:48:33 +0200
+	 In-Reply-To:Content-Type; b=B8Y+KWaqTFHFflelpJrYzPLvWMB41v4rTflviIqeWbRAC6s35+tTbLUJZC20hsxwgeUNUGJS8FPg5V9Y0oIM19WSMKt1ecdUwp5A9KWwjDRAclk4uLFX2XC2JQ8rl/wFun1gtjC8w3DHInvHTcHvIH2zmB5BwRtXn1hWyNxfRj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=2Wp77FJW; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=UxVyimGao7p0sqobtYKOAtYcaEFn3ktSbdCzD3T7UOM=; b=2Wp77FJW1QESi4u/Ikpi/5sH98
+	2n09GBbxkBnzNeqR7/bLDordnvS0VbZ3ISU+6B/iF2FyALRRwyWaFgYrLrm68hMGQ2TKr1AP03xBx
+	9Hj4cmilLnMyteyZVGWxdsdye3IzECUwZu/a632Vwt8dF5pSQQXA6Vn3bfCgeoTEFOd+la+5ycefT
+	XbQ4c0xVUBZFsNadBc+Mhun8jPAM8YcsnRiMciyE48aFXqkhLimuJLnXbledwuEV8VQe7Kvt83dHb
+	0NbFfYdlDF761J3TDFvi0J0e9S5TE6CgjsgfUs1TyQ6oCF4YjYcfpOL9wbOhOxqnSDYqSmSLGj2Ii
+	eejUXsVg==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vUJYx-00000001TgZ-1cAT;
+	Sat, 13 Dec 2025 06:57:07 +0000
+Message-ID: <5903a8e1-71c6-4546-ac50-35effa078dda@infradead.org>
+Date: Fri, 12 Dec 2025 22:57:02 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,9 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 00/26] Introduce meminspect
-To: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
- pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com, corbet@lwn.net, david@redhat.com,
  mhocko@suse.com
 Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
  linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
@@ -98,98 +68,112 @@ Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
  Will McVicker <willmcvicker@google.com>,
  "stefan.schmidt@linaro.org" <stefan.schmidt@linaro.org>
 References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
-From: Eugen Hristev <eugen.hristev@linaro.org>
+ <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+Hi,
 
+On 12/12/25 10:48 PM, Eugen Hristev wrote:
+> 
+> 
+> On 11/19/25 17:44, Eugen Hristev wrote:
+>> meminspect is a mechanism which allows the kernel to mark specific memory
+>> areas for memory dumping or specific inspection, statistics, usage.
+>> Once regions are marked, meminspect keeps an internal list with the regions
+>> in a dedicated table.
+> 
+> [...]
+> 
+> 
+>> I will present this version at Plumbers conference in Tokyo on December 13th:
+>> https://lpc.events/event/19/contributions/2080/
+>> I am eager to discuss it there face to face.
+> 
+> Summary of the discussions at LPC talk on Dec 13th:
+> 
+> One main idea on the static variables annotation was to do some linker
+> magic, to create a list of variables in the tree, that would be parsed
+> by some script, the addresses and sizes would be then stored into the
+> dedicated section at the script level, without having any C code change.
+> Pros: no C code change, Cons: it would be hidden/masked from the code,
+> easy to miss out, which might lead to people's variables being annotated
+> without them knowing
+> 
+> Another idea was to have variables directly stored in a dedicated
+> section which would be added to the table.
+> e.g. static int __attribute(section (...)) nr_irqs;
+> Pros: no more meminspect section Cons: have to keep all interesting
+> variables in a separate section, which might not be okay for everyone.
+> 
+> On dynamic memory, the memblock flag marking did not receive any obvious
+> NAKs.
+> 
+> On dynamic memory that is bigger in size than one page, as the table
+> entries are registered by virtual address, this would be non-contiguous
+> in physical memory. How is this solved?
+> -> At the moment it's left for the consumer drivers to handle this
+> situation. If the region is a VA and the size > PAGE_SIZE, then the
+> driver needs to handle the way it handles it. Maybe the driver that
+> parses the entry needs to convert it into multiple contiguous entries,
+> or just have virtual address is enough. The inspection table does not
+> enforce or limit the entries to contiguous entries only.
+> 
+> On the traverse/notifier system, the implementation did not receive any
+> obvious NAKs
+> 
+> General comments:
+> 
+> Trilok Soni from Qualcomm mentioned they will be using this into their
+> software deliveries in production.
+> 
+> Someone suggested to have some mechanism to block specific data from
+> being added to the inspection table as being sensitive non-inspectable
+> data.
+> [Eugen]: Still have to figure out how that could be done. Stuff is not
+> being added to the table by default.
+> 
+> Another comment was about what use case there is in mind, is this for
+> servers, or for confidential computing, because each different use case
+> might have different requirements, like ignoring some regions is an
+> option in one case, but bloating the table in another case might not be
+> fine.
+> [Eugen]: The meminspect scenario should cover all cases and not be too
+> specific. If it is generic enough and customizable enough to care for
+> everyone's needs then I consider it being a success. It should not
+> specialize in neither of these two different cases, but rather be
+> tailored by each use case to provide the mandatory requirements for that
+> case.
+> 
+> Another comment mentioned that this usecase does not apply to many
+> people due to firmware or specific hardware needed.
+> [Eugen]: one interesting proposed usecase is to have a pstore
+> driver/implementation that would traverse the inspection table at panic
+> handler time, then gather data from there to store in the pstore
+> (ramoops, mtdoops or whatever backend) and have it available to the
+> userspace after reboot. This would be a nice use case that does not
+> require firmware nor specific hardware, just pstore backend support.
+> 
+> Ending note was whether this implementation is going in a good direction
+> and what would be the way to having it moving upstream.
+> 
+> Thanks everyone who attended and came up with ideas and comments.
+> There are a few comments which I may have missed, so please feel free to
+> reply to this email to start a discussion thread on the topic you are
+> interested in.
+> 
+> Eugen
+> 
 
-On 11/19/25 17:44, Eugen Hristev wrote:
-> meminspect is a mechanism which allows the kernel to mark specific memory
-> areas for memory dumping or specific inspection, statistics, usage.
-> Once regions are marked, meminspect keeps an internal list with the regions
-> in a dedicated table.
+Maybe you or someone else has already mentioned this. If so, sorry I missed it.
 
-[...]
+How does this compare or contrast to VMCOREINFO?
 
+thanks.
+-- 
+~Randy
 
-> I will present this version at Plumbers conference in Tokyo on December 13th:
-> https://lpc.events/event/19/contributions/2080/
-> I am eager to discuss it there face to face.
-
-Summary of the discussions at LPC talk on Dec 13th:
-
-One main idea on the static variables annotation was to do some linker
-magic, to create a list of variables in the tree, that would be parsed
-by some script, the addresses and sizes would be then stored into the
-dedicated section at the script level, without having any C code change.
-Pros: no C code change, Cons: it would be hidden/masked from the code,
-easy to miss out, which might lead to people's variables being annotated
-without them knowing
-
-Another idea was to have variables directly stored in a dedicated
-section which would be added to the table.
-e.g. static int __attribute(section (...)) nr_irqs;
-Pros: no more meminspect section Cons: have to keep all interesting
-variables in a separate section, which might not be okay for everyone.
-
-On dynamic memory, the memblock flag marking did not receive any obvious
-NAKs.
-
-On dynamic memory that is bigger in size than one page, as the table
-entries are registered by virtual address, this would be non-contiguous
-in physical memory. How is this solved?
--> At the moment it's left for the consumer drivers to handle this
-situation. If the region is a VA and the size > PAGE_SIZE, then the
-driver needs to handle the way it handles it. Maybe the driver that
-parses the entry needs to convert it into multiple contiguous entries,
-or just have virtual address is enough. The inspection table does not
-enforce or limit the entries to contiguous entries only.
-
-On the traverse/notifier system, the implementation did not receive any
-obvious NAKs
-
-General comments:
-
-Trilok Soni from Qualcomm mentioned they will be using this into their
-software deliveries in production.
-
-Someone suggested to have some mechanism to block specific data from
-being added to the inspection table as being sensitive non-inspectable
-data.
-[Eugen]: Still have to figure out how that could be done. Stuff is not
-being added to the table by default.
-
-Another comment was about what use case there is in mind, is this for
-servers, or for confidential computing, because each different use case
-might have different requirements, like ignoring some regions is an
-option in one case, but bloating the table in another case might not be
-fine.
-[Eugen]: The meminspect scenario should cover all cases and not be too
-specific. If it is generic enough and customizable enough to care for
-everyone's needs then I consider it being a success. It should not
-specialize in neither of these two different cases, but rather be
-tailored by each use case to provide the mandatory requirements for that
-case.
-
-Another comment mentioned that this usecase does not apply to many
-people due to firmware or specific hardware needed.
-[Eugen]: one interesting proposed usecase is to have a pstore
-driver/implementation that would traverse the inspection table at panic
-handler time, then gather data from there to store in the pstore
-(ramoops, mtdoops or whatever backend) and have it available to the
-userspace after reboot. This would be a nice use case that does not
-require firmware nor specific hardware, just pstore backend support.
-
-Ending note was whether this implementation is going in a good direction
-and what would be the way to having it moving upstream.
-
-Thanks everyone who attended and came up with ideas and comments.
-There are a few comments which I may have missed, so please feel free to
-reply to this email to start a discussion thread on the topic you are
-interested in.
-
-Eugen
 
