@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 855F4CBA396
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 03:59:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E19E6CBA3B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 04:01:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6EA94306A053
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 02:59:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3F7AB306731D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 03:01:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73EB72F1FCA;
-	Sat, 13 Dec 2025 02:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 296E0274FCB;
+	Sat, 13 Dec 2025 03:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NbGcO2MI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3nhlJCo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE2E238C03;
-	Sat, 13 Dec 2025 02:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E8354763;
+	Sat, 13 Dec 2025 03:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765594743; cv=none; b=RxFJbi2d9lgfKq9/w1s+v8IIrnho5W6GqbJCYLKgz5WWZGJ73JplEmAFmpFNHjaBj9QorKE7Th4J2ExfoVEwGBWQ+uZQNYcLEQXAgLw/fxE5aOU0Z0OkBUtmX7JzUlpNWr+A8yZOzK2qVl39whewGYibniJioxaiZQJ7ZXLX5L0=
+	t=1765594884; cv=none; b=DkcUKLVh27jlMrgEvELkmIYpwEePhMaAj0uFoBWJuEO5BKQMaa6JvuobKL+Y4Qh2pj0kUnvcldTphqKZaUDbuvI3vlVt33/eII/SZXNUXYMMgqQtIcB2cPyja1sO0iBT42Hrr45ncn5Sv58SyVZjzYWW2HoA8OplKG+coeHLLTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765594743; c=relaxed/simple;
-	bh=KNH4RZL5PUFyyCM7KZsz16mXm7HYj28WnHjsws4VIXw=;
+	s=arc-20240116; t=1765594884; c=relaxed/simple;
+	bh=u4uC+opD9/GDpFJsYurkfVKTjIdwkKonZMXbeLIgp5E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JFOHfl1t3NxUDWGptauXRWZD1A5f3drzbkePmXxWWmKn8P7ROwr/Mq35+bcj9lO0pNFMLOW3QnlUj8fPIIIro/6Dr8ZmcuFSWCdJ6atViEe0DiyuOwUC8M9AZzGf+oOuibo166G7NU1VDlX3WHBgzelCO2yhcnxeRiUCMC4kDHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbGcO2MI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F6FC4CEF1;
-	Sat, 13 Dec 2025 02:58:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ycxte6eVEDoDTVr4fOL0Lgn08HmeKi1bB4Bsz7TssGbDQuksHmOx/D8uehCeGv3cKbxcuOYEvIKJVxd0pFGDMJCgY9kvCIDv+ofTLok2Qo66jbQX/PlfkSkm6VOf057rVO4XuM7ElDGfs/CVyzmkcVyK7k2lXQxMUKaI0t/gMIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3nhlJCo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD92C4CEF5;
+	Sat, 13 Dec 2025 03:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765594742;
-	bh=KNH4RZL5PUFyyCM7KZsz16mXm7HYj28WnHjsws4VIXw=;
+	s=k20201202; t=1765594883;
+	bh=u4uC+opD9/GDpFJsYurkfVKTjIdwkKonZMXbeLIgp5E=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NbGcO2MIOVUn/ry7gCdKnJs3l6qlwFRxPB3pgc+cbGlDEP3T0pp7H6H7vEwIyp/Gm
-	 U7LIILqAZzdtEaconNoYl1LBBtaHqeoxuJ7ns2TVlNaHG2FdNwKKAr1pvaixwrzvmk
-	 7pIMhvloTDvZTrBLAtolu4UauWO/iW/FB4SM+X2+ufjxcFUdkGrun4NPhzPSgvJAny
-	 lNbizq4d53nCtFXyevHgT2peCHFgqKyrUS8KzbK0E58HOge8bbIQir7a9525+JXlPF
-	 Z4odhM8vaBUglqdz8m4Zg15qSDTHOV12skFGdTSgKs/Je7HKZU3m8bQAvclO+TEXp7
-	 zhT8L4w2gz/CQ==
-Message-ID: <02201ae8-d705-4896-a3ff-9b2d5cf833f8@kernel.org>
-Date: Sat, 13 Dec 2025 03:58:52 +0100
+	b=G3nhlJCoMGvmOz+XiMZc/DcR6HIW5jKCvJVIs1tjc0OQBqIbqU2hRHpQOfjfRhtNF
+	 IgbI6VXcef8yOWWk5ik0IBpVRTS/+jzGGw5jDQoKUtY35IRtJNy6fmDtUAPGEjLEEq
+	 QbsjSXnjCE00gd8GzeygvC1Gdw90e4t2YrFBtERJ+AbTAP9uPM+yaP/++sibFxJcnq
+	 LPlw98k+NlL5dvbWpIzE9HQKvbWvFtvFwqUJF1Yr/4sqg0Flj90dgP1DImTese0a50
+	 QhM6qH8F/NZHqML2xcG3TLQplB754leenZbK95FHsPAo8zouQBkbLXK/ySETrb3l5B
+	 oschu81Pdykow==
+Message-ID: <eb752290-0eb3-4817-b3ca-91a4f423dac4@kernel.org>
+Date: Sat, 13 Dec 2025 04:01:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,32 +48,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: Remove unused includes
+Subject: Re: [PATCH] arm/arm64: dts: st: Drop unused .dtsi
 To: "Rob Herring (Arm)" <robh@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michal Simek <michal.simek@amd.com>, Vinod Koul <vkoul@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>,
- =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
- Andy Shevchenko <andy@kernel.org>, Yong Wu <yong.wu@mediatek.com>,
- Peter Rosin <peda@axentia.se>, Linus Walleij <linusw@kernel.org>,
- Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>, Philipp Zabel
- <p.zabel@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-iio@vger.kernel.org,
- iommu@lists.linux.dev, linux-gpio@vger.kernel.org,
- linux-sunxi@lists.linux.dev, imx@lists.linux.dev, linux-sound@vger.kernel.org
-References: <20251212231203.727227-1-robh@kernel.org>
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Viresh Kumar <vireshk@kernel.org>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-renesas-soc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ soc@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-msm@vger.kernel.org
+References: <20251212203226.458694-3-robh@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,21 +108,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251212231203.727227-1-robh@kernel.org>
+In-Reply-To: <20251212203226.458694-3-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/12/2025 00:11, Rob Herring (Arm) wrote:
-> Remove includes which are not referenced by either DTS files or drivers.
-> 
-> There's a few more which are new, so they are excluded for now.
+On 12/12/2025 21:32, Rob Herring (Arm) wrote:
+> These .dtsi files are not included anywhere in the tree and can't be
+> tested.
 > 
 > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>  arch/arm/boot/dts/st/spear320s.dtsi           | 24 -------
+>  .../boot/dts/st/stm32mp15xxab-pinctrl.dtsi    | 57 ---------------
+>  arch/arm64/boot/dts/qcom/msm8996-v3.0.dtsi    | 63 ----------------
 
 
-Oh yes!
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+This should go to the qcom one.
 
 Best regards,
 Krzysztof
