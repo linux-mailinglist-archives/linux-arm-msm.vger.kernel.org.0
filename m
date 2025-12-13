@@ -1,80 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B30ECBA695
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 08:23:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04DECCBA69C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 08:28:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0899930D15FD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 07:23:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 91C6830B5B34
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 07:28:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EADA8279795;
-	Sat, 13 Dec 2025 07:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B84A275112;
+	Sat, 13 Dec 2025 07:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hd5IO/Ik"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GuwYDZsp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A71258CD9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 07:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3351A3C38;
+	Sat, 13 Dec 2025 07:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765610589; cv=none; b=J8EzaP0Y69uwZjr0FZ1cF4fatPLR2gZ2LUDVUkumfJyMdjeAAdH9XfYuwDd3f/FJ5dBwF4Di25LBuY55LO1AHY7QmlXHgRE0QiMhkwfjWPCX6Xu0+3Ctinv0z5jnoEtq2sFCU8AxNqox7iYSaw5xu87EnXspWdOwMUxlUljBVdY=
+	t=1765610923; cv=none; b=kXmb11RP2yR0cWOwglBA9gtrWFMSCOqNY/SJ8EyZ7MU69n2CMxwbj0LkNEFrwj2eENXK4Bv3wyo9bDNcR8hk0vPyMLa6DkxoBtsKfoWx0puohbEGq7HTunLPe9McVbwiy4FjiCSyeC9J0ImSRfnhTyv1C1QcBu2++cRjjUScYmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765610589; c=relaxed/simple;
-	bh=9Qa+PthUmnTltiZTazohO99moG5pdpcX7qRMBsxF/ys=;
+	s=arc-20240116; t=1765610923; c=relaxed/simple;
+	bh=I8KHB05J4hzU7RAcGfM4K+COzPxnPfyndjSsOY4V+h8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EnJ2EbyZ/T+mUWr/RNnlp3haDMj32CgcNIndo0bFIf6V8y4pYBjijxVaCGWigoq4RkohOUhzAPHw6FWC1d9lDCgyJI1EV1ifyK0ommmYSySnpOF46VCy13CPmqUlZRl8C1cQzcBdESFhAkzxXf0ks/QJ9cYbvlt9ancUuoMViXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hd5IO/Ik; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-34374febdefso2051220a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 23:23:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765610587; x=1766215387; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qS/a8O0BbZSZZsXyGtd7peZrK8putFww9+X+USFCeDw=;
-        b=hd5IO/IkAS9Cts2py6hsAvieVf9h9ZCCP+wq7vdZv7lGLHc5Ult5/ZSoGo16bFFEi9
-         IIUP5p/qP+Cq74AfbT8Ijn1rQt0YfoBujNP+PLlo3DLIZgqZe7QLOTGgzVNnX3XPq6y2
-         OxFZMhGSuLqL7C7N7X12CxPkge2OnVhZsr7umtXcTGBiifiHTF4A/bT//HVcNSx+lxPM
-         2SKqJ39F7qwfflmuEa+va62mlcfawqpEBCEFusZvUhYwhLYHjcTiAwl7s1RfyM8dQElg
-         l5zPl8kSkv77Dr4s+Jtq4y76qqnXkYlH0D0Bu0RvCUpoVs2eiIwOW/k9hLe6EUNWi5O4
-         F52Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765610587; x=1766215387;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qS/a8O0BbZSZZsXyGtd7peZrK8putFww9+X+USFCeDw=;
-        b=kM3HHXfr31mfrXXxVDCgagXm+mawjfORtnDvU9Q0Ccnxp4Kv85Ol6xxAol+eutRfnK
-         tExNiyybtU+lPpJftAfvRTerU1imKYrJdMIF7HQfPTn/hlVTBUT6WpGd5QLqFgMhVapA
-         P9YNvOP+S5XLcWslaQfX/NjTGaynu03ewjZ5FL5iLtRQDMkKwj8fUf2wlK0EJUO3/UX/
-         u3I8pz5vLgfWz8kfThsTSEqfQdYdlGcNBUL9to6uZaMOUyrmy8UuIMK6yfhKlVIHsm/D
-         9ROxhg1SEHn7H6lOhLaNeRQCOepCzO1kZlA7hvvYqvkuNpk+LgJy2ijeurTa/m2IJ3EX
-         Z1yw==
-X-Forwarded-Encrypted: i=1; AJvYcCUzpKBFFx0QNluuZQHapz/eoAuofzS7bKaNGLjZowljnQD82x0hq3vDOy/d0itWrVvuUdUsTT1wnHSpgfh1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNTDJ3mAN7Pl+8XRgmEU+1oSvJ+jg5/Y+8RF+rn6S/BzrJwked
-	rpxOgxRbMiI4TPLA5Rv4MHklbiIdlTXs5XWKqZ9XiGdpuK5co5I4z4Nbf7vp6t7f4vE=
-X-Gm-Gg: AY/fxX4Talw0bUMVa0/nsd1YVWwk2+mZfTh0b2Aq/acFj0apzhk3IZKZsVtihR2Js1/
-	sve82sSOx0VyJiqp8dOGvVvSLBBXZZ8I4yjoDkMKHXJkkRNpITnTPH/p4eTnllXWhOfnr7UNB6O
-	/LGi1k4fdbVvkOeEdvWITTskOOu7gv8H5sMTXJ6Vk3SCAWVx44N6vbslmnULj20Yom7Iyjt3ZpH
-	MEpXQRJq6NO/7ihxZZMvNjmL2blwu8adgz/tz0aoe00F/q66qvz3RFVE2F8o2FxceT/9FkjD9YX
-	WqnzTzwMioPuwH27vnJKBgXG7KpnmgSgJdqSk5cmK4Ck/J8Af4gYNixF0MgXlglY8RRUrQXANxk
-	D6aTWtKKMbMc7LBRUacnX0bD4iLs4/95CFqsZ7gJZzP3Q1TfHM1a/Jch/hRSvqBIglBm8pTzL+D
-	PCv+Q27Yv/ii32rUbApVIdB1pT0+5c/mePNKXTXkvryvmVGat3H1g=
-X-Google-Smtp-Source: AGHT+IF5ZAK05FTZM7z1I/Tfu2uwtqip2Rr6c/twbgvqZujsfkv8PIP29+IUmV2/Et+MT9YWs2FBBQ==
-X-Received: by 2002:a17:903:2c07:b0:29d:df04:fcdf with SMTP id d9443c01a7336-29f2436dfb5mr47558295ad.42.1765610586985;
-        Fri, 12 Dec 2025 23:23:06 -0800 (PST)
-Received: from [10.200.3.203] (p99250-ipoefx.ipoe.ocn.ne.jp. [153.246.134.249])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29f2563b116sm39121255ad.102.2025.12.12.23.22.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Dec 2025 23:23:06 -0800 (PST)
-Message-ID: <c3db6ccd-dfc7-4a6a-82b7-3d615f8cab4f@linaro.org>
-Date: Sat, 13 Dec 2025 09:22:56 +0200
+	 In-Reply-To:Content-Type; b=IimK+2xakRLlAj+bO4wFdAzYVPDfJvNDuiHS+1eVmQzCFxYsV2liVcIrGs1GlYMUOURYe4MEJhX5oWu1Lg2gaEzaD7b3qcFiOH3tpQhHqPFjsHEZ6LOh7r/ojx0imKiCg+kWaFuqGMQQwUJv1WoiCxWbV08UXq8U0/KHGySB6v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GuwYDZsp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC7CC116B1;
+	Sat, 13 Dec 2025 07:28:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765610922;
+	bh=I8KHB05J4hzU7RAcGfM4K+COzPxnPfyndjSsOY4V+h8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=GuwYDZspCrlYpM3yidUiAHpYR37T1Q4VnneG1ihkjSwHfoZCcVywhoxvYuSZxWN5D
+	 Z9OqOMjbPCmMPeA+HZln6BeweyVD+Z6hg6CYHPTY2F8ktiPFPwqd7EUpvJtBNp2Z7J
+	 12W9+OAtXmUrabNWkNAh4xCK4M3z/N8saObqde0ZqZJi9lQk6nMuQV2sKRPkXH5RL+
+	 bDXSWd1ekWMCLmmTA+/lANrI+O67Zkbd9rboRmzRU07ULyEBCQC+g16n62r6/C2NVd
+	 LjCCAAmBlmBzwLn7bnH8qpxR1rth9wlsEvgb/Ya1pTXpR2WBu9YiIGDIUUYBc/Q3Ba
+	 eu+3LAX6Sqmtg==
+Message-ID: <37ef8a9e-0ebc-4d31-99e1-3f0512d73412@kernel.org>
+Date: Sat, 13 Dec 2025 07:28:32 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,156 +48,143 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] Introduce meminspect
-To: Randy Dunlap <rdunlap@infradead.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com, corbet@lwn.net, david@redhat.com,
- mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org,
- Trilok Soni <tsoni@quicinc.com>, Kaushal Kumar <kaushalk@qti.qualcomm.com>,
- Shiraz Hashim <shashim@qti.qualcomm.com>,
- Peter Griffin <peter.griffin@linaro.org>, stephen.s.brennan@oracle.com,
- Will McVicker <willmcvicker@google.com>,
- "stefan.schmidt@linaro.org" <stefan.schmidt@linaro.org>
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
- <5903a8e1-71c6-4546-ac50-35effa078dda@infradead.org>
-From: Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
+ description
+To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
+ Kapatrala Syed <akapatra@quicinc.com>,
+ Hariram Purushothaman <hariramp@quicinc.com>,
+ Richard Acayan <mailingradian@gmail.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <-p_V50_c9ufrDqGMvZ5pwIXywQxh2C6Rjo4IEUlVAeFJouqq3zlWRt-VsIRsCmGwuvslk9MU3XxtxyTZrXuSSg==@protonmail.internalid>
+ <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
 Content-Language: en-US
-In-Reply-To: <5903a8e1-71c6-4546-ac50-35effa078dda@infradead.org>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 12/13/25 08:57, Randy Dunlap wrote:
-> Hi,
+On 12/12/2025 22:55, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
 > 
-> On 12/12/25 10:48 PM, Eugen Hristev wrote:
->>
->>
->> On 11/19/25 17:44, Eugen Hristev wrote:
->>> meminspect is a mechanism which allows the kernel to mark specific memory
->>> areas for memory dumping or specific inspection, statistics, usage.
->>> Once regions are marked, meminspect keeps an internal list with the regions
->>> in a dedicated table.
->>
->> [...]
->>
->>
->>> I will present this version at Plumbers conference in Tokyo on December 13th:
->>> https://lpc.events/event/19/contributions/2080/
->>> I am eager to discuss it there face to face.
->>
->> Summary of the discussions at LPC talk on Dec 13th:
->>
->> One main idea on the static variables annotation was to do some linker
->> magic, to create a list of variables in the tree, that would be parsed
->> by some script, the addresses and sizes would be then stored into the
->> dedicated section at the script level, without having any C code change.
->> Pros: no C code change, Cons: it would be hidden/masked from the code,
->> easy to miss out, which might lead to people's variables being annotated
->> without them knowing
->>
->> Another idea was to have variables directly stored in a dedicated
->> section which would be added to the table.
->> e.g. static int __attribute(section (...)) nr_irqs;
->> Pros: no more meminspect section Cons: have to keep all interesting
->> variables in a separate section, which might not be okay for everyone.
->>
->> On dynamic memory, the memblock flag marking did not receive any obvious
->> NAKs.
->>
->> On dynamic memory that is bigger in size than one page, as the table
->> entries are registered by virtual address, this would be non-contiguous
->> in physical memory. How is this solved?
->> -> At the moment it's left for the consumer drivers to handle this
->> situation. If the region is a VA and the size > PAGE_SIZE, then the
->> driver needs to handle the way it handles it. Maybe the driver that
->> parses the entry needs to convert it into multiple contiguous entries,
->> or just have virtual address is enough. The inspection table does not
->> enforce or limit the entries to contiguous entries only.
->>
->> On the traverse/notifier system, the implementation did not receive any
->> obvious NAKs
->>
->> General comments:
->>
->> Trilok Soni from Qualcomm mentioned they will be using this into their
->> software deliveries in production.
->>
->> Someone suggested to have some mechanism to block specific data from
->> being added to the inspection table as being sensitive non-inspectable
->> data.
->> [Eugen]: Still have to figure out how that could be done. Stuff is not
->> being added to the table by default.
->>
->> Another comment was about what use case there is in mind, is this for
->> servers, or for confidential computing, because each different use case
->> might have different requirements, like ignoring some regions is an
->> option in one case, but bloating the table in another case might not be
->> fine.
->> [Eugen]: The meminspect scenario should cover all cases and not be too
->> specific. If it is generic enough and customizable enough to care for
->> everyone's needs then I consider it being a success. It should not
->> specialize in neither of these two different cases, but rather be
->> tailored by each use case to provide the mandatory requirements for that
->> case.
->>
->> Another comment mentioned that this usecase does not apply to many
->> people due to firmware or specific hardware needed.
->> [Eugen]: one interesting proposed usecase is to have a pstore
->> driver/implementation that would traverse the inspection table at panic
->> handler time, then gather data from there to store in the pstore
->> (ramoops, mtdoops or whatever backend) and have it available to the
->> userspace after reboot. This would be a nice use case that does not
->> require firmware nor specific hardware, just pstore backend support.
->>
->> Ending note was whether this implementation is going in a good direction
->> and what would be the way to having it moving upstream.
->>
->> Thanks everyone who attended and came up with ideas and comments.
->> There are a few comments which I may have missed, so please feel free to
->> reply to this email to start a discussion thread on the topic you are
->> interested in.
->>
->> Eugen
->>
+> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
+> voltage from the description.
 > 
-> Maybe you or someone else has already mentioned this. If so, sorry I missed it.
+> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda regulator descriptions sdm845")
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> Added only Fixes tag for the initial commit, not all the copy-paste
+> propagated ones.
+> ---
+>   Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
+>   6 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> How does this compare or contrast to VMCOREINFO?
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> index 019caa2b09c32..9009cfe993d75 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> @@ -130,7 +130,7 @@ properties:
 > 
-> thanks.
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> index ee35e3bc97ffd..cb922f90fe900 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> @@ -129,7 +129,7 @@ properties:
+> 
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> index c99fe4106eee9..2231d7216f62a 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> @@ -268,7 +268,7 @@ properties:
+> 
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>   required:
+>     - clock-names
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> index 35c40fe223767..8e6ca94c88695 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> @@ -95,7 +95,7 @@ properties:
+> 
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> index 82bf4689d3300..d50e096b900db 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> @@ -211,7 +211,7 @@ properties:
+> 
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>   required:
+>     - clock-names
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> index ebf68ff4ab961..ccd2d024bfd10 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> @@ -300,7 +300,7 @@ properties:
+> 
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+> 
+>   required:
+>     - clock-names
+> 
+> ---
+> base-commit: d9771d0dbe18dd643760431870a6abf9b0866bb0
+> change-id: 20251212-docs-camss-fixes-0fa525271951
+> 
+> Best regards,
+> --
+> David Heidelberg <david@ixit.cz>
+> 
+> 
+> 
 
-This inspection table could be created in an VMCOREINFO way, the patch
-series here[1] is something that would fit it best .
+I think this is copy/paste legacy error.
 
-The drawbacks are :
-some static variables have to be registered to VMCOREINFO in their file
-of residence. This means including vmcoreinfo header and adding
-functions/code there, and everywhere that would be needed , or , the
-variables have to be un-static'ed , which is a no-go.
-This received more negative opinions on that particular patch series.
-The annotation idea seemed cleaner and simpler, and more generic.
+The voltage level should be more usefully encoded in the name anyway.
 
-We could add more and more entries to the vmcoreinfo table, but that
-would mean expanding it a lot, which it would maybe defy its purpose,
-and be getting too big, especially for the cases where custom drivers
-would like to register data.
-
-How I see it, is that maybe the vmcoreinfo init function, could also
-parse the inspection table and create more entries if that is needed.
-So somehow memory inspection is a superset or generalization , while
-VMCOREINFO is a more particular use case that would fit here.
-
-Do you think of some better way to integrate the meminspect table into
-VMCOREINFO ?
-
-[1]
-https://lore.kernel.org/all/20250912150855.2901211-1-eugen.hristev@linaro.org/
+---
+bod
 
