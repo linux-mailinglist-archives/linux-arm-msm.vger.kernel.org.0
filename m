@@ -1,136 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-85150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC4A7CBA899
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 13:00:44 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0BC7CBA928
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 13:38:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A0A7F30DB8A6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 12:00:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 77C1D30094BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 12:38:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47DEC30146E;
-	Sat, 13 Dec 2025 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E3F19067C;
+	Sat, 13 Dec 2025 12:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VWjidaZD"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j5r3tvR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109771DF75D;
-	Sat, 13 Dec 2025 12:00:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447E37081F;
+	Sat, 13 Dec 2025 12:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765627223; cv=none; b=mRydWs6hTk0VXjnAW9+Cu0WzYQJ3pzfZx4utlHn8ipFiN9Ny1e/VFjsiT2jeHlfjI+2AQz7d94JbeCD9KXuObs+zpPEW5YZMI87MTlQqd8FUkj+Owf/wLYGg54FZ40ktBUg00cLihPEDamF5eNJAgLkQaWIlDHcvMPq0c9Nwks0=
+	t=1765629525; cv=none; b=OMlEhF1vrZsrhy2WOWZoofK3DcZEUAbgVzh1cppWhTRtJWxhdmpdwhT75ikYc8MAD59DKNWNKT2LL35ak7x41GWRc304nj149GKKtrDGR1VlvteYMvKitHyxmyVXp1vCIJxYi5ZCz7jtt5vIgLbgUN68jxPat19bgUvmE5i7lcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765627223; c=relaxed/simple;
-	bh=LsAJIhrm9bzt7mSQU8oFFjwtQ0AC3TcH9tL6y0V0y1o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QAnoN+P3M53z/hCNMXgIHiiXPmft7yp8enhUY0ihUgs6mGZZchIzPyNzn5BaUqfU8Ie9ReOHhxrNWch2WLOGWSzOgf42lDcfwiDJ6E1GSrjcrt3cUebk3WJ9e/21ctDzhyxP40a+SZkaieGfj6XRMLaN/D2bLyJ0qf4tB80n1ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VWjidaZD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D18E7C4CEFB;
-	Sat, 13 Dec 2025 12:00:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765627222;
-	bh=LsAJIhrm9bzt7mSQU8oFFjwtQ0AC3TcH9tL6y0V0y1o=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=VWjidaZDXSavPwKPVjRkSpiTJAjBvKqC/1LxuFnF49ZZFuoOwLUgt/cdsEiwJTtgK
-	 W/WTT4/dknVOb9kp5WxCka7Uos7We72AOAHZU4bTU0VlYY+4GWBtSrSNilW2eX/6dM
-	 dZma5CDBgdH28ialCjGnPvPss7QQVE6JmevsFziupEkc9iJ13eFJvycqPwIzu1X7zB
-	 eWmb4w3qbX65en6o18w0FMvLLDf2j20AhKJzFz/AWIeI0ROscAifuyvX27Zp9xmD9q
-	 mkX57wkZsae15sovghR8O+ZejxMlqytUKTSyJ8W3jBzo3Y5o1Y5Xve1mO89JiL8uAi
-	 LulNZSuByxEOw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3B35D5B157;
-	Sat, 13 Dec 2025 12:00:22 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Sat, 13 Dec 2025 13:00:21 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: sdm845-db845c: Use introduced
- platform wide cam_mclk0_default
+	s=arc-20240116; t=1765629525; c=relaxed/simple;
+	bh=G27+91EwFmRmbX5tFcElcFokL9SyhLTKle8C2wMwatA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s0lS19i9EJQGCrXJ1hM91bmedjTECkUbozVLMk7EFsMdVK91ROvR43KIGz4daBMRxN5j+H4uLyripvWIfBt329GAqUaYC9QX4SWcOTlEIZp9soumdjZa0hUzHeweMEMPQWY2f7yWOXxYpzk9irFUv3rXvJsM15qSNe912mTbmFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j5r3tvR+; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1765629525; x=1797165525;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=G27+91EwFmRmbX5tFcElcFokL9SyhLTKle8C2wMwatA=;
+  b=j5r3tvR+TyaTPyt9fa21LY2Uds+vdNEGqX45TsDZ2jPTCSnJtQvLAIEw
+   QalpLTaqBODEgr0xFnnA0PZnN6cHG+9Lird3YoPLS8WGYT+/yr91SEmyY
+   HGpoXqtQesHpQjYYR9qA4Q3JDj8vNkrhH9Zmz8VwUg8PRIdmqVehr6AiU
+   ZDnVIOrLngtbXUJgEkhRyhWcF2GJm5G+JL4f3RrQtMBne/9FOplPgTSdN
+   rFGVVcf9IUg5UAv5dIQN/0MqjGOHZ5Qo0xHB8BIuguUgxllplopH3QGsN
+   93QhjGjj2rHMNgtrUfdRcbWGhxIcnRPHKqRBbxKO27bst3Z3bZlD7D4vL
+   w==;
+X-CSE-ConnectionGUID: dQA+iJCVRletzvNOC0kkdA==
+X-CSE-MsgGUID: +6cCc8JXSY+fDkBU6iyPxA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11641"; a="85018034"
+X-IronPort-AV: E=Sophos;i="6.21,146,1763452800"; 
+   d="scan'208";a="85018034"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2025 04:38:44 -0800
+X-CSE-ConnectionGUID: lCT32xwXSb+SwuspvsqIbw==
+X-CSE-MsgGUID: 1zp9xd16S5KiNKF0NrC5BA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,146,1763452800"; 
+   d="scan'208";a="196591578"
+Received: from lkp-server01.sh.intel.com (HELO d335e3c6db51) ([10.239.97.150])
+  by orviesa010.jf.intel.com with ESMTP; 13 Dec 2025 04:38:39 -0800
+Received: from kbuild by d335e3c6db51 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vUOtQ-000000007cL-3DKn;
+	Sat, 13 Dec 2025 12:38:36 +0000
+Date: Sat, 13 Dec 2025 20:38:29 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jie Gan <jie.gan@oss.qualcomm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+	Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>
+Subject: Re: [PATCH v8 2/8] coresight: core: add a new API to retrieve the
+ helper device
+Message-ID: <202512132024.rsZaNtbp-lkp@intel.com>
+References: <20251211-enable-byte-cntr-for-ctcu-v8-2-3e12ff313191@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251213-sdm845-mclk-v1-2-197bc947d4c6@ixit.cz>
-References: <20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz>
-In-Reply-To: <20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1459; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=R7wOc0/W3li22Q1J4/X9qHO1WroFHpmXK6iETy2cixs=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpPVVV2U1w3Lv52MNqjwbzlO3Q9Z3+2zXGDIi1b
- fZj7gY/pBuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaT1VVQAKCRBgAj/E00kg
- ciqqEACXJbHxjZ3BLIDW/tuHXpqh/j4bDcR89FPsnNqFZ7fXbJZJhZSErUwV+tn0KH88XJinS/k
- 6QTw3qzim1EDuILqD4daWRbkd5kV/Fh5aHSR/EQp4OGycl7wRRmRwrFOqykdjZ1BDj62MjWVj6q
- 4MNLeqa41tQUpb3ElJAm/JKn/3jK+S9PwcF8gtFNwhrKqnFmRoXptHkRmNzkUPrqJuSrXcmL7jk
- 2cXLrQP4Bv5E3gDqhFEEeqsucmfFVRXlJ2DWJQnujXmSiMAhg2T7NAPTWYoaSo8QkDbDju3CQTy
- 7wspl0ibtKHWX+fm0m0u8a6ss6TBqM1Ta9Fiz6EraPj6M4LHwUuAD9KbtpU1miw1hqCK5yWngyo
- rHHXIUtOkDHvxlJO14zP1g2eY8H3X9QjySHDa1RbzLfqpEtFRYc06vmXY/r2XAgD4Rgnv1d2XqV
- W0uwc53Kq9PPELEA4Q00ljmmRPrRNfRRB9rwy6+UWah8+FjOWbja6RKK9vSluj1WMYDcXmezn1M
- 8IclGpllQ9BvZu7Gc7IWc2S75Aua47GyFKpDne3FlZ2rrBDnVb1IxJXRS1X+fMY8XLq+GZE5eu4
- AsXPlHa/OgCfF7ZeD3TUFWLYiQdPW/wGjuPFHk/naQX/jTZQsL9vy369S8dO1yFQwQu0pZoIcYj
- tAMG9k5VmzdvCzQ==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251211-enable-byte-cntr-for-ctcu-v8-2-3e12ff313191@oss.qualcomm.com>
 
-From: David Heidelberg <david@ixit.cz>
+Hi Jie,
 
-All Snapdragon 845 platform has same controls GPIOs.
+kernel test robot noticed the following build warnings:
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 2 +-
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts                       | 8 --------
- 2 files changed, 1 insertion(+), 9 deletions(-)
+[auto build test WARNING on 47b7b5e32bb7264b51b89186043e1ada4090b558]
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index dbe1911d8e470..f6c2c98970d76 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -40,7 +40,7 @@ camera@10 {
- 		/* CAM0_RST_N */
- 		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
- 		pinctrl-names = "default";
--		pinctrl-0 = <&cam0_default>;
-+		pinctrl-0 = <&cam0_default &cam_mclk0_default>;
- 
- 		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
- 		clock-names = "xvclk";
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index ce23f87e0316b..981d19c20fa1f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -877,14 +877,6 @@ rst-pins {
- 			drive-strength = <16>;
- 			bias-disable;
- 		};
--
--		mclk0-pins {
--			pins = "gpio13";
--			function = "cam_mclk";
--
--			drive-strength = <16>;
--			bias-disable;
--		};
- 	};
- 
- 	cam3_default: cam3-default-state {
+url:    https://github.com/intel-lab-lkp/linux/commits/Jie-Gan/coresight-core-Refactoring-ctcu_get_active_port-and-make-it-generic/20251211-142430
+base:   47b7b5e32bb7264b51b89186043e1ada4090b558
+patch link:    https://lore.kernel.org/r/20251211-enable-byte-cntr-for-ctcu-v8-2-3e12ff313191%40oss.qualcomm.com
+patch subject: [PATCH v8 2/8] coresight: core: add a new API to retrieve the helper device
+config: arm64-randconfig-001-20251213 (https://download.01.org/0day-ci/archive/20251213/202512132024.rsZaNtbp-lkp@intel.com/config)
+compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project 1335a05ab8bc8339ce24be3a9da89d8c3f4e0571)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251213/202512132024.rsZaNtbp-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202512132024.rsZaNtbp-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> Warning: drivers/hwtracing/coresight/coresight-core.c:600 function parameter 'subtype' not described in 'coresight_get_helper'
+>> Warning: drivers/hwtracing/coresight/coresight-core.c:600 function parameter 'subtype' not described in 'coresight_get_helper'
 
 -- 
-2.51.0
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
