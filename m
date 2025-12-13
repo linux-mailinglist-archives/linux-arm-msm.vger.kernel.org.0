@@ -1,98 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-85138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5343FCBA503
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 06:11:47 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF16FCBA627
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 07:48:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7750F30012C3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 05:11:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3221F30011B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 06:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78889182D2;
-	Sat, 13 Dec 2025 05:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E5E1DF25C;
+	Sat, 13 Dec 2025 06:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a6GAvZBX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dad6rnze"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V/rv/PvX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC741E22E9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 05:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FFA70808
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 06:48:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765602705; cv=none; b=erEoA7WNIWJ6HpfjqyUlcWpChCoY2K54mns/uOR7zQBhvX4lMONmasy6uuB6e8WmHKgBnI5LDMUKj1bIWFwsINCXsy/K/cXIwi/NMmbPnK/L3WZiFN8q4uOjziQSZybko8vOU/HrYucvyJw3cHvB8B4whojLrVlM9axZDgpuvk4=
+	t=1765608525; cv=none; b=NqLdwl+q8ye25a1zLhCbtbZfyHGv85rzxCde2X1Jh/QD3g4yqIJowXJJ0r+l9OO0XNnSzJWHoNIqi5UG6ZUtH2gi5+NxbyI/TGvjT+/RR4F4GjmuJxPGD1lFB8Ckf+sAEWpaS+0EmyTS4xMeikrYfiz8cpmovA8htdMlBm1SizY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765602705; c=relaxed/simple;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	h=Message-ID:Date:MIME-Version:To:From:Content-Type; b=NKkovefBGt44h/JY4p1I+OKjr2DzA0ZloV4KkaH+pmGj3DMJyabcgi2+bP4lQYPMWdwcURU+sLa2fKr+oGynZ1iKUu32JUI5rawRO4kVhXxfYXj6Eaey4uzW5eJMSwlM78F17+Q1Z5enyqqMCQqOblZVf5StA5O6A3WgTvpZkpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a6GAvZBX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dad6rnze; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BD4h9p82038632
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 05:11:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:to; s=qcppdkim1; bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5
-	NMpJWZG3hSuFU=; b=a6GAvZBXmBCO1JPWHWCx4f+gnYExK4KFqisJ3LkPDD+53V
-	cQYKNyt+WynsTcolzg9Jt77t9Pp2n6PEtZ1TD/SIdzAWtr7qde2IR8FTpdMH76nY
-	vthEeCw39dSeVqEBnBobggIGRklr0WxCky6xIY9JHXHxRFuBrMq3oZf4M2AzJCbC
-	HhY/xWXxobsVGE93nAiI8V5lVwfhUrUAbxYNNvFPc6ByX1lHwX18WIFqNLUroEr1
-	rl+2SI7GNhxoDM2UQh76qMv89ZBT59AsJQdWGTkoxqQrzyDrerLy+M/Rl+wDfjGk
-	tUP6LoKUt/ek/hDYoc5ZfLHC5BrxL4RLEoi4Kr9Q==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b11c6g10k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 05:11:42 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bb2303fe94so2097508b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 21:11:42 -0800 (PST)
+	s=arc-20240116; t=1765608525; c=relaxed/simple;
+	bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nmTfwaRrsK5yIW5UVa02fAUIQWUZtfXfUSCVz9nVcV/bvyVI/jRGareeys770LZwc2sXCG6kb57FgTcSMhQ9Yc9d3JA6HHOuyFBVrlvOqn917k3B9CCIN7UTXZ3gPQKn3wNxuJFOIOh69f8KDq70MR2buEifuuR7FP0AyG7/k8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V/rv/PvX; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7b89c1ce9easo2211580b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Dec 2025 22:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765602702; x=1766207502; darn=vger.kernel.org;
-        h=content-transfer-encoding:from:to:content-language:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=dad6rnzemifhaStrkqRaM+6UO8vKyTorwwo4hLO/j09gMdD/ajC1KPpLF1YIzeyb9r
-         q3TGUqnlnqv/B8rEZ23iw+3D+i8gvw4tNkv5qCcFgyXodkj1RIPi9+YmgTOmcPSe+x/r
-         HCGR9dKc1uesx7Q6q/rKwRNr4nNiquEKbjJ06vSW3ZCbvWnCY7eKcoCTG5AlGSHuxTRJ
-         HJ/Vew164Maj4qRZiO6SyGTP+3wick2s8BGkOfra7TimvBTElbE5elTkDirSYoTHo2Ki
-         6lKIKVErZbI35gY58TcdVpzQKSKPqye27IdBjwC2HMIaP+APTIlXJKhZ8tezGtUzqljC
-         1fgg==
+        d=linaro.org; s=google; t=1765608523; x=1766213323; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
+        b=V/rv/PvXawv5NhhkAlMigL5A3ymTVqMjUYFcMQfTez04D7GoxsMFc3nHxvrRxu0+Bx
+         q/ag4Oils+4vYzzLAYkocXSctwh95tJIk7AfzCjE9g4pD/crZacOKcamExzMPbbSjgdU
+         KpahdKnZjsNP57dPYv7jaInJnq5iLcW9+0ZWmvT2OozAB0E1wIJitV0Dv73h8kHCl6Je
+         gm6vdMhqnhnrGP6jyc/R+pcvBWKNWf5P9e8+76Dii1eOMderlpgnbFv5KVQKR9ZZP1Q2
+         +7GgkROGYw6lLjhmPRcJU5vV3NKGCV2mkB6SwBClNERHoV9nzTfyhH/Rn2nie3gdTSjk
+         kIXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765602702; x=1766207502;
-        h=content-transfer-encoding:from:to:content-language:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=fMHoVAardTbS2qV49vJT54UigCrUdBHiEMmN2n2zUWPF7+BgB4JlWR70GvX8y9tGfF
-         gxfZuDl/N80vEaNxqYFTGL17atBYRQSgHRIo9zQ0wy5SVHkyxKJDHjbTM4sXJLPsIARn
-         4GuR5DCICZ7wkw2gluaz2j554zDAbBvPAABJCPw84/to8zCr0eit08CYxW6r7tXOVjPO
-         J/yf0egDJSJhRtjUctvFKWhH4FV/Bkq+ukwH0CClEpjIV4FjqUCluSbkjn3D22GrN+Xb
-         b56YBhfjXPMogTCXr8A3SPXoR42g55HZPiF4R06OaHXK5LUx2GTob2PrmhTXh3WiiY/y
-         aQ4A==
-X-Gm-Message-State: AOJu0Ywpb3biAPwfMgu/HB/FoxB+wIPip2ZPFTD0D6im15/4SAprEw5h
-	ucw1q63LB02fqK4TTBR2yG/oVOhy67FbKY+pRLA2VDi1I2cjM7/2NK6rUdFsBmGoCRCHFFUd8Td
-	pN767fAIfOe00P73oO+wg97bFcjxhXLaT8j+Ej6G2GI4WoD3ZahqmTH3OotXjICbx1wE1hL58A3
-	tg
-X-Gm-Gg: AY/fxX75j3KD0qt/T1zMYul9jBpSkEnpec1dkg6IjVBPEx3GhbMLAOCpZNx62rdabpH
-	I3IUW1SE7A5wlkIVn1ilUrsV/Ec5tmnykVeFwBodTlSMT38BHTTkQHeM0CPQWjHhm+O6UfJB1WL
-	VAil06zebESx3JixQjyoYBAmZGh22d9BF/1dt6JMFfiQ62K74mA4lcwkuLwyG72peRU2QucwqCU
-	/BVF2NuoGBp7BtmnceDtzIovLBrrL3jpZGbXSGBiAOEJO401zkOrBbdbjh2dB743Md1HQsBHMZj
-	xnUI7H3Pyub7HDw1pKwueSRAOjWrmDEU2EtRlq3UsxIHOh+jJYgv45Vzr2yIkyaVhUZMGTuP4wc
-	RTWyShplA9muW6yAugG2CNitLc5ybFb1De+N2balqDV6W+rKl
-X-Received: by 2002:a05:6a00:bc90:b0:7e8:4471:8c7 with SMTP id d2e1a72fcca58-7f6694aef80mr3822875b3a.40.1765602702167;
-        Fri, 12 Dec 2025 21:11:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgi0pTSvPNtSUFmLKIYaUPA6HlehsXWR7oga5QTlHJzHTQA+C2tQv4k30cuFVvEbABdkScDg==
-X-Received: by 2002:a05:6a00:bc90:b0:7e8:4471:8c7 with SMTP id d2e1a72fcca58-7f6694aef80mr3822858b3a.40.1765602701708;
-        Fri, 12 Dec 2025 21:11:41 -0800 (PST)
-Received: from [192.168.1.13] ([27.34.254.116])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c5093d5csm6640502b3a.49.2025.12.12.21.11.40
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1765608523; x=1766213323;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OSPLFg4W3QR5ByFn0Z+25izVWJy4kGkKLbWih19PHZA=;
+        b=hjkpHbbffozDd/asyUxhYLcCDWAgM5Oh9rtwBgPswm7zLUWKmBnYtx/uyU1eTsdoff
+         fds6E5P6KUp4t1ipKULlrxvM+JhF4FceOMm3bwNFAY8/thmXOpHFDJYl7gsYbkMhoAW1
+         2fXv1wPGPleMkwr04ygRFrBxndVwIIOQBYw4Nd6ys/b67kEJGK8iSxbfG6SLWV8OP6Wd
+         HqYRckGkqg9hP9ZHiO2BWwa42g76079IGNbFS3yYRUtPAuoqoeNHvb5hkajUUte8PcZ5
+         DWTzazgeoICcJLxyzoDkA+iXMkCOYYznMZODvQDTOJXS8RTc69RTUmFtMTLNCtvnvoHC
+         ZeDg==
+X-Gm-Message-State: AOJu0YyI3zSKr1WM8XKUJvXPx7sehPhplm0Rv9KUJ0AOTafb8ZVfUenI
+	riyOAykxjCtNsUp1BLBYcu/I5PabOZsSRAb8kGae127GaRjXl2yfHw+srHfsCUWcy/YB9RXgnLj
+	kN3py1g8=
+X-Gm-Gg: AY/fxX5DXR6srJUUGO3OVBHgBrmEJCLJKNLy/Tsm/rApT1ueInFN2+f23i3qSuDYOYq
+	GcyBSzTVxapcb7Fp8Q2WnabqjBbCOGccfToEY68aX5928b75TBzeLp4mQPE75NZ7i19gpKAL+Um
+	otZK+iMK9uDAwBaitUsv2U5Kg+MqVLRktOIc8R1CJwfZInysQZfAze5FaAz9oPMFfOwLIe9a7Km
+	tMMe/nO1Bb23/f1lfvXN7Gd6DU510FzlTCNbhoQMknmT3gvAv2f0ozUQknKgXTYQpB+nu2DSkq8
+	b/7mgKOXaM94Uv09p27TjAxZk3Tcwo1KliHIX+/4fHjxpgZmp4KFecX24iyQep4IQWU8bqT6Kl2
+	1pXhovIgV/H4GfMJqpbLUdczPo3+Q8QFLbpZsOoad2Rp5E9l0BOvTzqm8xPueCCER5jNwrMWUio
+	laNpuoUnvSM07vu+b2Z1G6KHgQ/Gxp1l8otFGJPEWfQ345LB4tBqJ7TQQ2lL85FQ==
+X-Google-Smtp-Source: AGHT+IHwMXPg7Qn0Ef9xWbq83SFpsB1sFhZLa5C8vjkRdWjkXJZFN6bz1qhctibBoHiLjB/xaNqEfg==
+X-Received: by 2002:a05:6a00:1c99:b0:7e8:4471:ae56 with SMTP id d2e1a72fcca58-7f6694a964bmr3530338b3a.34.1765608522549;
+        Fri, 12 Dec 2025 22:48:42 -0800 (PST)
+Received: from [10.200.3.203] (p99250-ipoefx.ipoe.ocn.ne.jp. [153.246.134.249])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c4ab52aasm6927000b3a.38.2025.12.12.22.48.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Dec 2025 21:11:41 -0800 (PST)
-Message-ID: <2ab1bb75-c2ec-4e72-96e1-6411005a9e21@oss.qualcomm.com>
-Date: Sat, 13 Dec 2025 10:41:37 +0530
+        Fri, 12 Dec 2025 22:48:41 -0800 (PST)
+Message-ID: <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
+Date: Sat, 13 Dec 2025 08:48:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,30 +82,114 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/26] Introduce meminspect
+To: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+ mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org,
+ Trilok Soni <tsoni@quicinc.com>, Kaushal Kumar <kaushalk@qti.qualcomm.com>,
+ Shiraz Hashim <shashim@qti.qualcomm.com>,
+ Peter Griffin <peter.griffin@linaro.org>, stephen.s.brennan@oracle.com,
+ Will McVicker <willmcvicker@google.com>,
+ "stefan.schmidt@linaro.org" <stefan.schmidt@linaro.org>
+References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+From: Eugen Hristev <eugen.hristev@linaro.org>
 Content-Language: en-US
-To: linux-arm-msm@vger.kernel.org
-From: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=actsXBot c=1 sm=1 tr=0 ts=693cf58f cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=mQ3mVlFQv8SU7HNyWwWuZg==:17
- a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=tclcd6dtLQvEqt9_mmAA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: 0O0LCGChnI8En8jQfLJjeOrxZDGrxG4w
-X-Proofpoint-GUID: 0O0LCGChnI8En8jQfLJjeOrxZDGrxG4w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDA0MCBTYWx0ZWRfXzPIPvdyLv9NJ
- 4e2M9rbQ+uLf1owkbcMONXpwUj/r/vl5c6jsfXdCa6SMzebkp+4JZREmuKcfarTe/fndAkeg7gC
- CxKnN+WFzo9wJVavHsGpT5ZiDvMQgnLyvcW3uwviLRIbcohNDhTNvsp05qDlb89iJyeC/vYbl4H
- IUMt8pljZy7nbMD3vkU79uAEE/jd4VM7wcaEMqedqyi1c0rNpSRjBakgoR/lXzWc10PGYEAr7Vk
- ExU62xVqCvxJt9BL5fCEUyKLT/WG3eJBLhvnvBDoC1kqbDkX6sB7gXXlQneRUN440+/DaRv2NEa
- 43ySf6Vbav5OZnX4zAknKxBBz8d1RO8hfK1gujreFCgMBHHNFgN7wMBEEfU3j0z/nvL2wYZ8419
- CPZKEiM9EpOmBj5GNxp+71sNUAQB6Q==
-X-Proofpoint-Virus-Version: 
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 spamscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512130040
 
+
+
+On 11/19/25 17:44, Eugen Hristev wrote:
+> meminspect is a mechanism which allows the kernel to mark specific memory
+> areas for memory dumping or specific inspection, statistics, usage.
+> Once regions are marked, meminspect keeps an internal list with the regions
+> in a dedicated table.
+
+[...]
+
+
+> I will present this version at Plumbers conference in Tokyo on December 13th:
+> https://lpc.events/event/19/contributions/2080/
+> I am eager to discuss it there face to face.
+
+Summary of the discussions at LPC talk on Dec 13th:
+
+One main idea on the static variables annotation was to do some linker
+magic, to create a list of variables in the tree, that would be parsed
+by some script, the addresses and sizes would be then stored into the
+dedicated section at the script level, without having any C code change.
+Pros: no C code change, Cons: it would be hidden/masked from the code,
+easy to miss out, which might lead to people's variables being annotated
+without them knowing
+
+Another idea was to have variables directly stored in a dedicated
+section which would be added to the table.
+e.g. static int __attribute(section (...)) nr_irqs;
+Pros: no more meminspect section Cons: have to keep all interesting
+variables in a separate section, which might not be okay for everyone.
+
+On dynamic memory, the memblock flag marking did not receive any obvious
+NAKs.
+
+On dynamic memory that is bigger in size than one page, as the table
+entries are registered by virtual address, this would be non-contiguous
+in physical memory. How is this solved?
+-> At the moment it's left for the consumer drivers to handle this
+situation. If the region is a VA and the size > PAGE_SIZE, then the
+driver needs to handle the way it handles it. Maybe the driver that
+parses the entry needs to convert it into multiple contiguous entries,
+or just have virtual address is enough. The inspection table does not
+enforce or limit the entries to contiguous entries only.
+
+On the traverse/notifier system, the implementation did not receive any
+obvious NAKs
+
+General comments:
+
+Trilok Soni from Qualcomm mentioned they will be using this into their
+software deliveries in production.
+
+Someone suggested to have some mechanism to block specific data from
+being added to the inspection table as being sensitive non-inspectable
+data.
+[Eugen]: Still have to figure out how that could be done. Stuff is not
+being added to the table by default.
+
+Another comment was about what use case there is in mind, is this for
+servers, or for confidential computing, because each different use case
+might have different requirements, like ignoring some regions is an
+option in one case, but bloating the table in another case might not be
+fine.
+[Eugen]: The meminspect scenario should cover all cases and not be too
+specific. If it is generic enough and customizable enough to care for
+everyone's needs then I consider it being a success. It should not
+specialize in neither of these two different cases, but rather be
+tailored by each use case to provide the mandatory requirements for that
+case.
+
+Another comment mentioned that this usecase does not apply to many
+people due to firmware or specific hardware needed.
+[Eugen]: one interesting proposed usecase is to have a pstore
+driver/implementation that would traverse the inspection table at panic
+handler time, then gather data from there to store in the pstore
+(ramoops, mtdoops or whatever backend) and have it available to the
+userspace after reboot. This would be a nice use case that does not
+require firmware nor specific hardware, just pstore backend support.
+
+Ending note was whether this implementation is going in a good direction
+and what would be the way to having it moving upstream.
+
+Thanks everyone who attended and came up with ideas and comments.
+There are a few comments which I may have missed, so please feel free to
+reply to this email to start a discussion thread on the topic you are
+interested in.
+
+Eugen
 
