@@ -1,250 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-85166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D136CBB8F3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 10:35:32 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7C31CBB983
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 11:36:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1373E3006AB1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 09:35:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 94F4D3003BF7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 10:36:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 090422BDC3F;
-	Sun, 14 Dec 2025 09:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7413A25DAEA;
+	Sun, 14 Dec 2025 10:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="K50dNiAK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J+BDsUow"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D06199FB0;
-	Sun, 14 Dec 2025 09:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48620FBF6;
+	Sun, 14 Dec 2025 10:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765704929; cv=none; b=UMRuwRdBSdT/c8U5pIiT0hvqjs2pFsFcpV2J5MmYfnkRHeGPCixT5Otc2Lu8MJeYHsWV16Yh4Ga/DyKcTjZkmczjo4/5dY+/N+Q6D3kSrhhQ7tVVl6k2rxYGYfQiK2JdY6YqwfiJlpDXsX6F0c4aFiTtONQxQrR+UQis5ZQmcao=
+	t=1765708593; cv=none; b=Gffu8worauoYReYiQlfoWjt9MzborZQDEJD9QraWaycx49P4BnGPYSqgx2NwFbl9a7kc5cETCEJncizlJEFdjgTUQft8ed1M3Yt879eYPaXi7Y6Z5xLjFEy27AM5pVNCCzknzpVce3XUrkcLlN2JN8nWQmInQmMP2YwL5tztDg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765704929; c=relaxed/simple;
-	bh=z4uLRSI/RsfVSf3WSE/RzhaFVNkBYN5eW1kJcBuDefY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UE1Q5iA3PtZCcMc3jMh08+dWgT8UWoK/DxWS9posmF5qm6OOs3JHRPJt20gZNyUAELI9ajauoMjk9tM0ea/Iu2ESuD0/8+l89FkLQl/W6unwIytUqJgI5JAeIJlFN7sjATi1ZjWHyAYk8E8zayZt1zCzT4sBDZf1N1wMWOT0GDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=K50dNiAK; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id A83A65340EB3;
-	Sun, 14 Dec 2025 10:35:14 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765704914;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=tMgjTzgxKuwd4mawBjuWpHsFIkkq8ldcQ3anb9nOhyk=;
-	b=K50dNiAKSIxpsuOyd3/iSylE8L69IURehIHgwD1JZBhIoRDuNcfuHiqtC7IwDXIVmlgfmW
-	Epl5NbGbRa5OXluAa96cM4CNv7h8Y4HsYHC8OhiBPu/8eakpr2+J9J4RTO2/zYOwPck4XC
-	yKBrYabSoQtOHClbi8Q5ONJ6UZD0ZrY=
-Message-ID: <b9b84317-a392-4f1e-aa8f-351e92c678a1@ixit.cz>
-Date: Sun, 14 Dec 2025 10:35:14 +0100
+	s=arc-20240116; t=1765708593; c=relaxed/simple;
+	bh=Bb3gaOEY5RHee7gQk1ex1YcCU+/dbzpvULfO5tzYYDQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mdzgplQ6VpZ5YgBTOb+jmlahJU3qYNJ3nGMYHUn/fXGFmuAi9o+eo7tM5I5PE4iG6bXTibvxUcjaPiQWTGv6nXXUltg6T3bJh5fwcUEgqeEk/3QvMGP7g0lxJkF45LvlqrMMHjPvVRnTQsvuSfP1IF6Oc28FvaF/UKOGKtlGT+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J+BDsUow; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD99C4CEF1;
+	Sun, 14 Dec 2025 10:36:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765708592;
+	bh=Bb3gaOEY5RHee7gQk1ex1YcCU+/dbzpvULfO5tzYYDQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J+BDsUowotkCEH5trAml11w3cO5apChP51JVU32tn21Y3uncQj6yGLu4SKw2QyShQ
+	 kMCiYFFafCJlLdXr6YKN3X9x2++OewbcWPJA5yy0/dvYV2Az6+BZC7oLUZEirLkEYQ
+	 ECv1znP9t11MxGSLCAjjX77tQhMj7ehAYYsqWCVKU+wKb7Jwy8N322zwjp5rtO8Vk2
+	 R8gjq+7MYyOUZwGILWv9MYOw9imZJinohJwlugVym74Tfatat5lMoyB0kK1SbPOfNq
+	 brQDqeC4FjI1wGfUBnLl8rwZrqXJcvXvn5BNjJRu/dtdkoXrXYrQ/8HxB/Y1W6C4Fn
+	 wZAD0uHXD1abQ==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 9C43D1AC5687; Sun, 14 Dec 2025 19:36:29 +0900 (JST)
+Date: Sun, 14 Dec 2025 19:36:29 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Jonathan Marek <jonathan@marek.ca>
+Cc: linux-arm-msm@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	"open list:QCOM AUDIO (ASoC) DRIVERS" <linux-sound@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 1/2] ASoC: codecs: lpass-wsa-macro: add
+ RX4/RX5/RX6/RX7/RX8
+Message-ID: <aT6TLZRgWwGjrLPD@sirena.co.uk>
+References: <20251125223848.1798-1-jonathan@marek.ca>
+ <20251125223848.1798-2-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
- description
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
- Kapatrala Syed <akapatra@quicinc.com>,
- Hariram Purushothaman <hariramp@quicinc.com>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
- <1e09a93a-d42f-4a23-b346-9f158a60d8aa@linaro.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <1e09a93a-d42f-4a23-b346-9f158a60d8aa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="eT4X1ujPdsk8ugJq"
+Content-Disposition: inline
+In-Reply-To: <20251125223848.1798-2-jonathan@marek.ca>
+X-Cookie: -- I have seen the FUN --
 
-On 14/12/2025 01:04, Vladimir Zapolskiy wrote:
-> On 12/13/25 00:55, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
->> voltage from the description.
->>
->> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda 
->> regulator descriptions sdm845")
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->> Added only Fixes tag for the initial commit, not all the copy-paste
->> propagated ones.
-> 
-> Generally it should be possible to specify a list of Fixes: tags.
-> 
-> However, despite the change is the proper one, there is an opinion that 
-> Fixes
-> tags are not applicable to dt bindings with a given reason that only 
-> executed
-> code can be fixed. So you may be asked to remove even a single Fixes tag.
-> 
->>   Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
->>   6 files changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p- 
->> camss.yaml
->> index 019caa2b09c32..9009cfe993d75 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->> @@ -130,7 +130,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>     ports:
->>       $ref: /schemas/graph.yaml#/properties/ports
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280- 
->> camss.yaml
->> index ee35e3bc97ffd..cb922f90fe900 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
->> @@ -129,7 +129,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>     ports:
->>       $ref: /schemas/graph.yaml#/properties/ports
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp- 
->> camss.yaml
->> index c99fe4106eee9..2231d7216f62a 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->> @@ -268,7 +268,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>   required:
->>     - clock-names
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670- 
->> camss.yaml
->> index 35c40fe223767..8e6ca94c88695 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
->> @@ -95,7 +95,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>     ports:
->>       $ref: /schemas/graph.yaml#/properties/ports
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845- 
->> camss.yaml
->> index 82bf4689d3300..d50e096b900db 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
->> @@ -211,7 +211,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>   required:
->>     - clock-names
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250- 
->> camss.yaml
->> index ebf68ff4ab961..ccd2d024bfd10 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
->> @@ -300,7 +300,7 @@ properties:
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      Phandle to regulator supply to PHY refclk pll block.
->>   required:
->>     - clock-names
->>
-> 
-> As for the change itself it is good, I'd prefer to get a correction
-> to 1.2V in the documentation rather than a complete removal though.
 
-What I'm seeing, while the vdda-pll is usually close to 1.2V, it seems 
-to me that's not everytime the case.
+--eT4X1ujPdsk8ugJq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Can you confirm it should be exactly 1.2V, if yes, I'll clarify it in 
-next version.
+On Tue, Nov 25, 2025 at 05:35:32PM -0500, Jonathan Marek wrote:
+> This allows playback using the WSA_2CH AIF, which feeds RX4 and RX5 on bo=
+th
+> WSA and WSA2.
+>=20
+> RX6/RX7/RX8 can be tested with the regular WSA AIF (the 3rd intf is RX8,
+> the 5th intf is RX6/7).
 
-David>
-> In any case,
-> 
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
+This doesn't apply against current code, please check and resend.
 
--- 
-David Heidelberg
+--eT4X1ujPdsk8ugJq
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmk+kywACgkQJNaLcl1U
+h9AHCAf+J0hVdJmLHtreA3iP43lWhh1jQak9lrRRHJ8QYyPjNznB9n3lzUTrrs1z
+EAy8CqQhqXEWnhcNnmEf37EiBEWu4fMCmW0T1KEb6tm3YRkia4DpFG8XPfumnXdE
++9Gsudx34Ykr/TFlaKNfHJpNvzV8jbpi8TEEdhpGjkHjLWqPF6RpD0Z2Y7/Ei491
+tGX7M0AwvY4w2w1LnMqTnbodlvKSycOvn4yraNjX2H99LyUAC4qnpfg/FQVOBiBr
+06VjNKKnFWJ5VauM+nZQKxMr/9kSB0+fvM8lmhgEKakOtvPmwxASDSfQnW4ptnXT
+6l3Ixdt5OHCjRptRO6DC+iu9TZPPQA==
+=JhlX
+-----END PGP SIGNATURE-----
+
+--eT4X1ujPdsk8ugJq--
 
