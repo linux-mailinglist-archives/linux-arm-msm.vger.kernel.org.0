@@ -1,152 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-85164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C62E7CBB526
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 01:13:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A49CCBB7B6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 08:53:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 658703008E9C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 00:13:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 842C53008FB2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 07:48:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEDEFF9E8;
-	Sun, 14 Dec 2025 00:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69BE9271A7B;
+	Sun, 14 Dec 2025 07:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V5dDYa6i"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ZpeQbYZv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337643B8D4C
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 00:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DBC21D3CD;
+	Sun, 14 Dec 2025 07:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765671182; cv=none; b=eYA/+S/fBBPsY0sYHxSKtygXSDAfBTMcUBq5WfEuW15TOTmveYmvOn1p9Z/vEeWl45SMdGxS6a4kWpsppM/5uKp/eDyajOfj5sAoYl+BS5nGabp2Ygm4fYxdtKqy5u41LbidG3JepFRQRmrX+jRoAE0kcCsNU2gBvTJ0sp4JvZM=
+	t=1765698480; cv=none; b=mBvz7pNNZdamuntrNJxqIo87409+xtwsOESeP9fAJBqurJ1TTVCGLxCVUeHGgiKiB3DTi0VNK8+eMg3P86hbMErPqTaKCFFdy+mWq+W3orYBo3KY7GisyFg7h3yyUTH6T/gYBbq0WuNxcbtctMXu1fXxz5pwbwPsN+qTIThe7Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765671182; c=relaxed/simple;
-	bh=vsvgbqhg3tSK6U4XQECKskE/ov7KmsHhac+n5VQ3Udw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d9X0iv1LuPfNWZiK/04ktQPz2j6tXtl38N/unZURB+oaxAMrC8z3aSC9eQfYzWFnl7muI64S7fRDVFMU3rm8StUimPURoNaJtOA9MholdEstefAgEMzCTBVol4u2xY5jYVa84FYODhEsURBnvoolrdUtnDFKpj0U0DkbChF6RZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V5dDYa6i; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-59426dc96f2so196186e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 16:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765671179; x=1766275979; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6cs2594TMmAznKRH01WTgorColGdcHW47FTc8OPu5Ls=;
-        b=V5dDYa6i22+s70n2bX4cGfZ697Gk4PcK1t58VlXHk/7F5/GYcN9QAh7ZBc4GdO9z5s
-         wl7V9lYKCMNv5uPtfQ7Fe2Noi3xyx8PKCB2/EwJVhKuXPsYZSiFtm37rtNmISmLeEYTv
-         UyOxkGnO/TcKYR7bjozjYJMTBu56FHHdK0KwziKS9u3X7YIhhftYiNrkVCp61LYB3rWK
-         am/OPBs2jM98tyq1aNnPgSNj5f34UGBNB5yjvyT+l+9+a3+ZoI4uzJqyrCga93Pwnj7O
-         ozTMnZqtOiSKjfT284/yKSt8sdg2PVj51UJ6yvvYPGzNiFsbHO3kkvnrw0kfWylMw1dw
-         48ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765671179; x=1766275979;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6cs2594TMmAznKRH01WTgorColGdcHW47FTc8OPu5Ls=;
-        b=kwugDd6TS5r9BOlRo4Pwvwg1lPyTqDbD44FS4cekgLEtGNzvHeR5yGT6KPhFwgU00P
-         jbuGwllR/UxMjAf07tuDw0HveMXfj/7FnBVvN1ukfEp0PxQKRXk1LICK+cgue69Bzbtz
-         YxOpORvFq36Z4gtsvGx2uWgJ35WJzOMv0MEZvo5Wr/lFL1VG77Hcbg+pM6Wwf0gD0gzR
-         fDZaB9K7/cOKDegTeggT2L6b/x1RRn+FTAlV+HSD7AXo665ThS4WfxX4QSDStjNH2RkD
-         BLfnGgZtC67XiVAopFi28vPf3YvhZweXg4z/sk/vSKEvOp9/gWk44HWpbKmQ/zfp96Y2
-         YAiQ==
-X-Gm-Message-State: AOJu0YxiLiHeI1CAkz7w5g3AKOdsC3izSruIDSOB9S1qqq1bvE61WvEs
-	5ynHZAskCwQsThZyDbDEqVQoy07xqiM++8/DNxTlgjoSSObyQzrMuftLqkelGZWuQPQ=
-X-Gm-Gg: AY/fxX4kkZhIqlHkT8lHZMPzEh03CnN64a0mqbr8X+2uGRIheVIL8WMMve5moqn6uB6
-	z5gUY2CV4EPoie+DcZhpR5gqOZQwH6HBbAJ1/TibNdcMwREMhDXdIW6qdu5viV1XTCv6ylMMNGE
-	6JbNiChmyfMgmK+v3edQUUxX1dBiB1nApI9FKHkIWm+DkbVIPDAJyeH2Dgz6+dSyd/5fDLa/SM/
-	2PyCYqhpln7Vm9nQVJ86QIzbaYWQxMH3Gkr78iI/v9W/4hknoxEEimGJ6/t0yLz5GNVLJAob/8o
-	dM+F8iI6sDE7Yjq2UVqNZ1AcJh5BgZI3P1uBRFCDcN3mWRVTgTUHOyVvuy7ekChhV6cDPeB+eXQ
-	hhCCkvX1CyJd1EwC40LDZTXz72vr4YJ/pZfoCXjo2QcJX8d/JvemcMUkDgyfm1QiYj8aCNKnvog
-	TUvzaNZjF8GgsEpzEpW83ctM9dJ/sytAynQWVcDyubdGccEqjR9yb5meA20UDJWNhPEioVD5L7K
-	H3O9mMFEzynwVw=
-X-Google-Smtp-Source: AGHT+IFm4BJTCDjreUh2T7xgcVbVJ0wHXDQMXAZTqYS6BUidZybUDCLVjfay5BiQaCQll7cj358FCw==
-X-Received: by 2002:a05:6512:ea3:b0:595:83c6:2228 with SMTP id 2adb3069b0e04-598fa9dd15bmr1086116e87.0.1765671179251;
-        Sat, 13 Dec 2025 16:12:59 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f3194dbcsm3466519e87.78.2025.12.13.16.12.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Dec 2025 16:12:57 -0800 (PST)
-Message-ID: <bac65324-6049-40d1-b196-6aeafd37366b@linaro.org>
-Date: Sun, 14 Dec 2025 02:12:55 +0200
+	s=arc-20240116; t=1765698480; c=relaxed/simple;
+	bh=ROTGzyfuiMBGAMSYOlNep8OvVSvit2dYTA4kwQD4KUA=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=MXWDbBvd3itdOlzKHm60PpTe3VbsQdLLpeTJ4Iu9p4W3IQhy6aPMN2LZAnpXTu3sCD6ip3LvG0Mgsp2Pi933GHjlqDGFPl3HYxj1pfKC9srTuAFuV7dpgJkI0yEGR9L8QXZrjEVlnh5NVeXo6xyuLBlxAlUl3UKSak02F3r1kac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ZpeQbYZv; arc=none smtp.client-ip=109.224.244.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1765698470; x=1765957670;
+	bh=ROTGzyfuiMBGAMSYOlNep8OvVSvit2dYTA4kwQD4KUA=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=ZpeQbYZvbxX199bGqyFndU3wirv4cUXn07YkZ2E1RVIZkBpGghGktonY7oU4aMgSE
+	 czO/ok8TfEpKMTThJSFzMhLRY1L5HtJHlGhAY4tMCx8cQdJqkaMhuUF/5vzaVyW40y
+	 6NjaKfIu2MOy3L26O65azetqDDcdyFZk1x4g/97jqeo1WLxcl9thhhS8/uuGhkRm+Q
+	 LGFx5tQLohIccVbDPPtML2MdFO+cJ6xQV0Vfwtew+5w7Qniwka6a61rI4mgsrz7Y40
+	 U7FkEv3FzZ/3yLr13J4c+SVl6e5as7mOefc62iSQooxl066uHExWRvMg/ks2ba0Mqp
+	 gqBKgawWT9NOA==
+Date: Sun, 14 Dec 2025 07:47:45 +0000
+To: Bjorn Andersson <andersson@kernel.org>
+From: Alexander Koskovich <AKoskovich@pm.me>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH] soc: qcom: pd-mapper: Add support for SM7635
+Message-ID: <20251214074736.2147462-1-akoskovich@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: a14da6da8ddae64cbb40d7f5e28000ac6eb55c27
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-db845c: Use introduced
- platform wide cam_mclk0_default
-To: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz>
- <20251213-sdm845-mclk-v1-2-197bc947d4c6@ixit.cz>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20251213-sdm845-mclk-v1-2-197bc947d4c6@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 12/13/25 14:00, David Heidelberg via B4 Relay wrote:
-> From: David Heidelberg <david@ixit.cz>
-> 
-> All Snapdragon 845 platform has same controls GPIOs.
+Add support for the Qualcomm SM7635 SoC to the protection domain
+mapper. SM7635 shares the same protection domain configuration as
+SM8550, so reuse the existing SM8550 domain data.
 
-It's a bit clumsy and not very informative commit message, and MCLK is
-not a "control GPIO", it's a pad function.
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+ drivers/soc/qcom/qcom_pd_mapper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->   arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso | 2 +-
->   arch/arm64/boot/dts/qcom/sdm845-db845c.dts                       | 8 --------
->   2 files changed, 1 insertion(+), 9 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> index dbe1911d8e470..f6c2c98970d76 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-> @@ -40,7 +40,7 @@ camera@10 {
->   		/* CAM0_RST_N */
->   		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
->   		pinctrl-names = "default";
-> -		pinctrl-0 = <&cam0_default>;
-> +		pinctrl-0 = <&cam0_default &cam_mclk0_default>;
->   
->   		clocks = <&clock_camcc CAM_CC_MCLK0_CLK>;
->   		clock-names = "xvclk";
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index ce23f87e0316b..981d19c20fa1f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -877,14 +877,6 @@ rst-pins {
->   			drive-strength = <16>;
->   			bias-disable;
->   		};
-> -
-> -		mclk0-pins {
-> -			pins = "gpio13";
-> -			function = "cam_mclk";
-> -
-> -			drive-strength = <16>;
-> -			bias-disable;
-> -		};
->   	};
->   
->   	cam3_default: cam3-default-state {
-> 
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_m=
+apper.c
+index 6384f271953d..7cc7f261f6ba 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -552,6 +552,7 @@ static const struct of_device_id qcom_pdm_domains[] __m=
+aybe_unused =3D {
+ =09{ .compatible =3D "qcom,apq8074", .data =3D NULL, },
+ =09{ .compatible =3D "qcom,apq8084", .data =3D NULL, },
+ =09{ .compatible =3D "qcom,apq8096", .data =3D msm8996_domains, },
++=09{ .compatible =3D "qcom,milos", .data =3D sm8550_domains, },
+ =09{ .compatible =3D "qcom,msm8226", .data =3D NULL, },
+ =09{ .compatible =3D "qcom,msm8909", .data =3D NULL, },
+ =09{ .compatible =3D "qcom,msm8916", .data =3D NULL, },
+--=20
+2.47.3
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
--- 
-Best wishes,
-Vladimir
 
