@@ -1,118 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-85161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4479ACBB447
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 22:52:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D018CBB514
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 01:05:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9C5BD30019F8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Dec 2025 21:52:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7104B300A1FD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 00:05:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0397D285CAA;
-	Sat, 13 Dec 2025 21:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22C713B8D7F;
+	Sun, 14 Dec 2025 00:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tk22ue/E"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iNoA/bek"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79163280329
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 21:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076BE748F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 00:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765662761; cv=none; b=ihKN5hjkuNQa38O6vQZ/pGp7fOyvulFnZamgWaMn+oIsUnNinaAlrBGs39SHEgVScsMWwZpFLQ3o+Nr5r4YOZsoMswg+z0w9VWC09sKSY0GVVEVf5b53JBL/NY9REdX36unsy7hph1rlGExrohsimvAgbdw1f3+5g6QbRpMDyQg=
+	t=1765670699; cv=none; b=cUHsS+VbIH8M78jgu3VBp/qQ2NuDj/KxrouwKCfbtgU/dmqAZFuLI+h2BhjCNmD9xcXr2z+4/WPYxo8XfR45onWreK10eFb3OUJ7dNIJ8TVWoW4pWSKcfdOfRWWHd0HTR3OeaRpvyf4xN5v1mNC+rIuOsJDRgs2dX6KR0lQV7ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765662761; c=relaxed/simple;
-	bh=MOrv8Z468pz42F7Vvd2hP+rc9j/1X54/GPGCIfRTwL0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dHt5WcAlASwgAavX29oD9StqEtj9+TbjMOztnrEF+NDknUO6PE+QWwnv2Ye3RjtAjAXjYZwTvrHa/z31GyPZ+ZToj3qA9gUmeg9BzFSsy0O+6e1SLM6zhxvSzSBRpV+YlA3FMfIfpmd/ew/E0IQL7v9tPQvB/ifBk4nzNbDLUU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tk22ue/E; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8a3eac7ca30so166711685a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 13:52:40 -0800 (PST)
+	s=arc-20240116; t=1765670699; c=relaxed/simple;
+	bh=+zQAz+Rb/94sTj+jzifGC0Wl/VBMTW3fTEGmfxduBUk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CfhNK2P3viwzlvTdiEX5XztNLxOPo6bxzfpGyg2OKzsIxoRE3LQKGpi20ztwucLBQJ+62mIpkkJcsDAZkaCujg/gAhLLrjtgoFDujMIKMA27mPLvsU1GJWgK/r5KaNrH8tt71PS5lfgs7QIMaxAQe2tjPY82bZZNnYcbJHevmJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iNoA/bek; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37b8f270a3dso2524001fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 16:04:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765662759; x=1766267559; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0vmpfVrhKRCeQv0RKMF2hPkD4G5WVFs8+IoJsGJYwCQ=;
-        b=Tk22ue/EZPyVUX+ppacY8yOIiMdBQwT5vrLi6BbR+l2HyDp3K8OsXqTTvRq3W9HfWo
-         rAIgeiJKdtVK2UsK2t5lwPPlTAInbJD2WIhcrJ45X7kKuwZBvvI1/85Q+f1g3sY2ijty
-         NlPlXrbJgnakpEFHuhmF/GD7wF0pSNccpEdTPIGP+J5ldhHcafLAU9qY55MuptgIft2Z
-         3p0gqZh9mnNbR8sEbDJEKhRt5KlHKzkEFREMLlFCMLeODDVXyoGN6APvmoIIhoeOcMzd
-         Nomddglb4/NW0Kqdhqj3lYLP7SKJ7CcGCq5nA4gBYwXPlVLlyrqrgNCQBa+5Nc3wgQ+I
-         QGyA==
+        d=linaro.org; s=google; t=1765670695; x=1766275495; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5BgboonVbxKrO9X8kRKN4BUW9psx0IkF2ipu6x5mfes=;
+        b=iNoA/bekPHTxP1q3Nr2OzNojY8sy6H/d8k9YHmSPWix9gHriFGPYgqcX23fodFeet1
+         OgIpuxYVeYK/hzPB6YQyyDCOJrMAQZqgwp1YvLu/43oq4+oe1ABoBMWzrLfh2b7/Kww6
+         rOsiw9yETELqkwFxZfk2PCw63/W4ciQNm9HO5ckuLLz6CSc/iNyOG8+HVK+2gbZB2U3Y
+         ORxlAn+cjwaDRICR/8cI7neCFXdXEqlv7PTFjiwNczwqAJVkJBkS7AsgbrCXZNx3fUrK
+         7SfXVedYW2/KctJKCc5MO1T8+N+z/79T4IGVcznJ3dzYhupRzqoMJ/zX7HjXlv+B9oc3
+         HpaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765662759; x=1766267559;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0vmpfVrhKRCeQv0RKMF2hPkD4G5WVFs8+IoJsGJYwCQ=;
-        b=It+UHBT6oyPHYNkytWLLsuowyApUGyZ3iY9etkmULiIb3+JcR4BSYRZKJ8jmn8Chlg
-         laH3bRpSEgLlVNZzr5Q8yB/MLwjz/UIt42v1JrYQLwOBMpZX/tB9Gxmos6yrLsHc7NwU
-         6nBAcPnknmodqZfxlfdW0wXLe4/6wMTpnpBkMyOQbmVEL/tDf16kx4vPqJpVGzKVS7oX
-         QKqCUDVp0IbSJGUHb/G3iU+GfS7R3EJIoMzzETBcB+9RN5nemJvboXr9x6cmfdvj/lJp
-         GTnJ38yTgb2RJzlTn2diGlqwwm+QGmKBR4vSz/SkaBIZqQbubGW1A8XxCGrjaAkyxYkG
-         ey7A==
-X-Forwarded-Encrypted: i=1; AJvYcCX/I64xMUwtPakcxBjKTrlLwwTjtpTK8uFpVJhb7+x37VsYilx858dHvrO9jMtGE1hcKuyZqYduOvB0yJuk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5u5EeaoDeHiGU2NxyTddSMjWDidbplnlnVHonIyI1uFqpj2P0
-	kmarXtMO4Zn4VCieJEfXvzlJd/v7yq/WZ3TMrE9hfSd5ZlgNAC3bKJPz
-X-Gm-Gg: AY/fxX5BWkOA0pF8hr3fveyDgwwzvIHE2sc3nuNz5UTXv/OsoKGK3jMPZEVfd5QmQfN
-	m3C2BC80BIyk9r0SbHskcJhN32VoUuGIFY4KeBI0ru6trt5+JjM+o+mdm9DmTks6cBQB1xyGN2Y
-	VJl4YZw/3KYgRCDqM2SkIsoFVP6fISe+bx5pExFcdZzFHGtg4Zo2WoUt2fjQgNA7rpcEHc+if3t
-	EwfTcN/Z0rd2RXfNkXZW1MjNFN7aHnuXFqLEUGVhVZMJSrdjD0j6vUVuFohJuZUZ8/pvyLWQRyi
-	/bmAV45XOwkrzNjGcgwnjDfbSqlz398Otw8dpaMjr5pkRzA2c+YnaLGb2o612OEuF11AgiiT6hu
-	r9MC9lyooaLSre33mbSA6D5S+N39Wu83Vx2tMR0GKt3SL17TrUrBvOqA9nDh0lPyqA6A6OcwhNl
-	vZFlIoBS/bQ3v5dQ==
-X-Google-Smtp-Source: AGHT+IHHh35U+sxh3+imqr2OZ78va01JS9YvuTHyoO2ahBYtY2IepXHUI8Y0tIiK43w8obVA7scckA==
-X-Received: by 2002:a05:620a:4508:b0:8b2:e179:febd with SMTP id af79cd13be357-8bb398dfef4mr1038221585a.10.1765662759216;
-        Sat, 13 Dec 2025 13:52:39 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8bab5c3bd4bsm744693985a.32.2025.12.13.13.52.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Dec 2025 13:52:37 -0800 (PST)
-Date: Sat, 13 Dec 2025 16:52:51 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Robert Mader <robert.mader@collabora.com>
-Subject: Re: [PATCH v4 1/5] dt-bindings: media: i2c: Add Sony IMX355
-Message-ID: <aT3gM5eSxjNRDmRW@rdacayan>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-2-mailingradian@gmail.com>
- <25c8ad84-2a3f-4e09-a32f-8af68379858e@linaro.org>
- <aT3eUlQuwXptSFGD@rdacayan>
+        d=1e100.net; s=20230601; t=1765670695; x=1766275495;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5BgboonVbxKrO9X8kRKN4BUW9psx0IkF2ipu6x5mfes=;
+        b=pf6dcdgqgrmbaNuEBcH1arVNAyCm/rMmhtUBzF3BhKsqBfck6VCc04giTZnW+zz24l
+         mgCsjnNHhNyd0BYy3xE9uQLcoo5ruMhSAdPxwlY5ZGoiDRHD54+6L+aZZSHWP/EhhlNb
+         SYXqyH0VHiBdA5fRClQxw+9HGFL0JiHYO3KnRzQZ+znOjscJdwFxq3GbU6sRFMhSY5Ol
+         wLMHNy3BVHxM18V66vH4ABPlWVcQd0FL3rVZfcxObQQlVJvUn9602Vrf7UIzvDJKrqL+
+         o6rbDgTRApJHd6EEosK5gp6Kholr6Xtlo94wDp24cVH+1R2Cmrcrg9krWpPRQqKMuDn1
+         xMeA==
+X-Forwarded-Encrypted: i=1; AJvYcCUs3g/bA0Zm2HiNAfjIz4bLjG1sE4mIAf4F7XCscfDJXhCD18EJzGDBpJwquMeNiH7O/Nyvvmuoot/72CIa@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNatz2SSwnDhi/tVUCAVBZDuSfVedFDMBR270szTaMVLRNWCBQ
+	PqbT+hKm85HA//ZTx7+f9H4eaR1Q/K74zR1vGsYnKNRjhMSRRoW7fcYUgi1e/uxODio=
+X-Gm-Gg: AY/fxX4cynSvgP06Q4Sipvpg5TFN8kbjpEANZT0Yt9H2cLEkvR6NBeG6zj/KW/I8M6Z
+	BiKWOheZKn0JRskUem41n80eyZDZh4afJ5kA+rReWBxAsWsqsG+lM/HctFVsUilKylmheol1zoQ
+	3IT6gpHAydvKJ0en7yfny/b8pEqRn2rp1kyKtW+VIc3qNc7ZkzPz2Yff60/awLQW0MNtJFCVV7/
+	/DYf7wbd+1CZtKcTnBaEI/SVyA0To9WiyGJNJMGAbXKobmfhetlL6rI8k+lPNH9Kt+Cmbv2ffa9
+	C0M1hgPT+qJYp0INRF6iM0SzdpPyPeEzcwF8nwmxfJdYY8AOxpBmk667JRsKRPSxzosKYn7aYJQ
+	CDGKZf1w9KxbWvh5Cc+Ho9wRi5fZBwXfHBu3lOwJIowCyOGR1g0nRpWTvCNbloX3icB2q1tnozt
+	7bRZOQLk6Gdc5NeQu4OjsyBoHOPUxVNy2NGUJbLc1q9lOjPGNOLPOyuPhNZ83tySqOXxTbchGrT
+	//5
+X-Google-Smtp-Source: AGHT+IG0gHywQrxKrfUQzEHRspDDk2UVqLJp4GZHTOJ02LFhlHAWCfdGIvRgbfMc4gVJJKA+2cbEpg==
+X-Received: by 2002:a05:6512:b98:b0:594:93b8:88a0 with SMTP id 2adb3069b0e04-598faa8dc1fmr1251168e87.6.1765670694934;
+        Sat, 13 Dec 2025 16:04:54 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f3195e52sm3425805e87.84.2025.12.13.16.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Dec 2025 16:04:53 -0800 (PST)
+Message-ID: <1e09a93a-d42f-4a23-b346-9f158a60d8aa@linaro.org>
+Date: Sun, 14 Dec 2025 02:04:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aT3eUlQuwXptSFGD@rdacayan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
+ description
+To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
+ Kapatrala Syed <akapatra@quicinc.com>,
+ Hariram Purushothaman <hariramp@quicinc.com>,
+ Richard Acayan <mailingradian@gmail.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Dec 13, 2025 at 04:50:07PM -0500, Richard Acayan wrote:
-> On Thu, Dec 11, 2025 at 01:02:49PM +0200, Vladimir Zapolskiy wrote:
-> > On 12/11/25 03:48, Richard Acayan wrote:
-> <snip>
-> > > +  reset-gpios:
-> > > +    maxItems: 1
-> > 
-> > Please explicitly document that the reset GPIO is active low, and make
-> > the correspondent dts changes.
+On 12/13/25 00:55, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
 > 
-> On my local copy, the DTS already specifies active low, and I haven't
-> changed it since sending. I'll just change the dt-bindings.
+> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
+> voltage from the description.
+> 
+> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda regulator descriptions sdm845")
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> Added only Fixes tag for the initial commit, not all the copy-paste
+> propagated ones.
 
-Oh nevermind. It is still active high.
+Generally it should be possible to specify a list of Fixes: tags.
+
+However, despite the change is the proper one, there is an opinion that Fixes
+tags are not applicable to dt bindings with a given reason that only executed
+code can be fixed. So you may be asked to remove even a single Fixes tag.
+
+>   Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
+>   Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
+>   6 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> index 019caa2b09c32..9009cfe993d75 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
+> @@ -130,7 +130,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> index ee35e3bc97ffd..cb922f90fe900 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
+> @@ -129,7 +129,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> index c99fe4106eee9..2231d7216f62a 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> @@ -268,7 +268,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>   required:
+>     - clock-names
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> index 35c40fe223767..8e6ca94c88695 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> @@ -95,7 +95,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> index 82bf4689d3300..d50e096b900db 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> @@ -211,7 +211,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>   required:
+>     - clock-names
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> index ebf68ff4ab961..ccd2d024bfd10 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+> @@ -300,7 +300,7 @@ properties:
+>   
+>     vdda-pll-supply:
+>       description:
+> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +      Phandle to regulator supply to PHY refclk pll block.
+>   
+>   required:
+>     - clock-names
+> 
+
+As for the change itself it is good, I'd prefer to get a correction
+to 1.2V in the documentation rather than a complete removal though.
+
+In any case,
+
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+
+-- 
+Best wishes,
+Vladimir
 
