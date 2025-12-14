@@ -1,77 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-85179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40395CBC00C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 21:48:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B9EBCBC012
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 21:50:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7087B300A727
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 20:48:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 529993011A51
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 20:50:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E6C1275AE8;
-	Sun, 14 Dec 2025 20:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60EA42D2388;
+	Sun, 14 Dec 2025 20:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OXEspm8L"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BJpRkwwE";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QEwAWyiF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852F52CCC0
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9356283124
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765745311; cv=none; b=iuzxEEnFFpx/8EH+9fo2fT3g/yOSf9FT7XcOOiEL9M+ZY2MkKqhtUm68Frx07DS8Ec20oR3um7FrbP/JTorM3yaRjVUGyjL0nKSdIDiCGvMl2mbR/eab03Flj1pKKoQGJrBwSSFCJJ/wW/cIiVNofYq2Dus5TSTEb6anXFM02Fs=
+	t=1765745414; cv=none; b=UP1hUlQMSkyNedgUzkTAksU7IhUzGojNNY2PdgKAGHdcMWS02590zXCUTsDf+teZHYtTvpPp1FCRBCDrl86iT/H06w024n09Cw3hArhVguCEfZfyeIWADzGYJ2+whdn7qzUsm+2+wbgGmK++AJJnCur0ZC5NFjnJemBaEUD+UPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765745311; c=relaxed/simple;
-	bh=TcwMHoDEwaiNpVVENgTmjk5JwGFt7zB3QOd1uIX5JT8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ISIqFZvRzgt+3o6WqNUYSMFc7zXO4lcRQ//w2pcuB0myau5NuypBnOtWOEDd9WSOBXUoZ+MrqpqgXxVoOveCeSTjhnVsvm9OHHsDPqA+9zNcpbjlbRu1qgygw9nZpoAfCpcNa5EGpsGmddR/z1Q6gviyNleuvxRSUDRbQ/KmBck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OXEspm8L; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4775e891b5eso12207795e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 12:48:29 -0800 (PST)
+	s=arc-20240116; t=1765745414; c=relaxed/simple;
+	bh=D5gfX72dcbftJiT9jh3/QxSSyV9CVVWGK6O49XWgWbM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qWICLRzp+5cXvqKwco7QULTwgwDUg2fOjeWRj6pV0pDtfBb47tOcfLqhFtZuNQJrIzp5vqnj8TLUZvs/3+eeEIs7GFBtGjS2zZanqwB5SSR5/u4UsHKbKd9MEItwbViIGOs8BY4P/Q7d4D7LjSKauo+xAE1Yp2qvAbKCmn/LK+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BJpRkwwE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QEwAWyiF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BEHj2hr2212598
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:50:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=BDZjFfiv2zQi++NCLg14+N
+	dxaO6iLJspQfu01S70w9k=; b=BJpRkwwEAabDEngUb9Um8VJdL4Ixd/Tx/ceby+
+	Kp0B45eka6PdOMP+UuFRAB+qJgI5jbY/GLFJKDlQ1MklJDrf7T3MbSI5y0mnpMOr
+	7PP+n4U15ZEd5ko+OtHcs+p9qmLOMlZ5OdkGPeMHmF8ImbppHL1vYhkNdG/NWMWn
+	KgtQFVTkuVnPKbl/+PdJF+nY2Dp8oq/dKGjdnKYnDE8L7NidcTfNHqttAzdhBxXa
+	CCXmluy0juE560tsMOIGldejc8VWxr69iarmq5kISRl6RVX9QBxvJQCFPmpwlAWo
+	UxiDHPTVYqrFRz2kS5G/lGQ1hdgTaYrdPQkdusxrhms9EgzQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b119t2fsb-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:50:12 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ee04f4c632so54529361cf.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 12:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765745308; x=1766350108; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vNonSz/psu7LwKVFUVtvRRDRx4rkVmD2CMw/UAxEWwM=;
-        b=OXEspm8LsVZghnxaLNr/tMHObtV7E+Dghloyae6U1I+1jHAw1LdnR3aF6f6osDT9bT
-         DLR3aE+WCvnqQNAYoSKFKYe/zX653X/hDFWdvrZR0YD1/be3rqnW5BbX7ZWUHDwMgnID
-         3qIz19R8OUJdTI9z8Rv3kQKtoRXZqXnTQkHUHo0ejzZbmlmHuPhNIg2EPyhhZBh3/sAD
-         vW+csGhGvYE7kHOaBydMBeDGyovO4RzS9U3YX4fuofQSy9vpPzMGMy1Ij1n3jDC+ErOa
-         nlfPP88I1CHMd1ltrJ/2e623xmxQ92TR2vXCjfUFBAjdwrkCfYWLIG4EYT93HATRA5dS
-         4Eyg==
+        d=oss.qualcomm.com; s=google; t=1765745411; x=1766350211; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BDZjFfiv2zQi++NCLg14+NdxaO6iLJspQfu01S70w9k=;
+        b=QEwAWyiFptlmEqY2PY9JqF958QZ9fHo1iqw9w6mOt4GZzDWVzzjLhDj/uvszKMt6Ww
+         NVZ/KbkTaGUHnWvFRMKTR9q3i22nUQ0GVPdqufkDJbVbJsizWeSXx2YP7gVhSD/atq9H
+         T42dDdpthBzboYqhqxv0FuL81M8nkYxTD0ICzpCDyajk7Fg0AnvdBDrUzlK2P6goD0pc
+         zJmzGdKcAtyCkh4iz0AIdqJ8FsGfNmqTdjFdOLkmThqUy+Yd5bJmjiIvFHE09OYOoOYG
+         AIms0FYqPCLEJ/FsOznaHTQzOwEnjCTCD2J/3Fs6kgRkCd51Nbi5XtLpB8qDhgtBDqH1
+         nLGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765745308; x=1766350108;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1765745411; x=1766350211;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vNonSz/psu7LwKVFUVtvRRDRx4rkVmD2CMw/UAxEWwM=;
-        b=GAmEDyDtxQQiCsGJ/Lip81P3MV4jaqSXOJaBm6YwdAYUbFjJ2Y3bjqoEzrP96f2up8
-         pTjXys688KYKy93EntHN/JkkxeWPktfzHpBUlj5/+q0kbVKy+hMhprJBbe3alVxpSHVU
-         h/FUdR0AwvDUFfh/+t6/ymNmjrUTV29TB1MTuLke0zKd4iz7l+dQj5pLoBzR9JncycwQ
-         hTFlwd7KaueSNw1u0x04qHtru6/QRanRxJyZUZb/FgJZoLUqcyvSi+b4U+1BhUf8pi28
-         a/2ogoWhIFX4hoRYgybYxgXd3S0Gdfgh+jj5xIgcsyfnpuP2San6oImfbICJkPKsmUlN
-         I6Fg==
-X-Gm-Message-State: AOJu0YzlZB60VmDoH4BlDkaV+46SC7jVQUtXmUJSb+K5k1jbsQ8EQPdw
-	H4BvuVeWvkuqVl97tBVolM4Py+0qXLKJ3mtfdO5F2YAsRKzMBjgazYcY
-X-Gm-Gg: AY/fxX6J008IusAuaqRq6OnzFBX2H9Rbq2UDGCOPKpmAtL/B6iEBwH89uu4WPNHvNPc
-	IqdPZIb/VQx4C9MLo4N4HSBSY3ntqKWdcMQULnrgPemCQ1q5E+1GemZMS4XD5jE7uLUwtv1ar7M
-	m1GD/E5VfcRK9T64+DepnW/fb8GFCiX3SFxy6wWAIJHdxDs8nhY5uOtVCEglnfytYtdOZ4KHW7h
-	Schyv19svsaCmUBrSN2qmgkHDkCsEuuyd3SwNAQAtWSLamZHOEWLKbAhdwBr8GP8rkYRbNjs+9b
-	z3xDfcNi7OxPaEWmiuIDtoEDBa21UsBY+eg4JaIb1CvVuh2pvsmxO+wPm/+blei8KjUReZOUTxu
-	w2Ntd4gYN/ntv1B9+bwURM/+GJYk001uKha5YY9aKRaZ89tb4nJEJjrQQM3vISWN64qydBawhRh
-	yL5oN0NxqDVFP7PGH7NBI7WJAwOmEGvfP1J/m5+No4e3UGm3fGd634tn8a+KPj5ncI2gI=
-X-Google-Smtp-Source: AGHT+IFBCVvj6+os8tE0zn7I5CZGv9VZPVSZHJMl/dseBhLP5fj10TprRwFuaFPRpuk7nw+hKEUczA==
-X-Received: by 2002:a05:600c:3104:b0:477:af07:dd17 with SMTP id 5b1f17b1804b1-47a8f90634fmr86748335e9.24.1765745307477;
-        Sun, 14 Dec 2025 12:48:27 -0800 (PST)
-Received: from [192.168.1.6] (92.40.201.95.threembb.co.uk. [92.40.201.95])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f768936sm151673595e9.6.2025.12.14.12.48.26
+        bh=BDZjFfiv2zQi++NCLg14+NdxaO6iLJspQfu01S70w9k=;
+        b=kAobe/bfvikzJ3eap0ggE1o7VYZPyQKSef8+3lN00CHxFWYfUzhXAR0XifBiLzhsYv
+         WwdvgawZZJwgYdz8pwYCJ/xJvtmhHRYgOivIjDIyQ7nQo2QSl65QQT/af8oFMQQYIiMn
+         +hI9KKM6YhhG1J70a+888yyzBBD2TpVOey11ESPx9hNaK3a4jdcdyLxcxw6KFQ9587ze
+         btL2yK/z+2JV1tNmnObAy5XWnxOQX2xkFUMH+1LGNyV+GE82W4n5YCABPeIW/i/scQeD
+         +7E+2y020EfRLvDf9+yrmE8iCpyxqM+4aFDcTyoaiRQFXq8h6I4xFK7BuDFPkDQZNhzk
+         0eag==
+X-Gm-Message-State: AOJu0YyUCqiDeSSbH3JKTU+VB5uOpnHIHOyIgtwrPm3BNROkAiXEkKMq
+	RU9ocASAnbHN/Cvf0DDGqYeNeIE0NIcUsCSREPbFcTmrxMT/zXy1/JolbBxxhm9/D0yPE9x+7tT
+	cfKlLpJEWy4Gq/d6G204ky2CB7GuV+1n4UW5nfHf7V17WbD4/NQbxcfZBFmDTrCYJXwGdDIR+M8
+	h6
+X-Gm-Gg: AY/fxX5X21DBhlYW7X8QiEyWE/SdVEcykXa1nHOUoseg6aodn3b5EU4sNfzprWNfEkJ
+	8zXswiSl/OgX0djJD6evl/gtdmFHmRNOcxoBRUa6I52kF5ztCADK3p8SSDjBdP4EZm2fTtGhgYX
+	rVBgS0pe2YUSydzwJ21CS4322jujgB1bCEZhVziZW6yZS006I7E9vf3uGNnwLh+Yty53G5GZC8E
+	b5pc9VPdgrj6Da6ugevyniQLRz0Y4R9bcJvZ9nGtxfF+hTUvKxLhF7PM3YEJcJC89Nf4QSo2T1P
+	5IyPWwfK6DhH/xxWjXC8KnZjz1KRHC5BsVnh7mA/5vhKfoUFvvmyZHWDttZD7EPdDP6W8dr5Ig6
+	cu5kDTT+k0qDdAqg=
+X-Received: by 2002:a05:622a:514e:b0:4ee:3e74:43d8 with SMTP id d75a77b69052e-4f1d05d57e9mr116168611cf.38.1765745410838;
+        Sun, 14 Dec 2025 12:50:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGBlljZj+Llgtkdz+sLCPPCXCteLK7/KkEBADIwgrEe0+k3ZIqA60CM0VLitQCSBuDGQ5EkAg==
+X-Received: by 2002:a05:622a:514e:b0:4ee:3e74:43d8 with SMTP id d75a77b69052e-4f1d05d57e9mr116168371cf.38.1765745410193;
+        Sun, 14 Dec 2025 12:50:10 -0800 (PST)
+Received: from hackbox.lan ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7cfa2ed80dsm1206316366b.16.2025.12.14.12.50.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Dec 2025 12:48:27 -0800 (PST)
-From: Dale Whinham <daleyo@gmail.com>
-Date: Sun, 14 Dec 2025 20:48:12 +0000
-Subject: [PATCH] drm/msm/dp: Enable support for eDP v1.4+ link rates table
+        Sun, 14 Dec 2025 12:50:09 -0800 (PST)
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Subject: [PATCH 0/2] arm64: dts: qcom: x1e80100: Enable APSS watchdog in
+ EL2
+Date: Sun, 14 Dec 2025 22:49:57 +0200
+Message-Id: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-0-94ee80b8cbe7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,272 +101,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251214-drm-msm-edp14-v1-1-45de8c168cec@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIsiP2kC/x3MQQqAIBBA0avIrBPSNKKrRAtxxpqFJgoRSHdPW
- r7F/w0qFaYKq2hQ6ObKV+pQgwB/unSQZOwGPWqrtDISS5SxRkmYu5Zg0M8W/WQc9CYXCvz8v21
- /3w+xqy7RXwAAAA==
-X-Change-ID: 20251214-drm-msm-edp14-8f4dc65dc34a
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Dale Whinham <daleyo@gmail.com>, 
- =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>, 
- Steev Klimaszewski <threeway@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1765745306; l=8083;
- i=daleyo@gmail.com; s=20251214; h=from:subject:message-id;
- bh=TcwMHoDEwaiNpVVENgTmjk5JwGFt7zB3QOd1uIX5JT8=;
- b=RnEdCGQ3MrJHIIbU35i5I0o3JLkQeHea3CMb/A3VD3uiOO0lL//YVE9vp0JMeb3O4NuwM4iRT
- MBAlvTWA7FiDQdWKuDO6ZNWqHK94C6Z0yslSnm+shkx4SWrUzUHxF98
-X-Developer-Key: i=daleyo@gmail.com; a=ed25519;
- pk=M4mvgx1TB2TniKaedTDsO3PbLKgFosJuegXRXPbn2Ds=
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPUiP2kC/yXNSw7CMAwA0atUXmPJiUJFuQpiYRIHguiHOIVKV
+ e9OgOXbzKygkpMoHJsVsrySpnGoMLsG/I2Hq2AK1WDJ7o01Djn3rcNQFJ9+7HExciBDhPKwyCE
+ gT6r4DgWFnOfWd12kCDU3ZYlp+a1O5791vtzFl28ftu0DS5v/R4wAAAA=
+X-Change-ID: 20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-e04ca6c99f0f
+To: Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-47773
+X-Developer-Signature: v=1; a=openpgp-sha256; l=784;
+ i=abel.vesa@oss.qualcomm.com; h=from:subject:message-id;
+ bh=D5gfX72dcbftJiT9jh3/QxSSyV9CVVWGK6O49XWgWbM=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBpPyL4g0KSITKL2rS/5/JUGlRc0/0kct1Ly8r76
+ O/focbcIhKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaT8i+AAKCRAbX0TJAJUV
+ VgeiD/0S9x5IrcKnYoesWTiAUaF0m2f+l8iEmOC6z6Xv1f+57t6mjtVmyzM+X1uShWgTptrYd5v
+ Vzj+tCTqwlkCPkGeiK+8xIkwPJoDFM6+CCSUb9Z5rs7zZgZM5N/46ubwCAVt3W/GJUB5iPyXqfe
+ 1PzK1RfaBq6e6z1TK2iWelb7k/QeZxg1tBglFwjU7LFFEYIvYp6fGmB5BYOsgTzZ55E0aEGLnsV
+ mtCyQnwDaSep11n/+kSqHqGnRMOn0pWuG4JZh33fBmjYN/h088YR1CGTub2wPl1c8TaN6Z2X9ni
+ l+fUDgapQqW4vmpzDASabutLTfMEJQRC/jxw+voVFoF+ylAGLjIqac7l4REMkaCmnGb74INg2BV
+ i35PMDjvqPpOlAnaUK8vFDRmb/9WOtqNNf0NNcNr5oMXVVrZhX4ecYkQoJk/DhONnOJ8/HEZeis
+ M3k4WugytcE65W+S1LxTTQZHUkoz5sEVb0vK45ko+LV1BZmgkWqhm9jgYbHEjTayNgMdrYQkSiz
+ MeHSkoAkcAI2TGWmUg4LtG4HV4rtiI8a3YNt4N9KRFMI6v7tGC1cltPSnLCBTFDeBV02ealnnei
+ dH+4wJFkyJIfWqhiulu81bpudVkMVpsBrxafgzrw3UB84Z4GVjTyAd3WwHs8PzUDhlBiAFH3UEC
+ 0P+AugGQcVfwFpQ==
+X-Developer-Key: i=abel.vesa@oss.qualcomm.com; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE0MDE5MyBTYWx0ZWRfX2TtuWFBHbKNw
+ qACmyfW84VxAcv+OnWoKBQOOtrkxGFMGA1rbFGpRaQ8q973FIlZS1XjVwNtMNA3tYJ/ckSHqoHx
+ zXdgUlOD09BqY7U9XjwRTk3MTL0lNTtwZBAF3iapc0eb31LrFxpwNeeyTJvoZ5zJHHkoQ4dybAa
+ P9e0LBMmriyrQdTnjRkceaWoRzT4KI0jmuSS0/Lqh5ijFfRzIKugOnyDqSQfI//9igyhVRF3vE3
+ naTV/LT69Zk6YsOv/x7Ee7XR11jk68N95zMfKUb7l6KeAJ5ONcSe1fTX2NdWOv60wnX7f1DUCwL
+ I70JB1MBfjCaZ4sRKqpsVwAzmK1cbGVpsWqScngxSjbFE5/lQ/pzPws/F/+vHUSNVYTJCHJz9A6
+ oUs3Wokk9dTbJhwRqz/J11oKd/vKjQ==
+X-Proofpoint-GUID: 6AyYo6Vz6M9GLR-r_0omzuZ3uIJjSImL
+X-Authority-Analysis: v=2.4 cv=E6nAZKdl c=1 sm=1 tr=0 ts=693f2304 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=DdBtMnqNxkYIvXj6ev4VzQ==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=hl1-wkGA7n6pOO7jiTgA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: 6AyYo6Vz6M9GLR-r_0omzuZ3uIJjSImL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-14_06,2025-12-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0 adultscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512140193
 
-The MSM DRM driver currently does not support panels which report their
-supported link rates via the SUPPORTED_LINK_RATES table.
+On X1E80100 platforms, in EL2, the APSS watchdog is accessible.
+The APSS WDT HW is compatible with the one from SC8280XP, SM8250 and the
+like. So describe it in the EL2 overlay and document its compatible.
 
-For panels which do not offer the optional eDP v1.3 fallback via
-MAX_LINK_RATE, this will cause a panel probe failure (e.g. Samsung
-ATNA30DW01-1 as found in Microsoft Surface Pro 11).
-
-Detect eDP v1.4 panels and parse the SUPPORTED_LINK_RATES table when
-present.
-
-Additionally, set the rate using LINK_RATE_SET instead of LINK_BW_SET,
-but only if LINK_BW_SET hasn't already been written to.
-
-Signed-off-by: Dale Whinham <daleyo@gmail.com>
-Tested-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-Tested-by: Steev Klimaszewski <threeway@gmail.com>
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c  | 57 +++++++++++++++++-----------
- drivers/gpu/drm/msm/dp/dp_link.h  |  3 ++
- drivers/gpu/drm/msm/dp/dp_panel.c | 79 +++++++++++++++++++++++++++++++++------
- 3 files changed, 107 insertions(+), 32 deletions(-)
+Abel Vesa (2):
+      dt-bindings: watchdog: Document X1E80100 compatible
+      arm64: dts: qcom: x1-el2: Add the APSS watchdog
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index cbcc7c2f0ffc..f00456902c10 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -175,20 +175,29 @@ static inline void msm_dp_write_link(struct msm_dp_ctrl_private *ctrl,
- static int msm_dp_aux_link_configure(struct drm_dp_aux *aux,
- 					struct msm_dp_link_info *link)
- {
--	u8 values[2];
-+	u8 lane_count, bw_code;
- 	int err;
- 
--	values[0] = drm_dp_link_rate_to_bw_code(link->rate);
--	values[1] = link->num_lanes;
-+	lane_count = link->num_lanes;
- 
- 	if (link->capabilities & DP_LINK_CAP_ENHANCED_FRAMING)
--		values[1] |= DP_LANE_COUNT_ENHANCED_FRAME_EN;
-+		lane_count |= DP_LANE_COUNT_ENHANCED_FRAME_EN;
-+
-+	if (link->use_rate_set) {
-+		DRM_DEBUG_DP("using LINK_RATE_SET: 0x%02x", link->rate_set);
-+		err = drm_dp_dpcd_writeb(aux, DP_LINK_RATE_SET, link->rate_set);
-+	} else {
-+		bw_code = drm_dp_link_rate_to_bw_code(link->rate);
-+		DRM_DEBUG_DP("using LINK_BW_SET: 0x%02x", bw_code);
-+		err = drm_dp_dpcd_writeb(aux, DP_LINK_BW_SET, bw_code);
-+	}
- 
--	err = drm_dp_dpcd_write(aux, DP_LINK_BW_SET, values, sizeof(values));
- 	if (err < 0)
- 		return err;
- 
--	return 0;
-+	err = drm_dp_dpcd_writeb(aux, DP_LANE_COUNT_SET, lane_count);
-+
-+	return err;
- }
- 
- /*
-@@ -1474,26 +1483,32 @@ static int msm_dp_ctrl_link_train_1(struct msm_dp_ctrl_private *ctrl,
- static int msm_dp_ctrl_link_rate_down_shift(struct msm_dp_ctrl_private *ctrl)
- {
- 	int ret = 0;
-+	struct msm_dp_link_info *link_params = &ctrl->link->link_params;
- 
--	switch (ctrl->link->link_params.rate) {
--	case 810000:
--		ctrl->link->link_params.rate = 540000;
--		break;
--	case 540000:
--		ctrl->link->link_params.rate = 270000;
--		break;
--	case 270000:
--		ctrl->link->link_params.rate = 162000;
--		break;
--	case 162000:
--	default:
--		ret = -EINVAL;
--		break;
-+	if (link_params->rate_set) {
-+		--link_params->rate_set;
-+		link_params->rate = link_params->supported_rates[link_params->rate_set];
-+	} else {
-+		switch (link_params->rate) {
-+		case 810000:
-+			link_params->rate = 540000;
-+			break;
-+		case 540000:
-+			link_params->rate = 270000;
-+			break;
-+		case 270000:
-+			link_params->rate = 162000;
-+			break;
-+		case 162000:
-+		default:
-+			ret = -EINVAL;
-+			break;
-+		}
- 	}
- 
- 	if (!ret) {
- 		drm_dbg_dp(ctrl->drm_dev, "new rate=0x%x\n",
--				ctrl->link->link_params.rate);
-+				link_params->rate);
- 	}
- 
- 	return ret;
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index b1eb2de6d2a7..725e08f75574 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -17,6 +17,9 @@
- struct msm_dp_link_info {
- 	unsigned char revision;
- 	unsigned int rate;
-+	unsigned int supported_rates[DP_MAX_SUPPORTED_RATES];
-+	unsigned int rate_set;
-+	bool use_rate_set;
- 	unsigned int num_lanes;
- 	unsigned long capabilities;
- };
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index ad5d55bf009d..5f9ccc48ee6c 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -13,6 +13,8 @@
- #include <drm/drm_print.h>
- 
- #include <linux/io.h>
-+#include <linux/types.h>
-+#include <asm/byteorder.h>
- 
- #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
- 
-@@ -107,29 +109,84 @@ static int msm_dp_panel_read_dpcd(struct msm_dp_panel *msm_dp_panel)
- 	drm_dbg_dp(panel->drm_dev, "max_lanes=%d max_link_rate=%d\n",
- 		   link->max_dp_lanes, link->max_dp_link_rate);
- 
--	link_info->rate = drm_dp_max_link_rate(dpcd);
-+	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(link->lttpr_common_caps);
-+	max_lttpr_rate = drm_dp_lttpr_max_link_rate(link->lttpr_common_caps);
-+
-+	/* For eDP v1.4+, parse the SUPPORTED_LINK_RATES table */
-+	if (link_info->revision >= DP_DPCD_REV_14) {
-+		__le16 rates[DP_MAX_SUPPORTED_RATES];
-+		u8 bw_set;
-+		int i;
-+
-+		rc = drm_dp_dpcd_read_data(panel->aux, DP_SUPPORTED_LINK_RATES,
-+					   rates, sizeof(rates));
-+		if (rc)
-+			return rc;
-+
-+		rc = drm_dp_dpcd_read_byte(panel->aux, DP_LINK_BW_SET, &bw_set);
-+		if (rc)
-+			return rc;
-+
-+		/* Find index of maximum supported link rate that does not exceed dtsi limits */
-+		for (i = 0; i < ARRAY_SIZE(rates); i++) {
-+			/*
-+			 * The value from the DPCD multiplied by 200 gives
-+			 * the link rate in kHz. Divide by 10 to convert to
-+			 * symbol rate, accounting for 8b/10b encoding.
-+			 */
-+			u32 rate = (le16_to_cpu(rates[i]) * 200) / 10;
-+
-+			if (!rate)
-+				break;
-+
-+			drm_dbg_dp(panel->drm_dev,
-+				   "SUPPORTED_LINK_RATES[%d]: %d\n", i, rate);
-+
-+			/* Limit link rate from link-frequencies of endpoint property of dtsi */
-+			if (rate > link->max_dp_link_rate)
-+				break;
-+
-+			/* Limit link rate from LTTPR capabilities, if any */
-+			if (max_lttpr_rate && rate > max_lttpr_rate)
-+				break;
-+
-+			link_info->rate = rate;
-+			link_info->supported_rates[i] = rate;
-+			link_info->rate_set = i;
-+		}
-+
-+		/* Only use LINK_RATE_SET if LINK_BW_SET hasn't already been written to */
-+		if (!bw_set && link_info->rate)
-+			link_info->use_rate_set = true;
-+	}
-+
-+	/* Fall back on MAX_LINK_RATE/LINK_BW_SET (eDP v1.3) */
-+	if (!link_info->rate) {
-+		link_info->rate = drm_dp_max_link_rate(dpcd);
-+
-+		/* Limit link rate from link-frequencies of endpoint property of dtsi */
-+		if (link_info->rate > link->max_dp_link_rate)
-+			link_info->rate = link->max_dp_link_rate;
-+
-+		/* Limit link rate from LTTPR capabilities, if any */
-+		if (max_lttpr_rate && max_lttpr_rate < link_info->rate)
-+			link_info->rate = max_lttpr_rate;
-+	}
-+
- 	link_info->num_lanes = drm_dp_max_lane_count(dpcd);
- 
- 	/* Limit data lanes from data-lanes of endpoint property of dtsi */
- 	if (link_info->num_lanes > link->max_dp_lanes)
- 		link_info->num_lanes = link->max_dp_lanes;
- 
--	/* Limit link rate from link-frequencies of endpoint property of dtsi */
--	if (link_info->rate > link->max_dp_link_rate)
--		link_info->rate = link->max_dp_link_rate;
--
- 	/* Limit data lanes from LTTPR capabilities, if any */
--	max_lttpr_lanes = drm_dp_lttpr_max_lane_count(panel->link->lttpr_common_caps);
- 	if (max_lttpr_lanes && max_lttpr_lanes < link_info->num_lanes)
- 		link_info->num_lanes = max_lttpr_lanes;
- 
--	/* Limit link rate from LTTPR capabilities, if any */
--	max_lttpr_rate = drm_dp_lttpr_max_link_rate(panel->link->lttpr_common_caps);
--	if (max_lttpr_rate && max_lttpr_rate < link_info->rate)
--		link_info->rate = max_lttpr_rate;
--
- 	drm_dbg_dp(panel->drm_dev, "version: %d.%d\n", major, minor);
- 	drm_dbg_dp(panel->drm_dev, "link_rate=%d\n", link_info->rate);
-+	drm_dbg_dp(panel->drm_dev, "link_rate_set=%d\n", link_info->rate_set);
-+	drm_dbg_dp(panel->drm_dev, "use_rate_set=%d\n", link_info->use_rate_set);
- 	drm_dbg_dp(panel->drm_dev, "lane_count=%d\n", link_info->num_lanes);
- 
- 	if (drm_dp_enhanced_frame_cap(dpcd))
-
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml |  1 +
+ arch/arm64/boot/dts/qcom/x1-el2.dtso                     | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
 ---
-base-commit: 7bc29d5fb6faff2f547323c9ee8d3a0790cd2530
-change-id: 20251214-drm-msm-edp14-8f4dc65dc34a
+base-commit: d9771d0dbe18dd643760431870a6abf9b0866bb0
+change-id: 20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-e04ca6c99f0f
 
 Best regards,
--- 
-Dale Whinham <daleyo@gmail.com>
+--  
+Abel Vesa <abel.vesa@oss.qualcomm.com>
 
 
