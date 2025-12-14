@@ -1,856 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-85173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9300DCBBBFA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 15:51:51 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94610CBBF78
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 20:26:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DB0AD300BDA7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 14:51:35 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 18A8E3001C05
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 19:26:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFECC2848A8;
-	Sun, 14 Dec 2025 14:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF44E3128B6;
+	Sun, 14 Dec 2025 19:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNry0N0P"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A+RPiyEk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9888F27E1DC;
-	Sun, 14 Dec 2025 14:51:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7612E093F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 19:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765723885; cv=none; b=AYOiZoJ8ThiKlm8QHTeDRW29xi0DStDir+mLCdpBcZ/+EkMnGu73s/CwyT0cPKvzmMf2Bb4Yhb0Gl/sxP9OLvfrayLdxnZ7q/ib+Yb4LPjwWut2TjBMZzUl9TQAKWpF6a4vVowUWUMPclVNH400f0q1bpqVm13t07aO7zcm1Ehg=
+	t=1765740387; cv=none; b=Y2WkM4fF5zbL5qbXWZ6d+jYiyqVQ7NM6bIBdsoap74VR2qiXIi9eW/Le/J0wk8sm64gZjFq+LZwsuowN8xUKsU6sCo0CUuXKaGMBHDpYCGU0rubq/mZ0XuIpJ+iYlAZrAuRmUaUBcE8Dp3JyVHuw3ItaVie2GMXEnL1v3OJGXws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765723885; c=relaxed/simple;
-	bh=Lboai8EeopeEBFSuATB/HNZX9cbcUnOk2Po9DEsGe4U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Wc2cS0niMARd4dlKei5NnC5tNjzYeUoe1KUzhqa+ki7+DU6B59gyDVNT1hm7aS94yrmaXl7J2+Bc72WKAFlQkA0WQQbV4mg9TZhO/e+hAVxxMTo62fMZKn+ty3y0ME5iN7kP+hZhZKXvfgMT8ZeuFFu20waUAAZml+0n/SrP9AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNry0N0P; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 62434C4AF55;
-	Sun, 14 Dec 2025 14:51:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765723885;
-	bh=Lboai8EeopeEBFSuATB/HNZX9cbcUnOk2Po9DEsGe4U=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=gNry0N0PZWhma0E3uCgzeWZdQoW8sHcgfABn2KBWlGdz0mb2Z16gtRn+aUoLhgWVD
-	 sXfHbS6S1k1njEu7yVlevdmhPCenSZDb73M17MadpyaOB78+uMEoznanCoy3+zvNF0
-	 UGDmDomQAC6/Adq7chatTfQiqCHyl2vL7Uk/K7p+WXP0Q4VGdxmJIJbtezj1aPZabw
-	 Cjiki2OPAqzZGYFK0MrCsGA18QcQqZBqfpRj7p4wbX+7/wMAXg1XWeFXOuiqQuTG2T
-	 44fXm6nK/y/GVZGw00Ajw8OFC+JFzphi0lCPQZ2MzZ9jTyPFj+EmhzvN+fW2nbnF5Z
-	 8OSNjbxNtZXLw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55323D5B171;
-	Sun, 14 Dec 2025 14:51:25 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Sun, 14 Dec 2025 15:51:24 +0100
-Subject: [PATCH v7 8/8] arm64: dts: qcom: Add support for Pixel 3 and Pixel
- 3 XL
+	s=arc-20240116; t=1765740387; c=relaxed/simple;
+	bh=WVvUVNXHWd1pFmBd40ObioZYv7TFHGnsEnJa5VsJHMc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gu0RTI6k0dW2/ND5yVfmrsD3n9x6qdC8BgCVFVV1QlYMIUcOhSu9scl0stltMvrRVS9fcHD5XI98hR9U/KFIK4YSNps2IhTIcW15U0XR8iRKlbfPxalhoJm+xmyviTozL1/cVeIJUic7dCUzACJYZZq78lO2Tbdnl4g7blW1VUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A+RPiyEk; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-477b5e0323bso11558225e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 11:26:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1765740384; x=1766345184; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WVvUVNXHWd1pFmBd40ObioZYv7TFHGnsEnJa5VsJHMc=;
+        b=A+RPiyEkN3Ckk8WLce7h7Sw8AvsBeSFOVBj7oiTnX2XZW8BazLN6/+Tfa/M7Sz0FQK
+         2uLSls3YaO18b9J54FUo/0k81MIuZnpHgDUHnxtj7ncXOoumhdU65qpV7l4xtw+KtPJU
+         lo/8ibxGdYuJ5iztgHy/E62OjtSfsy1RssuLUeRenSJ61JKycPvvGLLnoBJeFPM1rwPh
+         nCh2vVrUHCnS6TIc2sFu2qLoCSjvfdJuQXBXcaxPn0TE/EYtKVgeFr4bGagcIbUFEe8e
+         rMu6GERxfVei9HrznipwUzHw3BpyLwe83aWuIjx53MRs2dOoHJGUSZRIQgyxCBVw4ww9
+         Dfaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765740384; x=1766345184;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WVvUVNXHWd1pFmBd40ObioZYv7TFHGnsEnJa5VsJHMc=;
+        b=kZDMyldNzl/TJctHwyemC5GOksCqkjqoDg4oWlO23QD0960jI0SPhteFpG+c4Im6P+
+         LoRQh+xJSp00QHHv7HfieqiVK2o+0UNh2CKi7igFTYI24sLCe4J0SYnDt1adbiZbr1FR
+         M0BbTggCccaQ9MazBgKxAjSbIPOf7qWTvxdScCtLOlMyfJqmMFaOqWKgJvFwKrwRFn4H
+         MHoK6LNodPSij1nOsWaKdz1NRuG66Fx2b8ozhw7GS7OFSygxepedSW9PWpvjNfCFepJh
+         vpinvpjazV2s/u8TZTrdGhbZEkzQvK+E0JPdqyioZvrnBJAN9r2XiVq6JIvMc9jhzuOR
+         kXhA==
+X-Forwarded-Encrypted: i=1; AJvYcCWSwN5KeKX6EQ8/FKg+iGBAOwAUijlL3x+HiPBcVFWuUEUB/5mORGNgmNMx/yq/5LpvrqgUcl4+bmGWRqEj@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+EivBGl3NIiBDpaYagFwjSGLiztqecEPJEX2zlOifbv26VL5E
+	pIuyTZj9hoNojoStqz21Yv2GsVhdUcLpQFJKeXszvqCJE03LFOfP7MDlFXKYPwfpKSN5OerfpZE
+	mCaxTTB+tuIM8Hmb7CAZORDZ/ITSUcgfPjLX+2TrU5g==
+X-Gm-Gg: AY/fxX5WpZPirc1ElEkNS2b5DHwUdvOpWYqozhy35lUgdM+pL3hvLAp5BerFi27HnMn
+	+Pw/yw1LNfamVqtUlr+ax0+6/cCFrhEnsxrkNJPtYUrCzZRciecgVz9i7hOTotIeW/T5eeudKd2
+	qRrYPbysdxY+Zo1WALbG3Kb/rrS/EQEn9mszl6OSupOOJ1eJWchNSxHgvzJl5CgTVO9I+uAUi1g
+	nZAV2hgFc8eLKVMPj8VSGOqwx/lvYHeb4+e5eY2INKiX9cK/bgak/szz/EzLajk6ILmGI6z0cdL
+	BSXIUQ==
+X-Google-Smtp-Source: AGHT+IGp0URZxcEmKzuJnhkovablE+rc5aXkwhLdHAPUclpKC2fkjaTnvENlFOzSKOUjZ6+NbMexq1Gb63+5Gfmk+Q4=
+X-Received: by 2002:a5d:5704:0:b0:42f:f627:3a88 with SMTP id
+ ffacd0b85a97d-42ff6273cd7mr5138840f8f.4.1765740384249; Sun, 14 Dec 2025
+ 11:26:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251214-pixel-3-v7-8-b1c0cf6f224d@ixit.cz>
-References: <20251214-pixel-3-v7-0-b1c0cf6f224d@ixit.cz>
-In-Reply-To: <20251214-pixel-3-v7-0-b1c0cf6f224d@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <jesszhan0024@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Dmitry Baryshkov <lumag@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- Petr Hodina <phodina@protonmail.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, David Heidelberg <david@ixit.cz>, 
- Amit Pundir <amit.pundir@linaro.org>, Casey Connolly <casey@connolly.tech>, 
- Joel Selvaraj <foss@joelselvaraj.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Bjorn Andersson <andersson@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=18088; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=39zvd9k7CrDiRLbinVszmhIVwGcsW4DHVMWoYFfctZE=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpPs7qDLcGkgQREF/M9CWb5zMfn871fbtiCu9PG
- NmiUxpBqhiJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaT7O6gAKCRBgAj/E00kg
- cp+jD/9uYqHQ0yP8feXfTq0Lh/fEmLh+JLl7fhNG0UY7AKmfKoKA8zBtjp/ZONH7Kk6FWywH12c
- 6jNfbHVvEBZvY0xqEacAovAlk3QQJfCgPPMb7UVUjynz8UqnvmFo+y8JBbYs4y1VNABA2hWum8c
- FBRve1vSdp3W+XntimOISd1xGPDJa5/lkT14PEZTFFAw5EAVlngID4DiXjpLBVFdJ8ZbzdyAVfP
- ZELtxZ+pWsNyKKnLK3rtL9SWH9Epeg2d0w9m82IEDjXJC3Hn3tCHZ1qB2oEmDpPyEyF6fFDW6GP
- bbuCLP1ztCxK+qL8qvWDd+BDxSN6E/7Bt61iHiyeHk4w6GfZeD+KnHi6TytnRWSPhtLvcUhR628
- xJLh+Zs5AdiR3q+MEymVFULWHz+tK1iPDhiGZOcehBdDAE6wwQBR3k1dvkzTBYI7PHBePcVfPog
- LnkZUas3RuZ09KJE3+sKzUqKDm5TiBTjRe1QfqejXUQI1cJW2xPUd2WY15Fa1Hhen3tsuqoA7oY
- +NyizR1MVRZX7nrVGIfEYLqQUnSUm7ezvQcivtjgbJNjtCPCuvllsw1kSGOyla89G1faMVc6fU6
- 11nYPKJjU5eg4V36kHjuwlMxJShtzr9/F5b1AN9abJuyRYSQUsgI3Utp5sOHhCmoPih4gtRfpoZ
- FbLhmuWP3D3TVEA==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+References: <20251202-wip-obbardc-qcom-msm8096-clk-cpu-fix-downclock-v1-1-90208427e6b1@linaro.org>
+ <8d769fb3-cd2a-492c-8aa3-064ebbc5eee4@oss.qualcomm.com> <CACr-zFD_Nd=r1Giu2A0h9GHgh-GYPbT1PrwBq7n7JN2AWkXMrw@mail.gmail.com>
+In-Reply-To: <CACr-zFD_Nd=r1Giu2A0h9GHgh-GYPbT1PrwBq7n7JN2AWkXMrw@mail.gmail.com>
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Sun, 14 Dec 2025 19:26:13 +0000
+X-Gm-Features: AQt7F2pFoRVbsgf9gdAd9vkk-xGL6wVZ5NRGI1iTg1jQSI3LzAG1OQ6PvpoNNQM
+Message-ID: <CACr-zFA=4_wye-uf3NP6bOGTnV7_Cz3-S3eM_TYrg=HDShbkKg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "clk: qcom: cpu-8996: simplify the cpu_clk_notifier_cb"
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: David Heidelberg <david@ixit.cz>
+Hi Konrad,
 
-This adds initial device tree support for the following phones:
+On Mon, 8 Dec 2025 at 22:36, Christopher Obbard
+<christopher.obbard@linaro.org> wrote:
+> Apologies for the late response, I was in the process of setting some
+> more msm8096 boards up again in my new workspace to test this
+> properly.
+>
+>
+> > It may be that your board really has a MSM/APQ8x96*SG* which is another
+> > name for the PRO SKU, which happens to have a 2 times wider divider, tr=
+y
+> >
+> > `cat /sys/bus/soc/devices/soc0/soc_id`
+>
+> I read the soc_id from both of the msm8096 boards I have:
+>
+> Open-Q=E2=84=A2 820 =C2=B5SOM Development Kit (APQ8096)
+> ```
+> $ cat /sys/bus/soc/devices/soc0/soc_id
+> 291
+> ```
+> (FWIW this board is not in mainline yet; but boots with a DT similar
+> enough to the db820c. I have a patch in my upstream backlog enabling
+> that board; watch this space)
+>
+> DragonBoard=E2=84=A2 820c (APQ8096)
+> ```
+> $ cat /sys/bus/soc/devices/soc0/soc_id
+> 291
+> ```
 
- - Google Pixel 3 (blueline)
- - Google Pixel 3 XL (crosshatch)
-
-Both phone boards use the same identifiers and differ only slightly
-in their connected peripherals.
-
-Supported functionality includes:
- - Debug UART
- - UFS
- - USB-C (peripheral mode)
- - Framebuffer (both u-boot and Linux)
- - Display (Pixel 3 only, and the driver needs work)
- - GPU
- - Bluetooth
- - Wi-Fi
-
-The rmtfs region is allocated using UIO, making it technically "dynamic."
-
-Its address and size can be read from sysfs:
-
-$ cat /sys/class/uio/uio0/name
-/sys/class/uio/uio0/maps/map0/addr
-0x00000000f2701000
-
-$ cat /sys/class/uio/uio0/maps/map0/size
-0x0000000000200000
-
-Like the OnePlus 6, the Pixel 3 requires 1 kB of reserved memory on either
-side of the rmtfs region to work around an XPU bug that would otherwise
-cause erroneous violations when accessing the rmtfs_mem region.
-
-Co-developed-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Co-developed-by: Casey Connolly <casey@connolly.tech>
-Signed-off-by: Casey Connolly <casey@connolly.tech>
-Co-developed-by: Joel Selvaraj <foss@joelselvaraj.com>
-Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
-Co-developed-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Co-developed-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   2 +
- .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  89 ++++
- arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 536 +++++++++++++++++++++
- .../boot/dts/qcom/sdm845-google-crosshatch.dts     |  36 ++
- 4 files changed, 663 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6f34d5ed331c4..c853b28b3b198 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -250,6 +250,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
- sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-crosshatch.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-blueline.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
-new file mode 100644
-index 0000000000000..fa89be500fb85
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
-@@ -0,0 +1,89 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "sdm845-google-common.dtsi"
-+
-+/ {
-+	model = "Google Pixel 3";
-+	compatible = "google,blueline", "qcom,sdm845";
-+};
-+
-+&battery {
-+	charge-full-design-microamp-hours = <2970000>;
-+	voltage-min-design-microvolt = <3600000>;
-+	voltage-max-design-microvolt = <4400000>;
-+};
-+
-+&framebuffer0 {
-+	width = <1080>;
-+	height = <2160>;
-+	stride = <(1080 * 4)>;
-+};
-+
-+&i2c2 {
-+	clock-frequency = <1000000>;
-+
-+	status = "okay";
-+
-+	/* ST,FTS @ 49 */
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vdda_mipi_dsi0_1p2>;
-+
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "lg,sw43408-lh546wf1-ed01", "lg,sw43408";
-+		reg = <0>;
-+
-+		vddi-supply = <&vreg_l14a_1p8>;
-+		vpnl-supply = <&vreg_l28a_3p0>;
-+
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&panel_default>;
-+		pinctrl-names = "default";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+	qcom,te-source = "mdp_vsync_e";
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vdda_mipi_dsi0_pll>;
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	panel_default: panel-default-state {
-+		reset-pins {
-+			pins = "gpio6";
-+			function = "gpio";
-+			drive-strength = <8>;
-+			bias-disable;
-+		};
-+
-+		te-pins {
-+			pins = "gpio12";
-+			function = "mdp_vsync";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+	};
-+};
-+
-+&wifi {
-+	qcom,calibration-variant = "Google_blueline";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-new file mode 100644
-index 0000000000000..fd9788d5c3f54
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-@@ -0,0 +1,536 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/input/linux-event-codes.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "sdm845.dtsi"
-+#include "pm8998.dtsi"
-+#include "pmi8998.dtsi"
-+
-+/delete-node/ &mpss_region;
-+/delete-node/ &venus_mem;
-+/delete-node/ &cdsp_mem;
-+/delete-node/ &mba_region;
-+/delete-node/ &slpi_mem;
-+/delete-node/ &spss_mem;
-+/delete-node/ &rmtfs_mem;
-+
-+/ {
-+	chassis-type = "handset";
-+	qcom,board-id = <0x00021505 0>;
-+	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
-+
-+	aliases {
-+		serial0 = &uart9;
-+		serial1 = &uart6;
-+	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "serial0:115200n8";
-+
-+		/* Use display framebuffer as setup by bootloader */
-+		framebuffer0: framebuffer-0 {
-+			compatible = "simple-framebuffer";
-+			memory-region = <&cont_splash_mem>;
-+
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	reserved-memory {
-+		cont_splash_mem: splash@9d400000 {
-+			reg = <0 0x9d400000 0 0x02400000>;
-+			no-map;
-+		};
-+
-+		mpss_region: memory@8e000000 {
-+			reg = <0 0x8e000000 0 0x9800000>;
-+			no-map;
-+		};
-+
-+		venus_mem: venus@97800000 {
-+			reg = <0 0x97800000 0 0x500000>;
-+			no-map;
-+		};
-+
-+		cdsp_mem: cdsp-mem@97D00000 {
-+			reg = <0 0x97D00000 0 0x800000>;
-+			no-map;
-+		};
-+
-+		mba_region: mba@98500000 {
-+			reg = <0 0x98500000 0 0x200000>;
-+			no-map;
-+		};
-+
-+		slpi_mem: slpi@98700000 {
-+			reg = <0 0x98700000 0 0x1400000>;
-+			no-map;
-+		};
-+
-+		spss_mem: spss@99B00000 {
-+			reg = <0 0x99B00000 0 0x100000>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: rmtfs-region@f2700000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xf2700000 0 0x202000>;
-+			qcom,use-guard-pages;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "Volume keys";
-+		autorepeat;
-+
-+		pinctrl-0 = <&volume_up_gpio>;
-+		pinctrl-names = "default";
-+
-+		key-vol-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+	};
-+
-+	vreg_s4a_1p8: regulator-vreg-s4a-1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&adsp_pas {
-+	firmware-name = "qcom/sdm845/Google/blueline/adsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8998-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+		vdd-s11-supply = <&vph_pwr>;
-+		vdd-s12-supply = <&vph_pwr>;
-+		vdd-s13-supply = <&vph_pwr>;
-+		vdd-l1-l27-supply = <&vreg_s7a_1p025>;
-+		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
-+		vdd-l3-l11-supply = <&vreg_s7a_1p025>;
-+		vdd-l4-l5-supply = <&vreg_s7a_1p025>;
-+		vdd-l6-supply = <&vph_pwr>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-+		vdd-l9-supply = <&vreg_bob>;
-+		vdd-l10-l23-l25-supply = <&vreg_bob>;
-+		vdd-l13-l19-l21-supply = <&vreg_bob>;
-+		vdd-l16-l28-supply = <&vreg_bob>;
-+		vdd-l18-l22-supply = <&vreg_bob>;
-+		vdd-l20-l24-supply = <&vreg_bob>;
-+		vdd-l26-supply = <&vreg_s3a_1p35>;
-+		vin-lvs-1-2-supply = <&vreg_s4a_1p8>;
-+
-+		vreg_s3a_1p35: smps3 {
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+		};
-+
-+		vreg_s5a_2p04: smps5 {
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		vreg_s7a_1p025: smps7 {
-+			regulator-min-microvolt = <900000>;
-+			regulator-max-microvolt = <1028000>;
-+		};
-+
-+		vdda_mipi_dsi0_pll:
-+		vreg_l1a_0p875: ldo1 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+		};
-+
-+		vreg_l5a_0p8: ldo5 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a_2p95: ldo13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+			/*
-+			 * We can't properly bring the panel back if it gets turned off
-+			 * so keep it's regulators always on for now.
-+			 */
-+			regulator-always-on;
-+		};
-+
-+		vreg_l17a_1p3: ldo17 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l19a_3p3: ldo19 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			/*
-+			 * The touchscreen needs this to be 3.3v, which is apparently
-+			 * quite close to the hardware limit for this LDO (3.312v)
-+			 * It must be kept in high power mode to prevent TS brownouts
-+			 */
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l20a_2p95: ldo20 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l21a_2p95: ldo21 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l24a_3p075: ldo24 {
-+			regulator-min-microvolt = <3088000>;
-+			regulator-max-microvolt = <3088000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l25a_3p3: ldo25 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_mipi_dsi0_1p2:
-+		vreg_l26a_1p2: ldo26 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+		};
-+
-+		vreg_l28a_3p0: ldo28 {
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_LPM>;
-+			regulator-boot-on;
-+			/*
-+			 * We can't properly bring the panel back if it gets turned off
-+			 * so keep it's regulators always on for now.
-+			 */
-+			regulator-always-on;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pmi8998-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-bob-supply = <&vph_pwr>;
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3312000>;
-+			regulator-max-microvolt = <3600000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+			regulator-allow-bypass;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pm8005-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+
-+		vreg_s3c_0p6: smps3 {
-+			regulator-min-microvolt = <600000>;
-+			regulator-max-microvolt = <600000>;
-+		};
-+	};
-+};
-+
-+&cci {
-+	status = "okay";
-+};
-+
-+&cci_i2c1 {
-+	/* actuator @0c */
-+
-+	/* front camera, imx355 @1a */
-+
-+	/* eeprom @50, at24 driver says 8K */
-+};
-+
-+&cdsp_pas {
-+	firmware-name = "qcom/sdm845/Google/blueline/cdsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&gcc {
-+	protected-clocks = <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
-+};
-+
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/sdm845/Google/blueline/a630_zap.mbn";
-+};
-+
-+&i2c12 {
-+	/* Bottom spkr (right) CS35L36 @ 40 */
-+
-+	/* Top spkr (left) CS35L36 @ 41 */
-+};
-+
-+&ipa {
-+	firmware-name = "qcom/sdm845/Google/blueline/ipa_fws.mbn";
-+	memory-region = <&ipa_fw_mem>;
-+
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mss_pil {
-+	firmware-name = "qcom/sdm845/Google/blueline/mba.mbn",
-+			"qcom/sdm845/Google/blueline/modem.mbn";
-+
-+	status = "okay";
-+};
-+
-+&pm8998_gpios {
-+	volume_up_gpio: vol-up-active-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <0>;
-+	};
-+};
-+
-+&pm8998_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&pmi8998_charger {
-+	monitored-battery = <&battery>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&qup_uart9_rx {
-+	drive-strength = <2>;
-+	bias-pull-up;
-+};
-+
-+&qup_uart9_tx {
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = < 0 4>, /* SPI (Intel MNH Pixel Visual Core) */
-+			       <81 4>; /* SPI (most likely Fingerprint Cards FPC1075) */
-+
-+	touchscreen_reset: ts-reset-state {
-+		pins = "gpio99";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	touchscreen_pins: ts-pins-gpio-state {
-+		pins = "gpio125";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchscreen_i2c_pins: qup-i2c2-gpio-state {
-+		pins = "gpio27", "gpio28";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
-+&uart6 {
-+	pinctrl-0 = <&qup_uart6_4pin>;
-+
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&uart9 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l20a_2p95>;
-+	vcc-max-microamp = <800000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l26a_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&vreg_l1a_0p875>;
-+	vdda-pll-supply = <&vreg_l12a_1p8>;
-+	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
-+
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l26a_1p2>;
-+	vdda-pll-supply = <&vreg_l1a_0p875>;
-+
-+	status = "okay";
-+};
-+
-+&venus {
-+	firmware-name = "qcom/sdm845/Google/blueline/venus.mbn";
-+
-+	status = "okay";
-+};
-+
-+&wifi {
-+	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
-+	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-+	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
-+	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+
-+	qcom,snoc-host-cap-8bit-quirk;
-+
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
-new file mode 100644
-index 0000000000000..2a81ca1d00b1b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
-@@ -0,0 +1,36 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "sdm845-google-common.dtsi"
-+
-+/ {
-+	model = "Google Pixel 3 XL";
-+	compatible = "google,crosshatch", "qcom,sdm845";
-+};
-+
-+&battery {
-+	charge-full-design-microamp-hours = <3480000>;
-+	voltage-min-design-microvolt = <3600000>;
-+	voltage-max-design-microvolt = <4400000>;
-+};
-+
-+&dispcc {
-+	/* Disable for now so simple-framebuffer continues working */
-+	status = "disabled";
-+};
-+
-+&framebuffer0 {
-+	width = <1440>;
-+	height = <2960>;
-+	stride = <(1440 * 4)>;
-+};
-+
-+&mdss {
-+	/* Disable for now so simple-framebuffer continues working */
-+	status = "disabled";
-+};
-+
-+&wifi {
-+	qcom,calibration-variant = "Google_crosshatch";
-+};
-
--- 
-2.51.0
+Sorry to nag, but are you able to look into this soc_id and see if
+it's the PRO SKU ?
 
 
+Cheers!
+
+Chris
 
