@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-85162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D018CBB514
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 01:05:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7271CBB523
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 01:09:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7104B300A1FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 00:05:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0779B300DA75
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 00:09:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22C713B8D7F;
-	Sun, 14 Dec 2025 00:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5021758B;
+	Sun, 14 Dec 2025 00:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iNoA/bek"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N+GfDfPZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076BE748F
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 00:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0203B8D78
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 00:09:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765670699; cv=none; b=cUHsS+VbIH8M78jgu3VBp/qQ2NuDj/KxrouwKCfbtgU/dmqAZFuLI+h2BhjCNmD9xcXr2z+4/WPYxo8XfR45onWreK10eFb3OUJ7dNIJ8TVWoW4pWSKcfdOfRWWHd0HTR3OeaRpvyf4xN5v1mNC+rIuOsJDRgs2dX6KR0lQV7ic=
+	t=1765670975; cv=none; b=r8/MZ2AVE81uBDp5kTZM7r6tdsltVn84wqOVlgRdkHIF0ZIRc4ArsMO55j1NCnD7hLs7LjeBTD3FW5931E4JK9bQ3WUxYnrEq74rgrzuWDjYqFzyH3PhhRiTwaFgQOjGqlvrAdUpkOtGOfJ0OT+FSNeXz437aHnisXS9WkJIbe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765670699; c=relaxed/simple;
-	bh=+zQAz+Rb/94sTj+jzifGC0Wl/VBMTW3fTEGmfxduBUk=;
+	s=arc-20240116; t=1765670975; c=relaxed/simple;
+	bh=sgNSVyUVIlQGl+4yq6gFL7+dAkwlztttag9JjuKcAB8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CfhNK2P3viwzlvTdiEX5XztNLxOPo6bxzfpGyg2OKzsIxoRE3LQKGpi20ztwucLBQJ+62mIpkkJcsDAZkaCujg/gAhLLrjtgoFDujMIKMA27mPLvsU1GJWgK/r5KaNrH8tt71PS5lfgs7QIMaxAQe2tjPY82bZZNnYcbJHevmJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iNoA/bek; arc=none smtp.client-ip=209.85.208.175
+	 In-Reply-To:Content-Type; b=iTmVkeXJlAlvCnH798KNx8iR/Z0aovPxGdsG0EGGLT56q9RoxlTig/StHEucRuniWuDLGRcYadVGQfEfRkAEqvTnhKXx/fTy2tpJ37xSHQnAL2XNYizCGw8oxYC0u/xpcyKGRzxRGDxmQwujH0M04eOdocpSilVVu2HPfKLhgWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N+GfDfPZ; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37b8f270a3dso2524001fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 16:04:56 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-59474f1308cso228839e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Dec 2025 16:09:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765670695; x=1766275495; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1765670971; x=1766275771; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5BgboonVbxKrO9X8kRKN4BUW9psx0IkF2ipu6x5mfes=;
-        b=iNoA/bekPHTxP1q3Nr2OzNojY8sy6H/d8k9YHmSPWix9gHriFGPYgqcX23fodFeet1
-         OgIpuxYVeYK/hzPB6YQyyDCOJrMAQZqgwp1YvLu/43oq4+oe1ABoBMWzrLfh2b7/Kww6
-         rOsiw9yETELqkwFxZfk2PCw63/W4ciQNm9HO5ckuLLz6CSc/iNyOG8+HVK+2gbZB2U3Y
-         ORxlAn+cjwaDRICR/8cI7neCFXdXEqlv7PTFjiwNczwqAJVkJBkS7AsgbrCXZNx3fUrK
-         7SfXVedYW2/KctJKCc5MO1T8+N+z/79T4IGVcznJ3dzYhupRzqoMJ/zX7HjXlv+B9oc3
-         HpaA==
+        bh=YLbZpeVWxhUiA9xdv2yvpF5kwmnyurNX54Ve7q/okuU=;
+        b=N+GfDfPZ87JYzoR59zM/+8WfSjy6WI1X/m+CBQAkxW4lS8KmXuwjgzu/fYI26l7zuX
+         jBbdwEIqsNeqL/WR5gBE8iPXBG1vATlGosqrrorghFnDk0grJo3Apn4UTA/yasAtlhZc
+         tZ823kTOA7XjwITOE8/TacFEp+Jnkyu/BSRPR7C64cPc2zTBzHGnj9ZzvWJuJqH2EHY+
+         wcHZrbGluVeoIMLrknyj4XhVa+Gj7E3K+RVIhjgWkMgW2VuELUm2iP9P2bCdktgCYeml
+         dXX+q9zYbNDJbRdrItlmjlE22mp/z9dPEUEvOyvLvyN+vUGius4u7Fxw9aus2xx92VQz
+         yILg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765670695; x=1766275495;
+        d=1e100.net; s=20230601; t=1765670971; x=1766275771;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5BgboonVbxKrO9X8kRKN4BUW9psx0IkF2ipu6x5mfes=;
-        b=pf6dcdgqgrmbaNuEBcH1arVNAyCm/rMmhtUBzF3BhKsqBfck6VCc04giTZnW+zz24l
-         mgCsjnNHhNyd0BYy3xE9uQLcoo5ruMhSAdPxwlY5ZGoiDRHD54+6L+aZZSHWP/EhhlNb
-         SYXqyH0VHiBdA5fRClQxw+9HGFL0JiHYO3KnRzQZ+znOjscJdwFxq3GbU6sRFMhSY5Ol
-         wLMHNy3BVHxM18V66vH4ABPlWVcQd0FL3rVZfcxObQQlVJvUn9602Vrf7UIzvDJKrqL+
-         o6rbDgTRApJHd6EEosK5gp6Kholr6Xtlo94wDp24cVH+1R2Cmrcrg9krWpPRQqKMuDn1
-         xMeA==
-X-Forwarded-Encrypted: i=1; AJvYcCUs3g/bA0Zm2HiNAfjIz4bLjG1sE4mIAf4F7XCscfDJXhCD18EJzGDBpJwquMeNiH7O/Nyvvmuoot/72CIa@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNatz2SSwnDhi/tVUCAVBZDuSfVedFDMBR270szTaMVLRNWCBQ
-	PqbT+hKm85HA//ZTx7+f9H4eaR1Q/K74zR1vGsYnKNRjhMSRRoW7fcYUgi1e/uxODio=
-X-Gm-Gg: AY/fxX4cynSvgP06Q4Sipvpg5TFN8kbjpEANZT0Yt9H2cLEkvR6NBeG6zj/KW/I8M6Z
-	BiKWOheZKn0JRskUem41n80eyZDZh4afJ5kA+rReWBxAsWsqsG+lM/HctFVsUilKylmheol1zoQ
-	3IT6gpHAydvKJ0en7yfny/b8pEqRn2rp1kyKtW+VIc3qNc7ZkzPz2Yff60/awLQW0MNtJFCVV7/
-	/DYf7wbd+1CZtKcTnBaEI/SVyA0To9WiyGJNJMGAbXKobmfhetlL6rI8k+lPNH9Kt+Cmbv2ffa9
-	C0M1hgPT+qJYp0INRF6iM0SzdpPyPeEzcwF8nwmxfJdYY8AOxpBmk667JRsKRPSxzosKYn7aYJQ
-	CDGKZf1w9KxbWvh5Cc+Ho9wRi5fZBwXfHBu3lOwJIowCyOGR1g0nRpWTvCNbloX3icB2q1tnozt
-	7bRZOQLk6Gdc5NeQu4OjsyBoHOPUxVNy2NGUJbLc1q9lOjPGNOLPOyuPhNZ83tySqOXxTbchGrT
-	//5
-X-Google-Smtp-Source: AGHT+IG0gHywQrxKrfUQzEHRspDDk2UVqLJp4GZHTOJ02LFhlHAWCfdGIvRgbfMc4gVJJKA+2cbEpg==
-X-Received: by 2002:a05:6512:b98:b0:594:93b8:88a0 with SMTP id 2adb3069b0e04-598faa8dc1fmr1251168e87.6.1765670694934;
-        Sat, 13 Dec 2025 16:04:54 -0800 (PST)
+        bh=YLbZpeVWxhUiA9xdv2yvpF5kwmnyurNX54Ve7q/okuU=;
+        b=Y7PkAXCX5EM4xhAqr+5RfCk2FF1P0CmZiJMJ2X4+r9QN1142cUcxS8T4M4nBDKAsBu
+         GSB8Co8ReKHKAhiUjpJxsqxHYQVZPAQxy6ndXfR1EuOrg4dBeW20pbdwEALrIett+dzx
+         iDaSwFjlR1cw+tik36/uu3qjwZGMOlrJTArz4BIco3kYyVOoPNFHSbJRZycRwuDNxt3I
+         IexbeDJxtELKxK/HC0On3ARh19MIBuH7hk4pS4ZoaWerEDxPO3pdJ0LdnobjtK5kI2mK
+         YY0ekMqHdkTsO5PmXB/+j2nEYB1RqeszGkDMPveeYTpXAnNY29WVpsmWXym0m8ZDoE5r
+         k4Mg==
+X-Gm-Message-State: AOJu0YzHdxCi+Xn9WhphdIHmPHqE6MEitvZ9fLUrYTJrC0hM9UmUrNWl
+	hnfSFeBYZzRz6cq/bvSNZXsqhqDalaHP+C0xPQ2ZmbAkwvJZJ06Fpsm8U5YojlQuIY0u85goxgI
+	dVuPC
+X-Gm-Gg: AY/fxX7fNHz1NferOlqG0cXbw5XoFSaAz/IPxlywrIPeHBEuQXd1OPuqq6Xy07TKJim
+	b+VXfntzZDyv7Dq8pdplml39s2rScNg6let64hdTnQBeROBoIxMTJAC00vT187f02GV83foI/sz
+	bq4GDJSTiCeGW0saRlF5TNgaLeXH1akRuyGCoGR2NB7bT6xpTf8ot54RadDUPu6C56KCKpDz4D1
+	5YPUGffo7iDWrDosL2rK1y6sj4a/hXje6LEjCxe/+2LuEQWbEH1hN4/Kuv3LdGmkYdAnc68qOuv
+	EMlRwM/wL6ITJnLHMaB5af/sq8pLsNqD32fI1/sncHAP05Y+B3huseuUgvWtEsVjaQraQeJGJmu
+	JYrsQtwEXtp2BKDO3NfVbhAKYP5qOyb6tHXqqzZBz24Y7j2iarHfDONc3CCIbtYw6DYXvY1j81N
+	GbU4KSzAita0L4Z749AmL8rGMUr4hS9TC6wYbc/EqH6tjTbZMYAOOPXq15jQnGcaVMaw==
+X-Google-Smtp-Source: AGHT+IGa33buz/rmba0bIG4qV9RX3OHMcGRTnZkr8Mbi7xgjdbVEw2xZ+1nY7hVGxnE3RNPMJLjOOg==
+X-Received: by 2002:a05:6512:3d1b:b0:597:d7d6:398d with SMTP id 2adb3069b0e04-598faa01850mr1324255e87.2.1765670970598;
+        Sat, 13 Dec 2025 16:09:30 -0800 (PST)
 Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f3195e52sm3425805e87.84.2025.12.13.16.04.51
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f3194dbcsm3464122e87.78.2025.12.13.16.09.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Dec 2025 16:04:53 -0800 (PST)
-Message-ID: <1e09a93a-d42f-4a23-b346-9f158a60d8aa@linaro.org>
-Date: Sun, 14 Dec 2025 02:04:43 +0200
+        Sat, 13 Dec 2025 16:09:28 -0800 (PST)
+Message-ID: <2cb8c5ce-ea80-4cb6-9bef-f526eb433d96@linaro.org>
+Date: Sun, 14 Dec 2025 02:09:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,137 +81,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
- description
-To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
- Kapatrala Syed <akapatra@quicinc.com>,
- Hariram Purushothaman <hariramp@quicinc.com>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
+Subject: Re: [PATCH 1/2] arm64: qcom: sdm845: Introduce camera master clock
+ pinctrl
+To: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz>
+ <20251213-sdm845-mclk-v1-1-197bc947d4c6@ixit.cz>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
+In-Reply-To: <20251213-sdm845-mclk-v1-1-197bc947d4c6@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 12/13/25 00:55, David Heidelberg via B4 Relay wrote:
+On 12/13/25 14:00, David Heidelberg via B4 Relay wrote:
 > From: David Heidelberg <david@ixit.cz>
 > 
-> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
-> voltage from the description.
+> There are shared for the whole architecture, so let's define these in
+> proper place.
 > 
-> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda regulator descriptions sdm845")
 > Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
-> Added only Fixes tag for the initial commit, not all the copy-paste
-> propagated ones.
-
-Generally it should be possible to specify a list of Fixes: tags.
-
-However, despite the change is the proper one, there is an opinion that Fixes
-tags are not applicable to dt bindings with a given reason that only executed
-code can be fixed. So you may be asked to remove even a single Fixes tag.
-
->   Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
->   Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
->   Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
->   Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
->   Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
->   Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
->   6 files changed, 6 insertions(+), 6 deletions(-)
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 43 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 43 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-> index 019caa2b09c32..9009cfe993d75 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-> @@ -130,7 +130,7 @@ properties:
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index bf2f9c04adba7..97bd9513b011b 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2805,6 +2805,49 @@ tlmm: pinctrl@3400000 {
+>   			gpio-ranges = <&tlmm 0 0 151>;
+>   			wakeup-parent = <&pdc_intc>;
 >   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->     ports:
->       $ref: /schemas/graph.yaml#/properties/ports
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-> index ee35e3bc97ffd..cb922f90fe900 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-> @@ -129,7 +129,7 @@ properties:
->   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->     ports:
->       $ref: /schemas/graph.yaml#/properties/ports
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-> index c99fe4106eee9..2231d7216f62a 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-> @@ -268,7 +268,7 @@ properties:
->   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->   required:
->     - clock-names
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> index 35c40fe223767..8e6ca94c88695 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> @@ -95,7 +95,7 @@ properties:
->   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->     ports:
->       $ref: /schemas/graph.yaml#/properties/ports
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> index 82bf4689d3300..d50e096b900db 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-> @@ -211,7 +211,7 @@ properties:
->   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->   required:
->     - clock-names
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> index ebf68ff4ab961..ccd2d024bfd10 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-> @@ -300,7 +300,7 @@ properties:
->   
->     vdda-pll-supply:
->       description:
-> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +      Phandle to regulator supply to PHY refclk pll block.
->   
->   required:
->     - clock-names
+> +			cam_mclk0_default: cam-mclk0-default-state {
+> +				pins = "gpio13";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam_mclk0_sleep: cam-mclk0-sleep-state {
+> +				pins = "gpio13";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-pull-down;
+> +			};
+> +
+> +			cam_mclk1_default: cam-mclk1-default-state {
+> +				pins = "gpio14";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam_mclk1_sleep: cam-mclk1-sleep-state {
+> +				pins = "gpio14";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-pull-down;
+> +			};
+> +
+> +			cam_mclk2_default: cam-mclk2-default-state {
+> +				pins = "gpio15";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam_mclk2_sleep: cam-mclk2-sleep-state {
+> +				pins = "gpio15";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-pull-down;
+> +			};
+> +
+> +
+
+Please remove an excessive blank line.
+
+>   			cci0_default: cci0-default-state {
+>   				/* SDA, SCL */
+>   				pins = "gpio17", "gpio18";
 > 
 
-As for the change itself it is good, I'd prefer to get a correction
-to 1.2V in the documentation rather than a complete removal though.
+Please add mclk3 to the list, it's one of the gpio16 pad functions.
 
-In any case,
+After adding that
 
 Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
