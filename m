@@ -1,578 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-85252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FE82CBDE29
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 13:51:41 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCE9CBDF46
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 14:10:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0882D300FA0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 12:51:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E4D5330495BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 13:01:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1509315764;
-	Mon, 15 Dec 2025 12:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6AFD28C864;
+	Mon, 15 Dec 2025 13:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XsRLtCEm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y9FvoFQd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MORJTOyU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4163A2F2616;
-	Mon, 15 Dec 2025 12:42:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2C6286A9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 13:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765802546; cv=none; b=chMXUtT9wc7bHFsR305WMVj3dp49nU+YZZry7GhWKz0T/ci6NlV1EmKQHtAvt8jw+DaHxS9T6orrUEHa6hFG2O+h/qutVE/xS+gWD+c1VJiLm8qgB4Z97KGiwX5XWPHSoIKgcj+LCaGkuF7wXLb4mO5Vb/9u55dKTuyL3bpHX/U=
+	t=1765803664; cv=none; b=CsEzbL7I3HUCurSRQ3mxIHaIFTSV594+zcBlaUurdrPUe8ldxvgbMcUzBmO+QQ+f8we2GwXXiKZpApiYaoQc6uGljXEP530VpSRfOF5tEqNzLJaxrB+dtBqcIPBf9Gie9+aS6QjLtAw/XAnHUBesx57QeozIhiK3QcVMoiNwRXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765802546; c=relaxed/simple;
-	bh=Iz6V6PWUwu+QGmdkLwwDsv515c+j0B7QKQvLTh1nias=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ga5b2qMvOQX8I2PfJMwlA8Ihs2Bd0QcQIZyk78YpQrasmQDzFsFg0WpeO2ucgoIxq2A3G1vb/CnrSHFXOWyhmCK+LpzLuY1qlAPjuXwbeE52vYaS/8qjG3x7UcosMnwjZ7wQcEElMIgS0UM0neFURw/ZizJyNpkVXbKY09zspRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XsRLtCEm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E8CFC4CEF5;
-	Mon, 15 Dec 2025 12:42:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765802546;
-	bh=Iz6V6PWUwu+QGmdkLwwDsv515c+j0B7QKQvLTh1nias=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=XsRLtCEmSKvvW4+dew6fVvOOGpm7ZRMaVW5jGd6Sp86NfQQy2xwdQh69GQarW+dXX
-	 HrNmfDyqBhO80PqWOkxiMHSWvukeW8gPYdPrxxYJXm+K1wySrZHs0vjy0+hhuYAILW
-	 3Kp3GL2Z5YVjqUiG12NHAtw2YQ1NA1Q+itFAlfr3hYXJlzCJW76A75NBDMrXXN4DqR
-	 rLJh0tWXmRjVKyr2TRMjiArxP09VikVcfi4TlxbQfkUdisQqof1Y3J0hIhLGzRYMh9
-	 p3Irvkv2ysqytPv81aCqAML1HSDUIVB3ZKdR1lqDrsuxr+lpURYw2/2YERA19j1WC3
-	 NEGBsyiTqrqzQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CA0D5B16F;
-	Mon, 15 Dec 2025 12:42:26 +0000 (UTC)
-From: Xiangxu Yin via B4 Relay <devnull+xiangxu.yin.oss.qualcomm.com@kernel.org>
-Date: Mon, 15 Dec 2025 20:42:08 +0800
-Subject: [PATCH v8 12/12] phy: qcom: qmp-usbc: Add QCS615 USB/DP PHY config
- and DP mode support
+	s=arc-20240116; t=1765803664; c=relaxed/simple;
+	bh=bGeFX1PHslKb/I6pp2SZh4itUTZljDjY9CVtNtdVlOc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FASVjXBikwZqrUKDRkihGoP9LngSKWTetlTperZBMeHmgjfHXOMXqpuQvI/z55BlDV0oXNYqn097DyDhAo6SezUKpGGHPy4S571rntt28At2qrJgrvaBVCvPEDEfYOmJqpMopr3h6qZPOQzLeP6W3McSKVdZF5hjMnCKI91UFuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y9FvoFQd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MORJTOyU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BFANpRs675843
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 13:00:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eWzLoZ3fbNna6oDTvHfwwszm/4c1bM5VeFkwVbiDZzU=; b=Y9FvoFQd/34/h/6T
+	Pthljz6NOcdqHikjysir2IHRMBRSHxuaoftJLndZtTXjOwWI09iy+torM6j18f4i
+	iIN9Z+W01shbR6w81z5V0j2Q5FTMR2LQ9daZaoK9A8CbjPdylLC7Xo4cinjor1lF
+	nXdTSu0FI4EV1Y3aslTN7JLR4TtpVAhQn+ra+g3lHcNkkljp0PSYFVRE+gC6MnfW
+	dkhuTAQvArpdp8b32bz/43DB48ntIF/uZC23NLArNbQjZWhBrpehxopXrtCwtTYn
+	GYYBcQHGdPRLsRxtbdSZgTx9O348bKTHAWywByg+fnJSJTct3B7sz3svP2yVMn3T
+	svDjQA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b11cymk5a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 13:00:55 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-29f1f69eec6so32835515ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 05:00:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1765803655; x=1766408455; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eWzLoZ3fbNna6oDTvHfwwszm/4c1bM5VeFkwVbiDZzU=;
+        b=MORJTOyUy1Uv6mGDy9k4ddf1B3ULTVnuWiXCZ4mCLpE23JGR2dhxvWZNNySTT9YB95
+         GcUBCC+ejSXZ4nhj8rAK08gUZKv939dmK4UFACkZeQJsrlCrnfbCj/5KGtK8V3UkQ3IB
+         ad455EtSVMyvU9czHS2LYvLN7VTylhbfjHW6qkOmJ7/9GUXyep0XeORyTjQA0rl4Htq+
+         6r3fC4N4xXlBiSxX949j0o6VogNF9RHaJbRxlbUhHWhqFyfAyh3Oc1tyOa5iL56MFQ1d
+         5WMy7QVQunifkAxQROplCER2K+1l2iG5gqHkrZ9dVv0QS9Oeir3mH4URaB9maT76ndTy
+         T27Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765803655; x=1766408455;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eWzLoZ3fbNna6oDTvHfwwszm/4c1bM5VeFkwVbiDZzU=;
+        b=FfBnB+aRtIMDhX+g3PkGofbkbj+cP/XWvKj3UEhSPHh8QIkqDmykc8/fTw+jdQryCL
+         9sWvuAXanRnF1HBgml1P9rB0NITQg/Vt1oc/uIsZ4sstWRvmAUo5sRDTJRsTVM4gD0Vp
+         pjrsqA0OSDKJywsLdKClwUb/yg/L5MAg9GTImMXNtWmYmvf7Tiam1qjtlLQ//tujUBhR
+         w+SWXuvRDHsqvJKL7AOPtk3B9qpcq9ydbL/RameHNLgQDenB7liCjYd8/KYEyrujXNG/
+         9EYYAMLk/yToHhncjCQG/kIq0Oeo8bHzkckWY+SJlS0FHAmjClj/mIX8IBoJ21H97Xzt
+         dyXQ==
+X-Gm-Message-State: AOJu0Yzi6hcU/iwRrXDyVKjFaIgYrqQDgSwfmd+udV3ofMKh5xHe5wDQ
+	nTe39BCoQ6K9IdLIVVWov1dMuzm3tT0Qj6Z8qANOgjH7HNJIpdWqKJjVBqcY20GGjkkWb57WYAh
+	R0q7EqZlPpfxxS1foxDJIqnW1WIngv0c2zvkF2NfqcNvr3t89AS6LdGvcXHNH+yHTg8bf
+X-Gm-Gg: AY/fxX6ETLLbf8j4unvysvxTlL/WcoHbDjZseImcTnckYm4or+/4/BUw7tiwPBwb/mG
+	GQ72UV8hsVOyY+dhPvh2KCkvXI6Z3OmcQxBApvBNxHi0ZJRoMqsSK6vd0MpRzowwu6iLowZmTaP
+	pyjFRkZ/Z+vaO+uBBhgjV+flT6CRqRmMT+fIMxAse0obr5FEmHghgoAmLAo1DFqrkC1/eT26Iyf
+	t8nyxhs6uTzDMo1HBrqsGRrToaJV0PfJTV1f6AfuX7ASaizu1Fj6WX+AqjQrfihDtcLMO8xEBdV
+	7zNRw8XvKYBadVVeyWlWQvVpAD8rhhhXB3q513CkIxpPL43zgNzE7+NO4SIbYrlV6WpHiRZzo0/
+	CflSM4oDQn8PkRQVjmWB7mL9EpqlvLz/CEBxswgMibbQDv+CEnaepESnckfMhMcq3Res1VXy1B1
+	Ly3FM9p+gAbSxr3IRBvSePur7uaVLQXsWs
+X-Received: by 2002:a17:903:1988:b0:2a0:ccee:b354 with SMTP id d9443c01a7336-2a0cceebca3mr46641855ad.35.1765803654156;
+        Mon, 15 Dec 2025 05:00:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrz1GbG2GulNcHY2p0JDhisa9h4HGD51A2Jm2Vs7BYkvVj/IS8tR0gt8HDA+qn2x76f6/Cbw==
+X-Received: by 2002:a17:903:1988:b0:2a0:ccee:b354 with SMTP id d9443c01a7336-2a0cceebca3mr46641205ad.35.1765803653570;
+        Mon, 15 Dec 2025 05:00:53 -0800 (PST)
+Received: from [10.190.210.122] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29eea04101esm133447405ad.70.2025.12.15.05.00.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Dec 2025 05:00:53 -0800 (PST)
+Message-ID: <43e48560-2848-4474-b858-a3d15944e2ee@oss.qualcomm.com>
+Date: Mon, 15 Dec 2025 18:30:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/2] Add support for Gunyah Watchdog
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+References: <20251118-gunyah_watchdog-v8-0-e5de12e2eef5@oss.qualcomm.com>
+ <6a8f5d62-f6ea-44b3-9baf-acfbc1e58efe@oss.qualcomm.com>
+ <992d46b7-b053-4a9e-ba04-f5653525a891@kernel.org>
+Content-Language: en-US
+From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+In-Reply-To: <992d46b7-b053-4a9e-ba04-f5653525a891@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251215-add-displayport-support-for-qcs615-platform-v8-12-cbc72c88a44e@oss.qualcomm.com>
-References: <20251215-add-displayport-support-for-qcs615-platform-v8-0-cbc72c88a44e@oss.qualcomm.com>
-In-Reply-To: <20251215-add-displayport-support-for-qcs615-platform-v8-0-cbc72c88a44e@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com, 
- li.liu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1765802543; l=17185;
- i=xiangxu.yin@oss.qualcomm.com; s=20241125; h=from:subject:message-id;
- bh=AitIfH7m+nEawI9lh0FW677FK38HTsyWQc7K8BMhHH8=;
- b=IH8CN3kZfNlfLNQoSZem++bBFfQ9yvq1cQQhDX7J5WWP5R6Ouz+YVVlK0fRj3X5CygEn1QtXu
- qwbROL6NMrqCj8mHyy1iWPPFjO9/O4JeN1HKSkt5HBJPj51WHZXyrkX
-X-Developer-Key: i=xiangxu.yin@oss.qualcomm.com; a=ed25519;
- pk=F1TwipJzpywfbt3n/RPi4l/A4AVF+QC89XzCHgZYaOc=
-X-Endpoint-Received: by B4 Relay for xiangxu.yin@oss.qualcomm.com/20241125
- with auth_id=542
-X-Original-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Reply-To: xiangxu.yin@oss.qualcomm.com
-
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-
-Add QCS615-specific configuration for USB/DP PHY, including DP init
-routines, voltage swing tables, and platform data. Add compatible
-"qcs615-qmp-usb3-dp-phy".
-
-Note: SW_PORTSELECT handling for orientation flip is not implemented
-due to QCS615 fixed-orientation design and non-standard lane mapping.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 413 +++++++++++++++++++++++++++++++
- 1 file changed, 413 insertions(+)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-index b1a2380401ff..14feb77789b3 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-@@ -30,6 +30,7 @@
- #include "phy-qcom-qmp-pcs-misc-v3.h"
- 
- #include "phy-qcom-qmp-dp-phy.h"
-+#include "phy-qcom-qmp-dp-phy-v2.h"
- 
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- #define SW_PORTSELECT_VAL			BIT(0)
-@@ -289,6 +290,83 @@ static const struct qmp_phy_init_tbl qcm2290_usb3_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
- };
- 
-+static const struct qmp_phy_init_tbl qmp_v2_dp_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x37),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_ENABLE1, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BG_CTRL, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_BUF_ENABLE, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE0, 0x28),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE0, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE0, 0x0b),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0x40),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x08),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORECLK_DIV, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE2_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_CTRL, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x02),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v2_dp_serdes_tbl_rbr[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x2c),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x69),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0xbf),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x21),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v2_dp_serdes_tbl_hbr[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x24),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x69),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x80),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x07),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0x3f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x38),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v2_dp_serdes_tbl_hbr2[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x20),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x8c),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0x7f),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x70),
-+	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
-+};
-+
-+static const struct qmp_phy_init_tbl qmp_v2_dp_tx_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TRANSCEIVER_BIAS_EN, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_VMODE_CTRL1, 0x40),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_PRE_STALL_LDO_BOOST_EN, 0x30),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_INTERFACE_SELECT, 0x3d),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_CLKBUF_ENABLE, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_RESET_TSYNC_EN, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TRAN_DRVR_EMP_EN, 0x03),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_PARRATE_REC_DETECT_IDLE_EN, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TX_INTERFACE_MODE, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TX_EMP_POST1_LVL, 0x2b),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TX_DRV_LVL, 0x2f),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_TX_BAND, 0x4),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_RES_CODE_LANE_OFFSET_TX, 0x12),
-+	QMP_PHY_INIT_CFG(QSERDES_V2_TX_RES_CODE_LANE_OFFSET_RX, 0x12),
-+};
-+
- struct qmp_usbc_offsets {
- 	u16 serdes;
- 	u16 pcs;
-@@ -434,6 +512,10 @@ static const char * const usb3phy_reset_l[] = {
- 	"phy_phy", "phy",
- };
- 
-+static const char * const usb3dpphy_reset_l[] = {
-+	"phy_phy", "dp_phy",
-+};
-+
- static const struct regulator_bulk_data qmp_phy_msm8998_vreg_l[] = {
- 	{ .supply = "vdda-phy", .init_load_uA = 68600 },
- 	{ .supply = "vdda-pll", .init_load_uA = 14200 },
-@@ -459,6 +541,34 @@ static const struct qmp_usbc_offsets qmp_usbc_offsets_v3_qcm2290 = {
- 	.rx2		= 0x800,
- };
- 
-+static const struct qmp_usbc_offsets qmp_usbc_usb3dp_offsets_qcs615 = {
-+	.serdes		= 0x0,
-+	.pcs		= 0xc00,
-+	.pcs_misc	= 0xa00,
-+	.tx		= 0x200,
-+	.rx		= 0x400,
-+	.tx2		= 0x600,
-+	.rx2		= 0x800,
-+	.dp_serdes	= 0x1c00,
-+	.dp_txa		= 0x1400,
-+	.dp_txb		= 0x1800,
-+	.dp_dp_phy	= 0x1000,
-+};
-+
-+static const u8 qmp_v2_dp_pre_emphasis_hbr2_rbr[4][4] = {
-+	{0x00, 0x0b, 0x12, 0xff},
-+	{0x00, 0x0a, 0x12, 0xff},
-+	{0x00, 0x0c, 0xff, 0xff},
-+	{0xff, 0xff, 0xff, 0xff}
-+};
-+
-+static const u8 qmp_v2_dp_voltage_swing_hbr2_rbr[4][4] = {
-+	{0x07, 0x0f, 0x14, 0xff},
-+	{0x11, 0x1d, 0x1f, 0xff},
-+	{0x18, 0x1f, 0xff, 0xff},
-+	{0xff, 0xff, 0xff, 0xff}
-+};
-+
- static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
- 	.offsets		= &qmp_usbc_offsets_v3_qcm2290,
- 
-@@ -531,6 +641,51 @@ static const struct qmp_phy_cfg qcs615_usb3phy_cfg = {
- 	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
- };
- 
-+static void qmp_v2_dp_aux_init(struct qmp_usbc *qmp);
-+static void qmp_v2_configure_dp_tx(struct qmp_usbc *qmp);
-+static int qmp_v2_configure_dp_phy(struct qmp_usbc *qmp);
-+static int qmp_v2_calibrate_dp_phy(struct qmp_usbc *qmp);
-+
-+static const struct qmp_phy_cfg qcs615_usb3dp_phy_cfg = {
-+	.offsets		= &qmp_usbc_usb3dp_offsets_qcs615,
-+
-+	.serdes_tbl		= qcm2290_usb3_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(qcm2290_usb3_serdes_tbl),
-+	.tx_tbl			= qcm2290_usb3_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_tx_tbl),
-+	.rx_tbl			= qcm2290_usb3_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
-+	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
-+
-+	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
-+
-+	.dp_serdes_tbl		= qmp_v2_dp_serdes_tbl,
-+	.dp_serdes_tbl_num	= ARRAY_SIZE(qmp_v2_dp_serdes_tbl),
-+	.dp_tx_tbl		= qmp_v2_dp_tx_tbl,
-+	.dp_tx_tbl_num		= ARRAY_SIZE(qmp_v2_dp_tx_tbl),
-+
-+	.serdes_tbl_rbr		= qmp_v2_dp_serdes_tbl_rbr,
-+	.serdes_tbl_rbr_num	= ARRAY_SIZE(qmp_v2_dp_serdes_tbl_rbr),
-+	.serdes_tbl_hbr		= qmp_v2_dp_serdes_tbl_hbr,
-+	.serdes_tbl_hbr_num	= ARRAY_SIZE(qmp_v2_dp_serdes_tbl_hbr),
-+	.serdes_tbl_hbr2	= qmp_v2_dp_serdes_tbl_hbr2,
-+	.serdes_tbl_hbr2_num	= ARRAY_SIZE(qmp_v2_dp_serdes_tbl_hbr2),
-+
-+	.swing_tbl		= &qmp_v2_dp_voltage_swing_hbr2_rbr,
-+	.pre_emphasis_tbl	= &qmp_v2_dp_pre_emphasis_hbr2_rbr,
-+
-+	.dp_aux_init		= qmp_v2_dp_aux_init,
-+	.configure_dp_tx	= qmp_v2_configure_dp_tx,
-+	.configure_dp_phy	= qmp_v2_configure_dp_phy,
-+	.calibrate_dp_phy	= qmp_v2_calibrate_dp_phy,
-+
-+	.reset_list		= usb3dpphy_reset_l,
-+	.num_resets		= ARRAY_SIZE(usb3dpphy_reset_l),
-+	.vreg_list		= qmp_phy_qcs615_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_qcs615_vreg_l),
-+};
-+
- static void qmp_usbc_set_phy_mode(struct qmp_usbc *qmp, bool is_dp)
- {
- 	if (qmp->tcsr_map && qmp->dp_phy_mode_reg)
-@@ -589,6 +744,253 @@ static int qmp_usbc_com_exit(struct phy *phy)
- 	return 0;
- }
- 
-+static void qmp_v2_dp_aux_init(struct qmp_usbc *qmp)
-+{
-+	writel(DP_PHY_PD_CTL_AUX_PWRDN |
-+	       DP_PHY_PD_CTL_LANE_0_1_PWRDN | DP_PHY_PD_CTL_LANE_2_3_PWRDN |
-+	       DP_PHY_PD_CTL_PLL_PWRDN,
-+	       qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
-+
-+	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-+	       DP_PHY_PD_CTL_LANE_0_1_PWRDN | DP_PHY_PD_CTL_LANE_2_3_PWRDN |
-+	       DP_PHY_PD_CTL_PLL_PWRDN,
-+	       qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
-+
-+	writel(0x00, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG0);
-+	writel(0x13, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG1);
-+	writel(0x00, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG2);
-+	writel(0x00, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG3);
-+	writel(0x0a, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG4);
-+	writel(0x26, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG5);
-+	writel(0x0a, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG6);
-+	writel(0x03, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG7);
-+	writel(0xbb, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG8);
-+	writel(0x03, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG9);
-+	qmp->dp_aux_cfg = 0;
-+
-+	writel(PHY_AUX_STOP_ERR_MASK | PHY_AUX_DEC_ERR_MASK |
-+	       PHY_AUX_SYNC_ERR_MASK | PHY_AUX_ALIGN_ERR_MASK |
-+	       PHY_AUX_REQ_ERR_MASK,
-+	       qmp->dp_dp_phy + QSERDES_V2_DP_PHY_AUX_INTERRUPT_MASK);
-+}
-+
-+static int qmp_v2_configure_dp_swing(struct qmp_usbc *qmp)
-+{
-+	const struct qmp_phy_cfg *cfg = qmp->cfg;
-+	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
-+	void __iomem *tx = qmp->dp_tx;
-+	void __iomem *tx2 = qmp->dp_tx2;
-+	unsigned int v_level = 0, p_level = 0;
-+	u8 voltage_swing_cfg, pre_emphasis_cfg;
-+	int i;
-+
-+	if (dp_opts->lanes > 4) {
-+		dev_err(qmp->dev, "Invalid lane_num(%d)\n", dp_opts->lanes);
-+		return -EINVAL;
-+	}
-+
-+	for (i = 0; i < dp_opts->lanes; i++) {
-+		v_level = max(v_level, dp_opts->voltage[i]);
-+		p_level = max(p_level, dp_opts->pre[i]);
-+	}
-+
-+	if (v_level > 4 || p_level > 4) {
-+		dev_err(qmp->dev, "Invalid v(%d) | p(%d) level)\n",
-+			v_level, p_level);
-+		return -EINVAL;
-+	}
-+
-+	voltage_swing_cfg = (*cfg->swing_tbl)[v_level][p_level];
-+	pre_emphasis_cfg = (*cfg->pre_emphasis_tbl)[v_level][p_level];
-+
-+	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
-+	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
-+
-+	if (voltage_swing_cfg == 0xff && pre_emphasis_cfg == 0xff)
-+		return -EINVAL;
-+
-+	writel(voltage_swing_cfg, tx + QSERDES_V2_TX_TX_DRV_LVL);
-+	writel(pre_emphasis_cfg, tx + QSERDES_V2_TX_TX_EMP_POST1_LVL);
-+	writel(voltage_swing_cfg, tx2 + QSERDES_V2_TX_TX_DRV_LVL);
-+	writel(pre_emphasis_cfg, tx2 + QSERDES_V2_TX_TX_EMP_POST1_LVL);
-+
-+	return 0;
-+}
-+
-+static void qmp_usbc_configure_dp_mode(struct qmp_usbc *qmp)
-+{
-+	bool reverse = (qmp->orientation == TYPEC_ORIENTATION_REVERSE);
-+	u32 val;
-+
-+	val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-+	      DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_LANE_0_1_PWRDN | DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-+
-+	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
-+
-+	if (reverse)
-+		writel(0xc9, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-+	else
-+		writel(0xd9, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-+}
-+
-+static int qmp_usbc_configure_dp_clocks(struct qmp_usbc *qmp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
-+	u32 phy_vco_div;
-+	unsigned long pixel_freq;
-+
-+	switch (dp_opts->link_rate) {
-+	case 1620:
-+		phy_vco_div = 0x1;
-+		pixel_freq = 1620000000UL / 2;
-+		break;
-+	case 2700:
-+		phy_vco_div = 0x1;
-+		pixel_freq = 2700000000UL / 2;
-+		break;
-+	case 5400:
-+		phy_vco_div = 0x2;
-+		pixel_freq = 5400000000UL / 4;
-+		break;
-+	default:
-+		dev_err(qmp->dev, "link rate:%d not supported\n", dp_opts->link_rate);
-+		return -EINVAL;
-+	}
-+	writel(phy_vco_div, qmp->dp_dp_phy + QSERDES_V2_DP_PHY_VCO_DIV);
-+
-+	clk_set_rate(qmp->dp_link_hw.clk, dp_opts->link_rate * 100000);
-+	clk_set_rate(qmp->dp_pixel_hw.clk, pixel_freq);
-+
-+	return 0;
-+}
-+
-+static void qmp_v2_configure_dp_tx(struct qmp_usbc *qmp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
-+	void __iomem *tx = qmp->dp_tx;
-+	void __iomem *tx2 = qmp->dp_tx2;
-+
-+	/* program default setting first */
-+	writel(0x2a, tx + QSERDES_V2_TX_TX_DRV_LVL);
-+	writel(0x20, tx + QSERDES_V2_TX_TX_EMP_POST1_LVL);
-+	writel(0x2a, tx2 + QSERDES_V2_TX_TX_DRV_LVL);
-+	writel(0x20, tx2 + QSERDES_V2_TX_TX_EMP_POST1_LVL);
-+
-+	if (dp_opts->link_rate >= 2700) {
-+		writel(0xc4, tx + QSERDES_V2_TX_LANE_MODE_1);
-+		writel(0xc4, tx2 + QSERDES_V2_TX_LANE_MODE_1);
-+	} else {
-+		writel(0xc6, tx + QSERDES_V2_TX_LANE_MODE_1);
-+		writel(0xc6, tx2 + QSERDES_V2_TX_LANE_MODE_1);
-+	}
-+
-+	qmp_v2_configure_dp_swing(qmp);
-+}
-+
-+static int qmp_v2_configure_dp_phy(struct qmp_usbc *qmp)
-+{
-+	u32 status;
-+	int ret;
-+
-+	qmp_usbc_configure_dp_mode(qmp);
-+
-+	writel(0x05, qmp->dp_dp_phy + QSERDES_V2_DP_PHY_TX0_TX1_LANE_CTL);
-+	writel(0x05, qmp->dp_dp_phy + QSERDES_V2_DP_PHY_TX2_TX3_LANE_CTL);
-+
-+	ret = qmp_usbc_configure_dp_clocks(qmp);
-+	if (ret)
-+		return ret;
-+
-+	writel(0x01, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+	writel(0x05, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+	writel(0x01, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+	writel(0x09, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+
-+	writel(0x20, qmp->dp_serdes + QSERDES_COM_RESETSM_CNTRL);
-+
-+	if (readl_poll_timeout(qmp->dp_serdes + QSERDES_COM_C_READY_STATUS,
-+			       status,
-+			       ((status & BIT(0)) > 0),
-+			       500,
-+			       10000)) {
-+		dev_err(qmp->dev, "C_READY not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	if (readl_poll_timeout(qmp->dp_serdes + QSERDES_COM_CMN_STATUS,
-+			       status,
-+			       ((status & BIT(0)) > 0),
-+			       500,
-+			       10000)){
-+		dev_err(qmp->dev, "FREQ_DONE not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	if (readl_poll_timeout(qmp->dp_serdes + QSERDES_COM_CMN_STATUS,
-+			       status,
-+			       ((status & BIT(1)) > 0),
-+			       500,
-+			       10000)){
-+		dev_err(qmp->dev, "PLL_LOCKED not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	writel(0x19, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+
-+	if (readl_poll_timeout(qmp->dp_dp_phy + QSERDES_V2_DP_PHY_STATUS,
-+			       status,
-+			       ((status & BIT(0)) > 0),
-+			       500,
-+			       10000)){
-+		dev_err(qmp->dev, "TSYNC_DONE not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	if (readl_poll_timeout(qmp->dp_dp_phy + QSERDES_V2_DP_PHY_STATUS,
-+			       status,
-+			       ((status & BIT(1)) > 0),
-+			       500,
-+			       10000)){
-+		dev_err(qmp->dev, "PHY_READY not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	writel(0x3f, qmp->dp_tx + QSERDES_V2_TX_TRANSCEIVER_BIAS_EN);
-+	writel(0x10, qmp->dp_tx + QSERDES_V2_TX_HIGHZ_DRVR_EN);
-+	writel(0x0a, qmp->dp_tx + QSERDES_V2_TX_TX_POL_INV);
-+	writel(0x3f, qmp->dp_tx2 + QSERDES_V2_TX_TRANSCEIVER_BIAS_EN);
-+	writel(0x10, qmp->dp_tx2 + QSERDES_V2_TX_HIGHZ_DRVR_EN);
-+	writel(0x0a, qmp->dp_tx2 + QSERDES_V2_TX_TX_POL_INV);
-+
-+	writel(0x18, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+	writel(0x19, qmp->dp_dp_phy + QSERDES_DP_PHY_CFG);
-+
-+	if (readl_poll_timeout(qmp->dp_dp_phy + QSERDES_V2_DP_PHY_STATUS,
-+			       status,
-+			       ((status & BIT(1)) > 0),
-+			       500,
-+			       10000)){
-+		dev_err(qmp->dev, "PHY_READY not ready\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	return 0;
-+}
-+
-+static int qmp_v2_calibrate_dp_phy(struct qmp_usbc *qmp)
-+{
-+	static const u8 cfg1_settings[] = {0x13, 0x23, 0x1d};
-+	u8 val;
-+
-+	qmp->dp_aux_cfg++;
-+	qmp->dp_aux_cfg %= ARRAY_SIZE(cfg1_settings);
-+	val = cfg1_settings[qmp->dp_aux_cfg];
-+
-+	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_AUX_CFG1);
-+
-+	return 0;
-+}
-+
- static int qmp_usbc_usb_power_on(struct phy *phy)
- {
- 	struct qmp_usbc *qmp = phy_get_drvdata(phy);
-@@ -855,6 +1257,14 @@ static int qmp_usbc_dp_power_on(struct phy *phy)
- 	void __iomem *tx = qmp->dp_tx;
- 	void __iomem *tx2 = qmp->dp_tx2;
- 
-+	/*
-+	 * FIXME: SW_PORTSELECT handling for DP orientation flip is not implemented.
-+	 * Expected:
-+	 * - For standard lane mapping: configure SW_PORTSELECT in QSERDES_DP_PHY_CFG_1.
-+	 * - For non-standard mapping: pass orientation to dp_ctrl and handle flip
-+	 *   via logical2physical lane remapping.
-+	 */
-+
- 	mutex_lock(&qmp->phy_mutex);
- 
- 	qmp_usbc_dp_serdes_init(qmp);
-@@ -1600,6 +2010,9 @@ static const struct of_device_id qmp_usbc_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,qcm2290-qmp-usb3-phy",
- 		.data = &qcm2290_usb3phy_cfg,
-+	}, {
-+		.compatible = "qcom,qcs615-qmp-usb3-dp-phy",
-+		.data =  &qcs615_usb3dp_phy_cfg,
- 	}, {
- 		.compatible = "qcom,qcs615-qmp-usb3-phy",
- 		.data = &qcs615_usb3phy_cfg,
-
--- 
-2.34.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE1MDExMiBTYWx0ZWRfX0JEOt32SLXmy
+ VtiFztbBJGPWTtWcHKzHHFP6W/S/o01cSSTmcWKvHOeYvP5yiGMIHaSrAuPcklYEwfPkqKWBoep
+ lXhlZ24WnT+J0jYZzzpYZi/7Of2Ti3QrO6se60u/6LXo9FEDE03u19pTxw8BFFq+IlJqvjd8sJI
+ lHqDjR5cLw5ZsX+Dt5dWN5DMaJjX2DJktQj3Yy4GSWNcg9NrH/B2zSR7/mTJvJ7MANUlaxYwmdt
+ Qs5LpmNGpuQP20IsXsm+7mmnGWyts4/aQ2VVI8UYuJI5dic4ABLTOc5Ngsmk6J5QfiQLQSVH2ZO
+ cbXgkwiXC+Gb0lqUzJmtdXKSvndlgnkPiJ3SnD/vxwUuzl7dBypXxjoqSMDrIkfcXNV3SGe/Wnt
+ QB2shVDFpULEJNUxN5BOY5wbaoLOEg==
+X-Proofpoint-GUID: 52iHVaf_mZPdz564tFEdtivNKk24OqZx
+X-Authority-Analysis: v=2.4 cv=Afq83nXG c=1 sm=1 tr=0 ts=69400687 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=S4oPqir27zQB1GLfsjsA:9 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: 52iHVaf_mZPdz564tFEdtivNKk24OqZx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-15_02,2025-12-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512150112
 
 
+
+On 12/2/2025 9:29 PM, Krzysztof Kozlowski wrote:
+> On 02/12/2025 12:23, Hrishabh Rajput wrote:
+>> Hi Bjorn, Guenter, and Wim,
+>>
+>> Just a gentle ping on this series.
+> 
+> It's merge window. There was no point in pinging just before merge
+> window and is even worse to ping now. Nothing can happen with this
+> patchset and such pings is only noise.
+> 
+
+Thanks for the guidance and apologies for the noise created during the 
+merge window.
+
+>>
+>> Since the patches have received Reviewed-by tags from Dmitry and
+>> Guenter, I wanted to confirm the merge strategy.
+>>
+>> Bjorn: Are you planning to pick the QCOM SCM changes separately through
+>> your tree, or would you prefer the whole series go through the Watchdog
+>> tree?
+>> If the latter, do we need an explicit Acked-by from you for QCOM SCM patch?
+> 
+> Where did you document dependencies between patches and any non-obvious
+> merging? I open cover letter and there is NOTHING. I look at patch
+> changelog and also NOTHING.
+> 
+> So if you tell us nothing, why would we care to think we need to do
+> anything special here?
+> 
+> You must explicitly document every dependency, both external and between
+> patches, in the cover letter. At least cover letter, some people (e.g.
+> mostly me) don't even read them...
+> 
+
+This is a miss from my end. The following information should have been 
+the part of the cover letter:
+```
+This series spans 2 subsystems and is split as follows:
+- Patch 1: QCOM SCM - Register Gunyah Watchdog Platform device
+- Patch 2: Watchdog - Add Gunyah Watchdog driver
+
+Dependency:
+There is no build-time dependency between the patches, but Patch 1 is 
+required for Patch 2 to function.
+
+Merge strategies:
+- Strategy 1: Take both patches via the Watchdog tree.
+- Strategy 2: Take Patch 1 via QCM SCM maintainter's tree, Patch 2 via 
+Watchdog tree.
+
+Since the patches concern primarily with the Watchdog, I suggest we go 
+ahead with Strategy 1. If this is acceptable, I request an Acked-by from 
+QCOM SCM maintainer for Patch 1.
+```
+
+I understand that this should have been a part of the cover letter. If 
+it helps the process, I can add the above information in the cover 
+letter and resend as v9. Since there are no other fixes, v9 would only 
+contain the cover letter changes.
+
+Thanks,
+Hrishabh
 
