@@ -1,95 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-85183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D210CBC046
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 21:59:25 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E43BCBC838
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 05:55:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A20E5300EE64
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Dec 2025 20:59:23 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 2008E30087BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 04:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B71A283124;
-	Sun, 14 Dec 2025 20:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2F8B315D24;
+	Mon, 15 Dec 2025 04:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SXddaXMQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Gd4Cx1lM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N0IcB4qF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C291A24A067
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AEA3176FD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 04:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765745961; cv=none; b=VWirkE+ie8PkUkWWFQOkx3mNX5KyB3jC0jWk6O4iar2xo9OC3PdNvYH/7i/gnuIuEtZDXElgoMwYOYhj1LW2x34RVONLxo6ByYaiauJrGyIyA08WNZi2936tfirLS8P4rGWfHjzgS2ci4MT3Sn6bGmPniyg4gvPp9toTT1JbLZY=
+	t=1765774502; cv=none; b=DL7j0KUF8veh2uq074fte0g03i36qX8cfimd/iWGEr7RE15uVyurW999Rnz6A12L78RVOjDSuoVysfbnyzU1eJPRrpG3SWS4EmPsTFFVTCt5E+kNLKK8DmVreAcqidF2tw7V0HgYor0PbOjKR4Ta/dPHoM/qSSNUsOy8KWc4ykc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765745961; c=relaxed/simple;
-	bh=0KMRYNO4kj0rIWLQR6VXgnYyHz0d7TIs3nmlB9EGS1E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rPB8jWeowNFEDxE/iPXdKEF/LYWEaOQ+bXzWwUiCLAlXTT1AhAzLlmOymrGezSaK+at1x2CBZ4aZ+PlhfTThGHylvLeCJlkm7A836VLbQdyPbtOUHj17+NUsH1Yyws4NHcNHLhhRT2sx4PAPtNxxjWHLDGpEbW6k+5rJAh8WDwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SXddaXMQ; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7aae5f2633dso2940759b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 12:59:19 -0800 (PST)
+	s=arc-20240116; t=1765774502; c=relaxed/simple;
+	bh=OtI43I9uh5Dxj4J6JYHv+KXNtGFs6aWMCpVLpoCkE6U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ezvihrnIX6ntdS7b1/3SrbbnQuRj9Vu+3gs24P3guwSI2timYpCQ6k73VkDXEZ3crfnlrhVzygIa8qNKignZCmFTTuvl581TjaK0KrpGeAJr+24xNRXjwl8RwfGv670oApaF11+sCvQpl0LbSproA3d/ZNzxHZ8Ihv6xO7SJS9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Gd4Cx1lM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N0IcB4qF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BEMlAYW3144133
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 04:54:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=XCRRoZX5HFKwk0TtzOQqIO+LFtD6GUuisWM
+	F/z8xudo=; b=Gd4Cx1lMtf3MaMJDukQb/83yDPwwIPCoTwjAb3eUG1yiHp0eLY1
+	vbBB65Zs3joFElIkKvTVIfODlpujZt6LlzWc50kn7Hnrrc0PQHAotGpyWR8NCX7l
+	fWp9cPx4t6WTeW9Ue9Cynztg2WuBkyLyO/gO1eZmZaxThgPkBt5UEC37McPJ7uJp
+	dxbo8VATTmjVeuJ0HwmivHoAJ+ETFYHVjawLxFPcbV5FoybgzQb3X++9/4xMsVNw
+	qHN4F7HTB6Uq1gqufkbUORt0X5Osswy+w4PRtxQ3eyWp0MVfOClF21n6hxdqEi46
+	OV1NeASkoUlBPY8uYTodzILylvV/iXhlSLg==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b119ak7ns-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 04:54:59 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b96038aa68so2785699b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Dec 2025 20:54:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765745959; x=1766350759; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765774499; x=1766379299; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kf8/6K2teDNVpRcuyX4Rd2wH3CZRe6Wcte8AE2g3GNQ=;
-        b=SXddaXMQxOQ4u96KatYJUElMin0ONwCofTDTXBVSmAPAnSSM7ILp1EUTjYG+V+tz7U
-         OZVVmKrELND6MMEWf5R1+6/FVhKIP5NeIZpLR/jW7WlMWro95HkJeIOJa2OkU/FWk7Nm
-         rlWzX6IC5/XVurzw2T4gxowqqeJQk+s/ipfNxcdAy2Ma22Mj5AzD3unCwvwSNko4S+i1
-         lEVsMVqOwVQ7xHMh94lZv3N8MG3uuJJ7MqFGoEqPC602AfQKaPzGHOg3m/E+W2pYtGV/
-         u92TRPo55xiukZcIMH+mm7Nn3YjJCzApccLA8YQgTkvtJTlpBFGb9Oukjfm5MCrgKMSk
-         Jrww==
+        bh=XCRRoZX5HFKwk0TtzOQqIO+LFtD6GUuisWMF/z8xudo=;
+        b=N0IcB4qF0bT0H7vZSADW2nWuewyzoZTFuYJeKJvzJ+SFy3qZdBYr6XIRvB+InHxa6z
+         iTBgdEVPpkKDYecMOsb29fd0ghbyNcOQMw6Qk6NuiCpoBx0yC6FKv948Hg74e/z1L3or
+         twTpS4KXasTULXNMtFn34uBJLqXbToj3zMDGGyetxN1pCVrLFBhZXJ4Wu1TJyEkX4p1T
+         9QAi1Ro9NRA/Qnt6qcajZ5LrnKcHIsJWB2uXQA/hckKdGMGQCQPAjDBuo8nYQCmGmMTt
+         v5Pkte+Y9Rh144r0xvlvgyj9m9M2qyKMqIjH+qfne3tD5n5XHht965w0S5D4AmKn2VaQ
+         lKtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765745959; x=1766350759;
+        d=1e100.net; s=20230601; t=1765774499; x=1766379299;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kf8/6K2teDNVpRcuyX4Rd2wH3CZRe6Wcte8AE2g3GNQ=;
-        b=f/+SWvinyL8e4S7DjrfUTc94b3sGJ6rHUtBTl7CG8Of8YuKJMskl6NCth+CgmNj1kW
-         X7JhaVj1ho2NHivZtYEdr6loJWyajUon6D+qnvMTvHlVxpto34IwAp4PA4i0DFKyf3MH
-         WVrNP0FitIv/JklbznBwg+DliNIDcDI57J0KslWtJZ7oxMMTU3jiD/pBKQo7rKWoPu8T
-         SBPecGk5c0FOArP16wEIKg+COUpdTv1hw/4s55Jt6Guo61pywVEr761lCe0tsYJG4+28
-         /EEoWsFm6Tci1FDqAgWzZ2LGCd/eM609KsXZK8xuk41LmikYgGLrggBsnYsxVn1B2rvA
-         JohA==
-X-Forwarded-Encrypted: i=1; AJvYcCWzQyZMPqjSNJk/3ro3xwuVxp5+IJyW1n0s0jEotk7WZP3DhoWkZ1U7HrGAZd+j5OBRYYHi4Pw8LIVcg4uv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsfdwZ+tMdMrsJ/hMnuU1+Is0h9jcxGach8SWr82Oy007DyAB/
-	dgNsowg4sTBNcgQC/YEuZY/l+BxwmdajyLv75BDc3m4CLUkbr35ZAoaf
-X-Gm-Gg: AY/fxX53nWpV5VIAFG246sYC3Rr7zXnC3oBAGA3+liQODA94vKy2xfTu5P5p82Q0kwi
-	YE66DJRM5tNtgSW+wuOko17NyZm/I05qypdvjEy1kgy543BmaxeJZji8V3Oo6JfT5TvGBUSyJm7
-	f7KcYl6hHXA8i/0Hv5MZi0H4ZC4Q4JYjFNeEzNdOLp0OzDREr59Q+47TXFxtyY2Mi78WNSlmFJ2
-	YF+dcEacnK+y113BCv89X23Gpz6hbH7HaCtxEh3M4l5samZZ0DPnzmVRqXqYMucLHR7Iabh3gVB
-	0bJOqqcZmrEOGUupBeNbo2G95nyPlHRT7TFSxSLYRORpswiUJJfAUVgxPKrC75w0zXib8bebMoV
-	3UqxBajZxEfVLi85ke9DjbSmZ/tph4+ttIqPcw/Pz0l2kXpCBI+VHUWtgdxJV4RENVZshp9R/zb
-	OUNXwfsllySlV0iTL2owk=
-X-Google-Smtp-Source: AGHT+IHF24o2Ly7Mr/lxjtc1FrISspaWeGMsZpBG3wLNV1EITlc6cCBdDneNg0BsjDKnEHLcA8k40Q==
-X-Received: by 2002:a05:6a21:33a9:b0:363:b976:8f79 with SMTP id adf61e73a8af0-369b6aa5600mr9846654637.43.1765745958939;
-        Sun, 14 Dec 2025 12:59:18 -0800 (PST)
-Received: from LilGuy ([2409:40c2:105b:dc88:1107:395c:23c0:2b1b])
-        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-c0c2589d4f7sm10584880a12.3.2025.12.14.12.59.12
+        bh=XCRRoZX5HFKwk0TtzOQqIO+LFtD6GUuisWMF/z8xudo=;
+        b=PyRkTIUNIuIv7WkAXudDm5fQswHPSywz2d5WR6buCWHDhNTO9v7Nf+FASt9MjwtiMI
+         n2BsLUEyvFYonefeLgEj5VZ4vAPg1lec+6r/AIDnNk3aSPcpRBsRpMUwJIIF7EQ4os14
+         zPYTXcb+pOhHknreC1o9n/XD9kl1p6nyzXLY1nnm4fKl4uqBXtZkNMCqfQfst1jogCi/
+         8beiyv2bmL9xiiVm8/7ONMHQ6OUihRSEioO8dSxfbPVr2el/3DfyjQ3i9uVMfkpITena
+         E3peNvFLGcIC3w2FSrtGnL1qzc4jmKGjGNtkyUf0EaSKU5uURze62VIPLX2od1uUHwyu
+         a23Q==
+X-Gm-Message-State: AOJu0Yyr/yLbkoK4inFtg3scoTHgf3lycRxt64kszOk4ibdZlLWHY2l5
+	kS7VO6M12EaCl4ZE4TSXDP7+SOXI2C/OkJ4yXg0dbP+Hp1UUEtkCYytVEG4j5YgHlv7vIxss9SI
+	0D61sVCwaIgmwfx2sCQCjd0fwNgQ53J+cvsnnm+wZJJVz9dz5m0AnG47WSsTjyaCaW110
+X-Gm-Gg: AY/fxX5E43H/3o7Kl8HurTmeGVyLW3hJ/LwwWTwoKPxOKxmgusAMj/F0xxSBoNyv9ab
+	7exYTgIUxUnTJ6MLQjioIuKBKO1dSJzcxhSzt/nu0Lt+KEB7kFkVRu6ah+eSXr2NfyYUyg4k4sh
+	1CSiPPO7wZfX1U9JfroHGmfUaDudOJGvChr7PVSsgvItXqceNEU91ke50dXH2MxEFButwLUe1N4
+	lx37C9lG7ope1opS/Nrlbek33cuzkg1zlXvE1Rwm64IGGD+B1JdCRqne085F9GMM6+Npl5rndgU
+	Bhohl4v58rx5CUJM6DBrcoxZ5ADM2MuxGtqvszbiwsjpWigz7C5PxIM25vl7oqlq1Q+rXWkoQQn
+	5phxDhuSF0jVwQ9K8C6bDzM35/BxMYc1X3NlWEtA=
+X-Received: by 2002:a05:6a00:6ca1:b0:7ad:1907:5756 with SMTP id d2e1a72fcca58-7f667936b06mr11473322b3a.12.1765774498650;
+        Sun, 14 Dec 2025 20:54:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjX9StN1jhhvvUIZ1mWxtutuPbVNNSt7BZMg2/9K4HOgGDP2M7J+aTFxEJGdC2uHG+izMDag==
+X-Received: by 2002:a05:6a00:6ca1:b0:7ad:1907:5756 with SMTP id d2e1a72fcca58-7f667936b06mr11473288b3a.12.1765774498159;
+        Sun, 14 Dec 2025 20:54:58 -0800 (PST)
+Received: from hu-gkohli-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c4aa91d0sm11190997b3a.32.2025.12.14.20.54.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Dec 2025 12:59:18 -0800 (PST)
-From: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org (open list:DRM DRIVER for Qualcomm display hardware),
-	dri-devel@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm display hardware),
-	freedreno@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm display hardware),
-	linux-kernel@vger.kernel.org (open list)
-Cc: skhan@linuxfoundation.org,
-	david.hunter.linux@gmail.com,
-	Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
-Subject: [PATCH] drm/msm: Replace custom dumb_map_offset with generic helper
-Date: Mon, 15 Dec 2025 02:28:50 +0000
-Message-ID: <20251215022850.12358-1-swarajgaikwad1925@gmail.com>
-X-Mailer: git-send-email 2.52.0
+        Sun, 14 Dec 2025 20:54:57 -0800 (PST)
+From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Subject: [PATCH] arm64: dts: qcom: lemans: Enable cpufreq cooling devices
+Date: Mon, 15 Dec 2025 10:24:51 +0530
+Message-Id: <20251215045451.3150894-1-gaurav.kohli@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,161 +105,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE1MDA0MiBTYWx0ZWRfX70NpcaCXW4r2
+ VPqFnCIi4c5G9fM+D90GVHTvK36UcL1acFbAAzXaIgdwt6iiAAGkdOqTR8/C7stezX2xHt5eDH5
+ LAouXxLzYZUzI4V9D+NCqTr+NWyJIJOrJPHhLWaIEu47P11HyB9WI3HUdqLa1nWVodtMtgiRhvw
+ bc9Yxh6DBFOaMambHnG7oijL4UqcKgEI86ew5NDKblOnO6huX4qWQkaokGcoCCXfVLP5wJ7Tn9n
+ lk0F6xF6Aydsfw31n9wzFrkKkzL2/5lKnHWTnsuFIEaKENzSwvWglpACMz/iAYesdx7BGvRbbbq
+ HVsgW6j23poPdmruJCu4hB7cnHlL1w/q2OecFlmFiSJQdPwQeZ1PKBETMkBbBTs7buq/Z2GEh8r
+ rdi0L+vtOOrafYi3HDlgIgaxGJ77hQ==
+X-Authority-Analysis: v=2.4 cv=LNFrgZW9 c=1 sm=1 tr=0 ts=693f94a3 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=ZDMc2YS8df6EeW9c3AUA:9 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: AwQEE6jyBp0GAONVNUygw9KxCDLi83uo
+X-Proofpoint-ORIG-GUID: AwQEE6jyBp0GAONVNUygw9KxCDLi83uo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-14_07,2025-12-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512150042
 
-The msm driver implements a custom dumb_map_offset callback. This
-implementation acquires the msm_gem_lock, but the underlying
-drm_gem_create_mmap_offset() function is already thread-safe regarding
-the VMA offset manager (it acquires the mgr->vm_lock internally).
+Add cooling-cells property to the CPU nodes to support cpufreq
+cooling devices.
 
-Switching to the generic drm_gem_dumb_map_offset() helper provides
-several benefits:
-1. Removes the unnecessary locking overhead (locking leftovers).
-2. Adds a missing check to reject mapping of imported objects, which is
-   invalid for dumb buffers.
-3. Allows for the removal of the msm_gem_dumb_map_offset() wrapper and
-   the msm_gem_mmap_offset() helper function.
+Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
 
-The logic from msm_gem_mmap_offset() has been inlined into
-msm_ioctl_gem_info() to maintain functionality without the separate
-helper.
-
-This addresses the TODO:
-"Documentation/gpu/todo.rst: Remove custom dumb_map_offset implementations"
-
-Signed-off-by: Swaraj Gaikwad <swarajgaikwad1925@gmail.com>
----
-
- Compile-tested only.
-
- drivers/gpu/drm/msm/msm_drv.c |  8 +++---
- drivers/gpu/drm/msm/msm_gem.c | 49 -----------------------------------
- drivers/gpu/drm/msm/msm_gem.h |  3 ---
- 3 files changed, 5 insertions(+), 55 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 7e977fec4100..bf20550c5814 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -588,7 +588,9 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
-
- 	switch (args->info) {
- 	case MSM_INFO_GET_OFFSET:
--		args->value = msm_gem_mmap_offset(obj);
-+		ret = drm_gem_create_mmap_offset(obj);
-+		if (ret == 0)
-+		    args->value = drm_vma_node_offset_addr(&obj->vma_node);
- 		break;
- 	case MSM_INFO_GET_IOVA:
- 		ret = msm_ioctl_gem_info_iova(dev, file, obj, &args->value);
-@@ -836,7 +838,7 @@ static const struct drm_driver msm_driver = {
- 	.open               = msm_open,
- 	.postclose          = msm_postclose,
- 	.dumb_create        = msm_gem_dumb_create,
--	.dumb_map_offset    = msm_gem_dumb_map_offset,
-+	.dumb_map_offset    = drm_gem_dumb_map_offset,
- 	.gem_prime_import   = msm_gem_prime_import,
- 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
- #ifdef CONFIG_DEBUG_FS
-@@ -859,7 +861,7 @@ static const struct drm_driver msm_kms_driver = {
- 	.open               = msm_open,
- 	.postclose          = msm_postclose,
- 	.dumb_create        = msm_gem_dumb_create,
--	.dumb_map_offset    = msm_gem_dumb_map_offset,
-+	.dumb_map_offset    = drm_gem_dumb_map_offset,
- 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
- #ifdef CONFIG_DEBUG_FS
- 	.debugfs_init       = msm_debugfs_init,
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 017411a0bf45..da74f1413f94 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -375,34 +375,6 @@ static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
- 	return ret;
- }
-
--/** get mmap offset */
--static uint64_t mmap_offset(struct drm_gem_object *obj)
--{
--	struct drm_device *dev = obj->dev;
--	int ret;
--
--	msm_gem_assert_locked(obj);
--
--	/* Make it mmapable */
--	ret = drm_gem_create_mmap_offset(obj);
--
--	if (ret) {
--		DRM_DEV_ERROR(dev->dev, "could not allocate mmap offset\n");
--		return 0;
--	}
--
--	return drm_vma_node_offset_addr(&obj->vma_node);
--}
--
--uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj)
--{
--	uint64_t offset;
--
--	msm_gem_lock(obj);
--	offset = mmap_offset(obj);
--	msm_gem_unlock(obj);
--	return offset;
--}
-
- static struct drm_gpuva *lookup_vma(struct drm_gem_object *obj,
- 				    struct drm_gpuvm *vm)
-@@ -730,27 +702,6 @@ int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
- 			MSM_BO_SCANOUT | MSM_BO_WC, &args->handle, "dumb");
- }
-
--int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
--		uint32_t handle, uint64_t *offset)
--{
--	struct drm_gem_object *obj;
--	int ret = 0;
--
--	/* GEM does all our handle to object mapping */
--	obj = drm_gem_object_lookup(file, handle);
--	if (obj == NULL) {
--		ret = -ENOENT;
--		goto fail;
--	}
--
--	*offset = msm_gem_mmap_offset(obj);
--
--	drm_gem_object_put(obj);
--
--fail:
--	return ret;
--}
--
- static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index a4cf31853c50..92ada1d69250 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -262,7 +262,6 @@ struct msm_gem_object {
- void msm_gem_vma_get(struct drm_gem_object *obj);
- void msm_gem_vma_put(struct drm_gem_object *obj);
-
--uint64_t msm_gem_mmap_offset(struct drm_gem_object *obj);
- int msm_gem_prot(struct drm_gem_object *obj);
- int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct drm_gpuva *vma);
- void msm_gem_unpin_locked(struct drm_gem_object *obj);
-@@ -285,8 +284,6 @@ struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj);
- void msm_gem_unpin_pages_locked(struct drm_gem_object *obj);
- int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
- 		struct drm_mode_create_dumb *args);
--int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
--		uint32_t handle, uint64_t *offset);
- void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
- void *msm_gem_get_vaddr(struct drm_gem_object *obj);
- void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
-
-base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
---
-2.52.0
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index f80f9b950ed5..24f6ef430320 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -55,6 +55,7 @@ cpu0: cpu@0 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_0>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -84,6 +85,7 @@ cpu1: cpu@100 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_1>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -108,6 +110,7 @@ cpu2: cpu@200 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_2>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -132,6 +135,7 @@ cpu3: cpu@300 {
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_3>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -156,6 +160,7 @@ cpu4: cpu@10000 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_4>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -186,6 +191,7 @@ cpu5: cpu@10100 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_5>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -210,6 +216,7 @@ cpu6: cpu@10200 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_6>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+@@ -234,6 +241,7 @@ cpu7: cpu@10300 {
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_7>;
+ 			capacity-dmips-mhz = <1024>;
++			#cooling-cells = <2>;
+ 			dynamic-power-coefficient = <100>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+-- 
+2.34.1
 
 
