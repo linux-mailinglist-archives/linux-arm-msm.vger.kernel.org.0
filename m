@@ -1,57 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-85260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24F1BCBE393
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 15:13:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 850C7CBE970
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 16:19:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C444C304EDBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 14:11:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C70A4302D2A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 15:07:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55EA932F743;
-	Mon, 15 Dec 2025 13:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4FC3314CB;
+	Mon, 15 Dec 2025 13:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUK+XdN8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XWs4oT2i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD2133030A;
-	Mon, 15 Dec 2025 13:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60063314C2;
+	Mon, 15 Dec 2025 13:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765807163; cv=none; b=EblXayIzWk9PvgiDlZOY1+FfJcqdnZCzDnQRylT197Q7ZO6ITFpdnnoVQvHQYGE3avEnkeJrI1hs4ycGIh+1cMKDz/6w6r8KtXNRVmXjibniMFgArQ70V6JplG9au+1rqdWv6I+rEY5YFry7MjNFkFPXrO0NJVyCwrcA2lpskHs=
+	t=1765807170; cv=none; b=b4QMidIydICbHewUzOvvibY3aqDD4kXCv3FG4YAkoqsnZrG4YeksFFfvjon+51+DEF9IjSNLTLHFkLmaiLYydzrhPNy2/eSwy0rZJHDGykzRfEHAyOJ+bp4gkHUtJNbRZlhI55tIUhWQdvUsp1Mgvx5CNRloj7qXLHCV3ZzESk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765807163; c=relaxed/simple;
-	bh=aCAKHeRz0R1Pp79NnKo9Pw2t9f3vwIJOW1wBLc3sFv8=;
+	s=arc-20240116; t=1765807170; c=relaxed/simple;
+	bh=IuiIygsKUZ0UuNkx13gsxBmP8a+v9qO1VwX9cWyX0+k=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=r3DWJb+ECF3uKOYvX+9563OzrIWqnwcudY57j0L55YDyp6Kt2NZvVlt+q39v8eu/cbT/w5WS40wvyRi1r4IKg39AqlX6jNluk7UL6J7pA88U5Gg7CujgwoBNWTuoeW7i2R0JmRjIKVgrjz5h3rpFjwySDbtB0JboY6UcEEX4cxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUK+XdN8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1225C4CEF5;
-	Mon, 15 Dec 2025 13:59:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=I/gyWoOdYWimFWfm3HnuoDY1jkYyBdU+2MjtAW0oWIDksK+Fprvf1yNrnGWdhaE+NeArdTBa4rW4rGqajUlFLnSie/MTcHE5kH7yPL9LQaizV90XyJc3rphtkVUzWv38569l0+Lkc+9yLNtMmKab6wnufeO/QXSn3oR1NXVIHRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XWs4oT2i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125D3C4CEF5;
+	Mon, 15 Dec 2025 13:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765807163;
-	bh=aCAKHeRz0R1Pp79NnKo9Pw2t9f3vwIJOW1wBLc3sFv8=;
+	s=k20201202; t=1765807170;
+	bh=IuiIygsKUZ0UuNkx13gsxBmP8a+v9qO1VwX9cWyX0+k=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=XUK+XdN8VUJ/wmD7y7N6QNnA34TyypFdS29JvTN/YGUNcI4c7vdL8gka52RXgnwLv
-	 K8mNzrvmdgPLTaXXd+oqdHpksRcE2Od1s2qx6g0cWz+5IYrl7N3ZVyIVDN9PkLjMCk
-	 /yxWNE2o6Qt/tiDpcCZaqGzkPuLjWumIDPfjmXM1SZHY6RFOtV50zDfq4zhECOYTs7
-	 j4eLQ3dZ0p9EnNSpGxukd3vVE7PdwvQZQVn/kyRP3+9ejEK8Zqs7+sxzn3HuQ/6nZd
-	 aC04MkhkJ8XBTKzBz6eThK8aPobIWV1Hdc1Q7KKV2GouYgNI19V24VkFtntT/O9ZOe
-	 0S/dwYZwXIyoQ==
+	b=XWs4oT2i6BYFD4FSVU/vt0vjikHA24HoE3gKg2TeKQWCCDJm80zCDL9gfni77+3qM
+	 m9t1OgNM+Q3629Qh29//lQ3oOtoqpzIMSCjJYc3945xoSUXtf74uqm8n/2Yy1fEmSl
+	 CxenF2AYHOjUaiPb5CaZ9z7688LTpDyK+7e5cWL+4wcvO87MQtiExqwR3ij6Wm+nV7
+	 6vUs9CuT+swHvUt9BlpJaXo5rFzct/H4NJkLz7hJS8d9ka7FVxhcoUuAWCCICuZ1wd
+	 G6uz8/Kvs1/NzN3kgBU76gv6y4MrLCkXQJ/2aHT2KEu0FIaR7WvHxNpZ8DZ4zqgCVk
+	 7nfvpeBd5MXZw==
 From: Mark Brown <broonie@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20251129-qpic-snand-superfluous-readloc-v1-1-b84ca17095d9@gmail.com>
-References: <20251129-qpic-snand-superfluous-readloc-v1-1-b84ca17095d9@gmail.com>
-Subject: Re: [PATCH] spi: spi-qpic-snand: remove superfluous
- qcom_spi_set_read_loc() calls
-Message-Id: <176580716116.161463.15413695989499192950.b4-ty@kernel.org>
-Date: Mon, 15 Dec 2025 22:59:21 +0900
+To: linux-arm-msm@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>
+Cc: linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20251120211204.24078-1-jonathan@marek.ca>
+References: <20251120211204.24078-1-jonathan@marek.ca>
+Subject: Re: [PATCH 1/5] spi-geni-qcom: remove manual CS control
+Message-Id: <176580716950.161463.18012619677965135620.b4-ty@kernel.org>
+Date: Mon, 15 Dec 2025 22:59:29 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,15 +57,13 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-47773
 
-On Sat, 29 Nov 2025 11:29:27 +0100, Gabor Juhos wrote:
-> Before configuring the registers related to page read, both the
-> qcom_spi_read_page_ecc() and the qcom_spi_read_page_oob() functions
-> are calling qcom_spi_set_read_loc() to set the read location for the
-> first codeword.
+On Thu, 20 Nov 2025 16:11:58 -0500, Jonathan Marek wrote:
+> The GPI_DMA mode already uses automatic CS control, to use automatic CS
+> control for non-GPI case all that's needed is to set the FRAGMENTATION flag
+> using the same logic as setup_gsi_xfer(). (note clearing SPI_TRANS_CFG's
+> CS_TOGGLE bit enables automatic CS control, the comment was wrong)
 > 
-> However the qcom_spi_set_read_loc() function puts the passed value
-> into the register write cache only, from where those gets written
-> to the corresponding register later via DMA.
+> spi_geni_set_cs() is slow, so this is a big performance improvement.
 > 
 > [...]
 
@@ -80,8 +73,16 @@ Applied to
 
 Thanks!
 
-[1/1] spi: spi-qpic-snand: remove superfluous qcom_spi_set_read_loc() calls
-      commit: cde4e63e847b4d41f017c2beb119c2668106a88a
+[1/5] spi-geni-qcom: remove manual CS control
+      commit: b99181cdf9fa0247dda3ba1228b4578286ab7ecd
+[2/5] spi-geni-qcom: don't set max clock in setup_fifo_params
+      commit: 7ba2e0edb18b3ccee7339315be47080832a3c355
+[3/5] spi-geni-qcom: use xfer->bits_per_word for can_dma()
+      commit: fb2bbe3838728f572485706677590e4fc41eec5c
+[4/5] spi-geni-qcom: initialize mode related registers to 0
+      commit: 739062a9f1e9a77a9687c8fd30f8e5dd12ec70be
+[5/5] spi-geni-qcom: rework setup_fifo_params
+      commit: 781c3e71c94c80e1b33a7d84b970907dd32abc10
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
