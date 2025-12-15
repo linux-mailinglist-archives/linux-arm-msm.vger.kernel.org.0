@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-85186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BA91CBCA08
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 07:35:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56228CBCA53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 07:36:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B6D44300F9E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 06:35:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0AAE93026501
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 06:35:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4ABE2ED860;
-	Mon, 15 Dec 2025 06:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8054F32692A;
+	Mon, 15 Dec 2025 06:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OKI66DoG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CDUZHd7p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76CD1448E0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA330C344;
 	Mon, 15 Dec 2025 06:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765780528; cv=none; b=HRiT4MyEVLyngrs3p7sUVVCu56TDaWZmQtwesKqEPLss4zCxMqL86KSbc6v7xTw/WY156eC4O5V7uiSv1dxtTQC3NDzQ/fKeptTzC+MQ5aI7BUIXj1YznkxRRgD3O9PH3H+CdnLYkssumGo7yGBOkePikF3LBlmZAFKvpztmN8s=
+	t=1765780529; cv=none; b=UGqFrNxmaAIH4MCBJNX3qfGUOGHmTNNd0Eyzob158qvBls4lOJ8UjwOfgud5j7kzEFFhLolKUJ54qiIaBOa4Npjama4mBBIIwxe/DkDjnbuvFY6CmKyj6jAzOd8qGv/wh7V/RcI3v/a7zAdmiF8ndgptvkdzgembks+CiQ1Ij6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765780528; c=relaxed/simple;
-	bh=VnwpWxR/8+nShFX5zfIEPvBeQMXdJgHrpvPMXyO7f/o=;
+	s=arc-20240116; t=1765780529; c=relaxed/simple;
+	bh=Lf+FQE4DVs8wvHLmolFVttU+W2l4hGvMNlsCOthE8w0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rXk1ugwcS83NKm/l8rJFcMmUchJKuYL+4SJMu1WcuxN9WXiHYiggsJwZGaqiaYqSWdlvCcApj4X0Zqzlj7AFo7DpXVbH4E1hix55u1r3fT+WbJgl6jFmNbv3WGHMOurJzbRvN64HRhcpgyq8kRPOQayHbDYd2EtldErEWi/QoIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OKI66DoG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7697BC2BC87;
+	 In-Reply-To:To:Cc; b=bY5D4oStplk/GbIw47L3NF1fnYzYmBEdgE5GgVucU7C2jKoexqL6vfjWpVZEonQWJHX/86yTHk1A0aIpYpY4snRUJq/mmbl46q+oncl1/IoL2aFnBxqSa4PrFwjWQI1CrNAxfk/bG3axVgUTMZXhksqm/qdDAwAikLuZ87gvRqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CDUZHd7p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 86FB0C2BCB7;
 	Mon, 15 Dec 2025 06:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1765780528;
-	bh=VnwpWxR/8+nShFX5zfIEPvBeQMXdJgHrpvPMXyO7f/o=;
+	bh=Lf+FQE4DVs8wvHLmolFVttU+W2l4hGvMNlsCOthE8w0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=OKI66DoGBTmFAoRAImFSwNjDYMtMm2teSmOIuISJCkZLXhooCZh//pYtzMcOojhF6
-	 HJ7tVkq2669oofn2shaiXdHcIFI3J3e2dmmh8nM2HR3nOH0BzBb50lJmHPvLkENS3q
-	 +GJQ3KPkXLBXS/q1IJGERskhkAP+FKpJlz/8R7+K4TqBawJhnnz+NxYJueSzQCcqvg
-	 PKxImsKwvJXcBCV+/cyCEMbsSs4nsrX587SoAcm99+ktcvMB3ZwfDbuKj9J+BYmY4r
-	 zElOCa5gLzKkpNMPTprbRdQ9Jcg4+hRIqr++0TOnXD0s9bcjpKl8Yshh5xiqgSiUVf
-	 QPuiL7Ok8DGWg==
+	b=CDUZHd7px6P96hRWWgMmLKbDWT9203Z+RWlP9vEDdjh1enmCFtGYNP+T5rEdSMIlS
+	 UiCC0ycZQjB/8m5GrCgfnuUsL/BUaW+OuOQ8Qle3x5dbZrPqw6m6iQ9JZipQDXNEyk
+	 dfXp8dr8x5Izo59Ol10QPMsSe7ARcKgAXjEA1GbZvBGtb5oJb7gneJMTM9nO70+LXp
+	 Y5mczCZlniW+09+RJ3hPKcqILMS/pFqg5+uQaj33jHetL4dFB27FbrU8SrlTv0HsKR
+	 Y5hP3MnS5Y0b34/8j0FTR8vbZSHqDeCy8chrv2CkNe2IZFvFDbl2lN11ciSaQXqmbp
+	 gSlaHcMcDNEig==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 711DCD5B16F;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 802B0D41D74;
 	Mon, 15 Dec 2025 06:35:28 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Mon, 15 Dec 2025 10:35:09 +0400
-Subject: [PATCH v7 4/8] mailbox: qcom: fix IPC register offset for IPQ5424
+Date: Mon, 15 Dec 2025 10:35:10 +0400
+Subject: [PATCH v7 5/8] arm64: dts: qcom: ipq5018: add nodes to bring up q6
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251215-ipq5018-wifi-v7-4-ec4adba941b5@outlook.com>
+Message-Id: <20251215-ipq5018-wifi-v7-5-ec4adba941b5@outlook.com>
 References: <20251215-ipq5018-wifi-v7-0-ec4adba941b5@outlook.com>
 In-Reply-To: <20251215-ipq5018-wifi-v7-0-ec4adba941b5@outlook.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -65,13 +65,14 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Jassi Brar <jassisinghbrar@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
  George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1765780526; l=1407;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765780526; l=2536;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=bQie0gh5+yB2rgVd9SAgk+hMuExkZX7LZ4wgufEEF9I=;
- b=ejBjz1LnFrBL/mN4ZXwRdohWziR6hrBgFOzVNjlMYOPl3t3qhEz31c6JPnxymw5zM8PgRY6+P
- dvXEaL+YUfHDWVkNsPgJFw+gE37Bea24ptnDnd7MjIVPqKR6KcHwSwU
+ bh=U+CxhXV7IiW6598EUIu9tQZCBq0lj8MkLhtP7TD5I8s=;
+ b=diC55B13ROdDqKiaREz99TYj8BPbt26jlvPd59SAQ/K2Tl03xaXfV+ZfQitXtNU0Pe00JSdmR
+ DwZoF00y1EdCiq9z7gIv4Z1cqscP6ufceM5n+XDyGRXmyYPUdX0GYbg
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -81,28 +82,96 @@ Reply-To: george.moussalem@outlook.com
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-The IPC register in IPQ5424 is at offset 0xc instead of 0x8 as defined
-in driver data for msm8994. As such, switch to the existing
-apps_shared_apcs_data driver data which has offset set to 0xc.
+Enable nodes required for q6 remoteproc bring up.
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 64 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-index d3a8f6b4a03b368821ef9a5b24fee78037104610..258b03307869b244e053e7a355531268114906df 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -164,7 +164,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
- 	{ .compatible = "qcom,sm6125-apcs-hmss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
- 	{ .compatible = "qcom,ipq5332-apcs-apps-global", .data = &ipq6018_apcs_data },
--	{ .compatible = "qcom,ipq5424-apcs-apps-global", .data = &msm8994_apcs_data },
-+	{ .compatible = "qcom,ipq5424-apcs-apps-global", .data = &apps_shared_apcs_data },
- 	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq6018_apcs_data },
- 	{ .compatible = "qcom,sc7180-apss-shared", .data = &apps_shared_apcs_data },
- 	{ .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index f024b3cba33f6100ac3f4d45598ff2356e026dcf..7bb09621891ea6d287d1c83c77e2feb71b93a0c6 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -158,6 +158,35 @@ tz_region: tz@4ac00000 {
+ 			reg = <0x0 0x4ac00000 0x0 0x200000>;
+ 			no-map;
+ 		};
++
++		q6_region: wcss@4b000000 {
++			no-map;
++			reg = <0x0 0x4b000000 0x0 0x1b00000>;
++		};
++	};
++
++	wcss: smp2p-wcss {
++		compatible = "qcom,smp2p";
++		qcom,smem = <435>, <428>;
++
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
++
++		mboxes = <&apcs_glb 9>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <1>;
++
++		wcss_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			#qcom,smem-state-cells = <1>;
++		};
++
++		wcss_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
+ 	};
+ 
+ 	soc: soc@0 {
+@@ -717,6 +746,41 @@ frame@b128000 {
+ 			};
+ 		};
+ 
++		q6v5_wcss: remoteproc@cd00000 {
++			compatible = "qcom,ipq5018-wcss-sec-pil";
++			reg = <0x0cd00000 0x10000>;
++			firmware-name = "ath11k/IPQ5018/hw1.0/q6_fw.mbn";
++			interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
++					      <&wcss_smp2p_in 0 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 1 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 2 IRQ_TYPE_NONE>,
++					      <&wcss_smp2p_in 3 IRQ_TYPE_NONE>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			clocks = <&gcc GCC_SLEEP_CLK_SRC>,
++				 <&gcc GCC_SYS_NOC_WCSS_AHB_CLK>;
++			clock-names = "sleep",
++				      "interconnect";
++
++			qcom,smem-states = <&wcss_smp2p_out 0>,
++					   <&wcss_smp2p_out 1>;
++			qcom,smem-state-names = "shutdown",
++						"stop";
++
++			memory-region = <&q6_region>;
++
++			glink-edge {
++				interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
++				label = "rtr";
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 8>;
++			};
++		};
++
+ 		pcie1: pcie@80000000 {
+ 			compatible = "qcom,pcie-ipq5018";
+ 			reg = <0x80000000 0xf1d>,
 
 -- 
 2.52.0
