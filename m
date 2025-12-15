@@ -1,95 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-85205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 712BDCBD037
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 09:45:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 526D6CBD047
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 09:46:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 38373301B82C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 08:40:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7E5E330248BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 08:41:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07188313E38;
-	Mon, 15 Dec 2025 08:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02294329383;
+	Mon, 15 Dec 2025 08:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cdLNK5jD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NC4Rk5FZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ipzbHdt3";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZqYoXEpS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3AF30E0E7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF2329C48
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765788048; cv=none; b=K9rm+dX5FVAcGVRzspkV031ydV26VnVTjn6jo+Jn0byxIQ3Unk6EvGw0QdvoEFoQcsxd4Z5t858zYOB/M0XwXn/RmrXsex6u7zWDmYPmSApqqtWwFhu9Ae8LwZ1t7DPeQCaL1HXQcvqgDseEGDCp8RaEyCQQeV+bZUK5k7X+fq4=
+	t=1765788056; cv=none; b=MrMk17mHPzg3h91kNG5pjQ7+oe6tfOCYPFQ90GTvrOC8w5rV7mUQEjwMbHyONI87MfSbYTUqBWO7BnUjo28gWi8tvOztRn962Lf55e1XQXVXkWKz6KZPggi3J2jRMIrkNDxfpXkHhOQGlR+GnJjxG2zAjQPcg+trmzkMCV1BFOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765788048; c=relaxed/simple;
-	bh=eYqbCgFTx7pO2+x0Rgwk8N2aIIU8O+9nShTeQC9NPWs=;
+	s=arc-20240116; t=1765788056; c=relaxed/simple;
+	bh=CWfkoJLjgIy2gUgRXCOUxurYebB6LVsEC7XgknJptQU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ycr5OgtOxXaNUCbThIb9cO5PGg6UVXVMsXHVueNKjDWoMqmuOIdvkFtxFlmoXP2aDebdPiM7oXpl4leB8pWIMNCvN3x3+S2TIHov/TW5v6cQpSxp5ZDRyU0IlNXT6lHC0NXe8+Xcmz/70p3JOWopHVNiv0iumDi19o0FivS+D6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cdLNK5jD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NC4Rk5FZ; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=We4oqeSdFn4uZU1V9Dyrryz0GaOgwzXjvQ7chi9MwSPm85TNOuPOVAa0gLQQbOUBhu1r8hyPHuYnPS4P69B3j6gDi9ZFWqxM4MW6tK926J0A2LlLfdyjV2VWkwkncRUba2Z3msKC+DGYwmcNO+hFVNrqzlB9vNW9khiAT57iCsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ipzbHdt3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZqYoXEpS; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BF8UIlE2608256
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:47 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BENe8JT3407426
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=AlSWjXvP89D
-	8APUnrnCOFRXps/W1frFHw3Bcs+wBdn0=; b=cdLNK5jDp8TBB7djLkAZ6HtFZoW
-	WTej2mBmm7t8tW9Je6HRuT8zUzvjjl/E1dCsS+jz1SL8gSIVj+LBa2gF/tFSzOnn
-	gnKYLsH7/g+1ybTm/TQyHPdboHESWBt3nz+LVX2rh+yJXq9lCscolQxx+Rus6neD
-	4GQ/HItzF9rWj+WdhnLzSHXZmyiIfe6vXtpoSmOUR3QQJIX1nPgIk7tmvPTE3SPq
-	iBXBCRec+Cr7zO56HMJHb6pBYnHiVh3DYmaDCnDnJkPHS5APwMbzxjGEiarLw3ua
-	QCWXir820zTOKa0IHrdXwJKQzq/T3QDgYULHlDUvFaRi6SKCxO3ZuUl68+Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b11c6ku5a-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=ZtV4X5cR6Ur
+	U16OtyrxKymwqQ6A4WNFYALAmfpTs2C4=; b=ipzbHdt3Z5lcQmn0jzbJcgXpN8W
+	UfprVbrjyX2o7v4dGazqeKJk+z5+z+uEbkqeUyfRq3tdTAqZZeBbAfaylR0r3/J+
+	lM+oCBP9415T45FFHQCSYOZrKMNnEf4B8iITcmo41KaIUtgvLutINk1QzFUAciXR
+	QURaJOUNHdf9E2q6yV0+vxJzc8IncDdukXeePj8U5oigDWQ6Ixv4TVya4DpuiAeL
+	lQg6+g9/0Aa7vdp1rUxSH/xYKMWx1rBRwlwekvDjqrcGPjBjueYOLG6i/Vtboz/e
+	VJdvnfzKirxhGtf7OWixKI78Hu/Tr9CPXfB+vVa092DLKnkWJSbqRgv1SXA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b11dsbssj-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:46 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee21a0d326so33108401cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 00:40:46 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 08:40:54 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ed79dd4a47so76492041cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 00:40:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765788045; x=1766392845; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1765788054; x=1766392854; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AlSWjXvP89D8APUnrnCOFRXps/W1frFHw3Bcs+wBdn0=;
-        b=NC4Rk5FZwnUPz1HZAJW1JO5uvQfeeLwiKszcxD1dATnidiwO2qDCy2GmMaNQqhehKZ
-         k/cWnkNH6kibuElk0sgRjksxLgvhw/8M0tMl48DSCL3DOdPJ1Daf8rBDytvNaEWGiUUn
-         vPPit19RhRq6V6svea5hW/wjLgVGFG2Ne4zHOgPS61QDjrwsPlSK4D3cPGNGW2pVVFX4
-         hjCY+JSa6/AIPBkNyvTkx5wBmkn6jH0rP7lFL42LlHJULv5LKMu9AQJtlMl05srwUKpG
-         BK2wNrOA2/zuBvnls35WxJrW6okO0wCgEejQcXL7ddri/BzWKhaXfK+llUMDpN800M6g
-         Vqcg==
+        bh=ZtV4X5cR6UrU16OtyrxKymwqQ6A4WNFYALAmfpTs2C4=;
+        b=ZqYoXEpSQOeTviWeDH19SYN8HBdoKXPUib39kOcETbrUluDIj4R2kMdIM8L+zfj5m3
+         L8d8PE4kJI5DQtknKxgdnWLnAjijXwKAKYDD0tsz3Jrl0A/WgxpF3PM3jvnu7rF1aAzU
+         nUiH01ieAzWyW/xF4ZgTSweLVtdZnH8u6g1bMpECIWEtluJmioIybknJ2dPWNpIaYHge
+         ExMGABvK7RQN8HVCuSqB1yH+dgDl8/t0FDPYRJhRSNUgZ7PP5DNEc+yXUumhyl9C4yxd
+         HXjYn4knP1rgEOW2tnj33EtL/S/YWNlU93TL2YXQAbRjFE84Pt3KyKFqpGbDckRsdiol
+         LDkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765788045; x=1766392845;
+        d=1e100.net; s=20230601; t=1765788054; x=1766392854;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=AlSWjXvP89D8APUnrnCOFRXps/W1frFHw3Bcs+wBdn0=;
-        b=mfnm+wkTSPE/yZwyYyajEBANVAOpOvEn5eOlAke6iFFSXpIebNh6M8Hi2W2NuMG8S5
-         zUOyfKuKa1TRaZlMJ7RG56y3/a6rF0ldNY+S49IZjcPpvERfICoCJjrv/RW2s1N8iW5Y
-         S9U9+cdH9uO8ACb65ziU64kwRNiRQi/fvsxdA4BSq5DOgk3dFTEuL6K/w2QnlhbzMjpY
-         Bes9u42yfCWkAvdLzFhrJr1dv2XFvWe/JkT6rUWUfoEdtQVlQgc5jSKQsnz+1Ab/TJsE
-         eSMFkSEUMr/Bm2gJmENP/rteWXYIms1Qsoqh3bqZpheNUhmws9BpZL+b9mpGDi+9X/dM
-         JikQ==
-X-Gm-Message-State: AOJu0YyN/s6KZrMD25y6LazzpJGsAJo++SVyGd0HOGGIZz3gscZDZG1z
-	CGKqPlavV/oNv7mXIeANGBI/DVQtcjRb6eJAaR6FxWaWfxkA9usdrNli0yUXCr0Mdu32uprlk/u
-	L6sfsOBCX/kY/gjkld76qHi57M/yVOK9agh0r5AriCUb2i6+rPwyguOvpVJR+C6Y2FRig
-X-Gm-Gg: AY/fxX5N7xM7pOIbKRSDEZU2EWoj2P+RD2r7yyHzSWzNYP39xtL8S08chjHYJ7bEobq
-	SZPQ8s9CTPvW5w02uGSIKRtCh+16asm6K9L++BDLP49S87GyogRsM+RbO8TQWnxspkt3PtclPrz
-	ykfKsmL26NTZNspaShHUTWa8bAeG1/MFKoFNz6yLihu6CyyjW4LNmAg8/etLF7/dQbeE3vnVWxg
-	HLJgPC3KOXDxDA3a6+OiwAfmhi/q9iyuYHwT/N5Hmm1PteWCnvJxwSIKYC5rOrUjisCC+Q9UGo8
-	OZ3yJGGicv8FV3N3TYXCuqJBzRKFSSnuprRqyVg93DFOd/8UYL6IGUuLRxnyJNNfApdyqORPUP2
-	fxtzAlJjasP5qboBbb2hB3blXwKF0mVA0E9zkEng3PRpjTC6g8VhGXzRayWvOufvhn+I=
-X-Received: by 2002:a05:622a:1791:b0:4e6:ebe3:9403 with SMTP id d75a77b69052e-4f1d059d261mr122345821cf.41.1765788045679;
-        Mon, 15 Dec 2025 00:40:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkrFIAQoibBowZ+hZ+Nx8U5gIQEDXi5Q9OFXQj88z4ksCGjc3LaNGlfwA9GNy8uOY0+1Glhg==
-X-Received: by 2002:a05:622a:1791:b0:4e6:ebe3:9403 with SMTP id d75a77b69052e-4f1d059d261mr122345531cf.41.1765788045177;
-        Mon, 15 Dec 2025 00:40:45 -0800 (PST)
+        bh=ZtV4X5cR6UrU16OtyrxKymwqQ6A4WNFYALAmfpTs2C4=;
+        b=W5PydybpBSEbbkryFOR3/Q3hnoBiZQdy5u7nnRVH6h42Ylt+FRRErqXpkF6d/OMIvm
+         VUjPPCBVuKduNvQIp3wt6dCOGVbuY29bTgxnzhTviIOhCLr1cAM9txaA5W5dbYRmkUKw
+         0NXqWN6Ftl7VpSmgC+sZ9qWlKmUhGTjlnsDmvHzZAusYcv2chVSsyOMrAUW9G0rx5U0C
+         +aUeMkKqUAjsTbDMevFYNu6BtSmUtUwp+7/nBVYEV/JTcBWI75/lqIQqIVG74D7qiCz3
+         X9xme3n9S84hgWw7/PTLnXrKcorMXKYvtJysiKQClPK9qlm/f45kaHDniXUQxtCo2SLH
+         mQGA==
+X-Gm-Message-State: AOJu0YzYTsbpkN4aqrm5qP/ilXGvkXTQi3SLr26Xwauh/4hLmR3hH1w7
+	bsXJdTnfLWRu7Oo+5IdqYk6np/PbsYyLhFBl5/bBW0uquTo/J4hvqP8D154CUFkNNH+0Z6esb7x
+	4v1jn5fRHuf0vyQSQUa+qwpjOryXXWte364ryCdT5yUy6U+xwgh3lY4Aia5PwP+uTL8Po
+X-Gm-Gg: AY/fxX4gc5+fs2Kx22haM239K1ZWvrlwyyPW6JABXNQEceaP9LxNEjHCySRPq15Aihk
+	3a2TDJ4hI7A4qNPItZqQU6b3t9cTTfiRRI2rAl/zIhONRPnEckVbQvRafL+4rWpWvbC4fCTn99s
+	Bhizhk/Rp5eqyyi/TJYQ1D48TaBRyIh1bYkW+2TKMWJobxNqTxREZeSwym6hOm6PwvAknc5DAGP
+	YtIASNDlA/DPXe/c0wbYHk7cRSuQsZ0IM4cjB5jUpExO1h0FC0w8XZHijBc77qkG0URw/NldVs1
+	+cciBu2qOsTddXUadMz3UiS0H6KWr2m7EeHQViSqKNJbnMV7oV02hSTAvXg9VCrzNfLVDbGoTqd
+	k9qf0RiRRNnAKcGRPxX0GxraIZ5ng8LUP/Tz+VPJkDPCPwLow6+lrau68ZyPtKhFi4xI=
+X-Received: by 2002:ac8:5794:0:b0:4f1:c6c4:dbcf with SMTP id d75a77b69052e-4f1d05e1994mr118120751cf.41.1765788053686;
+        Mon, 15 Dec 2025 00:40:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH/1noZeIOiPTqPNhvlgm4f0gFz0fAc6cRFHkHLSAhxls+TIUbS04EGECkvuqYtOB+uQYVx2A==
+X-Received: by 2002:ac8:5794:0:b0:4f1:c6c4:dbcf with SMTP id d75a77b69052e-4f1d05e1994mr118120621cf.41.1765788053258;
+        Mon, 15 Dec 2025 00:40:53 -0800 (PST)
 Received: from yuanjiey.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f1bd6b50afsm90557971cf.21.2025.12.15.00.40.36
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f1bd6b50afsm90557971cf.21.2025.12.15.00.40.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Dec 2025 00:40:44 -0800 (PST)
+        Mon, 15 Dec 2025 00:40:52 -0800 (PST)
 From: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
 To: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
         jesszhan0024@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
@@ -100,11 +100,10 @@ To: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
-        aiqun.yu@oss.qualcomm.com,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH v3 07/11] drm/msm/dsi: Add support for Kaanapali
-Date: Mon, 15 Dec 2025 16:38:50 +0800
-Message-Id: <20251215083854.577-8-yuanjie.yang@oss.qualcomm.com>
+        aiqun.yu@oss.qualcomm.com
+Subject: [PATCH v3 08/11] drm/msm/dpu: Add interrupt registers for DPU 13.0.0
+Date: Mon, 15 Dec 2025 16:38:51 +0800
+Message-Id: <20251215083854.577-9-yuanjie.yang@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251215083854.577-1-yuanjie.yang@oss.qualcomm.com>
 References: <20251215083854.577-1-yuanjie.yang@oss.qualcomm.com>
@@ -115,85 +114,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=actsXBot c=1 sm=1 tr=0 ts=693fc98e cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+X-Proofpoint-GUID: nhwB6SiWq5VUomdMICelbiaUbNp0XMMN
+X-Proofpoint-ORIG-GUID: nhwB6SiWq5VUomdMICelbiaUbNp0XMMN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE1MDA3MiBTYWx0ZWRfX0rJJhbYSd3wF
+ +XTKYSJe/Txpx0aFZJlyFsyKNh2HaAsys9f6YQu+QRpETtWyk29mhdIlCj+Zx1Dq20PD5pUx7dk
+ HXWApJz5unLrG/R/8fxW6r2uoxue8fwtxGig1YG4rlPSPMKsGlpixEKlfyheLqMvhsBkG1L6hJS
+ 9t0UKcMCfBj7R4uYgau/YTAxzsu51eDdmreCzkRD/WGPnWErc4AJ5mj8ay/m3eHavq4YeM5ADH0
+ xY8PkeMLfABDyImuC64T78V95QKbV+jrH8RiETcdTo5ldX45y/O5G4uYvgA6ShvVSzF8f6AFD+A
+ f6EELATQqHhhpCMz2dpHUZVQSQ8Qkw3aY6wgc5sLFJKoks94gOQxHbQfKKczf+PsKMtj9JuoiVs
+ cK7Rj7D8JqER0AeGKgv1T1zygLGRMg==
+X-Authority-Analysis: v=2.4 cv=cfLfb3DM c=1 sm=1 tr=0 ts=693fc996 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=EGddA7oXPexY6v9tJfMA:9 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: R-hWoOosKCR-VPSJuofwolrhuHsIYY6T
-X-Proofpoint-GUID: R-hWoOosKCR-VPSJuofwolrhuHsIYY6T
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE1MDA3MiBTYWx0ZWRfX7/FhBzh/Ix8V
- gS6eWBjKrdar9PZlPY8WMcmpnMr9nab7QO+doNqYQXbjIIXbT/GEZUa7+os7WVEmEkM3y0bafF2
- Gnr720x5sZxut44gz0yw7QcBnxVhffQc+Jd0Yzhbe/x8xvBXfztxoPsQjynORgjAwgYFGJyWlnx
- kYCYr3rJjXkCknHMi+yVW4oZ3PPD343+0gj8LnoVKXKpOGLhLAXprN+ypb4Y6DOYYyo2aKHrBRJ
- Mm7rI4kX/LxJCQQNHiw63VOkbCECsDmvWvbpkimqiAQhbIT2dITB0Dg4qXRouZLj6uiBONu/ahW
- 3NEp3oFBUaOFG9eniiK1MhnEYZHZatnzAp0y3L3D7JfzRypIljwzZmUVH2oxj9FS4lhYrAJmbJB
- jyI+jvl6g+XKkmwMuavTTHNEAqEqSQ==
+ a=EUspDBNiAAAA:8 a=RfJNy9JZAWTFlj1jTG0A:9 a=a_PwQJl-kcHnX1M80qC6:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-15_01,2025-12-15_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512150072
 
 From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 
-Add DSI Controller version 2.10.0 support for DSI on Qualcomm
-Kaanapali SoC.
+DPU version 13.0.0 introduces changes to the interrupt register
+layout. Update the driver to support these modifications for
+proper interrupt handling.
 
 Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 13 +++++++++++++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
- 2 files changed, 14 insertions(+)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 89 ++++++++++++++++++-
+ 1 file changed, 88 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index fed8e9b67011..bd3c51c350e7 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -205,6 +205,17 @@ static const struct msm_dsi_config sm8650_dsi_cfg = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index 49bd77a755aa..5b7cd5241f45 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -40,6 +40,15 @@
+ #define MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(intf)	(MDP_INTF_REV_7xxx_TEAR_OFF(intf) + 0x004)
+ #define MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(intf)		(MDP_INTF_REV_7xxx_TEAR_OFF(intf) + 0x008)
+ 
++#define MDP_INTF_REV_13xx_OFF(intf)			(0x18d000 + 0x1000 * (intf))
++#define MDP_INTF_REV_13xx_INTR_EN(intf)			(MDP_INTF_REV_13xx_OFF(intf) + 0x1c0)
++#define MDP_INTF_REV_13xx_INTR_STATUS(intf)		(MDP_INTF_REV_13xx_OFF(intf) + 0x1c4)
++#define MDP_INTF_REV_13xx_INTR_CLEAR(intf)		(MDP_INTF_REV_13xx_OFF(intf) + 0x1c8)
++#define MDP_INTF_REV_13xx_TEAR_OFF(intf)		(0x18d800 + 0x1000 * (intf))
++#define MDP_INTF_REV_13xx_INTR_TEAR_EN(intf)		(MDP_INTF_REV_13xx_TEAR_OFF(intf) + 0x000)
++#define MDP_INTF_REV_13xx_INTR_TEAR_STATUS(intf)	(MDP_INTF_REV_13xx_TEAR_OFF(intf) + 0x004)
++#define MDP_INTF_REV_13xx_INTR_TEAR_CLEAR(intf)		(MDP_INTF_REV_13xx_TEAR_OFF(intf) + 0x008)
++
+ /**
+  * struct dpu_intr_reg - array of DPU register sets
+  * @clr_off:	offset to CLEAR reg
+@@ -199,6 +208,82 @@ static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
  	},
  };
  
-+static const struct msm_dsi_config kaanapali_dsi_cfg = {
-+	.io_offset = DSI_6G_REG_SHIFT,
-+	.regulator_data = sm8650_dsi_regulators,
-+	.num_regulators = ARRAY_SIZE(sm8650_dsi_regulators),
-+	.bus_clk_names = dsi_v2_4_clk_names,
-+	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
-+	.io_start = {
-+		{ 0x9ac0000, 0x9ac3000 },
++/*
++ * dpu_intr_set_13xx -  List of DPU interrupt registers for DPU >= 13.0
++ */
++static const struct dpu_intr_reg dpu_intr_set_13xx[] = {
++	[MDP_SSPP_TOP0_INTR] = {
++		INTR_CLEAR,
++		INTR_EN,
++		INTR_STATUS
++	},
++	[MDP_SSPP_TOP0_INTR2] = {
++		INTR2_CLEAR,
++		INTR2_EN,
++		INTR2_STATUS
++	},
++	[MDP_SSPP_TOP0_HIST_INTR] = {
++		HIST_INTR_CLEAR,
++		HIST_INTR_EN,
++		HIST_INTR_STATUS
++	},
++	[MDP_INTF0_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(0),
++		MDP_INTF_REV_13xx_INTR_EN(0),
++		MDP_INTF_REV_13xx_INTR_STATUS(0)
++	},
++	[MDP_INTF1_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(1),
++		MDP_INTF_REV_13xx_INTR_EN(1),
++		MDP_INTF_REV_13xx_INTR_STATUS(1)
++	},
++	[MDP_INTF1_TEAR_INTR] = {
++		MDP_INTF_REV_13xx_INTR_TEAR_CLEAR(1),
++		MDP_INTF_REV_13xx_INTR_TEAR_EN(1),
++		MDP_INTF_REV_13xx_INTR_TEAR_STATUS(1)
++	},
++	[MDP_INTF2_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(2),
++		MDP_INTF_REV_13xx_INTR_EN(2),
++		MDP_INTF_REV_13xx_INTR_STATUS(2)
++	},
++	[MDP_INTF2_TEAR_INTR] = {
++		MDP_INTF_REV_13xx_INTR_TEAR_CLEAR(2),
++		MDP_INTF_REV_13xx_INTR_TEAR_EN(2),
++		MDP_INTF_REV_13xx_INTR_TEAR_STATUS(2)
++	},
++	[MDP_INTF3_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(3),
++		MDP_INTF_REV_13xx_INTR_EN(3),
++		MDP_INTF_REV_13xx_INTR_STATUS(3)
++	},
++	[MDP_INTF4_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(4),
++		MDP_INTF_REV_13xx_INTR_EN(4),
++		MDP_INTF_REV_13xx_INTR_STATUS(4)
++	},
++	[MDP_INTF5_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(5),
++		MDP_INTF_REV_13xx_INTR_EN(5),
++		MDP_INTF_REV_13xx_INTR_STATUS(5)
++	},
++	[MDP_INTF6_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(6),
++		MDP_INTF_REV_13xx_INTR_EN(6),
++		MDP_INTF_REV_13xx_INTR_STATUS(6)
++	},
++	[MDP_INTF7_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(7),
++		MDP_INTF_REV_13xx_INTR_EN(7),
++		MDP_INTF_REV_13xx_INTR_STATUS(7)
++	},
++	[MDP_INTF8_INTR] = {
++		MDP_INTF_REV_13xx_INTR_CLEAR(8),
++		MDP_INTF_REV_13xx_INTR_EN(8),
++		MDP_INTF_REV_13xx_INTR_STATUS(8)
 +	},
 +};
 +
- static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
- 	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
- 	{ .supply = "refgen" },
-@@ -332,6 +343,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&sm8650_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_9_0,
- 		&sm8650_dsi_cfg, &msm_dsi_6g_v2_9_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_10_0,
-+		&kaanapali_dsi_cfg, &msm_dsi_6g_v2_9_host_ops},
- };
+ #define DPU_IRQ_MASK(irq_idx)	(BIT(DPU_IRQ_BIT(irq_idx)))
  
- const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 38f303f2ed04..5dc812028bd5 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -32,6 +32,7 @@
- #define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
- #define MSM_DSI_6G_VER_MINOR_V2_8_0	0x20080000
- #define MSM_DSI_6G_VER_MINOR_V2_9_0	0x20090000
-+#define MSM_DSI_6G_VER_MINOR_V2_10_0	0x200a0000
+ static inline bool dpu_core_irq_is_valid(unsigned int irq_idx)
+@@ -507,7 +592,9 @@ struct dpu_hw_intr *dpu_hw_intr_init(struct drm_device *dev,
+ 	if (!intr)
+ 		return ERR_PTR(-ENOMEM);
  
- #define MSM_DSI_V2_VER_MINOR_8064	0x0
- 
+-	if (m->mdss_ver->core_major_ver >= 7)
++	if (m->mdss_ver->core_major_ver >= 13)
++		intr->intr_set = dpu_intr_set_13xx;
++	else if (m->mdss_ver->core_major_ver >= 7)
+ 		intr->intr_set = dpu_intr_set_7xxx;
+ 	else
+ 		intr->intr_set = dpu_intr_set_legacy;
 -- 
 2.34.1
 
