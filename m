@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC576CBDBB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 13:14:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4134BCBDBC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 13:14:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BC8753064E60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 12:06:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7AB623044682
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 12:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 533E12FE59A;
-	Mon, 15 Dec 2025 12:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5061331A814;
+	Mon, 15 Dec 2025 12:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="auIcTO4U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hFKZxFao"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102C2E5B32;
-	Mon, 15 Dec 2025 12:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDE4314B93;
+	Mon, 15 Dec 2025 12:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765800392; cv=none; b=pdMCvzBy1N6PmLEWX8BqC/osMMQ5BuubI0KhTtjeBW5qDpvpZRPuW7RpjykS7XtQn/d4VuxmxeygEWrWtueu+M25IcohcOQmK38ypYx72QHa/7A7oRG/etNuA9Y+EUaDBJq+WBCON2fS7NGmZ8sk+sRw8GFUVFOSJZi+k7499gs=
+	t=1765800443; cv=none; b=iyGcVWdYYtPAZEGz3Q3yRtdgIzteX76dubtwn1IZ+uylnqQwHmXcfG2/5eGwFoqzMg2X7ambMUzmTrfD+y4MxJXWq6fNm3AVHsovhVHgTq8zGCSvHvWgUrOB6/mMmEx/a9WkO8AtUJmqVkjVVkATdZ0SD+00N0llM1zHKN88hpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765800392; c=relaxed/simple;
-	bh=Tno0AHB9Quxs0U7gU6aYZ0IoaFzErFHBdivOV6WcpAc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZSRPLfX+9L7iZruZeagZXhWHcfEPhY8kavvMXexNFsrm/D7Av6oSSpxBBAhLjlJygQ1KIrIvqyeY2LtEfMDihHfucss40cCxRuWjMYqKQtfddbVQoaBuMpP9v5kTEDu8Q1TmJa+hGw3MteWPbg1jwg4hTfqJlabLXbq8LavkZUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=auIcTO4U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531B1C4CEF5;
-	Mon, 15 Dec 2025 12:06:25 +0000 (UTC)
+	s=arc-20240116; t=1765800443; c=relaxed/simple;
+	bh=s2KR+VDnLiS5xNsyFmVpZZ2XwnffK6EVG4cj2tuLKUw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=hi3VZGxQR5gRW9m5y5Jec4SZoYMTsBnrMgtETzG2TS8OEYkJHHJqCbsrFrS+PYCVyYIxeSo+MjNh2I9rAe9a6uIN+EBuGIAb/6RJBTkWls0vHimpOC8lZNQP93wpV+PkcSoR3SsiA/FEQRvhq4odsalqW5bhTqhFTmzZGF4f3Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hFKZxFao; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8960FC4CEF5;
+	Mon, 15 Dec 2025 12:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765800391;
-	bh=Tno0AHB9Quxs0U7gU6aYZ0IoaFzErFHBdivOV6WcpAc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=auIcTO4Uppjz9xNmHlmUkA7o/TFTat0bABKCAD33s3LFOoWXJFIcf1B7vp2XHJ6SA
-	 DpduvQZnHmzpR10XQrmnO+TPMFafnaZu6pzh7GFDjBZ4TgcmZ6Sk6agEk4Yav4yVLG
-	 3gbyXUBdTxalXRwBvtlXeFCHG3xsQTC+B0dURTSfHHzvJIItlnyBPNknBgMCeW50RX
-	 +OvDtdBdwdvhoCkG3F9rmzwQ15+3N4RPYnkwPTOApDq83lUqTkHmHzXhMJPAHcMbti
-	 13NA8zJs4To8RH4mZp25U3BlQOYgrxAhFeLM1vmlQNSL66Rp9v3vZrSCDT1MCErLPS
-	 N2bYK52r7jb2Q==
-Message-ID: <03819cd6-9f19-4c28-806b-17c7596e5299@kernel.org>
-Date: Mon, 15 Dec 2025 13:06:22 +0100
+	s=k20201202; t=1765800442;
+	bh=s2KR+VDnLiS5xNsyFmVpZZ2XwnffK6EVG4cj2tuLKUw=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=hFKZxFao5vxFSFWUrC143MrHNRS0BH+qS9+fZtvBkO5V6LHLRqYw1UnE+HzGzs/7l
+	 IejSZlOakaRA0zsi/mslepl7vHRSsKvTi1LgD3Yx9RRPaOuYV/Ai5GQTpie5M2Fx2y
+	 UlD6uuZNAdz0DL6v1SUebi/KdFyTxEWk8exvBHxJNQAllRs5emU096YUTM73ndLDcJ
+	 Jns+KzILhVkYStoq3JEi6YQNOagqkjpeq93lsEZbNh3tF3y+5jWW4Pt2MEIm4FsqfI
+	 xfa3AdMSMgpAeeYROoIaQI53q9D3yYBicT1FLkC3a/6Y/aa3mhlDioM3iZUL/rpIQf
+	 9U2vBW6McMXjA==
+Message-ID: <9f5fcce3-b9c0-4aae-b4e0-10475eb5ec9e@kernel.org>
+Date: Mon, 15 Dec 2025 13:07:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] dt-bindings: mmc: Add dll-presets values for HS400
- and HS200 modes
+Subject: Re: [PATCH v6 2/5] arm64: dts: qcom: Add sdhc dll-presets
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -60,11 +60,10 @@ Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  dmitry.baryshkov@oss.qualcomm.com, quic_pragalla@quicinc.com,
  quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
- quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com,
- Sachin Gupta <quic_sachgupt@quicinc.com>
+ quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
 References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
- <20251215120009.3877889-2-quic_rampraka@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20251215120009.3877889-3-quic_rampraka@quicinc.com>
+ <0f7c0d5c-7f77-4669-9648-62d008f15b1c@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,47 +108,47 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251215120009.3877889-2-quic_rampraka@quicinc.com>
+In-Reply-To: <0f7c0d5c-7f77-4669-9648-62d008f15b1c@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/12/2025 13:00, Ram Prakash Gupta wrote:
-> From: Sachin Gupta <quic_sachgupt@quicinc.com>
+On 15/12/2025 13:05, Krzysztof Kozlowski wrote:
+> On 15/12/2025 13:00, Ram Prakash Gupta wrote:
+>> Add sdhc dll-presets for qdu1000 target.
+>>
+>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Document the 'dll-presets' property for MMC device tree bindings.
-> The 'dll-presets' property defines the DLL configurations for HS400
-> and HS200 modes.
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching. For bindings, the preferred subjects are
+> explained here:
+> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
 > 
-> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
-> different tuning.
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> index 846e5e5899aa..bc31504d5c8c 100644
+>> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>> @@ -912,8 +912,8 @@ sdhc: mmc@8804000 {
+>>  
+>>  			bus-width = <8>;
+>>  
+>> -			qcom,dll-config = <0x0007642c>;
+>> -			qcom,ddr-config = <0x80040868>;
+>> +			qcom,dll-presets = <0x000F64EC 0x0 0x01	0x2C010800 0x80040868>,
+>> +					   <0x0007642C 0x0 0x10 0x2C010800 0x80040868>;
 > 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
-> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 938be8228d66..a1a16e6e12ce 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -140,6 +140,11 @@ properties:
->      $ref: /schemas/types.yaml#/definitions/uint32
->      description: platform specific settings for DLL_CONFIG reg.
->  
-> +  qcom,dll-presets:
-> +    maxItems: 10
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    description: platform specific settings for DLL registers.
+> That's non-bisectable. You just broke the users of this DTS. Also, case
+> change is not explained and your binding said nothing about deprecating
+> other properties.
 
 
-So look at your DTS - this is clearly incomplete now. So obvious. I
-don't understand why you were hiding the DTS change, you just make
-review more difficult.
+Also, your binding said 10 items, not two.
 
-Anyway, your DTS says you replace some other DLL properties and nothing
-in the binding or commit msg explains that. Neither the reason nor the
-impact.
 
 Best regards,
 Krzysztof
