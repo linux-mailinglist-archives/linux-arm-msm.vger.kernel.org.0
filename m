@@ -1,111 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-85220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 571D4CBD306
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 10:36:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6907BCBD3D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 10:44:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4F15D301D5BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 09:36:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D93513026AFE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 09:40:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADC9532ABC6;
-	Mon, 15 Dec 2025 09:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06045321445;
+	Mon, 15 Dec 2025 09:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQ4nhYsj"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gzAo0c3W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D318314D24;
-	Mon, 15 Dec 2025 09:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB9423BCF3;
+	Mon, 15 Dec 2025 09:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765791376; cv=none; b=NaSnv6zVQjNOgWiUKRc8HbcZYuXaKcPf8jtrQAkVwjCszLNux4DhY73wj3K7FUx/Xk7EDOKMtqFTDR+p/vuuL8RpOLaV9MS5gH9eL3D4qgO868PMnTSUpCnb9yVKmKbVhtF3Fh1qO8BovS73WZTAH4Hglhs9kbthTmcrmcd5Ecg=
+	t=1765791602; cv=none; b=AmRub2BH87bb++fA58+VC1V8ZY0Q0H28RtHJtynntuDimPqZvPdhtdKT0JF60KWxnZoNB/xXRdGV/tNKYxmyn8H1/O0SRGDIDg/Scoio1xogB/0GJ5IcuHigM3LjV8peWV+buc7v7gQSbgoiLVDuFppJqXVEbPMlg/r37tPS6P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765791376; c=relaxed/simple;
-	bh=dSLpxiL1aXMnJwyx4tEHeVx1Cgit3eOzv1//IzQcCEo=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=CFwv/MqJ7afQ/IQM/6W7t+YM0WuTWMKTSga3UGvrcYfe3DWjAkRZ8rud1BUiOI5MQUfM7BW/fLvI0Z2oBnevUYSTVB9WxcEkjT6Yw2jlqAbEN7cJCsnZNMLol9qQQ8uwYfcD5gEDMIniz1XCV41Bluvq3avxbvTyRcb+4iyHclA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQ4nhYsj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A5DC19421;
-	Mon, 15 Dec 2025 09:36:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765791376;
-	bh=dSLpxiL1aXMnJwyx4tEHeVx1Cgit3eOzv1//IzQcCEo=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=WQ4nhYsj07UiogayY1jqqrBEbH7UuNW59gy5cWwaztlK6hn98biG/rx5bkL+/75G2
-	 t9Nd+CTzUxIIxaqgxI/8rdH1eJXhVRPpYQkWgbhl/xy265GTmXYNhl6PzoDQfxurtY
-	 HAbI/i3D53b0ft8ZBFNJ2UiSHTFDA1/fK7jT6LQHlJSsgAuv4avBXaBEeQqnzmLhN6
-	 aEa+2HNUYrDCObqeGGNcPtOGt5x5iAaf1n0bDbMyyacETlZP/B324g6bB1K5FiKTwb
-	 nm7xKVHKpmKks6f28H1RQyayZEVLZPmruxzIwyuH9vYiLGpcrp850fCYM6j3euztUI
-	 7c+Sw4wMtHvVQ==
-Date: Mon, 15 Dec 2025 03:36:13 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1765791602; c=relaxed/simple;
+	bh=Pt4quVBYWmoaMIPeeEHlsp/Eb4e9qXcbwudc2NTUoO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WOYXl8TiJ5ZMGKvBMm2WELEvmxI3fbX/f3epe0FU810yC93UBUCZoy9i71P+fk9A3t+9AO1d5WHC+V81xXLDKnMEA/JMJFqRWmqj2O78Nh071kUyW2+gVtxPcdY+8VHfK93AmZK4wRQ+g5/beJIky5aooW/rwXSxGSB0efmy6Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gzAo0c3W; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1765791601; x=1797327601;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=Pt4quVBYWmoaMIPeeEHlsp/Eb4e9qXcbwudc2NTUoO0=;
+  b=gzAo0c3WR4mY6nK4isPOJlU9P9/CqSi/EN4oMo/zq9EzKgUKOWT4W6B4
+   jFaOnluvjh3Rst/o87ZtFMKeBjh7Ql802rDo+Ryq+Dl0eQucEY02jRx1l
+   7Z3bRBpkK+K51slR1ZxF57NcAeGZlVGu0p+mLNQrnX8PKvU7pw3ib8wSK
+   ukPOt0WRwgPP8/g7S/lXJooIvr7kNGoOklmHkVyT11z//QntILYbFshT8
+   eW4xUZCZPnLmZcXVBDVE7DI7sq3f03+W9dthUccqET0wbulryyT/n7GrH
+   aGbtyNCP2AuEEyLG/OFn4XcIEAyScSDpSwgUv391kmuAgSbe8xyxHoidG
+   w==;
+X-CSE-ConnectionGUID: iN2D7MNZS8e3uPgYTHuDzw==
+X-CSE-MsgGUID: T62FOf92Q12Opf1eEZB9yg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="79144494"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; 
+   d="scan'208";a="79144494"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2025 01:40:00 -0800
+X-CSE-ConnectionGUID: pBlmkE7pTjidDV1szuvXlg==
+X-CSE-MsgGUID: WsqdzwHfTsK0+ch8WB7Wxg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; 
+   d="scan'208";a="197671922"
+Received: from vpanait-mobl.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.244.40])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2025 01:39:56 -0800
+Received: from kekkonen.localdomain (localhost [IPv6:::1])
+	by kekkonen.fi.intel.com (Postfix) with ESMTP id 0DB5611F914;
+	Mon, 15 Dec 2025 11:40:04 +0200 (EET)
+Date: Mon, 15 Dec 2025 11:40:03 +0200
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+	dave.stevenson@raspberrypi.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mchehab@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org, laurent.pinchart@ideasonboard.com
+Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
+Message-ID: <aT_Xc6LR161QBRFp@kekkonen.localdomain>
+References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
+ <20251114133822.434171-2-loic.poulain@oss.qualcomm.com>
+ <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
+ <CAFEp6-1Tdmr5v0r+q0qeOG6qqA-hiBaF1iTEcmhBA0oTjLgbgg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: yongxing.mou@oss.qualcomm.com, robin.clark@oss.qualcomm.com, 
- tzimmermann@suse.de, dri-devel@lists.freedesktop.org, conor+dt@kernel.org, 
- devicetree@vger.kernel.org, konrad.dybcio@oss.qualcomm.com, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- krzk+dt@kernel.org, neil.armstrong@linaro.org, jesszhan0024@gmail.com, 
- airlied@gmail.com, maarten.lankhorst@linux.intel.com, 
- linux-arm-msm@vger.kernel.org, lumag@kernel.org, simona@ffwll.ch, 
- tingwei.zhang@oss.qualcomm.com, aiqun.yu@oss.qualcomm.com, sean@poorly.run, 
- marijn.suijten@somainline.org, abhinav.kumar@linux.dev, mripard@kernel.org
-To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
-In-Reply-To: <20251215083854.577-5-yuanjie.yang@oss.qualcomm.com>
-References: <20251215083854.577-1-yuanjie.yang@oss.qualcomm.com>
- <20251215083854.577-5-yuanjie.yang@oss.qualcomm.com>
-Message-Id: <176579137354.1486530.823295322686100207.robh@kernel.org>
-Subject: Re: [PATCH v3 04/11] dt-bindings: display/msm:
- qcom,kaanapali-mdss: Add Kaanapali
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEp6-1Tdmr5v0r+q0qeOG6qqA-hiBaF1iTEcmhBA0oTjLgbgg@mail.gmail.com>
 
+Hi Loic,
 
-On Mon, 15 Dec 2025 16:38:47 +0800, yuanjie yang wrote:
-> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+On Mon, Dec 15, 2025 at 10:35:15AM +0100, Loic Poulain wrote:
+> Hi Sakari,
 > 
-> Kaanapali introduces DPU 13.0.0 and DSI 2.10. Compared to SM8750,
-> Kaanapali has significant register changes, making it incompatible
-> with SM8750. So add MDSS/MDP display subsystem for Qualcomm Kaanapali.
+> On Mon, Nov 17, 2025 at 6:30 PM Sakari Ailus
+> <sakari.ailus@linux.intel.com> wrote:
+> >
+> > Hi Loic,
+> >
+> > On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
+> > > Ensure reset state is low in the power-on state and high in the
+> > > power-off state (assert reset). Note that the polarity is abstracted
+> > > by the GPIO subsystem, so the logic level reflects the intended reset
+> > > behavior.
+> >
+> > That's an interesting approach to fix DTS gone systematically wrong.
+> >
+> > I was thinking of the drivers that have this issue, too, but I would have
+> > introduced a new GPIO under a different name (many sensors use "enable",
+> > too). Any thoughts?
 > 
-> Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
-> ---
->  .../display/msm/qcom,kaanapali-mdss.yaml      | 297 ++++++++++++++++++
->  1 file changed, 297 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,kaanapali-mdss.yaml
-> 
+> Apologies for missing your point earlier. We can’t really name it
+> enable, as it performs the opposite function and that would be
+> confusing in the device tree description. A property like reset2 would
+> be more accurate, but I suspect such a binding wouldn’t be acceptable
+> from a device tree/bindings perspective.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Many sensor datasheets document a pin called "xshutdown" or alike. That's
+not exactly "reset" or "enable" but it can be mapped to either and this can
+be seen in the existing bindings. The polarity is effectively the opposite,
+yes, but does that matter?
 
-yamllint warnings/errors:
+-- 
+Regards,
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,kaanapali-mdss.example.dtb: phy@9ac1000 (qcom,kaanapali-dsi-phy-3nm): reg: [[0, 162271232], [0, 460], [0, 162271744], [0, 128], [0, 162272512], [0, 1024]] is too long
-	from schema $id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20251215083854.577-5-yuanjie.yang@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Sakari Ailus
 
