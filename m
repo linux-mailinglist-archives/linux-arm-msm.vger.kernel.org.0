@@ -1,58 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-85258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB326CBE2BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 15:02:47 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24F1BCBE393
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 15:13:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E61E0304307C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 13:59:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C444C304EDBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Dec 2025 14:11:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1894030F535;
-	Mon, 15 Dec 2025 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55EA932F743;
+	Mon, 15 Dec 2025 13:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/B6fuBn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUK+XdN8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEF93090C1;
-	Mon, 15 Dec 2025 13:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD2133030A;
+	Mon, 15 Dec 2025 13:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765807128; cv=none; b=cT+JSV6IFXWoDrCXuDxKnexODMPA0PR838zqS57p2rjXQTlU7mtEByHdz0CiAHPirJxj/Q1U/lbmEFbwoyjY4SohUkMTMyC5tr5pfz0XJJ/Sp05xVDn656r1LWii2HbkJLZBonU4K4y+pWESHhrz3TbYkvCu8B0fTE941XHyUw4=
+	t=1765807163; cv=none; b=EblXayIzWk9PvgiDlZOY1+FfJcqdnZCzDnQRylT197Q7ZO6ITFpdnnoVQvHQYGE3avEnkeJrI1hs4ycGIh+1cMKDz/6w6r8KtXNRVmXjibniMFgArQ70V6JplG9au+1rqdWv6I+rEY5YFry7MjNFkFPXrO0NJVyCwrcA2lpskHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765807128; c=relaxed/simple;
-	bh=zV42fdFgQvaHn8g9/Yz2XawzLeS/o3lpBivWYvPsjn4=;
+	s=arc-20240116; t=1765807163; c=relaxed/simple;
+	bh=aCAKHeRz0R1Pp79NnKo9Pw2t9f3vwIJOW1wBLc3sFv8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=k2YwnfHqlIqLPiMvCz895Kk69/91uzydgXK5eOXXR+qihYT2SRPt7rT9VRJcuoWFx0swKM2PIbFQlpzp02ICf5nJJs5YpqQyHq1Peu15OJyaVzE2T3SiHy3RCrQaGWRLqEO1Vdi1Ey5yRzFYkl2x0hRWooVvcXqsaLU0KhikcTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/B6fuBn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BBDC4CEF5;
-	Mon, 15 Dec 2025 13:58:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=r3DWJb+ECF3uKOYvX+9563OzrIWqnwcudY57j0L55YDyp6Kt2NZvVlt+q39v8eu/cbT/w5WS40wvyRi1r4IKg39AqlX6jNluk7UL6J7pA88U5Gg7CujgwoBNWTuoeW7i2R0JmRjIKVgrjz5h3rpFjwySDbtB0JboY6UcEEX4cxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUK+XdN8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1225C4CEF5;
+	Mon, 15 Dec 2025 13:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765807127;
-	bh=zV42fdFgQvaHn8g9/Yz2XawzLeS/o3lpBivWYvPsjn4=;
+	s=k20201202; t=1765807163;
+	bh=aCAKHeRz0R1Pp79NnKo9Pw2t9f3vwIJOW1wBLc3sFv8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=B/B6fuBnWP2Zbi/2Qy3EIh1tMxzLN9Tpzwvpd7yEiif8yUDb59a1K00PeKrmbLG2i
-	 0yd2DLEoNiBKhz5nX2QRSpuWc2z2CcUX/WUO8gpcdUxfHiF9dmXwfjU/BG+pDKj0qX
-	 2lCc8+o5efpuDA2JYMLxKe1WsBSgXmKaZUhhAYTGoyPAZaXhIsixLAYNUVJcJ2Tmit
-	 QaHfRyvQYVJU4v6byPT9bYlytvIAKNnAUsxeKSJb7w+YcAaNLHRIsM9tuWM0rlkzwI
-	 3aEhswgXpb6WBUJkCBVmPGyfE4X3ZjKrO98hhE6J3r/sKQzOuJ3meJ9N/PeHry06v4
-	 nBOrBxwuTLmLg==
+	b=XUK+XdN8VUJ/wmD7y7N6QNnA34TyypFdS29JvTN/YGUNcI4c7vdL8gka52RXgnwLv
+	 K8mNzrvmdgPLTaXXd+oqdHpksRcE2Od1s2qx6g0cWz+5IYrl7N3ZVyIVDN9PkLjMCk
+	 /yxWNE2o6Qt/tiDpcCZaqGzkPuLjWumIDPfjmXM1SZHY6RFOtV50zDfq4zhECOYTs7
+	 j4eLQ3dZ0p9EnNSpGxukd3vVE7PdwvQZQVn/kyRP3+9ejEK8Zqs7+sxzn3HuQ/6nZd
+	 aC04MkhkJ8XBTKzBz6eThK8aPobIWV1Hdc1Q7KKV2GouYgNI19V24VkFtntT/O9ZOe
+	 0S/dwYZwXIyoQ==
 From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, David Heidelberg <david@ixit.cz>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- Robert Oscilowski <drgitx@gmail.com>, 
- Casey Connolly <casey.connolly@linaro.org>
-In-Reply-To: <20251115-sdm845-quaternary-v3-1-c16bf19128ac@ixit.cz>
-References: <20251115-sdm845-quaternary-v3-1-c16bf19128ac@ixit.cz>
-Subject: Re: [PATCH v3] ASoC: qcom: sdm845: set quaternary MI2S codec DAI
- to I2S format
-Message-Id: <176580712510.161056.2503669103240241615.b4-ty@kernel.org>
-Date: Mon, 15 Dec 2025 22:58:45 +0900
+To: Gabor Juhos <j4g8y7@gmail.com>
+Cc: linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20251129-qpic-snand-superfluous-readloc-v1-1-b84ca17095d9@gmail.com>
+References: <20251129-qpic-snand-superfluous-readloc-v1-1-b84ca17095d9@gmail.com>
+Subject: Re: [PATCH] spi: spi-qpic-snand: remove superfluous
+ qcom_spi_set_read_loc() calls
+Message-Id: <176580716116.161463.15413695989499192950.b4-ty@kernel.org>
+Date: Mon, 15 Dec 2025 22:59:21 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,21 +62,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-47773
 
-On Sat, 15 Nov 2025 19:43:58 +0100, David Heidelberg wrote:
-> We configure the codec DAI format for primary and secondary but not the
-> quaternery MI2S path. Add the missing configuration to enable speaker
-> codecs on the quaternary MI2S like the MAX9827 found on the OnePlus 6.
+On Sat, 29 Nov 2025 11:29:27 +0100, Gabor Juhos wrote:
+> Before configuring the registers related to page read, both the
+> qcom_spi_read_page_ecc() and the qcom_spi_read_page_oob() functions
+> are calling qcom_spi_set_read_loc() to set the read location for the
+> first codeword.
 > 
+> However the qcom_spi_set_read_loc() function puts the passed value
+> into the register write cache only, from where those gets written
+> to the corresponding register later via DMA.
 > 
+> [...]
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
-[1/1] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format
-      commit: 20c734cb678332883d317b17bf8fe7361648e170
+[1/1] spi: spi-qpic-snand: remove superfluous qcom_spi_set_read_loc() calls
+      commit: cde4e63e847b4d41f017c2beb119c2668106a88a
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
