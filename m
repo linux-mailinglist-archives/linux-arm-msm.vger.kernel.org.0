@@ -1,100 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-85370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81236CC35EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 14:56:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBB63CC37B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 15:16:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3F93B30287B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 13:56:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2DE5D3093DA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 14:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08F63A1E67;
-	Tue, 16 Dec 2025 13:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EF18346AFF;
+	Tue, 16 Dec 2025 14:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q6eAv7Ph";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CkkcuZUr"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="TFz8f+2S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556D1346AF0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 13:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BF6346AE9;
+	Tue, 16 Dec 2025 14:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765893381; cv=none; b=f7M1SjTTNhTOBOvKvtHY/KlZ631NCWm68fzPROerqViH5TSDnZnxtc0nsahsL6vV7xwv1h/9QbPb5DtHCjk8AIG0U5ibm68sZqP/tB+SCZC21N7VnEQ7RGOH1yeIt3am+ZahynvoatwX3OaCmp6htGvY8stOu6CH+Bmm33T++bk=
+	t=1765894017; cv=none; b=s8gOpz1kjJ0+UjUQ7zsUdFHKRpffFHYzsCyRyDmbENScJyb6t/DGHFiNndFVZaoCuSDI3m3LKD7EJE4KBmyVQCtRZiELIvgL2Zz9F8sCfA467KjirVUMcoiVgzQwGFT9TJ1ab9hxeYcj2A3sVJ5xDii9V42teeMeSksPn6DSbfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765893381; c=relaxed/simple;
-	bh=8FjMM2DD5knHDvTobbcP/zz0Bm12uALhLS7xCXUSXdQ=;
+	s=arc-20240116; t=1765894017; c=relaxed/simple;
+	bh=1kJBw9ewAFyhP05soNF5xx0EC+X1pDy+ycp2TT5An6E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hUz7fpTyqW2iQ66U6EAKqDZ96qeqUjt2rGfp3Hun2Dcj+2HDEl/zlCS1vYy3kLc9VS6Qzx/5FTLnk2ThkSYTK427MudytM0gND/IWn0axC38X27FEoQTyiYVBLLbuCrjkvPNuk1yF4blK/QqMkJrU2OiGZneq22zfU/o+ab4Tfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q6eAv7Ph; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CkkcuZUr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BGCiVlQ2869704
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 13:56:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SbhsZ0OGYPgaad9zJuJhqIqA++MwVqQPiy0O3X5duD4=; b=Q6eAv7Ph+ff5uKYX
-	aeCHya+aAFzzUA5bTCYx0/vsLjoTlUokkiQEHjl5/5ebeks95CF3+Kd3wSPqSKbQ
-	3bfNvGZFYJkgdRheGV5AKTNtSSBkq+Rj1VmLqz9s8qASVpJlwNNkCXGIMbZ7wD3e
-	EumpHBR2J+bJvE/4s+OJWZQQiD0mpW022ga2C+RBXq1qyI1kN+zKDSRVEGYunEyz
-	rvpLMUbSK3xds7gLRoM463uYK/hoR/OmzSdVxLtU3K/afMOsEfWjmr2vm9f4byks
-	jALM2/JAOryNaxb9OGJ4MRN5K+NYOhU7vtUJg5hEXT5BHrSWO5wKN18A++Inutls
-	2VA7yA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b33kw9dpv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 13:56:19 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b25c5dc2c3so84375285a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 05:56:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765893379; x=1766498179; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SbhsZ0OGYPgaad9zJuJhqIqA++MwVqQPiy0O3X5duD4=;
-        b=CkkcuZUr/LHv/MQz/TDfgrI7FMDsxEWyYwrz3ly7J5u7TepNcJewGNWGqBEiLH3mmU
-         wRQchqgcyQs6KH9C2NH021fZDlgD3EY/AyKlw6oVCugrOfTFJr1Aah6CIdSFOZut3/Cp
-         rbFYgjkaT0igV5Wuc2rHRCDAaRKu66UzLEYf48Pt4BEPscCQ2PS+kv+iWMmYo79wk/bd
-         ltd+x7RbUGe3gCQjUGsZLCiqv7HeQh0bp92hTYgQ1KufJ2NQ9YHPw4SI/TIhX/qdmUqy
-         usBBjtOsIFbELV3QD0kY0DJXlcBizWauEpK+qKJtpN8Kmm44MhjYsuSTzbHAjnyENuqu
-         09Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765893379; x=1766498179;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SbhsZ0OGYPgaad9zJuJhqIqA++MwVqQPiy0O3X5duD4=;
-        b=HgqPZNZ7ALseXQMVHGbHpSqvSI9Otf2aezNSXfIO6DN5tzzVHJJtIWp3AnYQ8IV29K
-         7xXwcV1/00QRKhsMXoxuaFsj18/fJTFtBuL2s+pEFlH2mE5ttwr/jDGQQVMBucIe1dKq
-         mv8LBV0uF/72+IsIjiOfuppIFN+iwfplKBJS+KRf04V86uBQp4faW/p5H61x1eawsizH
-         h89ZomplQw2x/psQvkOJT8JRxY9bNk6jUOhs/WamhcZ+uGfz8WsPNSTfeBx3qSw79n3M
-         RANsrui+6wivalThQIp5aFCBAva8+0JDQ8G3sxMA9USPDPyuQkzxsr52CXy0DR9aCPZA
-         LjBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX5kgiD2MfVXCkWZXtAvMR3jmnalT4rJdYYu02FS3jDswqyd2cGQ3SQPUPbHqX5UoyvMUu0HoEyHIY7ZAc/@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvCBHnyah7N21Exhac/+n08EqOHikZtndSd52YwrDKAeLDzW96
-	YQ392WpA/z+SuKqJYKIFB4YeqgJ6oqVXNnWlAu1l5ReUgtYoF2QByrMNWBgEE4nFiz0AgGshLA4
-	DUrF4n+S85HkK94PugU+OB8k+g8JU/YZAhIlCz9ETOUT+Ox9gRhglQwnsFU3jepQbxvno
-X-Gm-Gg: AY/fxX7fqci4L/2EptDWBt9CFyoOLNTg0nAHi7L+wffkbFYczXyk9jEIVJ1O4GCGiwP
-	nMKQnTfHLC80aQAd/93975rPoND+36rM4BVhrtU7dVONn3BsfTw8KPpsoSMx5OQaR0YMwaIX0Zr
-	yNrFd7/Tqo/uBurR2VUaaPbenn96pjmNwR9/1fhtc9BwDY12Y87z+NN5kswyiKtTt6husJOXBLH
-	4ldDsNAnIh4TPZ65DwP7Sl6wVvD52XdyuvdKfCcAdpgW7LCizApDto3nxwkRpnkg9rgipPSCLyb
-	K0MIlhqsUcQjo3WqFPE9/WOwfQu7j3EMokdz7X1G3uJnnmmaI98vbTb65TQPAxCtqGmK36P32im
-	GmE1WnYCGTw3GuB38ygqN0js+gE6CbmiKxqfs5YP+Kwz4i8cOIRS2lQn0yFzBPcqI+A==
-X-Received: by 2002:ae9:ec15:0:b0:8be:7dd7:f041 with SMTP id af79cd13be357-8be7dd7f178mr28298985a.7.1765893378370;
-        Tue, 16 Dec 2025 05:56:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGePisB4XYZbY+ZncYC+wZkSePP6j5Z8Hy2GQUKQW+33GwQePycCDqs3B2BjhcozU4/kzxU7g==
-X-Received: by 2002:ae9:ec15:0:b0:8be:7dd7:f041 with SMTP id af79cd13be357-8be7dd7f178mr28294985a.7.1765893377546;
-        Tue, 16 Dec 2025 05:56:17 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7ffde57adfsm103712866b.1.2025.12.16.05.56.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 05:56:16 -0800 (PST)
-Message-ID: <341012f3-18bd-4f96-98c1-f964d1fedb8f@oss.qualcomm.com>
-Date: Tue, 16 Dec 2025 14:56:14 +0100
+	 In-Reply-To:Content-Type; b=G9G8mCR+HdUnMHTKjS2KdY4h7Tp2t3V2poDQ9D7Ap/legZGI4ZU18q0FMKiJ+/xBi6v56tNxmTdwVanAqTxrVLHvgG9sdMG+coXe1B4C/XOWVQvU1qeU9L9djzOYQJtfoSxRGKQqt0m5LdYKplwiIhJnuGGt4KC+t04G0so4RgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=TFz8f+2S; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.88.180] (ip-94-112-34-59.bb.vodafone.cz [94.112.34.59])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 096BD5340E12;
+	Tue, 16 Dec 2025 15:06:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1765894006;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Kwd5JGsT5lP0X1c4h0ZVuRID3Oabl5FqXHQYBnk1M6k=;
+	b=TFz8f+2SyT9Mv7egQ9NzazOtUnKeuNZT4UDAoHwKdhP4KLV+62zdgwyCtkJiJXxw6EjSZr
+	p3Oj8E5AWBqDgGWuEDY7b/4v8zULy+4UU86XeRp6oLPh3+laK6LOLmPcNsZzIt4Q2EjWOQ
+	NkBoxMR3gnhzb2KFoMcMstqwzu8SXMk=
+Message-ID: <06e5bd5f-1748-4a6d-a054-64b8b73efb33@ixit.cz>
+Date: Tue, 16 Dec 2025 15:06:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,112 +54,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Richard Acayan <mailingradian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-media@vger.kernel.org, Robert Mader <robert.mader@collabora.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-6-mailingradian@gmail.com>
- <wwpqaecvz42jopgaboasbh353ieelctpvgo3yj6y5tnxoem5oz@j5sbx3yxntot>
- <aTtkwQb2gOeWAFuv@rdacayan>
- <d7jcawzugobqern6zlo5jwcnximtsroxywix53v2yp2isvzo5r@ymxicmgfjmzq>
+Subject: Re: [PATCH v8 1/2] Input: add ABS_SND_PROFILE
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>,
+ Benjamin Tissoires <bentiss@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Casey Connolly <casey.connolly@linaro.org>,
+ =?UTF-8?Q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>
+Cc: linux-input@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+ Gergo Koteles <soyer@irl.hu>
+References: <20251113-op6-tri-state-v8-0-54073f3874bc@ixit.cz>
+ <20251113-op6-tri-state-v8-1-54073f3874bc@ixit.cz>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <d7jcawzugobqern6zlo5jwcnximtsroxywix53v2yp2isvzo5r@ymxicmgfjmzq>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=TLpIilla c=1 sm=1 tr=0 ts=69416503 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=QX4gbG5DAAAA:8 a=pGLkceISAAAA:8
- a=_D9cum97ibiHH1HWyuYA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-GUID: lXH2WnQtvJCn95LvoPB9zbzF3lqN7D0R
-X-Proofpoint-ORIG-GUID: lXH2WnQtvJCn95LvoPB9zbzF3lqN7D0R
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDExOSBTYWx0ZWRfX3JXqrM/4bWuv
- Z2yeBz9wuuh1Dv7q1Z1Ranos08oVCat41hdiDboPCf4ozXNPReQgEAIRNYm6q5U1lltrMLcSnuZ
- slp0TUeLSXzlUbGEIofAP5hIA9gVYLkDmELyeP0tU3iukaUB1gQelHUcpAxTqJ3NZnhxzK09RBQ
- PgW98HNQ8fPAVoq1YRtE8reV2ZCfpvGimKb1+qNh5ZMnUXvkeny6LR10iP+o5OVReSbaJun8THS
- EOQPhLKBoVpk+8OLGoXYgFVLpGQPxerqJX7wkG5pqktV3n1SinhkjDCZ4Mo/EcEz3KuhZHPdioS
- OEnRPQgLJoE/TmCCLyWVd9QVnsv+8DkYBmiZUkVv2/yarKHjepMm9IdMWcEtPVHk0FBB921XZ2A
- iMTIgZX7RBVT6g22zJ4fZO1xX4vmzg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- clxscore=1015 adultscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160119
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20251113-op6-tri-state-v8-1-54073f3874bc@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 12/12/25 8:22 PM, Dmitry Baryshkov wrote:
-> On Thu, Dec 11, 2025 at 07:41:37PM -0500, Richard Acayan wrote:
->> On Thu, Dec 11, 2025 at 07:16:30AM +0200, Dmitry Baryshkov wrote:
->>> On Wed, Dec 10, 2025 at 08:48:46PM -0500, Richard Acayan wrote:
->>>> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
->>>> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
->>>> support for it.
->>>>
->>>> Co-developed-by: Robert Mader <robert.mader@collabora.com>
->>>> Signed-off-by: Robert Mader <robert.mader@collabora.com>
->>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
->>>> ---
->>>>  .../boot/dts/qcom/sdm670-google-sargo.dts     | 107 ++++++++++++++++++
->>>>  1 file changed, 107 insertions(+)
->>>>
->>>> @@ -392,6 +420,64 @@ vreg_bob: bob {
->>>>  	};
->>>>  };
->>>>  
->>>> +&camss {
->>>> +	vdda-phy-supply = <&vreg_l1a_1p225>;
->>>> +	vdda-pll-supply = <&vreg_s6a_0p87>;
->>>> +
->>>> +	status = "okay";
->>>> +
->>>> +	ports {
->>>> +		port@1 {
->>>> +			camss_endpoint1: endpoint {
->>>> +				clock-lanes = <7>;
->>>> +				data-lanes = <0 1 2 3>;
->>>> +				remote-endpoint = <&cam_front_endpoint>;
->>>> +			};
->>>> +		};
->>>> +	};
->>>
->>> This would be much better:
->>>
->>>   &camss_endpoint1: {
->>>       clock-lanes, data-lanes, remote-endpoint here
->>>   };
->>
->> I'm not sure what you mean, there might be some typo.
+On 13/11/2025 17:02, David Heidelberg via B4 Relay wrote:
+> From: Gergo Koteles <soyer@irl.hu>
 > 
-> My point is that you are duplicating `ports { port@1 {.... }; };` from
-> the base DTSI here.  We usually try to avoid this kind of path
-> duplication. If you can't have an empty endpoint in the base DTSI, I
-> suggest adding necessary labels to port@N nodes and then extending those
-> nodes in the board DTSI.
+> ABS_SND_PROFILE used to describe the state of a multi-value sound profile
+> switch. This will be used for the alert-slider on OnePlus phones or other
+> phones.
 > 
->> If this is about using the commonly-defined endpoints, Vladimir broke it
->> in commit dcf6fb89e6f7 ("media: qcom: camss: remove a check for
->> unavailable CAMSS endpoint"). If I do this again and go full circle, I'm
->> afraid this could break a second time before even making it to
->> linux-next.
+> Profile values added as SND_PROFLE_(SILENT|VIBRATE|RING) identifiers
+> to input-event-codes.h so they can be used from DTS.
+> 
+> Signed-off-by: Gergo Koteles <soyer@irl.hu>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Tested-by: Guido Günther <agx@sigxcpu.org> # oneplus,fajita & oneplus,enchilada
+> Reviewed-by: Guido Günther <agx@sigxcpu.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>   Documentation/input/event-codes.rst    | 6 ++++++
+>   drivers/hid/hid-debug.c                | 1 +
+>   include/uapi/linux/input-event-codes.h | 9 +++++++++
+>   3 files changed, 16 insertions(+)
+> 
 
-Quite frankly I don't think that commit was valid, given it's conceivable
-that an endpoint could be unconnected..
+Hello Dmitry, can I count this one reaches Linux 6.20?
 
-Konrad
+Thank you
+David
+
+-- 
+David Heidelberg
+
 
