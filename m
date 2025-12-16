@@ -1,52 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-85351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13B2ACC2FF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 13:59:02 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B65B1CC3504
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 14:45:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D05A73038F32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 12:58:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8211030D8466
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 13:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBF5933AD9D;
-	Tue, 16 Dec 2025 12:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FBB335580B;
+	Tue, 16 Dec 2025 12:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="DWsUadI1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eLAiQ/ms"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F9B223323;
-	Tue, 16 Dec 2025 12:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53793557EE;
+	Tue, 16 Dec 2025 12:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765889431; cv=none; b=OLMQvhZIwW5uIa+nZqB55JWviqoyP6aa5sgURNHuf+noq46IjkWbT4gpQ0Iix3r+f4TZiNYo3b5LwPJoZcbZol0Fz2lPQzkfI9kzYQbtLtkaA1g2ZAysumnGDyW5WCqVZCL48BP3LNVnQEAuMD7ne7r+rj33k5XYR+0DbbyucLU=
+	t=1765889480; cv=none; b=nypk1jCxL2g4Wts688K7hwT72R2Eqa7Kjgm46wEy+tnNroR3kMHexhzsPfnTsIbg9IMFfzzxySMYY86qNGm3d6dwInmdemr8ngOlHUGd2+uEW0/koWRVQgk89GN6ww41eqAZw2KikMh4LCYtWwNIujEr5iqbiLIpx97d6kCO+XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765889431; c=relaxed/simple;
-	bh=vfpJWzZXf9kRf+ROAAZn7hF+kk+xxNTRqtMykE3ukgQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NrwJUgMBQldaKSIfK279qIxJMxDLlHoiUBI2F2tbrPFUMsZ81C1e7/FonufuHdr/AL4Vi4BEg+A3PTmGCjJVDqT9waNpFMBkoXfPGqPfloqylk3aKFj9ANVA8yLluG/KGDq2rnfSFzlRK6IRNxXjUbzepXBd33eA2XJe7+tv+is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=DWsUadI1; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.88.180] (ip-94-112-34-59.bb.vodafone.cz [94.112.34.59])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id C1AC45340D57;
-	Tue, 16 Dec 2025 13:50:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765889426;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=DX4pmEhHzMBbUm5aXe9ehR4VlJ6zDNKIE8bWUABOEVQ=;
-	b=DWsUadI1M4ws3La+S9xeSat8KFOgDxTdwHm62Rucbyw9ae6FrnVrBgF11amzoKvk7puvDs
-	5Ai5eKqP3P/tbQToun4FzHddzx1XUCvt1i/s/xYTobi2YYBhVMv8olPYcMuVItswZWpomH
-	/gKYNbxKiixBQnXRykmewkrUsgxpEao=
-Message-ID: <ef8bb835-5749-43ed-9af8-abc9fdd19cbf@ixit.cz>
-Date: Tue, 16 Dec 2025 13:50:23 +0100
+	s=arc-20240116; t=1765889480; c=relaxed/simple;
+	bh=w20aSyMI8PJtafB/H7NdphB3pXroCMHxh3M4bbSfwlU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=s8bUL/o9efoAIgc/ZqYUEv3MpW2OWjNS57XtVDnU4C+aXw0EDXUulUe9uQnImeOZAN210X2nvRbfyM0mAKymkUhD7Rsds65cmCxM3gJSvRzOihy99OfTm70RLsHw1YVMsZyJbbx61dWJv8WcTikLWolIjJwqqrNesmmduIuX0fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eLAiQ/ms; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BGC7IGt3708638;
+	Tue, 16 Dec 2025 12:51:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Dxk5RC9Q9tFvzZbYUFy8PiPH+tcTYf2iKQcvjtGt9m0=; b=eLAiQ/ms0+5ah/XR
+	jWIC2vCroaFiopgE1X67sNBVaqLLpQU6AL2A+l8DWMK9FPjqTC3ZfD4QOh+FI8Ne
+	yRema28DqAZF0imrVY8omO3KKSGde2XKbaI8XllecRPr3hzS0iQ2rWtbeRhcCUbY
+	c2Sz2faPpnheab3y1CB8pDeYJrzxrZDrLCi6tXJwVyHBmhv9MUlY1qgVcknLO5Wv
+	bNyPWryHBDyLXh7ENtclYg3Jsqoc5kZg9dHLOeI3RMLctTX/IHSkxk8Fh5+ba2PY
+	BySA8Flo1GKo4CyZABVRU4z5q9RcF2NPn/hMl0pJFDWvJqJavG/wSdmKdsexB2G7
+	9jdrLw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b375b05e0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Dec 2025 12:51:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5BGCpDwI018533
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Dec 2025 12:51:13 GMT
+Received: from [10.217.216.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 16 Dec
+ 2025 04:51:09 -0800
+Message-ID: <00485066-d537-4f8f-a579-efa33e69a56f@quicinc.com>
+Date: Tue, 16 Dec 2025 18:21:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,89 +63,131 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] ath10k calibration variants for sdm845 phones
-To: Dylan Van Assche <me@dylanvanassche.be>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
+Subject: Re: [PATCH v6 1/5] dt-bindings: mmc: Add dll-presets values for HS400
+ and HS200 modes
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Ulf Hansson
+	<ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Adrian Hunter
+	<adrian.hunter@intel.com>
+CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
+ <20251215120009.3877889-2-quic_rampraka@quicinc.com>
+ <03819cd6-9f19-4c28-806b-17c7596e5299@kernel.org>
+ <1fc9ac39-231b-4fce-a354-22a21d126363@kernel.org>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+In-Reply-To: <1fc9ac39-231b-4fce-a354-22a21d126363@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDEwOSBTYWx0ZWRfX3ocbL7CNeEPJ
+ /JaqJCYcJKeBVKb99vRN6ZFctxa1K0Umphiracse5cJkETfJ7guy3feTDBjBnnFK5Y6K+atIinn
+ sWe1Y+XOkSuAON+v9mtGr3VImoxpZuNJmKvpEXNYMGTgALYrXfPIIW7DRod7aXF4zLb4Pe4/lqs
+ if5XeWQY4tC++5Z/QK+XQDsQr7GGFmIdkUi4gTpEX4go0d+3cBAV6GT4b42ZWOCUkfJRUq6ROcK
+ 7z1vkbYgHEZbl9i48E6P3KTnNVnhBwZu+rWe6Vq0rygXhdyg7UmUDxzuLktdqH/ZKyK3/aohPUU
+ 62afrMYwVTqzn/0ABF4hH6nbL2iETEprGM7c2PWS+bh0WQ2A5iJQ0IBMxSbUvwdG8GlqoTkt1yl
+ +E14WrgNp2nsaoQq9uTwLk7cePS5Og==
+X-Proofpoint-GUID: SoWcdD4mUz5blGdT3DsbVLaNa5wF2sdX
+X-Proofpoint-ORIG-GUID: SoWcdD4mUz5blGdT3DsbVLaNa5wF2sdX
+X-Authority-Analysis: v=2.4 cv=T9qBjvKQ c=1 sm=1 tr=0 ts=694155c2 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=llHt_Jtit41v_MIMWOYA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
+ adultscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160109
 
-Kind reminder for this series, as all the FW is already long-time in 
-linux-firmware.
 
-David
+On 12/15/2025 5:41 PM, Krzysztof Kozlowski wrote:
+> On 15/12/2025 13:06, Krzysztof Kozlowski wrote:
+>> On 15/12/2025 13:00, Ram Prakash Gupta wrote:
+>>> From: Sachin Gupta <quic_sachgupt@quicinc.com>
+>>>
+>>> Document the 'dll-presets' property for MMC device tree bindings.
+>>> The 'dll-presets' property defines the DLL configurations for HS400
+>>> and HS200 modes.
+>>>
+>>> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+>>> different tuning.
+>>>
+>>> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+>>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
+>>>  1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> index 938be8228d66..a1a16e6e12ce 100644
+>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> @@ -140,6 +140,11 @@ properties:
+>>>      $ref: /schemas/types.yaml#/definitions/uint32
+>>>      description: platform specific settings for DLL_CONFIG reg.
+>>>  
+>>> +  qcom,dll-presets:
+>>> +    maxItems: 10
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>>> +    description: platform specific settings for DLL registers.
+>>
+>> So look at your DTS - this is clearly incomplete now. So obvious. I
+>> don't understand why you were hiding the DTS change, you just make
+>> review more difficult.
+>>
+>> Anyway, your DTS says you replace some other DLL properties and nothing
+>> in the binding or commit msg explains that. Neither the reason nor the
+>> impact.
 
-On 10/11/2025 16:37, David Heidelberg via B4 Relay wrote:
-> Let's leaverage linux-firmware and use calibration from the board-2.bin.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> Dylan Van Assche (3):
->        arm64: dts: qcom: sdm845-oneplus: add ath10k calibration variant
->        arm64: dts: qcom: sdm845-xiaomi-beryllium: Add ath10k calibration variant
->        arm64: dts: qcom: sdm845-shift-axolotl: Add ath10k calibration variant
-> 
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi          | 1 +
->   arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts            | 1 +
->   arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 3 +++
->   3 files changed, 5 insertions(+)
-> ---
-> base-commit: ab40c92c74c6b0c611c89516794502b3a3173966
-> change-id: 20251110-sdm845-calibration-variants-66ad31ff88ca
-> 
+Sorry dt change was not pushed earlier, will add dt change as well
+going forward.
+
+The existing qcom,dll-config or qcom-ddr-config are not deprecated,
+but certainly I will add below in commit regarding the issue as well
+which is observed without this change as below:
+
+"Document the 'dll-presets' property for MMC device tree bindings.
+The 'dll-presets' property defines the DLL configurations for HS400
+and HS200 modes.
+
+It have 2 arrays of 5 elements each for HS400 and HS200 mode.
+The 5 elements are DLL_CONFIG, DLL_CONFIG_2,DLL_CONFIG_3, DLL_USER_CTRL
+and DDR_CONFIG.
+
+dll-presets fixes instances of CRC error observed with targets having
+artanis dll.
+
+QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+different tuning using dll-presets."
+
+> Plus it looks like you are adding some meaning to the entries, judging
+> by the DTS. DTS suggested something here is e.g. DLL_CONFIG, so that
+> meaning - including different modes - needs description in the schema in
+> items.
+>
 > Best regards,
+> Krzysztof
 
--- 
-David Heidelberg
+I will update the schema description as well with the 2 modes and 5 elements
+of it and will update the MaxItems to 2.
+
+Thanks,
+Ram
 
 
