@@ -1,181 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-85313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0804CC14F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:33:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5004CC151A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:36:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 62C793053B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:31:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1812630341E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:33:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBBF33093AC;
-	Tue, 16 Dec 2025 07:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E98FBF6;
+	Tue, 16 Dec 2025 07:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dE436VXL";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SY7f4Wge"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lpmpf7Lr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14E1258ED7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4522749FE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:33:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765870277; cv=none; b=bJcyC96kwsf9E5Rkzq13cDaiG3bj5VQgXC3Qx/MsXG33/aeB6CxfJXN1jb1C1xIEkpNftNZRNMMZq/CP/Mlia/Paqkxioty2OePZ+5QFZXwOadLZPooQ4NsASO+gp7h7KXcnIgmWlhLlMJ2FoyAMUHHmy9t9RmE1XeSOL6Us8yU=
+	t=1765870438; cv=none; b=VT+XS6+Cy3uL3OZKHvvYYS4P7tIngAPGriNPXAr78wrv6YUzythyW95fXxuSCSC6zX+eSFxRDurrhGERjG80k2DM8a8huXJ+f2RZuBNltAJ/DMzys8Uq5HIskhhXrn0ktoSZ+vBH7a4Kb9SUGsmdZtxbfO0jO5HHSU7rTPLb0MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765870277; c=relaxed/simple;
-	bh=KqXmHiakfwYzux5eMArMxc1YvDvL+58Ynaluota3mD8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kUhiXr3mRm9Dh08gJNQSAFdVmGM2xuueJhxb+RSX/GOwYVYeccloynzg7G0BhnidMtaeB2gFAurdU2L0aZugQe1bHlplLtn6GzHoY1WzW6FSnu3iBjJstFdSgnwASdsNXqMeQGLfByXU1BqysjBHsYX3R4LIgkRmJBxgE8+6WPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dE436VXL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SY7f4Wge; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BG7NVsJ1131493
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:31:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xIxBJD1RkXCDnkjEznZGhIWfIGyUcYjFJZa2VKldCQU=; b=dE436VXLRIYyTNba
-	+2sTzsq5fXW8fOFruRgP9eKwuU1A5ory1jv+r4useRCf9oM4tN38H98sUtiZipkU
-	3p11v7UJqkz+zeiLMOgcMMaIpc9A4QE33De/mgk7GRpFVt26rQ4ZCh0+FbZAmOw1
-	AU9Jyv+GdEdjLQU/sPwRWc9Uxbis3pc2u4tz/K0iK0qNZeWiHf0cMEUOq9LOhkPb
-	3fHXmX6Yu23kpWFqnyxLo3Zjgp+ucCD2vIy1AECmPbr/JnH0VL09LBMLzDiVGIdz
-	+KVek1X/nZCzwkvYKKffx/c7KIVeCeynFyB3qPxvWmY1SF7qEvTJAmTfUU/tGp4M
-	TkKPuA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2p3uatbu-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:31:07 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2a0c495fc7aso32696295ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 23:31:07 -0800 (PST)
+	s=arc-20240116; t=1765870438; c=relaxed/simple;
+	bh=afJGBzDRYXPLKRLUi36rv1TJEw66G7nq8Qwr10P9a+c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UxajBWxoXlo8NtQQAwOU2M6EChX2QVpp7XMQD3IifMPieNlucRXCkIMMVSGqK/k5t1OXwVNQfy03FEgTzrD4u55gcd2AsYhMkhXVdr15dagSnHP3+UQEaVeSwjMCRegNCsudLmoYFX96odSrUyKPyjp0tolF/W4Ym+B83wxzLr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lpmpf7Lr; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7c6e9538945so2888521a34.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 23:33:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765870267; x=1766475067; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xIxBJD1RkXCDnkjEznZGhIWfIGyUcYjFJZa2VKldCQU=;
-        b=SY7f4WgeEZbbpwZTUUGyjzWdpLpb1LodAhzW9Mo41Y7mkrorLFIQP5Q1zHk4nV5vbE
-         b3bkIuS3yMN+DKWM2H8JhjgsLoNmp9moRBfcrnDawrAxWrp3aauwh255WCuuCofUSjb0
-         fF0MNLjCOeePnWBTnyWSrD2TjI+4a69ljp5OLPdYWt54Zfetm+sC73/EEh8HXNWct6oH
-         V1v6OQKumna1WOScspMO9l41j6j2f1tTyNBGZOPlhiTbyEmnNalKqE5xXFJ+Sd2g1MAE
-         JBWSQrdT+eRYwjwTjQSWKRZ58QTDsEqGM8gW0MSwxJYuDzLVN2a2O5+L1xh2wPSFaLp6
-         B5Jg==
+        d=linaro.org; s=google; t=1765870435; x=1766475235; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pJxuVx1hE8QwPo+5lZ9vSSExDNzQxar/zw9l2S0dxlw=;
+        b=lpmpf7Lr8pLDHL00MvcoPN+7wg62wLL4F3NvJyPqt1HeOsgHx/SilTdytObjJdwwDJ
+         u425rCSa33RV1MGK3uFk53OgHitkDmHTL1cbyj/f4OOibYuFxp5Hh8hRG9HXptl/UEHB
+         estLT/9VFYqN4ULiDGkKHGREVJ0qMOaCzRi7HnQNuc76dph9zch1XgBSLpHcWzrbYrD4
+         NRkiIqyq0Uv6v5sOMJ38eSOp/DxLXLWeBObb7YhNBt/606fsdXkvY+KvlIEWSFtLJYRw
+         iiCnEf6qd9vb/MXuKAYVRHy8mPdSHfoJUDywnyaTchFZDi1rKgG/d6FKnmUXUyI3j0yh
+         fTng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765870267; x=1766475067;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xIxBJD1RkXCDnkjEznZGhIWfIGyUcYjFJZa2VKldCQU=;
-        b=JsDoSgIjKQkTG0E9f5QDO3HWWoDfCHfjHzJ7FmHvwquZNVImUBU0KRiJPkpK7EPV9t
-         fFmgLRSpMI2PA0vHNtu22mTzGgrjDDgkgVDoDt9A2LPrffdXktaqyX0xnB30pOqWhSNg
-         EzPRMU+bVZEjE7a13yxDQMhiExLn/d13MJBsNjyw6BSiknuuHs6laP4VVBZRMlT4iszT
-         0R9zC2TM638vnJAZBm0opeObwddNj1F5khYvWJYYKcXbOrDXLuVLWvTd74PnclXm/CmS
-         seZtJ5bzwtfeJuSogWAu5dECAI4cRTtQizgmlYajSsxFBkFZLo1mEF2FhgsWUeTZj36+
-         Pq0g==
-X-Forwarded-Encrypted: i=1; AJvYcCXNCoXrrLHIGLyLsq+AStri+Dr7CEVpHpoCpbwtV96M5OGdxoJo8MEiVLj0dUwhe+YdgtRmSGpLNp40wgxZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyd9os6iGP2qDQCTc758Bnn/C9YGzfyHTVLnOP21oLwHIaf2S48
-	MTf2EexDOGGsV9w6RQzaTRY93lqU9PIFp9vJCNdou9Hvxse/troVWJuF1r0m/Vr5ndIPlSzx20O
-	eKRLq+OYMCveGzUrHYs5rY8fgWzYHAFaZFYYK/E2UzmPaR9V0SfSQ6waVJ+zd8H95Lif4
-X-Gm-Gg: AY/fxX7qm/acSZTpOne/fkks3XZ5fyofedfaD7yhfJseZg3l71z/VRwGgrqNLqtHBH/
-	3KzxUrbrurlV/FpYyLCoTbLyQAH8y92e6rxH7wKR00EmLuNUHsfsoiYLWHKPCoseeCTSQ9zf9Ft
-	sNT/xD5jVDPE3QIY0cn2rcBZio2E3hbFGE4g2h4jDtiOeJfVeVYLsF0hqtcMTDtDTaB4jRx1YNp
-	3OQe5wJGNBqDQSV7Vokg5wyIu2CF3m4OLBeRThvbw1mGdEblLC9ywjy/3v2lDQqTAG2y38uodVY
-	OC/xRkpWwPwRYVbq1J3Rt7NZzoC5QoiziVub8sJ/LJMPGXKb79L6tzuVre40Zrk3CGDD15byU/Y
-	R20p+PN2Yvu/U96OhaY5mXOOLk38D/rp90bdu/ixghGHhpg==
-X-Received: by 2002:a17:903:249:b0:29f:1d52:1a07 with SMTP id d9443c01a7336-29f23b52fadmr134076545ad.19.1765870267062;
-        Mon, 15 Dec 2025 23:31:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGlu3eF+nq1irT8+FRIR/8xTU2Sc+nEboLNIwXG5OzetUX0379flKvZFD4RJPK0VF+9Jqis0w==
-X-Received: by 2002:a17:903:249:b0:29f:1d52:1a07 with SMTP id d9443c01a7336-29f23b52fadmr134076215ad.19.1765870266381;
-        Mon, 15 Dec 2025 23:31:06 -0800 (PST)
-Received: from [10.217.198.130] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a14625add8sm4504985ad.61.2025.12.15.23.31.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Dec 2025 23:31:05 -0800 (PST)
-Message-ID: <46cc0587-8eb6-4638-ad04-c05dcd56718c@oss.qualcomm.com>
-Date: Tue, 16 Dec 2025 13:01:01 +0530
+        d=1e100.net; s=20230601; t=1765870435; x=1766475235;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pJxuVx1hE8QwPo+5lZ9vSSExDNzQxar/zw9l2S0dxlw=;
+        b=nsSLKMoB04TsElDkdXTiXXSkgblwImpRgOkNWbGredd0DL8Ix5D9eIOfMg05zRl6mZ
+         5Dqqm6Ut+RWjV+8jRGAdYO+PNHkrHKQyW3iI/OzGSNW1BIMaBcp2NV1kd8LctVHHsEI9
+         Y8zRLlfhaV+kbGWB+fbfPiRxWYiHhw3odUr1hCmXtzWWSdcJuz6CSgXV5LIU7H5Xe5jZ
+         8GikB4Prwv5QIlMC0T2990Mze+bpBHnYTJfIAeV7GpfVdgUGGcLbL320OLUVjajxX6Ny
+         XzKv2Gtx7ovaScQCeX88+AXJ4kuSpY9TBIT+end7etVjwPfMl08O+e8G5YolrLB6d2fK
+         sIag==
+X-Forwarded-Encrypted: i=1; AJvYcCVdwRoyrvNmIvYMq9PTduwWmLWoFeaaS2jqKc7Ra9B1+98Xi3O1KCLzH+5sx28TzNBg7DXar3/7izLrvSBk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzek5WKZxnHlYPpBAN6kOKURp8TOsvvY2tIf5+bgFitIgZF6wd+
+	WPhQEWDv/4Zye4Slfjp2Ch7LFSi0DjcsDWUlr3swPIPeyda3bjs+Tr9KIuZK4oxdF8Bmv3kdBQB
+	NSXaHMO8Wi9gLhxLP8DyGPYk3mL18io2ekLfzeoij06Y+XzFLfFwiJFo=
+X-Gm-Gg: AY/fxX5/ZZzLJ3ZdK33ul4hcu6e3Ul4r1RnO4thvmd2RWUEgVPYedtei72V4xYV1YJe
+	9Fxn+DOyy98zhm/ijUKdA8CO47zyasGOJ9I2Y7FaWFerSwigF4+i79cVapUowzpC2vMXy0ieKYb
+	UKbX8AQlAlhNUtyKSSrBeapST0VIUfAICUsrEHTAbmU+DWvMCqfICbKm6Wxeh74fLnP8w8uk43x
+	yCBGinNxpopkigY3A0iJwC4EqIJZ7UccMLnPTmN/6CzcJrJE1bn498wRovsCQ1/+UHMMpXM0Bye
+	8wDq3uUO9x1IVSrMYi8NlNQ9NA==
+X-Google-Smtp-Source: AGHT+IFgcI1iXYmQOJMbCoMzO4TuZILfDefDSjHP+dHpTw0q1q+63iQUVOEFLyAayV4+4wtBrXEibqfLYLgVtUxJtl0=
+X-Received: by 2002:a05:6820:2114:b0:65b:328b:4b9c with SMTP id
+ 006d021491bc7-65b451b2947mr5857330eaf.18.1765870434698; Mon, 15 Dec 2025
+ 23:33:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Adjust tsens thermal
- zone configuration
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20251215105934.2428987-1-manaf.pallikunhi@oss.qualcomm.com>
- <zf5ztvnzaf6tplpjpytwbhktrebdnst2doybuubp6rjfj2fjs7@t2ma4ylx67gx>
-Content-Language: en-US
-From: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-In-Reply-To: <zf5ztvnzaf6tplpjpytwbhktrebdnst2doybuubp6rjfj2fjs7@t2ma4ylx67gx>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDA2MSBTYWx0ZWRfX0mJ/y5xPPjMb
- 9WytF0IjQNyx15Hf42pArd7rJRIMZubizrVcO1asOl5cqtegBSk+SUPf7rzhxgZKahByhZ1ga2O
- LigGoUyIvhqS5n2BrGPx99JLf3uo/FY8ulJ/OlXMPg5f2W6GvT7ywbwbnMFtaBH2w9t3duGH/Gh
- 2PshgvRFxYqzB7JjwB9Q/U1kk1YvkCWrV6UA/uiR+GDFCu1swwdLTUP60LPF/3PlDnaif7U1b8y
- +NyXz9tPjTBfDOTSuL041PHD9qSRz/b1rlAMTc9PA6i+xy+yrD5CEgUZqeSOr8IxqfA9zgqPpdn
- thrRfHIscQXEnuTqoB1vtfqAkkEzRrwOnV3JGeM7h2CCEJCKayxKseYIFkI2h+BAgiq0ONjcgmS
- 21xWU5iFnSZGYunJbVgVsgNJNeH5kw==
-X-Authority-Analysis: v=2.4 cv=Q/TfIo2a c=1 sm=1 tr=0 ts=69410abb cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=H-adPjGYz1qELiouFCkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-GUID: eIn_O3j3y5GmGaMkZasmYBFv1GONfspF
-X-Proofpoint-ORIG-GUID: eIn_O3j3y5GmGaMkZasmYBFv1GONfspF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-16_01,2025-12-15_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 adultscore=0 suspectscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160061
+References: <20251208020844.5310-4-krzysztof.kozlowski@oss.qualcomm.com>
+ <aTtn-x0hh18V7n7J@sumit-X1> <b29c97cd-cade-40ef-8e6d-d164b1d16059@oss.qualcomm.com>
+ <aTtyR5J3AqXoE7to@sumit-X1> <7b074ee0-4f10-4fba-9680-3d87dcf766c1@oss.qualcomm.com>
+In-Reply-To: <7b074ee0-4f10-4fba-9680-3d87dcf766c1@oss.qualcomm.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Tue, 16 Dec 2025 08:33:43 +0100
+X-Gm-Features: AQt7F2pwugYqW3nJWhjtHv1ppCx-uDAzlDiP3MdQeHwnJLNKjL7ZHy9bFIyp3LI
+Message-ID: <CAHUa44EO8HYA=KgouSt902RJ63H-Vz24nOaaj7PATVT0n2fkeA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] tee: qcomtee: call: Fix confusing cleanup.h syntax
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Sumit Garg <sumit.garg@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Dmitry,
+Hi,
 
-
-On 12/16/2025 1:21 AM, Dmitry Baryshkov wrote:
-> On Mon, Dec 15, 2025 at 04:29:34PM +0530, Manaf Meethalavalappu Pallikunhi wrote:
->> The QCS6490 rb3gen2 board uses the same Qualcomm QCM6490 platform
-> Is there a difference between QCS6490 and QCM6490 or between QC[SM]6490
-> and SC7280?
-Difference is only for qcs6490-rb3gen2 (IOT ).
+On Mon, Dec 15, 2025 at 9:30=E2=80=AFPM Amirreza Zarrabi
+<amirreza.zarrabi@oss.qualcomm.com> wrote:
 >
->> but has a different thermal junction temperature specification
->> due to package-level differences.
->>
->> Update passive/hot trip thresholds to 105°C and critical trip
->> thresholds to 115°C for various subsystem TSENS sensors.
->>
->> Disable CPU cooling maps for CPU TSENS since CPU thermal mitigation
->> is handled automatically in hardware on this board.
-> Is it a peculiarity of the RB3 Gen2 or is it that Chrome devices didn't
-> do it? What about QCM6490 IDP or FairPhone FP5?
+> Hi,
+>
+> On 12/12/2025 12:39 PM, Sumit Garg wrote:
+> > On Fri, Dec 12, 2025 at 02:07:40AM +0100, Krzysztof Kozlowski wrote:
+> >> On 12/12/2025 01:55, Sumit Garg wrote:
+> >>> On Mon, Dec 08, 2025 at 03:08:45AM +0100, Krzysztof Kozlowski wrote:
+> >>>> Initializing automatic __free variables to NULL without need (e.g.
+> >>>> branches with different allocations), followed by actual allocation =
+is
+> >>>> in contrary to explicit coding rules guiding cleanup.h:
+> >>>>
+> >>>> "Given that the "__free(...) =3D NULL" pattern for variables defined=
+ at
+> >>>> the top of the function poses this potential interdependency problem=
+ the
+> >>>> recommendation is to always define and assign variables in one state=
+ment
+> >>>> and not group variable definitions at the top of the function when
+> >>>> __free() is used."
+> >>>>
+> >>>> Code does not have a bug, but is less readable and uses discouraged
+> >>>> coding practice, so fix that by moving declaration to the place of
+> >>>> assignment.
+> >>>
+> >>> Okay I see but..
+> >>>
+> >>>>
+> >>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm=
+.com>
+> >>>> ---
+> >>>>  drivers/tee/qcomtee/call.c | 17 ++++++++---------
+> >>>>  1 file changed, 8 insertions(+), 9 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
+> >>>> index 65f9140d4e1f..8f8830f0df26 100644
+> >>>> --- a/drivers/tee/qcomtee/call.c
+> >>>> +++ b/drivers/tee/qcomtee/call.c
+> >>>> @@ -395,9 +395,7 @@ static int qcomtee_object_invoke(struct tee_cont=
+ext *ctx,
+> >>>>                             struct tee_ioctl_object_invoke_arg *arg,
+> >>>>                             struct tee_param *params)
+> >>>>  {
+> >>>> -  struct qcomtee_object_invoke_ctx *oic __free(kfree) =3D NULL;
+> >>>>    struct qcomtee_context_data *ctxdata =3D ctx->data;
+> >>>> -  struct qcomtee_arg *u __free(kfree) =3D NULL;
+> >>>>    struct qcomtee_object *object;
+> >>>>    int i, ret, result;
+> >>>>
+> >>>> @@ -412,12 +410,14 @@ static int qcomtee_object_invoke(struct tee_co=
+ntext *ctx,
+> >>>>    }
+> >>>>
+> >>>>    /* Otherwise, invoke a QTEE object: */
+> >>>> -  oic =3D qcomtee_object_invoke_ctx_alloc(ctx);
+> >>>> +  struct qcomtee_object_invoke_ctx *oic __free(kfree) =3D
+> >>>> +          qcomtee_object_invoke_ctx_alloc(ctx);
+> >>>>    if (!oic)
+> >>>>            return -ENOMEM;
+> >>>>
+> >>>>    /* +1 for ending QCOMTEE_ARG_TYPE_INV. */
+> >>>> -  u =3D kcalloc(arg->num_params + 1, sizeof(*u), GFP_KERNEL);
+> >>>> +  struct qcomtee_arg *u __free(kfree) =3D kcalloc(arg->num_params +=
+ 1, sizeof(*u),
+> >>>> +                                                GFP_KERNEL);
+> >>>
+> >>> ..this makes the code less readable with variable declarations floati=
+ng
+> >>
+> >> Which is intentional.
+> >>
+> >>> within the function. I would rather favor to not use the cleanup.h co=
+nstruct
+> >>> but use explicit kfree() invocations instead like it's done in all ot=
+her
+> >>> allocations in the TEE subsystem.
+> >>
+> >> Sure, fair. I just don't get why introducing cleanup.h without actuall=
+y
+> >> accepting its explicitly documented style...
+> >>
+> >
+> > TBH, it is likely overlooked during review of the QTEE driver. Having a
+> > builtin warning for the undesired syntax would help the reviewers here.
+> >
+> > -Sumit
+>
+> While the style may seem unusual -- as stated in cleanup.h, using cleanup=
+ helpers
+> makes the code more readable overall compared to relying on multiple goto=
+ statements.
+> Also, it=E2=80=99s not just about the "__free(...) =3D NULL" use cases --=
+ there are locks
+> involved as well. Switching to direct free() would require reverting thos=
+e locks,
+> since mixing cleanup helpers with manual cleanup is not acceptable.
+>
+> If this behavior is explicitly documented in cleanup.h, there is no reaso=
+n not
+> to use it as intended. I also support Krzysztof=E2=80=99s suggestion.
 
-Chrome devices do not perform automatic thermal mitigation, whereas all 
-other boards handle it automatically. I will push another patch to 
-disable cpu mitigation for all other boards other than chrome.
+It looks quite ugly, and it can't be mixed with the usual goto
+cleanups (I suspect some care is needed with switch cases too), so we
+must be careful where we use it. It's not obvious that this pattern
+should be used in every function. However, where it's used, it should,
+of course, be used correctly.
+
+Thanks for the fixes, Krzysztof.
+
+Amir, if you're happy with the fixes, can you give your R-B for each of the=
+m?
 
 Thanks,
-
-Manaf
-
->
->> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 334 +++++++++++++++++++
->>   1 file changed, 334 insertions(+)
->>
+Jens
 
