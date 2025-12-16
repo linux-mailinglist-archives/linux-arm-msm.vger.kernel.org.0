@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12C33CC4364
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:18:54 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ADBECC4558
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:37:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E88FD304744A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:13:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0ACA63049B15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7D52586E8;
-	Tue, 16 Dec 2025 16:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D98E30DD1B;
+	Tue, 16 Dec 2025 16:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jo/szr80"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HoFVvBkZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDCD23B609;
-	Tue, 16 Dec 2025 16:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467E3309EE7;
+	Tue, 16 Dec 2025 16:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765901032; cv=none; b=KQDedjJcT8twNmBpqob2nbu15q78SCA+/I10fAoeA722LD16/OdBjeMqyIH3fVkvnW+20EU/HWoKx8JLBbHOm1BffM2WSGc0n8kDWfgPWv0n6T/6jyrdl5gFAfIrf2ppqnJU1yAef5kjIUsE0wbqOhdiRlQrWwJMoD05Sju3S7I=
+	t=1765902702; cv=none; b=Dti1MpGJYcYSXSVtCr9Ktg47S1oLbFYcXRe4uL20tHjbxRV24rtr0gDh6ljVmgkZ1XDPZ1AYh2MJxDtfrRF7wCXTv/0vr2kfPTRXXBr/ZkVkXUMosJ1C5TI6rMkArQtmP097MMXeNJd5AGvNp4B2RLXfx/SpgoV/bpSW6l6U0vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765901032; c=relaxed/simple;
-	bh=nYwX+wSueMVMR+YGKaee6e2rV3N20IPf57KZu6XHhT4=;
+	s=arc-20240116; t=1765902702; c=relaxed/simple;
+	bh=E7dmVrHhtwD9aEMSLFMK5pjM+UtFZCjWaDfD8Pus7gA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I+zRrElwFfENXZ5PrQ2y8nfKc+JAKTeKJnVNoMDgYqgO4HpPZrLZOgDZ7naHwaTJvxpp9fL3cLFFDRTkJpkqf9WGd5PCZyXAHTNlXn6OWRxB4Xl0p2kzdyYZgQo1yJShi+FWTD3EKCK8UFiFnlRTo9Bshyiv4gKuw4h9UT11O6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jo/szr80; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96014C4CEF1;
-	Tue, 16 Dec 2025 16:03:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=A6+0cWzrhv/koRRctBuS+UrSXvNuoPgAJzYWQ8phbEzIsgCK4kdhee7J9Yq557CwA4tMM+Tga0n6SD14jcNCdsWccJ0zOayhfbJhlgIfSHsuP1ZXsprrRsojqfJpaFCpziaE+sK65R0Khf+8Ncvo9iYAHHTNPqOmdfUxpYozb98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HoFVvBkZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D41AC16AAE;
+	Tue, 16 Dec 2025 16:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765901032;
-	bh=nYwX+wSueMVMR+YGKaee6e2rV3N20IPf57KZu6XHhT4=;
+	s=k20201202; t=1765902701;
+	bh=E7dmVrHhtwD9aEMSLFMK5pjM+UtFZCjWaDfD8Pus7gA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jo/szr80KKyxE6l8ve0Uy6xDQf7Z5qBbnDyUES6ZkSDebN/+9Q8gsVzgdDDW1Eurs
-	 Dun0oF5mZBbqlpn2CKBF0AW1gn0V/OqK9hNskwxOeRHOwRLAnkdXgKlwbCpMpKV7TO
-	 DUoEv1qne2ysffrpjmnJP4kagP4pNRtblHlx0PARMAUYnrHpajg+YQqKsft1S0wmR1
-	 xs9rT8E+shj3dk96bO6U7VDrQgkqesZrkc5eLZasj9iNB+MuqwSc8dsRm33vGIKnpF
-	 pXsReKoCkdrsxg4QBlOEcMYJV5hHZyHwwPObFLKsSCEnNa8GsaorMfOmiHiLZiOKwu
-	 FIk3zTA+HSbmA==
-Message-ID: <5c82a8d7-6632-4d3a-a6de-ad9b1641c074@kernel.org>
-Date: Tue, 16 Dec 2025 17:03:47 +0100
+	b=HoFVvBkZR7VgHmEjvvQGBLiKJ7MZUprkp3RKFAnoNlSK+7lPSxsj6z6q2WfVuL9Pp
+	 pSQGJTEppkEAt7jqoHOBQ+aH/gT8Th4yivEoGpSnilFkA9Ng8WI1HjuqdZvYl4n3zW
+	 tBOiUxuBrx+wcB5VuHbKU47auBBtYisB9RcXYOBvw65qSoRT+7Uf3rxv0RXIP6o7oM
+	 tiBuaboZVX+wuvqmg+UML1PHuTg01QyFv6GS+j1Z+qGrR6oZCnAd7hDzLvGksmGwXg
+	 IyfO8RS0BXOlUEiTSpgY98E6irQNjckdKYiW2azJ/HP041Yv9NPEsx3HI4gHi5SaOo
+	 1IBOJY0xU1k9Q==
+Message-ID: <e301edf2-4769-4f1f-a452-ef4410abf16c@kernel.org>
+Date: Tue, 16 Dec 2025 17:31:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,22 +48,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] dt-bindings: mmc: Add dll-presets values for HS400
- and HS200 modes
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm8750-mtp: Enable display
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Adrian Hunter <adrian.hunter@intel.com>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- dmitry.baryshkov@oss.qualcomm.com
-References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
- <20251215120009.3877889-2-quic_rampraka@quicinc.com>
- <03819cd6-9f19-4c28-806b-17c7596e5299@kernel.org>
- <1fc9ac39-231b-4fce-a354-22a21d126363@kernel.org>
- <00485066-d537-4f8f-a579-efa33e69a56f@quicinc.com>
+ <conor+dt@kernel.org>, Jessica Zhang <jesszhan@quicinc.com>,
+ Abhinav Kumar <abhinavk@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251112-sm8750-display-dts-v2-0-d1567c583821@linaro.org>
+ <20251112-sm8750-display-dts-v2-2-d1567c583821@linaro.org>
+ <knfknl26as6becjwg2noedxklty65i6bdixx4vxwusyswppdsk@vstzkn5xivnv>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,93 +106,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <00485066-d537-4f8f-a579-efa33e69a56f@quicinc.com>
+In-Reply-To: <knfknl26as6becjwg2noedxklty65i6bdixx4vxwusyswppdsk@vstzkn5xivnv>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/12/2025 13:51, Ram Prakash Gupta wrote:
-> 
-> On 12/15/2025 5:41 PM, Krzysztof Kozlowski wrote:
->> On 15/12/2025 13:06, Krzysztof Kozlowski wrote:
->>> On 15/12/2025 13:00, Ram Prakash Gupta wrote:
->>>> From: Sachin Gupta <quic_sachgupt@quicinc.com>
->>>>
->>>> Document the 'dll-presets' property for MMC device tree bindings.
->>>> The 'dll-presets' property defines the DLL configurations for HS400
->>>> and HS200 modes.
->>>>
->>>> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
->>>> different tuning.
->>>>
->>>> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
->>>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
->>>> ---
->>>>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
->>>>  1 file changed, 5 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> index 938be8228d66..a1a16e6e12ce 100644
->>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
->>>> @@ -140,6 +140,11 @@ properties:
->>>>      $ref: /schemas/types.yaml#/definitions/uint32
->>>>      description: platform specific settings for DLL_CONFIG reg.
->>>>  
->>>> +  qcom,dll-presets:
->>>> +    maxItems: 10
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->>>> +    description: platform specific settings for DLL registers.
->>>
->>> So look at your DTS - this is clearly incomplete now. So obvious. I
->>> don't understand why you were hiding the DTS change, you just make
->>> review more difficult.
->>>
->>> Anyway, your DTS says you replace some other DLL properties and nothing
->>> in the binding or commit msg explains that. Neither the reason nor the
->>> impact.
-> 
-> Sorry dt change was not pushed earlier, will add dt change as well
-> going forward.
-> 
-> The existing qcom,dll-config or qcom-ddr-config are not deprecated,
-> but certainly I will add below in commit regarding the issue as well
-> which is observed without this change as below:
-
-No.
-
-You need schema for this. Actually for both cases - replacing properties
-and defining the list.
-
-> 
-> "Document the 'dll-presets' property for MMC device tree bindings.
-> The 'dll-presets' property defines the DLL configurations for HS400
-> and HS200 modes.
-> 
-> It have 2 arrays of 5 elements each for HS400 and HS200 mode.
-> The 5 elements are DLL_CONFIG, DLL_CONFIG_2,DLL_CONFIG_3, DLL_USER_CTRL
-> and DDR_CONFIG.
-> 
-> dll-presets fixes instances of CRC error observed with targets having
-> artanis dll.
-> 
-> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
-> different tuning using dll-presets."
-> 
->> Plus it looks like you are adding some meaning to the entries, judging
->> by the DTS. DTS suggested something here is e.g. DLL_CONFIG, so that
->> meaning - including different modes - needs description in the schema in
->> items.
-
-Here I wrote it already. Don't ask for repeating.
-
+On 13/11/2025 04:50, Dmitry Baryshkov wrote:
+> On Wed, Nov 12, 2025 at 04:02:39PM +0100, Krzysztof Kozlowski wrote:
+>> Enable display on MTP8750 board with Novatek NT37801 panel.
 >>
->> Best regards,
->> Krzysztof
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 70 +++++++++++++++++++++++++++++++++
+>>  1 file changed, 70 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+>> index c8cb521b4c26..68644eccdbff 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+>> @@ -933,6 +933,48 @@ &lpass_vamacro {
+>>  	qcom,dmic-sample-rate = <4800000>;
+>>  };
+>>  
+>> +&mdss {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&mdss_dsi0 {
+>> +	vdda-supply = <&vreg_l3g_1p2>;
+>> +
+>> +	status = "okay";
+>> +
+>> +	panel@0 {
+>> +		compatible = "novatek,nt37801";
+>> +		reg = <0>;
+>> +
+>> +		reset-gpios = <&tlmm 98 GPIO_ACTIVE_LOW>;
+>> +
+>> +		vddio-supply = <&vreg_l12b_1p8>;
+>> +		vci-supply = <&vreg_l13b_3p0>;
+>> +		vdd-supply = <&vreg_l11b_1p0>;
+>> +
+>> +		pinctrl-0 = <&disp0_reset_n_active>, <&mdp_vsync_active>;
+>> +		pinctrl-1 = <&disp0_reset_n_suspend>, <&mdp_vsync_suspend>;
 > 
-> I will update the schema description as well with the 2 modes and 5 elements
+> Nit: Is the VSYNC pin a pinctrl for the panel? I think it's a pin used
+> by DSI controller or by the DPU.
 
-I did not say description. I said you need schema.
+On the schematics it goes to the panel, so I think it might be treated
+as panel's property. It's also made like this on every other DTS,
+although I know that this is not the best argument.
 
+> 
+> Other than that:
+> 
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
