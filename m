@@ -1,218 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-85384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B372CC40C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:49:20 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4673CC40CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:49:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2DBAE3034F19
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8D3A4300EADD
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 15:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B06C364052;
-	Tue, 16 Dec 2025 15:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17FBA3446AA;
+	Tue, 16 Dec 2025 15:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JtM7/pmv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="umzTpPGI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5829D3590CD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 15:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B4934403D;
+	Tue, 16 Dec 2025 15:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765898640; cv=none; b=p+eKe8c7HXtDyesUPBYRQ6p6SiSYY4Wg0M0HevHDabLi7n9kwdE6s8AssS88ro69l4XEexMzlieQPnC9msv9ND79oPsVW0AU92RCAbK+B4/w6e8SjOIjWE2p8EhIGe1a8CSAbWt2mmKUOzmwquBjh/vGr/KPxQfD5i+FiJJ7Wpo=
+	t=1765898950; cv=none; b=aVpC+9Yv2andrpsSOFAHL+dPWS+1Kjkb3Ut0OSYIFe6Uc6lDWc2ncbSJTjv/LqNzmh57UWw6j952a7Pl5HN9vjAGpL7rQYeEJM982APzna2QY9Cy6Ig9HOkPIpwpKG//39pKj2WxRKgu0V/9jsXbOIjTYOVZB/u2e9MDKX9x2g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765898640; c=relaxed/simple;
-	bh=vAIUzpoHMjytN7Rz/48aH/uHNy/JzgqzYyhfXala8SY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j+gbR9/KsnXsv+P+Crr1KLvLtORWIEn4qUwsxVEDs+FxYLg0sxnOvdke5QXrtbBgauFa6JenpinyNHwd7vOmL3okTEVO8/HG3fSBCMRNFN2lT9rfxHW+AmAwFiSfk8FqmfnHu77hYQTvprCobkA66ATiHODZkkyoefqO0gioUbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JtM7/pmv; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-598ed017e4cso575254e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765898635; x=1766503435; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i2J5a4QLlp1gIHPWSsgnLzMZagpwihm0V+U4IQ8hkHA=;
-        b=JtM7/pmv4UcY9jganGs9Y13EyL7i08fV8rQzKsmUPCfnQdDOkQyDZl05qpkzCv77TN
-         eCtH2/hrSqMiiYf/UBtJScf3Ey0DhUP+8rO4/ScQOF+R0xzLi8OD0J7ijWbk4aKwFt7n
-         WipjFgBy+I/DCdTrnA6qRlgx2sK2YmcfLpiMrmvlNEko4tIvH132pcZ+6I31EDWWcehv
-         s2YWAnG9EXEAoUtnciSontVikcqUJJYdMi18nrZiIO0bENoW6t+sIJw8inbN+kULFw6B
-         Vz2e5tLkl8raiid9BW8HnaqL0iMGUTUWvr+uvBchI1EWdYAFCoVU0TKe0e662QhGYRt0
-         rEmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765898635; x=1766503435;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i2J5a4QLlp1gIHPWSsgnLzMZagpwihm0V+U4IQ8hkHA=;
-        b=thbJSrjvTt5AbJo4MYTlzeEfUly6aOC+MZrL7g3BVj2b+ZWjIdFve27VOzVsyzXOUM
-         K/rlSy3o5OJTgugHuo7GP2cNRU9QwPNKtXhMl6/FOehlrBtPKnolLQrmiih3trTdE/XG
-         35Uja7AgmoWFObXgDgX+NOGakKNuWjDY2/7xPXg8BK8umwV8gCYbZJdXGr66lCZquYr/
-         QoTHkaGpXItJoSaBJuTLxZi9QBYKZhiEXU+og30gZ+p8h34TgMrNtePfwzJ3DX6g4IX6
-         juU8k1VqvpONkKB7pxQzbQl0TMCFgvRW07HMUwaS6qNi02PLXpHvaOH4TZHE8azyGHO6
-         Pxxw==
-X-Forwarded-Encrypted: i=1; AJvYcCUq3z3h9ByUU+rNh4CgNkARIFivtPl8qzGyDS1kYWpNuOxn+iMgCbDKktpdrrWVgWIY7WQFfBqmSPHb9s/q@vger.kernel.org
-X-Gm-Message-State: AOJu0YzW9dmlMzugnKcvm2TAxf980x/L1bbvgazQDfdYu1L9LSymUDDM
-	5p5LCjEkDaKj9+SD4gaV35qFucvAH6R1l9MNl/ZA3WPQUJ73KcsNbX9ud2qT8ELxqk4=
-X-Gm-Gg: AY/fxX427Tmsw7rjb7/KL5JPooSZFdNaxBz64JZYqPNe/VZtqTEWjV9gRLV+NR/bZFy
-	ej2DOmn7tIW/AO9/qZpAGFFtJmJ3Fs08JXmYBI8v5aTJcOv6KWjyA01Taes2F7nRZmWLlDo36PV
-	ele2wwG888pWLDOYH30BkY9D5HDHttFyOOZJaBNPNqlSHq1oAww+/g7Z/ojvjmgKOmMtaY1Y820
-	hUwiuu6kEIazkdQ/7CZ/RrHMpa848M2jvRifJOxlAaR8JjUqlLyius34tn800SJQql0Uqfu26YA
-	YAST/mhaI+f1bvjezeuq5noY7aGQbmgDCS8W2+uayHu0X27ndEzA5lrBHf4RXKoq+1GbC1qvlO+
-	0cEoa16UXf/ICf2BPFcThT3BaBGaVO0BomxTVnyq1L65b/8BN/DyM/dCERAnAts1EaaQOyUOOCJ
-	pYS+020/rH95r5Cl0Z0iaVQEkMAS3f9tazq4IHQ1Na8FLUh/dyOWhDUnjGUYyQwfjooBDlkZRuT
-	D61
-X-Google-Smtp-Source: AGHT+IHUqZ8MlsWcdLXjMndrMOISBhO6vzgQ33SdrvAjwJowVkeUJIKabKJZh0y+vSHN1OThLLU0NQ==
-X-Received: by 2002:a05:6512:e86:b0:595:834a:b1ed with SMTP id 2adb3069b0e04-598faaa6ddfmr3212199e87.7.1765898635326;
-        Tue, 16 Dec 2025 07:23:55 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5990da1a743sm964416e87.41.2025.12.16.07.23.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 07:23:54 -0800 (PST)
-Message-ID: <fa131841-ae9e-49ee-a7c6-728b4a6a4b60@linaro.org>
-Date: Tue, 16 Dec 2025 17:23:53 +0200
+	s=arc-20240116; t=1765898950; c=relaxed/simple;
+	bh=ZqgGDZJPzfmSIrJ7Y3pKsg8ii8OKhw1fZ3Qm4xmv9Pk=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=pS4d7t46G7zY3oPaV2ia5bXJJazIkohSajSaFU4pYVWqUt6r5+iyAng9GtFjbbjtb2242WwCOmdhzr4qig6waYsgL0E8Q0WZmE/vayM/+wfsPR3eo8mBlGaFmS3tIuxKiK1KJ+efLR+5IK10E9z7UQ7tzlmxoGvhdMdY2ticl+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=umzTpPGI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AC9C4CEF1;
+	Tue, 16 Dec 2025 15:29:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765898949;
+	bh=ZqgGDZJPzfmSIrJ7Y3pKsg8ii8OKhw1fZ3Qm4xmv9Pk=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=umzTpPGIUT9tUTdOow3rH7yL6TqEzh9jL3coxEi60tDTEZXQB8BR3BoA45lhOC9vy
+	 ChdhMlpYuW0txxWq/5C5AfwbTvaB/WtN/9qJ6Hq4RTZSFrsPptZaBW+Q31TuwPwe4J
+	 jzRGJjo9Ce1KD8PlR9zheTmtIiKgcel3TyKN0f/8atgypVcc9ItUZ4zHcqb7n/V2XO
+	 IRP9EkmfZVaa4UopJeLQ3trHBAQRiBE3nS2uo8Z7y9EuPlVKzJje27tIMYfusi3P+d
+	 NB9X+24+egEpRIz6sIipW5wMotLHPx/3+zfRLf2a5Z6If9+Qjltd7ts6SjLNJ496w6
+	 v5Drg7l6spKwg==
+Date: Tue, 16 Dec 2025 09:29:06 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-Content-Language: ru-RU
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org,
- Robert Mader <robert.mader@collabora.com>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-6-mailingradian@gmail.com>
- <wwpqaecvz42jopgaboasbh353ieelctpvgo3yj6y5tnxoem5oz@j5sbx3yxntot>
- <aTtkwQb2gOeWAFuv@rdacayan>
- <d7jcawzugobqern6zlo5jwcnximtsroxywix53v2yp2isvzo5r@ymxicmgfjmzq>
- <341012f3-18bd-4f96-98c1-f964d1fedb8f@oss.qualcomm.com>
- <1d830282-a778-44aa-918b-5ab3e1516c0d@linaro.org>
- <4c4e8e5b-66b1-4227-86ee-756eca945972@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <4c4e8e5b-66b1-4227-86ee-756eca945972@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-pci@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+ quic_shazhuss@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Rama Krishna <quic_ramkri@quicinc.com>, quic_vbadigan@quicinc.com, 
+ Nitesh Gupta <quic_nitegupt@quicinc.com>, 
+ Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>
+To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+In-Reply-To: <20251216-firmware_managed_ep-v2-1-7a731327307f@oss.qualcomm.com>
+References: <20251216-firmware_managed_ep-v2-0-7a731327307f@oss.qualcomm.com>
+ <20251216-firmware_managed_ep-v2-1-7a731327307f@oss.qualcomm.com>
+Message-Id: <176589894648.2511603.9461849499751093485.robh@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p:
+ Document firmware managed PCIe endpoint
 
-On 12/16/25 16:41, Konrad Dybcio wrote:
-> On 12/16/25 3:31 PM, Vladimir Zapolskiy wrote:
->> On 12/16/25 15:56, Konrad Dybcio wrote:
->>> On 12/12/25 8:22 PM, Dmitry Baryshkov wrote:
->>>> On Thu, Dec 11, 2025 at 07:41:37PM -0500, Richard Acayan wrote:
->>>>> On Thu, Dec 11, 2025 at 07:16:30AM +0200, Dmitry Baryshkov wrote:
->>>>>> On Wed, Dec 10, 2025 at 08:48:46PM -0500, Richard Acayan wrote:
->>>>>>> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
->>>>>>> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
->>>>>>> support for it.
->>>>>>>
->>>>>>> Co-developed-by: Robert Mader <robert.mader@collabora.com>
->>>>>>> Signed-off-by: Robert Mader <robert.mader@collabora.com>
->>>>>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
->>>>>>> ---
->>>>>>>    .../boot/dts/qcom/sdm670-google-sargo.dts     | 107 ++++++++++++++++++
->>>>>>>    1 file changed, 107 insertions(+)
->>>>>>>
->>>>>>> @@ -392,6 +420,64 @@ vreg_bob: bob {
->>>>>>>        };
->>>>>>>    };
->>>>>>>    +&camss {
->>>>>>> +    vdda-phy-supply = <&vreg_l1a_1p225>;
->>>>>>> +    vdda-pll-supply = <&vreg_s6a_0p87>;
->>>>>>> +
->>>>>>> +    status = "okay";
->>>>>>> +
->>>>>>> +    ports {
->>>>>>> +        port@1 {
->>>>>>> +            camss_endpoint1: endpoint {
->>>>>>> +                clock-lanes = <7>;
->>>>>>> +                data-lanes = <0 1 2 3>;
->>>>>>> +                remote-endpoint = <&cam_front_endpoint>;
->>>>>>> +            };
->>>>>>> +        };
->>>>>>> +    };
->>>>>>
->>>>>> This would be much better:
->>>>>>
->>>>>>     &camss_endpoint1: {
->>>>>>         clock-lanes, data-lanes, remote-endpoint here
->>>>>>     };
->>>>>
->>>>> I'm not sure what you mean, there might be some typo.
->>>>
->>>> My point is that you are duplicating `ports { port@1 {.... }; };` from
->>>> the base DTSI here.  We usually try to avoid this kind of path
->>>> duplication. If you can't have an empty endpoint in the base DTSI, I
->>>> suggest adding necessary labels to port@N nodes and then extending those
->>>> nodes in the board DTSI.
->>>>
->>>>> If this is about using the commonly-defined endpoints, Vladimir broke it
->>>>> in commit dcf6fb89e6f7 ("media: qcom: camss: remove a check for
->>>>> unavailable CAMSS endpoint"). If I do this again and go full circle, I'm
->>>>> afraid this could break a second time before even making it to
->>>>> linux-next.
->>>
->>> Quite frankly I don't think that commit was valid, given it's conceivable
->>> that an endpoint could be unconnected..
->>>
->>
->> Endpoint is not a device, status property is the property of devices and
->> not a property of anything else as the Devicetree Specification v0.4 and
->> earlier ones define. Dangling endpoints are fine, there is no need to
->> add another property to determine, if an endpoint is connected or not.
->>
->> There should be no status properties inside endpoint device tree nodes.
-> 
-> The spec doesn't actually define what a "device" is. Funnily enough, it refers
-> to "endpoint" as a device:
-> 
-> 2.2.2 Generic Names Recommendation
-> The name of a node should be somewhat generic, reflecting the function of the
-> _device_ and not its precise programming model. If appropriate, the name should
-> be one of the following choices:
-> 
-> [...]
-> 
-> * endpoint
-> 
-> 
-> Plus an OF node is opaque in its purpose.. The top node, a firmware node, a
-> node representing a physical IP block and a config.ini-style blurb are all
-> "device nodes"
 
-It sounds like somebody of DT maintainers should clarify the matter and update
-the spec to be less ambiguous, if it happens that "device" term is undefined.
-
+On Tue, 16 Dec 2025 19:19:17 +0530, Mrinmay Sarkar wrote:
+> Document the required configuration to enable the PCIe Endpoint controller
+> on SA8255p which is managed by firmware using power-domain based handling.
 > 
-> But coming back to the real world, the ports/endpoints represent the physical
-> connections to CAMSS and it makes sense to have them defined in one place,
-> especially since there's a predictable number of them that should not be left
-> up to each board to define.. That quite obviously implies that not all boards
-> are going to utilize all interfaces and the commit of yours that was mentioned
-> above seems to only be valid on the basis of semantics, which I above mentioned
-> are not *really* a valid point..
+> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> ---
+>  .../bindings/pci/qcom,pcie-ep-sa8255p.yaml         | 110 +++++++++++++++++++++
+>  1 file changed, 110 insertions(+)
+> 
 
-For whatever reason CAMSS on SDM670 is very special, because IIRC there is no
-other platform with preset status poperties of endpoints. This exclusive SDM670
-specifics shall be analysed and eliminated, since it hasn't been done during
-patch review time, it's time to do it right now then.
+My bot found errors running 'make dt_binding_check' on your patch:
 
--- 
-Best wishes,
-Vladimir
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.example.dtb: /example-0/soc/pcie-ep@1c10000: failed to match any schema with compatible: ['qcom,sa8255p-pcie-ep']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20251216-firmware_managed_ep-v2-1-7a731327307f@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
