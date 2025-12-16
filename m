@@ -1,133 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-85299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 555CBCC1135
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:15:50 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D567CC1215
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:37:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8CF063071AAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 06:11:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 971EE308A880
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 06:32:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B7EC3358BE;
-	Tue, 16 Dec 2025 06:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80749336EC5;
+	Tue, 16 Dec 2025 06:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AErAzs5D";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XVlD5oCB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XjLjq8jV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8373B335541
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 06:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05475335BCC;
+	Tue, 16 Dec 2025 06:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765865516; cv=none; b=Vobsw/7qbOUhPhuUy9GKhVbYwett9KZ276LJNJA79SMZ/z+kr9Z9ADERJVXimTVKmf32fgsLKmS2gqRP7vs6K5NXNYc6qxtCjRscrQTHg1ZKEvXS/lcX+6T1AwpvzdJBLH1pIllyZtZJFqfFA6yVpV5sxnwOqCcbOH2wcySJ4YA=
+	t=1765866187; cv=none; b=Pdd5B8CihNLMDd7Gs3WAf0PelZ6x3cjskpkfedbXCKEpl+HItgWp2yReC7Otu0qoOC4lbBH6WIp6k1EVZQ+/8o+pFm/yMNYDO1w+pvnHgtmjBa29PyElZ0rMrDpSd3hlfxJZzTjD5k08zLILBBz5wQ6cOFjBy6F2JuQtdfJl1b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765865516; c=relaxed/simple;
-	bh=i1Nwt0cCOQGDA21YL0EvQLhtpOTFKxdTlaMYLCDWRDA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eQ2+wtc6TE1a8uwVa6s8rNGRrCIZT2ksEOZSE9D7+ljEom2P2j4P1P02rKKPqyvmXpUArQdgNxJ7HW7kb06frDz4MNkiC1/E2z7urRlHil1nnpILMVwBzywvVRm+V/IAkYQZ+wrTeqv+4uCDk8uUIHMOLih4sG0LG4iZ9+YwXec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AErAzs5D; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XVlD5oCB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1765866187; c=relaxed/simple;
+	bh=QAphHMbDpNPv3Br717L5zULaKEOTo+K8m5qzBOmz2cc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Myvr29ZsXQBsZ9kfPDiwhV3XX9vqbhmV21jfS6xqgkrGZ9+OKDkSvOs7EeGivK4tUdhYtsYIZ7BSipdFhs6pV49JinQ4EBL4uaiVqIht8MwiBxSdypgTGCO5CIOUMXhZLn3g3xwDSAO4sCDedGoKYxllowsFZp2vZMWltFlJx3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XjLjq8jV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BG539FJ366847
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 06:11:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=GYtIKEJE2D2FmKqEGGzDBua0
-	0Jcsf/HU9nFna+Bnk/k=; b=AErAzs5D+qQHkkY0UCul7jV9PfK3iI56TNk9mb+o
-	2DWIbIWXO6hDBEelq1xI9JL40uiSdEMTYL2zdzXngQcMYN9ZdQWp/0ySAgZHaqgr
-	FZXbvIq3UbhFMNyEc2KXYxj7xPO2JcDx6/Kujxq7CTHTLOp4NSnKh09dlGfe1wj0
-	5JEeXOoX5WNeRwDWiDE6SRxjaBfO3zgqpOiQA8f25SBXLGLCyF8nP2QBBoqF7cjy
-	hgJQrUmYrvmRE7l0cTtGk/6nlhgordUQq67NNe8EyXre2NRQKDlDH4WaxxlObUzl
-	MUxzTiQ3lo2W7PVZJxXnTyvo2nD+9/9ukBehF/oIZmsrYw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2j1c3bm5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 06:11:43 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b9d73d57328so4160262a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 22:11:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765865503; x=1766470303; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GYtIKEJE2D2FmKqEGGzDBua00Jcsf/HU9nFna+Bnk/k=;
-        b=XVlD5oCBNxHFtTJ8kuIV9nCc5MNU5Ia6HuLuxVJYPxrSpL8Lnu63Zmmy7smMQJ5n1/
-         1l1TIJ45bffHaka1SN/CsdIY4slAfKfSk9JLjqnzi9wu75Ufd3eqqs9ru5eU28QRFHdC
-         183Hcm57VU7cKlt1NV2O47oh1omPR5vaRR/76d2GcxfwzMxCbc+PcuaFIxDAoxrv/kI4
-         dph4xgTLQHWl7CsKjz7GyGOk1Padih030lVhwipP3LGCkQ9zmGpCHADogPaUOg43ftSo
-         SqpDHWmdrjmupWdTA9Llxcfz3DY/gOKnbExyD2M136UhI2o7SEBJj30nlr4uY93lmNXI
-         9g8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765865503; x=1766470303;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GYtIKEJE2D2FmKqEGGzDBua00Jcsf/HU9nFna+Bnk/k=;
-        b=dpYkvKfGFbiUmhi9ZYA6QRcTv03hkAFE0iQT0pNI+3mHi5PCJVyAq8b8TeWUcWvxUL
-         80lzodaVyUN7AZadzEYH+Mo01aVhnxWA18OCvyHIL2KIjUwDp7srqc/onSSYrsAGO4sj
-         UTpSZxb/lp/yD8SyeV7UxHJ36a0FPvxyY6zlEMfVcJMvOPae1IoYD2u1rFoLoQdcQRJF
-         jH1xxAtfsJRUcVdqsq94Xod9dei5bZuw1ofGcBHZq8I1KndwfqGfcni/dNzjXYt64L9E
-         6JOBk+kPJtSADyONyzSa9Kzug1vFkUT3d6UD1bFn52GMg3EvjTqsTdS9C8yZTLYlBNYB
-         5lyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWqhsRWQUk4+in0YPfBq7UV3xfgOtgYSieUba0/IHXO8248L8ZFaVtQID3upDAqGRoNi8pAZV037Oyw3hS7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXXLAeU9jhnJi6/PiJRhpAZ1tpzmhPqe8sJDcKZHyyq3sSxdm5
-	O9F3lC/JO7+cVOMtb4y9uV3n15X7YHTqIkldk4Un6MeeI3ML5T+sUpQbLPNkBnK0AsDdar+dWwu
-	0qIIUUQbySNlnrlO5U5Gf4X9jMLRBVWbZ4fovxH1RBZ9fuRqt5FTrPV3KNqpW4EqxECf5
-X-Gm-Gg: AY/fxX7a5Mco3bcqb+garFjWPJDph8LKnDIwhyf9zmMKA8p42dLDjdGLYKb/HOt6Eoi
-	b9scy0Sihv6EnH7bITRxrwROags8bFwlAw1bQ7Q+wyqr+zTDJgsbNaGOps8sWHRVbPgliMe3mYo
-	8pAKiFO+adhIz2PmcDa/Ye3iFLj2Z6GMgpKGNxbEjvJVzI0J4SpwCJlGccYesc62tw8LsKFcSKS
-	Rbik5kBrggwGBoKVnHS6GUxD/LC3Na+JapdjFUtNAA5Bc+SLmZW422NTj8Hez0pduX/htR/PQIM
-	mluTv5qS5mebeTA23FtWkF8qpNU9SQY1v1bXDPCunVXjguh0EZV2bZL74S4i1BwAVVDgobt5EsT
-	LZPUVkBtMvtZryuEuFvRw+ejRQw0au5pZZbGTBBPt2Bb+ltlIx8naRitz
-X-Received: by 2002:a05:7022:2485:b0:11c:b3ae:c9e9 with SMTP id a92af1059eb24-11f34c2da09mr10389184c88.43.1765865502724;
-        Mon, 15 Dec 2025 22:11:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQUrjrXhziyFtXJsM6JkEaIAFtfz31jh8L3KbQdzLZxoqrvqw0zeZlF6U5tIO/dtPAtWXSZg==
-X-Received: by 2002:a05:7022:2485:b0:11c:b3ae:c9e9 with SMTP id a92af1059eb24-11f34c2da09mr10389165c88.43.1765865502211;
-        Mon, 15 Dec 2025 22:11:42 -0800 (PST)
-Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f43ced319sm18229042c88.9.2025.12.15.22.11.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Dec 2025 22:11:41 -0800 (PST)
-Date: Mon, 15 Dec 2025 22:11:40 -0800
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mayank Rana <mayank.rana@oss.qualcomm.com>,
-        Baochen Qiang <quic_bqiang@quicinc.com>
-Subject: Re: [PATCH v3] mhi: host: Add standard elf image download
- functionality
-Message-ID: <aUD4HLP8wZr4Iztn@hu-qianyu-lv.qualcomm.com>
-References: <20251201-wlan_image_load_skip_512k-v3-1-bedb5498a58a@oss.qualcomm.com>
- <ttpn6o2far7xebghblurxvi43aohv74v7jq2vdgc4jhgc7avo2@lgp4y4sytene>
- <aTZxrhpYhoOP+VDz@hu-qianyu-lv.qualcomm.com>
- <6b115125-17f9-4eec-b10c-0722eabe517e@oss.qualcomm.com>
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BG4F9x1366858;
+	Tue, 16 Dec 2025 06:22:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=l61JFv+MfI0WE1da1fbXOG
+	rJamZBh/AIvGNfa1343js=; b=XjLjq8jVBxMybhCq0uVELXRsgEr9xkcJfja/+u
+	SKilc7gWqIAvRSUS9CMNNqLSBSQVGpjMHpO8eJLsbUywxJ79rumtvAjqNkbUurR4
+	wFap2R0/bBKRxKbVxJNhS+5Is8C5Wx2qY3haFmy+niDfQcdEfKFBpkBTJ/rvz2g3
+	jf49epotsp6aYrVAhdUNnlc/f8SY4O4i9pG7ncdOAwyndt44zCI5UVfBRMOMsA7O
+	DTVc9HmGV4Cci4Gro/bdN6ObZ0hlk75KE361xUOHMp/ZiIZvNS1aXhO8n58btASL
+	jtVTpjOfDUJURJHbvu4jf6K8TQGgRClMn2uUfm635RxU9A8w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2j1c3d56-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Dec 2025 06:22:44 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5BG6MhwT000815
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Dec 2025 06:22:43 GMT
+Received: from hu-nihalkum-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Mon, 15 Dec 2025 22:22:38 -0800
+From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+To: <bryan.odonoghue@linaro.org>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_svankada@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v7 0/5] Add CCI and imx577 sensor support for monaco evk
+Date: Tue, 16 Dec 2025 11:52:18 +0530
+Message-ID: <20251216062223.2474216-1-quic_nihalkum@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6b115125-17f9-4eec-b10c-0722eabe517e@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDA0OSBTYWx0ZWRfX3S3XTdGwhgHR
- IgI8nxJtZ2GdmGZfW7ex1UfOQGowVHOVWEjWsEUOe9z8HlK3di6/C955bK+TCMyKqK2JqPjXBO7
- k3HUqq0OCnBv7OKPLU1uC2Z+2BzjigntDLFktf7RFUOzc9V0V6FOtuDBU0Yeze/mVszC+wEMZHe
- 7i2NWaot4M/AX2HFIOKgdYvgfphQU2K7ob0wn+dpID+n3GFGjV0b4ynl8XKa/jsGz95BMLfk41f
- BidCrm50y+c8zShH2Wi1FXPkKK0fxOwVVxqOkn8H6HNglgJoX8KogXlhA4zjXuTCbe6ZLSG3hHE
- xvD0Vnmwpxv881NxeBcYw2FsuZBPGsRPc2ImHme0BnQgLKwj5FTd1S5rzXuLLAtJtQ5Pm6HpOio
- tx3oZUgP3juUi5eEhp6VIabQ+/8HqA==
-X-Proofpoint-GUID: PVUPYExd6Y-s6ZxWutg9uhWtI3qRThLC
-X-Authority-Analysis: v=2.4 cv=ceLfb3DM c=1 sm=1 tr=0 ts=6940f81f cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=RwQgUtxsi0qMzmDKmZsA:9
- a=CjuIK1q_8ugA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: PVUPYExd6Y-s6ZxWutg9uhWtI3qRThLC
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDA1MCBTYWx0ZWRfX64A40uEaAWAl
+ 57RLu4mVwEXeZpFunmjxlcJo9hmu/euAUuhxw6EZdrQgxC/q76KfmPMtn36f9TJN4IGTpfS1EEQ
+ FQrFUR4YCg4pOJ5Pc0Zvse86Hkr7YOhAwvyiNMrybBg2p0cNROU4evECv3043sRmdfQN7h53Vsf
+ T+CeTEyJ0XPrm1aEFh8r5RmvOE7yBuEz2AUcnE9fNCydWF57wAS4QmuoCFoAAHO7Uo/QQPgB/YT
+ UjqexihoYKfmjqk0ub8Tx5eElGsrlQRKDOkYgRF2WZl0ndg8p+QhFBoZTHYZwIiL/RPMQ4s3whb
+ f7pleUXOyiPVo/KNfUI/isvwfETqzkiMY4rNQfJLTyT6RA4Q/IOBFnvzcoE4GDlZSu0P8ID6JqA
+ e3MAJFZXBhK1mcWNiMS6Q81I4vUjoQ==
+X-Proofpoint-GUID: gEkY0mgEOhTR-tWbl-H2CsIFBbZ-iR4x
+X-Authority-Analysis: v=2.4 cv=ceLfb3DM c=1 sm=1 tr=0 ts=6940fab4 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=yYjbjCPdd4sGEI68VPkA:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: gEkY0mgEOhTR-tWbl-H2CsIFBbZ-iR4x
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-16_01,2025-12-15_03,2025-10-01_01
@@ -135,36 +98,98 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  suspectscore=0 impostorscore=0 clxscore=1015 phishscore=0 priorityscore=1501
  adultscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160049
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160050
 
-n Mon, Dec 15, 2025 at 10:21:58AM -0800, Jeff Johnson wrote:
-> On 12/7/2025 10:35 PM, Qiang Yu wrote:
-> > On Sat, Dec 06, 2025 at 01:25:34PM +0200, Dmitry Baryshkov wrote:
-> >> On Mon, Dec 01, 2025 at 06:33:15PM -0800, Qiang Yu wrote:
-> >>> From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> ...
-> >>> @@ -445,6 +448,7 @@ struct mhi_controller {
-> >>>  	bool bounce_buf;
-> >>>  	bool fbc_download;
-> >>>  	bool wake_set;
-> >>> +	bool standard_elf_image;
-> >>
-> >> This flag is never set, making it a dead API. If there are other patches
-> >> setting up the flag, please include them into them in the same series.
-> > 
-> > Let me discuss with Baochen about whether he can include the patch in his
-> > series that actually sets this flag for QCC2072 device.
-> 
-> The QCC2072 patchset under internal review is already 19 patches, all of which
-> are specific to the ath12k driver and hence would go through ath.git.
-> 
-> I'd prefer to not bury this patch in that series.
-> 
-> Would you be happy with a commit text note that indicates this functionality
-> will be used in an upcoming series that adds support for QCC2072 to the ath12k
-> driver?
->
-It's fine to me.
+From: nihalkum <nihalkum@qti.qualcomm.com>
 
-- Qiang Yu
+Monaco EVK is a single-board computer based on the Qualcomm QCS8300 SoC.
+It lacks a camera sensor in its default configuration.
+This series adds CCI support and enables the IMX577 sensor via CSIPHY1
+through device tree overlay.
+
+We have tested IMX577 Sensor on CCI1 with following commands:
+- media-ctl --reset
+- media-ctl -V '"imx577 3-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+- media-ctl -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+- media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+- yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video1
+---
+
+This patch series depends on patch series:
+https://lore.kernel.org/all/20251107162521.511536-1-quic_vikramsa@quicinc.com
+
+Bindings for Supplies are added by below patch:
+https://lore.kernel.org/all/20251107162521.511536-1-quic_vikramsa@quicinc.com
+
+Changes in v7:
+- Define MCLK pinctrl definitions in monaco.dtsi - Konrad and Vladimir
+- Define fixed regulators for camera AVDD rails in monaco-evk.dts - Konrad
+- Link to v6:
+  https://lore.kernel.org/all/20251126081057.4191122-1-quic_vikramsa@quicinc.com
+
+Changes in v6:
+- Fixed ordering of property-n and property-names in vreg_cam1_2p8 - Konrad 
+- Moved vreg_cam1_2p8 defintion to monaco-evk.dts - Konrad
+- Removed description of pins with MCLK and Regulators function - Konrad
+- Added pin hardware description for MCLK, regulators in monaco.dtsi - Konrad
+- Link to v5:
+  https://lore.kernel.org/all/20251114064541.446276-1-quic_vikramsa@quicinc.com
+
+Changes in v5:
+- Rename cciX_i2cY_* to cciX_Y_* to shorten the labels - Vladimir 
+- Added description of pins with MCLK function - Vladimir 
+- Link to v4:
+  https://lore.kernel.org/all/20251015131303.2797800-1-quic_vikramsa@quicinc.com
+
+Changes in v4:
+- Remove the AXI source clock from the CCI node - Konrad
+- Updated the qcs8300-camss device tree binding.
+- Link to v3:
+  https://lore.kernel.org/all/20250917130647.1701883-1-quic_vikramsa@quicinc.com
+
+Changes in v3:
+- Updated and Wrapped commit messages for [PATCH v2 1/3] and [PATCH v2 2/3] - Rob
+- Link to v2:
+  https://lore.kernel.org/all/20250912141134.2799078-1-quic_vikramsa@quicinc.com
+
+Changes in v2:
+- Remove the patch that adds PHY supply documentation in the qcs8300 CAMSS. 
+  bindings. This change should be submitted together with the qcs8300 bindings patch.
+- Fix indentation and regulator node name - Krzysztof.
+- Update commit message as suggested - Dmitry.
+- Link to v1:
+  https://lore.kernel.org/lkml/20250909114241.840842-1-quic_vikramsa@quicinc.com
+
+Used following tools for the sanity check of these changes.
+- make -j32 W=1
+- checkpatch.pl
+- make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=i2c/qcom,i2c-cci.yaml dt_binding_check
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=i2c/qcom,i2c-cci.yaml
+- make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml dt_binding_check
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml
+
+Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+
+Nihal Kumar Gupta (5):
+  dt-bindings: i2c: qcom-cci: Document qcs8300 compatible
+  arm64: dts: qcom: monaco: Add CCI definitions
+  arm64: dts: qcom: monaco: Add camera MCLK pinctrl
+  arm64: dts: qcom: monaco-evk: Add camera AVDD regulators
+  arm64: dts: qcom: monaco-evk-camera: Add DT overlay
+
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ .../dts/qcom/monaco-evk-camera-imx577.dtso    |  67 ++++
+ arch/arm64/boot/dts/qcom/monaco-evk.dts       |  51 +++
+ arch/arm64/boot/dts/qcom/monaco.dtsi          | 324 ++++++++++++++++++
+ 5 files changed, 448 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso
+
+-- 
+2.34.1
+
 
