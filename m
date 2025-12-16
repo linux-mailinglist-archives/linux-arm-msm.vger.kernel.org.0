@@ -1,133 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-85383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD38CC3DF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:20:03 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B372CC40C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:49:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CB61A302B141
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 15:18:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 2DBAE3034F19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 15:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 267F3355813;
-	Tue, 16 Dec 2025 15:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B06C364052;
+	Tue, 16 Dec 2025 15:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ak6pimUM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JtM7/pmv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A167B3557E6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 15:12:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5829D3590CD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 15:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765897981; cv=none; b=Ojoka+tOq4AvJCeGWeOoYEaUg1KNz+l15R/oPIb0n2j/W54qZC6nzsXg9YwT8DKpqQh3KzKQH28p7SBGpFS5HSLyNS+lJkl8tx+MIDOIaCTUzhDgzHwlb5nIeIQYDDmIZeHzE7ZsBbVqi/E5OnFbiP2vdssHuexdT9/xjihToxA=
+	t=1765898640; cv=none; b=p+eKe8c7HXtDyesUPBYRQ6p6SiSYY4Wg0M0HevHDabLi7n9kwdE6s8AssS88ro69l4XEexMzlieQPnC9msv9ND79oPsVW0AU92RCAbK+B4/w6e8SjOIjWE2p8EhIGe1a8CSAbWt2mmKUOzmwquBjh/vGr/KPxQfD5i+FiJJ7Wpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765897981; c=relaxed/simple;
-	bh=otRnitXgK3YK8QOOnOlDhlnw9uTpljPxLSfkYiE4/jA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=URhr4pr4oYLIG7QIvCBIPcb5bpju5A2Ur+wBrQHVi5fmLV0ajrMr9/yUsqGWlFFRG/tEsCQT25y9fsg8OBjdsbG/fnRyCTa3RRofVsvWAGm8nHO7c8uwp4MQtFsburJj6ivTxjJ8pGS30MFD7IKNcH36v4GGQnq5HVO4eWyXkqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ak6pimUM; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-47aa03d3326so11272545e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:12:57 -0800 (PST)
+	s=arc-20240116; t=1765898640; c=relaxed/simple;
+	bh=vAIUzpoHMjytN7Rz/48aH/uHNy/JzgqzYyhfXala8SY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j+gbR9/KsnXsv+P+Crr1KLvLtORWIEn4qUwsxVEDs+FxYLg0sxnOvdke5QXrtbBgauFa6JenpinyNHwd7vOmL3okTEVO8/HG3fSBCMRNFN2lT9rfxHW+AmAwFiSfk8FqmfnHu77hYQTvprCobkA66ATiHODZkkyoefqO0gioUbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JtM7/pmv; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-598ed017e4cso575254e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:23:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1765897976; x=1766502776; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2RaB9SM+pvwUf1QmqN2DN92hZRXQJ2LlXiPVs66C+PM=;
-        b=ak6pimUMaCZZ/eH5zmilk5fKWiWmW54oMRx2jPSJVi1CVmJPC98gQhTksBJFW+6nHP
-         DLE/wPy/UVd/TBJCpnXSaDfkC28opZO1OGWlzr6THu7BZffJesytfKxKrfaEWWQOvJdB
-         Ro9a3MGnc9Th9Aofq0LHrc4iXCjQxD7lXbdtME75auAIp06AwNFJk17U4gcy4sEeP6BZ
-         iRvSkXX1cwVC/goq2Jw4EZ9m/Ie8IaH/U2IsFtT/U51CKl+hcFy8uf0/8tp07WkrieUV
-         1JAlv/ia8ggNysCdeLTYF/v1MLare0gRW8hYTq3ZcLxz/6Or+4EXMTge1Q2fGGhNLp8K
-         cYFA==
+        d=linaro.org; s=google; t=1765898635; x=1766503435; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i2J5a4QLlp1gIHPWSsgnLzMZagpwihm0V+U4IQ8hkHA=;
+        b=JtM7/pmv4UcY9jganGs9Y13EyL7i08fV8rQzKsmUPCfnQdDOkQyDZl05qpkzCv77TN
+         eCtH2/hrSqMiiYf/UBtJScf3Ey0DhUP+8rO4/ScQOF+R0xzLi8OD0J7ijWbk4aKwFt7n
+         WipjFgBy+I/DCdTrnA6qRlgx2sK2YmcfLpiMrmvlNEko4tIvH132pcZ+6I31EDWWcehv
+         s2YWAnG9EXEAoUtnciSontVikcqUJJYdMi18nrZiIO0bENoW6t+sIJw8inbN+kULFw6B
+         Vz2e5tLkl8raiid9BW8HnaqL0iMGUTUWvr+uvBchI1EWdYAFCoVU0TKe0e662QhGYRt0
+         rEmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765897976; x=1766502776;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2RaB9SM+pvwUf1QmqN2DN92hZRXQJ2LlXiPVs66C+PM=;
-        b=pYT3PWaeXRosYyefJKYyzEfiQr/BGZS5m8bewDBPCtOkPjBbOzz0I6mEy6PKO+cxKw
-         ZJnQqYMlzV+uEfOg2hkWi976Gq17eeu9qjR5/si04MGpp7H7xKbvIYGHfJfIphl2y8en
-         +vdmZGu16UMk/Ggdi5Ky3CCKlUd5jdOCy1wjTIKNT6JXTEbPCAf6ldWJZ9cXwa2pD8w9
-         98UcfHIfDKuo2LmqcdAlQzObNPpWgFdfKPxPrGArqRNiMuDePkWP9HQSacy58KzI5OtJ
-         BYYznDAgVaf5RUMVpCw6NQnFvh5aMnI90z9Fs2Y3/kJd7XHU2l4a5JNsKAKmsGvQf7T3
-         MV7g==
-X-Gm-Message-State: AOJu0YyXu0aJeCyMHuvGv69hMO1LsHgCKbc+G8/oZJBQRPcWIk27KC/k
-	TDbinVou1jDT+FVde34crYV/1sZl/VenO6Zc+kODKo2QfG0eSyvoQGl8WgdFi41GdPk=
-X-Gm-Gg: AY/fxX7aqIJY23iWf+h3kk8gACnYNgroLbRPQH/MLmEGUAm1B+O2w3sroPIQ4QiBhAX
-	t+T6GcYqYCGXk0KMq4eQs9E/+Sb7uzO339S+OQgNFrDCk2RoVGJ9IWOmC5Zp3JMErF2IvLJebww
-	F47AAtldwQ48h0CPyFmE+/eEFcm9zLWCVEmR14LGKvO5gbo9B/5uAu1+GVE+/Q/PbXHQg3LNVzx
-	lp/USy1E/FycZQ0VQF1/drcSHuMrB8E+pC3SLFi1trpMiXCl45+SUfth8UZWlYoO0c/Ihg96yeN
-	yKVQjXE/j7DjtqNZH6XIbNhsIuRNvOeew8DhiR120X6HDlv8jOzMODo/eY1lIVX03HIVDP2D+vV
-	Sm0/Ar5G8TjdfJWGy28I7EwGvn/7Np8riFCfPd2/q1wkAvveVbJdFFyUn3lPje99SKdZPpzrxbd
-	a44xqxRwawqUw00w==
-X-Google-Smtp-Source: AGHT+IFg1h+oSthyGc4tPORkNrPPpnVeUr6FNMPfEJgnXBupogksrkrfKGsIU7DtuK9+emJLDR1CpQ==
-X-Received: by 2002:a05:600c:608d:b0:46e:49fb:4776 with SMTP id 5b1f17b1804b1-47a8f8c18d1mr142495795e9.11.1765897975942;
-        Tue, 16 Dec 2025 07:12:55 -0800 (PST)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47bd90b81e6sm12034075e9.3.2025.12.16.07.12.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 07:12:55 -0800 (PST)
-Date: Tue, 16 Dec 2025 16:12:52 +0100
-From: Petr Mladek <pmladek@suse.com>
-To: Eugen Hristev <eugen.hristev@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
-	rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
-	mhocko@suse.com, tudor.ambarus@linaro.org,
-	mukesh.ojha@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
-	linux-hardening@vger.kernel.org, jonechou@google.com,
-	rostedt@goodmis.org, linux-doc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
-Subject: Re: [PATCH 21/26] printk: Register information into meminspect
-Message-ID: <aUF29MLUj3YRh4v_@pathway.suse.cz>
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <20251119154427.1033475-22-eugen.hristev@linaro.org>
+        d=1e100.net; s=20230601; t=1765898635; x=1766503435;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i2J5a4QLlp1gIHPWSsgnLzMZagpwihm0V+U4IQ8hkHA=;
+        b=thbJSrjvTt5AbJo4MYTlzeEfUly6aOC+MZrL7g3BVj2b+ZWjIdFve27VOzVsyzXOUM
+         K/rlSy3o5OJTgugHuo7GP2cNRU9QwPNKtXhMl6/FOehlrBtPKnolLQrmiih3trTdE/XG
+         35Uja7AgmoWFObXgDgX+NOGakKNuWjDY2/7xPXg8BK8umwV8gCYbZJdXGr66lCZquYr/
+         QoTHkaGpXItJoSaBJuTLxZi9QBYKZhiEXU+og30gZ+p8h34TgMrNtePfwzJ3DX6g4IX6
+         juU8k1VqvpONkKB7pxQzbQl0TMCFgvRW07HMUwaS6qNi02PLXpHvaOH4TZHE8azyGHO6
+         Pxxw==
+X-Forwarded-Encrypted: i=1; AJvYcCUq3z3h9ByUU+rNh4CgNkARIFivtPl8qzGyDS1kYWpNuOxn+iMgCbDKktpdrrWVgWIY7WQFfBqmSPHb9s/q@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW9dmlMzugnKcvm2TAxf980x/L1bbvgazQDfdYu1L9LSymUDDM
+	5p5LCjEkDaKj9+SD4gaV35qFucvAH6R1l9MNl/ZA3WPQUJ73KcsNbX9ud2qT8ELxqk4=
+X-Gm-Gg: AY/fxX427Tmsw7rjb7/KL5JPooSZFdNaxBz64JZYqPNe/VZtqTEWjV9gRLV+NR/bZFy
+	ej2DOmn7tIW/AO9/qZpAGFFtJmJ3Fs08JXmYBI8v5aTJcOv6KWjyA01Taes2F7nRZmWLlDo36PV
+	ele2wwG888pWLDOYH30BkY9D5HDHttFyOOZJaBNPNqlSHq1oAww+/g7Z/ojvjmgKOmMtaY1Y820
+	hUwiuu6kEIazkdQ/7CZ/RrHMpa848M2jvRifJOxlAaR8JjUqlLyius34tn800SJQql0Uqfu26YA
+	YAST/mhaI+f1bvjezeuq5noY7aGQbmgDCS8W2+uayHu0X27ndEzA5lrBHf4RXKoq+1GbC1qvlO+
+	0cEoa16UXf/ICf2BPFcThT3BaBGaVO0BomxTVnyq1L65b/8BN/DyM/dCERAnAts1EaaQOyUOOCJ
+	pYS+020/rH95r5Cl0Z0iaVQEkMAS3f9tazq4IHQ1Na8FLUh/dyOWhDUnjGUYyQwfjooBDlkZRuT
+	D61
+X-Google-Smtp-Source: AGHT+IHUqZ8MlsWcdLXjMndrMOISBhO6vzgQ33SdrvAjwJowVkeUJIKabKJZh0y+vSHN1OThLLU0NQ==
+X-Received: by 2002:a05:6512:e86:b0:595:834a:b1ed with SMTP id 2adb3069b0e04-598faaa6ddfmr3212199e87.7.1765898635326;
+        Tue, 16 Dec 2025 07:23:55 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5990da1a743sm964416e87.41.2025.12.16.07.23.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Dec 2025 07:23:54 -0800 (PST)
+Message-ID: <fa131841-ae9e-49ee-a7c6-728b4a6a4b60@linaro.org>
+Date: Tue, 16 Dec 2025 17:23:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251119154427.1033475-22-eugen.hristev@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
+ front camera
+Content-Language: ru-RU
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Richard Acayan <mailingradian@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-media@vger.kernel.org,
+ Robert Mader <robert.mader@collabora.com>
+References: <20251211014846.16602-1-mailingradian@gmail.com>
+ <20251211014846.16602-6-mailingradian@gmail.com>
+ <wwpqaecvz42jopgaboasbh353ieelctpvgo3yj6y5tnxoem5oz@j5sbx3yxntot>
+ <aTtkwQb2gOeWAFuv@rdacayan>
+ <d7jcawzugobqern6zlo5jwcnximtsroxywix53v2yp2isvzo5r@ymxicmgfjmzq>
+ <341012f3-18bd-4f96-98c1-f964d1fedb8f@oss.qualcomm.com>
+ <1d830282-a778-44aa-918b-5ab3e1516c0d@linaro.org>
+ <4c4e8e5b-66b1-4227-86ee-756eca945972@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <4c4e8e5b-66b1-4227-86ee-756eca945972@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed 2025-11-19 17:44:22, Eugen Hristev wrote:
-> Annotate vital static information into meminspect:
->  - prb_descs
->  - prb_infos
->  - prb
->  - prb_data
->  - printk_rb_static
->  - printk_rb_dynamic
+On 12/16/25 16:41, Konrad Dybcio wrote:
+> On 12/16/25 3:31 PM, Vladimir Zapolskiy wrote:
+>> On 12/16/25 15:56, Konrad Dybcio wrote:
+>>> On 12/12/25 8:22 PM, Dmitry Baryshkov wrote:
+>>>> On Thu, Dec 11, 2025 at 07:41:37PM -0500, Richard Acayan wrote:
+>>>>> On Thu, Dec 11, 2025 at 07:16:30AM +0200, Dmitry Baryshkov wrote:
+>>>>>> On Wed, Dec 10, 2025 at 08:48:46PM -0500, Richard Acayan wrote:
+>>>>>>> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
+>>>>>>> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
+>>>>>>> support for it.
+>>>>>>>
+>>>>>>> Co-developed-by: Robert Mader <robert.mader@collabora.com>
+>>>>>>> Signed-off-by: Robert Mader <robert.mader@collabora.com>
+>>>>>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+>>>>>>> ---
+>>>>>>>    .../boot/dts/qcom/sdm670-google-sargo.dts     | 107 ++++++++++++++++++
+>>>>>>>    1 file changed, 107 insertions(+)
+>>>>>>>
+>>>>>>> @@ -392,6 +420,64 @@ vreg_bob: bob {
+>>>>>>>        };
+>>>>>>>    };
+>>>>>>>    +&camss {
+>>>>>>> +    vdda-phy-supply = <&vreg_l1a_1p225>;
+>>>>>>> +    vdda-pll-supply = <&vreg_s6a_0p87>;
+>>>>>>> +
+>>>>>>> +    status = "okay";
+>>>>>>> +
+>>>>>>> +    ports {
+>>>>>>> +        port@1 {
+>>>>>>> +            camss_endpoint1: endpoint {
+>>>>>>> +                clock-lanes = <7>;
+>>>>>>> +                data-lanes = <0 1 2 3>;
+>>>>>>> +                remote-endpoint = <&cam_front_endpoint>;
+>>>>>>> +            };
+>>>>>>> +        };
+>>>>>>> +    };
+>>>>>>
+>>>>>> This would be much better:
+>>>>>>
+>>>>>>     &camss_endpoint1: {
+>>>>>>         clock-lanes, data-lanes, remote-endpoint here
+>>>>>>     };
+>>>>>
+>>>>> I'm not sure what you mean, there might be some typo.
+>>>>
+>>>> My point is that you are duplicating `ports { port@1 {.... }; };` from
+>>>> the base DTSI here.  We usually try to avoid this kind of path
+>>>> duplication. If you can't have an empty endpoint in the base DTSI, I
+>>>> suggest adding necessary labels to port@N nodes and then extending those
+>>>> nodes in the board DTSI.
+>>>>
+>>>>> If this is about using the commonly-defined endpoints, Vladimir broke it
+>>>>> in commit dcf6fb89e6f7 ("media: qcom: camss: remove a check for
+>>>>> unavailable CAMSS endpoint"). If I do this again and go full circle, I'm
+>>>>> afraid this could break a second time before even making it to
+>>>>> linux-next.
+>>>
+>>> Quite frankly I don't think that commit was valid, given it's conceivable
+>>> that an endpoint could be unconnected..
+>>>
+>>
+>> Endpoint is not a device, status property is the property of devices and
+>> not a property of anything else as the Devicetree Specification v0.4 and
+>> earlier ones define. Dangling endpoints are fine, there is no need to
+>> add another property to determine, if an endpoint is connected or not.
+>>
+>> There should be no status properties inside endpoint device tree nodes.
 > 
-> Information on these variables is stored into inspection table.
+> The spec doesn't actually define what a "device" is. Funnily enough, it refers
+> to "endpoint" as a device:
 > 
-> Register dynamic information into meminspect:
->  - new_descs
->  - new_infos
->  - new_log_buf
-> This information is being allocated as a memblock, so call
-> memblock_mark_inspect to mark the block accordingly.
+> 2.2.2 Generic Names Recommendation
+> The name of a node should be somewhat generic, reflecting the function of the
+> _device_ and not its precise programming model. If appropriate, the name should
+> be one of the following choices:
 > 
-> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+> [...]
+> 
+> * endpoint
+> 
+> 
+> Plus an OF node is opaque in its purpose.. The top node, a firmware node, a
+> node representing a physical IP block and a config.ini-style blurb are all
+> "device nodes"
 
-I haven't tested this. But it looks reasonable from my POV.
-I assume that the output from the "log" command was from your
-synthetic test so that "crash" was even able to print the messages.
+It sounds like somebody of DT maintainers should clarify the matter and update
+the spec to be less ambiguous, if it happens that "device" term is undefined.
 
-Feel free to use:
+> 
+> But coming back to the real world, the ports/endpoints represent the physical
+> connections to CAMSS and it makes sense to have them defined in one place,
+> especially since there's a predictable number of them that should not be left
+> up to each board to define.. That quite obviously implies that not all boards
+> are going to utilize all interfaces and the commit of yours that was mentioned
+> above seems to only be valid on the basis of semantics, which I above mentioned
+> are not *really* a valid point..
 
-Reviewed-by: Petr Mladek <pmladek@suse.com>
+For whatever reason CAMSS on SDM670 is very special, because IIRC there is no
+other platform with preset status poperties of endpoints. This exclusive SDM670
+specifics shall be analysed and eliminated, since it hasn't been done during
+patch review time, it's time to do it right now then.
 
-Best Regards,
-Petr
-
-PS: I haven't attended Plumbers conference this year so
-    I do not know what is the current state of this project.
-    
+-- 
+Best wishes,
+Vladimir
 
