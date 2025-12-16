@@ -1,296 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-85390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56474CC41D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:06:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00210CC41D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:06:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2A9B1303CCFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:04:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 98DF0304DA0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:02:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D336346E77;
-	Tue, 16 Dec 2025 15:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819241D86FF;
+	Tue, 16 Dec 2025 16:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="MIxWhb2p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFrTuZ86"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013014.outbound.protection.outlook.com [40.107.162.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92252346AC2;
-	Tue, 16 Dec 2025 15:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765900543; cv=fail; b=IzqI9H70AzLEfQ0hmHXAgn+9oRUTmpVjKnPSTZgVMjCOqa+JdAjK07pxxiS3ftkrycGbsRPURK9hEsUxsxYUZw1HPY9+kpoa7+EIW2D2osF2Bi/2NiddIpt2ED8qy1p546EQgcIEMs0F3122IDnLPkJDkWCehBZV79TzrZx3Yx8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765900543; c=relaxed/simple;
-	bh=5Qix+p47pAyRLzNAcdLgWnZv1iu6g6ylbAJPUA4CLXo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=mSf6mHLccXMrp+utpOVQmKrXk5eFs2LkWG47nxNcRPLzxU9iiB9J6SJu5D8Y0oQZx5Zube5Jv0Ali51ECP+mFNe59fufCSi+XX0PqS7R8XzuYzzEwWad4Sn90hhjbU1sd72mtmglQIbbi5Ncxk/Lv5mf94/JOduo5TMq8EEn9DI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=MIxWhb2p; arc=fail smtp.client-ip=40.107.162.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=khk6Kvyw0HvxDPeIJlky/ex/kZMmr93eGfIFg+DzRGEmJGvxb4eeoL81AxoJTQ3Z6Isof8sELimZ4NZgFS4TTqOEDUUdubgrdSyfR1EbOppd2dSg1HM1HAnO2bgTvrQCdkXwLKLU4NgoIJNydykakZlGzENqLRq77B3CyMkxbQh7aF5v+lcm2EhXHkz+oq29DENNO8m2lvcTxKEpLqbnuQILO/I6KWAlFLc4jd6EM7V9OcyMXoLNH0cTOm1QFPFLSQJC+2OAPVlu+DzVAOXgq69nEqgBoPaLK38epE5jIzlGA+GhoEj2qladPN1c1Zwyuc3k48rzY4Roe35Vq+4THg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rWKRvvQqrWnyJvD6H3w1zuqhISioJQivJla4pZjnjvs=;
- b=pGQlxv5sQibem6bIXN+c3BxmJJPHUjhOwEm/yK1zgf6BGEcekokuAfrKzFKxfP28wd22pcTiqJAtNZxPM7SzkJKj4pvpSLYRPFqhR025R/6pk/2+YBI0vFth2ZNxfPO5tRr++BopXqqpeluUTyYOLn8qZiPMAqtdIaM6bSyPHjC5C2dqmgliZjkF+Z0lg4sAJ8MrFTuoNe6V2HrDNhXd5ULABx8lWwJ/yMHbn9EfAF+BD5xler3s3GzzX3NAPmdb0kwCbrOF1bTc+TMbcIxItV0U2W0u+t1g4q0/bIaLOO6tMTnKtFOow7kwLszri6MEfl+GX/Lt/6k1Sfe3ZDKZvQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rWKRvvQqrWnyJvD6H3w1zuqhISioJQivJla4pZjnjvs=;
- b=MIxWhb2pfGAo2dGS2wGP4AFdrnhCfJ4XFMKHZfg/uxHD/PVUcZ/lbQCvk3cvyDMbewgIfOJhCQOw1gxQJ5srhBSkEILnng6pEmrrvDqsOO5TwOIT7IGvF+QTxIXMM5WbzZBAYTblK/TVsBDB3qqaLbvkJ3uamw2FNNbtTWzX5PdAKZh6gZgpOH2CIip+dWzRgT6mbhQZEUXsCW8jJdzOeqJoh9gFJJsFPmoRSFhjx9t7blsc/hPhX3E8FtJus96kEkerhJh2oT+I53fTzFhyOj0FqhZCVT1tO5llMNyvvoubC0n+BYzx9P6rJWCR9FmpzPcOIqGHU4BsWFz6acgpSw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from DU2PR04MB8951.eurprd04.prod.outlook.com (2603:10a6:10:2e2::22)
- by AM9PR04MB8954.eurprd04.prod.outlook.com (2603:10a6:20b:409::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.6; Tue, 16 Dec
- 2025 15:55:34 +0000
-Received: from DU2PR04MB8951.eurprd04.prod.outlook.com
- ([fe80::753c:468d:266:196]) by DU2PR04MB8951.eurprd04.prod.outlook.com
- ([fe80::753c:468d:266:196%4]) with mapi id 15.20.9412.011; Tue, 16 Dec 2025
- 15:55:34 +0000
-Date: Tue, 16 Dec 2025 10:55:26 -0500
-From: Frank Li <Frank.li@nxp.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Koichiro Den <den@valinux.co.jp>, Niklas Cassel <cassel@kernel.org>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev
-Subject: Re: [PATCH 0/8] dmaengine: Add new API to combine onfiguration and
- descriptor preparation
-Message-ID: <aUGA7tmDYm1MhRXn@lizhi-Precision-Tower-5810>
-References: <20251208-dma_prep_config-v1-0-53490c5e1e2a@nxp.com>
- <aUFUX0e_h7RGAecz@vaman>
- <aUF2SX/6bV2lHtF0@lizhi-Precision-Tower-5810>
- <aUF-C8iUCs-dYXGm@vaman>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aUF-C8iUCs-dYXGm@vaman>
-X-ClientProxiedBy: SN7PR04CA0235.namprd04.prod.outlook.com
- (2603:10b6:806:127::30) To DU2PR04MB8951.eurprd04.prod.outlook.com
- (2603:10a6:10:2e2::22)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9E63B7A8;
+	Tue, 16 Dec 2025 16:02:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765900948; cv=none; b=MOj2cfVG86bP2iMeaEbzPbV5fGyNXDk88ZFYaMkX1Abdkra+bvfUFhUqdWiN0BlnnbT5qKtOO9ANCoLAlKlR267MTR6QF7vIHdhqAP3tItld4TqBmbUNUtecnf34pTBg73sTKjB5d63Opb015spMhd4Uk2SDuqzqqroaQdEAnk4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765900948; c=relaxed/simple;
+	bh=4dgCEM4nTnnn0sFZ8m1aMoo3gsMxbEEftNNJrXbVIlA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SaK54N7C0OSbfLqKcSw0PmIHiu+juVZW17g1lUUcMPhBjHY7NOU/ZzFQJfri/hOPgyaCW/McHeH5Mb78ubFSay7bNW8YEtnAtcoquWit7xYc7VYSwUPSEnW9Gf7aMhy4os/DB1brscVgRz9vM5JFh7E+bIcOvT1IBs8y6dVFRx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFrTuZ86; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F644C4CEF1;
+	Tue, 16 Dec 2025 16:02:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765900947;
+	bh=4dgCEM4nTnnn0sFZ8m1aMoo3gsMxbEEftNNJrXbVIlA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rFrTuZ86QqRyQSV08D118p9n5vQ2OyOm5MiEyFd++uezU33AUrwth1Qy1nCHkXJU0
+	 Im+OB3jqWGddoWb7tGoDgefOwseKq4qJnJ5I1+NZ6zz6VXvbLIsRva+OnJ3wI6d44l
+	 t7CgtgjOT9gUFjUuprW0G8r+joVRkeW14S42NNMNf5+7iOdZhRj8ojHjjeBNNJadNx
+	 iK/oN9/wisFa3oN8JNlqFfbwEfGpIFCyT0BzZXmsh5i4CpOYP9Qz90lcw1Uo4WKTCs
+	 6A57ThEZuaO5+QECzQ07ZVfG5GxUCMVGpFtqXr6M0ObNkHST7jCw7wQJRw8Pe7f+D8
+	 39IJ/ntB+1YQg==
+Message-ID: <047e0283-75be-4ce1-b6f4-e500e0a653e8@kernel.org>
+Date: Tue, 16 Dec 2025 17:02:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU2PR04MB8951:EE_|AM9PR04MB8954:EE_
-X-MS-Office365-Filtering-Correlation-Id: f632ccca-1e06-4802-15bf-08de3cbb8c1a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|52116014|7416014|366016|1800799024|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?b9YMGedgganElge629YlXO3Z5ArbwvhE9GEtmKg8WoG89zdHT4l4qhTnw/ip?=
- =?us-ascii?Q?p8BY3AK1ukYexiElBVJHRLlZPSCei2ymhyfoD3sfq9gGuzen8yRxNH8n7nT9?=
- =?us-ascii?Q?Tndz5LxWwD46HjHjEcI/ui2in+Ab0OxdDpTQuKXltq1JyVuGpbg90u8/+6aV?=
- =?us-ascii?Q?t14P7qwOob3TgL/SeT4xPatKEf/cJxqi4m1u+90Gme+n03zKmfhxYN58ue7b?=
- =?us-ascii?Q?6HRAmo8C5fzCXfvD0F8A2KOEfHEBnEUL9/GWj0I7M7oIqRFJAuAkhoRoHWf5?=
- =?us-ascii?Q?7+s0RBVM0vH6KBpSHWsWqVY0P7Vno4h4g70AJQ/V2BPHoyumXhl6chua7raY?=
- =?us-ascii?Q?g65zBsu633+4oK7NN1zSG47w0YO5i987qhBf7ts3RXCYfO47oW02S9Y9LbOt?=
- =?us-ascii?Q?kCB28kPKhR5GY/lhjsKZHiXGgphw+tEByH7qM2HHAAnSzIUK8li4DFGWuvRB?=
- =?us-ascii?Q?PuaROQsPJGU9I5C0VAaTcl29StRZDcKE8LqgRDdTjegdda6+sGMjCFnpdyWE?=
- =?us-ascii?Q?ienWbPGRegxsuMekAxLMmCyXdEgyncEmfj8PVErbtYa9wI8+ZqqOWNOxNfR6?=
- =?us-ascii?Q?21fV1M6uaQAxcr5lR6RR+i1s1xp3qEhuNmsG9oxzjbYb4r/wIPchgCbPJ1p8?=
- =?us-ascii?Q?qQ/HV+fDOS5RWyCPBQebZwQCk9wh6mj/XNpatTm3sMLBmc9CtTlcCiQ+YzH5?=
- =?us-ascii?Q?KaJLEun8nZMRSTmz8oLqXYqct67WsdtgYM8tkaXewWkDoDxUqeSw/U2Z5nRG?=
- =?us-ascii?Q?dabMCwoYWL1ogKlulWaOEqE+XbPlAD2AaQ5JtlNpA2MQi4SxO7KzAVx/gqk3?=
- =?us-ascii?Q?9NxCuxD1aEmA/fD/jSCJztLXXJPSgUymUlcvfLaHtG8usbxyGsjQqAlxksTc?=
- =?us-ascii?Q?TcOL041JcYNUAtNhoDwgkxr/gJ6QAV4XVR05pA0DSChNZ1wEyOIOGgNVBMKz?=
- =?us-ascii?Q?wiR/Y3bpEGe12lXGzgoGfFiOy7kDW/dESeJ0WBYF+Q6kYmUGSLSuMItCobfp?=
- =?us-ascii?Q?NTpVPZpZdOgEFTcFNCgBi4coe7vjpsUj4VKLYv9O7sCkIuZwh0+opF1NCQCe?=
- =?us-ascii?Q?rmNVvC6q3tyCPgrKityzO9h0rQQ7iaTr2nNKvD/SkXfXax6fGjHbYT4lmQVC?=
- =?us-ascii?Q?YF1O7y3MjQ5BHFpHUjWiV+ykGjNRlRyih8ku99q6ee41Gf55fAV2a2NwqJpX?=
- =?us-ascii?Q?GTF3m6KEQlCp+3ipN7PJNgT56oZ98rQ54+W2fGn5hyGCe1gnWG1HJU7t+03H?=
- =?us-ascii?Q?0lJhkM8zJ/IUsK7rurzeXzJPxE1hzTrRn2/gGIBLvZ3kEcGV8yQ93enNwmvn?=
- =?us-ascii?Q?U4VyBfgfP83C1RjWcJAvYCKC61y10YuJH/pSupZrF240OzZsakdPzSbF3Xb2?=
- =?us-ascii?Q?IlKQnfoiIbbnYMge+aHxvlIX0XCcaf3WDDB+sFrLQT9iLf1DNwtwjI0M3n1T?=
- =?us-ascii?Q?auG1gZKtLIyWX7k3uFHkVXJnwUtxlWsO7U/y34fznU1CMCFFIfHimzQbJAoC?=
- =?us-ascii?Q?frJS27drQXeT1hDbGr/pvMwni7+9pBnYVmT5?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8951.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(52116014)(7416014)(366016)(1800799024)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?iB2L/0CIEBXx1PmYT7v9VCUKzc59mBuvpXG1BpauRoOhvxEoyOUqDHOOXM24?=
- =?us-ascii?Q?2sr4IHMvZOUIfo3OHTkVq9ytp4Z/57Y21JxYyzY6dtYHQhgeqUGkCZ9e+B0j?=
- =?us-ascii?Q?SXLBXAMoczBGq4FbzFTG9GdBQq7OP/H4qnGMW+3PwNnHXZ5L+D4yuBlhYx3F?=
- =?us-ascii?Q?sjmiTdiZutQm3f0TiDhSRkPmH7kU9zT8z7DZsSf0LI72x+fgKhGDtq1RyD4F?=
- =?us-ascii?Q?+EpwCrSKXFtMIeyNFDFZWKDd5RDJIJ+SCWBidBUhVWuKy8o5RPyJFhC85JLg?=
- =?us-ascii?Q?vme4n9FVH2k8QPOM2oiOB9+i+BIfMsuTdCvpOvRrLTKuJLkbqyc3Kl4lJVyR?=
- =?us-ascii?Q?GpIYGhDyB7gbjzwmL8ik3IkJbKnvhHKI2sInNJT4Rnkuzptwi0q1YKDxvGC2?=
- =?us-ascii?Q?Fvt2gWsNh9dbBqRvZp9Flq8pe4RHQYWRbIzvrtBhxlEvxM5oYrICD6rLzEGF?=
- =?us-ascii?Q?/GzRtKmHz775CXsnhRo/A5TyK5l7IgrQ0SLiK24TgJiADC15LyiiekFDkfAn?=
- =?us-ascii?Q?sm4VsMUjLcaoswFX3vQlfsIsf8Wx1YjdqA9hh3XunggYpfQ0ChyoZzGTz4Sk?=
- =?us-ascii?Q?nxbLVfc9io3IV6SlM6rWQYHxStrS/eGaltD7SAbp2MNxN8uK8X46A6Q3D2nW?=
- =?us-ascii?Q?7inRk0GCwrS1y4HGCqXOG5Nm0eo85xVykbg8/bWGD4GIvgiwnEQOr9pQpib4?=
- =?us-ascii?Q?e5VXEQ7kdAJI3OwtIAtl3gKU3jfvDF7Tx6b1Pgis1KHURVRl/4v090NW27fW?=
- =?us-ascii?Q?vVEs4yMcM6/76lj8/N8mDIhFUp4VZ1lRv9awGrVNtCASGbGCb60CSIrrxdSZ?=
- =?us-ascii?Q?Wt0aV4PHv9Zk2FnYiArnyel8s3H2l+fXY3NY7n3OTwC+XdoFOU7BRzT3wLD2?=
- =?us-ascii?Q?JqmrooINZD9StVE0JpdO7FH54WvnhZO8zmnWVxcq4kapDBN7uHd7aMkdY/pi?=
- =?us-ascii?Q?bKsImGLong9daMhBaX144GpJburnTgnx0zyYTV+L0iO9+yJGyw7ZRysqTSLs?=
- =?us-ascii?Q?3ykxz+0YwAKUILINgbc9JzPCpluLNqnlQ7NwsYBzEUxezjf7SHMbKJ+5fpGZ?=
- =?us-ascii?Q?w0KbTU85V0A7ZNT72tG2Xz89XROcdZXI7Pvn7tmdqRuQK0b9EOakt0pQmG4q?=
- =?us-ascii?Q?fADPwpW33jyPRfgFzzv1ADu53sSAvIh7fVO5YAAzKH6Pfp+W0GA5zkdWBJGX?=
- =?us-ascii?Q?e49zQj+YvAM2qEstqx5K7t+FHenem3bIDdUE/ULcp3d/KnNgGcobmrCzX6GD?=
- =?us-ascii?Q?bMdDdSZvpRsncQmzWaG4CD0g3h4Z05GigZcRFXdD76IyjD0SN3A7Lyj4c5p4?=
- =?us-ascii?Q?RU1bO58AkBSgw0t/xJ2HSLfnWSCRn3M3k2r0nmBAftB8410reA02tIOQsyzd?=
- =?us-ascii?Q?ZOP8vnBWZU5ya1aA6wbrc28Qi7MasHnuwqmkHPL8jzDvvNjqv3OYiBRRkYTt?=
- =?us-ascii?Q?4sGxPM5Vr3pc+lAIk9pixZfV3oTrbPP8unmsiAjnVHExXxfbx9Zqxor37A7Q?=
- =?us-ascii?Q?YI/AOsdareS6peLQbDnQUUSf/RVrNcoaoZaMDgW+YENxKxkietNXQjlg4alA?=
- =?us-ascii?Q?jq18+gDJCzrTfuarmWmjqOznpXBGfg3PQZgUMwBE?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f632ccca-1e06-4802-15bf-08de3cbb8c1a
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8951.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2025 15:55:34.3562
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: z55vdi7hIw/1NNMsD4xM83rlsi2JYA+NW9fLPc2Vxb/Q9cBelnwosPBimuKsYwFvkVN7Q6L/OlR/WYiVkedzIQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8954
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/5] arm64: dts: qcom: Add sdhc dll-presets
+To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dmitry.baryshkov@oss.qualcomm.com, quic_pragalla@quicinc.com,
+ quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
+ <20251215120009.3877889-3-quic_rampraka@quicinc.com>
+ <0f7c0d5c-7f77-4669-9648-62d008f15b1c@kernel.org>
+ <9f5fcce3-b9c0-4aae-b4e0-10475eb5ec9e@kernel.org>
+ <b98eb114-6967-4ac4-8b4d-936966a58171@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <b98eb114-6967-4ac4-8b4d-936966a58171@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 16, 2025 at 09:13:07PM +0530, Vinod Koul wrote:
-> On 16-12-25, 10:10, Frank Li wrote:
-> > On Tue, Dec 16, 2025 at 06:15:19PM +0530, Vinod Koul wrote:
-> > > On 08-12-25, 12:09, Frank Li wrote:
-> > >
-> > > Spell check on subject please :-)
-> > >
-> > > > Previously, configuration and preparation required two separate calls. This
-> > > > works well when configuration is done only once during initialization.
-> > > >
-> > > > However, in cases where the burst length or source/destination address must
-> > > > be adjusted for each transfer, calling two functions is verbose.
-> > > >
-> > > > 	if (dmaengine_slave_config(chan, &sconf)) {
-> > > > 		dev_err(dev, "DMA slave config fail\n");
-> > > > 		return -EIO;
-> > > > 	}
-> > > >
-> > > > 	tx = dmaengine_prep_slave_single(chan, dma_local, len, dir, flags);
-> > > >
-> > > > After new API added
-> > > >
-> > > > 	tx = dmaengine_prep_slave_single(chan, dma_local, len, dir, flags, &sconf);
-> > >
-> > > Nak, we cant change the API like this.
-> >
-> > Sorry, it is typo here. in patch
-> > 	dmaengine_prep_slave_single_config(chan, dma_local, len, dir, flags, &sconf);
-> >
-> > > I agree that you can add a new way to call dmaengine_slave_config() and
-> > > dmaengine_prep_slave_single() together.
-> > > maybe dmaengine_prep_config_perip_single() (yes we can go away with slave, but
-> > > cant drop it, as absence means something else entire).
-> >
-> > how about dmaengine_prep_peripheral_single() and dmaengine_prep_peripheral_sg()
-> > to align recent added "dmaengine_prep_peripheral_dma_vec()"
->
-> It doesnt imply config has been done, how does it differ from usual
-> prep_ calls. I see confusions can be caused!
+On 16/12/2025 13:41, Ram Prakash Gupta wrote:
+> 
+> On 12/15/2025 5:37 PM, Krzysztof Kozlowski wrote:
+>> On 15/12/2025 13:05, Krzysztof Kozlowski wrote:
+>>> On 15/12/2025 13:00, Ram Prakash Gupta wrote:
+>>>> Add sdhc dll-presets for qdu1000 target.
+>>>>
+>>>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 4 ++--
+>>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>> Please use subject prefixes matching the subsystem. You can get them for
+>>> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+>>> your patch is touching. For bindings, the preferred subjects are
+>>> explained here:
+>>> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
+> 
+> sure I missed to add qdu1000:, will add in subject.
+> 
+>>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>> index 846e5e5899aa..bc31504d5c8c 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+>>>> @@ -912,8 +912,8 @@ sdhc: mmc@8804000 {
+>>>>  
+>>>>  			bus-width = <8>;
+>>>>  
+>>>> -			qcom,dll-config = <0x0007642c>;
+>>>> -			qcom,ddr-config = <0x80040868>;
+>>>> +			qcom,dll-presets = <0x000F64EC 0x0 0x01	0x2C010800 0x80040868>,
+>>>> +					   <0x0007642C 0x0 0x10 0x2C010800 0x80040868>;
+>>>
+>>> That's non-bisectable. You just broke the users of this DTS. Also, case
+>>> change is not explained and your binding said nothing about deprecating
+>>> other properties.
+> 
+> right I will update the sequence of dt as last change in the series.
 
-dmaengine_prep_peripheral_single(.., &sconf) and
-dmaengine_prep_peripheral_sg(..., &sconf).
+This will fix nothing. Please read maintainer soc profile how DTS is
+handled. It's still no go, shall I be explicit with NAK?
 
-The above two funcitions have pass down &sconf.
+> 
+> I couldn't get "case change is not explained" but I guess ask is for
+> explanation why is this change needed. As the soc is using artanis
 
-The usual prep_ call have not sconf argument, which need depend on previous
-config.
+No, why are you making it upper case. What is the preferred style for DTS?
 
-further, If passdown NULL for config, it means use previuos config.
 
->
-> > I think "peripheral" also is reduntant. dmaengine_prep_single() and
-> > dmaengine_prep_sg() should be enough because
->
-> Then you are missing the basic premises of dmaengine that we have memcpy
-> ops and peripheral dma ops (aka slave) Absence of peripheral always
-> implies that it is memcpy
-
-Okay, it is not big deal. is dmaengine_prep_dma_cyclic() exception? which
-have not "peripheral" or "slave", but it is not for memcpy.
-
-Frank
->
-> > - dmaengine_prep_dma_cyclic() is actually work with prepiperial FIFO
-> > - some prepierial FIFO work like memory, by use shared memory method, like
-> > PCIe map windows.
-> > - argument: config and dir already passdown information to indicate if it
-> > is device preiperial. So needn't indicate at function name.
-> > - maybe later extend to support mem to mem by config becuase adjust burst
-> > size for difference alignment or difference bus fabric port to optimaze
-> > performance.
-> >
-> > Frank
-> >
-> > >
-> > > I would like to retain the dmaengine_prep_slave_single() as an API for
-> > > users to call and invoke. There are users who configure channel once as
-> > > well
-> > >
-> > > >
-> > > > Additional, prevous two calls requires additional locking to ensure both
-> > > > steps complete atomically.
-> > > >
-> > > >     mutex_lock()
-> > > >     dmaengine_slave_config()
-> > > >     dmaengine_prep_slave_single()
-> > > >     mutex_unlock()
-> > > >
-> > > > after new API added, mutex lock can be moved. See patch
-> > > >      nvmet: pci-epf: Use dmaengine_prep_slave_single_config() API
-> > > >
-> > > > Signed-off-by: Frank Li <Frank.Li@nxp.com>
-> > > > ---
-> > > > Frank Li (8):
-> > > >       dmaengine: Add API to combine configuration and preparation (sg and single)
-> > > >       PCI: endpoint: pci-epf-test: use new DMA API to simple code
-> > > >       dmaengine: dw-edma: Use new .device_prep_slave_sg_config() callback
-> > > >       dmaengine: dw-edma: Pass dma_slave_config to dw_edma_device_transfer()
-> > > >       nvmet: pci-epf: Remove unnecessary dmaengine_terminate_sync() on each DMA transfer
-> > > >       nvmet: pci-epf: Use dmaengine_prep_slave_single_config() API
-> > > >       PCI: epf-mhi:Using new API dmaengine_prep_slave_single_config() to simple code.
-> > > >       crypto: atmel: Use dmaengine_prep_slave_single_config() API
-> > > >
-> > > >  drivers/crypto/atmel-aes.c                    | 10 ++---
-> > > >  drivers/dma/dw-edma/dw-edma-core.c            | 38 +++++++++++-----
-> > > >  drivers/nvme/target/pci-epf.c                 | 21 +++------
-> > > >  drivers/pci/endpoint/functions/pci-epf-mhi.c  | 52 +++++++---------------
-> > > >  drivers/pci/endpoint/functions/pci-epf-test.c |  8 +---
-> > > >  include/linux/dmaengine.h                     | 64 ++++++++++++++++++++++++---
-> > > >  6 files changed, 111 insertions(+), 82 deletions(-)
-> > > > ---
-> > > > base-commit: bc04acf4aeca588496124a6cf54bfce3db327039
-> > > > change-id: 20251204-dma_prep_config-654170d245a2
-> > > >
-> > > > Best regards,
-> > > > --
-> > > > Frank Li <Frank.Li@nxp.com>
-> > >
-> > > --
-> > > ~Vinod
->
-> --
-> ~Vinod
+Best regards,
+Krzysztof
 
