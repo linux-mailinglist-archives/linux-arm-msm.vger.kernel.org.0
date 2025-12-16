@@ -1,100 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-85401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46916CC48BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 18:08:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A51E4CC49B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 18:15:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4FBB030E9296
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:00:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 412823020CFD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:15:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F19530BB87;
-	Tue, 16 Dec 2025 16:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8F82328608;
+	Tue, 16 Dec 2025 17:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RIBvJ3Kn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fd77r7CV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A83F157480
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 16:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462EF72602;
+	Tue, 16 Dec 2025 17:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765904384; cv=none; b=pZ4R17bmNTUtRHrbQNQAgvV+lhJ9HlP4t11E7K5b5MuxDZczTKO+K6XOuKEtn8PX1omuNcA0nQ4sOPLlTC4l+Q4VAKeAzMzRLZWL2zliDCzGQSD0Ni5VkQP6lsWmb1rzJbBba0iJksRE3frWCklIeVIK5g0hIWas1Eg0wAyZrDc=
+	t=1765905309; cv=none; b=LnuBWAAjmNS2H98DgxXyYO0++R/7z6nfVFFmOBNxnmRrzJO4YbXJ3UzLvKgXYTaYKuzM4KQ0XghUM0VymuD4mYmdBnSPH7tynXhqwB3tIbpa+pZxfBb8qkIuscPTn9De8dk61UpXIeDtAYiqlJUl0Np+hUBNBxPfkpeWXrOtUEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765904384; c=relaxed/simple;
-	bh=/ijnLDUb9CQME0qI2gWKSAPbBVhfRXPEwaX0lLnaaas=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=szy4YXZ0g49Wr+Nvb/FGPif/Ia84TFf2Bp1Omjhmqe6rhcOrW6l2KfQtq54n1ody3+q379fkZMkZMe7UF7N+WWHfZwYGf1klmjVE1qDjI9oeFsrr0yvOJwA2RWqCtBGDoNNXBOdgoorqQUca9T/xQXryHSL397MSx5moUlqtvGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RIBvJ3Kn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD32C4CEFB;
-	Tue, 16 Dec 2025 16:59:40 +0000 (UTC)
+	s=arc-20240116; t=1765905309; c=relaxed/simple;
+	bh=mcmdjoIeQ8dVaydge/S3sCXDOzpTarcOqio6eoFh39k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rrHXTHMM8940VyGS/oFtYGMoLc0inKaEen3gfFSjzRe7hxDv+h6CXG8f1C6j1EL+GVsg7SXXRfTic0i4cDAjJGllioKn/CEVIYo3k65J38YH6pkjVC/jeOovTFpI04ejlhHffXEJJeIDMx5eZzfHHNIrto//AQQ7DGmtaBDR07I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fd77r7CV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79985C4CEF1;
+	Tue, 16 Dec 2025 17:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765904384;
-	bh=/ijnLDUb9CQME0qI2gWKSAPbBVhfRXPEwaX0lLnaaas=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=RIBvJ3KnAH5vOwS453MxRhzr+wWJFwGuX+1tg/NpRqPq0qaLE4ksqd32E8JvyMT+Z
-	 qJRJq6ZKtm4WJQ+DxpNBu5YW2Oiygn/4mtjYNnIaAEnsmCyiQlrgNUxYkSRxz0BTeL
-	 eOA009AwfBJFGhQANqPsVQ2DTUsx13YhwiAXyfxbwBCL9cBVWS1HnEWJT753MhmCJO
-	 ioD1R/o9Fjg0+OoUAIntOCuZ878WB8YriQUXAGoORgEhOMY6gjtvpN8nU9Ba6Rq7rA
-	 2lnhkZDarRjmlZrabydQwzxoYaz/Iorj+Zh/Tk0tfCDO0uQs1Y+xv6k21Vli78T2K7
-	 hKwECA0A5K02Q==
-From: Vinod Koul <vkoul@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, 
- Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, 
- Sinan Kaya <okaya@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
- Michal Simek <michal.simek@amd.com>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- Abin Joseph <abin.joseph@amd.com>, 
- Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, 
- linux-arm-msm@vger.kernel.org
-In-Reply-To: <20251027133232.392898-1-sakari.ailus@linux.intel.com>
-References: <20251027133232.392898-1-sakari.ailus@linux.intel.com>
-Subject: Re: [PATCH 1/6] dmaengine: at_xdmac: Remove redundant
- pm_runtime_mark_last_busy() calls
-Message-Id: <176590438034.430148.2613882199706918410.b4-ty@kernel.org>
-Date: Tue, 16 Dec 2025 22:29:40 +0530
+	s=k20201202; t=1765905308;
+	bh=mcmdjoIeQ8dVaydge/S3sCXDOzpTarcOqio6eoFh39k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fd77r7CVON1lRH0b5ILmf5Gy/OkXnk169H1lioS5jyy9elisWdT1B/13wKfu+8pZc
+	 MMVtqqxS56r1V01p+Q85v7lwRhImLwUnIJJ0vwO75aAuzEyDngWY8pLjYM79dfY8f+
+	 5hyuQnh96NvBdqQApeIyRFLfbs6yW4Y4LKCn8Aw/RrfYIIobxDskLwKUX6wRtVGBKw
+	 R2zpsoAI2i5/AFYKvFT2N8twQh/qnJ6umnF7PnanyQvjDYoEksoloEXlTs+/elMEY/
+	 PTZGiL02hNPhdY5Gtl8RycZ9WpmAyen3c6YEpedvcyXnwPyXz276eehtsd3P+/npXv
+	 IAcWNiEQ0WdfQ==
+Date: Tue, 16 Dec 2025 11:15:05 -0600
+From: Rob Herring <robh@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Jonathan Cameron <jic23@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michal Simek <michal.simek@amd.com>, Vinod Koul <vkoul@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>, Yong Wu <yong.wu@mediatek.com>,
+	Peter Rosin <peda@axentia.se>, Linus Walleij <linusw@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	dmaengine@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-iio@vger.kernel.org, iommu@lists.linux.dev,
+	linux-gpio@vger.kernel.org, linux-sunxi@lists.linux.dev,
+	imx@lists.linux.dev, linux-sound@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: Remove unused includes
+Message-ID: <20251216171505.GA2641341-robh@kernel.org>
+References: <20251212231203.727227-1-robh@kernel.org>
+ <20251213165949.4b51f7cb@jic23-huawei>
+ <695ca5d2-b713-4838-8427-a9d31751c0cf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <695ca5d2-b713-4838-8427-a9d31751c0cf@oss.qualcomm.com>
 
-
-On Mon, 27 Oct 2025 15:32:27 +0200, Sakari Ailus wrote:
-> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-> pm_runtime_mark_last_busy().
+On Tue, Dec 16, 2025 at 01:02:52PM +0100, Konrad Dybcio wrote:
+> On 12/13/25 5:59 PM, Jonathan Cameron wrote:
+> > On Fri, 12 Dec 2025 17:11:52 -0600
+> > "Rob Herring (Arm)" <robh@kernel.org> wrote:
+> > 
+> >> Remove includes which are not referenced by either DTS files or drivers.
+> >>
+> >> There's a few more which are new, so they are excluded for now.
+> >>
+> >> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> > 
+> > Acked-by: Jonathan Cameron <jonathan.cameron@huawei.com> #for-iio
+> > 
+> > Ideally we'll get a QC ack on those as well.
+> > 
+> > Jonathan
+> >>  .../dt-bindings/iio/qcom,spmi-adc7-pmr735b.h  |  30 --
+> >>  .../dt-bindings/iio/qcom,spmi-adc7-smb139x.h  |  19 --
 > 
+> Those are being moved to dts/qcom:
 > 
+> https://lore.kernel.org/linux-arm-msm/20251127133903.208760-1-jishnu.prakash@oss.qualcomm.com/
+> 
+> and will hopefully be in use later in this cycle.
+> 
+> Krzysztof and the submitter agreed on that outcome since they represent
+> hw constants and aren't "real" bindings (connecting sw to sw)
 
-Applied, thanks!
+Okay, I'll drop those 2 when applying.
 
-[1/6] dmaengine: at_xdmac: Remove redundant pm_runtime_mark_last_busy() calls
-      commit: bce33c132a2061c9a7958474c3e2d030c22664de
-[2/6] dmaengine: pl330: Remove redundant pm_runtime_mark_last_busy() calls
-      commit: 5f6f0cad6d2d599b765d572216a290e48bfdcb5f
-[3/6] dmaengine: qcom: Remove redundant pm_runtime_mark_last_busy() calls
-      (no commit info)
-[4/6] dmaengine: ste_dma40: Remove redundant pm_runtime_mark_last_busy() calls
-      commit: 01f2bcf06d7e0e3c4badd03c030cf634ca10a172
-[5/6] dmaengine: ti: Remove redundant pm_runtime_mark_last_busy() calls
-      commit: 35d522a9612f5ba83192416521725acede02c28f
-[6/6] dmaengine: zynqmp_dma: Remove redundant pm_runtime_mark_last_busy() calls
-      commit: 3b81235280026c551660c6374ede9599fc82f617
-
-Best regards,
--- 
-~Vinod
-
-
+Rob
 
