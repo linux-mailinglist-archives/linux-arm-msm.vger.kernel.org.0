@@ -1,211 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-85314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5004CC151A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:36:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05ABECC1534
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:38:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1812630341E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:33:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 077B33048096
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:36:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E98FBF6;
-	Tue, 16 Dec 2025 07:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987ED3128B2;
+	Tue, 16 Dec 2025 07:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lpmpf7Lr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MKcJHQ7d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4522749FE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:33:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949C73093AC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765870438; cv=none; b=VT+XS6+Cy3uL3OZKHvvYYS4P7tIngAPGriNPXAr78wrv6YUzythyW95fXxuSCSC6zX+eSFxRDurrhGERjG80k2DM8a8huXJ+f2RZuBNltAJ/DMzys8Uq5HIskhhXrn0ktoSZ+vBH7a4Kb9SUGsmdZtxbfO0jO5HHSU7rTPLb0MM=
+	t=1765870563; cv=none; b=k9js1U6eySdSR6G73baXdKTqsja+UA6+MGdhHoJpxa0YY8H39PFrAMLDkDp7QsR495/DgYVQdWQx53Vs1IOo2QaO2lYROvQDCVx8ChIwsTYFgnub8HuG01XjEBGx5q0baQ8LpiDLSrl7g5KNWNWFoUOcgdwLgKKqMqrhM6T2OKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765870438; c=relaxed/simple;
-	bh=afJGBzDRYXPLKRLUi36rv1TJEw66G7nq8Qwr10P9a+c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UxajBWxoXlo8NtQQAwOU2M6EChX2QVpp7XMQD3IifMPieNlucRXCkIMMVSGqK/k5t1OXwVNQfy03FEgTzrD4u55gcd2AsYhMkhXVdr15dagSnHP3+UQEaVeSwjMCRegNCsudLmoYFX96odSrUyKPyjp0tolF/W4Ym+B83wxzLr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lpmpf7Lr; arc=none smtp.client-ip=209.85.210.41
+	s=arc-20240116; t=1765870563; c=relaxed/simple;
+	bh=TSTZH3ha7P3zf07UuAzzCe0DuOTPhq7Iu4ok3zeXQDI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RslbAHh0RPaecKS2/gmXDwaEcQlOPr1aSnqW3fXzVzh9O9BCpmG7ESwfe8bCucNdCpheHveC6fDfkgzbcwLUu4Ekh7GtH0mfv4RxJqk4Tu/EgIciDf3SD5oKmnJwfP3I9dZ8uLwKlYHhfHLwfsPps0jnyoRs++vaitFrcRyBLCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MKcJHQ7d; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7c6e9538945so2888521a34.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 23:33:55 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5986cd85d83so202450e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 23:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765870435; x=1766475235; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1765870558; x=1766475358; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pJxuVx1hE8QwPo+5lZ9vSSExDNzQxar/zw9l2S0dxlw=;
-        b=lpmpf7Lr8pLDHL00MvcoPN+7wg62wLL4F3NvJyPqt1HeOsgHx/SilTdytObjJdwwDJ
-         u425rCSa33RV1MGK3uFk53OgHitkDmHTL1cbyj/f4OOibYuFxp5Hh8hRG9HXptl/UEHB
-         estLT/9VFYqN4ULiDGkKHGREVJ0qMOaCzRi7HnQNuc76dph9zch1XgBSLpHcWzrbYrD4
-         NRkiIqyq0Uv6v5sOMJ38eSOp/DxLXLWeBObb7YhNBt/606fsdXkvY+KvlIEWSFtLJYRw
-         iiCnEf6qd9vb/MXuKAYVRHy8mPdSHfoJUDywnyaTchFZDi1rKgG/d6FKnmUXUyI3j0yh
-         fTng==
+        bh=n16XrMflW8K8mCPPIig2n79GG39zI0dw0k9fySATJAk=;
+        b=MKcJHQ7dLs5AtE6b7YT3ZDf5h3PkL5su1lXUpP+J9VClf9fUGrUYX/MCeT25FVhJ59
+         ix5+KNe4tgJt9cMfVy97/AGeAN4oWklYOkb1haEjrQw7GQ2AirIl0auSmTAiOJdfs5qs
+         EyTj9dpJL8XCkVyenr9nT9+wqYB8b5rSc5Wo8eHRXeeVG1bMCCRZpy8ya+H/egpEVxOo
+         wVBusbwblb89K4aQbImL0/m08ndrZJetUbbzoYawmltU8hCUaKg5YMzjoBWW5tI8okVX
+         h+pqLqKB9CKBQsOhBwDbK7tWFpWkGNah57K/MMfGDFXmsAP7QOORbzl07LHEavKzUJhd
+         QjIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765870435; x=1766475235;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pJxuVx1hE8QwPo+5lZ9vSSExDNzQxar/zw9l2S0dxlw=;
-        b=nsSLKMoB04TsElDkdXTiXXSkgblwImpRgOkNWbGredd0DL8Ix5D9eIOfMg05zRl6mZ
-         5Dqqm6Ut+RWjV+8jRGAdYO+PNHkrHKQyW3iI/OzGSNW1BIMaBcp2NV1kd8LctVHHsEI9
-         Y8zRLlfhaV+kbGWB+fbfPiRxWYiHhw3odUr1hCmXtzWWSdcJuz6CSgXV5LIU7H5Xe5jZ
-         8GikB4Prwv5QIlMC0T2990Mze+bpBHnYTJfIAeV7GpfVdgUGGcLbL320OLUVjajxX6Ny
-         XzKv2Gtx7ovaScQCeX88+AXJ4kuSpY9TBIT+end7etVjwPfMl08O+e8G5YolrLB6d2fK
-         sIag==
-X-Forwarded-Encrypted: i=1; AJvYcCVdwRoyrvNmIvYMq9PTduwWmLWoFeaaS2jqKc7Ra9B1+98Xi3O1KCLzH+5sx28TzNBg7DXar3/7izLrvSBk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzek5WKZxnHlYPpBAN6kOKURp8TOsvvY2tIf5+bgFitIgZF6wd+
-	WPhQEWDv/4Zye4Slfjp2Ch7LFSi0DjcsDWUlr3swPIPeyda3bjs+Tr9KIuZK4oxdF8Bmv3kdBQB
-	NSXaHMO8Wi9gLhxLP8DyGPYk3mL18io2ekLfzeoij06Y+XzFLfFwiJFo=
-X-Gm-Gg: AY/fxX5/ZZzLJ3ZdK33ul4hcu6e3Ul4r1RnO4thvmd2RWUEgVPYedtei72V4xYV1YJe
-	9Fxn+DOyy98zhm/ijUKdA8CO47zyasGOJ9I2Y7FaWFerSwigF4+i79cVapUowzpC2vMXy0ieKYb
-	UKbX8AQlAlhNUtyKSSrBeapST0VIUfAICUsrEHTAbmU+DWvMCqfICbKm6Wxeh74fLnP8w8uk43x
-	yCBGinNxpopkigY3A0iJwC4EqIJZ7UccMLnPTmN/6CzcJrJE1bn498wRovsCQ1/+UHMMpXM0Bye
-	8wDq3uUO9x1IVSrMYi8NlNQ9NA==
-X-Google-Smtp-Source: AGHT+IFgcI1iXYmQOJMbCoMzO4TuZILfDefDSjHP+dHpTw0q1q+63iQUVOEFLyAayV4+4wtBrXEibqfLYLgVtUxJtl0=
-X-Received: by 2002:a05:6820:2114:b0:65b:328b:4b9c with SMTP id
- 006d021491bc7-65b451b2947mr5857330eaf.18.1765870434698; Mon, 15 Dec 2025
- 23:33:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765870558; x=1766475358;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n16XrMflW8K8mCPPIig2n79GG39zI0dw0k9fySATJAk=;
+        b=Ftt0+0+apsc0k/f5Tu8ssxraEODl3A9iXnPINZLVGACNQFo2Q3TlHV92KAEr5uVxxd
+         FJhJ75wEpZt7MfgDuUDAMLiczCsC+H6fOx+9BwKDgL/k/R7o4vb2mVJuIzVCxXdYq+D7
+         wd0JXqojNrlnFUFccOtceUwN0Osta8p0/yYuePycUZMma1bqvh1b+F3iDyogBOK0TKle
+         czXAMD/oT3loCcXO5hWp+7CK68RtiZxz7d/G0PS3cctYVnwZ+guXx6iLFzOI3rOXjxkk
+         zO5QQJNnPeuodxyfMakSW5PRszgFjhJcRN9XJpzUyMqYCL9o/zprKUCwg04q8UmEkI7m
+         Zvpw==
+X-Forwarded-Encrypted: i=1; AJvYcCUzyALBpHD/izwu6Hez+LJyspShJ7eUh/LygtW5YEudsDiGABVSgfehKYC+wL0H527ifPynKuLPeE0rEgfD@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVy//0R4s9uA7ls8yqHlVbirGk3WFR1B8nNNovq8eRvH4O/G4y
+	PAcQlKPPbXQ4OZPBD9YrQG8alqJmT3FRLIH6Gx8wKTs2LKyy2MTi+IOX35nPtViVDdk=
+X-Gm-Gg: AY/fxX4+Fxl0RRJzwr5XO2hsjKUA/T+6r1uciiuwdT1aI0zJv+Sds6HtbcAazLCEJlv
+	z32rtvsw71M/LVexj1oNHYOc+6qkVdzV+w5gGFg2LPFBYJVGVosWi9nMAlf3XF1ihBGTSbge1gn
+	ZF4j7tyeBEuP0S03Gtx69lXmk5zPoHPVm2a010ifwSIohWxSKnGW4j9ZWsvAifqQkN+qMu1s1gX
+	gng186kkALMTdD7NxlsV1YXmBoxlRguFwiYDOYeNf7/Qhs7uti3I8XGDB1TfZsXYtYeThvEdIej
+	Lbn160Ciaq5xwU3GrnDOeh7trBkMgHgluypubFQGbh29nbK/hXJayji14REDbyuv2l9EJa6+YCo
+	Za5xWG16zT2vUHj5nOXBBf2UNC9+dvKSADVHcBEeasG04RYh6G9axklA5F2MFyz79uNk4D7fnam
+	7Aza15HbS0GxkSz+rClL2Ece78sugAdauN3gVvdJaiuXdVSd5XSeytzuyr75981SS/1w==
+X-Google-Smtp-Source: AGHT+IEA3Aizumvo2C29apLGRfL5f4cmKkJaCe7dpJMQ1br+YvsIHx4NhcZQQJWEH/cY0jbWIL6pIw==
+X-Received: by 2002:a05:6512:3e27:b0:598:e3ed:b43e with SMTP id 2adb3069b0e04-598faa98e36mr2872191e87.6.1765870557425;
+        Mon, 15 Dec 2025 23:35:57 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5990da5040bsm639372e87.65.2025.12.15.23.35.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Dec 2025 23:35:56 -0800 (PST)
+Message-ID: <5bd29b5f-6fcf-428d-b451-698d92f0883e@linaro.org>
+Date: Tue, 16 Dec 2025 09:35:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251208020844.5310-4-krzysztof.kozlowski@oss.qualcomm.com>
- <aTtn-x0hh18V7n7J@sumit-X1> <b29c97cd-cade-40ef-8e6d-d164b1d16059@oss.qualcomm.com>
- <aTtyR5J3AqXoE7to@sumit-X1> <7b074ee0-4f10-4fba-9680-3d87dcf766c1@oss.qualcomm.com>
-In-Reply-To: <7b074ee0-4f10-4fba-9680-3d87dcf766c1@oss.qualcomm.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Tue, 16 Dec 2025 08:33:43 +0100
-X-Gm-Features: AQt7F2pwugYqW3nJWhjtHv1ppCx-uDAzlDiP3MdQeHwnJLNKjL7ZHy9bFIyp3LI
-Message-ID: <CAHUa44EO8HYA=KgouSt902RJ63H-Vz24nOaaj7PATVT0n2fkeA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] tee: qcomtee: call: Fix confusing cleanup.h syntax
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Sumit Garg <sumit.garg@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 5/5] arm64: dts: qcom: monaco-evk-camera: Add DT
+ overlay
+To: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>,
+ bryan.odonoghue@linaro.org, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Ravi Shankar <quic_rshankar@quicinc.com>,
+ Vishal Verma <quic_vishverm@quicinc.com>
+References: <20251216062223.2474216-1-quic_nihalkum@quicinc.com>
+ <20251216062223.2474216-6-quic_nihalkum@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251216062223.2474216-6-quic_nihalkum@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 12/16/25 08:22, Nihal Kumar Gupta wrote:
+> Monaco EVK board does not include a camera sensor in its default hardware
+> configuration. Introducing a device tree overlay to support optional
+> integration of the IMX577 sensor via CSIPHY1.
+> 
+> Camera reset is handled through an I2C expander, and power is enabled
+> via TLMM GPIO74.
+> 
+> An example media-ctl pipeline for the imx577 is:
+> 
+> media-ctl --reset
+> media-ctl -V '"imx577 3-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video1
+> 
+> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
+> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
+> Co-developed-by: Vishal Verma <quic_vishverm@quicinc.com>
+> Signed-off-by: Vishal Verma <quic_vishverm@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile             |  4 ++
+>   .../dts/qcom/monaco-evk-camera-imx577.dtso    | 67 +++++++++++++++++++
+>   2 files changed, 71 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 6f34d5ed331c..b1ba182a0d8d 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -38,6 +38,10 @@ lemans-evk-camera-dtbs	:= lemans-evk.dtb lemans-evk-camera.dtbo
+>   dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera-csi1-imx577.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
+> +
+> +monaco-evk-camera-imx577-dtbs	:= monaco-evk.dtb monaco-evk-camera-imx577.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-camera-imx577.dtb
+> +
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso b/arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso
+> new file mode 100644
+> index 000000000000..351eb5ee70ba
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso
+> @@ -0,0 +1,67 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 
-On Mon, Dec 15, 2025 at 9:30=E2=80=AFPM Amirreza Zarrabi
-<amirreza.zarrabi@oss.qualcomm.com> wrote:
->
-> Hi,
->
-> On 12/12/2025 12:39 PM, Sumit Garg wrote:
-> > On Fri, Dec 12, 2025 at 02:07:40AM +0100, Krzysztof Kozlowski wrote:
-> >> On 12/12/2025 01:55, Sumit Garg wrote:
-> >>> On Mon, Dec 08, 2025 at 03:08:45AM +0100, Krzysztof Kozlowski wrote:
-> >>>> Initializing automatic __free variables to NULL without need (e.g.
-> >>>> branches with different allocations), followed by actual allocation =
-is
-> >>>> in contrary to explicit coding rules guiding cleanup.h:
-> >>>>
-> >>>> "Given that the "__free(...) =3D NULL" pattern for variables defined=
- at
-> >>>> the top of the function poses this potential interdependency problem=
- the
-> >>>> recommendation is to always define and assign variables in one state=
-ment
-> >>>> and not group variable definitions at the top of the function when
-> >>>> __free() is used."
-> >>>>
-> >>>> Code does not have a bug, but is less readable and uses discouraged
-> >>>> coding practice, so fix that by moving declaration to the place of
-> >>>> assignment.
-> >>>
-> >>> Okay I see but..
-> >>>
-> >>>>
-> >>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm=
-.com>
-> >>>> ---
-> >>>>  drivers/tee/qcomtee/call.c | 17 ++++++++---------
-> >>>>  1 file changed, 8 insertions(+), 9 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
-> >>>> index 65f9140d4e1f..8f8830f0df26 100644
-> >>>> --- a/drivers/tee/qcomtee/call.c
-> >>>> +++ b/drivers/tee/qcomtee/call.c
-> >>>> @@ -395,9 +395,7 @@ static int qcomtee_object_invoke(struct tee_cont=
-ext *ctx,
-> >>>>                             struct tee_ioctl_object_invoke_arg *arg,
-> >>>>                             struct tee_param *params)
-> >>>>  {
-> >>>> -  struct qcomtee_object_invoke_ctx *oic __free(kfree) =3D NULL;
-> >>>>    struct qcomtee_context_data *ctxdata =3D ctx->data;
-> >>>> -  struct qcomtee_arg *u __free(kfree) =3D NULL;
-> >>>>    struct qcomtee_object *object;
-> >>>>    int i, ret, result;
-> >>>>
-> >>>> @@ -412,12 +410,14 @@ static int qcomtee_object_invoke(struct tee_co=
-ntext *ctx,
-> >>>>    }
-> >>>>
-> >>>>    /* Otherwise, invoke a QTEE object: */
-> >>>> -  oic =3D qcomtee_object_invoke_ctx_alloc(ctx);
-> >>>> +  struct qcomtee_object_invoke_ctx *oic __free(kfree) =3D
-> >>>> +          qcomtee_object_invoke_ctx_alloc(ctx);
-> >>>>    if (!oic)
-> >>>>            return -ENOMEM;
-> >>>>
-> >>>>    /* +1 for ending QCOMTEE_ARG_TYPE_INV. */
-> >>>> -  u =3D kcalloc(arg->num_params + 1, sizeof(*u), GFP_KERNEL);
-> >>>> +  struct qcomtee_arg *u __free(kfree) =3D kcalloc(arg->num_params +=
- 1, sizeof(*u),
-> >>>> +                                                GFP_KERNEL);
-> >>>
-> >>> ..this makes the code less readable with variable declarations floati=
-ng
-> >>
-> >> Which is intentional.
-> >>
-> >>> within the function. I would rather favor to not use the cleanup.h co=
-nstruct
-> >>> but use explicit kfree() invocations instead like it's done in all ot=
-her
-> >>> allocations in the TEE subsystem.
-> >>
-> >> Sure, fair. I just don't get why introducing cleanup.h without actuall=
-y
-> >> accepting its explicitly documented style...
-> >>
-> >
-> > TBH, it is likely overlooked during review of the QTEE driver. Having a
-> > builtin warning for the undesired syntax would help the reviewers here.
-> >
-> > -Sumit
->
-> While the style may seem unusual -- as stated in cleanup.h, using cleanup=
- helpers
-> makes the code more readable overall compared to relying on multiple goto=
- statements.
-> Also, it=E2=80=99s not just about the "__free(...) =3D NULL" use cases --=
- there are locks
-> involved as well. Switching to direct free() would require reverting thos=
-e locks,
-> since mixing cleanup helpers with manual cleanup is not acceptable.
->
-> If this behavior is explicitly documented in cleanup.h, there is no reaso=
-n not
-> to use it as intended. I also support Krzysztof=E2=80=99s suggestion.
+Year is missing.
 
-It looks quite ugly, and it can't be mixed with the usual goto
-cleanups (I suspect some care is needed with switch cases too), so we
-must be careful where we use it. It's not obvious that this pattern
-should be used in every function. However, where it's used, it should,
-of course, be used correctly.
+> + */
+> +
+> +/dts-v1/;
+> +/plugin/;
+> +
+> +#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
+> +#include <dt-bindings/gpio/gpio.h>
+> +
+> +&camss {
+> +	vdda-phy-supply = <&vreg_l4a>;
+> +	vdda-pll-supply = <&vreg_l5a>;
+> +
+> +	status = "okay";
+> +
+> +	ports {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		port@1 {
+> +			reg = <1>;
+> +
+> +			csiphy1_ep: endpoint {
+> +				clock-lanes = <7>;
 
-Thanks for the fixes, Krzysztof.
+Please remove 'clock-lanes' property here.
 
-Amir, if you're happy with the fixes, can you give your R-B for each of the=
-m?
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&imx577_ep1>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&cci1 {
+> +	pinctrl-0 = <&cci1_0_default>;
+> +	pinctrl-1 = <&cci1_0_sleep>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&cci1_i2c0 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	camera@1a {
+> +		compatible = "sony,imx577";
+> +		reg = <0x1a>;
+> +
+> +		reset-gpios = <&expander2 1 GPIO_ACTIVE_LOW>;
+> +		pinctrl-0 = <&cam1_default>;
+> +		pinctrl-names = "default";
+> +
+> +		clocks = <&camcc CAM_CC_MCLK1_CLK>;
+> +		assigned-clocks = <&camcc CAM_CC_MCLK1_CLK>;
+> +		assigned-clock-rates = <24000000>;
+> +
+> +		avdd-supply = <&vreg_cam1_2p8>;
+> +
+> +		port {
+> +			imx577_ep1: endpoint {
+> +				link-frequencies = /bits/ 64 <600000000>;
+> +				data-lanes = <0 1 2 3>;
 
-Thanks,
-Jens
+data-lanes property value should be '1 2 3 4>', 0 is for the clock lane.
+
+On CAMSS side this cannot be changed, unfortunately it's a lingering issue.
+
+> +				remote-endpoint = <&csiphy1_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+
+If only one of 3 defined from 4/5 regulators is used, do you really wish
+to describle all 3 in advance? You may consider to remove 2 currently unused
+GPIO controlled regulator descriptions, and squash this change with 4/5.
+
+-- 
+Best wishes,
+Vladimir
 
