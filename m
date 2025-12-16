@@ -1,245 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-85294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D16C6CC06BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 02:10:22 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 551F4CC079E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 02:40:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8FE143012BF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 01:10:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 32ACD3011B04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 01:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE04204F8B;
-	Tue, 16 Dec 2025 01:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VT0cj1O2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C671A256E;
+	Tue, 16 Dec 2025 01:40:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D26158538
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 01:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D7713C3F2;
+	Tue, 16 Dec 2025 01:40:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765847420; cv=none; b=NjOsRiw/BNrT+ta6qvn+9OglnP5xoLBxnHPhAR1k5VOkoQf7pl50Ovir1SNOaRlxHFyxN0ExsoMmfneP2Nx1o5uzYqB5WI7Olj+VkxTangLDcZSaAVrxFyPNcmsKQacNS44wsfHqWaUWtNVt4O+lxfNvOsyl9q6EYa3Kv5V+xEQ=
+	t=1765849255; cv=none; b=lpjAJvaLg4eNlgzL01wXXysMUfewOFWJ554HEKifhmVNIWksXFfQhnErTE1EoTOGz2q0rdNZr0S9CCqk97X9vS5vclNzIcI+rJDy+chu9xazr8j3dc0apZhqq1iSM8bhwhdxAaH7L7Q+IEW4kFg2Jzz5gvo/WTCpDH87X/uFRaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765847420; c=relaxed/simple;
-	bh=WIZ9jyFswOPNqTgsmJJ76iM6G7nvLeuDuP7DQJ6BNqA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VVrXhIslyimNyk+LP5AtefYe8kqOreCEZ8hFujnk8/9+EX+v39gTeqwVCh+UNu2ISY7/IQFu6Ja9MZdLJzNXD9Hr7qBVuGrWK6/nMpXZs+3Ze7cN9BS568PogFtsYHmT17OVgKyzQqOZsByBaAhd5MB1CA0CxQSE7uICxBcQ7Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VT0cj1O2; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-37fcd0704d5so4011591fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 17:10:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765847416; x=1766452216; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Mi8Xm0zurhbSPDMlN1uc/lNI9yNMPSviozpqbJTiEDg=;
-        b=VT0cj1O2UIktLIzkUNpdWYDS3SfInrhRY5mNJcIKLeUAXCKRnfwbUflVWjr+5L2m2h
-         8+WWCWRbStWVXcptD5tJdnwvuPsKkW2Zv/oNskRQqBqrVJcIZCJykx7PPQtFsuRcpYTC
-         XlwVQvCvmiX4uFLJe9LYi6QIQP17gPaVn5nij71NEtk3tU8dPxKwX7ywJKMmeq7vX2c5
-         an1OKKnE4LnMcyB7y2AS0t17BU4sGHiS3J86NELr8jdlU8bP/slS1Uf6EhzZd7YfUNjf
-         btpfWx78MnxCnndLDhszNUTO+JqoG0mtIRqBu2tD+pydRZ9BaEoC/JnMoDgLv/61iISN
-         W/EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765847416; x=1766452216;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mi8Xm0zurhbSPDMlN1uc/lNI9yNMPSviozpqbJTiEDg=;
-        b=LSi8ltxlcc8Sktk6MIGqr7YfddLl6IKxG/CyT7/YFNc4lRdPGWMEofUhwJp2gEKk4X
-         dUC7DcOUdLMdA4uQna5Wg/N3I7zTP0fNyH5AQo3zTgNmHfe/IWi54Ou5wsZ7ff7MbDGl
-         ylw7KndxtX/8CYh3R8EZJI8bwAMBoD+FrywGBmlZ+U4QRIH8DfZ6EaDcJiQ65WSspb7K
-         tEsN5mWu4mXFMsS2KiPMILylB9g9qTuVAhFezKf/uyU5SCDRTz5wjE4H4nPHW9x2yeNQ
-         RCJ9o+sBpV7nhYliAHbJOPwM1YohtJ6iEPOfe6/BEqLWrGOfJfCt0IYz2f7+no13WFp/
-         csPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV1nWETE9kJC19M0KpdyhFAzlywLwho3ezzKMtu8vNwLIxuZx7+Kih2S+lL3+JhnzanYjAK8Zqh+fsTWPXb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvCoK/tK31hjIwSPnIWLBHb2z8c2UGbCn7vCtcJBInFMfHkGNR
-	s7kgFphXLeD6I7RFP15eqniMgeLcLdc/p0zYMy+D6+Wue6m1mvWYBe0jyPngea5eSLQ=
-X-Gm-Gg: AY/fxX7OZoaNW3qLODd5GUMPP+ABYe4P6J4TiDganW0czmQxAaVLNInDpd+jMVnmoOD
-	0yaVgxmN+ppuj0a3i90g/IieIY1OtxgdcOjubdlU7Q7QsdpGQGhoNMdR6xFnvgYwdTofIYVMM85
-	v3kem8SozXo7LEts0ttKD2oHPs2PRUO17LAo4cG6QAWLqX+fxTLGVygFgbn5pvc6Zol+ulrct19
-	BU21NWDSyQ3nmuJ7uNHHZHJ7dcaK0oCSmhy74koQwD+gJ8ShXkBjQV5kqUWnWX578lBaLbSExHc
-	bQ3ZttgdDD+7Hb4p1zaqwqa3oAraeyy2VbS/b8+q4p3rMe0M4BRIzxnIk61qmzO8hHRqK0kXQ1p
-	J9odK0E0WM/rzIufy6rnr3nDM23mCgjSn2nzgjSFl12BqQStTRHrhSvUj3Y5m4wgGaxX4AGq6yw
-	+eKbfwVsdP+9ktz2/0D/qi9L2Rwe7zxcIVPUhJ3a61LPPjKUxajOKFDPbhplDUxfDaRA==
-X-Google-Smtp-Source: AGHT+IH7lvZQh/tJdyvFMjmv5Z9sx5r76i24YJXdpQwBw46WC2pR2Mr05q/RbbpGbzcBzScS/lkVsA==
-X-Received: by 2002:a05:651c:2223:b0:37a:8acb:a053 with SMTP id 38308e7fff4ca-37fd088227dmr17398471fa.8.1765847416234;
-        Mon, 15 Dec 2025 17:10:16 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-37fdebe61e2sm33946831fa.7.2025.12.15.17.10.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Dec 2025 17:10:14 -0800 (PST)
-Message-ID: <9d78a741-2cc4-4622-8c4d-a096521ca08a@linaro.org>
-Date: Tue, 16 Dec 2025 03:10:13 +0200
+	s=arc-20240116; t=1765849255; c=relaxed/simple;
+	bh=OxyVMbdEVLlQ40GIPx+TvFzGx+KEK/557hc/XhzYmLA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=D7RkXq5NmHo6cbOH+TdI82S0tft3ypBgh6JkCLN81vRE8o/E+Qy0ZWI8RH69Qy4FopYHYaciGAb0RnvxL4nExoyfH8alsxDdwiBnOZIegSRI3nPtsi1RZbFmsXSgbRxeEKUMHh/QByLP9pLiZISeDiyCR+kUJ/rk3ymzvfdkic4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from DESKTOP-L0HPE2S (unknown [124.16.141.245])
+	by APP-01 (Coremail) with SMTP id qwCowABX_mmduEBpzAfHAA--.7071S2;
+	Tue, 16 Dec 2025 09:40:47 +0800 (CST)
+From: Haotian Zhang <vulab@iscas.ac.cn>
+To: andersson@kernel.org,
+	konradybcio@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Haotian Zhang <vulab@iscas.ac.cn>
+Subject: [PATCH v2] soc: qcom: cmd-db: Use devm_memremap() to fix memory leak in cmd_db_dev_probe
+Date: Tue, 16 Dec 2025 09:39:32 +0800
+Message-ID: <20251216013933.773-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.50.1.windows.1
+In-Reply-To: <20251215074125.2089-1-vulab@iscas.ac.cn>
+References: <20251215074125.2089-1-vulab@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: dt-bindings: Correct camss VDDA PLL supply
- description
-To: David Heidelberg <david@ixit.cz>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
- Kapatrala Syed <akapatra@quicinc.com>,
- Hariram Purushothaman <hariramp@quicinc.com>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz>
- <1e09a93a-d42f-4a23-b346-9f158a60d8aa@linaro.org>
- <b9b84317-a392-4f1e-aa8f-351e92c678a1@ixit.cz>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <b9b84317-a392-4f1e-aa8f-351e92c678a1@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowABX_mmduEBpzAfHAA--.7071S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cw13WrWxtr4ktFyDJr47Jwb_yoW8XFW8pa
+	4xJa4Ykryjyr4YyF17Zr48ZayrK3yftayDJa47u3s0vwn8JFWkt34rtFyjgayxXrykJr1a
+	vF4kJayrCF18AFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUkC14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
+	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
+	6r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrV
+	AFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCI
+	c40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267
+	AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_
+	Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfUehL0UU
+	UUU
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBwwSA2lArlMplgAAsx
 
-On 12/14/25 11:35, David Heidelberg wrote:
-> On 14/12/2025 01:04, Vladimir Zapolskiy wrote:
->> On 12/13/25 00:55, David Heidelberg via B4 Relay wrote:
->>> From: David Heidelberg <david@ixit.cz>
->>>
->>> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
->>> voltage from the description.
->>>
->>> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda
->>> regulator descriptions sdm845")
->>> Signed-off-by: David Heidelberg <david@ixit.cz>
->>> ---
->>> Added only Fixes tag for the initial commit, not all the copy-paste
->>> propagated ones.
->>
->> Generally it should be possible to specify a list of Fixes: tags.
->>
->> However, despite the change is the proper one, there is an opinion that
->> Fixes
->> tags are not applicable to dt bindings with a given reason that only
->> executed
->> code can be fixed. So you may be asked to remove even a single Fixes tag.
->>
->>>    Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
->>>    Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
->>>    Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
->>>    Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
->>>    Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
->>>    Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
->>>    6 files changed, 6 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-
->>> camss.yaml
->>> index 019caa2b09c32..9009cfe993d75 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->>> @@ -130,7 +130,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>      ports:
->>>        $ref: /schemas/graph.yaml#/properties/ports
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-
->>> camss.yaml
->>> index ee35e3bc97ffd..cb922f90fe900 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
->>> @@ -129,7 +129,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>      ports:
->>>        $ref: /schemas/graph.yaml#/properties/ports
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-
->>> camss.yaml
->>> index c99fe4106eee9..2231d7216f62a 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->>> @@ -268,7 +268,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>    required:
->>>      - clock-names
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-
->>> camss.yaml
->>> index 35c40fe223767..8e6ca94c88695 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
->>> @@ -95,7 +95,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>      ports:
->>>        $ref: /schemas/graph.yaml#/properties/ports
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-
->>> camss.yaml
->>> index 82bf4689d3300..d50e096b900db 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
->>> @@ -211,7 +211,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>    required:
->>>      - clock-names
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-
->>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-
->>> camss.yaml
->>> index ebf68ff4ab961..ccd2d024bfd10 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
->>> @@ -300,7 +300,7 @@ properties:
->>>      vdda-pll-supply:
->>>        description:
->>> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->>> +      Phandle to regulator supply to PHY refclk pll block.
->>>    required:
->>>      - clock-names
->>>
->>
->> As for the change itself it is good, I'd prefer to get a correction
->> to 1.2V in the documentation rather than a complete removal though.
-> 
-> What I'm seeing, while the vdda-pll is usually close to 1.2V, it seems
-> to me that's not everytime the case.
-> 
-> Can you confirm it should be exactly 1.2V, if yes, I'll clarify it in
-> next version.
-> 
+If cmd_db_magic_matches() fails after memremap() succeeds, the function
+returns -EINVAL without unmapping the memory region, causing a
+potential resource leak.
 
-This info can be obtained by checking "vdda-pll-supply" supplies of CAMSS,
-which are set in upstream device tree nodes right at the moment across
-various Qualcomm SoCs, as well it can be verified against downstream.
+Switch to devm_memremap to automatically manage the map resource.
 
-The naming (and the descriptions above also) "vdda-pll-supply" itself
-is non-informative, I hope that in future there will be only clear supply
-names like found in qcom,x1e80100-camss.yaml, qcom,qcm2290-camss.yaml and
-qcom,sm8650-camss.yaml
+Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+---
+Changes in v2:
+  - Switch to devm_memremap instead of adding memunmap to also do
+    the cleaning when cmd_db_dev_driver is unregistered, since there
+    is no _remove() function.
+  - Updated subject to reflect the usage of devm_memremap().
+---
+ drivers/soc/qcom/cmd-db.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
->> In any case,
->>
->> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>
-> 
-
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index ae66c2623d25..84a75d8c4b70 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -349,15 +349,16 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
+ 
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+-	if (!cmd_db_header) {
+-		ret = -ENOMEM;
++	cmd_db_header = devm_memremap(&pdev->dev, rmem->base, rmem->size, MEMREMAP_WC);
++	if (IS_ERR(cmd_db_header)) {
++		ret = PTR_ERR(cmd_db_header);
+ 		cmd_db_header = NULL;
+ 		return ret;
+ 	}
+ 
+ 	if (!cmd_db_magic_matches(cmd_db_header)) {
+ 		dev_err(&pdev->dev, "Invalid Command DB Magic\n");
++		cmd_db_header = NULL;
+ 		return -EINVAL;
+ 	}
+ 
 -- 
-Best wishes,
-Vladimir
+2.50.1.windows.1
+
 
