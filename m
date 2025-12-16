@@ -1,167 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-85411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E8D5CC521E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 21:55:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2F6CC51F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 21:50:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 273403011A71
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 20:55:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 261ED303C9DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 20:49:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3AA32D7DCF;
-	Tue, 16 Dec 2025 20:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CAA728CF50;
+	Tue, 16 Dec 2025 20:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="f7SLo7Vk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KI02r3BX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B7525A2A2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 20:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765918527; cv=pass; b=rFgDBaXna2CVj9qd8C6QG2uFuhBZc1ihOaEkSqBzbxPRvRR1vu7ZUwlFuHntasl8jeEZ2/3GeAGQyHRCgEPjJlCnkIsEBAImS1RBqYlFAojPW5801I6AhXgm6rZD/4xKHXU0ftk42ttk8PAJE3XQlWk/grLR8xdSlnFMcMjEHnc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765918527; c=relaxed/simple;
-	bh=XMfwca+6IgBX1mGQW2ZtGykWl8XuJMRTmtfG6eC1w78=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lzcRQsPIeFsWTAkiUVSbaDHYpc/ng4dF9CaY9qFfrxy+0qwZc63L21s1lrHeUTvqINhNRPe7b26tPXECh/4pomDjKVChdAKWabaYnNS5AANrvrlXMpSzd7HOKFa0OixEXphywloCK8uB22aGc9LuOD1H1XPLI6WhA+0Wri2k54M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=f7SLo7Vk; arc=pass smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-644fbd758b3so2806a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 12:55:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1765918524; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fmBm1uloOmlfZv+toeuGvIVJcmAbwO5SSYt+UMI2qtcliZCeDGZUAU7yBKV4ifOcj3
-         nEhqJULdAnsP2deQVfAnZIzyslTBsScI9rNR04iiXd1hwjYm1zQ6XkC4NNIIGogGi5hw
-         F5uBvTi7dzxDL505lxzxmILsKrhMM76Lwkec6Tw0UZhcVp2gkhYOym7UnZOcN5vNTskV
-         xjS5Lfl07QuvHg9NQPDMvfCbo7es8zK2/yYn3DEJ4E0pAAF3lw8NGxZWrTRapi3kLS6f
-         HslljAidPgBWX6bbzd750y1mlASXrOb2dMwbUNkI0NXQG8CrfaPLs3nVub83Z5e83+EW
-         MSJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=dKg1m5VNPLRGkAOKZAtKQZ4xqbiaIXMC7dpNZywm3hM=;
-        fh=cfa6IJLR6UQV4sZ51q1Q7UakGmyXltLPVuNTw2vo028=;
-        b=c3h4GAAbe2hYXKZnFTjrKHbYZqtiAerf9cLexrIdmwgtFk3B2HfJsaofAKy1BjLKnK
-         KCTpFttGFqJN7gs5XqUQDldTvu3Mctk7WB9d52dVHOYRh7ZFylZ94dzbcbC6Vkmt2Bzm
-         Qk/PfCsgawH9TgCVE8g6EkFSP8BOyg/nwjr9qchgM89l1DUtgyTQ5XOtLjNgyXgliIlp
-         qbVUbKnzdBWUaOM2vyPmPihcfSeSsMf1NdmCcE4MG6zs4ePV1+J2bhT8/50LVw27nt1S
-         0akNXxtx+ByngYdTxEEriKuNSsNuVi023mE1ASzUi03p6ZVRSVq+p8OpdY/88UxIOF0V
-         bQ3g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765918524; x=1766523324; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dKg1m5VNPLRGkAOKZAtKQZ4xqbiaIXMC7dpNZywm3hM=;
-        b=f7SLo7Vk+htYayx0UcMConq1uILGWzyiEFVHAGAxoXpdZjrFjZ/wHt5ucr1WAo3BlW
-         7M6s+UqeSaJqI/ik5MPczNR1y0JmhJkSrVJuqAxgTnkGynIRQHbd7t1BhjmOKVgOb3a3
-         cPHXOaLj9TZJuGDRkbZuod9vcw9rrXBq7YrLOwBKz+Je1zA7yKq8jZrWEHbCWYqSEeLa
-         FNTAQ2aJWBWYIaKmkZHvuDHBGAgMWNzH4VNv/jZ5EzoXp2w6PaThC8hOp1gGp95wG1wR
-         ociKBE/6qW8MeyCZCmHFuLN5OiiRiTeAMhz1dEOlCbK7ch+x8XQB58nS6u+/SGGGHoOT
-         PvXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765918524; x=1766523324;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dKg1m5VNPLRGkAOKZAtKQZ4xqbiaIXMC7dpNZywm3hM=;
-        b=Yu0ORUY6r8h6q7EeM6z1mKByoFoWHETSuGZLqCQT8JH/vxC+BSI7UNY5lynGQOV4gU
-         X+jAVfgccmjdh2CriwIyyF/uaYXKZX/NbSEey0aa6OvqrkOzLprG9HmdWlzXZm/mmGn4
-         uOPt6+pYuNqlnFkHddUk0C4s0ObC0SRkyt07MfyQs/b5Jkc9BKGiJJf23u/QOBT+nPw5
-         AS2FNoSv0QXrTeMHGb71MBqrBhfb1G+x9JcWANoDKgawE9faTmbgB8o+4MMoN4W6bzow
-         mopsZxFK6VX2vWK7WpJdKo0gUlaF3nIubjTCVdg6yqyAzQeuYkUv0uCCyGh1mv4+2cXb
-         qNwg==
-X-Forwarded-Encrypted: i=1; AJvYcCXIu2wyO+DYPIgCK6aF1YR+DeIWIiLf2P8+V2gkncNNUZK1PSZEm0Nc/Cq6dTU2Lem2Qu5FKYT2erhD/oyb@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdKCVHqB9GrU4/R+QH5tb0LwPfsm5bbIbbc/BZjgpp+wu8oOCb
-	VRcyuVW10P70YXN87t5i2J8icBwbruO55wv9yZNwnYmWSXjKE864CsQLvEvlqeuB6ZqTZU/sBbL
-	E6cI3baLTAH3zH03uv26d6/xQUtU+q1B792tbr0UW
-X-Gm-Gg: AY/fxX5RJXpHuC6MlFfTvFKvDJQSNp43HDdPdTpho6ZcJlsIJkic+lvjOAfNXCQIfVm
-	7wjPwSyFXfAr3DEdhc5Q0LQOSXkG1E8TQpuSADEJdSdcoiBwldJVHd/Nl5vUkWjPrzyed/wgbh8
-	6k8DGbMoijCALZp4HUzcHBfzD60eXi15j+4av1ex9T4CuS22b19n7iX27QlpuiAKUSPWwEvM76W
-	eKSenunGkz++Jp294J7XUKA/+clZnc+pAkQ4fvW+DfMSne70t/XTq+Xk4oPtEx9B7pmmq91ltTN
-	0Z9RPcpNHqmHD3UYGx+3TICv4Q==
-X-Google-Smtp-Source: AGHT+IGsz1tDpW+49yJ/nc0dBXZ2gMbZxB0iidEu4hhho1b5ydd5gY5zW3RYgrYE2+/84hxzFVkC6qexu8x/FiUhkVE=
-X-Received: by 2002:aa7:cd64:0:b0:649:8aa1:e524 with SMTP id
- 4fb4d7f45d1cf-64b4013d16bmr8195a12.11.1765918524027; Tue, 16 Dec 2025
- 12:55:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8852727FD;
+	Tue, 16 Dec 2025 20:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765918196; cv=none; b=DV+Hx6i6wiRWmUGP91DzyJj8IEbEDharR3lvPDFUihurNIIUw86gw0EJkHrs8DMYorvpOlnJW0cyrKBXNT7UqV0XKhnmjZuBbGqtjjZDiQcM9LcU+nDOrxxvKeqe4iPuDM2S3z00cJJYQaIkM7vuyAtKwCbFzHOOV3o2z450eO0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765918196; c=relaxed/simple;
+	bh=6wymaJPlQHbPudiHvSRxiQ8Pqob0S9TYPF/L2Na/Y78=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZFV9SAeeYYeUx6nD/o7/CdRGbUl4NOFiAAQw0uS5VfA1vAsJVmtNz3kHPI7tnYP6aFuICkr9+49IQX2RVrdcD8w9423uHhYy9qbeZrK0KFepOgIRHU1ad9xBWv1GEF8a8GRRm7cpBYxJ6YyAWMrdwTkMRGmMJqFHel6hfvLl25c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KI02r3BX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A49EC4CEF1;
+	Tue, 16 Dec 2025 20:49:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765918195;
+	bh=6wymaJPlQHbPudiHvSRxiQ8Pqob0S9TYPF/L2Na/Y78=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KI02r3BXxKEzcYY2hCzSsOKFYLBt5PbZH+JLUN+gAMx9ky9WYzTLKSaAWtMk3tPWJ
+	 ky/9P5eZDZR7Mvr+8Xw6lLf5I7TGkonXhyqwcIStzTZ69oaQOA4RflXh2IpaS2wfKx
+	 QBj8KijcFsuuppAWuYFTtUvIuRH5+dATvKg76Qc9WqHurLMffMeFHa2C/SNgMgMY/G
+	 mMgx1HoheUuBsE8fIQ7w7CwGD1NIlu8sfC0MoQNtzNJ0nBMEQBPNo8j9splgbkUHro
+	 96lBmfLG6rAlgQzDSM0eays9B33JL8onHkULU3ouSM4llqCfGGWTsh9kWxe+VfQYO3
+	 rURgwzTvHLuDQ==
+Date: Tue, 16 Dec 2025 12:57:56 -0800
+From: Bjorn Andersson <andersson@kernel.org>
+To: Matthew Maurer <mmaurer@google.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, 
+	Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org
+Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
+Message-ID: <nddh2fawoofktjglouq5wrjubxhyqrlzftqz7lvx3xdfipncip@xgudpcfdo2bd>
+References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
- <2025121303-railing-fountain-bebf@gregkh> <CAGSQo01yhgPVRzeZjGu=xV-eHMARRThYL7bbD4o=VskG3mYLCw@mail.gmail.com>
- <7ykaadjhqdqzcbu37fexlkjgfcn7ywe757ppn3xh5xhiaimbbb@acirz3zslcpg>
-In-Reply-To: <7ykaadjhqdqzcbu37fexlkjgfcn7ywe757ppn3xh5xhiaimbbb@acirz3zslcpg>
-From: Matthew Maurer <mmaurer@google.com>
-Date: Tue, 16 Dec 2025 12:55:11 -0800
-X-Gm-Features: AQt7F2olNYfBzUfT50sKKiFb9bKqZfz2W8W5EYDMqFhKnOcHZBrOqkNe5zCyA2Y
-Message-ID: <CAGSQo02mx361GmTzCCiMyQZUfnsWCRTbvFpBX73W=PZnhJ0wcA@mail.gmail.com>
-Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Greg KH <gregkh@linuxfoundation.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, rust-for-linux@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
 
-On Tue, Dec 16, 2025 at 12:52=E2=80=AFPM Bjorn Andersson <andersson@kernel.=
-org> wrote:
->
-> On Sat, Dec 13, 2025 at 08:24:55AM -0800, Matthew Maurer wrote:
-> > On Sat, Dec 13, 2025 at 5:57=E2=80=AFAM Greg KH <gregkh@linuxfoundation=
-.org> wrote:
-> > >
-> > > Shouldn't this all just be in 1 .rs file?  By not doing that, you hav=
-e a
-> > > number of public symbols (that are very generic), that will "pollute"
-> > > the global namespace of the kernel symbol table (unless rust does thi=
-s
-> > > somehow differently?)
-> >
-> > Rust produces one compilation unit per "crate". In this case,
-> > `socinfo` is the crate, and the other files are included as "modules".
-> > Symbols defined in them are not public unless annotated with `pub`.
-> > `pub(crate)` makes them only exported within the scope of the crate,
-> > i.e. inside the single produced `.o` file.
-> >
->
-> Does this imply that a fully converted drivers/soc/qcom would have ~50
-> subdirectories in it then?
+On Sat, Dec 13, 2025 at 12:36:00AM +0000, Matthew Maurer wrote:
+> Re-implements qcom-socinfo driver in Rust, using `Scoped`-based DebugFS
+> bindings.
 
-Not necessarily. Directories are not mandatory for a Rust module,
-whether to do things this way is a code structure/stylistic decision.
-I did it in this case primarily because I wanted to separate out the
-large in-code data table (e.g. SOC_IDS) and the logic for speaking to
-the smem driver from the rest of the code. If you have a preference
-for a single file, I can very easily put it all in a single file.
+Okay, but why?
 
->
-> Regards,
-> Bjorn
->
-> > > But putting this all in 1 file should solve all of that, and remove a=
-ll
-> > > global symbols.  Especially for just a small and simple driver like
-> > > this, no need to split it up at all.
-> >
-> > I'm willing to put it all in one file if that's preferred for
-> > organizational purposes, but as explained above, this shouldn't bloat
-> > the symbol count in Rust. If it were my own codebase this would be
-> > separate files, so up to y'all what level of granularity you'd prefer.
-> >
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
+https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+[..]
+
+> ---
+> base-commit: 4b31c90f86768367c84cc6e99e1deee0ec55197b
+> change-id: 20251029-qcom-socinfo-d8387c7fdb1c
+> prerequisite-change-id: 20251029-soc-bindings-9b0731bcdbed:v1
+> prerequisite-patch-id: e4da423ddabec93bd9a64004691266f9b740e0c5
+> prerequisite-patch-id: 5097ff622f8cb1d38354674cf70c1c946ac87f6c
+> prerequisite-change-id: 20251029-add-entropy-f57e12ebe110:v1
+> prerequisite-patch-id: 657de204912d2c5efff9898d3f4c51e52684d8e6
+> prerequisite-change-id: 20251212-transmute-8ab6076700a8:v1
+> prerequisite-patch-id: 4f5f7cb002d02d232083ab5c3ce6b3cb90650bd6
+> prerequisite-patch-id: 01a1f3d727e549c173dd142180741f5b6a3c866e
+> prerequisite-patch-id: ff801a7ae439876b1554b4d1132d94c825bbe74f
+
+So, it doesn't work on a clean v6.19-rc1 tree?
+
+Regards,
+Bjorn
+
+> 
+> Best regards,
+> -- 
+> Matthew Maurer <mmaurer@google.com>
+> 
 
