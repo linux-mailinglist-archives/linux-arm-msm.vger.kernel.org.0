@@ -1,165 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-85407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15376CC51AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 21:34:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E71E0CC5209
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 21:53:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D4006303D30E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 20:34:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B765F3011403
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 20:53:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB629273D66;
-	Tue, 16 Dec 2025 20:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E0302701BB;
+	Tue, 16 Dec 2025 20:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejwgbbhE"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zH2ikxtX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98291A3172;
-	Tue, 16 Dec 2025 20:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765917253; cv=none; b=WMaBN4bsCSh7JftNQi0RV17/Jkhitx2OYM8E/fOz1sGihW7wyBen99zrxRMgR4iPHTfFbGZ36Frun+TDCJCiEXwiGygiaDHLXnJWdTk68aSNvXsbnrBRjt6RPq33m1Ogy8hMrl+sQ+0+oap2C4SeaUKg/vASZXpQ7saJz/dzeKQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765917253; c=relaxed/simple;
-	bh=gbs4MTBB/3mazzLZycEOEMLJRyBSAc2efhxppbIrQME=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EKBv8saEwBCOzi0VAn6S4EZkyynJ5U5YRUvDMDwqRxQR5rvxt7Z9okDc/YhSFWLsWYwbgeoFABh4KKwy7S0RowGc78oqfReTSHw+H5rCBEZJXQybCXMhcYAAuM8O0rVfTzjIH8Ejjn4aQdZ4wH1ZtZBMz3nv4HIrDpVHM+iqfQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejwgbbhE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 32F58C4CEF1;
-	Tue, 16 Dec 2025 20:34:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765917253;
-	bh=gbs4MTBB/3mazzLZycEOEMLJRyBSAc2efhxppbIrQME=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=ejwgbbhE1VKoPElXQTJdSzP0MqnWz2PUxWlRnBZb4N9Cp6cKn0n+zf6U4nK22RVkQ
-	 f1pwGdvbm6Rj703objVU0wimqgNh29ln88OTwU79OyjhM4XZEBu5tagGfG4sA4Ksbg
-	 KgV0jfx6y2Jx69JwuwhzIysbRRpTkJwn+Cwfcqv3/VV4sCEbaPErg6V2+/bIXbgH7T
-	 ND8CABNcqREln/WpjnsnoVF+nnLZEBclj+aRKlBaah8m+lJ4e6QRnA9o7Geyzn8QEd
-	 ODJt7pLqS+6lzaJmbTwNdH7sMG8RCrSdEk6nuGkYekmvOIQOvArB9KRTXLaHlJ167K
-	 v1MmsH+LGx6IA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 288B4D5E127;
-	Tue, 16 Dec 2025 20:34:13 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 16 Dec 2025 21:34:08 +0100
-Subject: [PATCH] arm64: dts: qcom: sdm845-oneplus: Enable known blocks and
- add placeholders
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAAD18AE3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 20:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765918424; cv=pass; b=M+Y128eK5eKGyScRFBO68T0v1xxyPj8GVAUNt9bL4P1nkJFHaaspRSsi/lQjfX6jKWpPCR2nvTCJ27hEB3ktWzUCNLba8GOC6u8VpM1wbhZUEknyHH4fd9VFCV+r0kRBvw9Ri7HEfWePqAESA4izeNCFj77wtn5GxRX+GumiKrY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765918424; c=relaxed/simple;
+	bh=NuuxPtGKuNA4nBoRIDfUkRbP6YtfhfrvEuFwuu2H+Zo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ox+cfxYzGYmXtD3XRGn4ydE1djJE7XBiR69HewZpfnmHZMSHR1stfeqikAz/y/6pymvHTItlWkziS8f+yX3rsCxZHmFJEpNcylITGrdaJcq0ploAdb9oFoN3UDa++0Jk1SgqEjqFGrF8hdGWVARj2wjPIgN3ex6jpOi4LbB03GA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zH2ikxtX; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-644fbd758b3so2790a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 12:53:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1765918421; cv=none;
+        d=google.com; s=arc-20240605;
+        b=icbtrNAew+JZPR5QhiaAooiJW+7FuKGRXtPcUZY36x2iHlQWPHuyWms8TK+ysJjkh5
+         IcsHG25qUHQNUc0YeCPzCOm97S3jmRnWCv/IQDCdV2Ry6sJwOYyMK/HGhRs0fRvS25qn
+         eH1mKuT6uqudSoN9+RY/DdPTm1ad3DrB3nFW+pXnOEJ++gJxvh3cf2j6Dobd0t+OLs4o
+         g4iRdwBBt8majF+XitnDjg8CPlGtNevxGzMDv/TWN1PSuhYdw9fNZw325h28CxTExudP
+         CW8jgI5Izs8aEFzu63CNRgSIIGDOAMK/ag8t18cMVHcKp7qp7FWGo2n0dxrYUPzhMpan
+         cmrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NuuxPtGKuNA4nBoRIDfUkRbP6YtfhfrvEuFwuu2H+Zo=;
+        fh=1I5SG+pB2kbWCCa9Sh9hh3LsfUx63cMt8kyNoQBp1iQ=;
+        b=kRL4kRDvfo43IbNM/h4czmQEtvhxm7Kx8I9gJj8QKdqBX7g+h7PRO5WhDFvZa4/rzj
+         NaJDY5QPW+oEmXVoyBd+57tdpTT5db9ojnQZPLQkxPQPWI3016kn7B/ezqxDvT6+o752
+         g6Ep3OoUYPhofcAX3iCZycP5+i2G98/XIpdphFvQemaCtP9rP4PFwWYtlE+aaFgZkZOq
+         DrYFtfgBytuSEaokzwwqdQSwCZBO6NURtksQxA2kCz+H+IISKlVgpHEPziqzCAsbXQDC
+         fYMs5Z2DzjVAOOCpisGpuWpVZcohGptt08iyoFEO6FnCAxPQaR8KnMiWr6pfZ8GxQO2+
+         6asg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1765918421; x=1766523221; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NuuxPtGKuNA4nBoRIDfUkRbP6YtfhfrvEuFwuu2H+Zo=;
+        b=zH2ikxtXSyw/nSVwduoZbM29JF+gm1IupaPUtajDTZJyWip6LOTurKDsH84RwFS6SU
+         EMwWZknr6XN3wXyhHbOhwPHzEDqT2MUq2FekW91FIvhux1w6fATYtBbdLkOjjcYbV06n
+         lrl33W7JF8QFjUJ7mOqNPQqxZgVrk9IoeKVVJ0x/PqtHyvgbbBUStJNANaZEXIpo3oZP
+         nn2DzhLV2z657wsaZHeNkwf9SfX+HsmZ2sfwDa7uiwQlaoCMJoWNWI2Uw541LFYOvkEx
+         o/U34T3Joq0nxdRFRYWeSZoIMd1mWzi4jBmqJZqn0tcMrj8g0MYPuwql98GtPurp32bM
+         T1/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765918421; x=1766523221;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NuuxPtGKuNA4nBoRIDfUkRbP6YtfhfrvEuFwuu2H+Zo=;
+        b=AvabpIMgT8b6GNOpXW+lhZn3ARgzBOuEJOjF1olBC3J+hkD9LjSi9gEaVQeieEeM5V
+         c+F5qvtxsbt2GTfdaQOmwKnAqMSMcCGuTPN46vaeaCId3r7Sze2lJKBXKJQRDR/zEVqv
+         WTNLedusJqHxk9HYwr2t5O6nYvJIDgCNXClEKURNFQ05v4w5BM4A5EfFqv9eO860/rTy
+         PKjRpWqQH3S1hkxMWLcuyeqLzyOqvtBe+9ZpEhHqilVuD96BH+D0+nJs2Qy0Brh4U895
+         AnknTinM695Pburx8LyzJS4zxeEuxmvtX7T57tj+3wFaAwpwxtRhSNURYJamBiQh7LDp
+         CJDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUWCr2TNBhd1bKE+Nzsr9AUrt0RBGw+ch8Ma4LTGMurBH7ymysoHpfu/aGxkGPRB7zZq2TxeNIBLR9J3V1i@vger.kernel.org
+X-Gm-Message-State: AOJu0YxeizhosYvspAwC9h59wGJ9cJIpKYp7VaABBwxB102Oy8CVYVku
+	LQXzucr7LZj3cbXCo42Ldp5rHAFfQKN9ju18bPvZ2GNmGrMC8WRo0RNOyloIxk5ttvpF/vUxkfu
+	UrCLsbQT/OfhA3Gsyl5Da8mN8p7VRNlb/DlEud4Ih
+X-Gm-Gg: AY/fxX7MQ0ERui7UVKp4D23G8JtkIEa4NUjjALi6XJ/4BU9ZGkoNImNhi6Z2aK2x+O2
+	pFkvUlqFFNuEbhSpx1DK3ZAyoPt3eYFLP6O/gU1UCjY5PnYl4sILFqqvo/dlx8pDUw7sXcXnMef
+	W9YknsS4Dz4cbzOyBB3nKl3BsbCNlugW2+7b2jbcEymF36dWicodQhME9o32mRxtJ0cix2DTlRG
+	LlgDCJGplhckkTdeZoj4P3wdrjwWtPblOLmQn+HxSThQzNzxjv5K1OXm6Uo8nBlJOhrfKgn+agi
+	NOKeusnrN/JMOELiIX25j55Xiw==
+X-Google-Smtp-Source: AGHT+IFlOvKMhimG9TFoBpuVqH9GtXgyGZ2U02aYOYY30YWANnZ6aMhDL6EnJrDezEKB6RJNaeCQrFHpvip4H8DwYGI=
+X-Received: by 2002:aa7:dacf:0:b0:63c:1167:3a96 with SMTP id
+ 4fb4d7f45d1cf-64b4011f599mr8097a12.5.1765918420655; Tue, 16 Dec 2025 12:53:40
+ -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251216-placeholders-v1-1-d7d544200e7c@ixit.cz>
-X-B4-Tracking: v=1; b=H4sIAD/CQWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1NDQyNj3YKcxOTUjPyclNSiYl3zFDPTVCNLMxOLRBMloJaCotS0zAqwcdG
- xtbUAMTGuOl4AAAA=
-X-Change-ID: 20251123-placeholders-7d65e29648a4
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1668; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=+JZK2ZbxfA/IlfNdhYsiDNwaA0HXucqfuw6KNa0TyXk=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpQcJEA5Crw2AD4nFHdNFPek/RbVbA9LTtw78Hh
- 4W6BMB9wcyJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaUHCRAAKCRBgAj/E00kg
- coQ4D/wIOrl3U2EPI6EA35fBqsUoauCdeaHMeDEaVT/zFWMxpY4NvPo7wQPEKxGptTrhvi0DS10
- yCn/4/HjDwEb9vmbsnj6dJ7UDoqbW6+PzRYphlSoND/IoHRT0Bh373xKXOmuWAWJtEhA6Cmb7A0
- 9tpUKrJ1jhmNo1iGhUZkqUnigNWKXjAUioHYtXmqoycC/fkuWdS6spHKlciENo0ehlPp0+0q/72
- m1nfuBi+auZdkt7yqiliJ3efTApM4s0kodS0PQZe1PD/oq4CPn52esVEAJFBjO0GCu1EJN3es/x
- rL575oZ/+LuNzQSb0UJcN+PyZo8AN2CAFynPOs/QWA9ielUgjpgJtBM8+MiozHLzWEDvGwhZiyV
- i/pkCbUOfDZubU1DWGg/swawcp529r5fnZcK0uCgZfa+fPVir40FrPDhp8lRRHiUi0KbeJ+nFki
- KeC3+VXUktrf4BrRsAn2wmGxpjYrMBAZTM9Tc0aiEmOnyMPK+OB6Vvy1zpMp/nU7aN5HaItZPVb
- oN5wBPoKfBwmoors9qnzIKdbKGaoarYUt5nRtdOTy/jY9IU6kPyspRou7uCOd5fycjJTzvFm0Ka
- NuY3uesS0hK5H6cz8O44mN2S3vYGvHHBw6Swaw1DqWjBnvdh/6KvD6qI1CCTt1JNK3Ae5OwuwnU
- UGyUMm1NE8YVc7g==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com> <nddh2fawoofktjglouq5wrjubxhyqrlzftqz7lvx3xdfipncip@xgudpcfdo2bd>
+In-Reply-To: <nddh2fawoofktjglouq5wrjubxhyqrlzftqz7lvx3xdfipncip@xgudpcfdo2bd>
+From: Matthew Maurer <mmaurer@google.com>
+Date: Tue, 16 Dec 2025 12:53:28 -0800
+X-Gm-Features: AQt7F2okKfu-bKqlTg4yU3QLph0ShB8kLBxero0Gp3Hpjnyyxgk-uDLozLNKpHQ
+Message-ID: <CAGSQo0254uMNb52aJACpuEr6O1GiUng9nNut1eecM3AFaSy_8w@mail.gmail.com>
+Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, rust-for-linux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: David Heidelberg <david@ixit.cz>
+On Tue, Dec 16, 2025 at 12:49=E2=80=AFPM Bjorn Andersson <andersson@kernel.=
+org> wrote:
+>
+> On Sat, Dec 13, 2025 at 12:36:00AM +0000, Matthew Maurer wrote:
+> > Re-implements qcom-socinfo driver in Rust, using `Scoped`-based DebugFS
+> > bindings.
+>
+> Okay, but why?
+>
+> https://docs.kernel.org/process/submitting-patches.html#describe-your-cha=
+nges
+>
+> [..]
 
-We know these devices are present; most of them are supported by
-downstream and are close to the mainline kernels.
+I'll move more of the text from the cover letter into the commit
+message, but the short version is that it's intended to be a low-risk
+driver to pilot vendor drivers in Android.
 
-This adds placeholders for:
- - front camera (imx371)
- - rear cameras (imx519, imx376k)
- - actuators
- - NFC node on i2c3
+>
+> > ---
+> > base-commit: 4b31c90f86768367c84cc6e99e1deee0ec55197b
+> > change-id: 20251029-qcom-socinfo-d8387c7fdb1c
+> > prerequisite-change-id: 20251029-soc-bindings-9b0731bcdbed:v1
+> > prerequisite-patch-id: e4da423ddabec93bd9a64004691266f9b740e0c5
+> > prerequisite-patch-id: 5097ff622f8cb1d38354674cf70c1c946ac87f6c
+> > prerequisite-change-id: 20251029-add-entropy-f57e12ebe110:v1
+> > prerequisite-patch-id: 657de204912d2c5efff9898d3f4c51e52684d8e6
+> > prerequisite-change-id: 20251212-transmute-8ab6076700a8:v1
+> > prerequisite-patch-id: 4f5f7cb002d02d232083ab5c3ce6b3cb90650bd6
+> > prerequisite-patch-id: 01a1f3d727e549c173dd142180741f5b6a3c866e
+> > prerequisite-patch-id: ff801a7ae439876b1554b4d1132d94c825bbe74f
+>
+> So, it doesn't work on a clean v6.19-rc1 tree?
 
-This is very handy when rebasing the integration tree with
-support for multiple different blocks at the same time.
+Correct. Those other patchsets are patchsets I'm landing which add
+bindings used in this one.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 28 ++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index db6dd04c51bb5..3e60565d54c08 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -352,6 +352,26 @@ vreg_s3c_0p6: smps3 {
- 	};
- };
- 
-+&cci {
-+	status = "okay";
-+};
-+
-+&cci_i2c0 {
-+	/* front sony,imx371 @10 */
-+
-+	/* rear sony,imx519 @1a */
-+
-+	/* rear onnn,lc898217xc @72 */
-+};
-+
-+&cci_i2c1 {
-+	/* sa,sa3103 @0d */
-+
-+	/* rear sony,imx376k @10 */
-+
-+	/* onnn,lc898217xc @74 */
-+};
-+
- &cdsp_pas {
- 	status = "okay";
- 	firmware-name = "qcom/sdm845/oneplus6/cdsp.mbn";
-@@ -373,6 +393,14 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/sdm845/oneplus6/a630_zap.mbn";
- };
- 
-+&i2c3 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	/* nxp,nxp-nci-i2c @28 */
-+};
-+
- &i2c10 {
- 	status = "okay";
- 	clock-frequency = <100000>;
-
----
-base-commit: 563c8dd425b59e44470e28519107b1efc99f4c7b
-change-id: 20251123-placeholders-7d65e29648a4
-
-Best regards,
--- 
-David Heidelberg <david@ixit.cz>
-
-
+>
+> Regards,
+> Bjorn
+>
+> >
+> > Best regards,
+> > --
+> > Matthew Maurer <mmaurer@google.com>
+> >
 
