@@ -1,227 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-85309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9C4BCC13A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:00:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC8EBCC14A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 08:23:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 420DB3002FEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:00:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6B96030601B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 07:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 117EC338F26;
-	Tue, 16 Dec 2025 07:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EB4C33A709;
+	Tue, 16 Dec 2025 07:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="QJXU0ivI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ohs9IdXq";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X0wwQBik"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451DE225413;
-	Tue, 16 Dec 2025 07:00:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F2133A714
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765868438; cv=none; b=XSrHAMOHQu6PuoDTk7ndzAW4g0Jqak1klYBs/plcCwhzBfCZDov8P1gD2XGngVMf0dC4TakUjAvfYxAB/vT2mKcx5I/HwT3mcX+FBfkQpE66AHHHYpHKq1RqEEeclIsRUTodi1edAZNjRyz1AmkvquqMdvQBd2lVHfjaZFpQsck=
+	t=1765869295; cv=none; b=cAlM7bLu7SUmHy3znin9FkH2MY2groJSJHWowMjNsBK1E/v9cKfN+zIeb5tzDb0ebLqZY3fmuXwUYgkSXNkGSZlQwJhV5Rvt8ye4575pN58+QluwbjT00BEoDWwqvIph1pEwaFEOV7b0ADxgpb+oAcdns2vSkYSmMPaOjBvBEYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765868438; c=relaxed/simple;
-	bh=qY8QMfnRy/a3cs9SUvODsIarwko2nwg42PutdqdoI9s=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=TtxYymZGUOz1yh3HHvsnWSA9ocwGsDauHZiGcZ49ahxKwFW4rJtGrqXw/dhToRmpIfKj2wvLKZIxvEqozwafahQXIgQ+jbg3f3i6zxlMmWrJmtdJczRU08xLgk9Ur8fx+xxf77FhiwTMLVGLOvgH2TID/pS0H25RQQVKbADWVro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=QJXU0ivI; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=ACLxWNBKlHzVYrQhk+bIPDxbMvRXgt1a0foI415LnX4=; b=QJXU0ivIeBSXYI/xeJMRaNszO/
-	3N07ehRAX6bpi9ocM0/RhO18PXW7yDlTSBZeY2KO/EzP7HrqEFfNMN+caN/TAlT0zTxOmhXJGKJGC
-	DFqJzmsU8Fi8N4yFEX/r/AOacAnnKIKh4nmIVmJbpUJkywLMkOCRnSYNF7OrmWCi/OIG1ObxhqRwi
-	n/IRgskUcjEfHp41IVygkeiJXsTqr7vxTO5scFMdybpHp4b3hnPPzNhX/EIzhPDuEpKyEwDdJstjq
-	h1X39dJKIHUTC+IqdNwmUHfo8E+U/j51fff9B9mT9yc0neDnekDPXsKfz7aX7iZfNa/QNy1EmvPDI
-	Lck+C40A==;
-Received: from [50.53.43.113] (helo=[192.168.254.34])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vVP2w-00000004ojt-3TS1;
-	Tue, 16 Dec 2025 07:00:34 +0000
-Message-ID: <93682055-4a6d-4098-b74f-afef735d1699@infradead.org>
-Date: Mon, 15 Dec 2025 23:00:33 -0800
+	s=arc-20240116; t=1765869295; c=relaxed/simple;
+	bh=m/5Gss7GrBqANXW/b4jIDW3eIyq31dv73Wuja8//6WI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ye/ua7DFE0ABpv1E/QBGQMObx2tzXWTedr5TVG9PnlgkUCId6BKZie5+zZs+86SwPFRHCBqC5q1jcMFQkWNEogJrNSlBD7Rssf7u+EPj/O61+MXrlPjaGtXgqHQ9KHKR4LLCEesYd6KAveI9NkmPw6BxCQHqO02u5i3MYf6+Yb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ohs9IdXq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X0wwQBik; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BG7EleH1131394
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:14:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Am0uuG/SMaWGn5BG7PqsVygZOCHB1Fc3JGgHjjK0254=; b=ohs9IdXqsQ7uFp7R
+	5cgS6Qs3b2tYXCPCmtLqZ62d2MTEeeX/hjz0Af420poHabXs9qRnAcMJqHJzSpwm
+	F7/B57jfmAevd6ChvNCjGMSbJwS7vse6eSO4q2PPuT/KWF+fQaIko6Fxau5rY3EW
+	dz9tlnJm/eTzZMzQhjRJU2pG4x8z4N6akHPqJaaFDDy4gHH/j9d3xQArUTTq9EP9
+	G+kBwZKhpMTIuegC+WN9Uv4OHgrcx4n/pWfMprzW2yZdkC+gHUSQVYNGNI/HpKsx
+	myZsRD4bJ5uWbfOx+6QIihlDhmwgmwVevJNoprVG2NG5hiunxbX4VVwKMsK56yhh
+	oW2KZw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2p3uart5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 07:14:50 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-88a344b86f7so63217276d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Dec 2025 23:14:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1765869290; x=1766474090; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Am0uuG/SMaWGn5BG7PqsVygZOCHB1Fc3JGgHjjK0254=;
+        b=X0wwQBikv4kGNAc6sUMT/0GwlqvIfZ8siDTSZYWFAJgIN2aDp5iskckbxHmnWpazCK
+         asC8A+/g/qpCHTTYDobj/vKVsHC5B5yceY4Eibajy5es6uUcBn/E/toorhVAnsc0W9CO
+         MDSZCGsUiw2zT/u5W7ENQwa0buUaYOZcI9lbN+g+xWYipPLv14F5QmEvFBPUktdirBCa
+         oSzWYBtyXc5r88vXOP+NZq+8PtBnnuvbLr1CZ34AHL2/ghMsj3TRYlEeNRD+EWSWQvhn
+         jhO9LGpNd3KUWMa6VCqe9FrX16UB9ImPVyeShNXrWSnNN8ff8xRl9AZ9H0YkJ/M3yY3C
+         citg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765869290; x=1766474090;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Am0uuG/SMaWGn5BG7PqsVygZOCHB1Fc3JGgHjjK0254=;
+        b=Oo7TuUwqnF4Z2hNHeNBoosYWAJXiQoKBYhkG8OvRseWwjwIGmBxbp9R0A5U9mnN6xD
+         /bakqb7o4ZsUIy3snWfgS5TbX7CP4Y9YYGIjJV/XW78asQR9UtdKAFnBO89vZgYe0p8b
+         hFZJHLHx2VswKrLceg1iJX9lny40ZomUEq/A8vJP4D4+b/1+P48ZGa+ltIvhEUmOS/QF
+         gYI18fsiEduW6MmKNEk2hH9+jd3Dnebdg0RkWWFx98HUg0jxf5o++BhIptUL9pco5u4h
+         MSFnH1pupal+/KqP5QWNu0ayxeg9UF4mI1OfvLm67RwN2auVVBc5urW1OOmCqp+Lgq+H
+         7MSw==
+X-Forwarded-Encrypted: i=1; AJvYcCUwSvmn7RI8Xr3FoLODeuMMVj2RZ9s37g4AU0zx9p4VPCd53UMrUafimXbX+BEHKXCFiHbLPxMVrIEG6vMH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFBKaLez2wbAfcCHofPoEuFRIwi+9bnsEqQrpHVT9e7j7TrVkn
+	YtVBGC3/EBGMVyt5+NS360EmnImmgDAYZb4sJOzvrlu319qwjJeZl9affIebL/NF5dHtCaxDEST
+	3eUD+evSRr/KoqJlEKXpwX4xsPLP8RppjiclWuUapVYdt1AO5FkU8RmjW8trvm/EHQn4O
+X-Gm-Gg: AY/fxX55L4c3/Cq6ZnY4rrVLrBHs/ImgTMJREcqIpg53Mf/sMl0Qu3mbfwTVx9qU9Jy
+	0cno9MYBAEbPKykTg/aQZ1Kj+ZDI/USb6YiN9iz4Zr71v509OBQ4InAs34RGEst+rIre5E7ba0f
+	zxXRpGTSDfGC/yaCrs2lMUWnwf05hVEC4vx6W+GTRFxz7a8iZsP3B/5B/OgZZnSY4RFwCQeGjmH
+	+IbbHCq8ZDpQHsAmPBMX89OB/k10FvnZ77tQTdKYF3/fRmxgLbaoxTrznD+yCR2v+aoAbF0/Zk+
+	gSoWzcmQqFbuIH3wsbqX/KmlS3FzC+1JhRtc5E+vbaqp8SjSE7Y8ro8ILvpSZRa9C+6Q0q95wW/
+	aMYnq+BZu3pWSnBICQH/H8HkYToS9MId7rU0y530HZvP/t+91TVfeKi1nlFRldEPiXRDHOCI=
+X-Received: by 2002:a05:6214:2e45:b0:882:7571:c012 with SMTP id 6a1803df08f44-888801cba45mr175118176d6.55.1765869289744;
+        Mon, 15 Dec 2025 23:14:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE2lJX1RHdL61KthpwkRgPaivxdvAcRF1rHNtkwmJXCWmk9l44q+8qM2lkJENhb3atu86mA7Q==
+X-Received: by 2002:a05:6214:2e45:b0:882:7571:c012 with SMTP id 6a1803df08f44-888801cba45mr175117936d6.55.1765869289243;
+        Mon, 15 Dec 2025 23:14:49 -0800 (PST)
+Received: from yuanjiey.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-889a860ce52sm67808286d6.50.2025.12.15.23.14.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Dec 2025 23:14:48 -0800 (PST)
+Date: Tue, 16 Dec 2025 15:14:37 +0800
+From: yuanjiey <yuanjie.yang@oss.qualcomm.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: yongxing.mou@oss.qualcomm.com, robin.clark@oss.qualcomm.com,
+        tzimmermann@suse.de, dri-devel@lists.freedesktop.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org,
+        konrad.dybcio@oss.qualcomm.com, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, krzk+dt@kernel.org,
+        neil.armstrong@linaro.org, jesszhan0024@gmail.com, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, linux-arm-msm@vger.kernel.org,
+        lumag@kernel.org, simona@ffwll.ch, tingwei.zhang@oss.qualcomm.com,
+        aiqun.yu@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, abhinav.kumar@linux.dev,
+        mripard@kernel.org
+Subject: Re: [PATCH v3 04/11] dt-bindings: display/msm: qcom,kaanapali-mdss:
+ Add Kaanapali
+Message-ID: <aUEG3TL34CM2V5Z+@yuanjiey.ap.qualcomm.com>
+References: <20251215083854.577-1-yuanjie.yang@oss.qualcomm.com>
+ <20251215083854.577-5-yuanjie.yang@oss.qualcomm.com>
+ <176579137354.1486530.823295322686100207.robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] Introduce meminspect
-From: Randy Dunlap <rdunlap@infradead.org>
-To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com, corbet@lwn.net, david@redhat.com,
- mhocko@suse.com, linux-debuggers@vger.kernel.org
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org,
- Trilok Soni <tsoni@quicinc.com>, Kaushal Kumar <kaushalk@qti.qualcomm.com>,
- Shiraz Hashim <shashim@qti.qualcomm.com>,
- Peter Griffin <peter.griffin@linaro.org>, stephen.s.brennan@oracle.com,
- Will McVicker <willmcvicker@google.com>,
- "stefan.schmidt@linaro.org" <stefan.schmidt@linaro.org>
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <bf00eec5-e9fe-41df-b758-7601815b24a0@linaro.org>
- <5903a8e1-71c6-4546-ac50-35effa078dda@infradead.org>
- <c3db6ccd-dfc7-4a6a-82b7-3d615f8cab4f@linaro.org>
- <b74aef93-9138-413a-8327-36c746d67e10@infradead.org>
-Content-Language: en-US
-In-Reply-To: <b74aef93-9138-413a-8327-36c746d67e10@infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <176579137354.1486530.823295322686100207.robh@kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDA1OCBTYWx0ZWRfX45xoAU1E6iFx
+ TZnFervIQy+XRQaV6i3ti8GunzlahccypNqha/DZ4Vrmm119pcZu9aD0kd40bm4ejHaN7S/yXLd
+ n+zR8ri+RjBBCG6FAPf6ofAj/PNdCxVEBcqYE9Kv+n2AI0orrEETl9VPOjNYUtAUwiEk/31JK82
+ fITGBmOsjRBidKOl897LcGKM3RuXtFtLx97REGQ2fyXo7FxifQ+PoNX91pMmjodvWEsCiya8qEH
+ K5IOcOA8aHG1v9uekbhxezs/xBKHAWUnfdOh7Bh5qnNPR3+OKHS4NvmFC44PsjTs2fMIVbJbATb
+ QmAvsuYzBuUdfJxU3caRezY0vaZ2ZtJv5C5QhGb9LzvPrj+BbPqXdsNbuxjavVXFJ9D414liJDj
+ vkYQdRxTRqWXXhCiadeNzZF3fi1HJw==
+X-Authority-Analysis: v=2.4 cv=Q/TfIo2a c=1 sm=1 tr=0 ts=694106ea cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=0awkmHLjsCMGZ7zvgVIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-GUID: qGdps7l9UoWlcaMEdBD5IQBuO8w9AGS_
+X-Proofpoint-ORIG-GUID: qGdps7l9UoWlcaMEdBD5IQBuO8w9AGS_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-16_01,2025-12-15_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 adultscore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160058
 
-
-
-On 12/15/25 10:54 PM, Randy Dunlap wrote:
+On Mon, Dec 15, 2025 at 03:36:13AM -0600, Rob Herring (Arm) wrote:
 > 
+> On Mon, 15 Dec 2025 16:38:47 +0800, yuanjie yang wrote:
+> > From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> > 
+> > Kaanapali introduces DPU 13.0.0 and DSI 2.10. Compared to SM8750,
+> > Kaanapali has significant register changes, making it incompatible
+> > with SM8750. So add MDSS/MDP display subsystem for Qualcomm Kaanapali.
+> > 
+> > Co-developed-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> > ---
+> >  .../display/msm/qcom,kaanapali-mdss.yaml      | 297 ++++++++++++++++++
+> >  1 file changed, 297 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,kaanapali-mdss.yaml
+> > 
 > 
-> On 12/12/25 11:22 PM, Eugen Hristev wrote:
->>
->>
->> On 12/13/25 08:57, Randy Dunlap wrote:
->>> Hi,
->>>
->>> On 12/12/25 10:48 PM, Eugen Hristev wrote:
->>>>
->>>>
->>>> On 11/19/25 17:44, Eugen Hristev wrote:
->>>>> meminspect is a mechanism which allows the kernel to mark specific memory
->>>>> areas for memory dumping or specific inspection, statistics, usage.
->>>>> Once regions are marked, meminspect keeps an internal list with the regions
->>>>> in a dedicated table.
->>>>
->>>> [...]
->>>>
->>>>
->>>>> I will present this version at Plumbers conference in Tokyo on December 13th:
->>>>> https://lpc.events/event/19/contributions/2080/
->>>>> I am eager to discuss it there face to face.
->>>>
->>>> Summary of the discussions at LPC talk on Dec 13th:
->>>>
->>>> One main idea on the static variables annotation was to do some linker
->>>> magic, to create a list of variables in the tree, that would be parsed
->>>> by some script, the addresses and sizes would be then stored into the
->>>> dedicated section at the script level, without having any C code change.
->>>> Pros: no C code change, Cons: it would be hidden/masked from the code,
->>>> easy to miss out, which might lead to people's variables being annotated
->>>> without them knowing
->>>>
->>>> Another idea was to have variables directly stored in a dedicated
->>>> section which would be added to the table.
->>>> e.g. static int __attribute(section (...)) nr_irqs;
->>>> Pros: no more meminspect section Cons: have to keep all interesting
->>>> variables in a separate section, which might not be okay for everyone.
->>>>
->>>> On dynamic memory, the memblock flag marking did not receive any obvious
->>>> NAKs.
->>>>
->>>> On dynamic memory that is bigger in size than one page, as the table
->>>> entries are registered by virtual address, this would be non-contiguous
->>>> in physical memory. How is this solved?
->>>> -> At the moment it's left for the consumer drivers to handle this
->>>> situation. If the region is a VA and the size > PAGE_SIZE, then the
->>>> driver needs to handle the way it handles it. Maybe the driver that
->>>> parses the entry needs to convert it into multiple contiguous entries,
->>>> or just have virtual address is enough. The inspection table does not
->>>> enforce or limit the entries to contiguous entries only.
->>>>
->>>> On the traverse/notifier system, the implementation did not receive any
->>>> obvious NAKs
->>>>
->>>> General comments:
->>>>
->>>> Trilok Soni from Qualcomm mentioned they will be using this into their
->>>> software deliveries in production.
->>>>
->>>> Someone suggested to have some mechanism to block specific data from
->>>> being added to the inspection table as being sensitive non-inspectable
->>>> data.
->>>> [Eugen]: Still have to figure out how that could be done. Stuff is not
->>>> being added to the table by default.
->>>>
->>>> Another comment was about what use case there is in mind, is this for
->>>> servers, or for confidential computing, because each different use case
->>>> might have different requirements, like ignoring some regions is an
->>>> option in one case, but bloating the table in another case might not be
->>>> fine.
->>>> [Eugen]: The meminspect scenario should cover all cases and not be too
->>>> specific. If it is generic enough and customizable enough to care for
->>>> everyone's needs then I consider it being a success. It should not
->>>> specialize in neither of these two different cases, but rather be
->>>> tailored by each use case to provide the mandatory requirements for that
->>>> case.
->>>>
->>>> Another comment mentioned that this usecase does not apply to many
->>>> people due to firmware or specific hardware needed.
->>>> [Eugen]: one interesting proposed usecase is to have a pstore
->>>> driver/implementation that would traverse the inspection table at panic
->>>> handler time, then gather data from there to store in the pstore
->>>> (ramoops, mtdoops or whatever backend) and have it available to the
->>>> userspace after reboot. This would be a nice use case that does not
->>>> require firmware nor specific hardware, just pstore backend support.
->>>>
->>>> Ending note was whether this implementation is going in a good direction
->>>> and what would be the way to having it moving upstream.
->>>>
->>>> Thanks everyone who attended and came up with ideas and comments.
->>>> There are a few comments which I may have missed, so please feel free to
->>>> reply to this email to start a discussion thread on the topic you are
->>>> interested in.
->>>>
->>>> Eugen
->>>>
->>>
->>> Maybe you or someone else has already mentioned this. If so, sorry I missed it.
->>>
->>> How does this compare or contrast to VMCOREINFO?
->>>
->>> thanks.
->>
->> This inspection table could be created in an VMCOREINFO way, the patch
->> series here[1] is something that would fit it best .
->>
->> The drawbacks are :
->> some static variables have to be registered to VMCOREINFO in their file
->> of residence. This means including vmcoreinfo header and adding
->> functions/code there, and everywhere that would be needed , or , the
->> variables have to be un-static'ed , which is a no-go.
->> This received more negative opinions on that particular patch series.
->> The annotation idea seemed cleaner and simpler, and more generic.
->>
->> We could add more and more entries to the vmcoreinfo table, but that
->> would mean expanding it a lot, which it would maybe defy its purpose,
->> and be getting too big, especially for the cases where custom drivers
->> would like to register data.
->>
->> How I see it, is that maybe the vmcoreinfo init function, could also
->> parse the inspection table and create more entries if that is needed.
->> So somehow memory inspection is a superset or generalization , while
->> VMCOREINFO is a more particular use case that would fit here.
->>
->> Do you think of some better way to integrate the meminspect table into
->> VMCOREINFO ?
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
-> No, I just wanted to make sure that you or someone had looked into that.
-> Thanks for your summary.
-
-Although you copied Stephen Brennan on this, I think it would be a good idea
-to copy the linux-debuggers@vger.kernel.org mailing list also to see if
-there are any other comments about it. [now done]
-
->> [1]
->> https://lore.kernel.org/all/20250912150855.2901211-1-eugen.hristev@linaro.org/
+> yamllint warnings/errors:
 > 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,kaanapali-mdss.example.dtb: phy@9ac1000 (qcom,kaanapali-dsi-phy-3nm): reg: [[0, 162271232], [0, 460], [0, 162271744], [0, 128], [0, 162272512], [0, 1024]] is too long
+> 	from schema $id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.kernel.org/project/devicetree/patch/20251215083854.577-5-yuanjie.yang@oss.qualcomm.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
 
--- 
-~Randy
+pip3 install dtschema --upgrade
 
+After update package, 
+and use：  make dt_binding_check   I see the same issue.
+
+but use single check:
+make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/qcom,kaanapali-mdss.yaml
+I don't see any error/warning.
+
+will fix it in next patch.
+
+Thanks,
+Yuanjie
+
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
 
