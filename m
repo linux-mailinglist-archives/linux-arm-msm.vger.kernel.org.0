@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00210CC41D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:06:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12C33CC4364
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 17:18:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 98DF0304DA0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:02:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E88FD304744A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 16:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819241D86FF;
-	Tue, 16 Dec 2025 16:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7D52586E8;
+	Tue, 16 Dec 2025 16:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rFrTuZ86"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jo/szr80"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9E63B7A8;
-	Tue, 16 Dec 2025 16:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDCD23B609;
+	Tue, 16 Dec 2025 16:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765900948; cv=none; b=MOj2cfVG86bP2iMeaEbzPbV5fGyNXDk88ZFYaMkX1Abdkra+bvfUFhUqdWiN0BlnnbT5qKtOO9ANCoLAlKlR267MTR6QF7vIHdhqAP3tItld4TqBmbUNUtecnf34pTBg73sTKjB5d63Opb015spMhd4Uk2SDuqzqqroaQdEAnk4=
+	t=1765901032; cv=none; b=KQDedjJcT8twNmBpqob2nbu15q78SCA+/I10fAoeA722LD16/OdBjeMqyIH3fVkvnW+20EU/HWoKx8JLBbHOm1BffM2WSGc0n8kDWfgPWv0n6T/6jyrdl5gFAfIrf2ppqnJU1yAef5kjIUsE0wbqOhdiRlQrWwJMoD05Sju3S7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765900948; c=relaxed/simple;
-	bh=4dgCEM4nTnnn0sFZ8m1aMoo3gsMxbEEftNNJrXbVIlA=;
+	s=arc-20240116; t=1765901032; c=relaxed/simple;
+	bh=nYwX+wSueMVMR+YGKaee6e2rV3N20IPf57KZu6XHhT4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SaK54N7C0OSbfLqKcSw0PmIHiu+juVZW17g1lUUcMPhBjHY7NOU/ZzFQJfri/hOPgyaCW/McHeH5Mb78ubFSay7bNW8YEtnAtcoquWit7xYc7VYSwUPSEnW9Gf7aMhy4os/DB1brscVgRz9vM5JFh7E+bIcOvT1IBs8y6dVFRx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rFrTuZ86; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F644C4CEF1;
-	Tue, 16 Dec 2025 16:02:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=I+zRrElwFfENXZ5PrQ2y8nfKc+JAKTeKJnVNoMDgYqgO4HpPZrLZOgDZ7naHwaTJvxpp9fL3cLFFDRTkJpkqf9WGd5PCZyXAHTNlXn6OWRxB4Xl0p2kzdyYZgQo1yJShi+FWTD3EKCK8UFiFnlRTo9Bshyiv4gKuw4h9UT11O6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jo/szr80; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96014C4CEF1;
+	Tue, 16 Dec 2025 16:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765900947;
-	bh=4dgCEM4nTnnn0sFZ8m1aMoo3gsMxbEEftNNJrXbVIlA=;
+	s=k20201202; t=1765901032;
+	bh=nYwX+wSueMVMR+YGKaee6e2rV3N20IPf57KZu6XHhT4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rFrTuZ86QqRyQSV08D118p9n5vQ2OyOm5MiEyFd++uezU33AUrwth1Qy1nCHkXJU0
-	 Im+OB3jqWGddoWb7tGoDgefOwseKq4qJnJ5I1+NZ6zz6VXvbLIsRva+OnJ3wI6d44l
-	 t7CgtgjOT9gUFjUuprW0G8r+joVRkeW14S42NNMNf5+7iOdZhRj8ojHjjeBNNJadNx
-	 iK/oN9/wisFa3oN8JNlqFfbwEfGpIFCyT0BzZXmsh5i4CpOYP9Qz90lcw1Uo4WKTCs
-	 6A57ThEZuaO5+QECzQ07ZVfG5GxUCMVGpFtqXr6M0ObNkHST7jCw7wQJRw8Pe7f+D8
-	 39IJ/ntB+1YQg==
-Message-ID: <047e0283-75be-4ce1-b6f4-e500e0a653e8@kernel.org>
-Date: Tue, 16 Dec 2025 17:02:22 +0100
+	b=jo/szr80KKyxE6l8ve0Uy6xDQf7Z5qBbnDyUES6ZkSDebN/+9Q8gsVzgdDDW1Eurs
+	 Dun0oF5mZBbqlpn2CKBF0AW1gn0V/OqK9hNskwxOeRHOwRLAnkdXgKlwbCpMpKV7TO
+	 DUoEv1qne2ysffrpjmnJP4kagP4pNRtblHlx0PARMAUYnrHpajg+YQqKsft1S0wmR1
+	 xs9rT8E+shj3dk96bO6U7VDrQgkqesZrkc5eLZasj9iNB+MuqwSc8dsRm33vGIKnpF
+	 pXsReKoCkdrsxg4QBlOEcMYJV5hHZyHwwPObFLKsSCEnNa8GsaorMfOmiHiLZiOKwu
+	 FIk3zTA+HSbmA==
+Message-ID: <5c82a8d7-6632-4d3a-a6de-ad9b1641c074@kernel.org>
+Date: Tue, 16 Dec 2025 17:03:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,7 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] arm64: dts: qcom: Add sdhc dll-presets
+Subject: Re: [PATCH v6 1/5] dt-bindings: mmc: Add dll-presets values for HS400
+ and HS200 modes
 To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -57,14 +58,12 @@ To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
  Adrian Hunter <adrian.hunter@intel.com>
 Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- dmitry.baryshkov@oss.qualcomm.com, quic_pragalla@quicinc.com,
- quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
- quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+ dmitry.baryshkov@oss.qualcomm.com
 References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
- <20251215120009.3877889-3-quic_rampraka@quicinc.com>
- <0f7c0d5c-7f77-4669-9648-62d008f15b1c@kernel.org>
- <9f5fcce3-b9c0-4aae-b4e0-10475eb5ec9e@kernel.org>
- <b98eb114-6967-4ac4-8b4d-936966a58171@quicinc.com>
+ <20251215120009.3877889-2-quic_rampraka@quicinc.com>
+ <03819cd6-9f19-4c28-806b-17c7596e5299@kernel.org>
+ <1fc9ac39-231b-4fce-a354-22a21d126363@kernel.org>
+ <00485066-d537-4f8f-a579-efa33e69a56f@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,56 +109,92 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <b98eb114-6967-4ac4-8b4d-936966a58171@quicinc.com>
+In-Reply-To: <00485066-d537-4f8f-a579-efa33e69a56f@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/12/2025 13:41, Ram Prakash Gupta wrote:
+On 16/12/2025 13:51, Ram Prakash Gupta wrote:
 > 
-> On 12/15/2025 5:37 PM, Krzysztof Kozlowski wrote:
->> On 15/12/2025 13:05, Krzysztof Kozlowski wrote:
+> On 12/15/2025 5:41 PM, Krzysztof Kozlowski wrote:
+>> On 15/12/2025 13:06, Krzysztof Kozlowski wrote:
 >>> On 15/12/2025 13:00, Ram Prakash Gupta wrote:
->>>> Add sdhc dll-presets for qdu1000 target.
+>>>> From: Sachin Gupta <quic_sachgupt@quicinc.com>
 >>>>
+>>>> Document the 'dll-presets' property for MMC device tree bindings.
+>>>> The 'dll-presets' property defines the DLL configurations for HS400
+>>>> and HS200 modes.
+>>>>
+>>>> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+>>>> different tuning.
+>>>>
+>>>> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
 >>>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
 >>>> ---
->>>>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 4 ++--
->>>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>> Please use subject prefixes matching the subsystem. You can get them for
->>> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
->>> your patch is touching. For bindings, the preferred subjects are
->>> explained here:
->>> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-> 
-> sure I missed to add qdu1000:, will add in subject.
-> 
->>>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>>> index 846e5e5899aa..bc31504d5c8c 100644
->>>> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
->>>> @@ -912,8 +912,8 @@ sdhc: mmc@8804000 {
+>>>>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
+>>>>  1 file changed, 5 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> index 938be8228d66..a1a16e6e12ce 100644
+>>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>>> @@ -140,6 +140,11 @@ properties:
+>>>>      $ref: /schemas/types.yaml#/definitions/uint32
+>>>>      description: platform specific settings for DLL_CONFIG reg.
 >>>>  
->>>>  			bus-width = <8>;
->>>>  
->>>> -			qcom,dll-config = <0x0007642c>;
->>>> -			qcom,ddr-config = <0x80040868>;
->>>> +			qcom,dll-presets = <0x000F64EC 0x0 0x01	0x2C010800 0x80040868>,
->>>> +					   <0x0007642C 0x0 0x10 0x2C010800 0x80040868>;
+>>>> +  qcom,dll-presets:
+>>>> +    maxItems: 10
+>>>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>>>> +    description: platform specific settings for DLL registers.
 >>>
->>> That's non-bisectable. You just broke the users of this DTS. Also, case
->>> change is not explained and your binding said nothing about deprecating
->>> other properties.
+>>> So look at your DTS - this is clearly incomplete now. So obvious. I
+>>> don't understand why you were hiding the DTS change, you just make
+>>> review more difficult.
+>>>
+>>> Anyway, your DTS says you replace some other DLL properties and nothing
+>>> in the binding or commit msg explains that. Neither the reason nor the
+>>> impact.
 > 
-> right I will update the sequence of dt as last change in the series.
+> Sorry dt change was not pushed earlier, will add dt change as well
+> going forward.
+> 
+> The existing qcom,dll-config or qcom-ddr-config are not deprecated,
+> but certainly I will add below in commit regarding the issue as well
+> which is observed without this change as below:
 
-This will fix nothing. Please read maintainer soc profile how DTS is
-handled. It's still no go, shall I be explicit with NAK?
+No.
+
+You need schema for this. Actually for both cases - replacing properties
+and defining the list.
 
 > 
-> I couldn't get "case change is not explained" but I guess ask is for
-> explanation why is this change needed. As the soc is using artanis
+> "Document the 'dll-presets' property for MMC device tree bindings.
+> The 'dll-presets' property defines the DLL configurations for HS400
+> and HS200 modes.
+> 
+> It have 2 arrays of 5 elements each for HS400 and HS200 mode.
+> The 5 elements are DLL_CONFIG, DLL_CONFIG_2,DLL_CONFIG_3, DLL_USER_CTRL
+> and DDR_CONFIG.
+> 
+> dll-presets fixes instances of CRC error observed with targets having
+> artanis dll.
+> 
+> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+> different tuning using dll-presets."
+> 
+>> Plus it looks like you are adding some meaning to the entries, judging
+>> by the DTS. DTS suggested something here is e.g. DLL_CONFIG, so that
+>> meaning - including different modes - needs description in the schema in
+>> items.
 
-No, why are you making it upper case. What is the preferred style for DTS?
+Here I wrote it already. Don't ask for repeating.
+
+>>
+>> Best regards,
+>> Krzysztof
+> 
+> I will update the schema description as well with the 2 modes and 5 elements
+
+I did not say description. I said you need schema.
 
 
 Best regards,
