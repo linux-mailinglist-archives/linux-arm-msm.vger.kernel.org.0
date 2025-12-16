@@ -1,222 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-85415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8A92CC55CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 23:33:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB329CC56D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 00:05:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EAAC3300C6F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 22:32:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D130E301C3DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Dec 2025 23:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5000B33F368;
-	Tue, 16 Dec 2025 22:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAE98313E17;
+	Tue, 16 Dec 2025 23:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3G8Y0ntc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kz/TBTRz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6AA322B62
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 22:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765924373; cv=pass; b=W1wtciI247oVuXa+ctxup29CKX0CeJhRyhCh0IzEeXS6eYOmCLCb6Ttk1TQh3dD6RXMzy7OvWqG6a/YkirLoz/aNNdniKFY8+38eYT90qWiZ4IUH0pvvbQPfbaha/+rS01aBE4KXYTlvNMEam4cJBtfc9QccPPFSfHc/lPLuocc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765924373; c=relaxed/simple;
-	bh=bpI3qgmct85d99Wdu8ysJv2aQrdBxKxtFJJfm0j7Fas=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=btnR/4kZC29FSZ8Of+5syeoiptwyIvtj1RHsm+YhhjUvgXkqihHRKWUNdd8G7vzClVPWfBSfziH7drkuG2rsjypnmyxKxT2LDDOhCbCTfWZL9mVaM8+k0zemRp9A7+e2ihZV4ejshpB6Rz9CVP/yIFG52rTjHZew0YjIlxtZFFY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3G8Y0ntc; arc=pass smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-64175f78a6fso3770a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 14:32:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1765924370; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fM2rLAN095WGY8gBGQWy06XM75uSoexCMvmfjHD71IkeTa/5fMMwevKRPd7QaD+6jb
-         1Ty/QwXZXuqw+FC0oZ5/Rq3E0zQd39i3ZRQ2u7Aj5yBnmP7ObQr4n35Ps1YW/eJbAl8a
-         BTfgh/nBzjVuYyTwkJ5zjSKzo8Lt48HDEQIqKqMuwCoLKpoDvXEcmfV+vZdCEcpHuMYD
-         +A0ZicgzVKG6syzM4YUhdCXn1ZyHgH/OcF9kac4d99HmyytmwlswLIHMPOkIZ0LpQEU1
-         krv+NLwF8oPVhHtg8j5XfRyTHyOxvy2aDulWOIh0NMoPiyo8x9xLTXZ6skvcmkLUj22z
-         wryg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=u/uRByAbRJbo58zgegW29bIt1a9CPOIK3a+qOu5T88E=;
-        fh=DVG4jimYG78EKGTuL6udn9xGtkCH1PPAudWtsJIYePc=;
-        b=U2xptMY5H90vKPO/5BVjZ5w0y4MUZtMOKSJ1hD+VsiPuBtpL48i8hfle1HzbYnTkjl
-         3NBX6gCojt56v9m5VTY2NAUFXl6+bphFWMOH83YG/IXzuHENXpcDwhCZdaZ8WVA9190o
-         OeLZ2NHatAUXepr0eojCFWNvIPmQybwfJD2NNCQvuL/xVCVlFKr0zxi4N3kp0K52hmvM
-         6A7I6McXFr8lyWFXz99f7BoCyVL7CwLJ5cvGDzqSe24/UoQeRPieJuwzD732cr3A/YQ5
-         gceQLcs5ZDY9H/79uHl/ZTZdS8/y7E0MBi15Tv1OtFLbbh+Y0pwXaMfs4Ue4fzRHfB80
-         jCOg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765924370; x=1766529170; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u/uRByAbRJbo58zgegW29bIt1a9CPOIK3a+qOu5T88E=;
-        b=3G8Y0ntc89S11XNGwjl0tL6CoUWCmOZwkV9hh632nXInvKkngMf9yaxZxx70Pzd4JI
-         3ueD3QdPhPQzKj+sMyazPs8+lGLm1qgAPt+6tA/RLoqcVmGcC9+i6PTy2mGT8zArELDr
-         9HWTbnDOfNZWcgcx1Pphg+NPkxOIBhDEcexCpARbj7qt3SEdol3hquMA48C0XJ5hWW6F
-         LumiRInZstQ598Z6vGL9KYd+g8cq92JjlzE852t4/rWiFgj0FKUv61P84KfWYyfAjBZN
-         touSz/ZKRTLhqkcCrPdn4aw3C4wlU7GmSXBRHVyn2C0emHfgd9sQOdmbzPrFKG6Uanxm
-         vbqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765924370; x=1766529170;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=u/uRByAbRJbo58zgegW29bIt1a9CPOIK3a+qOu5T88E=;
-        b=v9E2GPveJQJbGNjviQ82MuLR29XKAC+/3yXJklaDLOs027vvTLgUYMFZ4P9JBoQGXX
-         4prRqFRU6qRBE1V1dfhNC0us1RF1cnudAUnVeJhyj1wWCXbnadezbywIiwftyJz7y75g
-         8DLe7tNYcLWfH8jpAsVLykXJmdNUUQY1koUUvN5cGmZ7BEp9n5g4OA9b7TcXmqggpcdC
-         YmP/ZDH6nfPmQo9HE+9a17w0dOQ9F9VYV8YXd/w1NaEhUn7aIgYzgq7KnUcFZTi3lRqy
-         Li/8RVXjx6nNXboK3mEBfe67KDkmT/2ViohQISTaocjCXgrCCTFC9nnn2nlecRRWKcPM
-         5A6g==
-X-Forwarded-Encrypted: i=1; AJvYcCWD+sun8HiQXhL2cK1bCOwhBLzHFY4Dm1qlK5f/l7QcGFXdHjclIklO2e2YjXPGQzqWTBL2fp2KFWJl1g97@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4UCq3B92MUAOskG25QaFzE7dCDmTOgbP435wPk2m1Q6ACq4M6
-	tzV/QfWAQjHSmGqJ8gqojR16Oj8osRjpjebUw4kuD4gQyiA0ScAcdbsTjql2IqJ4b+W7YPO28a2
-	pCvpGfIpDuxCGtyCbUeyG0ipa8IlWzhx9HnxNQRNm
-X-Gm-Gg: AY/fxX4MEZ6CEuWe6gSXUExNEV8tfCJVXi6bIFQ0EA0XaaJdJ6GASVsiQwjyJ4MhHdp
-	v+6vrh5lCm0I8+cmTE4BG10F9mRZcO73uCKaWNK5KG1Zc7sr9/2zkGwFGFc6SPrER/hpNyYi97B
-	nS7ocftFItaTacTF/rmhBLd8T5KBrHepRIdXuZ4YhazuRMpwC1nEpVM1eegqO+IDANjNLrc4ywT
-	ItlL8c3AwvMFqfGjONOnQ9a77zsp4YHgHOeCTQShfWU9fZI7QNX9RJqVAogLA0ZeRG6SJhnH4JQ
-	T4cOyalCAel9g6UHSAFPilx6lw==
-X-Google-Smtp-Source: AGHT+IGk+uzAq4KrDl4d6gp44pXmFrmRq7YrqGJeM6IUZ/xwN2/FNI9D5PEuR/uqGEmokbJ/ruk9yr3kVNSu4r9RbYE=
-X-Received: by 2002:aa7:de93:0:b0:643:6984:ceea with SMTP id
- 4fb4d7f45d1cf-64b420db90cmr3076a12.13.1765924369503; Tue, 16 Dec 2025
- 14:32:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C66C2750E6;
+	Tue, 16 Dec 2025 23:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765926337; cv=none; b=Z9KBKzb1cgK8BoE2WeSF7gBSAonbCy7Y+3ZeLOLDDrjjP9Ih0b8gq2os/Fm5KP67Fz2UE76k2KweqaXK2prZp3UFRO9bqCCED7LUUP9WF3Mktu1EtmkWzStnLxNgw4qlw8Muuvr299hnoF6BR69NpKM0oH1ZAzet6sPW3UP1QI0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765926337; c=relaxed/simple;
+	bh=al+q9paNXMom5/boJ4qRvDMYbo1yfVh25gc6b7f8M+I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSLYUESvBhpbb0JT6FkkN0aetxJChscs6WCACkFRzQAwv+TT5Ph701xhSm08yKR7k7ilBCJo4DEb1Z1s+eaDH7Ji0sMPj5o7Mpg0RAt9wX4ccBUCfB/yeDB9j/QNvMvl5oWCdXXRz7RP9tpfogsmtc086AbHWmpDTWdjYaVz+Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kz/TBTRz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADABC4CEF1;
+	Tue, 16 Dec 2025 23:05:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765926337;
+	bh=al+q9paNXMom5/boJ4qRvDMYbo1yfVh25gc6b7f8M+I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kz/TBTRzAskAEjZKpOHm607OmtZ3QOXSVRzXo479GfWZHkfuAbuaQHaI/Q6IGz7dc
+	 YvA4Jh3y53zWFbavFgHVf5f79PDo1cFCHDI+tJW96seE3yVHacxbMpYCt0NiTsAOB9
+	 Co6CFwQ8F72Vidg+ep1d+mFtsf1AietGR0+48haF3by8w3XC+C/M6dqFobj22xasAF
+	 zmZeOgTpDT7inI3A1fyzxyRSFaC0ydwzmeTdEgCG1BN7kOs/JuV985VqKY2OeFpalT
+	 yEUQism/WILpCrslJzmH8QAAnsxttqreHsJlb4IJ7Freeinc91Fxh6b+dP9jvRyCYx
+	 1MkVFxJLGpQlg==
+Date: Tue, 16 Dec 2025 15:13:39 -0800
+From: Bjorn Andersson <andersson@kernel.org>
+To: Matthew Maurer <mmaurer@google.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, 
+	Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org
+Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
+Message-ID: <nqao3h3a45aw74bpvleqpx4iqmsjcxdjgvegyafnhvk2vtwwz4@n37vq7lsgzrr>
+References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
+ <nddh2fawoofktjglouq5wrjubxhyqrlzftqz7lvx3xdfipncip@xgudpcfdo2bd>
+ <CAGSQo0254uMNb52aJACpuEr6O1GiUng9nNut1eecM3AFaSy_8w@mail.gmail.com>
+ <ekngmao2rw4mktubhpodudnkfvx5of74uvlswr7csnyxcwlmo5@cb6jfgiyg4vc>
+ <CAGSQo03+pVhjyfSLGHHcr=w1-3=C5AcEKJf-GbcEvfJ6NTid7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
- <2025121303-railing-fountain-bebf@gregkh> <CAGSQo01yhgPVRzeZjGu=xV-eHMARRThYL7bbD4o=VskG3mYLCw@mail.gmail.com>
- <7ykaadjhqdqzcbu37fexlkjgfcn7ywe757ppn3xh5xhiaimbbb@acirz3zslcpg>
- <CAGSQo02mx361GmTzCCiMyQZUfnsWCRTbvFpBX73W=PZnhJ0wcA@mail.gmail.com> <tbypgxb6ksoa3b5lshlczfozcpz4vvor3ypkpwocl4oczi5iyl@ufbhyyljn3zo>
-In-Reply-To: <tbypgxb6ksoa3b5lshlczfozcpz4vvor3ypkpwocl4oczi5iyl@ufbhyyljn3zo>
-From: Matthew Maurer <mmaurer@google.com>
-Date: Tue, 16 Dec 2025 14:32:38 -0800
-X-Gm-Features: AQt7F2peL8HajVvvFgsPh5Inmu10tO1nxbHHDTz5Irq_1l5Geotc52icf8ueFUY
-Message-ID: <CAGSQo00DqmA1ihePtOWqv37h3U0NjN3ka853XA7w+6aCUkxS5g@mail.gmail.com>
-Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Greg KH <gregkh@linuxfoundation.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, rust-for-linux@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGSQo03+pVhjyfSLGHHcr=w1-3=C5AcEKJf-GbcEvfJ6NTid7g@mail.gmail.com>
 
-On Tue, Dec 16, 2025 at 2:06=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
-rg> wrote:
->
-> On Tue, Dec 16, 2025 at 12:55:11PM -0800, Matthew Maurer wrote:
-> > On Tue, Dec 16, 2025 at 12:52=E2=80=AFPM Bjorn Andersson <andersson@ker=
-nel.org> wrote:
-> > >
-> > > On Sat, Dec 13, 2025 at 08:24:55AM -0800, Matthew Maurer wrote:
-> > > > On Sat, Dec 13, 2025 at 5:57=E2=80=AFAM Greg KH <gregkh@linuxfounda=
-tion.org> wrote:
-> > > > >
-> > > > > Shouldn't this all just be in 1 .rs file?  By not doing that, you=
- have a
-> > > > > number of public symbols (that are very generic), that will "poll=
-ute"
-> > > > > the global namespace of the kernel symbol table (unless rust does=
- this
-> > > > > somehow differently?)
-> > > >
-> > > > Rust produces one compilation unit per "crate". In this case,
-> > > > `socinfo` is the crate, and the other files are included as "module=
-s".
-> > > > Symbols defined in them are not public unless annotated with `pub`.
-> > > > `pub(crate)` makes them only exported within the scope of the crate=
-,
-> > > > i.e. inside the single produced `.o` file.
-> > > >
-> > >
-> > > Does this imply that a fully converted drivers/soc/qcom would have ~5=
-0
-> > > subdirectories in it then?
+On Tue, Dec 16, 2025 at 02:13:08PM -0800, Matthew Maurer wrote:
+> On Tue, Dec 16, 2025 at 1:53 PM Bjorn Andersson <andersson@kernel.org> wrote:
 > >
-> > Not necessarily. Directories are not mandatory for a Rust module,
-> > whether to do things this way is a code structure/stylistic decision.
-> > I did it in this case primarily because I wanted to separate out the
-> > large in-code data table (e.g. SOC_IDS) and the logic for speaking to
-> > the smem driver from the rest of the code.
->
-> Separating out the logic for interfacing the smem driver sounds like a
-> quite reasonable proposition, to the point that I'd expect this to be a
-> module of its own?
-
-Currently the socinfo driver is the only user of that code, so
-splitting it into a full kernel module would just add overhead to no
-benefit. If we had multiple Rust drivers, we could consider between
-either referencing the same file multiple places (would cause minor
-code bloat, but avoid module overhead) or making it a module.
-
->
-> > If you have a preference
-> > for a single file, I can very easily put it all in a single file.
->
-> My preference is that this follows whatever is the idiomatic model for
-> in-kernel Rust. Whichever way that pulls us would be the answer to my
-> question above...
-
-drivers/gpu/{drm/nova,nova-core} use multi-file layout (with a single
-kernel module, and multiple Rust files), so I would say that it is
-idiomatic to use multiple files to define a single kernel module.
-
-As far as a directory per kernel module, it generally appears that
-multi-file Rust modules happen to have an exclusive directory with the
-exception of the binder driver. However, that may be coincidence, as
-most of those are defining a single high level kernel module, not a
-cluster of related kernel modules.
-
-Danilo or Miguel might have an opinion here on when directories should
-be used? The Rust Coding Guidelines [1] don't seem to have any
-opinions on directory structure, and I was unable to find any generic
-guidance for general kernel development.
-
-Were it my project, I would use directories for any Rust module that
-was multi-file, and just use a regular file for Rust modules which
-don't have a natural division into multiple pieces.
-
-[1]: https://docs.kernel.org/rust/coding-guidelines.html
-
->
-> Regards,
-> Bjorn
->
+> > On Tue, Dec 16, 2025 at 12:53:28PM -0800, Matthew Maurer wrote:
+> > > On Tue, Dec 16, 2025 at 12:49 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> > > >
+> > > > On Sat, Dec 13, 2025 at 12:36:00AM +0000, Matthew Maurer wrote:
+> > > > > Re-implements qcom-socinfo driver in Rust, using `Scoped`-based DebugFS
+> > > > > bindings.
+> > > >
+> > > > Okay, but why?
+> > > >
+> > > > https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+> > > >
+> > > > [..]
+> > >
+> > > I'll move more of the text from the cover letter into the commit
+> > > message, but the short version is that it's intended to be a low-risk
+> > > driver to pilot vendor drivers in Android.
+> > >
 > >
-> > >
-> > > Regards,
-> > > Bjorn
-> > >
-> > > > > But putting this all in 1 file should solve all of that, and remo=
-ve all
-> > > > > global symbols.  Especially for just a small and simple driver li=
-ke
-> > > > > this, no need to split it up at all.
+> > The answers I'm looking for isn't in your cover letter either. I want to
+> > know what benefits Rust provides in this particular case.
+> >
+> 
+> Rust likely does not provide any significant benefits for the socinfo
+> driver itself, aside from having caught the slight disconnect
+> (mentioned on the other thread) where it should probably be an
+> auxiliary device because it assumes that the `qcom-smem` device will
+> remain active as long as it does.
+> 
+
+Yes, this isn't unique to Rust. The smem API would benefit from an
+overhaul in general... At the time I wrote it, you couldn't really boot
+the system without SMEM, so I added the suppress_bind_attrs, these days
+you can exercise a fair amount of use cases without it.
+
+> The primary intention of converting this driver is to be a low risk
+> trial for GKI's ABI stability for vendor modules and a first Rust
+> vendor module (we have platform modules already for binder and ashmem)
+> on Android. This was discussed informally with Trilok (a long time
+> ago) to act as an example for other vendor drivers and encourage usage
+> of Rust for new drivers or those where memory safety has been a
+> problem in the past, but nothing was ever formally committed to.
+
+But if the test bed for GKI ABI stability is the goal, don't you need
+something with a more interesting interface?
+
+Also, how would this manifest itself in the upstream kernel? Do you have
+a test bed where you build GKI + vendor "kernel" out of the upstream
+kernel tree today?
+
+> Trying to apply Rust to more significant existing modules (where it
+> would provide a greater benefit) raises concern about whether they
+> will operate identically. Socinfo in particular can be more thoroughly
+> tested for equivalency, as aside from the runtime DSP information
+> modification that was mentioned in this discussion, the output of the
+> socinfo driver is static and can just be checked. This means that a
+> socinfo driver swap will essentially have the language change be the
+> *only* significant thing about the change, keeping the risk to a
+> minimum.
+> 
+> Part of the reason for the RFC prefix on this patch is to solicit your
+> feedback on whether you are open to this. If you have somewhere else
+> you'd prefer we try this, I'd be open to that as well.
+> 
+
+Rust is a new dependency and it's a foreign language to the vast
+majority of the contributors in the upstream Qualcomm community.
+
+So, IMHO sufficient value needs to come with such rewrite, and this
+value needs to be properly documented in the git history. Rewriting
+things for the sake of rewriting things, or the facilitate a downstream
+experiment, is hard for me to force onto our community.
+
+Regards,
+Bjorn
+
 > > > >
-> > > > I'm willing to put it all in one file if that's preferred for
-> > > > organizational purposes, but as explained above, this shouldn't blo=
-at
-> > > > the symbol count in Rust. If it were my own codebase this would be
-> > > > separate files, so up to y'all what level of granularity you'd pref=
-er.
+> > > > > ---
+> > > > > base-commit: 4b31c90f86768367c84cc6e99e1deee0ec55197b
+> > > > > change-id: 20251029-qcom-socinfo-d8387c7fdb1c
+> > > > > prerequisite-change-id: 20251029-soc-bindings-9b0731bcdbed:v1
+> > > > > prerequisite-patch-id: e4da423ddabec93bd9a64004691266f9b740e0c5
+> > > > > prerequisite-patch-id: 5097ff622f8cb1d38354674cf70c1c946ac87f6c
+> > > > > prerequisite-change-id: 20251029-add-entropy-f57e12ebe110:v1
+> > > > > prerequisite-patch-id: 657de204912d2c5efff9898d3f4c51e52684d8e6
+> > > > > prerequisite-change-id: 20251212-transmute-8ab6076700a8:v1
+> > > > > prerequisite-patch-id: 4f5f7cb002d02d232083ab5c3ce6b3cb90650bd6
+> > > > > prerequisite-patch-id: 01a1f3d727e549c173dd142180741f5b6a3c866e
+> > > > > prerequisite-patch-id: ff801a7ae439876b1554b4d1132d94c825bbe74f
+> > > >
+> > > > So, it doesn't work on a clean v6.19-rc1 tree?
+> > >
+> > > Correct. Those other patchsets are patchsets I'm landing which add
+> > > bindings used in this one.
+> > >
+> >
+> > Okay, please make that explicit when submitting patches, so that the
+> > maintainers know that your patch(es) can't be merged.
+> 
+> I thought that was what I had done by using the combination of "RFC"
+> and putting the prerequisite change IDs from b4, but I will include a
+> statement to that effect in my cover letter in the future.
+> 
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > >
+> > > > Regards,
+> > > > Bjorn
 > > > >
 > > > > >
-> > > > > thanks,
+> > > > > Best regards,
+> > > > > --
+> > > > > Matthew Maurer <mmaurer@google.com>
 > > > > >
-> > > > > greg k-h
 
