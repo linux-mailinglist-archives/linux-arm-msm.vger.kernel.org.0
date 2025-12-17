@@ -1,217 +1,315 @@
-Return-Path: <linux-arm-msm+bounces-85444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62B92CC64CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 07:51:54 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07713CC670E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 08:55:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5EBDB302219E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 06:51:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 792D030146FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 07:55:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2339A32C943;
-	Wed, 17 Dec 2025 06:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D4FE3358A2;
+	Wed, 17 Dec 2025 07:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Li+DlOsu";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QsjiMA3X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oqQM4kRL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CE432D434
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 06:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ECB319875;
+	Wed, 17 Dec 2025 07:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765954306; cv=none; b=El2Ef5GU21oBLEgupteeqsYDj5mcPqIZVwWlGAg3pc9FehKe8RfMAyNMYbChmZ5XcqTQO8FpiVXtcPqH8tNWpHwdeLjM9j9aEnn8TUNUalWfJbmuT0mhIIws3sUbQXNbzHDHM5MyJZeySkwxLv3q/uImY1JM2auTE2RIaH42mPc=
+	t=1765958152; cv=none; b=FAO9kZ6AZrImgqpsLQuiQrK+CQf80vUsGwgjSdmp61Ot076iXtQ+RiUYpS782Yb/HLczFRNQd30uDoohtFlHnNdawZtmAlLfNM/Nvulay52AbKBPGQuV03y8OHTlwH37wUlYkKACnj3mPFdDAeAn4r66GOdAl4FJiTHhXBIBDzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765954306; c=relaxed/simple;
-	bh=0I0qvqymRF9QoC70JOSPLWPw0M52SYeSoFmasyfSf3g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARQpfcHTsvf+cCSI7oHNvZEewDtf137EWib71T8rX3CldyrPkxA4EN1O/7P91ft+7S54pOCiOYXKyfijCa6Twd7zXdtQjC0YOqKrcko7+P8wVGmzUjggfE7zUQzvKZdCEwOFPVIdVRsEukcOjL+ulLhtKZxzRwqRQE5Lmj1K0wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Li+DlOsu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QsjiMA3X; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BH3F9N01591248
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 06:51:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=yyqEdTkNehZ
-	DD9905IPSA7Oq8e/eLNXhAbCD4frPgqQ=; b=Li+DlOsuK5SgcvNPolNg2yRB9hL
-	OXELOynD+JAaSPlxYOAsc8cFFWR/GOUyv1q5c0xEGITWS21zrgDZFr/hVBCDEu2R
-	dFPwCuGCuBRz79bN/9TL513SbB2u61G/qUCLm7ktK77TVGd90zGFdSKN1R/Eo0Mt
-	4+fxlHgug8ixnR753JETKkqufgWhrImoeGUjp/oXbgwRS+mbTqW3utC0Duhg1eRM
-	jhNdg3JmskjBKHd2NSE0E2JlqIh/4smmtlmsRoYSiZMeCAYMOYnHtZHGb1MFfLj1
-	YfDcnB3V6mOxYSuhxQuJ5IjgY/yj4qxx7QPpKGviFJVMPIsQJ8Z9yqcacmA==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3fefhc1d-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 06:51:34 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2a0bae9acd4so35212525ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 22:51:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765954293; x=1766559093; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yyqEdTkNehZDD9905IPSA7Oq8e/eLNXhAbCD4frPgqQ=;
-        b=QsjiMA3X/TPlaZfTKZ2zJbK9myO1itwW/VwNRnJt+ylPBBuIvuGtMXIPpRVWA7g6nt
-         xSVdKh1ZY02ntCiIG2IIGGWKlEA4VQG1/fWfv5X/NHWCGgdprjvyZ1bhEXCcAiDZjN5h
-         lW1Uc58F4tLr/fwI8UYrDiOXmVIYSEVmylssjQOXLcvWA2K4w1DHsM3NFQbNy0iUipB9
-         WzEvcSY+B5RW+nmdbp7VGk9bdiAC3XnNYCauRULIwG+g/LqwgNA7V1EsytEix5TF65UD
-         9P7+0apw3ACHaSmXkIlvdaxG0DQbvXcY702h24EYEdJyDUdckHCrausKCzdjH+iLyJhW
-         WZww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765954293; x=1766559093;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yyqEdTkNehZDD9905IPSA7Oq8e/eLNXhAbCD4frPgqQ=;
-        b=KceTNZoivyF9WhMSS2hxLn+0v2baW1dpCmjgkNWMFxrhJsm5GmTTJMs9BI06s9EtGH
-         vQ42uEDCe2oBh8NTe0UuMKmYA40lF9uqOww26igdKC4bv8nV+guYLCIkkyaYB2hp3ShY
-         xnPrqhu5Ftdc+qdUrLnVt0KU7GqeLu0qmqcklCS0o6khiYnj1nVDq+Mj4bFOieauiN6w
-         QgHl1l4J0FKu/VKC144OoKdF6Dx0OuGl/8gcLCekIee3ljEHqqr59IamzgfN9nhNK4/v
-         elNeVyp/krTb45Y4rq7dRg/CBBApNTRmr8qbVXNFHtjztSM0UW4EAKn0c2/z8zxo9/JO
-         8S1g==
-X-Forwarded-Encrypted: i=1; AJvYcCU66FqRDwGlKS4Rkw50zV43xoTSQ+SOPi8CwCssJUd7hFk3oAALRMmoX8chGTettf0jybyhFa3F2Pjd5YLE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxovUMS9EWweOCcU4ZRmMkEIyWKPU34uvCxkx+rhpAVwcvcrwdG
-	lqqAOoEOrx9gl9Fu+S5d5l2RcZErJ0kO0UTwq7Um42wtPysv/AMdcA2FMMR2u4FBljH+fO/JHcy
-	E9mOaNQXFrNcOstKItosgxIpanJ9Y9uYFW9DBjOpkBp8D2FI0vPyhi2J5giRCJJ4/wJkO
-X-Gm-Gg: AY/fxX7IHSq7CSZvytdZI2hNudFAJ8GxBZfj1zrv1thINceJ6c/yjRbmIG7BpeYRW1D
-	n359F2H+y15cmYozKb1VnIY5ubhNvofb0FmqoV69woHMbxVeLot+EmMgONe8TXy31Mk6AeVowZ+
-	pF9SW5n+bCfF9dFybjwfSj8ZR8xx1Kbf9G2lRcTVaqnRO1pKX5BSUyFEP1M2sT7xcDh8saJVajd
-	WD/V0kPYN5dRasEkvfz/iM4r8sYRoYZcIHeUzwOMMKk48aeE4vFH9GYhSBqvJ++VJ5QnFxtWjH5
-	pSLXtxcZbtv2ori4DLv6rGYu6PrzkKMVHG01BLVBgA2iFaWTBMRW0KGvz/VpW04hWK0valDceyA
-	y76wcWSiuw0N9bAUgz3IHgu2GmlmonQEvHVCZ9xlbZpvGDqoABP2weAYB7adiZm4hdJQlgfE48/
-	wh
-X-Received: by 2002:a17:903:11ce:b0:2a1:3cd8:d2dc with SMTP id d9443c01a7336-2a13cd8d5c2mr49204255ad.57.1765954293257;
-        Tue, 16 Dec 2025 22:51:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtqz6CiOwlW1tkl+yctLuwFblPw8bJgxrwHp/33FxU5mFEQrIOanR0EDlUZNhr30xxaWfvwg==
-X-Received: by 2002:a17:903:11ce:b0:2a1:3cd8:d2dc with SMTP id d9443c01a7336-2a13cd8d5c2mr49204035ad.57.1765954292751;
-        Tue, 16 Dec 2025 22:51:32 -0800 (PST)
-Received: from zhonhan-gv.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a0993ab61dsm118846515ad.46.2025.12.16.22.51.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 22:51:32 -0800 (PST)
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-To: andersson@kernel.org, mathieu.poirier@linaro.org, corbet@lwn.net,
-        rusty@rustcorp.com.au, ohad@wizery.com
-Cc: linux-remoteproc@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        zhongqiu.han@oss.qualcomm.com
-Subject: [RFC PATCH 5/5] rpmsg: virtio: Optimize endpoint lookup in RX path with RCU
-Date: Wed, 17 Dec 2025 14:51:12 +0800
-Message-ID: <20251217065112.18392-6-zhongqiu.han@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251217065112.18392-1-zhongqiu.han@oss.qualcomm.com>
-References: <20251217065112.18392-1-zhongqiu.han@oss.qualcomm.com>
+	s=arc-20240116; t=1765958152; c=relaxed/simple;
+	bh=ew1qpWkFBmwjFCEwQhZJW8KB/TpfiurnB2GhFeqTvrI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TWp5X8/TaFPmVrrqpSX6uQyCZDBgOIz3QJYbyQgtLSupswdZNq+ZcnJgSml7GofXxi/zVPCu1jxN6xUzh9afYh4VEdAullsMj6KJ5tKjjwvI4y/yG1/k/zOz++PFddqWKglmuLcdOChJ6D/FrThm6XHIEesmMvCD3yKiaJpBEB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oqQM4kRL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDB2C4CEFB;
+	Wed, 17 Dec 2025 07:55:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765958151;
+	bh=ew1qpWkFBmwjFCEwQhZJW8KB/TpfiurnB2GhFeqTvrI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oqQM4kRLweMj3YY5cGK5J5KkZy+9qYJoV+xO3ZtssRFspto2X8F7uKR9LGgCevV2w
+	 dDOFpQFC8nYmDvvhDB+4Q9HtCJQn8Rax63CovRpmsXuDG2Qscpp1DfCvNtR9xJ5iL4
+	 MYnZc/Y1R8GE4loaZM3Vj7HKRxfUw3qWW2YG1IIi1Tyveequbgs6PLM7UE17+keJY1
+	 c4Yu8Ud31hLkfTi7Q/WgL05wH3IY8+5AIfMk7DFrQVao8gotPSyoOW3wR+A5FUHXWk
+	 8gE1Xb7Vh0Al98N9Jf+UZ3+tt6vaUEgxCVKqyz9roB+10sxBBhyDxFrL5Adb8p311T
+	 8yNnThA3xZ/oQ==
+Message-ID: <a4e0bc9b-1482-49ac-8454-39edeaf3b676@kernel.org>
+Date: Wed, 17 Dec 2025 08:55:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDA1MyBTYWx0ZWRfX+IGHfSFV+Sya
- +SPHB3f+8IYH2BvrQeC4g7jGt4Sxp/tE+UgBnn26BXbmLJlGeFVCfquOkT5lfIRHT0aL/nPhI04
- ktcPG9gaXVpmywyjggNDEjNpeA2eNfZm5V5fPAZO6nDhZIvxGiTltFAuvxuzwNpPe9U26S5/NjK
- dATVdxHIft3HgZ6m6X7kly7JnZi4eAZ2D93n+V2/psMY3BRP023Zr1wgKyteVrvfwHuQ5dPNmO5
- L5MBD/9YtxgVcVbtkR1IXLW4CE6wfvDxtFklB9LBCVYdRrIlcJYppdkNDq1T9eR3enATRELUVX2
- 6l3FYZbilu5oC/icB4VM2OJYooRAqaeriLJoNvbO0s3aoPgJJtSBYsQmvEpdIlbmQt5EddkcF70
- G34fsIFkmX9tHA/nheMpMc9ols+kYA==
-X-Proofpoint-ORIG-GUID: 8ZndSVOk-kXGJKw_fA1hK1Ii7k3S3pW1
-X-Proofpoint-GUID: 8ZndSVOk-kXGJKw_fA1hK1Ii7k3S3pW1
-X-Authority-Analysis: v=2.4 cv=R48O2NRX c=1 sm=1 tr=0 ts=694252f6 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=4XvfFkW6Ni2-fQWSjOsA:9 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-17_01,2025-12-16_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512170053
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil:
+ convert to DT schema
+To: "Alex G." <mr.nuke.me@gmail.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, konradybcio@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251210003729.3909663-1-mr.nuke.me@gmail.com>
+ <20251210003729.3909663-2-mr.nuke.me@gmail.com>
+ <20251216-notorious-omniscient-frog-caceaf@quoll>
+ <f38764d7-9d7d-47f4-a099-b6ac6b12be6e@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <f38764d7-9d7d-47f4-a099-b6ac6b12be6e@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Endpoint lookup in the receive path acts as a demultiplexer routing
-incoming messages to the appropriate endpoint. This is a read-heavy
-operation (frequent message receives) with infrequent writes
-(endpoint creation/destruction). Since idr_find() is safe under RCU
-read-side protection, RCU can be used to optimize this path.
+On 17/12/2025 06:01, Alex G. wrote:
+>> Filename based on the compatible, so for example:
+>> qcom,ipq8074-wcss-pil.yaml
+> Okay.
+>>> @@ -0,0 +1,167 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/remoteproc/qcom,ipq9574-wcss-pil.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm IPQ WCSS Peripheral Image Loader
+>>> +
+>>> +maintainers:
+>>> +  - Placeholder Maintainer <placeholder@kernel.org>
+>>
+>> This must be a real person. Fallback is your SoC maintainer.
+> 
+> I can't find an official maintainer for IPQ8074 or IPQ9574. I could list 
 
-Convert endpoint lookup to use RCU:
-- Read path: Use rcu_read_lock/unlock for lockless lookup
-- Destroy path: Add synchronize_rcu() after endpoint removal
+I don't think you looked then. get_maintainers gives you clear answer.
 
-This reduces lock contention in the hot receive path.
+> myself, but you know a lot about these bindings. Is it okay if I list 
+> you as the maintainer of this binding, Krzysztof?
 
-RCU safety note:
-When idr_alloc() returns, the endpoint becomes immediately visible to
-idr_find(), but ept->addr might not yet be set. This creates a theoretical
-window where RX could find an endpoint with uninitialized addr.
+No. I am not the maintainer of this SoC.
 
-This is safe because:
-1) When endpoints are created via rpmsg core callbacks, initialization
-   completes before announce_create() is sent. Remote processors only
-   send messages after receiving the announcement.
-2) For manually created endpoints, drivers control timing and typically
-   do not announce until ready.
+> 
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: qdsp6
+>>> +      - const: rmb
+>>> +
+>>> +  interrupts-extended:
+>>
+>> No, you only need interrupts. Please look at other bindings - how they
+>> write this.
+> 
+> I thought I needed interrupts-extended if the interrupts use more than 
+> one interrupt controller. Is that not the case?
 
-Thus, messages only arrive after ept->addr is initialized, making this
-RCU optimization safe.
+Instead of asking the same question again, which would give you the same
+answer "No, you only need interrupts" please rather think on the rest of
+the answer - look at other bindings.
 
-No functional change except reduced contention.
 
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
----
- drivers/rpmsg/virtio_rpmsg_bus.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+..
 
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index 79d983055b4d..4cbb8a8aaec5 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -17,6 +17,7 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-+#include <linux/rcupdate.h>
- #include <linux/rpmsg.h>
- #include <linux/rpmsg/byteorder.h>
- #include <linux/rpmsg/ns.h>
-@@ -297,6 +298,12 @@ __rpmsg_destroy_ept(struct virtproc_info *vrp, struct rpmsg_endpoint *ept)
- 	idr_remove(&vrp->endpoints, ept->addr);
- 	mutex_unlock(&vrp->endpoints_lock);
- 
-+	/*
-+	 * Wait for any ongoing RCU read-side critical sections to complete.
-+	 * This ensures no one is accessing the endpoint after removal.
-+	 */
-+	synchronize_rcu();
-+
- 	/* make sure in-flight inbound messages won't invoke cb anymore */
- 	mutex_lock(&ept->cb_lock);
- 	ept->cb = NULL;
-@@ -680,7 +687,7 @@ static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
- 	}
- 
- 	/* use the dst addr to fetch the callback of the appropriate user */
--	mutex_lock(&vrp->endpoints_lock);
-+	rcu_read_lock();
- 
- 	ept = idr_find(&vrp->endpoints, __rpmsg32_to_cpu(little_endian, msg->dst));
- 
-@@ -688,7 +695,7 @@ static int rpmsg_recv_single(struct virtproc_info *vrp, struct device *dev,
- 	if (ept)
- 		kref_get(&ept->refcount);
- 
--	mutex_unlock(&vrp->endpoints_lock);
-+	rcu_read_unlock();
- 
- 	if (ept) {
- 		/* make sure ept->cb doesn't go away while we use it */
--- 
-2.43.0
 
+>>> +  qcom,smem-states:
+>>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>>
+>> That's incomplete - missing constraints. Are you sure you wrote this
+>> code the same way we already did for other devices?
+> 
+> I am not sure. It seems to match qcom,qcs404-cdsp-pil.yaml or 
+
+No, it does not.
+
+Look at these files even - they have maxItems. Where do you see maxItems
+here? So how this can be done the same way ("match")?
+
+> qcom,wcnss.yaml. What constraints are you expecting here?
+
+So you take the latest binding, e.g. pas-common for all new platforms.
+Or qcom,qcs404-cdsp-pil.yaml. You need maxItems here and list of items
+for the names.
+
+
+
+> 
+>>> +    description: States used by the AP to signal the remote processor
+>>> +
+>>> +  qcom,smem-state-names:
+>>> +    description:
+>>> +      Names of the states used by the AP to signal the remote processor
+>>> +
+>>> +  glink-edge:
+>>> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+>>> +    description:
+>>> +      Qualcomm G-Link subnode which represents communication edge, channels
+>>> +      and devices related to the Modem.
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - reg-names
+>>> +  - interrupts-extended
+>>> +  - interrupt-names
+>>> +  - memory-region
+>>> +  - qcom,halt-regs
+>>> +  - qcom,smem-states
+>>> +  - qcom,smem-state-names
+>>> +
+>>> +allOf:
+>>
+>> Seems you do not reference other schemas. I am going to repeat myself
+>> for 10th time: are you sure you followed other devices?
+> 
+> It's the sixth time, but I see your point. Comparing to 
+> qcom,qcs404-cdsp-pil.yaml or qcom,wcnss.yaml, I can't see what's 
+> missing. What do I need here?
+
+In previous cases you did not look at other binding, so I am questioning
+now everything.
+
+> 
+>>
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,ipq8074-wcss-pil
+>>> +    then:
+>>> +      properties:
+>>> +        qcom,smem-states:
+>>> +          items:
+>>> +            - description: Shutdown Q6
+>>> +            - description: Stop Q6
+>>> +        qcom,smem-state-names:
+>>> +          items:
+>>> +            - const: shutdown
+>>> +            - const: stop
+>>
+>> Missing clocks
+> 
+> The text binding that this replaces implies no clocks for IPQ8074. What 
+> would you like me to add instead?
+
+Disallow the clocks. See example-schema.
+
+> 
+>> Missing blank line
+>>
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,qcs404-wcss-pil
+>>> +    then:
+>>> +      properties:
+>>> +        qcom,smem-states:
+>>> +          maxItems: 1
+>>> +        qcom,smem-state-names:
+>>> +          items:
+>>> +            - const: stop
+>>
+>>> +
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,qcs404-wcss-pil
+>>> +    then:
+>>> +      properties:
+>>> +        clocks:
+>>> +          minItems: 10
+>>> +          maxItems: 10
+>>> +        clock-names:
+>>> +          items:
+>>> +            - const: xo
+>>> +            - const: gcc_abhs_cbcr
+>>> +            - const: gcc_axim_cbcr
+>>> +            - const: lcc_ahbfabric_cbc
+>>> +            - const: tcsr_lcc_cbc
+>>> +            - const: lcc_abhs_cbc
+>>> +            - const: lcc_tcm_slave_cbc
+>>> +            - const: lcc_abhm_cbc
+>>> +            - const: lcc_axim_cbc
+>>> +            - const: lcc_bcr_sleep
+>>
+>> All this goes to previous if.
+> 
+> Okay
+> 
+>>> +      required:
+>>> +        - clocks
+>>> +        - clock-names
+>>> +        - cx-supply
+>>> +
+>>> +additionalProperties: false
+>>
+>> Missing example.
+> 
+> I plan to add the example in the next patch in the series that adds 
+> IPQ9547 binding. I don't have the resources to test IPQ8074 or QCS404, 
+> and I want to be sure that the example I add is tested.
+
+I don't understand what example has anything to do with testing. We
+speak here ONLY about this binding. I do not review other code. This
+patch should have the example, but if you cannot come with one, because
+it does not exist in any existing sources, then you should just say
+that. You have entire commit msg to explain every unusual thing. And
+testing something on a device is not a reason, because you do not test
+the binding on a device.
+
+
+Best regards,
+Krzysztof
 
