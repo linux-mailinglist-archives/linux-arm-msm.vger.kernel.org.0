@@ -1,226 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-85570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B2BACC8D65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:44:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 962B8CC8E1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:53:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 66266301A1DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:34:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9CA05309E8D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:47:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4DFD34A3C9;
-	Wed, 17 Dec 2025 16:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1141F253950;
+	Wed, 17 Dec 2025 16:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CYDtl8HT";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bsb85ZuY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y3dAjfRa";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AsDtlY/N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC91345759
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A123624C5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765989286; cv=none; b=cRFBL4YAUCMzx03A6QiXP1lJXGT5GCpBPhw56j9D3r5kCyErlfZSgKRsY2XOi0gWVnSmOWNMevayrLoknbsadhHVQqVn8jvwcIIL8c9KPmypRyKQfMupFh4kKCVYUcsK4IXtTUngyfIsYMNzHAlAVYODvG4Hfwenkj6uSH4O/Vo=
+	t=1765989324; cv=none; b=OzNDdtrDf5PQu2nN1F43e06Skjov7Z6OdFe+E2VdclrNmzRkuyHHlUsUo6wyD3xfbr51FXpeuPuzliA6/ZIPsViKYrypjEtkZ2gxiF34FZW6TnozntAVc189cVNkX0o+g3oHn73hr/jbiWYRW/MCFP3INIr//eMN+e9xNjaPMAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765989286; c=relaxed/simple;
-	bh=b+d6o7PIy88Nf8fMsJvNdIh5oqps9OqiSSI9SYHnDd4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B7E6RX0bKu2UWV9sO0D5L29MaViaXl3JOHPySbz0D6MPtkbk/2+GAkKBCWki0eT5eIB5fy3ZvIPNIET4uPqop71N/B2ZkA/GcnJDHol3Hs5mFeN3UKFtj3yBy70u7iL5g98hyHaukxjxNKF5AELrCjlEozH6x3cO0IcdrPcupZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CYDtl8HT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bsb85ZuY; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1765989324; c=relaxed/simple;
+	bh=MTke/QM0PFjN8QJGwMVznBklB/oOZJSHHEy6N6Uhs2I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=aAakKMsL+NLgdcdAtFivy6DpBod1xB6dfHsD0X/dUrijDByiv+m9vrIdYTXchHKpAc3dU5p7a7fWTUe1+mASbpNBSvj8sq4bysshVnZ2DLpbJiIS231891WdJwbBMj/VlaVojtm7YzAVD3iqaXVN4Cb7S074OvCxkaW4F27mNj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y3dAjfRa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AsDtlY/N; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BHCKoH43329736
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:34:44 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BHCKxTR2042763
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:35:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=EoS2/SEtxcfOVm1nycVOUKsk
-	ylsoggbceMpNDql009E=; b=CYDtl8HTW6hJG3zMzleDv/pNLNdGlHA82rjbwhvZ
-	SEwQIiBvdo83E5GzBE4lzRK+sAyqJvnXznZTa70si/4Fj10YAL4bC+1ewfakpj8t
-	eVoSLkiFKMgam4IXhjRXKAqXjHh4SMOwosdesGpLET0hZRLqTzUVgipgUAeSCS21
-	xNC+n2gVtljXXpe60jJ61BcEdeqF40Sm0lEoF4hqZF4xzVTJ8ilewVEpDFKCIGEC
-	2oJ/5M9xz74h5JZHLM+uvCPtjrchhflUp1/Or0TKLUm1kV62D+2KSG6kp8so9aql
-	yG3CrqXo7vtSLtMNwT6d4xCYym1XQxpKdyLWS7jRqKdF1w==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3nkkj95t-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RAAYF+70CB9eB3ACXAKpYiBOB9FD0mSsanrWwDwQLqE=; b=Y3dAjfRadBO7r21m
+	c6UXwUoqGL4OpqGvN3b/bF0Iimc7Gf0BdTmSqE2nwG5PSw8bEgwU4QM8YFbgStUS
+	WKlsh8+sDln1EbIapbcLOslXZt7WeTgCajavTLBbwMqQq36yb7770nFwybqGpiG7
+	DCPBYhYBH6+6mVznuyPybLxmEqbQpDuzG+6dJB3r1yTGIaikBcUnNe3ftsnubuER
+	+IG6iVFF7iyyTEW0htiWSDgabaSBjLt5kHQ5EWO7ktHrFAHV5ZkdE8a0qaP0iFVH
+	ANrb1wiWZsdsIDJXG8tj2n2sTVYYs9H1n7wdTDyKcG46wUiXSE3eIP2RojZQJ/FE
+	pIuNwQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3fj1u826-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:34:44 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ee27e24711so105881891cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 08:34:43 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 16:35:21 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-29f1f69eec6so63707005ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 08:35:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765989283; x=1766594083; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EoS2/SEtxcfOVm1nycVOUKskylsoggbceMpNDql009E=;
-        b=bsb85ZuYMz+62AdlgfXMAvDBQXNS5MOjpbd6JMz2gvfUekPcAGYvkle2r0eNdwuGg9
-         ThOBv3vn+8PocUhBxkpTSb3hMNVyrQWvHpXztC8wUufzMSoFSlb0H/WDgYnESezrq4YV
-         n6sG1mpKnTB0wXTDhzIGklH/2N49F5oEsuEqH5HgHI1+XxYFmmyehm5B9mBpY2qObcpt
-         EQYgcoZkSEYod8vbDD0UQ3ZafTzvVQjtqfP7dRJMuReT1pMLj8jUVZH7Ad9guv4nQVMW
-         t541oDRewqbuVszGZjrIRcVu0OnjQu0Q5OJ91nA274oxFdIrtX/EEvAxynbnG1t2bw1M
-         /fMw==
+        d=oss.qualcomm.com; s=google; t=1765989320; x=1766594120; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RAAYF+70CB9eB3ACXAKpYiBOB9FD0mSsanrWwDwQLqE=;
+        b=AsDtlY/NgutsUy/9gogioMyQ/yHx/Vi4fR/748SKzJbSRLMNLpZze+UfB/Js8vX++M
+         yM7nUIay6LDAsc9rAS0K/aoWe6YR65fARTpRC+MGjxxkttmlzn56i08wevJjDnfxExD/
+         UjpDS5WHx+nvhLsfORxryyBA0q6YlOj0myNgRLwWGASqFu4lGlsqtRdiiDWVEklHeeX0
+         qTSBGFrcYLVttLAqeKxR4Luj7cVGAJnv2BQDETsT7BXNJDe940rzM1h3qM+buJrSb5Ni
+         UeR72ej+7/ktyUC7QWmv8r4SpbY/+QIZBWp8jRK+nYe0dEWXZfDbPVzzEwdoqmoj8wgn
+         cf6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765989283; x=1766594083;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EoS2/SEtxcfOVm1nycVOUKskylsoggbceMpNDql009E=;
-        b=dbl/WekNDsKVY+1y02kWeCo6okkwc4xtoxWVYdLp5z4U9ZKjGUrn51P6ZVkNRpElLI
-         W6MzwFGRf2hBF6IWmHFJ/zFDs5DPE20nngrsJeRKGDg6DmVB22k/sC+eTy4TzUg1q0rU
-         ZnYbRLj7H8YwKYBr+ZdJNeAN+F5CqYMeYguq51nIJgSPoqy7dLB7tsj4qo0LT6QIgxxQ
-         XLAwCuMuJF5NNs8rcFjCKy5ce0pRzahj02jikZk2b349viWGntto6igWrQ5jx0jQ0FmN
-         BhqBkNrA5hbCLpcyrwTeHR0DNkQ+i2qzQhISQz7mx66dfWFJacygO6k5/dA6uNJSR0Tu
-         Dw2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUiGSuipGQhmTsXzf8UtMmhB2LM1lCMRRY/mQjtvY5ASllIkAv9+hwx9SilpR6mHkpeoUPXW8uU+uxfzMoR@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYzMJgYlDLfiE7Tv6hp4oWcha9XWKjGGxb914z4zXlLuQMYe8o
-	BlpNi7b4we/CW9hByRZCF4F4KiSeu6XfHPewt8VpwFviWK23l3kw4L7yrSDIYwL5AIV19G54tMg
-	IuFpmrAH7PZGRHuaywHv+WpwCL1rCcK0e4SWFMyav6O9U5JCEglCyvIFKzaAzicLsIJXA
-X-Gm-Gg: AY/fxX455G9pY77HtJCosbvTjrO+dzo3JJKsytxLOI8eoFwBdRl9bgtN6RGlGtb4Lbr
-	uopadkKp+DHjsu1KL+Wfq7gKUsoxvqQZJxxSMkOnS0fhicwsC4PO4mQlnoW28n/zUmF7Jxz42eU
-	5QvXbcLVoEtgKgRTidwulea4nq2BRIKrO9PAu2Qe9+vVZY8dJeeSdEUGhhSU1ZyRehfj4H904Co
-	pa9gkfkvhq7DFAp3fI75pYzul7qtdeikgC0jIq+KdChtHvsqJ2K3Lj9bDxOTSTO/0Ohfoweb0Vl
-	bCPBVKFfrn7CgAkV02yrzCpzSe2sFzCNYjFdLJRNB53CQGHrQ6He3SgzfDJOFCME6lB7gQHJuld
-	qG9wkxWIjTMiimGHPwiJEgTOOlf8RiEygD8xfVWwL/jOcY5QSZH/W0+urFM5kZsSx3ePVJwXhXg
-	x2SevU5Yaverrh6yHGxX1EOIU=
-X-Received: by 2002:a05:622a:a18:b0:4f1:c72b:284a with SMTP id d75a77b69052e-4f1d049ff8cmr220756101cf.15.1765989283257;
-        Wed, 17 Dec 2025 08:34:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsAAJHwqxmftk+OQ1zGcEv9EePgWku3/QTaYBqJtm4eCKo2EQ/iMJ21n1xekg/vIL0bnve2g==
-X-Received: by 2002:a05:622a:a18:b0:4f1:c72b:284a with SMTP id d75a77b69052e-4f1d049ff8cmr220755741cf.15.1765989282670;
-        Wed, 17 Dec 2025 08:34:42 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5990da5dcd1sm2503254e87.81.2025.12.17.08.34.41
+        d=1e100.net; s=20230601; t=1765989320; x=1766594120;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RAAYF+70CB9eB3ACXAKpYiBOB9FD0mSsanrWwDwQLqE=;
+        b=rh7pqxqk8s1f0nV9ORbIhQTL4/3pvJitAyjqzi1tAR9oXMP9TunOfEa3fGbKwF5+Em
+         FgwrK1gmc992JEDXmqlLUffquPBaIBU9TOfNFyiJqe0dA4RRI71xslz4Ia5MskfPHz50
+         PmK/Lq22+f+Zmwyag01tJgrVT2hVpgFhwrQ2MzYmAvMtjFJrFs7dXOyGU35ndoc+fVk4
+         UuVDtmTJd15EFV+QSnU9k45+FxyVSHfEPTuTszNQLnxdadL+gM6Osdec9kd6KLGBps30
+         hGO8woQ/rniHj8T1XI/HtoyAYxI/eFWtlR2/j/oLBKejjFVearopNfEl6yUgZk+U2no+
+         mJfA==
+X-Gm-Message-State: AOJu0Ywkr8//t5oWjEqe1kQ9HYy3iWfHEnxJFJ32nUjs1Uv0TsNC9Xgj
+	CpeOR14MOObEq2cSMdIqJrbhGRM1fMx9jBNZQptkohmAvEBJADvU6OLOyODw0CL0EPUTYakZQeT
+	ilefkMmtsvWPSHBVi2B6zh5LHuRDEGfKjLVp1r73VN3e5xWHLO7XDsXiROFiVUOi1upFG
+X-Gm-Gg: AY/fxX53KENeSfNlySkbctJnNGfvWSAHSeEG+Bz4vEV5s1nAd622JIJb4nsM0yXqkjQ
+	bLp68sKeImpx2tW6GzPrpj0CMeHxjbX4luT5SUTbhoU8L1NgmuMrYHA0dsdDmrZR8yo5Ye2/Gos
+	skRSpj5nL8D0qwhP2Lj0qbygl4UfuG4giKHVXoLGq7EPUligNegtnUxL5LS4/S7+gEv7L7zHRZE
+	rCmv7INATIIgOnmL/tolufgXlceYCQfc5R0NwLMgRsZsTAB+dv+lZkHO/7YvgrnIINvhSMU3yK3
+	bmun/ug1L24ZgzrLrn9zrxX04orL73NEZUOqG3J3F3xUyXl/WOs2LPToMxRDUS4nORm/Uwt7LFQ
+	RRMy89p5K4L7sh4iA+bQYLfc3JpU1qr+8YAFy
+X-Received: by 2002:a17:902:e5cb:b0:296:2b7a:90cd with SMTP id d9443c01a7336-29f2404b710mr169876535ad.32.1765989320115;
+        Wed, 17 Dec 2025 08:35:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFwOv9nHjP6e4rUF3j6KYca1AcLzLfSlGw7UOAw1YHneczpAa76mOInSGYfud6yFOrzEM7JDw==
+X-Received: by 2002:a17:902:e5cb:b0:296:2b7a:90cd with SMTP id d9443c01a7336-29f2404b710mr169876255ad.32.1765989319461;
+        Wed, 17 Dec 2025 08:35:19 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29ee9b36af7sm204721055ad.18.2025.12.17.08.35.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 08:34:41 -0800 (PST)
-Date: Wed, 17 Dec 2025 18:34:40 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Paul Sajna <sajattack@postmarketos.org>,
-        barnabas.czeman@mainlining.org
-Subject: Re: [PATCH] drm/msm/mdp5: drop support for MSM8998, SDM630 and SDM660
-Message-ID: <dcapydafye2v6owrkehngivqlucjcx6aa3sszszflh3ocm7dpq@qsajm2qkc52d>
-References: <20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com>
- <8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org>
+        Wed, 17 Dec 2025 08:35:19 -0800 (PST)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Date: Wed, 17 Dec 2025 22:04:40 +0530
+Subject: [PATCH v9 04/14] firmware: qcom_scm: Introduce PAS context
+ allocator helper function
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org>
-X-Proofpoint-GUID: c5ImXFf-s8uexxxFHi_NeC9mUsRD0ugX
-X-Proofpoint-ORIG-GUID: c5ImXFf-s8uexxxFHi_NeC9mUsRD0ugX
-X-Authority-Analysis: v=2.4 cv=f/RFxeyM c=1 sm=1 tr=0 ts=6942dba4 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=e5mUnYsNAAAA:8 a=jsZ3alcmfn4h52Hz5qMA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDEzMSBTYWx0ZWRfX7koPZm9uzOcy
- 82PlmAVyd3aQYR/ftPHQR/AcnOcJ05VWvvHfEYcKU8Q4DWcSSderOIfqAlhKMsqVGaWaUAIuXid
- TzWAFvcM7aisKfzPEa4YzlrEmJwQboOEQg5ui+n/la+s8AfPYHNILoFHbrcoSdyTL/6KoeKH91D
- pLYdP4aGd5BsuWCm/gD3R3e7J+cb643coIqmC3W4FmcXEuWzVubepT6jq1QhwECQ1Y7cNQVqFOl
- 9qaHa3ZiSre1bhLKusWsLtjh+8N6YzzLriOvayICM6C7Gi1UGEFOclvUo4YRQu7czV5kt/qP0bL
- lFoBYH2yY1EEEupPIupyOm6Ga9zVCEhWq6hb60IO1weYyHoiE5cr7w7RvWvVzbnZI8vkoG1A/DU
- l3eJNdEEWvuk5kIfqnpdnADGQaY95A==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251217-kvm_rproc_v9-v9-4-ab7ac03e0ff1@oss.qualcomm.com>
+References: <20251217-kvm_rproc_v9-v9-0-ab7ac03e0ff1@oss.qualcomm.com>
+In-Reply-To: <20251217-kvm_rproc_v9-v9-0-ab7ac03e0ff1@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+X-Mailer: b4 0.14-dev-f7c49
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765989299; l=4036;
+ i=mukesh.ojha@oss.qualcomm.com; s=20250708; h=from:subject:message-id;
+ bh=MTke/QM0PFjN8QJGwMVznBklB/oOZJSHHEy6N6Uhs2I=;
+ b=8qm9J440ImkkEOrX9lhBxIjnEf8H3iYB7vQriZ/Zw7s7iQ9LpFfqX3Q4Pp2Q0i8Y8D19CPWTj
+ frbqu0b1cYSCXMcjCT55EsnHZZeaxy9vRY+TmHbVM8jM0pi0FxcfPRK
+X-Developer-Key: i=mukesh.ojha@oss.qualcomm.com; a=ed25519;
+ pk=eX8dr/7d4HJz/HEXZIpe3c+Ukopa/wZmxH+5YV3gdNc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDEzMSBTYWx0ZWRfX4HgUALbz3ubj
+ zE2IYJKouuepDB95rzs6phHhrLlViNoShrCcWmWN/37wEuP1w9clHAaPxxMelC3JzcqJq/267r+
+ 1RIohaAyQRD3OypKPK56YDN5ESKWIISq6q6MZyWavmgJcvbCAkhj6ccdjWnmRl8SStTzgFVI58v
+ jW7gPrbBKjvFvZ/D27H2Rq8aDuwzUfOHEtodoS9AwUfOeIHV4ya9WVkj4du97yKBUiPfwsS+1jv
+ +dFjs6wNlHZ+vxqt7uoRxnBmvaHQO3SFYxq8lnTDPh0PUG/NFQ7zK6UQG0eQ/+PPqbyQ2tFK++B
+ GQemOHxGIa9FY9qrYuLAII12n4KQRbr0emJIwLsBc8ZMCpZ+txFdMS/HWrYPd89OKjG+/H3epe7
+ 2c8AylUJ4DopCl0+KLpN7kRV6iBAyg==
+X-Proofpoint-ORIG-GUID: fGHUnlCcBoa41c2AWzMFbU5yDN9ns-Yo
+X-Proofpoint-GUID: fGHUnlCcBoa41c2AWzMFbU5yDN9ns-Yo
+X-Authority-Analysis: v=2.4 cv=edgwvrEH c=1 sm=1 tr=0 ts=6942dbc9 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=FtZ2CgB1kwCBZN0VdloA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-17_03,2025-12-16_05,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512170131
 
-On Wed, Dec 17, 2025 at 06:05:31PM +0300, Alexey Minnekhanov wrote:
-> On 11.12.2025 04:25, Dmitry Baryshkov wrote:
-> > Currently MDP5 3.x (MSM8998, SDM630 and SDM660) platforms are support
-> > by both DPU and MDP5 drivers. Support for them in the DPU driver is
-> > mature enough, so it's no longer sensible to keep them enabled in the
-> > MDP5 driver. Not to mention that MSM8998 never used an MDP5 compatible
-> > string. Drop support for the MDP5 3.x genration inside the MDP5
-> > driver and migrate those to the DPU driver only.
-> > 
-> > Note: this will break if one uses the DT generated before v6.3 as they
-> > had only the generic, "qcom,mdp5" compatible string for SDM630 and
-> > SDM660. However granted that we had two LTS releases inbetween I don't
-> > think it is an issue.
-> > 
-> 
-> I've retested DPU driver on our downstream release based on 6.18 (by
-> using msm.prefer_mdp5=false kernel cmdline parameter) on all devices
-> at my disposal, and I can confirm DPU driver working fine an all SDM660,
-> SDM636 ones, but not on SDM630. Some logs from sdm630-sony-nile-pioneer
-> (Sony Xperia XA2):
+When the Peripheral Authentication Service (PAS) method runs on a SoC
+where Linux operates at EL2 (i.e., without the Gunyah hypervisor), the
+reset sequences are handled by TrustZone. In such cases, Linux must
+perform additional steps before invoking PAS SMC calls, such as creating
+a SHM bridge. Therefore, PAS SMC calls require awareness and handling of
+these additional steps when Linux runs at EL2.
 
-Unfortunately I only have SDM660 and video DSI usecase here. BTW: is
-your SDM636 / SDM660 using CMD or video panel?
+To support this, there is a need for a data structure that can be
+initialized prior to invoking any SMC or MDT functions. This structure
+allows those functions to determine whether they are operating in the
+presence or absence of the Gunyah hypervisor and behave accordingly.
 
-> 
-> [    2.356546] msm_dpu c901000.display-controller: bound c994000.dsi (ops
-> dsi_ops [msm])
-> [    2.357328] adreno 5000000.gpu: GPU speedbin fuse 146 (0x92), mapped to
-> opp-supp-hw 0x4
-> [    2.364802] msm_dpu c901000.display-controller: bound 5000000.gpu (ops
-> a3xx_ops [msm])
-> [    2.444649] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x30030000
-> [    2.449793] [drm] Initialized msm 1.13.0 for c901000.display-controller
-> on minor 1
-> ...
-> [    2.911900] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
-> error]enc33 intf1 ctl start interrupt wait failed
-> [    2.911916] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
-> commit done returned -22
-> ...
-> [    3.176171] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
-> error]enc33 intf1 ctl start interrupt wait failed
-> [    3.176367] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
-> commit done returned -22
-> 
-> Which results in horrendous ~3-5 fps in shell.
-> 
-> The block "enc33 intf1 ctl start interrupt wait failed" + "wait for
-> commit done returned -22" is repeated few times per second whenever
-> the display is turned on, and stops when it's turned off.
-> 
-> Meanwhile it is working fine using MDP5 driver (msm.prefer_mdp5=true).
+Currently, remoteproc and non-remoteproc subsystems use different
+variants of the MDT loader helper API, primarily due to differences in
+metadata context handling. Remoteproc subsystems retain the metadata
+context until authentication and reset are completed, while
+non-remoteproc subsystems (e.g., video, graphics, IPA, etc.) do not
+retain the metadata context and can free it within the
+qcom_scm_pas_init() call by passing a NULL context parameter and due to
+these differences, it is not possible to extend metadata context
+handling to support remoteproc and non remoteproc subsystem use PAS
+operations, when Linux operates at EL2.
 
-It's interesting. Would you please capture the devcoredump for the
-platform? There will be a lot of blocks, I'm interested in INTF_1, CTL
-and top_0.
+Add PAS context data structure allocator helper function.
 
-Also, as a debugging check, would you mind patching
-dpu_encoder_phys_cmd_wait_for_commit_done() so that it always calls
-dpu_encoder_phys_cmd_wait_for_tx_complete()? I will check if there are
-any differences for CTL_START and similar registers, but it will take
-some time.
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+---
+ drivers/firmware/qcom/qcom_scm.c       | 34 ++++++++++++++++++++++++++++++++++
+ include/linux/firmware/qcom/qcom_scm.h | 14 ++++++++++++++
+ 2 files changed, 48 insertions(+)
 
-> Well, as fine as possible considering [1], using several FD_MESA_DEBUG
-> tricks to work around GPU issues.
-> 
-> P.S. I have not yet tested MSM8998, but I can try if required
-
-As far as I remember, MDP5 on MSM8998 has never been wired (as in never
-committed to the DTSI). Angelo has enabled and Freebox people have
-tested DPU on MSM8998, but I think it was limited to video / HDMI
-usecases.
-
-> 
-> [1] https://gitlab.freedesktop.org/mesa/mesa/-/issues/8442
-> 
-> --
-> Regards,
-> Alexey Minnekhanov
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 1e1057638e98..5162c02f5f88 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -558,6 +558,40 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
+ 		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
+ }
+ 
++/**
++ * devm_qcom_scm_pas_context_alloc() - Allocate peripheral authentication service
++ *				       context for a given peripheral
++ *
++ * PAS context is device-resource managed, so the caller does not need
++ * to worry about freeing the context memory.
++ *
++ * @dev:	  PAS firmware device
++ * @pas_id:	  peripheral authentication service id
++ * @mem_phys:	  Subsystem reserve memory start address
++ * @mem_size:	  Subsystem reserve memory size
++ *
++ * Returns: The new PAS context, or ERR_PTR() on failure.
++ */
++struct qcom_scm_pas_context *devm_qcom_scm_pas_context_alloc(struct device *dev,
++							     u32 pas_id,
++							     phys_addr_t mem_phys,
++							     size_t mem_size)
++{
++	struct qcom_scm_pas_context *ctx;
++
++	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return ERR_PTR(-ENOMEM);
++
++	ctx->dev = dev;
++	ctx->pas_id = pas_id;
++	ctx->mem_phys = mem_phys;
++	ctx->mem_size = mem_size;
++
++	return ctx;
++}
++EXPORT_SYMBOL_GPL(devm_qcom_scm_pas_context_alloc);
++
+ /**
+  * qcom_scm_pas_init_image() - Initialize peripheral authentication service
+  *			       state machine for a given peripheral, using the
+diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+index a13f703b16cd..5045f8fe876d 100644
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -72,6 +72,20 @@ struct qcom_scm_pas_metadata {
+ 	ssize_t size;
+ };
+ 
++struct qcom_scm_pas_context {
++	struct device *dev;
++	u32 pas_id;
++	phys_addr_t mem_phys;
++	size_t mem_size;
++	void *ptr;
++	dma_addr_t phys;
++	ssize_t size;
++};
++
++struct qcom_scm_pas_context *devm_qcom_scm_pas_context_alloc(struct device *dev,
++							     u32 pas_id,
++							     phys_addr_t mem_phys,
++							     size_t mem_size);
+ int qcom_scm_pas_init_image(u32 pas_id, const void *metadata, size_t size,
+ 			    struct qcom_scm_pas_metadata *ctx);
+ void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx);
 
 -- 
-With best wishes
-Dmitry
+2.50.1
+
 
