@@ -1,184 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-85432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C68FCC5F16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 05:07:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21CE6CC5F3C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 05:18:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 25EA63022589
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 04:07:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C3E3F301E912
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 04:17:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEBD52737EE;
-	Wed, 17 Dec 2025 04:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QR7Y/VDX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BAF019B5A3;
+	Wed, 17 Dec 2025 04:17:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C73238C16;
-	Wed, 17 Dec 2025 04:06:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157711DFFD;
+	Wed, 17 Dec 2025 04:17:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765944417; cv=none; b=ujGi/0072sDs1TBYJEQqY9nEaH8vQIqYv2q6S2CqExS90X29Dx9EeuffmLNvEGUr0FcoU5nWhzvleDtirwvxgoA+Iz5Lt4E9/qGp6aStxD3DXsZzIj077SvwtH6BFJHG2MbEocRYCxVtVmAFrtss2IvFk7p26JgWuqK4s03BvuM=
+	t=1765945078; cv=none; b=ufkxR4KaHSa80HoyAnclVuJawrdQUgpsGSCQiPYYskzJhcnJEnUl5aDtY0hpNV+JfsMqOSIJqpuk209UMLwz8Hr1M0yTcE8ofR5BDSfkikD8UzLsSv15RKiFSIPNQBxt/8Ysu2krBx4bdN+vsF9jf3w6KLK94z+REzHAMfFy4eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765944417; c=relaxed/simple;
-	bh=OjAwINyKQ1MUxnEaRrjG70fGlGQQE/ByQWcqTj43Ghs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JsuhnVfT8Rnh9DNF9uCqt+F91HQ2LdTVQj2LXQVKksw3LD5NbzAREOZ+0uUMvaQkxVaF4aGO/j9JrD/usYJZsGdG+cedNoL5AM6T3Yjopl57D1CT2caRN53RdtwUFoDBZPjXbchdG5/n+wB+95LjQnY37tqDp/6Qy/R1t14n5uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QR7Y/VDX; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765944416; x=1797480416;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=OjAwINyKQ1MUxnEaRrjG70fGlGQQE/ByQWcqTj43Ghs=;
-  b=QR7Y/VDXUeob0WAxBVfg+iYi9wnUpqZENBPCYslAk4J4rhA+tq7Vvn26
-   VcMHRZ+KNCwZJdA4mKNPkGyK+jwJKON4Kfw9nagGLgTsWgotI1cC8R23c
-   Ly55JbIRuqj9gqI0aArk3ITAq3fA196ObO1r79LWe92WK7MJMBs9UmvCz
-   0NZABNel7AMIdMgpMXlHVutXiq20DKGUCYieEN9pZZGXzUysspdQZdurC
-   +URM1IAt5lZ+SYAakedj2jKf6GFddn3jwg5T49xjo/UK6RYqx4CYpd97l
-   IHNvXH/mm3TUhNRePz6F1aDRZQaEO5IaBMZL5tM4Fsg7bY649PEcqW7+W
-   w==;
-X-CSE-ConnectionGUID: llqnxI+LQcCGRQQmWKToLQ==
-X-CSE-MsgGUID: uNjwlglQQHqNZajALb+euw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="67944587"
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; 
-   d="scan'208";a="67944587"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2025 20:06:55 -0800
-X-CSE-ConnectionGUID: nmWCp0OqQQOWgJLaINxs2g==
-X-CSE-MsgGUID: qhgqTwwSQ8qMcQ1q2oSf7w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; 
-   d="scan'208";a="203112031"
-Received: from lkp-server02.sh.intel.com (HELO 034c7e8e53c3) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 16 Dec 2025 20:06:50 -0800
-Received: from kbuild by 034c7e8e53c3 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vVioK-0000000049k-1tgD;
-	Wed, 17 Dec 2025 04:06:48 +0000
-Date: Wed, 17 Dec 2025 12:06:40 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-mmc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-	quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-	quic_sayalil@quicinc.com, quic_nitirawa@quicinc.com,
-	quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com,
-	Sachin Gupta <quic_sachgupt@quicinc.com>
-Subject: Re: [PATCH v6 5/5] mmc: sdhci-msm: Rectify DLL programming sequence
- for SDCC
-Message-ID: <202512171135.hzSvlDE9-lkp@intel.com>
-References: <20251215120009.3877889-6-quic_rampraka@quicinc.com>
+	s=arc-20240116; t=1765945078; c=relaxed/simple;
+	bh=Y+x7T8cwOUbncJtyHrL+aolrnlkmvLALLFS7zbPC2A0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aPEoTsySn5YS6vJMGtCP6sZy3RHOPXBRjlfloJOuc4ZEDU2M6wz3Wbd51NRI/2joOAoPTALgJjwG+JJ/ZJvk/pHQM7A1qOT3+D37DYCZtzuw+SWC6GxMoK1rBs0nSC9HxFE4NVZB9In57FmLXhtDMGUcx7AWrBNEldjKJOMsQ3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from DESKTOP-L0HPE2S.localdomain (unknown [124.16.141.245])
+	by APP-03 (Coremail) with SMTP id rQCowACnyN_nLkJp_832AA--.11265S2;
+	Wed, 17 Dec 2025 12:17:44 +0800 (CST)
+From: Haotian Zhang <vulab@iscas.ac.cn>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Haotian Zhang <vulab@iscas.ac.cn>
+Subject: [PATCH] clk: qcom: Return correct error code in qcom_cc_probe_by_index()
+Date: Wed, 17 Dec 2025 12:13:38 +0800
+Message-ID: <20251217041338.2432-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251215120009.3877889-6-quic_rampraka@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:rQCowACnyN_nLkJp_832AA--.11265S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrKF1fuw43XFW7GF4DZw47Arb_yoWDXFc_Ar
+	48urs3Xr48Arn2vr15AF13ur9ayF90gr1kA3WSqasxt347uFsrZrZ0van5Z3yfXrZ3J347
+	uwnxWr47Zr1fCjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb48FF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+	Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r12
+	6r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
+	0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y
+	0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+	WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+	IxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbSfO7UUUU
+	U==
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCRETA2lB-9WynQAAsl
 
-Hi Ram,
+When devm_platform_ioremap_resource() fails, it returns various
+error codes. Returning a hardcoded -ENOMEM masks the actual
+failure reason.
 
-kernel test robot noticed the following build warnings:
+Use PTR_ERR() to propagate the actual error code returned by
+devm_platform_ioremap_resource() instead of -ENOMEM.
 
-[auto build test WARNING on linus/master]
-[also build test WARNING on krzk-dt/for-next v6.19-rc1]
-[cannot apply to robh/for-next krzk/for-next ulf-hansson-mmc-mirror/next next-20251216]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Fixes: 75e0a1e30191 ("clk: qcom: define probe by index API as common API")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+---
+ drivers/clk/qcom/common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ram-Prakash-Gupta/dt-bindings-mmc-Add-dll-presets-values-for-HS400-and-HS200-modes/20251215-200814
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20251215120009.3877889-6-quic_rampraka%40quicinc.com
-patch subject: [PATCH v6 5/5] mmc: sdhci-msm: Rectify DLL programming sequence for SDCC
-config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20251217/202512171135.hzSvlDE9-lkp@intel.com/config)
-compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251217/202512171135.hzSvlDE9-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202512171135.hzSvlDE9-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from include/asm-generic/bug.h:31,
-                    from arch/x86/include/asm/bug.h:193,
-                    from arch/x86/include/asm/alternative.h:9,
-                    from arch/x86/include/asm/barrier.h:5,
-                    from include/linux/list.h:11,
-                    from include/linux/module.h:12,
-                    from drivers/mmc/host/sdhci-msm.c:8:
-   drivers/mmc/host/sdhci-msm.c: In function 'sdhci_msm_configure_dll':
->> include/linux/kern_levels.h:5:25: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int' [-Wformat=]
-       5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-         |                         ^~~~~~
-   include/linux/printk.h:484:25: note: in definition of macro 'printk_index_wrap'
-     484 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-         |                         ^~~~
-   include/linux/printk.h:555:9: note: in expansion of macro 'printk'
-     555 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~
-   include/linux/kern_levels.h:11:25: note: in expansion of macro 'KERN_SOH'
-      11 | #define KERN_ERR        KERN_SOH "3"    /* error conditions */
-         |                         ^~~~~~~~
-   include/linux/printk.h:555:16: note: in expansion of macro 'KERN_ERR'
-     555 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-         |                ^~~~~~~~
-   drivers/mmc/host/sdhci-msm.c:930:33: note: in expansion of macro 'pr_err'
-     930 |                                 pr_err("%s: %s: Non standard clk freq =%u\n",
-         |                                 ^~~~~~
---
-   In file included from include/asm-generic/bug.h:31,
-                    from arch/x86/include/asm/bug.h:193,
-                    from arch/x86/include/asm/alternative.h:9,
-                    from arch/x86/include/asm/barrier.h:5,
-                    from include/linux/list.h:11,
-                    from include/linux/module.h:12,
-                    from sdhci-msm.c:8:
-   sdhci-msm.c: In function 'sdhci_msm_configure_dll':
->> include/linux/kern_levels.h:5:25: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int' [-Wformat=]
-       5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
-         |                         ^~~~~~
-   include/linux/printk.h:484:25: note: in definition of macro 'printk_index_wrap'
-     484 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-         |                         ^~~~
-   include/linux/printk.h:555:9: note: in expansion of macro 'printk'
-     555 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~
-   include/linux/kern_levels.h:11:25: note: in expansion of macro 'KERN_SOH'
-      11 | #define KERN_ERR        KERN_SOH "3"    /* error conditions */
-         |                         ^~~~~~~~
-   include/linux/printk.h:555:16: note: in expansion of macro 'KERN_ERR'
-     555 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-         |                ^~~~~~~~
-   sdhci-msm.c:930:33: note: in expansion of macro 'pr_err'
-     930 |                                 pr_err("%s: %s: Non standard clk freq =%u\n",
-         |                                 ^~~~~~
-
-
-vim +5 include/linux/kern_levels.h
-
-314ba3520e513a Joe Perches 2012-07-30  4  
-04d2c8c83d0e3a Joe Perches 2012-07-30 @5  #define KERN_SOH	"\001"		/* ASCII Start Of Header */
-04d2c8c83d0e3a Joe Perches 2012-07-30  6  #define KERN_SOH_ASCII	'\001'
-04d2c8c83d0e3a Joe Perches 2012-07-30  7  
-
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 121591886774..eec369d2173b 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -454,7 +454,7 @@ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
+ 
+ 	base = devm_platform_ioremap_resource(pdev, index);
+ 	if (IS_ERR(base))
+-		return -ENOMEM;
++		return PTR_ERR(base);
+ 
+ 	regmap = devm_regmap_init_mmio(&pdev->dev, base, desc->config);
+ 	if (IS_ERR(regmap))
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0
+
 
