@@ -1,184 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-85418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F3A5CC58B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 01:03:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 47F83CC5930
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 01:16:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 32A593040A6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 00:02:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5A9CE3016DC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 00:15:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1512171C9;
-	Wed, 17 Dec 2025 00:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D414A17A2FA;
+	Wed, 17 Dec 2025 00:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PRESunnf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZjWXeR1O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898E43D6F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 00:02:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F337E0E8;
+	Wed, 17 Dec 2025 00:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765929729; cv=none; b=c8XioIxkGU95qbSqN8+3lOF17W9qhGJe42GzjZa7dPtHFgSIBncA3HSgNXQb1NpTGHMnu7EDcfYqrn2UNfUbUhaFU0rCqIQV5VP2F0n7OKWC/0iau++ASstELSv9N/NC8tsnje9HCjJFojuazh0cyKc0P3IkYta8rMSaKNwmycc=
+	t=1765930552; cv=none; b=IISIm9I5/b5QO2ke0ceOHJ/CL/BGW6j43mkTo5mFiPZRwZ05R4MwC5g0acCIQlpecshfO/vZzJ9GX2V4JxUGWh3Qk55Tjl+BaXahx2OM/ASfdlpOXSFfccstXtW+v1Qhz8IIW09QbXWSLI3WMZETLiOLG3EidteNdo8xa4DBvdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765929729; c=relaxed/simple;
-	bh=4fX+V0YnP016/orDpEqU5FVPZMbBz2SoqmDB72xWnxo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fD/Wm0KavgDciPnTNlvedqKTmarWulRluzNM2vZOZIAnaSung/IQmlprMA4+/3IPXKhRtDy+a4TXn6UYlWx95CsMAFN/FSP7iEYdW1KOXhiul6SE70cEo5kvHiv+XRZvlBSafiqDsivXuYYul9fkyxF9rzx1i9o23g9imfBHJP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PRESunnf; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5990ee705e6so167440e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Dec 2025 16:02:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765929725; x=1766534525; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IESsZe/W5RT7xiwRsUhKBankOTgyA4GaQytGF+x9/ao=;
-        b=PRESunnfy0Y4ZNiGwe53/eeaSy5yUJVJqkDakXGiRmMu25eT7vzfKnBAX5odfvmAcB
-         7ZO/wPbN8DjQqX062y++qlz+SHqVdWkIXqxJgi3jRFSjfoTYmEvRgKBvtKple3toUcmm
-         fj2cjRa18bF365MvODRt/VoYmDtZBDXS7HTL21Fp9C1g3pyLaQHN/glrLenhGfJB0TJp
-         /8LKcepHiQSjNTqeZ49YLpTZNWUVXs5FloXRUz/HLZYWaqtXyfmzP/QjDnat6uuYZXWP
-         +e0s6lkH6o0Z/Q4ZBYX/zTRoEl5yaZeyyo33iIKMjX6qJWGJ9uDVA9tByVHznqLVQVLH
-         Xk9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765929725; x=1766534525;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IESsZe/W5RT7xiwRsUhKBankOTgyA4GaQytGF+x9/ao=;
-        b=PXqbtFr4e4FIz+q9zIgYvBQHUUFIeaaJLWYRySa1beYHF9f137NLatHk9sv9D8mnxd
-         aJg0GlOnKIcg0vxLIUDHRY9dyYaMQahikooXZ1L4Vctn0Kdls8J94K/ZQjJodpGD/mqm
-         ewf8xeHImgIlrqB4YEFis/4DFygnzIiAcTk9+2sR0f8eRmZrDgwhaDcd/kKzpm+9b78N
-         b+NooZyXMqIGlbJ+Kqks3kTFHfVfg0jJTSz0wRENJiGkhFwx0xIxx+XiXc84mgUV/Dvr
-         lAHc98+yJMUQg0jK4a60kwJNXd01bkGlwDjyVflPAtrNL5MvDd32TbdmXYRTLxoh78dM
-         44bA==
-X-Gm-Message-State: AOJu0YwOjMaYc4vDrEWCaCPIj3wsFTSz9WeobQwkwiJGyR7yYGVrejSg
-	W7ncJKkHjsoa436ryjugvLNEem8/Fe2/zkBTEy/mgwPak8Jtmipy8hsv7I0YrWzqsxE=
-X-Gm-Gg: AY/fxX4vfBzohYwJ+EU1+z3+Yzo+CdkSFhAO3AYCmVZeNJI3odX32SO0nexn8ntktx1
-	VqKf/2QUSK9woa9xEPCfR3M5RVejP6N98GdFtyOGKcPJ7VRCfA5jW3+0ByRYdr5KKDuwWvIo11o
-	+tAyybQ3cbAmmUG73x50uYO/25gBTJYIMp41mbRFEKaoIo1Iuwh5cSmbfUq0w6KouTAFOIZNU3M
-	GTWMiIYwWNhkZRidqnkJDAOh0F3/ftX7eid7a7EHmFcT2FGDBFpxvsGAg+Wkl91UNo1SBzcs/et
-	K3Vq0NxEWeyQfB3vMPG162bC7XHsauln12QrdgLJj0ctvdfm8R4qWJEdCABE/E5Z3YLCLvTSQHI
-	V0i19B/980bdvC9LVkho2m5yF5UDdcLpXiDRwBxz2ZpbSbSkoqjANyGktAZ0ujMHhA1GDt6Pjyj
-	awItI8gbB4MXRBj+MpjcsghfPzXEF/ICWWx20qESMc1RbHJ8VSiR8g2rAYfLiPypLJXw==
-X-Google-Smtp-Source: AGHT+IFrCa4ZjN33CIw4ShWO7Hf+XIWaZzk0eJOF4MY7Y25K8sz5SXR5eCMOVJwo9hvvGRP1v96ung==
-X-Received: by 2002:a05:6512:3f1a:b0:594:4c87:a8f9 with SMTP id 2adb3069b0e04-598faa62e77mr3237266e87.4.1765929725412;
-        Tue, 16 Dec 2025 16:02:05 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5990da1aa2dsm1454881e87.42.2025.12.16.16.02.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 16:02:03 -0800 (PST)
-Message-ID: <eff759a7-06ee-42f5-a3a6-860956d7ae84@linaro.org>
-Date: Wed, 17 Dec 2025 02:02:01 +0200
+	s=arc-20240116; t=1765930552; c=relaxed/simple;
+	bh=1fLaQXQMhAIIY9eYTYTesa9WGtZTwz0jbYAKYyGDJQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZkZODT9+wUPH99h1QRYCMjsiTmyF4wUk9oUIO1UiK57/y8dXN+3ls8cwsebFFiVpY8SLlQwwreZV0qEF+inAiil4i+KlcokBGmtPyEWQZCqO+0kTUsjxrvwMZ5YrJZYOyI1XecxdS+a0TyhcixcGQikzlFST1erdCei4uVU/nsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZjWXeR1O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F576C4CEF1;
+	Wed, 17 Dec 2025 00:15:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765930552;
+	bh=1fLaQXQMhAIIY9eYTYTesa9WGtZTwz0jbYAKYyGDJQo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZjWXeR1ONyqKqG0QcMf/3Nv2u3TzWQBOf2sLo/F+oEvxIVO6iKSiwVYu+8PU1fSUY
+	 CDbx77XmAtjoaUn7FBnJay52USa5BuIUG+gn+Sd6pZykxNMC9I0lih41KQBG346ajq
+	 U9N/dF7ijEh0qL/c+n4u8Jblejm0P+YubteKQtHH9RAfvWu9OUx4DRkIsBc0mw8x75
+	 YgvGVl+xrgCrqDdug9jI3R63qVj1UEw9nas8KwX96SWETjXifQBqes+Ecc6jpL7ci+
+	 z4BpBXfDJPVSoUSJ9kp00vYHf/HIOYnOL1DCxFAt7598+iSwc2ALgqtF6xX5vQl6SE
+	 OpmPq0LPGz0Yw==
+Date: Tue, 16 Dec 2025 16:23:53 -0800
+From: Bjorn Andersson <andersson@kernel.org>
+To: Matthew Maurer <mmaurer@google.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, 
+	Trilok Soni <tsoni@quicinc.com>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org
+Subject: Re: [PATCH RFC] soc: qcom: socinfo: Re-implement in Rust
+Message-ID: <msbgnz45owgcnx2q5e6kamhsfmslyed6kqbrprrttkoeruradr@nd3rbstjxds5>
+References: <20251213-qcom-socinfo-v1-1-5daa7f5f2a85@google.com>
+ <nddh2fawoofktjglouq5wrjubxhyqrlzftqz7lvx3xdfipncip@xgudpcfdo2bd>
+ <CAGSQo0254uMNb52aJACpuEr6O1GiUng9nNut1eecM3AFaSy_8w@mail.gmail.com>
+ <ekngmao2rw4mktubhpodudnkfvx5of74uvlswr7csnyxcwlmo5@cb6jfgiyg4vc>
+ <CAGSQo03+pVhjyfSLGHHcr=w1-3=C5AcEKJf-GbcEvfJ6NTid7g@mail.gmail.com>
+ <nqao3h3a45aw74bpvleqpx4iqmsjcxdjgvegyafnhvk2vtwwz4@n37vq7lsgzrr>
+ <CAGSQo011pq+YX=AF0TczzzTw0JL2azvVtijCDDH8HJzzxFYOPA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] media: dt-bindings: Add CAMSS device for Kaanapali
-To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-References: <20251113-add-support-for-camss-on-kaanapali-v6-0-1e6038785a8e@oss.qualcomm.com>
- <20251113-add-support-for-camss-on-kaanapali-v6-1-1e6038785a8e@oss.qualcomm.com>
- <bd899586-f714-4d2e-95e3-6abf124e75a4@linaro.org>
- <37d0f89f-69be-45a7-90fa-347d6a3800bf@oss.qualcomm.com>
- <2d7ac7e8-ab69-44a6-b732-3657abf3a5a6@oss.qualcomm.com>
- <ceeee542-a319-4ad9-ada8-3dc769599dec@mleia.com>
- <d1fb4d8a-608e-44f5-834f-fa92d487c75b@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <d1fb4d8a-608e-44f5-834f-fa92d487c75b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGSQo011pq+YX=AF0TczzzTw0JL2azvVtijCDDH8HJzzxFYOPA@mail.gmail.com>
 
-Hi Vijay.
-
-On 12/16/25 19:55, Vijay Kumar Tumati wrote:
+On Tue, Dec 16, 2025 at 03:32:53PM -0800, Matthew Maurer wrote:
+> On Tue, Dec 16, 2025 at 3:05 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Tue, Dec 16, 2025 at 02:13:08PM -0800, Matthew Maurer wrote:
+> > > On Tue, Dec 16, 2025 at 1:53 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> > > >
+> > > > On Tue, Dec 16, 2025 at 12:53:28PM -0800, Matthew Maurer wrote:
+> > > > > On Tue, Dec 16, 2025 at 12:49 PM Bjorn Andersson <andersson@kernel.org> wrote:
+> > > > > >
+> > > > > > On Sat, Dec 13, 2025 at 12:36:00AM +0000, Matthew Maurer wrote:
+> > > > > > > Re-implements qcom-socinfo driver in Rust, using `Scoped`-based DebugFS
+> > > > > > > bindings.
+> > > > > >
+> > > > > > Okay, but why?
+> > > > > >
+> > > > > > https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+> > > > > >
+> > > > > > [..]
+> > > > >
+> > > > > I'll move more of the text from the cover letter into the commit
+> > > > > message, but the short version is that it's intended to be a low-risk
+> > > > > driver to pilot vendor drivers in Android.
+> > > > >
+> > > >
+> > > > The answers I'm looking for isn't in your cover letter either. I want to
+> > > > know what benefits Rust provides in this particular case.
+> > > >
+> > >
+> > > Rust likely does not provide any significant benefits for the socinfo
+> > > driver itself, aside from having caught the slight disconnect
+> > > (mentioned on the other thread) where it should probably be an
+> > > auxiliary device because it assumes that the `qcom-smem` device will
+> > > remain active as long as it does.
+> > >
+> >
+> > Yes, this isn't unique to Rust. The smem API would benefit from an
+> > overhaul in general... At the time I wrote it, you couldn't really boot
+> > the system without SMEM, so I added the suppress_bind_attrs, these days
+> > you can exercise a fair amount of use cases without it.
+> >
+> > > The primary intention of converting this driver is to be a low risk
+> > > trial for GKI's ABI stability for vendor modules and a first Rust
+> > > vendor module (we have platform modules already for binder and ashmem)
+> > > on Android. This was discussed informally with Trilok (a long time
+> > > ago) to act as an example for other vendor drivers and encourage usage
+> > > of Rust for new drivers or those where memory safety has been a
+> > > problem in the past, but nothing was ever formally committed to.
+> >
+> > But if the test bed for GKI ABI stability is the goal, don't you need
+> > something with a more interesting interface?
 > 
-> On 12/12/2025 4:49 AM, Vladimir Zapolskiy wrote:
->> On 11/18/25 20:44, Konrad Dybcio wrote:
->>> On 11/18/25 7:25 PM, Vijay Kumar Tumati wrote:
->>>>
->>>> On 11/18/2025 7:00 AM, Bryan O'Donoghue wrote:
->>>>> On 14/11/2025 03:29, Hangxiang Ma wrote:
->>>>>> +                  <0x0 0x0900e000 0x0 0x1000>,
->>>>>
->>>>> Why aren't you starting @ 0x0900e000 ? seems to be omitting some of
->>>>> the registers in the ICP block. Should start at +0xd000 not +0xe000 ?
->>>>>
->>>>>> +                  <0x0 0x0902e000 0x0 0x1000>,
->>>>>
->>>>> Same here.
->>>> Hi Bryan, HLOS does not have access to those registers. They are
->>>> configured by the Hyp.
->>>
->>> If that's hyp, please add them. We already have platforms without
->>> Gunyah. Remember, bindings are defined once and for good and I wouldn't
->>> call it impossible that someone would want to run that configuration on
->>> Kaanapali some day
->>>
->>
->> If the ICP register block is added now, then it will practically exclude
->> an option to run hardware demosaic on Kaanapali. There were notorious
->> and still unresolved problems with CSIPHY blocks, which shall be split
->> from CSID/VFE CAMSS on device tree level also, for similar reasons the
->> same should be done with ICP or other blocks. It makes exactly zero
->> sense to pile everything into a monolythic device tree node, and doing
->> so undermines any future advances in CAMSS support in the upstream
->> Linux, the hardware description in downstream is done thoughtfully
->> better,
->> and not for no reason.
->>
-> Hi Vladimir, yes, this has been discussed in the past and the general
-> consensus from everyone is for not blocking KNP series on this. But yes,
-> there is an ongoing effort to modularize the bindings for future
-> chipsets and when it's ready, we can review, discuss and take it
+> We've been watching things manually for the 6.12 release and manually
+> backtested on the 6.6 release (by looking at our ABI dumps) and
+> believe that it works. The only way we can really progress further is
+> by deploying a vendor driver in the field.
 
-My concern is that it makes very little sense to throw any not clearly
-defined hardware properties and interconnections into an unorganized and
-unmanageable pile of everything, because this closes the door to ever update
-the upstream CAMSS driver by adding better CAMSS IP support for any already
-manufactured and sold Qualcomm SoC powered board with done CAMSS support.
+But this is the upstream kernel, you're not contributing to 6.6, 6.12,
+or even 6.18. If we merge this rewrite for v6.20 it will be deploying
+into the field in 2027.
 
-If some user already holds a phone, a laptop and expects to offload CPU to
-CAMSS IP one happy day, it's pretty unsatisfactory to say that it will never
-happen on legacy hardware, because there was done an unrecoverable mistake
-by adding never tested properties into CAMSS DT bindings, and the remained
-option is to "wait for future chipsets". Each added unsupported and unused
-property boards up the window of better CAMSS support on manufactured boards.
+Perhaps I'm misunderstanding what you're saying here though?
 
-I don't understand a reason why to do worse for the upstream, when there is
-a clear and feasible alternative not to do worse, thus my misunderstanding
-and my grief for upstream CAMSS are my concerns.
-
-> forward. As for your ICP concern, if you are referring to the Demosaic
-> in OFE, I believe we might still be able to do it either with direct OFE
-> config from CPU or using the firmware (preferred), given that we
-> properly establish the shared memory and SID IOVA ranges for ICP,
-> assuming that the load and authenticate will be taken care by Hyp or TZ.
-> Please share your thoughts if I missed something.
-> 
-> Hi Bryan, please feel free to add your thoughts.
+> If we pick something more
+> interesting, there was concern around it being caught up on concerns
+> related to the specific driver. The hope was that this driver would
+> simultaneously be real enough to count as a driver in the eyes of
+> other vendors watching for someone to take the lead, and simple enough
+> to be low risk enough to be possible.
 > 
 
--- 
-Best wishes,
-Vladimir
+Are you talking about upstream drivers, or downstream vendor drivers?
+
+> We do have more interesting drivers in process, e.g. the tyr graphics
+> driver, but those are longer term efforts.
+> 
+> >
+> > Also, how would this manifest itself in the upstream kernel? Do you have
+> > a test bed where you build GKI + vendor "kernel" out of the upstream
+> > kernel tree today?
+> 
+> In Android, kernel modules are split into two categories - "GKI
+> modules", which get shipped with the primary kernel to every system,
+> and vendor modules, which are shipped and loaded by particular
+> devices. Neither current builtin modules [1] nor current GKI modules
+> [2] contain the qcom socinfo, so it is a vendor module. This
+> categorization is not an "in-tree" / "out of tree" categorization, but
+> a "every Android device" / "some Android devices" one.
+> 
+
+Forgive me, but I'm reading this as "Android downstream" + "Qualcomm
+downstream", my question was how this relates to the upstream kernel.
+
+> [1] https://ci.android.com/builds/submitted/14027866/kernel_aarch64/latest/modules.builtin
+> [2] https://android.googlesource.com/kernel/common/+/refs/heads/android16-6.12/modules.bzl
+> >
+> > > Trying to apply Rust to more significant existing modules (where it
+> > > would provide a greater benefit) raises concern about whether they
+> > > will operate identically. Socinfo in particular can be more thoroughly
+> > > tested for equivalency, as aside from the runtime DSP information
+> > > modification that was mentioned in this discussion, the output of the
+> > > socinfo driver is static and can just be checked. This means that a
+> > > socinfo driver swap will essentially have the language change be the
+> > > *only* significant thing about the change, keeping the risk to a
+> > > minimum.
+> > >
+> > > Part of the reason for the RFC prefix on this patch is to solicit your
+> > > feedback on whether you are open to this. If you have somewhere else
+> > > you'd prefer we try this, I'd be open to that as well.
+> > >
+> >
+> > Rust is a new dependency and it's a foreign language to the vast
+> > majority of the contributors in the upstream Qualcomm community.
+> >
+> > So, IMHO sufficient value needs to come with such rewrite, and this
+> > value needs to be properly documented in the git history. Rewriting
+> > things for the sake of rewriting things, or the facilitate a downstream
+> > experiment, is hard for me to force onto our community.
+> 
+> Since you brought it up, I took a brief look and found CVE-2024-58007
+> [3] , which would have been prevented through use of Rust, as the
+> access would have been bounds-checked. I understand that such
+> vulnerabilities in socinfo.c are likely to be uncommon, but even for a
+> driver this simple memory safety issues do happen, and have even
+> happened recently.
+> 
+
+Yes, this is exactly the kind of argumentation I would like to see.
+
+This is something we can weigh against the added cost of the Rust
+implementation.
+
+Regards,
+Bjorn
+
+> [3]: https://nvd.nist.gov/vuln/detail/CVE-2024-58007
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > > > >
+> > > > > > > ---
+> > > > > > > base-commit: 4b31c90f86768367c84cc6e99e1deee0ec55197b
+> > > > > > > change-id: 20251029-qcom-socinfo-d8387c7fdb1c
+> > > > > > > prerequisite-change-id: 20251029-soc-bindings-9b0731bcdbed:v1
+> > > > > > > prerequisite-patch-id: e4da423ddabec93bd9a64004691266f9b740e0c5
+> > > > > > > prerequisite-patch-id: 5097ff622f8cb1d38354674cf70c1c946ac87f6c
+> > > > > > > prerequisite-change-id: 20251029-add-entropy-f57e12ebe110:v1
+> > > > > > > prerequisite-patch-id: 657de204912d2c5efff9898d3f4c51e52684d8e6
+> > > > > > > prerequisite-change-id: 20251212-transmute-8ab6076700a8:v1
+> > > > > > > prerequisite-patch-id: 4f5f7cb002d02d232083ab5c3ce6b3cb90650bd6
+> > > > > > > prerequisite-patch-id: 01a1f3d727e549c173dd142180741f5b6a3c866e
+> > > > > > > prerequisite-patch-id: ff801a7ae439876b1554b4d1132d94c825bbe74f
+> > > > > >
+> > > > > > So, it doesn't work on a clean v6.19-rc1 tree?
+> > > > >
+> > > > > Correct. Those other patchsets are patchsets I'm landing which add
+> > > > > bindings used in this one.
+> > > > >
+> > > >
+> > > > Okay, please make that explicit when submitting patches, so that the
+> > > > maintainers know that your patch(es) can't be merged.
+> > >
+> > > I thought that was what I had done by using the combination of "RFC"
+> > > and putting the prerequisite change IDs from b4, but I will include a
+> > > statement to that effect in my cover letter in the future.
+> > >
+> > > >
+> > > > Regards,
+> > > > Bjorn
+> > > >
+> > > > > >
+> > > > > > Regards,
+> > > > > > Bjorn
+> > > > > >
+> > > > > > >
+> > > > > > > Best regards,
+> > > > > > > --
+> > > > > > > Matthew Maurer <mmaurer@google.com>
+> > > > > > >
 
