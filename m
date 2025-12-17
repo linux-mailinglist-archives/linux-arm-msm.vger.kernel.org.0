@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AB82CC8023
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 14:56:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5BB3CC805F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 14:58:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0875A30680F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 13:53:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C882E301F251
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 13:55:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2558A382BC9;
-	Wed, 17 Dec 2025 13:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 275CA382BDC;
+	Wed, 17 Dec 2025 13:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcRH1ze9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CrORD9Gq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55E3382BC5;
-	Wed, 17 Dec 2025 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C6382BD3;
+	Wed, 17 Dec 2025 13:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765979626; cv=none; b=r4c5XVlcyevSLf1y4pJ8hdZZ1Ba7MO8E9azwzMgFUBNIyPU9ddzxwSnYdaovZaVet0UKS0jRZhBspJ6DughxIkEpzEQePzuW51+O9b8YvUrBItaor0ZdmDN2htCwuqCSAOu819D/TB87tNHxCVriyE9w8IalOVbcZXsngxG6h44=
+	t=1765979709; cv=none; b=PgTrtpXCkqXyIhaYPalnafP7T+1KaWrsJJN//pv36xwueUzOFZPZB2NZiCc/eDBryCfb4Os7hwyQ7k3KXuXCoAI1OJyx7GhrCklB2SDxMYG/VGXWqgTd8ZMNl/2t445vlfVcyvcv2DOYVycv2s+m8bA38pKQqmf5NO3PYz1fkEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765979626; c=relaxed/simple;
-	bh=LSAatRuwlKsmUa0I3zhBm612tklOcdKIV1w+WRG7oIY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=iDXd7qkvXTuDXtn8aUKe8Y4pu9yk8vMflXBrTz2I3T/KMdh3NrXm79KR6GeAYuKaVsxNzTKHitqEzx4KFOnKur2Tsghi9aqhRxfpXG26dfdyBxp7iwytvFJHOrBWT3rojNYfc2Xk/wgbya4BO0S8WICgB2qguAGtYWd8wZduCtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcRH1ze9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDEDC4CEF5;
-	Wed, 17 Dec 2025 13:53:41 +0000 (UTC)
+	s=arc-20240116; t=1765979709; c=relaxed/simple;
+	bh=aak9BWB4Ce8Ru/qMBmAZMG1Sh8Djz+zlw+C7bTWk+XI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ATfJRin/vOJ/bj6iCwb9EWjlIPr3+PjnQw+SLz7lQ0cBaXbWU6B0T87N0vm8mj7veG1+C0npWn26tU8HZOmLb5sVIOfb2JiuYwJc9kpQwrhkA92xyGTS6Gzqab+ukweTiVzraJXIwEt7lQV0HxJcQ0jJqapIVIafyUf8YfbKY1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CrORD9Gq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4672AC4CEF5;
+	Wed, 17 Dec 2025 13:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765979625;
-	bh=LSAatRuwlKsmUa0I3zhBm612tklOcdKIV1w+WRG7oIY=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=dcRH1ze9S1D3iqndHfTKJtT0OA34/fesm3EqmDhudyqM6/ZItEg6C8GNubNp4ZX9r
-	 +Drrs2aODL29D0YfTp9w4FJBJe0RjbicX3/klfrdU7kp9miIlIV5Z5+G8JCpqwhqKU
-	 JmJAh/bq6rY7yiHakdah+e51XtERLkLr5V4iTA4ojCTpvqGQauMLnJUwkmsMvVJdaF
-	 edEbyeHtcrWjWU3hDo3DMom3+xdmzbuq3a8QQdmUM3BDySAp6aiYYPVCj0+dL5N1U2
-	 QZEIFagv/so5cz17HcedvL1SxVNZTQ0kUtv3bHa/qo7G5Gc91ehKf9jkS8RDAgOjMZ
-	 XPacs951/YT3Q==
-Message-ID: <62930036-f817-4051-9657-46c1786287c5@kernel.org>
-Date: Wed, 17 Dec 2025 14:53:40 +0100
+	s=k20201202; t=1765979704;
+	bh=aak9BWB4Ce8Ru/qMBmAZMG1Sh8Djz+zlw+C7bTWk+XI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CrORD9Gq3quU3a8qn1sQGN9zv+tkvkWPNlVJJ7vGWyXoWTF2PMKzZtO34v44yCsOy
+	 FbNFQfssO1nKczAvr2JSEbCbjkYz8M2uoySV8Lxob+hJvZrGze62bNRcZkmA6IbLej
+	 Kv9aNhnzUe8I0SuW5UH0lXo/Q5OwcBoUgzHNO29ZloZYQ3CH6ALc6N0Mxl1wYRQmor
+	 Sr+Wx9Ndl92x+/F3rqPcSPq7W5wixSQdcnKnBntNp5olDWm0DoyuS4ygCElP75zlea
+	 l8P/4M0EvABIC4gadMh/1IY9xDjWXYzkSFQbULDUzqOrD8M17E03kF+QhCeb/D7fqf
+	 5H/GnaXVbxCVw==
+Message-ID: <3e8128f4-3cba-4c13-a846-e5f1638a1e0f@kernel.org>
+Date: Wed, 17 Dec 2025 14:54:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,22 +48,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] arm64: dts: qcom: x1e80100: Add crypto engine
+Subject: Re: [PATCH v2 07/11] dt-bindings: clock: qcom: document the Kaanapali
+ GPU Clock Controller
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20251125-kaanapali-mmcc-v2-v2-0-fb44e78f300b@oss.qualcomm.com>
+ <20251125-kaanapali-mmcc-v2-v2-7-fb44e78f300b@oss.qualcomm.com>
+ <20251126-elated-stoic-scorpion-25b630@kuoka>
+ <de44560d-4ed8-41fe-be7b-56412b933a8c@oss.qualcomm.com>
+ <fbe39eac-7c92-4a08-bafb-31e5c51a0613@kernel.org>
+ <503f445e-0d12-407d-bc77-f48ad335639b@oss.qualcomm.com>
+ <e8bdb176-b6fb-4dd2-8b5b-9da8073fa915@kernel.org>
+ <ca118faf-3451-4b83-9074-82bc5e1f731e@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Val Packett <val@packett.cool>,
- Stephan Gerhold <stephan.gerhold@linaro.org>,
- Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Udit Tiwari <quic_utiwari@quicinc.com>,
- Neeraj Soni <quic_neersoni@quicinc.com>,
- Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20251211-crypto_dt_node_x1e80100-v6-1-03830ed53352@oss.qualcomm.com>
- <15276b31-8189-43e7-b619-76b2f85380dd@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -108,42 +123,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <15276b31-8189-43e7-b619-76b2f85380dd@kernel.org>
+In-Reply-To: <ca118faf-3451-4b83-9074-82bc5e1f731e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/12/2025 14:53, Krzysztof Kozlowski wrote:
-> On 11/12/2025 09:49, Harshal Dev wrote:
->> On X Elite, there is a crypto engine IP block similar to ones found on
->> SM8x50 platforms.
+On 17/12/2025 14:21, Konrad Dybcio wrote:
+> On 12/17/25 11:09 AM, Krzysztof Kozlowski wrote:
+>> On 17/12/2025 10:32, Taniya Das wrote:
+>>>>>
+>>>>> We would like to leverage the existing common clock driver(GDSC) code to
+>>>>
+>>>> Fix the driver code if it cannot handle other cells. Your drivers do not
+>>>> matter for choices made in bindings.
+>>>>
+>>>
+>>> As it is still a clock controller from hardware design and in SW I will
+>>> be map the entire hardware region and this way this clock controller
+>>> will also be aligned to the existing clock controllers and keep the
+>>> #power-domain-cells = <1> as other CCs.
 >>
->> Describe the crypto engine and its BAM.
->>
->> Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
->> ---
->> The dt-binding schema update for the x1e80100 compatible is here
->> (already merged):
->>     
->> https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
->> ---
->> Changes in v6:
->> - Added Reviewed-by tag from Abel.
->> - Link to v5: https://lore.kernel.org/r/20251210-crypto_dt_node_x1e80100-v5-1-5ad22a869a56@oss.qualcomm.com
+>> I don't see how this resolves my comment.
 > 
-> You just sent it 7 days ago! Why new version? Please relax, and help out
+> Spanning the entire 0x6000-long block will remove your worry about this
+> description only being 2-register-wide
 
-s/7/1 day ago/
-
-> by reviewing other patches on the mailing lists in order to relieve the
-> burden of maintainers and move your patches higher up the list.
-> 
-> 
-> Best regards,
-> Krzysztof
-
+But that was not the comment here. Taniya replied under comment about
+cells. We are not discussing here some other things...
 
 Best regards,
 Krzysztof
