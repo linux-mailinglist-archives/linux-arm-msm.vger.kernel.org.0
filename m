@@ -1,183 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-85588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CAABCC8FD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 18:13:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2EF8CC91A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 18:43:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8FA98308D506
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:03:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 09B7832FC401
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:33:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E4BE33DEC5;
-	Wed, 17 Dec 2025 17:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1CF434DCE6;
+	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oZU1M/hi";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fUCKPCb7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XKNWmpy4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5029933B963
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 17:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20AC32E738;
+	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765990994; cv=none; b=mbZWETH+lAFOT0CTFdGtiOaFY99yyXlLVC4N6THmzrsaKsgXfxuOTEFpSDPnO0fdabENRCbqCcfwMomY03Nv2mBbeHA9qZ4VEdWuB+UEhADZf8kRIrro67WoZQs/Y8Vd9xADSdoIYL5YhW7rGP2dKcGwZqWpeq5YX9lYfI21LZk=
+	t=1765991821; cv=none; b=WknkRvP6E14DIw3A23fpUtgxBQuC0icK83SmOilgQTSicrH05rUFjRgcyEWL8x/6lqePMvc/TbyQ2Ar+4hIbdnmNHpJRFHzSqoRRB6cN+u5uk3yHQq1CXyC9Y1Tv660+Ng5UsUPTt9TkdHGFngspt5byBJTgMso64RXay2vlciI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765990994; c=relaxed/simple;
-	bh=jFfml0PbMAt6dL2CYkFFQUy06q66HDr6RMPI80bPBC4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ksE3yMpgJWlBkjDZww/MtPNWuOH4jx3FcaLOdBSnwQFqziheHK1jK+ovoOzwPFKTaLva/ZkaWLJEtCJjTK1Cc0HgW7Op1e6aqWgTTwFjfNxMYAWMdLunYvveVQYlB0ahtnB6DwwcWtunwsvlqvLvXzSyNEwkZzZjK8gCDkjseV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oZU1M/hi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fUCKPCb7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BHCKnsG3329722
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 17:03:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	z261fyPupslYBkJ5cxTf5CKDeIlO2UYDYvtaabHqFiU=; b=oZU1M/hiYsh0lRiI
-	f9r03Hh6MJAEoWL3pKlgBQS2qmPhcXQtcgKzo1nqrpHDGmbQqGU/WR3NVyqCJQQ3
-	Z4+ayejXUA8x84OjvGGaC91EL/gcuanoBve/NqpHdQrHmRZBn7YxcGmocH/PLFIO
-	OYUAOgKH7tY9O5DlPCHB2kuSRJopCye6T1EelHhxHqU5IT0eHXw7dCEkbSXapq08
-	LQgybBiTWPeQKZh5bgbRgntMyRdCD9guN4MaDmVrDhM5NA1CoZpetM+p7t3wU784
-	0bfESd1j68GTDQbNxSlz1ZrNo3sFAHlEiZKRpL56i0PCvF3xp/HDgYiwiGlalyB8
-	R+FHGw==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3nkkjc4s-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 17:03:11 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34c93f0849dso895495a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 09:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765990990; x=1766595790; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z261fyPupslYBkJ5cxTf5CKDeIlO2UYDYvtaabHqFiU=;
-        b=fUCKPCb78sRUJabI0571uJnbF9JLW4bySNdZkQk3ZmzbEp7K1+xui/lYUfzU+yYw+h
-         HQt2HsZ0cWYUNKpXawDVNeri4BKLZOwJofpVjEiIFsSFnwFQ2YPmqwgrsthBbNXbPUjh
-         qPGoz/+f1XmscYBzpOZyxGUtk1KgiMsgq1k9k9wY4BJ8jGXu53deQy3eTf+vGU9CH6Np
-         dpivNrQASzxSt7uB6qoRjpoAbC6Gj7JAojdzWJuknXEYq6B5OUI7wIta7mdSRGSeniUq
-         WDS8J1bvRfp5sYZH1zvRLUbgi64Ranr+lVBgdUwy9Bm42/bHumMwGqPctpONseSNd50R
-         VURg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765990990; x=1766595790;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z261fyPupslYBkJ5cxTf5CKDeIlO2UYDYvtaabHqFiU=;
-        b=xDAm+Ar92R/hQDOz2VeNvgyK2MhepN438spq+ZjqRgfTZTkuRS2pu4vBBvbWds+gh4
-         JbzkDVmTZz8RMNjDT10AcbPe9/GMgotVDkwdnCA8mZ78+43/szn1sPp+/fOHadilev8U
-         tfAyb0ne0YKYShka/ayyl8lz2aOaxspovuCSjZRDtqoXCOhqESB16e6/g/rIWVP+wrX7
-         dC9V2v/OnmFCgVPSebtVS64QqdYnOrEHzbLZ6mSvCgWXoxQ5LXvmJx2LHI0hWFW0sMbi
-         Bkrik0Ao7ExKOIIDF9lfOumiHGpssdg/EonfjqzqyrwAZq3drhdnt0rMRxDnYFAr6v51
-         hcjA==
-X-Forwarded-Encrypted: i=1; AJvYcCWS8caYK5Xdj6TJg0ASxrkVXsjV0h/hBtQH4gvVOE8Dv30zsfG8D0toLzir7bNJHc6m8QDaMtpCR0ViAmtc@vger.kernel.org
-X-Gm-Message-State: AOJu0YziabsQr6yV1Akt7UrvswJ1QUD6SNo44EDiyty9CQAoi+wMBgoM
-	QAsDixsCLN2YSNQcf2O6h8JE6vYnrMwAaAUYvtoedOnnKIXxQPwnoboibIz7ah+fHMNGecXz9jI
-	YILMRx1Z/jAQfigEK0rRMhd89dU8QFnEgWQLrim4TMNv4DKXW0XvyQKAgj+rX+ZkwLQpz
-X-Gm-Gg: AY/fxX5kyg8clcP5VrZrL8ythWNqwDyzRXzAsWlwhfVPHtvYEuw2nYoeJZZBcUap1Cs
-	Wr34Zf6n0J8jOnglrrQj7442r1SxEIXQ/AM4JqBQUynGrChbKHCp12hQZ/NFYoWraY89dg46Ppx
-	15wlrDdX8xl370m1dxV5oH8FUOfVudbLAHZU6sG7MVObjq5Qj+pG/vJw35GeuddJQw4XTEMS0Q1
-	mpe20yZGp5dq/0NI2bqeTfhjxRb60qxN7HrHxby/c17TXb91hBLzTWz0Ht+LEL7OoYeo84UX5tw
-	05r/jSthogwRGT/EPMzEBVrocxF9ufmb1vCNf0GTmlSn8btjyrztNxM45xM9/v31FFbFtwonN2z
-	dnQDa4eeE/UdRNmCNNNxJna+Z3Tf5y12RVnuU
-X-Received: by 2002:a17:90b:1f86:b0:32e:8ff9:d124 with SMTP id 98e67ed59e1d1-34e71dff8fdmr73802a91.15.1765990989967;
-        Wed, 17 Dec 2025 09:03:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGi0CjPdXURNC9AmcXtnkh9wxDqTCsj/JCLC8T/NKV+5GRB2gbi0Z9PFj9R1nneBL2QAgKgyg==
-X-Received: by 2002:a17:90b:1f86:b0:32e:8ff9:d124 with SMTP id 98e67ed59e1d1-34e71dff8fdmr73691a91.15.1765990988200;
-        Wed, 17 Dec 2025 09:03:08 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34e70d4f7e2sm126905a91.2.2025.12.17.09.03.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 09:03:07 -0800 (PST)
-Date: Wed, 17 Dec 2025 22:33:01 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
-        Bartosz Golaszewski <brgl@kernel.org>
-Subject: Re: [PATCH v11 2/3] firmware: qcom_scm: Support multiple waitq
- contexts
-Message-ID: <20251217170301.cpiemk2hn4vufogn@hu-mojha-hyd.qualcomm.com>
-References: <20251217-multi_waitq_scm-v11-0-f21e50e792b8@oss.qualcomm.com>
- <20251217-multi_waitq_scm-v11-2-f21e50e792b8@oss.qualcomm.com>
+	s=arc-20240116; t=1765991821; c=relaxed/simple;
+	bh=nCNmapLXVkzx5G0AMg0w1rDB82qxLQX+MYjj3DhiKp4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AiZY/ZPf75wMrtdt9O9/JSot46/bBFuvm4qwMh1wywMntlDh9kpUgatBLHaeBu5pbI5VhvCBq8z1B6nSmNyMWBHV1leBt5QWxAAMLphjWaQ0pGJvlkfwbJoJ1QD/rTKkvPEnbYURYqPDQmCJXL9S4G8BZa/kHYyEJ4qmKtrybJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XKNWmpy4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 62943C4CEF5;
+	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765991821;
+	bh=nCNmapLXVkzx5G0AMg0w1rDB82qxLQX+MYjj3DhiKp4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=XKNWmpy4m79ww++MMmPrggUkdOn2gZ8gefp8Nh5CQsp/ZAqAGzKerSg95thiEkcOP
+	 NuB/EMl77H1Xmqn3WMCIRUZyy3bnCafUs+PG0ZcbmAXJst9RNckeI3KKu/b2lRKno1
+	 OL2+IZ2susK1SiaxP2rHvu8HgDWHsrmdTtFc3A6guRoc3kc+gL3YstQtU4AHQhNQGO
+	 TRYdvCbDVnkOo2JTKcPpPdkdedn6G6RoIdaudox8t0/6bIT5HfmRESsxR9MGZa24ql
+	 g8Ea5iBUWHxuWi6mLRl5T09AvLPHRcHAgpad9DDTy9BaxJoGKDR2mWDsnxxsYtocbm
+	 0KA4S7pZimAaw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46B3CD65C53;
+	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH 0/2] net: qrtr: Drop the MHI 'auto_queue' feature
+Date: Wed, 17 Dec 2025 22:46:50 +0530
+Message-Id: <20251217-qrtr-fix-v1-0-f6142a3ec9d8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251217-multi_waitq_scm-v11-2-f21e50e792b8@oss.qualcomm.com>
-X-Proofpoint-GUID: -qGRJ3zEtIeqg9BoMKdho6CuCyPHugCl
-X-Proofpoint-ORIG-GUID: -qGRJ3zEtIeqg9BoMKdho6CuCyPHugCl
-X-Authority-Analysis: v=2.4 cv=f/RFxeyM c=1 sm=1 tr=0 ts=6942e24f cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=QzrcfVhLTvighugrL7YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDEzNSBTYWx0ZWRfX8eEnYReTrPZx
- 2bYmfrNboBKbqOBQ4P+SORQYN9tjl9xKAjiID0v7WdI9hdJkMhLqBz87ULZTd8vvPyXw3Xswo0v
- I9MjrEJrvFgv3jXdlAiYXsNRNkG+DZDoTzZBexfHchS740Yty9J9yGg4QFV1z7KPGZAi/9wLBvb
- lsmuEXclCnO6D5V3G2xVPzTHVYg+/0xsYHmZillO6v4rzGyISaibZoeGnaEpe6GoSlEDtULdphh
- SPwOEY0qCZYyV/+Ej6MCpGB9K1RI1T1tuh/+Iym3Pi+XSmVyHl4ADzuDBiBGxBMWNYTQqLM88c2
- AjKyu9ppo8JCgB4pYq5MnXK62zhI8ff4UtnTSDX1EYmck74tXsjZT/d/jyKPfGK/TjXCWTD/pCS
- PJQOUe+6G1uiDYEbBF9HwSHJLdZgwA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-17_03,2025-12-16_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512170135
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAILlQmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDI0Nz3cKikiLdtMwK3WQDUwugWIpFimGiElB5QVEqUBhsVHRsbS0AovM
+ Jm1oAAAA=
+X-Change-ID: 20251217-qrtr-fix-c058251d8d1a
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
+ Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, 
+ Oded Gabbay <ogabbay@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+ Jeff Johnson <jjohnson@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+ Maxim Kochetkov <fido_max@inbox.ru>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
+ ath12k@lists.infradead.org, netdev@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ Chris Lew <quic_clew@quicinc.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ stable@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1833;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=nCNmapLXVkzx5G0AMg0w1rDB82qxLQX+MYjj3DhiKp4=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpQuWLGsKVi00BM9j9k2fzmDyfhFZKHkWaVpwxL
+ mEyD11ffiGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaULliwAKCRBVnxHm/pHO
+ 9dflCACJcSVT7YDyfd1eVp65ty6CysudUmNCdkpwxqBUbCrnGNo3J5HA5Hjn0fxfolTcFBBLQ07
+ NeDnBv7hbBbeyy/YGPc7B2nWrkzT2oE/O6mX1dmUEBSjUBVMBq+M2qerwQHpjy3mT6EmN+lLYuk
+ EoZKz4737MjFD7GJoeu4mMQuQOXQ86hQRcwpELNcqSYNc+8fep+/5IiIPQ2NgkCKu4cKF+CAANE
+ NmFlrFhiohovN3SfcwHdt4M3dZd2Klsd1aCphMoU9i8/gw1xIHR1cGHhWU1Y6+l7SUkLrL6jBh+
+ YTWv2owV7o/wUYhLImCgqMf3xtU5X3/Kt/L/XHl60z1w9ez8
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
-On Wed, Dec 17, 2025 at 08:04:20PM +0530, Shivendra Pratap wrote:
-> From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-> 
-> Currently, only a single waitqueue context exists in the driver.
-> Multi-waitqueue mechanism is added in firmware to support the case,
-> when multiple VMs make SMC calls or single VM making multiple calls on
-> same CPU. Enhance the driver to support multiple waitqueue when
-> support is present in the firmware.
-> 
-> When VMs make a SMC call, firmware allocates a waitqueue context,
-> assuming the SMC call to be a blocking call. The SMC calls that cannot
-> acquire resources, while execution in firmware, are returned to sleep
-> in the calling VM. When the resource becomes available in the
-> firmware, the VM gets notified to wake the sleeping thread and resume
-> SMC call. The current qcom_scm driver supports single waitqueue as the
-> old firmwares support only single waitqueue with waitqueue id zero.
-> Multi-waitqueue mechanism is added in firmware starting SM8650 to
-> support the case when multiple VMs make SMC calls or single VM making
-> multiple calls on same CPU. To enable this support in qcom_scm driver,
-> add support for handling multiple waitqueues. For instance, SM8650
-> firmware can allocate two such waitq contexts, so the driver needs to
-> implement two waitqueue contexts. For a generalized approach, the
-> number of supported waitqueues can be queried from the firmware using
-> a SMC call.
-> 
-> Introduce qcom_scm_query_waitq_count to get the number of waitqueue
-> contexts supported by the firmware and allocate “N” unique waitqueue
-> contexts with a dynamic sized array where each unique wq_ctx is
-> associated with a struct completion variable for easy lookup. Older
-> targets which support only a single waitqueue, may return an error for
-> qcom_scm_query_waitq_count, set the wq_cnt to one for such failures.
-> 
-> Reviewed-by: Bartosz Golaszewski <brgl@kernel.org>
-> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Hi,
 
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+This series intends to fix the race between the MHI stack and the MHI client
+drivers due to the MHI 'auto_queue' feature. As it turns out often, the best
+way to fix an issue in a feature is to drop the feature itself and this series
+does exactly that.
 
+There is no real benefit in having the 'auto_queue' feature in the MHI stack,
+other than saving a few lines of code in the client drivers. Since the QRTR is
+the only client driver which makes use of this feature, this series reworks the
+QRTR driver to manage the buffer on its own.
+
+Testing
+=======
+
+Tested on Qcom X1E based Lenovo Thinkpad T14s laptop with WLAN device.
+
+Merge Strategy
+==============
+
+Since this series modifies many subsystem drivers, I'd like to get acks from
+relevant subsystem maintainers and take the series through MHI tree.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
+Manivannan Sadhasivam (2):
+      net: qrtr: Drop the MHI auto_queue feature for IPCR DL channels
+      bus: mhi: host: Drop the auto_queue support
+
+ drivers/accel/qaic/mhi_controller.c   | 44 -------------------
+ drivers/bus/mhi/host/init.c           | 10 -----
+ drivers/bus/mhi/host/internal.h       |  3 --
+ drivers/bus/mhi/host/main.c           | 81 +----------------------------------
+ drivers/bus/mhi/host/pci_generic.c    | 20 +--------
+ drivers/net/wireless/ath/ath11k/mhi.c |  4 --
+ drivers/net/wireless/ath/ath12k/mhi.c |  4 --
+ include/linux/mhi.h                   | 14 ------
+ net/qrtr/mhi.c                        | 67 ++++++++++++++++++++++++-----
+ 9 files changed, 60 insertions(+), 187 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251217-qrtr-fix-c058251d8d1a
+
+Best regards,
 -- 
--Mukesh Ojha
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
+
 
