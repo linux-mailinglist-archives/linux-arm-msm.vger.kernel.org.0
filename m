@@ -1,123 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-85485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B36ECC765F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 12:44:00 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7F46CC75CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 12:38:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 23E5230C6202
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 11:40:39 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6B3F430039CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 11:38:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7083033EAEA;
-	Wed, 17 Dec 2025 11:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC87F350D49;
+	Wed, 17 Dec 2025 11:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QsLd3koP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d+d58dUj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D25432ABF6;
-	Wed, 17 Dec 2025 11:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2A7350D4C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 11:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765971122; cv=none; b=JouwqBPaQERzpbYfcqtY+QbV/0Cw4tsH5ePfyJyo0mHv3OfK+uz0a0+LCfolRrERfNLNR41mO83HDY6nU0j4gqafMyhGRHAqXsDExsy0LSsh2fG9WWrvrAcAnypeScXdR4wnRiajUpJFdhqWL9x1gdwVrnrWskZ+HT2zz4BiTwY=
+	t=1765971488; cv=none; b=VAUrehbu0/P+RG3d6YQkVVFfqCFEjXcjRslaIkDTO4EbWgC9mUSsnL4OmQUbOUTFNc0eLp0ya7Ln4rPnluNw1VZt4MVEmbLNg0w+6L1qEtSfzOzkI1vrgw5W4aj2D3yqJcypRRMZq8u2QqgAGkIE5/ReKwEWp52yIUIYIWLe68w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765971122; c=relaxed/simple;
-	bh=3dqfqIyIPLev54CZ6uE58tgsfI2/7I7WNdCX5laUzmQ=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=tuhZwKw5xQcmjrAAw+nxlbx4DEFoPdjGfSc1gFV4XoaeIG3m56F+o/ZVdfNOL5FmGOTw/hSYiloLbQ3RtXkG2U1RxFf9aTXjFo7Wm2EnWBO/EugR6POaCs/9eN8qRRtMfOJTi1JlvpFBloywW02+wLecfLk+PEklpyFavmT1L+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QsLd3koP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CDFC113D0;
-	Wed, 17 Dec 2025 11:32:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765971121;
-	bh=3dqfqIyIPLev54CZ6uE58tgsfI2/7I7WNdCX5laUzmQ=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=QsLd3koPmVP+cLQxVZfeWNiT94p7LMqhdDJunz0ylkw7vLoznd7bXzcJV/d6QdVzY
-	 oiXLzW1gY04d0uztqIRIef3/v/iSBuADsT/d3F9zvUXRzQ3SJBufeUNG8ABpsedbHC
-	 rqfS7XK2qQx9Wz+FjtDRtEheYj98KRXjvxfgtrPha3D2JtI8k3p9oEYz1XBeUtqTa7
-	 5Yg7AzBfhZiSG1P2E9FloxClEUdORqjumcD7Xah0qPmxJJ70ytm0slzoSTpInPlmzi
-	 tFdGP6i/6aPW2NnZVVjdRgAOP2jl51cTDs+8/zDvirYP7bCtTSKM9BgvTpu/ixXru6
-	 pLrIdNrqXSAZQ==
-Date: Wed, 17 Dec 2025 05:31:58 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1765971488; c=relaxed/simple;
+	bh=fu7sMIYgUSh/v4rkjBNhREAJ1FIhusnRA78rCGY6UUI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=nYoRQ4NYi+k3gNXEvKNwTquIdZrdIOcJuFMAhRLniVblcwoee1tcMDUTsRC+XlLA8OC6cZXsC0nl3wdOQC2FP0VXT6JiBeC/xpjDuk6eUUbtUZ1n369VG0NoAIZvAto3LH/vtSuy71QktdCLXmxgpMmeV9i5zLEtNYKCjYrmQWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d+d58dUj; arc=none smtp.client-ip=209.85.128.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-47755de027eso36954905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 03:38:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1765971485; x=1766576285; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fu7sMIYgUSh/v4rkjBNhREAJ1FIhusnRA78rCGY6UUI=;
+        b=d+d58dUjx3fplfb9BR7VzEG9exatnCl8buZ5IaFR3+e7cnRsgY2Ho3S+o2XDy6scy1
+         cNbJ6rm5mrw3IMVmOXJnIronvvqL4xBYAMPABGFyYY/wIEpnYRBh4CGdpqxmpjtOP94K
+         FHg4kf0LsFFplh3h6Ppk/tpX3wGohHbdRqy9jd+RwuHZfvJTYwsb8hpJBihmnQM2dKpD
+         Mo6qik0eXc6HgkbTb7DUrTTxidlApMko6FPrs2g/5MDs3rktfFheQ76jUCH8y73/rlbi
+         88inoGEMWS0HdogzAeKqr9+dh0DzBEL9EewXDgmmrDU7TBWLpAzZ4T/8+prBNSa9M8m9
+         vBPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765971485; x=1766576285;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fu7sMIYgUSh/v4rkjBNhREAJ1FIhusnRA78rCGY6UUI=;
+        b=fPKBi5gGjVXLUcDHAyh6h4ZXMPaNIdKLV98Uxk3fYU+ggXkwD8QZEPWcydWWww9Wvf
+         MQvMWYfnRtxQJkMFSilSST01sRzqQxVgdt0QiDAnsTktmieWcpV+njQIDsyzEDSL/cxi
+         FfY/54OUl6bvsXL5BkYgciBVh3jM4kNb2nOfwCGBfbCTFf0C1+YRmVRtUnPjdCW3xj1H
+         kcW/Btg9KUf1a1/iaFgImczSc6qEDDkXRjAF5UFaNOYpL1vassKc3k5IwUAw1hHf/Kb5
+         t6eZENPkasSpXjaVcI4CThJGE5VHEBsJgxJaiLV21t8K5+AaKDroBfc4iQa1BskUxfh2
+         ok9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUIrhZNJj8Rq/S6fDe16S/Vr6/dwlSsULcatEVtVL/Na7kOXdgB05qk4MawP77/r/32x59hvkM8ErRmxB1L@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTr4DVZSzMF67b7q8jqiz6vvUXpY2hlIqixgaNR7Br7HoEN4lW
+	I/mEaabhIGutv7XAzKqyMzuCzds64nuUN/y/g+DUhUZK7n7534Z6g4/Z4YEqqT9V7mk=
+X-Gm-Gg: AY/fxX6i9GYLMNwpl6XGhjbnZkZm+oSWEn3bb+DJtQs1hWmZAypAz9rxkyY+mkUMblg
+	mOqhoGXafuSDBr8Z1OUYFwI2lsINGrURPCjMpcb4zdlHqhCFMA8FaEwVrdVw5h9XX2MZXGgEtl5
+	2uG7Mwt2pS6L/g+mrQPMMJUEVZ2C8VVwU/PA25XJbBzaeDuOpVfFJKjJpvNaOVFo6AmhN3kgK16
+	iZq89l0RHsOAl2zSmOIsROzaaFklnsdn/c+RrbHPid1HXrGj+fW5Y9wBMr1afMZAMQ/oSSrFwvn
+	QTYZpFFdHTcwcY1HPrmTGRKmvGBUbyW6TVQbIHOoIMZWHfT8373ra+QdD4M+t+LrpenyphceZiu
+	oa1AqoohTXT7A1CIdAFbYwgiBZKaftT6FDrqgXhObCPEGMg9QGo/mNDYQTO5wKN9bJpETIyLWxa
+	q4MnAd8DfDMujgkZ4C
+X-Google-Smtp-Source: AGHT+IHnX+LxQmLQiVs+ZpZFsuF5KyxBkwZoY99AYE5aZUalbfeBEMXFDIkjxf7sAdzdTezvtXYJLQ==
+X-Received: by 2002:a05:600c:a46:b0:477:58:7cf4 with SMTP id 5b1f17b1804b1-47a8f8a7d03mr182754515e9.4.1765971484924;
+        Wed, 17 Dec 2025 03:38:04 -0800 (PST)
+Received: from localhost ([2a02:c7c:5e34:8000:95b6:94a5:9a2e:e813])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47bdc14b421sm33633925e9.0.2025.12.17.03.38.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Dec 2025 03:38:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Rama Krishna <quic_ramkri@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, linux-kernel@vger.kernel.org, 
- quic_shazhuss@quicinc.com, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
- linux-pci@vger.kernel.org, konrad.dybcio@oss.qualcomm.com, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- Nitesh Gupta <quic_nitegupt@quicinc.com>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- quic_vbadigan@quicinc.com
-To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-In-Reply-To: <20251217-firmware_managed_ep-v3-1-ff871ba688fb@oss.qualcomm.com>
-References: <20251217-firmware_managed_ep-v3-0-ff871ba688fb@oss.qualcomm.com>
- <20251217-firmware_managed_ep-v3-1-ff871ba688fb@oss.qualcomm.com>
-Message-Id: <176597111816.570337.1780092644304118894.robh@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p:
- Document firmware managed PCIe endpoint
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 17 Dec 2025 11:38:03 +0000
+Message-Id: <DF0GN7VV4R2W.2E3U1LMOF0JPG@linaro.org>
+To: "Ravi Hothi" <ravi.hothi@oss.qualcomm.com>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
+ <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
+ <tiwai@suse.com>
+Cc: <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <kernel@oss.qualcomm.com>,
+ <mohammad.rafi.shaik@oss.qualcomm.com>, <ajay.nandam@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/2] ASoC: qcom: q6dsp-lpass-ports: Expand sampling
+ rate and PCM format constraints
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+X-Mailer: aerc 0.20.0
+References: <20251210065157.2775514-1-ravi.hothi@oss.qualcomm.com>
+ <DEUL786WEYBY.3502XZKMTYTN3@linaro.org>
+ <370a9d69-1706-438a-bb36-01a22e5cf540@oss.qualcomm.com>
+In-Reply-To: <370a9d69-1706-438a-bb36-01a22e5cf540@oss.qualcomm.com>
 
+On Mon Dec 15, 2025 at 7:29 AM GMT, Ravi Hothi wrote:
+>
+>
+> On 12/10/2025 7:26 PM, Alexey Klimov wrote:
+>> On Wed Dec 10, 2025 at 6:51 AM GMT, Ravi Hothi wrote:
+>>> This patch series expands the existing constraints in
+>>> the q6dsp-lpass-ports driver to improve compatibility
+>>> and flexibility for audio stream configurations.
+>>>
+>>> The first patch extends the supported sampling rates to cover a wider
+>>> range, from 8000 Hz to 192000 Hz, ensuring better compatibility with
+>>> diverse audio hardware and allowing more flexible audio stream setups.
+>>>
+>>> The second patch adds support for the 32-bit PCM format
+>>> (SNDRV_PCM_FMTBIT_S32_LE) alongside the existing 16-bit
+>>> and 24-bit formats, enabling handling of high-resolution
+>>> audio streams and improving audio quality for supported hardware.
+>>=20
+>> Is q6dsp-lpass-ports involved in compress offloaded playback on
+>> existing devices? If yes, then how is it gonna play with
+>> explicitly setting format/sampling rate to s16le/48k in sndcards drivers=
+?
+>>
+> Support for s16le/48k is already available; these patch will expand the=
+=20
+> existing constraint so that customers can use a wider range.
 
-On Wed, 17 Dec 2025 15:42:45 +0530, Mrinmay Sarkar wrote:
-> Document the required configuration to enable the PCIe Endpoint controller
-> on SA8255p which is managed by firmware using power-domain based handling.
-> 
-> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-> ---
->  .../bindings/pci/qcom,pcie-ep-sa8255p.yaml         | 110 +++++++++++++++++++++
->  1 file changed, 110 insertions(+)
-> 
+Unfortunately, you didn't answer any of my questions or answered
+a different one.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Perhaps the main one: is q6dsp-lpass-ports involved in compress offloaded
+playback on existing devices?
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.example.dtb: pcie-ep@1c10000 (qcom,pcie-ep-sa8255p): compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1[ep])[0-9]+(pro)?-.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,sar[0-9]+[a-z]?-.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,(glymur|milos)-.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,gcc-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,mmcc-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,pcie-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1[ep])[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,rpm-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' does not match '^qcom,scm-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm|x1[ep])[0-9]+.*$'
-	'qcom,pcie-ep-sa8255p' is not one of ['qcom,dsi-ctrl-6g-qcm2290', 'qcom,gpucc-sdm630', 'qcom,gpucc-sdm660', 'qcom,lcc-apq8064', 'qcom,lcc-ipq8064', 'qcom,lcc-mdm9615', 'qcom,lcc-msm8960', 'qcom,lpass-cpu-apq8016', 'qcom,usb-ss-ipq4019-phy', 'qcom,usb-hs-ipq4019-phy', 'qcom,vqmmc-ipq4019-regulator']
-	'qcom,pcie-ep-sa8255p' is not one of ['qcom,ipq806x-gmac', 'qcom,ipq806x-nand', 'qcom,ipq806x-sata-phy', 'qcom,ipq806x-usb-phy-ss', 'qcom,ipq806x-usb-phy-hs']
-	from schema $id: http://devicetree.org/schemas/arm/qcom-soc.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20251217-firmware_managed_ep-v3-1-ff871ba688fb@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks,
+Alexey
 
 
