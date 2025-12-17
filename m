@@ -1,64 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-85601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CC83CC9BFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 23:59:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA928CC9C20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 00:00:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C3FDD3020DF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 22:59:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E90533072E3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 22:59:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA64330338;
-	Wed, 17 Dec 2025 22:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7F8733064C;
+	Wed, 17 Dec 2025 22:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7mE5Dea"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAtspn4q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E609155C82;
-	Wed, 17 Dec 2025 22:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DE4330309;
+	Wed, 17 Dec 2025 22:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766012374; cv=none; b=AoZg/2lwFcyhIydKaNDZpxjsckhVqkrOioJbLkEmxeDpXsM0HYKutIlm1OMmz+FnyGHuZ6qKV5P6+fTOVjO8bjaERC18fCApXFnuPqjH1ds8pg7k+bs9j9OvrToIWkg3hBIaLjsOzMvw1zkw3U3Gp+tfSZ3hPgk3L3OR2uulAjU=
+	t=1766012375; cv=none; b=O43Trb6dQ6LpzxNfFXnl6r1Gu2sK5kpmwMLju/w8zHDOPJaq0+uq5QFB25P7zpI8w9NRKCoPN/k7n14cvDonpHIpELhwvbkU71SVYfmLgxhF4O43nA/mfyQP1r464tT0MQT3YmqGtOXGYZXnmnf5BeN8OVZLk2XVM1dnKkYsfzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766012374; c=relaxed/simple;
-	bh=gxKD86vCYqVB9qu1hsvUUHYg9TwFu68CpTRHZf5NsTc=;
+	s=arc-20240116; t=1766012375; c=relaxed/simple;
+	bh=4c5vMgeK3RGuJU2a8uepiWICvMBUCnWppwKt6gD1oWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ogj1ybo28KLcmbcdf6LgKK7RMmwSZQWOTn7xpv9eMlcXXV6lt6fKZCs1+K4ngNcQjpmCS61TV7P3zDyjxEdfbfrMLpLuoiMXzLCD6gc1QRDPo9IbayJvm1Rz6rILIA/aAgGxB047u5gHDVavnwYnhPn3K3oAMh17URWXrgsMT/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7mE5Dea; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1D6C113D0;
-	Wed, 17 Dec 2025 22:59:32 +0000 (UTC)
+	 MIME-Version:Content-Type; b=tgbRUj4eDd+0crfV34E0WiJs+kKvGIAArtY2kM62kO0i3/CAlz/59t6bGYICjCcmfvvT8NShv9kI9mKIuuDKgK5OtsAIjtyZXvEba25Ze46FrVNoq4J25ajLEpeweG7WNel6Ik1mzSrRlxhV0qYMow7viU3d6DotZR6Og4TsXRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAtspn4q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B28C2BCB4;
+	Wed, 17 Dec 2025 22:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766012374;
-	bh=gxKD86vCYqVB9qu1hsvUUHYg9TwFu68CpTRHZf5NsTc=;
+	s=k20201202; t=1766012375;
+	bh=4c5vMgeK3RGuJU2a8uepiWICvMBUCnWppwKt6gD1oWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7mE5DeaNTdS1nvSdU3EA2szh6vYo0Cse/TAATlBxRVhbkSikI9VxL5YOhWi91G2u
-	 cu0psOD8SouPuN9kRDw99Z/sFOgB8lwH28DlLwrCIul3rLblw1PsrgROgSxsTo3yre
-	 pb3XsrH3Y2G/oop0MKVxZTR+UVsSx3CTQjho0DGxpMvv3O9hmcL6QIWOgNWy7vG50y
-	 FoMmXg9u0knK/kEvnYHzs16vJ9JcYtAGvF/ovqPg+jIZlTkZrksDA/pV7n6t1tv8RL
-	 +YtQgrz5JpS+y02Z58w0Oc+CnEQg4NR7hLMG/aAzRiyH0krReq2o0PkwbDvJIAq0Tu
-	 W0/L8CnMrxv7Q==
+	b=eAtspn4qJ6qmYN7LGxrgPd+wObsXj+BU1FIIRMqt1ZCNrxRVHX+AVSRUpfmclkXUR
+	 We4GJdhOrMG0Hxq+q4d+b7yhZUzjQ9oAUZ4GTtdWOLACWULNk7HGXnwkraVp3G54ni
+	 HRobXc1EbON7IPB6+wKJzfEFVhyer7/IZ7OOMPD55pXKMqmavND2XBSOwxyhwU2M/t
+	 x9tJk0hF980wxLHf7b5+l5byuz377ac2LA9P8RZU/CLmClhwdHzTeTY7KrXymZB2f4
+	 3PfOIGvswYMdZNpozibp23w6oKbwxc6GiZ1iMkDkm7mZEHbie5id5lhKUFzounNBej
+	 jiTgVNHzvgnQg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	manivannan.sadhasivam@oss.qualcomm.com,
+	Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
+Cc: quic_sayalil@quicinc.com,
+	nitin.rawat@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	rajendra.nayak@oss.qualcomm.com,
-	sibi.sankar@oss.qualcomm.com,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/2] soc: qcom: llcc: Add support for Glymur SoC
-Date: Wed, 17 Dec 2025 17:07:36 -0600
-Message-ID: <176601285471.201175.3617092991903531436.b4-ty@kernel.org>
+	stable@vger.kernel.org
+Subject: Re: [PATCH V1] arm64: dts: qcom: talos: Correct UFS clocks ordering
+Date: Wed, 17 Dec 2025 17:07:37 -0600
+Message-ID: <176601285468.201175.2478674762145052914.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251211-glymur_llcc_enablement-v3-0-43457b354b0d@oss.qualcomm.com>
-References: <20251211-glymur_llcc_enablement-v3-0-43457b354b0d@oss.qualcomm.com>
+In-Reply-To: <20251126131146.16146-1-pradeep.pragallapati@oss.qualcomm.com>
+References: <20251126131146.16146-1-pradeep.pragallapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,24 +68,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 11 Dec 2025 14:32:34 +0530, Pankaj Patil wrote:
-> Glymur SoC uses the Last Level Cache Controller (LLCC) as its
-> system cache controller, update the device-tree bindings to allow
-> maximum of 14 registers for llcc block since GLymur has 12 llcc base
-> register regions and an additional AND, OR broadcast base register.
-> Updated SCT configuration data in the LLCC driver.
+On Wed, 26 Nov 2025 18:41:46 +0530, Pradeep P V K wrote:
+> The current UFS clocks does not align with their respective names,
+> causing the ref_clk to be set to an incorrect frequency as below,
+> which results in command timeouts.
 > 
-> Enabled additional use case IDs defined in
-> include/linux/soc/qcom/llcc-qcom.h:
+> ufshcd-qcom 1d84000.ufshc: invalid ref_clk setting = 300000000
+> 
+> This commit fixes the issue by properly reordering the UFS clocks to
+> match their names.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: cache: qcom,llcc: Document Glymur LLCC block
-      commit: bd0b8028ce5fbc7d9f5c2751c20661b0d8114e60
-[2/2] soc: qcom: llcc-qcom: Add support for Glymur
-      commit: 0418592550c6a370b2b8a5cbebd53fb7dd63d837
+[1/1] arm64: dts: qcom: talos: Correct UFS clocks ordering
+      commit: 8bb3754909cde5df4f8c1012bde220b97d8ee3bc
 
 Best regards,
 -- 
