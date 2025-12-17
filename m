@@ -1,327 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-85590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 194ADCC90FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 18:31:45 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FA5CC9422
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 19:18:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 879BB3037E8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:31:44 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 85C5D300A23A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 18:18:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05C1B34DCEE;
-	Wed, 17 Dec 2025 17:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D5FD2C026E;
+	Wed, 17 Dec 2025 18:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ppv9FTuW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XX0FTlGh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dnHvZqcR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58AD34D4E3;
-	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CA12D130B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 18:18:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765991821; cv=none; b=TSKKSH1iyBtnCpk8BYRY07ME2HC3fCN5kGfl3kPxHs9hhh+xcKmaUHIYbJ49h7ndvi8xEx1QTHes85QT7XRNjc7T+dzg+raB81wVq48KczR9aRLjMf7kEI8bUHuW0kM60ZwJq9kQ+6STyxPi77wi9X5KfRNfWITCYjHBko4VXCk=
+	t=1765995528; cv=none; b=PKo3N6ttrfpgISMnbiey8nS7xiyPPIrzIrTdEvSapkXMhhauPdveHZRZdqYwFLy6dbbB1Gai8WRL12G8BfCTbTf5p/DGvbrq2leLjeaszZEetS2lLKoALc+BgiRn6s0XxMjHoOR060ckAIiYPOHuIf1JpVNq3hZwl3uaslnoDZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765991821; c=relaxed/simple;
-	bh=AD7dDXAD3itkjdYA9TfORuuV9wOhDa/AZUPfi5Hae9k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KhXdXDPH+BAvzHv9QW/qPxEdO/T9Tg9aUqurGdAE2SIjB58qGmxo12mLUCyKd/HOpYlFCILIxFWCRW+9wswoat6cwTi6iAzMzZ6s8SHVXnVWjJKxg4zIbWkii2Iy6AvkhUe9syBM+IuvXVR1Zblw+PKVGyEW+PbHNvlLOMiSCoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ppv9FTuW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8CEB6C19421;
-	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765991821;
-	bh=AD7dDXAD3itkjdYA9TfORuuV9wOhDa/AZUPfi5Hae9k=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ppv9FTuWEHdNKSoznW2U69F+f/KnzH91SZNCxEErTRR1CUqHGWGh32PIpm3SAA8Y0
-	 dol7hmh3gMleLRiECS98M48jEoWvrA1HfLm7LWPAWi1g5yN6xZwqYrxTorabcRTkM5
-	 RPzTj2w9GKDBT4EGQDRe99d/bdVB4O+Lo8u/eFQWLFLf6p2fnE5Y3+b5BHp8dVnz+g
-	 K7kgeVSMmW37lHg9Vjm2rpEhq/UtoKBauSgTlBa46GYVi2q1dEVbOflfpbJCbsDGrQ
-	 KDd7J1dj56t77HsDCa9X50CdMLzcXAOgBTDzrtrJHUnJKvUXfY28BmLoTtXYs585Oz
-	 wZH32/DEmyPXg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DFD2D65C7D;
-	Wed, 17 Dec 2025 17:17:01 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Wed, 17 Dec 2025 22:46:52 +0530
-Subject: [PATCH 2/2] bus: mhi: host: Drop the auto_queue support
+	s=arc-20240116; t=1765995528; c=relaxed/simple;
+	bh=KPCoPks2Y2/j+fWOc0DjbN2flfAgVDX5MiFdzCmlPxI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oK3NxbwzltRwkljAoLHouXmJXZDdbVCBV77Bn17nOqv2/sU3qEQyuZuHh6Zi7EMWLN/btF3XuF3g76KpdvQmw87IOEk0cl/ZuzVDFpjiLq2oWsAB7bZYlwvW46wSt9r6IQQYNOpKsjnZVIAUl1x02rxMM+Pv5KssjtOjBV6+FNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XX0FTlGh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dnHvZqcR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BHH7iPD2659354
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 18:18:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wBmu9AzZ9xdbtIOjudSzxPBr2BE5g0gg/z6YBjxDbIE=; b=XX0FTlGhGcl0GgQl
+	ByTU7cTPlDPk/BXambHGMBBrAFNZaJfIcs6xA6ew4ZJ9tR7UJQS+gqePcy3CuHsP
+	vAotqv37mohmAfVk+eAvIYj7rZG2V0YacO0NNdP0m9w3yE0WWFoEoPEvo6maf4xs
+	6DWw+J4IIVBayH2jAWjYTnjijGyHuVPMpR0JkPMA9P0/h03K2SoFh/RKObvRsWpV
+	eE00BccsGUxbyFdW7MIQrXSXW3cfy70VmIAoj7vErrMdAHU142riKXQR00XrVdgA
+	bnC0PryPEaCZPZzqHVwAwn49yCO1jVtKSjP0r7hhODK19mvYysQxYak3xA0We1cb
+	FKeYhQ==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b40n786xv-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 18:18:37 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b99f6516262so16143320a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 10:18:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1765995517; x=1766600317; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wBmu9AzZ9xdbtIOjudSzxPBr2BE5g0gg/z6YBjxDbIE=;
+        b=dnHvZqcRtWDUre1eSfogviBxCN1JzyHdKmapu2M1qOVC3dThbDQ2E46ZVgFM8YO8co
+         cnHlKpe30HIkVhPSD9wk/hsMp7B1QkWxRU19JFcDyyIEzwYb/ZIAijsxKCuCW7fxxnqf
+         H9TdxfWDcUZ21KsJEqIsUeHy3o7IW9H17uzg8Zet2kh9fuOoeTaHjx7WngyiYzksfqyy
+         vco0eLOEwX2L3/1Nph1uWmmQ/tK47ynkdnS9Orq8mVDCZK/eaQpSg8H5Um57U23qJsua
+         uWPp/Zo9/eMIL7nV83cZ87zQ+ybvd9sjX+wf1Kh/XvKANbAXYDIRumejZZVbL7vshHdZ
+         T0Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765995517; x=1766600317;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wBmu9AzZ9xdbtIOjudSzxPBr2BE5g0gg/z6YBjxDbIE=;
+        b=mHn29t+TOYXb9+WYbbPIbQCMkTTpmKnXb8JmUrDmrKa5xRTYOjJyGtYKXlJS0FSnDj
+         uWQ5idkUFFGzqcr0N2NCA0ycvpYWMORDLuDmy4+f9Y1yO9BPwHF5ws//j81NBJrc4yPD
+         X9hsLvGmePGBJcEDEPZ6oG9/3YoAhpAnszU4D61S6OqjD1JIY0wBHgnLY3x85MK2g8Ek
+         ZLlydTvztK4ZxchBJmrkuoxe2NT/PuxX/EKCQBsXsoAqA9JSG1Qvk64bT5Z4ivPl0ZYC
+         WbjqtKmprXXB9lS+zGgp91VTRFRjJ56ULkPDIzyb/DqJQgl59nEiV/5eFRwr3u+yCBgj
+         mIRQ==
+X-Gm-Message-State: AOJu0YxkBnuhFAhtlykFG7eqPhvh97yL96LupTRxYtmYEtdbUqCqF6cD
+	dRkZxGDiFKPQcHCoovjbAwHeeBDNZSyYIRIcWjpGJF4NH/TePBpifBkoDzWUamqcO0/ZFy4T04T
+	NMO0/YDz/ra1agqqtF55H+OzE9DxALigcPi6TEz+gHNSU43UcE7hQp29v9kYeVY1xUDJN
+X-Gm-Gg: AY/fxX7JQZMQrt33EPvZMh5zXNop8wPzi7kM+qm4jUFnXNDjU9bOccixAl4zcQ6dPqf
+	amb0fEcdirVFYugutBX9I1oIpFaL1hkuf/0QiEHNnBNEQ/U4Dw/ZtjUTW8WY6+5KbqEYb+V3NAo
+	TWxPaGjcNKIp0XGhhuXResaPW4122gk3BdIS0Pt/w3nIi5zj3wXpoAr/PfDrNonYtsMkIEPHKQX
+	3tFUBYMBAKSShqrZ3kZhHqhdmV7CpgXa73QXCNO0aXWADKi6o22nrh35qaAshHIQYxF+dNP6DSh
+	9zUh9l4MOcdhXJBCb/kSqmnvwn5ZqtkwONQsaHQeDohP/0Urk6D3PorPQrvsOwmhhgtvUMdmsfn
+	hxndUK/Wr6Muc9nynBaMxlT+SGo2QPtRYjFMvE5+ADKd1gh0yF++B5xeNexH1UBOE4nJj6A==
+X-Received: by 2002:a05:7301:182:b0:2a4:3592:cf83 with SMTP id 5a478bee46e88-2ac303958camr10594088eec.39.1765995517146;
+        Wed, 17 Dec 2025 10:18:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH6ScF6p2dbGaIAlfPTuofAf2/eZTtk6ONOKBGl/Qm27pAQp9ttnZa9kTtvsKTJrPW0AuH8SQ==
+X-Received: by 2002:a05:7301:182:b0:2a4:3592:cf83 with SMTP id 5a478bee46e88-2ac303958camr10594041eec.39.1765995516561;
+        Wed, 17 Dec 2025 10:18:36 -0800 (PST)
+Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12061a93616sm517453c88.14.2025.12.17.10.18.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Dec 2025 10:18:36 -0800 (PST)
+Message-ID: <5e568034-20a3-4ed5-a8e0-c010e5aa7b82@oss.qualcomm.com>
+Date: Wed, 17 Dec 2025 10:18:34 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-qrtr-fix-v1-2-f6142a3ec9d8@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] net: qrtr: Drop the MHI auto_queue feature for IPCR
+ DL channels
+To: manivannan.sadhasivam@oss.qualcomm.com,
+        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+        Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jeff Johnson <jjohnson@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Maxim Kochetkov <fido_max@inbox.ru>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+        ath12k@lists.infradead.org, netdev@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan@kernel.org>, Chris Lew <quic_clew@quicinc.com>,
+        stable@vger.kernel.org
 References: <20251217-qrtr-fix-v1-0-f6142a3ec9d8@oss.qualcomm.com>
-In-Reply-To: <20251217-qrtr-fix-v1-0-f6142a3ec9d8@oss.qualcomm.com>
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
- Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, 
- Oded Gabbay <ogabbay@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- Jeff Johnson <jjohnson@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
- Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Loic Poulain <loic.poulain@oss.qualcomm.com>, 
- Maxim Kochetkov <fido_max@inbox.ru>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
- ath12k@lists.infradead.org, netdev@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan@kernel.org>, 
- Chris Lew <quic_clew@quicinc.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7752;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=VV1/Ikl0OH6lDMHohEMkdP14WyebiuRyo/ktlKpfYQ0=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpQuWLymmyGTbV8eF0fjUIB0p3YI1DhyQBE4klb
- 8kCicS1Oa2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaULliwAKCRBVnxHm/pHO
- 9f8NB/4pb1tI5jOjRcvH7nqMIvhr0IshwN2BGFpgymF6Pqg2ovOgSWiITOPGtpgeDwuTeuMofNq
- VJ+zsH8/hmSDmNuIfbb1uRzu3xNiBI50/5Knqw99RFdVu5wer7HL+F9AsG/4tuh7igH/VofxnoJ
- 7JaDGbVyajrKnkuLP7A0/kKjCFTc+eWFeWWWZnIHgq/2k2tp8G2raOmrquJSqExOMYt9CIhm89p
- m4oHnZgqmlWMm9dg8glTibgBM1xYkOfgk99G5XczRPLbt5q5fPVG+fPGghyJc5IvpMBVGfW2u0l
- O8fcUyy/ZqUf3iCP/Tu5EBZc5GzfGRIpRrq2Gl+h8CCjmaLr
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+ <20251217-qrtr-fix-v1-1-f6142a3ec9d8@oss.qualcomm.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20251217-qrtr-fix-v1-1-f6142a3ec9d8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: m3l9ZKin7KYkG8GTSq665LqtRywD-cnr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDE0NSBTYWx0ZWRfXzGeOwJ0VdfRV
+ Ki3B3NQin9qqvxBJaVrJqPVqynA2rZErozq6GoQUvaLj8lhLcMQeh71bczSx+Pf75419J36rLIq
+ yme1rneoBlp9bpqOOXy7RyafWLqc7X9suugckinBlAG0xGQuX6bU/otTjoQMQd9UVSy6xw0HBmv
+ QhWUDnydEd2rEVS9EWaQhGcJ+j0mislmVgpCY6giA/z6I8EYUerCeBmlsy30YfN190qAKWGt3o8
+ nXxHGhuodWP/DEEmDNy6fypTT1v4SUyPtCGOCaSgxM2NmuIkHuc8Z9gd6jAhZgg4BhpBXQkFg+O
+ Ac31ra/7FIOUMOZ/iAFCitQbOzIvdja+ZbtQ7FWpQx66xrcY9JioqFYk89PG8kyJc7kvUnh35k5
+ xe01juAENh1mPjPw/hRNVVkiUIHyEA==
+X-Authority-Analysis: v=2.4 cv=TZebdBQh c=1 sm=1 tr=0 ts=6942f3fd cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=zitRP-D0AAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=isMaZ9OHK7bkWVW8W2QA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=xwnAI6pc5liRhupp6brZ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: m3l9ZKin7KYkG8GTSq665LqtRywD-cnr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-17_03,2025-12-16_05,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512170145
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On 12/17/2025 9:16 AM, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> 
+> MHI stack offers the 'auto_queue' feature, which allows the MHI stack to
+> auto queue the buffers for the RX path (DL channel). Though this feature
+> simplifies the client driver design, it introduces race between the client
+> drivers and the MHI stack. For instance, with auto_queue, the 'dl_callback'
+> for the DL channel may get called before the client driver is fully probed.
+> This means, by the time the dl_callback gets called, the client driver's
+> structures might not be initialized, leading to NULL ptr dereference.
+> 
+> Currently, the drivers have to workaround this issue by initializing the
+> internal structures before calling mhi_prepare_for_transfer_autoqueue().
+> But even so, there is a chance that the client driver's internal code path
+> may call the MHI queue APIs before mhi_prepare_for_transfer_autoqueue() is
+> called, leading to similar NULL ptr dereference. This issue has been
+> reported on the Qcom X1E80100 CRD machines affecting boot.
+> 
+> So to properly fix all these races, drop the MHI 'auto_queue' feature
+> altogether and let the client driver (QRTR) manage the RX buffers manually.
+> In the QRTR driver, queue the RX buffers based on the ring length during
+> probe and recycle the buffers in 'dl_callback' once they are consumed. This
+> also warrants removing the setting of 'auto_queue' flag from controller
+> drivers.
+> 
+> Currently, this 'auto_queue' feature is only enabled for IPCR DL channel.
+> So only the QRTR client driver requires the modification.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 227fee5fc99e ("bus: mhi: core: Add an API for auto queueing buffers for DL channel")
+> Fixes: 68a838b84eff ("net: qrtr: start MHI channel after endpoit creation")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/linux-arm-msm/ZyTtVdkCCES0lkl4@hovoldconsulting.com
+> Suggested-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-Now that the only user of the 'auto_queue' feature, (QRTR) has been
-converted to manage the buffers on its own, drop the code related to it.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/bus/mhi/host/init.c     | 10 -----
- drivers/bus/mhi/host/internal.h |  3 --
- drivers/bus/mhi/host/main.c     | 81 +----------------------------------------
- include/linux/mhi.h             | 14 -------
- 4 files changed, 2 insertions(+), 106 deletions(-)
-
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 099be8dd1900..b020a6489c07 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -841,18 +841,8 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
- 		mhi_chan->lpm_notify = ch_cfg->lpm_notify;
- 		mhi_chan->offload_ch = ch_cfg->offload_channel;
- 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
--		mhi_chan->pre_alloc = ch_cfg->auto_queue;
- 		mhi_chan->wake_capable = ch_cfg->wake_capable;
- 
--		/*
--		 * If MHI host allocates buffers, then the channel direction
--		 * should be DMA_FROM_DEVICE
--		 */
--		if (mhi_chan->pre_alloc && mhi_chan->dir != DMA_FROM_DEVICE) {
--			dev_err(dev, "Invalid channel configuration\n");
--			goto error_chan_cfg;
--		}
--
- 		/*
- 		 * Bi-directional and direction less channel must be an
- 		 * offload channel
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 7937bb1f742c..7b0ee5e3a12d 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -286,7 +286,6 @@ struct mhi_chan {
- 	bool lpm_notify;
- 	bool configured;
- 	bool offload_ch;
--	bool pre_alloc;
- 	bool wake_capable;
- };
- 
-@@ -389,8 +388,6 @@ int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info);
- void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
- 
--/* Automatically allocate and queue inbound buffers */
--#define MHI_CH_INBOUND_ALLOC_BUFS BIT(0)
- int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
- 		       struct mhi_chan *mhi_chan);
- void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 861551274319..53c0ffe30070 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -664,23 +664,6 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 				mhi_cntrl->runtime_put(mhi_cntrl);
- 			}
- 
--			/*
--			 * Recycle the buffer if buffer is pre-allocated,
--			 * if there is an error, not much we can do apart
--			 * from dropping the packet
--			 */
--			if (mhi_chan->pre_alloc) {
--				if (mhi_queue_buf(mhi_chan->mhi_dev,
--						  mhi_chan->dir,
--						  buf_info->cb_buf,
--						  buf_info->len, MHI_EOT)) {
--					dev_err(dev,
--						"Error recycling buffer for chan:%d\n",
--						mhi_chan->chan);
--					kfree(buf_info->cb_buf);
--				}
--			}
--
- 			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
-@@ -1177,17 +1160,12 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
- int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
- 		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
- {
--	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
--							     mhi_dev->dl_chan;
- 	struct mhi_buf_info buf_info = { };
- 
- 	buf_info.v_addr = skb->data;
- 	buf_info.cb_buf = skb;
- 	buf_info.len = len;
- 
--	if (unlikely(mhi_chan->pre_alloc))
--		return -EINVAL;
--
- 	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
- }
- EXPORT_SYMBOL_GPL(mhi_queue_skb);
-@@ -1472,45 +1450,6 @@ static int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- 	if (ret)
- 		goto error_pm_state;
- 
--	if (mhi_chan->dir == DMA_FROM_DEVICE)
--		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
--
--	/* Pre-allocate buffer for xfer ring */
--	if (mhi_chan->pre_alloc) {
--		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
--						       &mhi_chan->tre_ring);
--		size_t len = mhi_cntrl->buffer_len;
--
--		while (nr_el--) {
--			void *buf;
--			struct mhi_buf_info info = { };
--
--			buf = kmalloc(len, GFP_KERNEL);
--			if (!buf) {
--				ret = -ENOMEM;
--				goto error_pre_alloc;
--			}
--
--			/* Prepare transfer descriptors */
--			info.v_addr = buf;
--			info.cb_buf = buf;
--			info.len = len;
--			ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &info, MHI_EOT);
--			if (ret) {
--				kfree(buf);
--				goto error_pre_alloc;
--			}
--		}
--
--		read_lock_bh(&mhi_cntrl->pm_lock);
--		if (MHI_DB_ACCESS_VALID(mhi_cntrl)) {
--			read_lock_irq(&mhi_chan->lock);
--			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
--			read_unlock_irq(&mhi_chan->lock);
--		}
--		read_unlock_bh(&mhi_cntrl->pm_lock);
--	}
--
- 	mutex_unlock(&mhi_chan->mutex);
- 
- 	return 0;
-@@ -1522,12 +1461,6 @@ static int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- error_init_chan:
- 	mutex_unlock(&mhi_chan->mutex);
- 
--	return ret;
--
--error_pre_alloc:
--	mutex_unlock(&mhi_chan->mutex);
--	mhi_unprepare_channel(mhi_cntrl, mhi_chan);
--
- 	return ret;
- }
- 
-@@ -1600,12 +1533,8 @@ static void mhi_reset_data_chan(struct mhi_controller *mhi_cntrl,
- 		mhi_del_ring_element(mhi_cntrl, buf_ring);
- 		mhi_del_ring_element(mhi_cntrl, tre_ring);
- 
--		if (mhi_chan->pre_alloc) {
--			kfree(buf_info->cb_buf);
--		} else {
--			result.buf_addr = buf_info->cb_buf;
--			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
--		}
-+		result.buf_addr = buf_info->cb_buf;
-+		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 	}
- }
- 
-@@ -1666,12 +1595,6 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
- }
- EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer);
- 
--int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev)
--{
--	return __mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
--}
--EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer_autoqueue);
--
- void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
- {
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index dd372b0123a6..88ccb3e14f48 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -215,7 +215,6 @@ enum mhi_db_brst_mode {
-  * @lpm_notify: The channel master requires low power mode notifications
-  * @offload_channel: The client manages the channel completely
-  * @doorbell_mode_switch: Channel switches to doorbell mode on M0 transition
-- * @auto_queue: Framework will automatically queue buffers for DL traffic
-  * @wake-capable: Channel capable of waking up the system
-  */
- struct mhi_channel_config {
-@@ -232,7 +231,6 @@ struct mhi_channel_config {
- 	bool lpm_notify;
- 	bool offload_channel;
- 	bool doorbell_mode_switch;
--	bool auto_queue;
- 	bool wake_capable;
- };
- 
-@@ -743,18 +741,6 @@ void mhi_device_put(struct mhi_device *mhi_dev);
-  */
- int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
- 
--/**
-- * mhi_prepare_for_transfer_autoqueue - Setup UL and DL channels with auto queue
-- *                                      buffers for DL traffic
-- * @mhi_dev: Device associated with the channels
-- *
-- * Allocate and initialize the channel context and also issue the START channel
-- * command to both channels. Channels can be started only if both host and
-- * device execution environments match and channels are in a DISABLED state.
-- * The MHI core will automatically allocate and queue buffers for the DL traffic.
-- */
--int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
--
- /**
-  * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-  *                               Issue the RESET channel command and let the
-
--- 
-2.48.1
-
+Acked-by: Jeff Johnson <jjohnson@kernel.org> # drivers/net/wireless/ath/...
 
 
