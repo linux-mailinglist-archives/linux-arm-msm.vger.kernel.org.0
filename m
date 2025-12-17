@@ -1,147 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-85537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B915CC859E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:11:12 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5357CC86B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:25:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1B8F83013780
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 15:10:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2D9F730AEB98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 15:15:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6477C342509;
-	Wed, 17 Dec 2025 15:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3F6E355807;
+	Wed, 17 Dec 2025 15:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="H0BDAUBb"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="Pb+qA2WW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC4033FE3A;
-	Wed, 17 Dec 2025 15:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4523557EE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 15:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765983772; cv=none; b=daTd9eCIDTe4fXG0QHPKbIssDOAuKTLtK0fHFbqWuNWyORpc2ybX786MlnN6T5W6Emd7hN9wfpuVIIDI6u6SQV3rsVoaNrB+z0Pz8E+vdFmHQ7XEwMEgmrAaZ9B+FyDfWCKZJJeFKdGkMCSFMgB5Ru9feH/EIsKH6D5tYpTPvtI=
+	t=1765983946; cv=none; b=FDszurU/TUdr61zUJs3bA9gVOEHbfPNXJaLQHUDpqaHCUBFa980VeHZlubgPrR9Zd48YlOW+N2A7x81vTSLeAZFp524gVevfOOLjXGbqURw1k5BA0hzhA6aqOjMmHZ1DRwK9renmOM28jOQe2CCeMv0gYzpLQFJpUDqkaQurdCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765983772; c=relaxed/simple;
-	bh=naP2qCObIgL5PlOW2pXz7WzozwC1xiYvZ/VkrIK+xFg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OLxPrI/KNjIkU/OZZdxkoelj8s90K90/3VKbvDN2SmDuXbPauKDxnnW+OjiQ7uVQoKWXiP2IvWBy4bM77aqeMw+MU1+F9u2o948ZAABJZhlcIOiRc6EhKF3ErLbRLtLzSgGmeqQ6ko2sZG3AyyuPiTcYQc6S3BS079M8OspceuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=H0BDAUBb; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.136.28] (78-80-112-127.customers.tmcz.cz [78.80.112.127])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 9E25F5340EE8;
-	Wed, 17 Dec 2025 16:02:46 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1765983767;
+	s=arc-20240116; t=1765983946; c=relaxed/simple;
+	bh=eI8YbOyM9z/WkaNgK625OiENoKA/xykWTcIx4vrdBLo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EMvo//1j2xZdlM0nEehp6del8nk711UNE4sxKHY3Xm7rsOZ5KUYTLRu8Kybn/h6W7Q7PzxyUsEs2MmgqK/pM3GqVyLtFxtWZ9dA+7LL8fsTT5eln4PmaGylU4o7pvV9U9vIPElzQ/GiW6QO091BhsqSHcojbOZD/0GhWxi84tcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=Pb+qA2WW; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+Message-ID: <8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1765983941;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=QM1NJwYV1p3zWu7QMfqCptCqvZBRfiDuumuA17PYOdE=;
-	b=H0BDAUBb8XAmCnb5tVBDKlBYi8kClRaLdOyDo1r1+8tvqHBQ+6xwMgpFRkImbh71qn7dUM
-	x5QYi0AYP99V7Ag9Gdtg/I6ntog1koBzR3wd/rC9pdfqaqwioVbxeQA6O8cH6xvrP1oY6y
-	FSkNshdIqrMK/ahGUzHK+0CQssqVD+w=
-Message-ID: <4d97d070-5998-43f0-b945-813b5e7d21c7@ixit.cz>
-Date: Wed, 17 Dec 2025 16:02:45 +0100
+	 in-reply-to:in-reply-to:references:references;
+	bh=BU61uOE5rQFMg5G4aoZO7QP4QinbxTTLs0nJykuT8sQ=;
+	b=Pb+qA2WWptWdsEksD+2nkZcRJvnq0032Qdw/x8F8Yh/Ryo31ap3ucPFTAXwfwceB3yQcR0
+	H+FUbJ8YO+GXJj83trUH7u8d2IaeBJyLBaSz+Ji295q83uCKcJVQtzPZUbMc5wiAOrPWWP
+	9mZdS3ecncoc7ujqlP8rHzTEH8xF6bfij661GCT4gcW+6Pc8qefkXHfHQKnimrPZtxdyJo
+	XP6g9kyDP2xo5C5slSaVJQ8dcqxn1C4Oo86R14hLKria24kjsMRtWGKg5SPpVUfhh3tqO1
+	gCCAwB97pxiFjxqPYk/EPFiJQeEiWg4D75Vzqw/wLhHqpKCy97kSqX1AtXFjww==
+Date: Wed, 17 Dec 2025 18:05:31 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH WIP v2 3/8] media: qcom: camss: Prepare CSID for C-PHY
- support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
- Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-Cc: Joel Selvaraj <foss@joelselvaraj.com>,
- Kieran Bingham <kbingham@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz>
- <20251204-qcom-cphy-v2-3-6b35ef8b071e@ixit.cz>
- <9af39b45-581b-4e25-8ab9-19015f00d6bc@oss.qualcomm.com>
- <df5557e2-a086-48ca-b8e7-972cbdb7745a@ixit.cz>
- <689db2b8-6845-4ac8-a012-e589dc11e45d@oss.qualcomm.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: Re: [PATCH] drm/msm/mdp5: drop support for MSM8998, SDM630 and SDM660
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Paul Sajna <sajattack@postmarketos.org>, barnabas.czeman@mainlining.org
+References: <20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <689db2b8-6845-4ac8-a012-e589dc11e45d@oss.qualcomm.com>
+In-Reply-To: <20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On 17/12/2025 14:31, Konrad Dybcio wrote:
-
-[...]>
-> Perhaps just:
+On 11.12.2025 04:25, Dmitry Baryshkov wrote:
+> Currently MDP5 3.x (MSM8998, SDM630 and SDM660) platforms are support
+> by both DPU and MDP5 drivers. Support for them in the DPU driver is
+> mature enough, so it's no longer sensible to keep them enabled in the
+> MDP5 driver. Not to mention that MSM8998 never used an MDP5 compatible
+> string. Drop support for the MDP5 3.x genration inside the MDP5
+> driver and migrate those to the DPU driver only.
 > 
-> /* Set the PHY_TYPE_SEL bit to enable C-PHY mode */
-> if (csid->phy.cphy)
-> 	val |= BIT(CSI2_RX_CFG0_PHY_TYPE_SEL);
+> Note: this will break if one uses the DT generated before v6.3 as they
+> had only the generic, "qcom,mdp5" compatible string for SDM630 and
+> SDM660. However granted that we had two LTS releases inbetween I don't
+> think it is an issue.
 > 
-> ?
 
-Yeah, the comment helps here.
+I've retested DPU driver on our downstream release based on 6.18 (by
+using msm.prefer_mdp5=false kernel cmdline parameter) on all devices
+at my disposal, and I can confirm DPU driver working fine an all SDM660, 
+SDM636 ones, but not on SDM630. Some logs from sdm630-sony-nile-pioneer
+(Sony Xperia XA2):
 
-Thanks
-David
+[    2.356546] msm_dpu c901000.display-controller: bound c994000.dsi 
+(ops dsi_ops [msm])
+[    2.357328] adreno 5000000.gpu: GPU speedbin fuse 146 (0x92), mapped 
+to opp-supp-hw 0x4
+[    2.364802] msm_dpu c901000.display-controller: bound 5000000.gpu 
+(ops a3xx_ops [msm])
+[    2.444649] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x30030000
+[    2.449793] [drm] Initialized msm 1.13.0 for 
+c901000.display-controller on minor 1
+...
+[    2.911900] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu 
+error]enc33 intf1 ctl start interrupt wait failed
+[    2.911916] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait 
+for commit done returned -22
+...
+[    3.176171] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu 
+error]enc33 intf1 ctl start interrupt wait failed
+[    3.176367] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait 
+for commit done returned -22
 
-> 
-> Konrad
+Which results in horrendous ~3-5 fps in shell.
 
--- 
-David Heidelberg
+The block "enc33 intf1 ctl start interrupt wait failed" + "wait for
+commit done returned -22" is repeated few times per second whenever
+the display is turned on, and stops when it's turned off.
 
+Meanwhile it is working fine using MDP5 driver (msm.prefer_mdp5=true).
+Well, as fine as possible considering [1], using several FD_MESA_DEBUG
+tricks to work around GPU issues.
+
+P.S. I have not yet tested MSM8998, but I can try if required
+
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/issues/8442
+
+--
+Regards,
+Alexey Minnekhanov
 
