@@ -1,222 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-85555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72829CC8F88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 18:09:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D05B4CC8BA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 17:18:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7E7923116598
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:55:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CA55F30562F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 16:10:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35DD029DB61;
-	Wed, 17 Dec 2025 15:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C75233FE11;
+	Wed, 17 Dec 2025 16:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UjcofAbv";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="F5REcQz8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mJQ3SvGu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3A348896
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 15:57:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABDC33BBD0;
+	Wed, 17 Dec 2025 16:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765987030; cv=none; b=VPQCJ+XDvHSbkU/qQVloj0GYsrJvPNSM0V/GXUPcVb8iX47Mzm3B03M0kuxh8xXvcelZWmv8MiAdWS1NyeMo7Aw+QO+DRz5z0t/x5WcNgkpBpJXfC1G44DfK1UDgpMdN20CYxQy7RHJ4q888o7U1Avjjtff2JJTZIScSIR27+d0=
+	t=1765987226; cv=none; b=seTBzlqI/Vm9Vnt5LZmOemJQxua71fqhf1ZaaZ4lT1FCSnsB/ZpKUH5aQVXiM3UwmiKd5LyMyGO/22KADyhN+o3eC/cfcmW5dfpYVLkVmshCHXoDGmXcXyj9kDzk/L7Mujj7VttKb2rjREZiOoadZ7XHWE+slHOvQnbkAaoBiYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765987030; c=relaxed/simple;
-	bh=gRnwoWYVjN7GMrjsuBdpDhiMQwmfcdo/4r/Rw1j08vQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WrgMdQ+OKZrz6/gtuhS6FHg2qc21qxP3pAl/Y+WeRl632fKorcbfwtMK3vLOzAj2sqtzAE6lIWr/xo5pu7uWsVAtw+8q4Ar85ED7CFzvEBbgY5uCeTXHMb/bnO1d0GFaZb7SVNEnYm2eVSgIY2HHR0RJPf5kNwooHh73y8iTJ1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UjcofAbv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=F5REcQz8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BHEvUYc2720294
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 15:57:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Y4KqA588JLPQI0i1Leq0ab3vXKKNpG6AzEKsdY8kU30=; b=UjcofAbvH5ht9RLh
-	cYDq/xR01gLxK5bht4pOfOe/Ivsszgr2Fdc+4rcX4BKCEK8dYHehIfDscs9uNXo1
-	c99OZw+2Hhp7E+iGe+UUdUIzg20l72HxXdn20rJxGjEoM9C5iDBpi/nU5Gj1peGu
-	zJV872/Ehdt2N8ZdNXR1QHbg0OrsQ9zTpRvBfbGJd5ioRNCDQycKNXOoWuHyeG25
-	sMGWfTG7WP81EoILnuep+ocmdsTk7487psinZdOW7vf21t4uujkft+xeThwvgNUX
-	bo7HqQhm2fZiWh4O9HW+uRwY198oLau6bSWKMY940YVr7bEIYAQWOL3tMckzmBfE
-	pj/7Jw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3xr587gx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 15:57:00 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4edad69b4e8so16515281cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Dec 2025 07:57:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765987020; x=1766591820; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y4KqA588JLPQI0i1Leq0ab3vXKKNpG6AzEKsdY8kU30=;
-        b=F5REcQz8IfQ0pWce3a6i/wPOtbb4O/rz7hxWm5v0rBKY6+1OHXj2TvYlqKMFWE+BO5
-         Qb4+rfs4/2RrHGe+ukFhQ4NULqIJCZQv9KNp0cLN5rQ+mjt/EliLpqJnq7S7psYlHnUK
-         psWILYCaqwK474EcyA3P5CcFX/Di7fRTjCEQkOjgzrOJ/D3OQNiZylicOagiSImOQkjh
-         /vwkRzT7rRZ2XUBr9WdSXxosV+0mCZtn60P4Dk22rMyopEnh7YtYS599MdhXYJWtnUH0
-         HLOAuCCCh9xEnv3ojv72tm0rJ35Ekn7x8mp+9359Cv/Nvj2IM42AkWqzFNYd1DZEk+hO
-         rXgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765987020; x=1766591820;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Y4KqA588JLPQI0i1Leq0ab3vXKKNpG6AzEKsdY8kU30=;
-        b=bnvrPgIMsS+FLlgWUKH+kyosvcv+bHTjXVnWP0KFXp3Wtwisc2BOmOlAMDVbE0P24H
-         bCQBnJ0KDdPc4siSvDx1QavORswRV/sui9GxzB+LrpFbTANnvmASRUbjqXmJyCcz4936
-         g0/pxXcuJcZXBpX9uCd7Brgw5YV8FnU/uEIzwc6pv4BZuGnWYZ4W2RhETD7A7IqTloNv
-         gCPP8AOHQIi6z4uWBeeg5vJvOnqqhxb5aLV/5y2Mdp0vwpwBqFt6KE6uejLnXIsxkstf
-         tkI+fhn1hOvsUDb9GFvha+Bk7qHCetf4ax1MwVRF8bEg8ahRhaqTPcP1GTxFHfL414Yg
-         ujzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU4ZYMQ+Cc8TwSNM73HSUkiMRNIqZsp1lDDMbKechM26sNYRoViXm6R/ML9tG+k7VvPu7Vmyf7UaO1tAA/g@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/BNY8SV759NEikcs7X+VLmmsgP67ZZZ1UfHwpAwL/QrbenjiL
-	z/JaXy4z8fA9nq6xYsATLGZMrPVfNI47U4OIyvdvF1Q5EMw0WGRZDCSnP55i+kA/9Cw/RqcUrlF
-	s8s6ErhTkEw81ULNr7OCBFuZr8vBIIF5UxRWyTZ2hi6Pj70bWLDLgbcnRHYu4cvAaDF0Q
-X-Gm-Gg: AY/fxX6uGvhFIRmGNHwZu6q3ozwENVl9TC5LDDWdOa/yKDwyMhD5hWXD9hF1zxQhzpQ
-	0WjqKhZ1zz6IAIp83V4c9BgQKrttq8LjEhfAwA4aYqV370T4YgVRpLdPvpwDfoHpAE5mzqX4FpW
-	m1L4cJ+kacl2pLLey4DXnDOPQqrNcfTUeJwT+un9NXSQjIHk1BK04uqo3JLUKhi1YAJvXcvaOAH
-	QVvQSpsC1uSRChnpOhOvqCiHCHT3BqZ0aw4pkzoA4FFmdsV/vHaSFElNfGN0VCKNWkKspqMugS7
-	AAGMGO6RwHP8Ya5EiFGfkZQDLQ8D9gmvpLrFF8jLOkrXvQPxPV/uKhoDXdsQpPtbxjVkmmwVO0w
-	ns3f70DPJCVC9NvnwULJ3cHGsoJbjdUoY
-X-Received: by 2002:a05:622a:50f:b0:4ee:12e6:dc73 with SMTP id d75a77b69052e-4f1bfc359c5mr334303301cf.20.1765987019688;
-        Wed, 17 Dec 2025 07:56:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHSeUGQg3MB7LH9Sfie6xzdKE2ev/yzJYMwkoILOdDw7e/522lcpaoGhlmo5oVnRw1Xh0YFVw==
-X-Received: by 2002:a05:622a:50f:b0:4ee:12e6:dc73 with SMTP id d75a77b69052e-4f1bfc359c5mr334302971cf.20.1765987019289;
-        Wed, 17 Dec 2025 07:56:59 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.218.51])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4310adeeef6sm5439800f8f.32.2025.12.17.07.56.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 07:56:58 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Wed, 17 Dec 2025 16:56:29 +0100
-Subject: [PATCH v3 11/11] dt-bindings: bluetooth: qcom,wcn7850-bt:
- Deprecate old supplies
+	s=arc-20240116; t=1765987226; c=relaxed/simple;
+	bh=DHOfVMuEIeml+D4bFjkUEOu0EPfKRIvup+yg4sES+PE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=nKBPMWH8Ji67CrornHbbo+eh5Lb9Zvf/6S3XK3+oIaV7liMgphKJr9r7kzzLBofqKl35JEegDBj80OXGh/gPL6oYJSzdeQn/lyNfGEnmqDOTGVzfTmYNL3L0NGllmZG46viN7YOqCAkwaBMa38wlC5DT48gN9IZxYjUds+vma3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mJQ3SvGu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5378C4CEF5;
+	Wed, 17 Dec 2025 16:00:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765987225;
+	bh=DHOfVMuEIeml+D4bFjkUEOu0EPfKRIvup+yg4sES+PE=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=mJQ3SvGuKCZT7LnQAFR49RdDJMDX7elVlGpihT0zA20f/DwfLPYh5R32l39rU4bz4
+	 /h9duBv994yLKJBNB1iM5wMN2z5h9EJn/5QDrI164kETelxnBMktLMPw7+u1ITXBKW
+	 88BIYSNymOeBePbKXDH1NpWeykyqoy3lYRWY5GjEM0I5mYygamO8fEgy6ZkqX1Jhfc
+	 +MacbN55zhrMv1OYWllb8rYj9DKdSTQJ8fCwLHA3ZAv6VLQ20LTu2JCpiJHz4hnUck
+	 jSG68Kcb/S3vJTPCtZ4tkP33/ThLY91kaNM4WxGq0fpzje9HNoAs6xxVBcyDdtQbl7
+	 Tuih6DOPO12ww==
+Message-ID: <730230b1-d753-4c64-9c38-0e86a184c0fa@kernel.org>
+Date: Wed, 17 Dec 2025 17:00:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: dt-bindings: qcom,x1e80100-camss: Fix typo in
+ CSIPHY supply description
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bryan O'Donoghue <bod@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251028111115.46261-2-krzysztof.kozlowski@linaro.org>
+ <3f6f62f3-67be-4d3a-89ab-747e6acae29c@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <3f6f62f3-67be-4d3a-89ab-747e6acae29c@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-dt-bindings-qcom-bluetooth-v3-11-ced8c85f5e21@oss.qualcomm.com>
-References: <20251217-dt-bindings-qcom-bluetooth-v3-0-ced8c85f5e21@oss.qualcomm.com>
-In-Reply-To: <20251217-dt-bindings-qcom-bluetooth-v3-0-ced8c85f5e21@oss.qualcomm.com>
-To: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Rocky Liao <quic_rjliao@quicinc.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-        Bartosz Golaszewski <brgl@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1900;
- i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=gRnwoWYVjN7GMrjsuBdpDhiMQwmfcdo/4r/Rw1j08vQ=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpQtK2taJdcfc71fNpPw4LJbo7qeYKf7M33R32W
- mEtK42HxAyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaULStgAKCRDBN2bmhouD
- 17MiEACS7xd3LVPvQXjWLBMFSa2PmWiLwHVDtKBW8gEpmwHoSPzYHXgOR/euSJamH8L8boA+IE9
- NeNxEkh+BHZpmUmr1RKMnw9o+y4hSwlDkmK+irX804O+DD1fH96l+morgQJC79vCrUV63p3doS0
- 3n16dXUgxUM+TdL0LGtGl3psTvtxOw7IEpbEE86qnkev75YQSaium8SCcHj6teZT4ErdMCgBdAB
- 6zzZEW/Q7iLizEdaq4OZmWoPT6WMwxyRE3BYcLANAyYRIidrxFbZnwn8e6QhyiDj6jSGkP0crtj
- KhCIqf2L1U4TGtIEpnyNW8auIKrihZVy08m2aNUmT7mxWqSlTDsbiqJR+EyxmMAHKb6fzOymixR
- rczG4JI3uZq6DxerQbJspEivHWpHLPmMNeUcX9TzdM650mYGJWGDcHwBedq9ylU/KbyJgiLETHR
- TpYPPYhCY0+9zZwUI73lCr4EKsiov7Q4qxA36iEBTTRj24hZBfNkWMDEkJad5wb2ha3c+yUUVYo
- jte7+mXAx1JTOTEUtSGaWRLAGn8fAdOoXfuHIT013tMtMsYh/0OiAj8YYx5N2UC4i9GL5H5OWdW
- 0/UzJTRu0oFSUoe72e0YsJZ+rERfj9LTTSKUpf/mdrFkK4bcG9+Jbs/3y5bHyPlXK8yzGn8tovv
- 2NN8rWjvqXRChig==
-X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Proofpoint-GUID: MseB7QrRyNs_l9JOoxGkD_1tFDYvClRK
-X-Authority-Analysis: v=2.4 cv=DsBbOW/+ c=1 sm=1 tr=0 ts=6942d2cc cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=hmARNUlj3OVxZ3RlbIsQyw==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Yne-JONsqnic5O4-CUAA:9 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDEyNiBTYWx0ZWRfXwAdCKC6dBRen
- KTjMPVmrTNFrRSbWenbpxkhDTryMnR56+PQd3+8uOihbyhq7TCSv+4rajVeIQBIXwwXBtm+06yA
- 3TW+HBItRYWhqs2GD16aab55KElAabbpMOjkuLFqOdxDuktUUA433p74um6HUktO/Znk1uehM+s
- jAW1V2DpfwJ1TxJ/IaxFsxqNdxESIpsDTCq0rqpeQ1Hb8HWizlS72SxVdAUVSV/sysjGYMLITXi
- 471qxa1CKatlBOwe1xndn7eD3c50SrCKiMvATbd9vFhLT2UxK5QeFikug8DfdpiGKRo83nzCgHE
- 9iME0arht8174kymcvh7BUdziM053VwgZULkJCpsp1cCDVeorgXS9/YYw0PmeCNUGt2s5dJs9Tn
- hy0zGK2YCRbfXO1mvqO3Lpp07mHMFA==
-X-Proofpoint-ORIG-GUID: MseB7QrRyNs_l9JOoxGkD_1tFDYvClRK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-17_03,2025-12-16_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 impostorscore=0 spamscore=0 adultscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512170126
 
-Commit bd3f305886ad ("dt-bindings: bluetooth: qualcomm: describe the
-inputs from PMU for wcn7850") changed the binding to new description
-with a Power Management Unit (PMU), thus certain power-controller
-properties are considered deprecated and are part of that PMUs binding.
+On 17/12/2025 16:41, Krzysztof Kozlowski wrote:
+> On 28/10/2025 12:11, Krzysztof Kozlowski wrote:
+>> Correct description of the CSIPHY 1.2 V supply
+>> ("vdd-csiphy-1p2-supply"), because it supplies 1.2 V, confirmed with DTS
+>> on the mailing lists.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../devicetree/bindings/media/qcom,x1e80100-camss.yaml          | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> 
+> Ping! It has been 1.5 months already. This also got other DT ack - TWO
+> DAYS after the posting - so why is this still not addressed by camss
+> maintainers?
+> 
 
-Deprecate them to mark clearly that new PMU-based approach is preferred.
+Huh, my bad, this was applied. There is just no trace for it here, so I
+missed that. Apologies for the noise.
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
----
- Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+There is awesome tool, btw, called b4, and with one-command setup you
+can then later generate nice thank you letters (and with few more
+commands setup they can be nicely customized)...
 
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-index bd628e48b4e1..8108ef83e99b 100644
---- a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-+++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn7850-bt.yaml
-@@ -18,20 +18,24 @@ properties:
- 
-   enable-gpios:
-     maxItems: 1
-+    deprecated: true
- 
-   swctrl-gpios:
-     maxItems: 1
-     description: gpio specifier is used to find status
-                  of clock supply to SoC
-+    deprecated: true
- 
-   vddaon-supply:
-     description: VDD_AON supply regulator handle
- 
-   vdddig-supply:
-     description: VDD_DIG supply regulator handle
-+    deprecated: true
- 
-   vddio-supply:
-     description: VDD_IO supply regulator handle
-+    deprecated: true
- 
-   vddrfa0p8-supply:
-     description: VDD_RFA_0P8 supply regulator handle
-@@ -44,6 +48,7 @@ properties:
- 
-   vddrfa1p9-supply:
-     description: VDD_RFA_1P9 supply regulator handle
-+    deprecated: true
- 
-   vddrfacmn-supply:
-     description: VDD_RFA_CMN supply regulator handle
-
--- 
-2.51.0
+Best regards,
+Krzysztof
 
 
