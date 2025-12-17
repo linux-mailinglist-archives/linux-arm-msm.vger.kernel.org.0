@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D712ECC7FB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 14:53:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AB82CC8023
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 14:56:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1B8D0301D3A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 13:53:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0875A30680F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Dec 2025 13:53:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09ADE382586;
-	Wed, 17 Dec 2025 13:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2558A382BC9;
+	Wed, 17 Dec 2025 13:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVhy7qc4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcRH1ze9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5174D36C0B3;
-	Wed, 17 Dec 2025 13:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55E3382BC5;
+	Wed, 17 Dec 2025 13:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765979587; cv=none; b=R4pbwhCDiv5MlJrWs5ROI3VSI/j1sE9oKzDo+a5t1MLJ9jWSG5gCEahOJu+nD6O/pKyurhQb5BP9AX3ald83UU3/kWayje51oEc9fytAmQ7Ys20d+0hQVYQRnZfykWofe4vkLdQi8QUgKyABL9v9TuIBRfKDKx3vw1P12TfeNUQ=
+	t=1765979626; cv=none; b=r4c5XVlcyevSLf1y4pJ8hdZZ1Ba7MO8E9azwzMgFUBNIyPU9ddzxwSnYdaovZaVet0UKS0jRZhBspJ6DughxIkEpzEQePzuW51+O9b8YvUrBItaor0ZdmDN2htCwuqCSAOu819D/TB87tNHxCVriyE9w8IalOVbcZXsngxG6h44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765979587; c=relaxed/simple;
-	bh=iqKQ0HptustHn3P3PT7ZInZ8bW36perzba8gJh/dal0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DAmuzzADYPqGJO6d16j9YteijsrxUiCHD2/5N0sn0eIYtRu96lIorZDnRzZ68RhIpy21kczThVjgVyhgNuF5wdpZol+3GmwS5q5vk7JUN8d2o8uRXMo9o7xoEnGGfqRo6MLy8gzCMVWruQqar0V95qS1t/s7HbUvOzaKbFohU8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVhy7qc4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AFCC4CEF5;
-	Wed, 17 Dec 2025 13:53:02 +0000 (UTC)
+	s=arc-20240116; t=1765979626; c=relaxed/simple;
+	bh=LSAatRuwlKsmUa0I3zhBm612tklOcdKIV1w+WRG7oIY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iDXd7qkvXTuDXtn8aUKe8Y4pu9yk8vMflXBrTz2I3T/KMdh3NrXm79KR6GeAYuKaVsxNzTKHitqEzx4KFOnKur2Tsghi9aqhRxfpXG26dfdyBxp7iwytvFJHOrBWT3rojNYfc2Xk/wgbya4BO0S8WICgB2qguAGtYWd8wZduCtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcRH1ze9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDEDC4CEF5;
+	Wed, 17 Dec 2025 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765979586;
-	bh=iqKQ0HptustHn3P3PT7ZInZ8bW36perzba8gJh/dal0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iVhy7qc4QQtwNHuRXYlSinwnQABrP+5A/QuW57LBUH9wjvZFTehgNGmobGHO5EPmU
-	 1YjK464xL8VkABpi3kPsPuaJeCsN451xjNA2FjVHUfkEv74YL/JNumin4HgHPvy49W
-	 kInjQGADiz9+lcVxgqGTRmZKgEAMFPyUG9pCBmwR6ZPStdT3Y9pcmKz/FMt7LkViJl
-	 CWm5EgxQjAHr/jebz9LisinXZ1YxJIXU7v3QI3Cnce6Ue0mK8LHK7FXCyrEw3/nD9T
-	 1BYul78aRqouLjgBC11ID2Uc40UvCVwJk9Jc0DvsIpUhit85JAWrci90NLHzxVsiiY
-	 Oe/ta7cq47+Ww==
-Message-ID: <15276b31-8189-43e7-b619-76b2f85380dd@kernel.org>
-Date: Wed, 17 Dec 2025 14:53:00 +0100
+	s=k20201202; t=1765979625;
+	bh=LSAatRuwlKsmUa0I3zhBm612tklOcdKIV1w+WRG7oIY=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=dcRH1ze9S1D3iqndHfTKJtT0OA34/fesm3EqmDhudyqM6/ZItEg6C8GNubNp4ZX9r
+	 +Drrs2aODL29D0YfTp9w4FJBJe0RjbicX3/klfrdU7kp9miIlIV5Z5+G8JCpqwhqKU
+	 JmJAh/bq6rY7yiHakdah+e51XtERLkLr5V4iTA4ojCTpvqGQauMLnJUwkmsMvVJdaF
+	 edEbyeHtcrWjWU3hDo3DMom3+xdmzbuq3a8QQdmUM3BDySAp6aiYYPVCj0+dL5N1U2
+	 QZEIFagv/so5cz17HcedvL1SxVNZTQ0kUtv3bHa/qo7G5Gc91ehKf9jkS8RDAgOjMZ
+	 XPacs951/YT3Q==
+Message-ID: <62930036-f817-4051-9657-46c1786287c5@kernel.org>
+Date: Wed, 17 Dec 2025 14:53:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,6 +49,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6] arm64: dts: qcom: x1e80100: Add crypto engine
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Harshal Dev <harshal.dev@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,7 +63,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20251211-crypto_dt_node_x1e80100-v6-1-03830ed53352@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <15276b31-8189-43e7-b619-76b2f85380dd@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,33 +108,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251211-crypto_dt_node_x1e80100-v6-1-03830ed53352@oss.qualcomm.com>
+In-Reply-To: <15276b31-8189-43e7-b619-76b2f85380dd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/12/2025 09:49, Harshal Dev wrote:
-> On X Elite, there is a crypto engine IP block similar to ones found on
-> SM8x50 platforms.
+On 17/12/2025 14:53, Krzysztof Kozlowski wrote:
+> On 11/12/2025 09:49, Harshal Dev wrote:
+>> On X Elite, there is a crypto engine IP block similar to ones found on
+>> SM8x50 platforms.
+>>
+>> Describe the crypto engine and its BAM.
+>>
+>> Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+>> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+>> ---
+>> The dt-binding schema update for the x1e80100 compatible is here
+>> (already merged):
+>>     
+>> https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
+>> ---
+>> Changes in v6:
+>> - Added Reviewed-by tag from Abel.
+>> - Link to v5: https://lore.kernel.org/r/20251210-crypto_dt_node_x1e80100-v5-1-5ad22a869a56@oss.qualcomm.com
 > 
-> Describe the crypto engine and its BAM.
-> 
-> Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-> ---
-> The dt-binding schema update for the x1e80100 compatible is here
-> (already merged):
->     
-> https://lore.kernel.org/all/20250213-dt-bindings-qcom-qce-x1e80100-v1-1-d17ef73a1c12@linaro.org/
-> ---
-> Changes in v6:
-> - Added Reviewed-by tag from Abel.
-> - Link to v5: https://lore.kernel.org/r/20251210-crypto_dt_node_x1e80100-v5-1-5ad22a869a56@oss.qualcomm.com
+> You just sent it 7 days ago! Why new version? Please relax, and help out
 
-You just sent it 7 days ago! Why new version? Please relax, and help out
-by reviewing other patches on the mailing lists in order to relieve the
-burden of maintainers and move your patches higher up the list.
+s/7/1 day ago/
+
+> by reviewing other patches on the mailing lists in order to relieve the
+> burden of maintainers and move your patches higher up the list.
+> 
+> 
+> Best regards,
+> Krzysztof
 
 
 Best regards,
