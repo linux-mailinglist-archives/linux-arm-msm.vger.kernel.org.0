@@ -1,149 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-85712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79702CCC556
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:49:24 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58C2DCCC638
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:05:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F1B3930C0D99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 14:46:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2E79430C19D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:01:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484A12D3EF1;
-	Thu, 18 Dec 2025 14:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A0AC2E7F3E;
+	Thu, 18 Dec 2025 14:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Mswjy1Vl";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KMsEz3yP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZhmfQyw/";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EAudjjoA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DADE2877D6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD1A2E7621
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766068715; cv=none; b=GtMsJsE1x4kpzTGyeeLufJyUTIeZ5cSZ3mHtOVPE+NtLqt1LIOXZTQhrvMTrE64RVA85qN60pSwqkBHYyXMOh9AyjdOpB5YswvhenPewkvSK1flJXfakNlrjxqYnSf+aM1TClpLd0R5syI2Rys9bWFwyVHblmDVBVXd3QY8nDM4=
+	t=1766069012; cv=none; b=alcRZStCY7yOMcYOhW1RQvsbbkN44+oPySfVvlrVPUsICHAkpeYjsES/WSpQBTgjL2MyGze6kwBwHMg/zk+f+UBFjSh6Ppy2AHUOJwdKVY1juQcf/UVbSKYrRnBUYWINjHcc09W+EA/lMMiHoLW8BLUnysoZc61jC1WizGTAYrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766068715; c=relaxed/simple;
-	bh=ArL2dpKAJjAc+7mXNblJNDmtmUpgtot12YPCAF2ieD4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kIMVDxxJRagKjygISaQYORR1Qhe6WxRvohxsXoMYQ9b/C7NXbwlbvx35GxraXn/yMBcBUHwkLf4hWtlmG4Q4BTdDV+T4BNBpRnMH2/U11L8XBY0DhCxdcfdS4/N8rz7utRFEPfaevbOJwhEMLFqboDzwEQJtFPf4cx9yeBV5+xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Mswjy1Vl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KMsEz3yP; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1766069012; c=relaxed/simple;
+	bh=u1Vvamo0fP1X1uQgT6kmBj5ORx0m7TZCiIN2eI4q1Rk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d/O8R4Tqc2Tk9/0WvTgTy6ypfmzUoAKBa/tYwjNvhOv1f96fbsuoJQXo7Xpt3Sw1JeZ4rugTEYApFp74j1mWrTZI1NS3PkrjvUGVdk/CwvmwJu0Ole2vaxWI62HmVCmP8WABy5ESPMAr6pYA3QRgxtBNJuMz1iDZa/1fIgvRU80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZhmfQyw/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EAudjjoA; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BIB5Ufp1335070
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:38:32 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BIB5RnJ1334929
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:43:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5Y26BULJ8RBq8/D+FuknUz03YZBdAhneAsR52EWKMMc=; b=Mswjy1Vlgde/VVMV
-	PsnE/UvWUYz5E6XJaUWUl6XlpMDJDecx7hz4RFl4KFJGCIUxmvz7cYFfXJxYXPeC
-	T11JnGIiplug1yP7+AhgW8OgmHkE3MdQn1Q2CL08e6dnj8YFF+U2pUHE3thriXiY
-	CblQa865hk3i3341DnHYkfPnsneus0H+CVkIaBEfh2lke4cdxSxrijIg5TMjimn2
-	Xw2RirzFdd1fcdHX8kXDRyHkQEHMtY/ZBN0qVEkOeIDoPQpYZQdJFFepIzdRPdfe
-	GUvwwB77W+ZEyp8kZKU7uVEQx7x+bvm/uwNP3dDkw+Evuw2SuIY4B+qPYsP+nJsk
-	6vadpg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4gec0mjt-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=cl4v0oEPk0Fzc67kkLwDXNvT
+	S+8R7nFDTHzGx6wYMJ8=; b=ZhmfQyw/JXNNvoQLaqIzCtrDzdR00aSVZ9TKxagW
+	t5m9yzpBTyOi1hTIVW/SjpjPuEwN27otyVRDbUJXzAUVIUGHT4htGIUX96XJ6osK
+	dFBuiRxUaLdtZQlsKjFyMB/urMXZrBx252zF9jQ7l2P7GLLt1HFcZVPrUABYQCYp
+	bcIL2PORFygZUQWYIbKn7DAvCWaqU+ELhzVli16CMePq6VlfnQzRcPzYaglFhBka
+	FSn1dtBccjS5NmUBMBIreURLDMToKgmeiLAukeW9w6MPj7w/0eFF9DVAT3s7bTNe
+	AvrO9ntkJdBAm/nOPP1JJhKEeC/SEVgvL50AmiYlwiHkcA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4gec0n0x-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:38:32 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4f1d7ac8339so19959981cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 06:38:32 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:43:29 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ed6ff3de05so17980581cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 06:43:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766068711; x=1766673511; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5Y26BULJ8RBq8/D+FuknUz03YZBdAhneAsR52EWKMMc=;
-        b=KMsEz3yPUvW5iSr+OMtULXKLmKNuQlQhZRam2uvXyUgiMLPAW1QFbdbng/sAJelL+5
-         kTpMeaosCJhm+1t6bS24AaXKB95E4j33KN5h8FLrImUNcYnd3oICz1Q9Zkvf/exelTFs
-         wF9sNYqO6OYIfzp11n+g+1CbyozzqlpqFGb+iv5eG+Y9sjSIIObv+btJ/I0LEsNC4Zc/
-         W42cP1AP81If9am4SWDYgpe+BuBN6mXpxR8JpXII0rabm0hDMPglpiHIe7GloJcuJB+i
-         GrI8yGT/jlpgn2keFWRd9dCIA8AvbZTHRF0NYR7bNzfrRgIBEXS6J2dKy3esqiczs/ld
-         FbCg==
+        d=oss.qualcomm.com; s=google; t=1766069009; x=1766673809; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cl4v0oEPk0Fzc67kkLwDXNvTS+8R7nFDTHzGx6wYMJ8=;
+        b=EAudjjoANxlhME/mZrpu4EX7p2eBWJzZV80FdMwkqXh/0B+XG47cYqanw5TX9a8HMH
+         m3ITBzS8gwK+vYr3C5GVuiCcpaM7BnpnrT7Vo4zztSwZQzsV6CDJXH9UlC/fKmgDsowH
+         ZqGlADP+Wj6t1U8Q3XEZGEHqiulNGDdiqB+PUmYyFf0hUryqe1e8UlySH5X+DP4JQ2YP
+         xqGvmcjhaITrYen2dqMfiSYQQ3aGdQUntd6hNpbGeTlMj13OpsbA2FtxnYLIydDIjt0y
+         k8cSzqprhbGkDhmofO3/0yOq8N4bL+3wzdotF0k95c17h6IcwPhfccMI8XH3YeA+ICs0
+         ZzRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766068711; x=1766673511;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5Y26BULJ8RBq8/D+FuknUz03YZBdAhneAsR52EWKMMc=;
-        b=VQOV2IHkPJT4Krc2ppEjpn7n5Nis2RNqzC7Z8x3TKAdZ//lSBTqn7DR7I8fCAn+jC8
-         yXK9PvmODpXxWzlyNXJ3XWiLPbqRL2/eKoN4EzOfS5693xvfRuaHsw5vt71WqEkT4O5e
-         Sz0XaCRYSi1qoVmbzaOiCJ9iV42Wi6o0yrYaIF5fGFuVBayvEtCZarGDKwvE6cj0GCnI
-         PQKBhkCzKQ3oa2sTC1obOh6GQu8iYRNkhix7zVMwU3GcJIjlPPpfHaeqlG+Ue2bq8HfV
-         JwV6gpEBNlBNfVBAITquW4B2ajSbqf5R/GSb4s6o7ljz6zBkNZ5TSeWTVb19jv4W63WG
-         QEIA==
-X-Gm-Message-State: AOJu0YwRKeAiqgP/EF/VRDHIhcHE5b/61+bQLxdGuhoWMNCavBD7NyNP
-	uc92kigfOn9mHhJTmaOJYuQAuxpnuBo9HgFh0z+UY0Qk7b/n7i7NzGttbXoce6DOV+jimYc9LCu
-	9Ij98PW0avkxj4DeT8KQhKKUi23yUrSmJQQpf82Dmt/XZTnTo/P1Agf15WHeQ05OIeZsZ
-X-Gm-Gg: AY/fxX4Huix0jWIIDMgO60xFmSF28W2dvO7jbWoFgVxTwqSZX4opkXqyN1P1ebQBh37
-	zZsOs/YWHu3ciWXfmhJwubAJl+czm7LJPf8dlNA21LUeWKU7uWQaY3cEKvKZqR3ajUAJ00GKJ5T
-	e+EsjHMK2ZVRhYsi/EgtNNl0Il7kCIisMA6MrcGTp17oTWaBPKTlrpo7BSzjH7m7xy7iQAVwTkF
-	mndsZ8YBLZON5Km+SYqIIPPvRAOxbKSPqFL1DnhD5efHRkkafwk/0j8KmUoXbjL5ha5PUpiHbQJ
-	i8RGXjBokGzrXuBl7CMxYyJzlCqY/PdimsSstYcU4NfnNW0+35Boq+M3DI9tWkVwy835MEwklf2
-	sdmLk3JknxDEIEOzmbnlztLNALOOwc1cOZhe7CPKsmyo9U5n2a4aePxFtPLLbFs5AmhfhRo/ZDC
-	UHmyNYMhJUqKxBCS6t3tCMpAY=
-X-Received: by 2002:ac8:7619:0:b0:4f1:e99f:7d74 with SMTP id d75a77b69052e-4f1e99f80a7mr178650651cf.12.1766068711224;
-        Thu, 18 Dec 2025 06:38:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlEjQv+ygaBdqph3ve8a6YaNgg6UhxtXDrabzkJXxuxcFj1Fh/AECTZrZvFwrReoNsFEU/Mw==
-X-Received: by 2002:ac8:7619:0:b0:4f1:e99f:7d74 with SMTP id d75a77b69052e-4f1e99f80a7mr178650211cf.12.1766068710573;
-        Thu, 18 Dec 2025 06:38:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1766069009; x=1766673809;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cl4v0oEPk0Fzc67kkLwDXNvTS+8R7nFDTHzGx6wYMJ8=;
+        b=FInwLv5CHxZhdPK3XZgPOyRxi3ROlKXRwIsRPZRIg3g3FdDK5KRlj0dDo0YmkzfzX6
+         OK80vEHaPDoqeL1c9WY7qP/CTIgowLA0QiQ0bdTCyDIzrtafAG5IRV3tbeQJZeVovVCh
+         LvSeUmYy6oJCpWO1jona5kPOfLq7gWWf0bGvM5SLmdrMnNM5sW8ZRt09I1+9y//EDHsZ
+         8NgCvxxMHKFWRfFlKq5OeuE4k+gvbIrs+p1IUMyJgVhZNLdSBuCPSaOIhIPVtP5CbO0v
+         psQMgyMLIzSDPgb32FZxDL/RUkbk5X2hIsc6ZU/M2Wxa40W+whrsAR3oY57GTnSKvYbY
+         VSGA==
+X-Forwarded-Encrypted: i=1; AJvYcCW1yuww5GoU6o+3Mh5JCnkuuA0i+1JHODQLshuNJRCjf1z1fdC66LoyYhV1VBZ/ArcK1eh5wXqEJOkLoZtE@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfjFj40SplwL47PSOlb+qG6v7sEAf7Fz9n4QvWlhmpyyesXAxT
+	wIUkMumwuJpmRU8mxkIs+bRa97B9aAX1zxutxJvY+ocmyfy01hP4jCXBuHKPNDIKBc0EzVCJzeT
+	9W4ljFmdughGY5dDqWx+fogI/r2ZBrNYEBKfImtERmtHJ8CGBvnUrmPiUeyv6MLFL030w
+X-Gm-Gg: AY/fxX6GEsMAF+STsKPcNajqvgnm3MiidggKsqF2LqtQtr/cY44+VOFs2cTgFIYnuxY
+	ClVgbY3bqheTZZgk1hm30tMs+uzJ3fEz7k9b9mL4hskXbCespX7AowwwgSgSUmNmsz7Gx+exJR2
+	wT0hRq5Oov8Pwj30Pt2oo0YsrRB6SQlKYSJgfhquwOb6U8SAScnWrxG/Vof+1pnMPiTr80AqC23
+	bmKJAnyPOhkLVFzFLGQcTkoogPHYQ1xklJ9E+NAOVMIMj7Nh7HLAEkvhTtkbnIE3mGQwLbjIM7T
+	IwIVWp8fxGzlW+0hq2uXmYmyBAIh11CLcfQiJkjAFs4akz70mkx2qEZpYbq14+72Ugwe1iS/nU/
+	ybINH/SO1ygP45F+IN/5CX3K/ydsVBgQOT9viRdFjdW/1u9RO30gLvBQ7lPepUYymgbabGpYySF
+	n50HIwWRZvJBvZw1gpm3Ea7+M=
+X-Received: by 2002:a05:622a:4acb:b0:4ee:13d0:d02b with SMTP id d75a77b69052e-4f1d059e61cmr284139781cf.50.1766069008855;
+        Thu, 18 Dec 2025 06:43:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHL6dB+1hj86WlzrKc5tiatChh9pmm+26BpKCuaMLqUN4WCKyyEtSQwL9D+XULfFU0r7F5lig==
+X-Received: by 2002:a05:622a:4acb:b0:4ee:13d0:d02b with SMTP id d75a77b69052e-4f1d059e61cmr284139561cf.50.1766069008428;
+        Thu, 18 Dec 2025 06:43:28 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a132d3c3dsm1160214e87.33.2025.12.18.06.38.29
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-381134f39aesm10852521fa.14.2025.12.18.06.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Dec 2025 06:38:29 -0800 (PST)
+        Thu, 18 Dec 2025 06:43:27 -0800 (PST)
+Date: Thu, 18 Dec 2025 16:43:25 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 18 Dec 2025 16:38:25 +0200
-Subject: [PATCH v2 3/3] drm/msm/mdp5: drop support for MSM8998, SDM630 and
- SDM660
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 5/5] phy: qcom: qmp-pcie: add QMP PCIe PHY tables for
+ Kaanapali
+Message-ID: <e2lg4eanhotbvauhfaq6z6d22ptwn5g5rfpvblpuegobdybtv2@f4qfelzzrymq>
+References: <20251124-kaanapali-pcie-phy-v4-0-d04ee9cca83b@oss.qualcomm.com>
+ <20251124-kaanapali-pcie-phy-v4-5-d04ee9cca83b@oss.qualcomm.com>
+ <mudq7gmqs62osuarvflmemt2a2gnuloywabtr4w5oyyddp4b7v@eynaurtfrnyt>
+ <aUDywpWf+gpEH4Uw@hu-qianyu-lv.qualcomm.com>
+ <ulsst7k4meqq5psv577pqapnsrehvvpk3oijp5usxtxdwoxunb@6mxjmpigkwk7>
+ <aUPYk6VuFUFrtUDI@hu-qianyu-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251218-mdp5-drop-dpu3-v2-3-11299f1999d2@oss.qualcomm.com>
-References: <20251218-mdp5-drop-dpu3-v2-0-11299f1999d2@oss.qualcomm.com>
-In-Reply-To: <20251218-mdp5-drop-dpu3-v2-0-11299f1999d2@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10672;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=ArL2dpKAJjAc+7mXNblJNDmtmUpgtot12YPCAF2ieD4=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpRBHh76SAH27gYa/CXPaY+ut8tVW+Fwu+alavP
- YH4oSO/buGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaUQR4QAKCRCLPIo+Aiko
- 1SqWB/4rPUw4X7Z10ue2JgU45F0EcvH0czjZ37NeLdgRLPzEAt85KbAar2zJSe/MRX1cAQ9GLFM
- eq/DhzphJhGxxnSqvGkGxwVPs2qMTRjl2LAbX8mGhSrKsYZBUeDS+WzfVJ5ZVeqCuIDmNz/YD++
- Ea8SVWRLTeSMzZCKiqPf5Op9Omwt1ZT+CrvC+V6frFocaEfizf0E7d1GVQhaKAlrhaVMAelEHd5
- Hny7NV2JZ4p2U3fAfN22RirB9nYq+1EoklwoOEq0Dd4nZqy8XOAXF6NPiNC92UV9DyxvfhKQbp7
- 4uJvmtJeAqJJLHPhPaLvi1A+AK46JXIoeiJWwXSLNcmalzAu
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: mieBHMli_JGH1Ag3Xwno8025oVK0kNAn
-X-Authority-Analysis: v=2.4 cv=V51wEOni c=1 sm=1 tr=0 ts=694411e8 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aUPYk6VuFUFrtUDI@hu-qianyu-lv.qualcomm.com>
+X-Proofpoint-ORIG-GUID: JgC4MiNQd10l9-RqhfmGHu83IVMzS1fh
+X-Authority-Analysis: v=2.4 cv=V51wEOni c=1 sm=1 tr=0 ts=69441311 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=-7OkC1N2hDg87y89b1EA:9 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDEyMSBTYWx0ZWRfXwUpeJPUBRO04
- 7yWDKcnmWBdd6Gp0viC6KOldmAkwR7JPoz8u5MTUfAOp6EYJuN/1A7dNY6e7PMArRSnsyvKYqTP
- 5PsMgov9MeB/4CR4C3yn3kuarS1wl7LUIRWx3udKAut5UObYFZzCYkvr7iMwZBNb/yVVfyO3e5Z
- M0QAyvTjxkqlnqTop0ahfGsQxd6/x392QoAaxjUfT8rSZuBBuSybPHJT/UONpmWIkY2jwUiBUS2
- Vr2+ZyiYNR82aosccT3gQC25UV7eg9F07ouDZ7vnbbNmH3XNbOXfNN45saECWOnVJnke/DiefTh
- rorMnZA0P5u66TZug9/nsMEDJysxYGbM5bEkQZ4OB0sKI9r+dfY0z2IPx2LHIVnUF9LRf7jR/tD
- eSRhP1/hbx1ZBProZT6e4tu6VnXUOg==
-X-Proofpoint-GUID: mieBHMli_JGH1Ag3Xwno8025oVK0kNAn
+ a=JfrnYn6hAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Zsci5tvq42nDwCYANM4A:9
+ a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=1CNFftbPRP8L7MoqJWF3:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDEyMiBTYWx0ZWRfXxoiZrrJbmyCV
+ JYYbTDGWFrIgaMjlE9/JbnSUVfKp1ty3Fk9BylL8VmkUQi1eFZqfV6SjJ+5ayqFuv86GenretNC
+ +GFH/LLV7A7jKQ6jAoH+d0nXDn5ljSFdLUREiib60f3Efz5EMeZJdBvgcqQRHQfvHZZMo1CndGr
+ fGqtnqBR76w3IewtTapaLZWssqhT6+ijJlBwFWLiIgDIcKKGxOIqLrotQseohZlXB4LtvAHKWsi
+ tkdQU3sbP6xnVxmVKjAALSqVT4QrYDf+olpIdKGMQNmwkUlzZu9HdjIMYxKmF/OQdo2EKtX3E0K
+ beU5BS9pK1z6L+Z4UTNg/u99QSZkWs/PurzyCA/DuPzn0ssjqfC9/Yso+eOSYA36cvCCPAi1niL
+ qHwCqea2ptqhiRPpd+A3EJHK5DQpwA==
+X-Proofpoint-GUID: JgC4MiNQd10l9-RqhfmGHu83IVMzS1fh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-18_02,2025-12-17_02,2025-10-01_01
@@ -151,408 +143,141 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0 malwarescore=0
  lowpriorityscore=0 spamscore=0 suspectscore=0 adultscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512180121
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512180122
 
-Currently MDP5 3.x (MSM8998, SDM630 and SDM660) platforms are support
-by both DPU and MDP5 drivers. Support for them in the DPU driver is
-mature enough, so it's no longer sensible to keep them enabled in the
-MDP5 driver. Not to mention that MSM8998 never used an MDP5 compatible
-string. Drop support for the MDP5 3.x genration inside the MDP5
-driver and migrate those to the DPU driver only.
+On Thu, Dec 18, 2025 at 02:33:55AM -0800, Qiang Yu wrote:
+> On Thu, Dec 18, 2025 at 03:26:26AM +0200, Dmitry Baryshkov wrote:
+> > On Mon, Dec 15, 2025 at 09:48:50PM -0800, Qiang Yu wrote:
+> > > On Wed, Dec 10, 2025 at 03:51:15AM +0200, Dmitry Baryshkov wrote:
+> > > > On Mon, Nov 24, 2025 at 02:24:38AM -0800, Qiang Yu wrote:
+> > > > > Add QMP PCIe PHY support for the Kaanapali platform.
+> > > > > 
+> > > > > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > > > > Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > > > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> > > > > ---
+> > > > >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 194 +++++++++++++++++++++++++++++++
+> > > > >  1 file changed, 194 insertions(+)
+> > > > > 
+> > > > > @@ -3363,6 +3516,16 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_30 = {
+> > > > >  	.ln_shrd	= 0x8000,
+> > > > >  };
+> > > > >  
+> > > > > +static const struct qmp_pcie_offsets qmp_pcie_offsets_v8_0 = {
+> > > > 
+> > > > Is it really 8.0 or 8.20?
+> > > 
+> > > I double confirmed the version, it is really 8.0.
+> > 
+> > This is really strange. The SERDES offset not equal to 0, te
+> > PHYSTATUS_4_20 bit instead of PHYSTATUS -- all of that has always been a
+> > characteristic of N.20 PHYs.
+> 
+> Yeah, seems your theroy is correct on previous target such as sm8550 and
+> sm8450. But for kaanapali, the fact is the version is 8.0, SERDES offset
+> is 0x1000 and the status bit is bit 7.
+> 
+> We can also cross check the status bit with downstream devicetree:
+> 93 		qcom,phy-status-bit = <7>;
 
-Note: this will break if one uses the DT generated before v6.3 as they
-had only the generic, "qcom,mdp5" compatible string for SDM630 and
-SDM660. However granted that we had two LTS releases inbetween I don't
-think it is an issue.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 314 -------------------------------
- drivers/gpu/drm/msm/msm_drv.c            |  16 +-
- 2 files changed, 13 insertions(+), 317 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index df464f7c05bf..69fef034d0df 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -1097,310 +1097,6 @@ static const struct mdp5_cfg_hw msm8937_config = {
- 	.max_clk = 320000000,
- };
- 
--static const struct mdp5_cfg_hw msm8998_config = {
--	.name = "msm8998",
--	.mdp = {
--		.count = 1,
--		.caps = MDP_CAP_DSC |
--			MDP_CAP_CDM |
--			MDP_CAP_SRC_SPLIT |
--			0,
--	},
--	.ctl = {
--		.count = 5,
--		.base = { 0x01000, 0x01200, 0x01400, 0x01600, 0x01800 },
--		.flush_hw_mask = 0xf7ffffff,
--	},
--	.pipe_vig = {
--		.count = 4,
--		.base = { 0x04000, 0x06000, 0x08000, 0x0a000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_CSC	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_rgb = {
--		.count = 4,
--		.base = { 0x14000, 0x16000, 0x18000, 0x1a000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_dma = {
--		.count = 2, /* driver supports max of 2 currently */
--		.base = { 0x24000, 0x26000, 0x28000, 0x2a000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_cursor = {
--		.count = 2,
--		.base = { 0x34000, 0x36000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			MDP_PIPE_CAP_CURSOR	|
--			0,
--	},
--
--	.lm = {
--		.count = 6,
--		.base = { 0x44000, 0x45000, 0x46000, 0x47000, 0x48000, 0x49000 },
--		.instances = {
--				{ .id = 0, .pp = 0, .dspp = 0,
--				  .caps = MDP_LM_CAP_DISPLAY |
--					  MDP_LM_CAP_PAIR, },
--				{ .id = 1, .pp = 1, .dspp = 1,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--				{ .id = 2, .pp = 2, .dspp = -1,
--				  .caps = MDP_LM_CAP_DISPLAY |
--					  MDP_LM_CAP_PAIR, },
--				{ .id = 3, .pp = -1, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB, },
--				{ .id = 4, .pp = -1, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB, },
--				{ .id = 5, .pp = 3, .dspp = -1,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--			     },
--		.nb_stages = 8,
--		.max_width = 2560,
--		.max_height = 0xFFFF,
--	},
--	.dspp = {
--		.count = 2,
--		.base = { 0x54000, 0x56000 },
--	},
--	.ad = {
--		.count = 3,
--		.base = { 0x78000, 0x78800, 0x79000 },
--	},
--	.pp = {
--		.count = 4,
--		.base = { 0x70000, 0x70800, 0x71000, 0x71800 },
--	},
--	.cdm = {
--		.count = 1,
--		.base = { 0x79200 },
--	},
--	.dsc = {
--		.count = 2,
--		.base = { 0x80000, 0x80400 },
--	},
--	.intf = {
--		.base = { 0x6a000, 0x6a800, 0x6b000, 0x6b800, 0x6c000 },
--		.connect = {
--			[0] = INTF_eDP,
--			[1] = INTF_DSI,
--			[2] = INTF_DSI,
--			[3] = INTF_HDMI,
--		},
--	},
--	.max_clk = 412500000,
--};
--
--static const struct mdp5_cfg_hw sdm630_config = {
--	.name = "sdm630",
--	.mdp = {
--		.count = 1,
--		.caps = MDP_CAP_CDM |
--			MDP_CAP_SRC_SPLIT |
--			0,
--	},
--	.ctl = {
--		.count = 5,
--		.base = { 0x01000, 0x01200, 0x01400, 0x01600, 0x01800 },
--		.flush_hw_mask = 0xf4ffffff,
--	},
--	.pipe_vig = {
--		.count = 1,
--		.base = { 0x04000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_CSC	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_rgb = {
--		.count = 4,
--		.base = { 0x14000, 0x16000, 0x18000, 0x1a000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_dma = {
--		.count = 2, /* driver supports max of 2 currently */
--		.base = { 0x24000, 0x26000, 0x28000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_cursor = {
--		.count = 1,
--		.base = { 0x34000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			MDP_PIPE_CAP_CURSOR	|
--			0,
--	},
--
--	.lm = {
--		.count = 2,
--		.base = { 0x44000, 0x46000 },
--		.instances = {
--				{ .id = 0, .pp = 0, .dspp = 0,
--				  .caps = MDP_LM_CAP_DISPLAY |
--					  MDP_LM_CAP_PAIR, },
--				{ .id = 1, .pp = 1, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB, },
--				},
--		.nb_stages = 8,
--		.max_width = 2048,
--		.max_height = 0xFFFF,
--	},
--	.dspp = {
--		.count = 1,
--		.base = { 0x54000 },
--	},
--	.ad = {
--		.count = 2,
--		.base = { 0x78000, 0x78800 },
--	},
--	.pp = {
--		.count = 3,
--		.base = { 0x70000, 0x71000, 0x72000 },
--	},
--	.cdm = {
--		.count = 1,
--		.base = { 0x79200 },
--	},
--	.intf = {
--		.base = { 0x6a000, 0x6a800 },
--		.connect = {
--			[0] = INTF_DISABLED,
--			[1] = INTF_DSI,
--		},
--	},
--	.max_clk = 412500000,
--};
--
--static const struct mdp5_cfg_hw sdm660_config = {
--	.name = "sdm660",
--	.mdp = {
--		.count = 1,
--		.caps = MDP_CAP_DSC |
--			MDP_CAP_CDM |
--			MDP_CAP_SRC_SPLIT |
--			0,
--	},
--	.ctl = {
--		.count = 5,
--		.base = { 0x01000, 0x01200, 0x01400, 0x01600, 0x01800 },
--		.flush_hw_mask = 0xf4ffffff,
--	},
--	.pipe_vig = {
--		.count = 2,
--		.base = { 0x04000, 0x6000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_CSC	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_rgb = {
--		.count = 4,
--		.base = { 0x14000, 0x16000, 0x18000, 0x1a000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SCALE	|
--			MDP_PIPE_CAP_DECIMATION	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_dma = {
--		.count = 2, /* driver supports max of 2 currently */
--		.base = { 0x24000, 0x26000, 0x28000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			0,
--	},
--	.pipe_cursor = {
--		.count = 1,
--		.base = { 0x34000 },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			MDP_PIPE_CAP_CURSOR	|
--			0,
--	},
--
--	.lm = {
--		.count = 4,
--		.base = { 0x44000, 0x45000, 0x46000, 0x49000 },
--		.instances = {
--				{ .id = 0, .pp = 0, .dspp = 0,
--				  .caps = MDP_LM_CAP_DISPLAY |
--					  MDP_LM_CAP_PAIR, },
--				{ .id = 1, .pp = 1, .dspp = 1,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--				{ .id = 2, .pp = 2, .dspp = -1,
--				  .caps = MDP_LM_CAP_DISPLAY |
--					  MDP_LM_CAP_PAIR, },
--				{ .id = 3, .pp = 3, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB, },
--				},
--		.nb_stages = 8,
--		.max_width = 2560,
--		.max_height = 0xFFFF,
--	},
--	.dspp = {
--		.count = 2,
--		.base = { 0x54000, 0x56000 },
--	},
--	.ad = {
--		.count = 2,
--		.base = { 0x78000, 0x78800 },
--	},
--	.pp = {
--		.count = 5,
--		.base = { 0x70000, 0x70800, 0x71000, 0x71800, 0x72000 },
--	},
--	.cdm = {
--		.count = 1,
--		.base = { 0x79200 },
--	},
--	.dsc = {
--		.count = 2,
--		.base = { 0x80000, 0x80400 },
--	},
--	.intf = {
--		.base = { 0x6a000, 0x6a800, 0x6b000, 0x6b800 },
--		.connect = {
--			[0] = INTF_DISABLED,
--			[1] = INTF_DSI,
--			[2] = INTF_DSI,
--			[3] = INTF_HDMI,
--		},
--	},
--	.max_clk = 412500000,
--};
--
- static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 	{ .revision = 0, .config = { .hw = &msm8x74v1_config } },
- 	{ .revision = 1, .config = { .hw = &msm8x26_config } },
-@@ -1416,12 +1112,6 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 	{ .revision = 16, .config = { .hw = &msm8x53_config } },
- };
- 
--static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
--	{ .revision = 0, .config = { .hw = &msm8998_config } },
--	{ .revision = 2, .config = { .hw = &sdm660_config } },
--	{ .revision = 3, .config = { .hw = &sdm630_config } },
--};
--
- const struct mdp5_cfg_hw *mdp5_cfg_get_hw_config(struct mdp5_cfg_handler *cfg_handler)
- {
- 	return cfg_handler->config.hw;
-@@ -1455,10 +1145,6 @@ struct mdp5_cfg_handler *mdp5_cfg_init(struct mdp5_kms *mdp5_kms,
- 		cfg_handlers = cfg_handlers_v1;
- 		num_handlers = ARRAY_SIZE(cfg_handlers_v1);
- 		break;
--	case 3:
--		cfg_handlers = cfg_handlers_v3;
--		num_handlers = ARRAY_SIZE(cfg_handlers_v3);
--		break;
- 	default:
- 		DRM_DEV_ERROR(dev->dev, "unexpected MDP major version: v%d.%d\n",
- 				major, minor);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 7e977fec4100..abee7149a9e8 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -960,23 +960,33 @@ static bool prefer_mdp5 = true;
- MODULE_PARM_DESC(prefer_mdp5, "Select whether MDP5 or DPU driver should be preferred");
- module_param(prefer_mdp5, bool, 0444);
- 
-+/* list all platforms that have been migrated from mdp5 to dpu driver */
-+static const char *const msm_mdp5_dpu_migrated[] = {
-+	/* there never was qcom,msm8998-mdp5 */
-+	"qcom,sdm630-mdp5",
-+	"qcom,sdm660-mdp5",
-+	NULL
-+};
-+
- /* list all platforms supported by both mdp5 and dpu drivers */
- static const char *const msm_mdp5_dpu_migration[] = {
- 	"qcom,msm8917-mdp5",
- 	"qcom,msm8937-mdp5",
- 	"qcom,msm8953-mdp5",
- 	"qcom,msm8996-mdp5",
--	"qcom,sdm630-mdp5",
--	"qcom,sdm660-mdp5",
- 	NULL,
- };
- 
- bool msm_disp_drv_should_bind(struct device *dev, bool dpu_driver)
- {
--	/* If it is not an MDP5 device, do not try MDP5 driver */
-+	/* If it is not an MDP5 device, use DPU */
- 	if (!of_device_is_compatible(dev->of_node, "qcom,mdp5"))
- 		return dpu_driver;
- 
-+	/* If it is no longer supported by MDP5, use DPU */
-+	if (of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migrated))
-+		return dpu_driver;
-+
- 	/* If it is not in the migration list, use MDP5 */
- 	if (!of_device_compatible_match(dev->of_node, msm_mdp5_dpu_migration))
- 		return !dpu_driver;
+
+
+> 
+> - Qiang Yu
+> > 
+> > > 
+> > > - Qiang Yu
+> > > > 
+> > > > > +	.serdes		= 0x1000,
+> > > > > +	.pcs		= 0x1400,
+> > > > > +	.pcs_misc	= 0x1800,
+> > > > > +	.tx		= 0x0000,
+> > > > > +	.rx		= 0x0200,
+> > > > > +	.tx2		= 0x0800,
+> > > > > +	.rx2		= 0x0a00,
+> > > > > +};
+> > > > > +
+> > > > >  static const struct qmp_pcie_offsets qmp_pcie_offsets_v8_50 = {
+> > > > >  	.serdes     = 0x8000,
+> > > > >  	.pcs        = 0x9000,
+> > > > > @@ -4425,6 +4588,34 @@ static const struct qmp_phy_cfg qmp_v6_gen4x4_pciephy_cfg = {
+> > > > >  	.phy_status             = PHYSTATUS_4_20,
+> > > > >  };
+> > > > >  
+> > > > > +static const struct qmp_phy_cfg qmp_v8_gen3x2_pciephy_cfg = {
+> > > > > +	.lanes = 2,
+> > > > > +
+> > > > > +	.offsets		= &qmp_pcie_offsets_v8_0,
+> > > > > +
+> > > > > +	.tbls = {
+> > > > > +		.serdes			= kaanapali_qmp_gen3x2_pcie_serdes_tbl,
+> > > > > +		.serdes_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_serdes_tbl),
+> > > > > +		.tx			= kaanapali_qmp_gen3x2_pcie_tx_tbl,
+> > > > > +		.tx_num			= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_tx_tbl),
+> > > > > +		.rx			= kaanapali_qmp_gen3x2_pcie_rx_tbl,
+> > > > > +		.rx_num			= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_rx_tbl),
+> > > > > +		.pcs			= kaanapali_qmp_gen3x2_pcie_pcs_tbl,
+> > > > > +		.pcs_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_pcs_tbl),
+> > > > > +		.pcs_misc		= kaanapali_qmp_gen3x2_pcie_pcs_misc_tbl,
+> > > > > +		.pcs_misc_num		= ARRAY_SIZE(kaanapali_qmp_gen3x2_pcie_pcs_misc_tbl),
+> > > > > +	},
+> > > > > +
+> > > > > +	.reset_list		= sdm845_pciephy_reset_l,
+> > > > > +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> > > > > +	.vreg_list		= qmp_phy_vreg_l,
+> > > > > +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> > > > > +	.regs			= pciephy_v8_regs_layout,
+> > > > > +
+> > > > > +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> > > > > +	.phy_status		= PHYSTATUS_4_20,
+> > > > > +};
+> > > > > +
+> > > > >  static const struct qmp_phy_cfg glymur_qmp_gen5x4_pciephy_cfg = {
+> > > > >  	.lanes = 4,
+> > > > >  
+> > > > > @@ -5209,6 +5400,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
+> > > > >  	}, {
+> > > > >  		.compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy",
+> > > > >  		.data = &ipq9574_gen3x2_pciephy_cfg,
+> > > > > +	}, {
+> > > > > +		.compatible = "qcom,kaanapali-qmp-gen3x2-pcie-phy",
+> > > > > +		.data = &qmp_v8_gen3x2_pciephy_cfg,
+> > > > >  	}, {
+> > > > >  		.compatible = "qcom,msm8998-qmp-pcie-phy",
+> > > > >  		.data = &msm8998_pciephy_cfg,
+> > > > > 
+> > > > > -- 
+> > > > > 2.34.1
+> > > > > 
+> > > > > 
+> > > > > -- 
+> > > > > linux-phy mailing list
+> > > > > linux-phy@lists.infradead.org
+> > > > > https://lists.infradead.org/mailman/listinfo/linux-phy
+> > > > 
+> > > > -- 
+> > > > With best wishes
+> > > > Dmitry
+> > > 
+> > > -- 
+> > > linux-phy mailing list
+> > > linux-phy@lists.infradead.org
+> > > https://lists.infradead.org/mailman/listinfo/linux-phy
+> > 
+> > -- 
+> > With best wishes
+> > Dmitry
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
 -- 
-2.47.3
-
+With best wishes
+Dmitry
 
