@@ -1,98 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-85716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68835CCC626
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:04:33 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 231C6CCC891
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:44:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9ADCD3007E45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:04:29 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id F1426305B3E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:43:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11CE12D6E76;
-	Thu, 18 Dec 2025 15:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A5A339860;
+	Thu, 18 Dec 2025 15:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="or0nf8VU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeWyc7MN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA95D28D8DA;
-	Thu, 18 Dec 2025 15:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC343148C9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 15:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766070265; cv=none; b=EPDOupEiFgeVkqLC05Axj7h87zfXqlFUSwXqNnfzYJIgdpAwmXBIzWutixBc3l+ZH8TWm8G8al+gPTbJNrZoxDAT2mFaDw10aVcwMsowTjxcLp/QSAJNBSVs4RWsXXXkLO95XVnURdENn3yYRixXbyIJLZGUTHvUzLCQFrODZh8=
+	t=1766071955; cv=none; b=tQydcDqKXe6j5e2d4/HGWrSNA/FGrUpB0rwctqHo2ibNDZDFM5MblMo+NN3kEnZAgq0wSuXSfHX6DRN9DmzsBEpXw+HKWn8k3dxDHNMj0LrcWhSBLC3GMgrVNJVL6i+PDIJ13g9f/n5KjuJkR8B0gvihb0+AxLXZWdqCeRtm+s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766070265; c=relaxed/simple;
-	bh=TZc9Hlw0J1rsEXQ0S3cg/4mmQeIULdQ8BsiItCa/0nA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqzilOScAaDoYpUmbctEJgAwohQYjXvllMBfnyfxHWxi6dWY/75gmhINRHQ/SE8/VqbbFsq43yarshweGJIy8PtaJ99gu1SF+6w8EVkB5GMTUXj1WGncXv9pQrF43hDOkeGIq6O1q6hlVShiVlobG9nLKg1UAYYrrajcZBhOIvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=or0nf8VU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191D4C4CEFB;
-	Thu, 18 Dec 2025 15:04:24 +0000 (UTC)
+	s=arc-20240116; t=1766071955; c=relaxed/simple;
+	bh=mtJEaxRJ0pSaciF6SUw8joG1pAlhDTsgA230AZ93/YI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S3bOcPVTJptQuMclDZCu9vKoprGsB9Ev3OXvdqxDenb8cgxbwoJhKO8wUu+FRODY50dRZI8d/x/YprTKJhAWb/J3Th8CMoUIFVBp+/Ot6dYX705P/EVmG0387I+zGu6W4rBGmT8v6LOBVzLouA6jHca3yU68Vb9hZg0yIwora7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeWyc7MN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16980C4AF09
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 15:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766070265;
-	bh=TZc9Hlw0J1rsEXQ0S3cg/4mmQeIULdQ8BsiItCa/0nA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=or0nf8VUHQUtT3hN+QIH+SD1Wc1VA8wcJbvDGXZWaZcXFg3zv3BZRf//deLGRlaim
-	 ARFCW5RU3zVDBFANug05lEnQ/AUchMNl7jKOgB1w8w6A8JuWvpYOzPMcbW2Cd+WIeg
-	 xq+v1OtlKPkFufoRcGENo51C2qqIdoinAmghuVbdaZNfbN+WnKtXirXBnc0l3TKQfq
-	 3mH6aiIUstI7F4oO7pBuDlfrNTPLWZGWB3NOPQ3Gvz/NgR/wV1WilA50BPNRLwSnXZ
-	 zAw5NRmiGdkj1TxevR0h05Nxu3AgDeEC4202aHuOTfWpZadpQ5TDBHjSF31TVMobtI
-	 VXtrQA5BhsKjg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: aiqun.yu@oss.qualcomm.com,
-	tingwei.zhang@oss.qualcomm.com,
-	trilok.soni@oss.qualcomm.com,
-	yijie.yang@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Tengfei Fan <tengfei.fan@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v4 0/5] arm64: dts: qcom: Introduce Kaanapali platform device tree
-Date: Thu, 18 Dec 2025 09:04:21 -0600
-Message-ID: <176607025911.302413.14359032773299957927.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251215-knp-dts-v4-0-1541bebeb89f@oss.qualcomm.com>
-References: <20251215-knp-dts-v4-0-1541bebeb89f@oss.qualcomm.com>
+	s=k20201202; t=1766071955;
+	bh=mtJEaxRJ0pSaciF6SUw8joG1pAlhDTsgA230AZ93/YI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=oeWyc7MNHd7xMNURlUMQSB2cKjZLIoO1fWwRQCKIl5mEiJEIRQG/wCJzkVujuOHwX
+	 Tmm6USZvdic4Zg2DeI98s5v10XmOgitA0hQJDlfcqw1dttw06+NOnDuWGBZLogEDxq
+	 E4SIgshvsg7CNH4BEaTPKF5B5MPlDu9rV7qETF3yki/2r+198/1bD/MbCdK+3ygiMz
+	 NHnWwLof7mQP2Xj0lTyUc2jrp6uW55pGFcFR/hoxMtaFoE/eYjx4sFnxlmf2F2CrBn
+	 MalY2IPKkYcos5DbyQwxBEiDHiuvV0y27BjyUVi36nva+tcxcjaDok+PtqDDvuEgPZ
+	 y4FUjry+Nfe3A==
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38007fa1efbso3689891fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 07:32:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU8/gqVf49w3EBvmKCxElsAE95rRAPO7MVDB9Fx7tytNu4Kn0F0/4//T3w+eIAR85fgMJ/q79+vuxAabwKv@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeuKrv4m7/JoTTEN91cDS/AA0CZQEzRHalOUfUgWT4G5v9CFCo
+	Z1HPuDRcw8OgwQmCBRgxIgV4jXp9/il55iMqcigb6bZ2gE26gZ2CG+cGtSgMvSupkiWjGdF1qX3
+	HyuKS9uFVOvYyJsmrvneWVsQb5vhWgDyg5tseBpB1mg==
+X-Google-Smtp-Source: AGHT+IF6LzK0HuPfeatnJq9XbiQ0+26VjO0wEIfZhLGkpB7aa4MhNQWClndM2CR4LTEg/jW+unYGn+Uqi4sUq1ySSKs=
+X-Received: by 2002:a2e:be22:0:b0:37f:c5ca:a0ed with SMTP id
+ 38308e7fff4ca-37fd087a5a3mr65865261fa.26.1766071953627; Thu, 18 Dec 2025
+ 07:32:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
+ <20251128-qcom-qce-cmd-descr-v9-10-9a5f72b89722@linaro.org> <c15e156f-fd11-4d38-98c0-f89b78044407@oss.qualcomm.com>
+In-Reply-To: <c15e156f-fd11-4d38-98c0-f89b78044407@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 18 Dec 2025 16:32:20 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MeDQgDzjRDVodJhPpHye6LYLmigsHhRjDqTK1Kn5+EhqQ@mail.gmail.com>
+X-Gm-Features: AQt7F2oR1ydtP2acJpQiF8tSxBxoIBWtjl_WKVgiAkSvnymIweDphsjTepEVa7M
+Message-ID: <CAMRc=MeDQgDzjRDVodJhPpHye6LYLmigsHhRjDqTK1Kn5+EhqQ@mail.gmail.com>
+Subject: Re: [PATCH v9 10/11] crypto: qce - Add support for BAM locking
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Dec 1, 2025 at 2:03=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 11/28/25 12:44 PM, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Implement the infrastructure for using the new DMA controller lock/unlo=
+ck
+> > feature of the BAM driver. No functional change for now.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  drivers/crypto/qce/common.c | 18 ++++++++++++++++++
+> >  drivers/crypto/qce/dma.c    | 39 ++++++++++++++++++++++++++++++++++---=
+--
+> >  drivers/crypto/qce/dma.h    |  4 ++++
+> >  3 files changed, 56 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/drivers/crypto/qce/common.c b/drivers/crypto/qce/common.c
+> > index 04253a8d33409a2a51db527435d09ae85a7880af..74756c222fed6d0298eb6c9=
+57ed15b8b7083b72f 100644
+> > --- a/drivers/crypto/qce/common.c
+> > +++ b/drivers/crypto/qce/common.c
+> > @@ -593,3 +593,21 @@ void qce_get_version(struct qce_device *qce, u32 *=
+major, u32 *minor, u32 *step)
+> >       *minor =3D (val & CORE_MINOR_REV_MASK) >> CORE_MINOR_REV_SHIFT;
+> >       *step =3D (val & CORE_STEP_REV_MASK) >> CORE_STEP_REV_SHIFT;
+> >  }
+> > +
+> > +int qce_bam_lock(struct qce_device *qce)
+> > +{
+> > +     qce_clear_bam_transaction(qce);
+> > +     /* Dummy write to acquire the lock on the BAM pipe. */
+> > +     qce_write(qce, REG_AUTH_SEG_CFG, 0);
+>
+> This works because qce_bam_lock() isn't used in a place where the state
+> of this register matters which isn't obvious.. but I'm not sure there's
+> a much better one to use in its place
+>
+> Wonder if we could use the VERSION one (base+0x0) - although it's suppose=
+d
+> to be read-only, but at the same time I don't think that matters much for
+> the BAM engine
+>
 
-On Mon, 15 Dec 2025 01:07:20 -0800, Jingyi Wang wrote:
-> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
-> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
-> 
-> Add device trees for the Kaanapali SoC, MTP (Mobile Test Platform) and
-> QRD (Qualcomm Reference Device), along with the corresponding defconfig
-> and binding, providing initial support to boot to UART shell with UFS
-> enabled.
-> 
-> [...]
+It seems that we can use VERSION as well, so I'll change that in v10.
 
-Applied, thanks!
-
-[3/5] arm64: dts: qcom: Introduce Kaanapali SoC
-      commit: 2eeb5767d53f457913d2b378a3bd9e2269a4098d
-[4/5] arm64: dts: qcom: kaanapali: Add base MTP board
-      commit: 1cc3a0a0210697a25e96783cf21f93d28a09ebf7
-[5/5] arm64: dts: qcom: kaanapali: Add base QRD board
-      commit: 0e31dcfefd21ed76ff1b2d05647cd34336ab9772
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Bart
 
