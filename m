@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-85661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8596CCAD67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 09:21:12 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6854DCCAD6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 09:21:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C46593006FC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 08:21:09 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 474A8301B94D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 08:21:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 514F1299AB1;
-	Thu, 18 Dec 2025 08:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A4D2338930;
+	Thu, 18 Dec 2025 08:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PT6fI06H"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVL3BDJK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C691FF1AD;
-	Thu, 18 Dec 2025 08:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA33329C40;
+	Thu, 18 Dec 2025 08:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766046068; cv=none; b=I0B1y9zfHKPbl2c4Un7liHlug9df17qkXnoi/OTXlHvsWuoh6Gu6ulJh+PfSZk/E/HfoKW58zHxzBuipbXo/U0t5TmPMBkNKARPjS3ZMZKSCkJ6dTEYDWgMNcaHN9Z1+zQL3saMbdmlA+0Rql5f3aetuAwi3O2A8m/MH9SKgbw4=
+	t=1766046069; cv=none; b=dGhs5rwKpqx2vMhWN7CoxtnqyvekyuzoToeFEjAS42Klf5Sabsbdmq9qrT/OPo001b4vFpc8epdmqqsw0HYyM+cRyFrCKvONHIKOhIMF1i+yU0/eFF045Ab82gSVPGWrSgKAAVHsIIIgQ6/LOghTr3uuTlmEaOb5y+qjVGwMteg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766046068; c=relaxed/simple;
-	bh=YwOe/Yo6AihlgMw8tJfRxWFjpLQf3aQ6KLj1QD8bwp8=;
+	s=arc-20240116; t=1766046069; c=relaxed/simple;
+	bh=eHaXCMfNPrzGKKskN0ftcIIedst5WnhbseQpDz6pWOc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ixvLcwsEbPp3CxdPtxDpuLJQPHCS1wWAjudoM2VifySAkv/o7ot5LyG1ndBWB5ys2DGU+NCPxwk/KhAC2QDQSkDd4l4py3hx4QRXOqegVF7+Ya7g2QoA6AXfRLkwMhv09VFUk1/HbMNCf7PFSdNf0Sb5m1JyUk/vxDs2WrMu2NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PT6fI06H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB23C4CEFB;
-	Thu, 18 Dec 2025 08:21:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=vEmHaKaGOtC08Rnu85V7z+P4EXzOW1/0BTLsQglqYLqhSyynVPJyqaZLgcBDExq7IL9EYIyuVtozUUSv1f8aYr+ZcIJw7YJNg3+sDzl+v8TqGjr3ky+F0tyJTTTDWjfjVqgThWH0znc4kZCTpqWvi3b5KBncBr7/0t/AqHpW0UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVL3BDJK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1C5C113D0;
+	Thu, 18 Dec 2025 08:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766046065;
-	bh=YwOe/Yo6AihlgMw8tJfRxWFjpLQf3aQ6KLj1QD8bwp8=;
+	s=k20201202; t=1766046069;
+	bh=eHaXCMfNPrzGKKskN0ftcIIedst5WnhbseQpDz6pWOc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=PT6fI06HKwbchTfiqEjdqSD6ORwCj78RbRDtpX0iYka3F5A9nefaKpuwS0kmwk2ui
-	 MQLAW6/lnw/iulR14QkpRlq4604CQlziP8SCV9TDzGydEZDzp010EHdbpEoXRwSGhh
-	 AyfFDJ5l7/XJz3zPZd4kgCcAJpYRRKBFVcMT8OpOBc567Je3fxpvu0AQfH/j2ZNO0q
-	 1umgWKyFDwRM8OGlXoVPuhKCJdabp4WxqsT0N0l8TbHe4kzV0V4fYNFKL6oBM8ubOA
-	 1kyBZNKjUjdQlG8+K1YZkXZdIkUnxJPiu+is9njXutEtxAdESsp4hA6qPnE0p4oDbh
-	 AYLJJ3KU+MhsQ==
+	b=gVL3BDJK87Tty1gmGoNnwxGNkY5Xw+KRSXfRU3ZjV0NdBFyq3rwm7LOPUngYZbzZU
+	 6zLuUH/n//TLWJYsG4bml2u0yasTF90eq+sjLUsw3mjIoKftzjL/gZ/AmDYykmhJqs
+	 z1FeaBd2bj+jiHKK4HZn/9f0QC7aA6Ce+Z86IInmOdQad51cHum/lX68BMjlJBLDPB
+	 MM3+QE8lBwhgBofFv9eEoiJiRHl3hto0JFUS9VBA5dP2hCvizCNDr3oPTTbP/GlEnA
+	 CDUV+KJoinY4O7SoMqy0IvVePiq4RTfyaVaUGmI726jZO3FnN0mBVDV3ZhhL9hfjWP
+	 P2BU5tc6smjjg==
 From: Mark Brown <broonie@kernel.org>
 To: Srinivas Kandagatla <srini@kernel.org>, 
  Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
  Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20251008104448.117167-3-krzysztof.kozlowski@linaro.org>
-References: <20251008104448.117167-3-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 1/2] ASoC: qcom: audioreach: Add support for Speaker
+In-Reply-To: <20251217094602.55117-3-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20251217094602.55117-3-krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v4 1/2] ASoC: qcom: audioreach: Add support for Speaker
  Protection module
-Message-Id: <176604606357.48417.1586328124379101511.b4-ty@kernel.org>
-Date: Thu, 18 Dec 2025 08:21:03 +0000
+Message-Id: <176604606703.48417.8295362346139487733.b4-ty@kernel.org>
+Date: Thu, 18 Dec 2025 08:21:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-47773
 
-On Wed, 08 Oct 2025 19:44:49 +0900, Krzysztof Kozlowski wrote:
+On Wed, 17 Dec 2025 10:46:03 +0100, Krzysztof Kozlowski wrote:
 > Speaker Protection is capability of ADSP to adjust the gain during
 > playback to different speakers and their temperature.  This allows good
 > playback without blowing the speakers up.
