@@ -1,101 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-85643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 576B7CCAC2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 09:02:52 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F4AECCAC6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 09:07:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 532AB3019BEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 08:01:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 50CD4307475C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 08:05:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 676832E8B94;
-	Thu, 18 Dec 2025 08:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FB242EFD91;
+	Thu, 18 Dec 2025 08:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="lTet96wj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="guQfAe+x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12541288502;
-	Thu, 18 Dec 2025 08:01:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36EF2E9ED6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 08:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766044900; cv=none; b=pSS95YXkZznRYZgHFxXt3hM+fF1pv+/ySCzEC1vTK1oJk/CcaSv3xXPh0HVdygvTK+0n72Hey2VpS/hNauM+EbRaRd2seQQvZY+CYNlwMmrYwue7O7H0C7etFyGb9KLL/Tsz5cLrTkSD2wvCXG86AuVj2jAmLR9UWGtvdiyCwhI=
+	t=1766045090; cv=none; b=fwCsHnZn7KphZTGcgrlt2glvQAwzAZwTuNJaGjRhPr19IBu9CFl2WOJN3FdV9+faQR3UswWTlJqqbOkqgQq5p4D/IrtCPPM2fUsRRHEQlu2YNo+ahAAWkBD9PwoUkEHG9FQjufd5BOw5Ka8mL/OEv+1HRLaN7QqV1EcymJd2VIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766044900; c=relaxed/simple;
-	bh=hJQGXniDj6XYRfLcZnB351F2cNE20mJsOY0Desfah90=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=EpGqz1W2shxi4D4szTTEut+PgzMrVnXdYdh57AMInf4Oltahuw6bQFONtur6hWXqTkFWE7CNL/OOz2XCpgvityD812ZcFlAmogwbbqioHfILMMxh09GGLSluaV0wofNKkLfFTTDO3FGv9IM5cZ/H2hjGpVWY3WpxEG8URTctqR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=lTet96wj; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=hJQGXniDj6XYRfLcZnB351F2cNE20mJsOY0Desfah90=; b=l
-	Tet96wjjbxK9+jV6nxMvZeYgskKwZvepT+cRmhw+qKQdPyggFS5kcR6Vg1qYmxkl
-	cWjKfFs59rf7FVkozJS3EFY0c0jMyueD/pyqYp9/ugs6dtFDZs0TetKBnY+05JCx
-	P+tJtS5WXyMzAeZjXjmd34AkFJxvdyu2W6dEXW3voM=
-Received: from slark_xiao$163.com (
- [2409:895a:3845:9f84:28e0:5641:6598:4ec8] ) by ajax-webmail-wmsvr-40-128
- (Coremail) ; Thu, 18 Dec 2025 16:00:36 +0800 (CST)
-Date: Thu, 18 Dec 2025 16:00:36 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Loic Poulain" <loic.poulain@oss.qualcomm.com>
-Cc: mani@kernel.org, ryazanov.s.a@gmail.com, johannes@sipsolutions.net,
-	andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v3 2/2] net: wwan: mhi: Add network support for
- Foxconn T99W760
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20250723(a044bf12) Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <CAFEp6-23je6WC0ocMP7jXUtPGfeG9_LpY+1N-oLcSTOmqQCL2w@mail.gmail.com>
-References: <20251119105615.48295-1-slark_xiao@163.com>
- <20251119105615.48295-3-slark_xiao@163.com>
- <CAFEp6-23je6WC0ocMP7jXUtPGfeG9_LpY+1N-oLcSTOmqQCL2w@mail.gmail.com>
-X-NTES-SC: AL_Qu2dBPyfu0Ao4CGfY+kWnUwUgu46UMG3vf8u2IMbaeUvswHy2gsJYEZMGmT/wcKhNQuAoAC1QQBH4MZ8QKL4uuvk8YgDKR9PVgcaMSBc
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1766045090; c=relaxed/simple;
+	bh=EUWA9vBS/8Bj7ML6MIoqvCIK0kHU15G6PnmKBfCoYhk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZLMFhQmcZ/Em1CdeQY21/5+2PYI7ou1OfAJ216NtYR/v+DWYKeEMCKqnRCsokNWg9j4jhi2OpxLATALcZXmvdsMvVbHN7SjCSnXEBIiwPU7gz7NhzcFZ0oGcy9LYXCYETWO0y+QD4BZPg1MEGK460OMsSV+CHZUwkPdlugHBHoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=guQfAe+x; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8b2ea5a44a9so41896085a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 00:04:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766045085; x=1766649885; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZFatZ2cHC57MPqYi+kElcilUE7e6ABilLQQM4w6mW4c=;
+        b=guQfAe+xdwIYVfnbl2P7NeYl3RvgnZekq458I5TSmauxRj5I+LyEX55C/jdUJ5oWam
+         G+MVsWqfq0pBytYwhNN4JP8C2wcMHedfZWuzrxrbbXaM79o/8XK/aFCpk1F9Sag+iOpx
+         PYlgzDONeJ4y6ME8qfcl1lln+VevTT+bBe7w+Ei/WAEa36ZrRpSeLJHmeyACAbs2jVJi
+         fcnTiLyxZ3k3cC4/pdjhHooxB4S+ZXHre+u8oqtXlWB3JmT4S/mzgP6W2Ra4BIP0b8C/
+         pKfiqvsfsBRJ+6BleZ4f4WwL4spYglq9PqfOWqiv08YFkh2sMKdGz+p3jCNSyDKqV7HF
+         7zkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766045085; x=1766649885;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ZFatZ2cHC57MPqYi+kElcilUE7e6ABilLQQM4w6mW4c=;
+        b=SH5+usc5OHINl9oiF1qsIwG2VVbOoOpXSkK8/y2HXVJna/QAMw6nsVGA64DYkiCLVm
+         Q6hZ9yW+JkQ+WQegVeCKfKPT38wVoEEb7JXmOPykJe6A3pFAX6jeOEdQxaVj1h3RuTqL
+         rEY04x8ef8szb2CfldCM03IT2IVM7rzJXRzlsqS2aJM8ZE2Qch2do1cvs2FMDIw1gA2f
+         wR2J59QQR7q414wUNsC3oi6pGFqkfKlI1y5k3xwugaWx2zL445g4jbJDEM6/6upZbFIK
+         EL1qgRVbtizS5/0kuME2xQX/6l1RBd+jAKxdlkxOOiIeH3k4tc8bdIWznSykfsJwkxxL
+         X/mw==
+X-Forwarded-Encrypted: i=1; AJvYcCWRIgm2kPmGAxWd9UXnej4/Yrmj8WEh56XeL8ZZMQD18CgB05gzoov6pFnZqwCB4Vl6/0iZAM51WH72JSEj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXDWVdNWr8a03UWUkNrjrzyJPPAdvVqN8IbKM8Wc8Oq1unOCGs
+	xXYA18V2tXLNIk34K3nJcyKxEZuDzCmw0zMKZHewf5vyXopnauKjbwO2175zqhTIYOwnYGPVTlW
+	a/g/2pJVeTYbScor3+vafAO7ghn5t7w==
+X-Gm-Gg: AY/fxX4LnGOLHjX0uDIjnQ8jooSgEdUwzIK4h7194nzJyhn58jnUenNkZ7jkXQbxUUd
+	+jhWUL37aM7dPDvz1jvh6/wkx+ruuVVsHdZxm1+t8loJRZWosZqEC/jqAUH5OmoH2N6xN6oMZAO
+	BuxmhOmQ78UzTnnYLTIEoLoLLfK8vk7i79RFY4SoJyt6Q2pVVY92U3p0DnlkED9KgxMPbyZ24Yc
+	aZfIdJDx8yMovUjULwfmw/YlCIDDhTCme+ugu92rBxaJBWg7+Al9ijfpfNpCkfpXQUpl1CJeHOO
+	HMHECSsFM/VjrMjXwqulAk0gvx5MNU7j
+X-Google-Smtp-Source: AGHT+IGeR69NlMrzzWAKf9Swns5oCRSmbi6pAM+ySzcMfeKthzzgVomUQBx8U3ObrUEQapivifkUsz3RXTHr8lctfyo=
+X-Received: by 2002:a05:620a:460a:b0:8b2:e179:feb7 with SMTP id
+ af79cd13be357-8bb3a36d2c1mr2973617185a.49.1766045085533; Thu, 18 Dec 2025
+ 00:04:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <4c4751c0.9803.19b3079a159.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:gCgvCgCntFGktENpzgs+AA--.8285W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbC6ASB5WlDtKRTwwAA3i
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+References: <20251218-surface-sp11-for-next-v3-0-875afc7bd3b7@gmail.com>
+ <20251218-surface-sp11-for-next-v3-4-875afc7bd3b7@gmail.com> <s45ki2ckgw7fu25h5wd6mb3mc4kzs6qq5eitv56asqf2suxh6l@s5tbqce7gz3f>
+In-Reply-To: <s45ki2ckgw7fu25h5wd6mb3mc4kzs6qq5eitv56asqf2suxh6l@s5tbqce7gz3f>
+From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
+Date: Thu, 18 Dec 2025 09:04:09 +0100
+X-Gm-Features: AQt7F2rxXLkRo1KdQwBVcMP3Fy3-pCbHAovHIvjCqXVawC_ZHWulzabv7lnj8zk
+Message-ID: <CA+kEDGFTh5bG98dtok66A+hC+-QcfSubdr64M7+JZ0nLeqm_tw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] platform/surface: aggregator_registry: Add Surface
+ Pro 11
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johannes Berg <johannes@sipsolutions.net>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	ath12k@lists.infradead.org, Dale Whinham <daleyo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-CkF0IDIwMjUtMTEtMjEgMjA6NDY6NTQsICJMb2ljIFBvdWxhaW4iIDxsb2ljLnBvdWxhaW5Ab3Nz
-LnF1YWxjb21tLmNvbT4gd3JvdGU6Cj5PbiBXZWQsIE5vdiAxOSwgMjAyNSBhdCAxMTo1N+KAr0FN
-IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNvbT4gd3JvdGU6Cj4+Cj4+IFQ5OVc3NjAgaXMg
-ZGVzaWduZWQgYmFzZWQgb24gUXVhbGNvbW0gU0RYMzUgY2hpcC4gSXQgdXNlIHNpbWlsYXIKPj4g
-YXJjaGl0ZWNodHVyZSB3aXRoIFNEWDcyL1NEWDc1IGNoaXAuIFNvIHdlIG5lZWQgdG8gYXNzaWdu
-IGluaXRpYWwKPj4gbGluayBpZCBmb3IgdGhpcyBkZXZpY2UgdG8gbWFrZSBzdXJlIG5ldHdvcmsg
-YXZhaWxhYmxlLgo+Pgo+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxzbGFya194aWFvQDE2
-My5jb20+Cj4KPlJldmlld2VkLWJ5OiBMb2ljIFBvdWxhaW4gPGxvaWMucG91bGFpbkBvc3MucXVh
-bGNvbW0uY29tPgo+CkhpIExvaWMsCk1heSBJIGtub3cgd2hlbiB0aGlzIHBhdGNoIHdvdWxkIGJl
-IGFwcGxpZWQgaW50byBuZXQgb3IgbGludXgtbmV4dD8KSSBzYXcgdGhlIGNoYW5nZXMgaW4gTUhJ
-IHNpZGUgaGFzIGJlZW4gYXBwbGllZC4KVDk5Vzc2MCBkZXZpY2Ugd291bGQgaGF2ZSBhIG5ldHdv
-cmsgcHJvYmxlbSBpZiBtaXNzaW5nIHRoaXMgY2hhbmdlcyBpbiB3d2FuCnNpZGUuIFBsZWFzZSBo
-ZWxwIGRvIGEgY2hlY2tpbmcuCgpUaGFua3MKPj4gLS0tCj4+ICBkcml2ZXJzL25ldC93d2FuL21o
-aV93d2FuX21iaW0uYyB8IDMgKystCj4+ICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCsp
-LCAxIGRlbGV0aW9uKC0pCj4+Cj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL25ldC93d2FuL21oaV93
-d2FuX21iaW0uYyBiL2RyaXZlcnMvbmV0L3d3YW4vbWhpX3d3YW5fbWJpbS5jCj4+IGluZGV4IGM4
-MTRmYmQ3NTZhMS4uYTE0MmFmNTlhOTFmIDEwMDY0NAo+PiAtLS0gYS9kcml2ZXJzL25ldC93d2Fu
-L21oaV93d2FuX21iaW0uYwo+PiArKysgYi9kcml2ZXJzL25ldC93d2FuL21oaV93d2FuX21iaW0u
-Ywo+PiBAQCAtOTgsNyArOTgsOCBAQCBzdGF0aWMgc3RydWN0IG1oaV9tYmltX2xpbmsgKm1oaV9t
-YmltX2dldF9saW5rX3JjdShzdHJ1Y3QgbWhpX21iaW1fY29udGV4dCAqbWJpbQo+PiAgc3RhdGlj
-IGludCBtaGlfbWJpbV9nZXRfbGlua19tdXhfaWQoc3RydWN0IG1oaV9jb250cm9sbGVyICpjbnRy
-bCkKPj4gIHsKPj4gICAgICAgICBpZiAoc3RyY21wKGNudHJsLT5uYW1lLCAiZm94Y29ubi1kdzU5
-MzRlIikgPT0gMCB8fAo+PiAtICAgICAgICAgICBzdHJjbXAoY250cmwtPm5hbWUsICJmb3hjb25u
-LXQ5OXc1MTUiKSA9PSAwKQo+PiArICAgICAgICAgICBzdHJjbXAoY250cmwtPm5hbWUsICJmb3hj
-b25uLXQ5OXc1MTUiKSA9PSAwIHx8Cj4+ICsgICAgICAgICAgIHN0cmNtcChjbnRybC0+bmFtZSwg
-ImZveGNvbm4tdDk5dzc2MCIpID09IDApCj4+ICAgICAgICAgICAgICAgICByZXR1cm4gV0RTX0JJ
-TkRfTVVYX0RBVEFfUE9SVF9NVVhfSUQ7Cj4+Cj4+ICAgICAgICAgcmV0dXJuIDA7Cj4+IC0tCj4+
-IDIuMjUuMQo+Pgo=
+Le jeu. 18 d=C3=A9c. 2025 =C3=A0 01:07, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> a =C3=A9crit :
+>
+> On Thu, Dec 18, 2025 at 12:56:40AM +0100, J=C3=A9r=C3=B4me de Bretagne vi=
+a B4 Relay wrote:
+> > From: Dale Whinham <daleyo@gmail.com>
+> >
+> > This enables support for the X1-based Surface Pro 11.
+> >
+> > Signed-off-by: Dale Whinham <daleyo@gmail.com>
+> > Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.co=
+m>
+> > Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+> > ---
+> >  drivers/platform/surface/surface_aggregator_registry.c | 18 ++++++++++=
+++++++++
+> >  1 file changed, 18 insertions(+)
+> >
+> > diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/d=
+rivers/platform/surface/surface_aggregator_registry.c
+> > index 78ac3a8fbb736384f7e50f1888a71297a892a7c3..c18d991afc8b0a0bbb26966=
+351b75b8ea01097a4 100644
+> > --- a/drivers/platform/surface/surface_aggregator_registry.c
+> > +++ b/drivers/platform/surface/surface_aggregator_registry.c
+> > @@ -406,6 +406,22 @@ static const struct software_node *ssam_node_group=
+_sp9_5g[] =3D {
+> >       NULL,
+> >  };
+> >
+> > +/* Devices for Surface Pro 11 (ARM/QCOM) */
+> > +static const struct software_node *ssam_node_group_sp11[] =3D {
+> > +     &ssam_node_root,
+> > +     &ssam_node_hub_kip,
+> > +     &ssam_node_bat_ac,
+> > +     &ssam_node_bat_main,
+> > +     &ssam_node_tmp_sensors,
+> > +     &ssam_node_hid_kip_keyboard,
+> > +     &ssam_node_hid_kip_penstash,
+> > +     &ssam_node_hid_kip_touchpad,
+> > +     &ssam_node_hid_kip_fwupd,
+> > +     &ssam_node_hid_sam_sensors,
+> > +     &ssam_node_kip_tablet_switch,
+> > +     NULL,
+> > +};
+> > +
+> >  /* -- SSAM platform/meta-hub driver. ---------------------------------=
+------- */
+> >
+> >  static const struct acpi_device_id ssam_platform_hub_acpi_match[] =3D =
+{
+> > @@ -485,6 +501,8 @@ static const struct of_device_id ssam_platform_hub_=
+of_match[] __maybe_unused =3D {
+> >       /* Surface Laptop 7 */
+> >       { .compatible =3D "microsoft,romulus13", (void *)ssam_node_group_=
+sl7 },
+> >       { .compatible =3D "microsoft,romulus15", (void *)ssam_node_group_=
+sl7 },
+> > +     /* Surface Pro 11 */
+> > +     { .compatible =3D "microsoft,denali", (void *)ssam_node_group_sp1=
+1 },
+>
+> Please keep it sorted. arcata < denali < romulus
+
+Thank you, I will fix this in v4.
+
+
+> >       { },
+> >  };
+> >
+> >
+> > --
+> > 2.47.3
+> >
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
