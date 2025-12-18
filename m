@@ -1,169 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-85744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B23ACCD90F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 21:47:13 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 500DCCCDD9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 23:43:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 85C7E30A701A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 20:44:04 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B5B283019340
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 22:43:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4227C30B501;
-	Thu, 18 Dec 2025 20:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="fN+tZitd"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D552E7179;
+	Thu, 18 Dec 2025 22:43:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F062F8BC3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 20:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC44F2D9EF3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 22:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766090576; cv=none; b=XHN1aE8oNtrFJ2xSnISNhcDFmdAATA6NFAxg5W5eiTnoJarogf5wUHu3heeU6hGKOtosIjhgNoNwIq1eVk/8gioEpyP5pxeZJCrkqntXNAP6Xb3I5FX4D+6QCSVqWXdwIAELwoiJZz38Sf19AV2ZtWnSQ3M+wOHebF3ui52AJ44=
+	t=1766097795; cv=none; b=J6E3HpM56/fOMFoWVNaIavyzkI+HgzE+M1Z351qOWfDmQ2kUFM7ljAi9eED2vKwrnbWgpBE2CcD8UVss9fqrwLIYH6ozNiJVvALzUPIDbLmfWXsaYxRuZoM2gO6TsEcWhkCUUQR5NqIo2xy9q5SuL/lqaKF2ITW59ctzjcl3bBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766090576; c=relaxed/simple;
-	bh=4ICv3yuhPrWHwgL1jUFMIG72Z1BgncvRKKGH0bYdP14=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rZYchZ/vdjLZ/uZzQ6ueZOssZy0Cy8zDADMQn18d7ilf+wOTLE2Hle+EJxEyfaJljLSruvDW69G3y3KVM9EHVJAZ15qTlctBr+Vtkc9JeNv6bMCXEgqTpO+/0DbfwWxKNCzb+rP+9XowcqccrCA/sM+6PcQSfRjPNbSrtPHfb+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=fN+tZitd; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6492e25cd7eso1623487a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 12:42:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1766090572; x=1766695372; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A4g1ryvYz2NMxLIjSNGcYTJ//wVogM+BYR83E55tzQE=;
-        b=fN+tZitdlGldRZFwsBPMgJ5unn8oxKOKyn8A4UyklUxpuQom7fy7L6kIzCk5T2jVcM
-         KVgO4mzCbFmL2NEiKmIjgirBAguOrS2j9vNNntb65ezHsUVww8+CTulzcc+IC1dYTTrQ
-         RyGHOPA6JpLGLb/wmL1KEJ28B/avjdsIGEApmD0J/CwGj9prUS4CDcZcXuHQzXJpdqe+
-         8pAuvVEkSsKaWFFVmSYN6eUypEtg+nWjLViXldm4LBL9mw03AnNo9mwutgRGHggC1zgj
-         WjNFw5NGIsZRbbyYW5lGHuRKNWTRvkiq2LE0hae9+h+i2d2WKVc0CpM/yN4+Z0ZCZmSl
-         MfHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766090572; x=1766695372;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=A4g1ryvYz2NMxLIjSNGcYTJ//wVogM+BYR83E55tzQE=;
-        b=vrHRyjtW3f7841AEj1vUplduTYhO0Z56WMIZ7+jgxCc3Vq8n2dhCzQF2Hb2O1e2iEa
-         o5Tg11TOmnd2ctNcgvYfBIglXkb/ZoGcHRqNw2g4kjtUgnW+wxq0QX6HlQ2fd0LcTfNf
-         KqAV3TZWT9T9j19qsDT7i9Gxj1ag153KVEkiNEouXSRuQjVQa0QqimxCPCx+Klo/jJ8p
-         AwPUxZPpGtXdwdQPrld0qEY/WtMDMY9n9PRgiLkREkWXp1RNfrKSlBUJYKJxCru/ltjx
-         /2MLrkL6Y9yF/8jWQ5JoDgLuL4rrGh3JO11KT1c6yLMAT67v3UHwjqxho0GI6rdXGIqU
-         WPSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVB8AcXgGd8hdcYrkPFArgv1uZGTWUzpCP8VpOFiUSozlTQEXMAVct4ydJFPiPDv1e57H/tKyosYXbGrP3p@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUE6gScOHCIB1D82qdifKRt6mUU1hbF9QyoXhdJmYjAmvu8gtz
-	77iXpwb2OsEUIZQqp+1FbxPl6KZD4aAM20FsGNXLzDyv0RpjnK0FJEMBB1ojImMT/qo=
-X-Gm-Gg: AY/fxX7piM655V6nXRD6oXXdePbWLXh9fBxDBeibyQnbs5kz3Dj6K+/OXIVrWj4rJ3z
-	QYyj1w/RGzeSoxViP0+phU+W+yOWz7z383h1r0c8yad1C4oItlr41FPhY/ApTAYT0b7DAC1iuHC
-	GUcIHSKIDIwdy3boU4RaTrY+ewNfamZ5O5gijgLczTBjJW6+uGLH5dy/hR+CxdFNav6a+WUKNT0
-	svljEWPcYaO0AlUTOrteAULROjYfNMFJIN+hyKGy+Y+azpVSrobOqstYKTPMLG270eSEtSwcv1k
-	E1HYKCz/YpUwA2wGzp/phkkDW81Go54mIEXE5U+4lIdesb9TlShbnw3cex3u6ymLp1kmOCU+PbA
-	qMQw8CqU8edeo9U2GHooVCPEGJH7M2SjwFltWE5LeG5eA8r0u9gfs72tmVxDZHfQDpgJm6dNyFP
-	xxupgxL6fcTz9rqla3
-X-Google-Smtp-Source: AGHT+IGNnpdBTKQikQZocIsWq3iB22zoBWwmboLhMYxqkAhxGrqfRLDHCiiACwlMqdCYJH9TsGGe6Q==
-X-Received: by 2002:a05:6402:35cc:b0:64b:58df:cf24 with SMTP id 4fb4d7f45d1cf-64b8d24f389mr839814a12.11.1766090572290;
-        Thu, 18 Dec 2025 12:42:52 -0800 (PST)
-Received: from localhost ([2a02:8071:b783:6940:1d24:d58d:2b65:c291])
-        by smtp.gmail.com with UTF8SMTPSA id 4fb4d7f45d1cf-64b916b82e7sm365476a12.35.2025.12.18.12.42.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Dec 2025 12:42:51 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v1 2/2] bus: mhi: ep: Use bus callbacks for .probe() and .remove()
-Date: Thu, 18 Dec 2025 21:42:16 +0100
-Message-ID:  <2a79d99182a5171e83a07bf9f438ae31362f7e5d.1766090211.git.ukleinek@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cover.1766090211.git.ukleinek@kernel.org>
-References: <cover.1766090211.git.ukleinek@kernel.org>
+	s=arc-20240116; t=1766097795; c=relaxed/simple;
+	bh=lCkQu2wDBmR6kjru2AMqWuKpIkmuqiCBKhOxtVPx/ww=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F4j9fAzWzeOmbbpYx0LMQFAmkwjAsHjQfnGI0OMh7sXhUyyD9j+K2zWsQ6AdxNUKIfYaUQtutcKcDWNNDHzUdpsD3UsFbuVukHTr2fWEUPaZaWEY1Bq1l0ZeJy9QINFVUmTIo61Xg+bfKS12CAYM5GcV4o0aWTQv1UBt71X9+1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0832F207F7;
+	Thu, 18 Dec 2025 23:04:05 +0100 (CET)
+Date: Thu, 18 Dec 2025 23:04:04 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v16 10/10] drm/msm/dpu: Enable quad-pipe for DSC and
+ dual-DSI case
+Message-ID: <aUR2b3FOSisTfDFj@SoMainline.org>
+References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
+ <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
+ <tjakx64c25gyakblncsvuoj2iquoknx4ngwujt2uf2clhhfvfl@lbvhrimf6gwp>
+ <i234zyh7ajsxdvbkzindyk5h6wilds226jqmh32kml4aweesav@frlk2l7zgmg4>
+ <CABymUCNm5fpFN-Zpw7WkqP4EdBGXR9JCFyppOkuWs-r9MFx3dg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2477; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=4ICv3yuhPrWHwgL1jUFMIG72Z1BgncvRKKGH0bYdP14=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpRGc4B+Cx+6lrqUdq7rJgJqKco6uBImN1TK7ym 0GbyAT+zdOJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaURnOAAKCRCPgPtYfRL+ Ts7LCACyd1U3000e73Nv1IXXeQ6//AjKstvpejHgoauxmaGI6W3tf9Nawu36xzhcpeALS0Jdcl5 LGQ7dWXDHbikv28ppVKFJvzaB4zcH8GZ3l8YThYF3Mkw2W+z6i+tVadpLDrLClB788IQM5/rGB5 bNvfpUC302SwXHm+e34veYWO5RvmET9LhT4cEhRNsDzB+RUcbUQnn3/rOyHfNBgZvrPCOuIE8wh cy1lFiVuc8XLxrcYsMYdUpLABQfE3bwKiiBBiMCo5jvivw1JrHuLT/P34IiBYJsE8PJBVtFk2zC aC29/LgwIBOaqHNaTyd/jyDnFNvdWSgwzTfE7JDfD4ZzLyDg
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABymUCNm5fpFN-Zpw7WkqP4EdBGXR9JCFyppOkuWs-r9MFx3dg@mail.gmail.com>
 
-These are nearly identical to the driver callbacks, the only relevant
-difference is that the bus remove method returns void (instead of an int
-where the value is ignored).
+On 2025-12-11 23:53:00, Jun Nie wrote:
+> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> ???2025???12???11????????? 03:30?????????
+> >
+> > On Sat, Nov 29, 2025 at 05:37:43PM +0100, Marijn Suijten wrote:
+> > > On 2025-09-18 21:29:02, Jun Nie wrote:
+> > > > To support high-resolution cases that exceed the width limitation of
+> > > > a pair of SSPPs, or scenarios that surpass the maximum MDP clock rate,
+> > > > additional pipes are necessary to enable parallel data processing
+> > > > within the SSPP width constraints and MDP clock rate.
+> > > >
+> > > > Request 4 mixers and 4 DSCs for high-resolution cases where both DSC
+> > > > and dual interfaces are enabled. More use cases can be incorporated
+> > > > later if quad-pipe capabilities are required.
+> > > >
+> > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > > > ---
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 27 +++++++++++++++++------
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++----------------
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
+> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
+> > > >  6 files changed, 35 insertions(+), 32 deletions(-)
+> > >
+> > > With this patch applied, I get the following crash on the Sony Xperia 1 III, a
+> > > dual-DSI dual-DSC device:
+> > >
+> > >       Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
+> > >       Mem abort info:
+> > >         ESR = 0x0000000096000004
+> > >         EC = 0x25: DABT (current EL), IL = 32 bits
+> > >         SET = 0, FnV = 0
+> > >         EA = 0, S1PTW = 0
+> > >         FSC = 0x04: level 0 translation fault
+> > >       Data abort info:
+> > >         ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> > >         CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> > >         GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> > >       user pgtable: 4k pages, 48-bit VAs, pgdp=000000012d4e1000
+> > >       [0000000000000020] pgd=0000000000000000, p4d=0000000000000000
+> > >       Internal error: Oops: 0000000096000004 [#1]  SMP
+> > >       Modules linked in: msm drm_client_lib ubwc_config drm_dp_aux_bus gpu_sched drm_gpuvm drm_exec
+> > >       CPU: 5 UID: 0 PID: 3081 Comm: (sd-close) Tainted: G     U              6.18.0-rc7-next-20251127-SoMainline-12422-g10b6db5b056d-dirty #21 NONE
+> > >       Tainted: [U]=USER
+> > >       Hardware name: Sony Xperia 1 III (DT)
+> > >       pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > >       pc : dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm]
+> > >       lr : dpu_plane_atomic_check_sspp.isra.0+0x84/0x3f4 [msm]
+> > >       sp : ffff800081e23940
+> > >       x29: ffff800081e23950 x28: ffff0000bf2700d0 x27: 0000000000000a00
+> > >       x26: ffff0000bf270000 x25: 0000000000000a00 x24: ffff0000bd0e5c18
+> > >       x23: ffff000087a6c080 x22: 0000000000000224 x21: ffff00008ce88080
+> > >       x20: 0000000000000002 x19: ffff0000bf270138 x18: ffff8000818350b0
+> > >       x17: 000000040044ffff x16: ffffc488ae2e37e0 x15: 0000000000000005
+> > >       x14: 0000000000000a00 x13: 0000000000000000 x12: 0000000000000138
+> > >       x11: 0000000000000000 x10: 0000000000000012 x9 : 0000000000000000
+> > >       x8 : 0000000000000a00 x7 : 0000000000000000 x6 : 0000000000000000
+> > >       x5 : 0000000000000002 x4 : 0000000000000000 x3 : ffffc48897741db0
+> > >       x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+> > >       Call trace:
+> > >        dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm] (P)
+> > >        dpu_plane_atomic_check+0x100/0x1a0 [msm]
+> > >        drm_atomic_helper_check_planes+0xd8/0x224
+> > >        drm_atomic_helper_check+0x50/0xb4
+> > >        msm_atomic_check+0xd0/0xe0 [msm]
+> > >        drm_atomic_check_only+0x4e0/0x928
+> > >        drm_atomic_commit+0x50/0xd4
+> > >        drm_client_modeset_commit_atomic+0x200/0x260
+> > >        drm_client_modeset_commit_locked+0x64/0x180
+> > >        drm_client_modeset_commit+0x30/0x60
+> > >        drm_fb_helper_lastclose+0x60/0xb0
+> > >        drm_fbdev_client_restore+0x18/0x38 [drm_client_lib]
+> > >        drm_client_dev_restore+0xac/0xf8
+> > >        drm_release+0x124/0x158
+> > >        __fput+0xd4/0x2e4
+> > >        fput_close_sync+0x3c/0xe0
+> > >        __arm64_sys_close+0x3c/0x84
+> > >        invoke_syscall.constprop.0+0x44/0x100
+> > >        el0_svc_common.constprop.0+0x3c/0xe4
+> > >        do_el0_svc+0x20/0x3c
+> > >        el0_svc+0x38/0x110
+> > >        el0t_64_sync_handler+0xa8/0xec
+> > >        el0t_64_sync+0x1a0/0x1a4
+> > >       Code: 2a1403e5 52800082 94008e28 f9400380 (f940101b)
+> > >       ---[ end trace 0000000000000000 ]---
+> > >       pstore: backend (ramoops) writing error (-28)
+> > >       [drm:dpu_encoder_frame_done_timeout:2726] [dpu error]enc33 frame done timeout
+> > >
+> > > I don't see any thought given to it in the extremely terse patch description,
+> > > but this patch seems to unconditionally select 4 DSCs and 4 LMs on this device
+> > > because the underlying SM8350 SoC has 4 available in its catalog - while it
+> > > was previously affixed to 2:2:2 matching the downstream and known-working
+> > > configuration of this device - and I can only imagine things are rolling
+> > > downhill from there.
+> > >
+> > > faddr2line seems to be failing for me, but this is the line
+> > > `dpu_plane_atomic_check_sspp.isra.0+0x88` seems to be referring to:
+> > >
+> > >       aarch64-linux-gnu-objdump .output/drivers/gpu/drm/msm/msm.ko -dS | grep dpu_plane_atomic_check_sspp.isra.0\> -A80
+> > >       00000000000671ac <dpu_plane_atomic_check_sspp.isra.0>:
+> > >       static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
+> > >       ...
+> > >          67234:       f940101b        ldr     x27, [x0, #32]
+> > >               if (!(sblk->scaler_blk.len && pipe->sspp->ops.setup_scaler) &&
+> >
+> > I think it is:
+> >
+> >         pipe_hw_caps = pipe->sspp->cap;
+> >     14bc:       f9401018        ldr     x24, [x0, #32]
+> >
+> >
+> > So, please check why pipe->sspp becomes NULL (or where do we miss the
+> > NULL check for pipe->sspp).
+> 
+> Yeah, per panic log and objdump, it should be due to this line. But no
+> clue is found
+> with code analysis.
+> Did you reproduce it? If so, what's the platform and git commit id? I
+> tested with
+> HDK8650 dual-DSI HDMI bridged monitor, but kernel does not panic.
+> 
+> resource mapping:
+>         pingpong=104 104 # # # # - - # # # # -
+>         mixer=104 104 # # # # - -
+>         ctl=104 # # # # # - -
+>         dspp=# # # # - - - -
+>         dsc=# # # # # # - -
 
-The objective is to get rid of users of struct device_driver callbacks
-.probe(), and .remove() to eventually remove these.
+This series, and specifically this patch I am replying to applies modifications
+to DSC topology requests.  your test setup however does not seem to be using any
+DSC encoders at all and is hence not going into this strange block of code that
+I am concerned about:
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
----
- drivers/bus/mhi/ep/main.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+	if (topology.num_dsc) {
+		if (dpu_kms->catalog->dsc_count >= num_rt_intf * 2)
+			topology.num_dsc = num_rt_intf * 2;
+		else
+			topology.num_dsc = num_rt_intf;
+		topology.num_lm = topology.num_dsc;
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 3c208b5c8446..35922e7a24c1 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1596,7 +1596,7 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
- }
- EXPORT_SYMBOL_GPL(mhi_ep_unregister_controller);
- 
--static int mhi_ep_driver_probe(struct device *dev)
-+static int mhi_ep_probe(struct device *dev)
- {
- 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
- 	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-@@ -1609,7 +1609,7 @@ static int mhi_ep_driver_probe(struct device *dev)
- 	return mhi_drv->probe(mhi_dev, mhi_dev->id);
- }
- 
--static int mhi_ep_driver_remove(struct device *dev)
-+static void mhi_ep_remove(struct device *dev)
- {
- 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
- 	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-@@ -1619,7 +1619,7 @@ static int mhi_ep_driver_remove(struct device *dev)
- 
- 	/* Skip if it is a controller device */
- 	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
--		return 0;
-+		return;
- 
- 	/* Disconnect the channels associated with the driver */
- 	for (dir = 0; dir < 2; dir++) {
-@@ -1643,8 +1643,6 @@ static int mhi_ep_driver_remove(struct device *dev)
- 
- 	/* Remove the client driver now */
- 	mhi_drv->remove(mhi_dev);
--
--	return 0;
- }
- 
- int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner)
-@@ -1660,8 +1658,6 @@ int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner
- 
- 	driver->bus = &mhi_ep_bus_type;
- 	driver->owner = owner;
--	driver->probe = mhi_ep_driver_probe;
--	driver->remove = mhi_ep_driver_remove;
- 
- 	return driver_register(driver);
- }
-@@ -1708,6 +1704,8 @@ const struct bus_type mhi_ep_bus_type = {
- 	.dev_name = "mhi_ep",
- 	.match = mhi_ep_match,
- 	.uevent = mhi_ep_uevent,
-+	.probe = mhi_ep_probe,
-+	.remove = mhi_ep_remove,
- };
- 
- static int __init mhi_ep_init(void)
--- 
-2.47.3
+For DSC-enabled setups with 2:2:2 topology (the device I mentioned in the
+main report) this is bumping the number of DSC encoders **and layer mixers**
+to **four** if available in the catalog; it is not even checked against the
+currently allocated resources in the case of "hotpluggable" panels.
 
+Unrelated to this bug, but as a relevant context-comment on this series:
+We discussed scenarios in the past where DSC-merge might be used (for example
+in a 2:2:1 or 4:4:2 topology) for improved power consumption, but should modeset
+back to lower DSC usage (1:1:1 or 2:2:2) if a second display is plugged in that
+also requires a DSC encoder to be driven at some refresh rate - and only 2 or 4
+encoders are available.
+
+- Marijn
+
+>         cdm=#
+>         sspp=# # # # - - - - 104 # # # # # - -
+>         cwb=# # # #
+> 
+> 
+> Hi Marijn,
+> Could you help collect debug info with this change? Thanks!
+> BTW: my irc id: niej
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index d07a6ab6e7ee1..fc61c2fbb0699 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -886,6 +886,7 @@ static int dpu_plane_atomic_check_nosspp(struct
+> drm_plane *plane,
+>                         new_plane_state->fb->width, new_plane_state->fb->height,
+>                         new_plane_state->rotation);
+> 
+> +       memset(&pstate->pipe_cfg[0], 0, PIPES_PER_PLANE *
+> sizeof(struct dpu_sw_pipe_cfg));
+>         /*
+>          * We have 1 mixer pair cfg for 1:1:1 and 2:2:1 topology, 2 mixer pair
+>          * configs for left and right half screen in case of 4:4:2 topology.
+> @@ -1055,6 +1056,13 @@ static int dpu_plane_atomic_check_sspp(struct
+> drm_plane *plane,
+>                 if (!drm_rect_width(&pipe_cfg->src_rect))
+>                         continue;
+>                 DPU_DEBUG_PLANE(pdpu, "pipe %d is in use, validate it\n", i);
+> +               if(!pipe->sspp) {
+> +                       WARN(1, "%svirtual plane pipe %d is null with
+> width %d height %d!!\n",
+> +                               dpu_use_virtual_planes ? " " : "non-",
+> +                               i,
+> +                               drm_rect_width(&pipe_cfg->src_rect),
+> +                               drm_rect_height(&pipe_cfg->src_rect));
+> +               }
+>                 ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
+>                                                   &crtc_state->adjusted_mode,
+>                                                   new_plane_state);
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
