@@ -1,251 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-85677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78EFACCB959
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 12:21:33 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 324D3CCB983
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 12:24:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7985B3009779
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:21:32 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AC3F7300CD54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:23:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8656C1C5D6A;
-	Thu, 18 Dec 2025 11:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55B043164A9;
+	Thu, 18 Dec 2025 11:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqgjvUol"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KeSRamcO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WsR/v/GD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CC51E4AF;
-	Thu, 18 Dec 2025 11:21:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B8B316917
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 11:23:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766056891; cv=none; b=muEP9H/s76UD1ZRycH6Khq50ug8ywv4bzGh48JZbdZR4VMbdZTzFaSvV8eGfZx/OX3+iOV5HrwHY/zhMuxpxk1jBdH6dbqgsi4gjc8xyZqW3AEz/slqBqBcO/QxrTZ0TX5ED9WY4qaBmo00cp+bPz+HzoaAqDWlazrq1yt2gSwU=
+	t=1766057038; cv=none; b=P0I919zeCYWfj5T8elLDSq0RJBb6WGHgNeBeifrkAm5jzom9wnKxjlUQbs7BBvhLGT7iVX/qRVA3WGreBIKbxshdosbsEFIOoNgGsg8ZcA2ezULKpGjng6XnJoyzMq9Ji7OAlOEvmrsKrTpJm8+5dG5sfSNL9Vx4uWl6B2jplZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766056891; c=relaxed/simple;
-	bh=WSuZiH14Fb7LFDruRIJNxEtdiCIv4NaXGh8dSIxEhLw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BKclUtJtTfRZIHYFdLtLWMdRl7Ko6qWordx08XJXjcYJK8xDzyVlkErM+pE1kulBBVnIiN6vmlvmiy5fGCgLRbySMDC1F0xakqZdXGNyQq1VDhgOSu8vMNuFX6P+B++Lh7/3f/f4kTemVfWsMGtFNDc3jWAJqXCOgz5kHkfg8WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqgjvUol; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BC8C4CEFB;
-	Thu, 18 Dec 2025 11:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766056890;
-	bh=WSuZiH14Fb7LFDruRIJNxEtdiCIv4NaXGh8dSIxEhLw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UqgjvUollLJjnXuwHmIkgGwXce8C6IdhZBhWUQkGSpxjVzCLz8H4rbG5iaCs/cfE6
-	 IgvVMD5Y89a4Q9rpGwnPBytrdhYdAum0Qh4dxwD20OFYIxgsNCbQO7eLcphpzDWGku
-	 NLnyeeUbCdfi9WwSeUpoPRdOPWFrrydfynX2cTBO125PB4h9Z7mGVmVxyvdVjXxTN0
-	 xRG1LcLQyraTcVfCEpusg16A4HvzwL9FHuO3z0Z7+SWe7SRYPnl7t2pK/zNK9TgrVk
-	 g4jyrQmbqftgpPU60yB8m4yPGuPvKUM8LNymJu21JsTJReJu1M8Hkubnmd+N4QwT80
-	 yLe9qe0G03juQ==
-Date: Thu, 18 Dec 2025 16:51:18 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Cc: Qiang Yu <qiang.yu@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Mayank Rana <mayank.rana@oss.qualcomm.com>
-Subject: Re: [PATCH v3] mhi: host: Add standard elf image download
- functionality
-Message-ID: <chdnee7wgjv7mgnikistr5pgee2i3unah2dw2ypbllbfzkqjlr@iizwiggs6ux3>
-References: <be72nummuhhqh3oiid7fx2amzaolgdsyfr2q2guzh27kyv5nes@x4a25lsvclio>
- <gc2phr73ai2or5auu6rju2qbszrulk74rnft52ldmu4b4tot5r@xfoclkhrlfl3>
- <gcyjhnn33xcuiqfmiqt7diijncovp3smcnncyvfsnwo45v5z3m@plbtdjbxksgr>
- <aT+0RqCybM730hPY@hu-qianyu-lv.qualcomm.com>
- <7nhlxp6gxk2tkuzh2rogywp6ko4n5nkh6ih2uly3zsskmi7wpp@7weahfg6gksm>
- <aUEXwbuTEvV7Y6I/@hu-qianyu-lv.qualcomm.com>
- <gpfcofdq3yhudisyhgu5r7rjwc66bxdjvbj7vyyrgby77uxs5u@mfkxgck3ll6y>
- <aUO1k06T3YUGX7kV@hu-qianyu-lv.qualcomm.com>
- <84b14cdf-8549-4a00-8dcc-bb5bd1918cfe@oss.qualcomm.com>
- <3427ac3e-671e-4c5b-99aa-69eb7927df8c@oss.qualcomm.com>
+	s=arc-20240116; t=1766057038; c=relaxed/simple;
+	bh=hs3jI0CO+N8F+Wozmcv4hy1NcL+3H2sHoU4lkDZA+qY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S8nGldXprgrW7wD1OFI9gNYvGGdk90Q38C/Qa4snBoFY8qb20Gc/3kk0CP05dbCUrFJcpMwFCRwNgwv/9Yc6KfAO2J0mJ6jngDfpZD0VIAh8nGHhZk6zFwi3a8gfJrTsfrmHPuq6uqeMoGWLAXjuR8sFWJsqawB8OIav476f/dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KeSRamcO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WsR/v/GD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BI8r78q3447018
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 11:23:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XM3PjRRkgJDLVtvgBlf1yGGi/oXyJmhRngXHmv4Ni6M=; b=KeSRamcO8HYzb+Jd
+	8DbYNGEtSh2mqQ2eIkctswsma5t61Lp7RqIvxNZPNCWCa9GWlyyIbx6LvXVB26RV
+	x2GH4wxtBM+eu5MtYUy1N2FLrsQ5pYIM0sf0ZeRXFfAKE4N8CB+a07QIuMLY/JpW
+	eWnOdXkjw0qubFHlLebkG73GKf7K5gfpAshYyGU5+9Ow2fE2DpnL9CZXgTejdPLI
+	hw5i3MMvNGKL2ySdGFAlwk0l9+dDehUH9ToIyBZMiOYmivS2hapgNRp/XBGeGCWx
+	qd4sVpFR+8lqBeqWvyhcLn9Q1S4fX3j6ngfIV12Udv445I+UJ6z5x0kwiVSEBme9
+	iWXp+w==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4egb8j9n-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 11:23:54 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-88653c1bab5so1958076d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 03:23:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766057033; x=1766661833; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XM3PjRRkgJDLVtvgBlf1yGGi/oXyJmhRngXHmv4Ni6M=;
+        b=WsR/v/GDHiu/TOvS6JjBvA3UUJsx5Sfj3wN2PwRtZX+qMUNDHoXNbaQ+XAbbK/qKFU
+         jSSsetyt3x3wP0HCWt8h0bknjW3tlRbF6srOX0YIpR5D1tjj0jsLRyJJtf3cZWVhdJgW
+         EaA13MiQLsAEKcISfPOPU5UUeFZUKTxjrRdOb+xF5ZmpNfmjvwBhMADByzv+ULMZBOKs
+         1xsuf86mLf0N8usM1Rg4Eg88V9m8bheYwj/ydJcWb6J71Omi2itrHhZ3y2FsYVl4lMXN
+         tFHf/qS1RsshyLTvwqslvz4gF42hEJMsjxhKD+P5DgCIF1135Vqby13gZsgLOoxQ29sI
+         l2jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766057033; x=1766661833;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XM3PjRRkgJDLVtvgBlf1yGGi/oXyJmhRngXHmv4Ni6M=;
+        b=Twge6ZxLLZ17t904DHafqxui+r9F+lF8ftOXorOwmF0wXburgkrdjQN9kfdBnoV8Y7
+         prHkXKCTswgV86M45LuivYNP9sLFQ0SVNV+/E8NGl6HsbrGg3fH8VbNGdDy7AZujcuZB
+         /F0VPf1wHrn5CBVtR+fGpZXoPm4AC9Mn1Jtzp3CMIx3vK/emAS/JtvvywuYA57SgZRhG
+         g4Dzs2+dkioF37GSA1l654HktAj63MXDZDpRfZ/wQcpcrUoQcJ0+Bj57K68HRzo+YzCq
+         F9JgLbv3Rnn9UguZHsNMK+l91BPjVMO0p+gH7rvVTKEVeErHPURYFu1+w80hhhjbVNss
+         /Sjw==
+X-Forwarded-Encrypted: i=1; AJvYcCWr5LKkOGA1VvLnbMibmDZHutZrkwLkME4ui4OxGkdm6lrqpZLX/mBGleYNCfXBJ1Eiz+K3sZqegMzJfEKx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx376fVnDmovTuQpNj8+yibTbc/nabz7XeGQ8zhzrc9bDJKVDy0
+	iYXUo99W+03+bVonLQwp0MOwv3u68Xk159mwAlwFs2/Xjnduu6dZzLHNKAfz/j0y3VSUVQrkN6+
+	iwWJm4LrTMfGiyuPnJlJ6l55RSOVJ3Y3RqlGBx+Vf/4Zr/KO/2Z7d5NM8rDeBB4DGXEKU
+X-Gm-Gg: AY/fxX6LB9qCLLX8iZ7GF1ZdUkA0NObvuCNV1mNDuANyUgdB/B6UW1lRrsLsZQ0u+WC
+	gqD2T4VeGqctC7IEwsPUy4bJQv8msAN+11OchC1FJx+qVgpg2UTfHEqI9xh+iI+l5z4xqu9LpUZ
+	ZbNYnUnDzCBV38yLwdx4J+s/uePgvbyDm7x9lGXuIvOjSDT9baXzdA1UBsDt9KImfDtnsPBk/KG
+	s5c7UqYJs878l/IV/Vc7vHL4Brk3rBEbYywckLKJ1ockhXO2fRC8A6+iaWZ/t9lyXO9dBet3rmC
+	pL6pyoRsGDFWo+MiFFqIpAo0dmmOwlu72KuYKOxTQzVAWiTgAfkxXcV06xIbgVEMHJ8SueUIfpV
+	RTQl/UFtxSBi9fdL5igiBLqg4lUbB2b4ivflOSIjet1svcKz0+dN8OHgCsEewatXaTQ==
+X-Received: by 2002:a05:6214:2023:b0:882:63cf:3970 with SMTP id 6a1803df08f44-88c9770bd12mr18182316d6.1.1766057033616;
+        Thu, 18 Dec 2025 03:23:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE/tvDYCoy3mFqOPD7fGTgiVRBpPOULT1Lah31cAzxTWH9nDj15BUCPMDBDM0NtBT/HmoVqzg==
+X-Received: by 2002:a05:6214:2023:b0:882:63cf:3970 with SMTP id 6a1803df08f44-88c9770bd12mr18182046d6.1.1766057033159;
+        Thu, 18 Dec 2025 03:23:53 -0800 (PST)
+Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b585d1d61sm2335297a12.9.2025.12.18.03.23.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Dec 2025 03:23:52 -0800 (PST)
+Message-ID: <24f29ff0-99d0-4175-a6c9-f402ce99f645@oss.qualcomm.com>
+Date: Thu, 18 Dec 2025 12:23:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3427ac3e-671e-4c5b-99aa-69eb7927df8c@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/mdp5: drop support for MSM8998, SDM630 and SDM660
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Paul Sajna <sajattack@postmarketos.org>,
+        barnabas.czeman@mainlining.org
+References: <20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com>
+ <8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org>
+ <dcapydafye2v6owrkehngivqlucjcx6aa3sszszflh3ocm7dpq@qsajm2qkc52d>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <dcapydafye2v6owrkehngivqlucjcx6aa3sszszflh3ocm7dpq@qsajm2qkc52d>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDA5MyBTYWx0ZWRfX4tT/mj/kfHc8
+ HZ6eWXX3ASwe3KyTlbBb81nhPLHhOBqWvzKlVwRlsw3dRsydeBIx78Tzk38K+SZVpzeLgiT3Du9
+ 8+jYtF+Jk2Xpx5IfvAeOSIqvXj/PWKN9YHFa5Ft9b/ME6OwifZb2u3ZCOfObEVzYvjM3s+VPNV9
+ uALsmQJeqbSYDEt0xX7h4Ts6wMCdOEhwYoJej82T4t2IuSR+H6BzUG3JU5jETiHCNaq5OrzLP/s
+ DOp7Pg/phyEuF4ZTEMOeYW9ofpRsyhcavL75WDeiMHymZItiafQ000lLfOnlhW503VEEX5rvjS+
+ paXkhGU/EF1k4dp/4btFJczZ3jzACOG5SfbiaOGGYaLM0pcU1xNo9kLtAdL4yTliM3FPcLxxxCF
+ n8usY48L3GrT/ESDcq6SJ/0gGGyzVw==
+X-Authority-Analysis: v=2.4 cv=M9tA6iws c=1 sm=1 tr=0 ts=6943e44a cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=cLwkmEU5_4-cEt2YZAUA:9
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: X5zUmZC_U-eY-12fqslNitLZQQi7aSlQ
+X-Proofpoint-ORIG-GUID: X5zUmZC_U-eY-12fqslNitLZQQi7aSlQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-18_01,2025-12-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 suspectscore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512180093
 
-On Thu, Dec 18, 2025 at 05:21:54PM +0800, Baochen Qiang wrote:
+On 12/17/25 5:34 PM, Dmitry Baryshkov wrote:
+> On Wed, Dec 17, 2025 at 06:05:31PM +0300, Alexey Minnekhanov wrote:
+>> On 11.12.2025 04:25, Dmitry Baryshkov wrote:
+>>> Currently MDP5 3.x (MSM8998, SDM630 and SDM660) platforms are support
+>>> by both DPU and MDP5 drivers. Support for them in the DPU driver is
+>>> mature enough, so it's no longer sensible to keep them enabled in the
+>>> MDP5 driver. Not to mention that MSM8998 never used an MDP5 compatible
+>>> string. Drop support for the MDP5 3.x genration inside the MDP5
+>>> driver and migrate those to the DPU driver only.
+>>>
+>>> Note: this will break if one uses the DT generated before v6.3 as they
+>>> had only the generic, "qcom,mdp5" compatible string for SDM630 and
+>>> SDM660. However granted that we had two LTS releases inbetween I don't
+>>> think it is an issue.
+>>>
+>>
+>> I've retested DPU driver on our downstream release based on 6.18 (by
+>> using msm.prefer_mdp5=false kernel cmdline parameter) on all devices
+>> at my disposal, and I can confirm DPU driver working fine an all SDM660,
+>> SDM636 ones, but not on SDM630. Some logs from sdm630-sony-nile-pioneer
+>> (Sony Xperia XA2):
 > 
+> Unfortunately I only have SDM660 and video DSI usecase here. BTW: is
+> your SDM636 / SDM660 using CMD or video panel?
 > 
-> On 12/18/2025 5:13 PM, Baochen Qiang wrote:
-> > 
-> > 
-> > On 12/18/2025 4:04 PM, Qiang Yu wrote:
-> >> On Thu, Dec 18, 2025 at 10:25:08AM +0530, Manivannan Sadhasivam wrote:
-> >>> On Tue, Dec 16, 2025 at 12:26:41AM -0800, Qiang Yu wrote:
-> >>>> On Mon, Dec 15, 2025 at 08:41:32PM +0200, Dmitry Baryshkov wrote:
-> >>>>> On Sun, Dec 14, 2025 at 11:09:58PM -0800, Qiang Yu wrote:
-> >>>>>> On Sat, Dec 13, 2025 at 11:21:11AM +0900, Manivannan Sadhasivam wrote:
-> >>>>>>> On Fri, Dec 12, 2025 at 09:24:06PM +0200, Dmitry Baryshkov wrote:
-> >>>>>>>> On Fri, Dec 12, 2025 at 10:07:01AM +0900, Manivannan Sadhasivam wrote:
-> >>>>>>>>> On Thu, Dec 11, 2025 at 03:57:54PM +0200, Dmitry Baryshkov wrote:
-> >>>>>>>>>> On Thu, Dec 11, 2025 at 01:37:12AM -0800, Qiang Yu wrote:
-> >>>>>>>>>>> On Wed, Dec 10, 2025 at 12:57:11AM +0200, Dmitry Baryshkov wrote:
-> >>>>>>>>>>>> On Sun, Dec 07, 2025 at 10:35:26PM -0800, Qiang Yu wrote:
-> >>>>>>>>>>>>> On Sat, Dec 06, 2025 at 01:25:34PM +0200, Dmitry Baryshkov wrote:
-> >>>>>>>>>>>>>> On Mon, Dec 01, 2025 at 06:33:15PM -0800, Qiang Yu wrote:
-> >>>>>>>>>>>>>>> From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Currently, the FBC image is a non-standard ELF file that contains a single
-> >>>>>>>>>>>>>>> ELF header, followed by segments for SBL, and WLAN FW. However, TME-L
-> >>>>>>>>>>>>>>> (Trust Management Engine Lite) supported devices (eg. QCC2072) requires
-> >>>>>>>>>>>>>>> separate ELF headers for SBL and WLAN FW segments due to TME-L image
-> >>>>>>>>>>>>>>> authentication requirement.
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Current image format contains two sections in a single binary:
-> >>>>>>>>>>>>>>> - First 512KB: ELF header + SBL segments
-> >>>>>>>>>>>>>>> - Remaining: WLAN FW segments
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> The TME-L supported image format contains two sections with two elf
-> >>>>>>>>>>>>>>> headers in a single binary:
-> >>>>>>>>>>>>>>> - First 512KB: First ELF header + SBL segments
-> >>>>>>>>>>>>>>> - Remaining: Second ELF header + WLAN FW segments
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Download behavior:
-> >>>>>>>>>>>>>>> - Legacy: 1. First 512KB via BHI (ELF header + SBL)
-> >>>>>>>>>>>>>>>           2. Full image via BHIe
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> - TME-L: 1. First 512KB via BHI (First ELF header + SBL)
-> >>>>>>>>>>>>>>>          2. Remaining via BHIe (Second ELF header + WLAN FW segments)
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Add standard_elf_image flag to mhi_controller_config to indicate TME-L
-> >>>>>>>>>>>>>>> supported image format. When set, MHI skips the first 512KB during WLAN FW
-> >>>>>>>>>>>>>>> download over BHIe as it is loaded in BHI phase.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> What is standard about it?
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> The TME-L requires standard elf image format which includes single EFL
-> >>>>>>>>>>>>> header and WLAN FW segment.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> The "standard_elf_image" seems misleading. Since the new image format is
-> >>>>>>>>>>>>> required for TME-L image authentication, how about using 
-> >>>>>>>>>>>>> tme_supported_image?
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> Just elf_image?
-> >>>>>>>>>>>
-> >>>>>>>>>>> Is it too generic for this specific use case. Current image format also
-> >>>>>>>>>>> contains elf header.
-> >>>>>>>>>>
-> >>>>>>>>>> upload_elf_image?
-> >>>>>>>>>>
-> >>>>>>>>>
-> >>>>>>>>> Nope. What does 'upload' even mean here? The 'TIS and ELF' spec v1.2 clearly
-> >>>>>>>>> defines that an ELF executable can have only one ELF header. So I'd prefer
-> >>>>>>>>> 'standard_elf_image' to differentiate it from the non-spec-conformant ELF image
-> >>>>>>>>> used previously.
-> >>>>>>>>
-> >>>>>>>> What kind of ELF image was used previously? Could you please explain
-> >>>>>>>> what do 'First ELF header' vs 'Second ELF header' mean here?
-> >>>>>>>>
-> >>>>>>>
-> >>>>>>> I don't have the details of it, but Qiang should be able to explain. But AFAIC,
-> >>>>>>> that was a non-standard ELF image and the new one is going to be spec
-> >>>>>>> conformant.
-> >>>>>>>
-> >>>>>> Previous image format:
-> >>>>>> ELF header + SBL segments + WLAN FW segments
-> >>>>>>
-> >>>>>> The TME-L supported image format:
-> >>>>>> First ELF header + SBL segments + Second ELF header + WLAN FW segments
-> >>>>>
-> >>>>> What is the Second ELF header in this context? ELF files usually have
-> >>>>> only one header. Are we repeating the same ELF header or is some kind of
-> >>>>> an embedded ELF-in-ELF.
-> >>>>
-> >>>> The "Second ELF header" refers to a separate, complete ELF file embedded
-> >>>> within the FBC image, not a duplicate header. The TME-L supported format
-> >>>> contains:
-> >>>>
-> >>>> FBC Image Structure:
-> >>>> ┌─────────────────────────────────────┐
-> >>>> │  Complete ELF File #1 (SBL)        │
-> >>>> │  ┌─────────────────────────────┐   │
-> >>>> │  │ ELF Header                  │   │ ← First ELF header
-> >>>> │  │ Program Headers             │   │
-> >>>> │  │ SBL Segments                │   │
-> >>>> │  └─────────────────────────────┘   │
-> >>>> ├─────────────────────────────────────┤
-> >>>> │  Complete ELF File #2 (WLAN FW)    │
-> >>>> │  ┌─────────────────────────────┐   │
-> >>>> │  │ ELF Header                  │   │ ← Second ELF header
-> >>>> │  │ Program Headers             │   │
-> >>>> │  │ WLAN FW Segments            │   │
-> >>>> │  └─────────────────────────────┘   │
-> >>>> └─────────────────────────────────────┘
-> >>>>>
-> >>>>>>
-> >>>>>> As per 'TIS and ELF' spec v1.2 Mani mentioned, the previous image format
-> >>>>>
-> >>>>> pointer?
-> >>>>
-> >>>> The entire 'TIS and ELF' spec v1.2 document descibes the structure of the
-> >>>> ELF excutable file, I can not point out a specfic sentence or phase that
-> >>>> tell us the previous image format is standard. But at least there is an
-> >>>> example we can refer to: Figure A-4. Executable File Example. And I can
-> >>>> also use readelf cmd to parse the image.
-> >>>>
-> >>>>>
-> >>>>>> is also standard elf image. But it doesn't meet the requirement of TME-L
-> >>>>>> because we need separate elf header for SBL and WL FW for TME-L
-> >>>>>> authentication.
-> >>>>>>
-> >>>>>> So the commit message stating "Currently, the FBC image is a non-standard
-> >>>>>> ELF file that contains a single ELF header, followed by segments for SBL,
-> >>>>>> and WLAN FW" is not correct and standard_elf_image is not accurate.
-> >>>>>>
-> >>>>>> Can we avoid saying anything about standard in commit message? Flags eg.
-> >>>>>> separate_elf_header and tme_supported_image are more accurate.
-> >>>>>
-> >>>>> Please define, what is the supported image.
-> >>>>
-> >>>> The supported image refers to an image format that TME-L can authenticate.
-> >>>> Both SBL and WLAN FW should be in ELF format. After powering on, SBL (ELF
-> >>>> format, ELF header + SBL segment, first 512 KB) is loaded over BHI and
-> >>>> authenticated by TME-L. After entering SBL, WLAN FW (ELF format, skip
-> >>>> first 512KB of fbc image) is loaded over BHIe and also authenticated by
-> >>>> TME-L.
-> >>>>
-> >>>
-> >>> So what makes it different here is that you are now sending the two FWs
-> >>> separately as standalone ELF image to the device for authentication by TME-L,
-> >>> but those are combined in a single image file in the host. But what makes you to
-> >>> combine two images in the first place? Why can't they be separate ELF files?
-> >>>
-> >>> I think you can avoid the hassle if you could just have separate ELF images for
-> >>> SBL and WLAN FW and say that the TME-L just expects individual ELF image.
-> >>>
-> >> Yes, they are two separate images combined into a single file. I'm not
-> >> sure of the specific reasons for this design choice, so I can't comment
-> >> on it. The WLAN team provides a single file for both SBL and WLAN FW, and
-> >> I don't know whether they're willing to change.
-> >>
-> >> Baochen, do you have any comment on this?
-> > 
-> > Hmm, sorry, no idea :(
+>>
+>> [    2.356546] msm_dpu c901000.display-controller: bound c994000.dsi (ops
+>> dsi_ops [msm])
+>> [    2.357328] adreno 5000000.gpu: GPU speedbin fuse 146 (0x92), mapped to
+>> opp-supp-hw 0x4
+>> [    2.364802] msm_dpu c901000.display-controller: bound 5000000.gpu (ops
+>> a3xx_ops [msm])
+>> [    2.444649] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x30030000
+>> [    2.449793] [drm] Initialized msm 1.13.0 for c901000.display-controller
+>> on minor 1
+>> ...
+>> [    2.911900] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
+>> error]enc33 intf1 ctl start interrupt wait failed
+>> [    2.911916] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
+>> commit done returned -22
+>> ...
+>> [    3.176171] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
+>> error]enc33 intf1 ctl start interrupt wait failed
+>> [    3.176367] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
+>> commit done returned -22
+>>
+>> Which results in horrendous ~3-5 fps in shell.
+>>
+>> The block "enc33 intf1 ctl start interrupt wait failed" + "wait for
+>> commit done returned -22" is repeated few times per second whenever
+>> the display is turned on, and stops when it's turned off.
+>>
+>> Meanwhile it is working fine using MDP5 driver (msm.prefer_mdp5=true).
 > 
-> I mean I don't know the reason behind the design choice.
+> It's interesting. Would you please capture the devcoredump for the
+> platform? There will be a lot of blocks, I'm interested in INTF_1, CTL
+> and top_0.
 > 
+> Also, as a debugging check, would you mind patching
+> dpu_encoder_phys_cmd_wait_for_commit_done() so that it always calls
+> dpu_encoder_phys_cmd_wait_for_tx_complete()? I will check if there are
+> any differences for CTL_START and similar registers, but it will take
+> some time.
+> 
+>> Well, as fine as possible considering [1], using several FD_MESA_DEBUG
+>> tricks to work around GPU issues.
+>>
+>> P.S. I have not yet tested MSM8998, but I can try if required
+> 
+> As far as I remember, MDP5 on MSM8998 has never been wired (as in never
+> committed to the DTSI). Angelo has enabled and Freebox people have
+> tested DPU on MSM8998, but I think it was limited to video / HDMI
+> usecases.
 
-Ok, then I guess we should try to get rid of the flag and just check for the
-WLAN FW ELF header during runtime:
+I think we poked at both, back in the day (tm) and DPU worked on msm8998-
+sony-maple (sharp,ls055d1sx04 cmd mode panel) with the funny CMD mode hack
+(due to a register field not existing on <845?)
 
-	/*
-	 * Some FW combine two separate ELF images (SBL + WLAN FW) in a single
-	 * file. Hence, check for the existence of the second ELF header after
-	 * SBL. If present, load the second image separately.
-	 */
-	if (!memcmp(fw_data + mhi_cntrl->sbl_size, ELFMAG, SELFMAG)) {
-		fw_data += mhi_cntrl->sbl_size
-		fw_sz -= mhi_cntrl->sbl_size;
-	}
+https://github.com/SoMainline/linux/commit/14e0517e2fd5eee116a32db624b09856c60fa022
 
-- Mani
+FYI panel wiring:
 
--- 
-மணிவண்ணன் சதாசிவம்
+https://github.com/SoMainline/linux/commit/88f276e81cea0f7496d3f92cd731f27615cfa703
+
++Marijn may know more
+
+Konrad
 
