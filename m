@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-85739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95E85CCD1A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 19:12:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72DF2CCD1FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 19:17:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0A1B53011AB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 18:11:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1E0AE3081036
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 18:12:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 403F035505B;
-	Thu, 18 Dec 2025 18:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CA5535505D;
+	Thu, 18 Dec 2025 18:03:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA72355051;
-	Thu, 18 Dec 2025 18:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE244354AD7;
+	Thu, 18 Dec 2025 18:03:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766081004; cv=none; b=tj/T+XMpECQfzx4WPJ/DheYgI6C0DJQ3/6EAPdbxnaCci1beIl46gnBMhcreDcBkc9360JO5LDwa5Iw5O/AKsZ/8AlB2q58fzoISlM0iKmxxzEIWv24IozPGox4JCjt9Cx5s9jQqhinAgsGFCkvFsqOS1qsQitQ6v+sZJoBuAwY=
+	t=1766081003; cv=none; b=fGrprg/mOmp81X/lfbV5yVaCLZqhzmf2R9Xw9QdQ5BdfPu4xdJLEtE7Sj5PLcNVsmxlYa07+Gizk2JW2bhPLTVQ5vLyZa1eLtmo46VWsrh+cb3dMntOkcRWvkEJIvbbfY6o70ERYVLx5wErwsU8SIv3LPAZ36rML0IOB4QilspE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766081004; c=relaxed/simple;
-	bh=wfVBD4Vc3yV/0KYBjXQ5OKWNculmXF3g7gDq4yoK9/Q=;
+	s=arc-20240116; t=1766081003; c=relaxed/simple;
+	bh=9NFP+lkYx1RDyYK5uALA3aRFuNVGTf2anS04BoevzS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoF/Od5mbRnPXDgzwLcPTjfTn+DugrgPakAtIAZJ29lUHKdIsYkyPF6btKuoudPY//+d6pcX5RA6u4NLHoutlSodCPjgOF6YlOwe1rEiKR+iOFBWM9k7yTAk8ppZNmFyVLJHLylysNZ8gZadvB51bO+VtElT3EwCFKgW18Dyn64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=15.184.224.54
+	 MIME-Version; b=JGJ/GL52tYOwK8q0kltr65Reo8VcqAXJhEGIxfL4tAJdq2QM40P1zT0LmmHyI23HifBwV/fGS5xQFRoY2sMYengC2VMR0CGDyIFpFzHhQJeKQKz+WRGE+LYRkGTaSs0STAGmNH1QRnZHFEyGe2BgzezZQR3I8glXTWsWfiXn3pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.204.34.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpgz12t1766080957t6cdf7b4c
-X-QQ-Originating-IP: 1O3gaj4ACK8WXXkB2Iw1cUX0B1+/aacB837MLA5+Y80=
+X-QQ-mid: esmtpgz12t1766080959t18399a9e
+X-QQ-Originating-IP: HRY41DCVJM6ztJQhG5rRVPrgnrnvSTWL8ryX4p9C0vg=
 Received: from bigfoot-server-arm-node1.classf ( [183.250.239.212])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 19 Dec 2025 02:02:35 +0800 (CST)
+	id ; Fri, 19 Dec 2025 02:02:38 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8351619728533894091
+X-BIZMAIL-ID: 10201982189096493261
 EX-QQ-RecipientCnt: 16
 From: Junhao Xie <bigfoot@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -53,9 +53,9 @@ Cc: Junhao Xie <bigfoot@radxa.com>,
 	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-mtd@lists.infradead.org
-Subject: [PATCH 1/2] firmware: qcom: scm: Add SCM storage interface support
-Date: Fri, 19 Dec 2025 02:02:04 +0800
-Message-ID: <155C9F219E5A9219+20251218180205.930961-2-bigfoot@radxa.com>
+Subject: [PATCH 2/2] mtd: devices: Add Qualcomm SCM storage driver
+Date: Fri, 19 Dec 2025 02:02:05 +0800
+Message-ID: <A41171D3EA8B583B+20251218180205.930961-3-bigfoot@radxa.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251218180205.930961-1-bigfoot@radxa.com>
 References: <20251218180205.930961-1-bigfoot@radxa.com>
@@ -68,332 +68,341 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
 Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: NEaes6yu2o+m2o0BdQ9UqVNgONfAeMXAwpxXDAHIAxija5m2FORdHhGc
-	zv1wEOgGq61CMOZwDW5fBJ9gPXKsoWTCwnxyf3RMVXrIBVAsHjDvOO9LzM53Nj6ihc96xMS
-	RiAfMIPlB0MPDXTPThFl595NKtbs7PF7bWeE8BA/p7FhDgTZiO1h07y6a+2U+5Ce5Dic5Sy
-	94nu5q06OeZbBbST1+/B4AMmBjpb5mY8JkPrb+2Hkq/6C+K+Z4n8z950OqKbeM3gUPxjXwI
-	CnNZUua5VvgmnSGvptSt+yMN53v48fReKdtts1TKkMzqgRckK7xU/NU+6PfDMfvLOpUDIOB
-	wprfTrGhv2k5ax43Rn39gBAXCzA3ryv2626Tw1jP99VQXqxMSJxsUHx58I2duBwYWjOQ7Wf
-	KflV858OecnX3CODjHebk6K0Hq5LuI49rzb+cyBtzO+DYGFkp27+2PVm1NcygfRvrMrPt3P
-	4AUDdBIvoLvgMb9ijipPv8O/nD4hheL08AETSSk0A8054PmZMDvzNLo1/T0gqjklu5TOEWE
-	N1Yz1MDMgFVKzMIfNqODl0u5Jv8ANEwYUX/YRyZ8SpnI6uDDVFg4llyIYgpL6lC7r0AOs17
-	yEq329sfUghuFmqolpfFlJ5bTzqWbCINuJXKx5f077ATCV1PSdRFo0Qbv+o3lsh3jORv3Q1
-	/bQIj+yTkXr4S8ElBf3BHX0xRhqQU1w0Nb3aUDdMxtdLq916ssZIZdaYNZqqWo6LyMcEXLb
-	0PE3Rgt+DANDhP46bDG+VeUNtJiHvA7m9aeOhunuqvFhjKgMll0aboWXRfxvJCUbx7t4gxT
-	3DaTHQQFACKMbGRVHm+cu7aZe73g/XSA0Ssvo1o/6tC9XvNuGhbjzTQYrrNRIEfs/3riaSa
-	k5ZwyWJVUsoZ1XKHeRI9R9p/vMH5GtKbYgXhrFMAcG5FdszjX+brQMF/+MYoaJaQ9uSZ64T
-	qSv6Sp1PI8b3UxuDIHPftcFWdPaitiv6GDRfFSdUXTY2kVcTK4Eg5/FVshIyvmISxtgw=
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-XMAILINFO: OdKM2jcE40T2SB1uthZS5rWQKsA78htpXUaI6RO3QMYE/zG8J2A5pKyR
+	MSDbFQWwCcSRDE0k6cOoHzRlalB5i8T4lzLDxRG3s/+KTjnncthLQejlAS2xitl2kYshTBn
+	6k+OV5T+iwGdPFk/VX1nVKQ3qOfFFb8XkQcYiHQn1/nhKYR1LzxrL/Er76+vW2Qsq2YENYG
+	LCB9bEHLVNpUIk5vl9nmoccq/x+IEZRKfW/tO+rVJomA8PoYH0q+kQchTE3Fp5bNDBcuCwe
+	7fxKhUxCjn5AC2n4LLdb8LzG3f8Zq8Id4OapFkEqqynxkPg0HERatg9xKRYaoYHfYzJcBaq
+	pcjzGa5JC5fsnflo9CME221yBBaiboanTpPSvSxvtl7tvWpvo9uoXiQPBUrOBCmoxM9nFNs
+	KYnJJW2A3z8eduCreNK0GYdlIHuHvwjky/jus6NNEkj0om0t+/Gng6sQbymMiWNc3dZHDMX
+	IfX3BmcvCh+onl9TbuR+gAZWrO1HcO65K95WVuNV6MlCjHMDJaennFShH9T/1qxwd3SfXou
+	Q8yWQN8xEld7EG3Ax0xRg41KFIXPGyVK3g1QL8ZWb4xGmHXPqpbTnpXh/fQDgc64TuQi1In
+	D14Q9MMBHK/11EyyDaWtQVyL8MZEfWEg5RcaQMQ7MggBBKzjYYAqjWYwYx56Ju367G3mEW5
+	iTKlrE4YOIJxBQtIZhJl7oj8eJwU6f2gM9rLcO2vmoSueDA8HwjcM+k1tIXX9N42eIV8DdU
+	lQo7gl6BweNtiVQWfEeaUCzc9TrhdyMcWe6nFclDhQGzs2+imdh0E+QOvsMYtf+wu4HTKgA
+	d7ybMkv7qyrnN8RUhE0oG3SaTDuWvmO1/2aJ+o2M+IJYj+djFcXGM45YOFY7v8r1xV5WR9B
+	1FzfTG6K7XSw1HsMhdQGKiBH+1umoLsPEbHz9eTcNTRJOlYsEAwu1ndnjbD679myAKplHke
+	ysqW8abZQtpGo1znBQQ8VPC4JSNeQAvpK5yrCyAvjTN0QePiq5GblSjGmlisFWKWha+awAk
+	cYYPqx+6m15UIhibbA5gavoIkYkbWwbvQq0MonBrMoWnQw/jw6
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
 X-QQ-RECHKSPAM: 0
 
-Add infrastructure to support accessing TrustZone-protected storage
-devices through SCM (Secure Channel Manager) calls. Some Qualcomm
-platforms protect their firmware storage (typically SPI NOR flash)
-via TrustZone, making it inaccessible from the non-secure world.
-
-Currently allowlisted for Radxa Dragon Q6A (QCS6490) where it has been
-validated. Additional platforms can be added as they are tested.
+Add MTD driver for accessing storage devices managed by Qualcomm's
+TrustZone firmware. On some platforms, BIOS/firmware storage (typically
+SPI NOR flash) is not directly accessible from the non-secure world and
+all operations must go through SCM (Secure Channel Manager) calls.
 
 Signed-off-by: Junhao Xie <bigfoot@radxa.com>
 Tested-by: Xilin Wu <sophon@radxa.com>
 ---
- drivers/firmware/qcom/qcom_scm.c       | 183 +++++++++++++++++++++++++
- drivers/firmware/qcom/qcom_scm.h       |   3 +
- include/linux/firmware/qcom/qcom_scm.h |  47 +++++++
- 3 files changed, 233 insertions(+)
+ drivers/mtd/devices/Kconfig            |  17 ++
+ drivers/mtd/devices/Makefile           |   1 +
+ drivers/mtd/devices/qcom_scm_storage.c | 256 +++++++++++++++++++++++++
+ 3 files changed, 274 insertions(+)
+ create mode 100644 drivers/mtd/devices/qcom_scm_storage.c
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 731074ca1ebbe..b117e1b58e363 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -66,6 +66,21 @@ struct qcom_scm_mem_map_info {
- 	__le64 mem_size;
- };
+diff --git a/drivers/mtd/devices/Kconfig b/drivers/mtd/devices/Kconfig
+index e518dfeee6542..4f73e89a11947 100644
+--- a/drivers/mtd/devices/Kconfig
++++ b/drivers/mtd/devices/Kconfig
+@@ -194,6 +194,23 @@ config MTD_INTEL_DG
+ 	  To compile this driver as a module, choose M here: the module
+ 	  will be called mtd-intel-dg.
  
-+struct qcom_scm_storage_cmd {
-+	__le64 storage_type;
-+	__le64 slot_num;
-+	__le64 lun;
-+	__le64 guid_ptr;
-+	__le64 storage_cmd;
-+};
++config MTD_QCOM_SCM_STORAGE
++	tristate "Qualcomm TrustZone protected storage MTD driver"
++	depends on MTD
++	depends on QCOM_SCM || COMPILE_TEST
++	help
++	  This provides an MTD device to access storage (typically SPI NOR
++	  flash) that is managed by Qualcomm's TrustZone firmware. On some
++	  platforms, the firmware storage is not directly accessible from
++	  the non-secure world and all operations must go through secure
++	  monitor calls.
 +
-+struct qcom_scm_storage_cmd_details {
-+	__le64 lba;
-+	__le64 length;
-+	__le64 data_ptr;
-+	__le64 data_size;
-+};
++	  This driver is only functional on devices where the bootloader
++	  has configured TrustZone to expose the storage interface.
 +
- /**
-  * struct qcom_scm_qseecom_resp - QSEECOM SCM call response.
-  * @result:    Result or status of the SCM call. See &enum qcom_scm_qseecom_result.
-@@ -111,6 +126,15 @@ enum qcom_scm_qseecom_tz_cmd_info {
- 	QSEECOM_TZ_CMD_INFO_VERSION		= 3,
- };
++	  To compile this driver as a module, choose M here: the module
++	  will be called qcom_scm_storage.
++
+ comment "Disk-On-Chip Device Drivers"
  
-+enum qcom_scm_storage_result {
-+	STORAGE_RESULT_SUCCESS			= 0,
-+	STORAGE_RESULT_NO_MEMORY		= 1,
-+	STORAGE_RESULT_INVALID_PARAMETER	= 2,
-+	STORAGE_RESULT_STORAGE_ERROR		= 3,
-+	STORAGE_RESULT_ACCESS_DENIED		= 4,
-+	STORAGE_RESULT_NOT_SUPPORTED		= 5,
-+};
-+
- #define QSEECOM_MAX_APP_NAME_SIZE		64
- #define SHMBRIDGE_RESULT_NOTSUPP		4
+ config MTD_DOCG3
+diff --git a/drivers/mtd/devices/Makefile b/drivers/mtd/devices/Makefile
+index 9fe4ce9cffde9..d71d07f811fa2 100644
+--- a/drivers/mtd/devices/Makefile
++++ b/drivers/mtd/devices/Makefile
+@@ -19,6 +19,7 @@ obj-$(CONFIG_MTD_BCM47XXSFLASH)	+= bcm47xxsflash.o
+ obj-$(CONFIG_MTD_ST_SPI_FSM)    += st_spi_fsm.o
+ obj-$(CONFIG_MTD_POWERNV_FLASH)	+= powernv_flash.o
+ obj-$(CONFIG_MTD_INTEL_DG)	+= mtd_intel_dg.o
++obj-$(CONFIG_MTD_QCOM_SCM_STORAGE)	+= qcom_scm_storage.o
  
-@@ -2214,6 +2238,159 @@ static void qcom_scm_qtee_init(struct qcom_scm *scm)
- 	devm_add_action_or_reset(scm->dev, qcom_scm_qtee_free, qtee_dev);
- }
  
-+#if IS_ENABLED(CONFIG_MTD_QCOM_SCM_STORAGE)
+ CFLAGS_docg3.o			+= -I$(src)
+diff --git a/drivers/mtd/devices/qcom_scm_storage.c b/drivers/mtd/devices/qcom_scm_storage.c
+new file mode 100644
+index 0000000000000..bf5a9f423ed7c
+--- /dev/null
++++ b/drivers/mtd/devices/qcom_scm_storage.c
+@@ -0,0 +1,256 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Qualcomm TrustZone SCM Storage Flash driver
++ *
++ * Copyright (c) 2025 Junhao Xie <bigfoot@radxa.com>
++ */
 +
-+int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
-+			      enum qcom_scm_storage_cmd_id cmd_id,
-+			      u64 lba, void *payload, size_t size)
-+{
-+	struct qcom_scm_res scm_res = {};
-+	struct qcom_scm_desc desc = {};
-+	struct qcom_scm_storage_cmd *cmd;
-+	struct qcom_scm_storage_cmd_details *details;
-+	size_t buf_size;
-+	void *payload_buf;
-+	int ret;
++#include <linux/dma-mapping.h>
++#include <linux/module.h>
++#include <linux/mtd/mtd.h>
++#include <linux/platform_device.h>
++#include <linux/slab.h>
 +
-+	buf_size = sizeof(*cmd) + sizeof(*details);
-+	if (payload)
-+		buf_size += size;
-+	void *data __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
-+							 buf_size,
-+							 GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+	memset(data, 0, buf_size);
-+	if (payload) {
-+		payload_buf = data + sizeof(*cmd) + sizeof(*details);
-+		memcpy(payload_buf, payload, size);
-+	}
-+
-+	cmd = data;
-+	cmd->storage_type = storage_type;
-+	cmd->storage_cmd = cmd_id;
-+
-+	details = data + sizeof(*cmd);
-+	details->lba = lba;
-+	if (payload)
-+		details->data_ptr = qcom_tzmem_to_phys(payload_buf);
-+	details->length = size;
-+
-+	desc.svc = QCOM_SCM_SVC_STORAGE;
-+	desc.cmd = QCOM_SCM_STORAGE_CMD;
-+	desc.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO, QCOM_SCM_VAL,
-+				     QCOM_SCM_RW, QCOM_SCM_VAL);
-+	desc.args[0] = qcom_tzmem_to_phys(cmd);
-+	desc.args[1] = sizeof(*cmd);
-+	desc.args[2] = qcom_tzmem_to_phys(details);
-+	desc.args[3] = sizeof(*details);
-+	desc.owner = ARM_SMCCC_OWNER_SIP;
-+
-+	ret = qcom_scm_call(__scm->dev, &desc, &scm_res);
-+	if (ret)
-+		return ret;
-+
-+	if (payload)
-+		memcpy(payload, payload_buf, size);
-+
-+	switch (scm_res.result[0]) {
-+	case STORAGE_RESULT_SUCCESS:
-+		return 0;
-+	case STORAGE_RESULT_NO_MEMORY:
-+		return -ENOMEM;
-+	case STORAGE_RESULT_INVALID_PARAMETER:
-+		return -EINVAL;
-+	case STORAGE_RESULT_STORAGE_ERROR:
-+		return -EIO;
-+	case STORAGE_RESULT_ACCESS_DENIED:
-+		return -EACCES;
-+	case STORAGE_RESULT_NOT_SUPPORTED:
-+		return -EOPNOTSUPP;
-+	default:
-+		return -EIO;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(qcom_scm_storage_send_cmd);
++#include <linux/firmware/qcom/qcom_scm.h>
 +
 +/*
-+ * Allowlist of platforms known to support and have tested SCM storage interface.
-+ * This is a safety mechanism to prevent exposing potentially dangerous firmware
-+ * access on untested platforms. New platforms should be added here after validation.
++ * This driver provides MTD access to storage devices managed by Qualcomm's
++ * TrustZone firmware. The storage (typically SPI NOR flash) is not directly
++ * accessible from the non-secure world and all operations must go through
++ * SCM (Secure Channel Manager) calls.
++ *
++ * A bounce buffer is required because the interface requires
++ * block-aligned addresses and sizes
 + */
-+static const struct of_device_id qcom_scm_storage_allowlist[] = {
-+	{ .compatible = "radxa,dragon-q6a" },
-+	{ }
++struct qcom_scm_storage {
++	struct device *dev;
++	struct mutex lock;	/* Protects SCM storage operations */
++	struct mtd_info mtd;
++	struct qcom_scm_storage_info info;
++	size_t buffer_size;
++	u8 *buffer;
 +};
 +
-+static bool qcom_scm_storage_machine_is_allowed(void)
++static int qcom_scm_storage_erase(struct mtd_info *mtd,
++				  struct erase_info *instr)
 +{
-+	struct device_node *np;
-+	bool match;
++	struct qcom_scm_storage *host =
++		container_of(mtd, struct qcom_scm_storage, mtd);
 +
-+	np = of_find_node_by_path("/");
-+	if (!np)
-+		return false;
++	if (instr->addr % host->info.block_size ||
++	    instr->len % host->info.block_size)
++		return -EINVAL;
 +
-+	match = of_match_node(qcom_scm_storage_allowlist, np);
-+	of_node_put(np);
++	guard(mutex)(&host->lock);
 +
-+	return match;
++	return qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
++					 QCOM_SCM_STORAGE_ERASE,
++					 instr->addr / host->info.block_size,
++					 0, instr->len);
 +}
 +
-+static void qcom_scm_storage_free(void *data)
++static int qcom_scm_storage_read(struct mtd_info *mtd,
++				 loff_t from, size_t len,
++				 size_t *retlen, u_char *buf)
 +{
-+	struct platform_device *storage_dev = data;
++	struct qcom_scm_storage *host =
++		container_of(mtd, struct qcom_scm_storage, mtd);
++	size_t block_size = host->info.block_size;
++	loff_t block_start, block_off, lba;
++	size_t chunk, to_read;
++	int ret = 0;
 +
-+	platform_device_unregister(storage_dev);
-+}
++	if (retlen)
++		*retlen = 0;
 +
-+static int qcom_scm_storage_init(struct qcom_scm *scm)
-+{
-+	struct qcom_scm_storage_info info;
-+	struct platform_device *storage_dev;
-+	int ret;
++	if (from + len > mtd->size)
++		return -EINVAL;
 +
-+	ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
-+					QCOM_SCM_STORAGE_GET_INFO,
-+					0, &info, sizeof(info));
-+	if (ret < 0) {
-+		dev_info(scm->dev, "scm storage not available: %d\n", ret);
++	if (len == 0)
 +		return 0;
++
++	guard(mutex)(&host->lock);
++
++	while (len > 0) {
++		block_start = round_down(from, block_size);
++		block_off = from - block_start;
++		lba = block_start / block_size;
++
++		if (block_off || len < block_size) {
++			chunk = min_t(size_t, block_size - block_off, len);
++			to_read = block_size;
++		} else {
++			chunk = round_down(len, block_size);
++			chunk = min_t(size_t, chunk, host->buffer_size);
++			to_read = chunk;
++		}
++
++		ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
++						QCOM_SCM_STORAGE_READ,
++						lba, host->buffer,
++						to_read);
++		if (ret)
++			return ret;
++
++		memcpy(buf, host->buffer + block_off, chunk);
++
++		buf += chunk;
++		from += chunk;
++		len -= chunk;
++		if (retlen)
++			*retlen += chunk;
 +	}
 +
-+	if (!qcom_scm_storage_machine_is_allowed()) {
-+		dev_info(scm->dev, "scm storage untested, skipping\n");
-+		return 0;
-+	}
-+
-+	dev_info(scm->dev, "scm storage size %llu bytes\n",
-+		 info.total_blocks * info.block_size);
-+
-+	storage_dev = platform_device_alloc("qcom_scm_storage", -1);
-+	if (!storage_dev)
-+		return -ENOMEM;
-+
-+	storage_dev->dev.parent = scm->dev;
-+
-+	ret = platform_device_add(storage_dev);
-+	if (ret) {
-+		platform_device_put(storage_dev);
-+		return ret;
-+	}
-+
-+	return devm_add_action_or_reset(scm->dev, qcom_scm_storage_free,
-+					storage_dev);
-+}
-+
-+#else /* CONFIG_MTD_QCOM_SCM_STORAGE */
-+
-+static int qcom_scm_storage_init(struct qcom_scm *scm)
-+{
 +	return 0;
 +}
 +
-+#endif /* CONFIG_MTD_QCOM_SCM_STORAGE */
-+
- /**
-  * qcom_scm_is_available() - Checks if SCM is available
-  */
-@@ -2449,6 +2626,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	/* Initialize the QTEE object interface. */
- 	qcom_scm_qtee_init(scm);
- 
-+	/*
-+	 * Initialize the SCM storage interface.
-+	 */
-+	ret = qcom_scm_storage_init(scm);
-+	WARN(ret < 0, "failed to initialize scm storage: %d\n", ret);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-index a56c8212cc0c4..3b68b33c5ccc3 100644
---- a/drivers/firmware/qcom/qcom_scm.h
-+++ b/drivers/firmware/qcom/qcom_scm.h
-@@ -149,6 +149,9 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
- 
-+#define QCOM_SCM_SVC_STORAGE			0x1a
-+#define QCOM_SCM_STORAGE_CMD			0x01
-+
- #define QCOM_SCM_SVC_WAITQ			0x24
- #define QCOM_SCM_WAITQ_RESUME			0x02
- #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
-diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-index a55ca771286bf..41f799d8de54f 100644
---- a/include/linux/firmware/qcom/qcom_scm.h
-+++ b/include/linux/firmware/qcom/qcom_scm.h
-@@ -53,6 +53,36 @@ enum qcom_scm_ice_cipher {
- 	QCOM_SCM_ICE_CIPHER_AES_256_CBC = 4,
- };
- 
-+enum qcom_scm_storage_cmd_id {
-+	QCOM_SCM_STORAGE_INIT      = 0,
-+	QCOM_SCM_STORAGE_READ      = 1,
-+	QCOM_SCM_STORAGE_WRITE     = 2,
-+	QCOM_SCM_STORAGE_ERASE     = 3,
-+	QCOM_SCM_STORAGE_GET_INFO  = 4,
-+	QCOM_SCM_STORAGE_DEINIT    = 5,
-+};
-+
-+enum qcom_scm_storage_type {
-+	QCOM_SCM_STORAGE_NULL    = 0,
-+	QCOM_SCM_STORAGE_SPINOR  = 1,
-+};
-+
-+#define QCOM_SCM_STORAGE_FW_VER_LEN	32
-+#define QCOM_SCM_STORAGE_MEM_TYPE_LEN	5
-+#define QCOM_SCM_STORAGE_PROD_NAME_LEN	32
-+
-+struct qcom_scm_storage_info {
-+	u64 total_blocks;
-+	u32 block_size;
-+	u32 page_size;
-+	u32 num_physical;
-+	u64 manufacturer_id;
-+	u64 serial_num;
-+	char fw_version[QCOM_SCM_STORAGE_FW_VER_LEN];
-+	char memory_type[QCOM_SCM_STORAGE_MEM_TYPE_LEN];
-+	char product_name[QCOM_SCM_STORAGE_PROD_NAME_LEN];
-+} __packed;
-+
- #define QCOM_SCM_PERM_READ       0x4
- #define QCOM_SCM_PERM_WRITE      0x2
- #define QCOM_SCM_PERM_EXEC       0x1
-@@ -181,4 +211,21 @@ int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
- int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
- 				    u64 *result, u64 *response_type);
- 
-+#if IS_ENABLED(CONFIG_MTD_QCOM_SCM_STORAGE)
-+
-+int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
-+			      enum qcom_scm_storage_cmd_id cmd_id,
-+			      u64 lba, void *payload, size_t size);
-+
-+#else /* CONFIG_MTD_QCOM_SCM_STORAGE */
-+
-+static inline int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
-+					    enum qcom_scm_storage_cmd_id cmd_id,
-+					    u64 lba, void *payload, size_t size)
++static int qcom_scm_storage_write(struct mtd_info *mtd,
++				  loff_t to, size_t len,
++				  size_t *retlen, const u_char *buf)
 +{
-+	return -EOPNOTSUPP;
++	struct qcom_scm_storage *host =
++		container_of(mtd, struct qcom_scm_storage, mtd);
++	size_t block_size = host->info.block_size;
++	loff_t block_start, block_off, lba;
++	size_t chunk, to_write;
++	int ret = 0;
++
++	if (retlen)
++		*retlen = 0;
++
++	if (to + len > mtd->size)
++		return -EINVAL;
++
++	if (len == 0)
++		return 0;
++
++	guard(mutex)(&host->lock);
++
++	while (len > 0) {
++		block_start = round_down(to, block_size);
++		block_off = to - block_start;
++		lba = block_start / block_size;
++
++		if (block_off || len < block_size) {
++			chunk = min_t(size_t, block_size - block_off, len);
++			to_write = block_size;
++
++			ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
++							QCOM_SCM_STORAGE_READ,
++							lba, host->buffer,
++							block_size);
++			if (ret)
++				return ret;
++		} else {
++			chunk = round_down(len, block_size);
++			chunk = min_t(size_t, chunk, host->buffer_size);
++			to_write = chunk;
++		}
++
++		memcpy(host->buffer + block_off, buf, chunk);
++
++		ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
++						QCOM_SCM_STORAGE_WRITE,
++						lba, host->buffer,
++						to_write);
++		if (ret)
++			return ret;
++
++		buf += chunk;
++		to += chunk;
++		len -= chunk;
++		if (retlen)
++			*retlen += chunk;
++	}
++
++	return 0;
 +}
 +
-+#endif /* CONFIG_MTD_QCOM_SCM_STORAGE */
++static int qcom_scm_storage_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct qcom_scm_storage *host;
++	int ret;
 +
- #endif
++	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
++	if (!host)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, host);
++	host->dev = dev;
++
++	ret = devm_mutex_init(dev, &host->lock);
++	if (ret)
++		return ret;
++
++	host->buffer_size = SZ_256K;
++	host->buffer = devm_kzalloc(dev, host->buffer_size, GFP_KERNEL);
++	if (!host->buffer)
++		return -ENOMEM;
++
++	ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
++					QCOM_SCM_STORAGE_GET_INFO,
++					0, &host->info,
++					sizeof(host->info));
++	if (ret < 0)
++		return dev_err_probe(dev, ret,
++				     "failed to get storage info\n");
++
++	if (!host->info.block_size || !host->info.total_blocks)
++		return dev_err_probe(dev, -EINVAL,
++				     "invalid storage geometry\n");
++
++	if (host->info.block_size > host->buffer_size)
++		return dev_err_probe(dev, -EINVAL,
++				     "block size %u exceeds buffer size\n",
++				     host->info.block_size);
++
++	host->mtd.name = dev_name(dev);
++	host->mtd.owner = THIS_MODULE;
++	host->mtd.dev.parent = dev;
++	host->mtd.size = host->info.total_blocks * host->info.block_size;
++	host->mtd.erasesize = host->info.block_size;
++	host->mtd.writesize = host->info.block_size;
++	host->mtd.writebufsize = host->info.block_size;
++	host->mtd.type = MTD_NORFLASH;
++	host->mtd.flags = MTD_WRITEABLE;
++	host->mtd._erase = qcom_scm_storage_erase;
++	host->mtd._read = qcom_scm_storage_read;
++	host->mtd._write = qcom_scm_storage_write;
++
++	ret = mtd_device_register(&host->mtd, NULL, 0);
++	if (ret)
++		return ret;
++
++	dev_info(dev, "scm storage 0x%llx registered with size %llu bytes\n",
++		 host->info.serial_num, host->mtd.size);
++
++	return 0;
++}
++
++static void qcom_scm_storage_remove(struct platform_device *pdev)
++{
++	struct qcom_scm_storage *host = platform_get_drvdata(pdev);
++
++	WARN_ON(mtd_device_unregister(&host->mtd));
++}
++
++static const struct platform_device_id qcom_scm_storage_ids[] = {
++	{ "qcom_scm_storage", 0 },
++	{}
++};
++MODULE_DEVICE_TABLE(platform, qcom_scm_storage_ids);
++
++static struct platform_driver qcom_scm_storage_driver = {
++	.probe	= qcom_scm_storage_probe,
++	.remove	= qcom_scm_storage_remove,
++	.driver = {
++		.name	= "qcom_scm_storage",
++	},
++	.id_table = qcom_scm_storage_ids,
++};
++module_platform_driver(qcom_scm_storage_driver);
++
++MODULE_AUTHOR("Junhao Xie <bigfoot@radxa.com>");
++MODULE_DESCRIPTION("Qualcomm TrustZone SCM Storage Flash driver");
++MODULE_LICENSE("GPL");
 -- 
 2.51.2
 
