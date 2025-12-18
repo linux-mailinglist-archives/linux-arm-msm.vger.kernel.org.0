@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-85702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31FC6CCC25A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 14:59:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B1F0ECCC3E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:21:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BB61E309C2D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 13:54:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 59EA630CBE6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 14:17:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 633A5345CA4;
-	Thu, 18 Dec 2025 13:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA9023370FA;
+	Thu, 18 Dec 2025 14:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UYvXeSl4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hTYnMvj1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mXfppaV7";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TExsO59Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BAE3451C6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 13:54:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD637336EEE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766066063; cv=none; b=hwNa0TKWUP1ylwpazh8a546WAuz4TmRBo6kO7zqzTj9C3dzqVeVWDXcqbh8JbTkh7zegTr/FpRV3XWwW2Na+llNcx8uzeawPVDfNa1WRify6SBzEfi4aeC/uGhA+2tP3+MXFeYDmMS8vBMbpOa0YiP43x9T7b5rnW6bzZSt6294=
+	t=1766066881; cv=none; b=g+ZjNPRY2wvBr3hU8s0SvFoW83JoLS9hL4XASWd6PwlQM4rSUr4+xcFfMDRxa02d/FCdY29iu3ezl7oHJW/H41FG8W3uzcLDr9oXp5vQ1CtkjrBIlFG/CFHUqMRn9fyC6HI4R1B90JqiIQgMESGamYYO4gWO246TSp09rhvMAgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766066063; c=relaxed/simple;
-	bh=C2r38V0186zCgV3wn8MPljqqx2DvRXHdoL95mnqxr5I=;
+	s=arc-20240116; t=1766066881; c=relaxed/simple;
+	bh=sdoaS3aVPnS8mlbKoSr87lcUSDSkDh/AS/lPTgP6tjw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gnQJm9/JhwDvbzLDPMKGMevj/VijUaLpiHyWjJ00oqLxhzJ4IivLUnAIN/REaBN/lj7GrMPvof4J9fYKpx19wbx/3q+5junByeYSmeDCMbH1XSv1pko2tN+/cZkHpgXMaJVF3WkhC5XvDslrGU3B5bofuLkKi4bkIq9xNdSSKcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UYvXeSl4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hTYnMvj1; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=XngVW9DT9f07DF8/RgAIehM46/lykFGxIw3DwtTCVFkTe7TZgYgiU3rcDMrjX9Um+Wbjj/zRmV9axxjvOCAL1/mZo6V2DD18wnfGjFy6f573NTueyq7/MUpNIOb775tzOxlQBI7k+ZAZfksI9+ZOn9VLqdvdoIyzUGwXIaOyZl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mXfppaV7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TExsO59Y; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BI9PemZ4191394
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 13:54:19 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BI9KFHe4057275
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:07:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	W95ZWbyv7ZebtdgUzuyg7nH2Tc3tRPvsWhfTYozeQfw=; b=UYvXeSl453Yk6zLA
-	jOQcGjMzy/fA2El17C1UCC6hhj+fRd1tGT/MWGnn+JN6Ynj24yZ/pGgeMLP4x5e8
-	IqZ7P5nYS3WDizMrsxZQFzs8/ZxGsSGZ9+MQaCYkiBfFu9eg7vbZoomuk+nI+ZHT
-	pOo6KzDXbo3zqcqH2uwtE0ejXfnm9Wnf9STe6kA4Oy9dMwL1bidJVU7zbwoQP3oW
-	mlO0mHkZedxB33Q/BVnf3EV/3z74nnSns0SXNWVgqhyByMxGiz4hvJgOGIqQwDm/
-	75rWZju3j5z3L/3pjLO8AgwhuXLGWwp3GOXFFFTBWvk07o+61jsQJW1mayffC6Tg
-	/Ugemg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b47pkj6by-1
+	o87SlVtSMSkrOoLeMNWzmv5vpvWXLBuQJpH68X8QlW4=; b=mXfppaV7X9Dxt9Vf
+	LA9opNIPxTOI69qUfqof8ArhXpia6iOvBIRyoGfltkS657FQ2MgEjUpUidMD2CwJ
+	YUfjaouirQTR+mjmQfdmymOqD4j1TjDPw5ND8LSm2xnP9oarl4A2zCXMy4uPYTMI
+	yZywaCaSyLu9ewRabwpS0LF/3cTwlLZzd1ldSUgoPojojWKX3taHAmiP9oWcZ1NY
+	1L/uexS7d8Jnw6KISu11wrQMcUH5+xder+j9GLl17ifLq8LHqpha7dL3rTyd/ouS
+	idmFTqe3n9FR1UAdlheZCqlmzMfxNagenGAfdV4T82s1yvWWUQ/or7KuMWIUHOAs
+	A6TRaA==
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com [209.85.128.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b3xr5bupn-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 13:54:18 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4f1e17aa706so3321081cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 05:54:18 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:07:58 +0000 (GMT)
+Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-78e7a045cb3so218927b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 06:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766066058; x=1766670858; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766066878; x=1766671678; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=W95ZWbyv7ZebtdgUzuyg7nH2Tc3tRPvsWhfTYozeQfw=;
-        b=hTYnMvj12fS5wh4MdfwidFoB4MPdiIHuB2vSrcGnleNMqan0bFINgU4cC9sCz57YLz
-         8c5omNgz6C4+HDHpRbVB/3moBx7KhdMhFH4U51rVk3WEpMh83TBNiyrkNi9/2uyMS0eC
-         xGr3PvfrNnSX9a43XKcKNR9EB/y8rT9rRbO4+1iJgl6tH5oivvIfqsrOTGxnM9og45Jc
-         z8li7lggqKtTDHB6bhu3BQIeOI7VvlCrN5E3RSO10gPLrS8aA4LilTXIq3bcIdbrKPCS
-         z8GhfTLYs3Z+QCBz7BCXD1kJq62XBQ4i7s2m7UrFWRU3a3urwS6EvMTewM4Idp8AzuBg
-         bQVA==
+        bh=o87SlVtSMSkrOoLeMNWzmv5vpvWXLBuQJpH68X8QlW4=;
+        b=TExsO59YlJqePpCNxibTsiJr66WtU0RmS8u/UGfiGw7+ZWhEyv8SqM3D9yJlocyA1V
+         051NUdN8HG3+OGb5/2x5z6P8jm31GSByoRg4i+r0s0Cjz/y9fJCipqEHv8FavAV5tBvg
+         FP2Vgs4eK8SlW1PtO2LXvOnqjxFw5tEOw0eWBr1polhhZgTq9zQMflgEXP0AAPK4Dhet
+         0GWgFUimBPCA0sMhHwdD045RnuKE9cGDqrgdzTX4cmevykucyk5eXYcjYm8XpqEo5CHU
+         4+q408bo/FwuoGpwKyHPUu/pTDUPDlzfrSW1PymUais+4tttXXJ48WJDZbo97VTTp06z
+         z/SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766066058; x=1766670858;
+        d=1e100.net; s=20230601; t=1766066878; x=1766671678;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=W95ZWbyv7ZebtdgUzuyg7nH2Tc3tRPvsWhfTYozeQfw=;
-        b=pioOU6WOnqcbwrfklNOL5bbANAihfM8TzA7fIBRh9tisH8tM86IBXYaFarojdIknvJ
-         +spm8Nu+Gzr6Mrtott4Jm9mW+uiAUAPs6MUPDEyuRk5OTd55La7iRXL7rg17niAjzJL1
-         xnjRQFJw/1wguP/Tac6NaD8MhbygwLw40IUyL178oOrAJ3LVNU7w48wxZ02WgmrmDa2W
-         v5AlQAYaqoHk4K5Pao+w+XbA/Q81SBAFryBZdEWZGrpWi9U/f4fSSNL1RNmCx3LyybdY
-         f0KNERqcDRFG2epC+8DmC68wTc4McZ54rDw6A1XDlcwoUOfMT4nK2o626rIcf2P1KtWS
-         1Lkw==
-X-Forwarded-Encrypted: i=1; AJvYcCXUbF6HfaZEqH5rRVx2J5dsssfYcK1LVzx2NfWGrCy60RZrMJVR1xaugNBX5VZIOKEinvK+/P6cBQMWc2DK@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoqrqmYL3K1k/l81z5bAyLm+CKA82pzDodME/dPj5iO/wOpC54
-	UdjqotzVSL7ErSQQK3juo+usppTJIJfibzsQ7JKOX62sq7vwbdF4atEwYjcHXLKAlHeDHaTjA0k
-	/y2mKW57pwRnt1x6u1u7CvAWrtnhQeU1QEJpKHPEzI93WgXuoPj96/OevbswYeLDetvVg
-X-Gm-Gg: AY/fxX6Z4Am7E9El2dKF76Da3MyFN9r+1DKll3lHzsuhpqvX4QbhWI3ytD292oie/+Z
-	gsYtndP8gXtRWeqIMYes7SM5EwMa8HCIgmhJ5H107MW+TTseWejkNetbtz9k3z9529IhMSwfnD5
-	xHnXvEf8hf4gQ1I+fW35Ll3SJ46CmrYuWKB5GYhedd49Pu+J75bCKc9IZd1MbmvNCBW80X0uEDZ
-	9LcXYXiikC2rfahlDpleDGDBr5nlLeDR5atCOhHdM97OrTrr9UJgzWnBkHA8ohbv6g+5aXygXoh
-	v4cZyGQbS498YU1pkGGQJ2XpI33Gh8EPdXFTwN1teXFHJ1NQWttygXtFb8VN4CrEW2T3vPx7uya
-	os8WUdvT81Y45m5BC9fp+xjj2jIAFyjUhmfHVB7/AyqOypZGZbaVS4TYW9nqVUzUk2Q==
-X-Received: by 2002:a05:622a:341:b0:4ec:f9c2:c1ec with SMTP id d75a77b69052e-4f361152409mr20233111cf.9.1766066057876;
-        Thu, 18 Dec 2025 05:54:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBlqC2m/dbjcpakq5xyRubRns6wW9qQ+MVm+nu5mEbtTBjt6LW/ckyVfsGNqX0AxDXLnM9sA==
-X-Received: by 2002:a05:622a:341:b0:4ec:f9c2:c1ec with SMTP id d75a77b69052e-4f361152409mr20232751cf.9.1766066057380;
-        Thu, 18 Dec 2025 05:54:17 -0800 (PST)
+        bh=o87SlVtSMSkrOoLeMNWzmv5vpvWXLBuQJpH68X8QlW4=;
+        b=Bk996OVcGRqugZdthupaCgPFQZpWyGMUtAUZIQlLw5/dEokWlN+BDHfdsxl6kbto+x
+         1vI59Jbpjigvfi/QUICJNwS223/DwLxvcQmsYgxIpWv5pS33CJUJ0l9njfTpgMZ71qsI
+         w8R/AbILbFP7+QlNP5rP+DGRaWD/i+EyqurU4lNu+nAtbFMYStQSHAUmj6592Ijv/Rlx
+         WqzOJiAPtDzH8yoZO+YtHZ4A2R/akoFtfZFin2bPZnLtiElTR71YApXfO7O/6dY/UVqi
+         DhzwrfsXQU7TMX/jDxGMJVU4YlYUT5rtdf8EE5xXBenjqEnbrHIg/9aeUPnMOT8VZCz3
+         pT0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXHZM2JBRtnAeZx2SCSAZU3YLew8KaeIUBah5iqEz5BUVA2u57zGLU7agBK7b7rV8GPh3gUWElFBbPBD8QD@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXLcUgjhzmFWJKUZdm95Kg7xdEHtQqrJweVA88763mdCdp/97d
+	3TGZa9a1FufFlSSxwpCgUy+yFAVPz5B/faRb/PPRqrojFCHNzuq0uPRiHtJdz7Lw3dcCvF0tIfa
+	Tfi7ftOmmcTt8ihpL3dU009cbJBrNmWo7dEjl6l6XsbtyVCbKyqkhuAaLjAdIa4pZ3NNk
+X-Gm-Gg: AY/fxX5fLSPw1X7//2RD1C4Ao+iAe0vdcZuv0IE4RhrpWHNMUW3+C4sMro12Svvu4hi
+	NPgAcCMhC41LZKImChv6p28P6OtsQSRZtnAf5fad5Hz+cB5pJyra1flzdYjKjgG82jvkm7j28uB
+	hQ/JYC8/gCOqsahyZeK1EusxUxETe+6RtZUjkMh4yOj0r29TExJiwM4oi05sn+j+s5ulVUdlHPg
+	Ua0QSxumRaQlQ0tVOwcvIrxtMk0jA2360fdnbPBO5hg57jNj3hHpjdHFVuIwvVo2vSRWi/8m0gN
+	C05Opcb791F/6mC0A+CfrWTB87Ga0yEdKmWeQgMKJ68nGm6uk5G5FEO5sY4KUZ2mmhfL7c2Eyd5
+	QWo4um+845W6l39w8R1X62XDhdt8qy89oHG3CY667jxiW8osAzDbKl9BnjafDKGL/dw==
+X-Received: by 2002:a05:690c:398:b0:78f:9d17:aff2 with SMTP id 00721157ae682-78fa7fb0c7amr17541607b3.5.1766066878036;
+        Thu, 18 Dec 2025 06:07:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHgUVF2ZvoMUW7DMha9Kz/azXqDs9FfldE8kOJJ1DVHmIj4XY8q/Ljmvx8z/7Vv2VwzZXA3Ug==
+X-Received: by 2002:a05:690c:398:b0:78f:9d17:aff2 with SMTP id 00721157ae682-78fa7fb0c7amr17541447b3.5.1766066877595;
+        Thu, 18 Dec 2025 06:07:57 -0800 (PST)
 Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8022f93e99sm237087366b.2.2025.12.18.05.54.15
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b80234a2d9bsm249294866b.48.2025.12.18.06.07.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Dec 2025 05:54:16 -0800 (PST)
-Message-ID: <92f0e801-032f-4c8a-8bb4-ecb3af48af0a@oss.qualcomm.com>
-Date: Thu, 18 Dec 2025 14:54:15 +0100
+        Thu, 18 Dec 2025 06:07:56 -0800 (PST)
+Message-ID: <80cb1b5f-7950-4014-913f-838d35fb64bd@oss.qualcomm.com>
+Date: Thu, 18 Dec 2025 15:07:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,142 +102,199 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/mdp5: drop support for MSM8998, SDM630 and SDM660
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Paul Sajna <sajattack@postmarketos.org>,
-        barnabas.czeman@mainlining.org
-References: <20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com>
- <8e1d33ff-d902-4ae9-9162-e00d17a5e6d1@postmarketos.org>
- <dcapydafye2v6owrkehngivqlucjcx6aa3sszszflh3ocm7dpq@qsajm2qkc52d>
- <24f29ff0-99d0-4175-a6c9-f402ce99f645@oss.qualcomm.com>
- <7dcs7n4pbdhmm4ujgqnek4setujzqxhkdsf3tuf4ggymajj3rj@xzapix7ujzr6>
+Subject: Re: [PATCH v8 00/14] Peripheral Image Loader support for Qualcomm
+ SoCs running Linux host at EL2
+To: Bryan O'Donoghue <bod@kernel.org>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251121-kvm_rproc_v8-v8-0-8e8e9fb0eca0@oss.qualcomm.com>
+ <0156c327-b867-481e-af24-679f037bfa56@linaro.org>
+ <Ux4KioDAyhqgZYleT-eeeFKzuT_qadCIpP3RgyB40apZPX4I9_JwcfY9mebop4gmFcyh4LPw0KQvFzL4zzysJQ==@protonmail.internalid>
+ <20251121113751.tnqw5abm5sd2rgr7@hu-mojha-hyd.qualcomm.com>
+ <9dfe5343-824d-42c2-aab8-8389602601e9@kernel.org>
+ <20251202083650.luk2jpcquq2pcf2r@hu-mojha-hyd.qualcomm.com>
+ <623225c2-166a-49a1-9856-d02ed55f1e47@oss.qualcomm.com>
+ <bds552pvggsf6jgfyghyigp2fb6zb6hucwqirwye5puctnrhdi@tqw4b2nc3mkg>
+ <64dbe824-a94c-4394-8cbe-ebdb7a3c42fd@oss.qualcomm.com>
+ <qnpgm5zmiqvwwmwc4z64uqssodrkcjaai4ro5tt36wua2jljlv@y3dx5s2sxrlp>
+ <55f68c6f-9b7e-4393-9ca2-b94551cd81b8@oss.qualcomm.com>
+ <jX9Ifmjba1jKjv7wLdH0BnDY-4Zo91ibfsoeCCOFvKhD_a8NWM8ONnJtbO_Cr5v6tttjEI8b-l0O7na3iXSL9Q==@protonmail.internalid>
+ <28207f1f-31f0-4007-bab5-e073ddf2d262@oss.qualcomm.com>
+ <24aa56bf-b03f-4b4b-9ac6-89fc91762179@kernel.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <7dcs7n4pbdhmm4ujgqnek4setujzqxhkdsf3tuf4ggymajj3rj@xzapix7ujzr6>
+In-Reply-To: <24aa56bf-b03f-4b4b-9ac6-89fc91762179@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: dqsMi8MxO2j-jG6BkaoTPVu7J8x3ceya
-X-Authority-Analysis: v=2.4 cv=Md9hep/f c=1 sm=1 tr=0 ts=6944078a cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 9zVBZjYiPBiPhBCalm_tOHi0MOIxh5Cu
+X-Authority-Analysis: v=2.4 cv=DsBbOW/+ c=1 sm=1 tr=0 ts=69440abe cx=c_pps
+ a=0mLRTIufkjop4KoA/9S1MA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=sMkN4vr61ZO4f_miHF8A:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDExNSBTYWx0ZWRfX4Y9gKNuCsF/Z
- PQESGR2I5V79zLNtCtUJ41cOn64vxcJI2BFqPxnf2zCv4S7WTKNVa98sH9l4i4NRiHjKj7LUpMC
- xqj7Ar9j1THyEGoYbbiWTrT4JOCbJUMU5utXnfiTfT9HrNITqoTpzw/sDnv3clqiGSepoLwZKrG
- jgOic7I5hQj1DCoNiyCja2WgtaAAnkj6yrqeIwWgok5pckUR4BGlIexp0JdoTCUdcwlsF+Dh5E9
- JrjsuvNNZevsEjG+i2V4POqSCIVCkuMRxOR3UUwMnvgWmP/zCUTRv+keQfJE8JhU2aFlWX6hrzw
- F2g2IW/a6+JgRgSnHeMXybDPRC/wf2RJNyqd++SzOcZWWgDFzimvwGr0vFoQwnU227RY8j5oyBF
- kShUqDRLaqQcwNCw2fF6XvJYLcZhtA==
-X-Proofpoint-GUID: dqsMi8MxO2j-jG6BkaoTPVu7J8x3ceya
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=inLNWrLPvn9skOYvWnUA:9 a=uiejn4RyafnNK9Kq:21 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=WgItmB6HBUc_1uVUp3mg:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDExNyBTYWx0ZWRfXxcZrVaz8OLns
+ udki04rtG7eTLiJDt7TFbnvvhLnDrAP/HonYn84TFpS1iVZhckRMmUeL9NXM6ARm+PahSEWQ+qb
+ GuBxFWoFkXxGgzNck8Jc0XtNU2OXNpeejwIDyabm5v8hWxHaIILqO3AWFBawTbNcef7vAQuJY8j
+ nR7FC8bHNJPJc2J5oFEBN9Sk3uT64PP5GK3iVMRtRu+9QkucHZS3jnoT7uSk1ZtEdFHZ43KGuDE
+ Bi97rfhWdGe2dqGF3qu17LxVdHy+YQuhb8eM74BRt5yhbYnPuZKtdrMksRxJ5Xg/nSYQZ+ztIaD
+ /JpdJoRm9bSgBZZvkJ9YZjl5iY+jkKjaHUxbSei1mnOZLuk98wdq9rcxhJbTnW7SnFbhdtD+imB
+ 4egop0lmJSgtwK07XxUILItaCvHG5A==
+X-Proofpoint-ORIG-GUID: 9zVBZjYiPBiPhBCalm_tOHi0MOIxh5Cu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-18_02,2025-12-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 adultscore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 spamscore=0 adultscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512180115
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512180117
 
-On 12/18/25 2:49 PM, Dmitry Baryshkov wrote:
-> On Thu, Dec 18, 2025 at 12:23:49PM +0100, Konrad Dybcio wrote:
->> On 12/17/25 5:34 PM, Dmitry Baryshkov wrote:
->>> On Wed, Dec 17, 2025 at 06:05:31PM +0300, Alexey Minnekhanov wrote:
->>>> On 11.12.2025 04:25, Dmitry Baryshkov wrote:
->>>>> Currently MDP5 3.x (MSM8998, SDM630 and SDM660) platforms are support
->>>>> by both DPU and MDP5 drivers. Support for them in the DPU driver is
->>>>> mature enough, so it's no longer sensible to keep them enabled in the
->>>>> MDP5 driver. Not to mention that MSM8998 never used an MDP5 compatible
->>>>> string. Drop support for the MDP5 3.x genration inside the MDP5
->>>>> driver and migrate those to the DPU driver only.
+On 12/18/25 5:32 AM, Bryan O'Donoghue wrote:
+> On 17/12/2025 11:43, Konrad Dybcio wrote:
+>> On 12/17/25 11:08 AM, Vikash Garodia wrote:
+>>>
+>>> On 12/6/2025 2:48 AM, Dmitry Baryshkov wrote:
+>>>> On Wed, Dec 03, 2025 at 10:48:14AM +0530, Vikash Garodia wrote:
 >>>>>
->>>>> Note: this will break if one uses the DT generated before v6.3 as they
->>>>> had only the generic, "qcom,mdp5" compatible string for SDM630 and
->>>>> SDM660. However granted that we had two LTS releases inbetween I don't
->>>>> think it is an issue.
+>>>>> On 12/3/2025 2:54 AM, Bjorn Andersson wrote:
+>>>>>> On Tue, Dec 02, 2025 at 03:43:17PM +0530, Vikash Garodia wrote:
+>>>>>>>
+>>>>>>> On 12/2/2025 2:06 PM, Mukesh Ojha wrote:
+>>>>>>>> On Thu, Nov 27, 2025 at 10:25:23AM +0000, Bryan O'Donoghue wrote:
+>>>>>>>>> On 21/11/2025 11:37, Mukesh Ojha wrote:
+>>>>>>>>>>> Sorry.
+>>>>>>>>>>>
+>>>>>>>>>>> Did we actually come up with a cogent reason to omit the video firmware
+>>>>>>>>>>> loading here ?
+>>>>>>>>>>>
+>>>>>>>>>>> AFAIU it is required for Lemans and Glymur - leaving it out is blocking
+>>>>>>>>>>> getting video stuff done and storing up trouble.
+>>>>>>>>>>>
+>>>>>>>>>>> What exactly is the blockage - is it something you want help with ?
+>>>>>>>>>> I replied to you here[1] and given my reason..till something concluded on
+>>>>>>>>>> "multi-cell IOMMU[2]", I can not add video and block what is working
+>>>>>>>>>> already.
+>>>>>>>>>>
+>>>>>>>>>> [1]
+>>>>>>>>>> https://lore.kernel.org/lkml/20251105081421.f6j7ks5bd4dfgr67@hu-mojha-
+>>>>>>>>>> hyd.qualcomm.com/
+>>>>>>>>>
+>>>>>>>>> Why though ?
+>>>>>>>>>
+>>>>>>>>> You are mixing together the issue of multiple SIDs and the original loading
+>>>>>>>>> of firmware which could easily reuse the venus method of
+>>>>>>>>>
+>>>>>>>>> &iris {
+>>>>>>>>>      video-firmware {
+>>>>>>>>>          iommus = <&apss_smmu hex>;
+>>>>>>>>>      };
+>>>>>>>>> };
+>>>>>>>>
+>>>>>>>> I completely understand what you are saying, and it would be very easy
+>>>>>>>> for me to do that if it gets accepted. However, I doubt that the people
+>>>>>>>> who raised this concern would agree with the approach.
+>>>>>>>>
+>>>>>>>> I’m not sure if the video team would like to pursue pixel/non-pixel/firmware context
+>>>>>>>> banks separately. I’ll leave this to @Vikas to answer.
+>>>>>>>
+>>>>>>> Not exactly as a separate sub-node, but i do like the idea of introducing a
+>>>>>>> simple iommu property, something like this, which Stephan proposed earlier
+>>>>>>> in the discussion [1]
+>>>>>>>
+>>>>>>> firmware-iommus = <&apps_smmu ...>;
+>>>>>>>
+>>>>>>> I understand that we are doing the iommu-map thing, but a property
+>>>>>>> exclusively for firmware like above look much simpler to me.
+>>>>>>>
+>>>>>>
+>>>>>> "We know we need to find a generic solution to this very problem, but
+>>>>>> while we work on that let's add this quick hack to the ABI"?
 >>>>>
+>>>>> I would not call that as hack, rather a simpler solution instead of packing
+>>>>> everything into the generic iommu-map.
+>>>>>
+>>>>> "firmware-iommus" is much more readable to interpret something running in
+>>>>> el2 mode, than digging into function ids inside iommu-map and then matching
+>>>>> it up with specific SIDs to confirm.
 >>>>
->>>> I've retested DPU driver on our downstream release based on 6.18 (by
->>>> using msm.prefer_mdp5=false kernel cmdline parameter) on all devices
->>>> at my disposal, and I can confirm DPU driver working fine an all SDM660,
->>>> SDM636 ones, but not on SDM630. Some logs from sdm630-sony-nile-pioneer
->>>> (Sony Xperia XA2):
->>>
->>> Unfortunately I only have SDM660 and video DSI usecase here. BTW: is
->>> your SDM636 / SDM660 using CMD or video panel?
->>>
+>>>> If you want it formally, NAK from my side for firmware-iommus. Either
+>>>> reuse an existing approach (at least it makese sense from the historical
+>>>> point of view) or introduce a generic approach, which is iommu-maps. The
+>>>> proposed firmware-iommus is definitely a hack around the IOMMU
+>>>> properties.
 >>>>
->>>> [    2.356546] msm_dpu c901000.display-controller: bound c994000.dsi (ops
->>>> dsi_ops [msm])
->>>> [    2.357328] adreno 5000000.gpu: GPU speedbin fuse 146 (0x92), mapped to
->>>> opp-supp-hw 0x4
->>>> [    2.364802] msm_dpu c901000.display-controller: bound 5000000.gpu (ops
->>>> a3xx_ops [msm])
->>>> [    2.444649] [drm:dpu_kms_hw_init:1173] dpu hardware revision:0x30030000
->>>> [    2.449793] [drm] Initialized msm 1.13.0 for c901000.display-controller
->>>> on minor 1
->>>> ...
->>>> [    2.911900] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
->>>> error]enc33 intf1 ctl start interrupt wait failed
->>>> [    2.911916] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
->>>> commit done returned -22
->>>> ...
->>>> [    3.176171] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:654] [dpu
->>>> error]enc33 intf1 ctl start interrupt wait failed
->>>> [    3.176367] [drm:dpu_kms_wait_for_commit_done:525] [dpu error]wait for
->>>> commit done returned -22
->>>>
->>>> Which results in horrendous ~3-5 fps in shell.
->>>>
->>>> The block "enc33 intf1 ctl start interrupt wait failed" + "wait for
->>>> commit done returned -22" is repeated few times per second whenever
->>>> the display is turned on, and stops when it's turned off.
->>>>
->>>> Meanwhile it is working fine using MDP5 driver (msm.prefer_mdp5=true).
+>>>> But it's really off-topic here.
 >>>
->>> It's interesting. Would you please capture the devcoredump for the
->>> platform? There will be a lot of blocks, I'm interested in INTF_1, CTL
->>> and top_0.
->>>
->>> Also, as a debugging check, would you mind patching
->>> dpu_encoder_phys_cmd_wait_for_commit_done() so that it always calls
->>> dpu_encoder_phys_cmd_wait_for_tx_complete()? I will check if there are
->>> any differences for CTL_START and similar registers, but it will take
->>> some time.
->>>
->>>> Well, as fine as possible considering [1], using several FD_MESA_DEBUG
->>>> tricks to work around GPU issues.
->>>>
->>>> P.S. I have not yet tested MSM8998, but I can try if required
->>>
->>> As far as I remember, MDP5 on MSM8998 has never been wired (as in never
->>> committed to the DTSI). Angelo has enabled and Freebox people have
->>> tested DPU on MSM8998, but I think it was limited to video / HDMI
->>> usecases.
+>>> Infact i see a concern with the iommu-map approach for firmware SIDs. Let say the hardware generates 10 SIDs, including firmware. So video binding should describe those 10 SIDs and the DTS should have all those 10 SIDs as well, including firmware SID.
+>>> Given above, video driver cannot distinguish if the SOC is running in EL2 (KVM) mode or Gunyah mode.
 >>
->> I think we poked at both, back in the day (tm) and DPU worked on msm8998-
->> sony-maple (sharp,ls055d1sx04 cmd mode panel) with the funny CMD mode hack
->> (due to a register field not existing on <845?)
+>> EL2 vs Gunyah is not hard (something like is_hyp_mode_available()), but
+>> again, this should all be calling some sort of is_gunyah() which would
+>> come from the gunyah hyp drivers, which have seen no activity on lkml
+>> for over a year..
 >>
->> https://github.com/SoMainline/linux/commit/14e0517e2fd5eee116a32db624b09856c60fa022
+>> Konrad
 > 
-> Ok, so my guess was correct and CTL_START is not present there. Checking
-> the regmaps, there is no intr_start too. Let me cook the patchset.
+> What exactly is the status of the iommu-map stuff and when is it likely to land ?
 
-FWIW it's not something I came up with.. But I can't fully recall the
-original finder. Maybe it was one of the MSM8996/MSM8998/SDM845-mainline
-contributors? It was difficult to find, so I'd like to credit the author
-but I'm afraid I can't find it..
+I don't know. This is unrelated to the issue this patchset is solving.
+
+> We _already_ have thanks to chromeos a way to define this stuff in venus.
+
+Which was.. heavily debated, let's call it, after Krzysztof noticed it exists
+and you agreed it should not spread by leaving your r-b on:
+
+6d3926a237b6 ("dt-bindings: media: qcom,sm8550-iris: Do not reference legacy venus properties")
+
+> My €0.02 is 100% fine with iommu-map as a solution for VPU but then, actually want to see it as part of the series solving the problem.
+> 
+> Else, we should reuse the venus approach.
+> 
+> Right now we have the worst of both worlds. Iris is blocked waiting on iommu-map but the iommu-map series has dropped Iris support because - reasons.
+
+I think you're replying to the wrong series.
+
+> The very definition of being stuck between a rock and a hard place.
+> 
+> @Mukesh - can you add Iris support back into the series ? If so then is it perfectly reasonable to proceed with iommu-map for Iris.
+> 
+> If not then we should just reuse the approach we have.
+> 
+> Either way I regard this series as broken right now, as it applies a solution that excludes one of the primary users of that solution with no view as to when that user gets enabled, worse still it requires adaptation to the new solution but the proposer won't do that work...
+
+Why should Mukesh be required to carry your burden?
+
+You (as the Iris maintainer) are a consumer of this new set of APIs provided in
+this series, so one would expect that you can help test it by creating a
+downstream patch (that would be nice to share), rebased on new revisions as
+necessary and sharing feedback based on the drawbacks you notice.
+> It places Iris in a very invidious position.
+> 
+> So again I think if we can agree to add Iris support back into this series then we should go ahead with implementing in Iris.
+> 
+> If not then the conclusion is Iris _won't_ use that solution and we go with the previous venus solution.
+
+Because that surely won't get any pushback.. 
 
 Konrad
+
+> Either way, the proposed series as is, is an effective blocker for Iris so I'd like a commitment either to re-add or we agree it won't be added at all.
+> 
+> Either way Iris gets unblocked.
+> 
+> ---
+> bod
 
