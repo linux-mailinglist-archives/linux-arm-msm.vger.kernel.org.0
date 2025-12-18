@@ -1,240 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-85715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1BFFCCC5E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:01:28 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68835CCC626
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:04:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4E191305EC21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:00:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9ADCD3007E45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 15:04:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3246928C2BF;
-	Thu, 18 Dec 2025 15:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11CE12D6E76;
+	Thu, 18 Dec 2025 15:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W27VBbtq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TsTnk7du"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="or0nf8VU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED05243968
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 15:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA95D28D8DA;
+	Thu, 18 Dec 2025 15:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766070002; cv=none; b=M6DmEJXKr3P4g0xxNOgb/E8xxX8pnOuVAcoLHPt9nUz5Z4w/cdS3EVnBmivMCcbOQp8LCiKZphB05+SVYkkjPPdFZwI8PPhOEo2VHvkPKO8/+kk8v7YVTnpEdaVRiYXQK2BREAz8h/z0bBwKQ7SeASC5lHKV0xOmXsOurUISuco=
+	t=1766070265; cv=none; b=EPDOupEiFgeVkqLC05Axj7h87zfXqlFUSwXqNnfzYJIgdpAwmXBIzWutixBc3l+ZH8TWm8G8al+gPTbJNrZoxDAT2mFaDw10aVcwMsowTjxcLp/QSAJNBSVs4RWsXXXkLO95XVnURdENn3yYRixXbyIJLZGUTHvUzLCQFrODZh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766070002; c=relaxed/simple;
-	bh=TTUSg9c7SQ25F3h6Y+3feZ9hKn8pWE0fflqhp8v8Lls=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LJgxJ4b6UC8UXnlZp2ygWnBq4a7jYWrUidDhtgAR7hoiKyzhJTXp5sUOoTb4fi7h8hxFxHqFgkpI8DAovHKsj4GdbNzcfLNkNE4ZES/9SVB989Ws4hPFaZr/IkYgOcJLSb+FSdUD63/bUqUyvUbtZwhloyGk0ahUhhIAyOQPe+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W27VBbtq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TsTnk7du; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BI8rBvB3447060
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:59:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Pr6x/FHZNy2BKmBuWTvABEu0BkQWH32tUpuP8BZZdQI=; b=W27VBbtq5yugaGUu
-	HZEFBmSyctDT2jwZHRQfRyyH64CkEQc3qj6Zw3GUAwgnbX0zC70tDe7OfIGucFZb
-	MlO+YKy5cOB5Sr59IP83O26dWO+z+Z9TlVcfc/6i4rX0Ckzk5IukaeEhAAb8rJEb
-	1kQjNrKWc/lVyr6i/NW0TNkpXt/gNBhR60Afpl7IbnKSlztW3VBihDnCY/fYOlj8
-	h/GHQslpZgqRc55cZ1RYlu6ncm+GRNHGqaey9YaMWZFlHKUVc6fFC+rLh7OvW9hK
-	My6GCq5s2sYPiqoh9Rfbwlq5Sj9OyVewoHgmDlbhNWr9SXjG1uiiorIjdw9duMrp
-	L3pBhg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4egb97g9-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:59:59 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b2fd6ec16aso16738285a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 06:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766069998; x=1766674798; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Pr6x/FHZNy2BKmBuWTvABEu0BkQWH32tUpuP8BZZdQI=;
-        b=TsTnk7du28m3TEP5XHfEQIdr0/lAwL3n7cqP8FAKueiXOUmrF5oIImd1XuQk5QZ3oi
-         /ysw1Mni6gS6NZJ09Vw9MxaZVEpIdOCSqALKILGjzrHHpWs72GMFPp7T4/xUhWOQxxVn
-         clHXY+ZhotLVhO/HAnTN9yXgsDuzNSjrE3Ty4Y/hHCo1r8Wo95oa8MzL9iPVYmquu1B2
-         pVKQRYgmOCXF2hae3+mnU06umoEVvoiyniD0hVjOkLh82CYDGgdKQIeXwz1h1V6Dc2Bl
-         3dISlpfQ6Kavjre1F6YgmydOrLQBVT8a7C87G6VR2I6RchpvNMBEq808CjJPXCgQkOje
-         NPLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766069998; x=1766674798;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Pr6x/FHZNy2BKmBuWTvABEu0BkQWH32tUpuP8BZZdQI=;
-        b=P317AxJv22mtX94ibaC3MmHAcQxbbYVn4CLyVKSpyT8aCgKPFIKLhSxpzMwBHliBiO
-         oTH579lLjmc0Z0Or/y166gG4mEFaI+LeQp0JIEdKo0+zuIDhQB8nzVoBHqM1KKB4NtBt
-         /i5VUyPQPKRatwoT/0O20fyeRNrpL1nWkSAL5tVM7Z6m4DvGvnPdEMhxbxfbEc8GrM8F
-         LZf8Zw6KNwg1HgVwG47QLZzHo32SpPHIOfaDr6WnsNkrYI5PanUUWD73CMZOYg6HIU/E
-         Bmq0pBKbfC5B2zY/PTMOTT0ydrp0rMYKb7R8VT+dzYkgVxe4UoRFODaeuDySF6e6aZ4S
-         43NA==
-X-Forwarded-Encrypted: i=1; AJvYcCV1kavT2MkmvwoRlIRYR7s+ZKfVnIdz0Jv+LYt1FB0l/dx5or2LIS43QQVBsVFlxQpMR6eYBQLWA25Jjkyz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBeI/JhhImnyCo4Pr/iQtjOAbzx5iZXO73ZtnAme8Xn/NNrV09
-	dpTNPYlnbznuoY3BMFDj0x6/BG5YB5Mij1Np3clP/o8K+yQjSYSrFp6kyb81bZT6agA2nmSDTvS
-	OeA5A0BjMMke6lKmJ3VmjaV14y9baCEmju2I7fkwYqW8x8mbJre0r32ZisRzruB5PW8sT
-X-Gm-Gg: AY/fxX5nJlDTStJtt3/fXXJ2YzK0aglZ1aZOHDdV1i5rlukASA9CAWlwJq3RTE13CUF
-	Sf0hGmPRG5lp1N76CJmDcZMhSeq3TEzlroZXzgH+O1ouqdIF8GHQGvESwLXNZIySbOSj+XchGFF
-	53RpRCuDQ0LHG46qbmyBVmP/T7Yo8SLHc2Dw9Kp73bzKWvCnk4YrFaBCKJc2Ns4SIOclRiMmbrX
-	FcDcl1Sony5KwdLGRx6BMfbLhaKLmNKEQGBtNl6BDPdOlNPwYWcmnfJRYXjnoR9pmK/gulk37Gw
-	Q0Q8TCm9qnLGbcVua7a7va/6NC+vm0oVm2jjLRRt7/yss4z+HMRqwedL69gYIK984pKWltaxHAE
-	Ic4aIWOb2dDBKil/LNzwcOvVDSUxQ06k6d2YXJgOWyLos4z4TE0uED6h9lMMnyTn50g==
-X-Received: by 2002:a05:620a:c43:b0:8b2:e5c6:b4a2 with SMTP id af79cd13be357-8bef2348e2fmr288593185a.1.1766069998441;
-        Thu, 18 Dec 2025 06:59:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdbJaaEQGTSDHRIBxUjseFJ7FtDsKJ+MMYtyNHiM5OM/Tdv+vbo7kLGv97qZkIXFwVzKKyRA==
-X-Received: by 2002:a05:620a:c43:b0:8b2:e5c6:b4a2 with SMTP id af79cd13be357-8bef2348e2fmr288587885a.1.1766069997854;
-        Thu, 18 Dec 2025 06:59:57 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b585d4a85sm2706715a12.12.2025.12.18.06.59.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Dec 2025 06:59:57 -0800 (PST)
-Message-ID: <acc02791-1828-4578-8a8f-ef3d6824cdbf@oss.qualcomm.com>
-Date: Thu, 18 Dec 2025 15:59:54 +0100
+	s=arc-20240116; t=1766070265; c=relaxed/simple;
+	bh=TZc9Hlw0J1rsEXQ0S3cg/4mmQeIULdQ8BsiItCa/0nA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hqzilOScAaDoYpUmbctEJgAwohQYjXvllMBfnyfxHWxi6dWY/75gmhINRHQ/SE8/VqbbFsq43yarshweGJIy8PtaJ99gu1SF+6w8EVkB5GMTUXj1WGncXv9pQrF43hDOkeGIq6O1q6hlVShiVlobG9nLKg1UAYYrrajcZBhOIvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=or0nf8VU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191D4C4CEFB;
+	Thu, 18 Dec 2025 15:04:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766070265;
+	bh=TZc9Hlw0J1rsEXQ0S3cg/4mmQeIULdQ8BsiItCa/0nA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=or0nf8VUHQUtT3hN+QIH+SD1Wc1VA8wcJbvDGXZWaZcXFg3zv3BZRf//deLGRlaim
+	 ARFCW5RU3zVDBFANug05lEnQ/AUchMNl7jKOgB1w8w6A8JuWvpYOzPMcbW2Cd+WIeg
+	 xq+v1OtlKPkFufoRcGENo51C2qqIdoinAmghuVbdaZNfbN+WnKtXirXBnc0l3TKQfq
+	 3mH6aiIUstI7F4oO7pBuDlfrNTPLWZGWB3NOPQ3Gvz/NgR/wV1WilA50BPNRLwSnXZ
+	 zAw5NRmiGdkj1TxevR0h05Nxu3AgDeEC4202aHuOTfWpZadpQ5TDBHjSF31TVMobtI
+	 VXtrQA5BhsKjg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: aiqun.yu@oss.qualcomm.com,
+	tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com,
+	yijie.yang@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	phone-devel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Tengfei Fan <tengfei.fan@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/5] arm64: dts: qcom: Introduce Kaanapali platform device tree
+Date: Thu, 18 Dec 2025 09:04:21 -0600
+Message-ID: <176607025911.302413.14359032773299957927.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251215-knp-dts-v4-0-1541bebeb89f@oss.qualcomm.com>
+References: <20251215-knp-dts-v4-0-1541bebeb89f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/8] power: supply: Add driver for Qualcomm PMI8998
- fuel gauge
-To: David Heidelberg <david@ixit.cz>, Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Casey Connolly <casey.connolly@linaro.org>,
-        Casey Connolly <casey@connolly.tech>,
-        Joel Selvaraj <foss@joelselvaraj.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexander Martinz <amartinz@shiftphones.com>,
-        =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org
-References: <20251124-pmi8998_fuel_gauge-v1-0-dd3791f61478@ixit.cz>
- <20251124-pmi8998_fuel_gauge-v1-2-dd3791f61478@ixit.cz>
- <5d6c3dda-71cd-4684-8546-bc4918b560de@oss.qualcomm.com>
- <d84c25d7-62c7-433d-9978-dd6b20f5681c@ixit.cz>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <d84c25d7-62c7-433d-9978-dd6b20f5681c@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDEyNCBTYWx0ZWRfXw3S7NdsnSUSE
- w4f2Qv6K7T7oNWl9s65Ki3r86ayRwgGhkbYt3s70guMSS9BRuDz1czD/jjrZSFCpctQNMMKl36L
- SZGKzwNkAjXtWbf/yJscjhtG5Nn1K3o+Zsow49k9menfZgL8RZ87uNc1EQGba7z7iULsWphjkcG
- P+1crRoFpUG5dSrlBioeuMgy5DQPTUAopvCOyAvFcKC+yvIaxkpZoLGAdgpNxKDnRUdLd30Pdva
- VEvDkvBjH/h9d0CxksiCMXy2Lqw1oEoExvGlirX8+0ovDnYWDvlwRhiLwfiMoe11QI3UzNpsS13
- grfe/hdTNCS0IZaaPgtXf1gz1AZffh2Tt7F0ftnTgghiiucbLWAMcpd2a6wQozaGKHFis6CTkTF
- gGqOMzV8fyyq8h0zwh91iTKpHJaHsQ==
-X-Authority-Analysis: v=2.4 cv=M9tA6iws c=1 sm=1 tr=0 ts=694416ef cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=OQN141zOAAAA:20 a=WFa1dZBpAAAA:8 a=KKAkSRfTAAAA:8
- a=HXtEcHK5oMWiseVRQrkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=MZguhEFr_PtxzKXayD1K:22 a=cvBusfyB2V15izCimMoJ:22
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-GUID: sod-mVIdbqb65biLyvAp7XypoI3g-fmX
-X-Proofpoint-ORIG-GUID: sod-mVIdbqb65biLyvAp7XypoI3g-fmX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-18_02,2025-12-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 clxscore=1015 suspectscore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2512180124
 
-On 12/12/25 4:22 PM, David Heidelberg wrote:
-> On 27/11/2025 16:28, Konrad Dybcio wrote:
->> On 11/24/25 10:53 PM, David Heidelberg via B4 Relay wrote:
->>> From: Joel Selvaraj <foss@joelselvaraj.com>
->>>
->>> Ths driver supports the fuel gauge hardware available on PMICs known as
->>> 3rd generation fuel gauge hardware available on PMI8998.
->>>
+
+On Mon, 15 Dec 2025 01:07:20 -0800, Jingyi Wang wrote:
+> Introduce the Device Tree for the recently announced Snapdragon SoC from Qualcomm:
+> https://www.qualcomm.com/products/mobile/snapdragon/smartphones/snapdragon-8-series-mobile-platforms/snapdragon-8-elite-gen-5
+> 
+> Add device trees for the Kaanapali SoC, MTP (Mobile Test Platform) and
+> QRD (Qualcomm Reference Device), along with the corresponding defconfig
+> and binding, providing initial support to boot to UART shell with UFS
+> enabled.
+> 
 > [...]
-> 
->> Downstream checks if the address is > 0xBA which is what you want
->> at least for pmi8998
-> 
-> My downstream [1] checks this value.
 
-https://github.com/LineageOS/android_kernel_xiaomi_sdm845/blob/lineage-22.2/drivers/power/supply/qcom/fg-util.c#L434
+Applied, thanks!
 
-I can quite surely tell you "> 0xBA" is the correct condition to check
-for.. both my work laptop and a downstream clone on my SSD concur that
+[3/5] arm64: dts: qcom: Introduce Kaanapali SoC
+      commit: 2eeb5767d53f457913d2b378a3bd9e2269a4098d
+[4/5] arm64: dts: qcom: kaanapali: Add base MTP board
+      commit: 1cc3a0a0210697a25e96783cf21f93d28a09ebf7
+[5/5] arm64: dts: qcom: kaanapali: Add base QRD board
+      commit: 0e31dcfefd21ed76ff1b2d05647cd34336ab9772
 
-> 
-> [1] https://github.com/LineageOS/android_kernel_xiaomi_sdm845/blob/lineage-22.2/drivers/power/supply/qcom/qpnp-fg.c#L760>
->> You can de-abbreviate this to 'secure_access' (not to be confused
->> with 'secondary' or so). There's a locking mechanism which needs a
->> 0xa5 byte written to the base+0xd0 register (applies to all FG
->> peripherals with the 'last non-secure register' value possibly
->> varying).
->>
->> [...]
->>
->>> +    u8 sec_addr_val = 0xa5;
->>> +    int ret;
->>> +
->>> +    if (((chip->base + addr) & 0xff00) == 0)
->>
->> The 'fuel gauge' consists of:
->>
->> FG_BATT_SOC @ 0x4000 (state of charge monitor)
->> FG_BATT_INFO @ 0x4100 ("general fg minus SoC")
->> FG_BCL @ 0x4200 (battery current limiter)
->> FG_LMH @ 0x4300 (limits management hardware)
->> FG_MEM_IF @ 0x4400 (DMA engine)
->> RRADC @ 0x4500 (today handled by its own driver)
->>
->> and a couple other peripherals that Linux doesn't need to worry about
->>
->> Each one of them should have its own 'reg' entry (which is assumed
->> to be 0x100-long), which will let you skip such interesting checks
->> and rely on the regmap framework disallowing address spillover (or
->> you can just then make the addr argument a u8)
-> 
-> Sounds good.
-> 
->>
->> It would be good to keep in mind their relationship and think about how
->> to model them together. I don't think they must all necessarily be part
->> of a single big "fg" dt node, particularly the LMH/BCL part seems to be
->> rather self-contained
-> 
-> Would you recommend some readings to prepare for this task?
-> 
-> I see the FG_BATT* + FG_MEM_IF seems to be pretty relying on each other, so I assume I need to take good care of that relation, when spliting pieces up.
-
-It may be that a single "fuel-gauge@" device node may make the most
-sense to represent all three of batt_soc, batt_info and mem_if.
-
-You'll unfortunately find out whether this is a good idea as you
-write/port the drivers. Downstream has some hacks around plumbing
-various PMIC peripherals with just function exports between drivers,
-so don't read too hard into that, just try to understand what each
-piece/function is doing and how that fits into the power_supply
-framework.
-
-I'm a little unsure about bcl and lmh.. but downstream keeps them in
-a single node and it doesn't seem to be that bad of an idea. There's some
-LMH support today in the kernel.. but not for the PMIC peripheral. That
-said, the downstream driver seems to just make the same secure calls
-anyway (which may be incomplete for some platforms, I don't remember the
-details: <20230113031401.2336157-3-konrad.dybcio@linaro.org>)
-
-Konrad
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
