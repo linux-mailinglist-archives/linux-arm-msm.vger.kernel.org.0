@@ -1,152 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-85669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3F66CCB4D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:06:28 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DE6ACCB726
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:43:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EADD53012CD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 10:06:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C162D3062FBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 10:41:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA2A3328ED;
-	Thu, 18 Dec 2025 10:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A83FA342530;
+	Thu, 18 Dec 2025 10:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vh8DhXGI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jc1gq3br"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C1E327C16
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 10:06:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A5D341ACB;
+	Thu, 18 Dec 2025 10:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766052386; cv=none; b=JNxzbp/4papYjZGgnK03k0mR3jW/z8llq1uNU6MqlrcgcqyU0GmMVm2gumdkfCJ3YnGUv/b873+IpXhhWG301CwzRjkA7n4drnX8hfZe5+bvLEIsdW565FiL5BJ/s7bE6yu4nMwsBZMlOwtH+dOIkKc3VMAbnUaDkh/mQYOXtF4=
+	t=1766053084; cv=none; b=lGHyt6B1o6NcGpOKjxAXbGqw5SAN2ZJrTO3nyv6dKpSoPOLkO2fQRquVLWbqJgiag8R8oLnR4TtSVdHk/FKu04Sw56LyqKhJXtyx19iQWCxREfm0SRyeP+9thDkSwOUFMUVZEi6IqeQUoTJLdo9zmn7zXVJCjlYCTKBMlm0dtCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766052386; c=relaxed/simple;
-	bh=00v3kzAV4duY2v2/dB54DflNOIbH5D4CPWqrg3MyJZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rPJGBaoRrZ0a8FBH/eOTruVcbw7FrI8Fi3vVDgX6VCNfQv3HLjLDKx+XuYwbSqlEAaL2nsnb9IQsUnMEVfjohE8iLw9mES6wtlrT8UyNLUhz1uZrFPsURiCnHEUdp2Osq0Kj8Y0mIoU7Dxd8H+hkGpryDJYcYyDFzJFH6KLP5Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vh8DhXGI; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6419b7b4b80so661311a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 02:06:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766052382; x=1766657182; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eMH8wF/DkKC3kkFwo7pbjYWtxpqsSiixfrTZUtPLmDs=;
-        b=vh8DhXGIpbMLGAmpNGkUa7l6mHdGkn8ZsVxvEd36/X86Y2beLx949ux1oGWOJe8GXU
-         URjI2s/ClwZbTIfZlPP/vFWf7SpVch8hP6d1XLItq+kTOfW/bbhSY4gFGCR+g6szQP4Q
-         rTtQ+fXe09cEn5ilYaQcoLcMogJ2TsXSupfCVktcH/LuhkognN+ClT0vtMA9TgTfEQ3S
-         TIkBH1rliLYIDUS394VepaJOkx2y/l8H0zWAoMWIvzdQqO0z4nJ2JeoYduieWlsDjwbL
-         3norY9qTI8w43dcP0XUz6r6XV34Ll/mhPsCnnEE0fZkyz5qlIGKx6pFLoVF1/jWu7Rl5
-         juyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766052382; x=1766657182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eMH8wF/DkKC3kkFwo7pbjYWtxpqsSiixfrTZUtPLmDs=;
-        b=HoRsgxkOtBycFd/vYZDdmEfjRFAMliptgkoAW+VJWflhBzDrplyFlSfaNLQrDmyK+E
-         8Nz1H6F0dmAVImWxBldQjsfODRQTkFBt2EqaQwTKG8SVjQastuCQTknO2YOpaq7v5OrO
-         BM7xeqZwg9tJgua4oSxMtcPSbXItnPIBupzGb7fD8Z3AAtvgEvCF60Dg6lLQUmwkYFso
-         wWbMgIiS4gLSYs4JTtQkwdaRBoDeDeUKVeHtX8keEbmPwKi838MzsfeaOvGD4xeilAI9
-         xp1IhreYdfT+L/sG+9h8MrPhgqm06x46/vC1NWjf+OgNyF0HPeMh1rnTokvcH2XdytUz
-         ozyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZDjKEn/p6igqzDOM3i1dWvCcUS1hm08E17AYxJiVxcE0XMKteHitLFmPw0e9CUB+SiKhwH5dtSTT21Khx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxb5meYjikgkChbZh02P8cDDqRkGaO3xiHvv3BfLn9MTID4yR6R
-	jTQeY2E50R3LKvHSdNe3Enat3X4Zc2JSUwh0ZF0wimHkHGGCr0B53/iLNDf4N12FJUk=
-X-Gm-Gg: AY/fxX6FBoIQdaxFvxMID3RWAzoneY+Ud+tAIX5f4jeihZC2dvrbKJTD2myCt805BmN
-	0Uod/LO6tYH5IZp/Ezr3X4ZGWARiuRW9PpLXO61TeTI+heCZWd6MrUb1xTaxgJrxJfZe7iDIoRd
-	fBvcPF3URROp9/mOyoKKCTj1EZm4Dj8WGwSgryJNfkIf0wf/L45SGA3Cmc65I9T32opKSxUiJZ8
-	UEGSDxcrx01BRVobVQfOJb7qqeCRNPh8vJ0fgRQ+aIZjDfUUtXxWkJnwGEaA3UGmci30dBvKVfp
-	BIXUT+olhvUpie9Am+YlNvNsz0robPAG41auL2LKulcsHMNdJadGmLpVWNIVYwsBElezPcdHYTq
-	V49gKi53S8Y9J/qka5G93ypYqZc2hoid7jjpz9LVwDVxSJy9oC0daQuLqCmeWfU10KSTvO1796S
-	/B3iAUfWLQGUeDsyKG2Vyzb5U=
-X-Google-Smtp-Source: AGHT+IFA6SS4YOPlrBDtk9PjM8zZe1pqVrSvNV8OpH8V3h+3nAk0ughsiQ0KfmvcLkZxgEp6dOM4bQ==
-X-Received: by 2002:a17:907:7ea5:b0:b7c:e3ad:cd17 with SMTP id a640c23a62f3a-b7d237756edmr2384134066b.32.1766052382145;
-        Thu, 18 Dec 2025 02:06:22 -0800 (PST)
-Received: from linaro.org ([2a02:2454:ff23:4410:1c2c:7aff:fe45:362e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8022f93e8esm185717366b.11.2025.12.18.02.06.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Dec 2025 02:06:21 -0800 (PST)
-Date: Thu, 18 Dec 2025 11:06:08 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1-el2: Add the APSS watchdog
-Message-ID: <aUPSEM2AFPTmQLtv@linaro.org>
-References: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-0-94ee80b8cbe7@oss.qualcomm.com>
- <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-2-94ee80b8cbe7@oss.qualcomm.com>
+	s=arc-20240116; t=1766053084; c=relaxed/simple;
+	bh=bxrqB9iSN80kbhnaAWO3v0ub+BG8cV05W//Bp9WiPh0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YvVUo0k0sFDTFbR2X2kIYHoNqlRkrGKWlRm+jR/Xofhhb6yEwiHydO1WmGveZ1Xbi5OgByj9VCBi8/GKuBbzysP9pzIA3C5B5QRFx0CjWF6pSPpOInKlPSPcwYla1A6viF5yq6nX/+ZVlSS9+6Eo1kXqMRu0LkRI+bRAytry/QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jc1gq3br; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B25C4CEFB;
+	Thu, 18 Dec 2025 10:17:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766053082;
+	bh=bxrqB9iSN80kbhnaAWO3v0ub+BG8cV05W//Bp9WiPh0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jc1gq3brsBpzaQ7E4X3Ecd7VjX24JIW1WvIk1E0wQV2wYhF8nyJVte9F2SBYWDQJh
+	 A2ofSAaYE6Gf5VTYW0L60wcEg/z0f0RgNHKMpoN77FcZXFKLLlv2ql42kYbDd6fFSV
+	 Siz6bNPNjoIdKSTbms8QjpH6pVcyVhN7q5S1OpQt8aw1SQzVoky+Qwu23w/WWgq9DU
+	 72sSy6AYocZEJpDZEYG5ehzoA3oUiTPG/MFdaCirlhU/+ZPqz93EM2/KhR56ir6x4Z
+	 OhvUKtWu4N9LYealnEyH+nWEjvXQaBkWRp7GrBUgWXIY6dzHwIbLs95Kujo85Q3B+p
+	 fr5CxSedtIsmg==
+Message-ID: <a9537dc9-c767-4909-8b1c-6e939ce4f3fc@kernel.org>
+Date: Thu, 18 Dec 2025 11:17:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-2-94ee80b8cbe7@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 5/8] dt-bindings: arm: add an interrupt property for
+ Coresight CTCU
+To: Jie Gan <jie.gan@oss.qualcomm.com>, Rob Herring <robh@kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+ Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251211-enable-byte-cntr-for-ctcu-v8-0-3e12ff313191@oss.qualcomm.com>
+ <20251211-enable-byte-cntr-for-ctcu-v8-5-3e12ff313191@oss.qualcomm.com>
+ <20251211133723.GA859302-robh@kernel.org>
+ <dfa43a63-ca14-4dd7-a7ab-acd95748a8b9@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <dfa43a63-ca14-4dd7-a7ab-acd95748a8b9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Dec 14, 2025 at 10:49:59PM +0200, Abel Vesa wrote:
-> The watchdog support in EL1 is SBSA compliant, handled by Gunyah
-> hypervisor, but in EL2. the watchdog is an instance of the APSS WDT HW
-> block, same as older platforms. So describe the APSS WDT node in the EL2
-> overlay.
+On 12/12/2025 02:12, Jie Gan wrote:
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1-el2.dtso | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> index 2d1c9151cf1b..404174a15659 100644
-> --- a/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> @@ -7,6 +7,8 @@
->  /dts-v1/;
->  /plugin/;
->  
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
->  /* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
->  &gpu_zap_shader {
->  	status = "disabled";
-> @@ -55,3 +57,17 @@ &pcie_smmu {
->  &sbsa_watchdog {
->  	status = "disabled";
->  };
-> +
-> +&soc {
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +
-> +	/* The APSS watchdog is only accessible in EL2 */
-> +	watchdog@17410000 {
-> +		compatible = "qcom,apss-wdt-x1e80100", "qcom,kpss-wdt";
-> +		reg = <0x0 0x17410000 0x0 0x1000>;
-> +		clocks = <&sleep_clk>;
-> +		interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
-> +		interrupt-parent = <&intc>;
-> +	};
+> On 12/11/2025 9:37 PM, Rob Herring wrote:
+>> On Thu, Dec 11, 2025 at 02:10:44PM +0800, Jie Gan wrote:
+>>> Add an interrupt property to CTCU device. The interrupt will be triggered
+>>> when the data size in the ETR buffer exceeds the threshold of the
+>>> BYTECNTRVAL register. Programming a threshold in the BYTECNTRVAL register
+>>> of CTCU device will enable the interrupt.
+>>>
+>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>>> ---
+>>>   .../devicetree/bindings/arm/qcom,coresight-ctcu.yaml    | 17 +++++++++++++++++
+>>>   1 file changed, 17 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+>>> index c969c16c21ef..90f88cc6cd3e 100644
+>>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+>>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+>>> @@ -39,6 +39,16 @@ properties:
+>>>       items:
+>>>         - const: apb
+>>>   
+>>> +  interrupts:
+>>> +    items:
+>>> +      - description: Byte cntr interrupt for the first etr device
+>>> +      - description: Byte cntr interrupt for the second etr device
+>>> +
+>>> +  interrupt-names:
+>>> +    items:
+>>> +      - const: etrirq0
+>>> +      - const: etrirq1
+>>
+>> Names are kind of pointless when it is just foo<index>.
+> 
+> Hi Rob,
+> 
+> I was naming them as etr0/etr1. Are these names acceptable?
 
-For consistency with &pcie_smmu, I think it would be cleaner to put this
-into hamoa.dtsi, mark it as status = "reserved"; and then enable it here
-in the overlay. That way, we have a full hardware description in
-hamoa.dtsi.
+Obviously irq is redundant, but how does etr0 solves the problem of
+calling it foo0?
 
-You should also be able to drop the interrupt-parent if you move it
-there.
+I don't think you really read Rob's comment.
 
-Thanks,
-Stephan
+> The interrupts are assigned exclusively to a specific ETR device.
+> 
+> But Suzuki is concerned that this might cause confusion because the ETR 
+> device is named randomly in the driver. Suzuki suggested using ‘port-0’ 
+> and ‘port-1’ and would also like to hear your feedback on these names.
+
+There is no confusion here. Writing bindings luckily clarifies this what
+the indices in the array mean.
+
+> 
+> Usually, the probe sequence follows the order of the addresses. In our 
+> specification, ‘ETR0’ is always probed before ‘ETR1’ because its address 
+> is lower.
+
+How is this even relevant? You are answering to something completely
+different, so I don't think you really tried to understand review.
+
+
+
+Best regards,
+Krzysztof
 
