@@ -1,54 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-85754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500DCCCDD9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 23:43:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A2A6CCDC26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 23:11:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B5B283019340
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 22:43:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D3CCC30194E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 22:11:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D552E7179;
-	Thu, 18 Dec 2025 22:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E0B42D97B7;
+	Thu, 18 Dec 2025 22:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Nn1DvvVx";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cv1tobdj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC44F2D9EF3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 22:43:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754692BEC45
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 22:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766097795; cv=none; b=J6E3HpM56/fOMFoWVNaIavyzkI+HgzE+M1Z351qOWfDmQ2kUFM7ljAi9eED2vKwrnbWgpBE2CcD8UVss9fqrwLIYH6ozNiJVvALzUPIDbLmfWXsaYxRuZoM2gO6TsEcWhkCUUQR5NqIo2xy9q5SuL/lqaKF2ITW59ctzjcl3bBU=
+	t=1766095906; cv=none; b=UfeTVEKHY0MBS87kVzkw9c4LwPoUMk5xGl0aZr/0vQP9qJlgU+Yn4UiJ7mtA5d0VyE5cVs+ZbfbtJJVk5t+gtPKc65YFZTC7J1AgPjW9XxGCt5/6uf/pNPBuJu9xvFqhpeur/9O/9ZKeNBsSvRmVU/DSWpgPVv6t0Pyzi2waa94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766097795; c=relaxed/simple;
-	bh=lCkQu2wDBmR6kjru2AMqWuKpIkmuqiCBKhOxtVPx/ww=;
+	s=arc-20240116; t=1766095906; c=relaxed/simple;
+	bh=d/baE5ea/eOmhYH31KV1fXjUE5BYHg9Dn+/jpAv4q3M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F4j9fAzWzeOmbbpYx0LMQFAmkwjAsHjQfnGI0OMh7sXhUyyD9j+K2zWsQ6AdxNUKIfYaUQtutcKcDWNNDHzUdpsD3UsFbuVukHTr2fWEUPaZaWEY1Bq1l0ZeJy9QINFVUmTIo61Xg+bfKS12CAYM5GcV4o0aWTQv1UBt71X9+1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0832F207F7;
-	Thu, 18 Dec 2025 23:04:05 +0100 (CET)
-Date: Thu, 18 Dec 2025 23:04:04 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v16 10/10] drm/msm/dpu: Enable quad-pipe for DSC and
- dual-DSI case
-Message-ID: <aUR2b3FOSisTfDFj@SoMainline.org>
-References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
- <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
- <tjakx64c25gyakblncsvuoj2iquoknx4ngwujt2uf2clhhfvfl@lbvhrimf6gwp>
- <i234zyh7ajsxdvbkzindyk5h6wilds226jqmh32kml4aweesav@frlk2l7zgmg4>
- <CABymUCNm5fpFN-Zpw7WkqP4EdBGXR9JCFyppOkuWs-r9MFx3dg@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=INFGPpM1j8xepREcDO49VGyKbgsXi9UJ9+Ugd91dFCfujBWmZ0T/75z9pgjAUub7O7lJZwDK660Tw4cs6IpgMo+nJkSxie/+XcZNUQ/zJo9coZKmyiBNQGnVIGPK17ovnpwSIQo+XSx9ZS5FLJ9oMBVDDhqp7Clu93FA0ALgYxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Nn1DvvVx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cv1tobdj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BILlGu23139387
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 22:11:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=dbQJt074OYwV0onaypnQggW5
+	LDc0aFE6tVImU4GcJ28=; b=Nn1DvvVx75YRuMnC9Ri59oYPgPKp0AAkLWtHGJQl
+	fvSvYYRuxOTj51jUcWNWcX3aS8N/Vrzaalb8tPTSPV0TAjjQS3XfpXsqhvbQJuui
+	gm+aFIA8kZq5VBy9RJoLp/tzl6PIGFnvFxdxmjGcx+FPJLYKXVwmaC9gYdxTte8G
+	uRI2ZVPJK0d3KjWo9xrgE2ZK30AMRR4FI0CFN3G2IevKiDQ4dttKB1rcBdcTcnXw
+	cSZy1wY/7fpYaAPfs6gcE6SCnvuiQYBLS+gyWwLaTij79tJ4eYM9Uv8VZ64XDRYD
+	rJQXYJAtmtG6Py6qusmNMZHT1iuERORQ/LQyzi9YXgTcaA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2d8bxf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 22:11:43 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4f1d26abbd8so28072961cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 14:11:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766095903; x=1766700703; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dbQJt074OYwV0onaypnQggW5LDc0aFE6tVImU4GcJ28=;
+        b=cv1tobdjSb9H+XsJdadSwh7wFdzLH+5tnaYISFTAcyI1zdDCbIDmNaJ0YARwAO/ZAy
+         QYbcTPsLOCq8ELipM+3U05wATUphuOVv9OqL5XopbCeRVv8KyBwQM0pIV8ZLMpfP11e0
+         qS996zIm8F01g/zem+tCWU+z4MLXODJEx2aC7ek/yqa0JPldlm7dexEmRd4VRYZf/Vj7
+         c8YXctkYK8Sj8DYgHrRdeJB4VkVlzfUKlHjlpeTzxBH2tNn79umZcte/gA8oQcx5/K1M
+         6uN4WZqpp3SgEMvFxnbmlNOtgcYL/JsXDPD4GmqrpaNbFlzI5SlbHHrluy0Lc6R4xSfR
+         CjKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766095903; x=1766700703;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dbQJt074OYwV0onaypnQggW5LDc0aFE6tVImU4GcJ28=;
+        b=LQtEtGa3Y2C+UnviTquACI65Rcf4QaoYVg9ddA/Vx781H3qzWBSQ3CFY3IbKQs0zrt
+         UZfFoeLpR+DRyeqrRfiK5mZyM74651Iu9NmklFwaAxU03lFxwo6RwmjzOVPKLjpZ5yjC
+         UaCRosVE1Gy4N9cjsSGypNpsy3dj5a1pCgZhJ6JkkLPnjj61UNSv2PJgmesiZTCpx2Ti
+         aCSEw2w2EFfq5Kq+OM7URgaB+Sz0aN1jhpVMZFMugaaqmewZ9jzY1QL+Ql46ItAfM3cm
+         Eut6Zxp9nSzUf4K2w4mL2FLN4ONLug2ltsJ50bR7U3Q7uMnjd3NJ4yaRuhcAJHZ8m905
+         +pRA==
+X-Forwarded-Encrypted: i=1; AJvYcCW/7lT1uPBlQg42nValrj03rDRBeLr9r1GYodUT6O+hIfig4aUoymrfBph61yGrFFqRg6DbYCi3eL8bzs+S@vger.kernel.org
+X-Gm-Message-State: AOJu0YynMWNPbp6C9oP8LyZyauh4/w5xEDv4oiG7P4/KjCCiHqVbpZg9
+	3D5kVYTM1AOG8EGXKGOfBNckx8rsK2jT1Q5fyWekzjZPSrOD0vdUKQvIahFyPwbPhahIDH6FmX8
+	sK9/aOVriEgbj3IW7M/UXynVuqg38kvbDElrrJxAnv8bHEJhWr7lB+0gjypkiH45rK441
+X-Gm-Gg: AY/fxX4z8Vdf+EZMYf2+15TZjBHniF7XABO90ftBWdc54jmjmiutkQ/oExIKKSqJx8Y
+	zlMffKIenM1Gzrn3GyKNhLFM0jBlgUQ2sm2xCgu+b4wSBZWmjUWiEW9T6W34G7l2jP5405VAGB+
+	ZdfS0IhoAKgpXycoBwJeeU+LpGzZLaUMtXUELC1lAQom4AH8mF1xGk2NXZb+6pmvq6ucs8BkwBu
+	OyyRl1qB7YZPolgLXWFGOcM0IZwb0bQBTp6ipGKx70r74xObORNRrMrR5buYd0eA99WBBrvzuwr
+	4UIxAMeXhKl739mwlGZsLtupA8qvgSnBENoffJgbMVcSCy3Zjjh5FgidJvZQrQlIrH02c4yZApZ
+	059gTULhvWHHplKdqvKGtWA==
+X-Received: by 2002:a05:622a:17ca:b0:4f3:5eb4:61d1 with SMTP id d75a77b69052e-4f4abda5d9cmr13012011cf.54.1766095902616;
+        Thu, 18 Dec 2025 14:11:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqh62rWiMeM8zIKIWonKwMJ6bmoK08RdUj+x1u/L/Ib4UD+e/5Mcj3lTEDDZ4flevbKDx5KQ==
+X-Received: by 2002:a05:622a:17ca:b0:4f3:5eb4:61d1 with SMTP id d75a77b69052e-4f4abda5d9cmr13011531cf.54.1766095902064;
+        Thu, 18 Dec 2025 14:11:42 -0800 (PST)
+Received: from oss.qualcomm.com ([86.121.7.169])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037de11dasm49970166b.35.2025.12.18.14.11.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Dec 2025 14:11:41 -0800 (PST)
+Date: Fri, 19 Dec 2025 00:11:39 +0200
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1-el2: Add the APSS watchdog
+Message-ID: <vlo2zqrlh6uhjxwt7wvzerh7qgii2mbgnsnykfg2obq7avgysy@q6v7msawgrn2>
+References: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-0-94ee80b8cbe7@oss.qualcomm.com>
+ <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-2-94ee80b8cbe7@oss.qualcomm.com>
+ <aUPSEM2AFPTmQLtv@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,207 +115,87 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABymUCNm5fpFN-Zpw7WkqP4EdBGXR9JCFyppOkuWs-r9MFx3dg@mail.gmail.com>
+In-Reply-To: <aUPSEM2AFPTmQLtv@linaro.org>
+X-Authority-Analysis: v=2.4 cv=AcG83nXG c=1 sm=1 tr=0 ts=69447c1f cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=DdBtMnqNxkYIvXj6ev4VzQ==:17
+ a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=MzO28PX6L44m6hDT13IA:9
+ a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE4MDE4NSBTYWx0ZWRfXxrBCsUOZfg8o
+ ezU90Tm1bxodDPPME1oa7kNF2/VQSD+SGuatBlzzlTY3et+QxM/lin0Kwg4IL+b1KwiY89IDTpy
+ RqrdxhUpdII1LLORZ1IAuXRrAf7ssCB6buKgcBcsD6N9EqGyFUGKIOArZYbUxqWiv61PVYp29aH
+ YFsi+QvfpelEi8BfKuiTRGMIFD3B4QQo1Ntp8jCYplS5janYKSSixL6kzgwsvB9sXCy74d//i4u
+ iI3hB9ce6cTcMQvtcVWsBb63uhmLPfmnnHaAHM//8vpLoL9fB/9Yq6EfF1sKUCHYOzrP6jzGn/R
+ icP8G+DAI2px70kDkAP6Mf9ioG5/hUkioen3pawSFTlASxxUBrVqPg5hMPHqVy6s52kBtsUijHc
+ uM59z4iKOcIORmD0R2+v6rBz2035pXnp/NDAmmNvQuNIZ+w30RrTFJgrvOm8/4Ea5bLGbp/uNPx
+ yInNUr1au7dJXS7Nf8w==
+X-Proofpoint-GUID: HVkFcGXJzh0_OpKTEZ-ozBfBSjles-Xp
+X-Proofpoint-ORIG-GUID: HVkFcGXJzh0_OpKTEZ-ozBfBSjles-Xp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-18_03,2025-12-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512180185
 
-On 2025-12-11 23:53:00, Jun Nie wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> ???2025???12???11????????? 03:30?????????
-> >
-> > On Sat, Nov 29, 2025 at 05:37:43PM +0100, Marijn Suijten wrote:
-> > > On 2025-09-18 21:29:02, Jun Nie wrote:
-> > > > To support high-resolution cases that exceed the width limitation of
-> > > > a pair of SSPPs, or scenarios that surpass the maximum MDP clock rate,
-> > > > additional pipes are necessary to enable parallel data processing
-> > > > within the SSPP width constraints and MDP clock rate.
-> > > >
-> > > > Request 4 mixers and 4 DSCs for high-resolution cases where both DSC
-> > > > and dual interfaces are enabled. More use cases can be incorporated
-> > > > later if quad-pipe capabilities are required.
-> > > >
-> > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > > > ---
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 27 +++++++++++++++++------
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++----------------
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
-> > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
-> > > >  6 files changed, 35 insertions(+), 32 deletions(-)
-> > >
-> > > With this patch applied, I get the following crash on the Sony Xperia 1 III, a
-> > > dual-DSI dual-DSC device:
-> > >
-> > >       Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-> > >       Mem abort info:
-> > >         ESR = 0x0000000096000004
-> > >         EC = 0x25: DABT (current EL), IL = 32 bits
-> > >         SET = 0, FnV = 0
-> > >         EA = 0, S1PTW = 0
-> > >         FSC = 0x04: level 0 translation fault
-> > >       Data abort info:
-> > >         ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-> > >         CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> > >         GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> > >       user pgtable: 4k pages, 48-bit VAs, pgdp=000000012d4e1000
-> > >       [0000000000000020] pgd=0000000000000000, p4d=0000000000000000
-> > >       Internal error: Oops: 0000000096000004 [#1]  SMP
-> > >       Modules linked in: msm drm_client_lib ubwc_config drm_dp_aux_bus gpu_sched drm_gpuvm drm_exec
-> > >       CPU: 5 UID: 0 PID: 3081 Comm: (sd-close) Tainted: G     U              6.18.0-rc7-next-20251127-SoMainline-12422-g10b6db5b056d-dirty #21 NONE
-> > >       Tainted: [U]=USER
-> > >       Hardware name: Sony Xperia 1 III (DT)
-> > >       pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > >       pc : dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm]
-> > >       lr : dpu_plane_atomic_check_sspp.isra.0+0x84/0x3f4 [msm]
-> > >       sp : ffff800081e23940
-> > >       x29: ffff800081e23950 x28: ffff0000bf2700d0 x27: 0000000000000a00
-> > >       x26: ffff0000bf270000 x25: 0000000000000a00 x24: ffff0000bd0e5c18
-> > >       x23: ffff000087a6c080 x22: 0000000000000224 x21: ffff00008ce88080
-> > >       x20: 0000000000000002 x19: ffff0000bf270138 x18: ffff8000818350b0
-> > >       x17: 000000040044ffff x16: ffffc488ae2e37e0 x15: 0000000000000005
-> > >       x14: 0000000000000a00 x13: 0000000000000000 x12: 0000000000000138
-> > >       x11: 0000000000000000 x10: 0000000000000012 x9 : 0000000000000000
-> > >       x8 : 0000000000000a00 x7 : 0000000000000000 x6 : 0000000000000000
-> > >       x5 : 0000000000000002 x4 : 0000000000000000 x3 : ffffc48897741db0
-> > >       x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-> > >       Call trace:
-> > >        dpu_plane_atomic_check_sspp.isra.0+0x88/0x3f4 [msm] (P)
-> > >        dpu_plane_atomic_check+0x100/0x1a0 [msm]
-> > >        drm_atomic_helper_check_planes+0xd8/0x224
-> > >        drm_atomic_helper_check+0x50/0xb4
-> > >        msm_atomic_check+0xd0/0xe0 [msm]
-> > >        drm_atomic_check_only+0x4e0/0x928
-> > >        drm_atomic_commit+0x50/0xd4
-> > >        drm_client_modeset_commit_atomic+0x200/0x260
-> > >        drm_client_modeset_commit_locked+0x64/0x180
-> > >        drm_client_modeset_commit+0x30/0x60
-> > >        drm_fb_helper_lastclose+0x60/0xb0
-> > >        drm_fbdev_client_restore+0x18/0x38 [drm_client_lib]
-> > >        drm_client_dev_restore+0xac/0xf8
-> > >        drm_release+0x124/0x158
-> > >        __fput+0xd4/0x2e4
-> > >        fput_close_sync+0x3c/0xe0
-> > >        __arm64_sys_close+0x3c/0x84
-> > >        invoke_syscall.constprop.0+0x44/0x100
-> > >        el0_svc_common.constprop.0+0x3c/0xe4
-> > >        do_el0_svc+0x20/0x3c
-> > >        el0_svc+0x38/0x110
-> > >        el0t_64_sync_handler+0xa8/0xec
-> > >        el0t_64_sync+0x1a0/0x1a4
-> > >       Code: 2a1403e5 52800082 94008e28 f9400380 (f940101b)
-> > >       ---[ end trace 0000000000000000 ]---
-> > >       pstore: backend (ramoops) writing error (-28)
-> > >       [drm:dpu_encoder_frame_done_timeout:2726] [dpu error]enc33 frame done timeout
-> > >
-> > > I don't see any thought given to it in the extremely terse patch description,
-> > > but this patch seems to unconditionally select 4 DSCs and 4 LMs on this device
-> > > because the underlying SM8350 SoC has 4 available in its catalog - while it
-> > > was previously affixed to 2:2:2 matching the downstream and known-working
-> > > configuration of this device - and I can only imagine things are rolling
-> > > downhill from there.
-> > >
-> > > faddr2line seems to be failing for me, but this is the line
-> > > `dpu_plane_atomic_check_sspp.isra.0+0x88` seems to be referring to:
-> > >
-> > >       aarch64-linux-gnu-objdump .output/drivers/gpu/drm/msm/msm.ko -dS | grep dpu_plane_atomic_check_sspp.isra.0\> -A80
-> > >       00000000000671ac <dpu_plane_atomic_check_sspp.isra.0>:
-> > >       static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
-> > >       ...
-> > >          67234:       f940101b        ldr     x27, [x0, #32]
-> > >               if (!(sblk->scaler_blk.len && pipe->sspp->ops.setup_scaler) &&
-> >
-> > I think it is:
-> >
-> >         pipe_hw_caps = pipe->sspp->cap;
-> >     14bc:       f9401018        ldr     x24, [x0, #32]
-> >
-> >
-> > So, please check why pipe->sspp becomes NULL (or where do we miss the
-> > NULL check for pipe->sspp).
+On 25-12-18 11:06:08, Stephan Gerhold wrote:
+> On Sun, Dec 14, 2025 at 10:49:59PM +0200, Abel Vesa wrote:
+> > The watchdog support in EL1 is SBSA compliant, handled by Gunyah
+> > hypervisor, but in EL2. the watchdog is an instance of the APSS WDT HW
+> > block, same as older platforms. So describe the APSS WDT node in the EL2
+> > overlay.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1-el2.dtso | 16 ++++++++++++++++
+> >  1 file changed, 16 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> > index 2d1c9151cf1b..404174a15659 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> > +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> > @@ -7,6 +7,8 @@
+> >  /dts-v1/;
+> >  /plugin/;
+> >  
+> > +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> >  /* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
+> >  &gpu_zap_shader {
+> >  	status = "disabled";
+> > @@ -55,3 +57,17 @@ &pcie_smmu {
+> >  &sbsa_watchdog {
+> >  	status = "disabled";
+> >  };
+> > +
+> > +&soc {
+> > +	#address-cells = <2>;
+> > +	#size-cells = <2>;
+> > +
+> > +	/* The APSS watchdog is only accessible in EL2 */
+> > +	watchdog@17410000 {
+> > +		compatible = "qcom,apss-wdt-x1e80100", "qcom,kpss-wdt";
+> > +		reg = <0x0 0x17410000 0x0 0x1000>;
+> > +		clocks = <&sleep_clk>;
+> > +		interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
+> > +		interrupt-parent = <&intc>;
+> > +	};
 > 
-> Yeah, per panic log and objdump, it should be due to this line. But no
-> clue is found
-> with code analysis.
-> Did you reproduce it? If so, what's the platform and git commit id? I
-> tested with
-> HDK8650 dual-DSI HDMI bridged monitor, but kernel does not panic.
+> For consistency with &pcie_smmu, I think it would be cleaner to put this
+> into hamoa.dtsi, mark it as status = "reserved"; and then enable it here
+> in the overlay. That way, we have a full hardware description in
+> hamoa.dtsi.
+
+Sounds like a good idea. Will do that in v2.
+
 > 
-> resource mapping:
->         pingpong=104 104 # # # # - - # # # # -
->         mixer=104 104 # # # # - -
->         ctl=104 # # # # # - -
->         dspp=# # # # - - - -
->         dsc=# # # # # # - -
+> You should also be able to drop the interrupt-parent if you move it
+> there.
 
-This series, and specifically this patch I am replying to applies modifications
-to DSC topology requests.  your test setup however does not seem to be using any
-DSC encoders at all and is hence not going into this strange block of code that
-I am concerned about:
+Yes. It will not be needed.
 
-	if (topology.num_dsc) {
-		if (dpu_kms->catalog->dsc_count >= num_rt_intf * 2)
-			topology.num_dsc = num_rt_intf * 2;
-		else
-			topology.num_dsc = num_rt_intf;
-		topology.num_lm = topology.num_dsc;
-
-For DSC-enabled setups with 2:2:2 topology (the device I mentioned in the
-main report) this is bumping the number of DSC encoders **and layer mixers**
-to **four** if available in the catalog; it is not even checked against the
-currently allocated resources in the case of "hotpluggable" panels.
-
-Unrelated to this bug, but as a relevant context-comment on this series:
-We discussed scenarios in the past where DSC-merge might be used (for example
-in a 2:2:1 or 4:4:2 topology) for improved power consumption, but should modeset
-back to lower DSC usage (1:1:1 or 2:2:2) if a second display is plugged in that
-also requires a DSC encoder to be driven at some refresh rate - and only 2 or 4
-encoders are available.
-
-- Marijn
-
->         cdm=#
->         sspp=# # # # - - - - 104 # # # # # - -
->         cwb=# # # #
-> 
-> 
-> Hi Marijn,
-> Could you help collect debug info with this change? Thanks!
-> BTW: my irc id: niej
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index d07a6ab6e7ee1..fc61c2fbb0699 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -886,6 +886,7 @@ static int dpu_plane_atomic_check_nosspp(struct
-> drm_plane *plane,
->                         new_plane_state->fb->width, new_plane_state->fb->height,
->                         new_plane_state->rotation);
-> 
-> +       memset(&pstate->pipe_cfg[0], 0, PIPES_PER_PLANE *
-> sizeof(struct dpu_sw_pipe_cfg));
->         /*
->          * We have 1 mixer pair cfg for 1:1:1 and 2:2:1 topology, 2 mixer pair
->          * configs for left and right half screen in case of 4:4:2 topology.
-> @@ -1055,6 +1056,13 @@ static int dpu_plane_atomic_check_sspp(struct
-> drm_plane *plane,
->                 if (!drm_rect_width(&pipe_cfg->src_rect))
->                         continue;
->                 DPU_DEBUG_PLANE(pdpu, "pipe %d is in use, validate it\n", i);
-> +               if(!pipe->sspp) {
-> +                       WARN(1, "%svirtual plane pipe %d is null with
-> width %d height %d!!\n",
-> +                               dpu_use_virtual_planes ? " " : "non-",
-> +                               i,
-> +                               drm_rect_width(&pipe_cfg->src_rect),
-> +                               drm_rect_height(&pipe_cfg->src_rect));
-> +               }
->                 ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
->                                                   &crtc_state->adjusted_mode,
->                                                   new_plane_state);
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+Thanks for reviewing,
+Abel
 
