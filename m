@@ -1,180 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-85668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF11CCCB4C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:04:54 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3F66CCB4D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 11:06:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C25F130081A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 10:04:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EADD53012CD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 10:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537563328ED;
-	Thu, 18 Dec 2025 10:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA2A3328ED;
+	Thu, 18 Dec 2025 10:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="f54/ZzJk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vh8DhXGI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3589F1DE3AD;
-	Thu, 18 Dec 2025 10:04:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C1E327C16
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 10:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766052267; cv=none; b=tuxNQ7/zUhfqo+D3+YVmnazaJHgljgEeWstx/ODh3nQU6BJVjTSlqNjrMS1rN2QWXN7UsfUIlgBxt2/KttSw9sPztmAtshBhNOuF0TAm0gJyKvl/dYcu8Ohs0skJs2j9D/sPJ2q+TgP+73tdEbOmO+IDb+mAWHfvKziCa326FVo=
+	t=1766052386; cv=none; b=JNxzbp/4papYjZGgnK03k0mR3jW/z8llq1uNU6MqlrcgcqyU0GmMVm2gumdkfCJ3YnGUv/b873+IpXhhWG301CwzRjkA7n4drnX8hfZe5+bvLEIsdW565FiL5BJ/s7bE6yu4nMwsBZMlOwtH+dOIkKc3VMAbnUaDkh/mQYOXtF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766052267; c=relaxed/simple;
-	bh=TxUlum7SkjqBF/sSg9gTED352+ADC55NbZgt0g3Ir4I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k+JhKUiV3v0EmSNzqXLkRJfj0sk5Zsg5AgU3BBE4KVv9/pLuJLAAk3RxBcSEpYKNZiQKBDe7jE/5cV87ypBfeBrsV/hyv05cs8ws/C4LTMLFVz2EWSCAS88QSOKw+Ky2SOHviDEbfeiliVqgE9anVz5eiY2T1Nt22XOo0gs03fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=f54/ZzJk; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 2BF975340CDD;
-	Thu, 18 Dec 2025 11:04:13 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1766052253;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=8l5P0XUgSnIo+g8uPjdtfk2ynK85bdk/6mgJVx0MUpQ=;
-	b=f54/ZzJkfA9PC5/yLTSj0YJ+IK2KnczOKOgeL1gl23KuNDh5nRBwA5WZaVcfEDmraZpkor
-	oUItVZgBpILpUVYXoxmrftGog5n8fLoB2gLSEKRo/FNoaoTKqeEx9snJ5LGIP7cDA99swb
-	7JlwLIvbnbXaiK2zF5wft4nsxl9et3g=
-Message-ID: <a25c4b25-6b7d-4e05-b8a8-546273fa4750@ixit.cz>
-Date: Thu, 18 Dec 2025 11:04:13 +0100
+	s=arc-20240116; t=1766052386; c=relaxed/simple;
+	bh=00v3kzAV4duY2v2/dB54DflNOIbH5D4CPWqrg3MyJZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rPJGBaoRrZ0a8FBH/eOTruVcbw7FrI8Fi3vVDgX6VCNfQv3HLjLDKx+XuYwbSqlEAaL2nsnb9IQsUnMEVfjohE8iLw9mES6wtlrT8UyNLUhz1uZrFPsURiCnHEUdp2Osq0Kj8Y0mIoU7Dxd8H+hkGpryDJYcYyDFzJFH6KLP5Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vh8DhXGI; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6419b7b4b80so661311a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 02:06:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766052382; x=1766657182; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eMH8wF/DkKC3kkFwo7pbjYWtxpqsSiixfrTZUtPLmDs=;
+        b=vh8DhXGIpbMLGAmpNGkUa7l6mHdGkn8ZsVxvEd36/X86Y2beLx949ux1oGWOJe8GXU
+         URjI2s/ClwZbTIfZlPP/vFWf7SpVch8hP6d1XLItq+kTOfW/bbhSY4gFGCR+g6szQP4Q
+         rTtQ+fXe09cEn5ilYaQcoLcMogJ2TsXSupfCVktcH/LuhkognN+ClT0vtMA9TgTfEQ3S
+         TIkBH1rliLYIDUS394VepaJOkx2y/l8H0zWAoMWIvzdQqO0z4nJ2JeoYduieWlsDjwbL
+         3norY9qTI8w43dcP0XUz6r6XV34Ll/mhPsCnnEE0fZkyz5qlIGKx6pFLoVF1/jWu7Rl5
+         juyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766052382; x=1766657182;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eMH8wF/DkKC3kkFwo7pbjYWtxpqsSiixfrTZUtPLmDs=;
+        b=HoRsgxkOtBycFd/vYZDdmEfjRFAMliptgkoAW+VJWflhBzDrplyFlSfaNLQrDmyK+E
+         8Nz1H6F0dmAVImWxBldQjsfODRQTkFBt2EqaQwTKG8SVjQastuCQTknO2YOpaq7v5OrO
+         BM7xeqZwg9tJgua4oSxMtcPSbXItnPIBupzGb7fD8Z3AAtvgEvCF60Dg6lLQUmwkYFso
+         wWbMgIiS4gLSYs4JTtQkwdaRBoDeDeUKVeHtX8keEbmPwKi838MzsfeaOvGD4xeilAI9
+         xp1IhreYdfT+L/sG+9h8MrPhgqm06x46/vC1NWjf+OgNyF0HPeMh1rnTokvcH2XdytUz
+         ozyg==
+X-Forwarded-Encrypted: i=1; AJvYcCXZDjKEn/p6igqzDOM3i1dWvCcUS1hm08E17AYxJiVxcE0XMKteHitLFmPw0e9CUB+SiKhwH5dtSTT21Khx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxb5meYjikgkChbZh02P8cDDqRkGaO3xiHvv3BfLn9MTID4yR6R
+	jTQeY2E50R3LKvHSdNe3Enat3X4Zc2JSUwh0ZF0wimHkHGGCr0B53/iLNDf4N12FJUk=
+X-Gm-Gg: AY/fxX6FBoIQdaxFvxMID3RWAzoneY+Ud+tAIX5f4jeihZC2dvrbKJTD2myCt805BmN
+	0Uod/LO6tYH5IZp/Ezr3X4ZGWARiuRW9PpLXO61TeTI+heCZWd6MrUb1xTaxgJrxJfZe7iDIoRd
+	fBvcPF3URROp9/mOyoKKCTj1EZm4Dj8WGwSgryJNfkIf0wf/L45SGA3Cmc65I9T32opKSxUiJZ8
+	UEGSDxcrx01BRVobVQfOJb7qqeCRNPh8vJ0fgRQ+aIZjDfUUtXxWkJnwGEaA3UGmci30dBvKVfp
+	BIXUT+olhvUpie9Am+YlNvNsz0robPAG41auL2LKulcsHMNdJadGmLpVWNIVYwsBElezPcdHYTq
+	V49gKi53S8Y9J/qka5G93ypYqZc2hoid7jjpz9LVwDVxSJy9oC0daQuLqCmeWfU10KSTvO1796S
+	/B3iAUfWLQGUeDsyKG2Vyzb5U=
+X-Google-Smtp-Source: AGHT+IFA6SS4YOPlrBDtk9PjM8zZe1pqVrSvNV8OpH8V3h+3nAk0ughsiQ0KfmvcLkZxgEp6dOM4bQ==
+X-Received: by 2002:a17:907:7ea5:b0:b7c:e3ad:cd17 with SMTP id a640c23a62f3a-b7d237756edmr2384134066b.32.1766052382145;
+        Thu, 18 Dec 2025 02:06:22 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff23:4410:1c2c:7aff:fe45:362e])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8022f93e8esm185717366b.11.2025.12.18.02.06.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Dec 2025 02:06:21 -0800 (PST)
+Date: Thu, 18 Dec 2025 11:06:08 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1-el2: Add the APSS watchdog
+Message-ID: <aUPSEM2AFPTmQLtv@linaro.org>
+References: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-0-94ee80b8cbe7@oss.qualcomm.com>
+ <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-2-94ee80b8cbe7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] media: dt-bindings: Correct camss VDDA PLL supply
- description
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vikram Sharma <quic_vikramsa@quicinc.com>,
- Kapatrala Syed <akapatra@quicinc.com>,
- Hariram Purushothaman <hariramp@quicinc.com>,
- Richard Acayan <mailingradian@gmail.com>, Bryan O'Donoghue <bod@kernel.org>,
- Hans Verkuil <hverkuil@kernel.org>, Depeng Shao <quic_depengs@quicinc.com>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20251216-docs-camss-fixes-v3-0-c238b6810771@ixit.cz>
- <20251216-docs-camss-fixes-v3-1-c238b6810771@ixit.cz>
- <20251218-fresh-fair-pigeon-aaeca0@quoll>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20251218-fresh-fair-pigeon-aaeca0@quoll>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251214-arm64-dts-qcom-x1e80100-el2-add-apss-wdt-v1-2-94ee80b8cbe7@oss.qualcomm.com>
 
-On 18/12/2025 09:12, Krzysztof Kozlowski wrote:
-> On Tue, Dec 16, 2025 at 01:24:50PM +0100, David Heidelberg wrote:
->> Usually, the supply is around 1.2 V, not 1.8 V. Rather remove mention of
->> voltage from the description.
+On Sun, Dec 14, 2025 at 10:49:59PM +0200, Abel Vesa wrote:
+> The watchdog support in EL1 is SBSA compliant, handled by Gunyah
+> hypervisor, but in EL2. the watchdog is an instance of the APSS WDT HW
+> block, same as older platforms. So describe the APSS WDT node in the EL2
+> overlay.
 > 
-> You did not remove the voltage. Anyway, both commits should be squashed.
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/x1-el2.dtso | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
->>
->> Fixes: 849139d46d09 ("media: dt-bindings: media: camss: Fixup vdda regulator descriptions sdm845")
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 2 +-
->>   Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 2 +-
->>   6 files changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->> index 019caa2b09c32..4986d18d1a2da 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
->> @@ -130,7 +130,7 @@ properties:
->>   
->>     vdda-pll-supply:
->>       description:
->> -      Phandle to 1.8V regulator supply to PHY refclk pll block.
->> +      1.2V regulator supply to CSIPHY IP blocks.
-> 
-> "...that supply is a regulator supply" so you still decided to go that
-> way. Why? I think I could not write this clearer.
+> diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> index 2d1c9151cf1b..404174a15659 100644
+> --- a/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
+> @@ -7,6 +7,8 @@
+>  /dts-v1/;
+>  /plugin/;
+>  
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+>  /* We can't and don't need to use zap shader in EL2 as linux can zap the gpu on it's own. */
+>  &gpu_zap_shader {
+>  	status = "disabled";
+> @@ -55,3 +57,17 @@ &pcie_smmu {
+>  &sbsa_watchdog {
+>  	status = "disabled";
+>  };
+> +
+> +&soc {
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	/* The APSS watchdog is only accessible in EL2 */
+> +	watchdog@17410000 {
+> +		compatible = "qcom,apss-wdt-x1e80100", "qcom,kpss-wdt";
+> +		reg = <0x0 0x17410000 0x0 0x1000>;
+> +		clocks = <&sleep_clk>;
+> +		interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
+> +		interrupt-parent = <&intc>;
+> +	};
 
-Oh! Vladimir mentioned the supplies should look like in
+For consistency with &pcie_smmu, I think it would be cleaner to put this
+into hamoa.dtsi, mark it as status = "reserved"; and then enable it here
+in the overlay. That way, we have a full hardware description in
+hamoa.dtsi.
 
- > names like found in qcom,x1e80100-camss.yaml, qcom,qcm2290-camss.yaml 
-and qcom,sm8650-camss.yaml
+You should also be able to drop the interrupt-parent if you move it
+there.
 
-I blindly considered these to be "examples how it should look like" and 
-used the more recent description without checking them.
-
-I'll squash the commits in next version and rephrase all camss the 
-supplies correctly, if it make sense to you.
-
-Sorry for the inconvenience and thanks.
-David
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-David Heidelberg
-
+Thanks,
+Stephan
 
