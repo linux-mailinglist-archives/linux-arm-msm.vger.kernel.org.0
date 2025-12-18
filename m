@@ -1,328 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-85734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87251CCCE2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 17:56:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AAE0CCCF08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 18:13:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DFCE3060F11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 16:52:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 07BF030191BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Dec 2025 17:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40DB1342169;
-	Thu, 18 Dec 2025 16:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N0qN6hm1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1554734D3B0;
+	Thu, 18 Dec 2025 17:04:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4732E266C;
-	Thu, 18 Dec 2025 16:51:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAB2434AB07;
+	Thu, 18 Dec 2025 17:04:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766076709; cv=none; b=t7crKT2x1tzd5FYYisX1agj02TwVJa9Wfzy8B6tLh7C49NYu4+ahHGi08mIrm3o5quGIj/Ul5UtHgesifhZZv9eHRkOftEeJ7G935hi4QsQbasK7RtPC44+eBdmfh4K75Nu2Zzoo/4vIGTC5yfhmBj8bYLexFhgJ3igaw+aJvIg=
+	t=1766077458; cv=none; b=LNrmXkQHmI7/TlQyMBCGNblrf0GtawAjo8G9upES+dxJB9KQfPbRbYKMe+mHedfRwT9DOTrDSyMloIu3DgutUBeOEc72OUA1D2R/W3jPXAW4c+qZgKNb8IHVlicOz0W8CkNji6zbL030mAgjsFU98saun9PXi0Qo/kmOTl1nr/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766076709; c=relaxed/simple;
-	bh=Q/8GpnfrMmlE2LL5HbEze0rIAQlIeIt7hlwv5Pmh084=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dP9wuH2slp5SXoEOihmJ0ilrigVU06/heyD3xGEF7pMPzsCBqb11P+b6pdUShmeZwtfZNQaKphqNjWdKR6kLXyQZvxWuz5f8lGALeElikkFM/dPcqRz979pyh2ujqPEj67iA24tbkDPOnLMJAqgK4/wTDc2d9f57oyjV3ZMOT8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N0qN6hm1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7F6EAC116C6;
-	Thu, 18 Dec 2025 16:51:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766076708;
-	bh=Q/8GpnfrMmlE2LL5HbEze0rIAQlIeIt7hlwv5Pmh084=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=N0qN6hm1RGtoVjHjBA5EV4109msEzFilC9TbhPOkhg9Jzdqs1G+JcfwlQ+e2kBx9C
-	 Gnfe8rYL7dMkmLnW5JNe7EFP8tMO/wFX2+BHXWC5kqa/g/jPlXgAlDR0T7ENmuhhTd
-	 xaJZrNzYSG/ZhnpU/I/hEvFeSdxerg0p5cBo3t+3xkp8qu6bEx8z62xiHmkkj0jVZc
-	 1URpJ/BOATsROzK/GWPXnXYQJ1rpwQPikjlbZs57k1sdC16BCmDrd+qrypz4Nm2alh
-	 GXWzNYVJUWVStJkwH3EgC5fK/qPWpHJ2DnPJEoC/K/QD7JJuHCo1amsuha5wwn7Aow
-	 B654/jmZCED+A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70CAAD6E2B3;
-	Thu, 18 Dec 2025 16:51:48 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Thu, 18 Dec 2025 22:21:45 +0530
-Subject: [PATCH v2 2/2] bus: mhi: host: Drop the auto_queue support
+	s=arc-20240116; t=1766077458; c=relaxed/simple;
+	bh=0qfzhWIRN/LX5OBVH0cKx+HcEmq870kWDLXVUz8oZH8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iVDiYP6RBf1UAh9GdnIT5zrjTHLqCOuBnegsCLgIsJ+YIDFdj3dsYL/F1xqhaTRceSd/LPbxVSUjlZ0WO28HUKOaG2PtnU19cdiGZwzHj8dr4t81yFQJA2fQmOrS0LQdfjEkgme5wBwgs37EDLifzNz87UnmE7Aymo1mPGUHyXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 42A4AFEC;
+	Thu, 18 Dec 2025 09:04:06 -0800 (PST)
+Received: from [10.57.74.203] (unknown [10.57.74.203])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 94D973F73F;
+	Thu, 18 Dec 2025 09:04:09 -0800 (PST)
+Message-ID: <3d4dd3d0-fca0-45ac-a833-e8f7f5d1aa95@arm.com>
+Date: Thu, 18 Dec 2025 17:04:07 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251218-qrtr-fix-v2-2-c7499bfcfbe0@oss.qualcomm.com>
-References: <20251218-qrtr-fix-v2-0-c7499bfcfbe0@oss.qualcomm.com>
-In-Reply-To: <20251218-qrtr-fix-v2-0-c7499bfcfbe0@oss.qualcomm.com>
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
- Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, 
- Oded Gabbay <ogabbay@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- Jeff Johnson <jjohnson@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
- Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Loic Poulain <loic.poulain@oss.qualcomm.com>, 
- Maxim Kochetkov <fido_max@inbox.ru>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
- ath12k@lists.infradead.org, netdev@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan@kernel.org>, 
- Chris Lew <quic_clew@quicinc.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7811;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=999FZ005VmQ50ugtoGwa60OjoIrDOfJs9J4slqZv21E=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpRDEiiTdzAY4ft40HzRS/ezsIRLSoNZ/RbJzA/
- Z5McmZxO5eJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaUQxIgAKCRBVnxHm/pHO
- 9a0UB/47xAE0KkVsOsPKTNJuunouZCvnWWk7FUl9ISg4FYtiwi1wGkGHjRbrzqY6JlbI4vqSNvb
- 1mJ3w1xwTz1jCDmkOTZRiTJG1CtAaOMPfq3UTtDIKmcDGgvHXAR1/hBoW5uHxc0Di20efsj6aFt
- Zw+zsLIOxAwW3V7Zlzw5Uwcz7Q0rT0T0IOs4tAO5MeBpddib2JG9qYSKC2rmeUM71YSk9kJXGJ3
- mTJxu6kLeu1gbv+qbwEp+tAqc4W2zm+GW0rEi+HaLuavVkjsDuDDWt3IrNdSWGnqARAvHk2vfOp
- 8BfRqhXE4Mw4D6hQzkmrwOnUTVSOvYO+aj1GrIToOwVsn/NT
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/12] coresight: Add CPU cluster funnel/replicator/tmc
+ support
+Content-Language: en-GB
+To: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>,
+ Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>
+Cc: kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ maulik.shah@oss.qualcomm.com, Jie Gan <jie.gan@oss.qualcomm.com>
+References: <20251218-cpu_cluster_component_pm-v2-0-2335a6ae62a0@oss.qualcomm.com>
+ <47191600-260a-46aa-9af8-dff2b08dc2e8@arm.com>
+ <8cb8fad9-c54e-43a3-a769-5452119cc2a1@oss.qualcomm.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <8cb8fad9-c54e-43a3-a769-5452119cc2a1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On 18/12/2025 16:18, yuanfang zhang wrote:
+> 
+> 
+> On 12/18/2025 5:32 PM, Suzuki K Poulose wrote:
+>> Cc: Sudeep
+>>
+>> On 18/12/2025 08:09, Yuanfang Zhang wrote:
+>>> This patch series adds support for CoreSight components local to CPU clusters,
+>>> including funnel, replicator, and TMC, which reside within CPU cluster power
+>>> domains. These components require special handling due to power domain
+>>> constraints.
+>>>
+>>> Unlike system-level CoreSight devices, these components share the CPU cluster's
+>>> power domain. When the cluster enters low-power mode (LPM), their registers
+>>> become inaccessible. Notably, `pm_runtime_get` alone cannot bring the cluster
+>>> out of LPM, making standard register access unreliable.
+>>
+>> Why ? AFAIU, we have ways to tie the power-domain to that of the cluster
+>> and that can auto-magically keep the cluster power ON as long as you
+>> want to use them.
+>>
+>> Suzuki
+>>
+> Hi Suzuki
+> 
+> Runtime PM for CPU devices works little different, it is mostly used to manage hierarchical
+> CPU topology (PSCI OSI mode) to talk with genpd framework to manage the last CPU handling in
+> cluster.
+> It doesn’t really send IPI to wakeup CPU device (It don’t have .power_on/.power_off) callback
+> implemented which gets invoked from .runtime_resume callback. This behavior is aligned with
+> the upstream Kernel.
 
-Now that the only user of the 'auto_queue' feature, (QRTR) has been
-converted to manage the buffers on its own, drop the code related to it.
+Why does it need to wake up the CPU ? The firmware can power up the
+cluster right? Anyways, to me this all looks like working around a
+firmware issue. I will let you sort this out with Sudeep's response
+, as I am not an expert on the cluster powermanagement and standards.
 
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/bus/mhi/host/init.c     | 10 -----
- drivers/bus/mhi/host/internal.h |  3 --
- drivers/bus/mhi/host/main.c     | 81 +----------------------------------------
- include/linux/mhi.h             | 14 -------
- 4 files changed, 2 insertions(+), 106 deletions(-)
+Suzuki
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 099be8dd1900..b020a6489c07 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -841,18 +841,8 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
- 		mhi_chan->lpm_notify = ch_cfg->lpm_notify;
- 		mhi_chan->offload_ch = ch_cfg->offload_channel;
- 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
--		mhi_chan->pre_alloc = ch_cfg->auto_queue;
- 		mhi_chan->wake_capable = ch_cfg->wake_capable;
- 
--		/*
--		 * If MHI host allocates buffers, then the channel direction
--		 * should be DMA_FROM_DEVICE
--		 */
--		if (mhi_chan->pre_alloc && mhi_chan->dir != DMA_FROM_DEVICE) {
--			dev_err(dev, "Invalid channel configuration\n");
--			goto error_chan_cfg;
--		}
--
- 		/*
- 		 * Bi-directional and direction less channel must be an
- 		 * offload channel
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 7937bb1f742c..7b0ee5e3a12d 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -286,7 +286,6 @@ struct mhi_chan {
- 	bool lpm_notify;
- 	bool configured;
- 	bool offload_ch;
--	bool pre_alloc;
- 	bool wake_capable;
- };
- 
-@@ -389,8 +388,6 @@ int mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
- 		      struct image_info *img_info);
- void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
- 
--/* Automatically allocate and queue inbound buffers */
--#define MHI_CH_INBOUND_ALLOC_BUFS BIT(0)
- int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
- 		       struct mhi_chan *mhi_chan);
- void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 861551274319..53c0ffe30070 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -664,23 +664,6 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
- 				mhi_cntrl->runtime_put(mhi_cntrl);
- 			}
- 
--			/*
--			 * Recycle the buffer if buffer is pre-allocated,
--			 * if there is an error, not much we can do apart
--			 * from dropping the packet
--			 */
--			if (mhi_chan->pre_alloc) {
--				if (mhi_queue_buf(mhi_chan->mhi_dev,
--						  mhi_chan->dir,
--						  buf_info->cb_buf,
--						  buf_info->len, MHI_EOT)) {
--					dev_err(dev,
--						"Error recycling buffer for chan:%d\n",
--						mhi_chan->chan);
--					kfree(buf_info->cb_buf);
--				}
--			}
--
- 			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
-@@ -1177,17 +1160,12 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
- int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
- 		  struct sk_buff *skb, size_t len, enum mhi_flags mflags)
- {
--	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
--							     mhi_dev->dl_chan;
- 	struct mhi_buf_info buf_info = { };
- 
- 	buf_info.v_addr = skb->data;
- 	buf_info.cb_buf = skb;
- 	buf_info.len = len;
- 
--	if (unlikely(mhi_chan->pre_alloc))
--		return -EINVAL;
--
- 	return mhi_queue(mhi_dev, &buf_info, dir, mflags);
- }
- EXPORT_SYMBOL_GPL(mhi_queue_skb);
-@@ -1472,45 +1450,6 @@ static int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- 	if (ret)
- 		goto error_pm_state;
- 
--	if (mhi_chan->dir == DMA_FROM_DEVICE)
--		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
--
--	/* Pre-allocate buffer for xfer ring */
--	if (mhi_chan->pre_alloc) {
--		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
--						       &mhi_chan->tre_ring);
--		size_t len = mhi_cntrl->buffer_len;
--
--		while (nr_el--) {
--			void *buf;
--			struct mhi_buf_info info = { };
--
--			buf = kmalloc(len, GFP_KERNEL);
--			if (!buf) {
--				ret = -ENOMEM;
--				goto error_pre_alloc;
--			}
--
--			/* Prepare transfer descriptors */
--			info.v_addr = buf;
--			info.cb_buf = buf;
--			info.len = len;
--			ret = mhi_gen_tre(mhi_cntrl, mhi_chan, &info, MHI_EOT);
--			if (ret) {
--				kfree(buf);
--				goto error_pre_alloc;
--			}
--		}
--
--		read_lock_bh(&mhi_cntrl->pm_lock);
--		if (MHI_DB_ACCESS_VALID(mhi_cntrl)) {
--			read_lock_irq(&mhi_chan->lock);
--			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
--			read_unlock_irq(&mhi_chan->lock);
--		}
--		read_unlock_bh(&mhi_cntrl->pm_lock);
--	}
--
- 	mutex_unlock(&mhi_chan->mutex);
- 
- 	return 0;
-@@ -1522,12 +1461,6 @@ static int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
- error_init_chan:
- 	mutex_unlock(&mhi_chan->mutex);
- 
--	return ret;
--
--error_pre_alloc:
--	mutex_unlock(&mhi_chan->mutex);
--	mhi_unprepare_channel(mhi_cntrl, mhi_chan);
--
- 	return ret;
- }
- 
-@@ -1600,12 +1533,8 @@ static void mhi_reset_data_chan(struct mhi_controller *mhi_cntrl,
- 		mhi_del_ring_element(mhi_cntrl, buf_ring);
- 		mhi_del_ring_element(mhi_cntrl, tre_ring);
- 
--		if (mhi_chan->pre_alloc) {
--			kfree(buf_info->cb_buf);
--		} else {
--			result.buf_addr = buf_info->cb_buf;
--			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
--		}
-+		result.buf_addr = buf_info->cb_buf;
-+		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 	}
- }
- 
-@@ -1666,12 +1595,6 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
- }
- EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer);
- 
--int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev)
--{
--	return __mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
--}
--EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer_autoqueue);
--
- void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
- {
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index dd372b0123a6..88ccb3e14f48 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -215,7 +215,6 @@ enum mhi_db_brst_mode {
-  * @lpm_notify: The channel master requires low power mode notifications
-  * @offload_channel: The client manages the channel completely
-  * @doorbell_mode_switch: Channel switches to doorbell mode on M0 transition
-- * @auto_queue: Framework will automatically queue buffers for DL traffic
-  * @wake-capable: Channel capable of waking up the system
-  */
- struct mhi_channel_config {
-@@ -232,7 +231,6 @@ struct mhi_channel_config {
- 	bool lpm_notify;
- 	bool offload_channel;
- 	bool doorbell_mode_switch;
--	bool auto_queue;
- 	bool wake_capable;
- };
- 
-@@ -743,18 +741,6 @@ void mhi_device_put(struct mhi_device *mhi_dev);
-  */
- int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
- 
--/**
-- * mhi_prepare_for_transfer_autoqueue - Setup UL and DL channels with auto queue
-- *                                      buffers for DL traffic
-- * @mhi_dev: Device associated with the channels
-- *
-- * Allocate and initialize the channel context and also issue the START channel
-- * command to both channels. Channels can be started only if both host and
-- * device execution environments match and channels are in a DISABLED state.
-- * The MHI core will automatically allocate and queue buffers for the DL traffic.
-- */
--int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
--
- /**
-  * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
-  *                               Issue the RESET channel command and let the
 
--- 
-2.48.1
 
+> 
+> Yuanfang
+> 
+>>
+>>>
+>>> To address this, the series introduces:
+>>> - Identifying cluster-bound devices via a new `qcom,cpu-bound-components`
+>>>     device tree property.
+>>> - Implementing deferred probing: if associated CPUs are offline during
+>>>     probe, initialization is deferred until a CPU hotplug notifier detects
+>>>     the CPU coming online.
+>>> - Utilizing `smp_call_function_single()` to ensure register accesses
+>>>     (initialization, enablement, sysfs reads) are always executed on a
+>>>     powered CPU within the target cluster.
+>>> - Extending the CoreSight link `enable` callback to pass the `cs_mode`.
+>>>     This allows drivers to distinguish between SysFS and Perf modes and
+>>>     apply mode-specific logic.
+>>>
+>>> Jie Gan (1):
+>>>     arm64: dts: qcom: hamoa: add Coresight nodes for APSS debug block
+>>>
+>>> Yuanfang Zhang (11):
+>>>     dt-bindings: arm: coresight: Add 'qcom,cpu-bound-components' property
+>>>     coresight: Pass trace mode to link enable callback
+>>>     coresight-funnel: Support CPU cluster funnel initialization
+>>>     coresight-funnel: Defer probe when associated CPUs are offline
+>>>     coresight-replicator: Support CPU cluster replicator initialization
+>>>     coresight-replicator: Defer probe when associated CPUs are offline
+>>>     coresight-replicator: Update management interface for CPU-bound devices
+>>>     coresight-tmc: Support probe and initialization for CPU cluster TMCs
+>>>     coresight-tmc-etf: Refactor enable function for CPU cluster ETF support
+>>>     coresight-tmc: Update management interface for CPU-bound TMCs
+>>>     coresight-tmc: Defer probe when associated CPUs are offline
+>>>
+>>> Verification:
+>>>
+>>> This series has been verified on sm8750.
+>>>
+>>> Test steps for delay probe:
+>>>
+>>> 1. limit the system to enable at most 6 CPU cores during boot.
+>>> 2. echo 1 >/sys/bus/cpu/devices/cpu6/online.
+>>> 3. check whether ETM6 and ETM7 have been probed.
+>>>
+>>> Test steps for sysfs mode:
+>>>
+>>> echo 1 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
+>>> echo 1 >/sys/bus/coresight/devices/etm0/enable_source
+>>> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
+>>> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
+>>> echo 0 >/sys/bus/coresight/devicse/etm6/enable_source
+>>> echo 0 >/sys/bus/coresight/devices/tmc_etf0/enable_sink
+>>>
+>>> echo 1 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
+>>> echo 1 >/sys/bus/coresight/devcies/etm0/enable_source
+>>> cat /dev/tmc_etf1 >/tmp/etf1.bin
+>>> echo 0 >/sys/bus/coresight/devices/etm0/enable_source
+>>> echo 0 >/sys/bus/coresight/devices/tmc_etf1/enable_sink
+>>>
+>>> echo 1 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
+>>> echo 1 >/sys/bus/coresight/devices/etm6/enable_source
+>>> cat /dev/tmc_etf2 >/tmp/etf2.bin
+>>> echo 0 >/sys/bus/coresight/devices/etm6/enable_source
+>>> echo 0 >/sys/bus/coresight/devices/tmc_etf2/enable_sink
+>>>
+>>> Test steps for sysfs node:
+>>>
+>>> cat /sys/bus/coresight/devices/tmc_etf*/mgmt/*
+>>>
+>>> cat /sys/bus/coresight/devices/funnel*/funnel_ctrl
+>>>
+>>> cat /sys/bus/coresight/devices/replicator*/mgmt/*
+>>>
+>>> Test steps for perf mode:
+>>>
+>>> perf record -a -e cs_etm//k -- sleep 5
+>>>
+>>> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+>>> ---
+>>> Changes in v2:
+>>> - Use the qcom,cpu-bound-components device tree property to identify devices
+>>>     bound to a cluster.
+>>> - Refactor commit message.
+>>> - Introduce a supported_cpus field in the drvdata structure to record the CPUs
+>>>     that belong to the cluster where the local component resides.
+>>> - Link to v1: https://lore.kernel.org/r/20251027-cpu_cluster_component_pm-v1-0-31355ac588c2@oss.qualcomm.com
+>>>
+>>> ---
+>>> Jie Gan (1):
+>>>         arm64: dts: qcom: hamoa: Add CoreSight nodes for APSS debug block
+>>>
+>>> Yuanfang Zhang (11):
+>>>         dt-bindings: arm: coresight: Add 'qcom,cpu-bound-components' property
+>>>         coresight-funnel: Support CPU cluster funnel initialization
+>>>         coresight-funnel: Defer probe when associated CPUs are offline
+>>>         coresight-replicator: Support CPU cluster replicator initialization
+>>>         coresight-replicator: Defer probe when associated CPUs are offline
+>>>         coresight-replicator: Update management interface for CPU-bound devices
+>>>         coresight-tmc: Support probe and initialization for CPU cluster TMCs
+>>>         coresight-tmc-etf: Refactor enable function for CPU cluster ETF support
+>>>         coresight-tmc: Update management interface for CPU-bound TMCs
+>>>         coresight-tmc: Defer probe when associated CPUs are offline
+>>>         coresight: Pass trace mode to link enable callback
+>>>
+>>>    .../bindings/arm/arm,coresight-dynamic-funnel.yaml |   5 +
+>>>    .../arm/arm,coresight-dynamic-replicator.yaml      |   5 +
+>>>    .../devicetree/bindings/arm/arm,coresight-tmc.yaml |   5 +
+>>>    arch/arm64/boot/dts/qcom/hamoa.dtsi                | 926 +++++++++++++++++++++
+>>>    arch/arm64/boot/dts/qcom/purwa.dtsi                |  12 +
+>>>    drivers/hwtracing/coresight/coresight-core.c       |   7 +-
+>>>    drivers/hwtracing/coresight/coresight-funnel.c     | 258 +++++-
+>>>    drivers/hwtracing/coresight/coresight-replicator.c | 341 +++++++-
+>>>    drivers/hwtracing/coresight/coresight-tmc-core.c   | 387 +++++++--
+>>>    drivers/hwtracing/coresight/coresight-tmc-etf.c    | 106 ++-
+>>>    drivers/hwtracing/coresight/coresight-tmc.h        |  10 +
+>>>    drivers/hwtracing/coresight/coresight-tnoc.c       |   3 +-
+>>>    drivers/hwtracing/coresight/coresight-tpda.c       |   3 +-
+>>>    include/linux/coresight.h                          |   3 +-
+>>>    14 files changed, 1902 insertions(+), 169 deletions(-)
+>>> ---
+>>> base-commit: 008d3547aae5bc86fac3eda317489169c3fda112
+>>> change-id: 20251016-cpu_cluster_component_pm-ce518f510433
+>>>
+>>> Best regards,
+>>
+> 
 
 
