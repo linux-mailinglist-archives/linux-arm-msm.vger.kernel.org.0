@@ -1,89 +1,490 @@
-Return-Path: <linux-arm-msm+bounces-85898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F421CD0305
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:02:19 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFB5ACD033E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:07:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BE53C303998D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:02:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 17E2C304F10C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:06:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A57E32720C;
-	Fri, 19 Dec 2025 14:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7238731A575;
+	Fri, 19 Dec 2025 14:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Ru0fzdn2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18F52306B0A;
-	Fri, 19 Dec 2025 14:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D84327C10
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 14:06:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766152926; cv=none; b=uSgY+lxma+nzX8mWw4ylPqVcO0vjUfYdLpxt8xeAR3ONUJX47rguEywBWk5m1smJapJNOafHscx1La540kTTubZ1d/fjk3p+qm31iKZUVGD6DjJesH/5Pn6sRw7f5V8BCTBVrnC8RQNQw+sYwDW/4PQA0VReLJ75LJIhnr7Ojqo=
+	t=1766153195; cv=none; b=g7smDEffz8q0BDYX1dxZiolmuw5L4/v9/z82VIYRJpZBo575yNHRALZ7rlyl/USOgbyYl3YcVA/yArFrmNa7n51OsIchr7yJ0XmlI00fshiQtqnd6Mn5xRYZ90gZHJy8knHk+m/bf+PW/lcxXBmdAnxaWKJDKbQZyHBww/mdqr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766152926; c=relaxed/simple;
-	bh=i/mmf81HXPfl+r0CrAZLzcet6zBD7jfudc0vbWBbtoU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DTTnGHqfYSgyymtUrHkgV+tY732m+JIZsEMiNDQkzL7GRewxbFk4GevbcdeNENlxg0sYZcZjKRMJyzpVIRQ3EdT9vWqK+bOMWeSMgds6VyvqKrHMK0dio1Pt8ylWJfLtBEnfKctsER9e1QtksEMPOURGFYVO3+2u3tGhzUnGgDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 15437FEC;
-	Fri, 19 Dec 2025 06:01:56 -0800 (PST)
-Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id DFB2F3F5CA;
-	Fri, 19 Dec 2025 06:02:00 -0800 (PST)
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-	Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
-	Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	linux-arm-msm@vger.kernel.org,
-	coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: (subset) [PATCH v4 0/2] Enable CTCU device for QCS8300
-Date: Fri, 19 Dec 2025 14:01:53 +0000
-Message-ID: <176615287813.688536.723538049922655005.b4-ty@arm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251103-enable-ctcu-for-monaco-v4-0-92ff83201584@oss.qualcomm.com>
-References: <20251103-enable-ctcu-for-monaco-v4-0-92ff83201584@oss.qualcomm.com>
+	s=arc-20240116; t=1766153195; c=relaxed/simple;
+	bh=egFzCMnGOD3tJo+4vJ8btYz5dTAD6NLL/56REmlPA40=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=i3FlYP6/v4+/4K7+Uqz0WF7uI88yn2wRzbMYxtqtAqJqEO0X4YbUZ6nogSCmYgIYOkxvaQMpw77n1ijTZOvA9BPYivllc91/ftkjBm4A38COZIXgeZ7nMRIMUnwE/shDZdU4Mh30RzM0no928fZ7kcKiUND5gkGfJMeAUFNpXhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Ru0fzdn2; arc=none smtp.client-ip=209.85.218.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-b7a72874af1so321780666b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 06:06:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1766153190; x=1766757990; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UPBoI4RkzL5cm0xuXI21DUKNk04nFE+PV9GWAo62RZo=;
+        b=Ru0fzdn2XnoEObwjbCNWmkMN2t7QqrT6cR97kIxMyxz+JhsJMBpJoz3SG5DYov5M/z
+         tf97jZc7wOpAdVjmSKbmfsOHziDx896vcLnQSFM6KrYuM/3/RD0azeeloMYoUrSnFWWZ
+         EmL4pMJdMBEmoQuC1HHXNsco1lAn5chTiGCqCjBhzSMMmfLa2w/hyD/Nf+x1j2fSlJk/
+         9uCgiPi+gt8Kz4n5KXsL8Sk18aZFpG4PpeawuawjDpwRNJT9hjmMaGB5YxgV5DByZAlE
+         cEdYCoD8IvmSC9vzx/HuMFSm0GHr84xeZfZ0fAqqMXBVF1nN7jhAzLG733uY2T+g3mMk
+         Jcww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766153190; x=1766757990;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UPBoI4RkzL5cm0xuXI21DUKNk04nFE+PV9GWAo62RZo=;
+        b=S9HD/6Gzw1r9cJWDrgw5Fm0dtvJX+khBvvEq0f5XIK388I5FOcnHYShhhLK+kxG4Gb
+         yweKFejeG0OuGcLkPnLuGlCP7o8BQXoRfzn4sLB4E4VMTZQpUOlFHpl67HJB+p0UWeuW
+         QJquGopfD+bgcZ9lxXLrxg41WpBhVoY/zJW7jS6JW/cgKr4f+pBxi6UNmiyeDbgNQANq
+         AcKSubxo/pCuv/m2cqCtWaZtWoxkBY4eeSppeyzBbFVFHDR/lpFpRkaljd09jjqWu8vs
+         h32GTO2PRuTcD/h4KMfdTHAQ1UjpWJaX445epuCUiAtek5M8NYCCkBwwJUPUg4VlluFG
+         2M8w==
+X-Forwarded-Encrypted: i=1; AJvYcCW7vrbO1/LQcNg0KS6vA2si9M/Is/mSoi5HpVtBD3JURLhxLuZBZkFBuqRDXth4FSAqhy5CbAUodA+92nvw@vger.kernel.org
+X-Gm-Message-State: AOJu0YwsjjVGye8gRJI7Ljfy2VLaldE/1WWHIoHoRmD2zf/1uhuoOAM/
+	45WCgWhz6AJwcOkAMCCc12Yo5qg/4XblO0MInYNnV1MWse+unnK+TagAKMBahki9uhs=
+X-Gm-Gg: AY/fxX7nwYTWbZrPZmlnRbOj7EGLBN1IzbDZ4jQxA1o+zwRDbJ7vDuUuyJQWp3SGgki
+	+mGrt6/YIxi5mMhG2FmE011QQKmC7gPJQ5xeJ7LN6uSTRCqPm3wNHCSWX+/1X4f0a4aawBr6UZQ
+	KHoxJfcHDhjY/7N3lKI2l10QX6VlOAZr3Zdd968zz0fEdn87yc9s5T2wgQZIAk+bbbl7AYtuwJr
+	r0pYcOW55qVNENI+RVUtggIcYCguhvRQg0EG4glMI1pT3Jw/4pkpcuLHwWPfqVvHHY7Q4lMd2k7
+	wzHBudIqQRW1g0xc3PqgGZ+I9b5vvLo6Nqwjwp09UKynjbs3mI+ibdURDMnsVRx22z/HWceIPGx
+	OwJ6WlTJw4a3t+xz+2wlx29ZNjfr9LpYecVAt9XuNYgvyBjnZbrQBbWVG+m3ZhQ8/7QCdQwma7G
+	5A+bgoj6CB/pVNqB6v/ARk2tln+S9kJv7wq0khiDq/6V8iX58M7XP64cS7mbiOgBM/pVrMkV31l
+	CpgTMSJSppDiFIe/otZEduk
+X-Google-Smtp-Source: AGHT+IE1v4c+8Sd4pe4o1DRqdOiLKSjOHSK0siHKrWox12nqjHle8Ep3VA4xCcrMCIW/7ulCvQnm0Q==
+X-Received: by 2002:a17:907:d87:b0:b7a:1bde:1223 with SMTP id a640c23a62f3a-b80371e923emr294366266b.64.1766153189822;
+        Fri, 19 Dec 2025 06:06:29 -0800 (PST)
+Received: from localhost (2001-1c00-3b89-c600-71a4-084f-6409-1447.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b89:c600:71a4:84f:6409:1447])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037ad806asm243460266b.23.2025.12.19.06.06.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Dec 2025 06:06:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 19 Dec 2025 15:06:28 +0100
+Message-Id: <DF291XT4MOYA.3OVO84CAJKJ5R@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Vladimir Zapolskiy"
+ <vladimir.zapolskiy@linaro.org>, "Bryan O'Donoghue" <bod@kernel.org>, "Luca
+ Weiss" <luca.weiss@fairphone.com>, "Robert Foss" <rfoss@kernel.org>, "Todor
+ Tomov" <todor.too@gmail.com>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
+ <20251114-sm6350-camss-v2-1-d1ff67da33b6@fairphone.com>
+ <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
+ <r6EgtiSu8pqs2ouFERTw7fx8kYZ3RcSbGklwd17UPxNGGd3sbRDl2BPyplkABZVu3qyfrIzRMisa0qTSrm89BA==@protonmail.internalid> <DE8FV81S45S5.CH6K1QAX940D@fairphone.com> <a428f8b9-c338-4404-8dc1-da6daae37d5c@kernel.org> <d7dfeb7e-c0b2-426e-8572-023715c33674@linaro.org> <272d039c-25a0-4db5-96a3-c28907882cd2@linaro.org>
+In-Reply-To: <272d039c-25a0-4db5-96a3-c28907882cd2@linaro.org>
+
+Hi Bryan,
+
+On Sun Nov 16, 2025 at 3:05 PM CET, Bryan O'Donoghue wrote:
+> On 14/11/2025 17:06, Vladimir Zapolskiy wrote:
+>> On 11/14/25 18:09, Bryan O'Donoghue wrote:
+>>> On 14/11/2025 13:06, Luca Weiss wrote:
+>>>> Hi Vladimir,
+>>>>
+>>>> On Fri Nov 14, 2025 at 1:40 PM CET, Vladimir Zapolskiy wrote:
+>>>>> Hi Luca.
+>>>>>
+>>>>> On 11/14/25 13:15, Luca Weiss wrote:
+>>>>>> Add bindings for the Camera Subsystem on the SM6350 SoC.
+>>>>>>
+>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>> ---
+>>>>>> =C2=A0=C2=A0=C2=A0 .../bindings/media/qcom,sm6350-camss.yaml=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 349 ++++++=20
+>>>>>> +++++++++++++++
+>>>>>> =C2=A0=C2=A0=C2=A0 1 file changed, 349 insertions(+)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm6350-=20
+>>>>>> camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm6350-=20
+>>>>>> camss.yaml
+>>>>>> new file mode 100644
+>>>>>> index 000000000000..d812b5b50c05
+>>>>>> --- /dev/null
+>>>>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
+>>>>>> @@ -0,0 +1,349 @@
+>>>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>>>>> +%YAML 1.2
+>>>>>> +---
+>>>>>> +$id: http://devicetree.org/schemas/media/qcom,sm6350-camss.yaml#
+>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>>> +
+>>>>>> +title: Qualcomm SM6350 Camera Subsystem (CAMSS)
+>>>>>> +
+>>>>>> +maintainers:
+>>>>>> +=C2=A0 - Luca Weiss <luca.weiss@fairphone.com>
+>>>>>> +
+>>>>>> +description:
+>>>>>> +=C2=A0 The CAMSS IP is a CSI decoder and ISP present on Qualcomm=20
+>>>>>> platforms.
+>>>>>> +
+>>>>>> +properties:
+>>>>>> +=C2=A0 compatible:
+>>>>>> +=C2=A0=C2=A0=C2=A0 const: qcom,sm6350-camss
+>>>>>> +
+>>>>>> +=C2=A0 reg:
+>>>>>> +=C2=A0=C2=A0=C2=A0 maxItems: 12
+>>>>>> +
+>>>>>> +=C2=A0 reg-names:
+>>>>>> +=C2=A0=C2=A0=C2=A0 items:
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid_lite
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy3
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite
+>>>>>> +
+>>>>>> +=C2=A0 clocks:
+>>>>>> +=C2=A0=C2=A0=C2=A0 maxItems: 30
+>>>>>> +
+>>>>>> +=C2=A0 clock-names:
+>>>>>> +=C2=A0=C2=A0=C2=A0 items:
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: cam_ahb_clk
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: cam_axi
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: soc_ahb
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: camnoc_axi
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: core_ahb
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: cpas_ahb
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy0_timer
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy1_timer
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy2_timer
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy3
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy3_timer
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: slow_ahb_src
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0_axi
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0_cphy_rx
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0_csid
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1_axi
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1_cphy_rx
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1_csid
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2_axi
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2_cphy_rx
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2_csid
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite_cphy_rx
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite_csid
+>>>>>
+>>>>> The sorting order of this list does not follow the sorting order=20
+>>>>> accepted
+>>>>> in the past.
+>>>>
+>>>> What file should I best reference?
+>>>
+>>> Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+>>>
+>>>>>
+>>>>> I'm very sorry for the vagueness, but I can not pronounce the accepte=
+d
+>>>>> sorting order name, because it triggers people.
+>>>>>
+>>>>>> +
+>>>>>> +=C2=A0 interrupts:
+>>>>>> +=C2=A0=C2=A0=C2=A0 maxItems: 12
+>>>>>> +
+>>>>>> +=C2=A0 interrupt-names:
+>>>>>> +=C2=A0=C2=A0=C2=A0 items:
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csid_lite
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: csiphy3
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe0
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe1
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe2
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: vfe_lite
+>>>>>> +
+>>>>>> +=C2=A0 interconnects:
+>>>>>> +=C2=A0=C2=A0=C2=A0 maxItems: 4
+>>>>>> +
+>>>>>> +=C2=A0 interconnect-names:
+>>>>>> +=C2=A0=C2=A0=C2=A0 items:
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: ahb
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: hf_mnoc
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: sf_mnoc
+>>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: sf_icp_mnoc
+>>>>>
+>>>>> Please remove sf_mnoc and sf_icp_mnoc, they are not needed for enabli=
+ng
+>>>>> IP to produce raw images, and one day you may use them somewhere else=
+.
+>>>>
+>>>> Ack, will give it a try.
+>>>
+>>> Disagree with this.
+>>>
+>>> See the Kanaapali patches. I'm asking new submissions to be as complete
+>>> as possible, instead of limiting the hardware description to the RDI.
+>>>
+>>> So listing the ICP noc is the right thing to do.
+>>>
+>>> So please include register banks for
+>>>
+>>> - bps
+>>> - cdm
+>>> - icp
+>>> - ipe
+>>> - jpeg
+>>> - lrme
+>>=20
+>> This suggests to get a DT backward compatibility lock forever,=20
+>
+> I'm not entirely sure what this comment means.
+>
+> The objective here is to get a full and complete DT describing camera=20
+> hardware that can be consumed by
+>
+> - CAMSS RDI
+> - CAMSS RDI + future goodness
+> - FreeBSD
+> - Any other DT consumer of upstream data perhaps even CamX
+> which
+>> makes it
+>> a very bad advice, which is favourable for just the single interested=20
+>> party,
+>> which offers an alternative to the upstream CAMSS.
+>>=20
+>> Anybody who wants to get support of any CAMSS ISP functionality above RA=
+W
+>> images shall not add anything unrelated and unsupported.
+>>=20
+>> The asked inclusion shall be done later on safely, if ever needed.
+>
+> As I say the objective is to fully describe the hardware in DT, not to=20
+> describe only the RDI path.
+
+So far I've gotten this diff on top of v2, not quite sure how to
+continue further...
+
+Please advice how to turn these resources into a usable dt-binding.
+
+I'm also a bit worried that it'll be subtly wrong due to all the
+additions being impossible to test for me.
+
+Regards
+Luca
 
 
-On Mon, 03 Nov 2025 15:06:20 +0800, Jie Gan wrote:
-> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in binding to utilize
-> the compitable of the SA8775p platform becuase the CTCU for QCS8300 shares same
-> configurations as SA8775p platform.
-> 
-> Changes in V4:
-> 1. dtsi file has been renamed from qcs8300.dtsi -> monaco.dtsi
-> Link to V3 - https://lore.kernel.org/all/20251013-enable-ctcu-for-qcs8300-v3-0-611e6e0d3085@oss.qualcomm.com/
-> 
-> [...]
+diff --git a/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml=
+ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
+index d812b5b50c05..340bf03ffe91 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sm6350-camss.yaml
+@@ -203,6 +202,23 @@ examples:
+                   <0x0 0x0acb6000 0x0 0x4000>,
+                   <0x0 0x0acbd000 0x0 0x4000>,
+                   <0x0 0x0acc4000 0x0 0x4000>;
++
++                  // ICP ?? =3D=3D qcom,cam-a5 ?
++               // <0x0 0x0ac00000 0x0 0x6000>, // ? a5_qgic
++               // <0x0 0x0ac10000 0x0 0x8000>, // ? a5_sierra
++               // <0x0 0x0ac18000 0x0 0x3000>; // ? a5_csr
++
++               // <0x0 0x0ac87000 0x0 0xa000> // "ipe" IPE (Image Processi=
+ng Engine)
++               // <0x0 0x0ac6f000 0x0 0x8000> // "bps"? BPS
++               // <0x0 0x0ac6b000 0x0 0xa00> // "lrme"? LRME
++
++               // <0x0 0x0ac40000 0x0 0x1000>, // ? CAM CPAS: cam_cpas_top
++               // <0x0 0x0ac42000 0x0 0x4600>, // ? CAM CPAS: cam_camnoc
++               // <0x0 0x01fc0000 0x0 0x40000>; // ? CAM CPAS: core_top_cs=
+r_tcsr
++
++               // <0x0 0x0ac52000 0x0 0x4000> // "jpeg_dma" JPEG DMA & Dow=
+nscaler
++               // <0x0 0x0ac4e000 0x0 0x4000> // "jpeg_enc" JPEG Encoder
++               // <0x0 0x0ac48000 0x0 0x1000> // ? CPAS CDM
+             reg-names =3D "csid0",
+                         "csid1",
+                         "csid2",
+@@ -216,8 +232,12 @@ examples:
+                         "vfe2",
+                         "vfe_lite";
+=20
+-            clocks =3D <&gcc GCC_CAMERA_AHB_CLK>,
+-                     <&gcc GCC_CAMERA_AXI_CLK>,
++            // CAMCC_FAST_AHB_CLK_SRC + CAMCC_ICP_CLK for qcom,cam-a5
++            // CAMCC_IPE_0_AHB_CLK + CAMCC_IPE_0_AREG_CLK + CAMCC_IPE_0_AX=
+I_CLK + CAMCC_IPE_0_CLK for qcom,cam-ipe
++            // CAMCC_BPS_AHB_CLK + CAMCC_BPS_AREG_CLK + CAMCC_BPS_AXI_CLK =
++ CAMCC_BPS_CLK for qcom,cam-bps
++            // CAMCC_JPEG_CLK for qcom,cam_jpeg_enc / qcom,cam_jpeg_dma
++            // CAMCC_LRME_CLK for qcom,lrme
++            clocks =3D <&gcc GCC_CAMERA_AXI_CLK>,
+                      <&camcc CAMCC_SOC_AHB_CLK>,
+                      <&camcc CAMCC_CAMNOC_AXI_CLK>,
+                      <&camcc CAMCC_CORE_AHB_CLK>,
+@@ -246,8 +266,7 @@ examples:
+                      <&camcc CAMCC_IFE_LITE_CLK>,
+                      <&camcc CAMCC_IFE_LITE_CPHY_RX_CLK>,
+                      <&camcc CAMCC_IFE_LITE_CSID_CLK>;
+-            clock-names =3D "cam_ahb_clk",
+-                          "cam_axi",
++            clock-names =3D "cam_axi",
+                           "soc_ahb",
+                           "camnoc_axi",
+                           "core_ahb",
+@@ -277,18 +296,24 @@ examples:
+                           "vfe_lite_cphy_rx",
+                           "vfe_lite_csid";
+=20
+-            interrupts =3D <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 717 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 461 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 718 IRQ_TYPE_LEVEL_HIGH>,
+-                         <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
++            // 469 for cpas-cdm
++            // 463 for qcom,cam-a5
++            // 474 for qcom,cam_jpeg_enc
++            // 475 for qcom,cam_jpeg_dma
++            // 476 for qcom,lrme
++            // 459 for qcom,cam-cpas
++            interrupts =3D <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 717 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 473 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 461 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 718 IRQ_TYPE_EDGE_RISING>,
++                         <GIC_SPI 472 IRQ_TYPE_EDGE_RISING>;
+             interrupt-names =3D "csid0",
+                               "csid1",
+                               "csid2",
+@@ -302,6 +327,9 @@ examples:
+                               "vfe2",
+                               "vfe_lite";
+=20
++            // MASTER_CAMNOC_HF0_UNCOMP -> SLAVE_CAMNOC_UNCOMP ?
++            // MASTER_CAMNOC_SF_UNCOMP -> SLAVE_CAMNOC_UNCOMP ?
++            // MASTER_CAMNOC_ICP_UNCOMP -> SLAVE_CAMNOC_UNCOMP ?
+             interconnects =3D <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIV=
+E_ONLY
+                              &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACT=
+IVE_ONLY>,
+                             <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAY=
+S
+@@ -315,12 +343,18 @@ examples:
+                                  "sf_mnoc",
+                                  "sf_icp_mnoc";
+=20
++            // <&apps_smmu 0xd40 0x20> & <&apps_smmu 0xd60 0x20> for lrme
++            // <&apps_smmu 0xd00 0x20> & <&apps_smmu 0xd20 0x20> for jpeg
++            // <&apps_smmu 0xca2 0x0> & <&apps_smmu 0xc40 0x20> & <&apps_s=
+mmu 0xc60 0x20> & <&apps_smmu 0xcc0 0x20> & <&apps_smmu 0xce0 0x20> for icp
++            // <&apps_smmu 0xc80 0x0> for cpas-cdm0
+             iommus =3D <&apps_smmu 0x820 0xc0>,
+                      <&apps_smmu 0x840 0x0>,
+                      <&apps_smmu 0x860 0xc0>,
+                      <&apps_smmu 0x880 0x0>;
+=20
+-            power-domains =3D <&camcc TITAN_TOP_GDSC>
++            // ipe_0_gdsc for qcom,cam-ipe
++            // bps_gdsc for qcom,cam-bps
++            power-domains =3D <&camcc TITAN_TOP_GDSC>,
+                             <&camcc IFE_0_GDSC>,
+                             <&camcc IFE_1_GDSC>,
+                             <&camcc IFE_2_GDSC>;
+@@ -329,8 +363,14 @@ examples:
+                                  "ife1",
+                                  "ife2";
+=20
+-            vdd-csiphy-0p9-supply =3D <&vreg_l18a>;
+-            vdd-csiphy-1p25-supply =3D <&vreg_l22a>;
++            vdd-csiphy0-0p9-supply =3D <&vreg_l18a>;
++            vdd-csiphy0-1p25-supply =3D <&vreg_l22a>;
++            vdd-csiphy1-0p9-supply =3D <&vreg_l18a>;
++            vdd-csiphy1-1p25-supply =3D <&vreg_l22a>;
++            vdd-csiphy2-0p9-supply =3D <&vreg_l18a>;
++            vdd-csiphy2-1p25-supply =3D <&vreg_l22a>;
++            vdd-csiphy3-0p9-supply =3D <&vreg_l18a>;
++            vdd-csiphy3-1p25-supply =3D <&vreg_l22a>;
+=20
+             ports {
+                 #address-cells =3D <1>;
 
-Applied, thanks!
+>
+>>>>> I believe this clock is critical, and it is set so in the SM6350 GCC=
+=20
+>>>>> driver,
+>>>>> therefore it should not be added here.
+>>>>
+>>>> True, gcc_camera_ahb_clk has CLK_IS_CRITICAL in gcc-sm6350.c
+>>>
+>>> DT describes hardware, not the happenstance of Linux driver setup.
+>>>
+>>> On that basis omitting <&gcc GCC_CAMERA_AHB_CLK> from the clock list is
+>>> not correct.
+>>=20
+>> This has been already discussed, an enumerous amount of Qualcomm/MSM
+>> specific resourced like clocks enabled in ABL, Linux etc. are considered
+>> critical and not described in the dtb.
+>
+> I still think the argument for that is tenuous wrong in fact but, I know=
+=20
+> you are right, this is a lost argument.
+>
+> @Luca please _do_ include the full array of registers/clocks/nocs as you=
+=20
+> find them and yeah drop the AXI clock from that description because reaso=
+ns.
+>
+> https://lore.kernel.org/linux-arm-msm/20251113-add-support-for-camss-on-k=
+aanapali-v6-1-1e6038785a8e@oss.qualcomm.com/
+>
+>   ---
+> bod
 
-[1/2] dt-bindings: arm: add CTCU device for monaco
-      https://git.kernel.org/coresight/c/51cd1fb70e08
-
-Best regards,
--- 
-Suzuki K Poulose <suzuki.poulose@arm.com>
 
