@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-85862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEE72CD00BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:24:57 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21AD8CD007E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:22:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93FF530AEE89
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 13:21:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D64793037E13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 13:21:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9083B332EAD;
-	Fri, 19 Dec 2025 11:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31C42333426;
+	Fri, 19 Dec 2025 11:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DVxYbzuI";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="REAUt2tW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M+7ljc7Y";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="g4F1Hue/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07F9332901
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB2A332EAC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766144758; cv=none; b=OpCUAiwN3+4g1fU4K2jciwfWM/wpzBn68VNROkgyrS5wGHKMe0azVcl/9zqzFsmlA1L+aTISPkTvlaI5Vyz2LTfraJWxvDNaMZGJ6JZMwnSZeFDeoCN99DS17mU4LrcKWHub31LNCyMJniChrInwiNZhoc7uLhhUxaLPmSJcBgA=
+	t=1766144760; cv=none; b=fGuG2p3UPKDBXnw5uSY0VTTm6rRwfGy6y4OOsmUC7Y/C36t9SMPeWddI7uZ8PirD9Z480DRJGweuYn+gyB52LegEHzvRq+OpoYHJfn8wa9BIfcZVkb3D5XnuBnfjTfRJNoIrzURUap68rUb6pJHD4X0Xlt3LRkYH3KIkGNwOakc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766144758; c=relaxed/simple;
-	bh=6iQcqoX6EI5dlA/DvhZnH1NTKtirFC7ZgIFkbryUzbY=;
+	s=arc-20240116; t=1766144760; c=relaxed/simple;
+	bh=NyyDLjSfGMUENLbw8bS7UpVbLpd19bM1d/LGXzlZ0a8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LDCMHYrBGeIudGLWRilwTB2CfH0T9aNSlPE10yvxuTUcAKJhGNks0wsKE89RdhEvB89WVz9d0dB+xOIdBrJEd0csCISKliiDNmf6e25EejAdKxV1CRDKvaB69nx01I/VU1SgtM8ABhWzDaWWjqxwxQlevgKNNj9LR49xOxI3vlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DVxYbzuI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=REAUt2tW; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=M6oXK3j07kIDFsNXmxQcmi68GuhNgn1ANRVEm2B75ku8j8pxxvNAIxgRwxWsXcyOmIXkcS3rTOLbeNW4KWMzSCRs0PMvY0TO7oI+TEJ9R8bzcSLn+C/amNMvGtBYG9CCSf7I7y6HtZ+5C3yio1Fa/8fS0bhtUIpvPTXuDqOXHzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M+7ljc7Y; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=g4F1Hue/; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJ4cN0w3700872
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:56 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJBdD293700752
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	36PQfpvZIMXAADK9+hYs7pMJ/as3fZIUaaNgWdG/gSI=; b=DVxYbzuIF3Abdhb6
-	CRnlsPQaBmZ8B6k0EUIUsdpTSjCyjMSZ3Srrdw0s5UQG6PTnKP9KfaDX48zrA/pt
-	4W1wNoTpeMfuoLaXzzSaJGGTSSI4Pq6Cv4ukr4Wmoka4kE7j450ZhOB7h8sfb5M1
-	IG2qVCvKtH/Gokq4BiuW+bfnYRPEsSxzXiWZ4UlFW1l67gz/sbM4x5XQ+bcAE11t
-	Q6VmHB9cV/p8cQ6sEosNhZVtS3qkdmQs6kyFL6Vx8ByFg1kwH3dj04LmMkbpDXns
-	p6IzoJTVNScstutzxFuhP93tcc1vjpvi38Ae60zQhDB1G+/1Ppgq+vDSaGmNyUbU
-	wqCDUA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2ejf1q-1
+	k/n9QKasXofpMA+jcZikeqyca2hnXEd/6lPYRNYCXv4=; b=M+7ljc7YHQLl4sx5
+	QW5HY0wQgpSxQik2HytzmnUFjbfktyUZz0guvUU/wPM44L7VPwQ+OhXT1GTPiJCq
+	kFVYJkuX6Gd0il6/RKK6/yUuZZmHJx20hfCwd8ovGm3xWDk+3K9gzwMxtVhOg75t
+	hbSHy3TmAMdWrLDOElpapJqaJBU3Zjpf8jYFi+/p+Z7m9eEFj0YAcT9qcD0byQOR
+	KM5LEMZOmaKyFaP2mm5rndWptzw3iqwOOFTS0nWgotWKLKz6HIh1aGC3NxQOLpNq
+	swDJp8yRVjnlzz/g1mPjLXOzD3pYqwDQbnQjWC/FVy3X2HqB8z55lnTNtZOrOFdP
+	Eg1Znw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2ejf1u-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:55 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b9ff555d2dso366343585a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 03:45:55 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:57 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee0488e746so32598901cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 03:45:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766144755; x=1766749555; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766144757; x=1766749557; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=36PQfpvZIMXAADK9+hYs7pMJ/as3fZIUaaNgWdG/gSI=;
-        b=REAUt2tW86QM7vKkZg56fwMN0qGl/YV8O3ObprurGsHtpECdTw1O4QtR3iqDHul+J2
-         fmYuWzZhjq1BvPtMPJVRxqFPUJmwU33h1gjjP3whWIzNZiPQUmS+lLKX/xIO0BB8gUbq
-         mwJkrty3QfKUX8UAJCI3Bano0iyL28uYfFYAkVwPxamzQslDTdUfmVmZMTr+gkwj6bIn
-         OO8/KtzviQQdsqAKqqN+mhnZCuWwF3QvOZwyVnivkFJO6iKCZBCgBhErOCp5ODWRPsDB
-         egGiaQXdiEtwdgZxocmkRrSjBg3gzyKvLHL5Er7ch75PadaNvqW75P67+6mi77lmXiqB
-         ORzA==
+        bh=k/n9QKasXofpMA+jcZikeqyca2hnXEd/6lPYRNYCXv4=;
+        b=g4F1Hue/KmdYwERFOBlu6Apn2Br3zFIAIvXiK5aCkFRvLd5N0wG5bdfQly+nH6vulz
+         u5S8Eo+UhQjgMZ9kMlPHF6fVQBuu95mSJMeYTDEuqRbPK//EeMugY2iOM4OIjsqpPJZA
+         vWerHs/9w0lz42BvVQPISX4oRnMu7rr62xRk7hT1GxZnwZLmuH7F1s8wUqtsXYCyFGOb
+         JHy1hltGPSyShTeqJQYJavmqJkhA9OoMQxgcsQmQFbRR8NC1tQtsdl9ghLsCUhv4z9YF
+         Inj2Gt06eFmjnH1ynIfBaIQVINSj9VvceeYzgEUih225NaFUqDl/W8WiLsH8f8Dg6UNB
+         cXLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766144755; x=1766749555;
+        d=1e100.net; s=20230601; t=1766144757; x=1766749557;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=36PQfpvZIMXAADK9+hYs7pMJ/as3fZIUaaNgWdG/gSI=;
-        b=sbj14JJRu7uK/x6923Z/95tPRKUieEWHBHTnNozrjgaOu0m9eC4olMwrHTqFCDPtJY
-         rPZ7iNxP/ls0x35DF7VQWBe3z84hN3zA/3sFAkecRoATE/sgYwNSQmCbaulvaunwTlEj
-         vTm6y9bIvXOc2m/1cT+Chi2+Upo/mET436swbQuhogGqHGxQ1xmGt/vEnhDCd+NRI7tz
-         ZQOlTY7B4/Z6qI68wYFyYxybKqhvLrw3T7PBkY3MAVwjRC6WrH4nwzCe6l8G+LYp/qlZ
-         lIpRv60s7I4XGdnMdiq5gKjJvrE2cCM6JK/avLUlU5w8pe4iAM8CADxn9FtvdqbLmYUq
-         Wu3g==
-X-Forwarded-Encrypted: i=1; AJvYcCUdIWGJAnBG1+24i+PqFLMhgge/O4CmsehUWX7yuSzM363X1/1ivjrQ76MDLLIlx6Dlbx1cERgLx+5WWely@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxZu5KZWybu/QZF+g+kXUQgW416HJbu6RnfZ/VWV31+yWaqRXi
-	Qzv9MERvlp8y0g/gb6UhPWAcnOXWgbToWYq8+lePOsAOmP4R47hOol3Dxo8c3pGEbWwkapZYXJJ
-	0krKuOkUl2UDiLv2//FFNCSSbUkdgq4zP8jE7rAcoEIustqBfY2NpSD7x2Rr/3260k8Fz
-X-Gm-Gg: AY/fxX65Lm4GeynSgIYxQrenBGGTR2/V1rzkRfxGOXi327xgvdCSMaf81IqU1BhyH2P
-	S1hxUvdZ+kNmHQVOSiXTD4UVgzeU8xUQntYGwplJ1xhKz8usbOjN4sCx7gBMbM437PtNYpC2VoM
-	rMrF5cNRBtyE/1X7AnZ+C+ijfP/VWKZvjwvhMQ7qzfhfH1YWxZCTNkzCaQfKjjdnZRm5F46u9Nr
-	KhGn/fOkXOvC8O0SGLBgW4BNA2TPAXZll/8NqpCDx9TmrGN1zuBHWax5mvGKPdAjbjhlpOVwzjf
-	rrje4AugiHHielsxrANXDbJqd56PdkMhrQk896jVhubY3gX11ReIG4xah2xNOyunyJ1qJjHKhns
-	sQqGZ9TEISXaupwz0GVTr3rPZSb8u5rBK5ciGX0p1tbkcayMfASpOhfFOJ33FtEu50vR8
-X-Received: by 2002:a05:622a:90b:b0:4ee:1e28:acc5 with SMTP id d75a77b69052e-4f4abdb8a83mr34459331cf.61.1766144755260;
-        Fri, 19 Dec 2025 03:45:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEj/wWg8UX4Lk00EwF/Tg7aeliCSqzdQO+EZ1nBaXedJue4tu12ePIdbTJEtt5WJGatpPxiEA==
-X-Received: by 2002:a05:622a:90b:b0:4ee:1e28:acc5 with SMTP id d75a77b69052e-4f4abdb8a83mr34459001cf.61.1766144754855;
-        Fri, 19 Dec 2025 03:45:54 -0800 (PST)
+        bh=k/n9QKasXofpMA+jcZikeqyca2hnXEd/6lPYRNYCXv4=;
+        b=uS+5UkXh+58W5gNT8Xw++zfohbLIeKlLo+O9l7YV97npNLcgH3Yr4vZFKpobQkv4G3
+         XeMkWr5KvkHvHG8N5laDax5UiEUCXeTiTfqb5nsHkWdaRNpuUpFvhoGs6vs17fPZ0704
+         1WKk/qr3k8HaO2+fXdOGx077NmRnDPM7fLdJpxgBqG8Nhm5p1mL95Y5i7A+k4c6XwE3G
+         7m/j3Mk/IbQ/9JK+o49KkVodF5kAzvf6nQrZeCUyHoMrBssgIZQfsluVVeaAum3Bavzz
+         c4HzrBapc/IK+Gi3LH8+Sypt1+DEzhPHEIOxQMaoPCNZe3aMjX+jmvCvycgb22Zd3gGK
+         1JMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVcy1nbdcIPDffQqF570u2moRyiJd5WEfpSg7UgA5VzB0Tm48uZMon1FXZpkOoYFkdb8aQlTLm9raF8CJ7l@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5X/4QbHXiJ01J41RKsrQLR6fJWtO2m30IDZcVES9HLJ3/n3qJ
+	ibOz1La6GZQcSSM4MYhUtxGJPiWLLeiAs9XdZnlgARuR7pJCaHedeSN4MBjuA5pM1pyQwZMbKZA
+	HGocIjSCedldOKJiGJa3+7j3JQL39ZcroYkbDQNx6ZD/HmXOzccAaUzSAA9gk2DY0LvlL
+X-Gm-Gg: AY/fxX6EKUc/3Yf2ikEwIcI67v+uQwButRkJqHEDt851vEvRZb2rzCgQ1hL9QxbU0c0
+	jut8aV67+GDuy8w5yHQ5fbTL0tXtMqXpUmEBYkDc1UdoAi9g2b1JX7TAvYT+W6fCeVc06eZGYAP
+	iBLqDLiGoxbawxqIIGbaNlIgdaN3228f3qhqlSm+7DEke0JI62lC+Vz+a+dnTKAxCiXHEvssIQ5
+	vhd7XP5YbLsgJosNNT4QsvpnXKyrylfh0DhlJTnVe4aPn3HPushXYgNBczN4Vnyx4QZkT8L+Ych
+	LjI2KBH7i0TZEpdJSae8a07PgfE3xBPhA0Sh+mMVBEZNe07tuPi6QTKhD0qF7xfgh9v4LDTVaxV
+	5YEeDso+CCapK9l1ehYI+AYoBsuxMYqG9DE6/pEdLdu/agVcqr+J6346NXUSdD1whGtfA
+X-Received: by 2002:ac8:5a4b:0:b0:4ed:3d24:9570 with SMTP id d75a77b69052e-4f35f481077mr75172221cf.37.1766144756956;
+        Fri, 19 Dec 2025 03:45:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF2Qay+Fkz9w9/V4HcbS2VG8J/zzMCfFSu9UJ5VwWSLt8yl+iqgcay0FYPHFUsBhR9D3NQNsA==
+X-Received: by 2002:ac8:5a4b:0:b0:4ed:3d24:9570 with SMTP id d75a77b69052e-4f35f481077mr75171971cf.37.1766144756561;
+        Fri, 19 Dec 2025 03:45:56 -0800 (PST)
 Received: from [127.0.1.1] (83.31.98.88.ipv4.supernova.orange.pl. [83.31.98.88])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b91599844sm1974465a12.25.2025.12.19.03.45.53
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b91599844sm1974465a12.25.2025.12.19.03.45.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 03:45:54 -0800 (PST)
+        Fri, 19 Dec 2025 03:45:55 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Fri, 19 Dec 2025 12:45:44 +0100
-Subject: [PATCH v2 1/5] ASoC: qcom: topology: Constify pointed topology and
- vendor structs
+Date: Fri, 19 Dec 2025 12:45:45 +0100
+Subject: [PATCH v2 2/5] ASoC: qcom: topology: Constify pointed ar control
+ structs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251219-b4-container-of-const-asoc-qcom-v2-1-05fd2ecc06fe@oss.qualcomm.com>
+Message-Id: <20251219-b4-container-of-const-asoc-qcom-v2-2-05fd2ecc06fe@oss.qualcomm.com>
 References: <20251219-b4-container-of-const-asoc-qcom-v2-0-05fd2ecc06fe@oss.qualcomm.com>
 In-Reply-To: <20251219-b4-container-of-const-asoc-qcom-v2-0-05fd2ecc06fe@oss.qualcomm.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
@@ -114,38 +114,38 @@ Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8790;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1999;
  i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=6iQcqoX6EI5dlA/DvhZnH1NTKtirFC7ZgIFkbryUzbY=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpRTrr2vYzNesFQ+sK/Axv9hE7nGKF5leh2uV09
- ezIYLvg2PaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaUU66wAKCRDBN2bmhouD
- 1zHYD/9JTgWW3uIaKU2bHDN80TmFDCOG9MBeVWwKfayeTqJ6a46I5HNESHwCAvkiaQU5nWyLOgI
- 1JnpgYwzXsIpMU/QgpLSC6ds5mLpfezbSkhtAxgzLgFJp6Q8HLTKrBsPz5olOeb7lbleyTxjBpZ
- /uOJ7NrJTvJxkyksDI28YOzIB6HqzQzL6BhN04KLaMooFmEthxOPm6mulAftuuQgRSKkxBicztk
- wrybho9rIp39ShwUoom0AljtMpMdvm/mqWi19njbSmy/vQVnWb7FL6kvub/tGXb1Xf6JqIBV2rd
- oFUEIyMbZZdD5cLmiCtTqkHeGF7s1Y8hjDXBvpTbIguVxkeGE/SiH2+mLE9ZYXYDfM16cpZaB1j
- 2UZLGv1toVYnB1uH7K9eJFEXVGs0Mq4bA1lSfV9g96Vq0NCa6cjyHGQHsCWEUNRgMqu3ctDwgwo
- 3LuFq1D7IVCZKuG44MW/IhXwFssMcK+EfrBMaNw+ZOmnvzQjGeuSJUDcPLQhU1CZHI+auC5UGtA
- LO/s1ZMaVRBedRBU6oPC8vjb1p5KzVarmKaswZM0xGsRQHoWAoJwetyvjdJoqIqiiFRPJTBxpn4
- UTIryQ8923FBHY83+ycm97pfHDuIjdkY9oV7r4lUJ1QIL1Kr4HleiDRmweCy4t35sKM9wkrIbX/
- zT/siaq0N8EvhtA==
+ bh=NyyDLjSfGMUENLbw8bS7UpVbLpd19bM1d/LGXzlZ0a8=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpRTrsbgK2eb02MTt4oP6IN39AJpG1243+XIBph
+ JpU0VwlHoSJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaUU67AAKCRDBN2bmhouD
+ 1+mID/wJmJk1sH48y7AgVzKwt/lWXdPgYsFRrvkHQzSfFJ9uJqWBUjTPUxlnOMVTAf+mwA2X+Gd
+ APW9G25ZmIM5E1LEcXumLzyRg2c1AAa2Cv2iNZqnjn4eBfAms6dXwoHY24golyxz5SWDZZcWtOr
+ 2VyRjLLrtGdLHdfmWWdigvPYhcqK1jcTlwZH79NncBhaV6ft1v5hD7mDMy9135ko3aJhazoVdWL
+ WDX6tSDJ05WZpvGs3h06hHVlzJ4HD5pp7Bde/ErIctLGlZXR33xqyO0FTIfWUhoJAn+CXAH8jHa
+ psx8MJbLfl5eFf6WvVLk8ApBevHwpTvkhy22cvQg18//HAWhiHL5WnP6MXJNTa+mG1c2Ffow1Nd
+ LQeAFq+gdtwjdsTZq9USmrYrDGq71iruNo8WFXqcW5YqIMxm3VbVteCJ/M0r7H3UDtD50ly2Eqt
+ r72Oe1ZfTZRXFwUViUGNQiL0a+tEo+AAxjK/qP1iMTdcVJqUInYjPMG2wPitVcvzncuXzuDe22j
+ d5RfaexkdtKuM3AoZ/6WQBp2zI7i+FGnLYWPtlC/YD+sK71e5U02UsjFRqOPwf6uzfiv+wN7qj1
+ S7defSqaHsQKipBfgdd9kLPx1PU1O5ncag/a7CbEHxT49OVPbxG02GyrTze/FKoFtBhB1TDhJNs
+ CE7AA7z5ZoogBsQ==
 X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Proofpoint-GUID: L39F1vuPEE4s5rkvexFp4iCtQ5iZ5LVH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA5NyBTYWx0ZWRfX793nXFl39uhc
- OByOzwZXOByr5Q4Ycl04LwCSUAByhjSkOvAJyL4dNMME4NOcNK1JujetNfeX1YiPiM1RAhEcwcE
- +OBn3g+FDabFf+Y0g8URSdhIpa/NIHN2ad2ssotKgC+39jT1YXpwGP4HqhyCmB8rlXXzZq6/BXf
- uxlpt+kXis7Oxaa/yb7PQoe2aGnHrM9IWrZEdVegNbOA2CmJZsgUZoYLjDbvY/09ARd59P/62Rq
- 63gh3MA8m+Ya+/rxFESs7bWg5W1qEnxV104XxNWbCJZT4WQvIo1Vkogo/uozCbJ8eBsT3LFvjKS
- Ct/mLH/Z3tfDX23ilXLxYFykvf9rBb/CBwSlhIcuXqD21jFdz4MZFMqBlVJGk/JC5kgxOSWqSKs
- vJej3FAg309SWw9naiRDF75rvkZpbBt/XCPXVaMNMbHglndqpjm9eVKOQMi0MIwAE5ZBFTjDSYV
- IubKg6ub/qnvN7Kjgow==
-X-Proofpoint-ORIG-GUID: L39F1vuPEE4s5rkvexFp4iCtQ5iZ5LVH
-X-Authority-Analysis: v=2.4 cv=EabFgfmC c=1 sm=1 tr=0 ts=69453af3 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=qe4J/qXhiWkb1JZGYKbLYA==:17
+X-Proofpoint-GUID: ZRBR41-ns-FFnbGnuJwCbH4wH1BXrDjV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA5NyBTYWx0ZWRfXzxeGf1o2b42/
+ WV5o3ABCxXOC9gDn6eSiYw5a++vuOzkn4j3zyD7FtLJb3i52PV2cyjigD702PiXYaX9+iI/kX7D
+ 755m22vrVGcI0g8R3V8a5SXd2SdNuzFKUZovuaJKfBMtPHlEkc/SRr8ufJb8SQ5X3gnvXS2bpi5
+ pKEYfdRSfs0r3QE8pRqD48RAd2aqlz6bEMt2v1fTcck61l4W0foVyAvwVbTc7j/mZ40R8fbE8Os
+ yzFwuSY3w/9fdgQJRGYovkjMyNJJ0m5gYfAqng/yepYfrIHw67BmhCgMeSqhGhxkwirxEQF7xxZ
+ JzGhb5JPOMlbhVN2DGqFTNezhX9BRTrm0WJ6O8VN75iyl3c8ZBS4qI3OmV58jzHAVE1DhfE4rz4
+ JlKphuFQ3q5gfYbgu+ToXEyehvNODh1vYOxdVXqEnZZboFjmiJmZkzAYSAWjlqf1mKzG5BYsfRo
+ FRCqLiZ2WRzgaQOgjyw==
+X-Proofpoint-ORIG-GUID: ZRBR41-ns-FFnbGnuJwCbH4wH1BXrDjV
+X-Authority-Analysis: v=2.4 cv=EabFgfmC c=1 sm=1 tr=0 ts=69453af5 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=qe4J/qXhiWkb1JZGYKbLYA==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=Q5gdzY3N6a2DZr8aCz0A:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=Eep4eOvNbGvhNPJmoRUA:9
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-19_03,2025-12-17_02,2025-10-01_01
@@ -155,213 +155,55 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512190097
 
-Several functions in topology.c receive pointers to 'struct
-snd_soc_tplg_vendor_array' and 'struct snd_soc_tplg_private', and do not
-modify their contents.  Constify the pointers for self-explanatory code
-(pointed memory is not modified by the function) and a bit safer code.
+audioreach_route_load() does not modify the pointed 'struct
+audioreach_module' and functions for connecting subgraphs do not change
+pointed 'struct snd_ar_control'.  Constify the pointers for
+self-explanatory code (pointed memory is not modified by the function)
+and a bit safer code.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
- sound/soc/qcom/qdsp6/topology.c | 70 ++++++++++++++++++++---------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ sound/soc/qcom/qdsp6/topology.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
-index 5ce6edf3305e..062eb01fc7a7 100644
+index 062eb01fc7a7..9bde799146fa 100644
 --- a/sound/soc/qcom/qdsp6/topology.c
 +++ b/sound/soc/qcom/qdsp6/topology.c
-@@ -206,15 +206,15 @@ static struct audioreach_module *audioreach_tplg_alloc_module(struct q6apm *apm,
- 	return mod;
+@@ -1032,7 +1032,7 @@ static struct audioreach_module *audioreach_find_module(struct snd_soc_component
+ static int audioreach_route_load(struct snd_soc_component *scomp, int index,
+ 				 struct snd_soc_dapm_route *route)
+ {
+-	struct audioreach_module *src_module, *sink_module;
++	const struct audioreach_module *src_module, *sink_module;
+ 	struct snd_ar_control *control;
+ 	struct snd_soc_dapm_widget *w;
+ 	int i;
+@@ -1098,8 +1098,8 @@ static int audioreach_link_load(struct snd_soc_component *component, int index,
  }
  
--static struct snd_soc_tplg_vendor_array *audioreach_get_sg_array(
--							struct snd_soc_tplg_private *private)
-+static const struct snd_soc_tplg_vendor_array *
-+audioreach_get_sg_array(const struct snd_soc_tplg_private *private)
+ static void audioreach_connect_sub_graphs(struct q6apm *apm,
+-					  struct snd_ar_control *m1,
+-					  struct snd_ar_control *m2,
++					  const struct snd_ar_control *m1,
++					  const struct snd_ar_control *m2,
+ 					  bool connect)
  {
--	struct snd_soc_tplg_vendor_array *sg_array = NULL;
-+	const struct snd_soc_tplg_vendor_array *sg_array = NULL;
- 	bool found = false;
- 	int sz;
- 
- 	for (sz = 0; !found && (sz < le32_to_cpu(private->size)); ) {
--		struct snd_soc_tplg_vendor_value_elem *sg_elem;
-+		const struct snd_soc_tplg_vendor_value_elem *sg_elem;
- 		int tkn_count = 0;
- 
- 		sg_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
-@@ -239,15 +239,15 @@ static struct snd_soc_tplg_vendor_array *audioreach_get_sg_array(
- 	return NULL;
+ 	struct audioreach_graph_info *info;
+@@ -1123,10 +1123,10 @@ static void audioreach_connect_sub_graphs(struct q6apm *apm,
  }
  
--static struct snd_soc_tplg_vendor_array *audioreach_get_cont_array(
--							struct snd_soc_tplg_private *private)
-+static const struct snd_soc_tplg_vendor_array *
-+audioreach_get_cont_array(const struct snd_soc_tplg_private *private)
+ static bool audioreach_is_vmixer_connected(struct q6apm *apm,
+-					   struct snd_ar_control *m1,
+-					   struct snd_ar_control *m2)
++					   const struct snd_ar_control *m1,
++					   const struct snd_ar_control *m2)
  {
--	struct snd_soc_tplg_vendor_array *cont_array = NULL;
-+	const struct snd_soc_tplg_vendor_array *cont_array = NULL;
- 	bool found = false;
- 	int sz;
+-	struct audioreach_graph_info *info;
++	const struct audioreach_graph_info *info;
  
- 	for (sz = 0; !found && (sz < le32_to_cpu(private->size)); ) {
--		struct snd_soc_tplg_vendor_value_elem *cont_elem;
-+		const struct snd_soc_tplg_vendor_value_elem *cont_elem;
- 		int tkn_count = 0;
- 
- 		cont_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
-@@ -272,15 +272,15 @@ static struct snd_soc_tplg_vendor_array *audioreach_get_cont_array(
- 	return NULL;
- }
- 
--static struct snd_soc_tplg_vendor_array *audioreach_get_module_array(
--							     struct snd_soc_tplg_private *private)
-+static const struct snd_soc_tplg_vendor_array *
-+audioreach_get_module_array(const struct snd_soc_tplg_private *private)
- {
--	struct snd_soc_tplg_vendor_array *mod_array = NULL;
-+	const struct snd_soc_tplg_vendor_array *mod_array = NULL;
- 	bool found = false;
- 	int sz = 0;
- 
- 	for (sz = 0; !found && (sz < le32_to_cpu(private->size)); ) {
--		struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+		const struct snd_soc_tplg_vendor_value_elem *mod_elem;
- 		int tkn_count = 0;
- 
- 		mod_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
-@@ -305,13 +305,13 @@ static struct snd_soc_tplg_vendor_array *audioreach_get_module_array(
- 	return NULL;
- }
- 
--static struct audioreach_module_priv_data *audioreach_get_module_priv_data(
--		struct snd_soc_tplg_private *private)
-+static struct audioreach_module_priv_data *
-+audioreach_get_module_priv_data(const struct snd_soc_tplg_private *private)
- {
- 	int sz;
- 
- 	for (sz = 0; sz < le32_to_cpu(private->size); ) {
--		struct snd_soc_tplg_vendor_array *mod_array;
-+		const struct snd_soc_tplg_vendor_array *mod_array;
- 
- 		mod_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
- 		if (le32_to_cpu(mod_array->type) == SND_SOC_AR_TPLG_MODULE_CFG_TYPE) {
-@@ -334,10 +334,10 @@ static struct audioreach_module_priv_data *audioreach_get_module_priv_data(
- }
- 
- static struct audioreach_sub_graph *audioreach_parse_sg_tokens(struct q6apm *apm,
--						       struct snd_soc_tplg_private *private)
-+							       const struct snd_soc_tplg_private *private)
- {
--	struct snd_soc_tplg_vendor_value_elem *sg_elem;
--	struct snd_soc_tplg_vendor_array *sg_array;
-+	const struct snd_soc_tplg_vendor_value_elem *sg_elem;
-+	const struct snd_soc_tplg_vendor_array *sg_array;
- 	struct audioreach_graph_info *info = NULL;
- 	int graph_id, sub_graph_id, tkn_count = 0;
- 	struct audioreach_sub_graph *sg;
-@@ -392,10 +392,10 @@ static struct audioreach_sub_graph *audioreach_parse_sg_tokens(struct q6apm *apm
- 
- static struct audioreach_container *audioreach_parse_cont_tokens(struct q6apm *apm,
- 							 struct audioreach_sub_graph *sg,
--							 struct snd_soc_tplg_private *private)
-+							 const struct snd_soc_tplg_private *private)
- {
--	struct snd_soc_tplg_vendor_value_elem *cont_elem;
--	struct snd_soc_tplg_vendor_array *cont_array;
-+	const struct snd_soc_tplg_vendor_value_elem *cont_elem;
-+	const struct snd_soc_tplg_vendor_array *cont_array;
- 	struct audioreach_container *cont;
- 	int container_id, tkn_count = 0;
- 	bool found = false;
-@@ -437,7 +437,7 @@ static struct audioreach_container *audioreach_parse_cont_tokens(struct q6apm *a
- 
- static struct audioreach_module *audioreach_parse_common_tokens(struct q6apm *apm,
- 							struct audioreach_container *cont,
--							struct snd_soc_tplg_private *private,
-+							const struct snd_soc_tplg_private *private,
- 							struct snd_soc_dapm_widget *w)
- {
- 	uint32_t max_ip_port = 0, max_op_port = 0;
-@@ -447,8 +447,8 @@ static struct audioreach_module *audioreach_parse_common_tokens(struct q6apm *ap
- 	uint32_t src_mod_inst_id = 0;
- 
- 	int module_id = 0, instance_id = 0, tkn_count = 0;
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
--	struct snd_soc_tplg_vendor_array *mod_array;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_array *mod_array;
- 	struct audioreach_module *mod = NULL;
- 	uint32_t token;
- 	bool found;
-@@ -622,8 +622,8 @@ static int audioreach_widget_load_enc_dec_cnv(struct snd_soc_component *componen
- 					      int index, struct snd_soc_dapm_widget *w,
- 					      struct snd_soc_tplg_dapm_widget *tplg_w)
- {
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
--	struct snd_soc_tplg_vendor_array *mod_array;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_array *mod_array;
- 	struct audioreach_module *mod;
- 	struct snd_soc_dobj *dobj;
- 	int tkn_count = 0;
-@@ -660,9 +660,9 @@ static int audioreach_widget_load_enc_dec_cnv(struct snd_soc_component *componen
- }
- 
- static int audioreach_widget_log_module_load(struct audioreach_module *mod,
--					     struct snd_soc_tplg_vendor_array *mod_array)
-+					     const struct snd_soc_tplg_vendor_array *mod_array)
- {
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
- 	int tkn_count = 0;
- 
- 	mod_elem = mod_array->value;
-@@ -690,9 +690,9 @@ static int audioreach_widget_log_module_load(struct audioreach_module *mod,
- }
- 
- static int audioreach_widget_dma_module_load(struct audioreach_module *mod,
--					     struct snd_soc_tplg_vendor_array *mod_array)
-+					     const struct snd_soc_tplg_vendor_array *mod_array)
- {
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
- 	int tkn_count = 0;
- 
- 	mod_elem = mod_array->value;
-@@ -719,9 +719,9 @@ static int audioreach_widget_dma_module_load(struct audioreach_module *mod,
- }
- 
- static int audioreach_widget_i2s_module_load(struct audioreach_module *mod,
--					     struct snd_soc_tplg_vendor_array *mod_array)
-+					     const struct snd_soc_tplg_vendor_array *mod_array)
- {
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
- 	int tkn_count = 0;
- 
- 	mod_elem = mod_array->value;
-@@ -754,9 +754,9 @@ static int audioreach_widget_i2s_module_load(struct audioreach_module *mod,
- }
- 
- static int audioreach_widget_dp_module_load(struct audioreach_module *mod,
--					struct snd_soc_tplg_vendor_array *mod_array)
-+					    const struct snd_soc_tplg_vendor_array *mod_array)
- {
--	struct snd_soc_tplg_vendor_value_elem *mod_elem;
-+	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
- 	int tkn_count = 0;
- 
- 	mod_elem = mod_array->value;
-@@ -780,7 +780,7 @@ static int audioreach_widget_load_buffer(struct snd_soc_component *component,
- 					 int index, struct snd_soc_dapm_widget *w,
- 					 struct snd_soc_tplg_dapm_widget *tplg_w)
- {
--	struct snd_soc_tplg_vendor_array *mod_array;
-+	const struct snd_soc_tplg_vendor_array *mod_array;
- 	struct audioreach_module *mod;
- 	struct snd_soc_dobj *dobj;
- 	int ret;
+ 	mutex_lock(&apm->lock);
+ 	info = idr_find(&apm->graph_info_idr, m2->graph_id);
 
 -- 
 2.51.0
