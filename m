@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A22B8CD0F83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:49:14 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AFA1CD0F98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:49:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F1EA8301EBEE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:49:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A857F3040197
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:49:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB7C36656F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E233366DAB;
 	Fri, 19 Dec 2025 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kUYbiruI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qr//oIr5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A5366569;
-	Fri, 19 Dec 2025 16:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700F636657E;
+	Fri, 19 Dec 2025 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766162950; cv=none; b=HPNAblX7klE17LIbCIIUoQO6SW8LNyEGKEssGmA4GJ13NtW+vSmn5CL1gnPxfsLOp8j7v2dlflYBgYgF7LvMur6/uwm966Ow0NJmgVM/4dMDogr6lFj9rliqw6Kl+1VqUWeL/jKB46FI3K22Q1WfWFMabZyg9ypDT0kQwhEksdk=
+	t=1766162950; cv=none; b=XoqI97ytqDqZyPO46CqrAGKdKM04y5gF+yhrRjXAVhbL6uWwBw6UNt2YWnJ/3W56LnEC8k0wJAWFlWoIZDCfP9Q3+za/D0wo49uD1rQlRTiomaommGTLqz5/+JS29YBi/jOGZ8sJd5Wcvu3rdWtr63eaS0QltOv0RB0Yhd7lukE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766162950; c=relaxed/simple;
-	bh=gU/Spk635yGSmiL/m1EMeZ4emx6QYD9+JLagft52vcs=;
+	bh=8OOidh8j/WNjputt5lVwQsxZCg3kjra8hNH1KbKw198=;
 	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=WFeaYy4glv3mb80eYES+EZSNGG91WzHYxUSbGNzTdb8VadwUY/IseckAW0A+9NGX35Gd8LfJiXRCnvtoMNcer95iZ/lD6nzpiOtNoyK6apb7uWiAfXVe5at62p5BOp4PIwKfCC2VNZ2aX0Mom9VHpV+jtUJVA4MQ4iq0OrB1Rno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kUYbiruI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C59C116D0;
-	Fri, 19 Dec 2025 16:49:08 +0000 (UTC)
+	 Message-Id:Subject; b=XyuIWs05vnEAetfklRaNz+K09md186Yyrrlz2okeBhF9Ds/3TcckcwLjHR3lo80WSPnybHbr629C25iGQ8D6SNrZK0TK+AM1cup/JdV505QzpFRsSJeWpF97lXi6HWRD4L79+ISnHivlWl16L2UI0SknLcfkUWp4O6grWfsM6cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qr//oIr5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA421C4CEF1;
+	Fri, 19 Dec 2025 16:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766162948;
-	bh=gU/Spk635yGSmiL/m1EMeZ4emx6QYD9+JLagft52vcs=;
+	s=k20201202; t=1766162949;
+	bh=8OOidh8j/WNjputt5lVwQsxZCg3kjra8hNH1KbKw198=;
 	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
-	b=kUYbiruIk0KQIvLCn3b0/Y/uX1d6dGlovgCtUnooFBg/BQ8bwIIWe8AKgSK5TcBfq
-	 9ZxFO4O5sRrW1PtXvKgH/KK7/YMGNRUCV9lXneSGToB2DHS8Z45yW6KfzaA1hZkQlU
-	 ZpG5kk4tVHcAVabmrrYDkuMOOn+O8h/ZZiIHuQkHLM4TM+zR1j83rPD/QlZHP5/HiE
-	 cg+POSQsIDcdqxV3SOKiGObha/fUIcBmgYggt3CLnG6pAVfWNLjUoR+kOo1MF4HnHQ
-	 tjCYCSSprwqYkYViBTsBbbzbh70hXHQR178Mm3Njq79aRdQ5QL4TQf2uezgw/J86J2
-	 Df+lCZ1ZZfxPw==
+	b=qr//oIr5aN41TSnXsMaaZ2xZQ3n0alBGG3tqRqGLSy5/lahNc9lQc0WOSy2xJW7Zy
+	 Duch5l7uJH0l+AjeIZI2unYIMxmTbOLnr291ukseI33JoSnkwXdQOzxPQIkcg+ZeTJ
+	 ervEVTTCxAUZSvBlzrU35fBBAHFycZ1CPoE41vWhiuFr2KYebAs1431otshHsASNEx
+	 GiQgUJ0UIlhO0M2BBfJqGFHWYWFe4Mt7AS+JeYW9IAnJn4m5wPxCbT//h6Fm/ZItCO
+	 Gotd68IMRclFL8zOluL0AtJ8s048KR7RBBbmaR4+xu6vgiaV+8gxBqSBoV5qGaD7xS
+	 demnoLKtiylOA==
 From: Rob Herring <robh@kernel.org>
-Date: Fri, 19 Dec 2025 10:49:06 -0600
+Date: Fri, 19 Dec 2025 10:49:08 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -49,97 +49,47 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Cc: Johannes Berg <johannes@sipsolutions.net>, 
- Konrad Dybcio <konradybcio@kernel.org>, Dale Whinham <daleyo@gmail.com>, 
- linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Hans de Goede <hansg@kernel.org>, platform-driver-x86@vger.kernel.org, 
- devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- ath12k@lists.infradead.org, Maximilian Luz <luzmaximilian@gmail.com>, 
- linux-wireless@vger.kernel.org, Lorenzo Bianconi <lorenzo@kernel.org>, 
- Jeff Johnson <jjohnson@kernel.org>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
-In-Reply-To: <20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com>
-References: <20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com>
-Message-Id: <176616243275.3584198.6534106165888918555.robh@kernel.org>
-Subject: Re: [PATCH v4 0/6] Microsoft Surface Pro 11 support
+Cc: krzk+dt@kernel.org, devicetree@vger.kernel.org, 
+ mathieu.poirier@linaro.org, linux-remoteproc@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ andersson@kernel.org, linux-arm-msm@vger.kernel.org
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+In-Reply-To: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+Message-Id: <176616243343.3584214.2540779290356918872.robh@kernel.org>
+Subject: Re: [PATCH 1/9] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil:
+ convert to DT schema
 
 
-On Thu, 18 Dec 2025 23:22:06 +0100, Jérôme de Bretagne wrote:
-> This series brings support for the Qualcomm-based Microsoft Surface
-> Pro 11 covering both the OLED and LCD variants.
+On Thu, 18 Dec 2025 22:34:09 -0600, Alexandru Gagniuc wrote:
+> Convert the QCS404 and IPQ WCSS Peripheral Image Loader bindings to DT
+> schema. The text bindngs incorrectly implied that IPQ8074 needs only
+> one qcom,smem-states entry. This is only true for QCS404. IPQ8074
+> requires both "stop" and "shutdown".
 > 
-> Signed-off-by: Dale Whinham <daleyo@gmail.com>
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> ---
-> Changes in v4:
-> - Re-order the denali entry in the aggregator_registry acpi_match table [Dmitry]
-> - Improve the bindings by splitting the LCD and OLED variants into 2 entries [Konrad]
-> - Enable i2c4 to make it accessible through i2c-tools [Konrad]
-> - Document the addresses for i2c0 and i2c4 like in romulus.dtsi [Konrad]
-> - Fix the clock-frequency for i2c0 based on DSDT/SSDT
-> - Drop i2c5 which is not found in the DSDT after double-checking
-> - Add the R-b: tag from Konrad for the SP11 device trees
-> - Link to v3: https://lore.kernel.org/r/20251218-surface-sp11-for-next-v3-0-875afc7bd3b7@gmail.com
+> The example is to be added in a subsequent commit that adds the
+> IPQ9574 binding.
 > 
-> Changes in v3:
-> - Update the compatible strings to document both the OLED and LCD variants
-> - Move the disable-rfkill property into ieee80211.yaml [Rob,Krzysztof]
-> - Reference commit c6a7c0b09d5f and detail the disable-rfkill patch description [Rob,Krzysztof]
-> - Switch to the renamed hamoa.dtsi and hamoa-pmics.dtsi [Dale]
-> - Improve the comments describing the 2 USB Type-C port location
-> - Update the speaker definition to describe only 2-speakers [Konrad]
-> - Drop output-low from the speaker definition [Konrad]
-> - Enable i2c0 to make it accessible through i2c-tools [Konrad]
-> - Delete a non-applicable comment about removable WLAN card [Konrad]
-> - Re-order a few nodes and fix indentation issues [Konrad]
-> - Squash one of the patches as suggested [Krzysztof]
-> - Drop the NAKed patch patch about a dpcd link rate quirk [Dmitry]
-> - Include the Reviewed-by: tags
-> - Link to v2: https://lore.kernel.org/all/20251201011457.17422-1-daleyo@gmail.com/
-> 
-> Changes in v2:
->   - Dropped ATNA30DW01 patch as it was merged.
->   - Split device tree into x1e (OLED)/x1p (LCD) specific *.dts files and move common code into x1-microsoft-denali.dtsi (patch 4).
->   - Device tree now enables higher external monitor refresh rates/resolutions (patch 4).
->   - Device tree now enables partially working audio output; requires alsa-ucm-conf and audioreach-topology definitions in userspace (patch 4).
->   - Replaced 'Work around bogus maximum link rate' with a quirk-based approach (patch 5).
->   - Improve the commit message about the disable-rfkill property in response to feedback (patch 6).
+> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 > 
 > ---
-> Dale Whinham (4):
->       firmware: qcom: scm: allow QSEECOM on Surface Pro 11
->       platform/surface: aggregator_registry: Add Surface Pro 11 (QCOM)
->       arm64: dts: qcom: Add support for Surface Pro 11
->       wifi: ath12k: Add support for disabling rfkill via devicetree
+> Changes since RFC
+>  - rename binding from ipq9574 to ipq8074
+>  - use a real person instead of placeholder as maintainer
+>  - drop redundant minItems and descriptions
+>  - merge if: clauses as suggested by Krzysztof
+>  - various other fixes suggested by Krzysztof
 > 
-> Jérôme de Bretagne (2):
->       dt-bindings: arm: qcom: Document Microsoft Surface Pro 11
->       dt-bindings: wireless: ieee80211: Add disable-rfkill property
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   11 +
->  .../bindings/net/wireless/ieee80211.yaml           |    6 +
->  arch/arm64/boot/dts/qcom/Makefile                  |    4 +
->  arch/arm64/boot/dts/qcom/x1-microsoft-denali.dtsi  | 1324 ++++++++++++++++++++
->  .../dts/qcom/x1e80100-microsoft-denali-oled.dts    |   20 +
->  .../boot/dts/qcom/x1p64100-microsoft-denali.dts    |   16 +
->  drivers/firmware/qcom/qcom_scm.c                   |    1 +
->  drivers/net/wireless/ath/ath12k/core.c             |    3 +
->  .../platform/surface/surface_aggregator_registry.c |   18 +
->  9 files changed, 1403 insertions(+)
+> I used my name as a placeholder for the "maintainer" field. Krzysztof
+> mentioned to get the "SOC maintainer" using get_maintainer. I don't
+> know how to do that, and I don't see anyone listed for QCS404,
+> IPQ8074, or IPQ9574. The bindings apply to any of those SOCs.
 > ---
-> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
-> change-id: 20251218-surface-sp11-for-next-626e327f7b33
-> 
-> Best regards,
-> --
-> Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> 
-> 
+>  .../remoteproc/qcom,ipq8074-wcss-pil.yaml     | 156 ++++++++++++++++++
+>  .../bindings/remoteproc/qcom,q6v5.txt         | 102 ------------
+>  2 files changed, 156 insertions(+), 102 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
 > 
 
 
@@ -158,17 +108,145 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: 8f0b4cce4481fb22653697cced8d0d04027cb1e8 (use --merge-base to override)
+ Base: attempting to guess base-commit...
+ Base: tags/v6.19-rc1-9-g98675bc92a9e (exact match)
+ Base: tags/v6.19-rc1-9-g98675bc92a9e (use --merge-base to override)
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251219043425.888585-1-mr.nuke.me@gmail.com:
 
-arch/arm64/boot/dts/qcom/x1e80100-microsoft-denali-oled.dtb: wifi@0 (pci17cb,1107): 'disable-rfkill' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml
-arch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dtb: wifi@0 (pci17cb,1107): 'disable-rfkill' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: smp2p-wcss (qcom,smp2p): master-kernel: 'qcom,smp2p-feature-ssr-ack' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:1: 'wcss_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:2: 'wcss_ecahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:3: 'wcss_acmt' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:4: 'wcss_axi_m' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:5: 'q6_axim' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:6: 'q6_axim2' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:7: 'q6_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:8: 'q6_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:9: 'q6ss_boot' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:10: 'mem_noc_q6_axi' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:11: 'wcss_q6_tbu' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp454.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:12: 'sys_noc_wcss_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: smp2p-wcss (qcom,smp2p): master-kernel: 'qcom,smp2p-feature-ssr-ack' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:1: 'wcss_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:2: 'wcss_ecahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:3: 'wcss_acmt' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:4: 'wcss_axi_m' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:5: 'q6_axim' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:6: 'q6_axim2' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:7: 'q6_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:8: 'q6_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:9: 'q6ss_boot' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:10: 'mem_noc_q6_axi' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:11: 'wcss_q6_tbu' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:12: 'sys_noc_wcss_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: smp2p-wcss (qcom,smp2p): master-kernel: 'qcom,smp2p-feature-ssr-ack' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:1: 'wcss_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:2: 'wcss_ecahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:3: 'wcss_acmt' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:4: 'wcss_axi_m' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:5: 'q6_axim' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:6: 'q6_axim2' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:7: 'q6_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:8: 'q6_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:9: 'q6ss_boot' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:10: 'mem_noc_q6_axi' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:11: 'wcss_q6_tbu' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp453.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:12: 'sys_noc_wcss_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: smp2p-wcss (qcom,smp2p): master-kernel: 'qcom,smp2p-feature-ssr-ack' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:1: 'wcss_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:2: 'wcss_ecahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:3: 'wcss_acmt' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:4: 'wcss_axi_m' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:5: 'q6_axim' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:6: 'q6_axim2' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:7: 'q6_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:8: 'q6_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:9: 'q6ss_boot' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:10: 'mem_noc_q6_axi' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:11: 'wcss_q6_tbu' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp449.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:12: 'sys_noc_wcss_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: smp2p-wcss (qcom,smp2p): master-kernel: 'qcom,smp2p-feature-ssr-ack' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:1: 'wcss_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:2: 'wcss_ecahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:3: 'wcss_acmt' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:4: 'wcss_axi_m' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:5: 'q6_axim' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:6: 'q6_axim2' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:7: 'q6_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:8: 'q6_ahb_s' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:9: 'q6ss_boot' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:10: 'mem_noc_q6_axi' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:11: 'wcss_q6_tbu' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
+arch/arm64/boot/dts/qcom/ipq9574-rdp418.dtb: remoteproc@cd00000 (qcom,ipq9574-wcss-pil): clock-names:12: 'sys_noc_wcss_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,ipq8074-wcss-pil.yaml
 
 
 
