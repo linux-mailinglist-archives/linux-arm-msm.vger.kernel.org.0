@@ -1,117 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-85836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26929CCF6F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:42:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F68DCCF6FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:43:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B241F30049C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:42:47 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 48D7330210F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:43:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CFB82FF144;
-	Fri, 19 Dec 2025 10:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD3032FF651;
+	Fri, 19 Dec 2025 10:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IoSCk23s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B566D2882A9;
-	Fri, 19 Dec 2025 10:42:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854782376FD;
+	Fri, 19 Dec 2025 10:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766140966; cv=none; b=O566JSuVhgLWjDz4OJ4fjRABtamhr/lx7avGfuWyRQTSsMUNr74MA6/nF3qjPo4RR1/ZNnRCy0wzRBxEH/VtF2Pa6RoKmeDzGcY9X9FismXPrCFymTQPYUdK4t4qYSVV39Y6ep3lw+Tpsuq51QBsOYvyM/xeChbJ3+LOtXauyQQ=
+	t=1766140983; cv=none; b=GAJxY/SLTRBY55SJYQCM00S9p4zUDp5MFn7cVRpwMsek1H+x10yPUdodcbJe1H9VzPeypexoga/Gll1zb2Rl/+d2eJtfQL6KoCUYwMJqXmXi2ThUaGjjArUoIgQvK4hX0P7GwD7APze+8DV+DPFb4fzTYP4QcQu/hDuyrpu60vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766140966; c=relaxed/simple;
-	bh=j80u/3tGqchMI0uX25fhG4G01nqVVbFk3nPN3+udHKc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NLoez0pvlDlf6BpQ8RAdBckv8Wnj5Q3USbn6vD/j12ZwFsFze30DpT6m8srSrNQUsoagEO2NkOlrCnG5Ph857xDBC5IKRkgcbORGnll1VH5JYLyUxwGJbsndTQEUvGqMMj0x0WzssqBATQcLWAxWI45sUCGcXVKJbUMpRTmS8p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2DF2C106F;
-	Fri, 19 Dec 2025 02:42:37 -0800 (PST)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DE2FB3F5CA;
-	Fri, 19 Dec 2025 02:42:43 -0800 (PST)
-Date: Fri, 19 Dec 2025 10:42:41 +0000
-From: Leo Yan <leo.yan@arm.com>
-To: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Leo Yan <leo.yan@linux.dev>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, maulik.shah@oss.qualcomm.com,
-	Jie Gan <jie.gan@oss.qualcomm.com>
-Subject: Re: [PATCH v2 00/12] coresight: Add CPU cluster
- funnel/replicator/tmc support
-Message-ID: <20251219104241.GB9788@e132581.arm.com>
-References: <20251218-cpu_cluster_component_pm-v2-0-2335a6ae62a0@oss.qualcomm.com>
- <20251218104027.GA1790402@e132581.arm.com>
- <927f15d5-da2a-4282-b80f-c1c7563a4367@oss.qualcomm.com>
+	s=arc-20240116; t=1766140983; c=relaxed/simple;
+	bh=xkz5LUlBElFB9CvO+KaW9xJq6o3zkwL/JUJof/pyJKA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=duZNV3qQdGCYfd5z6Oj72GMxTB9ZKoUFQsLH73hhV6vhcCD5NVQjf5pDGfUYJqK3T9srdXHdCUA5/uyvJkptI4+NLouOK7O6QdKddL8lbWdRYfhcBy6n4staKKUQE3g2ukU+yXFDFs4M700A4VTMDsoklK9q1tINDt28ves/cKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IoSCk23s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA22C116B1;
+	Fri, 19 Dec 2025 10:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766140982;
+	bh=xkz5LUlBElFB9CvO+KaW9xJq6o3zkwL/JUJof/pyJKA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IoSCk23sz5zIAMhhpVSs+yWPq39dQ9XP469p2h5DRvRKuQSWJCW2G3aAoGFxmnsjR
+	 Y32S/nKLSMqJ8XvXJKKPt1Pzpofi4UzTmoFWnZQTyGWFQz4ePg61LHGxoS+EcGC+NQ
+	 rfPbh8jYbxXKaB/AGYclGcYhStpeiAoJ/12kcGwbssjeStmDEloHn/SePTEosz4mwy
+	 G+vuPh2d0k95qzFbVEsc/KQWud+YIsUIaPB8UK+YQUGKiFYja2/8mIkLB/xrgH7i4X
+	 V+i7y2DKw0yuhlxec2sGVW+fAC912w7KlOivIwf7iRrBCC+ahIV3bcQIFwCrmc/BQQ
+	 Lj3bhY4plfj4w==
+Message-ID: <0fa95ea2-4539-472b-adae-300e46a78f20@kernel.org>
+Date: Fri, 19 Dec 2025 19:42:57 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <927f15d5-da2a-4282-b80f-c1c7563a4367@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] nvmet: pci-epf: Use
+ dmaengine_prep_config_single_safe() API
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
+ Sagi Grimberg <sagi@grimberg.me>, Chaitanya Kulkarni <kch@nvidia.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, Koichiro Den <den@valinux.co.jp>,
+ Niklas Cassel <cassel@kernel.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org,
+ mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ imx@lists.linux.dev
+References: <20251218-dma_prep_config-v2-0-c07079836128@nxp.com>
+ <20251218-dma_prep_config-v2-6-c07079836128@nxp.com>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20251218-dma_prep_config-v2-6-c07079836128@nxp.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 19, 2025 at 09:50:18AM +0800, yuanfang zhang wrote:
-
-[...]
-
-> It is due to the particular characteristics of the CPU cluster power domain.
-> Runtime PM for CPU devices works little different, it is mostly used to manage hierarchical
-> CPU topology (PSCI OSI mode) to talk with genpd framework to manage the last CPU handling in
-> cluster.
-> It doesn’t really send IPI to wakeup CPU device (It don’t have .power_on/.power_off) callback
-> implemented which gets invoked from .runtime_resume callback. This behavior is aligned with
-> the upstream Kernel.
-
-Just for easier understanding, let me give an example:
-
-    funnel0: funnel@10000000 {
-        compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-        reg = <0x10000000 0x1000>;
-
-        clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
-        clock-names = "apb_pclk", "atclk";
-        power-domains = <&cluster0_pd>;
-    }
-
-If funnel0 is bound to cluster's power domain, kernel's genPD will
-automatically enable cluster power domain before access registers.
-
-My understanding is your driver or firmware fails to turn on a cluster
-power domain without waking up a CPU (and without sending IPI).  It is
-not a kernel issue or limitation, and no any incorrect in PSCI OSI.
-
-As Suzuki said, you might directly reply Sudeep's questions.  We would
-confirm if any flaw in common code.
-
-> > P.s., currently you can use "taskset" as a temporary solution without
-> > any code change, something like:
-> > 
-> >   taskset -c 0 echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+On 12/19/25 00:56, Frank Li wrote:
+> Use the new dmaengine_prep_config_single_safe() API to combine the
+> configuration and descriptor preparation into a single call.
 > 
-> This can address the runtime issue, but it does not resolve the problem during the probe phase.
+> Since dmaengine_prep_config_single_safe() performs the configuration and
+> preparation atomically and dw edma driver implement prep_config_sg() call
+> back, so dmaengine_prep_config_single() is reentriable, the mutex can be
+> removed.
 
-Indeed.  If you insmod mode, you might can temporarily disable idle
-states?
+What about for platforms other than DesignWare EDMA ?
+This is a generic endpoint driver that can work on any platform that is endpoint
+capable and that has a DMA channel for the PCI endpoint.
 
-    exec 3<> /dev/cpu_dma_latency; echo 0 >&3
-    insmod
-    exec 3<>-
+The dmaengine_prep_config_single_safe() API should be handling everything
+transparently for any platform, regardless of the DMA channel driver
+implementing or not the prep_config_sg() callback.
 
-Thanks,
-Leo
+For platforms that do not implement it, I suspect that the mutex will still be
+needed here. So how to we resolve this ? Ideally, all of that should be hidden
+by the DMA API. The endpoint driver should not need to deal with these differences.
+
+> 
+> Tested-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Frank Li <Frank.Li@nxp.com>
+> ---
+>  drivers/nvme/target/pci-epf.c | 18 ++++--------------
+>  1 file changed, 4 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+> index 56b1c6a7706a9e2dd9d8aaf17b440129b948486c..8b5ea5d4c79dfd461b767cfd4033a9e4604c94b1 100644
+> --- a/drivers/nvme/target/pci-epf.c
+> +++ b/drivers/nvme/target/pci-epf.c
+> @@ -388,22 +388,15 @@ static int nvmet_pci_epf_dma_transfer(struct nvmet_pci_epf *nvme_epf,
+>  		return -EINVAL;
+>  	}
+>  
+> -	mutex_lock(lock);
+> -
+>  	dma_dev = dmaengine_get_dma_device(chan);
+>  	dma_addr = dma_map_single(dma_dev, seg->buf, seg->length, dir);
+>  	ret = dma_mapping_error(dma_dev, dma_addr);
+>  	if (ret)
+> -		goto unlock;
+> -
+> -	ret = dmaengine_slave_config(chan, &sconf);
+> -	if (ret) {
+> -		dev_err(dev, "Failed to configure DMA channel\n");
+> -		goto unmap;
+> -	}
+> +		return ret;
+>  
+> -	desc = dmaengine_prep_slave_single(chan, dma_addr, seg->length,
+> -					   sconf.direction, DMA_CTRL_ACK);
+> +	desc = dmaengine_prep_config_single_safe(chan, dma_addr, seg->length,
+> +						 sconf.direction,
+> +						 DMA_CTRL_ACK, &sconf);
+>  	if (!desc) {
+>  		dev_err(dev, "Failed to prepare DMA\n");
+>  		ret = -EIO;
+> @@ -426,9 +419,6 @@ static int nvmet_pci_epf_dma_transfer(struct nvmet_pci_epf *nvme_epf,
+>  unmap:
+>  	dma_unmap_single(dma_dev, dma_addr, seg->length, dir);
+>  
+> -unlock:
+> -	mutex_unlock(lock);
+> -
+>  	return ret;
+>  }
+>  
+> 
+
+
+-- 
+Damien Le Moal
+Western Digital Research
 
