@@ -1,228 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-85804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6C7ECCF39E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:54:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EB30CCF3B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:56:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3D9403023E9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 09:54:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D879A3009436
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 09:54:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28AB2ED17C;
-	Fri, 19 Dec 2025 09:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E75D2E6CAB;
+	Fri, 19 Dec 2025 09:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="teXlBuee"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 156E72ED16B;
-	Fri, 19 Dec 2025 09:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1E622FAFD;
+	Fri, 19 Dec 2025 09:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766138061; cv=none; b=raOuQXxgFgTHBuhp0w5r+BcBjkmidQXMJC8doCpZuSEzdV1Z+fLA2Xi4lv5Gu3hzeO6KRbS3jB6jU41WaRXYfwMEBMqVXVYTIUi0r28D3s3qFtHR6VxK3AtLpp3ZmKSSEmq7FE75CvKoX6Zs+yMpNyrfxiK/Ltl/d4w8qgHigxY=
+	t=1766138096; cv=none; b=CZL0mDjTmb1O2xDt8l0qMloFnls69rPOVg6lF7bhqtUw6Wyzi8a7t4QBgosriY3uJv29UJ6tyePDvb3cEWbwOHRjECrdaZoBbcprcnTgcyP9mtnepYSHN8RQqZKDN36hdtwadmZEKusazDOsod7rovMNzGnH6puTRyoWThj4sGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766138061; c=relaxed/simple;
-	bh=oBDrMniGgr/u13j0I1Ae+D6FlHX8Ra/VhPHHp5KsWFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a7SxvdmZNTCDrVo3jt0Y97U821PQCK6hLV9cQeRxL32EWDqggjUO2k0SCFVoQpixszJGtQF6GYhO1KmyYxcwhYSWK5TfbfITU2cmmdvD+MwXl7z/aFECv52KAvea0V8i3c12Vd26fjRzr79GL2cQZZ8WX0yeP1vQi6hqcx3PyfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 149E4FEC;
-	Fri, 19 Dec 2025 01:54:11 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3A7443F5CA;
-	Fri, 19 Dec 2025 01:54:16 -0800 (PST)
-Message-ID: <95ac571a-1c8f-45d9-9874-648d4123ce18@arm.com>
-Date: Fri, 19 Dec 2025 09:54:14 +0000
+	s=arc-20240116; t=1766138096; c=relaxed/simple;
+	bh=lLAToM4vXYl2Fk0i65uKXkKio3mzy30inkIA9FUKzC8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fboDK2GEbuPlrwA7KoPU6yN7GwYlFFbUjN8fuV5rIb5Sp8bVvLwZ+AQtncGmOfNVS6l8XETP2YKB/uDqL33SfGoC2MD/Qpt/Ft/IQ06vPAWsEDZT8lMBWfFEBRtTjNLxGafAB6txUTziBLKuXOTrQpGrNvqYK5SAt68yYlb341I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=teXlBuee; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D23DC4CEF1;
+	Fri, 19 Dec 2025 09:54:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766138095;
+	bh=lLAToM4vXYl2Fk0i65uKXkKio3mzy30inkIA9FUKzC8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=teXlBuee2SGaO5gKVF903njhhJJyujvg1pKd00OAnL4abuUsJGZgjZ/0ok7vhvth2
+	 bcU+XqvTdsUyWpkZpecWy100vQ079+cxQeWRi+28eSuxcQrmBsLYtlz8WUeWJfVcUq
+	 +RSFqfo+R8zPY9wxRSVJOku2ErSx+BR2ZCiVm+A8ItqaKkKKlUy9gBMgtux8Nv7KL2
+	 36u+gOWyi0sgXtCiS2eR5uhq+yjpSWREwBllUfGexMuL23TknUzZrPf8XTKmynGAA8
+	 1YQnPj5YlHg8F3o877ew2QqD0hGZ++OqK+GF6FOX8VBhoy97Wb2Ohwj90JxEb6WA+M
+	 rkKF3JhaRlT8A==
+Date: Fri, 19 Dec 2025 10:54:53 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Daniel Stone <daniel@fooishbar.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <20251219-honest-slim-crab-02e932@houat>
+References: <20250929-gregarious-worm-of-memory-c5354d@houat>
+ <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
+ <20251003-uptight-echidna-of-stamina-815305@houat>
+ <zpygq4kapil3swsmhhqkdwny4ry2dznnzixsw5rkza5p2kqnvp@abvf2vxlbwif>
+ <2a5fitdzr2bz235fj6rvqzxr6ckszkjbazjfszlvnizdh2cvbt@w3ypjo7vahhs>
+ <pibxhl5hlcpuk3zsgyienfdlda5cwuxrnofwlw356scuzzplqy@zw3ofelgvwik>
+ <bsoqyzxi45i67jpzhwr2d4illufa5ghqf25z6flbp67lsbvh22@rrlcihp2oxea>
+ <cgzclxjubj5oca3rdnv44qwrkmpddxve4tlz76cc6p3b4hz3oc@3l7mt5ha7do6>
+ <20251201-enlightened-zebu-from-asgard-5a20be@houat>
+ <5dyhjur3hkhvtlwrl4h2m342byor7f3ssvkunj4cggnhbhlmnb@l2mfz7ypjj37>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 5/8] dt-bindings: arm: add an interrupt property for
- Coresight CTCU
-To: Jie Gan <jie.gan@oss.qualcomm.com>, Krzysztof Kozlowski
- <krzk@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
- Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251211-enable-byte-cntr-for-ctcu-v8-0-3e12ff313191@oss.qualcomm.com>
- <20251211-enable-byte-cntr-for-ctcu-v8-5-3e12ff313191@oss.qualcomm.com>
- <20251211133723.GA859302-robh@kernel.org>
- <dfa43a63-ca14-4dd7-a7ab-acd95748a8b9@oss.qualcomm.com>
- <a9537dc9-c767-4909-8b1c-6e939ce4f3fc@kernel.org>
- <2db74a3e-4aeb-4e87-9fe8-5c9693bfb67c@arm.com>
- <46afd4f6-f287-4d19-bc68-f2f6eac36e6a@oss.qualcomm.com>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <46afd4f6-f287-4d19-bc68-f2f6eac36e6a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-On 19/12/2025 02:05, Jie Gan wrote:
-> 
-> 
-> On 12/19/2025 7:19 AM, Suzuki K Poulose wrote:
->> On 18/12/2025 10:17, Krzysztof Kozlowski wrote:
->>> On 12/12/2025 02:12, Jie Gan wrote:
->>>>
->>>>
->>>> On 12/11/2025 9:37 PM, Rob Herring wrote:
->>>>> On Thu, Dec 11, 2025 at 02:10:44PM +0800, Jie Gan wrote:
->>>>>> Add an interrupt property to CTCU device. The interrupt will be 
->>>>>> triggered
->>>>>> when the data size in the ETR buffer exceeds the threshold of the
->>>>>> BYTECNTRVAL register. Programming a threshold in the BYTECNTRVAL 
->>>>>> register
->>>>>> of CTCU device will enable the interrupt.
->>>>>>
->>>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>>>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
->>>>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>>>>> ---
->>>>>>    .../devicetree/bindings/arm/qcom,coresight-ctcu.yaml    | 17 ++ 
->>>>>> + ++++++++++++++
->>>>>>    1 file changed, 17 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight- 
->>>>>> ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight- 
->>>>>> ctcu.yaml
->>>>>> index c969c16c21ef..90f88cc6cd3e 100644
->>>>>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
->>>>>> @@ -39,6 +39,16 @@ properties:
->>>>>>        items:
->>>>>>          - const: apb
->>>>>> +  interrupts:
->>>>>> +    items:
->>>>>> +      - description: Byte cntr interrupt for the first etr device
->>>>>> +      - description: Byte cntr interrupt for the second etr device
->>
->> This is really vague. How do you define first vs second ? Probe order ?
->> No way. This must be the "port" number to which the ETR is connected
->> to the CTCU. IIUC, there is a config area for each ETR (e.g., trace id
->> filter) connected to the CTCU. I was under the assumption that they
->> are identified as "ports" (input ports). I don't really understand how
->> this interrupt mapping works now. Please explain it clearly.
->>
-> 
-> Sorry for the misunderstanding.
-> 
-> Each ETR device should have its own interrupt line and an IRQ register 
-> within the CTCU device, as defined by the specification. In existing 
-> projects, the maximum supported number of ETR devices is 2.
-> 
-> Each interrupt is directly mapped to a specific ETR device, for example:
-> tmc@1000 → interrupt line 0
-> tmc@1001 → interrupt line 1
-> 
-> The suggestion to identify devices by ‘ports’ is much clearer than my 
-> previous explanation, as it explicitly shows which device is connected 
-> to which port.
-
-Thanks for confirming.
-
-> 
->>>>>> +
->>>>>> +  interrupt-names:
->>>>>> +    items:
->>>>>> +      - const: etrirq0
->>>>>> +      - const: etrirq1
->>>>>
->>>>> Names are kind of pointless when it is just foo<index>.
->>>>
->>>> Hi Rob,
->>>>
->>>> I was naming them as etr0/etr1. Are these names acceptable?
->>>
->>> Obviously irq is redundant, but how does etr0 solves the problem of
->>> calling it foo0?
->>>
->>> I don't think you really read Rob's comment.
->>>
->>>> The interrupts are assigned exclusively to a specific ETR device.
->>>>
->>>> But Suzuki is concerned that this might cause confusion because the ETR
->>>> device is named randomly in the driver. Suzuki suggested using ‘port-0’
->>>> and ‘port-1’ and would also like to hear your feedback on these names.
->>>
->>> There is no confusion here. Writing bindings luckily clarifies this what
->>> the indices in the array mean.
->>
->> The point is there are "n" interrupts. Question is, could there be more
->> devices(ETRs) connected to the CTCU than "n".
->>
->> e.g., Lets CTCU can control upto 4 ETRs and on a particular system, the
->>
->> TMC-ETR0 -> CTCU-Port0
->>
->> TMC-ETR1 -> CTCU-Port2
->> TMC-ETR2 -> CTCU-Port3
->>
->> Now, how many interrupts are described in the DT ? How do we map which
->> interrupts correspond to the CTCU-Portn. (Finding the TMC-ETRx back
->> from the port is possible, with the topology).
->>
-> 
-> Got your point and it's much clearer.
-> 
->> This is what I raised in the previous version. Again, happy to hear
->> if there is a standard way to describe the interrupts.
->>
->> Suzuki
->>
->>
->>>
->>>>
->>>> Usually, the probe sequence follows the order of the addresses. In our
->>>> specification, ‘ETR0’ is always probed before ‘ETR1’ because its 
->>>> address
->>>> is lower.
->>>
->>> How is this even relevant? You are answering to something completely
->>> different, so I don't think you really tried to understand review.
->>>
-> 
-> My previous explanation was definitely unclear. As Suzuki suggested, 
-> mapping the interrupt to the port number (to identify the relevant 
-> device based on topology) makes sense and provides a much easier way to 
-> understand the relationship between the interrupt and the ETR device.
-> 
-> So with the suggestion, here is the new description about the interrupts:
-> 
->    interrupts:
->      items:
->        - description: Interrupt for the ETR device connected to in-port0.
->        - description: Interrupt for the ETR device connected to in-port1.
-> 
->   interrupt-names:
->      items:
->       - const: port0
->       - const: port1
-
-Which brings us back to the question I posted in the previous version. 
-Do we really need a "name" or are there other ways to define, a sparse
-list of interrupts ?
-
-Suzuki
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="pxgyrzpu3xrfoz5s"
+Content-Disposition: inline
+In-Reply-To: <5dyhjur3hkhvtlwrl4h2m342byor7f3ssvkunj4cggnhbhlmnb@l2mfz7ypjj37>
 
 
-> 
-> Thanks,
-> Jie
-> 
->>>
->>>
->>> Best regards,
->>> Krzysztof
->>
-> 
+--pxgyrzpu3xrfoz5s
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+MIME-Version: 1.0
 
+On Sat, Dec 06, 2025 at 01:28:14PM +0200, Dmitry Baryshkov wrote:
+> On Mon, Dec 01, 2025 at 06:01:56PM +0100, Maxime Ripard wrote:
+> > On Fri, Nov 21, 2025 at 07:09:01PM +0200, Dmitry Baryshkov wrote:
+> > > > So it's not really impossible, you just need some hardware and a da=
+y's
+> > > > worth of work.
+> > > >=20
+> > > > There's no reason these should get a pass, it's breaking the spec f=
+or no
+> > > > reason.
+> > > >=20
+> > > > > > For SPD, It's really not clear to me why atomic_check should do=
+ that in
+> > > > > > the first place. Your initial concern was about exposing infofr=
+ames in
+> > > > > > debugfs that wouldn't be used by the driver.
+> > > > > >=20
+> > > > > > If the driver doesn't register a debugfs file for SPD, and igno=
+res
+> > > > > > whatever is in the atomic state, what's should we force drivers=
+ to do
+> > > > > > that?
+> > > > >=20
+> > > > > I really don't think that drivers should mess up with debugfs on =
+their
+> > > > > own. Making atomic_check() disable the unsupported InfoFrames mak=
+es the
+> > > > > picture perfect: the DRM no longer tries to program them to the
+> > > > > hardware, DebugFS files stay empty, so the whole state becomes
+> > > > > consistent.
+> > > >=20
+> > > > In the "bridge has no access to infoframes" case, there's really no
+> > > > infoframe. An empty file is "the infoframe can be there but isn't u=
+sed",
+> > > > not "we don't have access to it and can't report them". Only drivers
+> > > > have those infos.
+> > > >=20
+> > > > If we do split up write_infoframe into multiple functions though, I
+> > > > guess we could create the debugfs file only if the function pointer=
+ is
+> > > > set, which removes drivers' involvement if you don't like that.
+> > >=20
+> > > I'm fine with not using HDMI connector framework for lt9611uxc.
+> > > Likewise, I think, it's fine to have empty files for the infoframes
+> > > which are not being sent over the wire for any reason (hw not support=
+ing
+> > > it is one of the reasons).
+> >=20
+> > I can't think of any other example in the kernel where an empty file
+> > means that the driver doesn't support something.
+>=20
+> Okay. So we need to sort out implementing the split write_infoframes in
+> drm_bridge_connector. Any suggestions there? I'm asking, because I don't
+> want to end up exploding it.
+
+I guess it's only really a problem if we want to make it const, but we
+don't have to? We could just as well allocate the structure directly at
+probe with a drmm helper and fill it as we need to.
+
+Maxime
+
+--pxgyrzpu3xrfoz5s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaUUg7AAKCRAnX84Zoj2+
+dvkCAYDaU48ga79KBvkIgWW7cnrj0Ae2GfJE5Y2GVVoq0UjRWC1zmLdmNFkjoQil
+PD3wip4BgKf036443KTFOFktbqXWVW+vD37BVUvEwYqWrRwP+AK/8QBWIjjg9BKx
+PWhjchksXg==
+=penr
+-----END PGP SIGNATURE-----
+
+--pxgyrzpu3xrfoz5s--
 
