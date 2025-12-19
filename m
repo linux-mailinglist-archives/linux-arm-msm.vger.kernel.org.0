@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-85904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C2D5CD0420
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:28:33 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 911ECCD0429
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:29:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ED54F303EF9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:27:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 700B030AE08E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:28:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFD2732AAA9;
-	Fri, 19 Dec 2025 14:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BF3B32ABCE;
+	Fri, 19 Dec 2025 14:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NAvnL9Kk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8bL1xas"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D55A329E75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D374C32AAC3;
 	Fri, 19 Dec 2025 14:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766154477; cv=none; b=M+ifDtqLsvckDt6xKPWDHuEhBmfstkzgdlauCSWNNKidDKHJbxmZNgzgzGQOqh95yXriss93hDEQZe8iEbq8Tgp8b+w8t7nJmj/9A3P3h6I5iGGFwwjX2taL5RtR8MK6XAQHtfP5JKCfs4sBxIYm0sXYZiF/zoMWrzynDoqrGAI=
+	t=1766154477; cv=none; b=o8E3ARHrpLwMvQHh1ZGqypoqFtjCkax92Zuc4hipTloV8Ey1HkvTxdolEgXguzLxNeCFA7QU2JJseN0UohDfNXieOpF/f6OCQEOHhyxf+s9p2w4IQpdATFSiO10a0LOl4AxhwQ6ciE3IHg3DaAp6KLMAqdRse+qoGdkvWj+umFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766154477; c=relaxed/simple;
-	bh=eDtGYGTH17764v29Lss/qoa/UMzlKT7EjxFZXo4HF3w=;
+	bh=67Eabwf4Haq7pOJRL6UwOk2Tu2NXRhLIGQuWuOiVerc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3asH0eqrnSBQW4d/ViSMba+zwOBnfnGongTEQGbRW3gHAknkFlCTDCiXKIxX8xgmFj9go0KOB2k+7E5V4SQUi30Rf9+TKASTODMT5x9pNLyHnM1j7IEWIyU31xLcQvATJLO5Q/mcQiHP5fisC1kPc9Mqe8Ns91FiPDzSDkCKxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NAvnL9Kk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493B9C116D0;
+	 MIME-Version; b=oOWGDwVmEAzNNb84CKf3c2R9A75bZP86Jf2tdRTmBx7HIVdh3neFGc6PwYvzrbjZDYQ2XlGfj52DGYiCkTieTCp95YJ1c7DRxMf0sMzLWpMbTjsFhpai7qg8hma0K07Q5pI98iGK6MAquoZ/El3R+OOhriW2/RgpaA4AT91MJd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8bL1xas; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1D3C19421;
 	Fri, 19 Dec 2025 14:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1766154477;
-	bh=eDtGYGTH17764v29Lss/qoa/UMzlKT7EjxFZXo4HF3w=;
+	bh=67Eabwf4Haq7pOJRL6UwOk2Tu2NXRhLIGQuWuOiVerc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAvnL9KkbaGEKDTWlsu32uqsds/vMsqmoKLkv/XJeNJePN63Q698MRPG273vy508h
-	 BM+7ay527lfzaTZyYMF3nY6a7IcFX7x1bua1wE9JRTXATLWYg5bNTdwLGPdyKPgmTq
-	 B/9DL5oKhHOPwzcXfYOdHMz5EszLdcp8EOhERetcud9INoOlbPWYCGgqfyrGMcFe+K
-	 WP85G0yn5qiOjj5FoFSA1SMshX2eEggg4geR1NuGvNGp9wXZcKJ6EA89NcyU8Mepbe
-	 6cWn8vvsowYFNQ5/bcAx4U0p+UIhI81drwJxnOVFfZoqMai98AXZtLbSARGDTkIA0p
-	 mv2EWy+s5PwgQ==
+	b=g8bL1xasgE/i+sH4uTofdRtlbmtxv7E3McqQ+iNBSXBXEl45AZpPJbrs4dKT2nDXg
+	 GfOZne6qN1uQ1HVM7lP1prd0eAp8dbwMy/MH+3u47HEBnpL7qyfBTY+o12tt2QP0A0
+	 JrI9ScYNWbZHszzd3yQSwyHUSbrrTSOH0iDWo8ZGK4FulH6wxto2T/ww1m1nwp4Kij
+	 PSImf0B2Sur6YijhEmF7YlTq/lwnHewdVbIdVZ0KqTFkArHe4dHy6QfhliKsOS2ijw
+	 oyCM8GiswvRhq90w3osmLKJmBnlNYsw4KpbVNGbLUNK3XW5g7WDEUmqRpunpqTc2ie
+	 hp/i9acAfCQbg==
 Received: from johan by xi.lan with local (Exim 4.98.2)
 	(envelope-from <johan@kernel.org>)
-	id 1vWbSW-0000000051X-1TMm;
+	id 1vWbSW-0000000051Z-1tOB;
 	Fri, 19 Dec 2025 15:27:56 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Srinivas Kandagatla <srini@kernel.org>,
@@ -51,10 +51,10 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>
-Subject: [PATCH 1/3] ASoC: codecs: pm4125: drop bogus container_of() error handling
-Date: Fri, 19 Dec 2025 15:27:13 +0100
-Message-ID: <20251219142715.19254-2-johan@kernel.org>
+	Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+Subject: [PATCH 2/3] ASoC: codecs: wcd937x: drop bogus container_of() error handling
+Date: Fri, 19 Dec 2025 15:27:14 +0100
+Message-ID: <20251219142715.19254-3-johan@kernel.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251219142715.19254-1-johan@kernel.org>
 References: <20251219142715.19254-1-johan@kernel.org>
@@ -70,27 +70,25 @@ The dev_to_sdw_dev() helper uses container_of() to return the containing
 soundwire device structure of its pointer argument and will never return
 NULL.
 
-Fixes: 8ad529484937 ("ASoC: codecs: add new pm4125 audio codec driver")
-Cc: Alexey Klimov <alexey.klimov@linaro.org>
+Fixes: 9be3ec196da4 ("ASoC: codecs: wcd937x: add wcd937x codec driver")
+Cc: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 ---
- sound/soc/codecs/pm4125.c | 6 ------
- 1 file changed, 6 deletions(-)
+ sound/soc/codecs/wcd937x.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
-index 43dcafff6c77..1f0a3f5389f1 100644
---- a/sound/soc/codecs/pm4125.c
-+++ b/sound/soc/codecs/pm4125.c
-@@ -1533,13 +1533,7 @@ static int pm4125_bind(struct device *dev)
- 
- 	pm4125->sdw_priv[AIF1_CAP] = dev_get_drvdata(pm4125->txdev);
- 	pm4125->sdw_priv[AIF1_CAP]->pm4125 = pm4125;
--
- 	pm4125->tx_sdw_dev = dev_to_sdw_dev(pm4125->txdev);
--	if (!pm4125->tx_sdw_dev) {
+diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
+index f4dbcf04be49..10a2d598caa7 100644
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -2763,11 +2763,6 @@ static int wcd937x_bind(struct device *dev)
+ 	wcd937x->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd937x->txdev);
+ 	wcd937x->sdw_priv[AIF1_CAP]->wcd937x = wcd937x;
+ 	wcd937x->tx_sdw_dev = dev_to_sdw_dev(wcd937x->txdev);
+-	if (!wcd937x->tx_sdw_dev) {
 -		dev_err(dev, "could not get txslave with matching of dev\n");
 -		ret = -EINVAL;
--		goto error_put_tx;
+-		goto err_put_txdev;
 -	}
  
  	/*
