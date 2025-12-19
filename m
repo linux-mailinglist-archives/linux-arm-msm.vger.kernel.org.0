@@ -1,566 +1,395 @@
-Return-Path: <linux-arm-msm+bounces-85859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFE7BCCFA82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 12:48:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A92BCCFAF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 12:59:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1629830443EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:43:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B124830FF702
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:53:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A015D320A09;
-	Fri, 19 Dec 2025 11:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153CD331A51;
+	Fri, 19 Dec 2025 11:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AORecW+z";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QPpkScyH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dDyte6oI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LKv7GuHW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22068322B94
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC8E331A5F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766144589; cv=none; b=sG1SBKpU92xHZfQo+oh5BKxxOQaIwWn8Abp+rJ9hVGpIXcIWzeJTx/d0UJHdDnxEmU5iw3yd8iVaaTOfxVRipNapTUyu/3qLrL4H10noespY8GBLo8ZZoxbTaXylcqHtotOMP9B7nEYF6kSkdhh6TtT1f1X040bWKCiX23VBJ+E=
+	t=1766144737; cv=none; b=QAONoFykAXQ5j3G+OjC57aP+NGITk/Ldq3ruVFzc/8FZ7BR8KbNDYj/j7Y1Uto+02ankikmwihn5D4kT2oWeuu6PqungmrlqUFljQbYcerXULgTbTBCYRGruEfbstAJqPF5q9ANP3PqTFA1STR6G2odplSFWdPiycAyBCrYQGvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766144589; c=relaxed/simple;
-	bh=ffY/C3rLjQNK9hgvPbJK8l/sc4WQvdzTdnFHwivIiAc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=A76ib4on4eAdluYzVrHuSRysN9CdOduoJGPyfrO7yUS+mwnWYBxChLHlPvqGT27g91h1SuTTIqV7WC/o0rBGcQSbsLvl2QcanwhWZ8G+Tl5OxTAs1o+gTEXq3Vd1IyRDBv8RRUiIKJlphz5Obj6nRuMpU+mpy0Z6C18w0+8LVe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AORecW+z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QPpkScyH; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1766144737; c=relaxed/simple;
+	bh=irEAvrdRaf6875ZID1jYgTi4cPaci2203RnrQseavls=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SZY98Dn6E5r04PlQFhOlgdn+nrtFO73fWB2EfXo1S/BHiONFnLOaQVXosaidxgXU5fN44eqibRyRTzllhdu4hhPat0aU/smtlvMYfaMjPdQR6wBbQkB7Wd8yh3Y5VqLJdrOgXoVU/MxPaRcIjJFwz9y2FDoAF6Xxgd9+ReKOIC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dDyte6oI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LKv7GuHW; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJ4c8hW3319029
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:43:04 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJBY9gS091853
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bX0ELyjisY599ILAxQteYNae5xTg+flefV8EL6QhF6c=; b=AORecW+zGPdToLq+
-	HqdASpHg3KknK0QK2jUu7seuqC35HeVs21ktVpMPf8NWX+1fUP1xeC8hTDlzl4qy
-	1ywHpG3XB3t/rqOkC4XtgXV8kacDz2frSXnlOy5ai8hg9UEBftXNozjfgwfGnTm8
-	5sQn5nPVk478sfMp9SJWKWC1lWJjPm6EOJo7+jZkIq5+yUSFt8RqUejJ06xBDEki
-	wezwZCzwaRPOJW+g8ETfsr58l/XpEnSbva6fMWFqBgz4SCku1n+9LUEaZqjSIgj9
-	teyaiHwVjd0SfErKCVwOWFa2MLntwUsxWWegI+osVfaB7q5hpEzjafEB0YGXAGFi
-	qr56kA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2etf9t-1
+	jhUx/wL8Scv3qSsZrRmKOrRlXmJZdg37tIib1c09xSI=; b=dDyte6oIHG8BpbbF
+	T0W8qAkyiUu8A+ZS2sIcNQ6zPihDFbpBf0GDrKu2CZP2fM4Dgw+OoX0LI5vLZ5lk
+	NykT98vz5GbURLhTUed+EZfDAriQh7+5NLyPwPCVPSQt5EamiwG/hYNNU08RER9w
+	oFqBIEYAikps3GZqhy5BWS/TcauWwqXgwwZumyzYqMR0Vg/FIi/1dOPCysMyl/nj
+	T4ZTFUKZ2jSw9MX7ffzffOmz9kre/hcYCpYN/cGvFPSiM+bgI7NGJk+90ep5hOjS
+	6dqY64g3Y9i5FP5CCuXRqpiNX2MY+f98h1JebM0MSE0yybzcatYnQ/JoxUzNKjSv
+	JEXIKg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2eagt0-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:43:04 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee0c1c57bcso50147131cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 03:43:04 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 11:45:32 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-88882c9b4d0so5239146d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 03:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766144584; x=1766749384; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bX0ELyjisY599ILAxQteYNae5xTg+flefV8EL6QhF6c=;
-        b=QPpkScyH+htfUXwACMI9t2j2R8wWJyMzgBLLRYg0JA+vQagz44SVGDf7zI2QCp9JUm
-         dRh5+jGGf3XJGXMMWTA8tvHdKy8MrADVDifTmGQtTGXfBPEZx9KdCADWJdjIISUqbp5t
-         SYEQy1cvA/1bM5/jMLKcHAUIg8ycsFCsqz25RuSydUpOtoWXK3sqLO/oyvnmKNPRatEY
-         miO9+Isy3qGmb2+GI04t9iQzhGLhI38vW1X1LySZ/mEirRds4Zdb23WxJxlkfy6KvGL9
-         3NfQhg7K0zSQXfFUrI+BvJhh6aRphkwPy0yXGBefsqKX67f62uMprh+sv95cN9VvlDTY
-         fmHQ==
+        d=oss.qualcomm.com; s=google; t=1766144732; x=1766749532; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jhUx/wL8Scv3qSsZrRmKOrRlXmJZdg37tIib1c09xSI=;
+        b=LKv7GuHWd2dm3PEJ19zxbwCYL+QmPHCD5oQFMAGCkgDnSzvI2iV4YDR/dmYAvsUEDO
+         up6VlmtFmWT8V8HDNsJgkWbUUd5JmvY58IBaczVTk4jYw97Ac2cRk/6bopwMyW5xrE2M
+         vucyB78k+wDoxBKW5iASM7eLuPYKj1TwnmCss50mHtFyRyy+QSNyBhBC9qxyO4bV9Fgw
+         SHllq6/Wnzl0ytnS48iDMQRcUqI4iWVl8+Ep2Qq7qoHWuQ0HdTAYqdv0VxlJxnpY/+i7
+         MLm/PaGi2zWNgSJ8i90iLiLK8Xr8ntzhbcB0xEa7YlnB+n52IyEXq/7hLKOR/xal1sUU
+         N/Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766144584; x=1766749384;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bX0ELyjisY599ILAxQteYNae5xTg+flefV8EL6QhF6c=;
-        b=djaKnLcihPwsHJlwKE8Z0PhhOm3CQHVKYpKtZd4/Z07ZzOCYDIvxpWjK+ldIuByy/G
-         nrxlbZt3+AZeJLXcwKA6s8MdHZlMiQawB/zXhloJNHK0iqWXH2iQ+48NefdY6HE2tOTl
-         0r9Gi5GeMngwiko/b/VivY12wVVPV1nAkpZB0bkANraS+H1HwHG1m8/N0tKGpARJzr69
-         mLj44iDpRZ408DVUhNGJ6mvgPlhOR3OY2OafJhD9KKhL4pNp/WcNB1HYe13NtCaEH/Ka
-         kIlrlrATkqvur748sF6v8rgAaGJFL17vgtLiu/1DOtRqSiI5fSb8Ptx7MoTkI0Uta0NH
-         vBKQ==
-X-Gm-Message-State: AOJu0YyhpM4koUdTBAzd71nhJWDf8VdcfATm4Eiy0DgVkkXSJzZXjn8g
-	TlbuG2uu69EGIMd9ZwhtxCMY2U2tkGGRM0v8DpqEZQZfe8NNJU5Zp+jrRmS4GJEoQH5DhtHdrgW
-	mXltGXnvNpeDJtgpu+j8pDJa0ExIAn69kOHfLvsocJqvoEPjmrTcEjldAjJqYdVYM6Y8q
-X-Gm-Gg: AY/fxX6OE/xAqwzKNX7kVxy+Rc8mHKWhcFgLvw+PLF8Skqo5SDTrVRMDgPONXeenKPG
-	XntXkSeO/1J9yHFVMgA6fvWIe7bHVqGqyGYhNur/36fJ3+hxwJdvKCFAqXKrl0AQw3Fi00GmTZ0
-	fa0aYGycdOCTfnNkTKg7lbNF0sIlv7ZpUePWxILL/CRMXa9B+6kvhOWbrDYRhEdmjRQ47oiEd1Y
-	74H6plx9ij5xiPk9ks8xxIQjnTPfY9Dj5VaPV4nZCz1NieY8amWPwE/0XZWQBv/a5rTzJ9RAKZQ
-	rRQu2Jbw+BcgIqCaGmfdt1rUgdfBZg2hXvhF76oMKffhc2JQDMidE8qQR8q99ZAvBaRFRSqCTHG
-	9IDZRZ3UQ86dWGmDvld0qlmOEeE1WkVd8xJd/3LM=
-X-Received: by 2002:a05:622a:178b:b0:4ed:2ff9:b325 with SMTP id d75a77b69052e-4f4abd9da0cmr29498951cf.59.1766144583868;
-        Fri, 19 Dec 2025 03:43:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGCUeryxEuhslnEMUgRLQ538+mugwQpyqKxhABdKsq18zRMJQYzzEDch02GfgdLzQT6oGGhLg==
-X-Received: by 2002:a05:622a:178b:b0:4ed:2ff9:b325 with SMTP id d75a77b69052e-4f4abd9da0cmr29498401cf.59.1766144583291;
-        Fri, 19 Dec 2025 03:43:03 -0800 (PST)
-Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:d857:5c4e:6d25:707c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d193d4f09sm41134425e9.12.2025.12.19.03.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 03:43:02 -0800 (PST)
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Date: Fri, 19 Dec 2025 12:42:22 +0100
-Subject: [PATCH v6 7/7] net: stmmac: qcom-ethqos: add support for sa8255p
+        d=1e100.net; s=20230601; t=1766144732; x=1766749532;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jhUx/wL8Scv3qSsZrRmKOrRlXmJZdg37tIib1c09xSI=;
+        b=t/6MpVo/iy9MABHI/bTfLfY5N6TewLmDZXKhZfE7tF6cBYox0cg/JAH+FxcsD8CRKe
+         EYmVN268TiwwsdaVWs3/VXm5Bq4xL0a7PH8UnUz8Osg0sdRofPBsYAlfHagms+LTMWBi
+         tMnCHTjviyHkvmiVq5atIGC0ESBZShULUe6pcyD3bS/tU/MjmewL4deE5nsQCOMyN8pd
+         fKoIb7hcEahFd4hX7Avid0eyGJVPlO2kGOp4CAME+Fwu+Y8gLHgVb6I27Exqr4A5viUf
+         Ppi4G73I7Xjz4QYsYZWuniHVcM5DtLB3/hB0P2znSsHqiPWmiZojnDo8U2tlERroydgo
+         jSFg==
+X-Forwarded-Encrypted: i=1; AJvYcCVk7mVkAnI1GRbAlF78aDXu6PK0pbKKAABhImWfqp/ZBSvdTr7EIwEGSB5BpFy1yPyt0D+Qw/OZtUG04gqx@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMtW470H9nOuqvx2277eRtNaDbWm9kiBw+neMBMO6sE2dDzVlM
+	GJf5nxmYfaDQLfTF1eOyI+rH2xYii+Og91Y9JddSJxFRUtMaOemoGFzAmWp7+pf1ajOcZpJI8Wf
+	NNlvihWYPWYM1HK2boE0v/LQNKV6PoZhuOm9NJKEQ4yu1imzmE/Qaxscv6BN1eWOEssvS
+X-Gm-Gg: AY/fxX4hHdJK63e/xYKELhntA/dkn/r5+aySPply7C0+AGbwniJye+aSf9GDMDJTxT5
+	eBjdpLO62L8V95K8GVf+9Gy8zXUAFSSZuF6bHGRikpz7OB4VxtDToCQpb7Tc6E08W2g1uTv64p0
+	5yoBGB1U29/Dy5eZudKHpvUa4Fm4GrYIkKT+f+Wk/xGn3JH5x3aek5LVGF6QQgO4LSUmmweFWwK
+	vVngf/JY6YHnkoRjNa/fBOjdfkTttPaIFQU4qlrXsPU1+Mvt2vmQrv5BiE6637Cga+xS7xoIoj7
+	B5CIuZo/+XwpvblDxV/SNwuAdueRoEPGHxsFzdwCZKix1++LnDjkfUSzkgLoBDtmX7RqdzF0qu0
+	vBvfJX0wcYvI/qzGg5c+7B8PivAdvuv3PqwyUC/zMX5cMGa+Cqac+xE6FtTCj2+KJXQ==
+X-Received: by 2002:ac8:5744:0:b0:4ed:b7f0:c76e with SMTP id d75a77b69052e-4f4abdcbf88mr25731701cf.8.1766144731943;
+        Fri, 19 Dec 2025 03:45:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNtZi1B46d8MS0ItsM14wtH+pq/5YJaUTAUUgWUaWzQOR49pfP65rKPIpGesKt9Onif6HzRA==
+X-Received: by 2002:ac8:5744:0:b0:4ed:b7f0:c76e with SMTP id d75a77b69052e-4f4abdcbf88mr25731391cf.8.1766144731487;
+        Fri, 19 Dec 2025 03:45:31 -0800 (PST)
+Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037f512e3sm210284666b.67.2025.12.19.03.45.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Dec 2025 03:45:30 -0800 (PST)
+Message-ID: <84be5656-b22e-4fa7-8732-b355ba0c86ed@oss.qualcomm.com>
+Date: Fri, 19 Dec 2025 12:45:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251219-qcom-sa8255p-emac-v6-7-487f1082461e@oss.qualcomm.com>
-References: <20251219-qcom-sa8255p-emac-v6-0-487f1082461e@oss.qualcomm.com>
-In-Reply-To: <20251219-qcom-sa8255p-emac-v6-0-487f1082461e@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Matthew Gerlach <matthew.gerlach@altera.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Keguang Zhang <keguang.zhang@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-        Romain Gantois <romain.gantois@bootlin.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>,
-        Inochi Amaoto <inochiama@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Minda Chen <minda.chen@starfivetech.com>,
-        Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-        Fu Wei <wefu@redhat.com>,
-        Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] firmware: qcom: scm: Add SCM storage interface
+ support
+To: Junhao Xie <bigfoot@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Xilin Wu <sophon@radxa.com>, Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tomas Winkler <tomasw@gmail.com>, Raag Jadav <raag.jadav@intel.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Shuang Liang <liangshuang@eswincomputing.com>,
-        Zhi Li <lizhi2@eswincomputing.com>,
-        Shangjuan Wei <weishangjuan@eswincomputing.com>,
-        "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-        Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-        Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-        Samin Guo <samin.guo@starfivetech.com>,
-        Christophe Roullier <christophe.roullier@foss.st.com>,
-        Swathi K S <swathi.ks@samsung.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        Drew Fustini <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
-        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
-        imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-        linux-riscv@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11109;
- i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
- bh=ERxrAI7TvvbsXfivQVyIhZA9WF7tFtyd4OT7NKWaK70=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpRTowVuabPf3tOQ9zohZII/RkRRVd2Gj8jjepZ
- Va1GL7gD1uJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaUU6MAAKCRAFnS7L/zaE
- w3+WEACG/S8OdNzvmPmN1BeVLBcoxBvRMN0v8Ucc2P7BkTW39Kcw6jgcTXXh0iRZKaZ1AkXKZLE
- KFgf99nqm2wejxaYbn9Lf2AX6uZl1x0wGAxYY//mywVECqGRyBBr+i07ApEk/SPBsKQDRBp8rg5
- 08UfegvhdYq0ojcBB40b8nyE/epaX2yuodZbmbx7ZNjusFWJseSqXiKhizjD1JAVcEC+zKFQuII
- J+LDLAdfqwgTZhhzbjJH87hmqPo9Drb/s3KCr6O3prvKbHmVV/EOcLwTz9fbJPMqwLjz7czdIax
- xK0fLMOqCLCnRbtcWW2ehMR/Iy3w+aAqHaXvDIr5nDac/F+vktt2xDFS5DxEn64/ZSnCe6Wjk+A
- q7SFlaHf9OghjyUikRycrMjNhgPGweUWWJ7RqK5H9p81H76zPQNq8BdEV4kwzEqQFOFgtzFkgQR
- s4wzRZtQBxgVBTn6c7w39gjm2IdKaKbzlo6g5qFeTDmdIvg1m/8o8upbsS8EdPcNfirOXf0CDkU
- Gt//crhoCD1Up2CBhD6sEOzxnRUDO4nDLLo+LcEVKaNp0QO/ZtUr8m0s5Z+23KeWMn83+fcFs5q
- 1m/Gx4RbA1MG1/8ROYxwIq0AwOXQ+I32v7fCwkM1bwCzFkYRjKHisNbvgD5aHIBRrUOUw1DYfAG
- k/02tyI78oTROww==
-X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
-X-Proofpoint-GUID: 40tZk7WcObft1VkEfLjMr1qMyVMNnhao
-X-Proofpoint-ORIG-GUID: 40tZk7WcObft1VkEfLjMr1qMyVMNnhao
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA5NiBTYWx0ZWRfX1hTz0PwDM0vZ
- iZjM3s2ORHDye22nUNqUj1qnh+1HPJPE3lGP9G0Uxo+o7oa7ygv9kzppdK7jx2BrGPJF9ZWlnkE
- wRyNQ0uUpvyJRDq0dYI20F8LZosHsDhKgo3SD4kRqzShm/k2xKpwOhXNS1zUMZKltRHYNg5PkNp
- e/0g0xYbUaISJEQP4jwXS7kWPMnnDwV2GtdOy3nlnHprTZ9sBOUIEHm+CKpPIpXd+9KvP9VBvj7
- YgFxvbGQZdRjZCyzl5KLUHav/JJqtFT2SPakeWHdpE8BUXGmPvO5pqbfQAJs7YcYXnJ2BO7ZvaJ
- eeBUZXH4P49Tsc0pGLsYkFUdGPFS/gurjPXNTd9VTczKKlxHryREyHmkZ+pqGvd8+7pYrxdw+tt
- hn9Drjv8R2bzaOChjaKgTTzeVn/mtjxpkcXhqM+r3lQP+h9txVDJSAgyDF1jJx0jcFRlHekPpbW
- HHbeY+jrLo00codPslQ==
-X-Authority-Analysis: v=2.4 cv=Tp7rRTXh c=1 sm=1 tr=0 ts=69453a48 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=gYhETRYomtM5McKHAMIA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+        Alexander Usyskin <alexander.usyskin@intel.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mtd@lists.infradead.org
+References: <20251218180205.930961-1-bigfoot@radxa.com>
+ <155C9F219E5A9219+20251218180205.930961-2-bigfoot@radxa.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <155C9F219E5A9219+20251218180205.930961-2-bigfoot@radxa.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA5NiBTYWx0ZWRfX+VFPiGWYGH5x
+ qE/dB4/GoQE4j0SXin8VQd90q2BEJnoj24HSHBECHKZIwUcrtxIryrXj23u0bRgLDDDh9GrUobd
+ ae30FXTqQWEAOFmekmxZ4cd66zNlSNhhNsL0li6rj5JTgig1Dw2SRbKM0G0T0sLI5gs2jO1hkRz
+ aNTpN5dNG2BPeLweD+hHOvGb2ui51LLr57ntvqXWCNCKj1vjPwzaNGc/6BT68d4JITGDmJurItz
+ OZYk2pkxgycu5Ol5zci3i1830HFNsE/XZTiGmukUMCXlbZcjaiTcC8L5cMVJRrRGBfIDhPI823o
+ cjnr6gp9aHn43wnE8pDnWJbVCrti/Iux3XakvwY9Z0TbNl1ZvfnZh1jlynEYIIqCpLYM8tzEMjx
+ aXkeYXFxFXfmcuiphQxoz3VKEbp58iWbCR2Ed/1LzAiSREQpfayaPosKS5T7SF3WxsqmWvW29xr
+ x16vli/FmqJkVIr8uWA==
+X-Authority-Analysis: v=2.4 cv=W+c1lBWk c=1 sm=1 tr=0 ts=69453adc cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=ksxQWNrZAAAA:8 a=HWOIYEKOvZwOJwrNAaQA:9
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=l7WU34MJF0Z5EO9KEJC3:22
+X-Proofpoint-ORIG-GUID: PaHRmQulCzWXlHdCDpGLEXSlyhDBBxv0
+X-Proofpoint-GUID: PaHRmQulCzWXlHdCDpGLEXSlyhDBBxv0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-19_03,2025-12-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 spamscore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
  definitions=main-2512190096
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 12/18/25 7:02 PM, Junhao Xie wrote:
+> Add infrastructure to support accessing TrustZone-protected storage
+> devices through SCM (Secure Channel Manager) calls. Some Qualcomm
+> platforms protect their firmware storage (typically SPI NOR flash)
+> via TrustZone, making it inaccessible from the non-secure world.
+> 
+> Currently allowlisted for Radxa Dragon Q6A (QCS6490) where it has been
+> validated. Additional platforms can be added as they are tested.
+> 
+> Signed-off-by: Junhao Xie <bigfoot@radxa.com>
+> Tested-by: Xilin Wu <sophon@radxa.com>
+> ---
+>  drivers/firmware/qcom/qcom_scm.c       | 183 +++++++++++++++++++++++++
+>  drivers/firmware/qcom/qcom_scm.h       |   3 +
+>  include/linux/firmware/qcom/qcom_scm.h |  47 +++++++
+>  3 files changed, 233 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 731074ca1ebbe..b117e1b58e363 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -66,6 +66,21 @@ struct qcom_scm_mem_map_info {
+>  	__le64 mem_size;
+>  };
+>  
+> +struct qcom_scm_storage_cmd {
+> +	__le64 storage_type;
+> +	__le64 slot_num;
+> +	__le64 lun;
+> +	__le64 guid_ptr;
+> +	__le64 storage_cmd;
+> +};
+> +
+> +struct qcom_scm_storage_cmd_details {
+> +	__le64 lba;
+> +	__le64 length;
+> +	__le64 data_ptr;
+> +	__le64 data_size;
+> +};
 
-Extend the driver to support a new model - sa8255p. Unlike the
-previously supported variants, this one's power management is done in
-the firmware using SCMI. This is modeled in linux using power domains so
-add support for them.
+Let's make them __packed if only to denote that they're shared structures
+(no change to the compiler output because it's n*u64)
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
----
- .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 234 ++++++++++++++++++---
- 1 file changed, 209 insertions(+), 25 deletions(-)
+[...]
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 8ba57bba3f2e..54f8ef3cfd7d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -7,6 +7,8 @@
- #include <linux/platform_device.h>
- #include <linux/phy.h>
- #include <linux/phy/phy.h>
-+#include <linux/pm_opp.h>
-+#include <linux/pm_domain.h>
- 
- #include "stmmac.h"
- #include "stmmac_platform.h"
-@@ -81,6 +83,13 @@
- 
- #define SGMII_10M_RX_CLK_DVDR			0x31
- 
-+enum ethqos_pd_selector {
-+	ETHQOS_PD_CORE = 0,
-+	ETHQOS_PD_MDIO,
-+	ETHQOS_PD_SERDES,
-+	ETHQOS_NUM_PDS,
-+};
-+
- struct ethqos_emac_por {
- 	unsigned int offset;
- 	unsigned int value;
-@@ -98,6 +107,9 @@ struct ethqos_emac_driver_data {
- 
- struct ethqos_emac_pm_data {
- 	const char *link_clk_name;
-+	bool use_domains;
-+	struct dev_pm_domain_attach_data pd;
-+	unsigned int clk_ptp_rate;
- };
- 
- struct ethqos_emac_match_data {
-@@ -111,13 +123,20 @@ struct ethqos_emac_pm_ctx {
- 	struct phy *serdes_phy;
- };
- 
-+struct ethqos_emac_pd_ctx {
-+	struct dev_pm_domain_list *pd_list;
-+};
-+
- struct qcom_ethqos {
- 	struct platform_device *pdev;
- 	void __iomem *rgmii_base;
- 	void __iomem *mac_base;
- 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
- 
--	struct ethqos_emac_pm_ctx pm;
-+	union {
-+		struct ethqos_emac_pm_ctx pm;
-+		struct ethqos_emac_pd_ctx pd;
-+	};
- 	phy_interface_t phy_mode;
- 	int serdes_speed;
- 	int (*set_serdes_speed)(struct qcom_ethqos *ethqos);
-@@ -341,6 +360,25 @@ static const struct ethqos_emac_match_data emac_sa8775p_data = {
- 	.pm_data = &emac_sa8775p_pm_data,
- };
- 
-+static const char * const emac_sa8255p_pd_names[] = {
-+	"core", "mdio", "serdes"
-+};
-+
-+static const struct ethqos_emac_pm_data emac_sa8255p_pm_data = {
-+	.pd = {
-+		.pd_flags = PD_FLAG_NO_DEV_LINK,
-+		.pd_names = emac_sa8255p_pd_names,
-+		.num_pd_names = ETHQOS_NUM_PDS,
-+	},
-+	.use_domains = true,
-+	.clk_ptp_rate = 230400000,
-+};
-+
-+static const struct ethqos_emac_match_data emac_sa8255p_data = {
-+	.drv_data = &emac_v4_0_0_data,
-+	.pm_data = &emac_sa8255p_pm_data,
-+};
-+
- static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -407,6 +445,28 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- 	return 0;
- }
- 
-+static int qcom_ethqos_domain_on(struct qcom_ethqos *ethqos,
-+				 enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		dev_err(&ethqos->pdev->dev,
-+			"Failed to enable the power domain for %s\n",
-+			dev_name(dev));
-+	return ret;
-+}
-+
-+static void qcom_ethqos_domain_off(struct qcom_ethqos *ethqos,
-+				   enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+
-+	pm_runtime_put_sync(dev);
-+}
-+
- static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -623,6 +683,13 @@ static int ethqos_set_serdes_speed_phy(struct qcom_ethqos *ethqos)
- 	return phy_set_speed(ethqos->pm.serdes_phy, ethqos->serdes_speed);
- }
- 
-+static int ethqos_set_serdes_speed_pd(struct qcom_ethqos *ethqos)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
- static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
- {
- 	if (ethqos->serdes_speed != speed) {
-@@ -712,6 +779,28 @@ static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
- 	phy_exit(ethqos->pm.serdes_phy);
- }
- 
-+static int qcom_ethqos_pd_serdes_powerup(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+	int ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+	if (ret < 0)
-+		return ret;
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
-+static void qcom_ethqos_pd_serdes_powerdown(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+
-+	dev_pm_opp_set_level(dev, 0);
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_SERDES);
-+}
-+
- static int ethqos_clks_config(void *priv, bool enabled)
- {
- 	struct qcom_ethqos *ethqos = priv;
-@@ -742,6 +831,68 @@ static void ethqos_clks_disable(void *data)
- 	ethqos_clks_config(data, false);
- }
- 
-+static void ethqos_disable_serdes(void *data)
-+{
-+	struct qcom_ethqos *ethqos = data;
-+
-+	qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+}
-+
-+static int ethqos_pd_clks_config(void *priv, bool enabled)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret = 0;
-+
-+	if (enabled) {
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+		if (ret < 0) {
-+			dev_err(&ethqos->pdev->dev,
-+				"Failed to enable the MDIO power domain\n");
-+			return ret;
-+		}
-+
-+		ethqos_set_func_clk_en(ethqos);
-+	} else {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	}
-+
-+	return ret;
-+}
-+
-+static int qcom_ethqos_pd_init(struct device *dev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret;
-+
-+	/*
-+	 * Enable functional clock to prevent DMA reset after timeout due
-+	 * to no PHY clock being enabled after the hardware block has been
-+	 * power cycled. The actual configuration will be adjusted once
-+	 * ethqos_fix_mac_speed() is called.
-+	 */
-+	ethqos_set_func_clk_en(ethqos);
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_CORE);
-+	if (ret)
-+		return ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+	if (ret) {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void qcom_ethqos_pd_exit(struct device *dev, void *data)
-+{
-+	struct qcom_ethqos *ethqos = data;
-+
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+}
-+
- static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
- {
- 	struct plat_stmmacenet_data *plat_dat = priv->plat;
-@@ -782,8 +933,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 				     "dt configuration failed\n");
- 	}
- 
--	plat_dat->clks_config = ethqos_clks_config;
--
- 	ethqos = devm_kzalloc(dev, sizeof(*ethqos), GFP_KERNEL);
- 	if (!ethqos)
- 		return -ENOMEM;
-@@ -825,28 +974,67 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	ethqos->rgmii_config_loopback_en = drv_data->rgmii_config_loopback_en;
- 	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
- 	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
-+	ethqos->serdes_speed = SPEED_1000;
- 
--	ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
--	if (IS_ERR(ethqos->pm.link_clk))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
--				     "Failed to get link_clk\n");
-+	if (pm_data && pm_data->use_domains) {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_pd;
- 
--	ret = ethqos_clks_config(ethqos, true);
--	if (ret)
--		return ret;
-+		ret = devm_pm_domain_attach_list(dev, &pm_data->pd,
-+						 &ethqos->pd.pd_list);
-+		if (ret < 0)
-+			return dev_err_probe(dev, ret, "Failed to attach power domains\n");
- 
--	ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
--	if (ret)
--		return ret;
-+		plat_dat->clks_config = ethqos_pd_clks_config;
-+		plat_dat->serdes_powerup = qcom_ethqos_pd_serdes_powerup;
-+		plat_dat->serdes_powerdown = qcom_ethqos_pd_serdes_powerdown;
-+		plat_dat->exit = qcom_ethqos_pd_exit;
-+		plat_dat->init = qcom_ethqos_pd_init;
-+		plat_dat->clk_ptp_rate = pm_data->clk_ptp_rate;
- 
--	ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
--	if (IS_ERR(ethqos->pm.serdes_phy))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
--				     "Failed to get serdes phy\n");
-+		ret = qcom_ethqos_pd_init(dev, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+		if (ret)
-+			return dev_err_probe(dev, ret,
-+					     "Failed to enable the serdes power domain\n");
-+
-+		ret = devm_add_action_or_reset(dev, ethqos_disable_serdes, ethqos);
-+		if (ret)
-+			return ret;
-+	} else {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
-+
-+		ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
-+		if (IS_ERR(ethqos->pm.link_clk))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
-+					     "Failed to get link_clk\n");
-+
-+		ret = ethqos_clks_config(ethqos, true);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
-+		if (IS_ERR(ethqos->pm.serdes_phy))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
-+					     "Failed to get serdes phy\n");
-+
-+		ethqos_update_link_clk(ethqos, SPEED_1000);
-+
-+		plat_dat->clks_config = ethqos_clks_config;
-+		plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
-+
-+		if (ethqos->pm.serdes_phy) {
-+			plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
-+			plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
-+		}
-+	}
- 
--	ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
--	ethqos->serdes_speed = SPEED_1000;
--	ethqos_update_link_clk(ethqos, SPEED_1000);
- 	ethqos_set_func_clk_en(ethqos);
- 
- 	plat_dat->bsp_priv = ethqos;
-@@ -864,11 +1052,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (drv_data->dma_addr_width)
- 		plat_dat->host_dma_width = drv_data->dma_addr_width;
- 
--	if (ethqos->pm.serdes_phy) {
--		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
--		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
--	}
--
- 	/* Enable TSO on queue0 and enable TBS on rest of the queues */
- 	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
- 		plat_dat->tx_queues_cfg[i].tbs_en = 1;
-@@ -878,6 +1061,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_ethqos_match[] = {
- 	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
-+	{ .compatible = "qcom,sa8255p-ethqos", .data = &emac_sa8255p_data},
- 	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_sa8775p_data},
- 	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_sc8280xp_data},
- 	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_sm8150_data},
+> +#if IS_ENABLED(CONFIG_MTD_QCOM_SCM_STORAGE)
 
--- 
-2.47.3
+I would vouch for this to be always compiled-in
+
+> +int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
+> +			      enum qcom_scm_storage_cmd_id cmd_id,
+> +			      u64 lba, void *payload, size_t size)
+
+Please align the parameter whitespace (checkpatch, maybe w/ --strict
+should point that out)
+
+> +{
+> +	struct qcom_scm_res scm_res = {};
+> +	struct qcom_scm_desc desc = {};
+> +	struct qcom_scm_storage_cmd *cmd;
+> +	struct qcom_scm_storage_cmd_details *details;
+> +	size_t buf_size;
+> +	void *payload_buf;
+> +	int ret;
+
+Reverse-Christmas-tree would be neat (it's in a week!)
+
+> +
+> +	buf_size = sizeof(*cmd) + sizeof(*details);
+> +	if (payload)
+> +		buf_size += size;
+> +	void *data __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
+> +							 buf_size,
+> +							 GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +	memset(data, 0, buf_size);
+> +	if (payload) {
+> +		payload_buf = data + sizeof(*cmd) + sizeof(*details);
+> +		memcpy(payload_buf, payload, size);
+> +	}
+> +
+> +	cmd = data;
+> +	cmd->storage_type = storage_type;
+> +	cmd->storage_cmd = cmd_id;
+> +
+> +	details = data + sizeof(*cmd);
+> +	details->lba = lba;
+
+I'm debating whether adding something like:
+
+struct qcom_scm_storage_payload {
+	struct qcom_scm_storage_cmd *cmd;
+	struct qcom_scm_storage_cmd_details *details;
+	void *data[];
+};
+
+would improve readability, but perhaps for just 3 items it's simply not
+worth the boilerplate
+
+[...]
+
+
+> +static int qcom_scm_storage_init(struct qcom_scm *scm)
+> +{
+> +	struct qcom_scm_storage_info info;
+> +	struct platform_device *storage_dev;
+> +	int ret;
+> +
+> +	ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +					QCOM_SCM_STORAGE_GET_INFO,
+> +					0, &info, sizeof(info));
+> +	if (ret < 0) {
+> +		dev_info(scm->dev, "scm storage not available: %d\n", ret);
+> +		return 0;
+> +	}
+
+You can first call __qcom_scm_is_call_available for even more robustness
+
+> +
+> +	if (!qcom_scm_storage_machine_is_allowed()) {
+> +		dev_info(scm->dev, "scm storage untested, skipping\n");
+> +		return 0;
+> +	}
+
+FWIW UEFI uses these APIs, so if the implementation is correct, I see no
+reason to worry
+
+> +
+> +	dev_info(scm->dev, "scm storage size %llu bytes\n",
+> +		 info.total_blocks * info.block_size);
+
+dev_dbg?
+
+> +
+> +	storage_dev = platform_device_alloc("qcom_scm_storage", -1);
+> +	if (!storage_dev)
+> +		return -ENOMEM;
+> +
+> +	storage_dev->dev.parent = scm->dev;
+> +
+> +	ret = platform_device_add(storage_dev);
+> +	if (ret) {
+> +		platform_device_put(storage_dev);
+> +		return ret;
+> +	}
+> +
+> +	return devm_add_action_or_reset(scm->dev, qcom_scm_storage_free,
+> +					storage_dev);
+
+fauxbus?
+
+> +}
+> +
+> +#else /* CONFIG_MTD_QCOM_SCM_STORAGE */
+> +
+> +static int qcom_scm_storage_init(struct qcom_scm *scm)
+> +{
+> +	return 0;
+> +}
+> +
+> +#endif /* CONFIG_MTD_QCOM_SCM_STORAGE */
+> +
+>  /**
+>   * qcom_scm_is_available() - Checks if SCM is available
+>   */
+> @@ -2449,6 +2626,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  	/* Initialize the QTEE object interface. */
+>  	qcom_scm_qtee_init(scm);
+>  
+> +	/*
+> +	 * Initialize the SCM storage interface.
+> +	 */
+
+/* This fits in a single-line comment */
+
+
+> +	ret = qcom_scm_storage_init(scm);
+> +	WARN(ret < 0, "failed to initialize scm storage: %d\n", ret);
+> +
+>  	return 0;
+>  }
+>  
+> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+> index a56c8212cc0c4..3b68b33c5ccc3 100644
+> --- a/drivers/firmware/qcom/qcom_scm.h
+> +++ b/drivers/firmware/qcom/qcom_scm.h
+> @@ -149,6 +149,9 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
+>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
+>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
+>  
+> +#define QCOM_SCM_SVC_STORAGE			0x1a
+> +#define QCOM_SCM_STORAGE_CMD			0x01
+> +
+>  #define QCOM_SCM_SVC_WAITQ			0x24
+>  #define QCOM_SCM_WAITQ_RESUME			0x02
+>  #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index a55ca771286bf..41f799d8de54f 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -53,6 +53,36 @@ enum qcom_scm_ice_cipher {
+>  	QCOM_SCM_ICE_CIPHER_AES_256_CBC = 4,
+>  };
+>  
+> +enum qcom_scm_storage_cmd_id {
+> +	QCOM_SCM_STORAGE_INIT      = 0,
+> +	QCOM_SCM_STORAGE_READ      = 1,
+> +	QCOM_SCM_STORAGE_WRITE     = 2,
+> +	QCOM_SCM_STORAGE_ERASE     = 3,
+> +	QCOM_SCM_STORAGE_GET_INFO  = 4,
+> +	QCOM_SCM_STORAGE_DEINIT    = 5,
+
+6 -> _MAC_MISMATCH -> EBADMSG? (invalid data hash)
+7 -> _ALREADY_RUNNING -> -EALREADY
+8 -> _PARTITION_NOT_FOUND -> -ENOENT?
+9 -> _READONLY -> -EROFS
+
+> +};
+> +
+> +enum qcom_scm_storage_type {
+> +	QCOM_SCM_STORAGE_NULL    = 0,
+> +	QCOM_SCM_STORAGE_SPINOR  = 1,
+> +};
+> +
+> +#define QCOM_SCM_STORAGE_FW_VER_LEN	32
+> +#define QCOM_SCM_STORAGE_MEM_TYPE_LEN	5
+> +#define QCOM_SCM_STORAGE_PROD_NAME_LEN	32
+> +
+> +struct qcom_scm_storage_info {
+> +	u64 total_blocks;
+> +	u32 block_size;
+> +	u32 page_size;
+> +	u32 num_physical;
+> +	u64 manufacturer_id;
+> +	u64 serial_num;
+> +	char fw_version[QCOM_SCM_STORAGE_FW_VER_LEN];
+> +	char memory_type[QCOM_SCM_STORAGE_MEM_TYPE_LEN];
+> +	char product_name[QCOM_SCM_STORAGE_PROD_NAME_LEN];
+
+I would strongly assume all variables here are little-endian as well
+
+Konrad
 
 
