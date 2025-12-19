@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-85972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D3DCCD17CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 19:57:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC71CD17B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 19:56:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 025253043A84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:56:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8EE533020147
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A4EB34D906;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5602834CFBA;
 	Fri, 19 Dec 2025 18:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="T95j2VSJ"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ykRwGRLj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63AB34D919
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62A034D921
 	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 18:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766170008; cv=none; b=tusUtB40S9JgBOuBUwOIkHFDKoVShHAqwQlUkq7DKt27J7SVP4qLFoWuJYZkUcIXbOLL5ARE8pKU1Dl6cmf5jN3gO3r8Dx35t19JJxZoNc+ur9DHf6QiOnBLnmFLGKTwIn09qJPSF0x4Qsa7AngsMHOJC3eRDw2jaH6hyAoRujk=
+	t=1766170008; cv=none; b=dSIB6BR2fXjiDC16hpLO4AvQp3jnsMLbptUQ39tk9VxMrVWrM+bNUPljtvAwNjK0ckPfLLwpUXEWnnkj14NdloKyyfllBQ/JmyBzZMWEOe8MhSy/t2Nzj2z7D5FRWrJPb6robIlw8nVSL9mMR7gFEkOwuAO5U7H8roNVhq3BUD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766170008; c=relaxed/simple;
-	bh=2FanYDvvy1YFdWhYE1bLguf3LBX/PeoCX0CJoTPUTdA=;
+	bh=FbqCU44UbDeLMjzyPzJaS9f973pnQtgvV2R7iee1h3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iT14HoPkT+MRaQFnaWLLt6rfHjTwNMO/pX3DjeyBlB6DPH5Uzb0svj6L6WApN35COaokjU5rVn3VEytsOHvqsK4E6zTEyDUYAlJ8MIv5S6iSCKO82MlBGph7KhOVfs3XGK1iV85ayi18DagK8/R1IzLqiY07nrvKyjEa7dB+Nf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=T95j2VSJ; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=Q5xqC6qLIT28YgmdfIv96EhEOE0VavaQxoOXpZNPtXAd/AY+1T4b8eOWmGqNqf1StGrcopYVmuBiqrB6K8xPb1QOnje62kF5YrI48hdN3YYsILN4K2Pe2siuJMTA7nV/9uPNcide1QJGJEQ2wiu5ih7cICbm4gdhII8w8k/fSdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ykRwGRLj; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=STIo9H2/VjPqz6jqALPYI8whpqDYcsvYugZnqQ9trXY=; b=T95j2VSJFRDWLpUM/CcjN0BiTU
-	fU969KoN/l7A8x080o+dOfd7bc2X++Xp2q00IUq7g2Lzh8chyiAoL91WaYQpyX32/BWBSn11U0Mx1
-	g14A+4uHeJgX6d3IH8DpEfY8HeKBrvHudNn+VzETT8dysv7g7Xrm/GHKcpYbRyN/r96WdZBo3aWbz
-	clj8ZRwX/NfB8YiPL10eVvsRiuY9hy4LbRDmONsQJa91J7XbrM3JNTnU5e9VVJM6QwJwiNEpXPkal
-	u/sRpn1jdVGAhmJJz+3fZtOABkRKX9mDaOiMjEcauYsq3lGjwlC96baINHGxnEP+mE0R0BuC9sx1w
-	BHeK1Pqw==;
+	bh=blWFti2tFPKyEyaGfXOc6NvTt/uLRQso2G+suyw4GtU=; b=ykRwGRLjoAFK64oxwV8+/J/SF2
+	WdYo2v82JUuGB2qNdnWfisKxszkRcTgRw+lWNRzThvJsnJpFo9MrudRFfq8n8+z7+mQMBnePhyO32
+	UnsxCh+YN+xkU+psGOjZE5ef9xGYPyBDa65LKrhU0eTmUDf0SwWMRmfhcfjKOLOZIt6Fo6lOrJtjZ
+	73AFfA6sPJciaGw1KT3FJ+wuR29iJXzix1rPlr/cZKWrnqk1uG90a2pULux0T4teZWBUdEcyg8uUe
+	KJIFQWYRL7gVpPVF53kTL36qE5ecmq73wp4D1UcbQnhCeUa6C2CGY+c1+vgwCT5dYOlfgc7TNZ+ut
+	mkBANM9A==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vWfV0-0000000AqkV-0dst;
+	id 1vWfV0-0000000AqkV-1vLz;
 	Fri, 19 Dec 2025 18:46:46 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: dri-devel@lists.freedesktop.org
@@ -53,9 +53,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 18/19] drm/msm: msm_gpu.h: fix all kernel-doc warnings
-Date: Fri, 19 Dec 2025 10:46:37 -0800
-Message-ID: <20251219184638.1813181-19-rdunlap@infradead.org>
+Subject: [PATCH 19/19] drm/msm: msm_iommu.c: fix all kernel-doc warnings
+Date: Fri, 19 Dec 2025 10:46:38 -0800
+Message-ID: <20251219184638.1813181-20-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251219184638.1813181-1-rdunlap@infradead.org>
 References: <20251219184638.1813181-1-rdunlap@infradead.org>
@@ -69,60 +69,10 @@ Content-Transfer-Encoding: 8bit
 
 Correct or add kernel-doc comments to eliminate all warnings:
 
-Warning: drivers/gpu/drm/msm/msm_gpu.h:119 Incorrect use of kernel-doc
- format: * devfreq: devfreq instance
-Warning: drivers/gpu/drm/msm/msm_gpu.h:125 Incorrect use of kernel-doc
- format: * idle_freq:
-Warning: drivers/gpu/drm/msm/msm_gpu.h:136 Incorrect use of kernel-doc
- format: * boost_constraint:
-Warning: drivers/gpu/drm/msm/msm_gpu.h:144 Incorrect use of kernel-doc
- format: * busy_cycles: Last busy counter value, for calculating elapsed
- busy
-Warning: drivers/gpu/drm/msm/msm_gpu.h:156 Incorrect use of kernel-doc
- format: * idle_work:
-Warning: drivers/gpu/drm/msm/msm_gpu.h:163 Incorrect use of kernel-doc
- format: * boost_work:
-Warning: drivers/gpu/drm/msm/msm_gpu.h:170 struct member 'devfreq' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:170 struct member 'boost_freq' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'devfreq' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'lock' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'governor' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'we are
- continuing to sample busyness and * adjust frequency while the GPU is
- idle' not described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'boost_freq' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'busy_cycles'
- not described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'time' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'idle_time' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'idle_work' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'boost_work' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:172 struct member 'suspended' not
- described in 'msm_gpu_devfreq'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:472 No description found for
- return value of 'msm_context_is_vmbind'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:476 struct member 'ref' not
- described in 'msm_context'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:476 struct member 'elapsed_ns' not
- described in 'msm_context'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:492 expecting prototype for
- msm_context_is_vm_bind(). Prototype was for msm_context_is_vmbind()
- instead
-Warning: drivers/gpu/drm/msm/msm_gpu.h:523 No description found for
- return value of 'msm_gpu_convert_priority'
-Warning: drivers/gpu/drm/msm/msm_gpu.h:583 expecting prototype for
- struct msm_gpu_submitqueues. Prototype was for struct msm_gpu_submitqueue
- instead
+Warning: ../drivers/gpu/drm/msm/msm_iommu.c:381 expecting prototype for
+ alloc_pt(). Prototype was for msm_iommu_pagetable_alloc_pt() instead
+Warning: ../drivers/gpu/drm/msm/msm_iommu.c:426 expecting prototype for
+ free_pt(). Prototype was for msm_iommu_pagetable_free_pt() instead
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -134,227 +84,27 @@ Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Cc: Maxime Ripard <mripard@kernel.org>
 Cc: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/msm/msm_gpu.h |   68 ++++++++------------------------
- 1 file changed, 18 insertions(+), 50 deletions(-)
+ drivers/gpu/drm/msm/msm_iommu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- linux-next-20251217.orig/drivers/gpu/drm/msm/msm_gpu.h
-+++ linux-next-20251217/drivers/gpu/drm/msm/msm_gpu.h
-@@ -116,15 +116,12 @@ struct msm_gpu_fault_info {
-  * struct msm_gpu_devfreq - devfreq related state
-  */
- struct msm_gpu_devfreq {
--	/** devfreq: devfreq instance */
-+	/** @devfreq: devfreq instance */
- 	struct devfreq *devfreq;
--
--	/** lock: lock for "suspended", "busy_cycles", and "time" */
-+	/** @lock: lock for "suspended", "busy_cycles", and "time" */
- 	struct mutex lock;
--
- 	/**
--	 * idle_freq:
--	 *
-+	 * @idle_freq:
- 	 * Shadow frequency used while the GPU is idle.  From the PoV of
- 	 * the devfreq governor, we are continuing to sample busyness and
- 	 * adjust frequency while the GPU is idle, but we use this shadow
-@@ -132,43 +129,34 @@ struct msm_gpu_devfreq {
- 	 * it is inactive.
- 	 */
- 	unsigned long idle_freq;
--
- 	/**
--	 * boost_constraint:
--	 *
-+	 * @boost_freq:
- 	 * A PM QoS constraint to boost min freq for a period of time
- 	 * until the boost expires.
- 	 */
- 	struct dev_pm_qos_request boost_freq;
--
- 	/**
--	 * busy_cycles: Last busy counter value, for calculating elapsed busy
-+	 * @busy_cycles: Last busy counter value, for calculating elapsed busy
- 	 * cycles since last sampling period.
- 	 */
- 	u64 busy_cycles;
--
--	/** time: Time of last sampling period. */
-+	/** @time: Time of last sampling period.  */
- 	ktime_t time;
--
--	/** idle_time: Time of last transition to idle: */
-+	/** @idle_time: Time of last transition to idle.  */
- 	ktime_t idle_time;
--
- 	/**
--	 * idle_work:
--	 *
-+	 * @idle_work:
- 	 * Used to delay clamping to idle freq on active->idle transition.
- 	 */
- 	struct msm_hrtimer_work idle_work;
--
- 	/**
--	 * boost_work:
--	 *
-+	 * @boost_work:
- 	 * Used to reset the boost_constraint after the boost period has
- 	 * elapsed
- 	 */
- 	struct msm_hrtimer_work boost_work;
- 
--	/** suspended: tracks if we're suspended */
-+	/** @suspended: tracks if we're suspended */
- 	bool suspended;
- };
- 
-@@ -358,57 +346,43 @@ struct msm_gpu_perfcntr {
- struct msm_context {
- 	/** @queuelock: synchronizes access to submitqueues list */
- 	rwlock_t queuelock;
--
- 	/** @submitqueues: list of &msm_gpu_submitqueue created by userspace */
- 	struct list_head submitqueues;
--
- 	/**
- 	 * @queueid:
--	 *
- 	 * Counter incremented each time a submitqueue is created, used to
- 	 * assign &msm_gpu_submitqueue.id
- 	 */
- 	int queueid;
--
- 	/**
- 	 * @closed: The device file associated with this context has been closed.
--	 *
- 	 * Once the device is closed, any submits that have not been written
- 	 * to the ring buffer are no-op'd.
- 	 */
- 	bool closed;
--
- 	/**
- 	 * @userspace_managed_vm:
--	 *
- 	 * Has userspace opted-in to userspace managed VM (ie. VM_BIND) via
- 	 * MSM_PARAM_EN_VM_BIND?
- 	 */
- 	bool userspace_managed_vm;
--
- 	/**
- 	 * @vm:
--	 *
- 	 * The per-process GPU address-space.  Do not access directly, use
- 	 * msm_context_vm().
- 	 */
- 	struct drm_gpuvm *vm;
--
--	/** @kref: the reference count */
-+	/** @ref: the reference count */
- 	struct kref ref;
--
- 	/**
- 	 * @seqno:
--	 *
- 	 * A unique per-process sequence number.  Used to detect context
- 	 * switches, without relying on keeping a, potentially dangling,
- 	 * pointer to the previous context.
- 	 */
- 	int seqno;
--
- 	/**
- 	 * @sysprof:
--	 *
- 	 * The value of MSM_PARAM_SYSPROF set by userspace.  This is
- 	 * intended to be used by system profiling tools like Mesa's
- 	 * pps-producer (perfetto), and restricted to CAP_SYS_ADMIN.
-@@ -423,40 +397,32 @@ struct msm_context {
- 	 * file is closed.
- 	 */
- 	int sysprof;
--
- 	/**
- 	 * @comm: Overridden task comm, see MSM_PARAM_COMM
- 	 *
- 	 * Accessed under msm_gpu::lock
- 	 */
- 	char *comm;
--
- 	/**
- 	 * @cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE
- 	 *
- 	 * Accessed under msm_gpu::lock
- 	 */
- 	char *cmdline;
--
- 	/**
--	 * @elapsed:
--	 *
-+	 * @elapsed_ns:
- 	 * The total (cumulative) elapsed time GPU was busy with rendering
- 	 * from this context in ns.
- 	 */
- 	uint64_t elapsed_ns;
--
- 	/**
- 	 * @cycles:
--	 *
- 	 * The total (cumulative) GPU cycles elapsed attributed to this
- 	 * context.
- 	 */
- 	uint64_t cycles;
--
- 	/**
- 	 * @entities:
--	 *
- 	 * Table of per-priority-level sched entities used by submitqueues
- 	 * associated with this &drm_file.  Because some userspace apps
- 	 * make assumptions about rendering from multiple gl contexts
-@@ -466,10 +432,8 @@ struct msm_context {
- 	 * level.
- 	 */
- 	struct drm_sched_entity *entities[NR_SCHED_PRIORITIES * MSM_GPU_MAX_RINGS];
--
- 	/**
- 	 * @ctx_mem:
--	 *
- 	 * Total amount of memory of GEM buffers with handles attached for
- 	 * this context.
- 	 */
-@@ -479,7 +443,7 @@ struct msm_context {
- struct drm_gpuvm *msm_context_vm(struct drm_device *dev, struct msm_context *ctx);
- 
- /**
-- * msm_context_is_vm_bind() - has userspace opted in to VM_BIND?
-+ * msm_context_is_vmbind() - has userspace opted in to VM_BIND?
-  *
-  * @ctx: the drm_file context
-  *
-@@ -487,6 +451,8 @@ struct drm_gpuvm *msm_context_vm(struct
-  * do sparse binding including having multiple, potentially partial,
-  * mappings in the VM.  Therefore certain legacy uabi (ie. GET_IOVA,
-  * SET_IOVA) are rejected because they don't have a sensible meaning.
-+ *
-+ * Returns: %true if userspace is managing the VM, %false otherwise.
-  */
- static inline bool
- msm_context_is_vmbind(struct msm_context *ctx)
-@@ -518,6 +484,8 @@ msm_context_is_vmbind(struct msm_context
-  * This allows generations without preemption (nr_rings==1) to have some
-  * amount of prioritization, and provides more priority levels for gens
-  * that do have preemption.
-+ *
-+ * Returns: %0 on success, %-errno on error.
-  */
- static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
- 		unsigned *ring_nr, enum drm_sched_priority *sched_prio)
-@@ -541,7 +509,7 @@ static inline int msm_gpu_convert_priori
+--- linux-next-20251119.orig/drivers/gpu/drm/msm/msm_iommu.c
++++ linux-next-20251119/drivers/gpu/drm/msm/msm_iommu.c
+@@ -364,7 +364,7 @@ msm_iommu_pagetable_prealloc_cleanup(str
  }
  
  /**
-- * struct msm_gpu_submitqueues - Userspace created context.
-+ * struct msm_gpu_submitqueue - Userspace created context.
-  *
-  * A submitqueue is associated with a gl context or vk queue (or equiv)
-  * in userspace.
+- * alloc_pt() - Custom page table allocator
++ * msm_iommu_pagetable_alloc_pt() - Custom page table allocator
+  * @cookie: Cookie passed at page table allocation time.
+  * @size: Size of the page table. This size should be fixed,
+  * and determined at creation time based on the granule size.
+@@ -416,7 +416,7 @@ msm_iommu_pagetable_alloc_pt(void *cooki
+ 
+ 
+ /**
+- * free_pt() - Custom page table free function
++ * msm_iommu_pagetable_free_pt() - Custom page table free function
+  * @cookie: Cookie passed at page table allocation time.
+  * @data: Page table to free.
+  * @size: Size of the page table. This size should be fixed,
 
