@@ -1,227 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-85933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC69CD0F05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:42:02 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id A22B8CD0F83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:49:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C7D90303ACAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:41:45 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id F1EA8301EBEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:49:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2108834F485;
-	Fri, 19 Dec 2025 16:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB7C36656F;
+	Fri, 19 Dec 2025 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="iR/HRyWy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kUYbiruI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7A33491C7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 16:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A5366569;
+	Fri, 19 Dec 2025 16:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766162492; cv=none; b=Tdh8AmA70waPBF38QXg7+mLT7yqgrRUsXc6Q8Hr5iVxIFEtHBo36UwRMZ6FkkYldZPOfK4dLypkNFZXxbauHGcOY57RYozaObsKbIIJXc9yehm5rFyIgohr/9OCurkr1/vaSbaKbx3atnz33gSYPCiLzZU0Kwc74PZ1mSlu3pss=
+	t=1766162950; cv=none; b=HPNAblX7klE17LIbCIIUoQO6SW8LNyEGKEssGmA4GJ13NtW+vSmn5CL1gnPxfsLOp8j7v2dlflYBgYgF7LvMur6/uwm966Ow0NJmgVM/4dMDogr6lFj9rliqw6Kl+1VqUWeL/jKB46FI3K22Q1WfWFMabZyg9ypDT0kQwhEksdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766162492; c=relaxed/simple;
-	bh=LbaF66ke8LZxZbzBSqWF+LbtIQHMEYFknVPL8JPpg/I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NM+NFoyNrIqz8GQgLw0+7djz9/nKMzGdZdW6mobWPmhNQObhPsgGY20H86WV6DqwWO2p+5WXERfBa8TRiZlgmtn6HRb6IahEbmREAaAy6k2OxuV5s7cWTsDmm4tbkNCwfPdxAQfuKybjX/A4uzRj94fWo3zJzlBYJ+spiv+OUI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=iR/HRyWy; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b7636c96b9aso344473666b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 08:41:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1766162484; x=1766767284; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e2Cw2KB1P5Y6mcnQJX0NULNND1p0iocVjya6HA4fgP4=;
-        b=iR/HRyWytBvsluQHGs1uWbZEyhdPClEaoT+6qL2mpen5W8cwT16x/EKBTRCLrVnH/R
-         0Z6KI0JJjxzMvtzUZwHXX1AeDtT1KNqo7y0d1xOIgrDqZJHGINyrqOIgnDYSj4u/UlRS
-         Lge7gKT4q93y2b+mSRklybGNo0Y+HKvkm4IC3Yiz/aQVJj2cg31QsckiRTtA8QkgBhx8
-         j+cDWpA0ECla214yE1h4uPUUzOfPsnfC63Fxy1xKDuo/FQKEm5qU65GG6IodRM/PkZEJ
-         AsfCna+CZvjwRbTl5y6repf0fc1rj6pMbHEnSUgbknAj9WTOfDWljTcIOEf+uS3Y35PX
-         6lNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766162484; x=1766767284;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=e2Cw2KB1P5Y6mcnQJX0NULNND1p0iocVjya6HA4fgP4=;
-        b=XDgm27TIwHkDiWHmzs5Uiuaet14JV2xjTH7XpGate3HkQ0TZxorKjfWn3mjEsra41B
-         dci15LiLaJNreFx6HPp1hJbMnHRLo0GpxqqkvRScpXLaq6LGnP/znle0JhhsBblP/yLp
-         gkbQw0x0YN6EqcClGfb8WISdhIiDXAtKecPV6YgFB52IrOphSQSPATeHRiKSvXomNaQ+
-         ujpJDacqSNqu8pZpqaLHnTxI3FH/uvTwkU6drEh1SzP7hUxh//xDjCuYNQ4o5w/iqO1L
-         Bk+fOVyu1iQFrrCrb4YmmGyskljrWlESQCHu851g1BGz9+iDy8kf/beohc8dTKqu2xYB
-         cPsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEZFPqgSpxVeXJdlrbbYnzs5twKIaG5D8X2ifkOyEVzYQ+kOY3bX4w9VNVBbUO5ps/T8tgpepuJM67o2vg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzALzLiZB6MnYFlhKCwDbrMHWcLZf624dhzEnwbxtefpjYyllqe
-	diCrGnSVLIz4/2msrQ9pRrq0qqzILAcO+ql4M3bMJfcQ0whF845JMi1nGSPpzX5alopc6u6nI8/
-	8ev0KQSDLtFfm
-X-Gm-Gg: AY/fxX5TnXRjX+TMcFI2as2PmGi+yh6qtY9ErIBrv6nP2fABVvVz77vGP6y93rVngAj
-	mHQqNUQTxEjahIv714qUVP0oJux1kqu5SOK65mLaAiT5oY9/bb1FlnE45BL/oUqscC1bvTDvaXU
-	dv1HqLN+g3HqOrmoUtA1Iy1sVHDrOR3hibEpwPhRIAtAf8ketQfC0EdKfnwiHaU/Tabi1Yv93rd
-	f6jEkUQxP7RZoZ2+dfokiOQSEwd0slsMwf9/OfmEVgLLFu6uEPNY3nyByYugAb4+Ok+AADV9JJy
-	ggRgMEqlVnwyugaYGJ8cRDgJ7A6oiKGaxbMx4JQunBTQzZ1qon9hJ9rV6rVnc2i732aaIngmiK3
-	DZPrcG1Oz2wcG+0fIkn293a2Nuf7GrYsds5jIkXC4BZ0kpnPySXJQo2lBPDpb2zUMSmuP1l0r17
-	h0IKHr2aWO0RCzzObi+2MojIFV0NiaME8dR7XECqGfaSj9cTtbK4R230Vgerb5SWiepLcaoQGZc
-	1fqQozrzU5xUTqIRZWmSuZAcABBScqsS0M=
-X-Google-Smtp-Source: AGHT+IHcMyLakLOiabV0zgp9j2BbCuOpJ/ILNqwAtFawoKOVX3o7aGBaAA9adOk/BitF1e97wb/uow==
-X-Received: by 2002:a17:907:6d23:b0:b7d:266a:7728 with SMTP id a640c23a62f3a-b80371f8f50mr342762466b.44.1766162483979;
-        Fri, 19 Dec 2025 08:41:23 -0800 (PST)
-Received: from [192.168.178.182] (2001-1c00-3b89-c600-71a4-084f-6409-1447.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b89:c600:71a4:84f:6409:1447])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037f4ef1fsm270073866b.64.2025.12.19.08.41.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 08:41:23 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 19 Dec 2025 17:41:12 +0100
-Subject: [PATCH RFC 6/6] arm64: dts: qcom: milos-fairphone-fp6: Enable
- panel
+	s=arc-20240116; t=1766162950; c=relaxed/simple;
+	bh=gU/Spk635yGSmiL/m1EMeZ4emx6QYD9+JLagft52vcs=;
+	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=WFeaYy4glv3mb80eYES+EZSNGG91WzHYxUSbGNzTdb8VadwUY/IseckAW0A+9NGX35Gd8LfJiXRCnvtoMNcer95iZ/lD6nzpiOtNoyK6apb7uWiAfXVe5at62p5BOp4PIwKfCC2VNZ2aX0Mom9VHpV+jtUJVA4MQ4iq0OrB1Rno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kUYbiruI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C59C116D0;
+	Fri, 19 Dec 2025 16:49:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766162948;
+	bh=gU/Spk635yGSmiL/m1EMeZ4emx6QYD9+JLagft52vcs=;
+	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
+	b=kUYbiruIk0KQIvLCn3b0/Y/uX1d6dGlovgCtUnooFBg/BQ8bwIIWe8AKgSK5TcBfq
+	 9ZxFO4O5sRrW1PtXvKgH/KK7/YMGNRUCV9lXneSGToB2DHS8Z45yW6KfzaA1hZkQlU
+	 ZpG5kk4tVHcAVabmrrYDkuMOOn+O8h/ZZiIHuQkHLM4TM+zR1j83rPD/QlZHP5/HiE
+	 cg+POSQsIDcdqxV3SOKiGObha/fUIcBmgYggt3CLnG6pAVfWNLjUoR+kOo1MF4HnHQ
+	 tjCYCSSprwqYkYViBTsBbbzbh70hXHQR178Mm3Njq79aRdQ5QL4TQf2uezgw/J86J2
+	 Df+lCZ1ZZfxPw==
+From: Rob Herring <robh@kernel.org>
+Date: Fri, 19 Dec 2025 10:49:06 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251219-milos-mdss-v1-6-4537a916bdf9@fairphone.com>
-References: <20251219-milos-mdss-v1-0-4537a916bdf9@fairphone.com>
-In-Reply-To: <20251219-milos-mdss-v1-0-4537a916bdf9@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1766162477; l=2578;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=LbaF66ke8LZxZbzBSqWF+LbtIQHMEYFknVPL8JPpg/I=;
- b=Rv0hSkSQEMyym7EIZ+cVRBj/6SP1f7dhM4pzbEWfaCF2YNFHzOP6VQw+YLffiycuav+hx1xjB
- GC1ASefj0LAB0zCj980vbPgQ3vI8SRE/lnefKNNv4uybbds++qyTiBv
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Cc: Johannes Berg <johannes@sipsolutions.net>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Dale Whinham <daleyo@gmail.com>, 
+ linux-arm-msm@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Hans de Goede <hansg@kernel.org>, platform-driver-x86@vger.kernel.org, 
+ devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ ath12k@lists.infradead.org, Maximilian Luz <luzmaximilian@gmail.com>, 
+ linux-wireless@vger.kernel.org, Lorenzo Bianconi <lorenzo@kernel.org>, 
+ Jeff Johnson <jjohnson@kernel.org>, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
+In-Reply-To: <20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com>
+References: <20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com>
+Message-Id: <176616243275.3584198.6534106165888918555.robh@kernel.org>
+Subject: Re: [PATCH v4 0/6] Microsoft Surface Pro 11 support
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 71 ++++++++++++++++++++++--
- 1 file changed, 66 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-index 92b40ab56c26..8cddab412581 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -612,11 +612,6 @@ eeprom@51 {
- 	};
- };
- 
--&dispcc {
--	/* Disable for now so simple-framebuffer continues working */
--	status = "disabled";
--};
--
- &gcc {
- 	protected-clocks = <GCC_PCIE_1_AUX_CLK>, <GCC_PCIE_1_AUX_CLK_SRC>,
- 			   <GCC_PCIE_1_CFG_AHB_CLK>, <GCC_PCIE_1_MSTR_AXI_CLK>,
-@@ -725,6 +720,51 @@ &ipa {
- 	status = "okay";
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l4b>;
-+
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "boe,bj631jhm-t71-d900";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
-+
-+		vci-supply = <&vreg_l19b>;
-+		vddio-supply = <&vreg_l9b>;
-+		dvdd-supply = <&vreg_oled_dvdd_1p2>;
-+		// avdd-supply = <&pmiv0104_oledb> (VREG_OLEDB): 5V-8V
-+		// elvss-supply = <&pmiv0104_elvss> (VREG_ELVSS): -8V-0V
-+		// elvdd-supply = <&pmiv0104_elvdd> (VREG_ELVDD - OLEDB): 0-8V
-+
-+		pinctrl-0 = <&disp_reset_n_active>, <&mdp_vsync>;
-+		pinctrl-1 = <&disp_reset_n_suspend>, <&mdp_vsync>;
-+		pinctrl-names = "default", "sleep";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l2b>;
-+
-+	status = "okay";
-+};
-+
- &pm8550vs_c {
- 	status = "okay";
- };
-@@ -883,6 +923,20 @@ &tlmm {
- 			       <13 1>, /* NC */
- 			       <63 2>; /* WLAN UART */
- 
-+	disp_reset_n_active: disp-reset-n-active-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	disp_reset_n_suspend: disp-reset-n-suspend-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- 	ts_active: ts-irq-active-state {
- 		pins = "gpio19";
- 		function = "gpio";
-@@ -910,6 +964,13 @@ pm8008_int_default: pm8008-int-default-state {
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
-+
-+	mdp_vsync: mdp-vsync-state {
-+		pins = "gpio129";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
- };
- 
- &uart5 {
+On Thu, 18 Dec 2025 23:22:06 +0100, Jérôme de Bretagne wrote:
+> This series brings support for the Qualcomm-based Microsoft Surface
+> Pro 11 covering both the OLED and LCD variants.
+> 
+> Signed-off-by: Dale Whinham <daleyo@gmail.com>
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> ---
+> Changes in v4:
+> - Re-order the denali entry in the aggregator_registry acpi_match table [Dmitry]
+> - Improve the bindings by splitting the LCD and OLED variants into 2 entries [Konrad]
+> - Enable i2c4 to make it accessible through i2c-tools [Konrad]
+> - Document the addresses for i2c0 and i2c4 like in romulus.dtsi [Konrad]
+> - Fix the clock-frequency for i2c0 based on DSDT/SSDT
+> - Drop i2c5 which is not found in the DSDT after double-checking
+> - Add the R-b: tag from Konrad for the SP11 device trees
+> - Link to v3: https://lore.kernel.org/r/20251218-surface-sp11-for-next-v3-0-875afc7bd3b7@gmail.com
+> 
+> Changes in v3:
+> - Update the compatible strings to document both the OLED and LCD variants
+> - Move the disable-rfkill property into ieee80211.yaml [Rob,Krzysztof]
+> - Reference commit c6a7c0b09d5f and detail the disable-rfkill patch description [Rob,Krzysztof]
+> - Switch to the renamed hamoa.dtsi and hamoa-pmics.dtsi [Dale]
+> - Improve the comments describing the 2 USB Type-C port location
+> - Update the speaker definition to describe only 2-speakers [Konrad]
+> - Drop output-low from the speaker definition [Konrad]
+> - Enable i2c0 to make it accessible through i2c-tools [Konrad]
+> - Delete a non-applicable comment about removable WLAN card [Konrad]
+> - Re-order a few nodes and fix indentation issues [Konrad]
+> - Squash one of the patches as suggested [Krzysztof]
+> - Drop the NAKed patch patch about a dpcd link rate quirk [Dmitry]
+> - Include the Reviewed-by: tags
+> - Link to v2: https://lore.kernel.org/all/20251201011457.17422-1-daleyo@gmail.com/
+> 
+> Changes in v2:
+>   - Dropped ATNA30DW01 patch as it was merged.
+>   - Split device tree into x1e (OLED)/x1p (LCD) specific *.dts files and move common code into x1-microsoft-denali.dtsi (patch 4).
+>   - Device tree now enables higher external monitor refresh rates/resolutions (patch 4).
+>   - Device tree now enables partially working audio output; requires alsa-ucm-conf and audioreach-topology definitions in userspace (patch 4).
+>   - Replaced 'Work around bogus maximum link rate' with a quirk-based approach (patch 5).
+>   - Improve the commit message about the disable-rfkill property in response to feedback (patch 6).
+> 
+> ---
+> Dale Whinham (4):
+>       firmware: qcom: scm: allow QSEECOM on Surface Pro 11
+>       platform/surface: aggregator_registry: Add Surface Pro 11 (QCOM)
+>       arm64: dts: qcom: Add support for Surface Pro 11
+>       wifi: ath12k: Add support for disabling rfkill via devicetree
+> 
+> Jérôme de Bretagne (2):
+>       dt-bindings: arm: qcom: Document Microsoft Surface Pro 11
+>       dt-bindings: wireless: ieee80211: Add disable-rfkill property
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |   11 +
+>  .../bindings/net/wireless/ieee80211.yaml           |    6 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    4 +
+>  arch/arm64/boot/dts/qcom/x1-microsoft-denali.dtsi  | 1324 ++++++++++++++++++++
+>  .../dts/qcom/x1e80100-microsoft-denali-oled.dts    |   20 +
+>  .../boot/dts/qcom/x1p64100-microsoft-denali.dts    |   16 +
+>  drivers/firmware/qcom/qcom_scm.c                   |    1 +
+>  drivers/net/wireless/ath/ath12k/core.c             |    3 +
+>  .../platform/surface/surface_aggregator_registry.c |   18 +
+>  9 files changed, 1403 insertions(+)
+> ---
+> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+> change-id: 20251218-surface-sp11-for-next-626e327f7b33
+> 
+> Best regards,
+> --
+> Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> 
+> 
+> 
 
--- 
-2.52.0
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: 8f0b4cce4481fb22653697cced8d0d04027cb1e8 (use --merge-base to override)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com:
+
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-denali-oled.dtb: wifi@0 (pci17cb,1107): 'disable-rfkill' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml
+arch/arm64/boot/dts/qcom/x1p64100-microsoft-denali.dtb: wifi@0 (pci17cb,1107): 'disable-rfkill' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath12k.yaml
+
+
+
+
 
 
