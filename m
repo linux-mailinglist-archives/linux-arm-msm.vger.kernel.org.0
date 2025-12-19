@@ -1,215 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-85978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90E3DCD1DD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 21:55:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FF29CD1E25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 21:59:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4851F3061D79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 20:51:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B9682300FF94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 20:56:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0FB338595;
-	Fri, 19 Dec 2025 20:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BC2733DEDF;
+	Fri, 19 Dec 2025 20:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UeWEQLYt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaaSyuTT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2582E093E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 20:51:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DA2329E46
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 20:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766177473; cv=none; b=IoLftxiGRWyL3IyT0qed6kJj1Aa69Y/38Iu2XTDWC09JhyKZJGnTKa2bejeUVaiOKCZQEKjFseM+2damh1bdrJBzVFqirF51JQIXeWI2pCZ+T0yvEtR9xNR4kIxcSF54KRXIIM8VYgpSNOxGORqr+xZLY0P2p/SMoudmeysj+l4=
+	t=1766177786; cv=none; b=iAZrh2WfZHyOpIzGOV2VMLhEbq5EOLLf/gub4a37NhXvF7qiasgs/YTshPZfMql3uSBT/kDTfXh7wCiF4UiUqOmbV7yTyJTZk+jHGs2pT8+GH0uJnXS2zjeAC5dtWV2snIueXm4P1/WlpRwP4/ZPk4ItwHhBVNXMYYKXFd5wklE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766177473; c=relaxed/simple;
-	bh=2uEzBQQQWtRp+sJcH1ZQ4xURaTMrXsucyXkYUYunCcE=;
+	s=arc-20240116; t=1766177786; c=relaxed/simple;
+	bh=i3Vnb75W8CfJzDnDxCk3fIRFIT3WDMCJ1BDdD071/aU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uix5pqoO4gETtc7zqop//XH6+j8dmBCd2uuMjZrw6RU1S8aa3kbmxDnUcx614mznoIYjUW1ApuyE/i6AlYjZ5r9HQydn9qK+lKJ7ZKVZRT9ttRzUjdcP4isvOJ3MbyETCQA6xurb50uy+lLRYslfqBSasKv41495CijFDq9Nvus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UeWEQLYt; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-42b3b0d76fcso1325264f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 12:51:11 -0800 (PST)
+	 To:Cc:Content-Type; b=iqyrQsKVxfVSp3jVzMmiRPrJ5wL15as5EONsyIR6lzL1G2dgnd60H0/lpnkpt6wADbXcxNtUAsnOQC4tYRNP5/G9jm24NTn6nr9T0FO3FnH7Y5e2FFc25T601YTOHgzijNET6e1VUlLsQFzlhvQpUzG4tUW5sCR6MOZT6orTpMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaaSyuTT; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-88a347c424aso25839576d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 12:56:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766177470; x=1766782270; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766177784; x=1766782584; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KWvXjifL3DdZLZBwrViPG2ul+dj2alJq1oBwhJ2GYV8=;
-        b=UeWEQLYto0YeellsmmrMBt6YYBLTldKFKtK/uT+ehGYeiY6S35yZezYP5AuvDkSJqt
-         YclW3mihQsijnjA9oE17TKdRXtuefL06dFzr3ybGiZ483piUBwHa17e4levKaP+SkLqc
-         Z2PoyEdJtw6SbnTQg2i/ibzgEwPbi9V2jqQYuCPqWJ2OzVjo+QhlDA118KcAUI+FgGyj
-         YPSJAu1DHrdGsUM2LauuExmatpEzBzxhw7PisxIYD3hqcpOJkft9tWzPzI80B037ha3f
-         B89S2fPBWzdEPvO58vrIGrZoGqWyl77Q/grprIrBWTMeEu58tfYcCm/CnzMiUFgGlJjo
-         Nwkg==
+        bh=i3Vnb75W8CfJzDnDxCk3fIRFIT3WDMCJ1BDdD071/aU=;
+        b=XaaSyuTTgjeiPXXr+5iCBGk+qrr6tWD3XNCE0Z/P8donYTHVj7XCPNsb412WZqAZU5
+         o/cHLQ/jYP65srDFn1t3sSv3rAXo7VTtITTyIUf9n5m10XEun9NoGbf8PeKUtE5cSUfp
+         syX3FEbAdllnLjCZKMCnAe0iRFRFyMartIn7MJSu5fvwnTn4R3x7ExW+c6+shm7mtAA9
+         4MAPlzeG1quQ64gX9KTIUAYMuhU7uS5T01l7c63su5ZXHUNye/5pXlxsmUoJ4zS0yhZ6
+         csUt6P42T2ZGZgMb9uNG0qLBrKF0yEss9bOtzp9CFG4s0lzdoLKejt0NqZ4XIenHkV78
+         Pd3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766177470; x=1766782270;
+        d=1e100.net; s=20230601; t=1766177784; x=1766782584;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KWvXjifL3DdZLZBwrViPG2ul+dj2alJq1oBwhJ2GYV8=;
-        b=LsFjO3PgTzLxAyQatT98qXHfnMn1TboK3T4PhlpOiAhfHEJChyCKp6b3Mp1TODv25d
-         Y2IKVM5D8CqV8T1B8a18sRzAafhywpLcTblUPtOv1tvMA4hPXo+b75rnP2wt2+vj+FQS
-         Gy/rG05SkhjYmZvp12oNlqT2HipFisYWUPL5Yn8jPqw5Af97qaYu23Pcfy5nDlJPT1sT
-         FPsvcBtINBotAaFtN0X7eYT17AFYV7yDgld6u9mbCFIdiY72qwEn1GyvmPchqLzG9O7h
-         q8a5HTzHT/6ypQ9B+dDUcUqEPtTERKPZ3DNMKmhuS96l40TbU/e21XsIyTOe8GcOe0kN
-         F+BA==
-X-Forwarded-Encrypted: i=1; AJvYcCWyCmhU0ofIcoxArP5tebqKmYt8ixy0CBQu+SsaF9uO3a8rffnNLcTuvMAf2kBo/shVZfNkc3xY+p8pgpp4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1BNBU2rlhW3TDS/1DhLImpJfv+zH+lX7Bt3G9jLqkXdR8EQXL
-	OZf6ITDgoUlvSmaw3jaEtWneXUSWkpzJIa8l0ILDNTXTlQRwaSBFeF/FIFPZaZZbk01isSHZMq7
-	Gtsc1vyXfr3kruQ8A2q4MwXzKnTrgn8YGB4LlfMb2Ng==
-X-Gm-Gg: AY/fxX6XNvmBMI9w87P+DzAX9z0c4/hzXOEGxHUG5Xgm+NQb8jQszpzPSXWY0S7d28U
-	ITa+iY/f0Mzck3K4lXsnaW7ciXcRMP7jTdJ8x/v9mTkoJUXR7cm8PtgVFGv1M55H34sQwHsbmRP
-	n5MPe9gU3iT2mKgInr6+DGVMj2zxqrfurFN2v0VqIUgjy1/RIwrj5ViTEhyaZASqSftJeVG2mRa
-	xjxNUGVtw6bZFXMT+829MrU4EqBUhPh7E8HyIF+XcUknoBJsxznNwi4xEnaeU93TmQfXwk=
-X-Google-Smtp-Source: AGHT+IGakMjrjS0V+HjSXPWQpWbplx43XdYM8jjjAPDTeyhMqD3a9HCEG4A0lUMyYh9/xn5Pzfqlw5gcu8eqe4tbxOw=
-X-Received: by 2002:a05:6000:2211:b0:42b:396e:27fd with SMTP id
- ffacd0b85a97d-4324e4fda01mr4658908f8f.38.1766177469787; Fri, 19 Dec 2025
- 12:51:09 -0800 (PST)
+        bh=i3Vnb75W8CfJzDnDxCk3fIRFIT3WDMCJ1BDdD071/aU=;
+        b=SvpqChSHibm6q5wxOrYj/LNpK4RSUIJVoj6Xb/v7kj+jM1f6FpZTi6wu97nA+LClHW
+         gel6/vlDhtRFUOhdM/TFG3/MsdD6W1wSl7nZMV1cvweSUZItxXr3mycflenKFmYGfhXC
+         XXeRRP8/NEsdKoSRX+YrYRDWMIxpZu8t8IkNj3/Hef0INd25QEgk+7n6it+hZl3qptET
+         wI+i+eNe4R7qfeaDdDEKhQExLL/0lhjSZcBMJzMYiuQsbZ4dAjIFTuTw6ZbS1lXdpbAb
+         VuoCV3hNcf5QY8GwIJFUgJUYLCCbkCfu1swz0E23VW6DZBoLvgk4zhdMgjXQ2JcQBB6L
+         b2Dg==
+X-Forwarded-Encrypted: i=1; AJvYcCU8v/J1cXj4fN0jLfbNWdG4kMJHyyNrqpOBe/n3htjprN3KyONSHWDuw2FCcrldVAaSYp+zXREu1ArFqOtI@vger.kernel.org
+X-Gm-Message-State: AOJu0YwibczloAyBbGO7Qq08t8UGB2fhIVdywUOoJrlutQz/v7Qf4WHS
+	pSGU+51qOrXgtb9pxHD3gSCd6QXVzDPkn/K3unPyFfU9aeHLkCiGQVQiTBkZ6AWu4/xZQ/yUlLT
+	YEO8LtP9iTyFcvxHovX9UAnLrr8ZBZQ==
+X-Gm-Gg: AY/fxX42OoGwt0Uf16fqRm270/p1K5rv3wpJYMDc7vh6J89sjWrAKSuF05L12z7ofHZ
+	8qJpKD+3htrBUia76SVH1Ex99JF4GNJHm5JPjLr7rN/m3Emc+BzY0avT3dGNBSZOEcbh1JUq7GD
+	+b/ONr8b02sy0vuQFJDFhJXTwM8OsUaIzmlCclGEPJytULOhH3vME4u+YHXmNGgDdH5OtplGR2H
+	swnbBQPZTQrIlJefXbc4cEstzy6RogcEVS69aVNydY3XiS7sN9U6wZm8bU7RzJAh8N7Ge/+cI9v
+	srCP+4wxuywfd+OmuePET32d48c=
+X-Google-Smtp-Source: AGHT+IGQH6VIaRGaIEOqpyUgjkUaKG66oDPn1z9oy8qj+n60mmZ/JwdsKN6CJzkL/LLNCeXKogbMXa71ZR0FC4qCU1E=
+X-Received: by 2002:a05:6214:4e85:b0:880:47e0:19e8 with SMTP id
+ 6a1803df08f44-88d83792f32mr72964826d6.42.1766177783822; Fri, 19 Dec 2025
+ 12:56:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251202-wip-obbardc-qcom-msm8096-clk-cpu-fix-downclock-v1-1-90208427e6b1@linaro.org>
- <8d769fb3-cd2a-492c-8aa3-064ebbc5eee4@oss.qualcomm.com> <CACr-zFD_Nd=r1Giu2A0h9GHgh-GYPbT1PrwBq7n7JN2AWkXMrw@mail.gmail.com>
- <CACr-zFA=4_wye-uf3NP6bOGTnV7_Cz3-S3eM_TYrg=HDShbkKg@mail.gmail.com>
- <f902ebd4-4b4a-47c3-afd7-2018facdaad6@oss.qualcomm.com> <e2eg3zk2sc7pzzlybf6wlauw7fsks3oe6jy3wvbxkgicbo3s2g@tks2pgigtbza>
- <5e255831-3e84-4f3f-8b4f-c66d05e6be09@oss.qualcomm.com> <CAO9ioeVBk0CLGcdUdbixVGwGfheOaVwX=i39JovHa740mO4kRg@mail.gmail.com>
-In-Reply-To: <CAO9ioeVBk0CLGcdUdbixVGwGfheOaVwX=i39JovHa740mO4kRg@mail.gmail.com>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Fri, 19 Dec 2025 20:50:58 +0000
-X-Gm-Features: AQt7F2o78umlcW_HrVktv7_hgHR3QXtloBvEZUbyjIHfwxuPnlTElq7osnyWvPQ
-Message-ID: <CACr-zFA0vkn_a=a1LNn_rqrSsKPUsuf+jt8_a3MsHg8Ao30qOg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "clk: qcom: cpu-8996: simplify the cpu_clk_notifier_cb"
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
+References: <20251218-surface-sp11-for-next-v4-0-7bcf83c1504a@gmail.com>
+ <20251218-surface-sp11-for-next-v4-5-7bcf83c1504a@gmail.com>
+ <de00f21e-7fc7-4caa-93ec-afbcc5d9e12d@kernel.org> <d4a87f75-92a3-4c09-9f9c-e906f0b7ae70@gmail.com>
+In-Reply-To: <d4a87f75-92a3-4c09-9f9c-e906f0b7ae70@gmail.com>
+From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
+Date: Fri, 19 Dec 2025 21:55:48 +0100
+X-Gm-Features: AQt7F2qYuzcLI8NAKl_7FuywvK75_EKSOb3h7eO67Yd-AWYZh8w_fOHJFdfFDTk
+Message-ID: <CA+kEDGGbfXYXwkQcouLJHF3uBv+sPKdG8BE8PEGvVzgwWn_nYw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] arm64: dts: qcom: Add support for Surface Pro 11
+To: Dale Whinham <daleyo@gmail.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johannes Berg <johannes@sipsolutions.net>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	ath12k@lists.infradead.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Dmitry, Konrad,
-
-On Thu, 18 Dec 2025 at 13:33, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
+Le ven. 19 d=C3=A9c. 2025 =C3=A0 20:27, Dale Whinham <daleyo@gmail.com> a =
+=C3=A9crit :
 >
-> On Thu, 18 Dec 2025 at 15:09, Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
+> On 19/12/2025 17:47, Krzysztof Kozlowski wrote:
+> >> +// SPDX-License-Identifier: BSD-3-Clause
+> >> +/*
+> >> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights res=
+erved.
 > >
-> > On 12/17/25 5:39 PM, Dmitry Baryshkov wrote:
-> > > On Wed, Dec 17, 2025 at 01:22:59PM +0100, Konrad Dybcio wrote:
-> > >> On 12/14/25 8:26 PM, Christopher Obbard wrote:
-> > >>> Hi Konrad,
-> > >>>
-> > >>> On Mon, 8 Dec 2025 at 22:36, Christopher Obbard
-> > >>> <christopher.obbard@linaro.org> wrote:
-> > >>>> Apologies for the late response, I was in the process of setting s=
-ome
-> > >>>> more msm8096 boards up again in my new workspace to test this
-> > >>>> properly.
-> > >>>>
-> > >>>>
-> > >>>>> It may be that your board really has a MSM/APQ8x96*SG* which is a=
-nother
-> > >>>>> name for the PRO SKU, which happens to have a 2 times wider divid=
-er, try
-> > >>>>>
-> > >>>>> `cat /sys/bus/soc/devices/soc0/soc_id`
-> > >>>>
-> > >>>> I read the soc_id from both of the msm8096 boards I have:
-> > >>>>
-> > >>>> Open-Q=E2=84=A2 820 =C2=B5SOM Development Kit (APQ8096)
-> > >>>> ```
-> > >>>> $ cat /sys/bus/soc/devices/soc0/soc_id
-> > >>>> 291
-> > >>>> ```
-> > >>>> (FWIW this board is not in mainline yet; but boots with a DT simil=
-ar
-> > >>>> enough to the db820c. I have a patch in my upstream backlog enabli=
-ng
-> > >>>> that board; watch this space)
-> > >>>>
-> > >>>> DragonBoard=E2=84=A2 820c (APQ8096)
-> > >>>> ```
-> > >>>> $ cat /sys/bus/soc/devices/soc0/soc_id
-> > >>>> 291
-> > >>>> ```
-> > >>>
-> > >>> Sorry to nag, but are you able to look into this soc_id and see if
-> > >>> it's the PRO SKU ?
-> > >>
-> > >> No, it's the "normal" one
-> > >>
-> > >> Maybe Dmitry would know a little more what's going on
-> > >
-> > > Unfortunately, no.
-> > >
-> > > Maybe, the best option would be to really land the revert.
-> > >
-> > >
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >
-> > Is there a chance that this removal:
-> >
-> > -       case POST_RATE_CHANGE:
-> > -               if (cnd->new_rate < DIV_2_THRESHOLD)
-> > -                       ret =3D clk_cpu_8996_pmux_set_parent(&cpuclk->c=
-lkr.hw,
-> > -                                                          SMUX_INDEX);
-> > -               else
-> > -                       ret =3D clk_cpu_8996_pmux_set_parent(&cpuclk->c=
-lkr.hw,
-> > -                                                          ACD_INDEX);
-> >
-> > could have been the cause?
-> >
-> > On one hand, we're removing this explicit "set ACD as parent" path, but
-> > OTOH determine_rate should have taken care of this..
+> > How exactly is this copyrighted by Qualcomm? I don't think Qualcomm eve=
+r
+> > prepared DTS for this, so can you point us to the original work?
 >
-> My idea was that we switch to SMUX temporarily, then CLK framework
-> fixes that for us while performing the actual reparenting.
+> As mentioned in the commit message, this device is very similar to
+> Microsoft Romulus (Surface Laptop 7).
 >
-> Christopher, as a quick check, could possibly revert just this chunk?
+> Its associated device tree (x1e80100-microsoft-romulus.dtsi) was used as
+> a starting point for SP11, and so I felt it would be courteous to keep
+> the original copyright notice there.
+>
+> If this isn't appropriate, then that's fair enough and we can remove it.
 
-Do you mean something like this diff? I thought I'd ask and confirm
-first, to be really sure.
-This leaves the handlers present for the other two events
-(PRE_RATE_CHANGE and ABORT_RATE_CHANGE).
-I didn't bother checking the calls to clk_cpu_8996_pmux_set_parent for
-errors as it's just a quick hack.
-If you think this diff is good for a test, I will check it in the next few =
-days.
+Dale answered for the denali.dtsi file but your quote was for one of
+the 2 .dts files.
 
-diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-899=
-6.c
-index 21d13c0841ed0..5d7f42a86a923 100644
---- a/drivers/clk/qcom/clk-cpu-8996.c
-+++ b/drivers/clk/qcom/clk-cpu-8996.c
-@@ -565,6 +565,14 @@ static int cpu_clk_notifier_cb(struct
-notifier_block *nb, unsigned long event,
-                        clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
-SMUX_INDEX);
+For those 2 .dts files, it was kept when splitting our initial single
+DT into 3 files. Thank you for pointing this out, I will only keep
+the Copyright from Dale for them in v5 (if I understood correctly).
 
-                break;
-+       case POST_RATE_CHANGE:
-+               if (cnd->new_rate < DIV_2_THRESHOLD)
-+                        clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
-+                                                          SMUX_INDEX);
-+               else
-+                       clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
-+                                                          ACD_INDEX);
-+               break;
-        case ABORT_RATE_CHANGE:
-                /* Revert manual change */
-                if (cnd->new_rate < DIV_2_THRESHOLD &&
+> --
+> Best regards,
+> Dale
 
-
-Cheers!
-
-Christopher Obbard
+Thank you,
+J=C3=A9r=C3=B4me
 
