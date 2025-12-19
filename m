@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-85942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51AF5CD11EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:23:06 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA03FCD1234
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:26:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 07847303F5FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:23:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 120F730B1972
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:23:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C96033C195;
-	Fri, 19 Dec 2025 17:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DCB733A038;
+	Fri, 19 Dec 2025 17:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DnNiYVsG"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TENzGW2H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD4B1D6BB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03FB33C1A6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 17:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766164981; cv=none; b=hHveOvFiJ8dbnpaIPkLYjH7K/Jeex18Wg0q83P/2p0kEze0pMAAqhWRUS1qq8ho1MgreBp8sbWmsjkzMZost/k4n1oASOI3RktcMnJLEWGAPrWEfWXFY6MEIZxoPz+j50CsBkkiZ3IZNi8kxNrngz/RVbrDg1nUXMNrMLP1lRho=
+	t=1766164988; cv=none; b=UObpneNvSyDuPniB4ATyaojCdzBpmyE+fucg6NUQxvUT1k85TkB44o+mkBCK82JLQAfuj0luKxKmXH3vJjx6lzCnEaC0HbIal4gw3K8g7wii2gKQwulCPvlccV2WSVLtRTHp8+EIgx0VMYMnjz4yrZ4A9qn+rluuQkx8HP0Z+4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766164981; c=relaxed/simple;
-	bh=TYzNQ0isiTWkokeom4SbhziOp8ml3d5CiaE+CSoVQFY=;
+	s=arc-20240116; t=1766164988; c=relaxed/simple;
+	bh=UmOXR0V7KlTDGVT1DVPAyTxVyMFk1UfpgURmhro9K6o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JMKj2O/d8Bj/mRUKyoKvWkSxis5JU9BsjDDoJJd0I2jxkAuxeAJFtl6xmrgVmynSPJOFN13aq+Vjusct35oMs6d6SPqQu9B6u7pKmTJhFqL1NwTm024K2TLoPufWdrntvoNIxGJzpWY6IgzzALeBYQitby/FBVAcQ1/RObccNYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DnNiYVsG; arc=none smtp.client-ip=91.218.175.185
+	 MIME-Version:Content-Type; b=t5VER4MyMj2UWH5MjdF5phRRvc8IscF3APGNd7s0gkicVqM50R3t1PXmNBLb+n3JGm5nTuFMFgTK5g9PZqUOAL7SA929l8Ivo1z1NYLzmODi0sAO9MCRx1K1pRTeOWAkchYW62gHxZNUSbd5KdCF3ySz1IXv0QAEHsJkr0UoVCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TENzGW2H; arc=none smtp.client-ip=91.218.175.185
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1766164971;
+	t=1766164978;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=a0lJL/SNLjbeVra6hhUj+h/q0KnBWqBFK5+UFeVFEuI=;
-	b=DnNiYVsGky7iooT3a3nbKu5co/4qCd4S7rqhODuK5kCpnBQh5UpnE1ScWokGbVRhrIIpis
-	/FzlGEtu/lAmJr7Bz95Nys0lrCiaI1RBhR+ZZ2HahYqCE1ay3xkO0Cbd7TIfxWGdUuF2xn
-	N5kxIKAWf4layWeXsM+9hoy0/G1ZJ4M=
+	bh=RfCGsuhor+PCehZ1i9svCLDkgPc0siHPXWlS0C1CvUg=;
+	b=TENzGW2HPKBpvPu7nqFGx7/4eq7Kiz45V1QBTzqZNdxdWdQAfsMteiZdkjhptzB8DPjOjN
+	fkAz2FcSZAAgCyrIKLdX4eZb5IxXXM1X/Mi+mLFpn2rdoCtFHL1Aegd6UOtvsx91T2IV1X
+	3QCJc5VxLeQo30wSzCEfpqT9BqGoHuI=
 From: Sean Anderson <sean.anderson@linux.dev>
 To: Manivannan Sadhasivam <mani@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
@@ -59,9 +59,9 @@ Cc: linux-pci@vger.kernel.org,
 	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
 	Alex Elder <elder@riscstar.com>,
 	Sean Anderson <sean.anderson@linux.dev>
-Subject: [PATCH 2/3] PCI/pwrctrl: Add appropriate delays for slot power/clocks
-Date: Fri, 19 Dec 2025 12:22:21 -0500
-Message-Id: <20251219172222.2808195-2-sean.anderson@linux.dev>
+Subject: [PATCH 3/3] PCI/pwrctrl: Support PERST GPIO in slot driver
+Date: Fri, 19 Dec 2025 12:22:22 -0500
+Message-Id: <20251219172222.2808195-3-sean.anderson@linux.dev>
 In-Reply-To: <20251219172222.2808195-1-sean.anderson@linux.dev>
 References: <39e025bd-50f4-407d-8fd4-e254dbed46b2@linux.dev>
  <20251219172222.2808195-1-sean.anderson@linux.dev>
@@ -71,57 +71,125 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Each of the PCIe electromechanical specifications requires a delay
-between when power and clocks are stable and when PERST is released.
-Delay for the specified time before continuing with initialization. If
-there are no power supplies/clock, skip the associated delay as we
-assume that they have been initialized by the bootloader (and that
-booting up to this point has taken longer than the delay).
+On many embedded platforms PERST is controlled by a GPIO. This was
+traditionally handled by the host bridge. However, PERST may be released
+before slot resources are initialized if there is a pwrctrl device. To
+ensure we follow the power sequence, add support for controlling PERST
+to the slot driver.
+
+The host bridge could have already grabbed the GPIO. If this happens the
+power sequence might be violated but there's really nothing we can do so
+we just ignore the GPIO.
+
+PERST must be asserted for at least T_PERST, such as when
+entering/exiting S3/S4. As an optimization, we skip this delay when
+PERST was already asserted, which may be the case when booting (such as
+if the system has a pull-down on the line).
+
+If the link is already up (e.g. the bootloader configured the power
+supplies, clocks, and PERST) we will reset the link anyway. I don't
+really know how to avoid this. I think we're OK because the root port
+will be probed before we probe the endpoint so we shouldn't reset the
+link while we're reading the configuration space.
 
 Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
 ---
 
- drivers/pci/pwrctrl/slot.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/pci/pwrctrl/slot.c | 52 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 51 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pwrctrl/slot.c b/drivers/pci/pwrctrl/slot.c
-index 3320494b62d8..1c56fcd49f2b 100644
+index 1c56fcd49f2b..59dc92c4bc04 100644
 --- a/drivers/pci/pwrctrl/slot.c
 +++ b/drivers/pci/pwrctrl/slot.c
-@@ -5,6 +5,7 @@
-  */
- 
+@@ -7,6 +7,7 @@
  #include <linux/clk.h>
-+#include <linux/delay.h>
+ #include <linux/delay.h>
  #include <linux/device.h>
++#include <linux/gpio/consumer.h>
  #include <linux/mod_devicetable.h>
  #include <linux/module.h>
-@@ -31,6 +32,7 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+ #include <linux/pci-pwrctrl.h>
+@@ -18,6 +19,7 @@ struct pci_pwrctrl_slot_data {
+ 	struct pci_pwrctrl ctx;
+ 	struct regulator_bulk_data *supplies;
+ 	int num_supplies;
++	struct gpio_desc *perst;
+ };
+ 
+ static void devm_pci_pwrctrl_slot_power_off(void *data)
+@@ -28,6 +30,13 @@ static void devm_pci_pwrctrl_slot_power_off(void *data)
+ 	regulator_bulk_free(slot->num_supplies, slot->supplies);
+ }
+ 
++static void devm_pci_pwrctrl_slot_assert_perst(void *data)
++{
++	struct pci_pwrctrl_slot_data *slot = data;
++
++	gpiod_set_value_cansleep(slot->perst, 1);
++}
++
+ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
  {
  	struct pci_pwrctrl_slot_data *slot;
- 	struct device *dev = &pdev->dev;
-+	unsigned long delay = 0;
- 	struct clk *clk;
- 	int ret;
- 
-@@ -64,6 +66,17 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+@@ -66,6 +75,14 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
  				     "Failed to enable slot clock\n");
  	}
  
-+	if (slot->num_supplies)
-+		/*
-+		 * Delay for T_PVPERL. This could be reduced to 1 ms/50 ms
-+		 * (T_PVPGL) for Mini/M.2 slots.
-+		 */
-+		delay = 100000;
-+	else if (clk)
-+		/* Delay for T_PERST-CLK (100 us for all slot types) */
-+		delay = 100;
++	slot->perst = devm_gpiod_get_optional(dev, "reset", GPIOD_ASIS);
++	if (IS_ERR(slot->perst)) {
++		/* The PCIe host bridge may have already grabbed the reset */
++		if (PTR_ERR(slot->perst) != -EBUSY)
++			return dev_err_probe(dev, ret, "failed to get PERST\n");
++		slot->perst = NULL;
++	}
 +
-+	fsleep(delay)
+ 	if (slot->num_supplies)
+ 		/*
+ 		 * Delay for T_PVPERL. This could be reduced to 1 ms/50 ms
+@@ -76,7 +93,40 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+ 		/* Delay for T_PERST-CLK (100 us for all slot types) */
+ 		delay = 100;
+ 
+-	fsleep(delay)
++	if (slot->perst) {
++		/*
++		 * If PERST is inactive, the following call to
++		 * gpiod_direction_output will be the first time we assert it
++		 * and we will need to delay for T_PERST.
++		 */
++		if (gpiod_get_value_cansleep(slot->perst) != 1)
++			delay = 100000;
++
++		ret = gpiod_direction_output(slot->perst, 1);
++		if (ret) {
++			dev_err(dev, "failed to assert PERST\n");
++			return ret;
++		}
++	}
++
++	fsleep(delay);
++	if (slot->perst) {
++		gpiod_set_value(slot->perst, 0);
++		ret = devm_add_action_or_reset(dev,
++					       devm_pci_pwrctrl_slot_assert_perst,
++					       slot);
++		if (ret)
++			return ret;
++
++		/*
++		 * PCIe section 6.6.1:
++		 * > ... software must wait a minimum of 100 ms before sending a
++		 * > Configuration Request to the device immediately below that
++		 * > Port.
++		 */
++		msleep(100);
++	}
++
  	pci_pwrctrl_init(&slot->ctx, dev);
  
  	ret = devm_pci_pwrctrl_device_set_ready(dev, &slot->ctx);
