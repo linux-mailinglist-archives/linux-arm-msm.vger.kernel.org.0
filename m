@@ -1,121 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-85777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E33E7CCE8A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 06:35:26 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D8DFCCE8C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 06:37:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A3A873035276
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 05:35:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CDA8F300EAE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 05:37:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED8132BE02C;
-	Fri, 19 Dec 2025 05:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A8192D062F;
+	Fri, 19 Dec 2025 05:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bs9p6BI7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U8NsrceV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C079238C07
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 05:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3778728641F;
+	Fri, 19 Dec 2025 05:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766122524; cv=none; b=Dp677ZTMRwRKZDCEP63BE26vaWcX5Nrfm0GwzDu9XVsjZVOlIJ0f+dRLwxJv8QKh6F1r0AELarPdnp+i1YhsYeCjKYJglIgdZ6hxTemGhzFiO1k7l+1YyJ3R+4BA28AQIJi82drTHj0Apeo237sBxnSsdM+EBcZa4r8CjRrJJ7Y=
+	t=1766122669; cv=none; b=O+Dd5R9Gpo1r04sA45uqXg/HwYHTldcBbjjEJTpYxgph/sPOLfXCwiw3Gg42kPDvchhrYm1oWaAVz+IRUToahawYto8LiX8wPxxXP1s8CBeFqFqP1lYXpfI2A5ypMVWqrIDBlWRhrdKkYOhFxKXC9WX4sutSGu/yEkZzDjZEJM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766122524; c=relaxed/simple;
-	bh=ZhvazSte91iU+jx4QdnhFUqokDPmeF886UFAsqdeOG8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OX0rtBhVlp56/ZgNgMX6JhK7fzCdEGFpi8Vj6InA1nwHzvFxRRk8QKDr/HR28Hs56FLee/dEibmxcDTFG8/LPQ8UzoCAHQz3O7jL3t8zynP9rOAVYXiheQ9FMj6TsWZ3NZKqNANDibkGbyf4w7h9gwnD+Fc50h7/zTbWfmBV74g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bs9p6BI7; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a0bb2f093aso14233685ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Dec 2025 21:35:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766122523; x=1766727323; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rMTTCuooxMDzb9iO4B2W3oktqAuVxYafRzDCiEnReDQ=;
-        b=bs9p6BI7bmrcIORWo/ouvVkwMR2MJQw79BRm4iUgC8T1NeTqSeo+SIADqNiNXFRdBy
-         xpFumRz9sK7PWNGUEHAGHUx7DUyiU79cCqzGvukkli+WKMq08QlsDDf4E/uoWwMsoibF
-         y/OxEkomcR0WUXCfg7uCZ0RiR2knOXmgWWBzqtRaU2AOYYSCHWQT85fZFxbFuu5ICWmo
-         GTHlHqXNFPE7lseUwS7pbfyIcSDCu2NQduswrqexxUVDYQ6JrJCxzQc13bW8WIsTbgig
-         fSiCHh5BHSWQwvBsZoHuaPDFJxCfEOJxCVSyTZUpR4LN+QGxXyrL7fPpfDqBj64gCmSn
-         e9ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766122523; x=1766727323;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rMTTCuooxMDzb9iO4B2W3oktqAuVxYafRzDCiEnReDQ=;
-        b=wgxckldTsJ2pRYt2zqO4agc9PNGp/sgzDMHjcGf80WJk2WeUpsHPk95xZLtn1IcmwY
-         8gf1OMYVSOq3A/Mbn8nV5mu2NGiW8o7rJsNO069gip+oNYaJACyWy5wwypklbwCp/+x9
-         CdxNUexPKcHcURWIESM3Vb3uFUj3U3IIkI/nAUiu4ylnntYrkHfgS7mfQzYv1l6FpqJP
-         NLwHaQUIPvjdaoj1eHHSCLbYsZAzlSdQ4TP8DlDerQrNSudYmeOKgF96xJdliCm50s3K
-         8T8KxWLjodG879mKa86ZHcnGcTAozburuDhNg6cpAEA7ajp1uZcQot8pknVowH2EJMhR
-         fiQw==
-X-Forwarded-Encrypted: i=1; AJvYcCW2XLzVaYOO4OipKvC2Lh8hiKC5hEhCgzDmvv97SkX/LMGpAyAuYetPmDP9OJF8sxfkILQXC9WqTxf8ZSh6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQePy6Xj2alJFp6/yShphpcj8BXwONplL7DhsZllMUMQA/Je0g
-	6R7eamJIpwEV128OWRLlrhZEbtolHnolldUQ79Rw+XPD4opHjoJUT/UT
-X-Gm-Gg: AY/fxX5ryYC0XTGGM4jEu4WAtjyQDro0wg5OY4CWGRmXsV1h5GBM+BLTdARBCpsro/E
-	ijtnk8c7TGjc2hnfoAfIUOViMAAd/y4B8ZlyKNah9/AbVMva7+H8Z2dNbTMRvpsX/xU9TiUuo+3
-	yvXPx831e4S/QbjlZS11TRdUR2s215wMkqzZLz3LYrxq99Wr9UOz3YyfKyq2O4gFTomIBhfdwrZ
-	eEQWfUI4hcr81FxG9IBIiWHwG5hL1ODiIVvWAXSZ+37E75FbGAViVyX5t+kNgOvw5rqvdx8UusN
-	1xaQnXPRar4qiJzlYEUMJQEOj+hF2qHhq1wggQCC2PPD5bKsiIxdc72zEbT8hhUN5p+ias91Rro
-	KoX0VYQrbxsV29Vmet37GiW6I6/L1ikEOdLQPDKBB3ZVVGAvzSiAUm7Z3rpCEEsn5v+wLcQb1JG
-	zzSxxA+JqhncbGD8NZYYU48aaGbhpFtYvSE/3YUE+X5GQxN2pUVDEIjdfrB5C2/hc=
-X-Google-Smtp-Source: AGHT+IEckbGoyBwvIpN7+hsyYKZeqS+PjBBpgEAIEIby7FqmlE1JAmvvNFeTVYuKm8/epNSNg9/pVA==
-X-Received: by 2002:a05:7023:d03:b0:11b:9e5e:1a40 with SMTP id a92af1059eb24-121722ab330mr2043333c88.15.1766122522555;
-        Thu, 18 Dec 2025 21:35:22 -0800 (PST)
-Received: from google.com ([2a00:79e0:2ebe:8:c932:b7cf:9dde:f662])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1217243bbe3sm4998600c88.0.2025.12.18.21.35.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Dec 2025 21:35:22 -0800 (PST)
-Date: Thu, 18 Dec 2025 21:35:19 -0800
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: david@ixit.cz
-Cc: Jonathan Corbet <corbet@lwn.net>, Jiri Kosina <jikos@kernel.org>, 
-	Benjamin Tissoires <bentiss@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Casey Connolly <casey.connolly@linaro.org>, Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>, 
-	linux-input@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, phone-devel@vger.kernel.org, 
-	Gergo Koteles <soyer@irl.hu>
-Subject: Re: [PATCH v8 1/2] Input: add ABS_SND_PROFILE
-Message-ID: <ipazh76ewhshd3rtgjr4oz45zaqqmsqfdstu6nbxo3ctrd2x7k@wpd3tyywk5ay>
-References: <20251113-op6-tri-state-v8-0-54073f3874bc@ixit.cz>
- <20251113-op6-tri-state-v8-1-54073f3874bc@ixit.cz>
+	s=arc-20240116; t=1766122669; c=relaxed/simple;
+	bh=kqPBYCpOgXTvxxSHCVpOwQFHcphqRIEEiHlgEBAv11U=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=c5MPoeiYGAeAuBak2QgZeA/5WKAq33LBeuLVuq51u8ERG8idwIgBqTtZ+BMD/LiCkYNJh9be5XIE99l2tXwBktKFSL+6fSt3yL94KNj/lDw3oAQwR4+dToaVvPwNAqFVF9xPQqUkChJ+AUDC6TA5Gvx2jRYtE7mgaq1eNDSZ4Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U8NsrceV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68251C4AF09;
+	Fri, 19 Dec 2025 05:37:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766122668;
+	bh=kqPBYCpOgXTvxxSHCVpOwQFHcphqRIEEiHlgEBAv11U=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=U8NsrceVRjglPKRlDjEuyNkd3iLTbU0iewBcnZcz4zFkFS0Lu0rxqCJjVvtMqz6lZ
+	 keLrn8me0xN92cMsN9ul5Wz0P5eQFQjRnAhcBgRDneaFZxwzvj1FzF8/9zeH2t+ID2
+	 VOKWLotBETeInFUkuVLkgql09dLKIdPhtclK4hutatidOg7/qKDvEqijBEOUlQxwZr
+	 /PJ1+ulUByIP5ntDKqd9tB+pZ9n8oNpCpRpHH4HnYRUjezf/Kw2AIypyTKwc95nVGR
+	 tvzVPjGC5ti0YUR+Md99rVVJlwouRLqwdsMkzquZl1SnIRiCnjxnll7O2MVJAKorHL
+	 MRmBwPVc0TbrQ==
+Date: Thu, 18 Dec 2025 23:37:46 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251113-op6-tri-state-v8-1-54073f3874bc@ixit.cz>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: krzk+dt@kernel.org, linux-kernel@vger.kernel.org, 
+ mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org, 
+ andersson@kernel.org, devicetree@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-remoteproc@vger.kernel.org
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+In-Reply-To: <20251219043425.888585-2-mr.nuke.me@gmail.com>
+References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+ <20251219043425.888585-2-mr.nuke.me@gmail.com>
+Message-Id: <176612266639.1689224.7230344487195576447.robh@kernel.org>
+Subject: Re: [PATCH 2/9] dt-bindings: remoteproc: qcom: add IPQ9574 image
+ loader
 
-On Thu, Nov 13, 2025 at 05:02:58PM +0100, David Heidelberg via B4 Relay wrote:
-> From: Gergo Koteles <soyer@irl.hu>
-> 
-> ABS_SND_PROFILE used to describe the state of a multi-value sound profile
-> switch. This will be used for the alert-slider on OnePlus phones or other
-> phones.
-> 
-> Profile values added as SND_PROFLE_(SILENT|VIBRATE|RING) identifiers
-> to input-event-codes.h so they can be used from DTS.
-> 
-> Signed-off-by: Gergo Koteles <soyer@irl.hu>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Tested-by: Guido Günther <agx@sigxcpu.org> # oneplus,fajita & oneplus,enchilada
-> Reviewed-by: Guido Günther <agx@sigxcpu.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-Applied, thank you.
+On Thu, 18 Dec 2025 22:34:10 -0600, Alexandru Gagniuc wrote:
+> Document the IPQ9574 native (non-PAS) WCSS image loader. It is similar
+> to IPQ8074 WCSS, but requires several new clocks. These clocks must be
+> enabled by the host in non-PAS mode, and are not optional. Add an
+> example that uses the "qcom,ipq9574-wcss-pil" binding.
+> 
+> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> ---
+>  .../remoteproc/qcom,ipq8074-wcss-pil.yaml     | 115 +++++++++++++++++-
+>  1 file changed, 113 insertions(+), 2 deletions(-)
+> 
 
--- 
-Dmitry
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:49.28-51 Unexpected 'GCC_ANOC_WCSS_AXI_M_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:50.28-42 Unexpected 'GCC_Q6_AHB_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:51.28-44 Unexpected 'GCC_Q6_AHB_S_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:52.28-43 Unexpected 'GCC_Q6_AXIM_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:53.28-45 Unexpected 'GCC_Q6SS_BOOT_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:54.28-50 Unexpected 'GCC_MEM_NOC_Q6_AXI_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:55.28-52 Unexpected 'GCC_SYS_NOC_WCSS_AHB_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:56.28-45 Unexpected 'GCC_WCSS_ACMT_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:57.28-46 Unexpected 'GCC_WCSS_ECAHB_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:58.28-47 Unexpected 'GCC_WCSS_Q6_TBU_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:59.28-46 Unexpected 'GCC_WCSS_AHB_S_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:60.28-44 Unexpected 'GCC_Q6_AXIM2_CLK'
+Lexical error: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dts:61.28-46 Unexpected 'GCC_WCSS_AXI_M_CLK'
+FATAL ERROR: Syntax error parsing input tree
+make[2]: *** [scripts/Makefile.dtbs:141: Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1559: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20251219043425.888585-2-mr.nuke.me@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
