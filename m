@@ -1,137 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-85873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E18EFCCFC62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 13:25:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9B33CCFC71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 13:26:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EF0EC30B9437
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 12:18:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BB658305037B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 12:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06B8729D26C;
-	Fri, 19 Dec 2025 12:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B03C33FE20;
+	Fri, 19 Dec 2025 12:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jLWMvDNt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kDXoTy4J"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE7D21773D;
-	Fri, 19 Dec 2025 12:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A60332ED51;
+	Fri, 19 Dec 2025 12:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766146607; cv=none; b=Pp8iW20zyXaz0TFwYuByW23lSiy5VwYpT/vlML+Fj8fZwYTOd9Wpi5OOPBJlmaonkvx4/LAdiUTQ5ZP71E+K0GLLDusFFGEYpK5Q2lw9rGIp/S2hmjOBJNf36fq3mls9xrxiWe7m57F37Z06xS8IYyBv9RiF772N9DMnyLM5piM=
+	t=1766147116; cv=none; b=l/aL5O5Ph/bzbhi+e228UvrYLUsFcWEELvZPkr8OMhB67TXMJScgbJgJPWV+o6mhHy1XuOK7pNh4ixH2XTwliVFQNBVaS8t721R8g22BL3tCyUqN+WKeMlOPDKLeKwfsFRM2ha3dbph7bwCw1C0inWL41ZhGTaqn8unSfduzNvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766146607; c=relaxed/simple;
-	bh=rDHBOE2s2TroQBNbO8Fn6xkeku+tMwpTFJxF5635bvs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uwYY09eUmRzeYQsVF/r2/Nbi/K8geVih+/tM5asipuHTKAtXIMU4M5gXDZcT4abFVggUyIycdMThRN626qJljXV/srhkwerQ0xW05px9vZIxk7qr05AETTi0PUoBNy2RT6ovov1+7itBGMM9oI619tRT7sX2Jd0ExwoCstSt+D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jLWMvDNt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E9EC4CEF1;
-	Fri, 19 Dec 2025 12:16:42 +0000 (UTC)
+	s=arc-20240116; t=1766147116; c=relaxed/simple;
+	bh=IKABffyNvPjVM+RzIL5ZAgHEXRXD7t+eDtpJ1JycBW0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
+	 References:In-Reply-To; b=OZVBLsaa3DbuXAy/g1S+4GT+AMsKWcIqgEz8wjzVdIO0Qgimc6vYN0WNC0ouvVi5oNN/s8nsXd4RqDLgYu+ir/Q+wvI25ej5NRd1nJc3p1O6SjtsvNW1c9tAjlcgMd1Q2R76fmVyFHQ/+tLcmvCCBD9KSPJp5zFhalHFHmp8ZUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kDXoTy4J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEE8C4CEF1;
+	Fri, 19 Dec 2025 12:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766146607;
-	bh=rDHBOE2s2TroQBNbO8Fn6xkeku+tMwpTFJxF5635bvs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jLWMvDNt+hxAWLKNQm79eJLqeh0MjO3sYkjk8iheK0i0PWrC4Twt/MG/WPvtN7sb8
-	 qaxPaU47uUpoeDbLR+GvHU2AV0v8YtUlUdwq1uXLk8eGIHKQ361sieG9LHTFnXpLKL
-	 DPi1UqdlCZFdQSQS3iQ3VxDaLsC7qUlURbnmKEVXgdXBXX+9TqDPQfdEzcQePsLarj
-	 pNvUeEiUypOl3mfPwR1tb2CUvYLD2DhJu0yV6fxyLDlt3fNgQ8yCnO/qBLv0QrqILR
-	 eDAVjFakTJwFyFegPjC5aGttZ5x8uyQHfSYEgGQuXmXlMChyHrm3MIaTHWai/Qqsy1
-	 tewpErYy+TcdQ==
-Message-ID: <a9b29be9-e0d2-4643-a84a-55f565bf08bc@kernel.org>
-Date: Fri, 19 Dec 2025 13:16:41 +0100
+	s=k20201202; t=1766147115;
+	bh=IKABffyNvPjVM+RzIL5ZAgHEXRXD7t+eDtpJ1JycBW0=;
+	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
+	b=kDXoTy4JgoCQtYGg5/UHAbHNxZs3nuql9kLRBlRL08h4OgY6WohVAyq+6n5wjjjN4
+	 ZZ7BAsk+IxUf1OAJjfMLqsezJMiZTEDLMokOj+3p+oBqXBpbXSgX/PHtilfEzw0blp
+	 hI2uxR66pgVguorKq8YwmkyNG+YJG6ntsL7+PVOPC7iiav7mLXlrZCEYPzpNzwglj3
+	 LtPOVO5vSqBa06DClUFoH9b/rDV+mK9q3/3hxSbYNNEaKu+VQftOBZpinqYnnaPBwT
+	 5O4vVWnTHYIEwcwdw47DpyJQ2jk04fUUqn/U+WPbVnna0WAAaaMD7NYx91omtEqNg+
+	 CM2oilI8Y6E0g==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: monaco: add lt8713sx bridge with
- displayport
-To: Vishnu Saini <vishnu.saini@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, prahlad.valluru@oss.qualcomm.com,
- Prahlad Valluru <vvalluru@qti.qualcomm.com>
-References: <20251219-lt8713sx-bridge-linux-for-next-v2-0-2e53f5490eb9@oss.qualcomm.com>
- <20251219-lt8713sx-bridge-linux-for-next-v2-1-2e53f5490eb9@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251219-lt8713sx-bridge-linux-for-next-v2-1-2e53f5490eb9@oss.qualcomm.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Fri, 19 Dec 2025 13:25:05 +0100
+Message-Id: <DF26WBIDPMPU.3E6XTUPMZTHW1@kernel.org>
+To: "Alice Ryhl" <aliceryhl@google.com>
+From: "Danilo Krummrich" <dakr@kernel.org>
+Subject: Re: [PATCH 2/4] drm/gpuvm: drm_gpuvm_bo_obtain() requires lock and
+ staged mode
+Cc: "Daniel Almeida" <daniel.almeida@collabora.com>, "Matthew Brost"
+ <matthew.brost@intel.com>, =?utf-8?q?Thomas_Hellstr=C3=B6m?=
+ <thomas.hellstrom@linux.intel.com>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Boris Brezillon"
+ <boris.brezillon@collabora.com>, "Steven Price" <steven.price@arm.com>,
+ "Liviu Dudau" <liviu.dudau@arm.com>, "Miguel Ojeda" <ojeda@kernel.org>,
+ "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Trevor
+ Gross" <tmgross@umich.edu>, "Frank Binns" <frank.binns@imgtec.com>, "Matt
+ Coster" <matt.coster@imgtec.com>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jessica.zhang@oss.qualcomm.com>, "Sean Paul" <sean@poorly.run>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, "Lyude Paul" <lyude@redhat.com>,
+ "Lucas De Marchi" <lucas.demarchi@intel.com>, "Rodrigo Vivi"
+ <rodrigo.vivi@intel.com>, "Sumit Semwal" <sumit.semwal@linaro.org>,
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <freedreno@lists.freedesktop.org>, <nouveau@lists.freedesktop.org>,
+ <intel-xe@lists.freedesktop.org>, <linux-media@vger.kernel.org>,
+ <linaro-mm-sig@lists.linaro.org>
+References: <20251128-gpuvm-rust-v1-0-ebf66bf234e0@google.com>
+ <20251128-gpuvm-rust-v1-2-ebf66bf234e0@google.com>
+In-Reply-To: <20251128-gpuvm-rust-v1-2-ebf66bf234e0@google.com>
 
-On 19/12/2025 12:32, Vishnu Saini wrote:
-> Monaco-evk has LT8713sx which act as DP to 3 DP output
-> converter. Edp PHY from monaco soc is connected to lt8713sx
-> as input and output of lt8713sx is connected to 3 mini DP ports.
-> 
-> Two ports are available in mainboard and one port
-> is available on Mezz board.
-> 
-> lt8713sx is connected to soc over i2c0 and with reset gpio
-> connected to pin6 of ioexpander5.
-> 
-> Enable the edp nodes from monaco and enable lontium lt8713sx
-> bridge node.
+On Fri Nov 28, 2025 at 3:14 PM CET, Alice Ryhl wrote:
+> In the previous commit we updated drm_gpuvm_bo_obtain_prealloc() to take
+> locks internally, which means that it's only usable in immediate mode.
+> In this commit, we notice that drm_gpuvm_bo_obtain() requires you to use
+> staged mode. This means that we now have one variant of obtain for each
+> mode you might use gpuvm in.
+>
+> To reflect this information, we add a warning about using it in
+> immediate mode, and to make the distinction clearer we rename the method
+> with a _locked() suffix so that it's clear that it requires the caller
+> to take the locks.
+>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 
+Ultimately, the two different approaches of obtaining a VM_BO have always b=
+een
+desinged for the two different modes of operation -- great to see this refi=
+ned!
 
-And how much time did you give to maintainers to respond to your
-comments before sending v2?
+Given that, I think it would be great to update the "Locking" section of th=
+e
+GPUVM's documentation and expand it with a new section "Modes of Operation"=
+.
 
-You gave yourself 1 month. To the community you give 7 minutes.
-
-That's just unacceptable.
-
-NAK.
-
-Best regards,
-Krzysztof
+Mind sending a follow-up patch / series for this?
 
