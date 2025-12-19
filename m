@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C778CD071B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:07:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1541FCD06EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:02:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 86FD030F7542
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:01:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 829E530B61E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:58:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAE7533C1A6;
-	Fri, 19 Dec 2025 14:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C1A2339710;
+	Fri, 19 Dec 2025 14:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AcAWcoEY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N6KRafHD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEB9338935;
-	Fri, 19 Dec 2025 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA4B328605;
+	Fri, 19 Dec 2025 14:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766155979; cv=none; b=eUaJQQQH3c7ZnEeOxJTfSrLvd20m1zI9Wl4Tp0fGl4W0YFsWQNu+G0JF0AMUponll/ClEAFLx10f8DJhxBFoiXx5ReNy/I56RTLcO1YarWBTMiDX3sBQCjb4WuVCItQBbJVFvKNMcGl8q4iY3yrH8s1JEB1W8jLp4Jm6/WVBDoc=
+	t=1766156288; cv=none; b=EseD2/1Fvy6tlqLFDC5tacqXW0RY7WVNlYw3ZXArhHy51O/hyJ/YRqLeSfQYrdQqphrMQzxYA0eozoS0Ug/i3lWNRzdMOjVtbzonMErxxLJdX8DfPpCOMSKmBNFzUaFMKj5k5C26CuKjEpS3c4ibgAE4YVVQppB3bAwIPHQZCbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766155979; c=relaxed/simple;
-	bh=YP7lb/tia1LJhyshozaR4x6Net2qdgEZZ3mSCgOVtQQ=;
+	s=arc-20240116; t=1766156288; c=relaxed/simple;
+	bh=q7oapfRvjOItGCBaWMc+JPGaOrmVsH8zTKsn1vbZa2Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rGe+31aqjPZ5zcKdq6UK/dneK8Flr3r1gkBSck8D3XOwUFIEW1ui3R7zTmr7ct0lDoQognLKEbaB0rv0ty+Kam2kW+xLAtM88VLlJXHjg1iuBGSmkQFLpxY4fibw949iyy3vfXV+FGHOM+om6vcIEqoWxFyKs+xOmCIjIPprWng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AcAWcoEY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFA5C4CEF1;
-	Fri, 19 Dec 2025 14:52:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iHGmW0PT8PHA9Q077ETF0o7h9aTBNuVJAOXgeLLZcnPrJlZqb0be5+tHI+Y+L4Pyqo9IgHR3b3/ks3fEFQZWgdOAa9Ee3wdbX+XxvIH4XOTTERiBWss5ww2J1jR+uNvGoBis2m/SxwA5w753Ag+rElYdvOW+t3vb3U0+AlMI5Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N6KRafHD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADEFC4CEF1;
+	Fri, 19 Dec 2025 14:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766155978;
-	bh=YP7lb/tia1LJhyshozaR4x6Net2qdgEZZ3mSCgOVtQQ=;
+	s=k20201202; t=1766156284;
+	bh=q7oapfRvjOItGCBaWMc+JPGaOrmVsH8zTKsn1vbZa2Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AcAWcoEYH8VwkrrjR1/s+Z/lOG1WofuoErDMOSWrfASq3tesRnmJ9aOQvpe8haO3W
-	 xhrZiE1DmAO1iZCvxUwBC8S/UcnN4j+fX/t2GyXqBpW+OPjgK1HOb8SMkT1Dn4yW4+
-	 OtG84HtOaGbOW5alWaeitHuDaZxRXCyD/V9Dk+frXcBrZ82pmzabtoXU/EQLTJMQGC
-	 xm/aAzY1L13djsnjTJXJ4yZcuUlPNcnbq24B7sQMyeYo2VMU4snslJWTJwgJVmeX/b
-	 Y6ygYNAgoE2oqEZR1iiy2CJ1fo1BM17nf9rWnUyeJUut0lq57Kc/H2eD7YQq2uexhp
-	 iAcFstWLbgfkA==
-Message-ID: <abec3933-279d-4111-8adf-a2e1280ce0b7@kernel.org>
-Date: Fri, 19 Dec 2025 15:52:51 +0100
+	b=N6KRafHDnIc5hXBq0SB7MWUvzLHGeeTAeXyfijDrJZw+zyM30Gdr2FDMp9I9dh9ex
+	 l/SoN95QL+ro3XhJvxfmfQ3Kb7LucWEsd4DBGMixriVihVwcaBLAGZy36wfz+zwaZX
+	 rsWrdlPJGdJZMCaBwmmagjVYH4OzOptCC0yxj4HGOdohozx0kBUlomrKcL6kR/mUiV
+	 ix0T7KDNirY5wcgpxc99iK4J3bXvQnXiItWIthEXUg7rd5FUh2ePpzvMwu7y6HHZa6
+	 OwLlerjp2wt3gGkO9p999jNejnTLpiAkc/X31UpodT9sor9nba3ROS2kofcmSsjyI+
+	 xoEC24LACkwrw==
+Message-ID: <ee084ec9-31a4-492f-97c7-009dbfd77613@kernel.org>
+Date: Fri, 19 Dec 2025 15:57:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,14 +48,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil:
- convert to DT schema
-To: Alexandru Gagniuc <mr.nuke.me@gmail.com>, andersson@kernel.org,
- mathieu.poirier@linaro.org, krzk+dt@kernel.org, Rob Herring
- <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+Subject: Re: [PATCH v3 2/4] arm64: defconfig: Enable Glymur configs for boot
+ to shell
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, rajendra.nayak@oss.qualcomm.com,
+ sibi.sankar@oss.qualcomm.com
+References: <20251219-upstream_v3_glymur_introduction-v3-0-32271f1f685d@oss.qualcomm.com>
+ <20251219-upstream_v3_glymur_introduction-v3-2-32271f1f685d@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -101,69 +104,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+In-Reply-To: <20251219-upstream_v3_glymur_introduction-v3-2-32271f1f685d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/12/2025 05:34, Alexandru Gagniuc wrote:
-> Convert the QCS404 and IPQ WCSS Peripheral Image Loader bindings to DT
-> schema. The text bindngs incorrectly implied that IPQ8074 needs only
-> one qcom,smem-states entry. This is only true for QCS404. IPQ8074
-> requires both "stop" and "shutdown".
-> 
-> The example is to be added in a subsequent commit that adds the
-> IPQ9574 binding.
-> 
-> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+On 19/12/2025 15:46, Pankaj Patil wrote:
+> The serial engine must be properly setup before kernel reaches
+> "init",so UART driver and its dependencies needs to be built in.
 
-This is not v1, but v2. Look - what is this "dt-bindings: remoteproc:
-qcom,ipq8074-wcss-pil: convert to DT schema" in my inbox?
+Missing spaces before ,
 
-And what is this:
+> Enable its dependency clocks,interconnect and pinctrl as built-in
+> to boot Glymur CRD board to UART console with rootfs on nvme storage.
 
-> 
-> ---
-> Changes since RFC
->  - rename binding from ipq9574 to ipq8074
->  - use a real person instead of placeholder as maintainer
->  - drop redundant minItems and descriptions
->  - merge if: clauses as suggested by Krzysztof
->  - various other fixes suggested by Krzysztof
-
-So not v1?
-
-And now run b4 diff and find differences.
-
-If this is anyhow weird (although how counting from 0 or -1 or -2 if you
-have 3 RFCs can be natural?), then just use b4 which would solve all
-these problems.
-
-You also miss cover letter, which would be easily solved with b4.
-
-You are not making it easier for reviewers.
-
-> 
-> I used my name as a placeholder for the "maintainer" field. Krzysztof
-> mentioned to get the "SOC maintainer" using get_maintainer. I don't
-> know how to do that, and I don't see anyone listed for QCS404,
-> IPQ8074, or IPQ9574. The bindings apply to any of those SOCs.
-
-So you run get_maintainer.pl script on the soc DTSI file and you got
-zero results? I claim that's impossible... but just in case please post
-here the commands.
-
-Anyway listing yourself is fine.
-
-Trying to see what happened here:
-b4 diff '<20251219043425.888585-4-mr.nuke.me@gmail.com>'
-Grabbing thread from
-lore.kernel.org/all/20251219043425.888585-4-mr.nuke.me@gmail.com/t.mbox.gz
----
-Analyzing 15 messages in the thread
-Could not find lower series to compare against.
-
-so this patch will wait.
-
+Nvidia Glymur CRD? Standard comment - you look at kernel and defconfig
+as it only Qualcomm ever existed...
 
 Best regards,
 Krzysztof
