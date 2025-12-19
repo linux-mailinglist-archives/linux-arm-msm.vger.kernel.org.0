@@ -1,38 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-85826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 505F0CCF6E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:42:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8748DCCF66C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 11:38:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4CCC8307E8BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:36:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 75C143011425
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:33:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 728F130C61A;
-	Fri, 19 Dec 2025 10:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4F226F28D;
+	Fri, 19 Dec 2025 10:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvhFZA9m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F28F530C613;
-	Fri, 19 Dec 2025 10:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10D2253FC;
+	Fri, 19 Dec 2025 10:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766140087; cv=none; b=EVCIRlEuShwiZ8GQgxJRNZehqoccgnIIw1/+1m0YnbPEgoZ/rK4yswUTEv/QAwB38JA9i+r36QDD3xuB9TQ+gfYcGx4tPoeW465q+GgTxJOT9Gnrvv6BpK3cM4XWAI7D5cekxtTBlKmfwlBRzAfVA4lv0N4X9vKtfbukaK9ip+g=
+	t=1766140427; cv=none; b=eowBTuve2CMfj6dyC920xQmSPvTMDPZLvZlIR4NBN3H/BVpFyjnRvEZo2O0ykulpbYuAAleV2Yp+zi9W6bEJWEjr2f3Pa7RxEqbRrdSfwYx2HHpJj3vPjo/WUVj61gNi3rL8ONQC9kELjg3Ep4aGFAKlDAxQbjgpTVfNGFQ1koY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766140087; c=relaxed/simple;
-	bh=DBkOZYDNrFqDL6fapsRIk7StmcdcQiuyxUV0LIm540E=;
+	s=arc-20240116; t=1766140427; c=relaxed/simple;
+	bh=dtZQq9Tz8X9IApzFIIAr/KFy4FgR9nC4AkGBbD+ruV4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MDKXN+yFDzsPsCBVUkVEKy1bp9uCkbAnFN4NbPZ9dXoZqDpsd1dvQ9ANo3rpPgB+oJ6dyHyol2W+uAobpGndFkutq5k/XsjHKzIXyHHVC1ZcrZr0u20c9Kor8H5r9wmyfeotoS0oPO1XmtQGVbknVbKUKxvmNtW6FwBNhNUjuE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 61753106F;
-	Fri, 19 Dec 2025 02:27:58 -0800 (PST)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 34BA43F5CA;
-	Fri, 19 Dec 2025 02:28:03 -0800 (PST)
-Message-ID: <e9df1140-989f-46e3-8edc-2013e520bfed@arm.com>
-Date: Fri, 19 Dec 2025 10:28:01 +0000
+	 In-Reply-To:Content-Type; b=RKIfwxWWMEBo/7AhgwVRXoU98YQD1tZhZsPjMk3Ejy4ecsfn95Yk9VF40ktBn9h/TV9p/Ozl30DghYI4WDu1eEcsdi/kRZnkjRfMmX7asK6mFewGC6ur5STcDHoivZEXHcsZOs0vtQyrjdNMqv+4F1ykgZI8T4vFtmSrkvxpk78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvhFZA9m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CA0C4CEF1;
+	Fri, 19 Dec 2025 10:33:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766140426;
+	bh=dtZQq9Tz8X9IApzFIIAr/KFy4FgR9nC4AkGBbD+ruV4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=dvhFZA9mSqbLJ4yx1jwkajLjdYyJpg/f+9SuszQZkDtJpoVGrKr+VuyI2UpSTAk63
+	 TbgkCcHbt6vnU8Dl3ct5fdt4iBv5tNkB3tpX0Ymis8/x5zv4SfOtQfEcVOrNwoPr9d
+	 o/TqZs5FaoTMNrlNnl00Lylv9lHjgr2455clLXs9cY+cW7ut5VonZQRs2WBZw5JhQN
+	 qr7EiJyCLb8rxiesfFq0oCoVFmMig7iSpgXbkpL+6dL9bdP2ZAwrUZLFqsJjtL4uF8
+	 Cq4Odqpe3E285Sx/9maLb8nrVVpavMQg9va7oh7H1FeAJgKgnoLQPS5eiDC9K7Z9/y
+	 a8J56MSdiktog==
+Message-ID: <b081d13b-4af2-4b60-83e5-3553939c1749@kernel.org>
+Date: Fri, 19 Dec 2025 19:33:42 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -40,75 +48,197 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/12] coresight: Add CPU cluster funnel/replicator/tmc
- support
-To: Sudeep Holla <sudeep.holla@arm.com>,
- yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Leo Yan <leo.yan@linux.dev>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, maulik.shah@oss.qualcomm.com,
- Jie Gan <jie.gan@oss.qualcomm.com>
-References: <20251218-cpu_cluster_component_pm-v2-0-2335a6ae62a0@oss.qualcomm.com>
- <20251218-careful-ruby-wildebeest-a8babd@sudeepholla>
- <d0ce8306-84e0-4940-98aa-dbc356d87593@oss.qualcomm.com>
- <20251219-hysterical-sparkling-meerkat-59c5eb@sudeepholla>
+Subject: Re: [PATCH v2 1/8] dmaengine: Add API to combine configuration and
+ preparation (sg and single)
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
+ Sagi Grimberg <sagi@grimberg.me>, Chaitanya Kulkarni <kch@nvidia.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, Koichiro Den <den@valinux.co.jp>,
+ Niklas Cassel <cassel@kernel.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org,
+ mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ imx@lists.linux.dev
+References: <20251218-dma_prep_config-v2-0-c07079836128@nxp.com>
+ <20251218-dma_prep_config-v2-1-c07079836128@nxp.com>
 Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20251219-hysterical-sparkling-meerkat-59c5eb@sudeepholla>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <20251218-dma_prep_config-v2-1-c07079836128@nxp.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 19/12/2025 10:21, Sudeep Holla wrote:
-> On Fri, Dec 19, 2025 at 10:13:14AM +0800, yuanfang zhang wrote:
->>
->>
->> On 12/18/2025 7:33 PM, Sudeep Holla wrote:
->>> On Thu, Dec 18, 2025 at 12:09:40AM -0800, Yuanfang Zhang wrote:
->>>> This patch series adds support for CoreSight components local to CPU clusters,
->>>> including funnel, replicator, and TMC, which reside within CPU cluster power
->>>> domains. These components require special handling due to power domain
->>>> constraints.
->>>>
->>>
->>> Could you clarify why PSCI-based power domains associated with clusters in
->>> domain-idle-states cannot address these requirements, given that PSCI CPU-idle
->>> OSI mode was originally intended to support them? My understanding of this
->>> patch series is that OSI mode is unable to do so, which, if accurate, appears
->>> to be a flaw that should be corrected.
->>
->> It is due to the particular characteristics of the CPU cluster power
->> domain.Runtime PM for CPU devices works little different, it is mostly used
->> to manage hierarchicalCPU topology (PSCI OSI mode) to talk with genpd
->> framework to manage the last CPU handling in cluster.
+On 12/19/25 00:56, Frank Li wrote:
+> Previously, configuration and preparation required two separate calls. This
+> works well when configuration is done only once during initialization.
 > 
-> That is indeed the intended design. Could you clarify which specific
-> characteristics differentiate it here?
+> However, in cases where the burst length or source/destination address must
+> be adjusted for each transfer, calling two functions is verbose and
+> requires additional locking to ensure both steps complete atomically.
 > 
->> It doesn’t really send IPI to wakeup CPU device (It don’t have
->> .power_on/.power_off) callback implemented which gets invoked from
->> .runtime_resume callback. This behavior is aligned with the upstream Kernel.
->>
+> Add a new API dmaengine_prep_config_single() and dmaengine_prep_config_sg()
+> and callback device_prep_config_sg() that combines configuration and
+> preparation into a single operation. If the configuration argument is
+> passed as NULL, fall back to the existing implementation.
 > 
-> I am quite lost here. Why is it necessary to wake up the CPU? If I understand
-> correctly, all of this complexity is meant to ensure that the cluster power
-> domain is enabled before any of the funnel registers are accessed. Is that
-> correct?
+> Add a new API dmaengine_prep_config_single_safe() and
+> dmaengine_prep_config_sg_safe() for re-entrancy, which require driver
+> implement callback device_prep_config_sg().
 > 
-> If so, and if the cluster domains are already defined as the power domains for
-> these funnel devices, then they should be requested to power on automatically
-> before any register access occurs. Is that not the case?
+> Tested-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Frank Li <Frank.Li@nxp.com>
+> ---
+> change in v2
+> - add () for function
+> - use short name device_prep_sg(), remove "slave" and "config". the 'slave'
+> is reduntant. after remove slave, the function name is difference existed
+> one, so remove _config suffix.
+> ---
+>  Documentation/driver-api/dmaengine/client.rst |   9 +++
+>  include/linux/dmaengine.h                     | 103 ++++++++++++++++++++++++--
+>  2 files changed, 105 insertions(+), 7 deletions(-)
 > 
-> What am I missing in this reasoning?
+> diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
+> index d491e385d61a98b8a804cd823caf254a2dc62cf4..02c45b7d7a779421411eb9c68325cdedafcfe3b1 100644
+> --- a/Documentation/driver-api/dmaengine/client.rst
+> +++ b/Documentation/driver-api/dmaengine/client.rst
+> @@ -80,6 +80,10 @@ The details of these operations are:
+>  
+>    - slave_sg: DMA a list of scatter gather buffers from/to a peripheral
+>  
+> +  - config_sg: Similar with slave_sg, just pass down dma_slave_config
+> +    struct to avoid call dmaengine_slave_config() every time if need
 
-Exactly, this is what I am too. But then you get the "pre-formated 
-standard response" without answering our questions.
+...struct to avoid calling dmaengine_slave_config() every time adjusting the
+burst length or the FIFO address is needed.
 
-Suzuki
+> +    adjust burst length or FIFO address.
+> +
+
+> +static inline struct dma_async_tx_descriptor *
+> +dmaengine_prep_config_single_safe(struct dma_chan *chan, dma_addr_t buf,
+> +	size_t len, enum dma_transfer_direction dir, unsigned long flags,
+> +	struct dma_slave_config *config)
+>  {
+>  	struct scatterlist sg;
+> +
+>  	sg_init_table(&sg, 1);
+>  	sg_dma_address(&sg) = buf;
+>  	sg_dma_len(&sg) = len;
+>  
+> -	if (!chan || !chan->device || !chan->device->device_prep_slave_sg)
+> +	if (!chan || !chan->device || !chan->device->device_prep_config_sg)
+> +		return NULL;
+
+While at it, please move this arguments check before the sg initialization.
+Otherwise, this is a little odd (argument checks generally are done first).
+
+> +
+> +	return chan->device->device_prep_config_sg(chan, &sg, 1, dir,
+> +						   flags, config, NULL);
+> +}
+> +
+> +static inline struct dma_async_tx_descriptor *
+> +dmaengine_prep_config_single(struct dma_chan *chan, dma_addr_t buf, size_t len,
+> +	enum dma_transfer_direction dir, unsigned long flags,
+> +	struct dma_slave_config *config)
+> +{
+> +	struct scatterlist sg;
+> +
+> +	sg_init_table(&sg, 1);
+> +	sg_dma_address(&sg) = buf;
+> +	sg_dma_len(&sg) = len;
+> +
+> +	if (!chan || !chan->device)
+> +		return NULL;
+
+Same here. Check these before initializing sg.
+
+> +
+> +	if (chan->device->device_prep_config_sg)
+> +		return dmaengine_prep_config_sg_safe(chan, &sg, 1, dir,
+> +						     flags, config);
+> +
+> +	if (config)
+> +		if (dmaengine_slave_config(chan, config))
+> +			return NULL;
+> +
+> +	if (!chan->device->device_prep_slave_sg)
+>  		return NULL;
+>  
+>  	return chan->device->device_prep_slave_sg(chan, &sg, 1,
+>  						  dir, flags, NULL);
+>  }
+>  
+> +static inline struct dma_async_tx_descriptor *
+> +dmaengine_prep_slave_single(struct dma_chan *chan, dma_addr_t buf, size_t len,
+> +			    enum dma_transfer_direction dir,
+> +			    unsigned long flags)
+> +{
+> +	return dmaengine_prep_config_single(chan, buf, len, dir, flags, NULL);
+> +}
+> +
+>  /**
+>   * dmaengine_prep_peripheral_dma_vec() - Prepare a DMA scatter-gather descriptor
+>   * @chan: The channel to be used for this descriptor
+> @@ -1009,17 +1079,36 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_peripheral_dma_vec(
+>  							    dir, flags);
+>  }
+>  
+> -static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
+> +static inline struct dma_async_tx_descriptor *dmaengine_prep_config_sg(
+
+Very odd line split. Please split this after the "*" of the return type.
+
+>  	struct dma_chan *chan, struct scatterlist *sgl,	unsigned int sg_len,
+> -	enum dma_transfer_direction dir, unsigned long flags)
+> +	enum dma_transfer_direction dir, unsigned long flags,
+> +	struct dma_slave_config *config)
+>  {
+> -	if (!chan || !chan->device || !chan->device->device_prep_slave_sg)
+> +	if (!chan || !chan->device)
+> +		return NULL;
+> +
+> +	if (chan->device->device_prep_config_sg)
+> +		return dmaengine_prep_config_sg_safe(chan, sgl, sg_len,
+> +					dir, flags, config);
+> +
+> +	if (config)
+> +		if (dmaengine_slave_config(chan, config))
+> +			return NULL;
+> +
+> +	if (!chan->device->device_prep_slave_sg)
+>  		return NULL;
+>  
+>  	return chan->device->device_prep_slave_sg(chan, sgl, sg_len,
+>  						  dir, flags, NULL);
+>  }
+>  
+> +static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
+
+Same comment here.
+
+> +	struct dma_chan *chan, struct scatterlist *sgl, unsigned int sg_len,
+> +	enum dma_transfer_direction dir, unsigned long flags)
+> +{
+> +	return dmaengine_prep_config_sg(chan, sgl, sg_len, dir, flags, NULL);
+> +}
+> +
+>  #ifdef CONFIG_RAPIDIO_DMA_ENGINE
+>  struct rio_dma_ext;
+>  static inline struct dma_async_tx_descriptor *dmaengine_prep_rio_sg(
+> 
+
+
+-- 
+Damien Le Moal
+Western Digital Research
 
