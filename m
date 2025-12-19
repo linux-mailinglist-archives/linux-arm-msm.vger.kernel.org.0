@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-85966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0B70CD17F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 19:58:48 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2360BCD17D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 19:57:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EB0FE304065F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:56:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7706B3046D7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:57:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C445234D4CA;
-	Fri, 19 Dec 2025 18:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BFC234D930;
+	Fri, 19 Dec 2025 18:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="0Y3P9IuM"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="MQXyKwIE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5F934D4E8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 18:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8C034D4EB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 18:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766170006; cv=none; b=SSujQ9y2F/NOcmsLWrfJ0RCiVvFlCHSPh7iXQ4BstWwOke0apuIzzv63VE0Lnx7mFhtTjY9BJFok4Pek9YeAKyX93Tei4nqwY0qkHOb62P2miuacVdGZwOWF6QfS8tiP9w+mS2InQ31OjXbnC9fWyVsOxTfLwUy0o7T+srUsFEE=
+	t=1766170007; cv=none; b=H0az5xSuwKjmdDjPcMgZuF9Zcyx2rD3+08GytqgmgWIEyk0y414d/qrgYM65SbPnVbgA+KuTZOTeW5rqJMdTi4be2Uv1uETyKX6Imi0JxFOpXFZFnkYjOgis6qPLUls9VKqxVpoiqldxwi0HOYDWs1yZJTsmPAuZM2mXvWmzWxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766170006; c=relaxed/simple;
-	bh=exrGZEeRi+E9/C+ecrTPEToWLGj88fLJCHJ3ZaqQ/fQ=;
+	s=arc-20240116; t=1766170007; c=relaxed/simple;
+	bh=+H3WrloQlDguoIYJlwD5OqcFEK+Vo5qyimaNVzrGt+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAxPZd6hNVwdC6wPXrjivUQVSjvCzLgYdc+cm4nDIltNXQJSlii/TktXgBwJkm+IOzHJUnBwykPvDqmrQi9XjEEv2A5qRB7lLSogqFR5L12J+qOqbkrxpPoW0CXMaqXd5gyx3LT4Spx6H44iS+xwZAw+e5H6keL83wlyXxS+scs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=0Y3P9IuM; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=U5U+/uOlepqjtdkuQdTVYTmmM7CQHZwFDIvCf55T7261MUutbz3z8ecM82C0Kl0k7ZodpqfFnezxoLZfIBWeRFbSaG9jREj58Y0cLCT5egY3jJWPr1OweSjh/W5QRAYrzz9W5mIBB6cfioVRllLC8+ABsqykLA3CazySXVG+tvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=MQXyKwIE; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=UtLTwc+LiBLTScqzUXqYR3Ok73APBHKTYAuY0Z5/pns=; b=0Y3P9IuMTi3L/couh/zAofVFyy
-	E0XMDaUDT6h77QLXRljgI7dvOYGILqM1JLO3nyU8HBzHY3yTKEqJ0oLBCaD/Fxnx+q2H4u28x5BCc
-	62paejRColy7RVVws7mt9UqyjF6GwYNKZiIu+VXGI6i8zTrc87zHSAnM2tmJhEMYjU9lBXb98xOh7
-	7VCIhWW3sNSrJpR0VqtNsmFPwfdMcq92bkUeOMMnqpAl41ofZiGG5QLJ7dPppqaMdfbE5kHnZzxLY
-	blHQsUaIGkw1IegImx3PWSC4GOADyXqGqjwPxL6fBmekYCOFIemKCQoqkJSx5jCpc68TpdjRZsoPN
-	qAwZym9A==;
+	bh=29bFBqNh7gMbtS+CkFMD3+tvUazk9p3Y16DWfFrntG0=; b=MQXyKwIEdZLL0WoGvpSFHvj2Co
+	tiU8UxCqxYUJmHMKIJxUIJpksvoDsc3qEx6sHTMn9AkAlAv5tNRmNYoJ4KdAMOKPPHpt+OjuTX1qY
+	lE6jfZWaSRGtalpGuh1WtJGuLPba5EInBJxdhbrx8ZJoz/gBYi2fseMpw53YqctSSEKc2VqRiURNR
+	NN2l1ZO3K3rH3PRZu8heKHmfRk/YwMB/gBoS8W8EGs/kvPd74g5O0dnpw5dmxdQosp+Ye8nx74nlX
+	IdP67d732KpukFC+GGz3vlMgt75MGeZMDoJz/1bvJED7UlINUGb8kHLXLPu44gDU7ayEID0tFLZUo
+	EUL/n2mA==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vWfUy-0000000AqkV-2blN;
+	id 1vWfUy-0000000AqkV-3tEf;
 	Fri, 19 Dec 2025 18:46:44 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: dri-devel@lists.freedesktop.org
@@ -53,9 +53,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 13/19] drm/msm/dpu: dpu_hw_top.h: fix all kernel-doc warnings
-Date: Fri, 19 Dec 2025 10:46:32 -0800
-Message-ID: <20251219184638.1813181-14-rdunlap@infradead.org>
+Subject: [PATCH 14/19] drm/msm/dpu: dpu_hw_vbif.h: fix all kernel-doc warnings
+Date: Fri, 19 Dec 2025 10:46:33 -0800
+Message-ID: <20251219184638.1813181-15-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251219184638.1813181-1-rdunlap@infradead.org>
 References: <20251219184638.1813181-1-rdunlap@infradead.org>
@@ -69,34 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 Correct or add kernel-doc comments to eliminate all warnings:
 
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:93 Incorrect use of
- kernel-doc format: * setup_traffic_shaper() : Setup traffic shaper control
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:101 Incorrect use of
- kernel-doc format: * setup_clk_force_ctrl - set clock force control
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:111 Incorrect use of
- kernel-doc format: * get_danger_status - get danger status
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:119 Incorrect use of
- kernel-doc format: * setup_vsync_source - setup vsync source
- configuration details
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:127 Incorrect use of
- kernel-doc format: * get_safe_status - get safe status
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:135 Incorrect use of
- kernel-doc format: * dp_phy_intf_sel - configure intf to phy mapping
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:142 Incorrect use of
- kernel-doc format: * intf_audio_select - select the external interface
- for audio
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'setup_clk_force_ctrl' not described in 'dpu_hw_mdp_ops'
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'get_danger_status' not described in 'dpu_hw_mdp_ops'
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'setup_vsync_source' not described in 'dpu_hw_mdp_ops'
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'get_safe_status' not described in 'dpu_hw_mdp_ops'
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'dp_phy_intf_sel' not described in 'dpu_hw_mdp_ops'
-Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h:146 struct member
- 'intf_audio_select' not described in 'dpu_hw_mdp_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:19 Incorrect use of
+ kernel-doc format: * set_limit_conf - set transaction limit config
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:29 Incorrect use of
+ kernel-doc format: * get_limit_conf - get transaction limit config
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:39 Incorrect use of
+ kernel-doc format: * set_halt_ctrl - set halt control
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:48 Incorrect use of
+ kernel-doc format: * get_halt_ctrl - get halt control
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:57 Incorrect use of
+ kernel-doc format: * set_qos_remap - set QoS priority remap
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:67 Incorrect use of
+ kernel-doc format: * set_mem_type - set memory type
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:76 Incorrect use of
+ kernel-doc format: * clear_errors - clear any vbif errors
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:88 Incorrect use of
+ kernel-doc format: * set_write_gather_en - set write_gather enable
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'limit' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'set_limit_conf' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'get_limit_conf' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'set_halt_ctrl' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'get_halt_ctrl' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'set_qos_remap' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'set_mem_type' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 's' not described in 'dpu_hw_vbif_ops'
+Warning: drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h:93 struct member
+ 'set_write_gather_en' not described in 'dpu_hw_vbif_ops'
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -108,87 +114,81 @@ Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Cc: Maxime Ripard <mripard@kernel.org>
 Cc: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h |   21 +++++++++----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- linux-next-20251119.orig/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-+++ linux-next-20251119/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-@@ -77,12 +77,11 @@ enum dpu_dp_phy_sel {
- /**
-  * struct dpu_hw_mdp_ops - interface to the MDP TOP Hw driver functions
-  * Assumption is these functions will be called after clocks are enabled.
-- * @setup_split_pipe : Programs the pipe control registers
-- * @setup_pp_split : Programs the pp split control registers
-- * @setup_traffic_shaper : programs traffic shaper control
+--- linux-next-20251119.orig/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h
++++ linux-next-20251119/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h
+@@ -17,7 +17,7 @@ struct dpu_hw_vbif;
   */
- struct dpu_hw_mdp_ops {
--	/** setup_split_pipe() : Registers are not double buffered, thisk
-+	/**
-+	 * @setup_split_pipe : Programs the pipe control registers.
-+	 * Registers are not double buffered, this
- 	 * function should be called before timing control enable
- 	 * @mdp  : mdp top context driver
- 	 * @cfg  : upper and lower part of pipe configuration
-@@ -91,7 +90,7 @@ struct dpu_hw_mdp_ops {
- 			struct split_pipe_cfg *p);
+ struct dpu_hw_vbif_ops {
+ 	/**
+-	 * set_limit_conf - set transaction limit config
++	 * @set_limit_conf: set transaction limit config
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @rd: true for read limit; false for write limit
+@@ -27,7 +27,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id, bool rd, u32 limit);
  
  	/**
--	 * setup_traffic_shaper() : Setup traffic shaper control
-+	 * @setup_traffic_shaper : programs traffic shaper control.
- 	 * @mdp  : mdp top context driver
- 	 * @cfg  : traffic shaper configuration
+-	 * get_limit_conf - get transaction limit config
++	 * @get_limit_conf: get transaction limit config
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @rd: true for read limit; false for write limit
+@@ -37,7 +37,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id, bool rd);
+ 
+ 	/**
+-	 * set_halt_ctrl - set halt control
++	 * @set_halt_ctrl: set halt control
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @enable: halt control enable
+@@ -46,7 +46,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id, bool enable);
+ 
+ 	/**
+-	 * get_halt_ctrl - get halt control
++	 * @get_halt_ctrl: get halt control
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @return: halt control enable
+@@ -55,7 +55,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id);
+ 
+ 	/**
+-	 * set_qos_remap - set QoS priority remap
++	 * @set_qos_remap: set QoS priority remap
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @level: priority level
+@@ -65,7 +65,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id, u32 level, u32 remap_level);
+ 
+ 	/**
+-	 * set_mem_type - set memory type
++	 * @set_mem_type: set memory type
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
+ 	 * @value: memory type value
+@@ -74,7 +74,7 @@ struct dpu_hw_vbif_ops {
+ 			u32 xin_id, u32 value);
+ 
+ 	/**
+-	 * clear_errors - clear any vbif errors
++	 * @clear_errors: clear any vbif errors
+ 	 *	This function clears any detected pending/source errors
+ 	 *	on the VBIF interface, and optionally returns the detected
+ 	 *	error mask(s).
+@@ -86,7 +86,7 @@ struct dpu_hw_vbif_ops {
+ 		u32 *pnd_errors, u32 *src_errors);
+ 
+ 	/**
+-	 * set_write_gather_en - set write_gather enable
++	 * @set_write_gather_en: set write_gather enable
+ 	 * @vbif: vbif context driver
+ 	 * @xin_id: client interface identifier
  	 */
-@@ -99,7 +98,7 @@ struct dpu_hw_mdp_ops {
- 			struct traffic_shaper_cfg *cfg);
- 
- 	/**
--	 * setup_clk_force_ctrl - set clock force control
-+	 * @setup_clk_force_ctrl: set clock force control
- 	 * @mdp: mdp top context driver
- 	 * @clk_ctrl: clock to be controlled
- 	 * @enable: force on enable
-@@ -109,7 +108,7 @@ struct dpu_hw_mdp_ops {
- 			enum dpu_clk_ctrl_type clk_ctrl, bool enable);
- 
- 	/**
--	 * get_danger_status - get danger status
-+	 * @get_danger_status: get danger status
- 	 * @mdp: mdp top context driver
- 	 * @status: Pointer to danger safe status
- 	 */
-@@ -117,7 +116,7 @@ struct dpu_hw_mdp_ops {
- 			struct dpu_danger_safe_status *status);
- 
- 	/**
--	 * setup_vsync_source - setup vsync source configuration details
-+	 * @setup_vsync_source: setup vsync source configuration details
- 	 * @mdp: mdp top context driver
- 	 * @cfg: vsync source selection configuration
- 	 */
-@@ -125,7 +124,7 @@ struct dpu_hw_mdp_ops {
- 				struct dpu_vsync_source_cfg *cfg);
- 
- 	/**
--	 * get_safe_status - get safe status
-+	 * @get_safe_status: get safe status
- 	 * @mdp: mdp top context driver
- 	 * @status: Pointer to danger safe status
- 	 */
-@@ -133,14 +132,14 @@ struct dpu_hw_mdp_ops {
- 			struct dpu_danger_safe_status *status);
- 
- 	/**
--	 * dp_phy_intf_sel - configure intf to phy mapping
-+	 * @dp_phy_intf_sel: configure intf to phy mapping
- 	 * @mdp: mdp top context driver
- 	 * @phys: list of phys the DP interfaces should be connected to. 0 disables the INTF.
- 	 */
- 	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, enum dpu_dp_phy_sel phys[2]);
- 
- 	/**
--	 * intf_audio_select - select the external interface for audio
-+	 * @intf_audio_select: select the external interface for audio
- 	 * @mdp: mdp top context driver
- 	 */
- 	void (*intf_audio_select)(struct dpu_hw_mdp *mdp);
 
