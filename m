@@ -1,100 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-85801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3209CCF1B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:19:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3169BCCF1DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 10:24:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 650153016013
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 09:19:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5CA7130198F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 09:24:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 521E12EBB98;
-	Fri, 19 Dec 2025 09:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1DD623F422;
+	Fri, 19 Dec 2025 09:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Rnavz9a6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VIWpDjIP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aCDgLARS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NQmNVoFV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B832D1916
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7A827B4F9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766135979; cv=none; b=Rrs2QGmqgL3+OAaikB+zaQ6oukr9g0XVjnaC59IJgvzOYuCoemzi7519OF2XlZQhpwI+izFQ+72/uA0j42RAd3n2DtF2USw6f6hm9cwUs6HwDzd3u35x9kLtl6isxU+ZkX1BXnW4ThIq04nKqanXB6p77YWS3bfjachLq64zin8=
+	t=1766136265; cv=none; b=IqdVSLzLmwF0KtNIlS7ViWCOLYXiGNGgHMGG9fPs+nSJVcC9Q+smkNBkNlEJ37smoU+CjVF5GxswTyw2ZMHtKF3ekuW2aUZwbmLv9VHJXKiOSNvedkBYgVXaSXL2S10iywpF1Bt2/W3/+OEyBLgfPxPsRmb54m7Jbbqpg0z1LA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766135979; c=relaxed/simple;
-	bh=xh6Pbh0uWTIaJo9YnXyM3s8lP/uhb6VTvGe8mTnmtJQ=;
+	s=arc-20240116; t=1766136265; c=relaxed/simple;
+	bh=LgbFen8QkJa57MlcXSSYnglkQbLSOclS8v20wXODME0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DqXvlOSxWYB7yqGoTP40n1ooBiIqDnAe0VqGkj2LJoTcx5O4Btk+cJav6YzmIQQDclBe+6EIxJSxf0us2QJc5yi8TTIlO21Hmb1npI4rwvmGZvjf+WRBY40F8YhLmBYLiMoyOtjnbjdOjXaMEvI/IspNEs6LY8ms67u6oYgeTuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Rnavz9a6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VIWpDjIP; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=WdCcwQfIGbnvSDeDzvkgDQRKdpNSEucdTXqMa/idr/lwHqZUSBeIF6bSyytLXqmwrk7DH8A63m54DZDJTauOO/323d/aj4GV8lS8Vr6BTIn9/zAqWAemyj7wPDp63dgkqalJ8yuj94BTj7GTGmGUoaSeWM3RoeWDYCmkAgrq1GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aCDgLARS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NQmNVoFV; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJ4c9Sr3559103
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:19:37 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJ4cl0c4000448
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:24:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fAvrRD8TuzsgeKhtNKbSE9hAEe9ZjO0kt6Db19I21xc=; b=Rnavz9a6bq/JYna7
-	vnAmzuVs3bwK1CvNTty49QfBw/GdDWyL4+5GAeNz/BpnCmfYOdpQ4pCGeEgoNGUJ
-	B5yZEjA3z3D3xwqr8CHMOFdeLY46AVYFsNjSrCH1XfPVFcNVBfWGGFfJOwo0wDWA
-	8kKSC7lX7dsgKlm1xCnqbPJ/U8j5ts9RW09W9OUUU1WoX2kWbpRQWu5YQ5FwQwGn
-	dLOvGC1haOae3XD3evTu/ikjU0CDngiwZjKyP12NbNlp1QDwtA6tej15hJF1BBkA
-	ZWIgs1+YbxLKCUtmP3NfAHo3nLthHKu8v5QWSKWmhTbNFD8x30yxLm0O0Ut3OZt2
-	lhC36w==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2ca2u7-1
+	DOfwEI0tIm3WYzjLDVlBlTv1S+vqhrY0X0rRzcUt1/4=; b=aCDgLARS3jQj54UJ
+	L6gWb/8+Zn7EWzsA7zGPjFEF3ux+FijNYfSxC4l2oKnQwQxGYdvkbhvsQgEcshMA
+	QkeCjd/Y4XPtQiWgTcNNXXZXNQ8wP5IU0H1BwcKpQOmDGWlAkxYlKrx20IyjwFe8
+	osd94TAxaIuWEimju+EcXFw9676ozmgchZpJz9HYI2AAEQxFs69fKv0ns+tI8n4c
+	FS9UPWhrNDBeHovozQtlVc2tKeiZWURJR/B5h2xyaboUe64N5kI1BfP7VQtMuDSm
+	Dy6hSmq1+YNwYx8XjAUxdtp/GBtlI2zn1DNiCOJ6D1NInVSc3zaG2/13xxPlq4YR
+	ww9Y4w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r29j442-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:19:36 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-bc09a8454b9so3532000a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 01:19:36 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 09:24:23 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-34ab8aafd24so1915298a91.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 01:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766135976; x=1766740776; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766136263; x=1766741063; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fAvrRD8TuzsgeKhtNKbSE9hAEe9ZjO0kt6Db19I21xc=;
-        b=VIWpDjIPOakrVccy2h0f0M/jL/suq7rZ9shelToZqan9ZJKvSm92n9qTNsC4+uWn2k
-         zRuSkc+nyaa5HMR443reBD35BQnQ55YYx7Wfc1qimGfQ5LCgP4/t/rBa/O3ZrEn3p6Yq
-         Kzhm858Jk0FUhrfdgUtp1LRI2P2mxlSvZTp3VmhSGTJql0E3MDPGtGrtXQ9hvNpF+jLO
-         t1l/5qo9tjovJifsLw5lhOzSEUtWsi+jJAF5cL396p0/Tn0/hBkDU78Xo+KJiWiKIY6p
-         9C1gkw/qoHmEUXeCfXyMV1aXTzTACF7uh/c03tYy58G+iD5RkcSNRn0ViHRu9ipYbowh
-         gRyA==
+        bh=DOfwEI0tIm3WYzjLDVlBlTv1S+vqhrY0X0rRzcUt1/4=;
+        b=NQmNVoFVKf+yCJaXTU1X/PdLg1cFs7j64GdJjalFY2jIP4LPXHQR7F2qwnErNyULz+
+         Nm70ZEnFNqsGbEjU3JkjIWtJd7KysVxJso+iVj/Y+x7BfVoSmW9dY7x46evl2x3j/5j0
+         sGSAUv3up15DvVRuW+souOal+oTPdWP4loqlGUgyYw9YK502qPDDUdSLN1O3xQIWEOrA
+         wjHIVHiWGri0pPtlsrwpsfczKWFrr8t8vQmNwUFjRfFYdGVADcKu8Hfvm+lUUehgV9Dd
+         46PcB2fluT6Lz8T1P4V0GgmGaDkMDJ3h3VATQCBEKSgqT05YA0p5q3BkjZdnwMK3mwzr
+         wVbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766135976; x=1766740776;
+        d=1e100.net; s=20230601; t=1766136263; x=1766741063;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fAvrRD8TuzsgeKhtNKbSE9hAEe9ZjO0kt6Db19I21xc=;
-        b=lDsgt8E2Rkw9R8dR6Bi8XjzMAaTU06weI4WJ69lmxP4jbmb8+768EjnI/mBI4T9p7M
-         8ThBPMV7bpIC5Usq3/QPCxnL/QCtchrCbi0AOG7Yo/OZTtKMaOFwq+JvDZj4wLR/ojHK
-         zi8WU2SS+VLaqy5STYEGZY44IdsvuhT1EpLsFb5HjEMZcFxu3szxWLtCNHeFcX8rjWn7
-         tjewkF01MEMsdhftO4GZOFTejXNKU+XkcSJ1dwE1JID2253lg5VgRu+TvBoDVei2znU+
-         GosmrqaRGYh4oov3jrHHyqmtxd30zt9w0VdHllDDIhFppQ1zvTH5JkJ570q/9O3ZJ6WC
-         z3MQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXRfYthofbCWXejV5NbmDmCC1U1MaTyCZVFTFgmDw/DAk7o2MPGe2nlGeKbQ4PEKolh8YY6iJF0MgxBXNeo@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeU+uk29me7nLxplg8n845FSx0cINHLD8Hi22pzHOnoK/uSuBF
-	phzNkp/C1ekjNYYWMk7/cZwH7PDgJMRGgO6Zr7OujHa/2az1eL/6aAtG29e7a9nrLr64BZauU9f
-	qlRUGpeInLBmexJ1cZFpBcGtclpMaDwSyraD/L/xINqAn09njHzypqJpaUQ0N2yjcRmJs
-X-Gm-Gg: AY/fxX7UbBGfXdKkB4vcQmrdD5CBUAsaLIxioHhIVO0mbGq1xZkm22u4rYsfoCbyl7/
-	uiLimyKUx7wiVXexeXalDeF7nKsf/hNlhbWonH/KaDP1Kh4GkISJ6AtSxU9zsemknEV2tLH6wAh
-	OoPRFW4hd7qnhS1PEacz4ldM3IebMjZw9Aowm3+nJnn70Z1LksWcFYYus5TDtZz5UVmOYHyNkQW
-	7Kth631Opi+fgqrc45mngJyMYyjGScf0eqkrSFFiEGlIGgZFRrhJv5bdiZ44BwJPonDLMiMiFpH
-	jTwEv15BV+5so/KSIHdBOODtum3PJa46wAb6pPbH3YPCECqFKZlummTZRHix2m+EfY/tUdCI53y
-	htP4cAfZu2f/5t+zxQHDwjUMK/mJbx2XymI4Jx/GVv7uVkJlGRRLGad9ZXpvhQICt+g==
-X-Received: by 2002:a05:7022:f409:b0:119:e56b:c74a with SMTP id a92af1059eb24-121722b29ddmr2435070c88.15.1766135976044;
-        Fri, 19 Dec 2025 01:19:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHLncFl/Iqm9W8a4XTUYn9gRPfCdgmH0wDAwBm1zZM/UvMERAxXt5Y13MSnJriA8Eqv/U0vA==
-X-Received: by 2002:a05:7022:f409:b0:119:e56b:c74a with SMTP id a92af1059eb24-121722b29ddmr2435035c88.15.1766135975395;
-        Fri, 19 Dec 2025 01:19:35 -0800 (PST)
-Received: from [10.110.43.182] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1217254d369sm6369095c88.16.2025.12.19.01.19.32
+        bh=DOfwEI0tIm3WYzjLDVlBlTv1S+vqhrY0X0rRzcUt1/4=;
+        b=f4KmXlAfWiFBZBqlsRf6S9+2WBOuh6yPj/6ZICYb/Js1Ws8xmR07aNbt0y+VUUzC+5
+         6U2+W1WUL24ooSn1gM50ATGc6a3n7btMg8xgeHYlI1/34t87AOSFwra7XRIkhBRRoS/h
+         Z3qVFOAj/deXN+fzQE6FZRi0nLJndtN/XAVYsHyEwWC+MFTDEbFT2Fkg9dNoVVtH/RSi
+         ucIdiBGMLJFqW9O7nHajET8vosAX0/dl3kY8x4uQgj7UEQtCZhlwoOKSSXeHQwDre+gf
+         hETNZExVoZ0xiH657OXCJ/b0iO31Wu4SiS9+U56Z+1gI7RpHd7NlEgDLo1xS2oQgYRgW
+         wNtA==
+X-Forwarded-Encrypted: i=1; AJvYcCUYU3IWkJnzwk/u6uTHSRkEKvaVp6j+wl5QDSt7S+ba2S56XLh8mQ/e2dvh1Ol+XveZAG834Vc0CUtGWPZ7@vger.kernel.org
+X-Gm-Message-State: AOJu0YysjrPgVr279wX6RbNGVykc8RYBy41iY0YMQDJjU98wUyFHIk6g
+	5lTOTK5JdkCgQGE2FKN7zXt5/Yoj+wJxSxsWsHm/DTwXpi0jYyw37Yc7nKIuP6YwgMjrvLSTfm8
+	iRi6yVgRxo4s1GNJIkOTcRSJ6CteRvLaHhyjFqqka/mNZ7NS9/kLJ7lnmqmtwj3gH7Ho0
+X-Gm-Gg: AY/fxX58uhzppv8Fi/wiz0klM5ZQ3BS9ujYrF43qjMreKsJv8DyLCQNyik4ggELKSz7
+	E2kYxMyfpGiT47bfGS9bdqxIfacor6bBN0oJBf7Qi0PO0Iq+22auvgN5LiUKLcRaMXFHEK/jkZS
+	NMcfc2hAc0JOpcUQ54zzXCXxMsdUQsFuhTFIRaenzPAzL+bf93ImFlhHJYBuWuFBgxHfpgCXhSB
+	8wPX7ArEbHUsRFCNx0prH+iBIb/27vMp8UBliVAzV/mjaqqp/7rQilch7HSCcotVeJlZYd+K/PN
+	b74fWy83fte/A2Z78t2C2Yg0CunRUNhAKOu2VB5EVzetC0UURizGAYnYbyhoO5Li22PKqRUHp3F
+	jS6CX9MPhGXm33bqDK1oXKChooxh4HzY6Ds7x0kWSMnri7Y4fLbRvdlT+PsekxYPCOnezApJ+e/
+	4=
+X-Received: by 2002:a17:90a:c106:b0:34c:2f40:c662 with SMTP id 98e67ed59e1d1-34e71e2955bmr5077764a91.14.1766136262589;
+        Fri, 19 Dec 2025 01:24:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaHhZUaMUo8PyEk/p7xL6WeDX8rPW0yBK8DGzdCz4GjR2TbHsdfsLYyys2Yz/uQfK3XDzmBw==
+X-Received: by 2002:a17:90a:c106:b0:34c:2f40:c662 with SMTP id 98e67ed59e1d1-34e71e2955bmr5077738a91.14.1766136262041;
+        Fri, 19 Dec 2025 01:24:22 -0800 (PST)
+Received: from [10.133.33.174] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34e70dbcb6esm4744373a91.9.2025.12.19.01.24.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Dec 2025 01:19:35 -0800 (PST)
-Message-ID: <c3526d32-6769-4681-bc54-90a4af082265@oss.qualcomm.com>
-Date: Fri, 19 Dec 2025 17:19:30 +0800
+        Fri, 19 Dec 2025 01:24:21 -0800 (PST)
+Message-ID: <ac1dcd53-87f9-4b6e-ac95-dfe5fc972a89@oss.qualcomm.com>
+Date: Fri, 19 Dec 2025 17:24:15 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,150 +103,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] Bluetooth: btqca: Add WCN6855 firmware priority
- selection feature
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-        Marcel Holtmann
- <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com
-References: <20251117021645.712753-1-shuai.zhang@oss.qualcomm.com>
- <20251117021645.712753-2-shuai.zhang@oss.qualcomm.com>
- <mtp3qxngbnlpzk2cdp45ndtecab2h56ocwm6cp5ia7butra55a@bevidj6vdwzj>
+Subject: Re: [PATCH v8 2/8] coresight: core: add a new API to retrieve the
+ helper device
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20251211-enable-byte-cntr-for-ctcu-v8-0-3e12ff313191@oss.qualcomm.com>
+ <20251211-enable-byte-cntr-for-ctcu-v8-2-3e12ff313191@oss.qualcomm.com>
+ <dd043b78-d60c-4a79-85a8-9f352a4d89e1@arm.com>
 Content-Language: en-US
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <mtp3qxngbnlpzk2cdp45ndtecab2h56ocwm6cp5ia7butra55a@bevidj6vdwzj>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <dd043b78-d60c-4a79-85a8-9f352a4d89e1@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=cpSWUl4i c=1 sm=1 tr=0 ts=694518a8 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+X-Authority-Analysis: v=2.4 cv=P6c3RyAu c=1 sm=1 tr=0 ts=694519c7 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=CPydP0X5_9nDnWI7JbAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA3NiBTYWx0ZWRfX68Unc14m26A+
- NAh53Nb2Aa3syXPw20kOSvAICBuSBm4WMrWWzVmWcJgleq7cSFaIyDNcaaHVFiXIBZKgEjQDGTR
- Yt2VqHQFLlBtYzqA77g8GCD2BS7+bk9aim/V9GNMQXriBABIsYEX73azqratNO27t0K05D7vJgf
- MvC+JLheI5rsC5L3tlfsHz+Myuo1Dly3eVeh9Zcakxklz7SnAoBwI9GEgg1yXjXIMGn7fahS8pb
- GziNRgKKTfVnS7oLuH7k5gCb1eHZpl3RB7UZFHA84NNUyB0UiPYkWxnSljmqNBvW+49YQUKJmkW
- dpXu+5JiYuyKKYyO0MoQ7hZtcRGCneXIT7rRKvZ6o92AVMBehIj3Ve8PELAnD9LWqw4BzURu5qY
- IpN7B/bow9ahvYLVs2MpX7mhdZDqd5/s5NcZH9DEl4UBYyk5/WnbO7PGD2N6KDOAVg8Vevzfvpm
- 3mFAr4f7ZwPbGUPwtZw==
-X-Proofpoint-GUID: vv2rGd4T47gR1wnKD5aRG9KC27iU5kDF
-X-Proofpoint-ORIG-GUID: vv2rGd4T47gR1wnKD5aRG9KC27iU5kDF
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=t5fKABB059AxcEZLcEgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: G9nifpCuPRnPh66d0y3A0GE9awCpUnfa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA3NiBTYWx0ZWRfX/9PO2ET4VauL
+ 56S5bd+RufbZh43xBj6TAnl4q1hiz/4BlRqGluFBfMPfvYFC7zX/b1Vw9qpR4LheBAkji7BeNDD
+ k+ftD/VDTq9+G4xFjmgXbZcGMTkUmB+oVVwCWW8NMESe8aTAO5yrvvCFQOsq7DNnwhk5PIqfJ8B
+ JD6elqv4DBnTRtdb6LWwcQeSEC3TRvUlfYby8aBHN75tsmDF7XKvqs5KtD5W85B++M7O075MvDd
+ AS0nIme2KYYfiJEA6ovW5CTlCTmiU2C93A2zWd2HYs+yEdqx9YXjP9z6gKVMBvGz1XyQrhGte+U
+ weuCA472vPwKocRd+hDQRFNs/qSqYKU6meQkVGWG6kSFhguk161EM4oF8XSgHlSMb5WreomaQFf
+ Bf9rY3P37WlOeCHm0clETqJLVod2Bl/+VWhOY8uR7MrodUbJx7YnpAKml/ePwWewqh/x4Jx9xe7
+ 5gAex5CZ4UREbRWTSdA==
+X-Proofpoint-GUID: G9nifpCuPRnPh66d0y3A0GE9awCpUnfa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-19_02,2025-12-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 suspectscore=0 bulkscore=0 phishscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512190076
 
-Hi Dmitry
 
-On 11/19/2025 3:59 PM, Dmitry Baryshkov wrote:
-> On Mon, Nov 17, 2025 at 10:16:45AM +0800, Shuai Zhang wrote:
->> Historically, WCN685x and QCA2066 shared the same firmware files.
->> Now, changes are planned for the firmware that will make it incompatible
->> with QCA2066, so a new firmware name is required for WCN685x.
+
+On 12/19/2025 1:50 AM, Suzuki K Poulose wrote:
+> On 11/12/2025 06:10, Jie Gan wrote:
+>> Retrieving the helper device of the specific coresight device based on
+>> its helper_subtype because a single coresight device may has multiple 
+>> types
+>> of the helper devices.
 >>
->> Test Steps:
->>   - Boot device
->>   - Check the BTFW loading status via dmesg
->>
->> Sanity pass and Test Log:
->> QCA Downloading qca/wcnhpbftfw21.tlv
->> Direct firmware load for qca/wcnhpbftfw21.tlv failed with error -2
->> QCA Downloading qca/hpbftfw21.tlv
->>
->> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 >> ---
->>   drivers/bluetooth/btqca.c | 22 ++++++++++++++++++++--
->>   1 file changed, 20 insertions(+), 2 deletions(-)
+>>   drivers/hwtracing/coresight/coresight-core.c | 35 ++++++++++++++++++ 
+>> ++++++++++
+>>   drivers/hwtracing/coresight/coresight-priv.h |  2 ++
+>>   2 files changed, 37 insertions(+)
 >>
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> index 7c958d606..8e0004ef7 100644
->> --- a/drivers/bluetooth/btqca.c
->> +++ b/drivers/bluetooth/btqca.c
->> @@ -847,8 +847,12 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>   				 "qca/msbtfw%02x.mbn", rom_ver);
->>   			break;
->>   		case QCA_WCN6855:
->> +			/* Due to historical reasons, WCN685x chip has been using firmware
->> +			 * without the "wcn" prefix. The mapping between the chip and its
->> +			 * corresponding firmware has now been corrected.
->> +			 */
->>   			snprintf(config.fwname, sizeof(config.fwname),
->> -				 "qca/hpbtfw%02x.tlv", rom_ver);
->> +				 "qca/wcnhpbtfw%02x.tlv", rom_ver);
->>   			break;
->>   		case QCA_WCN7850:
->>   			snprintf(config.fwname, sizeof(config.fwname),
->> @@ -861,6 +865,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>   	}
->>   
->>   	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->> +
->> +	if (!rampatch_name && err < 0 && soc_type == QCA_WCN6855) {
->> +		snprintf(config.fwname, sizeof(config.fwname),
->> +			 "qca/hpbtfw%02x.tlv", rom_ver);
->> +		err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->> +	}
-> Is there a reason for ignoring how it was done already for other cases when
-> we need a similar fallback? Please extend the existing code (or rewrite
-> it) instead of adding a similar hook at a completely different place.
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/ 
+>> hwtracing/coresight/coresight-core.c
+>> index 0e8448784c62..667883ccb4b7 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -585,6 +585,41 @@ struct coresight_device 
+>> *coresight_get_sink(struct coresight_path *path)
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_get_sink);
+>> +/**
+>> + * coresight_get_helper: find the helper device of the assigned csdev.
+>> + *
+>> + * @csdev: The csdev the helper device is conntected to.
+>> + * @type:  helper_subtype of the expected helper device.
+>> + *
+>> + * Retrieve the helper device for the specific csdev based on its
+>> + * helper_subtype.
+>> + *
+>> + * Return: the helper's csdev upon success or NULL for fail.
+>> + */
+>> +struct coresight_device *coresight_get_helper(struct coresight_device 
+>> *csdev,
+>> +                          enum coresight_dev_subtype_helper subtype)
+> 
+> We have almost a similar function in coresight-core.c :
+> 
+> coresight_find_output_type(pdata, type, subtype).
+> 
+> Please could we reuse that, instead of adding similar funcitons ?
+> 
+> Please be careful about the mutex.
+> 
 
-Current Strategy (when DTS does not specify rampatch and firmware):
-     Rampatch: Load the rampatch based on soc_type.
-     NVM:  Load the NVM with board_id based on soc_type.
-                 If the file corresponding to board_id does not exist, 
-then load the NVM file ending with .bin.
-     For HSP (new requirement):
-         First, load the rampatch/NVM files wcnhpbtfw and wcnhpnv.
-         If not found:
-         Rampatch: Fall back to loading the hpbtfw rampatch file.
-         NVM:  Starting from wcnhpnv.bxxx, load the NVM file ending with 
-.bin.
-                     If still not found, look for hpnv.bxxx and then 
-apply the above NVM strategy again (soc_type(board_id)  to .bin).
+Thanks for the suggestion. I reviewed coresight_find_output_type, and I 
+believe we can reuse it to retrieve the CTCU device.
 
-The current changes are based on the original implementation, which 
-should make them the clearest modifications.
-Please review according to the existing strategy, and feel free to let 
-me know if you have any questions.
->> +
->>   	if (err < 0) {
->>   		bt_dev_err(hdev, "QCA Failed to download patch (%d)", err);
->>   		return err;
->> @@ -923,7 +934,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>   		case QCA_WCN6855:
->>   			qca_read_fw_board_id(hdev, &boardid);
->>   			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
->> -						  "hpnv", soc_type, ver, rom_ver, boardid);
->> +						  "wcnhpnv", soc_type, ver, rom_ver, boardid);
->>   			break;
->>   		case QCA_WCN7850:
->>   			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
->> @@ -936,6 +947,13 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>   	}
->>   
->>   	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->> +
->> +	if (!firmware_name && err < 0 && soc_type == QCA_WCN6855) {
->> +		qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
->> +					  "hpnv", soc_type, ver, rom_ver, boardid);
->> +		err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->> +	}
->> +
->>   	if (err < 0) {
->>   		bt_dev_err(hdev, "QCA Failed to download NVM (%d)", err);
->>   		return err;
->> -- 
->> 2.34.1
->>
 Thanks,
-Shuai
+Jie
+
+> Suzuki
+> 
+>> +{
+>> +    int i;
+>> +    struct coresight_device *helper;
+>> +
+>> +    /* protect the connections */
+>> +    mutex_lock(&coresight_mutex);
+>> +    for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
+>> +        helper = csdev->pdata->out_conns[i]->dest_dev;
+>> +        if (!helper || !coresight_is_helper(helper))
+>> +            continue;
+>> +
+>> +        if (helper->subtype.helper_subtype == subtype) {
+>> +            mutex_unlock(&coresight_mutex);
+>> +            return helper;
+>> +        }
+>> +    }
+>> +    mutex_unlock(&coresight_mutex);
+>> +
+>> +    return NULL;
+>> +}
+>> +EXPORT_SYMBOL_GPL(coresight_get_helper);
+>> +
+>>   /**
+>>    * coresight_get_in_port: Find the input port number at @csdev where 
+>> a @remote
+>>    * device is connected to.
+>> diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/ 
+>> hwtracing/coresight/coresight-priv.h
+>> index cbf80b83e5ce..8e39a4dc7256 100644
+>> --- a/drivers/hwtracing/coresight/coresight-priv.h
+>> +++ b/drivers/hwtracing/coresight/coresight-priv.h
+>> @@ -157,6 +157,8 @@ void coresight_path_assign_trace_id(struct 
+>> coresight_path *path,
+>>                      enum cs_mode mode);
+>>   int coresight_get_in_port(struct coresight_device *csdev,
+>>                 struct coresight_device *remote);
+>> +struct coresight_device *coresight_get_helper(struct coresight_device 
+>> *csdev,
+>> +                          enum coresight_dev_subtype_helper subtype);
+>>   #if IS_ENABLED(CONFIG_CORESIGHT_SOURCE_ETM3X)
+>>   int etm_readl_cp14(u32 off, unsigned int *val);
+>>
+> 
+
 
