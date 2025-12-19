@@ -1,145 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-85921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id F336BCD0602
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 15:51:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1F50CD06D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 16:00:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id EEF353003BE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:51:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 553D2308E497
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 14:57:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEFD833B6C2;
-	Fri, 19 Dec 2025 14:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A34733C182;
+	Fri, 19 Dec 2025 14:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n+AW1yh3"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="L3Mqft++"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m15596.qiye.163.com (mail-m15596.qiye.163.com [101.71.155.96])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8917033A9D7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 14:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED181FF7B3;
+	Fri, 19 Dec 2025 14:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.96
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766155861; cv=none; b=eAEMeti1XqjROWdPFO6P9W4WgaetJtypul0R4LlH88kJGDH/UNdmpz4L7TeYCbGvtFOJnLy29AT8ENySU1i5P1zhfn6UwWbpW76X5RpWOxl1XqT0FUMHLhgh7wnhYHxY2nnzcmYZT/HMA1vmQBt9ALTLvHkJapurtluEFztvkn0=
+	t=1766156233; cv=none; b=iFPy0eDy/WbXBTFuj634BEoQwGiiSu+XPpRbyFQQom0/N+XFCQYsp+wMzfQAxtHc7Ut3enLJ2WoKuDBQqcWnO/PLg/pFQo/0nyHHwx/ZgoXT5nXyUO8sLz5R0hnDizi7gSr40M87oGfJoSjyORs8exkjCdxcwIPkE6P3veduSNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766155861; c=relaxed/simple;
-	bh=EJ+dzeTq3zkO740x+wtY9FSqM6w84J+vYtOMY5yyNE0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EDx0w8cn8qxUrzqTHPU36DfX+rmG6rhxydAkOyg03AsIPRmN2pgkqkVtO2HJK+Cd/AxaHXRPoyvO+vVV1eI7mtHZIefaDasBL/GNuqz6zEKpJP1h33x2J25CxbOFBOotpDL732mtMczQ567g8Nnp2J24l2OUBzcBBqbbvM00HS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n+AW1yh3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD7FC116C6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 14:51:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766155860;
-	bh=EJ+dzeTq3zkO740x+wtY9FSqM6w84J+vYtOMY5yyNE0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=n+AW1yh3fWqz6Pw58golaJQ6cIZBfRT1dYunv61yQ4GhMzyvztykPanP0qDByujuM
-	 /Y42fO77bsarJqgRBVbNprsmgCb+Kdi9Cu7zM/THGOtqQOKSp6o19Se3uo4B5GhvIS
-	 rD8EFdfyrhgFXEO3nW1biCBUueREJLCg8piBQKWJ30d6xyOxooCH+uzpYRMygj8zth
-	 Ke19+ZJdTsgy7pN8RFCKpPqXBxJK7LKPVH0pE2IdSDTL2B4W9G2a/ZPrDwfnHS3wUg
-	 Yan49XloRsKhWuwlENbqItrUYMfN+WWuhrxEK72otTpPtam6VH13+/dK54Nd3L0/gd
-	 IPWTUrC19Oi9A==
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-64ba9a00b5aso707025a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 06:51:00 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWki9eXjJ97uAkDmH/aWVMGVX50AQNCtElo32rWu43+2rcVyYkrYJ3DwAqGttmJLvC+1OBoh3EyCTmx9pv6@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIg1BicSLy4nom1ZEC1rHQxVF9Eqgs1nZBOkGLbjaQD9ONqF4o
-	M5JMg9Ztw4altcc6BKw9exYfQuErlBPL1myBkUaX5G6sfTfuwym/ZoKsom7E0szXq3SxALdX2c0
-	QesCh/yPkz3uP/SJqtQQzF8IhceXfvQ==
-X-Google-Smtp-Source: AGHT+IGvbykqdyOBt06JtqzhXaVojyWEfyTLikIZk9aB1vZ+0nVNUga+r5sdbcsmsKbT8PgKJ4l0f7t65HN9riIlGis=
-X-Received: by 2002:a17:907:9816:b0:b7c:fe7c:e382 with SMTP id
- a640c23a62f3a-b8036f0f178mr307561166b.17.1766155858895; Fri, 19 Dec 2025
- 06:50:58 -0800 (PST)
+	s=arc-20240116; t=1766156233; c=relaxed/simple;
+	bh=tg2uhjnb2sKL7o1HVa8W2iAZx+MaYDiybQb1untzHz0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ExKJ4O6qdBpLXx0SqHn1WG/Wh3/EBa6eleWoz6qtW/1IFDj+efTg/q6j89kh1zcaxvIZguDPqVmgnh6gYww5Mu5iF/Q5BaQ1PqF2kddaswTFmv4mJfuOm61wgJf93rC2m4TpJfuoL9bS+Z1HEQ1jpqGRLGdBZJWg13+eoxoo2Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=L3Mqft++; arc=none smtp.client-ip=101.71.155.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 2de8ecb5a;
+	Fri, 19 Dec 2025 22:51:48 +0800 (GMT+08:00)
+Message-ID: <1ca8f181-7784-469a-b498-622a39737e1e@rock-chips.com>
+Date: Fri, 19 Dec 2025 22:51:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251216-firmware_managed_ep-v2-0-7a731327307f@oss.qualcomm.com>
- <20251216-firmware_managed_ep-v2-1-7a731327307f@oss.qualcomm.com>
- <176589894648.2511603.9461849499751093485.robh@kernel.org> <CAMyL0qNwZxysUGJu7YowPn2CpmdPrUwnCOeVjm_2M-ik4s+kgQ@mail.gmail.com>
-In-Reply-To: <CAMyL0qNwZxysUGJu7YowPn2CpmdPrUwnCOeVjm_2M-ik4s+kgQ@mail.gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 19 Dec 2025 08:50:46 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL+PKXYSRHVEZ-Hm4O7gF6g5nPj-6aG066NuiH3Z9S3uA@mail.gmail.com>
-X-Gm-Features: AQt7F2oVG2umosq9LINppZMQwPOzebAmEuTgS_Gu9O9JXH0WUaHa4RkPhA2Ltrs
-Message-ID: <CAL_JsqL+PKXYSRHVEZ-Hm4O7gF6g5nPj-6aG066NuiH3Z9S3uA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom,pcie-ep-sa8255p: Document
- firmware managed PCIe endpoint
-To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-Cc: linux-pci@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
-	quic_shazhuss@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rama Krishna <quic_ramkri@quicinc.com>, quic_vbadigan@quicinc.com, 
-	Nitesh Gupta <quic_nitegupt@quicinc.com>, Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, linux-iio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH 4/5] iio: adc: rockchip: Simplify with dev_err_probe
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>,
+ =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+ Andy Shevchenko <andy@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Heiko Stuebner <heiko@sntech.de>,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>
+References: <20251219-iio-dev-err-probe-v1-0-bd0fbc83c8a0@oss.qualcomm.com>
+ <20251219-iio-dev-err-probe-v1-4-bd0fbc83c8a0@oss.qualcomm.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <20251219-iio-dev-err-probe-v1-4-bd0fbc83c8a0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9b371876c109cckunm523b6161c55b6
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGkpLQlZISkxISh9MSUxPTUxWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=L3Mqft++QW1keeakifFX4r26Bo0K6b98n4bO3SkNmgCq8A7i7LaIGFWE33BuWDvjygTygfaTOhEhZeN8KwRErxShB2KrucqxNKw+Kd0nc3xTFXibEhJOhbcD08iJuqEY8SBejR1zFuRW/6LxVsItsK6il0sxsFTK4A2FeCidGBw=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=+dpxgpVjronVSwUPCPFj5OzYc6xfTN7Fz/RJWrifxaw=;
+	h=date:mime-version:subject:message-id:from;
 
-On Wed, Dec 17, 2025 at 2:52=E2=80=AFAM Mrinmay Sarkar
-<mrinmay.sarkar@oss.qualcomm.com> wrote:
->
-> On Tue, Dec 16, 2025 at 8:59=E2=80=AFPM Rob Herring (Arm) <robh@kernel.or=
-g> wrote:
-> >
-> >
-> > On Tue, 16 Dec 2025 19:19:17 +0530, Mrinmay Sarkar wrote:
-> > > Document the required configuration to enable the PCIe Endpoint contr=
-oller
-> > > on SA8255p which is managed by firmware using power-domain based hand=
-ling.
-> > >
-> > > Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-> > > ---
-> > >  .../bindings/pci/qcom,pcie-ep-sa8255p.yaml         | 110 +++++++++++=
-++++++++++
-> > >  1 file changed, 110 insertions(+)
-> > >
-> >
-> > My bot found errors running 'make dt_binding_check' on your patch:
-> >
-> > yamllint warnings/errors:
-> >
-> > dtschema/dtc warnings/errors:
-> > Documentation/devicetree/bindings/pci/qcom,pcie-ep-sa8255p.example.dtb:=
- /example-0/soc/pcie-ep@1c10000: failed to match any schema with compatible=
-: ['qcom,sa8255p-pcie-ep']
-> >
-> > doc reference errors (make refcheckdocs):
-> >
-> > See https://patchwork.kernel.org/project/devicetree/patch/20251216-firm=
-ware_managed_ep-v2-1-7a731327307f@oss.qualcomm.com
-> >
-> > The base for the series is generally the latest rc1. A different depend=
-ency
-> > should be noted in *this* patch.
-> >
-> > If you already ran 'make dt_binding_check' and didn't see the above
-> > error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> > date:
-> >
-> > pip3 install dtschema --upgrade
-> >
-> > Please check and re-submit after running the above command yourself. No=
-te
-> > that DT_SCHEMA_FILES can be set to your schema file to speed up checkin=
-g
-> > your schema. However, it must be unset to test all examples with your s=
-chema.
-> >
-> Thanks Rob for sharing this.
->
-> I already ran 'make dt_binding_check' but somehow I didn't see this error=
-.
-> Maybe I need to upgrade all the tools ..
+在 2025/12/19 星期五 22:31, Krzysztof Kozlowski 写道:
+> Use dev_err_probe() to make error code handling simpler and handle
+> deferred probe nicely (avoid spamming logs).
+> 
 
-The answer is provided above already. Don't set DT_SCHEMA_FILES.
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 
-Rob
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> ---
+>   drivers/iio/adc/rockchip_saradc.c | 13 +++++--------
+>   1 file changed, 5 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/rockchip_saradc.c b/drivers/iio/adc/rockchip_saradc.c
+> index 6721da0ed7bb..263d80c5fc50 100644
+> --- a/drivers/iio/adc/rockchip_saradc.c
+> +++ b/drivers/iio/adc/rockchip_saradc.c
+> @@ -492,10 +492,9 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
+>   	 */
+>   	info->reset = devm_reset_control_get_optional_exclusive(&pdev->dev,
+>   								"saradc-apb");
+> -	if (IS_ERR(info->reset)) {
+> -		ret = PTR_ERR(info->reset);
+> -		return dev_err_probe(&pdev->dev, ret, "failed to get saradc-apb\n");
+> -	}
+> +	if (IS_ERR(info->reset))
+> +		return dev_err_probe(&pdev->dev, PTR_ERR(info->reset),
+> +				     "failed to get saradc-apb\n");
+>   
+>   	init_completion(&info->completion);
+>   
+> @@ -505,10 +504,8 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
+>   
+>   	ret = devm_request_irq(&pdev->dev, irq, rockchip_saradc_isr,
+>   			       0, dev_name(&pdev->dev), info);
+> -	if (ret < 0) {
+> -		dev_err(&pdev->dev, "failed requesting irq %d\n", irq);
+> -		return ret;
+> -	}
+> +	if (ret < 0)
+> +		return dev_err_probe(&pdev->dev, ret, "failed requesting irq %d\n", irq);
+>   
+>   	info->vref = devm_regulator_get(&pdev->dev, "vref");
+>   	if (IS_ERR(info->vref))
+> 
+
 
