@@ -1,352 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-85940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA71ACD11BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:20:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF9D4CD11D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 18:22:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DA2C0302CF45
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:17:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E9E9E300DA51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Dec 2025 17:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58A23285419;
-	Fri, 19 Dec 2025 17:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FDDD2BF00B;
+	Fri, 19 Dec 2025 17:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="aw8l5ZWz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBEE2BF3D7;
-	Fri, 19 Dec 2025 17:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B641287518
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Dec 2025 17:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766164674; cv=none; b=lncMwpDD4qf6dF1SE/SqeOj5CL5U2RQJZFl7Kl34k+0OYq9SgNi66yJls78wdSZVn7XfbAVkydC1lfR1YZWM3Iiosu9EdGaWJcX8vok0ChC3LoPdhjwQlQTQ10iFPb0Nsd9bbJkstrq3DxolmGxLHimmGRNwBrguO8yb/i+JEH8=
+	t=1766164788; cv=none; b=C9XDSmtAkFlkMLQVPykvw9xagvNx8j38P7fqS1LYvNZr5n8Nc6MfPfrgYlcJLMmyeHhO+as/cDVCDk3dQjeFwnT8kR428AnMdh0N7ed5HOkSFYIORxca9+GwcY5GwmtA4Jfk4ZG/ZLpGKxpXwenc/1J9H1wUf+DS1adNqrgruUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766164674; c=relaxed/simple;
-	bh=wbc3qkYjRJEXz8H33tjyjNTmPGzMeBKSFPFNbaUg8Is=;
+	s=arc-20240116; t=1766164788; c=relaxed/simple;
+	bh=xzu0ib6hHB6LSoZmxaC5yBjOyyWTRlpWAc69Viwmgvs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ccKdUQ5xGhtalmPPfhrhy0BuO2lBbGrRDk/AYOgOSfY1Uid9XntNq4A/UZTx8LzH7Lg87LTEDriNRWb6ppT7anSXgKNolosUJK7+SumONS1/ExnQomudfJbEB+ACQRURjMdvccEh6zyOfyCyTCTKMNQl4u4U9DHMmK8IwSLuvDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpgz7t1766164578ta021a727
-X-QQ-Originating-IP: VIgD7Km41FaSeRiB8jcnBs9POC/pzWkFGEuKG8sOYs0=
-Received: from [192.168.0.160] ( [120.40.108.137])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 20 Dec 2025 01:16:17 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6853239046305480175
-EX-QQ-RecipientCnt: 11
-Message-ID: <8DD9C595B061AB97+b0f78150-3930-43ac-ac56-b57f24afb5d9@radxa.com>
-Date: Sat, 20 Dec 2025 01:16:17 +0800
+	 In-Reply-To:Content-Type; b=cF0Q8VdPyfwmAbWxIz1+FsbUjniaQZAs31rbMqTkf5iWshrx6Z5gBtx4d47vPgsk/IMqACDxtzoolgxTAgTi84DC6pvSgoU6+gN9v1vWAkiWhrqVV69OS4KCoQJi/bPzIzHz5qxrF2T6tm6lZVbPuJj2BaQZSb+32PwOpmq2qBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=aw8l5ZWz; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Message-ID: <39e025bd-50f4-407d-8fd4-e254dbed46b2@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1766164784;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KcTZ6T/rdlJiOM11s74YihRu9dE9rgDcr4qXhc6ZMio=;
+	b=aw8l5ZWztWySKnRzB3pskYK0zwnj9BysLm6c0KCauphqdZyyXevQZke/s69EOfHNo2TIA/
+	oC7jY+kmToyS18IGwiTBYd2EDJ/SAwp6DoEQ/Z2UzTggMYZc4ehN/VnieAaiOzKULsf1YP
+	lejvQbMgkqCe/vgDcc9uNmTt86h9t9g=
+Date: Fri, 19 Dec 2025 12:19:36 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] firmware: qcom: scm: Add SCM storage interface
- support
+Subject: Re: [PATCH v2 0/5] PCI/pwrctrl: Major rework to integrate pwrctrl
+ devices with controller drivers
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>, Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>,
+ Brian Norris <briannorris@chromium.org>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
+ Chen-Yu Tsai <wenst@chromium.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20251216-pci-pwrctrl-rework-v2-0-745a563b9be6@oss.qualcomm.com>
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Xilin Wu <sophon@radxa.com>, Miquel Raynal <miquel.raynal@bootlin.com>,
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-mtd@lists.infradead.org, Junhao Xie <bigfoot@radxa.com>
-References: <20251218180205.930961-1-bigfoot@radxa.com>
- <155C9F219E5A9219+20251218180205.930961-2-bigfoot@radxa.com>
- <84be5656-b22e-4fa7-8732-b355ba0c86ed@oss.qualcomm.com>
-From: Junhao Xie <bigfoot@radxa.com>
-In-Reply-To: <84be5656-b22e-4fa7-8732-b355ba0c86ed@oss.qualcomm.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Sean Anderson <sean.anderson@linux.dev>
+In-Reply-To: <20251216-pci-pwrctrl-rework-v2-0-745a563b9be6@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: OEyOu662Vd1NRVX/uYi9DmkCzw5ACdSkeHr3NdUBYDSBeyc3gp0uTmcI
-	Yz/DtozMQj1p82xp27h1C6k+6ybijEthXCMcVf4uG9odv8kdJ+oYrrovdGRReK1UyD0pn3y
-	5mQ+SBoogNqgOCQNsE5eNrbuK7w6lkO5dWFWd4EbDIT5JEJk+Cniv1GV2OAB6QQomTV/HZy
-	4sUUrERFhDPCGCA7cmi0lsi+6ezFVj9T8ML4v76c/JFY9/JWAPxQAqGYWbg1+jRmVXecA1+
-	rGNzXKiQHEXg3xF2vVdxrSkIYR86HRwWY+BwgCWgnQcbB5Hq3y1O38047UtVJxKxiZbqpag
-	4HABn9VLyAjpYh9D0MxsVA2TmpIFEy5Wou+7d7lJvlOdo7WuV7QUoL3zFrlH471l3p8G2hQ
-	JZIc/0pYdiunMADlAa49+3AXMBNjI6oBVUItOGc8mO3L/eqI4LqXuB4jTx9dv5A264XZ1nv
-	je7WmZrabMxgCBbaqm15j9K3BB3SFsCBEmGn1CdnGHR0QnqWbFVATxdtCEzx4mAt9QFzVvb
-	C+YcddOelue/TwEsv037rYxHtg/KZJ+KUsRXdj2SY49nWBwOdfL9o+FyECCeZAP+fQVszcZ
-	6k9o4ApP333BfTOuhSza1BaXn53AzvAXBCIZWGbZLgCdqMQiRz9oe/51b4gVxelKQZr26In
-	ROfwAMCd8MfY+IifO1xWYHYfhOd/wuPRg2faa414BpRBr9XbwcD0C3U1pQ0UrrzPz1rdGQI
-	mP5UrRU/69AEnoA7eqGcFZyylvqpzCvSclA6TmobaQ03vrBsBjmIyLZNnJiDOtZKp1/j9Vn
-	AnwE3JVyN6LpstUGoP1OxAxbF0pMp0343PMzXiZpKjJ1WlqkzDLqtJmjp2XssucPuBQFFmg
-	fxFuSv+Rp2k870ZZBKG0dWVQ7BdBCrx2MKmM190L5is1hRrG45FXremqPkhcypNKtcWmw5S
-	PPn94eTg1g5yAtgDLwIsP5oSU3Sl8MILn5QrmfIQJTbft1WLtYUWBGo9eV4N7vfCJXM73pk
-	cnN0eXWKCrpwKzzdB96Zq+mLdTFsEl1weHL7i3z20DCMQtlgBaezd4bHg9Se5qM4g0cWQk4
-	Q==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-X-QQ-RECHKSPAM: 0
+X-Migadu-Flow: FLOW_OUT
 
-On 2025/12/19 19:45, Konrad Dybcio wrote:
-> On 12/18/25 7:02 PM, Junhao Xie wrote:
->> Add infrastructure to support accessing TrustZone-protected storage
->> devices through SCM (Secure Channel Manager) calls. Some Qualcomm
->> platforms protect their firmware storage (typically SPI NOR flash)
->> via TrustZone, making it inaccessible from the non-secure world.
->>
->> Currently allowlisted for Radxa Dragon Q6A (QCS6490) where it has been
->> validated. Additional platforms can be added as they are tested.
->>
->> Signed-off-by: Junhao Xie <bigfoot@radxa.com>
->> Tested-by: Xilin Wu <sophon@radxa.com>
->> ---
->>  drivers/firmware/qcom/qcom_scm.c       | 183 +++++++++++++++++++++++++
->>  drivers/firmware/qcom/qcom_scm.h       |   3 +
->>  include/linux/firmware/qcom/qcom_scm.h |  47 +++++++
->>  3 files changed, 233 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 731074ca1ebbe..b117e1b58e363 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -66,6 +66,21 @@ struct qcom_scm_mem_map_info {
->>  	__le64 mem_size;
->>  };
->>  
->> +struct qcom_scm_storage_cmd {
->> +	__le64 storage_type;
->> +	__le64 slot_num;
->> +	__le64 lun;
->> +	__le64 guid_ptr;
->> +	__le64 storage_cmd;
->> +};
->> +
->> +struct qcom_scm_storage_cmd_details {
->> +	__le64 lba;
->> +	__le64 length;
->> +	__le64 data_ptr;
->> +	__le64 data_size;
->> +};
-> Let's make them __packed if only to denote that they're shared structures
-> (no change to the compiler output because it's n*u64)
+Hi,
 
-I will add the missing __packed to qcom_scm_storage_cmd and
-qcom_scm_storage_cmd_details.
+I have a few comments on the overall architecture. I did some work to
+add PERST as well (sent as replies to this message).
 
-> [...]
+On 12/16/25 07:51, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> This series provides a major rework for the PCI power control (pwrctrl)
+> framework to enable the pwrctrl devices to be controlled by the PCI controller
+> drivers.
+> 
+> Problem Statement
+> =================
+> 
+> Currently, the pwrctrl framework faces two major issues:
+> 
+> 1. Missing PERST# integration
+> 2. Inability to properly handle bus extenders such as PCIe switch devices
+> 
+> First issue arises from the disconnect between the PCI controller drivers and
+> pwrctrl framework. At present, the pwrctrl framework just operates on its own
+> with the help of the PCI core. The pwrctrl devices are created by the PCI core
+> during initial bus scan and the pwrctrl drivers once bind, just power on the
+> PCI devices during their probe(). This design conflicts with the PCI Express
+> Card Electromechanical Specification requirements for PERST# timing. The reason
+> is, PERST# signals are mostly handled by the controller drivers and often
+> deasserted even before the pwrctrl drivers probe. According to the spec, PERST#
+> should be deasserted only after power and reference clock to the device are
+> stable, within predefined timing parameters.
+> 
+> The second issue stems from the PCI bus scan completing before pwrctrl drivers
+> probe. This poses a significant problem for PCI bus extenders like switches
+> because the PCI core allocates upstream bridge resources during the initial
+> scan. If the upstream bridge is not hotplug capable, resources are allocated
+> only for the number of downstream buses detected at scan time, which might be
+> just one if the switch was not powered and enumerated at that time. Later, when
+> the pwrctrl driver powers on and enumerates the switch, enumeration fails due to
+> insufficient upstream bridge resources.
 >
->> +#if IS_ENABLED(CONFIG_MTD_QCOM_SCM_STORAGE)
-> I would vouch for this to be always compiled-in
-
-I mimicked CONFIG_QCOM_QSEECOM here, but it seems unneeded. I will remove this macro check.
-
->> +int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
->> +			      enum qcom_scm_storage_cmd_id cmd_id,
->> +			      u64 lba, void *payload, size_t size)
-> Please align the parameter whitespace (checkpatch, maybe w/ --strict
-> should point that out)
 >
+> Proposal
+> ========
+> 
+> This series addresses both issues by introducing new individual APIs for pwrctrl
+> device creation, destruction, power on, and power off operations.
 
-I have already aligned the parameter, but mix of tabs and spaces
-causes leading plus in diff to make them appear misaligned?
-(checkpatch --strict doesn't report any errors or warnings.)
+I wrote my own PCI power sequencing subsystem last year but didn't get
+around to upstreaming it before the current subsystem was merged. This
+approach (individual APIs for each power sequence) was how I did it. But
+I think the approach to do everything in probe is rather elegant, since
+it integrates with the existing device model and we don't need to modify
+existing drivers.
 
->> +{
->> +	struct qcom_scm_res scm_res = {};
->> +	struct qcom_scm_desc desc = {};
->> +	struct qcom_scm_storage_cmd *cmd;
->> +	struct qcom_scm_storage_cmd_details *details;
->> +	size_t buf_size;
->> +	void *payload_buf;
->> +	int ret;
-> Reverse-Christmas-tree would be neat (it's in a week!)
+To contrast, in U-Boot the second issue doesn't apply because driver
+probing happens synchronously and config space accesses are done after
+devices get probed. So you have something like
 
-Thanks, I will fix it.
+host bridge probe()
+pci_scan_child_bus()
+   discover root port
+   root port probe()
+      initialize slot resources (power supplies, clocks, etc.)
+   allocate root port BARs
+   discover root port children
 
->> +
->> +	buf_size = sizeof(*cmd) + sizeof(*details);
->> +	if (payload)
->> +		buf_size += size;
->> +	void *data __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
->> +							 buf_size,
->> +							 GFP_KERNEL);
->> +	if (!data)
->> +		return -ENOMEM;
->> +	memset(data, 0, buf_size);
->> +	if (payload) {
->> +		payload_buf = data + sizeof(*cmd) + sizeof(*details);
->> +		memcpy(payload_buf, payload, size);
->> +	}
->> +
->> +	cmd = data;
->> +	cmd->storage_type = storage_type;
->> +	cmd->storage_cmd = cmd_id;
->> +
->> +	details = data + sizeof(*cmd);
->> +	details->lba = lba;
-> I'm debating whether adding something like:
->
-> struct qcom_scm_storage_payload {
-> 	struct qcom_scm_storage_cmd *cmd;
-> 	struct qcom_scm_storage_cmd_details *details;
-> 	void *data[];
-> };
->
-> would improve readability, but perhaps for just 3 items it's simply not
-> worth the boilerplate
+I guess your approach is the only way to do it in Linux given the
+asynchronous nature of driver binding. What is the overhead for hotplug
+switches like? Maybe it makes sense to just treat all switches as
+hotplug capable when PCI power sequencing is enabled?
 
-Thanks for the suggestion, I will rework this for better readability in v2.
+> Controller
+> drivers are expected to invoke these APIs during their probe(), remove(),
+> suspend(), and resume() operations. This integration allows better coordination
+> between controller drivers and the pwrctrl framework, enabling enhanced features
+> such as D3Cold support.
 
-> [...]
->
->> +static int qcom_scm_storage_init(struct qcom_scm *scm)
->> +{
->> +	struct qcom_scm_storage_info info;
->> +	struct platform_device *storage_dev;
->> +	int ret;
->> +
->> +	ret = qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
->> +					QCOM_SCM_STORAGE_GET_INFO,
->> +					0, &info, sizeof(info));
->> +	if (ret < 0) {
->> +		dev_info(scm->dev, "scm storage not available: %d\n", ret);
->> +		return 0;
->> +	}
-> You can first call __qcom_scm_is_call_available for even more robustness
->
->> +
->> +	if (!qcom_scm_storage_machine_is_allowed()) {
->> +		dev_info(scm->dev, "scm storage untested, skipping\n");
->> +		return 0;
->> +	}
-> FWIW UEFI uses these APIs, so if the implementation is correct, I see no
-> reason to worry
+How does PERST work? The only reference I can find to GPIOs in this
+series is in the first patch. Is every driver supposed to add support
+for PERST and then call these new functions? Shouldn't this be handled
+by the power sequencing driver, especially as there are timing
+requirements for the other resources referenced to PERST? IMO if we are
+going to touch each driver, it would be much better to consolidate
+things by removing the ad-hoc PERST support.
 
-I will switch to __qcom_scm_is_call_available instead of qcom_scm_storage_machine_is_allowed,
-Thank you for your suggestion!
+> The original design aimed to avoid modifying controller drivers for pwrctrl
+> integration. However, this approach lacked scalability because different
+> controllers have varying requirements for when devices should be powered on. For
+> example, controller drivers require devices to be powered on early for
+> successful PHY initialization.
 
->> +
->> +	dev_info(scm->dev, "scm storage size %llu bytes\n",
->> +		 info.total_blocks * info.block_size);
-> dev_dbg?
+Is this the case for qcom? The device I tested (nwl) was perfectly
+happy to have the PCI device show up some time after the host bridge
+got probed.
 
-I will change to use dev_dbg.
+--Sean
 
->
->> +
->> +	storage_dev = platform_device_alloc("qcom_scm_storage", -1);
->> +	if (!storage_dev)
->> +		return -ENOMEM;
->> +
->> +	storage_dev->dev.parent = scm->dev;
->> +
->> +	ret = platform_device_add(storage_dev);
->> +	if (ret) {
->> +		platform_device_put(storage_dev);
->> +		return ret;
->> +	}
->> +
->> +	return devm_add_action_or_reset(scm->dev, qcom_scm_storage_free,
->> +					storage_dev);
-> fauxbus?
-
-For consistency with the existing code in this file,
-I will stick to platform_device_add.
-
->> +}
->> +
->> +#else /* CONFIG_MTD_QCOM_SCM_STORAGE */
->> +
->> +static int qcom_scm_storage_init(struct qcom_scm *scm)
->> +{
->> +	return 0;
->> +}
->> +
->> +#endif /* CONFIG_MTD_QCOM_SCM_STORAGE */
->> +
->>  /**
->>   * qcom_scm_is_available() - Checks if SCM is available
->>   */
->> @@ -2449,6 +2626,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>  	/* Initialize the QTEE object interface. */
->>  	qcom_scm_qtee_init(scm);
->>  
->> +	/*
->> +	 * Initialize the SCM storage interface.
->> +	 */
-> /* This fits in a single-line comment */
-
-Thanks, I will fix it.
-
->> +	ret = qcom_scm_storage_init(scm);
->> +	WARN(ret < 0, "failed to initialize scm storage: %d\n", ret);
->> +
->>  	return 0;
->>  }
->>  
->> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
->> index a56c8212cc0c4..3b68b33c5ccc3 100644
->> --- a/drivers/firmware/qcom/qcom_scm.h
->> +++ b/drivers/firmware/qcom/qcom_scm.h
->> @@ -149,6 +149,9 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
->>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
->>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
->>  
->> +#define QCOM_SCM_SVC_STORAGE			0x1a
->> +#define QCOM_SCM_STORAGE_CMD			0x01
->> +
->>  #define QCOM_SCM_SVC_WAITQ			0x24
->>  #define QCOM_SCM_WAITQ_RESUME			0x02
->>  #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
->> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
->> index a55ca771286bf..41f799d8de54f 100644
->> --- a/include/linux/firmware/qcom/qcom_scm.h
->> +++ b/include/linux/firmware/qcom/qcom_scm.h
->> @@ -53,6 +53,36 @@ enum qcom_scm_ice_cipher {
->>  	QCOM_SCM_ICE_CIPHER_AES_256_CBC = 4,
->>  };
->>  
->> +enum qcom_scm_storage_cmd_id {
->> +	QCOM_SCM_STORAGE_INIT      = 0,
->> +	QCOM_SCM_STORAGE_READ      = 1,
->> +	QCOM_SCM_STORAGE_WRITE     = 2,
->> +	QCOM_SCM_STORAGE_ERASE     = 3,
->> +	QCOM_SCM_STORAGE_GET_INFO  = 4,
->> +	QCOM_SCM_STORAGE_DEINIT    = 5,
-> 6 -> _MAC_MISMATCH -> EBADMSG? (invalid data hash)
-> 7 -> _ALREADY_RUNNING -> -EALREADY
-> 8 -> _PARTITION_NOT_FOUND -> -ENOENT?
-> 9 -> _READONLY -> -EROFS
-
-Thank you for your addition, I will add these codes to qcom_scm_storage_result.
-
->> +};
->> +
->> +enum qcom_scm_storage_type {
->> +	QCOM_SCM_STORAGE_NULL    = 0,
->> +	QCOM_SCM_STORAGE_SPINOR  = 1,
->> +};
->> +
->> +#define QCOM_SCM_STORAGE_FW_VER_LEN	32
->> +#define QCOM_SCM_STORAGE_MEM_TYPE_LEN	5
->> +#define QCOM_SCM_STORAGE_PROD_NAME_LEN	32
->> +
->> +struct qcom_scm_storage_info {
->> +	u64 total_blocks;
->> +	u32 block_size;
->> +	u32 page_size;
->> +	u32 num_physical;
->> +	u64 manufacturer_id;
->> +	u64 serial_num;
->> +	char fw_version[QCOM_SCM_STORAGE_FW_VER_LEN];
->> +	char memory_type[QCOM_SCM_STORAGE_MEM_TYPE_LEN];
->> +	char product_name[QCOM_SCM_STORAGE_PROD_NAME_LEN];
-> I would strongly assume all variables here are little-endian as well
-
-I will change to using __le64 and __le32.
-
-> Konrad
->
-
-Thank you for the review, I will incorporate these changes in v2.
-
-Best regards,
-Junhao Xie
+> By using these explicit APIs, controller drivers gain fine grained control over
+> their associated pwrctrl devices.
+> 
+> This series modified the pcie-qcom driver (only consumer of pwrctrl framework)
+> to adopt to these APIs and also removed the old pwrctrl code from PCI core. This
+> could be used as a reference to add pwrctrl support for other controller drivers
+> also.
+> 
+> For example, to control the 3.3v supply to the PCI slot where the NVMe device is
+> connected, below modifications are required:
+> 
+> Devicetree
+> ----------
+> 
+> 	// In SoC dtsi:
+> 
+> 	pci@1bf8000 { // controller node
+> 		...
+> 		pcie1_port0: pcie@0 { // PCI Root Port node
+> 			compatible = "pciclass,0604"; // required for pwrctrl
+> 							 driver bind
+> 			...
+> 		};
+> 	};
+> 
+> 	// In board dts:
+> 
+> 	&pcie1_port0 {
+> 		reset-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>; // optional
+> 		vpcie3v3-supply = <&vreg_nvme>; // NVMe power supply
+> 	};
+> 
+> Controller driver
+> -----------------
+> 
+> 	// Select PCI_PWRCTRL_SLOT in controller Kconfig
+> 
+> 	probe() {
+> 		...
+> 		// Initialize controller resources
+> 		pci_pwrctrl_create_devices(&pdev->dev);
+> 		pci_pwrctrl_power_on_devices(&pdev->dev);
+> 		// Deassert PERST# (optional)
+> 		...
+> 		pci_host_probe(); // Allocate host bridge and start bus scan
+> 	}
+> 
+> 	suspend {
+> 		// PME_Turn_Off broadcast
+> 		// Assert PERST# (optional)
+> 		pci_pwrctrl_power_off_devices(&pdev->dev);
+> 		...
+> 	}
+> 
+> 	resume {
+> 		...
+> 		pci_pwrctrl_power_on_devices(&pdev->dev);
+> 		// Deassert PERST# (optional)
+> 	}
+> 
+> I will add a documentation for the pwrctrl framework in the coming days to make
+> it easier to use.
+> 
+> Testing
+> =======
+> 
+> This series is tested on the Lenovo Thinkpad T14s laptop based on Qcom X1E
+> chipset and RB3Gen2 development board with TC9563 switch based on Qcom QCS6490
+> chipset.
+> 
+> **NOTE**: With this series, the controller driver may undergo multiple probe
+> deferral if the pwrctrl driver was not available during the controller driver
+> probe. This is pretty much required to avoid the resource allocation issue.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Exported of_pci_supply_present() API
+> - Demoted the -EPROBE_DEFER log to dev_dbg()
+> - Collected tags and rebased on top of v6.19-rc1
+> - Link to v1: https://lore.kernel.org/r/20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com
+> 
+> ---
+> Krishna Chaitanya Chundru (1):
+>       PCI/pwrctrl: Add APIs for explicitly creating and destroying pwrctrl devices
+> 
+> Manivannan Sadhasivam (4):
+>       PCI: qcom: Parse PERST# from all PCIe bridge nodes
+>       PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}' callbacks
+>       PCI/pwrctrl: Add APIs to power on/off the pwrctrl devices
+>       PCI/pwrctrl: Switch to the new pwrctrl APIs
+> 
+>  drivers/pci/controller/dwc/pcie-qcom.c   | 124 +++++++++++++---
+>  drivers/pci/of.c                         |   1 +
+>  drivers/pci/probe.c                      |  59 --------
+>  drivers/pci/pwrctrl/core.c               | 248 +++++++++++++++++++++++++++++--
+>  drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c |  30 +++-
+>  drivers/pci/pwrctrl/slot.c               |  46 ++++--
+>  drivers/pci/remove.c                     |  20 ---
+>  include/linux/pci-pwrctrl.h              |  16 +-
+>  8 files changed, 408 insertions(+), 136 deletions(-)
+> ---
+> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+> change-id: 20251124-pci-pwrctrl-rework-c91a6e16c2f6
+> 
+> Best regards,
 
