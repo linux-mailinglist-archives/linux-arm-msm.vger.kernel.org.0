@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-86015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1E1CCD2CF3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 11:06:04 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ECDCCD2D48
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 11:18:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0C212300BB83
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 10:05:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D223030071A7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 10:18:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8317A3009F7;
-	Sat, 20 Dec 2025 10:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2323305962;
+	Sat, 20 Dec 2025 10:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="p/uP8rnm"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kp9wtU7o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B862F5A35
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 10:05:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2121B2FA0DB
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 10:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766225140; cv=none; b=UAf11OBLL//zaHBw5kz+HgPsVv+qlyfySq8Dfc63xI+rToHk2eyJwmAwg64sQMsNZ3R536OYDomN3nwv+WUDjL9tFtwEqAHzs5kibta6eLdAf3SmrqbdRl6dVIlxdbFJDO6u2KnLLaidzwfvlHPV0ZDvSWXaiCqEb4z4iAw2JAY=
+	t=1766225918; cv=none; b=ba+q4gd/iPa4P6K2q2mwO4uUYQY+aBnTETW2Cr5pWH/moavRevOYjH8odVHIllxFNwUuA00xwCqiBWBsZaiw6Ff4WPBwxkUGpMeQAQ4pJNGXT87SVoYWM2jV09k9660AZp/pkN/WnBzPS03MnNnF+o3u4QMAt0cuRL2h+Mq4ES8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766225140; c=relaxed/simple;
-	bh=AeXXtz/xKBbgkU0M2gnK6yJRe3S7izp9ryLM1833MBs=;
+	s=arc-20240116; t=1766225918; c=relaxed/simple;
+	bh=+oURe4aXMdk0LjKAZ44d1/hPSLfZHh6FrPzIxlIWzd8=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=YRAqR+r1KOTK4zddOmq4Yvdxe2aYe1/l7oTAOflJuYrEA9FsB5L6tn/TSXVuKrmZHIJTGSDIQrQF8G3+bpa9fLEW0PhQbxJVWmCnzLM07EmMlnd/sInRz4PpuLM4SwnGSdNRBLIjvzQV/5sfNmwFs7oK15ZzSgi8qrp3PmUf8o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=p/uP8rnm; arc=none smtp.client-ip=209.85.218.73
+	 To:Cc:Content-Type; b=poT3cZrSZ/sQhmR/cpHVvX76ZoDMLmkrVhl+GD4aMVZJAo0pKnAgfrglNUTdSchvGKES+jPeqfWobPX5agMsjhS0K+VHX7GfV8QXxRIw3Cheg89i08oedRfKfYjZpcPIxuTU7Flvhx78apmnPN48DUImI7Ai/D25QI7G8b1H7EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kp9wtU7o; arc=none smtp.client-ip=209.85.128.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-b7a29e6f9a0so332284666b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 02:05:38 -0800 (PST)
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-477b8a667bcso31190425e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 02:18:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1766225137; x=1766829937; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1766225915; x=1766830715; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+5We+jBO0+cCD3c++ROAWKy2uW8li7ctcnKyzh7ve8o=;
-        b=p/uP8rnmekDhufC1a0igzGUxb9fqqBOmkxoNOnvqJgmb04K7j7mgED7YoOF7Mnqj/G
-         fZ+yrefWHb9Aagy+gdvP6t4MmZw01AQGCzf1SaRc7/0A94ng733yr7LTNEL2BYdv9lsr
-         Vp4bjlCauOTih4q51gLykZtGPnPHupohHlS0F+rwLoOKPD9F2A1vruXTUFHfDBj59bZ6
-         cNPE8i9blM32Fh15pN6SIiROpDL3ufp67bPbAPZlhmQ04tLLlG7P14ID19g7lqqdYajK
-         Qld6cM1Ho+XfNd5HY2EA1+aVlGJeY3EwpcQi39NdxdFq+iZVAPTLP0iWSpiAMcWp2sAr
-         utpw==
+        bh=+oURe4aXMdk0LjKAZ44d1/hPSLfZHh6FrPzIxlIWzd8=;
+        b=kp9wtU7o75Zy9gmWnkZJ2sqUlBN7oUu0RXi+xl7r8K4T98LbwJbLK9slQAxYLg7jXq
+         34aIDRwE6v8YMRlxl30n6N9RArrxWN5RPNlIvUyqzccW+lKVAI4NZR0eL9q2A2wGf7Lo
+         eOe1tAqDEn1XXkZINcH4/rMlhHlQQ2aKN6YiD+38IghgMCweigRX0Pe2xLiv/cJXnt9R
+         ewAsbG6ogZBHWMZh9hS3k84wRjnX5ljrFHShZO8f9wpQkOvPQLLnMBvyIOmJuWZcy4aW
+         9H8U6VcBh1rqhoaKDYpJoqrc2HotjoHkZSQexBCyMRiQr03jho0HyZHuEtYaov3KYOny
+         7JUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766225137; x=1766829937;
+        d=1e100.net; s=20230601; t=1766225915; x=1766830715;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+5We+jBO0+cCD3c++ROAWKy2uW8li7ctcnKyzh7ve8o=;
-        b=B1ilL4l/SQGOLXLkjPmm0mcZaeTojqkyfWFjY5uru2Vk6nW8/MvkE/qZjFZht31iWO
-         DWWbz/57ca5mokiO/Hv4olUX6i3BdQfunbBwCeSAnRr0EXgoW2U41+cnuY/rvdZOSAY0
-         VJjgEWBYELI9R/30xmvEj+LZ8A3nZr37y3lWP5b6PXxp5IvG/GhRORDyyy+hOM3scbPz
-         65X/0JVODNgDnYX52TGPZsctdUYaqghjwEJ7mqjwzEAxIGVSztRVfxiNtTyP4AxfJpqf
-         +wUr7ywfkQPHBjwIQjAZqchMh0TveHPsteFL/yhoOMXixRYxckNk7PbUN0MPVSFLveoT
-         AB/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWp0kBRFgNcyQ7w/qopG9pUryL92hZs8DC4Hw0Y9h93BQGCoMFpICNQGQq9XcBOjCj6wdrcuJmxY1gjEcfI@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiMKgd5q5OmfOOwm+3dXsaKelv77nD3/vSNK73QDg/ypza7Mcv
-	4RRCj4h3TKvBXEwpS37WrXYdIeUTGvAqHTgwMqfJLga9cwzasUdDNey+i32BQSiAA+APAS/E+N3
-	TshHU5QvMlutsaf4k4Q==
-X-Google-Smtp-Source: AGHT+IH+qbCL3E4KlR/xCuII76jDF4Kk0p12le+sQrE5wjNjdmbXoR9Ff184WWDRAFxJ6twYy7w7Nft4HG28DGY=
-X-Received: from edtn6.prod.google.com ([2002:aa7:db46:0:b0:64b:a192:b5])
+        bh=+oURe4aXMdk0LjKAZ44d1/hPSLfZHh6FrPzIxlIWzd8=;
+        b=EQ/dzczUOfQZD6GwTTuZEchpnBmD+UF+rumqtsYSZOAF2i3RMHqdMaNZxpZGvTrjy4
+         ALUWvRfdVnMMngJiHLhWRiOamfVTrhYLnRn9IkcNM/8Uyl+jzAV0fORozNuLi3OuqkUz
+         cSosSFkz7wsP5GDjOIbv+koTCCZ/9HR11Y0D0uEDcpywwGvFbAJMtN1IpaYP8vpUzMKu
+         rc1HJe9P12fV5ukVpo5PpLsln5TJx/jrG8ONRWHFclcKWoMNhpKWhMbPPJ6u+YkFKJbp
+         +czf50JmIKyHYk/izmo17ikvCfoNzPtzjcNlFaCmy4G72cYiZ0mnU7j+XzvzTHiKCedo
+         jEhA==
+X-Forwarded-Encrypted: i=1; AJvYcCVLqcswL4U4gIo8LifPc6MwZ3ieq/B4JNhSOEFzSdaa1QzSHGfh3hBZzmm6/j1yuGIDFas2qK/WiSOyn3CC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfSeqYp2sVKWiZW+v5Lk5nX4aEvq2x+XZ0OfnzOj6fywJ3iZT4
+	o/48QQyqNACCRN8mME6j8rnjmmrZ6B7E0JiO6/8/vwsZTOakyo4ngbRHwgKbKYpcyvecsiiiR+c
+	TCMZeYlsN+KJUWcL8eg==
+X-Google-Smtp-Source: AGHT+IHezTbdkQabpgPR3pVcmu1YjPdSolIwP7RQSXNt0PalcelZIDHJL+QGmDx/ShI8sV3gW2XIBlw4p3buplU=
+X-Received: from wmxa7-n1.prod.google.com ([2002:a05:600d:6447:10b0:477:5a0f:1860])
  (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:7814:b0:b80:4141:a470 with SMTP id a640c23a62f3a-b804141a5d5mr252551866b.6.1766225136958;
- Sat, 20 Dec 2025 02:05:36 -0800 (PST)
-Date: Sat, 20 Dec 2025 10:05:35 +0000
-In-Reply-To: <aUZw4fpWRUWFsb9r@google.com>
+ 2002:a05:600c:8b8b:b0:46e:6d5f:f68 with SMTP id 5b1f17b1804b1-47d19566aa8mr51108125e9.12.1766225915629;
+ Sat, 20 Dec 2025 02:18:35 -0800 (PST)
+Date: Sat, 20 Dec 2025 10:18:34 +0000
+In-Reply-To: <aUZ07zYew7Mfwc_C@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,8 +72,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20251128-gpuvm-rust-v1-0-ebf66bf234e0@google.com>
  <20251128-gpuvm-rust-v1-4-ebf66bf234e0@google.com> <DF2AXQ67412G.33JOX2CF0VFCK@kernel.org>
- <aUZw4fpWRUWFsb9r@google.com>
-Message-ID: <aUZ07zYew7Mfwc_C@google.com>
+ <aUZw4fpWRUWFsb9r@google.com> <aUZ07zYew7Mfwc_C@google.com>
+Message-ID: <aUZ3-iStCAWShvt8@google.com>
 Subject: Re: [PATCH 4/4] rust: drm: add GPUVM immediate mode abstraction
 From: Alice Ryhl <aliceryhl@google.com>
 To: Danilo Krummrich <dakr@kernel.org>
@@ -99,78 +99,10 @@ Cc: Daniel Almeida <daniel.almeida@collabora.com>, Matthew Brost <matthew.brost@
 	linaro-mm-sig@lists.linaro.org, Asahi Lina <lina+kernel@asahilina.net>
 Content-Type: text/plain; charset="utf-8"
 
-On Sat, Dec 20, 2025 at 09:48:17AM +0000, Alice Ryhl wrote:
-> On Fri, Dec 19, 2025 at 04:35:00PM +0100, Danilo Krummrich wrote:
-> > On Fri Nov 28, 2025 at 3:14 PM CET, Alice Ryhl wrote:
-> > > +    /// Returns a [`GpuVmBoObtain`] for the provided GEM object.
-> > > +    #[inline]
-> > > +    pub fn obtain(
-> > > +        &self,
-> > > +        obj: &T::Object,
-> > > +        data: impl PinInit<T::VmBoData>,
-> > > +    ) -> Result<GpuVmBoObtain<T>, AllocError> {
-> > > +        Ok(GpuVmBoAlloc::new(self, obj, data)?.obtain())
-> > > +    }
-> > 
-> > Does this method make sense? We usually preallocate a VM_BO, then enter the
-> > fence signalling critical path and then obtain the VM_BO.
-> 
-> Hmm, but there is something tricky here. When do we add it to the extobj
-> list, then? If we add it before starting the critical path, then we must
-> also call drm_gpuvm_bo_obtain_prealloc() before starting the critical
-> path because obtain must happen before drm_gpuvm_bo_extobj_add(). And
-> adding it to extobj after signalling the fence seems error prone.
-> 
-> And besides, adding it to the extobj list before the critical path
-> means that we can have drm_gpuvm_exec_lock() lock the new BO without
-> having to do anything special - it's simply in the extobj list by the
-> time we call drm_gpuvm_exec_lock().
-> 
-> > > +impl<T: DriverGpuVm> DerefMut for GpuVmCore<T> {
-> > > +    #[inline]
-> > > +    fn deref_mut(&mut self) -> &mut T {
-> > > +        // SAFETY: By the type invariants we may access `core`.
-> > > +        unsafe { &mut *self.0.core.get() }
-> > > +    }
-> > > +}
-> > 
-> > Hm..it seems more natural to me to deref to &GpuVm<T> and provide data() and
-> > data_mut().
-> 
-> That's fair.
-> 
-> > > +impl<T: DriverGpuVm> Drop for GpuVmBoAlloc<T> {
-> > > +    #[inline]
-> > > +    fn drop(&mut self) {
-> > > +        // SAFETY: It's safe to perform a deferred put in any context.
-> > > +        unsafe { bindings::drm_gpuvm_bo_put_deferred(self.as_raw()) };
-> > 
-> > This does not need to be deferred, no?
-> 
-> I think what I *actually* want to call here is
-> 
-> 	kref_put(&self->kref, drm_gpuvm_bo_destroy_not_in_lists_kref);
-> 
-> like what drm_gpuvm_bo_obtain_prealloc() does as of the first patch in
-> this series.
-> 
-> > > +    }
-> > > +}
-> > > +
-> > > +/// A [`GpuVmBo`] object in the GEM list.
-> > > +///
-> > > +/// # Invariants
-> > > +///
-> > > +/// Points at a `drm_gpuvm_bo` that contains a valid `T::VmBoData` and is present in the gem list.
-> > > +pub struct GpuVmBoObtain<T: DriverGpuVm>(NonNull<GpuVmBo<T>>);
-> > 
-> > How is this different from GpuVmBo? The only object that is not in the GEM list
-> > should be GpuVmBoAlloc, i.e. the preallocated one.
-> 
-> The difference is whether there is pointer indirection or not.
-> 
-> This type is morally an ARef<GpuVm<T>>, except I don't expose any way
-> to increment the refcount.
-> 
-> Alice
+On Sat, Dec 20, 2025 at 10:05:35AM +0000, Alice Ryhl wrote:
+
+Aha! This one didn't get duplicated on lore. It's the nouveau list that
+is broken.
+
+Alice
 
