@@ -1,93 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-86012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4992CD2C06
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 10:17:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 818F0CD2C71
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 10:48:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2A34F3001639
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:17:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4B10B301099B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:48:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8482D2FE598;
-	Sat, 20 Dec 2025 09:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A3092FA0C7;
+	Sat, 20 Dec 2025 09:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WD04EP1X"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Q4uxg6Vw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8D92FE577;
-	Sat, 20 Dec 2025 09:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B3B29DB64
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 09:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766222254; cv=none; b=MtA3ccADWjQRBR9YFg+UEAP6g3w2+YvAoSWN3X9fm5YTxsYvxE0GNPc1nW/Yfr2lQAEZExtyXm//EjH0pOCMVTEsEwfPQnAsqk9PYwL2VasuS9ngwk0lo/u4+IA7p2e4s1fZv6a3ZUJae7RfIzyPZRt3SnUEuFLbB/+Mt4wZzrY=
+	t=1766224101; cv=none; b=OdaaMchQCfsUT2ABThFqgl/8P0V3IwSH5KG4/gufUYvUaa8AFba2JUn1YYeKpyZmzadj+M3//RA+9c4pXytOTKRNcF7SWOD7d1xaNsv/7IjjduLU2Q0XCWIjaQgxvlKLEQXJyLVz9UI+i8oMPL6DHTmJ/MzIoeNpRbDB7bCE7Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766222254; c=relaxed/simple;
-	bh=+jTxt28fw4qnhNHpHKvUV1SQFK1gzA7qo8dTmeuYUOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mK9gjrP3jncC76aCpxtWWuMm4et8hrH+UCNkYK66AS21GBRxlkT7Olz1gPEY/Mb/nAaWFLSFwjAtyHvwtKgbONR7yYvTrA15FDt3HpyIGcO7fJcMrvtOk9F3m3Xa7i21K993GTK3hSBky6gqFRhG2LfY4ARNXbWB5N63/t7oGAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WD04EP1X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04627C4CEF5;
-	Sat, 20 Dec 2025 09:17:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766222253;
-	bh=+jTxt28fw4qnhNHpHKvUV1SQFK1gzA7qo8dTmeuYUOE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WD04EP1XXqvqkxpnwP16ZBSod7NMhGBMnZEmQKMN7MCbZJsHFnFAWWatkonkyZcR0
-	 kMbB9ia4JhimbHvWG79OfSLvAvrfcvw1VyTuNvOElRAoBoXywa32YT1sDHZl9G9sYB
-	 3+94agXESpgRmDgs9LL+Z5/1Li++ulUPKd8PbYuHdULGXqAy8+y52fFJnlKb0bsN99
-	 lFkPs4rS7Mdqc1XHj7WOCbkpXKXW5eFXXOGjkDEzJds4f0JPc8BeJcGEpqEigXkayl
-	 dR5oNrH8Itbg5UY5PWLrc4fHRbHuZelBTm5NBhPeLVW2yW8YueabrpdRR2JDiutYsG
-	 iPRlkdwAxP2EA==
-Date: Sat, 20 Dec 2025 10:17:30 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>, 
-	Matthias Kaehlcke <mka@chromium.org>, J =?utf-8?Q?=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
-	Mike Looijmans <mike.looijmans@topic.nl>, Catalin Popescu <catalin.popescu@leica-geosystems.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Pin-yen Lin <treapking@chromium.org>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] dt-bindings: usb: Add binding for Genesys Logic
- GL3590 hub
-Message-ID: <20251220-economic-gay-firefly-1873a9@quoll>
-References: <20251220063537.3639535-1-swati.agarwal@oss.qualcomm.com>
- <20251220063537.3639535-2-swati.agarwal@oss.qualcomm.com>
+	s=arc-20240116; t=1766224101; c=relaxed/simple;
+	bh=rqVPjPvOP/eczPJdYGczf1j/6Xtk0OMMW37CAdn8u8U=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=SzQfEcLTbCsN48IDPW6LN22lGZkGJcXtK+ebsm5Q5LZtJF8DLDluPkbo4PMPE/hBXhDcn5Wsj2QR52UiN3ACQbjdr3F9F8lr6uds4XVwNMcs2fq4AC9uM7Da5OGkmrhlPVoQ4bbn2XVCMeZjVsI6p/XskK4UhD5an7Ee1ROzDOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Q4uxg6Vw; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-477c49f273fso32938035e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 01:48:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1766224099; x=1766828899; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qOW4PnpVwJ1a1ow90wBbPY5V5qFqMGNXJlCYoRRToZ8=;
+        b=Q4uxg6Vwu3VxffWrGfyJrv+togy6gbYjxNv/HGQjR3rSamdZ+GiovZ65u+1XkgXjql
+         bjSAzqihfbNVN7eY8zGtQeLWut/AeR3Hjd1s1r5yVdL5oU+ePlEzL4zbdROifqe2zgUX
+         khxODN+T7l9hXwQtmJbpvokq4NsDy3HlHgBo6SiyGKaOecaxPqEbvvNe0oO0Q/v9hEgy
+         HqIdmFXf2eF3anX1KoLlMOKC0HUH+YwclnVyqdUkGPeaGyH3StodtRtjz19uO0hF2v3w
+         GVvFmSG72TewQOdTQSC3indiaBToMbo/zwy05oGLgVYBVWOOL9pQvJuonY0QDbjDvNod
+         n/wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766224099; x=1766828899;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qOW4PnpVwJ1a1ow90wBbPY5V5qFqMGNXJlCYoRRToZ8=;
+        b=udRsl/50tvKyhhIIMc/s7HhtdYz6SbP4ZMd+4+xUFSNS+xZWh33XcKpACmI7reQfie
+         wVQ18XBnNX3ONeH/UASzkGNYBDkSuf+glX6matLY56oRyRBIQkrYctjqp2pZ4C0qfbtU
+         DrA8has25zlO6YtLTkY/iu3d6nKe8PdCd962X067HACu+fIXvc4l9YU4XJM1T2KXRCKH
+         7XJOuDfcdwSowsGKs/kn4ONIbOcfxJeu8vv/hGtT7PnmqOZ1Ak3NE1APQgEAh4rcxeQi
+         6x62rNAqPl0XRabmxgQVJ1k470GCIQY0hEFHPiqejAuAZjxZX9u5l/rPAuJbkyEspTLk
+         NlQw==
+X-Forwarded-Encrypted: i=1; AJvYcCUAj+NoA3o1skkMlX76AJDdTFyXZxPRVc0xrarxo0zW/xCqj4TYbouHfRBfFMKBPA030ei8JZvJXNoi4mQu@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqBWfHBf2gfJCaN4QRRmoqVXqcK62L/04PP1m6G85/rjKS4P6e
+	JWyHFBJcQym7XvTypIItw5APFq7UJ/dci3Xlbmjx6YKW4wga9T7Xcw9+MPbd+STVAo68GoJgc+L
+	4JngAakchfTlm31x2sA==
+X-Google-Smtp-Source: AGHT+IF/wwyCbmZKrb9+OJuirDYtRZw2m8SWoZaJ0QqeIqy0vt7I3G/xdsnBsD2ylGONwHmPG8Ly7PYUfnT9IJg=
+X-Received: from wmbjp12.prod.google.com ([2002:a05:600c:558c:b0:475:decb:4c4d])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:608d:b0:477:93f7:bbc5 with SMTP id 5b1f17b1804b1-47d195667d6mr53518855e9.10.1766224098608;
+ Sat, 20 Dec 2025 01:48:18 -0800 (PST)
+Date: Sat, 20 Dec 2025 09:48:17 +0000
+In-Reply-To: <DF2AXQ67412G.33JOX2CF0VFCK@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251220063537.3639535-2-swati.agarwal@oss.qualcomm.com>
+Mime-Version: 1.0
+References: <20251128-gpuvm-rust-v1-0-ebf66bf234e0@google.com>
+ <20251128-gpuvm-rust-v1-4-ebf66bf234e0@google.com> <DF2AXQ67412G.33JOX2CF0VFCK@kernel.org>
+Message-ID: <aUZw4fpWRUWFsb9r@google.com>
+Subject: Re: [PATCH 4/4] rust: drm: add GPUVM immediate mode abstraction
+From: Alice Ryhl <aliceryhl@google.com>
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: Daniel Almeida <daniel.almeida@collabora.com>, Matthew Brost <matthew.brost@intel.com>, 
+	"Thomas =?utf-8?Q?Hellstr=C3=B6m?=" <thomas.hellstrom@linux.intel.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, Steven Price <steven.price@arm.com>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Lyude Paul <lyude@redhat.com>, Lucas De Marchi <lucas.demarchi@intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sumit Semwal <sumit.semwal@linaro.org>, 
+	"Christian =?utf-8?B?S8O2bmln?=" <christian.koenig@amd.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org, 
+	Asahi Lina <lina+kernel@asahilina.net>
+Content-Type: text/plain; charset="utf-8"
 
-On Sat, Dec 20, 2025 at 12:05:34PM +0530, Swati Agarwal wrote:
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - usb5e3,625
-> +    then:
-> +      properties:
-> +        peer-hub: true
-> +        vdd-supply: false
+On Fri, Dec 19, 2025 at 04:35:00PM +0100, Danilo Krummrich wrote:
+> On Fri Nov 28, 2025 at 3:14 PM CET, Alice Ryhl wrote:
+> > +    /// Returns a [`GpuVmBoObtain`] for the provided GEM object.
+> > +    #[inline]
+> > +    pub fn obtain(
+> > +        &self,
+> > +        obj: &T::Object,
+> > +        data: impl PinInit<T::VmBoData>,
+> > +    ) -> Result<GpuVmBoObtain<T>, AllocError> {
+> > +        Ok(GpuVmBoAlloc::new(self, obj, data)?.obtain())
+> > +    }
+> 
+> Does this method make sense? We usually preallocate a VM_BO, then enter the
+> fence signalling critical path and then obtain the VM_BO.
 
-This is not true. I clearly see VP33, AVDD and VP10 (and maybe more)
-supplies. Not only in pin list, but high level diagram clearly marks two
-supplies.
+Hmm, but there is something tricky here. When do we add it to the extobj
+list, then? If we add it before starting the critical path, then we must
+also call drm_gpuvm_bo_obtain_prealloc() before starting the critical
+path because obtain must happen before drm_gpuvm_bo_extobj_add(). And
+adding it to extobj after signalling the fence seems error prone.
 
-Please read again datasheet carefully, because that's your task, not
-mine. I do not have even access to most of the datasheets, so  you
-expecting me to do it is just unfair.
+And besides, adding it to the extobj list before the critical path
+means that we can have drm_gpuvm_exec_lock() lock the new BO without
+having to do anything special - it's simply in the extobj list by the
+time we call drm_gpuvm_exec_lock().
 
-Best regards,
-Krzysztof
+> > +impl<T: DriverGpuVm> DerefMut for GpuVmCore<T> {
+> > +    #[inline]
+> > +    fn deref_mut(&mut self) -> &mut T {
+> > +        // SAFETY: By the type invariants we may access `core`.
+> > +        unsafe { &mut *self.0.core.get() }
+> > +    }
+> > +}
+> 
+> Hm..it seems more natural to me to deref to &GpuVm<T> and provide data() and
+> data_mut().
 
+That's fair.
+
+> > +impl<T: DriverGpuVm> Drop for GpuVmBoAlloc<T> {
+> > +    #[inline]
+> > +    fn drop(&mut self) {
+> > +        // SAFETY: It's safe to perform a deferred put in any context.
+> > +        unsafe { bindings::drm_gpuvm_bo_put_deferred(self.as_raw()) };
+> 
+> This does not need to be deferred, no?
+
+I think what I *actually* want to call here is
+
+	kref_put(&self->kref, drm_gpuvm_bo_destroy_not_in_lists_kref);
+
+like what drm_gpuvm_bo_obtain_prealloc() does as of the first patch in
+this series.
+
+> > +    }
+> > +}
+> > +
+> > +/// A [`GpuVmBo`] object in the GEM list.
+> > +///
+> > +/// # Invariants
+> > +///
+> > +/// Points at a `drm_gpuvm_bo` that contains a valid `T::VmBoData` and is present in the gem list.
+> > +pub struct GpuVmBoObtain<T: DriverGpuVm>(NonNull<GpuVmBo<T>>);
+> 
+> How is this different from GpuVmBo? The only object that is not in the GEM list
+> should be GpuVmBoAlloc, i.e. the preallocated one.
+
+The difference is whether there is pointer indirection or not.
+
+This type is morally an ARef<GpuVm<T>>, except I don't expose any way
+to increment the refcount.
+
+Alice
 
