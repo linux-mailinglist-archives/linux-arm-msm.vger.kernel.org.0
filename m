@@ -1,86 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-86007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91C69CD2B11
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:48:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D36ACD2B26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:54:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D1AA3300F5AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 08:48:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 15A6E30109A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 08:54:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B80982D8367;
-	Sat, 20 Dec 2025 08:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C9142F0C63;
+	Sat, 20 Dec 2025 08:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZK2YNnU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OLDHIbD7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728E123313E;
-	Sat, 20 Dec 2025 08:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251524A35;
+	Sat, 20 Dec 2025 08:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766220495; cv=none; b=tTTDsK153RwctMvpkezVEsfeO/2JeXfMY2DlHM1omAAbD2P94KcqDlWnEfgJpc8vElbDZROhFlqpfFF8/H5cvu2su2tylBpjEu8v3fDrkBHTtSn22PwkWszP1+T1m1zWRY6JoPCPmlgFyrp0UL6QJ74B+bIO/P2iwV8TkSo4GB0=
+	t=1766220846; cv=none; b=dL1k3VSUvH4c1pkal5rAeOQc6P8C/7ZtJVOQAYyBZu62VtOd+xxnv6nKEjb6TjdcBO/c0YTwH34dSOkXinVmFR2ZM7iRw0LNG3ll1GV+z72A6hk65Nhtnrkof0l8YZF8Ucl95kgY4TaEWYelUMhujWS1eu6JuVLY4TxOfJjj1bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766220495; c=relaxed/simple;
-	bh=18qrj7yg+u8XLv0nD5iwxa5zywxEGxn2/r6db/iLYss=;
+	s=arc-20240116; t=1766220846; c=relaxed/simple;
+	bh=ME1PQR0kwfmB/h9m9Q9QgcF8LIQq656uWfk3ydEYZN0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PZvAtRqwoESYkur7MGEv7+7bZBCIupIbqldYgt5SWlEmNOJWk4eDaK1q6REarD+lPZkvdG6WreHwK/e4S4ralTs8JWX/adfzhi4qFX9UyRIw34dgihrEM9YnSuuxYUQf6ffcNT8Mq294U2rn3elRzFKs0Rr9wFC5VourGNpgj/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZK2YNnU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A18C4CEF5;
-	Sat, 20 Dec 2025 08:48:12 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=MZTUR6AmxHmdZqxAYTa9yxLiOG5UfQpVdotTeSU1/aAfLiBxfNsbRdDXyG7BL94Bf/opuIY9/kuNjdzl8vLNbuD0BrAi6Fa9Xa4lGWlA/HnRuCGFtxJYjPLXeOErE269ic/nO2upp3zNHwwHLciH8U7HD0YZam3BTCadrKA2MOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OLDHIbD7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20292C4CEF5;
+	Sat, 20 Dec 2025 08:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766220494;
-	bh=18qrj7yg+u8XLv0nD5iwxa5zywxEGxn2/r6db/iLYss=;
+	s=k20201202; t=1766220845;
+	bh=ME1PQR0kwfmB/h9m9Q9QgcF8LIQq656uWfk3ydEYZN0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pZK2YNnUaWn4dEJxlhskLRLooxac+p0uhMtIX0u2IGB063em/I4qic9nj32KHxwYL
-	 n5H3ygVyfsMxF9JRjGM+zodtf9rMgT+ZFL4RHvhVY13VjQHFIw6gTSyAVYr2daGPwO
-	 JYpspcMQNs4Ccd0CuHbSt/ZtE3GdkZznCBxqkBkeMixJ7FcnFzbip/QBzBGpI128Ir
-	 PnO+ummT309J/jMPFiP3tsJY+qOxsIutRgvo4QFcYXjgqX8MVPftY+uBXX8zkyxqCU
-	 ep57SFzIbCJ5R+HBRH0+YFl7OVfA9YXDW/Sc7HVSAHgRfZpvFrrz/hev/mku3UM3n7
-	 ftJPGM6g+0R5w==
-Date: Sat, 20 Dec 2025 09:48:10 +0100
+	b=OLDHIbD7oyU8mmVmkoxmE4E8Qtb3yibI9KJsX+HvXPVAyAr3c8LgGbndyfebXe3EA
+	 ChmOfPNoXcJIs/ZzW2KG/jCc83M/I84b4DmASvqXTKXRoKKFQH4GBhtOVxWAWj3Zf8
+	 wtv6+IuSWStMJwvB05lsUzD5I7mcSDZY9q8AKxsqVYBNSkbUsofgBlz16o8fndLRHE
+	 /xSveaX3vLihZqpX3TQtIDlWyopKGidVepz+xAv1vItCyZLnFlpbGidNrYfeyPpe6K
+	 zTZz3oFkxYENiF73YVXVBB3iBEE8Vjg4VC4DHzXIJ9BhUo2l0qz3rbBPIIpwzWZJ8U
+	 GEqOJ3cvLE8fw==
+Date: Sat, 20 Dec 2025 09:54:02 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Keguang Zhang <keguang.zhang@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, Romain Gantois <romain.gantois@bootlin.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
-	Shuang Liang <liangshuang@eswincomputing.com>, Zhi Li <lizhi2@eswincomputing.com>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, 
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, 
-	David Wu <david.wu@rock-chips.com>, Samin Guo <samin.guo@starfivetech.com>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v6 1/7] dt-bindings: net: qcom: document the ethqos
- device for SCMI-based systems
-Message-ID: <20251220-spiritual-barracuda-of-champagne-34eb91@quoll>
-References: <20251219-qcom-sa8255p-emac-v6-0-487f1082461e@oss.qualcomm.com>
- <20251219-qcom-sa8255p-emac-v6-1-487f1082461e@oss.qualcomm.com>
+To: Rob Herring <robh@kernel.org>
+Cc: Alexandru Gagniuc <mr.nuke.me@gmail.com>, andersson@kernel.org, 
+	mathieu.poirier@linaro.org, krzk+dt@kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/9] dt-bindings: remoteproc: qcom: add IPQ9574 image
+ loader
+Message-ID: <20251220-imaginary-merciful-quoll-a91a4c@quoll>
+References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
+ <20251219043425.888585-2-mr.nuke.me@gmail.com>
+ <20251219144433.GA3163791-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,22 +60,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251219-qcom-sa8255p-emac-v6-1-487f1082461e@oss.qualcomm.com>
+In-Reply-To: <20251219144433.GA3163791-robh@kernel.org>
 
-On Fri, Dec 19, 2025 at 12:42:16PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, Dec 19, 2025 at 08:44:33AM -0600, Rob Herring wrote:
+> On Thu, Dec 18, 2025 at 10:34:10PM -0600, Alexandru Gagniuc wrote:
+> > Document the IPQ9574 native (non-PAS) WCSS image loader. It is similar
+> > to IPQ8074 WCSS, but requires several new clocks. These clocks must be
+> > enabled by the host in non-PAS mode, and are not optional. Add an
+> > example that uses the "qcom,ipq9574-wcss-pil" binding.
 > 
-> Describe the firmware-managed variant of the QCom DesignWare MAC. As the
-> properties here differ a lot from the HLOS-managed variant, lets put it
-> in a separate file. Since we need to update the maximum number of power
-> domains, let's update existing bindings referencing the top-level
-> snps,dwmac.yaml and limit their maxItems for power-domains to 1.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> ---
+> Is the new example really much different and unique. If not, drop it 
+> (especially since it wasn't even tested).
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+There is simply no example for existing devices, so this is fine. It
+could be mentioned here WHY it is being added, which would solve two
+people's questions (yours and mine earlier). If only people knew and
+said WHY they are doing something.
 
 Best regards,
 Krzysztof
