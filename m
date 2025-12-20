@@ -1,46 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-85993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-85994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AF9CD283B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 06:53:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D1F3CD2868
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 07:04:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 252563018F7B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 05:53:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 92A77300BE5C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 06:04:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3127329992A;
-	Sat, 20 Dec 2025 05:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/ZOCOoy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFD52258EE0;
+	Sat, 20 Dec 2025 06:04:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D551A1339A4;
-	Sat, 20 Dec 2025 05:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F071547E7;
+	Sat, 20 Dec 2025 06:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766209990; cv=none; b=CR7DFp+NRwLbzc1LaUHMASYyxoeZrS7x5lzqBMxIf4blX5e5SPjlSSy72JzEcckobk9BeisQT1bbUHMKh1SqO4TTNLHZ0qUhrqHKV8n6TbfTX7iysbolvgWpUfdAgYJnopSwT5b1c/IvdqbBMquG1k3ey5hwmJ5tmVgyp5TZ9do=
+	t=1766210647; cv=none; b=mVCSolNj5rR8256VeTrexZLEMMzqfP9vo/CGrl78mE+T8HjB8kJv8WmXC6QZmJo7adRLZz4OfErUbZHGH9S17zqkRA3VVP7+pTX5Lj7nXkjzSWaCr1c8x2+msmGajNn6jXfihsoTuitvbdYDUFkVUqPA1A9lvsk0pk9Fg0rIZCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766209990; c=relaxed/simple;
-	bh=yzcnx8V5iL0PoVqDyA0xiWyoLqVGZT95qqXiDASFiCY=;
+	s=arc-20240116; t=1766210647; c=relaxed/simple;
+	bh=JhhZKgbhQDuIZvY+tywjTM/+EOuhlgXcOjO3AWdtoY4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UMOvh3QDYhynaB6Y3Og3rAgU9unds/AlMhjV3BiUUSqG3ra/mXTjvqXRQNCBIq2xT5pGn1k8d1r4WcqEhSk1F4QHxy8YTksbH7rcai50qFortfnAF+hIl5/bkBAjHib1FP4zSy21+jy/of6I9FfPN/o8ZD+dUeWZ4sZ1XpsjItI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/ZOCOoy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0D9C4CEF5;
-	Sat, 20 Dec 2025 05:53:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766209989;
-	bh=yzcnx8V5iL0PoVqDyA0xiWyoLqVGZT95qqXiDASFiCY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i/ZOCOoyQR7Wq6Tft4CKtU2ceU2InluE0kD6Xefj/hzDNJedwSgWfBVnt+nY2Kbdv
-	 d3Hflg4atRLo3a5M6Ddmv+7tk6cutpBLQYlIUQp1GQW9EmqwQePOdPWyGMItqQtQfx
-	 iCa45bG3kRNjTSngXrdAHR9XM9v1M0GE66c1HeLXxca28woybj5iPhMrjCvB0RwsQp
-	 pEqQJZh0nnUDZFz2FPDIw+lX7IMJ+269+snkjzl5kjDHvPsF1jbwjSLg3zg6CIvwTi
-	 ZdbqguiQggoBxhSukX7XnVENyarFzoEC6tOwGEH3NITi0RDvqtL2G1DLk46SLfGWZY
-	 Zkd8mEwQdPv7A==
-Message-ID: <0337e0dd-d25c-4f22-968b-f1a3c364d025@kernel.org>
-Date: Sat, 20 Dec 2025 05:53:03 +0000
+	 In-Reply-To:Content-Type; b=uIZGMM67EvuPlE0MHCI2Il8+b/k3UgOFHcYdkX8ubymvuqAOrT+79p7FOP1Idjo/RNLguhX9ZIonLI78qbvD45YIyYMev14saqxnJTgTsHOrOzEzbmfrzvMa090RzmCzfgCo2iAWaTf9OfLq2wCYAIcppfj7E1lovDuoVhGSSc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDAEC4CEF5;
+	Sat, 20 Dec 2025 06:04:01 +0000 (UTC)
+Message-ID: <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
+Date: Sat, 20 Dec 2025 06:04:00 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,61 +36,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
+ disable-rfkill property
+To: jerome.debretagne@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com>
- <20251114-sm6350-camss-v2-1-d1ff67da33b6@fairphone.com>
- <de7ad562-80bc-498e-a6fb-cc26bb6343f0@linaro.org>
- <r6EgtiSu8pqs2ouFERTw7fx8kYZ3RcSbGklwd17UPxNGGd3sbRDl2BPyplkABZVu3qyfrIzRMisa0qTSrm89BA==@protonmail.internalid>
- <DE8FV81S45S5.CH6K1QAX940D@fairphone.com>
- <a428f8b9-c338-4404-8dc1-da6daae37d5c@kernel.org>
- <d7dfeb7e-c0b2-426e-8572-023715c33674@linaro.org>
- <272d039c-25a0-4db5-96a3-c28907882cd2@linaro.org>
- <BBiBFB2AXdUoKHu6w0f7yyiLvTOr8mHRahPT-C1AYGm7_MaZ8yoyxdj6blE8utr5s4UtgEDJYkBckzM7Rvl8KA==@protonmail.internalid>
- <2ae1a0a3-b105-4c0d-abbc-4b9d708b0272@linaro.org>
-From: Bryan O'Donoghue <bod@kernel.org>
+ <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>,
+ Lorenzo Bianconi <lorenzo@kernel.org>,
+ Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Jeff Johnson <jjohnson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, ath12k@lists.infradead.org,
+ Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Dale Whinham <daleyo@gmail.com>
+References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
+ <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
+ <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
+From: Bryan O'Donoghue <bod.linux@nxsw.ie>
 Content-Language: en-US
-In-Reply-To: <2ae1a0a3-b105-4c0d-abbc-4b9d708b0272@linaro.org>
+In-Reply-To: <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 19/12/2025 16:18, Vladimir Zapolskiy wrote:
-> FreeBSD or CamX are software, and they shall be excluded from consideration.
+On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
+> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > 
-> There shall be no guesses about software usage, the only concern is if
-> the hardware desription in the shape of device tree nodes is proper or not.
+> For some devices, Wi-Fi is entirely hard blocked by default making
+> the Wi-Fi radio unusable, except if rfkill is disabled as expected
+> on those models.
 > 
-> Partial verifiable description is a proper description, and adding unknowns
-> of "future goodness" does not serve any reasonable technical purpose, it
-> adds an illusion of a proper description only, and it was proven that this
-> illision shatters even for CAMSS, see CAMSS CSIPHY case, when a wrong DT
-> choice can not be undone anymore for legacy platforms. It is good to acquire
-> an ability to learn from the past.
+> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
+> disabling specific features based on ACPI bitflag") added a way to
+> support features set via ACPI, including the DISABLE_RFKILL bit.
 > 
-> Everything can be added ad-hoc while keeping the hardware description in
-> a proper and correct state.
+> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
+> equivalent for devices described by a Devicetree instead of ACPI.
+> 
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> ---
+>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
+> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> @@ -29,6 +29,12 @@ properties:
+>         different 5 GHz subbands. Using them incorrectly could not work or
+>         decrease performance noticeably
+> 
+> +  disable-rfkill:
+> +    type: boolean
+> +    description:
+> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
+> +      blocked by default otherwise
+> +
+>   additionalProperties: true
+> 
+>   examples:
+> 
+> --
+> 2.47.3
+> 
+> 
+> 
 
-Are all of the VFE Lite's verified ?
+Is this really a hardware description though ?
 
-Even some of them ? I think not.
+Its really more of a logical/functional description. It tells the 
+runtime what todo, not what the hardware is.
 
-We are seeing in multiple places how failure to properly articulate SIDs 
-results in mess.
+You could also have a list of quirks in ath12k for this or have a 
+user-space utility look for the appropriate platform device string name 
+and disable rfkill.
 
-So full description of the hardware > partial.
+I think this logic belongs in drivers/net/wireless/ath/ath12k/ 
+triggering on a compat string.
 
-BTW your statement about not being able to change DT bindings is wrong. 
-You just need a good argument and to make that case successfully upstream.
+Should be achievable.
 
 ---
 bod
