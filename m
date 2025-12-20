@@ -1,56 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-86009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D07ACD2B32
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:57:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ADB5CD2BDB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 10:12:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 75EC1300974D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 08:57:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0938A3011A76
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 09:12:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 707492F6928;
-	Sat, 20 Dec 2025 08:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE59C2FD66D;
+	Sat, 20 Dec 2025 09:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKgEWuq0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tww/limY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BF84A35;
-	Sat, 20 Dec 2025 08:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882C68287E;
+	Sat, 20 Dec 2025 09:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766221021; cv=none; b=hVZl+FLNr+hnzi0CQd7WWGwgd96Zqjpo7rJlXj2nmCRBXmyIV/JmM7+bPKobe8FOeGk0dyGw0OQOm2aUhz5YzMJ32s65i3d5y3OdIrmLdj4s+QajSwc2Da/Q4cMM11Qdp/UQEhAaEQyM+lVp0ZmYkUZVHQt1Sx6WYVoMeEP3k9M=
+	t=1766221939; cv=none; b=gfYPBSO+VpbW8nLpyyz0ofSCobeBvfa//n4V2Edr4U/i9UHYAK17VkYKstMuCUyKKcbRoclBe+DgnZ4LgSD4F1Sk+l0d8ztrI0XU0ZJ5DnmLa7gzxyDwoqgcERCVzUZ3AH5dR3OBT9E1rWFKHwavYuPqavavyRetdSBec4lGCW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766221021; c=relaxed/simple;
-	bh=WnsUmdn4a/nYxPM7z7GAsLIyt/ZsTh54ZgIdj6D2txg=;
+	s=arc-20240116; t=1766221939; c=relaxed/simple;
+	bh=hYDqeJLk4fMx9mP+F0+rMSTvt8DAR2pALIwmlOoKT0s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iIKXMuaArSCZT/kbVrJzjBwHtQLbMsl7mXdG8cDes34SCO9qgKvlh1UPThDNiWnE6Z4xASft+AxfTjfQ57CvtFOop9MjKhZf/0YKg3NtTya9nNImsFOzyiiJQnGLEDwguGf8X6dyKvTX/wTRwdWJJtZGlP+Yf86u4QqiLlIIk9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKgEWuq0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E167CC4CEF5;
-	Sat, 20 Dec 2025 08:56:59 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=iNR/2mbZxHiVsx1HXyyNth6bfHeFJ0Lg9b1+VR923A8YStHgyNp7hHyhlxUFIhK98GGHFSKv7HbxYU5O2xbXWiWYJejVlXx71Arcf4ClYCAIsvCbQ4D3Q2nySZDkr7W8L7al/LbEV487CElKBB6LVxgr3RAFdXKuSSkvZ8eS7NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tww/limY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4EFC4CEF5;
+	Sat, 20 Dec 2025 09:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766221021;
-	bh=WnsUmdn4a/nYxPM7z7GAsLIyt/ZsTh54ZgIdj6D2txg=;
+	s=k20201202; t=1766221939;
+	bh=hYDqeJLk4fMx9mP+F0+rMSTvt8DAR2pALIwmlOoKT0s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AKgEWuq0U6C7wqAlOf+5cATc36Vv9IkOmfv6EscUD/Joe3uciufw2Uy1s/o2WQ5RM
-	 Dz2Kgp9BdIgOKrcCbVd2B4lJvG0ycblGHmsNfOZwZRj25GvJqVloEw7QniBke6pe5e
-	 O2So3MC1l34rVa9ir1o/HZSIunmtrNKcZRZfOdwlnJglLFxPAfx+Ih5DzwTZLneqvD
-	 T0GNrE76qRuG4brti6fir5LViNazkR9ZM9sSr9HdNvpjAo6GdxFCZ1BOmlkJBsf8bM
-	 Xf7I037SYry2u5pAiuSeEEqxrt8Se5kxKPDaP4TMNeiw4geWJTw3qIYylpQsF6Uek/
-	 HJ6vIITkKaqXw==
-Date: Sat, 20 Dec 2025 09:56:57 +0100
+	b=Tww/limY7l44Ini+Fmz+2jiIpRCWzR2fioOWFxZ6aozbV+o/WbMg73uNPvqNnjBdC
+	 pd7EaqOPoQTNyRR+RW0G5t0mxMGluoBZ6/1azAv3+cRtCEKTxxeZoJwfWalbSJsAei
+	 xgv6aLd4KMdGDS5ZqNRwE3UgtMzbuKcbgwkqVlU+YBNeXqgY29TPn+qYV+MmwY2NLq
+	 NoOSL3iH2wt/C/aU7KiLk69LiLYJ+KWnu54alTHyHZ6BWIGENTOGo7nWOiF4HgeEgb
+	 qnXa1tAINbNZd/CvwaFHyTukYOgN7yPFiay8mU+O1PZr8JiPHxrbql8JQEPMdPwzFE
+	 obCx4ZIhguAuw==
+Date: Sat, 20 Dec 2025 10:12:14 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Cc: andersson@kernel.org, mathieu.poirier@linaro.org, krzk+dt@kernel.org, 
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/9] dt-bindings: remoteproc: qcom: add IPQ9574 image
- loader
-Message-ID: <20251220-fantastic-koala-of-coffee-e8ba1f@quoll>
-References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
- <20251219043425.888585-2-mr.nuke.me@gmail.com>
+To: Bryan O'Donoghue <bod.linux@nxsw.ie>
+Cc: jerome.debretagne@gmail.com, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johannes Berg <johannes@sipsolutions.net>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jeff Johnson <jjohnson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, ath12k@lists.infradead.org, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Dale Whinham <daleyo@gmail.com>
+Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
+ disable-rfkill property
+Message-ID: <20251220-fervent-mamba-of-sunshine-f680a8@quoll>
+References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
+ <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
+ <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
+ <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,77 +66,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251219043425.888585-2-mr.nuke.me@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
 
-On Thu, Dec 18, 2025 at 10:34:10PM -0600, Alexandru Gagniuc wrote:
-> Document the IPQ9574 native (non-PAS) WCSS image loader. It is similar
-> to IPQ8074 WCSS, but requires several new clocks. These clocks must be
-> enabled by the host in non-PAS mode, and are not optional. Add an
-> example that uses the "qcom,ipq9574-wcss-pil" binding.
-> 
-> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> ---
->  .../remoteproc/qcom,ipq8074-wcss-pil.yaml     | 115 +++++++++++++++++-
->  1 file changed, 113 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml
-> index dea46cb9f93fe..a665b704a835f 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml
-> @@ -18,6 +18,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,ipq8074-wcss-pil
-> +      - qcom,ipq9574-wcss-pil
->        - qcom,qcs404-wcss-pil
->  
->    reg:
-> @@ -49,10 +50,10 @@ properties:
->        - const: wcss_q6_reset
->  
->    clocks:
-> -    maxItems: 10
+On Sat, Dec 20, 2025 at 06:04:00AM +0000, Bryan O'Donoghue wrote:
+> On 20/12/2025 00:21, J=C3=A9r=C3=B4me de Bretagne via B4 Relay wrote:
+> > From: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.com>
+> >=20
+> > For some devices, Wi-Fi is entirely hard blocked by default making
+> > the Wi-Fi radio unusable, except if rfkill is disabled as expected
+> > on those models.
+> >=20
+> > Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
+> > disabling specific features based on ACPI bitflag") added a way to
+> > support features set via ACPI, including the DISABLE_RFKILL bit.
+> >=20
+> > Add a disable-rfkill property to expose the DISABLE_RFKILL bit
+> > equivalent for devices described by a Devicetree instead of ACPI.
+> >=20
+> > Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.co=
+m>
+> > ---
+> >   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 +++=
++++
+> >   1 file changed, 6 insertions(+)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.y=
+aml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> > index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5ea=
+ec2c7ff367fd93945 100644
+> > --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> > +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> > @@ -29,6 +29,12 @@ properties:
+> >         different 5 GHz subbands. Using them incorrectly could not work=
+ or
+> >         decrease performance noticeably
+> >=20
+> > +  disable-rfkill:
+> > +    type: boolean
+> > +    description:
+> > +      Disable rfkill for some devices on which Wi-Fi would be entirely=
+ hard
+> > +      blocked by default otherwise
+> > +
+> >   additionalProperties: true
+> >=20
+> >   examples:
+> >=20
+> > --
+> > 2.47.3
+> >=20
+> >=20
+> >=20
+>=20
+> Is this really a hardware description though ?
+>=20
+> Its really more of a logical/functional description. It tells the runtime
+> what todo, not what the hardware is.
+>=20
+> You could also have a list of quirks in ath12k for this or have a user-sp=
+ace
+> utility look for the appropriate platform device string name and disable
+> rfkill.
+>=20
+> I think this logic belongs in drivers/net/wireless/ath/ath12k/ triggering=
+ on
+> a compat string.
 
-Either you miss minItems or you are changing existing devices without
-any explanation.
-
-> +    maxItems: 13
->  
->    clock-names:
-> -    maxItems: 10
-> +    maxItems: 13
->  
->    cx-supply:
->      description:
-> @@ -107,6 +108,7 @@ allOf:
->            contains:
->              enum:
->                - qcom,ipq8074-wcss-pil
-> +              - qcom,ipq9574-wcss-pil
->      then:
->        properties:
->          qcom,smem-states:
-> @@ -117,9 +119,47 @@ allOf:
->            items:
->              - const: shutdown
->              - const: stop
-
-So why all devices have now 13 clocks?
-
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq8074-wcss-pil
-
-Just keep the if:then: per device, don't mix it up.
-
-> +    then:
-> +      properties:
->          clock-names: false
->          clocks: false
+This is good point. Either this could be deducible from the compatible
+or this should actually describe the hardware and whatever is there
+wired/configured, not what OS should do.
 
 Best regards,
 Krzysztof
