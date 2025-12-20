@@ -1,222 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-86047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCD7BCD34A0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 18:47:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AD2CCD353F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 19:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 181DC3011A60
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 17:47:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 327E1300DA72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 18:44:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C732830C61B;
-	Sat, 20 Dec 2025 17:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52ED830FC2D;
+	Sat, 20 Dec 2025 18:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R1I2U7hM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XIGw/LOc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9766223AE62;
-	Sat, 20 Dec 2025 17:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E0723536B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 18:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766252836; cv=none; b=O7JeGbwHSKKeHt8EUyuULFivsI1jJMX/zNjSo5DQFiCAqKA9qYtSmuykCEjK1zSdUnYVtzFsu4I3qD2qKhfY7M0iVMjxClyKhdfUSRUCK+wBZIk6bwRTRwnc8Ow/TpkIFru2lMFjKgqFE550ic+8q7NimZ1BZeYSNLT5lQasusY=
+	t=1766256291; cv=none; b=j7TfmEl9JUr7vhAQZNYNz8RIvPQpo4EbJisLcVp+GjX6d7ON0sHKPARX5Hj/z0iTe1YlFRbFUjnieWknDW0z0x0lfeUL9MxRDTT5Ba+x6VtrEwdLmJR9bgL9blzBarbYvH9uEBpV99Pu/AVecfiZ8wlMdpLUpGS6t7GpsGfqwUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766252836; c=relaxed/simple;
-	bh=zs58iPHc9dVMILZf+f0sXG/xtW4XWxiXDfAKslwS8p8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=t2AHO9vwo0oL0CEBnJsbqLN89jhRthAMNltnhTPnu0V01gyhB11AiK8XU9FVTMJ7Hw7TcKm+Q6WbSk5Hua7O3+4+dZxMmZ0tKw3tEVi7QxC8GV6wKi4EbGwHctf+5NKSPhoFZmtOCePghMSmUhpuR5NqdKzIdVgrpfGL7KLdOPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R1I2U7hM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22B1FC116C6;
-	Sat, 20 Dec 2025 17:47:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766252836;
-	bh=zs58iPHc9dVMILZf+f0sXG/xtW4XWxiXDfAKslwS8p8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=R1I2U7hMNmhZJgXE+D/aTsAEyhNhq3dlnetcA9wwFJ5RjWpUTulxqywso81eSSIEO
-	 7ttJ/7g/3o85oQOa2+hZLqbZ75n7cZrYSS0kgu/ELfJc4gTgGb6JSp1QWkFcVl2Sre
-	 luFqSDd8Nxm59syaKeZ+UuVX9yGlXh60fR03hU815KB/xk9/mXAi658GDASMNhzj8Y
-	 cF1GtruB9m+Vapb5InWhuZqH9PaiqDfNn4iOubHSaV8EDxWsu2uqpNk+DdyvXyUHTS
-	 jBz+v1Fldzw4YCAL7aJrKwSRF6TfUD5cK6VxUmwvyXJTu4CArPp/erfU9FY3MSHxap
-	 RU1KvVRdYeNPg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FD45E668B4;
-	Sat, 20 Dec 2025 17:47:16 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Sat, 20 Dec 2025 18:47:10 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: x1p42100-lenovo-thinkbook-16: add
- hdmi bridge with enable pin
+	s=arc-20240116; t=1766256291; c=relaxed/simple;
+	bh=0u2OR6+3xMf4RaABwsoKlyiauVyQSZz852Zfxxk7a4U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UUaJIs0RDCSTCxcbPnCvjE0E1wB/8jVNxqLXBSPnSwhDNwzPwQlLjcqR+o4EjF4KKAKaABK7NBTE/hFbiArAUSEkAeid9jzDNDvy/qd0lSXDy17SxJ3ibI78/Ep/OPXbxmGlixBHhlOKFRiym+fMltJg52wbJl6grDzREldv/Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XIGw/LOc; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7c95936e43cso951415a34.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 10:44:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766256288; x=1766861088; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=trzEivKudx03y5CGgz9d9cZqh7fqV05Hs29kec+vigA=;
+        b=XIGw/LOcQs0At3cxgGOls8uuMTpcxxwE3ZkZDS9O2krFSnDulveLzSaS+XwaAY5ORI
+         Fat2H+DWcrhcPB5+1+ZDv2pHAdg/TCfaH6f1rHOHRFVeq8frtfNFIfiyH6lVUxmRJVr/
+         /KN2ychqdgiq7ffPPjrkU+tYxkxOXS1tKIIYjO3t/XFVJKxe8IahzDzwk1Dx14xyn7Jx
+         vSirQZ8fEmQqPvUdBWKxZ+q9HaVQVRj9K7tGUvhT39kyHXxnYX00SeIlWwRubu3MdnOn
+         /eg2CDgL/OGTDq5OIGaTrU49wtpaW1aN6eUookttsE9IYqwwK/1JsHXutbDR4vWo5L1Z
+         tVeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766256288; x=1766861088;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=trzEivKudx03y5CGgz9d9cZqh7fqV05Hs29kec+vigA=;
+        b=UYjKpjX6Zfa8HToJ+P5QwRgaTINnFLPW/y12+G7/h3sHGlx0uaJqwLdjXnxYemhKSP
+         YPKDQcFNAELT25V5PYr+PJkeqVzAl58pvZEsJzKYebndHBH4ccijSTZ1W/p/ckYSsVB8
+         0MDpJuw23JZ1cFURGGD+ukETJX9pqC8ASEx59FZihn1H4shIux8oF4yW6UNF2lKIVT41
+         PPuJuZXgoSzhUCfUH0B/KLgl7tzj8Ta4DPgx8198cxYm+dUFVxLBWg6QVAwX7/7jghN9
+         vOIlnihn4bUJEbLLIfYfhfGXtqAA5d9LRUeK91oqr5Sl31wpy/kgV9ChQF+ylXlWv49g
+         /5Ig==
+X-Gm-Message-State: AOJu0YzCcuAmvXOITUYyeD8UlsBtRc4l5k53NQBwb/eLdD/FN55MtQyw
+	zUJjcFaqKIgdN2pfBpJCn+wJw69YZUxzKcttGdxQt9R+sVxHxn3beFR7
+X-Gm-Gg: AY/fxX6s1NSnzmHpEsCGUtwg6lTVybt4hzxYWlKEOHJwyx4U8+wERi2OkOkFNqcwn37
+	OkjEL8gdYBX96v3f26Xv/dSQwduUkJxa/AqYca3NYRG8BQiyxHbE3jg60st3akgZWgRZZWPRoeT
+	VvMu9AKETX03FpK8wsfj9njmByQCEeuTBQYZNir9HkmMGW5ssASdEqnQ8/EPURVahpbc90Nkukv
+	9PyUSpw9mzSOG9bOuCWAtUOr4mXlWZBgvFFg+ADPyXqLlF5jMtY3R6D//rmK6O8Ze3Zh6dsSQ1b
+	b1OVn6w8daIn/JdBrwtngGVMcL9AVeRMCOL5Jvgfvrh5iZKQRTLeDXDRyPbJXdSYS/Tk2PLNRJ8
+	OYpU9+/T4Hfp9OChk8eQ/pOiP9uAbXDeHhdHs7ypxhHE7CMVW2XIFjH/ngKOrIMktAIjo+RPzSb
+	kpqZdgCvSXh7f7K9wuEo0eGHdE+h2FtC8HdOuJfXxzJb+6d1A5wibZ8y64jzZi82Fndy4uQXj4+
+	s6qrbiDOE11S5kJIjaXh90ZqjuK32Q=
+X-Google-Smtp-Source: AGHT+IE+0LLix2qQ2hee63jPrCqkAnrGvkh7ErNz8WY0FuIa+u/gxQ3Xhw28APg7ob5GTcztFxFk3w==
+X-Received: by 2002:a05:6808:1509:b0:450:44b9:68e0 with SMTP id 5614622812f47-457b20889c0mr3266072b6e.11.1766256288542;
+        Sat, 20 Dec 2025 10:44:48 -0800 (PST)
+Received: from nukework.gtech (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3fdaab5ccb9sm3623838fac.10.2025.12.20.10.44.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Dec 2025 10:44:46 -0800 (PST)
+From: "Alex G." <mr.nuke.me@gmail.com>
+To: andersson@kernel.org, mathieu.poirier@linaro.org, krzk+dt@kernel.org,
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject:
+ Re: [PATCH 1/9] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil: convert to DT
+ schema
+Date: Sat, 20 Dec 2025 12:40:19 -0600
+Message-ID: <7075845.DvuYhMxLoT@nukework.gtech>
+In-Reply-To: <abec3933-279d-4111-8adf-a2e1280ce0b7@kernel.org>
+References:
+ <20251219043425.888585-1-mr.nuke.me@gmail.com>
+ <abec3933-279d-4111-8adf-a2e1280ce0b7@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251220-tb16-hdmi-v1-2-18b1e20b396e@oldschoolsolutions.biz>
-References: <20251220-tb16-hdmi-v1-0-18b1e20b396e@oldschoolsolutions.biz>
-In-Reply-To: <20251220-tb16-hdmi-v1-0-18b1e20b396e@oldschoolsolutions.biz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Val Packett <val@packett.cool>, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1766252834; l=3182;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=G6F6G3AffDaqVvF/PzUgapReH3Uv+q5DJWksfE18o8U=;
- b=2qSiY6qbhNn9vDJLCu36cyhlYfB41DU45Lq9nZfDS0i2IoiFrnuKgYqhWEdg61nY2tPkfaWG8
- im/8Yb8+UDiAIky8PoWdVHFvezMZUVa4ifWaPaQFmI8w+2ei/SRWhS/
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On Friday, December 19, 2025 8:52:51 AM CST Krzysztof Kozlowski wrote:
+> On 19/12/2025 05:34, Alexandru Gagniuc wrote:
+> > Convert the QCS404 and IPQ WCSS Peripheral Image Loader bindings to DT
+> > schema. The text bindngs incorrectly implied that IPQ8074 needs only
+> > one qcom,smem-states entry. This is only true for QCS404. IPQ8074
+> > requires both "stop" and "shutdown".
+> > 
+> > The example is to be added in a subsequent commit that adds the
+> > IPQ9574 binding.
+> > 
+> > Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> 
+> > I used my name as a placeholder for the "maintainer" field. Krzysztof
+> > mentioned to get the "SOC maintainer" using get_maintainer. I don't
+> > know how to do that, and I don't see anyone listed for QCS404,
+> > IPQ8074, or IPQ9574. The bindings apply to any of those SOCs.
+> 
+> the soc DTSI file 
 
-Add TLMM 119 for hdmi bridge enable. AeoB has this gpio.
-In general this is the same setup as on the T14s. Since its using simple-bridge
-and also is Lenovo, we also use the same realtek,rtd2171 compatible.
-The real chip identity is not known yet. The bridge is wired with un-swapped
-lanes, though.
+Thank you Krzysztof! That's exactly what I needed to know
 
-As for gpio119 being used twice: It doesn't work if you don't, so it may be a case
-of TLMM multiplexing hpd for both ports.
+Alex
 
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
----
- .../boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts | 88 ++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-index b505a4cbb4350a962bbf779ec788265c7583bf20..80172f3059a42c8656eb682682495194015d3bbc 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-@@ -78,6 +78,47 @@ camera {
- 		vdd-supply = <&vreg_cam_5p0>;
- 	};
- 
-+	hdmi-bridge {
-+		compatible = "realtek,rtd2171";
-+
-+		enable-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&hdmi_hpd_default>;
-+		pinctrl-names = "default";
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				hdmi_bridge_dp_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out_dp>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				hdmi_bridge_tmds_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+
-+	hdmi-connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&hdmi_bridge_tmds_out>;
-+			};
-+		};
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -1038,6 +1079,14 @@ &mdss_dp1_out {
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
- };
- 
-+&mdss_dp2 {
-+	status = "okay";
-+};
-+
-+&mdss_dp2_out {
-+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+};
-+
- &mdss_dp3 {
- 	/delete-property/ #sound-dai-cells;
- 
-@@ -1327,6 +1376,19 @@ hall_int_n_default: hall-int-n-state {
- 		bias-disable;
- 	};
- 
-+	hdmi_bridge_en: hdmi-bridge-en-state {
-+		pins = "gpio119";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	hdmi_hpd_default: hdmi-hpd-default-state {
-+		pins = "gpio126";
-+		function = "usb2_dp";
-+		bias-disable;
-+	};
-+
- 	kybd_default: kybd-default-state {
- 		pins = "gpio67";
- 		function = "gpio";
-@@ -1585,6 +1647,32 @@ &usb_1_ss2_hsphy {
- 	status = "okay";
- };
- 
-+&usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	/delete-property/ mode-switch;
-+	/delete-property/ orientation-switch;
-+
-+	status = "okay";
-+
-+	ports {
-+		port@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			/delete-node/ endpoint;
-+
-+			usb_1_ss2_qmpphy_out_dp: endpoint@0 {
-+				reg = <0>;
-+
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&hdmi_bridge_dp_in>;
-+			};
-+		};
-+	};
-+};
-+
- &usb_2 {
- 	status = "okay";
- };
-
--- 
-2.51.0
 
 
 
