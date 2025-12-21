@@ -1,112 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-86068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82251CD4302
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 17:46:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09DF3CD446B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 20:00:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2C1083000095
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 16:46:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 352223006638
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 19:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 755272E40E;
-	Sun, 21 Dec 2025 16:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4058919755B;
+	Sun, 21 Dec 2025 19:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S71b+Slh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAjiaKal"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C2717C69;
-	Sun, 21 Dec 2025 16:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9421531C8;
+	Sun, 21 Dec 2025 19:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766335562; cv=none; b=Z9utrSrsLhfVB8FJmSFwOm4VmczHa2ghKXzHDS2lb573jnbswv5ONbMSd1504RFbckWy2UErkcQA2rHxE8htIA/fQjUD7r/Otmfrws6Hkst+g937RLClfCZLacb6S4CJ66vn+EJDu5qLRpIspZIWT9FWujjxoQwfQZAulccK75Y=
+	t=1766343627; cv=none; b=n2Zid2vx6rQrKqvSCJOuK7DymYVWKMZhX5DjhGANTjssXY4xL1VLGtXroUsLGE25GXrDDX1IXJUXxni3DnSC8K6J4a0VH6mViOf/kH5MRMmTV1BQNoN8tlSDla/0dWYR7E6NPDxxGYr/ICdFGiXlvfwOlP9TJaAEaBef6lWzYnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766335562; c=relaxed/simple;
-	bh=r9/xkDyHyyOz99bcJt0an5ynSeQuJ69gRxf1lMwnZNU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k0goclT9pqQnRV0l/Hk3ccB2v+Lbv9jWZ6wVLd59zlJCgHaxlwyvmN6Nn9VtT76cBdf7iiJYE7hATrW7UU720xNDmRJ1BTxheyI1AhMcn+bXmi6rE/tHYKMCCMLvyg4VpVLNWFD0n2R7vZhIKyWgzetgAU8Mj+qY9TZmv8Mkqjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S71b+Slh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F33C4CEFB;
-	Sun, 21 Dec 2025 16:46:01 +0000 (UTC)
+	s=arc-20240116; t=1766343627; c=relaxed/simple;
+	bh=gISvZ7uiRw2DVeZyAbf8mU5/eO1t0LE5VqvXtGRHxNY=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=u+zvfETmKtuCIvI+JZhde6xgZxJxygvWNp0D9O5vFXH3jVtq6leBG2d/1B4R5ToQEk4U3xRhBo8mjUgo63mjfLnX6YpXzQnjMszZdpG7gWv5PAoer5Q8hp7c/10ma5PKjqTtNw817RKRLS++S8O3UR5J1AnhI6SX+CrekLn53TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAjiaKal; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F811C4CEFB;
+	Sun, 21 Dec 2025 19:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766335561;
-	bh=r9/xkDyHyyOz99bcJt0an5ynSeQuJ69gRxf1lMwnZNU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=S71b+Slhl+wIyb59StFZDmcT5Is8Xv4hMaYsMMhTHNhbt6yMlTIsZntfnO1XrJwrH
-	 JcSgfLUvl3a+IMdgzPHDm2jmFxb0U/bgI+L4L2BgF6t9v9IFrTnDbOfwUUeOFkjAsi
-	 G7kyilvgKEvXJvpdbMe3ppVfcV+WfDJTD0KxrcwiUfxSec/mqmjxLl7cRH/G7XWsw4
-	 lact9GPRnLY92bKohG4WW1sD/qAFnQslY23Bo3RQnz1kMa8h87QcZdLJhFvQs/es70
-	 9HAuM7YiaSBEi3Np8D6m7p6Y9eXa9tEKLNgpqeGT8sQv/wQvRtmmWIy74KpWjZFIvu
-	 ThORkDpNPkaMA==
-Received: from johan by xi.lan with local (Exim 4.98.2)
-	(envelope-from <johan@kernel.org>)
-	id 1vXMZJ-000000005Cj-1auL;
-	Sun, 21 Dec 2025 17:46:05 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] drm/msm/a6xx: fix bogus hwcg register updates
-Date: Sun, 21 Dec 2025 17:45:52 +0100
-Message-ID: <20251221164552.19990-1-johan@kernel.org>
-X-Mailer: git-send-email 2.51.2
+	s=k20201202; t=1766343626;
+	bh=gISvZ7uiRw2DVeZyAbf8mU5/eO1t0LE5VqvXtGRHxNY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=HAjiaKalwmMZ81LniL2x0dAGc2dJJzFJ0TwDrYI+C8vQUmcZIMhH9jexZuXX5c0vh
+	 zwCNzIgHBV5ls9zC6qvNIWRAKXYWPXUC+IJ0cVuMopxwWL6DGyVjUkcgRAyzwsisFn
+	 SRA2fLrD3Opd6rmEge0GmvWLAoroh6KDES6hknHTiLXPJY8LGPp4xkCeQxM57LWEvF
+	 nh0QfbqjNUxxmilMu+mphOeWpELcszEZHP1/4UgUY+RxzUK266Th9vntALhxoSe7dw
+	 qTtz4OjEesXBdMKpwxAxBvu9rRDv+TWCo7G8y6eec84sn/piCtv5QzeVPn/ByX2EUv
+	 VfHqTuEArmeRQ==
+Date: Sun, 21 Dec 2025 19:00:10 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
+ dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+ daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+ thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+ subbaraman.narayanamurthy@oss.qualcomm.com, david.collins@oss.qualcomm.com,
+ anjelique.melendez@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
+ rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ cros-qcom-dts-watchers@chromium.org, quic_kotarake@quicinc.com,
+ neil.armstrong@linaro.org, stephan.gerhold@linaro.org
+Subject: Re: [PATCH V8 3/4] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+Message-ID: <20251221190010.2d111e0e@jic23-huawei>
+In-Reply-To: <6afcb26f-6f6a-41ef-ac45-976e5e2f17ae@oss.qualcomm.com>
+References: <20251127134036.209905-1-jishnu.prakash@oss.qualcomm.com>
+	<20251127134036.209905-4-jishnu.prakash@oss.qualcomm.com>
+	<20251207165349.72f80659@jic23-huawei>
+	<6afcb26f-6f6a-41ef-ac45-976e5e2f17ae@oss.qualcomm.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-The hw clock gating register sequence consists of register value pairs
-that are written to the GPU during initialisation.
+On Fri, 19 Dec 2025 18:45:32 +0530
+Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 
-The a690 hwcg sequence has two GMU registers in it that used to amount
-to random writes in the GPU mapping, but since commit 188db3d7fe66
-("drm/msm/a6xx: Rebase GMU register offsets") they trigger a fault as
-the updated offsets now lie outside the mapping. This in turn breaks
-boot of machines like the Lenovo ThinkPad X13s.
+> Hi Jonathan,
+> 
+> On 12/7/2025 10:23 PM, Jonathan Cameron wrote:
+> > On Thu, 27 Nov 2025 19:10:35 +0530
+> > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+> >   
+> >> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
+> >> with all SW communication to ADC going through PMK8550 which
+> >> communicates with other PMICs through PBS.
+> >>
+> >> One major difference is that the register interface used here is that
+> >> of an SDAM (Shared Direct Access Memory) peripheral present on PMK8550.
+> >> There may be more than one SDAM used for ADC5 Gen3 and each has eight
+> >> channels, which may be used for either immediate reads (same functionality
+> >> as previous PMIC5 and PMIC5 Gen2 ADC peripherals) or recurring measurements
+> >> (same as ADC_TM functionality).
+> >>
+> >> By convention, we reserve the first channel of the first SDAM for all
+> >> immediate reads and use the remaining channels across all SDAMs for
+> >> ADC_TM monitoring functionality.
+> >>
+> >> Add support for PMIC5 Gen3 ADC driver for immediate read functionality.
+> >> ADC_TM is implemented as an auxiliary thermal driver under this ADC
+> >> driver.
+> >>
+> >> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>  
+> > Hi Jishnu
+> > 
+> > Biggest thing I noticed on a fresh review is that you include
+> > very few headers.  This only compiles (I think) because of lots
+> > of deeply nested includes.  General principle in kernel code is
+> > to follow IWYU approach with a few exceptions.  That makes code
+> > much less prone to changes deep in the header hierarchy.
+> > 
+> > You can even use the tooling that exists for clang to give you suggestions
+> > though search around for config files (I posted one a long time back)
+> > that reduce the noise somewhat.
+> > 
+> > Jonathan
+> > 
+> >   
+> >> diff --git a/drivers/iio/adc/qcom-adc5-gen3-common.c b/drivers/iio/adc/qcom-adc5-gen3-common.c
+> >> new file mode 100644
+> >> index 000000000000..46bb09424f22
+> >> --- /dev/null
+> >> +++ b/drivers/iio/adc/qcom-adc5-gen3-common.c
+> >> @@ -0,0 +1,107 @@
+> >> +// SPDX-License-Identifier: GPL-2.0-only
+> >> +/*
+> >> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> >> + *
+> >> + * Code shared between the main and auxiliary Qualcomm PMIC voltage ADCs
+> >> + * of type ADC5 Gen3.
+> >> + */
+> >> +
+> >> +#include <linux/bitfield.h>
+> >> +#include <linux/delay.h>
+> >> +#include <linux/iio/adc/qcom-adc5-gen3-common.h>
+> >> +#include <linux/regmap.h>  
+> > This seems like very light set of includes.
+> > If nothing else should be seeing linux/types.h I think
+> > 
+> > In general try to follow include what you use principles (loosely as some
+> > conventions exit for not including particular headers). 
+> >   
+> 
+> I have a question about this - I'm including some header files in my
+> newly added common header file too (include/linux/iio/adc/qcom-adc5-gen3-common.h).
+> Do I need to repeat those in the driver files where this header is already
+> included?
 
-Note that the updates of these GMU registers is already taken care of
-properly since commit 40c297eb245b ("drm/msm/a6xx: Set GMU CGC
-properties on a6xx too"), but for some reason these two entries were
-left in the table.
+Yes. If things defined in those headers are used directly in this
+c code. 
 
-Fixes: 5e7665b5e484 ("drm/msm/adreno: Add Adreno A690 support")
-Cc: stable@vger.kernel.org	# 6.5
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 --
- 1 file changed, 2 deletions(-)
+Just because they are in the header today, doesn't mean they will be 
+after some future change and we shouldn't make that sort of future
+change harder by requiring people look at all the files that include your
+header with those includes.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 29107b362346..4c2f739ee9b7 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -501,8 +501,6 @@ static const struct adreno_reglist a690_hwcg[] = {
- 	{REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
- 	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
- 	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_DELAY_CNTL, 0x10111},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_HYST_CNTL, 0x5555},
- 	{}
- };
- 
--- 
-2.51.2
+It's also fairly common for stuff to be needed in the header that isn't needed
+directly in the c file (maybe cause it's only needed for a macro). In those
+cases no need to include in the c file.
+
+Jonathan
 
 
