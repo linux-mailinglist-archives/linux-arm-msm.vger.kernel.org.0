@@ -1,123 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-86056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D290ECD36CD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 21:44:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9C10CD39D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 03:49:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 43A973002509
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Dec 2025 20:44:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 44CD1300D407
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Dec 2025 02:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7AF3310627;
-	Sat, 20 Dec 2025 20:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42A6E168BD;
+	Sun, 21 Dec 2025 02:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="cWjngpa4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Gi1Odviy";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ekn4XFSj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E61E2F3609;
-	Sat, 20 Dec 2025 20:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072CCA937
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 02:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766263492; cv=none; b=QQ9/rIqAnWsHOJxe6rDuTFhf9Q7LfwaqdIQpo39HFwtHyLp1eUx4hiX/XhVHqsPSy7Ar7u4TwfOWzDURWaRrJ8DbpwYt2kud4Un9sog3KT+0xfSlh5szva3VbtugckG/cB6MHtfBB9hmjpbaWCYxv7N4w8s94myG2d6ZZu2saXc=
+	t=1766285350; cv=none; b=cnvLvnrAJW5bmGtK34l7HVLJ5S699zki/1oWxN92d5DxL/ebZOCPFnKjx3bqZ6RlnNpgOH+taAGvOwx/GumpaHl35fgwbMoSFuYyMA/3UthMPonW+RAkmDBjOmdBnTotYQByyafBeUwQcZt1dSAjRrH1HECkZLA0NPS/K8a7FUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766263492; c=relaxed/simple;
-	bh=Lzk1Ok3BTaaFHpZupHeCiDZY8/Dy+OZE5zgQHvrutgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pa603WO5x5UVIAnVF4Y0TEUmZXZD2Ig8khu3jS5tccUjLkOHLdzd6HT9eO6IkYzoczCGELycNCleX/YiauJyvx4HdZ+jZbP14GKBc3WEYOFR/395F032pnjTp8wOX00LhQfUYac0xcPm37IHA4eyyq2CfeMjwvt+am1UMSn29gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=cWjngpa4; arc=none smtp.client-ip=212.227.17.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	s=arc-20240116; t=1766285350; c=relaxed/simple;
+	bh=4hgXj8Pmpa+ynKdMCDBlN0z2koi/im5+/JqiifRdOPk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NsY9RSzTHt57AruxxOqiLleMIJyBbkqEVS6ok5qW/mO0DJT4CkH0TweEyVejlmiXr4tqa/DLffFoHdNEWPSnFXHzbjWfiASun7Jboto1d7Gh3QdyvYT9aT5eFX8ws27jXtT40xkBMSXT0yvQn59n90LTrcaS2nt6SiJvQaTzO1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Gi1Odviy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ekn4XFSj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BL2RDuN1398487
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 02:49:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	baN69HALTcc4BrWKlkYV1bDru2Yk1sycQmONrHJvY1Q=; b=Gi1Odviyqf2CJqJv
+	n5FiuAJWxiTlbXD9vniZRC4zUhrjHWtyRKJ/Ysn+3mF3fQZO4VOKaS6LiFXb1uG0
+	1t8y57jEBccmy6Kl1xLNoic23OA7rucPSuZRV0xVHn/3emCbTD8fiCs7zoAwA7+j
+	BP30n8B0IPU0UXdk6EnXFPo9IY7Ifw8uJmp2zPSWqDUsBncA6v4a7TW67ZwR2DPi
+	T4kIiBUradIdo0ME7fAVOu2e+3AmPFjXkTLONlCARsHs1diz0oSuSGK+I5N2V34P
+	qNo2GTbHFtJuhRYJ9vN9DfydpHN2Jg8ER2Xu9plv+6vqB2glrTByFF0CeeGZAK/O
+	Vj1rtw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mru1pf2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 02:49:07 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ed69f9ce96so95061441cf.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Dec 2025 18:49:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1766263488; x=1766868288;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=koDcGig5xLflj819KhwLIEcNAMdfnUESnwP9JoYSg2Y=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=cWjngpa4nmPB7An7QhDAU8etLeTUKqsUX/t4K+xita2RbQ0iaTwr2wzjvQGTcudI
-	 rMCBSJgtkU63NZ5GQK/bZ0c4TMFl6ao2g/21t3e+h+XfS9o1IaksdqrgvR+ea9pgi
-	 hII4DSRO5YSp+xISE8JlNa2fSIgEMSt45nArv2qekqvP5B/anSrkt9FosWFS5tLoW
-	 v6pElfDY3hgNkqsybgiG1R/uAL57NCG6SGFz+JyP0XT/m3cSf6UB6RroTPJHGB3H+
-	 +RwnGYpDW3E6R6fSom9jt9s4qUVfYYx4clKNsGlIYssOcb7TA/gXS0XpsxG/KJ2Yt
-	 +OLvlP6D/KBtHxzLnA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.174] ([91.64.235.193]) by mrelayeu.kundenserver.de
- (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1M6EOc-1vdgAw0aIi-0056At; Sat, 20 Dec 2025 21:18:38 +0100
-Message-ID: <da036d7f-e509-483a-98d2-f511deda8d5e@oldschoolsolutions.biz>
-Date: Sat, 20 Dec 2025 21:18:36 +0100
+        d=oss.qualcomm.com; s=google; t=1766285346; x=1766890146; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=baN69HALTcc4BrWKlkYV1bDru2Yk1sycQmONrHJvY1Q=;
+        b=ekn4XFSjfCeqYwJKLtbPDZh7/FALQKA0sCogU6FDo/o7eUJO0s5oxWBVtMQzzlSoRG
+         q5rL2krLMYt732QF8v9wWChQfc97Xy9dIFmfF0Js6Cmz26KMzgFY6x0K/hhW8kvinY2Q
+         CeEdyj5G9mLhTYmZJ+cothTvMOPAd1ocxXp07nTTasf7Zgm7EJbIFn3mFp/jf+W2DkBQ
+         ZebJLCVsWfadOJhImIkuOGsmv2DLsWk3PWt8yyew05FhIQ9r2Kfp+4emlfB+zP8jQlNp
+         cEyzFrmPDLE1HYzkGoPiipM0IFb5tnbxyZyX8I5s/epVmXmEu/TPpb+PiK7MfU+zzPka
+         XXRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766285346; x=1766890146;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=baN69HALTcc4BrWKlkYV1bDru2Yk1sycQmONrHJvY1Q=;
+        b=B/0bSnaoE9mOcPZcFLuBqDfmSViftyss6hVABFZIZOY8hp+VCSEimBgroq4+805DOs
+         WMV0I1FTevhuQraWgdZL4ZOpJoS5zMSxWVt33L8euQ4geXJ0waX8OkYNU2IGeoG//fms
+         BWfpGL3mEYQ8HsLIobRXFEAgwxM0Qlaye5tVRCv6bEHTVBfsi1YvfU/5GnoR67ZnGnbx
+         QONfZA6gkCNyqdfX0scimys+xmWcwdW4TER9JrFyL0ILm9rewJp3n5ekNgXiafSfp0gA
+         4GKtEnM6zsVFRe/crGognHKa04VgDMHWnZvfRhTpL+GpOfcK0+NnP2SlGci3bROwZtzj
+         M/Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCWR2/RyZnsH+idHrw4W3/DrJVahfMnuK74Xn/3lcW9/0cp+xZQ+bO/pjPV4kchWLs8//99i6GPrbC/bqzhd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCT+462IIYIYjuh5eM+eG9DXomJN2mMDtWVtPZvi9QiFpB7Mr6
+	XAcAGypMi8Gz6FEenhDjJGc2WXj0JUn14MPo23hCwRRgNh6biWKWTDe8kc5VSyZeGa6WAI3RA5k
+	Yy4TdWwCOtdg6+IdTUB6cqLy17ZgTVw3qi4uUoNb0wHfYvttcqfwRZ0kTQUWOfATaYaPs
+X-Gm-Gg: AY/fxX6XVmiKLL37KVpKy+EdTF14S+UC01uQefofI1cphkkvP1Gld9iF/TFGFOSivxJ
+	aMCgCcuy+LmhLFtM5fTS64f+eAC4gTpbiVC9KbwBDe1TGZ+eBOusHNf8bfnbTPpO3nUfrmTyzim
+	0TFD5LnY0pkTlSkIeu5WIZTNxtlRaUsVL7nOjxXEta8LopIMVj4HBz4W/ckLqNNhoa3G5DhAzuR
+	Mi8Ojm0KUV+YgurN4F3SyncnRzqit8ctZSp+F+yzlmnF8lPhQsoXXleR+1z3QlDmTs82tE2LsCy
+	5cjdo4qZHgw1kKPJVurvf0Egem66dXsWfBT/zWmTkd50IuQz06/smJddcbHnwR7yGE6K0QLz2sj
+	eoUwcub/KOgresSp1wRfUJIMxNhMHt8GGNJ1eBXvTAfPvSC5UQrBvYOhjC7Wq9fnN9tFEv55FEm
+	vg32uBosL/yhocAl6iFx5sPMU=
+X-Received: by 2002:a05:622a:1b8f:b0:4f1:def3:cc00 with SMTP id d75a77b69052e-4f4abdcbefdmr94487471cf.82.1766285346166;
+        Sat, 20 Dec 2025 18:49:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEondZuaShLCzXeRchLYsivILWzK0E2UvSHh5kpVrkZ16zOv6AX3t4sJBWxPrrlqjRUWYsJug==
+X-Received: by 2002:a05:622a:1b8f:b0:4f1:def3:cc00 with SMTP id d75a77b69052e-4f4abdcbefdmr94487241cf.82.1766285345646;
+        Sat, 20 Dec 2025 18:49:05 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185d5eb2sm1928148e87.1.2025.12.20.18.49.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Dec 2025 18:49:04 -0800 (PST)
+Date: Sun, 21 Dec 2025 04:49:01 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Val Packett <val@packett.cool>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1p42100-lenovo-thinkbook-16: add
+ hdmi bridge with enable pin
+Message-ID: <x2zwsjk4vv73a4i4pj2aphvajtjgkw6mkzs5brg6adlm4gnxpu@r7pbypzvcsi6>
+References: <20251220-tb16-hdmi-v1-0-18b1e20b396e@oldschoolsolutions.biz>
+ <20251220-tb16-hdmi-v1-2-18b1e20b396e@oldschoolsolutions.biz>
+ <72bq7sblm7iprtxg6oo65mit7vsheux2xatqlk3csf6sp7ersg@77p5hloqf555>
+ <8b562354-1c6f-4b13-be55-b23a6a93d9be@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1p42100-lenovo-thinkbook-16: force
- usb2-only mode on usb_1_ss2_dwc3
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Val Packett <val@packett.cool>
-References: <20251220-tb16-hdmi-v1-0-18b1e20b396e@oldschoolsolutions.biz>
- <20251220-tb16-hdmi-v1-1-18b1e20b396e@oldschoolsolutions.biz>
- <3zazejrynu6cl4ah36virtjl2jthlrjw4h3inkp4zjaovbtaif@2dnywhywqyzb>
-Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <3zazejrynu6cl4ah36virtjl2jthlrjw4h3inkp4zjaovbtaif@2dnywhywqyzb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:2ykD2jDZXKqDQv+3I+TPm4iVpzDLp/cH2G7HMAHN3Ru5xtQ3Dvu
- Cur/HqemO4h/hymHH+3TQvnkn1dlQf1eIOER2seb/zo9rS7Y4+/4tZ5hq+BSbymKgfsdmFV
- 8YHYKSLAdEIs53IlpbaKxVK2gRMMxf9F4CFUHyd38MwCC3E8q+xl42p0IyEkjllAxbqwoXd
- Ak4MZyqhx83P63kJb9ncw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:x7W2dwohhqI=;OumdA1WVPairt3xgNyuFA+hvSlF
- tquNqtaDA2/fJH2dVKzJNdOjNNc6ROD7T1bm5xrRJki89a18KZfPf1GLEtMW4P7jHnT44Ne/x
- mGvh7UiKDPoSrhXQADh1CYJgDGO1iJfpJaje/5MORK5Nz3W1G6LEEnYLI4fS3MWuIda9szC70
- Tx5I2+Wqzt+m228aYH0PG9yfZ996B5Jv5zMnFQVlwCQwlOODFGysVs1uPI7RhGGtYEeQRkSk7
- SNO8YKpuXhHwIkcXEV/PSNnqNjY9wFMtGtWuehWqO6yYd6/dRvZAJs7TjMJRE46ub4Fm/+he0
- xMAC9E4SdXcQyBkqzKNzpixUuzyNdeHgA+ddu3hGOrmQGDFsdlSdX/zXn9bVRK8XmGYNGo6eb
- 6T1x0M5b3yEYuJd3h3V6d5aGpCq4BeiXH1KHEqtionqbivr6oTo+nwS6A8ReL2QHb2U4fAUX3
- dAGI3KyVzNwlJJ7TyIUPuElrtr26FugRmITGrzt4FIawYXJqnu3YzSsQrVEGOkVc8L7hYsv89
- B54Mw5oAQYP4GyoFYYKJhvrzNEoCz62s6VkkhhbemIzffM6S53CDZUjRD/Wl/FOMcLphcdCzY
- vM30YUna4KcD3uhZvhwXpP1AVybL79VkAqCKulsOFdE5D1M63UFM68qi3nAopFX+aFzGBrYvN
- LX7u3MUOZaLHXFAgTkVxLJ5Z7TwTlB/zIz1Sj+L/WI6g8czpRR4XnWkxf4k3bVmZVktYQNCpp
- ptJQCf8wFI46QvYnkfN2eN1XkVYUSFgQG/gEckbkDuGuVItPy7Z+GvC0mdmfReS+kI04LP7/l
- qbFaxizwzhaT9ln1pTmhpY2XYFoYm1skDoj2yAMARXvn/I9TWvJp34db3u+6srdUTCzsm4COS
- gBNGAA8Z/uYDY/UFTscY1nrzE7GNMDONbui6NWlxgXVKzrDpY3RZoMjDsrPVUB+Ow4t7ISdHl
- v+rYa7Bl/OhuKSMTzRhyYepp1kVGyNfsUAs2YKWYWWzo3JjsE8vQNEyaTcmaNI0U2GETJhfhV
- zysJMRTL7ptokVoOjcLy9cRgb21hLOactKF8KoIYEJ2CZkuhsXj9d8jHrkjXN/oQsdRmWnvOE
- c0l1ukn6LbeSUhSZ/FFPyOiKrhloDMIJruAuQjqJQXor3/S9bUdKr6FQWy0n0uR2VzDoo9gWy
- fcdkF7Uv4y5zatJX5qyPVmqrIwjHqm752h5Fflilo9Uvy1fO8Fu2iY++sZZzrKTm1VQanAZAS
- Hf1xcloKK2fzzJg/Lrym+SK2a1djHT1t4bNchd3KuOE+umkKG57D+a+aemmkMGtVrOIJF29/p
- sQkm/w88KnnkUsk4d/ez8FMNcceCBIwq+QTcUInt0kNAs5pnV9Bmu7duoQDjzL5cIN45+BNuv
- 2u0C3Ny1ZMApIVmjWs2q1dCUPMo/NOwCUpL7EnJpzYvMJHDcn60xZVRArFLKZVaCaqv5oQPFq
- vKlOGaKW/BBALgqjCojxNgcxHeluoPjRDr2sewzX5YgNe3LpWIs65vuzu07+8pHEB8bOkLTM2
- TQxi63+rl9ptTpxfIUDbSX4RVnUtQuJpoAm29rSbRTfPv3FKH+taxCm3Iu7qm2WYp4IxC0eUl
- UJ0J3tvTJXqsLEIVgJsmwiJ3YiGBWvnZyzQWKgiOMIax6WXTSRBvdioRoNOSTIiox+z0u807B
- hmuwI42DdJ7zNMhJFqBK4HWltqp5/+olt83v9auGXoi/AGifa7fdX2bWElPZACpg5mYZhPtw7
- SAE+ScPkMr38SfASJDKLXgqjO1kTKhYiZnHpJCBMRTA8AbHQVA1H9BzkCMIqHSKJyXVzM3QXT
- mtO7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8b562354-1c6f-4b13-be55-b23a6a93d9be@oldschoolsolutions.biz>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIxMDAyMyBTYWx0ZWRfX1psPFjsvgHdg
+ k0Gre2aA8V5GmXVMnQ8JOqA7TxkXcFk9ukYcFaGNbEurjkQNakjL++YSHTjEBkQMyuBWL0AN5ze
+ 9UV/C9Fwld2KkrP3lzFFWn3LuCFP1jnBXqj8/c1cL4TYsYQl7qXW8INIpK+riKl04KfrJNLi4zh
+ /1NP5oxS2ANf0Ps0kKV0HVCVWaYiXV9P/zIrd4OO8V2nl1N1cr9TcE1q4ewekMpSUW0KOWJFyod
+ UiOFa/tn6x7ADWlEyGowoz+WE7GiYCipSqhQ98z0iijjpvtU8qEQR/lqZAa1Y46jBOuyTEV8xo8
+ KRimijkr75wvvX/jxdCP9AFrUPn07igtNAyp12ocw5Hg47MNsSYcEEMeRqYjgceO14De3yQ780M
+ 1hJXDiQl5T/7YLtwmiA110nfiAoV2dNbz7gc4w9Hq4ymEqAwXj9jZ+2Uhs78uPBMzOF7iDJW1k1
+ qiXeftNjmjaKg6RCXow==
+X-Authority-Analysis: v=2.4 cv=VMnQXtPX c=1 sm=1 tr=0 ts=69476023 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=gxl3bz0cAAAA:8 a=NDGBFv2eB_F-JEntco0A:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=dawVfQjAaf238kedN5IG:22 a=kiRiLd-pWN9FGgpmzFdl:22
+X-Proofpoint-ORIG-GUID: LXXiSpkCl6KuCjkO_5PE99q7kVEPbsKE
+X-Proofpoint-GUID: LXXiSpkCl6KuCjkO_5PE99q7kVEPbsKE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-21_01,2025-12-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
+ spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512210023
 
-On 20.12.25 19:54, Dmitry Baryshkov wrote:
-> On Sat, Dec 20, 2025 at 06:47:09PM +0100, Jens Glathe via B4 Relay wrote:
->> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>
->> +
->> +	/delete-property/ ports;
-> Just delete port@1 or only &usb_1_ss2_dwc3_ss endpoint.
+On Sat, Dec 20, 2025 at 09:17:16PM +0100, Jens Glathe wrote:
+> On 20.12.25 19:52, Dmitry Baryshkov wrote:
+> > On Sat, Dec 20, 2025 at 06:47:10PM +0100, Jens Glathe via B4 Relay wrote:
+> > > From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> > > 
+> > > Add TLMM 119 for hdmi bridge enable. AeoB has this gpio.
+> > Whaat is AeoB? I don't see the GPIO being used in other place.
+> 
+> AeoB is a resource format used by the QCom Windows drivers to add /
+> overwrite definitions coming from the ACPI tables. [1] It had the info that
+> was not to be found in the DSDT. Actually, x1e80100.dtsi has the
+> edp0_hpd_default pinctrl which is required for the display to work with the
+> function edp_hot. I verified this, you need both. I can use that definition
+> in this patchset, too, but its not for HDMI.
+> 
+> [1]: https://github.com/alexVinarskis/qcom-aeob-dumps/tree/master/lenovo-thinkbook-16-g7-qoy
+> 
+> > > In general this is the same setup as on the T14s. Since its using simple-bridge
+> > > and also is Lenovo, we also use the same realtek,rtd2171 compatible.
+> > > The real chip identity is not known yet. The bridge is wired with un-swapped
+> > > lanes, though.
+> > Is the chip marked anyhow?
+> I don't know. Haven't looked inside.
 
-Good catch, will do in v2.
+Photos / scans of the mainboard?
 
-[...]
+> > > As for gpio119 being used twice: It doesn't work if you don't, so it may be a case
+> > > of TLMM multiplexing hpd for both ports.
+> > What is the relationship between enable and HPD?
+> 
+> Yeah, good question. Actually HDMI hpd is wired to gpio126, and works
+> without the enable pin. But no link training succeeds, no display coming up.
+> With enable set on probe() this works. If you have the lane order right. The
+> HDMI socket  is "above" the type-c ports on the TB16, compared to the T14s
+> where it is "below" the type-c ports, so swapped lanes sounds reasonable.
 
+Okay, I might be misunderstanding something. What do you mean here by
+"gpio119 being used twice"?
 
+> 
+> [...]
+> 
+
+-- 
+With best wishes
+Dmitry
 
