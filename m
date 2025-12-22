@@ -1,100 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-86114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D76ACD4D31
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:51:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44FA4CD4D46
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:59:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 80D6E3008FB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:51:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D21B4300763E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:58:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7137B2417C2;
-	Mon, 22 Dec 2025 06:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F678303A35;
+	Mon, 22 Dec 2025 06:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RkYhFwd7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aDtX+z5E"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JOKWRQT/";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cgwdBUjB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93532222BF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:51:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FEF2F851
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766386286; cv=none; b=s/nh7YC5s05Sk89Q8CquNWJFQmCNyUKUBwl1V+FP8O5IfOv5aKn9rhJwiFZiln+VGYe7AE1OfdCobZw1fVbZkKmV1c7UezEZXVytQXpRZYYmE+fgIN/qk7vlTa2kiPlLuK3H9Te/TWx6B7JivdLmvOOPnyxNniwmXE2udqv/6YQ=
+	t=1766386738; cv=none; b=uwsFEaMprZQOxcnBlI51vPG6YtQoPsRiFyVmnPjLygsAjdB6POKxVZ3hl6e2Qunr6uq3QrRSqIbAPTRifdAiVlsSHeM+btiJSnDrNkPz+Nle2LoWAtXQHHZiX0cyVzyD1GtmhjMbRPS2oRqZuvBxCFNeRu0X0mc1pg4KtKcVeYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766386286; c=relaxed/simple;
-	bh=p7ApNdtHB2Xso3s8fjoNKww0TbV+dZf1r4pQxjwJks0=;
+	s=arc-20240116; t=1766386738; c=relaxed/simple;
+	bh=BC2DATRVLjyGGrI+/IOZpGrlevdSZVA+kZM7aOv6gs8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f/Uk/zU8B5CRndvZIdGMqic/EMuc62FRdySleQ+WAbBkwGw94WCU0W35D/t8J0UEQD+rmZSNIefxOvwg1xGF5vSoeC6CPewt3lqQLNe9TyhIauKNJBGM2Kiox2SmXD9DSozKv3Fv60R8Sn3ut+IXT9kEmM0EUh4gitO4dylzjRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RkYhFwd7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aDtX+z5E; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=KitammC4t50PKMxWZwqYl0ipoMliYXanaYDpcciTczvBffGiZrH6b5dPUaku5MoGRC74jTU6FuAjWu7gZTXJApd1q9ydq6hWK3Dt1dc9WJgoyzYxFqwSKwSWw7kNzn84Yx/04EggX83UlIAdc5x+Nk8ECvkyV4kDsaiy+xObrik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JOKWRQT/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cgwdBUjB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BLMQjbw024605
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:51:23 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BLMgrBg3732860
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:58:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	G5IBEk5VGJnkWt3hXkCW0xh6EACRykLwKHgEX/vbT48=; b=RkYhFwd7Ko48pB+t
-	omqAlkll0OiNLIz6/Xi1RC3CpKuyEV2PW8O8v8i3l1LRM744Pr56TDhxdOfkB7H5
-	zFitxrgbkMfov8BJdHPibjgHLEp8BCLuw/rVncmuUBr4mjr4YZ6Oz2iDSf1LMRZn
-	WvgjGH7ceZXKZ8jC6xjJ6rUulfkvu1ronyWOBsxe+rsJ8RCUQ7FxEg9zcpbAGHNS
-	nnHRqauViEU1gXx7vVV9h7sXuTmrufYLcRYScZfjX6yDdthq/lVm6k7rYHJe7u0o
-	LY21VFofOLqw67zFcIsL7Mx1gFeSU46pubYynCdIrTEOq2ke39hsJu1tQAS4GWrs
-	VK4s8Q==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mrabyyg-1
+	SMxuqKVWm3OclsZ+GWtTTlP0TisA0si8nmJC4yO6AdI=; b=JOKWRQT/Rb5Me+Q0
+	IADVjaPsTvHas15qk1e4hTv0HmtQWVt32pwpLO7ZhwLBuQgwxuyXkbeEbOOYHcD7
+	zAfxBttIlnzjdNDMSQXdHLS6/lNEDkqu/z8tlp1FDjqXeZ+ofaE18ADp5EB0/uLV
+	UYFajkuRb6//ncxlhA+sA6SpKy1qbddJoNTHxmLuWh0gPXC2ufaGKZshVw6uNdyz
+	Xsn8Kw8bsE82CT3itnV8H3wmHX8e2PyZzd0Ckra5cwq4dV/8Yl9Dx/IpO+E+n78E
+	Q+x9uJbVlzKXkm6mDWz1E2L3TRkPEN/nICrUS6KJSW/AXfM5B/GO9lXDqjnrFxHD
+	vBpI3w==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mrtc11x-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:51:23 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-29f1f79d6afso52198955ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 22:51:23 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:58:55 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bad1cef9bcso7496370b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 22:58:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766386282; x=1766991082; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766386735; x=1766991535; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=G5IBEk5VGJnkWt3hXkCW0xh6EACRykLwKHgEX/vbT48=;
-        b=aDtX+z5E+j4FpvmNEz1BPDbknMHLaWwOtca9yXpTKcdwtoRY6PQmYbUycJz1dHyog4
-         WkuigaEtTa74K09AEMC38IIgHpr9VkHpmECOuwUk6WDSAI4mDC6R/CKffwPOyqY6Qia8
-         2WnpvkeZQl6LL7TEaqBDVP5tzyjWv1MQxbIUOPV2XYrV3dde3dGdY8UWyKqmP22txQZv
-         o7GS9QvtAY/Q1z1DOQ8neae9vs5xV8udj2wdqa3asliz7SHnB1G+100VOWplgbNE8Z/q
-         oP637Iec7hxDwmoaS6DE0VLzmSMYtIseUAekcik3UsDJWuGhAK8yZwCuXSnKl9PvYTSw
-         SiTQ==
+        bh=SMxuqKVWm3OclsZ+GWtTTlP0TisA0si8nmJC4yO6AdI=;
+        b=cgwdBUjB4aHF1yeGsVlSlK84/IGArPCMnGO/VyR70fxLy2oj8GOe9cCV4nf6u00An1
+         4uRQ838+GIVzOhN8bQZ8VO28wukxmmXrWmh+CuajGvVJIW9F2K9GjQzkEphjKpSqs1xM
+         KowBS9VISP24EIRlJRzYx6j5gCFhRnZjHhSEzaRVMEF+qhcm8KiNb4wbcckefuylbsFb
+         iX+sPUW0zCSU9N9ZzIbuaoG6DYLp/ZSqfqhARq2QPIwx0XiF1EVkKqUb5W7izZdQhQbl
+         DHus3LExisb7TNJf8j6/LF2AcRHQv3c8g+6e79B4DxqLONGOSFtmKUxCwjoGaPEvT6D7
+         qBtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766386282; x=1766991082;
+        d=1e100.net; s=20230601; t=1766386735; x=1766991535;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G5IBEk5VGJnkWt3hXkCW0xh6EACRykLwKHgEX/vbT48=;
-        b=vnie1u8t/f7hn9cN2XMtCXXxXt0hoYq2bk6Wnpt/MQMVEJCulyfeqZTtVShngi8mHP
-         41jyNvB359nuFi5LmbasmoXM49GFWudilxAPou8zRExtMoL1xktsDnhVaBelCMyQJRMe
-         IxdsWYMuLPvq3WkKHyL7MSIFDOeBZpmE74FGVGKD30g+bwlV0l89OvpQ9jey/NRBJR0j
-         qCnjYJZCMZ4OdSocKWRUoN0iX0ojp13xdrNuCL+qevsrNNkX6NsV2ryUqu9xk/tsVUAY
-         VHXkCwK89ZxeuNSeu771XI+CIQ/UPzouBzmbNaFEeYeHIck/tN6DOPhp99SpXm3xyaBb
-         R26g==
-X-Forwarded-Encrypted: i=1; AJvYcCXEcvFnfiZZ1UTaWsGreCevwLP+scfTflaQlAnrJybbljrLgsaQAqS6qr4rwHoD7/bPg0v7NO5bJYmM5T6T@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1wtVVZ8fr8UzA4FYmUSHEVgMUBZjR4NC69PnSTOkyUkFpLYgx
-	bF1wvlxTrotV60I3CA11TdBdxta05M23PuuZONe3LqmFgF9M+W1ZysA0JNI/B2pR8y3USNxHfGo
-	ixjM06IwMIdX1xcUq45xJ57m7+4fTlICWXy80KcQyQjbgtiA4pGuii3gjZOLV4NpI408u
-X-Gm-Gg: AY/fxX7x4Ck+xlrGOOncAQhORKg7LW6qNDhgFaSQM1D1gLjqlyq78bTPjCVOJ4t4y+u
-	297m2dWREhSXqzYRs0oeN4jQ0v0J2kmO/wLVmkKvwm8J7i14jpTbMK7pk94ovaR17slRizlZ2re
-	If204Bne6ZQ8Al1i3mf0tVpunRoxVy0mC8rr6A70+oUZ3IuYEjR/GzycxwL1xi4Y7Y0YYUwUFOO
-	T15TLzeaI0232dnOuERDM6PDZWH0rEcgXqu5XpqBnBnxb9bACjcI0wkwCAmrB29AOo1H8SbhIO/
-	se2E3wQgNjgVq5zK2rqlfddB/s0MwXwC0AzZGRYmSAQHvwYO4+LBJ3d8dwaf2vkHt3L98TWexKx
-	SUyqDMkx98iiv8lPHLDCVA0wNlX/pwF2sWHgIL6M+Ww==
-X-Received: by 2002:a17:902:be0a:b0:2a0:e5da:febf with SMTP id d9443c01a7336-2a2f283de4bmr63910865ad.46.1766386282445;
-        Sun, 21 Dec 2025 22:51:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGTvgv1hHER1oJ5VEZI/LUm+x0Rgz+j+dmzfrj2FJyfQHSPSjcRw6dQUbfv/KXkbw7LePCVTA==
-X-Received: by 2002:a17:902:be0a:b0:2a0:e5da:febf with SMTP id d9443c01a7336-2a2f283de4bmr63910805ad.46.1766386281921;
-        Sun, 21 Dec 2025 22:51:21 -0800 (PST)
-Received: from [10.218.35.45] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c66932sm88235205ad.11.2025.12.21.22.51.18
+        bh=SMxuqKVWm3OclsZ+GWtTTlP0TisA0si8nmJC4yO6AdI=;
+        b=b47M6O8AJWTuEiez9wIyVmHYw9HI7rdqb9zIpj2vMqSJulai3kwR7cPzZBCYcI91v9
+         Gse9VQcXj31A2PVhNfa45GuqOe/EiwTPBOusrOeb+RLSpkzwtWOoZKjZpC7hQ6lq3Ge4
+         PfKorc0vjihb80LniGm0Q9V9a8Keykv9kgeIANvGHka0IIZRKn1D8aV+jpIIA/sIfpQ9
+         m57jsw7hVZeQY3bOwZIrPs5blgQrGUCqQzIAKDysXuEiXE1j2w7NcD+qzCEAXLB8O7hY
+         Ktseu/qLtH8yd9eD1Jllzz31xgQRI3OX6ujfxiFoCCIDBGuzvlWpWDeZRWlIgrx7vIQC
+         zPHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXSsbJi5z7eI1q8xoQJYq7KM1AeqI9DnmWBUSU7yRkt2Zsz2l+LikuFhlX0LKNlajyanFe1VCI6vUlnBKCx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3lS8uAYROG8sRgFu6XtLm7HdrdRyF88j/XqhBCG8ni/OBwZup
+	rjXUGIR47bn73Ccdpy9SrXJywcKVMWT3+moU9eQ/n7irettqt6sQJZgsj39abjQ4MeM0N3XZBj1
+	Hrc76mHJs2gO+32mtcanXtpypYj+uT77E5JCcYy2PV4D3tTTVmjd7W/kU0tmFvbqjNlD6
+X-Gm-Gg: AY/fxX58SEBAsNfW2Ar1a9QQuV2mkddD5p3b7s4V3Zxg7LedgddlbBpy2FOYjqaF1fm
+	67OqDTkSwgmC8Vx06fpDit3YBwHTjtkZK/WGC5SykxbO/Du2bhZhBM99clOGVGtJCfXZTCd/xW9
+	ufR/DPFoiixpoSeWjpdXqhl1jcjEU6DZi/7rD4h2lfAn8Ry8Cuy4PrHvgbE14MhUUE1qSPRyGPE
+	SnB4u+upSNZY868INUMKw/e/QZRaM6ZEh1TJh0qixUx9m9yW28yNrRiwix55gDXnqoemgWSn+xb
+	vBtxEmG6uLPATUMpAdBDYZGcUnCTfHje+M+kIo/6WVln63R5W6/rPDrHr6pQBromvAOw1LEZMOi
+	5tC4ZTOiQyjmLVH+isRQ52CNoHjn3qGdRszas0nxK5yyklNFaRE1d1CSjanBPqblNDVnS7CpVvp
+	k=
+X-Received: by 2002:a05:6a00:7613:b0:7ff:acc3:2f40 with SMTP id d2e1a72fcca58-7ffacc33e69mr7059154b3a.26.1766386735076;
+        Sun, 21 Dec 2025 22:58:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEO+6I8pHuD+xmFtIYOJqkUxAi0nAsXhcjYzo9deCdZ2wwdODhLF8KzB5WTxUNjuepx5+QCTg==
+X-Received: by 2002:a05:6a00:7613:b0:7ff:acc3:2f40 with SMTP id d2e1a72fcca58-7ffacc33e69mr7059129b3a.26.1766386734539;
+        Sun, 21 Dec 2025 22:58:54 -0800 (PST)
+Received: from [10.133.33.169] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e0a1a2asm9254539b3a.41.2025.12.21.22.58.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Dec 2025 22:51:21 -0800 (PST)
-Message-ID: <efa4b3e2-7239-4002-ad92-5ce4f3d1611b@oss.qualcomm.com>
-Date: Mon, 22 Dec 2025 12:21:16 +0530
+        Sun, 21 Dec 2025 22:58:54 -0800 (PST)
+Message-ID: <097dbefb-f679-40da-bce4-d6e09dc4cf08@oss.qualcomm.com>
+Date: Mon, 22 Dec 2025 14:58:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,210 +103,221 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] Revert "PCI: qcom: Enumerate endpoints based on
- Link up event in 'global_irq' interrupt"
-To: Niklas Cassel <cassel@kernel.org>,
-        Manivannan Sadhasivam
- <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: Shawn Lin <shawn.lin@rock-chips.com>, FUKAUMI Naoki <naoki@radxa.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Damien Le Moal <dlemoal@kernel.org>, stable@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20251222064207.3246632-8-cassel@kernel.org>
- <20251222064207.3246632-13-cassel@kernel.org>
+Subject: Re: [PATCH v8 5/8] dt-bindings: arm: add an interrupt property for
+ Coresight CTCU
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>
+Cc: Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251211-enable-byte-cntr-for-ctcu-v8-0-3e12ff313191@oss.qualcomm.com>
+ <20251211-enable-byte-cntr-for-ctcu-v8-5-3e12ff313191@oss.qualcomm.com>
+ <20251211133723.GA859302-robh@kernel.org>
+ <dfa43a63-ca14-4dd7-a7ab-acd95748a8b9@oss.qualcomm.com>
+ <a9537dc9-c767-4909-8b1c-6e939ce4f3fc@kernel.org>
+ <2db74a3e-4aeb-4e87-9fe8-5c9693bfb67c@arm.com>
+ <46afd4f6-f287-4d19-bc68-f2f6eac36e6a@oss.qualcomm.com>
+ <95ac571a-1c8f-45d9-9874-648d4123ce18@arm.com>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20251222064207.3246632-13-cassel@kernel.org>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <95ac571a-1c8f-45d9-9874-648d4123ce18@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 5mbUR_OhioO1psier66w1MzHJ871yLiQ
-X-Proofpoint-GUID: 5mbUR_OhioO1psier66w1MzHJ871yLiQ
-X-Authority-Analysis: v=2.4 cv=e9wLiKp/ c=1 sm=1 tr=0 ts=6948ea6b cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: BjmGMKs0iIDQKAWshR7xnU2JT3I6xMP0
+X-Proofpoint-GUID: BjmGMKs0iIDQKAWshR7xnU2JT3I6xMP0
+X-Authority-Analysis: v=2.4 cv=CeEFJbrl c=1 sm=1 tr=0 ts=6948ec2f cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=s8YR1HE3AAAA:8
- a=gPGEdhGqammTKEiSqskA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
- a=jGH_LyMDp9YhSvY-UuyI:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDA2MCBTYWx0ZWRfXxmAzJPMQLSB1
- /2TsgOvNJimD3cpk1+78kSN5s1DXY/OM5XdQtYEdW/p8Lrfd7/qPkMdjOEWaAivfJn+TLVw6ty1
- pFLrqd8CiAaEtUToNYlpFteD343xIoppk45zAUii5Dq11jiIi4mVskR3y3TznocgQH7EhMIKHqS
- 0Gl/6xyjHRdtcdcyb0XdfnMU2fDTTmViI4T11VMS0UNHJf2HLnrjuYG9Y2kbMRhxAMdkJfKcXWX
- r7yHQjlFeEcIEVexDVqc53BrS9O+bzuLWvhOLBNi/2ugCoGlBn9p7m0iSyGVLb3HeMYft9uxgcO
- 0X6V1EJMTYylyr9/Ghgig7u7UEc5NKD8RJGWOIpd4UuLCxzziX66evd4rZgkAryga2Kpwc4edIF
- lRIUHkEpFxgzWXBA0CFhE8UYnxwprl3OYVvMAyKaf0LxoJB4+KtPTIhogF6fHvX7qSSjnzLg+Iw
- GK+4jhrMRGlBjxpgXww==
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=W9kkhuXnUgcddjO-hjkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDA2MSBTYWx0ZWRfX/6Yu+QcnhWrc
+ LFgFQ+hhtQDSaJN1UqKoJaPh0Wu0xZUND8KNsKV7h8ut0/CGhjJ3G/BOJ0UHDKzgal+d2UI8VIS
+ /WzLi12W0TrJcLP+9lplUyaANYBrZ68jsVRnNsTHJgxR0E8ig0hzjORZfluezbBE+h5XxcTdwha
+ zv4NW1KxR0+kOpcR72MNM5TlfA79ODZrMU4Ag1yrsEHK7otm+QM9hCR3i7NfmtBwjkANbeQ11LM
+ tHej1N38TOf/LwtN/x6vwQn3KF9ZPwhFLRbfPXPtcu/vJOL/UwMHrZNTB+gXAgRJvONJ+Ks09V1
+ 6rCxZZeoKnsAbeGhxnJbvqA2E5KbNodtsEJHiW1bnNwozB85evJcFOTn4kxk/lAhrnK+UEuKfa8
+ nFA6Kk/UCqLs5HioLx6XiIbXOEq3Qt+/FcDyMDrRQfsnM5nrwHpmuSWr+BeRTFIZYDdfOGeoW7o
+ QN/T9RCTYRXG5uvhZ5A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0
- adultscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512220060
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
+ bulkscore=0 adultscore=0 spamscore=0 clxscore=1015 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512220061
 
 
 
-On 12/22/2025 12:12 PM, Niklas Cassel wrote:
-> This reverts commit 4581403f67929d02c197cb187c4e1e811c9e762a.
->
-> While this fake hotplugging was a nice idea, it has shown that this feature
-> does not handle PCIe switches correctly:
-> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
->
-> During the initial scan, PCI core doesn't see the switch and since the Root
-> Port is not hot plug capable, the secondary bus number gets assigned as the
-> subordinate bus number. This means, the PCI core assumes that only one bus
-> will appear behind the Root Port since the Root Port is not hot plug
-> capable.
->
-> This works perfectly fine for PCIe endpoints connected to the Root Port,
-> since they don't extend the bus. However, if a PCIe switch is connected,
-> then there is a problem when the downstream busses starts showing up and
-> the PCI core doesn't extend the subordinate bus number after initial scan
-> during boot.
->
-> The long term plan is to migrate this driver to the pwrctrl framework,
-> once it adds proper support for powering up and enumerating PCIe switches.
->
-> Cc: stable@vger.kernel.org
-> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-> Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-> Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Removing patch 3/6 should be sufficient, don't remove global IRQ patch, 
-this will be helpful
-when endpoint is connected at later point of time.
+On 12/19/2025 5:54 PM, Suzuki K Poulose wrote:
+> On 19/12/2025 02:05, Jie Gan wrote:
+>>
+>>
+>> On 12/19/2025 7:19 AM, Suzuki K Poulose wrote:
+>>> On 18/12/2025 10:17, Krzysztof Kozlowski wrote:
+>>>> On 12/12/2025 02:12, Jie Gan wrote:
+>>>>>
+>>>>>
+>>>>> On 12/11/2025 9:37 PM, Rob Herring wrote:
+>>>>>> On Thu, Dec 11, 2025 at 02:10:44PM +0800, Jie Gan wrote:
+>>>>>>> Add an interrupt property to CTCU device. The interrupt will be 
+>>>>>>> triggered
+>>>>>>> when the data size in the ETR buffer exceeds the threshold of the
+>>>>>>> BYTECNTRVAL register. Programming a threshold in the BYTECNTRVAL 
+>>>>>>> register
+>>>>>>> of CTCU device will enable the interrupt.
+>>>>>>>
+>>>>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>>>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+>>>>>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>>>>>>> ---
+>>>>>>>    .../devicetree/bindings/arm/qcom,coresight-ctcu.yaml    | 17 + 
+>>>>>>> + + ++++++++++++++
+>>>>>>>    1 file changed, 17 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/Documentation/devicetree/bindings/arm/ 
+>>>>>>> qcom,coresight- ctcu.yaml b/Documentation/devicetree/bindings/ 
+>>>>>>> arm/qcom,coresight- ctcu.yaml
+>>>>>>> index c969c16c21ef..90f88cc6cd3e 100644
+>>>>>>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+>>>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+>>>>>>> @@ -39,6 +39,16 @@ properties:
+>>>>>>>        items:
+>>>>>>>          - const: apb
+>>>>>>> +  interrupts:
+>>>>>>> +    items:
+>>>>>>> +      - description: Byte cntr interrupt for the first etr device
+>>>>>>> +      - description: Byte cntr interrupt for the second etr device
+>>>
+>>> This is really vague. How do you define first vs second ? Probe order ?
+>>> No way. This must be the "port" number to which the ETR is connected
+>>> to the CTCU. IIUC, there is a config area for each ETR (e.g., trace id
+>>> filter) connected to the CTCU. I was under the assumption that they
+>>> are identified as "ports" (input ports). I don't really understand how
+>>> this interrupt mapping works now. Please explain it clearly.
+>>>
+>>
+>> Sorry for the misunderstanding.
+>>
+>> Each ETR device should have its own interrupt line and an IRQ register 
+>> within the CTCU device, as defined by the specification. In existing 
+>> projects, the maximum supported number of ETR devices is 2.
+>>
+>> Each interrupt is directly mapped to a specific ETR device, for example:
+>> tmc@1000 → interrupt line 0
+>> tmc@1001 → interrupt line 1
+>>
+>> The suggestion to identify devices by ‘ports’ is much clearer than my 
+>> previous explanation, as it explicitly shows which device is connected 
+>> to which port.
+> 
+> Thanks for confirming.
+> 
+>>
+>>>>>>> +
+>>>>>>> +  interrupt-names:
+>>>>>>> +    items:
+>>>>>>> +      - const: etrirq0
+>>>>>>> +      - const: etrirq1
+>>>>>>
+>>>>>> Names are kind of pointless when it is just foo<index>.
+>>>>>
+>>>>> Hi Rob,
+>>>>>
+>>>>> I was naming them as etr0/etr1. Are these names acceptable?
+>>>>
+>>>> Obviously irq is redundant, but how does etr0 solves the problem of
+>>>> calling it foo0?
+>>>>
+>>>> I don't think you really read Rob's comment.
+>>>>
+>>>>> The interrupts are assigned exclusively to a specific ETR device.
+>>>>>
+>>>>> But Suzuki is concerned that this might cause confusion because the 
+>>>>> ETR
+>>>>> device is named randomly in the driver. Suzuki suggested using 
+>>>>> ‘port-0’
+>>>>> and ‘port-1’ and would also like to hear your feedback on these names.
+>>>>
+>>>> There is no confusion here. Writing bindings luckily clarifies this 
+>>>> what
+>>>> the indices in the array mean.
+>>>
+>>> The point is there are "n" interrupts. Question is, could there be more
+>>> devices(ETRs) connected to the CTCU than "n".
+>>>
+>>> e.g., Lets CTCU can control upto 4 ETRs and on a particular system, the
+>>>
+>>> TMC-ETR0 -> CTCU-Port0
+>>>
+>>> TMC-ETR1 -> CTCU-Port2
+>>> TMC-ETR2 -> CTCU-Port3
+>>>
+>>> Now, how many interrupts are described in the DT ? How do we map which
+>>> interrupts correspond to the CTCU-Portn. (Finding the TMC-ETRx back
+>>> from the port is possible, with the topology).
+>>>
+>>
+>> Got your point and it's much clearer.
+>>
+>>> This is what I raised in the previous version. Again, happy to hear
+>>> if there is a standard way to describe the interrupts.
+>>>
+>>> Suzuki
+>>>
+>>>
+>>>>
+>>>>>
+>>>>> Usually, the probe sequence follows the order of the addresses. In our
+>>>>> specification, ‘ETR0’ is always probed before ‘ETR1’ because its 
+>>>>> address
+>>>>> is lower.
+>>>>
+>>>> How is this even relevant? You are answering to something completely
+>>>> different, so I don't think you really tried to understand review.
+>>>>
+>>
+>> My previous explanation was definitely unclear. As Suzuki suggested, 
+>> mapping the interrupt to the port number (to identify the relevant 
+>> device based on topology) makes sense and provides a much easier way 
+>> to understand the relationship between the interrupt and the ETR device.
+>>
+>> So with the suggestion, here is the new description about the interrupts:
+>>
+>>    interrupts:
+>>      items:
+>>        - description: Interrupt for the ETR device connected to in-port0.
+>>        - description: Interrupt for the ETR device connected to in-port1.
+>>
+>>   interrupt-names:
+>>      items:
+>>       - const: port0
+>>       - const: port1
+> 
+> Which brings us back to the question I posted in the previous version. 
+> Do we really need a "name" or are there other ways to define, a sparse
+> list of interrupts ?
+> 
 
-- Krishna Chaitanya.
-> ---
->   drivers/pci/controller/dwc/pcie-qcom.c | 58 +-------------------------
->   1 file changed, 1 insertion(+), 57 deletions(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c5fcb87972e9..13e6c334e10d 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -55,9 +55,6 @@
->   #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
->   #define PARF_Q2A_FLUSH				0x1ac
->   #define PARF_LTSSM				0x1b0
-> -#define PARF_INT_ALL_STATUS			0x224
-> -#define PARF_INT_ALL_CLEAR			0x228
-> -#define PARF_INT_ALL_MASK			0x22c
->   #define PARF_SID_OFFSET				0x234
->   #define PARF_BDF_TRANSLATE_CFG			0x24c
->   #define PARF_DBI_BASE_ADDR_V2			0x350
-> @@ -134,9 +131,6 @@
->   /* PARF_LTSSM register fields */
->   #define LTSSM_EN				BIT(8)
->   
-> -/* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-> -#define PARF_INT_ALL_LINK_UP			BIT(13)
-> -
->   /* PARF_NO_SNOOP_OVERRIDE register fields */
->   #define WR_NO_SNOOP_OVERRIDE_EN			BIT(1)
->   #define RD_NO_SNOOP_OVERRIDE_EN			BIT(3)
-> @@ -1635,32 +1629,6 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
->   				    qcom_pcie_link_transition_count);
->   }
->   
-> -static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
-> -{
-> -	struct qcom_pcie *pcie = data;
-> -	struct dw_pcie_rp *pp = &pcie->pci->pp;
-> -	struct device *dev = pcie->pci->dev;
-> -	u32 status = readl_relaxed(pcie->parf + PARF_INT_ALL_STATUS);
-> -
-> -	writel_relaxed(status, pcie->parf + PARF_INT_ALL_CLEAR);
-> -
-> -	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
-> -		msleep(PCIE_RESET_CONFIG_WAIT_MS);
-> -		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
-> -		/* Rescan the bus to enumerate endpoint devices */
-> -		pci_lock_rescan_remove();
-> -		pci_rescan_bus(pp->bridge->bus);
-> -		pci_unlock_rescan_remove();
-> -
-> -		qcom_pcie_icc_opp_update(pcie);
-> -	} else {
-> -		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
-> -			      status);
-> -	}
-> -
-> -	return IRQ_HANDLED;
-> -}
-> -
->   static void qcom_pci_free_msi(void *ptr)
->   {
->   	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
-> @@ -1805,8 +1773,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   	struct dw_pcie_rp *pp;
->   	struct resource *res;
->   	struct dw_pcie *pci;
-> -	int ret, irq;
-> -	char *name;
-> +	int ret;
->   
->   	pcie_cfg = of_device_get_match_data(dev);
->   	if (!pcie_cfg) {
-> @@ -1963,27 +1930,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   		goto err_phy_exit;
->   	}
->   
-> -	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_global_irq%d",
-> -			      pci_domain_nr(pp->bridge->bus));
-> -	if (!name) {
-> -		ret = -ENOMEM;
-> -		goto err_host_deinit;
-> -	}
-> -
-> -	irq = platform_get_irq_byname_optional(pdev, "global");
-> -	if (irq > 0) {
-> -		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
-> -						qcom_pcie_global_irq_thread,
-> -						IRQF_ONESHOT, name, pcie);
-> -		if (ret) {
-> -			dev_err_probe(&pdev->dev, ret,
-> -				      "Failed to request Global IRQ\n");
-> -			goto err_host_deinit;
-> -		}
-> -
-> -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
-> -	}
-> -
->   	qcom_pcie_icc_opp_update(pcie);
->   
->   	if (pcie->mhi)
-> @@ -1991,8 +1937,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   
->   	return 0;
->   
-> -err_host_deinit:
-> -	dw_pcie_host_deinit(pp);
->   err_phy_exit:
->   	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
->   		phy_exit(port->phy);
+Each interrupt is dedicated to a specific ETR device. While we can 
+retrieve the list of interrupts using of_irq_get, we cannot guarantee 
+that the obtained interrupt corresponds to the correct ETR device?
+I believe it would be better to have an interrupt-name property, so we 
+can assign the name in the data structure and retrieve the interrupt by 
+its name, ensuring it maps to the correct ETR device.
+
+Thanks,
+Jie
+
 
 
