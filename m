@@ -1,160 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-86099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF308CD4B0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 05:25:20 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0417BCD4C07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:00:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F2474300A576
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 04:25:19 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 69E7830014EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:00:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8D552FF17A;
-	Mon, 22 Dec 2025 04:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25F6A3242B8;
+	Mon, 22 Dec 2025 06:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n4pxWTDw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="msKaCz3j";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="j/Of1mb9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29211E1A3D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 04:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956971FE44B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766377517; cv=none; b=iPVGfrR4m1o4ND+7WJKm40JSzpAqyDeI3/wh4UFOOBmuQl0LyecPQPkJO1QpgYhnQX3+vSgvYIWlOdF1/snenFzTjPvSYR200wDzXRZofZOQeehMnZ7EdtQSl0UeWO5H5cTrnVKITBJApVlgl0EtTAj4QJICh1waI0EMThdTXsM=
+	t=1766383228; cv=none; b=r3ws62Kv6DBndkM9FwEAeYA3/3SvnwvbtRglYVIT9rq62nE8iXPkwLN0Jb/v7bSw9irwqLNXAehV+uE5HrOLdzFQgjX7ewQHOjOU/JQzUUrPp1wkoWVvNezhhG4OeM//Q/VQRSLKuTUKKYisHtXtitCTT6BBGJnQvYlTRaue9dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766377517; c=relaxed/simple;
-	bh=zx+0zrUpNplPzxs7nAKriwd+5omooaKME7WghPYhMn8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=X7U7goYRdL1+S1fSQkuvHRUh1rwK/ekL0YZicAKq8jwDk0SopEi8W7hVSyMdI0V4h9R/rWiRTnajSeZYdUSKAnVqvhxhIuaoYO5uU6FlpCYEKOqqAeAcxOt1wvETj9/sPnbdrmF4CQgTOu7NA7eKLPnPqPCCYoP19tpkAc/zTo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n4pxWTDw; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-477aa218f20so21476545e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 20:25:15 -0800 (PST)
+	s=arc-20240116; t=1766383228; c=relaxed/simple;
+	bh=sM3fOozHuPpr6amxiCgciZ8EEcSIgyw/5gFaYYONp6I=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=oxYHK08s/P/ScD6ceSbt0lc4k+m6/uMCJduqSxmSZn4ucZCvoEmttfiAWsL0L9nnZW9SgC5alRdcb9pdBOpaw+Dv/GAYWzhfPBil/8XWiFlHd3CUKxQ4NADlZYwlH8Ls6xE1/Xk0J5w3OHNiCCXa6hkSKUJ4HkiZvDgcDIk0ZPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=msKaCz3j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=j/Of1mb9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BLN1OAv3395346
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:00:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=EkfFwQ+7c9l0H1ZxajjVglkDWGPmhRMd4V6jMyk8BEw=; b=ms
+	KaCz3jQt4ygKf2dOGdSe2zDL8IgtnaIBjpB6ZzGou6moXLZB0czObDNGanBZXpPS
+	Afks8xu9I3PcrbuD76UEBlRTGOP5BP0TZUc8SaSHkaUUQkHYC0nTsSGwe0WFj3K/
+	zkov0LZBsrwAu/RTCZZFNmIbwLzJOC8nZKhcmFd3QfINPy4EKstgKtv/02TpTnbh
+	nose4i3cC6h9Regnf7ln6vDob+/XVVULOisY/IobZ1ImmecZv6Fj6wUQhD3NgtdT
+	TBGYlvdHUY8Haar3eS3l4ZzgHj0iuRPPUkKVu3IYA2MvLXP2KT9Zj2+FrTTcXHhd
+	BFvDVFH7IFHf7ZC2l06A==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mtqkvfc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:00:25 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7b9090d9f2eso6919496b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 22:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766377514; x=1766982314; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zx+0zrUpNplPzxs7nAKriwd+5omooaKME7WghPYhMn8=;
-        b=n4pxWTDwr3YFj+V7OStUlZBkWUATtB2BS874+3yKeoORGhQhhdjWGa+OfOAtX9E6ct
-         kxLFr2VuLA8cWkD0oDjCTwkzTkYP09Dx5OaaDCKc8inKIutpa6IrHLa/oT0gtu353zVj
-         T5zK5E/v/nIcSM/5jtu5NqZlQgXMQBmxmollcD4VrHKBPH7GkCtSRS/YfVwEBOCTM9tB
-         dlSDQiOw2yzaHp2jpOQ9tckTgEfEwlExnYuZTleP1tLCiVsob0KWNAdQlNnARt8ZcUwl
-         U122PFq4L2fSb01w57PhM1CZ3UwSQ5UwvWK8nReL7nXun4ky1+bYnUAMdfcbDZfCpxZo
-         stBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766377514; x=1766982314;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+        d=oss.qualcomm.com; s=google; t=1766383224; x=1766988024; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zx+0zrUpNplPzxs7nAKriwd+5omooaKME7WghPYhMn8=;
-        b=GjvU9bVRLN4SsxFQD5W0UrWmCNNso/FbG3+6UgbUu3zPOeXlXQ27HtXJ7/t36xfi1l
-         Zg94fsdxMBXbLS3sUvzB+mz6xSffnFpypUjdA4T/svAxtgRUXqWPY5ZkpW6KhhkP4ozE
-         ST9oh/jUXtjppDQz+jYInbspAc0zRuRCkZSW/Fr32jZ0Mz5O/ka/uCCLX++9CLL6mCH0
-         T6FFlHbSuEkGu6ecEc/4nVgiO709SXyzrPhhHUxYCEMPj4rzqWQrwpagghomG1iXyJnO
-         H8CMkdqAB4Obm+Vr/NPZ8AFCzKlN4FlkBvPDzR5tnxBV6kJoL0XhSwRvJeCD6FOlAAbb
-         F5Ug==
-X-Forwarded-Encrypted: i=1; AJvYcCXjUG0O1xLlIPIiVC/m34cmqzP0eF+0e7cxWFltL2d/Ca5lLJ6floatyIfQp8vGz92kvOmHHQPqJYVbt5gc@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGuv2ZRxvcnUxPbalK/xJ6edZRamxtpSg4mSnAbbvDKogQrFzl
-	FC8l5GTKKrhwfj8jZOhCFVVqqb0AjIQNuR7fCoWH6/zzm/anTeNdzV1V1V9mSdh+5bM=
-X-Gm-Gg: AY/fxX6wfBOypudOC1jxY6IaSGd2rGXKXXwJrpVKcPZno74K1oFAnhqka+gzCmUfUnw
-	HX6nSykkn4X7JA050YEYPXnPBzczuRZnZMvHWrwMCWrnkruwD2kG3Td6UsNSDflyf9q98IYc3Iv
-	dGUlb5nJ6G8dO1nOt5w+o9oX+9PxzGWaeVtKt4oUw0F+H2IDjozCbVAXoe/bMZbKxM3PPpy58bq
-	y4/jKWc0/NJPUh2BRz/MQrbm0rlGkrzSHIFDdxu1FJnU4BXuFcJLbJcA7BUA6v2R4oduEutPXVq
-	EFsEc+oxqG4td+YznfwR+Hr+nHVgNlfFwkE7V2hQC7PleYA42fjfnArwhve66GBBjrLIujQohRQ
-	LZXl8QtgCcwrGxgFifHM9qKwH/oXrps/hM5FJZx9VZ0erOKhoTuOAUyn+jyMlt/bL7eDogI18Us
-	b3uF3myxIhVyizyDC3
-X-Google-Smtp-Source: AGHT+IEFPw6BHurC+yxPzjyCPrPhsx+XJDFA6UxzACnVNeSrnr8kjsZNwCOidsPpjrowChadwhrkMQ==
-X-Received: by 2002:a05:600c:4595:b0:477:a1a2:d829 with SMTP id 5b1f17b1804b1-47d1953ead3mr95117845e9.13.1766377514186;
-        Sun, 21 Dec 2025 20:25:14 -0800 (PST)
-Received: from localhost ([2a02:c7c:5e34:8000:7db7:794c:2c30:e530])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d193cba81sm168582455e9.10.2025.12.21.20.25.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Dec 2025 20:25:13 -0800 (PST)
+        bh=EkfFwQ+7c9l0H1ZxajjVglkDWGPmhRMd4V6jMyk8BEw=;
+        b=j/Of1mb9LUz+8F2UKHX2M7z8tawFzPGOJvmdnri1/jBHr8sjnN4uB+wPo2QI7AP3QY
+         RJGAjooOG4wHtntV3uuAVkv07KJ57Y7SHk5lAcymlcJZ9TS+iQhPz9SGvnNRSQWdxYZW
+         Tx2Vrfr0glr0tn88zgm1aKPY04Od+QCnB6EYZ+edycHTo28odMMmpKLTx9EDRVx/zp9v
+         fTjI8jb7UEdKVKKnD5yScdrX8ovh9Rj6zrpnVh00SMtpgejU3m4rACPC8EJgzLZfZe2G
+         6f7YgBgw0+PvfGDJNFrvQ6a8/LPKHoguYij4SFwsXL0U67+ohwy7VAtzURJfkXzM3E86
+         bIaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766383224; x=1766988024;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EkfFwQ+7c9l0H1ZxajjVglkDWGPmhRMd4V6jMyk8BEw=;
+        b=WA580ULU1/IrneliUR2zxYYV5SAWtfne8j8JOkPKQDPOgxvFbgS0WE9wvD+eeIltP3
+         IuWtMP8Ptir3WKb8OgkZ9xueZENHjih3U2hQBbwVj6k0g4brfWAvSzIWnUvfOQFxcXwt
+         0kL+hbn6vkOREE6cRhaCajKIb7479DTxUD/LARoWyVZ5wPzEr6qIUM/2n0Umi1HRunaa
+         ENxeugoMeyO+eqE89G5lnz7QFQ0lU4UaoV/ZwuFhK22+Ji1XQ/yv3L5MujnEYVMtGa7R
+         P5eXI76A65W8csmwlbIrji2LVBYL09xLT3H3BjP5TpLUltiVQfGbuY7saHuaSzofQph7
+         lU2g==
+X-Forwarded-Encrypted: i=1; AJvYcCV1Ml0DWYR7hIKJ8iRsSXZ4g02ix4v9kA9XvVDFY+ITonZH5IjgOEK06JRMSR2q4CJjGS66kCSZnuRLIHqC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/K6fck+y/9Smmfpm9a0stUJs+lBxnvG0tQYED9G0Gn7Xa7NqO
+	7KFVcrjW3RrYOapxRvmhEK6nrpxZJUoDAV1D4VlNshJYt1k5b/58ygKvACd1jAFHS38Z/ycyysT
+	BbHE0WC6zUo8EJiF74ohpmrGfB9zQW+mVLIZ9xXwrCvQQQ97hYNuluuEVINcwotrrLfZi
+X-Gm-Gg: AY/fxX6zg5n6IZJDwYsqO6xwOx3CgQG8iatECvab4bfjXUMbI4/PemJ+HmLdJYBtNl4
+	RNvE2brv2HydUHRjr0QlYm4ffDXDtdHPQYLXybMTU3M9B/O46UKQfbVEHecjJgLbN0p+YIgKSpp
+	H0QCsf0cYKCm0c50u+1hrvsDsIS+D54gAundjziQNKVgVyYFhNjVhNX8QuWF2YjXKryZA8qbE76
+	Ba2RWAS/UfpCoqjpAd+S4yCTLOuC34yyIG8DW87TFLAILjGDiZrzol6rFknS/sNesugvsUv0FAx
+	r74NiImcLjSC/ArWAfQf16HAT9ngWxj22JqIx8EsRXJ3anFo4UtbTRZQOO0ldBbP8ofAwQhpxHI
+	1f/J5VOruSL37H2b4y/uRZUhSsGTPbjQPkCyrg5wnfos=
+X-Received: by 2002:a05:6a00:4295:b0:781:17fb:d3ca with SMTP id d2e1a72fcca58-7ff648e71c8mr8362770b3a.15.1766383224280;
+        Sun, 21 Dec 2025 22:00:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLdwWxLM+DGPgEyWM20tvgmySSHg8PLe+eOCrjv5WpxgqOKsjiH21ugO6FRbrcVGZZ9l73dA==
+X-Received: by 2002:a05:6a00:4295:b0:781:17fb:d3ca with SMTP id d2e1a72fcca58-7ff648e71c8mr8362749b3a.15.1766383223749;
+        Sun, 21 Dec 2025 22:00:23 -0800 (PST)
+Received: from hu-pkondeti-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e88cdaesm8987572b3a.63.2025.12.21.22.00.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Dec 2025 22:00:23 -0800 (PST)
+Date: Mon, 22 Dec 2025 11:30:19 +0530
+From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+To: Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: SMP boot issue during system resume
+Message-ID: <dfa19ca7-c4c6-4386-a54d-44d623c8d3ed@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 22 Dec 2025 04:25:12 +0000
-Message-Id: <DF4GKIYJPDKA.DTLON4U0AZHB@linaro.org>
-Cc: <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <kernel@oss.qualcomm.com>,
- <mohammad.rafi.shaik@oss.qualcomm.com>, <ajay.nandam@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/2] ASoC: qcom: q6dsp-lpass-ports: Expand sampling
- rate and PCM format constraints
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>, "Ravi
- Hothi" <ravi.hothi@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
- <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
- <tiwai@suse.com>
-X-Mailer: aerc 0.20.0
-References: <20251210065157.2775514-1-ravi.hothi@oss.qualcomm.com>
- <DEUL786WEYBY.3502XZKMTYTN3@linaro.org>
- <370a9d69-1706-438a-bb36-01a22e5cf540@oss.qualcomm.com>
- <DF0GN7VV4R2W.2E3U1LMOF0JPG@linaro.org>
- <d9e64bd0-7ccf-490c-a6be-d9cc9484475d@oss.qualcomm.com>
-In-Reply-To: <d9e64bd0-7ccf-490c-a6be-d9cc9484475d@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Proofpoint-GUID: 4AP1b_T9o5SRW_KYGS8RQxzZiEy21bYJ
+X-Authority-Analysis: v=2.4 cv=dPWrWeZb c=1 sm=1 tr=0 ts=6948de79 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=AzHi_07Hxf6F1TnpHmwA:9
+ a=CjuIK1q_8ugA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: 4AP1b_T9o5SRW_KYGS8RQxzZiEy21bYJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDA1MiBTYWx0ZWRfX+oyhK/APQ00p
+ AxAG9y3GfvbG8wdg3daY0ai7L/X+t+7s04NscTSD3rbTU0P1e7EHB86dUG66DbKjZAH/JsQbC/o
+ cVxOuBDG/EquRngMqtYOpxtlHV6XUHI52fIlfI4EPLXxwGSd+dF7Yhws9+WiJCBvGrkwJNK7ZJZ
+ 1Sy3CCFn8za5OHjWhtpht97YuIQrsc7luLJePjwGUNBs1ZSfXP+Js2dgLDs4gXdh2jpB4++HANh
+ OxMmJ4UTbn1Z/Q5/yL2MkYLo0zKEIfOC5pZRmgDnFPw393OUnr0IKkLzWd3SwByE1eoCmU32g0l
+ PS5xEDrNPOBz9l/4FtAcHY7lheO0gk905P+PRTVsNs4yQiKW1ktSDB1RDYFMGD4X3V88U9g4e4p
+ SEQeiFYaR+x3jeaep3pCv4dt2oMLWdsr1vTV2tt+2OOHX4cXgnhGTAwIV7UhTfXFVHshCjzEGwc
+ hcGB80UuD6wXrVZMX3Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512220052
 
-On Wed Dec 17, 2025 at 12:56 PM GMT, Srinivas Kandagatla wrote:
->
->
-> On 12/17/25 11:38 AM, Alexey Klimov wrote:
->> On Mon Dec 15, 2025 at 7:29 AM GMT, Ravi Hothi wrote:
->>>
->>>
->>> On 12/10/2025 7:26 PM, Alexey Klimov wrote:
->>>> On Wed Dec 10, 2025 at 6:51 AM GMT, Ravi Hothi wrote:
->>>>> This patch series expands the existing constraints in
->>>>> the q6dsp-lpass-ports driver to improve compatibility
->>>>> and flexibility for audio stream configurations.
->>>>>
->>>>> The first patch extends the supported sampling rates to cover a wider
->>>>> range, from 8000 Hz to 192000 Hz, ensuring better compatibility with
->>>>> diverse audio hardware and allowing more flexible audio stream setups=
-.
->>>>>
->>>>> The second patch adds support for the 32-bit PCM format
->>>>> (SNDRV_PCM_FMTBIT_S32_LE) alongside the existing 16-bit
->>>>> and 24-bit formats, enabling handling of high-resolution
->>>>> audio streams and improving audio quality for supported hardware.
->>>>
->>>> Is q6dsp-lpass-ports involved in compress offloaded playback on
->>>> existing devices? If yes, then how is it gonna play with
->>>> explicitly setting format/sampling rate to s16le/48k in sndcards drive=
-rs?
->
-> be_hw_params_fixup callback in machine drivers can select any format
-> that fits the usecase. currently this is hardcoded for s16le samples and
-> 48K rate, but its not limited to this. This patch is expanding the
-> allowed range in the dais so that machine drivers should be able to
-> select other options, ex: for HDMI its better to be at S24LE or S32LE.
+Hi
 
-Yes. Exactly.
-So, should we add kcontrols to machine driver to handle these usecases like
-selecting s24le instead of s16le? Or what's the plan?
+We are seeing a SMP boot issue during system resume when CPUs are brought 
+online via pm_sleep_enable_secondary_cpus()->thaw_secondary_cpus()->_cpu_up() 
+on ARM64.
 
->>> Support for s16le/48k is already available; these patch will expand the=
-=20
->>> existing constraint so that customers can use a wider range.
->>=20
->> Unfortunately, you didn't answer any of my questions or answered
->> a different one.
->>=20
->> Perhaps the main one: is q6dsp-lpass-ports involved in compress offloade=
-d
->> playback on existing devices?
->
-> lpass-ports are the Backend DAI ports, So yes, they will be involved in
-> all the usecases that deal with handling sinks or sources irrespective
-> of pcm or compressed content.
+The _cpu_up() sets a global variable
 
-Thanks,
-Alexey
+secondary_data.task = idle;
 
+and wait for the secondary CPU to come online. A 5 second timeout is
+used here. If at all, the secondary CPU comes online after this timeout,
+we expect it to loop in kernel via __secondary_too_slow(). However, this
+depends on secondary_data.task value. Since we are bringing all disabled
+cores, after timeout, we set this global variable to the next CPU idle
+task and the late secondary CPU thinks the value is its idle task and
+does not enter __secondary_too_slow().
+
+An earlier attempt [1] to fix similar issue incrased the timout to 5
+seconds. We could reproduce this issue in Linux guest where vCPU
+scheduling latency can be higher under heavy load on the host.
+
+I would like to seek your inputs on how we can improve the current
+situation. We would like to avoid __secondary_too_slow() spin even when
+the CPU comes late. This is probably not a desired behavior for other cases like 
+Linux running bare metal or some guests. Having a Kconfig option or
+kernel param might help here.
+
+[1] https://lore.kernel.org/all/20190827151815.2160-1-will@kernel.org/
 
