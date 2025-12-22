@@ -1,139 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-86107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66AA7CD4C8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:18:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40428CD4CE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:40:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 40AB83001FDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:17:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 071AF3007615
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:40:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8443002C8;
-	Mon, 22 Dec 2025 06:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61553277AF;
+	Mon, 22 Dec 2025 06:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUOZEoyJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0Jn6Ky/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114031FE45D;
-	Mon, 22 Dec 2025 06:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241D22FE593
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 06:40:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766384233; cv=none; b=WhmaDRW+tRIpgWrX4JdMAszkoUdPAoWlctVAO4RruW/eEV18BDwWmj6iX5Z7ShealgHe04hk8nMdxevDy4z6HpMhJ6v2T9o2oesV2K4Xh7av76M/bo2fE/b93wWNp+yJqJXdBENKSR2bgQWxEd/fBsaEuO1jZt+2kNpNdnfZw0U=
+	t=1766385652; cv=none; b=pusuu38tfS76TkOKAwL1o7WD/qwYlwTItszewHqHI6q7l2VsIqEJwRz0cybIejUePu/U3lWfwKymxNHt1yGKh7AP/icWc4B4Fncy3KxUz5OHOv4joWYncSd/058kMOIN1zZFZiqZ2Hll0Cpk4PfslKGOvIiVW+sIf0BL65JFx/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766384233; c=relaxed/simple;
-	bh=+PJJrLUZuuvwo/YknxXQIYCxBgkPwh5ViNEYKOPqGLk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J1I4tohj1m1s9mwRSsmobjZDLk9scGEs8PzF7jFrbmBUI6uFNCapOrhxHfgZTStXZWHvH06ZP5Ea85Bbvq4P4vlhhjvMZduLUaOA5DI61ROwK8aPifCGRHn9erRTYden11l3gTj4UQtjIjT4iNxwAN7FnDhMMGmwcKP9F0MRG1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUOZEoyJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65A7C4CEF1;
-	Mon, 22 Dec 2025 06:17:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766384232;
-	bh=+PJJrLUZuuvwo/YknxXQIYCxBgkPwh5ViNEYKOPqGLk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QUOZEoyJQstFde3gfBLzzzrHX16nHgjhjNRxUJoGVckt+cwXYFKX/8s0ahpHkJUJ0
-	 wIvfxGJHOOxDkc7YqDXyD+Strd6UBqCkUddyT1eRF9MDsQGkSFjaY4wARRp1BKuM+Y
-	 0EdF87kTzSxmv8tWQr9bc5VWFdr8qyflO/sqUUm8+FAmm6eH4McKZHH/C5IstKkLlL
-	 jWj9I2HXicWC4Wv7JAk3x1wrwNA482sN7AZFQaYXm0R9aCkl7rzb7HHYzscZMTMSda
-	 RWKysMjOX0UO+6Z4iku0esn/gWAH/turVg2PCS10ycK93qiTQ5g1bBAhwezZ6NmrJ5
-	 Xt5Oz4xn7AbJw==
-Date: Mon, 22 Dec 2025 11:46:57 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Heiko Stuebner <heiko@sntech.de>, Shawn Lin <shawn.lin@rock-chips.com>, 
-	FUKAUMI Naoki <naoki@radxa.com>, Krishna chaitanya chundru <quic_krichai@quicinc.com>, 
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/6] PCI: dwc: Revert Link Up IRQ support
-Message-ID: <cngg5kifjqmrmb5ufyrv4k6dwo5tgatqssaeoog5aqpe7m253c@krov7axlplkw>
-References: <20251111105100.869997-8-cassel@kernel.org>
+	s=arc-20240116; t=1766385652; c=relaxed/simple;
+	bh=rP6QYpytQMGZd27phGooY7RQP9NfnWfEWJfnoQtwV5o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z1WUECezmbtw8HxT3qGSkMPlsnsjvYAm6slZm/k8mTViV6SjPzNpZ7zqbPktoz9yj6CzYm+X3+E5h9jNctJqTS/lRMmCUglNfMPcTIX3pKITB1yx0XtjC7gGSjx0mczpbsTFdyURoQxffsCBX7cwikBPB6j8nlLujfbRlMz6U9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0Jn6Ky/; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso2740402b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Dec 2025 22:40:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766385650; x=1766990450; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qPXWXbJD0J7h2WhDXKa99kJBcNS76iyn70zC5bGEQyw=;
+        b=b0Jn6Ky/X4rvXqEbjfShioAN4mKGSHbcisJMGLewppkO4i7h2XI2BT2Tqk6hYP0+q9
+         VLjOzlskp7ESy75jMRyxGwmZKFfLy0sDz8bwzV1YqM9cB6O+A4octWn7mtCCbs86B4x9
+         H/3bWyc/5YxQn3UnVZSm5jMagkeWSBj6yVjPNLYT/Sx+aXuJdwGS/2HNvm3xcO1SDG+l
+         nXAzaVPogGWeYmepWElpgPosdp3nYxw8fkG2xp9ErcQ7Za+SAJuNmeswAYRui9DokL9P
+         vka79YiFhu1vYUBoZC46Eikqt4tRXxIRv/jTZx2AFcbBf2wAUFghCebl9KcpdpoILN2d
+         4EDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766385650; x=1766990450;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qPXWXbJD0J7h2WhDXKa99kJBcNS76iyn70zC5bGEQyw=;
+        b=NqmJuDq8J4/mOEY8W2rU+mGtt0NwJpcOt1Csj6/L9G/xRoTg9qYeDmbTJ+7EAKnA2H
+         AB+3nKWBHyUGfUv4Nb0q9zNIw3kWYibKgstKXYfwzSOFyn1eGWVyUsCdsuPciCgR4R5R
+         jbem+lnuP3XVt++H1wgxeLTQzc7sscRYiop1K3JPOZCTXA005/BXZfOPEGK9LBIJjjHZ
+         zP+NvPDfPz2DBGl8MyY9BOVpHOzA6z2hcbd2T/jxLT8XJ/U7GoZ6kfQxrJR6D30PveW9
+         8Yp4mwkIt9ckk0nlNurj86loNuqZZd5TQ9cmMGtdu5I5886TebocHMQLEwaWA0Ms2GRa
+         kEXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/pmOOsc8lRYVNeNes4hnM5XsKq9R5VT1W3/sD/2WRGEkRD8Ud2dt5bhFbDB/Dg8U418yokV1P2YF5GThF@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSSHfMXrLc1MZcAjVrX3JErJP/o326qRQA8NQIy8apHA76mE3L
+	P6l1cvaHh6EPNee2Qt42DhwI+erRqPe2O/2ZPGbkcLSVgHwH0fK/pGsFDIYPRw==
+X-Gm-Gg: AY/fxX7H8spWcOvxjxp+6cU+93guZ/fZN02H7vVwUcOG1CzTXEa20pIYyG3BGVTpZhx
+	vxuB66Gmf/d4U4VnVFmWCoHW7PaIBJb1tbZB6CWTr6V5Z1XrBQHg1rZf/iQ24dizZaQVmQDiAeo
+	Qk5/k0U0AG+XVpfL3qmAJj4RMuASziYxTFSgLgacQD2mL/AZWQJYhlFjet2HxIrQmgztgAVYKmh
+	3EsjzvVNDC1EDp1bqeKtDWsfEC/c2UBP6svRRDZFCK0FEGOKgoAbreROAZ0jftKmao+JJ6jByvC
+	JENUez6SwpUryh5/X7++2FahM8K9aCC3d9Wn1WFYABFR2rSo6QRQVxuoC1QbjC7NTpGbwWiKKQq
+	xNP4YvYvNf1rLouR6xFZKEefs006ga5AiQgOur6BYA6U80CPzmenoe7dtYB+DYdknHCiEsHhIoY
+	O6A5RAKVgRxKCm2aXBZgCqHzMsWDYjGYdSH0J4i5TsDZX4
+X-Google-Smtp-Source: AGHT+IE62I9JyCTUp3ETxHws6VOOJR04P/KWDZqZ4yG8YBlKUZEaGLiVAdwx8Q1PoK8HXIjIa0sCkQ==
+X-Received: by 2002:aa7:9312:0:b0:7e8:43f5:bd56 with SMTP id d2e1a72fcca58-7ff6784e709mr7675977b3a.66.1766385650330;
+        Sun, 21 Dec 2025 22:40:50 -0800 (PST)
+Received: from [172.16.20.12] ([136.226.245.27])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7dfac29bsm9215799b3a.39.2025.12.21.22.40.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Dec 2025 22:40:49 -0800 (PST)
+Message-ID: <90700087-7367-403c-97c5-81108a573aae@gmail.com>
+Date: Mon, 22 Dec 2025 12:11:17 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251111105100.869997-8-cassel@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/2] arm64: dts: qcom: talos-evk: Add support for
+ QCS615 talos evk board
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251201172222.3764933-1-tessolveupstream@gmail.com>
+ <20251201172222.3764933-3-tessolveupstream@gmail.com>
+ <q63bdon55app4gb2il5e7skyc6z2amcnaiqbqlhen7arkxphtb@3jejbelji2ti>
+Content-Language: en-US
+From: tessolveupstream@gmail.com
+In-Reply-To: <q63bdon55app4gb2il5e7skyc6z2amcnaiqbqlhen7arkxphtb@3jejbelji2ti>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 11, 2025 at 11:51:00AM +0100, Niklas Cassel wrote:
-> Revert all patches related to pcie-designware Root Complex Link Up IRQ
-> support.
+
+
+On 06-12-2025 04:51, Dmitry Baryshkov wrote:
+> On Mon, Dec 01, 2025 at 10:52:22PM +0530, Sudarshan Shetty wrote:
+>> Add the device tree for the QCS615-based Talos EVK platform. The
+>> platform is composed of a System-on-Module following the SMARC
+>> standard, and a Carrier Board.
+>>
+>> The Carrier Board supports several display configurations, HDMI and
+>> LVDS. Both configurations use the same base hardware, with the display
+>> selection controlled by a DIP switch.
+>>
+>> Use a DTBO file, talos-evk-lvds-auo,g133han01.dtso, which defines an
+>> overlay that disables HDMI and adds LVDS. The DTs file talos-evk
+>> can describe the HDMI display configurations.
+>>
+>> The initial device tree includes support for:
+>> - CPU and memory
+>> - UART
+>> - GPIOs
+>> - Regulators
+>> - PMIC
+>> - Early console
+>> - AT24MAC602 EEPROM
+>> - MCP2515 SPI to CAN
+>> - ADV7535 DSI-to-HDMI bridge
+>> - DisplayPort interface
+>>
+>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile             |   3 +
+>>  .../qcom/talos-evk-lvds-auo,g133han01.dtso    | 131 +++++
+>>  arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 447 ++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/talos-evk.dts        | 137 ++++++
+>>  4 files changed, 718 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 5b52f9e4e5f3..94c20074397c 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -305,6 +305,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
+>> +talos-evk-lvds-auo,g133han01-dtbs	:= talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtb
+>>  x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
+>>  x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
+>> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
+>> new file mode 100644
+>> index 000000000000..2a90d61892e7
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
+>> @@ -0,0 +1,131 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>> + */
+>> +/dts-v1/;
+>> +/plugin/;
+>> +
+>> +#include <dt-bindings/gpio/gpio.h>
+>> +
+>> +&{/} {
+>> +	backlight: backlight {
+>> +		compatible = "gpio-backlight";
+>> +		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
+>> +		default-on;
+>> +	};
+>> +
+>> +	hdmi-out {
+>> +		status = "disabled";
+>> +	};
+>> +
+>> +	lcd-pwm-en {
+>> +		compatible = "gpio-backlight";
+>> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>;
+>> +		default-on;
+>> +	};
 > 
-> While this fake hotplugging was a nice idea, it has shown that this feature
-> does not handle PCIe switches correctly:
-> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
-> 
-> During the initial scan, PCI core doesn't see the switch and since the Root
-> Port is not hot plug capable, the secondary bus number gets assigned as the
-> subordinate bus number. This means, the PCI core assumes that only one bus
-> will appear behind the Root Port since the Root Port is not hot plug
-> capable.
-> 
-> This works perfectly fine for PCIe endpoints connected to the Root Port,
-> since they don't extend the bus. However, if a PCIe switch is connected,
-> then there is a problem when the downstream busses starts showing up and
-> the PCI core doesn't extend the subordinate bus number after initial scan
-> during boot.
-> 
-> The long term plan is to migrate this driver to the pwrctrl framework,
-> once it adds proper support for powering up and enumerating PCIe switches.
+> I really don't like the idea of describing two separate backlight
+> devices here. We have a single backlight on the panel, controlled by two
+> GPIOs. I think, using GPIO instead of a PWM is a sensible enough usecase
+> to let DT use two GPIOs in gpio-backlight (with corresponding changes to
+> the bindings and the driver).
 > 
 
-Could you please rebase this series on top of pci/controller/dwc branch and
-repost?
-
-- Mani
-
-> Niklas Cassel (6):
->   Revert "PCI: dw-rockchip: Don't wait for link since we can detect Link
->     Up"
->   Revert "PCI: dw-rockchip: Enumerate endpoints based on dll_link_up
->     IRQ"
->   Revert "PCI: qcom: Don't wait for link if we can detect Link Up"
->   Revert "PCI: qcom: Enable MSI interrupts together with Link up if
->     'Global IRQ' is supported"
->   Revert "PCI: qcom: Enumerate endpoints based on Link up event in
->     'global_irq' interrupt"
->   Revert "PCI: dwc: Don't wait for link up if driver can detect Link Up
->     event"
+Okay, will take care in the next patch.
+>> +
+>> +	panel-lvds {
+>> +		compatible = "auo,g133han01";
 > 
->  .../pci/controller/dwc/pcie-designware-host.c | 10 +--
->  drivers/pci/controller/dwc/pcie-designware.h  |  1 -
->  drivers/pci/controller/dwc/pcie-dw-rockchip.c | 60 +-----------------
->  drivers/pci/controller/dwc/pcie-qcom.c        | 63 +------------------
->  4 files changed, 6 insertions(+), 128 deletions(-)
+> backlight = <&backlight>;
 > 
-> -- 
-> 2.51.1
+>> +
+>> +		ports {
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			/* LVDS A (Odd pixels) */
+>> +			port@0 {
+>> +				reg = <0>;
+>> +				dual-lvds-odd-pixels;
+>> +
+>> +				lvds_panel_out_a: endpoint {
+>> +					remote-endpoint = <&sn65dsi84_out_a>;
+>> +				};
+>> +			};
+>> +
+>> +			/* LVDS B (Even pixels) */
+>> +			port@1 {
+>> +				reg = <1>;
+>> +				dual-lvds-even-pixels;
+>> +
+>> +				lvds_panel_out_b: endpoint {
+>> +					remote-endpoint = <&sn65dsi84_out_b>;
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +};
+>> +
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
 
