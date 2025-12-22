@@ -1,64 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-86229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EF30CD5D6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:45:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17885CD5E16
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:54:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D469030213FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:45:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B7CC43001557
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:52:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB4FB314B62;
-	Mon, 22 Dec 2025 11:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 104DE32ED59;
+	Mon, 22 Dec 2025 11:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I6GBvEeK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fNw7RytL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A3521FF23;
-	Mon, 22 Dec 2025 11:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8425F32E730;
+	Mon, 22 Dec 2025 11:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766403923; cv=none; b=lYo51k/PyzqC7N/D1VnC4d345gJNlL7RQpDbuvVWO6IArY+twPXZDp3DfJCpVByqXOEjRGOOWgXFMbeKhqjBogDzQK09kAnTAA1hT3H7eyLYjUb/tLCpRquKZ0Ql+GBSw/bPW2dCaqZFfJEgOPcd+G6qxT/lDXSUMi/fHtgdgCQ=
+	t=1766404352; cv=none; b=PGjHLsHFqy++TXZOxQOWgp61tIMZ+L8EIxhKQig4xBeYJQJ+9zCaDE79/6KzNc9vrSFh1+T6l491BfrwHJVf2Nn5VouITN/POdQ28bWB6xBABqOGoUpPAoFwYVU4vTrQlap2f8KoY4obFR/8G2KSeVSMTW2yIW9HiieVBBply+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766403923; c=relaxed/simple;
-	bh=a3HAZXboIYJtAUAVesMtixmEpYZ6agiytIhdOW9P2HU=;
+	s=arc-20240116; t=1766404352; c=relaxed/simple;
+	bh=vg7/adpD/1uCZFZ5FETf5AMIGjbfdcAZDucMWV87Hzg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OOy31/fDZxZjseG57AFfmu5E1WV8SgpR6TMONn6+/PCzaCn0HGtehLBRJ63llVkWaV2FvoHPV9S2MNVotvyjlET54wfzUnyWwMukv884DBo+N8k0sRUpPsLOaZLqFDyYsWfgKU9wlkiV/czUhK0Lq2mQ31vFMYAB12KerDavYo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I6GBvEeK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA7DC4CEF1;
-	Mon, 22 Dec 2025 11:45:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=E+L7aKAiRsR1JWO1NV4B4Jz+X3o/R74EfhQZNWF4g3gSwOnpGIuS1/2nhZxN1X6fbe/vd0YUQPXw4Iv7Wk9P8dP8mPZ87Sjey3F7Rbl7VhQKJBsCnticzjHn97Yq9yYFSUOJkFYlfSjV2RbNhbRV1tdC+o34edtxpMf2EBCltqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fNw7RytL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2AAC116C6;
+	Mon, 22 Dec 2025 11:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766403923;
-	bh=a3HAZXboIYJtAUAVesMtixmEpYZ6agiytIhdOW9P2HU=;
+	s=k20201202; t=1766404352;
+	bh=vg7/adpD/1uCZFZ5FETf5AMIGjbfdcAZDucMWV87Hzg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=I6GBvEeK7QJIwyVC0RguQ8ppbhf51QHCw6gAC9fbdnqgVssO3G4JNHD4Dag9JsdU8
-	 gH/BPSeZZ2RbMHrvJSd3yGXap6TfLSEA78UkcgthxVw9F9jgOl3jghxJh3OQw40Ilj
-	 RYkBP5lOkDJvbkcgJVyAWND1g2rHAARICk89OBfJ9SCd2to93kVQjsA4D9JG92aqOY
-	 2gGgc47Xi5xvRX6rnaHUTjP9/soKRV70zOW4zdd0n4ncZtFIY5+FfjtM+eJc7V1RsN
-	 0hajoj0KmFqLiZZR5bjuug2o7TycznWf+owlgZLVJEiTsjkPzwm3vMzz9jTFcbMZlS
-	 c5iC2jQalglEA==
-Date: Mon, 22 Dec 2025 17:15:05 +0530
+	b=fNw7RytL0T22OBM0RlgrShS40Ffh4GGreYAu9fE930EHChGuPXlRHHsH9ZaxfxbBO
+	 J4VrHHDQFuPe9+8bfw/CBX4Fr0AM85r8bwb8QzHN8iUUrhTiUiQ7RMv0bnkMJVBoU0
+	 efDSWoa5GMWVsTmdFYjuBB4KahHLWPFInOZZwjomKiGoc0OW7QBH/VVFqGKyEWPd2r
+	 J2U4sXrNbh8g0mr/kdUyDMlOs/8vvV1O6FTEkVVDPOGiwFCOlyPYUnE/tzw96TuOxK
+	 W4MTkYlhRyetbKHqYN2VrOyzfvcEm5IyrLPvmnwEIsRFCouo2JQqit0Auw71DlVZx8
+	 TqTPStguUYjFQ==
+Date: Mon, 22 Dec 2025 17:22:17 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Hans de Goede <hansg@kernel.org>
-Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jeff Johnson <jjohnson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, ath12k@lists.infradead.org, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Dale Whinham <daleyo@gmail.com>
-Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
- disable-rfkill property
-Message-ID: <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
-References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
- <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
- <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
- <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
- <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Shawn Lin <shawn.lin@rock-chips.com>, FUKAUMI Naoki <naoki@radxa.com>, 
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>, Damien Le Moal <dlemoal@kernel.org>, stable@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] Revert "PCI: qcom: Enumerate endpoints based on
+ Link up event in 'global_irq' interrupt"
+Message-ID: <xgmb6yllvoowfap5j55x4pd2j6a5k547s2qb72ektrddh2kujo@ueohphquccve>
+References: <20251222064207.3246632-8-cassel@kernel.org>
+ <20251222064207.3246632-13-cassel@kernel.org>
+ <efa4b3e2-7239-4002-ad92-5ce4f3d1611b@oss.qualcomm.com>
+ <aUjv2FwfoDqNMKoR@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,117 +64,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
+In-Reply-To: <aUjv2FwfoDqNMKoR@ryzen>
 
-On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
-> +Cc Mani
+On Mon, Dec 22, 2025 at 08:14:32AM +0100, Niklas Cassel wrote:
+> Hello Krishna,
 > 
-> Hi,
+> On Mon, Dec 22, 2025 at 12:21:16PM +0530, Krishna Chaitanya Chundru wrote:
+> > Removing patch 3/6 should be sufficient, don't remove global IRQ patch, this
+> > will be helpful
+> > when endpoint is connected at later point of time.
 > 
-> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
-> > On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
-> >> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> >>
-> >> For some devices, Wi-Fi is entirely hard blocked by default making
-> >> the Wi-Fi radio unusable, except if rfkill is disabled as expected
-> >> on those models.
-> >>
-> >> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
-> >> disabling specific features based on ACPI bitflag") added a way to
-> >> support features set via ACPI, including the DISABLE_RFKILL bit.
-> >>
-> >> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
-> >> equivalent for devices described by a Devicetree instead of ACPI.
-> >>
-> >> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> >> ---
-> >>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
-> >>   1 file changed, 6 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
-> >> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >> @@ -29,6 +29,12 @@ properties:
-> >>         different 5 GHz subbands. Using them incorrectly could not work or
-> >>         decrease performance noticeably
-> >>
-> >> +  disable-rfkill:
-> >> +    type: boolean
-> >> +    description:
-> >> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
-> >> +      blocked by default otherwise
-> >> +
-> >>   additionalProperties: true
-> >>
-> >>   examples:
-> >>
-> >> -- 
-> >> 2.47.3
-> >>
-> >>
-> >>
-> > 
-> > Is this really a hardware description though ?
+> Please see Mani's reply here:
+> https://lore.kernel.org/linux-pci/fle74skju2rorxmfdvosmeyrx3g75rysuszov5ofvde2exj4ir@3kfjyfyhczmn/
 > 
-> I would say yes it is. The wifi chip has an rfkill input pin and
-> things will be broken when that pin is hardwired to a fixed value
-> rather then being actually connected to a GPIO from say
-> the embedded controller.
+> "And neither the controller driver."
+> 
+> Sounds to me like he still wants this patch
+> (which removes the support from the controller driver).
 > 
 
-IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
-the device won't make use of it as there is no physical connection. So you want
-the WLAN driver to change the state through SW?
-
-> So I think that we would need here is not a disable-rfkill property
-> but some way to indicate in the DT-node that the rfkill input pin
-> is not connected and thus should be ignored.
-> 
-> This (the rfkill input pin being not-connected) IMHO very much
-> is hw-description.
-> 
-
-Though we can argue this way, I would prefer to handle it in the driver. For
-example, with my M.2 series, we will end up describing the M.2 slot:
-
-	connector {
-		compatible = "pcie-m2-e-connector";
-		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-		...
-		ports {
-			...
-			endpoint@0 {
-				reg = <0>;
-				remote-endpoint = <&pcie4_port0_ep>;
-			};
-		};
-	};
-
-Then if we use a DT property to convey the RFKILL pin state of the device, we
-would need to describe the endpoint device in DT and hardcode the state:
-
-	&pcie4_port0 {
-		...
-		port {
-			pcie4_port0_ep: endpoint {
-				remote-endpoint = <&m2_e_pcie_ep>;
-				disable-rfkill;
-			};
-		};
-	};
-
-So this will essentially make the M.2 device non-swappable unless you change the
-DT since you've how hardcoded the device property in the binding. This is
-something I try to avoid to make the M.2 slot really swappable.
-
-For this reason, I would prefer to handle the RFKILL state in the WLAN driver
-using the device specific compatible. This will be problematic only if multiple
-cards of the same Device ID have different RFKILL state and the devices are not
-distinguishable even with sub IDs.
-
-FWIW, ACPI support added with commit c6a7c0b09d5f, suffers from the same
-limitation.
+Yes, allowing hotplug for a non-hotplug Root Port is a bad idea. Too bad that I
+proposed it in the first place... Let's revert for all platforms to avoid
+setting bad precedence.
 
 - Mani
 
