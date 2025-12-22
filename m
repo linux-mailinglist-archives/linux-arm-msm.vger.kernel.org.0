@@ -1,107 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-86257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E30CCD6E9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 20:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3284FCD6EBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 20:05:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 050353003B18
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 19:03:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9AAFF3004849
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 19:05:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 310333358C0;
-	Mon, 22 Dec 2025 19:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E90F337B8B;
+	Mon, 22 Dec 2025 19:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="lJ6IpMax"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aoN4uyv1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244116.protonmail.ch (mail-244116.protonmail.ch [109.224.244.116])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6E832ABF1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 19:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BF933290B;
+	Mon, 22 Dec 2025 19:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766430194; cv=none; b=EYAmF4/zmx3UTURParnJbPM5NciKjCNLkv3KTUEsiXmMD3Ao+Ql+6xZYND9UfKdEf+hWMf6PNF0pHSH9LBdltRnhDtZJRwH7QxeTvOOwhIwtZu1YilapK65xgasLj3Gkh16aOBGM+UriPjUrjBv3h5Fn7ykMi9e5ykWcAiLQx8c=
+	t=1766430342; cv=none; b=qR2FvXa/VwMEIrUBKT/jKrfZ5ZEAFiivp//M00lPH6L2/oz1b3gPEPDLZyv/9E1eI0ZUN2zivBo+KbYO/nves0L//bIojSCk6ab7aWNqeKBOw/S7pu7n0txTkDB88a4XDr+xkfJzPohbxmG3+t16kfHD6YkNUFu+KIzNbMpPrAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766430194; c=relaxed/simple;
-	bh=PaF7GyI4rezprjUtIYvkxxp0xmLg4R6QoreSIahZw+A=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=LculdNiWG/U2cCd1gFNrl7d2LELHTcCqcbIp9F5AWi9YATqgXhfXvsn4H9MVOs22nCxxLLeKYeCbztW8yUtaoAfUYckGWCbGj9hyho3HtHyB+Lboq3Nke+u3FUL0TwIFG3+Om6gsVcUFSlGqvGHrLaz3mW8SWx2t0TrBVXQtr8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=lJ6IpMax; arc=none smtp.client-ip=109.224.244.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1766430183; x=1766689383;
-	bh=PaF7GyI4rezprjUtIYvkxxp0xmLg4R6QoreSIahZw+A=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=lJ6IpMaxuhkaRcR6shvwPCYk2EmxuWU1PfrRm1BmVc3ef+H1r5Gxm2D6uJNnbuUez
-	 NQjF3UY1fiRQun6SRo6oL8wGPggnMDgMPo51G38s8rY59FQxv/pN47JMBkUYnl3mLl
-	 EAKM5nRwtDi1i7jYQt9WF7d1S79tUQZbAgB1y7QggC8buPQDDLG9LaOFfp6FSwcqc4
-	 QxXLe9bTshiIzLPF5bgKW5v5jhB2sSVe7KzHmpM36ydkdWFaygCCbHWPIV+xJLjpqS
-	 tJxWuQgbwkHdvEYD21JHj0tzUuFta1AD5MoIeA5cnR2S/BLV/ekakFY1UvV2HVvKbb
-	 Du/FvRI8u3KCw==
-Date: Mon, 22 Dec 2025 19:02:58 +0000
-To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
-From: Alexander Koskovich <AKoskovich@pm.me>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, hrishabh.rajput@oss.qualcomm.com, Konrad Dybcio <konradybcio@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
-Message-ID: <b105810a-63a8-4d81-9ad8-b0788e2e1431@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: ac44ac6cdc9c89879847125c5270ee70225b687f
+	s=arc-20240116; t=1766430342; c=relaxed/simple;
+	bh=XAzRaUtpQSpLF7PqIZuIw0FO0Ql8emL2AC23FHRYVkE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MTH+cBVcP/wPl2z4lOnuNoIHUUXnbVmmmI8VSGFNSU6SjRY/Y8Df63fBjarZSWaPS8ZIQirsdlJBuJJLmi49NrhuhPGIdM1ne9nt9VbpwXo8oHDjSJzWsC2B2v+R1UnOAEx4khRP6O4e89SRZMmdDD1hxTVPMrQG9YdNGJfb2uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aoN4uyv1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 94336C4CEF1;
+	Mon, 22 Dec 2025 19:05:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766430341;
+	bh=XAzRaUtpQSpLF7PqIZuIw0FO0Ql8emL2AC23FHRYVkE=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=aoN4uyv16cxq6rEPBwZUQYHxkEDQLGvAwSu6a59NfMyIkig9RLC/cimm41Z5/765I
+	 kdY5rPatxNQGEZAls5Ig7VO7yZEmFzUbP76TO+gecesozGo3ttpQ+jPrsJZVDvI3Bt
+	 I+NuRijNgHXiJHEwKBDqA6mut461DuY95iHc0xuhHm5afAu+HDKndtvH698zQ6eJEk
+	 kG8LeiPgBfb9a/EyWUT1eiW+PN4WooMcJ4QPav58jQjdl3SMgZfoYuaW3nd2+pq2Zn
+	 lhWyq9tHr4LrkFLheVw7GR2sw3mXoOGgzNwWASVqvK1h5jUbmB40nLM7kdndeSpLU/
+	 9WHLAknOc+RWQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8333EE674B9;
+	Mon, 22 Dec 2025 19:05:41 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/4] sdm845: Update firmware paths
+Date: Mon, 22 Dec 2025 20:05:36 +0100
+Message-Id: <20251222-oneplus6-new-fw-path-v1-0-a2d366f9eb89@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAICWSWkC/x3MSwqAMAwA0atI1gY0VK1eRVwUTTUgtbT+QLy7x
+ eVbzDwQOQhH6LIHAp8SZXMJZZ7BuBg3M8qUDFRQVRIRbo79esQaHV9oL/RmX7DQxqpGaV1PLaT
+ UB7Zy/9t+eN8PVDmVZGYAAAA=
+X-Change-ID: 20251222-oneplus6-new-fw-path-08af474886d9
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1126; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=XAzRaUtpQSpLF7PqIZuIw0FO0Ql8emL2AC23FHRYVkE=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpSZaD/d5ILSKZpSBgn8hdmX66LHDjB8DsyxS6i
+ D/XcqLSF9KJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaUmWgwAKCRBgAj/E00kg
+ cr2rD/9f5JFbgw9MRTNdc6sP8huUcSldBiTAte5Ee6T6fZbDdF0qKB99JHGobo+CqFANnLXkxkF
+ s/mWvHXv2zBolyI52noFn3L82yNMvEUx77lzuItyCJub/fQScKm4WxBLVsrjxiFa0lsT0zeFEYd
+ GT23gilHIqOWrN4tqIn1MDpbSsWBwkTTupV4krIDrur3+dt4K3KN/HggHQDe8OfyxkNXiutMcPD
+ y4ku18TUmBB28T2Ji/QpfJNSb4ho3N7IsCnI3taC+7dcEvbeRVAse+d1/zd7IVC39O0q/kMsBts
+ oJplE4EzxNo9Yq6KSOPkG+BOtc5EHBirxgeZH0rNy46Z5mKHbFCi0Ed8ov/g7569smpiLqRXwPO
+ E5d0aoI40rIZi13HiZM4CSIQgAK8AZ4kSbsB767GPJiuC+myYomp/swI4/MPC6dfBRZtbprEqn0
+ 8VovEDM3jhCPtOkNiIh5X2kWtvDThIip/Orxv4cyZlUZNkViyEiW4PSxfdaqbZfZW9QrsuG+JYy
+ MpULAFt7Am6/mP+lOwSzMTmCpcqXZV/81ouvEwYeecBdM7ykO7UffOj8gSo4f+nkE7NRRuh/NGq
+ xhyuEG+JjliATninJ6JpdOVuCl5OCMn2CiLMShzNoEtPGVurZLi3QgFUGEHL+A9m9OWaw+1EWq9
+ oOh6msndLaJwSZw==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
+Update the paths for phones, where there are no patches pending which
+includes the firmware path update.
 
-On 9/4/25 1:05 PM, Pavan Kondeti wrote:
-> Thanks for asking this question. I believe the overlay part needs some
-> discussion here.
->
-> I have tried this series on 8550 MTP. The overlay failed, so watchdog
-> device did not probe. same is the case with 8750 too. It works only
-> after applying this patch. I will test and report my observation on 8650
-> later.
+I haven't touched the sdm845-mtp and db845c intentionally.
 
-Hi Pavan, was linked this thread after seeing what I think to be the=20
-same issue on another platform,
-but issue is a bit more serious here since bootloader fails to find a=20
-DTB at all, not just overlay fails.
-When the "arch_timer" label is missing from the base DTB on Milos,=20
-ufdt_apply_overlay in bootloader
-will fail and it looks like the DTB memory gets corrupted. If you are=20
-booting without a dtbo image,
-then you don't see the issue. Couple logs from bootloader when it happens:
+After merging, I'll notify distros and send MR against droid-juicer.
 
- =C2=A0 =C2=A0 ApplyOverlay: ufdt apply overlay failed
- =C2=A0 =C2=A0 Error: Dtb overlay failed
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (4):
+      arm64: dts: qcom: sdm845-oneplus: Update firmware paths
+      arm64: dts: qcom: sdm845-axolotl: Update firmware paths
+      arm64: dts: qcom: sdm845-samsung-starqltechn: Update firmware paths
+      arm64: dts: qcom: sdm845-xiaomi-polaris: Update firmware paths
 
-After this happens, the DTB memory seems to get corrupted:
+ .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 23 ++++++++++++++--------
+ .../boot/dts/qcom/sdm845-samsung-starqltechn.dts   | 15 ++++++++------
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts  | 22 +++++++++++++--------
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 17 ++++++++++------
+ 4 files changed, 49 insertions(+), 28 deletions(-)
+---
+base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+change-id: 20251222-oneplus6-new-fw-path-08af474886d9
 
- =C2=A0 =C2=A0 ERROR: Invalid device tree header ...
- =C2=A0 =C2=A0 Device Tree update failed Status:Not Found
-
-But it doesn't seem to have anything to do with the DTBO image itself=20
-(despite only happening with one),
-as it happens even the dtbo is effectively empty with the exception of a=20
-dummy fixups so the old version
-of libufdt in bootloader doesn't fail.
-
-This seems to have only started happening on recent versions of the=20
-proprietary hypervisor (don't see any
-dtb handling in https://github.com/quic/gunyah-hypervisor), since I=20
-don't see the same issue on Blair but I
-do on Milos.
-
-Should the label be applied to all QCOM platforms that have a timer node=20
-to prevent the issue from appearing
-elsewhere? It looks like it's already applied to lemans & sm6150.
-
-Thanks,
-Alex
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
 
 
