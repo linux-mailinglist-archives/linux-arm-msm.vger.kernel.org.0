@@ -1,368 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-86220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E94ECD5AEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:57:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BD31CD5B65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:04:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6C079300AC64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 10:57:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CD88B3017EC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:03:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37B3C31196C;
-	Mon, 22 Dec 2025 10:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 068663191DE;
+	Mon, 22 Dec 2025 11:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JABJmUxD"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BjRHVZd/";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N59LyUzV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165C730BB94
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 10:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7749621FF35
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766401055; cv=none; b=Zo+fN6nETgK4CJsyBzBlOpXcNdzoBvRF+CK1k2uqoZ9bMAcx7vUlV2wpN0wGI7CBmaieF0m3tU8K2nblBPPrrb+PeIonALMFYfPHe8E531iFYF1h5E8emQGodduCZiVEJforCO+zVB5ZvFZRF+pr6TELX3qLjBQZ/6TmISGB2yM=
+	t=1766401382; cv=none; b=GdXdH98GGE0asmPj7aC0NmAey8wYLTYPpdLKGXRuDpMWQbdpBeNnE3hJNnbPOHxm+IjWqNBv9nm7BvkZ6qI5k7u5FKmJlT10NnF2JPB1lE1T4Wb5k6PcSpb4Tqiqt+ErX4TugozUGxeeJiaeEeZ5orU/RxBetGHhJwqHrJ6/S7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766401055; c=relaxed/simple;
-	bh=Zohit+d7Nqia2qO+AWIiWXwBTYOoY4KMNV14bQFFtUk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sLv/fH1sjZVO+UwDwVTPaNxuWJZY/zPY+yhHdAg2+AKdyGhZjdwox4wVkCeGsUk9LUeijdUNei/PVlcboRsDnsOap90RAOpH4rUcbsQzP6n0IjirCv1JD0Q4qJik6PVyAP2ngGOnXmalvZIghaylcUcQhZH4Sog8/r+tDEv9JYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JABJmUxD; arc=none smtp.client-ip=209.85.218.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-b736d883ac4so684287566b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 02:57:32 -0800 (PST)
+	s=arc-20240116; t=1766401382; c=relaxed/simple;
+	bh=V58aHeBvB4nTNxTrIGwrE3WLIbUB4XyGJoqOW2PqIao=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ncoXwjj0xvt4dwFCAne/YuZC90t/uYUm/a3Hv0Kk6CroCKQkO18IcYSrkXOGlxY5Jw+w9bsA0Jf8+ZlBWNjXmGgc5d6hGN/tfQwo8VvlkbymVrSDzAavL+JrrMaqsVq4VvtT9DawtJ472X9CCUDlvcjkm9wviWN4I8nkP0bzQH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BjRHVZd/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N59LyUzV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BM8lauG3964461
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:03:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7aZ6s36kqSpgkeg3q72AMD6l8/vhyS1oDG7MzlNzu+U=; b=BjRHVZd/3nQ8hnOP
+	NhIrhAjKw1Rchi4jS6RJYfv8P26N+OWl/TJesrk2oj4rP6MzGOMx347Xif+vDwgn
+	dNZpcn7vpGEGGPSR9T58rFDm/1bYT1CnJ9M5u9CfJwGIBDZvhHrmztxrDZLBZu9m
+	wQcwa0cWqlBZqC0kbCKxfyCiwSEYrj+UlZwpIAsCEl85fUz4ETuVSiyVuEQ4ZPsS
+	Z1K0pdg1AffVMgjID1hIhv4NFTwDZsJxidqRPzgIFV6efH6bJEMopSFIglJWff50
+	grzhbuL/q+3wOpKIn7cXKfMPGmXSaL29WJLKH7TfydIzU95CkEmqrCTHNQXdtwAA
+	TC6rjQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b6vk6hg79-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:03:00 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8bb9f029f31so1052157485a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 03:03:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766401051; x=1767005851; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vEtUYlPnDW4g49nMdGggYHqAcvj6eSx1T3T4Pklvktw=;
-        b=JABJmUxDYhNsUypEE1eyhPHMgjlpXBWT5xRb4KARejAWisGftpe4BTSTV4n6vcOV2X
-         qo57Rejzy/ZBJ/WquvkXmvJEJtRBChmLnaUitp1tVEtewD97zokPFxqpuuivny34mmbd
-         gqGUUuDrtxfbg2S/OaBirfjXjoenWoSBxTMFAXraR2+jr07gIp57S21jn85imO8tM5Bx
-         TdhmrUVCkC2gjMEKdhwWEZrgWLkpEAETZJ/7JEpqtc+PdvGYCXpQzRmQzjB8eokNlgvc
-         VW+kn1sy5+lnjqGV9d67PcEDVoM7xk1+dU4Qdsb9h83iCALzQ0y7/rR9a/7F/M8EpJ+p
-         Q80A==
+        d=oss.qualcomm.com; s=google; t=1766401379; x=1767006179; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7aZ6s36kqSpgkeg3q72AMD6l8/vhyS1oDG7MzlNzu+U=;
+        b=N59LyUzVpB/0MkOxd0AjLFZK5/Z79Nzo1egC470CPA1tAuHgKXSBHyXxzvQB6CoIy2
+         0LLgV31C4NUpcNJvqYvaPJ8Qkx1ZxGIPBqcu/tEgTujWr/7Rbi6dygOer1Er4tK+v7NL
+         ZOD4BRMYf6vXipSKwi2wjMOFcxWfGDbn23CIN2NkbfCYRQxEJVRZLXYqiDdpclGBoBfn
+         VWNv0rHrk/s8lSTwf1IAgBRw6gorxxsWX4sLQVF6oNNI2LPXFip6Ivpb8s9xnC8m6d7H
+         cDoHfbvFh5GrH8KYrQqdJtPuASpuejD9waFNaT7YlLhwrJX2vZb1k9nmow7fZce2bJVn
+         pXmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766401051; x=1767005851;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vEtUYlPnDW4g49nMdGggYHqAcvj6eSx1T3T4Pklvktw=;
-        b=jkIq3vHlZ3ovAe00jpdQ4cKiJNN7EKfcXiRbAqoaJkAgml9LKMfoglRW8FJ4loOXSa
-         IAbnUngiDgX7xwoFGEimn+VWM6bN0KTLA4GBMlsedUAxoUN1e4Glg/BILBkB9C5iGLUn
-         EEDGEZ61+trF3ShKmi2bWJNj+Cw15jKH7dQh7wcu5eJm1FwuZxjpu8DI2oAwfMcUbdQC
-         xupdV5YaZUZF3j97dTkkyb3yLWHB3LRHDmgtA+gxEFz18CruQswiiRJDg0kOmGE1Jruk
-         MHfXgK6qpSgUSgeLtcU22nHBriCW+3pCbGx6+A+O4JULPNCa4W9uBj4WlHIO0D+aVgCX
-         nigQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUkz4+oqlWRo9d/6b5BtK6UiayZVg+U9qFiHhHFw6hIynV2I/U+qIiSfz2cDG1EjZvn9FlTHN8GFyIrrceP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvnkLSCxQEFFwV8LQ5E3BXSer3awjKm8LADIKa6qoYArTMTwVP
-	26KYgX/7/v3HGJLk2KHO41iNr6ak+SfUGPIXS7f8dQ3T3vGrkpIQZxoKclSzwrEhvA8=
-X-Gm-Gg: AY/fxX6VbLsGTXE2b+Oa+Vzxq2K0MpZoHNOvmYZzakAMcIFh3mQOG59rDkIZWKWJomF
-	KY/A5XBNk/3iM1/lTJsQm9liO0KL0B8LWkjc5xIP5KviEQX6fYfb7soA/scOMYM6kBbLk8eQq06
-	OwGxPxvKzN2SSfRh7VV2lBJuBZ4LNJ2DZmDdlP8DuGpPaMsjaawsJ6HLNQ7eOieafo/h65PSWUq
-	sI9nIrLGFyMA3wZOZje1wiIpBVx6jPIWwQGJHiVA7Y5x8hSaW4rWr4UKCw2PjyL5HbYUCQ3YZOT
-	UzvkSZtjhUSZbw1vdZlqrHt6Os6D/Qp6D9WKLO5iYHMkQbdAD3EGP+eAd9gBAGa63H8KkR+4Xi/
-	+PyJizTb4IGZi0iJmu5dJcR1KXFLFWypkNPZme1dpAzVJjltPVqjI8msMUoRWj93bABgiLU3aao
-	1r0dm8y6fC1OntANEJ
-X-Google-Smtp-Source: AGHT+IELyK7A/NLPhzrn4VgYN4L21tWVeMZBHHK46LVxKYhntQeFKJ42FL+SIPd64kGNWNo9z4iz0Q==
-X-Received: by 2002:a17:907:9719:b0:b80:f4d:4aba with SMTP id a640c23a62f3a-b80371d6999mr1126177266b.47.1766401051268;
-        Mon, 22 Dec 2025 02:57:31 -0800 (PST)
-Received: from linaro.org ([77.64.146.193])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037f0cc52sm1034561866b.52.2025.12.22.02.57.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Dec 2025 02:57:30 -0800 (PST)
-Date: Mon, 22 Dec 2025 11:56:56 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	rajendra.nayak@oss.qualcomm.com, sibi.sankar@oss.qualcomm.com,
-	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
-	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
-	Abel Vesa <abelvesa@kernel.org>
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Introduce Glymur base dtsi
-Message-ID: <aUkj-CkSSOlG8X6Q@linaro.org>
-References: <20251219-upstream_v3_glymur_introduction-v3-0-32271f1f685d@oss.qualcomm.com>
- <20251219-upstream_v3_glymur_introduction-v3-3-32271f1f685d@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1766401379; x=1767006179;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7aZ6s36kqSpgkeg3q72AMD6l8/vhyS1oDG7MzlNzu+U=;
+        b=oPsdsR+TH6VUoWGDD/qUkpn748Q2txyPO6MGBo1wZVC3xOFKCylRUdTs8TAKAZgxxy
+         zDaOl7IBOBOsJs78uofiMzhGW7Kh+2AqnM5ns3B8gZOs8hqO4g3eoPPNsveDV97AujM+
+         76+hV205pboqd+hLpJrPfwelqTqw9SbR3XMkr5jHbnaXZyxiQcEDx/i97F1AeKgyyJov
+         RiDlDbtBb9YSKzqBsAL40DmpiIuZ/BXe785o6PgyKDHE+rYuxU+z3TVpTWAS44Xt+BgG
+         HfyHK6HM43MUynWWy3rqO6ojKb+EBe6xy1ER79j5K+lCd7HCC99GYcOysOba75DMrpaU
+         RdPg==
+X-Gm-Message-State: AOJu0YwSWYJR4Mu9ipO3VuUujPmUvFQRUEmSAGgkbcDeZQwUlyOO0+X1
+	pnLHI/p/85fi0nypqJxm1CpUe2vDZM1IH+LjqBy5ho4Le0u6nEX+EyZZiCSO+LGYUOpS7EIp4eC
+	QERlM9dEJ0hm9PrWVIYA0bj6irSg7NpUrk9xg4OJ8q2lPilPIkH6ZXZn4SAAXJ0GEl7Ro
+X-Gm-Gg: AY/fxX5TQ7oQNu4pdaEimx250ewuObgATOr3yhx1JJGwSI5PcrW6oH4fXB1VtD0Adp+
+	TnhrVmlcAZqaimdmJReh+yJ2Jea8uGne5SnPsnrrzGTD3UEpeLCPVpxA/ea15W25YHxvhwz6AXN
+	mF8iXT5Gux6jAwYFZmO0kGaLavf6L4WYl/ZcT0tKGImWZzW3Yk/K7zueY8OkJ8Tm9E7c2cbwaQG
+	6X8XH9tYrFaX5aT0de19DfuPoG8cdDUUSPRuLx4/r5M7RSgZN48Wkd5Nq1YyNfQkqbq8P5B2lpR
+	c1emaXqetqRpZnfZT+ubNBDdxPI2iCI+UtdioBdvft79mYgGF9Xr4PjU5wI146EG1IOQTeNRrq7
+	qgPogy9aX2V21rhL3YVdAzCM+uFxabiwAQZnRGay+6JADDeOXJNRVm6g2/EuCiijaMKZkAaq/
+X-Received: by 2002:a05:620a:2697:b0:88f:c0e1:ec2 with SMTP id af79cd13be357-8c08fd32cebmr1637527785a.60.1766401379477;
+        Mon, 22 Dec 2025 03:02:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFgc4/mbxP1v0Y6Y+66GXLM/In3vvQag3zr/Bzdv0DzMO4r//tvzBx5y45NhOvo3FD7nI95Q==
+X-Received: by 2002:a05:620a:2697:b0:88f:c0e1:ec2 with SMTP id af79cd13be357-8c08fd32cebmr1637522485a.60.1766401378889;
+        Mon, 22 Dec 2025 03:02:58 -0800 (PST)
+Received: from [10.38.247.176] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0975ef6a7sm777484085a.55.2025.12.22.03.02.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Dec 2025 03:02:58 -0800 (PST)
+Message-ID: <a371b7d4-4a6e-4d9c-b86d-14b4cfe7a6eb@oss.qualcomm.com>
+Date: Mon, 22 Dec 2025 19:02:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: i2c: qcom-cci: Document sm6150
+ compatible
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+References: <20251222-sm6150_evk-v1-0-4d260a31c00d@oss.qualcomm.com>
+ <20251222-sm6150_evk-v1-1-4d260a31c00d@oss.qualcomm.com>
+ <43efa6fd-53c3-4680-8aca-7b37089ca295@kernel.org>
+ <68dffe33-fe4a-4c4b-890e-87e0229d84bf@oss.qualcomm.com>
+ <b96c10a5-942d-446e-b67e-a566a7d09274@oss.qualcomm.com>
+Content-Language: en-US
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+In-Reply-To: <b96c10a5-942d-446e-b67e-a566a7d09274@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251219-upstream_v3_glymur_introduction-v3-3-32271f1f685d@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: iP-Cnz6st-t9murxqaIi2jqFqx2nlBlt
+X-Authority-Analysis: v=2.4 cv=cuuWUl4i c=1 sm=1 tr=0 ts=69492564 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=jtnMdLYT_4TzbHYvX8gA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDEwMCBTYWx0ZWRfX46dRyrwEaTyI
+ FjAVIsmlMjdkVUcTcXf+OpubY0HyuKPMObZzUzkOhrQ62nxhUhiyPPf+RI8MGJt00C32hgzBoFZ
+ n/fXEvK7P3trDpBrX7NpIPYBKiWPLpLBh6DXnQZ8rTtfY7DJj2DmWVIEVgyoZj7vnGEJex4K2V0
+ qLeUNcE2TEMnpWWeK132jMhJsNJIGNkCudVR1Puy1MaVXawOhpSnhmvGS7GJ4GO+QuCyOxcc/YQ
+ odHKt6i92dDnnJhfhdKnduC5fXALsfpiCES/P9lGDUevqLdUALL6moztV3UBaoz/NahNPach6lp
+ NpdYTa954WuyIgPI8UDdQ5EFeAUGYAj+sBGjmE5aNvyGvohbovt0KdK3eAM7VCF9G+kz1fSXRRq
+ e+EQ+a/N10kNvSTjfrGkdJTgW1Lefy4HRz9iJ/Q0jW1Lh4XwlEsajmvTQcvXwK7lcEsbaLKFpmq
+ H5lHTUrlT30kf4/qrpQ==
+X-Proofpoint-GUID: iP-Cnz6st-t9murxqaIi2jqFqx2nlBlt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512220100
 
-On Fri, Dec 19, 2025 at 08:16:56PM +0530, Pankaj Patil wrote:
-> Introduce the base device tree support for Glymur – Qualcomm's
-> next-generation compute SoC. The new glymur.dtsi describes the core SoC
-> components, including:
+
+
+On 12/22/2025 5:49 PM, Konrad Dybcio wrote:
+> On 12/22/25 10:13 AM, Wenmeng Liu wrote:
+>>
+>>
+>> On 12/22/2025 4:58 PM, Krzysztof Kozlowski wrote:
+>>> On 22/12/2025 09:44, Wenmeng Liu wrote:
+>>>> Add the sm6150 CCI device string compatible.
+>>>>
+>>>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+>>>> ---
+>>>>    .../devicetree/bindings/i2c/qcom,i2c-cci.yaml          | 18 ++++++++++++++++++
+>>>>    1 file changed, 18 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+>>>> index a3fe1eea6aece9685674feaa5ec53765c1ce23d8..cb5e6fd5b2ad1de79a9b29d54869d093c952d778 100644
+>>>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+>>>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+>>>> @@ -33,6 +33,7 @@ properties:
+>>>>                  - qcom,sc8280xp-cci
+>>>>                  - qcom,sdm670-cci
+>>>>                  - qcom,sdm845-cci
+>>>> +              - qcom,sm6150-cci
+>>>>                  - qcom,sm6350-cci
+>>>>                  - qcom,sm8250-cci
+>>>>                  - qcom,sm8450-cci
+>>>> @@ -263,6 +264,23 @@ allOf:
+>>>>                - const: cpas_ahb
+>>>>                - const: cci
+>>>>    +  - if:
+>>>> +      properties:
+>>>> +        compatible:
+>>>> +          contains:
+>>>> +            enum:
+>>>> +              - qcom,sm6150-cci
+>>>> +    then:
+>>>> +      properties:
+>>>> +        clocks:
+>>>> +          minItems: 3
+>>>> +          maxItems: 3
+>>>> +        clock-names:
+>>>> +          items:
+>>>> +            - const: soc_ahb
+>>>
+>>>
+>>> Isn't this just camnoc_axi for this device (pay attention: to this device)?
+>>>
+>>
+>> On this SOC, both soc_ahb and camnoc_axi exist.
+>> Is it suggested that I use the existing ones below?
+>>   - if:
+>>        properties:
+>>          compatible:
+>>            contains:
+>>              enum:
+>>                - qcom,sdm670-cci
+>>      then:
+>>        properties:
+>>          clocks:
+>>            minItems: 4
+>>            maxItems: 4
+>>          clock-names:
+>>            items:
+>>              - const: camnoc_axi
+>>              - const: soc_ahb
+>>              - const: cpas_ahb
+>>              - const: cci
 > 
-> - CPUs and CPU topology
-> - Interrupt controller and TLMM
-> - GCC,DISPCC and RPMHCC clock controllers
-> - Reserved memory and interconnects
-> - SMMU and firmware SCM
-> - Watchdog, RPMHPD, APPS RSC and SRAM
-> - PSCI and PMU nodes
-> - QUPv3 serial engines
-> - CPU power domains and idle states, plus SCMI/ SRAM pieces for CPU DVFS
-> - PDP0 mailbox, IPCC and AOSS
-> - Display clock controller
-> - SPMI PMIC arbiter with SPMI0/1/2 buses
-> - SMP2P nodes
-> - TSENS and thermal zones (8 instances, 92 sensors)
+> Are both AXI and the two AHB clocks necessary for the CCI to operate?
+> It wasn't the case on other similarly-aged platforms
 > 
-> Add dtsi files for PMH0101, PMK8850, PMCX0102, SMB2370, PMH0104,
-> PMH0110 along with temp-alarm and GPIO nodes needed on Glymur
-> 
-> Add glmur-pmics.dtsi file for all the pmics enabled
-> 
-> Enabled PCIe controllers and associated PHY to support boot to
-> shell with nvme storage,
-> List of PCIe instances enabled:
-> 
-> - PCIe3b
-> - PCIe4
-> - PCIe5
-> - PCIe6
->
-> [...]
-> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> new file mode 100644
-> index 000000000000..eb042541cfe1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> @@ -0,0 +1,5700 @@
-> [...]
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		cpu0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,oryon";
-> +			reg = <0x0 0x0>;
-> +			enable-method = "psci";
-> +			power-domains = <&cpu_pd0>, <&scmi_perf 0>;
-> +			power-domain-names = "psci", "perf";
-> +			cpu-idle-states = <&cpu_c4>;
+> Konrad
 
-You probably want to move this to domain-idle-states:
-https://lore.kernel.org/linux-arm-msm/20251010-topic-x1e_dt_idle-v1-1-b1c8d558e635@oss.qualcomm.com/
-
-> +			next-level-cache = <&l2_0>;
-> +
-> +			l2_0: l2-cache {
-> +				compatible = "cache";
-> +				cache-level = <2>;
-> +				cache-unified;
-> +			};
-> +		};
-> [...]
-> +		qupv3_2: geniqup@8c0000 {
-> +			compatible = "qcom,geni-se-qup";
-> +			reg = <0x0 0x008c0000 0x0 0x3000>;
-> +			clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
-> +				 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
-> +			clock-names = "m-ahb",
-> +				      "s-ahb";
-> +			iommus = <&apps_smmu 0xd63 0x0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			status = "disabled";
-> +
-> +			i2c16: i2c@880000 {
-> +				compatible = "qcom,geni-i2c";
-> +				reg = <0x0 0x00880000 0x0 0x4000>;
-> +				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
-> +				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
-> +				clock-names = "se";
-> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
-> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
-> +						<&hsc_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>,
-
-CPU->something paths should be QCOM_ICC_TAG_ACTIVE_ONLY (everywhere).
-
-> +						<&aggre3_noc MASTER_QUP_2 QCOM_ICC_TAG_ALWAYS
-> +						 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> +				interconnect-names = "qup-core",
-> +						     "qup-config",
-> +						     "qup-memory";
-> +				dmas = <&gpi_dma2 0 0 QCOM_GPI_I2C>,
-> +				       <&gpi_dma2 1 0 QCOM_GPI_I2C>;
-> +				dma-names = "tx",
-> +					    "rx";
-> +				pinctrl-0 = <&qup_i2c16_data_clk>;
-> +				pinctrl-names = "default";
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				status = "disabled";
-> +			};
-> [...]
-> +		pcie4: pci@1bf0000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,glymur-pcie", "qcom,pcie-x1e80100";
-> +			reg = <0x0 0x01bf0000 0x0 0x3000>,
-> +			      <0x0 0x78000000 0x0 0xf20>,
-> +			      <0x0 0x78000f40 0x0 0xa8>,
-> +			      <0x0 0x78001000 0x0 0x4000>,
-> +			      <0x0 0x78005000 0x0 0x100000>,
-> +			      <0x0 0x01bf3000 0x0 0x1000>;
-> +			reg-names = "parf",
-> +				    "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "config",
-> +				    "mhi";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x00000000 0x0 0x78105000 0x0 0x100000>,
-> +				<0x02000000 0x0 0x78205000 0x0 0x78205000 0x0 0x1dfb000>,
-> +				<0x03000000 0x7 0x80000000 0x7 0x80000000 0x0 0x20000000>;
-> +			bus-range = <0 0xff>;
-> +
-> +			dma-coherent;
-> +
-> +			linux,pci-domain = <4>;
-> +			num-lanes = <2>;
-> +
-> +			operating-points-v2 = <&pcie4_opp_table>;
-> +
-> +			msi-map = <0x0 &gic_its 0xc0000 0x10000>;
-> +
-> +			interrupts = <GIC_SPI 505 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 510 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 511 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 512 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 944 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0",
-> +					  "msi1",
-> +					  "msi2",
-> +					  "msi3",
-> +					  "msi4",
-> +					  "msi5",
-> +					  "msi6",
-> +					  "msi7",
-> +					  "global";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 0 513 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 0 514 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 0 515 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 0 516 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_4_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_4_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_4_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_4_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_4_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_4_WEST_SF_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "noc_aggr";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_4_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			interconnects = <&pcie_west_anoc MASTER_PCIE_4 QCOM_ICC_TAG_ALWAYS
-> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&hsc_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					&pcie_west_slv_noc SLAVE_PCIE_4 QCOM_ICC_TAG_ALWAYS>;
-> +			interconnect-names = "pcie-mem",
-> +					     "cpu-pcie";
-> +
-> +			resets = <&gcc GCC_PCIE_4_BCR>,
-> +				 <&gcc GCC_PCIE_4_LINK_DOWN_BCR>;
-> +			reset-names = "pci",
-> +				      "link_down";
-> +
-> +			power-domains = <&gcc GCC_PCIE_4_GDSC>;
-> +
-> +			eq-presets-8gts = /bits/ 16 <0x5555 0x5555>;
-> +			eq-presets-16gts = /bits/ 8 <0x55 0x55>;
-
-Shouldn't there be an IOMMU assigned here? (i.e. iommus = <...> or
-iommu-map = <...>). The reason we don't have these directly in
-hamoa.dtsi is that it runs in EL1 by default and the Gunyah hypervisor
-prevents direct access to the SMMUv3 that protects the PCIe endpoints.
-
-Your cover letter says Glymur is capable of booting at EL2, so this
-can't be the case here. Is there no SMMU for PCIe on Glymur?
-
-There are significant security and performance downsides without a IOMMU
-assigned here (especially with the upcoming USB4 enablement), so this is
-not something I would expect to be omitted without any TODO comment or
-similar mentioned anywhere.
-
-> [...]
-> +		dispcc: clock-controller@af00000 {
-> +			compatible = "qcom,glymur-dispcc";
-> +			reg = <0x0 0x0af00000 0x0 0x20000>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&sleep_clk>,
-> +				 <0>, /* dp0 */
-> +				 <0>,
-> +				 <0>, /* dp1 */
-> +				 <0>,
-> +				 <0>, /* dp2 */
-> +				 <0>,
-> +				 <0>, /* dp3 */
-> +				 <0>,
-> +				 <0>, /* dsi0 */
-> +				 <0>,
-> +				 <0>, /* dsi1 */
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>,
-> +				 <0>;
-> +			power-domains = <&rpmhpd RPMHPD_MMCX>;
-> +			required-opps = <&rpmhpd_opp_turbo>;
-
-Are you sure you want to force TURBO here?
-
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
-> [...]
-> +		watchdog@17600000 {
-> +			compatible = "qcom,kpss-wdt";
-
-This compatible is deprecated.
-
-> +			reg = <0x0 0x17600000 0x0 0x1000>;
-> +			clocks = <&sleep_clk>;
-> +			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
-> +		};
-> +
-> [...]
+The test conclusion indicates that all three clocks are necessary.
+all of them are necessary.
 
 Thanks,
-Stephan
+Wenmeng
+
+
 
