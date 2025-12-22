@@ -1,317 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-86228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B43ACD5D47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:41:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EF30CD5D6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:45:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A4D1D300C159
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:41:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D469030213FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0FC31A570;
-	Mon, 22 Dec 2025 11:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB4FB314B62;
+	Mon, 22 Dec 2025 11:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Jr/VnzAO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bzZkfO0l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I6GBvEeK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9A231A07C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A3521FF23;
+	Mon, 22 Dec 2025 11:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766403695; cv=none; b=JBw6R3uFwc+jF3V85ywSpwdhLkTvbeSIzvNypKHsQsWf/DWoIuSxkT9BqLAZE1V3fibJuLXwmnggKGug3iUBBJFkhwZB1MTOoixiq1dhKQCkB6dAE3lTWm7dYsiwpG6nwa6Pa4lknmg0GN6hJZT2I5lCMUcYibb1ocuEgZFIiVw=
+	t=1766403923; cv=none; b=lYo51k/PyzqC7N/D1VnC4d345gJNlL7RQpDbuvVWO6IArY+twPXZDp3DfJCpVByqXOEjRGOOWgXFMbeKhqjBogDzQK09kAnTAA1hT3H7eyLYjUb/tLCpRquKZ0Ql+GBSw/bPW2dCaqZFfJEgOPcd+G6qxT/lDXSUMi/fHtgdgCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766403695; c=relaxed/simple;
-	bh=pyrrhaX/CQ8Yt1gGy1KhHavnV9uSnKcpHBeyLBp4GGU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZQX+BXDWqw2uRpGlUQYJ+TtiAzfSQWlK3NI0eG6CHLIBDZ73GP2mhRdhfNTSVPdM8S4aDPw2J1pri8wgo9N9Vh70O+t0wqhSRRC6eq+qo+eCKbIw6AJYpvd1gRwUPGSSGnkcJ9gdnIZvYNqiTgPq1f1co+d/BCZztnXZu7ItP8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jr/VnzAO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bzZkfO0l; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BM5gFUq2189766
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:41:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1/UIKllkeGxfodWfrgyA3aDglaljYW2IF4b2+t1+pfE=; b=Jr/VnzAO7vEfcILA
-	DKLS1Q6Ch74s1IoDPCbiQ+JRQGJxSLojulamGHNE1JBlMnsuWuwEWxMt24x0xAbH
-	7+emv1kpkGGDAafptGMs9IsoQ2D/KVMx5H7s9iPV5OMKwXW5jRfAWyvek2R0+mFm
-	jgsMOpl6NDlIn7egIzyKiivvv8rNsRKmGrWpd+31wsSbAK3htvuIolwMtdMMXOAn
-	eSqwWQdW08/T+WwQZSjz+jfhRvyw6ADHaJD8hiZZb4EwxPSPgGslTNgT0Qk5QwOW
-	E/WtN0zkEDevHGtYwzQw+zZ0dJQ0ZInzA1OePw8QHHd/3DhyTC8twFSZerqexqjA
-	DVtVOw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b702t91xc-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:41:32 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4edb6a94873so77092071cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 03:41:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766403690; x=1767008490; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1/UIKllkeGxfodWfrgyA3aDglaljYW2IF4b2+t1+pfE=;
-        b=bzZkfO0lG4KSo/Ekas9PZhlF664/clLDO/Jlt1JB5IMP0X7mwkjSKCNMnQo63LVGef
-         eWYaTdVQ270jPotJ+IQJGK4RaBqZePgkBpRbNGQnRpA0kqYK/1qP3mbtycmzi50WB211
-         aBdrmwswe3UFSFScXmB7KDulB66yOcMPLqb6ij0vsZ0Lcl2pP45J9paKS7/4Oxwc2vXJ
-         4NasFuquwRB2g7ZLbti3sGq3+IynhRz3pTUEz7WnOWjJ9UVh7TdKWmDqNHqHYkLcoiXN
-         VxjQ4S1QtTxjfTbfYLIWAzfa2NmH/pc4GFzOQZ0VksulEfAtCjh4sKvOToPGB1rpMivg
-         LBJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766403690; x=1767008490;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1/UIKllkeGxfodWfrgyA3aDglaljYW2IF4b2+t1+pfE=;
-        b=rg5FDuCsj7vnCKU9EkViIVaXBetPIIfzVI9e4xYua9oQmzWz+/J/C1pWr9qnPedJcy
-         9F+j2F3GnmthmSIjfrNhKSXw2x5SaXykOBByeCZwUA0jA03aF6R75s3NfR7t75ApaGDr
-         vDxqLXs66gbzH5R+By7CGJGU2eCW5kSUR0Ebb2E1NmmA+3Io12izIF6GyA49rLzx+rOm
-         w4WsV5YpYN1m2AhUOqA7MC1XAwHMNe3QYmRcF7411ddFqCdzKZrKi7I6/6B7LmGdQ5cO
-         nsmxSN+WfRlpHJjKpLXCfiNrrkfH6cbwyzQNSikWr0Q/QVAHlzYVrulJ/vjX7WyEkahU
-         7SSw==
-X-Gm-Message-State: AOJu0YzvgAoqedb8ZfpWz0u/x/AJOYp7uxwCtEHz74k8sXSJQ86Dz/mL
-	0+pLfoP899PeeWRRucD5zX4ZadmvdGUXBfqXvGmWs3itRx4uOfJHbD4la3bE7QM/ixr3n69upIF
-	BiWRwE44s37wiPSQpb2WBSdvvksNGkhfJ+7/mQ9+U3ub8BibVIQutDryOeCkrk8Tg3aVV
-X-Gm-Gg: AY/fxX7CGd9jqX/8HBtFhs9wI4ZKgmP6AE8PSy5Fgxn1tcdhjPaKu0mM2miD5+qBTWR
-	ssFjyKEviN7LSaeLmS5pljWS/eNfjtK17ynFkJHgNaCPpRpYByvE1VX6xZmm004fb/SvnitAhlM
-	NpIRHu8CcizK1dzjPziagc3DqizGZpKMDweJqp4cpDIdQs0fvmBzGHNvij1KCZrUd7c2ams5E7X
-	kAvLS0TxfUKqT9A+tMOe7FJ8yqiitTIoDXa5S5PXLY1OPK3/nYiCxYCY6MrGV0Y/eKQpZCORbwQ
-	bHxWqQuB674WTskfhvRGcK+acxu5OuL5FIHvGvyXVt4jOtZaOE70JpL7lBf4s8rp72kOMkrJ83f
-	umTj+rXKLViQWqGTIf84i45Ri1hW2qYL+EheOpc1VKBx+MLHBDW7myrUWiqNVX4GCHLHav1L9
-X-Received: by 2002:a05:622a:14cb:b0:4e8:aff9:a7a8 with SMTP id d75a77b69052e-4f4abd8c667mr168638211cf.52.1766403690585;
-        Mon, 22 Dec 2025 03:41:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGAza++v23oEt2IeKj7cYmSqi5vvDcYVw+GWG1+c7r0HzLdrAgIa03YWh75CHj/b9JMwdvaZg==
-X-Received: by 2002:a05:622a:14cb:b0:4e8:aff9:a7a8 with SMTP id d75a77b69052e-4f4abd8c667mr168637841cf.52.1766403689980;
-        Mon, 22 Dec 2025 03:41:29 -0800 (PST)
-Received: from [10.38.247.176] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4ac549da1sm74420891cf.9.2025.12.22.03.41.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Dec 2025 03:41:29 -0800 (PST)
-Message-ID: <703a502c-883d-434a-8bcf-f785080f5102@oss.qualcomm.com>
-Date: Mon, 22 Dec 2025 19:41:22 +0800
+	s=arc-20240116; t=1766403923; c=relaxed/simple;
+	bh=a3HAZXboIYJtAUAVesMtixmEpYZ6agiytIhdOW9P2HU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OOy31/fDZxZjseG57AFfmu5E1WV8SgpR6TMONn6+/PCzaCn0HGtehLBRJ63llVkWaV2FvoHPV9S2MNVotvyjlET54wfzUnyWwMukv884DBo+N8k0sRUpPsLOaZLqFDyYsWfgKU9wlkiV/czUhK0Lq2mQ31vFMYAB12KerDavYo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I6GBvEeK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA7DC4CEF1;
+	Mon, 22 Dec 2025 11:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766403923;
+	bh=a3HAZXboIYJtAUAVesMtixmEpYZ6agiytIhdOW9P2HU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=I6GBvEeK7QJIwyVC0RguQ8ppbhf51QHCw6gAC9fbdnqgVssO3G4JNHD4Dag9JsdU8
+	 gH/BPSeZZ2RbMHrvJSd3yGXap6TfLSEA78UkcgthxVw9F9jgOl3jghxJh3OQw40Ilj
+	 RYkBP5lOkDJvbkcgJVyAWND1g2rHAARICk89OBfJ9SCd2to93kVQjsA4D9JG92aqOY
+	 2gGgc47Xi5xvRX6rnaHUTjP9/soKRV70zOW4zdd0n4ncZtFIY5+FfjtM+eJc7V1RsN
+	 0hajoj0KmFqLiZZR5bjuug2o7TycznWf+owlgZLVJEiTsjkPzwm3vMzz9jTFcbMZlS
+	 c5iC2jQalglEA==
+Date: Mon, 22 Dec 2025 17:15:05 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Hans de Goede <hansg@kernel.org>
+Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jeff Johnson <jjohnson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, ath12k@lists.infradead.org, 
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Dale Whinham <daleyo@gmail.com>
+Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
+ disable-rfkill property
+Message-ID: <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
+References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
+ <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
+ <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
+ <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
+ <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: talos-evk-camera: Add DT overlay
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-References: <20251222-sm6150_evk-v1-0-4d260a31c00d@oss.qualcomm.com>
- <20251222-sm6150_evk-v1-3-4d260a31c00d@oss.qualcomm.com>
- <cfb8f192-b327-4bb9-993e-a28184571712@linaro.org>
-Content-Language: en-US
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-In-Reply-To: <cfb8f192-b327-4bb9-993e-a28184571712@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=SIhPlevH c=1 sm=1 tr=0 ts=69492e6c cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=db0P6ePePT7CMihELGIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: sDFZEoOZYy-zmjWZtzjbhFPeinJMvM6N
-X-Proofpoint-GUID: sDFZEoOZYy-zmjWZtzjbhFPeinJMvM6N
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDEwNiBTYWx0ZWRfXyMhFoEFIgkd5
- ct59mpnOn7gCpoo+kunkcr2aCgjSaoSiEYKm2WT7qCtrLalELdwI3tTbHHoYP52JJE3KHPj2TP/
- vIFJXluqMy0ikd1iTbQ+fwyFIDLW5Z6uC/MDX4GKt2GvwlbgvZ/IXInfQsIYNtH0vA8fQKsrceW
- 16Ee1Y+nH/n80bHV28HmnrQhU020Emv8i5ObqMFvirMUzzJ1KtmAObWbPYGyeyDJawo1XbrgA1g
- uAo6ZcNfBJWMreRvsT6ueLpRLXjTb7VA4QiDkj3Z203B9nTJwXTq98ppGQ6VF8YB7TOgmWoUVp7
- nR9XBbCpH3nSMuw1mURHQotd9RMF+N5XNjcwbxNoFtiSlhhhue1AB3sesTuTh4LIzqhlcnQOefP
- 1efKC3J9geeNZl9HhGHLBYUuSQvaXoicmrxm4zg/xSxPLsv4cBa7JPhyg82+3tRMIXbwJJ1dCrP
- KovhLV6W+ycxGjEfF1g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- adultscore=0 phishscore=0 spamscore=0 suspectscore=0 clxscore=1015
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512220106
+In-Reply-To: <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
 
+On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
+> +Cc Mani
+> 
+> Hi,
+> 
+> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
+> > On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
+> >> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> >>
+> >> For some devices, Wi-Fi is entirely hard blocked by default making
+> >> the Wi-Fi radio unusable, except if rfkill is disabled as expected
+> >> on those models.
+> >>
+> >> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
+> >> disabling specific features based on ACPI bitflag") added a way to
+> >> support features set via ACPI, including the DISABLE_RFKILL bit.
+> >>
+> >> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
+> >> equivalent for devices described by a Devicetree instead of ACPI.
+> >>
+> >> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> >> ---
+> >>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
+> >>   1 file changed, 6 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> >> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
+> >> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> >> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+> >> @@ -29,6 +29,12 @@ properties:
+> >>         different 5 GHz subbands. Using them incorrectly could not work or
+> >>         decrease performance noticeably
+> >>
+> >> +  disable-rfkill:
+> >> +    type: boolean
+> >> +    description:
+> >> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
+> >> +      blocked by default otherwise
+> >> +
+> >>   additionalProperties: true
+> >>
+> >>   examples:
+> >>
+> >> -- 
+> >> 2.47.3
+> >>
+> >>
+> >>
+> > 
+> > Is this really a hardware description though ?
+> 
+> I would say yes it is. The wifi chip has an rfkill input pin and
+> things will be broken when that pin is hardwired to a fixed value
+> rather then being actually connected to a GPIO from say
+> the embedded controller.
+> 
 
+IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
+the device won't make use of it as there is no physical connection. So you want
+the WLAN driver to change the state through SW?
 
-On 12/22/2025 7:19 PM, Vladimir Zapolskiy wrote:
-> On 12/22/25 10:44, Wenmeng Liu wrote:
->> Enable IMX577 via CCI on Taloss EVK Core Kit.
->>
->> The Talos EVK board does not include a camera sensor
->> by default, this overlay reflects the possibility of
->> attaching an optional camera sensor.
->> For this reason, the camera sensor configuration is
->> placed in talos-evk-camera.dtso, rather than
->> modifying the base talos-evk.dts.
->>
->> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile              |  2 +
->>   arch/arm64/boot/dts/qcom/talos-evk-camera.dtso | 64 ++++++++++++++++ 
->> ++++++++++
->>   arch/arm64/boot/dts/qcom/talos.dtsi            | 21 +++++++++
+> So I think that we would need here is not a disable-rfkill property
+> but some way to indicate in the DT-node that the rfkill input pin
+> is not connected and thus should be ignored.
 > 
-> Please split QCS615 MCLK definitions change into a separate commit.
-ACK.>
->>   3 files changed, 87 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/ 
->> qcom/Makefile
->> index 
->> 60121f133078b2754f98e6f45a3db4031b478cc8..b1d85b1f4a94714f2a5c976d162482d70ae920f2 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -325,7 +325,9 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8650-qrd.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-mtp.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-qrd.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += talos-evk.dtb
->> +talos-evk-camera-dtbs        := talos-evk.dtb talos-evk-camera.dtbo
->>   talos-evk-lvds-auo,g133han01-dtbs    := talos-evk.dtb talos-evk- 
->> lvds-auo,g133han01.dtbo
->> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk-camera.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)    += talos-evk-lvds-auo,g133han01.dtb
->>   x1e001de-devkit-el2-dtbs    := x1e001de-devkit.dtb x1-el2.dtbo
->>   dtb-$(CONFIG_ARCH_QCOM)    += x1e001de-devkit.dtb x1e001de-devkit- 
->> el2.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-camera.dtso b/arch/ 
->> arm64/boot/dts/qcom/talos-evk-camera.dtso
->> new file mode 100644
->> index 
->> 0000000000000000000000000000000000000000..ae1a02295b4dc48212aad40980a329ff458fe69a
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/talos-evk-camera.dtso
->> @@ -0,0 +1,64 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> This (the rfkill input pin being not-connected) IMHO very much
+> is hw-description.
 > 
-> Please add a missing year of the change.
-Now our requirement is a yearless copyright.>
->> + */
->> +
->> +/dts-v1/;
->> +/plugin/;
->> +
->> +#include <dt-bindings/clock/qcom,qcs615-camcc.h>
->> +#include <dt-bindings/gpio/gpio.h>
->> +
->> +&camss {
->> +    vdd-csiphy-1p2-supply = <&vreg_l11a>;
->> +    vdd-csiphy-1p8-supply = <&vreg_l12a>;
->> +
->> +    status = "okay";
->> +
->> +    ports {
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +
->> +        port@1 {
->> +            reg = <1>;
->> +
->> +            csiphy1_ep: endpoint {
->> +                clock-lanes = <7>;
-> 
-> Please remove 'clock-lanes' property.
-ACK.>
->> +                data-lanes = <0 1 2 3>;
->> +                remote-endpoint = <&imx577_ep1>;
->> +            };
->> +        };
->> +    };
->> +};
->> +
->> +&cci {
->> +    status = "okay";
->> +};
->> +
->> +&cci_i2c1 {
->> +    #address-cells = <1>;
->> +    #size-cells = <0>;
->> +
->> +    camera@1a {
->> +        compatible = "sony,imx577";
->> +        reg = <0x1a>;
->> +
->> +        reset-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
->> +        pinctrl-0 = <&cam2_default>;
->> +        pinctrl-names = "default";
->> +
->> +        clocks = <&camcc CAM_CC_MCLK2_CLK>;
->> +        assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
->> +        assigned-clock-rates = <24000000>;
->> +
->> +        avdd-supply = <&vreg_s4a>;
-> 
-> Just one voltage supply?
-yes, 22pin camera module only have one pin for power.>
->> +
->> +        port {
->> +            imx577_ep1: endpoint {
->> +                link-frequencies = /bits/ 64 <600000000>;
->> +                data-lanes = <1 2 3 4>;
->> +                remote-endpoint = <&csiphy1_ep>;
->> +            };
->> +        };
->> +    };
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/ 
->> dts/qcom/talos.dtsi
->> index 
->> ebb1807f0222c075d4207163ed4359a55616d903..3626312f138f2e8f1888eb6aa43fa474cdee884f 100644
->> --- a/arch/arm64/boot/dts/qcom/talos.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/talos.dtsi
->> @@ -1550,6 +1550,27 @@ tlmm: pinctrl@3100000 {
->>               #interrupt-cells = <2>;
->>               wakeup-parent = <&pdc>;
->> +            cam0_default: cam0-default-state {
->> +                pins = "gpio28";
->> +                function = "cam_mclk";
->> +                drive-strength = <2>;
->> +                bias-disable;
->> +            };
->> +
->> +            cam1_default: cam1-default-state {
->> +                pins = "gpio29";
->> +                function = "cam_mclk";
->> +                drive-strength = <2>;
->> +                bias-disable;
->> +            };
->> +
->> +            cam2_default: cam2-default-state {
->> +                pins = "gpio30";
->> +                function = "cam_mclk";
->> +                drive-strength = <2>;
->> +                bias-disable;
->> +            };
->> +
-> 
-> Please add to the list another pad with MCLK function, which is GPIO31.
 
-ACK.>
->>               cci_default: cci0-default-state {
->>                   cci_i2c0_default: cci-i2c0-default-pins {
->>                       /* SDA, SCL */
->>
-> 
-will update in next version.
+Though we can argue this way, I would prefer to handle it in the driver. For
+example, with my M.2 series, we will end up describing the M.2 slot:
 
-Thanks,
-Wenmeng
+	connector {
+		compatible = "pcie-m2-e-connector";
+		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
+		...
+		ports {
+			...
+			endpoint@0 {
+				reg = <0>;
+				remote-endpoint = <&pcie4_port0_ep>;
+			};
+		};
+	};
+
+Then if we use a DT property to convey the RFKILL pin state of the device, we
+would need to describe the endpoint device in DT and hardcode the state:
+
+	&pcie4_port0 {
+		...
+		port {
+			pcie4_port0_ep: endpoint {
+				remote-endpoint = <&m2_e_pcie_ep>;
+				disable-rfkill;
+			};
+		};
+	};
+
+So this will essentially make the M.2 device non-swappable unless you change the
+DT since you've how hardcoded the device property in the binding. This is
+something I try to avoid to make the M.2 slot really swappable.
+
+For this reason, I would prefer to handle the RFKILL state in the WLAN driver
+using the device specific compatible. This will be problematic only if multiple
+cards of the same Device ID have different RFKILL state and the devices are not
+distinguishable even with sub IDs.
+
+FWIW, ACPI support added with commit c6a7c0b09d5f, suffers from the same
+limitation.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
