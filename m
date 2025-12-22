@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-86094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24429CD4A8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 04:51:16 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B4DECD4A9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 04:51:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5E27A3006460
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 03:51:14 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 48C5A30010D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 03:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A184E326951;
-	Mon, 22 Dec 2025 03:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A03832720C;
+	Mon, 22 Dec 2025 03:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aygTOXkt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ByEwSWJC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737EE326946;
-	Mon, 22 Dec 2025 03:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0646327200;
+	Mon, 22 Dec 2025 03:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766375470; cv=none; b=l7jqPP0xs6VKiz2gzZpgxvfEgPSoY1jpYTVfGuxJt/HE0rAGxMVm2/rtrmC0YTT6IFAgke5E2LmDhbLR2LDc4/KT+SuObkIF3uxEC5BUWrMBuLAl2fDfkAmU06R9kT0dkz/CWfMIKgN8TgBKYzwf9EAOGbd1hgsrjSdG7K5bT/o=
+	t=1766375472; cv=none; b=BC7Johr+F7tdMW7Fw64u9dMg94q6A9hcDuoj+T51Q8PYEKu4zn+0kB8R3LyIglA5vDIouyf9aHt02gURLIkRcbhVV/AS5SYf3v91FDVTUGnswKGzk96hba3n4n4UOHmOcUaZ3MtQqnEGTy65YNrtjk5bM3eML5an8ZnRHtAcHOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766375470; c=relaxed/simple;
-	bh=nBw4PryBF6Gkq2ZTd+pa+4krsc8cXuhOR+oVgs3t3nQ=;
+	s=arc-20240116; t=1766375472; c=relaxed/simple;
+	bh=bmZtYfujMFG4w/cR+R5ItWw4bZeevnK8Lo5r2PAD8ys=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=F4FlV75qRZ7Kr3P0UIGkPSk33Kt2Vr1qN9uCwAt4eF/BR1TQ39xRr8SAu5O27a1UVrPa8CM3rOagctk6bniVst+kTlrELcB90e/cSGwEgz3iE4s8VEP+vmImMIzd+HWN6FVsTWC7gUeSUym2wHxg3NyTztzpgWbY2AzoR7EljYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aygTOXkt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9189C2BC86;
-	Mon, 22 Dec 2025 03:51:09 +0000 (UTC)
+	 Message-Id:Subject; b=Rflbvn8PXcV+YBn5h3H813LCFlp5WH5qWE4N/PgKb69yJ/VEsTHiig2MfV1qzDL/qGlJA1OHGnUb6lqynxhbByKDv8u/NUf2RUT/ajrGorp/gHhKHX3HIkRhm1BwET6Q2lETrfT/ZdB+qio2mJJuabCy66aR4HSZqKIiZbG1ywE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ByEwSWJC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B80C113D0;
+	Mon, 22 Dec 2025 03:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766375470;
-	bh=nBw4PryBF6Gkq2ZTd+pa+4krsc8cXuhOR+oVgs3t3nQ=;
+	s=k20201202; t=1766375471;
+	bh=bmZtYfujMFG4w/cR+R5ItWw4bZeevnK8Lo5r2PAD8ys=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=aygTOXktrIzznVoXoMNBvAg3QKFh5l+Hh6nAr5udJIcDly4x4hAcJInuwpLBVooFr
-	 gR/BQD3k8YX+FLjljPDmd3pRWQd8rw6Thcmzs7VrMTTDlr8+LeZd6/WUCNlZ8bCuBW
-	 RnAbv/A3SQxg1dbcENo42hfMuYDx3kRkr7kIY0GegdgfTv0JAvwrcbeFtK6X4rCV8M
-	 pLMWGSM7EDSrZzGKRrg/3aHIEAJU11QCB/inWfMaWHcczeX1GUkBwJm6ciYD9DbksX
-	 EjdZQoYvDnu+dBzZjZIDDIq6Xn57CI/18B5dw1yafhwq6mGIhAZviA+FpXzK/C9tvp
-	 hyhE15gS8GRMQ==
-Date: Sun, 21 Dec 2025 21:51:09 -0600
+	b=ByEwSWJCLdRrdAp6Sq/q2e9XkscSVPpC2fZlFw5EUGMSpfWcZ3VSPAwBHXiSb0L5M
+	 89a3DqsLXrKohyzANQx1Lr62g6fLwMSRbn1c03iQu9pUYNim+88xyHmAlPjBEDJ7d/
+	 WIW3Ppkp5N7yq9gVVw1vj5kezF7+dpUnpo8oXZAbrug/1a9sBDVbuGkem5QC5AFIch
+	 AWgW1e5XN6jV7wog/DjsWXCFXYyo8KesHY7i1YeQOsvXt306TzyEhS2rcoEevV+J30
+	 vglNciEiqSQx8BeAnyBtYG8s8vBts8jGFFV4CdxHoVT5O+kyi48hPm/ik79fqGkOy3
+	 MarP4YHGoLz5w==
+Date: Sun, 21 Dec 2025 21:51:10 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -49,49 +49,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>, dri-devel@lists.freedesktop.org, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, devicetree@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Jami Kettunen <jami.kettunen@somainline.org>, 
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, Andy Gross <agross@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Simona Vetter <simona@ffwll.ch>, Dmitry Baryshkov <lumag@kernel.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, 
  AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, David Airlie <airlied@gmail.com>, 
- Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
- Jessica Zhang <jesszhan0024@gmail.com>, linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Martin Botka <martin.botka@somainline.org>, Sam Ravnborg <sam@ravnborg.org>, 
- Casey Connolly <casey.connolly@linaro.org>, 
- Thomas Zimmermann <tzimmermann@suse.de>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ David Airlie <airlied@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Martin Botka <martin.botka@somainline.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Casey Connolly <casey.connolly@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht, 
+ Simona Vetter <simona.vetter@ffwll.ch>, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Jami Kettunen <jami.kettunen@somainline.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Sam Ravnborg <sam@ravnborg.org>, 
  AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+ dri-devel@lists.freedesktop.org, Rob Herring <robh+dt@kernel.org>
 To: Marijn Suijten <marijn.suijten@somainline.org>
-In-Reply-To: <20251222-drm-panels-sony-v2-8-82a87465d163@somainline.org>
+In-Reply-To: <20251222-drm-panels-sony-v2-10-82a87465d163@somainline.org>
 References: <20251222-drm-panels-sony-v2-0-82a87465d163@somainline.org>
- <20251222-drm-panels-sony-v2-8-82a87465d163@somainline.org>
-Message-Id: <176637546656.2070861.2818143516982857920.robh@kernel.org>
-Subject: Re: [PATCH v2 08/11] dt-bindings: display: panel: Describe Samsung
- SOUXP00-A DDIC
+ <20251222-drm-panels-sony-v2-10-82a87465d163@somainline.org>
+Message-Id: <176637546768.2070916.15396482062955238978.robh@kernel.org>
+Subject: Re: [PATCH v2 10/11] dt-bindings: display: panel: Describe Samsung
+ ANA6707 DDIC
 
 
-On Mon, 22 Dec 2025 00:32:14 +0100, Marijn Suijten wrote:
-> Document the Samsung SOUXP00-A Display-Driver-IC and 11644x3840@60Hz
-> 6.5" DSI command-mode panels found in the Sony Xperia 1 with amb650wh01
-> panel and Sony Xperia 1 II with amb650wh07 panel. It requires Display
-> Stream Compression 1.1.
+On Mon, 22 Dec 2025 00:32:16 +0100, Marijn Suijten wrote:
+> The ANA6707 Display-Driver-IC is paired with the amb650yl01 panel in the
+> Sony Xperia 1 III, Sony Xperia 1 IV and Sony Xperia V smartphones.  It
+> uses Display Stream Compression 1.1 and requires dual DSI interfaces to
+> satisfy the bandwidth requirements to run at 1644x3840 at 120Hz.
 > 
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  .../bindings/display/panel/samsung,souxp00-a.yaml  | 79 ++++++++++++++++++++++
+>  .../bindings/display/panel/samsung,ana6707.yaml    | 91 ++++++++++++++++++++++
 >  MAINTAINERS                                        |  5 ++
->  2 files changed, 84 insertions(+)
+>  2 files changed, 96 insertions(+)
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
@@ -101,10 +102,14 @@ yamllint warnings/errors:
 dtschema/dtc warnings/errors:
 /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/panel/samsung,sofef01-m.example.dtb: panel@0 (samsung,sofef01-m-amb609tc01): 'vci-supply' does not match any of the regexes: '^pinctrl-[0-9]+$'
 	from schema $id: http://devicetree.org/schemas/display/panel/samsung,sofef01-m.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'port' is a required property
+	from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.kernel.org/project/devicetree/patch/20251222-drm-panels-sony-v2-8-82a87465d163@somainline.org
+See https://patchwork.kernel.org/project/devicetree/patch/20251222-drm-panels-sony-v2-10-82a87465d163@somainline.org
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
