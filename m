@@ -1,316 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-86223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1288FCD5C83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:18:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E901CD5C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:19:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7B7773012F8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:18:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6B371300C376
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 11:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F063128B4;
-	Mon, 22 Dec 2025 11:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 628563164C7;
+	Mon, 22 Dec 2025 11:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eLbt7u8H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KRJhjtXG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F70313554
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D912313285
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 11:19:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766402307; cv=none; b=ftQ6oBchuZ2Pa0jlUZfmFQu+tBvIq79rXpMlZc4d4FkBGXsdrcbYJlUYUnxWFvwgxK+E6APEx1Os5E8eju/b4Q2bV4swSSy0IBKdwDV4bq8qpVIRU/jh5K42kc303GVCixYsnaL0xXX2SbdDgd4RotVjjtH6mc5AAcd+lIAQCkw=
+	t=1766402381; cv=none; b=jm1TKvpIe7sxLeskYakSKz2Xle1WeYoP1dfA+yHgD2sRHf+Lqkm5XHqxZ6so1SZW7JU1EHXM1Zy50ZeuoR6o5D5nkIJlf/9cRaxZNHI9LREKkJs766iePdBdCvI2cSkFfPZoTgTnTWmBCLCN4klGDzVhZRL4CPt+lPkZ/QfIFE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766402307; c=relaxed/simple;
-	bh=y2VplXurPY+PJR7CkrOdjaPooAL6MHR8YNC5Lz8z2s4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j/GNB3PgbZw/HkSFabxIszpiLDKtyp65bU1iaQfUqNK5H2YVCcZtWqPb2hnq4g6/QNTAXW3fyIiztHvrt65g/Tk9Sk/v5iiBKeGA377ymVrfWaSyv0xAiLPlAQCtwh96dQGP4m1hFagivh0bhD3g1XcZqfym0lXrzis4nJNDhAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eLbt7u8H; arc=none smtp.client-ip=209.85.218.50
+	s=arc-20240116; t=1766402381; c=relaxed/simple;
+	bh=NYySMlRB1fJNBjIZgFY+gQqMAE3gSi8WFM84eavaktQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Dfk6v7bXhxwd5L40AInYWVEfmfLwdOpQ6nXthgmz5sN9IB2VApXPVk6piWb2WCvNBNGmFZ3aJjHSeLcOMAY332xTppXkv4M2h4D5y3fB6fEpMvS3QomXj/rMPJ1PenmyjWYSkdCkx9QWq47m/qPBJVcb8jdkjPfyds8k2QcAMXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KRJhjtXG; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b736d883ac4so687703766b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 03:18:21 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59474f1308cso261295e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 03:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766402300; x=1767007100; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P7zPB0Fj60BtFrcAhKNEThzdtqddYqvCFvGAwUlxNL8=;
-        b=eLbt7u8HcTArl4Gtc9AQNSpKDVd/N12zpWNCXTehXdLlAQ0WYFlWULNracq8rC2DfD
-         eX5YCCKmDFM+Fc5z+jWfmfehxEj8xfh16al47FlL/bXzR6aj4iTTsktcxCO8kZ+zzccM
-         5TB8TvscLab8YDdC0qzz7e0uI7w+LHgbMB549Us8SjNr+uO4qs7+BKCtGWvK/Vy99aUK
-         ItqSd065peoJpKBqEyKz4yVrEp/M13MzliH3TqZel2I5Rf/zQh/4hsA24Ta0vz77HZBJ
-         j3BiymS31uMjlnTGtE/KVaJ6fB092GnzKkBpDoOFXe6Mp+Q7SwGidNCdfZSzGtmm4O5e
-         bxQQ==
+        d=linaro.org; s=google; t=1766402376; x=1767007176; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+nCdSVdtRzhabw5OEkxzKxb9YUm3JF1zKMZaKA3BdGo=;
+        b=KRJhjtXGkj8awhLFIZkPDoPUQ/JYNo4ux2GN0K1rTruCXdjlmmNp2NBmLolb5XR+j/
+         kHxjOM494mOeIkApxuoO/O1XS7158ngk8P7+LXkE+BX+5QycKz5TLH0U89sxN2ne9/Vi
+         1MjhvmwYgt/WrKlrOkDVYQhFbdsyVUr5oF5y9N0zOFA/cTn9Y88z5cu6kV39aA738sHv
+         EevVYaqXdnMA8jxL/o0/OOJ2wuAvSjgT4858OOISiLMmDTKN2zX0T9EvJf5nuPJ2vx3C
+         VoZV1hj+ZBHCn8KRgroQHao3ar9lDfNQwDlP0kruubcTSvsSCfluOce42N/kbqVUOIzs
+         sASA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766402300; x=1767007100;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P7zPB0Fj60BtFrcAhKNEThzdtqddYqvCFvGAwUlxNL8=;
-        b=N82W3LGK3uNA6sEmkt4/JAm5Udx8eTodSdZlqUufzotP/hw5bOhyCPAgdnqxCKsdDL
-         p2JtSoz7NMHLod1TaThdoyoWSW+cd6oIj7XFfXRCAyyZ2nr2QC4q1HRECgN6O0QLZL5J
-         LiEF04hVd31i5I761YYZu0a7+UIibOUcHw6VCsrD+twJ0nLH8QoTaZbZUqPevPIdQCkf
-         W/I845mlw72590I0TvvVwBI7J6Do/PsI5AFJmQELTMKtHmHq1Z+XIZKzkjfBI5ALJvZH
-         cQVPSPNe0A93lhzZJ/0j4bauZjTUyIj86Zr77ypMM9OfHI127j4qy9uw1JLClM4NvjcU
-         Zzvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKMUoc3CFrgZ80qShT6DV9h5ZZTCcbOiiYYhNGOCpDaniIwQnmh6CKEZhrvtRESoL8pVTCSlpq1Qe0ZP0g@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZZSt/CE19DAJ2QB/GOrgOgUn09CM40C7qFxEaS+pjDAC607Uh
-	SZRZ8NZIxOXuWajEjxcsziH+1TIz9qpnlX9IFzpnZ9NxCjES72td1Imrq7yPmVr7tY4=
-X-Gm-Gg: AY/fxX557wEyY3OXXRjZRcIRn5JG/qftYNaxLco+gdCUFlMQC8c/pta3H9EYQdRCQsd
-	DhxkWicPIjeZJczy2+rSllTNqe3FwqUT5GiJHNN9scQTfilCMUm/JWtOUV3YlFJSGCmklmLhUae
-	VMB6jO9sdo0Elk2qNNkrxEmJY6BY5jf3UY3ZQLnEetRJTWYjl2/piCcGah855cvTSUaI9N+FnrW
-	rV5cQWfGV/L2k2ASYO0Dep2ETf+wdmEf/draoDR93kGvPgU8iqZcGgnCS7SgEBDmHDH4jDlFiPt
-	axppTclSGdSZ8a9Y1jN7puqBmyWPsrabt9+WSsSEBh0pc2f3F9HfuchE7DDkJwboP7URrYyFGm1
-	VKIis89ln0wErUk1y6In13lHmvQTSSihZOzKp4qPn2B0yKq3eb8rfoB/o2ZfWVkDEt+gz4K2TTp
-	p/cG9bYz+Ut335ru/WINlFg/USXWc=
-X-Google-Smtp-Source: AGHT+IE00LMyqiVxLZ9MnQFDwF6e9c2zrtVjwFvmbCmP678z6S9lZDOsUYygR8GMYx2UGEMrT3J1OA==
-X-Received: by 2002:a17:907:706:b0:b7c:e758:a79d with SMTP id a640c23a62f3a-b803717dbf0mr1122554466b.37.1766402299574;
-        Mon, 22 Dec 2025 03:18:19 -0800 (PST)
-Received: from linaro.org ([77.64.146.193])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037de074dsm1074038666b.44.2025.12.22.03.18.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Dec 2025 03:18:19 -0800 (PST)
-Date: Mon, 22 Dec 2025 12:17:47 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	rajendra.nayak@oss.qualcomm.com, sibi.sankar@oss.qualcomm.com,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: glymur: Enable Glymur CRD board
- support
-Message-ID: <aUko20ORsgrlZrIn@linaro.org>
-References: <20251219-upstream_v3_glymur_introduction-v3-0-32271f1f685d@oss.qualcomm.com>
- <20251219-upstream_v3_glymur_introduction-v3-4-32271f1f685d@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1766402376; x=1767007176;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+nCdSVdtRzhabw5OEkxzKxb9YUm3JF1zKMZaKA3BdGo=;
+        b=A8S18FYHAkvc3a0L0s1172lO4nyHCQQX1gV/xMbTHIN2SpEPSoI90qPgYpFiinvHfU
+         UosLi0cdarcC0cZNRzXvIksdiuqOyvHnyKtoiuV7ube6LbtyHQYB4jO56mhA50GzShMv
+         FPbI8sTyj2txhwaYIrDdfLxP3g9BUAaNj40kaZwFMOgQVrN4F3pN6MsBHFM7ORBSve5Y
+         RRIgACADzKULwM49lwabFFeplmsgLEw256Mw5Ifb2mgMlEwUWuJZdIHGppFvPfQ6qlpF
+         R/eEivwyIY16j8smQoUXMmBco1morCTavCaTNfNTChu4EkotZyganNOJrRGJsESbyAEY
+         zP3g==
+X-Gm-Message-State: AOJu0YzFWvxIPvZpl/quVMvIjaNIc9ystB28ajtpSV/XUBAWgx6ylqwW
+	L2ibxnaArJGmvjPJQhYRRwPw4v/fVEkqcHJCahStUH3HRKqHlpkFzdNJMwD01oFcuTE=
+X-Gm-Gg: AY/fxX6ZCjRUtcy+UphBuRtoYJYjaFJetZEfZsbudH6MQ/Ecz8dVch0wd71Pap8Qw97
+	1JpBfmzs5lXv5CLwl2e6S3iolkIR0hAI35GUt12TFybPk7J4wUrxDSY/KPusp8jewaOMFMqCvLv
+	sp7FSPNPRTsGri13Kdk8tr2tTT+ne+8pq93AGysYKiXNseEcSgChgMvGbg3Entm9gizUyugaRXb
+	CZcc1ZyHEHbo/PyHRhoFdEceQB6qIhgz0pkpCIv8myXtkAyuIRk6H+e8uSHz8mTbH4HNVmh7/OO
+	8v8jgz6gr1hUG9xhvShNacFXQZWx2L9uKlljdgh1pOqdin3ExPRmBKu7SU+SJ4L1ug/cyEWATXa
+	TeSxQpnu5YvfzHWT6YNQw4MJ1UXe2D5N5j8yZ4zxGeCsoOKDWsY7OW87hiyqgkpQGjdiiJaSNoo
+	U0M0R1t0pu2G5/xEs55fBwpB90qoqtkmroUk1tujaaGgH4bwhRRUXrICXhPKW4lzp+Cg==
+X-Google-Smtp-Source: AGHT+IFHwXMzFpo+8uZ8eDR6Lk00sHETgxWpEEajBWiAtPVohEtLXk0F+nt4In8Dh7Nww7AyT8N4jw==
+X-Received: by 2002:a05:6512:3a84:b0:592:f383:3aad with SMTP id 2adb3069b0e04-59a17df4092mr2238574e87.8.1766402376164;
+        Mon, 22 Dec 2025 03:19:36 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a186280bcsm3119201e87.90.2025.12.22.03.19.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Dec 2025 03:19:35 -0800 (PST)
+Message-ID: <cfb8f192-b327-4bb9-993e-a28184571712@linaro.org>
+Date: Mon, 22 Dec 2025 13:19:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251219-upstream_v3_glymur_introduction-v3-4-32271f1f685d@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: talos-evk-camera: Add DT overlay
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org
+References: <20251222-sm6150_evk-v1-0-4d260a31c00d@oss.qualcomm.com>
+ <20251222-sm6150_evk-v1-3-4d260a31c00d@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251222-sm6150_evk-v1-3-4d260a31c00d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 19, 2025 at 08:16:57PM +0530, Pankaj Patil wrote:
-> Add initial device tree support for the Glymur Compute Reference
-> Device(CRD) board, with this board dts glymur crd can boot to shell
-> with rootfs on nvme and uart21 as serial console
+On 12/22/25 10:44, Wenmeng Liu wrote:
+> Enable IMX577 via CCI on Taloss EVK Core Kit.
 > 
-> Features enabled are:
-> - Regulators 0 - 4
-> - Power supplies and sideband signals (PERST, WAKE, CLKREQ) for
->   PCIe3b/4/5/6 controllers and PHYs
-> - QUPv3 instances
-> - PMIC thermal-zone updates
+> The Talos EVK board does not include a camera sensor
+> by default, this overlay reflects the possibility of
+> attaching an optional camera sensor.
+> For this reason, the camera sensor configuration is
+> placed in talos-evk-camera.dtso, rather than
+> modifying the base talos-evk.dts.
 > 
-> Co-developed-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Co-developed-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/glymur-crd.dts | 860 ++++++++++++++++++++++++++++++++
->  2 files changed, 861 insertions(+)
+>   arch/arm64/boot/dts/qcom/Makefile              |  2 +
+>   arch/arm64/boot/dts/qcom/talos-evk-camera.dtso | 64 ++++++++++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/talos.dtsi            | 21 +++++++++
+
+Please split QCS615 MCLK definitions change into a separate commit.
+
+>   3 files changed, 87 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 6f34d5ed331c..6ff911cca06c 100644
+> index 60121f133078b2754f98e6f45a3db4031b478cc8..b1d85b1f4a94714f2a5c976d162482d70ae920f2 100644
 > --- a/arch/arm64/boot/dts/qcom/Makefile
 > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= glymur-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= hamoa-iot-evk.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-tplink-archer-ax55-v1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dts b/arch/arm64/boot/dts/qcom/glymur-crd.dts
+> @@ -325,7 +325,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
+> +talos-evk-camera-dtbs		:= talos-evk.dtb talos-evk-camera.dtbo
+>   talos-evk-lvds-auo,g133han01-dtbs	:= talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-camera.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtb
+>   x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
+>   dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-camera.dtso b/arch/arm64/boot/dts/qcom/talos-evk-camera.dtso
 > new file mode 100644
-> index 000000000000..7c168e813f1e
+> index 0000000000000000000000000000000000000000..ae1a02295b4dc48212aad40980a329ff458fe69a
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-> @@ -0,0 +1,860 @@
+> +++ b/arch/arm64/boot/dts/qcom/talos-evk-camera.dtso
+> @@ -0,0 +1,64 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+
+Please add a missing year of the change.
+
 > + */
 > +
 > +/dts-v1/;
+> +/plugin/;
 > +
-> +#include "glymur.dtsi"
-> +#include "glymur-pmics.dtsi"
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/clock/qcom,qcs615-camcc.h>
+> +#include <dt-bindings/gpio/gpio.h>
 > +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. Glymur CRD";
-> +	compatible = "qcom,glymur-crd", "qcom,glymur";
+> +&camss {
+> +	vdd-csiphy-1p2-supply = <&vreg_l11a>;
+> +	vdd-csiphy-1p8-supply = <&vreg_l12a>;
 > +
-> +	aliases {
-> +		serial0 = &uart21;
-> +		serial1 = &uart14;
-> +		i2c0 = &i2c0;
-> +		i2c1 = &i2c4;
-> +		i2c2 = &i2c5;
-> +		spi0 = &spi18;
-> +	};
+> +	status = "okay";
 > +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
+> +	ports {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
 > +
-> +	clocks {
-> +		xo_board: xo-board {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <38400000>;
-> +			#clock-cells = <0>;
-> +		};
+> +		port@1 {
+> +			reg = <1>;
 > +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <32000>;
-> +			#clock-cells = <0>;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-0 = <&key_vol_up_default>;
-> +		pinctrl-names = "default";
-> +
-> +		key-volume-up {
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pmh0101_gpios 6 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			wakeup-source;
-> +		};
-> +	};
-> +
-> +	vreg_nvme: regulator-nvme {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_NVME_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmh0101_gpios 14 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&nvme_reg_en>;
-> +		pinctrl-names = "default";
+> +			csiphy1_ep: endpoint {
+> +				clock-lanes = <7>;
 
-This should be probably "regulator-boot-on" to avoid temporarily
-powering off the regulator during boot.
+Please remove 'clock-lanes' property.
 
-> +	};
-> +
-> +	vreg_nvme_sec: regulator-nvme-sec {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_NVME_SEC_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&pmh0110_f_e1_gpios 14 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&nvme_sec_reg_en>;
-> +		pinctrl-names = "default";
-
-Maybe this one too, not sure.
-
-> +	};
-> +
-> +	vreg_wlan: regulator-wlan {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_WLAN_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&tlmm 94 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wlan_reg_en>;
-
-This one too, if it is already turned on during boot.
-
-> +	};
-> +
-> +	vreg_wwan: regulator-wwan {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_WWAN_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&tlmm 246 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wwan_reg_en>;
-
-Yeah ...
-
-> +	};
-> +
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-
-regulator-always-on;
-regulator-boot-on;
-
-> +	};
-> +
-> +	thermal-zones {
-> +		pmh0101-thermal {
-
-I guess these could be device-specific, but I doubt they ever will be in
-practice. Can you put these in the PMIC dtsi or the glymur-pmics.dtsi to
-avoid duplication?
-
-> +			polling-delay-passive = <100>;
-> +			thermal-sensors = <&pmh0101_temp_alarm>;
-> +
-> +			trips {
-> +				trip0 {
-> +					temperature = <95000>;
-> +					hysteresis = <0>;
-> +					type = "passive";
-> +				};
-> +
-> +				trip1 {
-> +					temperature = <115000>;
-> +					hysteresis = <0>;
-> +					type = "hot";
-
-Given the temperature, it feels like this one should be "critical".
-
-> +				};
+> +				data-lanes = <0 1 2 3>;
+> +				remote-endpoint = <&imx577_ep1>;
 > +			};
 > +		};
+> +	};
+> +};
 > +
-> [...]
+> +&cci {
+> +	status = "okay";
+> +};
+> +
+> +&cci_i2c1 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	camera@1a {
+> +		compatible = "sony,imx577";
+> +		reg = <0x1a>;
+> +
+> +		reset-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
+> +		pinctrl-0 = <&cam2_default>;
+> +		pinctrl-names = "default";
+> +
+> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clock-rates = <24000000>;
+> +
+> +		avdd-supply = <&vreg_s4a>;
 
-Thanks,
-Stephan
+Just one voltage supply?
+
+> +
+> +		port {
+> +			imx577_ep1: endpoint {
+> +				link-frequencies = /bits/ 64 <600000000>;
+> +				data-lanes = <1 2 3 4>;
+> +				remote-endpoint = <&csiphy1_ep>;
+> +			};
+> +		};
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+> index ebb1807f0222c075d4207163ed4359a55616d903..3626312f138f2e8f1888eb6aa43fa474cdee884f 100644
+> --- a/arch/arm64/boot/dts/qcom/talos.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+> @@ -1550,6 +1550,27 @@ tlmm: pinctrl@3100000 {
+>   			#interrupt-cells = <2>;
+>   			wakeup-parent = <&pdc>;
+>   
+> +			cam0_default: cam0-default-state {
+> +				pins = "gpio28";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam1_default: cam1-default-state {
+> +				pins = "gpio29";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+> +			cam2_default: cam2-default-state {
+> +				pins = "gpio30";
+> +				function = "cam_mclk";
+> +				drive-strength = <2>;
+> +				bias-disable;
+> +			};
+> +
+
+Please add to the list another pad with MCLK function, which is GPIO31.
+
+>   			cci_default: cci0-default-state {
+>   				cci_i2c0_default: cci-i2c0-default-pins {
+>   					/* SDA, SCL */
+> 
+
+-- 
+Best wishes,
+Vladimir
 
