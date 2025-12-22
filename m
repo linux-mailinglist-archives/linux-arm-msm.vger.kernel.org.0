@@ -1,249 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-86153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A9CFCD5342
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 09:56:08 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1BA8CD5309
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 09:54:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A953D3079AAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 08:51:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D25533045A79
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 08:51:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEAE733D510;
-	Mon, 22 Dec 2025 08:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B33B33342E;
+	Mon, 22 Dec 2025 08:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJsSJp+r"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KIPpIkC0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JThsV+iW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2264F33D4FF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 08:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2C0332EBA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 08:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766392171; cv=none; b=Uk93BjPymH9PD29w5VVwGOCUxO7H3fCzmHilB1NDWh5DZzD0TprpIcXYWoyZTSG6H+1ujz5ZMVFICVV63JTcsGL/4rZONyU3df/hnpgy+lTtZIIVxo+PIuFtvbyH/mrGGtIrJiC01GObY3yhy8FbjvoeGZ1x/VhFwcfCC5RqP0o=
+	t=1766392132; cv=none; b=IJ+iABJ4AH5taAfJ+YN+OU/1ggkX0rpuFvGLjSycjRqOX167QhLyowV479uyO3GZ5F2HGeH5u+3kbLpfBF78jd/nisAjvu1NZqfhq0qQLzerFsdjthzCQjXCuxg98XdNBWbY+zjjMp9aDq7fjH7IZKATRgMAZz9o73vkZkABRA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766392171; c=relaxed/simple;
-	bh=J1eDk9ZVPw8FZKq7NBfxm7axQ7Jd97Z9A2H46UDDwHk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQABTeE831jIaCYIBrjWpBSufhl+7RrchHtE76YtgvGDHM3EU8+LLcTChrmWe4EdioAm5HYND4fa4/0DN44YY8Nr6pr42vo0R97rvFtaYO33d0BupyCc/jmLKmOls8G279XpMYl65KFQl15Pk7ejQX3IuSIE2SMnh2uztaTTeuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJsSJp+r; arc=none smtp.client-ip=209.85.210.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-7b8e49d8b35so4490502b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 00:29:29 -0800 (PST)
+	s=arc-20240116; t=1766392132; c=relaxed/simple;
+	bh=D1CzXEDGqZ4SIxckMt+uoSKACIrQ6NvDhcsFOK60C/4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PkAHVyYT5ZmM3l5jh4N38o6PTPUJt2jo1QWPbHdIbu4Lmpk61ow2od671Gi5zioXg2Zixwtal+T0IfI8XedlNqRpehP+bY7+JjSB+D/kE+FoRvENTBpOz1CMq1aOUdzMMB/69B2E1pIVEIy/md5N7WCzCtFJhpahcpu42M4ODPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KIPpIkC0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JThsV+iW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BM7Yqc33234134
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 08:28:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=arSuoSo08Lo2cAeKWtUafv
+	WaQHmn64vSxSM5X523+O0=; b=KIPpIkC0jtim7FVA1qtALeZ5rY2un39259QmGU
+	46u39Khw3ytvrQWK4oVBDuUeFKBqJruPUnNtY++Sg4oLpSJJqTBBOTZGvwVplEBp
+	savQ4t0cKL0OqSHZhTgkzQDYY6Ero9qvKTb+gvt/DY+qS//17mkcgYzyqNrEuSzK
+	d1o+dmorD1+W567KmLStxPqu+Qt42Dab+7XGCNadWGsjfD6A5c35H8LsH8U3DNn5
+	WphwdIHpBVyfa7a+SYRRd5Ulxn93wQ8j8uC3/MiUx8mKPDRxue+gBVMV3BBP6ip9
+	d/WSrJtNY7VxSETCNU07g92z4B6/iluqINYwo7DRa52MYNpg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mtqmak9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 08:28:49 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b9fa6f808cso1073328585a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 00:28:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766392169; x=1766996969; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6JUGCGjJm2Xj6X5n/nhoMCGHMBetXjpQki6LB/h6PNI=;
-        b=HJsSJp+r8+9Z1QHYX1ZgEMhzmgWCKSNbF3rbSZ0BxDl5c7ngxh/yI2I7UOLh7NTA23
-         gtRankyoxvfODPYeN0r+FaofjRkcXplRVNDKSj/aW5DpCpXHTb0T/I59kBjUvIIGEZXM
-         IDHmPiaR4c6c4zFuXBiX+j8zfDdTi6tfRfSPtuX/9KOTa59a15W91yX5jcqDjfynxXH2
-         0k3/CeYiQwEcgqG7iMYPH14ip1epdUEVxczA+9aTcnQJ8Uk6Xui+nef7M62rCpO1SHgr
-         ASQCdBtZ6pfs4lEptywG7JbQAAIgJ9JDh4xyLzEdWNvcsAxzhhYgejUafHhldOD1iIid
-         qnSg==
+        d=oss.qualcomm.com; s=google; t=1766392129; x=1766996929; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=arSuoSo08Lo2cAeKWtUafvWaQHmn64vSxSM5X523+O0=;
+        b=JThsV+iW7FECWpjpXjJ2XuoBWw1mAZdkqfaxB6qvYj4zz8XOjGs8+Hz05Ke5cOjW9Q
+         mkMK+WGBhrI8DFKkDjAnRbOkfCl7A88lC57/bSSaVbUd4aKg6a4gfs5ls0ZrrDSi9zDV
+         KOv24oML6O40TEduGTl0NE/YqNGvOX0b0AHbRydl70opHaG6SVI5gVklu3ZH8b8JFsiL
+         fAk66JUkAoQE9cyjymP1yUtD3AEYKuGCmDreaZIEMYOUdWCompV3y7xH0LHFIPgv9YFi
+         HJbZHFesgs9ro6OcnHmeNo6DCUJIGjyzV/haONcJQr+lRdD9W+4R9CyOFKJ9N0VClLOc
+         HlqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766392169; x=1766996969;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6JUGCGjJm2Xj6X5n/nhoMCGHMBetXjpQki6LB/h6PNI=;
-        b=HcsIfLiqK4f9v9S01ZNQD/Cnis1VZcc0ed3eX+TsmtdjYSHErGkcWRHzTNUFC7veLn
-         mqpt926MaYIqn3VrorKS9RSI2L8pKyzAeQXT3duKGtTrZFTq0X1EtGN054F4QHJVUCjO
-         fBjJYISuB2SlE8qvpJA1IgWAfkVSg5XZGi0a62X2MYXx60zDStWTD1G/GM63wGAeffk8
-         gbY55efeegxdbNmU33ekt3BKn7cHAvcCCYSBsCEYgsqGAwKbqsl3s36Y67iRMPJfFcmG
-         D1Sz6OaHvWzRh2XmFJ5pGOCWfCHTOQ2KWZHlXomqwz4Hk+A3TcDdeDP1rjdp7zIe7ABa
-         vXpg==
-X-Forwarded-Encrypted: i=1; AJvYcCWdwsEALCC02yhz4bmw3Q68MzLFB04TyjDFfcmO8edMSvPtFmLitR0owxmhfqdDDYAB14DGbzSkeJB6zyNl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4+hBIGKm0aNGIVWSTrjAwDV0r2rPoVeNp12gH7TTZEODC/9ii
-	0jHBElhXiZG8UPpuMqEJBSud9/TyJCJiFhicYaiXJFiNHPDNkr6ljoOc
-X-Gm-Gg: AY/fxX6qfIouMaa4JX6pRV5aUAJtcY2qnVTzSHRMiZHhhB45dgCtg/2EQUacHidmbnR
-	9K8sVnJ2WR3arbDNQwt6nb7ttm411dy1/HlN0O9CHK3AKPmwXHqN9uMRz/YUZe3NvhCU2QvyuA0
-	C84lESzgQZHc+YLkGYEt4qiZt+ow6pt59iW4xy+C0JDJsd3r7pbEWF9l0d1jQ9nVyCzpef3bBHx
-	uoiQa67K05ncYuO8FRC1WfenPBcCBJ5MyF156ig4M4D7KtxYfFKCmURXvTAEzyxFTM7DurSoufb
-	E3wnvq46ZHsKiAIRAHH92kmXEIi5ufMYhW1Uj3MftPLo6v9D01+mz6p0gi5N33e3KfYEUbj9XFO
-	dlYirOd3T1zKZfu+tAAvm1ZtVICyNpYBf0iN63lktqOGoNQb4SFqfFb21g81PwI7Uw+yBjzlrlo
-	/vRnS5Slk1
-X-Google-Smtp-Source: AGHT+IEimmJ/Dttom6F34YWsdHH3XKVu5FJm4MVosU3HZTEdHiOovrYFxoO5oyh48i40FCdqR5InOQ==
-X-Received: by 2002:a05:6a00:aa82:b0:7a9:c21a:55b4 with SMTP id d2e1a72fcca58-7ff657a6a53mr9194464b3a.28.1766392169447;
-        Mon, 22 Dec 2025 00:29:29 -0800 (PST)
-Received: from frodo ([2404:4400:417e:3d00:8b90:7f55:1261:772f])
-        by smtp.googlemail.com with ESMTPSA id d2e1a72fcca58-7ff7af29dcfsm9640064b3a.17.2025.12.22.00.29.19
+        d=1e100.net; s=20230601; t=1766392129; x=1766996929;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=arSuoSo08Lo2cAeKWtUafvWaQHmn64vSxSM5X523+O0=;
+        b=n5rgVZQdMwGxkPp6Op/Wy1Wmi0iIz96d9hYRDL2ZQ7zjQVXSwWcrTP0UMtWY5jODGQ
+         KEkOYwTqNk3ke27BvzoTTia8U7144CS2rk+eUC2LBxE+DyHwIPZVISwXJoklAR0YB9eQ
+         3yZzDG0lQ1c+GB9qtJA+QXXlFCXJVn4VGF/BwfGrnVT9ca9DZVE3L8a00R1bdwgioFNl
+         BvbYiQa6U9iXrJKq9lWOsIY7kcf6g0cbiIKuuiQP77PoE0TLl+hD7MAeGCuohvyCgG9O
+         3zQk8VD/QrPaLGVd45IW0N76dmV3uzjc9rhathpLzBIOOBCv3Ly0jC4HHLPZwOSjpZr0
+         Je1A==
+X-Forwarded-Encrypted: i=1; AJvYcCWsJ7s3JWgYfbMMHNrcm7Z4rCoW0G7jTEpLx0Xj5x21qCKlRI6hdohkAgtHy5S+gDoAoSTQ/pJk7HKCzFXL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3cVsFN9sLhjVhijoqPyUY0qrCud6oJNVf21+fnA0rZA6nSNqk
+	SYnRSTxzBKIsLITXyom/Bu15kvAJEzdrdY9fO35fxeruuEV3Q0Ws52akRRcJWikD1kCgfWUGdUD
+	0wMADMVeSm+R6no0/inVQzJgnW33FkncQ+5KGOSlYIhUbP1JEytYVF9WZioe7baAb5rIP
+X-Gm-Gg: AY/fxX7C3CkQPMxcFDq3OyyhnT7K4QgFjj8hS92BzlIeB8d5gtEwKIzhknVzmTYMSeD
+	EThRM9yQcs7L0/h+jpEX3ExD6RLdH08ufcpolNDu/ha0LoNabIDiUs8OjdAq/W8UZowMsPLnHd2
+	zw0lTayIZKwxu4fnAk9fuzJMP7NFjQ6043pD/Ljv42yVV8be2wvvYIfC2BjKf4VoNoz3SfgbcEu
+	cE/uYC9pchmycTq6RquGHLHUPh41oKgdTYobyc5hgspEto0c72Ix35vuFp9GR9qhYYdU4kOgX0/
+	NMc32mSzuJSrpvpQRHfuI8Sdo2VhHrObIEDJvb51+sa3z8cIoCYFa7/KRY6Wh1KFo1bRn/l+xqb
+	nakVU822qfYv+qKZi60p0fNw7MkScEZly6ce9yS3pkmtaQS3jPn6xyl/2euDDk/c5sJ6MopC9HL
+	K+
+X-Received: by 2002:a05:620a:f06:b0:8b3:16c:1a82 with SMTP id af79cd13be357-8c08fd22fd6mr1764908185a.47.1766392128770;
+        Mon, 22 Dec 2025 00:28:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHy7yKdj2dHsBU68SEa7/loz6oBVeXcN72zBV95sKHOXNIQUSoqbxAhyg3QnDEl+FhtFeixww==
+X-Received: by 2002:a05:620a:f06:b0:8b3:16c:1a82 with SMTP id af79cd13be357-8c08fd22fd6mr1764906085a.47.1766392128331;
+        Mon, 22 Dec 2025 00:28:48 -0800 (PST)
+Received: from WENMLIU-LAB01.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0970f8572sm764046585a.25.2025.12.22.00.28.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Dec 2025 00:29:29 -0800 (PST)
-From: Jim Cromie <jim.cromie@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	jbaron@akamai.com,
-	gregkh@linuxfoundation.org,
-	ukaszb@chromium.org,
-	louis.chauvet@bootlin.com
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	intel-gvt-dev@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	daniel.vetter@ffwll.ch,
-	tvrtko.ursulin@linux.intel.com,
-	jani.nikula@intel.com,
-	ville.syrjala@linux.intel.com,
-	seanpaul@chromium.org,
-	robdclark@gmail.com,
-	groeck@google.com,
-	yanivt@google.com,
-	bleung@google.com,
-	quic_saipraka@quicinc.com,
-	will@kernel.org,
-	catalin.marinas@arm.com,
-	quic_psodagud@quicinc.com,
-	maz@kernel.org,
-	arnd@arndb.de,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	mingo@redhat.com,
-	jim.cromie@gmail.com
-Subject: [PATCH v7 01/31] dyndbg: factor ddebug_match_desc out from ddebug_change
-Date: Mon, 22 Dec 2025 21:28:13 +1300
-Message-ID: <20251222082843.1816701-2-jim.cromie@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251222082843.1816701-1-jim.cromie@gmail.com>
-References: <20251222082843.1816701-1-jim.cromie@gmail.com>
+        Mon, 22 Dec 2025 00:28:47 -0800 (PST)
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Subject: [PATCH v2 0/3] media: qcom: camss: Add sm6150 camss support
+Date: Mon, 22 Dec 2025 16:28:38 +0800
+Message-Id: <20251222-sm6150-camss-v2-0-df8469a8343a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADYBSWkC/x3MQQqAIBBA0avIrBNyKImuEi1Mx5qFFg5EIN09a
+ fkW/1cQKkwCs6pQ6GbhMzdgp8AfLu+kOTQD9jgaRNSSrBl77V0S0bgNNrowTUPw0JKrUOTn3y3
+ r+35ApmPjXgAAAA==
+X-Change-ID: 20251222-sm6150-camss-2b46fad884dc
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1766392123; l=2152;
+ i=wenmeng.liu@oss.qualcomm.com; s=20250925; h=from:subject:message-id;
+ bh=D1CzXEDGqZ4SIxckMt+uoSKACIrQ6NvDhcsFOK60C/4=;
+ b=2fzW7qTm/UZDCu+ciY2beYdxaDwkLusVY0kiJjHK4ixqG/bITvQWRfusWOJeAdAB8gwdfNPDY
+ tSHfVZvW+QkCf+DbkDgt2AoELqIDF1zoWEWTIuQwxTy+mcLpDsKguuM
+X-Developer-Key: i=wenmeng.liu@oss.qualcomm.com; a=ed25519;
+ pk=fQJjf9C3jGDjE1zj2kO3NQLTbQEaZObVcXAzx5WLPX0=
+X-Proofpoint-GUID: xVmI0h28GmOGeIRLgVy05eb7PqQGryCq
+X-Authority-Analysis: v=2.4 cv=dPWrWeZb c=1 sm=1 tr=0 ts=69490141 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=b5PrnZgeE6CfPZZ6BtAA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: xVmI0h28GmOGeIRLgVy05eb7PqQGryCq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDA3NSBTYWx0ZWRfX0WCZSAVGdr/Z
+ Ypj7J6DMs3pVryCU1vYIjGTPAKS9ajxsX+Umz8hhJLifDJYhm+3p+wCSLcxZcT3Vyjx6eSOgfe8
+ IU2T8Yf2x7Qu5nm09WQHZ1m4htR6F0ryEiPXW8SPPnltgpzTfcz2p0fG+dM8nDbPSBn1ARpq7Hp
+ C23ArKy9MsCiAIYxS9LV/iiHLJ2DKPBF3unQWMMcPdMGxvrQybxWHnrHTqPUXMvRldMH1JoFdYe
+ 4g95LhKQejuYhX7XheQDXjRLD6ktNrPojVsNZPtqnl53rZCily2hbiWsJejcB1Qbegp6enIh9+A
+ 9cdJr85DR1QW/2dJXzKCWjyJoUS+QCFcvQlcdUIhD1cUgSJRWMK8AD+gFeJftTSLw5aEZIG3b1A
+ Je8K/V5LURlQw/8okIK7e9JdWzBdYv/gLZi6qcZw7jWFDH9GJLBFgo14xoICbiMUApnyty3IsF7
+ NZ5NHt/aPxbZOqcnoXA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-21_05,2025-12-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512220075
 
-ddebug_change() is a big (~100 lines) function with a nested for loop.
+SM6150 is a Qualcomm flagship SoC. This series adds support to
+the CSIPHY, CSID, VFE/RDI interfaces in SM6150.
 
-The outer loop walks the per-module ddebug_tables list, and does
-module stuff: it filters on a query's "module FOO*" and "class BAR",
-failures here skip the entire inner loop.
+The SM6150 platform provides:
+ - 2 x VFE (version 170), each with 3 RDI
+ - 1 x VFE Lite (version 170), each with 4 RDI
+ - 2 x CSID (version 170)
+ - 1 x CSID Lite (version 170)
+ - 3 x CSIPHY (version 2.0.0)
+ - 1 x BPS (Bayer Processing Segment)
+ - 1 x ICP (Imaging Control Processor)
+ - 1 x IPE (Image Postprocessing Engine)
+ - 1 x JPEG Encoder/Decoder
+ - 1 x LRME (Low Resolution Motion Estimation)
 
-The inner loop (60 lines) scans a module's descriptors.  It starts
-with a long block of filters on function, line, format, and the
-validated "BAR" class (or the legacy/_DPRINTK_CLASS_DFLT).
+Tested on Talos EVK board.
 
-These filters "continue" past pr_debugs that don't match the query
-criteria, before it falls through the code below that counts matches,
-then adjusts the flags and static-keys.  This is unnecessarily hard to
-think about.
+Tested with following commands:
+media-ctl -d /dev/media0 --reset
+media-ctl -d /dev/media0 -V '"imx577 9-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -d /dev/media0 -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+yavta -B capture-mplane  -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0 --capture=5
 
-So move the per-descriptor filter-block into a boolean function:
-ddebug_match_desc(desc), and change each "continue" to "return false".
-This puts a clear interface in place, so any future changes are either
-inside, outside, or across this interface.
+Changes in v2:
+- Add more resources(BPS, ICP, IPE, JPEG, LRME) and details for CAMSS.
+- Correct the order of the header files. - bob
+- Add Csiphy id num, improve the resource name. - Vladimir
+- Link to v1:
+  https://lore.kernel.org/all/20251016-sm6150-camss-v1-0-e7f64ac32370@oss.qualcomm.com/
 
-also fix checkpatch complaints about spaces and braces.
-
-Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
 ---
- lib/dynamic_debug.c | 83 +++++++++++++++++++++++++--------------------
- 1 file changed, 47 insertions(+), 36 deletions(-)
+Wenmeng Liu (3):
+      media: dt-bindings: Add qcom,sm6150-camss
+      media: qcom: camss: add support for SM6150 camss
+      arm64: dts: qcom: talos: Add camss node
 
-diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-index 5a007952f7f2..eb5146bcfaca 100644
---- a/lib/dynamic_debug.c
-+++ b/lib/dynamic_debug.c
-@@ -171,6 +171,52 @@ static struct ddebug_class_map *ddebug_find_valid_class(struct ddebug_table cons
-  * callsites, normally the same as number of changes.  If verbose,
-  * logs the changes.  Takes ddebug_lock.
-  */
-+static bool ddebug_match_desc(const struct ddebug_query *query,
-+			      struct _ddebug *dp,
-+			      int valid_class)
-+{
-+	/* match site against query-class */
-+	if (dp->class_id != valid_class)
-+		return false;
-+
-+	/* match against the source filename */
-+	if (query->filename &&
-+	    !match_wildcard(query->filename, dp->filename) &&
-+	    !match_wildcard(query->filename,
-+			    kbasename(dp->filename)) &&
-+	    !match_wildcard(query->filename,
-+			    trim_prefix(dp->filename)))
-+		return false;
-+
-+	/* match against the function */
-+	if (query->function &&
-+	    !match_wildcard(query->function, dp->function))
-+		return false;
-+
-+	/* match against the format */
-+	if (query->format) {
-+		if (*query->format == '^') {
-+			char *p;
-+			/* anchored search. match must be at beginning */
-+			p = strstr(dp->format, query->format + 1);
-+			if (p != dp->format)
-+				return false;
-+		} else if (!strstr(dp->format, query->format)) {
-+			return false;
-+		}
-+	}
-+
-+	/* match against the line number range */
-+	if (query->first_lineno &&
-+	    dp->lineno < query->first_lineno)
-+		return false;
-+	if (query->last_lineno &&
-+	    dp->lineno > query->last_lineno)
-+		return false;
-+
-+	return true;
-+}
-+
- static int ddebug_change(const struct ddebug_query *query,
- 			 struct flag_settings *modifiers)
- {
-@@ -203,42 +249,7 @@ static int ddebug_change(const struct ddebug_query *query,
- 		for (i = 0; i < dt->num_ddebugs; i++) {
- 			struct _ddebug *dp = &dt->ddebugs[i];
- 
--			/* match site against query-class */
--			if (dp->class_id != valid_class)
--				continue;
--
--			/* match against the source filename */
--			if (query->filename &&
--			    !match_wildcard(query->filename, dp->filename) &&
--			    !match_wildcard(query->filename,
--					   kbasename(dp->filename)) &&
--			    !match_wildcard(query->filename,
--					   trim_prefix(dp->filename)))
--				continue;
--
--			/* match against the function */
--			if (query->function &&
--			    !match_wildcard(query->function, dp->function))
--				continue;
--
--			/* match against the format */
--			if (query->format) {
--				if (*query->format == '^') {
--					char *p;
--					/* anchored search. match must be at beginning */
--					p = strstr(dp->format, query->format+1);
--					if (p != dp->format)
--						continue;
--				} else if (!strstr(dp->format, query->format))
--					continue;
--			}
--
--			/* match against the line number range */
--			if (query->first_lineno &&
--			    dp->lineno < query->first_lineno)
--				continue;
--			if (query->last_lineno &&
--			    dp->lineno > query->last_lineno)
-+			if (!ddebug_match_desc(query, dp, valid_class))
- 				continue;
- 
- 			nfound++;
+ .../bindings/media/qcom,sm6150-camss.yaml          | 439 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/talos.dtsi                | 200 ++++++++++
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     |   2 +
+ drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
+ drivers/media/platform/qcom/camss/camss.c          | 189 +++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 6 files changed, 833 insertions(+)
+---
+base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+change-id: 20251222-sm6150-camss-2b46fad884dc
+
+Best regards,
 -- 
-2.52.0
+Wenmeng <wenmeng.liu@oss.qualcomm.com>
 
 
