@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-86109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EA95CD4CE9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:42:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F19A7CD4D07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 07:42:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 23769300761A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:42:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5F6AE300CB8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 06:42:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B75F22D780;
-	Mon, 22 Dec 2025 06:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 446D5327C1F;
+	Mon, 22 Dec 2025 06:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfCgpAH8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X57lv1A4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F561A9F87;
-	Mon, 22 Dec 2025 06:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E09327C19;
+	Mon, 22 Dec 2025 06:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766385745; cv=none; b=WYtbWEY2RaQN8ww9mP4LQqpZMHElozvnx49ySaOvVNfhioYUctpEGDWdOjxa01jSTk05TINdtCHvxEYmKdt0ytJohzKDrXAt13qHnnmUF9nBqtDrltD4FwMR8Vrf/ok7D7uDROy1yOxl3btWQ77mEKp3VM8zFLuB3WojweZ7nIc=
+	t=1766385756; cv=none; b=KBqvhwDi9J8oHmXPJu8Hc8XTAUlVk+RC3N9pc4yZaiAkt9HC0fuG96pjDeV7tBrYfq1NPT18nAyXObytH2aKiMth9pd4ZKDJXEnlS62CisDvnGFhiWifh0kDU7a6eH4i5PEXvFGa58t8UpZKjEa379hIJfKOJQ42WdhOLtuVPqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766385745; c=relaxed/simple;
-	bh=j/mEMdNJlnAjwrnihLKGYdQ3OZVjJQVBvrLHExhr67I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iMLvlfXhiXkGir6xbzFEA9hlhTfWpxBs+4fY+G2XmS0bDVcL9bRGyJy3l4RFHIBJ9IvQLNr7QJ7OHbmT5xkc+8PufsTU921CHRLpCw6O2hYWGHeBbHxsHCkklIopjOiX0gsSwe5e+YOSkN3SBfb372GpaIB4ofQDam/CJe0HgM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfCgpAH8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882F7C4CEF1;
-	Mon, 22 Dec 2025 06:42:21 +0000 (UTC)
+	s=arc-20240116; t=1766385756; c=relaxed/simple;
+	bh=Fr4yk7k5y3uHh/YsR7yacBa/G6djF2KRQBIuPL+dvko=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dKDJOZDOWxyrmmpSeNdJZPZAXuxchSQMmtrIfl01IFqroAN/2THGDa6Xzr33PWmnumLMQY60ngqvbqG4ZNnG0fX9UUd5cjdKkKG86dGVDNHldFuucrJkjJKKTZkn9ti/T9P/wOhxcqfpg9mUjPQobQCGcwvXJfCWVBmKgyjDI5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X57lv1A4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033D2C4AF0C;
+	Mon, 22 Dec 2025 06:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766385744;
-	bh=j/mEMdNJlnAjwrnihLKGYdQ3OZVjJQVBvrLHExhr67I=;
-	h=From:To:Cc:Subject:Date:From;
-	b=IfCgpAH8IAGbJyxYrETz1YYvyP0FIGZ2lg+1Hgdv0Ez+FHajVjZm+RFALf/CXLELF
-	 5iCRDuqdGAslhE9nnRKBi7sbPPgSCgkyzQnHBn//SPVwDWfAhELCMmE8bg9ZoNgT4v
-	 Pu3M1al55TbDY4Pue0hhu0t05TeNAsvyQq6WH7Vns2MRFmW8tl1Uk9fY4TJR5eBJKI
-	 EQPCg+Iuti6xOPdFWlWeUK8iCDSid4YajJOKe5ApYRcRm0X8ZJpsJVlxWwUnSgXLRa
-	 kKwm+QYx0HqpS+ext8hPDO5gaqOsadYmu7/aYzPmcpjPzOeA8dG6EJmVAWnUNfrYYa
-	 WdcohC/k6ZkZw==
+	s=k20201202; t=1766385755;
+	bh=Fr4yk7k5y3uHh/YsR7yacBa/G6djF2KRQBIuPL+dvko=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=X57lv1A4mTxJ+dhFtsC3faF482eMh877ithyBmrxZVMCATYIGH58JfRSAgZmlYxkk
+	 N/dYXRPP4xWnBMsChjXAun8X4NTenHkI4NbnzEciNwIw19EacI3V4qaCIq7QM98r94
+	 TryHA79FGNuIdNDPGMSixgEiEpedQIXYYzGIIGNHQHHIAy1hQuGCUabVuCpgdcw6Rl
+	 fAWjrXo68V2nC4HPribPJIMVBpl4NR8FdEE4I4kHY89KFzfoaovwIZzIkBlI538J64
+	 toh7GunZcYFByndz+dSJNR7MHMgiNODlVfcreH3VG3Uoz/04YrzTsLWEeSqQNykF4x
+	 lzyRK2sXYm7uA==
 From: Niklas Cassel <cassel@kernel.org>
-To: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+To: Manivannan Sadhasivam <mani@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Heiko Stuebner <heiko@sntech.de>
+	Bjorn Helgaas <bhelgaas@google.com>
 Cc: Shawn Lin <shawn.lin@rock-chips.com>,
 	FUKAUMI Naoki <naoki@radxa.com>,
 	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
-	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 0/6] PCI: dwc: Revert Link Up IRQ support
-Date: Mon, 22 Dec 2025 07:42:07 +0100
-Message-ID: <20251222064207.3246632-8-cassel@kernel.org>
+	stable@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: [PATCH v2 3/6] Revert "PCI: qcom: Don't wait for link if we can detect Link Up"
+Date: Mon, 22 Dec 2025 07:42:10 +0100
+Message-ID: <20251222064207.3246632-11-cassel@kernel.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251222064207.3246632-8-cassel@kernel.org>
+References: <20251222064207.3246632-8-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3817; i=cassel@kernel.org; h=from:subject; bh=j/mEMdNJlnAjwrnihLKGYdQ3OZVjJQVBvrLHExhr67I=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDI9Xtj/ZN8jXWwic1qlhM3JUqik+9IE8+OrHEI5VwbV7 dzfrlffUcrCIMbFICumyOL7w2V/cbf7lOOKd2xg5rAygQxh4OIUgIn8K2RkuDvz6PbDOq8Lj9/d nn3papF6/vUz8y79q6s5pP2b+YWCYQ8jw+XEkuTZV5cvXvl06fKjYs6zOO4tZj/5qGf3VlXvdUn sN1gA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3982; i=cassel@kernel.org; h=from:subject; bh=Fr4yk7k5y3uHh/YsR7yacBa/G6djF2KRQBIuPL+dvko=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGDI9XrirLO+K7GhrX8RjqViuefKIeE4m197skwY6i/+9+ PQg83pHRykLgxgXg6yYIovvD5f9xd3uU44r3rGBmcPKBDKEgYtTACayZxnDX5E9zu8d+eIzk8t4 +I/INm9U8PY7rOcTtbm3aKvqJE+/A4wMT7fv+PPwutTXR4XSy4qX3V4wsyvMteNSL/tl+blN3vz reAE=
 X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
 Content-Transfer-Encoding: 8bit
 
-Revert all patches related to pcie-designware Root Complex Link Up IRQ
-support.
+This reverts commit 36971d6c5a9a134c15760ae9fd13c6d5f9a36abb.
 
 While this fake hotplugging was a nice idea, it has shown that this feature
 does not handle PCIe switches correctly:
@@ -110,33 +109,38 @@ during boot.
 The long term plan is to migrate this driver to the pwrctrl framework,
 once it adds proper support for powering up and enumerating PCIe switches.
 
+Cc: stable@vger.kernel.org
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-Changes since v1:
--Rebased against latest pci/controller/dwc
--Picked up tags.
-
-
-Niklas Cassel (6):
-  Revert "PCI: dw-rockchip: Don't wait for link since we can detect Link
-    Up"
-  Revert "PCI: dw-rockchip: Enumerate endpoints based on dll_link_up
-    IRQ"
-  Revert "PCI: qcom: Don't wait for link if we can detect Link Up"
-  Revert "PCI: qcom: Enable MSI interrupts together with Link up if
-    'Global IRQ' is supported"
-  Revert "PCI: qcom: Enumerate endpoints based on Link up event in
-    'global_irq' interrupt"
-  Revert "PCI: dwc: Don't wait for link up if driver can detect Link Up
-    event"
-
- .../pci/controller/dwc/pcie-designware-host.c | 10 +--
- drivers/pci/controller/dwc/pcie-designware.h  |  1 -
- drivers/pci/controller/dwc/pcie-dw-rockchip.c | 60 +-----------------
- drivers/pci/controller/dwc/pcie-qcom.c        | 63 +------------------
- 4 files changed, 6 insertions(+), 128 deletions(-)
-
-
-base-commit: cfd2fdfd0a8da2e5bbfdc4009b9c4b8bf164c937
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 60373fe1362f..e87ec6779d44 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1958,10 +1958,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, pcie);
+ 
+-	irq = platform_get_irq_byname_optional(pdev, "global");
+-	if (irq > 0)
+-		pp->use_linkup_irq = true;
+-
+ 	ret = dw_pcie_host_init(pp);
+ 	if (ret) {
+ 		dev_err(dev, "cannot initialize host\n");
+@@ -1975,6 +1971,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 		goto err_host_deinit;
+ 	}
+ 
++	irq = platform_get_irq_byname_optional(pdev, "global");
+ 	if (irq > 0) {
+ 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 						qcom_pcie_global_irq_thread,
 -- 
 2.52.0
 
