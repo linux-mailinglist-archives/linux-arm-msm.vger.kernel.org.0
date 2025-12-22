@@ -1,114 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-86251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7984CD6C76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 18:13:27 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDB8DCD6C9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 18:16:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BBAEE3032FD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 17:11:41 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8F3013005038
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 17:16:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43F97335553;
-	Mon, 22 Dec 2025 17:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EAE634D38E;
+	Mon, 22 Dec 2025 17:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WQMnjwB6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IteeYhpH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S8aZRTTt";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LLohvLkm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF801333752
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69C634CFDE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:08:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766422957; cv=none; b=iz0KUpzXNS35E8vHUhW16ECgaW6Vjfk0/IvDecEysLJfPR5DVIYmve+Clq054lhUj/6MGGvD6PYbpyHnk4M+fDw9eLpM6RYN0pOjEnsuP9wm0UJcTpmnhWlPAZYdAlLGvr1NqeiaQe1jQnx9KdGo1WB5dNGs1jFex0zDRLokoNw=
+	t=1766423305; cv=none; b=psPq+Je8Mv7viNGiW3BROJsU/YaPcdkl6UqQIr5OdaKsvDtnacfeXnEWBBWKwHBGAJsYeEqnvAHjxOZQfD1EaVYF8eIZjSmwWutXgJBox3VO8XfbnW2m3oOW+svGmYL/da1eO9hr6+ZZQ04x6D8oMIjKmXLOWG+3EjN44PH7muk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766422957; c=relaxed/simple;
-	bh=X2wWtZnXX+I/oXqvtUQbyTZW/mFP0hV7GbITAwxX9Rk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=a3s988aP1JjergbjPym4n9jwMMh5z2kncohIgmdOHIjwcXF4s4PeYdEDgnrXIXTMdKyRpG/fORop9bhfGjE0gRCO8Heb4d+vq9jk3SndV8Yj6EuB3SKN/aBJYShgOdfErHt1WzTgsyzA8nDMWd8RRBAevjIwNaBgJdYpcKPheWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WQMnjwB6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IteeYhpH; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1766423305; c=relaxed/simple;
+	bh=yuU6e2e1qZAfjqJxAR2lxB+hua/aywi4MlVW193eIY0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aU60weeSQ8MYFipjZKhXUqudp1JU3M65coLiQS6nSsj4CQQNrRVGUrG5F5uZcU2rxDXA26Ca5OphseDVPbTyhlsPu9wWNnfZ0BFUKAEz/xjEmaEOmc3uC68IsNDY4fGbf1G28uyqAlvsIQ+hNPrUx4GCLct30y2l4NJMtzsJd1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S8aZRTTt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LLohvLkm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BMGqvDJ1902176
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:02:33 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BMEBw0a1568783
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:08:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yp2RMDHYd3KhktISO6jK7zhxZreDnJv8OYT7HQAs42k=; b=WQMnjwB66gwdW62R
-	NJptTlmB7Qo6HsBaPOd2eYKPEY4bEAnyoIf76Cia+E+0PdYnnYjv9Oq2XMkrw6mu
-	axqLCB8+1c4W2iKoXaqXIqOtpB0gCi+5T1jXBffDT5vLnT16XjvawVkpdKyAt+k6
-	jdnZhIqbCj1JpE2Oa9LOapFOU48+60uZ5ONw8+VaSKoKs1Ss5ywl+SCWwleN/12T
-	wFHqqyP1qTh1JDoWKPlMz5jdNRpyLvssHrQ1GLNoHPSgt/OvF61Co64N5q3sHHsX
-	IeOQbU3V1XZza5ge0vnovo5SaeACEigCpU6YvMMis7afS9is6bQ5vc+4Y1hx2EQS
-	pPbZ/A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b79w8g0xh-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=uTJu74kOrD+Mhqkhf+/YtY
+	rkCua8e6faBgar0XkLxRo=; b=S8aZRTTtflFDOmze8vOzRZTug63Skr2gyWXOpb
+	OffiUxIl5oNZCMMUZa04HTcCciY6IdMvKuLwlM+RUFjz5lbeJX7Uyzc5Ba2bMqPf
+	oQvbhHBcMh2ZavbA83C2U0p9GIklyKPgvREKjnZAjqbHigc0hOqZLVJ3TfFLZNr8
+	pF7WkMi2SztxV+xBohB21/c1FL+sOpAfgRTZkzzZb1OhNVTx1dFs9jcwCXZ+59bI
+	+X8MJXoOtRBFhBhnPj62Eiai8YyAdYnvmqLAPsRo9+DV0DFPRC49l1C9iuvw5w/6
+	+kF+eaZgvNYHr5nMzyqTXjvJd8Tnz1QCUVa6OA1hgedYXypQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b76yy0kcp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:02:32 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34ab459c051so10944170a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 09:02:32 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 17:08:23 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7fc82eff4adso3970206b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 09:08:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766422952; x=1767027752; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yp2RMDHYd3KhktISO6jK7zhxZreDnJv8OYT7HQAs42k=;
-        b=IteeYhpH+1rZetA3ChaEAGPnbdrOvSaXX+a4KQwrNBpDi7GPGaD6qLG07JiVTAfqe0
-         a8OqTy/QlZKi6HoeFxvBz1I7LJUFGzkSzYF5UppnnjMv8sznhX7HvlRFz6WouG1KoYCk
-         WcHmsrS1lgb+6iH3qQvMD09UYGWhwARQZ9A5smxekFdSC48RgRqQKguBJQ3gimDJFRVu
-         EfR0t6eHETMLsck+JWSN7X5pLYnyg/ei0k2ehLDP4YEWz9TADVmnzif0VKWVKcL+Dea/
-         2p6QWJcsFBaXzkjdMiYbEFaCJ0NWLI2ytaqK5CuTqjB2Jlg+WSZIxakogCj7D1aLPws1
-         PX/Q==
+        d=oss.qualcomm.com; s=google; t=1766423302; x=1767028102; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uTJu74kOrD+Mhqkhf+/YtYrkCua8e6faBgar0XkLxRo=;
+        b=LLohvLkmfFK78HAwveZyRNtuuOkoBwu7DHQCIJemISLWt51qcvGnnw5HD7Odc8U3wf
+         NBVbMLi2Z6TDDsK2eNSGtbup7TOkV82JU1+FpeYowacAq4RvOYafdm98NW2362S6GxR4
+         QCHQRYZpbtmYs5+P2umJLpzu6Ly5ZxGRYWKVHSN76OUren5ip3I0FnRrUcIXTADRv+TX
+         fLprU8Z5uEa2ArHo0+0cRzXAneE8y0wfaVse5Ns4/SKQy7FSOErQKxKOWjKkmS3mubHD
+         GGLYqCNubk4gfSz4ZGG09GrZ+0wxfr+aV/ONmDrRTL2k9yzI9Prxq/qmIbxSGYuOah3P
+         C6FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766422952; x=1767027752;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yp2RMDHYd3KhktISO6jK7zhxZreDnJv8OYT7HQAs42k=;
-        b=Vs2nJHueWmFICJYdcBmbwBUfnFgleHUnNQlhDzvt8S3yeMwjkN+BhXO+Xu9hdwZ9CK
-         2/W0nJ0oyPawCDdGYvbLXg/gnyYe6XRUvtpMUU8VARGEPQ8PDaORUzGdcwYOAbP9Wlde
-         RiIOdHV77QMMZ+F6iDu/0xIu178HZbkKt+tnKTE4b0OUPfiSblz6HqmwMFOsQvYIdkb+
-         fhXi2Lq8IeRt7fSn7yGO/dVh43vTfXEXtQGrnt0q2ljqQpwTwVxHHGAx6/1/ZsSgzXpP
-         jLyMz5gLz+5DNBLgcRLV58drQIlTjXceK/B0/KARfW+iXFpPeWvZuNuBuEOKldAjDWjX
-         VY/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVVdVjw64LF8FtPDE2TdQcM5199tUwE9X34CjonNLX+pMUlLkN35hqX7gWeKyRDrlrgZKUmY8BmmaskBwFE@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWwcqqGmKp8sPTmqgknJMwaJPrOIqB7FoOzEgcVW9Z0NeXIOLz
-	vDxYv25bJZeXWOTmLlKYUK69IJQkFkenbEsPtaKrm0tg7lmvyfARD7BYUrb8UZnxs430SMaI/C1
-	rn3mhm2iPUfhphT6MzjV0K8dCMjYRXNCtwMUOqMABCdp3jnBxfehSdclLr5O5PBEhU4Qy
-X-Gm-Gg: AY/fxX5y46lwvzsymk4uKRjn+8+GI/fdslYsJ84xFM4+Qrs5wYrHUPOs7Nw6W9ungzr
-	XxX9PxyCzMPi7Xldr5Y5yyOiWIzYDoYxOfLvm5kdaf0f3VYSxxRlY9EHuVPwAve8FRk+Ej7xWpV
-	pcvnhsIiSIdJIs9q22uVQC1eMuh0T/3wnOfQiEodcy4mYTrQhPP8YVqzNC9TDMpSpVyQJVV2WnY
-	uVPwwKNCAo/xR9vMG9vwXYCqLvpfMK7HcLrrk7Ab8xcrjqumAI+fRJKE7EaI4J3g/l6xQQsrq2D
-	NGH5kZ3/SQPXNuzcUs69p+deM7dHFjp/x8PvQDRpT7PEnesqWcjSGQHvETaY4mEUkkFDxOc+lSy
-	5IZCTum6v
-X-Received: by 2002:a17:90b:3844:b0:33e:2d0f:479b with SMTP id 98e67ed59e1d1-34e9213011amr10256211a91.6.1766422951529;
-        Mon, 22 Dec 2025 09:02:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHhxvYwCBLtPVF5mS7w3vV1awrjYvqTGweCD6BTnP0tnreJxB27rzmNxHnp8YPmNFLzmV8T+A==
-X-Received: by 2002:a17:90b:3844:b0:33e:2d0f:479b with SMTP id 98e67ed59e1d1-34e9213011amr10256154a91.6.1766422950785;
-        Mon, 22 Dec 2025 09:02:30 -0800 (PST)
-Received: from [192.168.1.102] ([120.60.139.28])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34e70d4f887sm13636763a91.3.2025.12.22.09.02.26
+        d=1e100.net; s=20230601; t=1766423302; x=1767028102;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uTJu74kOrD+Mhqkhf+/YtYrkCua8e6faBgar0XkLxRo=;
+        b=YMPST6icWgEAoJpp/tfZUd6CqplhY12qefuRMGQI6rAyFewT+OrolxoOtmjVTpZDre
+         98g+pnLZXfYgmTesUGUC/noBu/TR3/dLLSccv7L+jXNFjfdKyf13IG+sMERiZ0Mmnl5d
+         zr48iwdLeQByBRPljgXdOeSQD148oGYSV3ExqGXf+S6Llidk3KvlVgb+EGg8tvn2fa+E
+         GmA3HXby+yB1oO0anvxCUyvsbMT7Blkm88GUnVZY/VP60xsXR+LA/sNPdzdo51b9C7IH
+         JDKivJGVPBsOe4MrmsJMDCsgd7YetpVvDI9rMR8oCHQrtty3gj4EQ26HseNoJ5I7ZAyE
+         KjLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUeV8HreBJdav+vYzbZqSQ4c8VcA4althiM9xHCE6P8+Ggk/7PyWlX7QEW7Vte375qHvpZ0NfFJxwNcLV+S@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAihptzmXUb2WleDcpK3y5j3GaT3A25kU/caXaIh75YLQ2hKo3
+	5lpSPLFhBQO3c7dwtvqwacojSjipDVt+vB2CVd/QdftHZbDr/swRNHILIGtEj0BdEuV1hzdbF1M
+	bYyj/DsgVEILnwgClXqeWXySDc6mQlpFxc5KTaTkHzd4Ab66xxiKb4ZdADz/3WXRNtwg/
+X-Gm-Gg: AY/fxX6WiW9rjikplk+SBpz4/DM9UiwW7BJ24vjz2ejtXDbSr+cOBvKuy/w4PHWb/+C
+	ApWixwnLkdxuclRLSY0Qh+1+IcVYmTOu1RzoeNzzurlp8eavVvM7aOyQ6cy1qRIHsvPuyegr77W
+	3ljK6+xTxlLWTpwrW9V7SoYGl3wHbbcpHkQKchDlqJ8Zzsf4kDhswxMml9CNOVRdXIqGnwoV8Y+
+	pwhdjULumhy82+tFnqyQPNsfVTVW+Jp+XtSxtMUdVQlpvb7QnGzocFrqCnJjyQwQp81/p5Jvi92
+	ULLVZ/A+qJ3eh+AsS7E2ExxobnSwe3GYlETkiO1HjXu8+VJBG4Pr+GEjm8yE9pUXvC0gaOdArFc
+	gxIdeyecNgfs/NhztTBS4o0kzWL/KdgMsWA==
+X-Received: by 2002:a05:6a00:4ac3:b0:7e8:3fcb:bc4b with SMTP id d2e1a72fcca58-7ff551df0c1mr11653894b3a.32.1766423302223;
+        Mon, 22 Dec 2025 09:08:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEQGoTkq6ENiYiLQXUVP+Xrflpg7TfjqSAtigwX2xx0bLzHFHk7HDNLAGumk7ig3V+Qu2T7RA==
+X-Received: by 2002:a05:6a00:4ac3:b0:7e8:3fcb:bc4b with SMTP id d2e1a72fcca58-7ff551df0c1mr11653863b3a.32.1766423301721;
+        Mon, 22 Dec 2025 09:08:21 -0800 (PST)
+Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7a939ea2sm10897176b3a.4.2025.12.22.09.08.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Dec 2025 09:02:30 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Google-Original-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Heiko Stuebner <heiko@sntech.de>, Niklas Cassel <cassel@kernel.org>
-Cc: Shawn Lin <shawn.lin@rock-chips.com>, FUKAUMI Naoki <naoki@radxa.com>,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Damien Le Moal <dlemoal@kernel.org>, linux-pci@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20251222064207.3246632-8-cassel@kernel.org>
-References: <20251222064207.3246632-8-cassel@kernel.org>
-Subject: Re: [PATCH v2 0/6] PCI: dwc: Revert Link Up IRQ support
-Message-Id: <176642294649.11053.7692165747212741983.b4-ty@kernel.org>
-Date: Mon, 22 Dec 2025 22:32:26 +0530
+        Mon, 22 Dec 2025 09:08:21 -0800 (PST)
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+Date: Mon, 22 Dec 2025 22:38:14 +0530
+Subject: [PATCH] clk: qcom: rcg2: compute 2d using duty fraction directly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -116,80 +99,111 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDE1NiBTYWx0ZWRfX3GlTpalxqYfV
- 3B4WxanHTrWHeBJUBaVk4U9FYJPVhIVsZhI+GwbcK03wt4YAy5ngD5nfCKTblO92XVDwjocBhcP
- xmj2d/0FtLLLhoP0dsu3HRwsP+1VfVg1IGL8qjxdeZu29J3Dw4vBI64PylpuRyJ7crwjFwUS2n9
- GIsf93fa3fawBro/Hz0W8f6YN5UWNaY+1aRbWhLdCIUYYawNJrpqPdG+YRc6AT7yacmbquPzcfV
- vog4Lbgr8vzHjJtcCnbRHcRRmT9OgqbXIkSEqdHzlyXR7oig0rcgOYCTbAgNQe9PsK4ADWmBxyR
- l/ji0+2JkhJp6wKL3jJwc1wZbMJM/qLxlBMKaLI28A9wB/I7z1HtCfuBd58shKk6XSdyiWmbz7b
- jl+h88eLP4tfxLxa0VXGSgtqmv5ePUqeF+nhF5zw0V7JDWjOM8J+r4eZ0WBgZ2/isjYnUPgpCdh
- NUYtr5yBK3lfyHDbLEQ==
-X-Proofpoint-GUID: S9f94JyfXk_5zgEjHDLVTQV6PTio6VX0
-X-Proofpoint-ORIG-GUID: S9f94JyfXk_5zgEjHDLVTQV6PTio6VX0
-X-Authority-Analysis: v=2.4 cv=T/eBjvKQ c=1 sm=1 tr=0 ts=694979a8 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=wbxd9xFQoh2bOL7BUxlcyw==:17
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAP16SWkC/x2M0QpAQBAAf0X77IrNEb8iXWdvsSV0h0j+3eVxm
+ mYeCOyFAzTJA55PCbIuEfI0AZrsMrISFxkwQ50jonLHfhu6aWazeaY/UFVd6gJ7y2R7iGk0g1z
+ /tu3e9wNYNxqjZgAAAA==
+X-Change-ID: 20251222-duty_cycle_precision-796542baecab
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDE1NyBTYWx0ZWRfXyD0aBoJXI+xn
+ V67twpG19trCq0UNURQInaTHdPmBPzDPC9zMzxY/u4dinElE6cjDqHvHP0ioHOcxpUNcpxQ3ncJ
+ d3Higpgd2CEoyUeqcHy7dsISOYY+6j8Iihb9nzBnROH14CqQuroutg2SSS8Ic5WnqwQoGzla70r
+ tN1c6U0pNEb1YXjx06zmiuTStYH9SEU2YUcaPQZmbRsbHF7VJ3Wm1y26U30rDJHzmwB1/DCjHPB
+ 8LEgsMso4CO7ggrBtw0XpDr2736UeYXy2fW3l7fqzyTbmaXAAhwr1n1PCMFOjPGXe9KJZDxwLiG
+ yfbBcE+4bNSUBRRs2p2ntn1Fwz0naUSYoD26RR1iPAgvChaTaoHMN6J1jnjRoveRN6Wa8jwma8n
+ FRqI2P9XXqHh9hjbFrFf2OFeByFNMRs9k+dPxHtG6KG/h+QocT7W0H0nTCYsSjOO6AGT7lp3fsX
+ Ye8tg4miC8YLDinOtuQ==
+X-Authority-Analysis: v=2.4 cv=Zb0Q98VA c=1 sm=1 tr=0 ts=69497b07 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=875CWLFNMCvb7f9f5gwA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=igsz0PQQFTjIY3ArcIwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: nwtE8s4FIsNRplNf1HAEmAQBKnWYVAlU
+X-Proofpoint-GUID: nwtE8s4FIsNRplNf1HAEmAQBKnWYVAlU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-22_02,2025-12-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 adultscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512220156
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ phishscore=0 spamscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512220157
 
+From: Taniya Das <quic_tdas@quicinc.com>
 
-On Mon, 22 Dec 2025 07:42:07 +0100, Niklas Cassel wrote:
-> Revert all patches related to pcie-designware Root Complex Link Up IRQ
-> support.
-> 
-> While this fake hotplugging was a nice idea, it has shown that this feature
-> does not handle PCIe switches correctly:
-> pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-> pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-> pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-> pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-> pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-> pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-> pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-> pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-> pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-> pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-> pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-> pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-> pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
-> 
-> [...]
+The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
+derives an intermediate percentage `duty_per = (num * 100) / den` and
+then computes:
 
-Applied, thanks!
+    d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
 
-[1/6] Revert "PCI: dw-rockchip: Don't wait for link since we can detect Link Up"
-      commit: fc6298086bfacaa7003b0bd1da4e4f42b29f7d77
-[2/6] Revert "PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ"
-      commit: 180c3cfe36786d261a55da52a161f9e279b19a6f
-[3/6] Revert "PCI: qcom: Don't wait for link if we can detect Link Up"
-      commit: e9ce5b3804436301ab343bc14203a4c14b336d1b
-[4/6] Revert "PCI: qcom: Enable MSI interrupts together with Link up if 'Global IRQ' is supported"
-      commit: 7ebdefb87942073679e56cfbc5a72e8fc5441bfc
-[5/6] Revert "PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt"
-      commit: 9a9793b55854422652ea92625e48277c4651c0fd
-[6/6] Revert "PCI: dwc: Don't wait for link up if driver can detect Link Up event"
-      commit: 142d5869f6eec3110adda0ad2d931f5b3c22371d
+This introduces integer truncation at the percentage step (division by
+`den`) and a redundant scaling by 100, which can reduce precision for
+large `den` and skew the final rounding.
+
+Compute `2d` directly from the duty fraction to preserve precision and
+avoid the unnecessary scaling:
+
+    d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+
+This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
+a single, final rounded division, improving accuracy especially for small
+duty cycles or large denominators. It also removes the unused `duty_per`
+variable, simplifying the code.
+
+There is no functional changes beyond improved numerical accuracy.
+
+Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+---
+ drivers/clk/qcom/clk-rcg2.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
++	u32 notn_m, n, m, d, not2d, mask, cfg;
+ 	int ret;
+ 
+ 	/* Duty-cycle cannot be modified for non-MND RCGs */
+@@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+ 
+ 	n = (~(notn_m) + m) & mask;
+ 
+-	duty_per = (duty->num * 100) / duty->den;
+-
+ 	/* Calculate 2d value */
+-	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
++	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+ 
+ 	/*
+ 	 * Check bit widths of 2d. If D is too big reduce duty cycle.
+
+---
+base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+change-id: 20251222-duty_cycle_precision-796542baecab
 
 Best regards,
 -- 
-Manivannan Sadhasivam <mani@kernel.org>
+Taniya Das <taniya.das@oss.qualcomm.com>
 
 
