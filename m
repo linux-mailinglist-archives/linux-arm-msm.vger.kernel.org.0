@@ -1,46 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-86236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D496CD60B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 13:51:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DECCCD6173
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 14:07:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6222E300286B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:51:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CBFCE3044681
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 13:06:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FAE12D193C;
-	Mon, 22 Dec 2025 12:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BA372D4806;
+	Mon, 22 Dec 2025 13:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3sFdgPZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="g436c2Np";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YvD5N6k5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DDA261B80;
-	Mon, 22 Dec 2025 12:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0642BE7DB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 13:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766407315; cv=none; b=uSld4mSqq9Z5RMyKdxH3+uJpYYEBpoJiJi6KSv1Xew1EmWzKeNgq86uvSHfYiyezk2Bn+f+Gnyqdw8WU6L2NGrf3KnZigZoNdNaA6+kPJZWwDBe4geeRJsov+sJDhokegnGekl2ia4UT2kkEE9YdrCjTUiqbVFEBFcA1K3OPr54=
+	t=1766408811; cv=none; b=GLw1twqezAzZ9nfZJBGUvASvg4Vpep9mnFMkHtMGt5FyrXSTw8Z7P106LLV6DcTjMK08ovWTjhlxFZePURGcU8VGpy/9GGLpd7wUQQ9u/nNWIKr/kTEjM3Gai+EZeV09K3mmzs1Rk6Ehbbnfqnr58dKOCYQtAZ86Dpy38ZYLhiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766407315; c=relaxed/simple;
-	bh=G5Zg4EHeNRLacKj+LTFhvKWt/cUI8R7NhKAOfZw/9c4=;
+	s=arc-20240116; t=1766408811; c=relaxed/simple;
+	bh=wv23DNsmsWzJoqwPtzDiDiysbtjWgZAM6vtUwbCcQwA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p8PsGpFPacaYGbtysvH/zsZrfMbpoNgdD/qc9ihg/O3s2Whmegk5dwIbpy5fDEjB2FbdzXCoDBShMcDJ8U+eq3p90poTj5uHCkAXeOtWLygm15K/8pEw9obI1vh1PqPXcBRVk0O0c73ppZFS9RfvrGyF79PJlXLxj+gpFrs1jgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3sFdgPZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED2C113D0;
-	Mon, 22 Dec 2025 12:41:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766407314;
-	bh=G5Zg4EHeNRLacKj+LTFhvKWt/cUI8R7NhKAOfZw/9c4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=M3sFdgPZXQTBDSkFVxFGUcF+kiGNSnacJtoydMWKvbVZ6+zTIZk+HEiCdCkAOErbg
-	 ui0DjVc8m2ZSfxuuRcIgi5Jhs5UyFwKFG5qCGTlVfs0oViNl+YrTLCDLr3lq3wZFKO
-	 91oeaduN5OxJdxu36f7HEz6OpPgdc7Tj38W8yxFaZ2YLRSqpujFZ8ERsGqxK0TJfAg
-	 DZFoF3qu5ATNBSfeYx2oj1W0V3Hos551TFtKqgb9icdxG26p3gBVKp2kzvwnL2jBrp
-	 fx2L2C26w0Vg8aPOsCmCFk0ZyVxF+RfFCqWLRATG0XPdnvLlrs8+kRXugwYk00bbtQ
-	 mDMG7dzYmx/iA==
-Message-ID: <2ff993a7-0fda-4337-9acc-92aaa75be750@kernel.org>
-Date: Mon, 22 Dec 2025 13:41:48 +0100
+	 In-Reply-To:Content-Type; b=AKqCvN9Wd6Vd9OSIpwc+8gbq20SslbfBasvficRh5huE4utCRBVYQxVT3iVwihJxNWvKfwsE2RXkVLqxeWIPaOMOAG0BwoqyyO2luuF2ewLjEeNKxKsfK7xgN1lpMaLBpxVl5xh44JeXSdUhmofPqTJCB072AeqrmET9e8fOWDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=g436c2Np; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YvD5N6k5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BM7qUlY3985379
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 13:06:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Rl34VUSIcLKGSTcgfDKK7LNhN6XEgT4eoWUw45WEru4=; b=g436c2Np0AohmjmX
+	W3NF26YkDIeY7QFDA40v2H/XS2cpwspk+DIYDXnNsBE4heNkzwIx8H8Ct6ikcz8Y
+	Ok4RLf/C7vOywr4L2qX3FMQI2GZOXaD3Zyg1FDWfGKhiBmz/ZRhihEpBjymjwYgO
+	ZwC4tbJDcTaOhBcI1Ry+PWtyzMb8dgDA2jkRqrU/ESWapuSQ5MwdK/fxw3aAwlwZ
+	j8OD34SXDYnqeQWPELQUK8GEZ1/xGpn+sRgzcjLsRJ/BEfhMxU6NSU0jVFXkpggD
+	fLx6EjTQTiWTpNwEY35EgmOZKDXFzPByyBf7gkl5cA7NpGcDPu2wQEQ/kJxAd9TK
+	00vWhw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b5mvfn1st-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 13:06:46 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2a0bb1192cbso79239425ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 05:06:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766408806; x=1767013606; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Rl34VUSIcLKGSTcgfDKK7LNhN6XEgT4eoWUw45WEru4=;
+        b=YvD5N6k55QtlCs1rAjdtuDk9TuX8bpTZCmSSxB2NZTFFMdi6C7rFTCGyd+3wNFd4/L
+         ygmNKmapvXhFUv6VnCavGRlcmfQ7nC6FSD4jRc0VVVDYU+HEanXHBJAFZpytmcxGfrjP
+         ZMiBMNWaYSs/BEhWOP4EgLAegqOkzohU2ZmS/fYczi1cxeoG7FeputQfffb3XMNJOLYD
+         mF4s6qpqEiCB513H0JNQZIdemYhP8vRUI+I8AAgJyuJuhsKOJ934SE9mrNNOezS4/VqT
+         SE7m1291zJbsXluq0djGIeDDAEp5BlJEwqTKI/0KaLvI0YSr92ZziW5bJMauYgtLpe9L
+         xpPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766408806; x=1767013606;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rl34VUSIcLKGSTcgfDKK7LNhN6XEgT4eoWUw45WEru4=;
+        b=Y1/VsTaJ0HLVUe4/8XK8V+U0idJblCDSI+SM3qPmBx49/KJB7e7dnygfX7q+78Ejpk
+         vSJYgpQrEI471hDO6GA+eTd6qDrNQyxHIPlMYT1czjteI1Wl9cqTptpdUG26rRuAROh5
+         +z9U1oklvvZLQ4M9VlL42b9nnMLXmdbtWymCsUEupx//+aiyqoLjShzGALm6P2bJg/ng
+         jiMchKqGrqpI7YFmx3g+qd27ZQlymZ+AHKOXgrSx+SAItaCaIirXMxCp+of++oFFhAe+
+         n7uuRpwe+GXyEuVeSTehiCL9AjaYHr+Kw8lj2SiQ6HFV6KU+5eArZBP414JIRu2rWfoT
+         bbRg==
+X-Forwarded-Encrypted: i=1; AJvYcCXpmgNXQipzMB/PJtohVqXgBJ0hEyR08z08t7lfX/ER7a/6XKfqErHuXmGLsVVqQtBDEOLwl0albDye+QL1@vger.kernel.org
+X-Gm-Message-State: AOJu0YykIlmH5vCmdMzMiofqW9baI5Rq1OPctl5qEHunPZ5CYtkgLjiB
+	wISX4R11Z0nLxZ1zqlB5g33WcjVCG6Aqs6mkjSYojW6+f4+IKi941khUMsJsP6svKXJA+SoxS0i
+	f3YgGrqPNHeMq1FKf+nqoTIp6N1voDJ98TCG64VUK54XpOgg9lLN+gfvndgg39UIvcsbD
+X-Gm-Gg: AY/fxX7QqG6/jYabO5iUYnZZGYrhR2iRRN+mJeou2AbqJMOuSmoh6mPhNRezyZKnmHq
+	xJCoxlc0c5lMZmBYLly2EwLg6/1RSjKsr9rRhrXdhif3WE1HsvLK8OvsghhLssdTkcluRxUeXsI
+	fiIwmsZXY1qWB7SXiwKwU5hrZjhjst0wTTqyB1oxEt4uiIeozE8YQOoGQffW1lJ+nTe2vA9Vbh4
+	/qhbVkcxquE1EEtdNn7hxcloazn7kM9FpI3q3mhuRf2z7XytHerKCg1ytoaaSJApWT0Vmjmv1lR
+	EnmFHlcvQjBzrCjEQ1jUm4k9OFe1EJcB+9Ieq7d9rdiemBl+eKx96AIEQnK6LcTbty/RxBi5PMJ
+	Wr9G5IT3fUr7tJlaMn/vbcoB6xvwHyMxsZ5laRQty6g==
+X-Received: by 2002:a17:902:ccd1:b0:2a2:f465:1273 with SMTP id d9443c01a7336-2a2f4651332mr99434235ad.35.1766408805893;
+        Mon, 22 Dec 2025 05:06:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGlbxx3zSYC7hX0CsS0/1ozD2P9MFWi8YNJtWnOe1tHF2S4inDEMsj0XZcm7mX2MOc53RRZRA==
+X-Received: by 2002:a17:902:ccd1:b0:2a2:f465:1273 with SMTP id d9443c01a7336-2a2f4651332mr99433985ad.35.1766408805432;
+        Mon, 22 Dec 2025 05:06:45 -0800 (PST)
+Received: from [10.217.217.28] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d6ec60sm96922405ad.86.2025.12.22.05.06.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Dec 2025 05:06:45 -0800 (PST)
+Message-ID: <f6ca8c43-9f00-4dd8-9e11-90f2a4e8d18e@oss.qualcomm.com>
+Date: Mon, 22 Dec 2025 18:36:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,160 +102,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
- disable-rfkill property
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>,
- Lorenzo Bianconi <lorenzo@kernel.org>,
- Maximilian Luz <luzmaximilian@gmail.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- ath12k@lists.infradead.org, Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Dale Whinham <daleyo@gmail.com>
-References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
- <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
- <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
- <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
- <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
- <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
-From: Hans de Goede <hansg@kernel.org>
-Content-Language: en-US, nl
-In-Reply-To: <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
+Subject: Re: [PATCH v3 1/2] dt-bindings: leds: leds-qcom-lpg: Add support for
+ PMH0101 PWM
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Fenglin Wu <quic_fenglinw@quicinc.com>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+        kamal.wadhwa@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+        jingyi.wang@oss.qualcomm.com
+References: <20251215-knp-pmic-leds-v3-0-5e583f68b0e5@oss.qualcomm.com>
+ <20251215-knp-pmic-leds-v3-1-5e583f68b0e5@oss.qualcomm.com>
+ <20251217-quiet-wandering-gaur-c9c6fe@quoll>
+Content-Language: en-US
+From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <20251217-quiet-wandering-gaur-c9c6fe@quoll>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=H8rWAuYi c=1 sm=1 tr=0 ts=69494266 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=g5AuMlRjdp1IwKd9_dYA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: mMJ3Vg311jFMK_Gw4xwJ306EGtWY_o77
+X-Proofpoint-GUID: mMJ3Vg311jFMK_Gw4xwJ306EGtWY_o77
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDExOSBTYWx0ZWRfXzH8FlnZ8saEZ
+ WRkwAcZMS92dbl0PZ4LLFNAEHTUtBIegWt3i5lchlOCMq+aJf58jRX0oCCgpbRkCUoehdQJTzbX
+ zdB3lHoDBCRkjt5oCTnwG1mDjXzvyPN9OdscVIlDD62ePmWnmLKr1EYzAgGHtSth5dPL9yN6OsC
+ LPW+LpXVD2nn18e5k2H0IlCDeQvoH7eiHaiHAupmIT7gbRnnWl+8E789zTYBTL+93K6y/bj4G7b
+ XgFVT8pCdc7/Nxvji2Ad1p41sCJu0teyW29KNT8zJ0lPgtQqn4bUpyXL7O7rtdoz9seZXbXe/Uu
+ aNrTaqGME+rxJW71j2nQ3MoPmdb5cXQYmzfujdTgjFqDfVJk/RZbpvmbmfd78BGpH34Fp1golzM
+ ORFHWKz7rVx7siv3IAY9pSCig+QWgMWfxi/Zvc36D4MWAVzQ1+v0l179fndV+puB0HYLXLfvvKs
+ DFQMcbsCRQB4xtFDS3w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-22_01,2025-12-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 spamscore=0 adultscore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512220119
 
-Hi Mani,
+Hi Krzysztof,
 
-On 22-Dec-25 12:45, Manivannan Sadhasivam wrote:
-> On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
->> +Cc Mani
+On 12/17/2025 1:45 PM, Krzysztof Kozlowski wrote:
+> On Mon, Dec 15, 2025 at 04:41:04PM +0530, Jishnu Prakash wrote:
+>> Add support for PMH0101 PWM modules which are compatible with the PM8350c
+>> PWM modules.
 >>
->> Hi,
->>
->> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
->>> On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
->>>> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
->>>>
->>>> For some devices, Wi-Fi is entirely hard blocked by default making
->>>> the Wi-Fi radio unusable, except if rfkill is disabled as expected
->>>> on those models.
->>>>
->>>> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
->>>> disabling specific features based on ACPI bitflag") added a way to
->>>> support features set via ACPI, including the DISABLE_RFKILL bit.
->>>>
->>>> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
->>>> equivalent for devices described by a Devicetree instead of ACPI.
->>>>
->>>> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
->>>> ---
->>>>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
->>>>   1 file changed, 6 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
->>>> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
->>>> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
->>>> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
->>>> @@ -29,6 +29,12 @@ properties:
->>>>         different 5 GHz subbands. Using them incorrectly could not work or
->>>>         decrease performance noticeably
->>>>
->>>> +  disable-rfkill:
->>>> +    type: boolean
->>>> +    description:
->>>> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
->>>> +      blocked by default otherwise
->>>> +
->>>>   additionalProperties: true
->>>>
->>>>   examples:
->>>>
->>>> -- 
->>>> 2.47.3
->>>>
->>>>
->>>>
->>>
->>> Is this really a hardware description though ?
->>
->> I would say yes it is. The wifi chip has an rfkill input pin and
->> things will be broken when that pin is hardwired to a fixed value
->> rather then being actually connected to a GPIO from say
->> the embedded controller.
->>
+>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+>> ---
+>>  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>>  1 file changed, 1 insertion(+)
 > 
-> IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
-> the device won't make use of it as there is no physical connection. So you want
-> the WLAN driver to change the state through SW?
+> So how many nvmem entries it has? You need to define it in schema.
 > 
->> So I think that we would need here is not a disable-rfkill property
->> but some way to indicate in the DT-node that the rfkill input pin
->> is not connected and thus should be ignored.
->>
->> This (the rfkill input pin being not-connected) IMHO very much
->> is hw-description.
->>
-> 
-> Though we can argue this way, I would prefer to handle it in the driver. For
-> example, with my M.2 series, we will end up describing the M.2 slot:
-> 
-> 	connector {
-> 		compatible = "pcie-m2-e-connector";
-> 		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-> 		...
-> 		ports {
-> 			...
-> 			endpoint@0 {
-> 				reg = <0>;
-> 				remote-endpoint = <&pcie4_port0_ep>;
-> 			};
-> 		};
-> 	};
-> 
-> Then if we use a DT property to convey the RFKILL pin state of the device, we
-> would need to describe the endpoint device in DT and hardcode the state:
-> 
-> 	&pcie4_port0 {
-> 		...
-> 		port {
-> 			pcie4_port0_ep: endpoint {
-> 				remote-endpoint = <&m2_e_pcie_ep>;
-> 				disable-rfkill;
-> 			};
-> 		};
-> 	};
-> 
-> So this will essentially make the M.2 device non-swappable unless you change the
-> DT since you've how hardcoded the device property in the binding. This is
-> something I try to avoid to make the M.2 slot really swappable.
-> 
-> For this reason, I would prefer to handle the RFKILL state in the WLAN driver
-> using the device specific compatible. This will be problematic only if multiple
-> cards of the same Device ID have different RFKILL state and the devices are not
-> distinguishable even with sub IDs.
 
-I think we're miscommunicating here. I'm not talking about the card having
-a broken rfkill implementation, I'm talking about the M.2 slot on the mainboard
-having e.g. W_DISABLE1# hardwired in such a way that cards would interpret it as
-having to always disable their wifi radio which is very similar to what is
-happening on the surface device. Except that on the Surface there is no M.2 slot,
-the wifi is just soldered onto the mainboard I believe.
+PMH0101 PWM has 2 nvmem entries, the same as PM8350C. But I see that
+PM8550 PWM was earlier added under the "if:then" condition for the number
+of nvmem entries and you made this change which removed that line:
 
-Based on experience I'm pretty sure we will encounter M.2 slots which such
-a hardwired W_DISABLE1# signal sooner rather then later.
+https://lore.kernel.org/all/20240226073713.19045-1-krzysztof.kozlowski@linaro.org/
 
-So my proposal is to come up with a generic way to solve the broken M.2 slot
-case and then apply that to the Surface case.
+    dt-bindings: leds: qcom-lpg: Drop redundant qcom,pm8550-pwm in if:then:
 
-Regards,
+    "qcom,pm8550-pwm" is compatible with "qcom,pm8350c-pwm" (latter used as
+    fallback), thus it is enough for the "if:then:" clause to check for the
+    presence of the fallback "qcom,pm8350c-pwm".
 
-Hans
+PMH0101 PWM would be the same as it also has PM8350C PWM as fallback.
+Do you prefer that I add it or not?
 
+Thanks,
+Jishnu
+
+
+> Best regards,
+> Krzysztof
+> 
 
 
