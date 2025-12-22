@@ -1,153 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-86235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F4DACD600A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 13:38:50 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D496CD60B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 13:51:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6826E300E454
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:38:41 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6222E300286B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 12:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBE4B29B79B;
-	Mon, 22 Dec 2025 12:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FAE12D193C;
+	Mon, 22 Dec 2025 12:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PbQuBHVB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3sFdgPZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377F129B783;
-	Mon, 22 Dec 2025 12:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DDA261B80;
+	Mon, 22 Dec 2025 12:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766407118; cv=none; b=PxkAKc8gRdQNwyPmZTl8Jhv5o6hyOKUWAv2I9JGtoRodOQpfCEOJR0iDrZUMLdP6/9yD89f1KR15Z8yOraxf6Q7CTX0O1zBMQduMMrvkJTHIuwTY4eM6EomK7D2w/AIYDmUrpLXA6W2ZmI1F/xTYi+VEJjUM8auCgBFr/9pq+lA=
+	t=1766407315; cv=none; b=uSld4mSqq9Z5RMyKdxH3+uJpYYEBpoJiJi6KSv1Xew1EmWzKeNgq86uvSHfYiyezk2Bn+f+Gnyqdw8WU6L2NGrf3KnZigZoNdNaA6+kPJZWwDBe4geeRJsov+sJDhokegnGekl2ia4UT2kkEE9YdrCjTUiqbVFEBFcA1K3OPr54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766407118; c=relaxed/simple;
-	bh=X01Y/w67otFw11UpoGzF5F8XTE13bbfr8SG5SnkWWLw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sz3pgE5osW5ao4pWe2Mvxr3ToVRutPS8FO+3w9si2+QEkZk4p6gPNr+WXiUKBdqgaJY53C3OAXBeyvIM4HLi9XgdVZg732IdigQmy0tN0IPZ2FHvykztHLzeYkDVG8598od4mJ30MMiXRtBURCCJKPnrZhMyuy3I4LrBvxmMlnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PbQuBHVB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BMCLs8m2189489;
-	Mon, 22 Dec 2025 12:38:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=r+oPJd0s+Q/6vNwQ1Hu2Jb9Bet4TtOBE38w
-	xre0eeeA=; b=PbQuBHVBPlQRMhR6fHs32gJxXoTBas1VfSXVADtN5QMKzGMVl+0
-	kMEDYYNEd2lbbXFn+z+3l01pnSYr/tbdusGt+ppS/bFGmrngXDLgGgPGMMCxlBR9
-	rUWArZbuq2NfBi1j+XZTUQKaz3SmTq+o0JC0t5cMcKMvyhR58t2864d2wbmSqbM3
-	CGlZJySz8TcE4P3gVFfdW8/FLGPySD4eQZa8jZCo1CS2mV7FvkwtIgKzRQX+Jh/U
-	vKYcs9Hge02N5Oo8yE+alIziuinhfDkUYJMC9Mh63DrctQwXB1tvoult/e0ATdoq
-	ggnIsLjmbTTNP023guNCMiroQpkPz7MZKng==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b702t96v2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Dec 2025 12:38:31 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BMCcSQW025329;
-	Mon, 22 Dec 2025 12:38:28 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4b5mvksftf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Dec 2025 12:38:28 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BMCcRoS025323;
-	Mon, 22 Dec 2025 12:38:28 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5BMCcR7h025319
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Dec 2025 12:38:27 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467392)
-	id CF54821D34; Mon, 22 Dec 2025 20:38:26 +0800 (CST)
-From: jinwli <jinwang.li@oss.qualcomm.com>
-To: Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        shuai.zhang@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com
-Subject: [PATCH v1] FROMLIST: driver: bluetooth: hci_qca: Always perform cleanup on every setup failure
-Date: Mon, 22 Dec 2025 20:38:24 +0800
-Message-Id: <20251222123824.3000167-1-jinwang.li@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1766407315; c=relaxed/simple;
+	bh=G5Zg4EHeNRLacKj+LTFhvKWt/cUI8R7NhKAOfZw/9c4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p8PsGpFPacaYGbtysvH/zsZrfMbpoNgdD/qc9ihg/O3s2Whmegk5dwIbpy5fDEjB2FbdzXCoDBShMcDJ8U+eq3p90poTj5uHCkAXeOtWLygm15K/8pEw9obI1vh1PqPXcBRVk0O0c73ppZFS9RfvrGyF79PJlXLxj+gpFrs1jgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3sFdgPZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED2C113D0;
+	Mon, 22 Dec 2025 12:41:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766407314;
+	bh=G5Zg4EHeNRLacKj+LTFhvKWt/cUI8R7NhKAOfZw/9c4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=M3sFdgPZXQTBDSkFVxFGUcF+kiGNSnacJtoydMWKvbVZ6+zTIZk+HEiCdCkAOErbg
+	 ui0DjVc8m2ZSfxuuRcIgi5Jhs5UyFwKFG5qCGTlVfs0oViNl+YrTLCDLr3lq3wZFKO
+	 91oeaduN5OxJdxu36f7HEz6OpPgdc7Tj38W8yxFaZ2YLRSqpujFZ8ERsGqxK0TJfAg
+	 DZFoF3qu5ATNBSfeYx2oj1W0V3Hos551TFtKqgb9icdxG26p3gBVKp2kzvwnL2jBrp
+	 fx2L2C26w0Vg8aPOsCmCFk0ZyVxF+RfFCqWLRATG0XPdnvLlrs8+kRXugwYk00bbtQ
+	 mDMG7dzYmx/iA==
+Message-ID: <2ff993a7-0fda-4337-9acc-92aaa75be750@kernel.org>
+Date: Mon, 22 Dec 2025 13:41:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
+ disable-rfkill property
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>,
+ Lorenzo Bianconi <lorenzo@kernel.org>,
+ Maximilian Luz <luzmaximilian@gmail.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ ath12k@lists.infradead.org, Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+ Dale Whinham <daleyo@gmail.com>
+References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
+ <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
+ <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
+ <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
+ <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
+ <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=SIhPlevH c=1 sm=1 tr=0 ts=69493bc7 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=aAzMGln4x-MfedFZepYA:9
-X-Proofpoint-ORIG-GUID: C0HBAyB6G5jKe3uq77IzH3KN3hWMPtMD
-X-Proofpoint-GUID: C0HBAyB6G5jKe3uq77IzH3KN3hWMPtMD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIyMDExMyBTYWx0ZWRfX9Ze6J5kujqlD
- nNi29Kir3EryH7xg6AVR0KaUI60sGMtoEQPHVCd7OV+dCNbX5+SxYk7NY0y1LAED2r/o8OS5gZp
- PR3FtdwreReG8LWl0MZWMSk1UM8iZbL/ow/3B4/GYlsf74M7qd442ytu01PShzwtWuY05xKZfUx
- /oh+fNMpAPbTaY7kGsCAzBkJm1q7USzQvFXxzhSg2Y/EfoN+c9KnIRbqCSs9K+K5hAFjGh9AlmU
- nAMIsN4CHanDuWK5Wf0l9v7kw+jknU7GpqVqfd7Tj83ei2BO6a91XsDwtwUlKXZt+udhkn/OncJ
- hHupFM5D7zCbSTdTHrLKN9GvzphQ9v6HPvCDUWdDY15aZemNDIZ3/Xla0SVJupayUo2HdVU61d/
- JIJXPsolD7Idp0QX94ZHVMbfZuAH/Y+UNsD9V9NNnuF3Rv1glhNVQLnj4z9fnFuhwqIFgiWYmnz
- iGIWT+maDVrTy+gPYkg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-22_01,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- adultscore=0 phishscore=0 spamscore=0 suspectscore=0 clxscore=1011
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512220113
 
-The retry logic in qca_setup combined error handling and
-retry gating under a single condition. This caused the final failed
-attempt (when retries reached MAX_INIT_RETRIES) to return without
-performing cleanup.
+Hi Mani,
 
-So only jumping to retry when there is a error and retries have not
-reached MAX_INIT_RETRIES.
+On 22-Dec-25 12:45, Manivannan Sadhasivam wrote:
+> On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
+>> +Cc Mani
+>>
+>> Hi,
+>>
+>> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
+>>> On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
+>>>> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+>>>>
+>>>> For some devices, Wi-Fi is entirely hard blocked by default making
+>>>> the Wi-Fi radio unusable, except if rfkill is disabled as expected
+>>>> on those models.
+>>>>
+>>>> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
+>>>> disabling specific features based on ACPI bitflag") added a way to
+>>>> support features set via ACPI, including the DISABLE_RFKILL bit.
+>>>>
+>>>> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
+>>>> equivalent for devices described by a Devicetree instead of ACPI.
+>>>>
+>>>> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+>>>> ---
+>>>>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
+>>>>   1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
+>>>> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>> @@ -29,6 +29,12 @@ properties:
+>>>>         different 5 GHz subbands. Using them incorrectly could not work or
+>>>>         decrease performance noticeably
+>>>>
+>>>> +  disable-rfkill:
+>>>> +    type: boolean
+>>>> +    description:
+>>>> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
+>>>> +      blocked by default otherwise
+>>>> +
+>>>>   additionalProperties: true
+>>>>
+>>>>   examples:
+>>>>
+>>>> -- 
+>>>> 2.47.3
+>>>>
+>>>>
+>>>>
+>>>
+>>> Is this really a hardware description though ?
+>>
+>> I would say yes it is. The wifi chip has an rfkill input pin and
+>> things will be broken when that pin is hardwired to a fixed value
+>> rather then being actually connected to a GPIO from say
+>> the embedded controller.
+>>
+> 
+> IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
+> the device won't make use of it as there is no physical connection. So you want
+> the WLAN driver to change the state through SW?
+> 
+>> So I think that we would need here is not a disable-rfkill property
+>> but some way to indicate in the DT-node that the rfkill input pin
+>> is not connected and thus should be ignored.
+>>
+>> This (the rfkill input pin being not-connected) IMHO very much
+>> is hw-description.
+>>
+> 
+> Though we can argue this way, I would prefer to handle it in the driver. For
+> example, with my M.2 series, we will end up describing the M.2 slot:
+> 
+> 	connector {
+> 		compatible = "pcie-m2-e-connector";
+> 		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
+> 		...
+> 		ports {
+> 			...
+> 			endpoint@0 {
+> 				reg = <0>;
+> 				remote-endpoint = <&pcie4_port0_ep>;
+> 			};
+> 		};
+> 	};
+> 
+> Then if we use a DT property to convey the RFKILL pin state of the device, we
+> would need to describe the endpoint device in DT and hardcode the state:
+> 
+> 	&pcie4_port0 {
+> 		...
+> 		port {
+> 			pcie4_port0_ep: endpoint {
+> 				remote-endpoint = <&m2_e_pcie_ep>;
+> 				disable-rfkill;
+> 			};
+> 		};
+> 	};
+> 
+> So this will essentially make the M.2 device non-swappable unless you change the
+> DT since you've how hardcoded the device property in the binding. This is
+> something I try to avoid to make the M.2 slot really swappable.
+> 
+> For this reason, I would prefer to handle the RFKILL state in the WLAN driver
+> using the device specific compatible. This will be problematic only if multiple
+> cards of the same Device ID have different RFKILL state and the devices are not
+> distinguishable even with sub IDs.
 
-Signed-off-by: jinwli <jinwang.li@oss.qualcomm.com>
----
- drivers/bluetooth/hci_qca.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+I think we're miscommunicating here. I'm not talking about the card having
+a broken rfkill implementation, I'm talking about the M.2 slot on the mainboard
+having e.g. W_DISABLE1# hardwired in such a way that cards would interpret it as
+having to always disable their wifi radio which is very similar to what is
+happening on the surface device. Except that on the Surface there is no M.2 slot,
+the wifi is just soldered onto the mainboard I believe.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 1d3b62579..b695577f8 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2026,7 +2026,7 @@ static int qca_setup(struct hci_uart *hu)
- 	}
- 
- out:
--	if (ret && retries < MAX_INIT_RETRIES) {
-+	if (ret) {
- 		bt_dev_warn(hdev, "Retry BT power ON:%d", retries);
- 		qca_power_shutdown(hu);
- 		if (hu->serdev) {
-@@ -2037,8 +2037,10 @@ static int qca_setup(struct hci_uart *hu)
- 				return ret;
- 			}
- 		}
--		retries++;
--		goto retry;
-+		if (retries < MAX_INIT_RETRIES) {
-+			retries++;
-+			goto retry;
-+		}
- 	}
- 
- 	/* Setup bdaddr */
--- 
-2.34.1
+Based on experience I'm pretty sure we will encounter M.2 slots which such
+a hardwired W_DISABLE1# signal sooner rather then later.
+
+So my proposal is to come up with a generic way to solve the broken M.2 slot
+case and then apply that to the Surface case.
+
+Regards,
+
+Hans
+
 
 
