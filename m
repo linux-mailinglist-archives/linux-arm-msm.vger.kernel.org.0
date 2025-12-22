@@ -1,289 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-86242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48207CD6574
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 15:16:11 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B479CD65B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 15:23:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EEA14300E82E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 14:16:09 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6F55530012C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 14:23:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A2642EC080;
-	Mon, 22 Dec 2025 14:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 605412F25EF;
+	Mon, 22 Dec 2025 14:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p/E900UC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJlt9irw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0D92E8DE3;
-	Mon, 22 Dec 2025 14:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289642D7DD2;
+	Mon, 22 Dec 2025 14:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766412968; cv=none; b=b709jq8F91dwmsz34qG0HgcRP61a5J8DimazfX99ztuC6rJsED/d6g1ibLEvjyU11nulqKkB/bCtyx3XYMlzooQgTXyhWgwrBctjzyAEz2NVgGDJdztqK4rhHj6+D6xZXp1l5fyXrGND2IKMcK0nn12Gwa6+nCAT7l0VD8NObzY=
+	t=1766413382; cv=none; b=Q4EppNolrQh9/wlMJeI4+lTb8YeE/t0xqHZpysrcMw6v2eJ27ltUHBj0Z/4o1sxu+tywhvvdxemKosT+DcLnEjz7/W0Ob6ltC0SqpU7lWSaP4p9NkVhx2muCjEZocwKF82VHIWpQTurtkdtZ3FqyuKVrtsi0CfQN/TPAJlYVj28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766412968; c=relaxed/simple;
-	bh=1jBc6qyZ3P/4T37ZcMfNxn0H2MMcyTFv/drl4N6XBps=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NPJKqIz6c+LUrriEz8+b+1p6DUsgOjvrQ2XPVDqpPJIqWrunR03IB0VqKzig1MVAFNPWJgvkmPuY5LjfViEUJhEi/o+jQCC6jYP4C7+i2HK6mywVdYvp/lslH1K1OOATo4JK0XY35ZLx2FnLpmNa1q0V04lTto8dnV/j0KTSGOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p/E900UC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 567D3C4CEF1;
-	Mon, 22 Dec 2025 14:16:07 +0000 (UTC)
+	s=arc-20240116; t=1766413382; c=relaxed/simple;
+	bh=VikiU5fJynBjtrVjM7EPrymHCn4PkuWUnCmSsSRBpE8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HKVw9Zz47HvwQYru88UpuR4QcgqO6Bmo29F24rKhjl05W2L5IUp9UjilM0wPDGZ47COBrZQ5/Osi/JAZ6l94/OBh0ZCy20w47eQHofopu+yl+/XMWLAAhkXeR85YFQEQqMwiQCNPVIcu2Iwb5km5FqZpvCT3JxCKrJNHaivB2rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJlt9irw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EF4C4CEF1;
+	Mon, 22 Dec 2025 14:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766412967;
-	bh=1jBc6qyZ3P/4T37ZcMfNxn0H2MMcyTFv/drl4N6XBps=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=p/E900UC0maEYi9VESilWqLLqlpJHNgYZVxKX0GLKLQlwQfFEu0SDxm1n7HJnB3Pm
-	 Sy1fScAdSpTe53mDrwEVqUdollxWG3PVykir7MjSpsh7NBwDHY798RO2IbNpFy/9Q/
-	 ftFzroPFSH8AuR8KeeDe0nRoWYO0KZX6tVszO+Pk1msOXGsCRuMZOgTTdH8OyMp/Wf
-	 6hVybymE25EzBXCyACIWbhpGz1DDBGk47fDT+9cll9XwivRxOLu2dvVKB+HFOq0yDw
-	 xI9uY2W6VhLdSyPRzEAus4MA4bkaWvpiVdTbGEB/O4/7P9mIE9mFKXMSQVN7mD6kL9
-	 kUh0gerZAQ8vw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A848E674A9;
-	Mon, 22 Dec 2025 14:16:07 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Mon, 22 Dec 2025 15:16:05 +0100
-Subject: [PATCH v4] media: dt-bindings: Correct camss supply description
+	s=k20201202; t=1766413382;
+	bh=VikiU5fJynBjtrVjM7EPrymHCn4PkuWUnCmSsSRBpE8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iJlt9irwlYODv0YGIGhyBb8rTYjxTGC5jrLyZdV+mB+afn07ANjnTMQtYVYbb+T2B
+	 0tQFFg84nWC3W+Zu88y0helvYklulqG3eB4axCmttATks3F/ghutcFxHPvsI+sKTiG
+	 Jjl6xxHMpkuBgvYHVDKTxXixqCztigua5jtFQUlAWIM6bBUQA0gL9R4y7T6lzJOxQ1
+	 8yu8n2MEl+qodeSujwahL1pU/jJwd//0CiyJOKColrzFSG4++Zk9Hw6mSJSArKfctt
+	 6HfYwSPk9ozIN74mHNa2SRkL0phDxx7MFfOJ+FkDfLRj4fQMbr0u5iHulkEHsk9i4a
+	 +5p2Sw721+V0g==
+Message-ID: <8b79b662-931f-4634-9389-6602d353d67a@kernel.org>
+Date: Mon, 22 Dec 2025 15:22:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251222-docs-camss-fixes-v4-1-914a4e5f7822@ixit.cz>
-X-B4-Tracking: v=1; b=H4sIAKRSSWkC/33Nyw6CMBAF0F8hXTumMzA8XPkfxkXtQ7oQDCUEJ
- fy7hY2YEJf3Ts6dSQTbeRvEKZlEZwcffNvEkB0SoWvV3C14E7MgSYyEBKbVAbR6hADOjzaAdIq
- JqcCKUUT27Ox6iOpyjbn2oW+71/phwKX9MzYgILCWiCzZOa7OfvT9Ub/FMjXQlqc7nCJXpcpMZ
- hh1rn95uuX5Dk9Bgqa0vOUlyqLAL5/n+QMezGP/LAEAAA==
-X-Change-ID: 20251212-docs-camss-fixes-0fa525271951
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Vikram Sharma <quic_vikramsa@quicinc.com>, 
- Kapatrala Syed <akapatra@quicinc.com>, 
- Hariram Purushothaman <hariramp@quicinc.com>, 
- Richard Acayan <mailingradian@gmail.com>, Bryan O'Donoghue <bod@kernel.org>, 
- Hans Verkuil <hverkuil@kernel.org>, Depeng Shao <quic_depengs@quicinc.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7481; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=fEXRciR6Ys4gi4vUzVq3MtNpCpDy6zNHxbkNb0gMhmI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpSVKl5PZ60LGSnxqmENG7hgH76D3/iClAfSrrX
- /EqcjZawJaJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaUlSpQAKCRBgAj/E00kg
- ciHJD/9V8KxeKCrEzpRWKO/a4XRSjC95uVY87L/TDRWXDsM3cUNSRn5ppsCzk3Za9NwlGI2LIQS
- QuItCRcWVwhnn5a6PSPqH6dh07kcOVNvaQzDFDcX7c3SOrj0QSULiWlVq3CiSem52jDewnRJL+5
- 8KHHbFtbksHk9iYdapmeZ+IwvnUfvWMWPuAbtMc08TLdjQ8+ol2jsRhCJDvyPDlrR4VQRnJYPom
- qKj0yNU5rN3QDvMGbslOYKd2CzWGJ8OyLZPwscYUTtNduqBkJrap/GoCCziG0ANIwMQYfvUjodC
- QSlfzfoDrXjnD1tJZCM/Ytxk2h+B3PP4WPAsFhaqxk/rasZMK9wxQvl76uGpYrM6UUHlqci9y2Z
- G3RElnNOeJLgha70I1yzxCQ0Nfa8PRTUNGDE2ju5uznvWe6jupGyNHAGicSK/m4hMe1aY1yIwxh
- SsmIML15ORMvL5Mkwq7gYxInK7jYrwmr4k7o/KGuCzvPkJjj10QMKwLEJPtxlS1qcXqR0cyzxaK
- Kkg64zEkQJUPLmPyyXLcbNxmRWxBHvSic9jVXskue28xIrHiRdvHjhTLnpt1ZlNn47B6ONtONSe
- m1MFB1onn4DhOk9XYL7PpMqDOGNeOK3IQtGCzZTMQmrvIuBmb5PI+RxsWV/67oa/zhdD2mY/Aca
- MuOoUQY76z4r7Jg==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
+ disable-rfkill property
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>,
+ Lorenzo Bianconi <lorenzo@kernel.org>,
+ Maximilian Luz <luzmaximilian@gmail.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ ath12k@lists.infradead.org, Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+ Dale Whinham <daleyo@gmail.com>
+References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
+ <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
+ <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
+ <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
+ <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
+ <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
+ <2ff993a7-0fda-4337-9acc-92aaa75be750@kernel.org>
+ <blbyjjkcxwnm5otgkodckxl2gx5ncelhnpqire7jt3yfdvszef@jgk6o7yvn2vo>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <blbyjjkcxwnm5otgkodckxl2gx5ncelhnpqire7jt3yfdvszef@jgk6o7yvn2vo>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: David Heidelberg <david@ixit.cz>
+Hi,
 
-Usually, the supply is around 1.2 V, not 1.8 V, and also correct wording.
+On 22-Dec-25 14:41, Manivannan Sadhasivam wrote:
+> On Mon, Dec 22, 2025 at 01:41:48PM +0100, Hans de Goede wrote:
+>> Hi Mani,
+>>
+>> On 22-Dec-25 12:45, Manivannan Sadhasivam wrote:
+>>> On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
+>>>> +Cc Mani
+>>>>
+>>>> Hi,
+>>>>
+>>>> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
+>>>>> On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
+>>>>>> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+>>>>>>
+>>>>>> For some devices, Wi-Fi is entirely hard blocked by default making
+>>>>>> the Wi-Fi radio unusable, except if rfkill is disabled as expected
+>>>>>> on those models.
+>>>>>>
+>>>>>> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
+>>>>>> disabling specific features based on ACPI bitflag") added a way to
+>>>>>> support features set via ACPI, including the DISABLE_RFKILL bit.
+>>>>>>
+>>>>>> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
+>>>>>> equivalent for devices described by a Devicetree instead of ACPI.
+>>>>>>
+>>>>>> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+>>>>>> ---
+>>>>>>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
+>>>>>>   1 file changed, 6 insertions(+)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>>>> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
+>>>>>> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
+>>>>>> @@ -29,6 +29,12 @@ properties:
+>>>>>>         different 5 GHz subbands. Using them incorrectly could not work or
+>>>>>>         decrease performance noticeably
+>>>>>>
+>>>>>> +  disable-rfkill:
+>>>>>> +    type: boolean
+>>>>>> +    description:
+>>>>>> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
+>>>>>> +      blocked by default otherwise
+>>>>>> +
+>>>>>>   additionalProperties: true
+>>>>>>
+>>>>>>   examples:
+>>>>>>
+>>>>>> -- 
+>>>>>> 2.47.3
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>
+>>>>> Is this really a hardware description though ?
+>>>>
+>>>> I would say yes it is. The wifi chip has an rfkill input pin and
+>>>> things will be broken when that pin is hardwired to a fixed value
+>>>> rather then being actually connected to a GPIO from say
+>>>> the embedded controller.
+>>>>
+>>>
+>>> IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
+>>> the device won't make use of it as there is no physical connection. So you want
+>>> the WLAN driver to change the state through SW?
+>>>
+>>>> So I think that we would need here is not a disable-rfkill property
+>>>> but some way to indicate in the DT-node that the rfkill input pin
+>>>> is not connected and thus should be ignored.
+>>>>
+>>>> This (the rfkill input pin being not-connected) IMHO very much
+>>>> is hw-description.
+>>>>
+>>>
+>>> Though we can argue this way, I would prefer to handle it in the driver. For
+>>> example, with my M.2 series, we will end up describing the M.2 slot:
+>>>
+>>> 	connector {
+>>> 		compatible = "pcie-m2-e-connector";
+>>> 		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
+>>> 		...
+>>> 		ports {
+>>> 			...
+>>> 			endpoint@0 {
+>>> 				reg = <0>;
+>>> 				remote-endpoint = <&pcie4_port0_ep>;
+>>> 			};
+>>> 		};
+>>> 	};
+>>>
+>>> Then if we use a DT property to convey the RFKILL pin state of the device, we
+>>> would need to describe the endpoint device in DT and hardcode the state:
+>>>
+>>> 	&pcie4_port0 {
+>>> 		...
+>>> 		port {
+>>> 			pcie4_port0_ep: endpoint {
+>>> 				remote-endpoint = <&m2_e_pcie_ep>;
+>>> 				disable-rfkill;
+>>> 			};
+>>> 		};
+>>> 	};
+>>>
+>>> So this will essentially make the M.2 device non-swappable unless you change the
+>>> DT since you've how hardcoded the device property in the binding. This is
+>>> something I try to avoid to make the M.2 slot really swappable.
+>>>
+>>> For this reason, I would prefer to handle the RFKILL state in the WLAN driver
+>>> using the device specific compatible. This will be problematic only if multiple
+>>> cards of the same Device ID have different RFKILL state and the devices are not
+>>> distinguishable even with sub IDs.
+>>
+>> I think we're miscommunicating here. I'm not talking about the card having
+>> a broken rfkill implementation, I'm talking about the M.2 slot on the mainboard
+>> having e.g. W_DISABLE1# hardwired in such a way that cards would interpret it as
+>> having to always disable their wifi radio which is very similar to what is
+>> happening on the surface device. Except that on the Surface there is no M.2 slot,
+>> the wifi is just soldered onto the mainboard I believe.
+>>
+> 
+> Ah, sorry for the confusion. I did misinterpret what you said.
+> 
+>> Based on experience I'm pretty sure we will encounter M.2 slots which such
+>> a hardwired W_DISABLE1# signal sooner rather then later.
+>>
+> 
+> But it makes no sense IMO. Vendors will usually connect unimplemented W_DISABL1#
+> GPIOs to a pull-up resistor so that the radios are operational all the time. I
+> don't see how they would expect a WLAN or any device with a radio to be
+> connected to the slot if they hardwire the pin to low.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
-Eventually, if more changes would be requested, would make sense someone
-from Qualcomm to follow-up on these, as I don't have schematics,
-documentation or also no access to the internal resources.
+Pins which are considered "unused" are also often hardwired
+to ground. If the m.2 slot is tested with a wifi-module where
+the W_DISABLE1# signal is not used on the wifi-module I can
+easily see this happen. I've seen a lot crazier / buggy stuff
+happen.
 
-Thank you
----
-Changes in v4:
-- Everything in one commit. (Krzysztof)
-- Dropped Fixes tag. (Bryan)
-- Updated rest of the files to make them in sync.
-- Link to v3: https://lore.kernel.org/r/20251216-docs-camss-fixes-v3-0-c238b6810771@ixit.cz
+> Are you sure that on the surface the pin is actually hardwired to low and not
+> connected to a GPIO that drivers the signal low?
 
-Changes in v3:
-- Add commit improving vdda-phy-supply description to match more recent
-  bindings.
-- Double-checked and specified it's 1.2 V vdda-pll-supply. (Vladimir)
-- Link to v2: https://lore.kernel.org/r/20251213-docs-camss-fixes-v2-1-a8a4d4d51c6c@ixit.cz
+I don't know what is the exact problem on the Surface. I just
+expect to see this more often, we've certainly seen lots of
+issues like this on x86 laptops. Things end up looking like
+the hard rfkill is activated all the time (and we often don't know
+if this is a fw issue, or an actually hardwired problem).
 
-Changes in v2:
-- Applied suggestion to clarify the description. (Krzysztof)
-- Link to v1: https://lore.kernel.org/r/20251212-docs-camss-fixes-v1-1-5c011505ff59@ixit.cz
----
- Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml  | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml   | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml   | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml   | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml   | 4 ++--
- Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml   | 4 ++--
- Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml | 4 ++--
- 8 files changed, 16 insertions(+), 16 deletions(-)
+Just an example from the top of my head the Broadcom windows
+drivers use different BT fw files for the same wifi/bt combo
+chip depending on the vend:prod id pair. One of the things which
+is different is that some fw files invert the BT rfkill signal
+because it is wired wrong (or there is an EC fw bug) and this
+is then worked around in the bt fw.
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-index 019caa2b09c32..48f280e998096 100644
---- a/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sa8775p-camss.yaml
-@@ -126,11 +126,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-index ee35e3bc97ffd..b1c54c5b01b28 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-camss.yaml
-@@ -125,11 +125,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-index c99fe4106eee9..354130aba9fc9 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
-@@ -264,11 +264,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
- required:
-   - clock-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-index 35c40fe223767..46cc7fff15992 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-@@ -91,11 +91,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-index 82bf4689d3300..be09cf3a3b3b8 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-@@ -207,11 +207,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
- required:
-   - clock-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-index ebf68ff4ab961..a509d4bbcb4aa 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-@@ -296,11 +296,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.8V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
- required:
-   - clock-names
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-index cd34f14916b42..4b9ab1352e914 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-@@ -134,11 +134,11 @@ properties:
- 
-   vdda-phy-supply:
-     description:
--      Phandle to a regulator supply to PHY core block.
-+      0.88V supply to CSIPHY IP blocks.
- 
-   vdda-pll-supply:
-     description:
--      Phandle to 1.2V regulator supply to PHY refclk pll block.
-+      1.2V supply to CSIPHY IP blocks.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
-diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-index b87a13479a4bf..2d1662ef522b7 100644
---- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-@@ -120,11 +120,11 @@ properties:
- 
-   vdd-csiphy-0p8-supply:
-     description:
--      Phandle to a 0.8V regulator supply to a PHY.
-+      0.8V supply to a PHY.
- 
-   vdd-csiphy-1p2-supply:
-     description:
--      Phandle to 1.2V regulator supply to a PHY.
-+      1.2V supply to a PHY.
- 
-   ports:
-     $ref: /schemas/graph.yaml#/properties/ports
+As we see a growing proliferation of arm64 laptops I fully
+expect all the fun from having a gazillion different designs
+with a time to market rush behind them result in similar issues
+on arm64.
 
----
-base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
-change-id: 20251212-docs-camss-fixes-0fa525271951
+Note I'm not saying we must tackle this today, we can wait
+till we see the first case in the real world I guess.
 
-Best regards,
--- 
-David Heidelberg <david@ixit.cz>
+I just thought that based on my experience this is more or
+less bound to happen, we could comeup with a solution for
+this now and then this solution could also nicely serve
+the Surface case which started this thread.
+
+But we can also delay tackling this and come up with some
+bespoke solution for the Surface case, like as suggested
+maybe a special compatible string ?
+
+> It is just hard to believe that board designers can do a blunder like this.
+
+Heh, you won't believe all the crap happening on cheap
+x86 devices.
+
+Regards,
+
+Hans
 
 
 
