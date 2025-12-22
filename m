@@ -1,154 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-86240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AC01CD6507
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 15:04:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C847CD6547
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 15:09:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3BA28300D403
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 14:01:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1FC8430530B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 14:07:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C01527A92E;
-	Mon, 22 Dec 2025 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8951E2D47F6;
+	Mon, 22 Dec 2025 14:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="0V6uobjQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NitRYNPv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15576FC5;
-	Mon, 22 Dec 2025 14:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB88F283FDD;
+	Mon, 22 Dec 2025 14:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766412092; cv=none; b=KIe7AKX5mHI9oaBivmUGiJzlpmxWTVfbWZbMZQfZlcjA/cl6nyZGHNONJY7cU/Y3a4/9Laq4Ialr5nOdHDNQ5k2k+xrPEPVxjA1HApUGgTOcK4xAbGveQwGm4zhFV6UKFLYl8Tpr0CusI2O9V5CgqSfMSwETywVKwDK3ReGcS+Q=
+	t=1766412469; cv=none; b=UgWZy672jSJTf2+iF/ibEh/A1C54RUxOaSmwZ0cCuFlPYlZ6t552dY9MVFabfDnHa1kEa6r/fK8NGjZ2uibNJV7gWEbb1A09JB097H94uAP/xWPGftQCYMq6HNcO9/cFHYLgM4wbLXyVRGFUcBQDS/mgmxh9F/7JqTuu7XlLy0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766412092; c=relaxed/simple;
-	bh=PusaHigErO05TgG4Vucoaj4/WBG2ExfgestHJdFX62s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mCvwjDA2xqGAziTHnmqFutNm2vY7Q8m9G1INt7AiinRKTFcINcf8WneUfcQjr+Ygw6ba9YEcXtA0olkkNQhi7tLH4egaj6gp89iX8v2rMS9qX/T7llt8+lJUvoLM5drVGYB+k2KA3dUck7UacIsMwqrMlXm8j94v92IrWXVp0Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=0V6uobjQ; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.136.28] (78-80-96-111.customers.tmcz.cz [78.80.96.111])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id C4A4F53409E4;
-	Mon, 22 Dec 2025 15:01:23 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1766412084;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=N1qdfjO0147Ai2vSJqmHPykKPgwTDBEt2ek4Q7arHWw=;
-	b=0V6uobjQxdK1IQWqlru15b9alAeNKETl1AJc1qwbPe0vTQUvHoGXwCQQ3DUM9yG0owRH22
-	5GaxM7lBLoq9vHLRN7Amu3kGcldAbTlP6jAwSdGbSf4hHvyxijt4rRuBLCNQhZ8uXMrOcf
-	QErGKUkW+hDGQhEgpwM4I4Z3Yv8baDE=
-Message-ID: <eabea4d4-366c-491a-bdcf-cbbfede66bd1@ixit.cz>
-Date: Mon, 22 Dec 2025 15:01:23 +0100
+	s=arc-20240116; t=1766412469; c=relaxed/simple;
+	bh=UOGYbwV4khizIIRkAZEZ1DrHXk7kYjdhqrezBYqAA7o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pqWgM38/sZuTalGNcJF51FIHp5lVdBb4QFz0QYZg5jv3YC8KTCWOwb/LUQvL9QQT508oGOIg1itgh2xQG4wQf7eGtiWjXUvExO/W/gi+blT+zlrvMShmN0PYDsfLd7lOd6YXxvbRmV+o/MUonqcGBWlSrWmC1v53CaH2Qwg/mHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NitRYNPv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CD4C4CEF1;
+	Mon, 22 Dec 2025 14:07:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766412468;
+	bh=UOGYbwV4khizIIRkAZEZ1DrHXk7kYjdhqrezBYqAA7o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NitRYNPvIDex3swqylD4WNfRjVbR/bL6FXStoDH7LCIy4B+888HSCmpnVuf2RASRR
+	 tKURip7NkNgixeDYA9a8FcqmQdidzevjjx0dxRhsqJDNW+pM2RJxH4h8tZVnS9C0Na
+	 oioopBrRVbIXKkkJtRjcl7s1PzFFtYcBmPF37C5mVqF9WaXRB1U6D0clzDghYveDWm
+	 Se4x2fakW8N7B4oJMLcVj0aI2MOSwDSVE8G32Vte+JbL/pkjGM5/0JhqEq/lsptzqx
+	 Z9yeM4/+Nhul31zfAvGm41yePHjelZ4DCHesVf4L6zJc71PrEW8/M2rH6uCPrHj/Bg
+	 R8OGyQTYCfRzg==
+Date: Mon, 22 Dec 2025 19:37:36 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2 00/10] Add support for handling PCIe M.2 Key E
+ connectors in devicetree
+Message-ID: <lrpxki6crdiezqam3nuw3pi45digirjpqxpvyjvwjugux6rjk5@3wpmtl77oj6f>
+References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
+ <aSYKHjpJkXWUVIyo@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-db845c: Use pad fn
- instead of defining own
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20251217-sdm845-mclk-v2-0-7028c2d09145@ixit.cz>
- <20251217-sdm845-mclk-v2-2-7028c2d09145@ixit.cz>
- <f86b483d-c674-4901-b2c8-19a535df4234@oss.qualcomm.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
- 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
- lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
- 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
- dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
- F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
- NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
- 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
- AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
- k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
- ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
- AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
- AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
- afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
- loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
- jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
- ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
- VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
- W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
- zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
- QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
- UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
- zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
- 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
- IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
- jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
- FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
- aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
- NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
- AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
- hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
- rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
- qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
- 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
- 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
- 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
- NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
- GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
- yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
- zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
- fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
- ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <f86b483d-c674-4901-b2c8-19a535df4234@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aSYKHjpJkXWUVIyo@linaro.org>
 
-On 18/12/2025 13:25, Konrad Dybcio wrote:
-> On 12/17/25 12:39 PM, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> Instead of defining own pad function for master clock, pick one offered
->> by sdm845 device-tree include.
+On Tue, Nov 25, 2025 at 08:57:18PM +0100, Stephan Gerhold wrote:
+> On Tue, Nov 25, 2025 at 08:15:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > This series is the continuation of the series [1] that added the initial support
+> > for the PCIe M.2 connectors. This series extends it by adding support for Key E
+> > connectors. These connectors are used to connect the Wireless Connectivity
+> > devices such as WiFi, BT, NFC and GNSS devices to the host machine over
+> > interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support for
+> > connectors that expose PCIe interface for WiFi and UART interface for BT. Other
+> > interfaces are left for future improvements.
+> > 
+> > Serdev device support for BT
+> > ============================
+> > 
+> > Adding support for the PCIe interface was mostly straightforward and a lot
+> > similar to the previous Key M connector. But adding UART interface has proved to
+> > be tricky. This is mostly because of the fact UART is a non-discoverable bus,
+> > unlike PCIe which is discoverable. So this series relied on the PCI notifier to
+> > create the serdev device for UART/BT. This means the PCIe interface will be
+> > brought up first and after the PCIe device enumeration, the serdev device will
+> > be created by the pwrseq driver. This logic is necessary since the connector
+> > driver and DT node don't describe the device, but just the connector. So to make
+> > the connector interface Plug and Play, the connector driver uses the PCIe device
+> > ID to identify the card and creates the serdev device. This logic could be
+> > extended in the future to support more M.2 cards. Even if the M.2 card uses SDIO
+> > interface for connecting WLAN, a SDIO notifier could be added to create the
+> > serdev device.
+> > 
+> > Open questions
+> > ==============
+> > 
+> > Though this series adds the relevant functionality for handling the M.2 Key M
+> > connectors, there are still a few open questions exists on the design. 
+> > 
+> > 1. I've used the M.2 card model name as the serdev device name. This is found
+> > out by comparing the PCIe VID:PID in the notifier. Is this approach acceptable?
+> > I did not use the PID as the serdev name since it will vary if the SDIO
+> > interface is used in the future.
+> > 
+> > 2. PCIe client drivers of some M.2 WLAN cards like the Qcom QCA6390, rely on
+> > the PCIe device DT node to extract properties such as
+> > 'qcom,calibration-variant', 'firmware-name', etc... For those drivers, should we
+> > add the PCIe DT node in the Root Port in conjunction with the Port node as
+> > below?
+> > 
+> > pcie@0 {
+> > 	wifi@0 {
+> > 		compatible = "pci17cb,1103";
+> > 		...
+> > 		qcom,calibration-variant = "LE_X13S";
+> > 	};
+> > 
+> > 	port {
+> > 		pcie4_port0_ep: endpoint {
+> > 			remote-endpoint = <&m2_e_pcie_ep>;
+> > 		};
+> > 	};
+> > };
+> > 
+> > This will also require marking the PMU supplies optional in the relevant ath
+> > bindings for M.2 cards.
+> > 
+> > 3. Some M.2 cards require specific power up sequence like delays between
+> > regulator/GPIO and such. For instance, the WCN7850 card supported in this series
+> > requires 50ms delay between powering up an interface and driving it. I've just
+> > hardcoded the delay in the driver, but it is a pure hack. Since the pwrseq
+> > driver doesn't know anything about the device it is dealing with before powering
+> > it ON, how should it handle the device specific power requirements? Should we
+> > hardcode the device specific property in the connector node? But then, it will
+> > no longer become a generic M.2 connector and sort of defeats the purpose of the
+> > connector binding.
+> > 
+> > I hope to address these questions with the help of the relevant subsystem
+> > maintainers and the community. 
+> > 
+> > Testing
+> > =======
+> > 
+> > This series, together with the devicetree changes [2] was tested on the
+> > Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the WCN7850 WLAN/BT M.2
+> > card connected over PCIe and UART.
+> > 
+> > [2] https://github.com/Mani-Sadhasivam/linux/commit/acbee74a5c90fc8839bb7b6f326c677ee1c0d89c
 > 
-> I'm a little bitter about the wording - the pad function here is "cam_mclk",
-> whereas what you're doing is inheriting a common pinmux/pincfg node that
-> refers to that function
-> 
-> [...]
-> 
->> -		mclk0-pins {
->> -			pins = "gpio13";
->> -			function = "cam_mclk";
->> -
->> -			drive-strength = <16>;
-> 
-> This patch changes the drive-strength (16 -> 2 mA)
-> 
-> FWIW it's 2 on reference designs and Sony boards, check your
-> downstream kernel
 
-I don't have any. I'm fine with this patch not getting applied, but I'll 
-CC Robert who added the support, maybe he can verify.
+Sorry for the delay!
 
-David
-
+> Thanks for working on describing the M.2 connectors properly in the
+> device tree!
 > 
-> Konrad
+> I haven't had time to look into this in detail yet, but a quick look at
+> the dt-bindings and examples looks good to me! Thanks for keeping the
+> bindings as generic as possible.
+> 
+
+Thanks for pushing me too ;)
+
+> I have a small nitpick for the specific example you have here: The
+> Lenovo ThinkPad T14s does not actually have a "M.2 Mechanical Key E
+> connector". If you look at a picture of the mainboard [1], the WLAN/BT
+> module is "soldered-down" (look on the right, on the right side next to
+> the large copper bracket). In the M.2 specification, "soldered-down"
+> modules do not have a "key", they have a specific pinout that is
+> followed (see section 5.4). The power sequencing etc and the set of pins
+> is quite similar/the same though.
+> 
+
+Oh, I was shared one schematics internally and told that it was the mirror of
+the T14s and it had the M.2 slot. So I just went with that. I didn't dare to
+open the cover of my corporate laptop ;)
+
+But this is a good info, thanks!
+
+> My notes (from a few months ago) suggest the T14s probably uses a
+> non-standard M.2 Type 1620 LGA pinout. I don't remember the exact chain
+> of thought behind that, but you can find similarly looking modules with
+> this type, e.g. https://www.sparklan.com/product/wnsq-290be/. There is a
+> 1620 *BGA* pinout in the M.2 specification, but a 1620 *LGA* pinout does
+> not exist there. Interestingly, in the block diagram of the module in
+> the link above this type is called *Q*M.2 1620 LGA 168 pin, as if this
+> is some Qualcomm-specific form factor.
+> 
+
+But the spec uses 1620 BGA for defining the SSD pinout. So 1620 LGA indeed looks
+like a custom one.
+
+> A real mechanical key E connector can be found e.g. in the X1E CRD, X1E
+> Devkit, or I think some of the X1E-based HP laptops (would need to check
+> which one exactly).
+> 
+> I'm not sure if it's really appropriate modeling the "soldered-down"
+> variant as "Mechanical Key E connector" in the DT. We might need
+> a separate compatible for this. Do you have any thoughts about that?
+> 
+
+I think having a separate compatible that uses the same binding should be
+sufficient since the interfaces are almost the same.
+
+- Mani
 
 -- 
-David Heidelberg
-
+மணிவண்ணன் சதாசிவம்
 
