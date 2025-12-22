@@ -1,245 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-86267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 558F8CD702E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 20:51:23 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1441CD729A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 21:58:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8D3D83019195
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 19:51:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2389E3015E0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Dec 2025 20:58:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA752F7ACA;
-	Mon, 22 Dec 2025 19:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1538E33A03F;
+	Mon, 22 Dec 2025 20:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="nNFswqg9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ViMmFbtv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D592BE058;
-	Mon, 22 Dec 2025 19:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1E6339B4F;
+	Mon, 22 Dec 2025 20:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766433080; cv=none; b=h7Ce5PLYc1zgSLoVsBQblyO4i4g1ReRK0t1JB2NGwlHsDMhx8eqAoz/WOUPJhndxTJTR3mwrzftKnr6BrVTYupd6Xko5DPlY7A6LAlPRd0dxajruze9gmluqGoDGhF1sdybH62q5EJPlihaO3NojVd2et8b97xtjuuDHUSbDmy8=
+	t=1766437130; cv=none; b=QQ5qOQoFHtiAJ69J1pp1Fo2H66kWbdqC/w5tkhhnR1UQHHwFcZxF1DTEpfb10j4h69woUPxXtWn3BQIJbQXugpRkgTnBCy8WtT2E7G+pLylQaiMIWlj4ZXOQTKCh8MVsY+GTH104/805TgtdbFYL0Bw5CO9beXClB73bqijZotQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766433080; c=relaxed/simple;
-	bh=laXSDc0LvGBCtakLKZRFmi7NTIJt8OH9TSTIhSvN0ZA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i1ZxBmYpVzn4amjdGZSYI5zwLxDWdgJJ0+Kht6UOp2R9apItH6yuvvMhCVIy1rBabOSueEtUcc1ybAMPQtn+mH0r+5fawFbE8EyUvwGVSsRTUuYEayhWxEQloEFpNZvfFymwVPP+Kx7EUqVcv4CJGVh8RhUKP9CyqHkjarwxBDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=nNFswqg9; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 2C06B5340D28;
-	Mon, 22 Dec 2025 20:51:12 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1766433072;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sWJjDwIX27c6gSieVEeo9HhjvU+gXMbAhgHUz27X4qw=;
-	b=nNFswqg9AHEde1hXN9fQicffAseOL4Mh4+s4K1VtLByYzAn+aZuCxhHfSMtBOp+PwaPkmg
-	330v95caGDIkSWzpGUXMjfaPjZo9KtqhNTWkuyXEksZ/BygYdMVhS2usJCMwO+Bz6RTmm5
-	+D2E/r2KmbhxCapi3wr6XSoN8cZweus=
-Message-ID: <17490007-73b9-423b-af49-b89e33ee51f3@ixit.cz>
-Date: Mon, 22 Dec 2025 20:51:11 +0100
+	s=arc-20240116; t=1766437130; c=relaxed/simple;
+	bh=RjcKXrzPX2dFCZErCFk///NOU9Z1yUxKAtOOeJz9X0o=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=c+xz89aT73xPU3NsBrdiBvBiD+IUwWitp7ziDdBBrmj6lP0ic9f3euftKzr+2fHJFFXQR8YFIdvl4QXyF2Z0MyEzrfVwc992+uGf8euUAxmjS5wG6QCcva6FkNaNPVBqAUCqmbELulHaLycsJaEiQXB4nhyj7KUS3+83aR+flh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ViMmFbtv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC32C19422;
+	Mon, 22 Dec 2025 20:58:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766437129;
+	bh=RjcKXrzPX2dFCZErCFk///NOU9Z1yUxKAtOOeJz9X0o=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=ViMmFbtvRRJTBVvRHcOrrc5YEzgxCYK8lP01m1aCPoZyLGn93aARQHU5vG10L1ArM
+	 CFXgNj9m5cT/T40bxcYRCu0OpKZ1WIO1Rmn3wnm+hok2FNxoTwVW3emMqr1JxSJXmh
+	 2ux7NY8Envw+DSGOx10fa0ND/8+SQsrAJwW4CP783/74p3KWBvYAcz7k9Bfj4Zx0k+
+	 O4ixE2KyIueGcrbwfC2n2kR9Lp0Jly1udmnXyXjdj6sNxiNRmZd6AForKiAhTJuK9Y
+	 +USr2DLXZB9EpvA7ZkiAoUkWdJ8NXHFIsfmWGTPsKIIn+9FCI56gmLxGIgu6WUAYby
+	 lfeR4Fd8fPN0g==
+From: Mark Brown <broonie@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-sound@vger.kernel.org
+In-Reply-To: <20251130-asoc-apr-const-v1-0-d0833f3ed423@oss.qualcomm.com>
+References: <20251130-asoc-apr-const-v1-0-d0833f3ed423@oss.qualcomm.com>
+Subject: Re: [PATCH 0/4] ASoC / soc/qcom: Constify APR/GPR callback
+ response data
+Message-Id: <176643712752.2127897.13538433686192847231.b4-ty@kernel.org>
+Date: Mon, 22 Dec 2025 20:58:47 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sdm845-oneplus: Update firmware
- paths
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251222-oneplus6-new-fw-path-v1-0-a2d366f9eb89@ixit.cz>
- <20251222-oneplus6-new-fw-path-v1-1-a2d366f9eb89@ixit.cz>
- <a8cc09c0-6acd-409a-a907-c3809b4f4db3@oss.qualcomm.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <a8cc09c0-6acd-409a-a907-c3809b4f4db3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-47773
 
-On 22/12/2025 20:31, Akhil P Oommen wrote:
-> On 12/23/2025 12:35 AM, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> Conform to the new firmware path scheme.
->> Includes cosmetic cleanups.
->>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 23 ++++++++++++++--------
->>   1 file changed, 15 insertions(+), 8 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> index db6dd04c51bb5..f1c63794db979 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->> @@ -181,8 +181,9 @@ panel_vddi_poc_1p8: panel-vddi-poc-regulator {
->>   };
->>   
->>   &adsp_pas {
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/adsp.mbn";
->> +
->>   	status = "okay";
->> -	firmware-name = "qcom/sdm845/oneplus6/adsp.mbn";
->>   };
->>   
->>   &apps_rsc {
->> @@ -353,8 +354,9 @@ vreg_s3c_0p6: smps3 {
->>   };
->>   
->>   &cdsp_pas {
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/cdsp.mbn";
->> +
->>   	status = "okay";
->> -	firmware-name = "qcom/sdm845/oneplus6/cdsp.mbn";
->>   };
->>   
->>   &gcc {
->> @@ -370,7 +372,7 @@ &gpu {
->>   };
->>   
->>   &gpu_zap_shader {
->> -	firmware-name = "qcom/sdm845/oneplus6/a630_zap.mbn";
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/a630_zap.mbn";
+On Sun, 30 Nov 2025 10:40:22 +0100, Krzysztof Kozlowski wrote:
+> Patch #1 and #3 touches also Qualcomm SoC file, so this could go either
+> via Qualcomm SoC tree (with Mark's Ack) or via ASoC tree (with Bjorn's
+> Ack).
 > 
-> I believe this is considered as breaking backward compatibility. How
-> about creating a symlink in linux-firmware instead.
-
-See discussion here:
-
-https://lore.kernel.org/linux-arm-msm/CAO9ioeW9=TPde4P=AOcQANvPv90K-9MkcRRgb7HNwe8KiOpFjQ@mail.gmail.com/
-
-I understood the conclusion was "let's do it".
-
-We have more-less 3 consumers here,
-  - postmarketOS (Alpine)
-  - Mobian (Debian)
-  - NixOS Mobile (NixOS)
-
-some of these using droid-juicer, which can be easily updated to update 
-paths.
-
-David
-
+> I propose to take it via ASoC tree (Bjorn's Ack), because I am
+> constifying things there already, so less possible conflicts.
 > 
-> -Akhil.
-> 
->>   };
->>   
->>   &i2c10 {
->> @@ -422,7 +424,8 @@ rmi4_f12: rmi4-f12@12 {
->>   &ipa {
->>   	qcom,gsi-loader = "self";
->>   	memory-region = <&ipa_fw_mem>;
->> -	firmware-name = "qcom/sdm845/oneplus6/ipa_fws.mbn";
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/ipa_fws.mbn";
->> +
->>   	status = "okay";
->>   };
->>   
->> @@ -474,8 +477,10 @@ &mdss_dsi0_phy {
->>   
->>   /* Modem/wifi */
->>   &mss_pil {
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/mba.mbn",
->> +			"qcom/sdm845/OnePlus/enchilada/modem.mbn";
->> +
->>   	status = "okay";
->> -	firmware-name = "qcom/sdm845/oneplus6/mba.mbn", "qcom/sdm845/oneplus6/modem.mbn";
->>   };
->>   
->>   &pm8998_gpios {
->> @@ -593,7 +598,8 @@ &qup_uart9_tx {
->>   };
->>   
->>   &slpi_pas {
->> -	firmware-name = "qcom/sdm845/oneplus6/slpi.mbn";
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/slpi.mbn";
->> +
->>   	status = "okay";
->>   };
->>   
->> @@ -744,7 +750,7 @@ bluetooth {
->>   		 * This path is relative to the qca/
->>   		 * subdir under lib/firmware.
->>   		 */
->> -		firmware-name = "oneplus6/crnv21.bin";
->> +		firmware-name = "OnePlus/enchilada/crnv21.bin";
->>   
->>   		vddio-supply = <&vreg_s4a_1p8>;
->>   		vddxo-supply = <&vreg_l7a_1p8>;
->> @@ -906,8 +912,9 @@ speaker_default: speaker-default-state {
->>   };
->>   
->>   &venus {
->> +	firmware-name = "qcom/sdm845/OnePlus/enchilada/venus.mbn";
->> +
->>   	status = "okay";
->> -	firmware-name = "qcom/sdm845/oneplus6/venus.mbn";
->>   };
->>   
->>   &wcd9340 {
->>
-> 
+> [...]
 
--- 
-David Heidelberg
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/4] ASoC: qcom: Constify APR callback response data
+      commit: 86af3c229245fe1e59f428fc6abe19127ce15f5f
+[2/4] soc: qcom: apr: Use typedef for GPR callback member
+      commit: c66cea195d76c7c396c4c565b967d3e2a709e762
+[3/4] ASoC: qcom: Constify GPR callback response data
+      commit: f3a86870c5938fe82ce02c29235326d417010ffb
+[4/4] ASoC: qcom: Constify APR/GPR result structs
+      commit: a2a631830deb382a3d27b6f52b2d654a3e6bb427
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
