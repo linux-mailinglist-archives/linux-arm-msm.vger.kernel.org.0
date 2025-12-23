@@ -1,62 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-86397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15A49CDA22B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 18:36:34 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EAA3CDA207
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 18:34:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4A78E303C98B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 17:33:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2858F3009B02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 17:34:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C434D3491C8;
-	Tue, 23 Dec 2025 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34DA63009C1;
+	Tue, 23 Dec 2025 17:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9SlRoip"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImAZa2Gi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BE5347FD7;
-	Tue, 23 Dec 2025 17:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0502234844F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 17:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766511230; cv=none; b=PTQSTu+TTkoVb0kPwWZd/CC11RuSAW+9NppTIviN1usI09GhrYlZUOC7FsEMRzclF2Qg0+ufFxyQpPZY1nTUfFFgnFh2iOWYVEzkwp/dLukz37fCp21EJ2AL50yUtZDyh/KahmxOSNdezSOCwJleBzRuVmYIUBd3WKMWlpxIz2w=
+	t=1766511236; cv=none; b=GDPj7Eg08mPbmJkqCcihv+L2At/oFjsXzZXeB2zgd4aDK4q8POeoQ+DBaQq20eGO4JCEgoAnP2M52AIhbM3mNLgAZHMZF/5UHBgr9GuB9O0M6lyaFRwr7BCJynIaM2r2BdsLvCCEMLEfzig/9TE4O9+AIJ2QSu0hiyFp6roqFJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766511230; c=relaxed/simple;
-	bh=j4KsScsG1hqXyQGukCHfOZAZLrJ9X3MMZqwShsIdJyI=;
+	s=arc-20240116; t=1766511236; c=relaxed/simple;
+	bh=v8zte2v/K+J876rOP8zQ5mxBjYpcNNsbcPhghDEfu6Y=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sjtjqM+xpLShRkarJv2M/Qr6uh4e0lOoxv4QtenRiLeJ6gYNWY0vCf2JQVQ6H/+IaCSxtqXeHkp35t8F39MNCTK6LHwZwzqpZ2qurDbwduzNC0CsUOgJUbd/N0dnSrmEM/3vtth4OYixhMCQQUhwW/lpnVsSJa4UXnwCYPYzqcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9SlRoip; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4219FC113D0;
-	Tue, 23 Dec 2025 17:33:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ECi3fQoOOVyJR/zN/OrQtauZtIX1jRgNV4w/3/it2ASrlwmJXLpWPP5OgUZCoOYwTd+OIBd0kPEWX0CNIFqlv/GK7YiRe/ND1cyDXoLVtRrpoke33SgkzEmq02nPOExoGNINcu7aSCbcM2SQfqstbS61PZjQMKqC0xxOW0ToX44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImAZa2Gi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8A8C19421;
+	Tue, 23 Dec 2025 17:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766511228;
-	bh=j4KsScsG1hqXyQGukCHfOZAZLrJ9X3MMZqwShsIdJyI=;
+	s=k20201202; t=1766511235;
+	bh=v8zte2v/K+J876rOP8zQ5mxBjYpcNNsbcPhghDEfu6Y=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=e9SlRoip9YzcvFE9Od0JKeiTvWcHKTv2tyxqTe/aBpKuDHdHAocPSidEmxIw1nZQk
-	 sNQ2j8SX5Afv5buWq0KL0qfKOrbcUMw5CR+qJ7RfUfWOBigXI8Dveg0W8dQxZDl2tx
-	 UHdMVj/gdFRNqNEJi6rXfmf4YzTf0YijO3g9THLoKYj8XiWb+4wv6Q2YgMdvPoU6xU
-	 ONFFM2npal8IzciF/NAarx+40JjrEgcPjafExcM0Qdvhu0SPdjwofb+BZifFT9/uyV
-	 tBpaKtG6t4K/dswictauUte0tnbk045G5pj4UeCAP7CUDB+LTEkkgmoemvUs5MR08B
-	 0vSdGw2lurMLw==
+	b=ImAZa2GiCmxn9wXhBA+wyiResrJlkc2wLUBF0q0R8ndbQV0y4m0MBSEbnvFseEx1X
+	 5p+2GOoKPF1nS7vkjN5d4UQq01kGRG13VEKbdzGXXALdBE0hFBy0lgVD1egmaxeOqe
+	 qGxbM+SxyRoKFiddJe/0kUQnRsvERNX9DwZ7AhtdHxNEZUmkGYrmHXpxKJaNtCh2x2
+	 tXzaQFc9Lh2pB/I1ewEa2aa03Bnxs61gLfqg6GlG9FJY8fTn0uPC3B2veNK7uENNbA
+	 7w5vSGO9oPtVaYNoZEnVFbGgJFRT1ftyWcMmgvBelZahFeTo2ZwXhFbxRRLsnHu10h
+	 mhq2zImllEotQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
- krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com, 
- mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org, 
- bhelgaas@google.com, johan+linaro@kernel.org, kishon@kernel.org, 
- neil.armstrong@linaro.org, abel.vesa@linaro.org, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
- linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
- quic_krichai@quicinc.com, quic_vbadigan@quicinc.com, 
- Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-In-Reply-To: <20251128104928.4070050-1-ziyue.zhang@oss.qualcomm.com>
-References: <20251128104928.4070050-1-ziyue.zhang@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v15 0/6] pci: qcom: Add QCS8300 PCIe support
-Message-Id: <176651122191.749296.15336587657057030247.b4-ty@kernel.org>
-Date: Tue, 23 Dec 2025 23:03:41 +0530
+To: kishon@kernel.org, Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: dmitry.baryshkov@oss.qualcomm.com, abel.vesa@oss.qualcomm.com, 
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ andersson@kernel.org
+In-Reply-To: <20251219085640.114473-1-loic.poulain@oss.qualcomm.com>
+References: <20251219085640.114473-1-loic.poulain@oss.qualcomm.com>
+Subject: Re: [PATCH v4] phy: qcom-qusb2: Fix NULL pointer dereference on
+ early suspend
+Message-Id: <176651123322.749296.4504100315872807969.b4-ty@kernel.org>
+Date: Tue, 23 Dec 2025 23:03:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,22 +61,30 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 28 Nov 2025 18:49:22 +0800, Ziyue Zhang wrote:
-> This series adds document, phy, configs support for PCIe in QCS8300.
-> It also adds 'link_down' reset for sa8775p.
+On Fri, 19 Dec 2025 09:56:40 +0100, Loic Poulain wrote:
+> Enabling runtime PM before attaching the QPHY instance as driver data
+> can lead to a NULL pointer dereference in runtime PM callbacks that
+> expect valid driver data. There is a small window where the suspend
+> callback may run after PM runtime enabling and before runtime forbid.
+> This causes a sporadic crash during boot:
 > 
-> Have follwing changes:
-> 	- Add dedicated schema for the PCIe controllers found on QCS8300.
-> 	- Add compatible for qcs8300 platform.
-> 	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
-> 	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+> ```
+> Unable to handle kernel NULL pointer dereference at virtual address 00000000000000a1
+> [...]
+> CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.7+ #116 PREEMPT
+> Workqueue: pm pm_runtime_work
+> pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> pc : qusb2_phy_runtime_suspend+0x14/0x1e0 [phy_qcom_qusb2]
+> lr : pm_generic_runtime_suspend+0x2c/0x44
+> [...]
+> ```
 > 
 > [...]
 
 Applied, thanks!
 
-[1/6] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings for qcs8300
-      commit: 393e132efcc5e3fc4ef2bd9bbed2a096096c9359
+[1/1] phy: qcom-qusb2: Fix NULL pointer dereference on early suspend
+      commit: 1ca52c0983c34fca506921791202ed5bdafd5306
 
 Best regards,
 -- 
