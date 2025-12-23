@@ -1,297 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-86283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 434DFCD840E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 07:31:18 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A27E5CD8453
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 07:38:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0CD76301517B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 06:31:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 89658300D642
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 06:38:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EF0D28DB49;
-	Tue, 23 Dec 2025 06:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A5A02FFF80;
+	Tue, 23 Dec 2025 06:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qejrEPDa"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IWQYvbv6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A8JCgHYO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA2D1A275;
-	Tue, 23 Dec 2025 06:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AE7168BD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 06:38:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766471475; cv=none; b=eE2Xo2xhyn+4NbHKy+Pyhox8T7bqFJqobA94wkCtL1zHh2iu3al+wsqu3u3Q0GVx0l47rD/HeOdVAG6G1EgTdW80/JSg6jxI4MeV1Ivcsy/BTg0JWOoWGY7LR3FihvWRe0UIr1fYAFZRtLX2CUQ1Man9hN0MVAHAWtfMsFQgaME=
+	t=1766471912; cv=none; b=hv4r/IyXZGm1QN/E3DS9lq8gNubNXwJUvVU7sJkeccI7xdSJM6W3/lxfy6DpGD3oz3j84lHuSea7B8qp926sFZDDhSTgGvRlgfIg1rPoFCsGr0eIvgAGsLRJch9G9+CYAei4SefhlblXy9S3XHDDob1ByH6yPsXnPFaykOgio9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766471475; c=relaxed/simple;
-	bh=RiDJuepokjtCc/A1gz3oaco/FAC3gt7ctaKz2LrTrKc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t0ct70IJ5Y2nXnBMY7rmviCbLU1xplAvMjPVSb9wAX2A5N6qiIu0tSLVYGc5hUm9xxY1S97rqsd1G2lRObKIIhbGQOxezyNzRRiVQICIb+w3XFMrwlIv/ul701eSpoQC7D8N5trWMZ5JnU6AnoMNGuOaRZ4QCiPa3mxW8fX7cYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qejrEPDa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B30C116B1;
-	Tue, 23 Dec 2025 06:31:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766471475;
-	bh=RiDJuepokjtCc/A1gz3oaco/FAC3gt7ctaKz2LrTrKc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qejrEPDakY+OTg7V3I4z7DZaU00Dvvx/S4tIto9ctI1+Z/+flU+mCxJDoMHTSHcqg
-	 oAZefPZ1zx4na2QUpDRsnatlQmhZLqk5ew0i0x83h6l5o3AVj1nPjPC1n/TWT/GpET
-	 zQ7NoVjKwt6KKwAbrymbYpzhpWdktANUbeVJuZMuYN0eESDBf0UVc4wkoY0T30ZU3O
-	 J6LcTSEIShDaG6gxLaFTn8Ie+m4ilFsIbmHWDzMRvrmC7KXP0NB7M8oI6bY1kmYkLf
-	 ADoz3LqBDuT2a652kSwowPyPR/o1MNji7tVt/N8uH+yXBlmYJGmU+fveudwhmMrg/M
-	 swzZ3YkpeKKLQ==
-Date: Tue, 23 Dec 2025 12:01:03 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Hans de Goede <hansg@kernel.org>
-Cc: Bryan O'Donoghue <bod.linux@nxsw.ie>, jerome.debretagne@gmail.com, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Johannes Berg <johannes@sipsolutions.net>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Jeff Johnson <jjohnson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, ath12k@lists.infradead.org, 
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Dale Whinham <daleyo@gmail.com>
-Subject: Re: [PATCH v5 2/7] dt-bindings: wireless: ieee80211: Add
- disable-rfkill property
-Message-ID: <2ixwny6hzumlqmok5cjwutvtk7nzmx4t3dhxc44ao4l2u755pj@n6m7jyxf2o62>
-References: <20251220-surface-sp11-for-next-v5-0-16065bef8ef3@gmail.com>
- <M7kfFb5fz-WB43U_xCUwgxpmBJ4TNdp4jE6yFu6HmemIcDx5tXO6H4xnW_pEQz6DMkKm-3POdB9hIdB092zhGQ==@protonmail.internalid>
- <20251220-surface-sp11-for-next-v5-2-16065bef8ef3@gmail.com>
- <e0e9e690-c56e-4b56-90f9-2af46a7feaf3@nxsw.ie>
- <c29de60c-c7c6-45d7-8d90-616df23df01c@kernel.org>
- <v4hxei4t7n6ebvw6heoccei2t3mskq7uo7zejv6dyvvq5fr5sv@xzpsiic5x7a4>
- <2ff993a7-0fda-4337-9acc-92aaa75be750@kernel.org>
- <blbyjjkcxwnm5otgkodckxl2gx5ncelhnpqire7jt3yfdvszef@jgk6o7yvn2vo>
- <8b79b662-931f-4634-9389-6602d353d67a@kernel.org>
+	s=arc-20240116; t=1766471912; c=relaxed/simple;
+	bh=uW4w+QJrEnv7Q6yTXfhLGPNGnruPOuDl5vmFKBo81lg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mdcHRtpOihdWMFEQnQIiDaDiYh0/7NYlEtZAOUN0O7+Iklnj3/lWIk00iNlWqatEVeokrGdu9lMCLGZe0qXiYmVEa6sqGOXUrtr9JLXwlGNBmmeEHgVqG48n+T4vSStwuK5fuF0KmUKTCBXNDav8INoZf7hLlzqwsgHdsLTRnzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IWQYvbv6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A8JCgHYO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BN30Pdn1568769
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 06:38:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SGfF6MiAYM+uTFbBjym3gHP0hxSqhDmj8ARoso+NK4s=; b=IWQYvbv6o2QuGLR6
+	KdtFGX7vH236h4LxPGdFx/zArX75MJBNgmjmsHbafyyMyZvOc6AbeQT/3ugtnQqY
+	W5gyuBvwMht6vorZhz8BTGxr8uLn0WjIJf5ycEw32cpDbRzCYgewfIpxAwU9Df5p
+	MvdkiNDe1uSmw4AdwePD/Ra3TFRG/eCYi/e0bY0J39OuWz3WcR06qu2Tp0aC9qdu
+	xmC96RNAKUMJWJa/OrWwWDnyp80zxzHbNaNzKVAQHCBe645KeILqysjlr4NsGvhU
+	6ICOTSsA36G+PiMA4uFMWYwyK0iKS4kDb/hVFT13iYGBiG5XAcBMzGbKJetANtzu
+	9fRceA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b76yy2jsu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 06:38:29 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a0c495fc7aso68790785ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Dec 2025 22:38:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766471909; x=1767076709; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SGfF6MiAYM+uTFbBjym3gHP0hxSqhDmj8ARoso+NK4s=;
+        b=A8JCgHYOViXMTgukIfiXxRFngWNKVg9eaq3CFWn9sSpeHbsAGL4bVS1z2FC3izT0NN
+         U5fKySDkeJItWrqyQ13z4IvHCE0Cq3ixATQJdMwZKfbYT0wOEv5zfVsTZ1OtmHfpAVV6
+         kFBIEVtgc5/eQx/kh0e+usp1pyqiZiYsFMv0adm5cLnti8wO3uaG+Y6RiDRp70CkBrye
+         GFRD3CbRxQrRlIAguMyB29Oato1xhuNgdOppDGsEB+1+PuXyfsj4EcEMGHokT67OYNvF
+         THyQiKF4zTMnmXf6tcdwKrvAs7VwGN3EEh7as8C9F/MhEA5aRkd4B1oisQhsb8hbcwx+
+         LWGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766471909; x=1767076709;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SGfF6MiAYM+uTFbBjym3gHP0hxSqhDmj8ARoso+NK4s=;
+        b=rSytngFaaND6NjldpjnfRKJ44gRABV+xnwHMu2hXq3vwmrmTXZC8JI6msdUr5QB8OF
+         LGpmv5d0yB+6JwravU1TT5qWsQfMQeKPJzZhVh/H0Y7ZqaOETENupl5bVli/zubWUtkw
+         m3fUv0UHQDoFZfovm/6FDhUl8/MS9jsmzkBMNz6hQ6uBRaP4cGUi3YBIkdJcxLDSUb9e
+         Oo+/+pJE1TlK9br56TvBe6/k/2Lj4IoiQ0A0BHfH5jr89fto0WOPjplJ/d2Ph7lMoBhg
+         2tzWPopoMiqMMfEsmBrg6GJnTk7Uln4lHSjJ6bT7pCiQ8oNDZiYDtKnHnhmAOYoQgmoX
+         +mpA==
+X-Gm-Message-State: AOJu0Yw1x3yJKYVfwndZuT2cnwMxORb13lSB2l93Hwco/26ZhgJOVj7f
+	7Z/UKUB75rBAWzHc4nxfzAQLO5bcmfy3E8QLU0WaiqDNrjW+tW3tUZgpxAT6miEpZWpbe0DG6hw
+	WqzkN2wbxy3hxrxHUgfnai9XUpIFja5WAx3Hf1X051o+HBGUc99teE2C5vetOB1AN1h99
+X-Gm-Gg: AY/fxX4CKABBZtvv8bQpf7dmuXAetCzxg89lEy5WyrIUfcxRVgTMFRiJGOr7lYDBFF/
+	dI8s3aAGgzl0pFtyxgUUBSaMLmkuFNYkLOlgcW7yBhb70C2mnSctwt0TcTDwqSjmKHbQaY2DbgD
+	EGiFabI/3T7I6NlHBaGxsjSaXb7INfhB5iqSSeoOEpkh8Br2K+b1dx4ccgKgQbsBlHSywYodEHX
+	XShXbjn79hlhgsS9kd7kqsPvG9bjL5cqgyo163waywi5vicdSFvTDVBzeD13davJz7CmKq0VLtg
+	5cf3hTwtfmxmPMWGtlbtJgeWG3Qt/cYIPs+Q5E4bggo3T04Osz1z/6+/Of1pgItlpxc8PWGB8Qt
+	6ykHNwehFqi2Ly4xz82kdYCrBe+ylgVCCQXuiQyM9Ks8raH3awf0G2V3xbXXQ7CVyUlli0mJFEe
+	c1YV74oQ==
+X-Received: by 2002:a17:903:2308:b0:298:1013:9d11 with SMTP id d9443c01a7336-2a2f283b5c4mr125136675ad.43.1766471908699;
+        Mon, 22 Dec 2025 22:38:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH93yqRyuVGpx4KdUKz1id1O48goghnQrUvi+7PXD0BfJO8Y445ooJwwM4asvCsSOmONVOhIw==
+X-Received: by 2002:a17:903:2308:b0:298:1013:9d11 with SMTP id d9443c01a7336-2a2f283b5c4mr125136535ad.43.1766471908154;
+        Mon, 22 Dec 2025 22:38:28 -0800 (PST)
+Received: from [10.133.33.229] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c66829sm117984885ad.10.2025.12.22.22.38.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Dec 2025 22:38:27 -0800 (PST)
+Message-ID: <1e7a7ff3-6f5c-4437-835f-5b5d4a05032c@oss.qualcomm.com>
+Date: Tue, 23 Dec 2025 14:38:20 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8b79b662-931f-4634-9389-6602d353d67a@kernel.org>
-
-On Mon, Dec 22, 2025 at 03:22:55PM +0100, Hans de Goede wrote:
-> Hi,
-> 
-> On 22-Dec-25 14:41, Manivannan Sadhasivam wrote:
-> > On Mon, Dec 22, 2025 at 01:41:48PM +0100, Hans de Goede wrote:
-> >> Hi Mani,
-> >>
-> >> On 22-Dec-25 12:45, Manivannan Sadhasivam wrote:
-> >>> On Mon, Dec 22, 2025 at 11:23:18AM +0100, Hans de Goede wrote:
-> >>>> +Cc Mani
-> >>>>
-> >>>> Hi,
-> >>>>
-> >>>> On 20-Dec-25 07:04, Bryan O'Donoghue wrote:
-> >>>>> On 20/12/2025 00:21, Jérôme de Bretagne via B4 Relay wrote:
-> >>>>>> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> >>>>>>
-> >>>>>> For some devices, Wi-Fi is entirely hard blocked by default making
-> >>>>>> the Wi-Fi radio unusable, except if rfkill is disabled as expected
-> >>>>>> on those models.
-> >>>>>>
-> >>>>>> Commit c6a7c0b09d5f ("wifi: ath12k: Add Support for enabling or
-> >>>>>> disabling specific features based on ACPI bitflag") added a way to
-> >>>>>> support features set via ACPI, including the DISABLE_RFKILL bit.
-> >>>>>>
-> >>>>>> Add a disable-rfkill property to expose the DISABLE_RFKILL bit
-> >>>>>> equivalent for devices described by a Devicetree instead of ACPI.
-> >>>>>>
-> >>>>>> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> >>>>>> ---
-> >>>>>>   Documentation/devicetree/bindings/net/wireless/ieee80211.yaml | 6 ++++++
-> >>>>>>   1 file changed, 6 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >>>>>> index d89f7a3f88a71d45d6f4ab2ae909eae09cbcaf9a..c10a4675640be947cd0b5eaec2c7ff367fd93945 100644
-> >>>>>> --- a/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >>>>>> +++ b/Documentation/devicetree/bindings/net/wireless/ieee80211.yaml
-> >>>>>> @@ -29,6 +29,12 @@ properties:
-> >>>>>>         different 5 GHz subbands. Using them incorrectly could not work or
-> >>>>>>         decrease performance noticeably
-> >>>>>>
-> >>>>>> +  disable-rfkill:
-> >>>>>> +    type: boolean
-> >>>>>> +    description:
-> >>>>>> +      Disable rfkill for some devices on which Wi-Fi would be entirely hard
-> >>>>>> +      blocked by default otherwise
-> >>>>>> +
-> >>>>>>   additionalProperties: true
-> >>>>>>
-> >>>>>>   examples:
-> >>>>>>
-> >>>>>> -- 
-> >>>>>> 2.47.3
-> >>>>>>
-> >>>>>>
-> >>>>>>
-> >>>>>
-> >>>>> Is this really a hardware description though ?
-> >>>>
-> >>>> I would say yes it is. The wifi chip has an rfkill input pin and
-> >>>> things will be broken when that pin is hardwired to a fixed value
-> >>>> rather then being actually connected to a GPIO from say
-> >>>> the embedded controller.
-> >>>>
-> >>>
-> >>> IIUC, even if the M.2 slot has the W_DISABLE1# signal routed from the host,
-> >>> the device won't make use of it as there is no physical connection. So you want
-> >>> the WLAN driver to change the state through SW?
-> >>>
-> >>>> So I think that we would need here is not a disable-rfkill property
-> >>>> but some way to indicate in the DT-node that the rfkill input pin
-> >>>> is not connected and thus should be ignored.
-> >>>>
-> >>>> This (the rfkill input pin being not-connected) IMHO very much
-> >>>> is hw-description.
-> >>>>
-> >>>
-> >>> Though we can argue this way, I would prefer to handle it in the driver. For
-> >>> example, with my M.2 series, we will end up describing the M.2 slot:
-> >>>
-> >>> 	connector {
-> >>> 		compatible = "pcie-m2-e-connector";
-> >>> 		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-> >>> 		...
-> >>> 		ports {
-> >>> 			...
-> >>> 			endpoint@0 {
-> >>> 				reg = <0>;
-> >>> 				remote-endpoint = <&pcie4_port0_ep>;
-> >>> 			};
-> >>> 		};
-> >>> 	};
-> >>>
-> >>> Then if we use a DT property to convey the RFKILL pin state of the device, we
-> >>> would need to describe the endpoint device in DT and hardcode the state:
-> >>>
-> >>> 	&pcie4_port0 {
-> >>> 		...
-> >>> 		port {
-> >>> 			pcie4_port0_ep: endpoint {
-> >>> 				remote-endpoint = <&m2_e_pcie_ep>;
-> >>> 				disable-rfkill;
-> >>> 			};
-> >>> 		};
-> >>> 	};
-> >>>
-> >>> So this will essentially make the M.2 device non-swappable unless you change the
-> >>> DT since you've how hardcoded the device property in the binding. This is
-> >>> something I try to avoid to make the M.2 slot really swappable.
-> >>>
-> >>> For this reason, I would prefer to handle the RFKILL state in the WLAN driver
-> >>> using the device specific compatible. This will be problematic only if multiple
-> >>> cards of the same Device ID have different RFKILL state and the devices are not
-> >>> distinguishable even with sub IDs.
-> >>
-> >> I think we're miscommunicating here. I'm not talking about the card having
-> >> a broken rfkill implementation, I'm talking about the M.2 slot on the mainboard
-> >> having e.g. W_DISABLE1# hardwired in such a way that cards would interpret it as
-> >> having to always disable their wifi radio which is very similar to what is
-> >> happening on the surface device. Except that on the Surface there is no M.2 slot,
-> >> the wifi is just soldered onto the mainboard I believe.
-> >>
-> > 
-> > Ah, sorry for the confusion. I did misinterpret what you said.
-> > 
-> >> Based on experience I'm pretty sure we will encounter M.2 slots which such
-> >> a hardwired W_DISABLE1# signal sooner rather then later.
-> >>
-> > 
-> > But it makes no sense IMO. Vendors will usually connect unimplemented W_DISABL1#
-> > GPIOs to a pull-up resistor so that the radios are operational all the time. I
-> > don't see how they would expect a WLAN or any device with a radio to be
-> > connected to the slot if they hardwire the pin to low.
-> 
-> Pins which are considered "unused" are also often hardwired
-> to ground. If the m.2 slot is tested with a wifi-module where
-> the W_DISABLE1# signal is not used on the wifi-module I can
-> easily see this happen. I've seen a lot crazier / buggy stuff
-> happen.
-> 
-> > Are you sure that on the surface the pin is actually hardwired to low and not
-> > connected to a GPIO that drivers the signal low?
-> 
-> I don't know what is the exact problem on the Surface. I just
-> expect to see this more often, we've certainly seen lots of
-> issues like this on x86 laptops. Things end up looking like
-> the hard rfkill is activated all the time (and we often don't know
-> if this is a fw issue, or an actually hardwired problem).
-> 
-> Just an example from the top of my head the Broadcom windows
-> drivers use different BT fw files for the same wifi/bt combo
-> chip depending on the vend:prod id pair. One of the things which
-> is different is that some fw files invert the BT rfkill signal
-> because it is wired wrong (or there is an EC fw bug) and this
-> is then worked around in the bt fw.
-> 
-> As we see a growing proliferation of arm64 laptops I fully
-> expect all the fun from having a gazillion different designs
-> with a time to market rush behind them result in similar issues
-> on arm64.
-> 
-> Note I'm not saying we must tackle this today, we can wait
-> till we see the first case in the real world I guess.
-> 
-> I just thought that based on my experience this is more or
-> less bound to happen, we could comeup with a solution for
-> this now and then this solution could also nicely serve
-> the Surface case which started this thread.
-> 
-> But we can also delay tackling this and come up with some
-> bespoke solution for the Surface case, like as suggested
-> maybe a special compatible string ?
-> 
-
-Hmm. If we want to go with the DT property, I'd use something like
-'broken-rfkill' or 'broken-w-disable1' or similar in the connector node, not in
-the device node. This will convey the fact that the RFKILL switch is broken
-in the connector or the hardware topology is not known.
-
-But we do not have the connector binding merged yet. Until then, I'd suggest to
-keep the hack in the WLAN driver by using the platform compatible and Device ID:
-
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index cc352eef1939..481778eb2c95 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -77,6 +77,16 @@ static int ath12k_core_rfkill_config(struct ath12k_base *ab)
-        if (ath12k_acpi_get_disable_rfkill(ab))
-                return 0;
- 
-+       /*
-+        * TODO: On Microsoft Surface Pro 11, OS is not able to control the
-+        * RFKILL switch. So keep the RFKILL disabled until the OS learns about
-+        * it. Ideally, this info should come from the connector node of the
-+        * board DT file. But since the connector DT node is not available,
-+        * implement the hack in the driver.
-+        */
-+       if (of_machine_is_compatible("microsoft,denali") && (ab->id.device == 0x1107))
-+               return 0;
-+
-        for (i = 0; i < ab->num_radios; i++) {
-                ar = ab->pdevs[i].ar;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/2] Enable DPU and Display Port for Qualcomm
+ QCS8300-ride platform
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20251117-dts_qcs8300-v7-0-bf42d39e7828@oss.qualcomm.com>
+Content-Language: en-US
+From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+In-Reply-To: <20251117-dts_qcs8300-v7-0-bf42d39e7828@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjIzMDA1NCBTYWx0ZWRfX2P5WMRI5Lx9u
+ 4IKuwpSTZ042B8OWfaoOqWwzLVf2+zcydrpno1l27CxxmyA6QMOGh60lGhY/+qO7jxSTLRr7sma
+ /8nraJNIcF8rbWlpVWE8khOp9kqXgVyoIWm/0/DFvfdiFHXhQHnrO7mWCc9LcL/BAbYXW6BFs1d
+ GD5woZJuxEfox1YoBKw+wa45uIQ5AzLZ35q9M1wbStBms1+NPKR1bFHNX+WNDpL464W+vo6tmlh
+ r4B9zPr1v5mAJHgeKhnDtiYJhWdo+Esx2eUuvukGxslEmWhOwoLsoDaCyt5p7pAVG81Cfn1n32w
+ okXw2031ULHPbkPRRaqxk3Ogh6kCo4tHKs0YB27RqtrZNDuRGN5+nQHFN03I/R4oXCbut0YTjPS
+ vkcsA1pRQrEnyhB2rNBleJdaQ5vTVTU2BtR4qUV0OxRn4GoujNGOY++rc+YVZfQAKPne4BpmaxC
+ uI9scEo1XD1UxuZt+Xg==
+X-Authority-Analysis: v=2.4 cv=Zb0Q98VA c=1 sm=1 tr=0 ts=694a38e5 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=n2RjsMndgCGXELCLl8sA:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: ksiEjwGxywTmg0KMQtNHe14JqEI3MfL5
+X-Proofpoint-GUID: ksiEjwGxywTmg0KMQtNHe14JqEI3MfL5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-23_02,2025-12-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ phishscore=0 spamscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512230054
 
 
-Once the connector binding gets merged, hopefully we can add the DT property and
-use it in the driver.
 
-> > It is just hard to believe that board designers can do a blunder like this.
+On 11/17/2025 2:49 PM, Yongxing Mou wrote:
+> This series adds the MDSS, DPU and DPTX0 node on Qualcomm QCS8300 SoC.
+> It also enables Display Port on Qualcomm QCS8300-ride platform.
 > 
-> Heh, you won't believe all the crap happening on cheap
-> x86 devices.
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> ---
+> This series make top of:
+> https://lore.kernel.org/all/20251029-qcs8300_mdss-v13-0-e8c8c4f82da2@oss.qualcomm.com/
+> which has been merged into msm-next, but has not yet appeared in linux-next, list here for reference.
+> ---
+> Changes in v7:
+> - Repost after dependencies were accepted and rebase to latest linux-next.
+> - Link to v6: https://lore.kernel.org/r/20250917-dts_qcs8300-v6-0-5c862aa80f64@oss.qualcomm.com
 > 
-
-Coming from the DT world, I thought the ACPI world is superior, but this reminds
-of the fact "No world is superior to another" :)
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> Changes in v6: Fixed comments from Dmitry.
+> - Rebase to latest linux-next and remove merged dependencies.
+> - Modify DP controller compatable to use fallback.
+> - Link to v5: https://lore.kernel.org/r/20250806-dts_qcs8300-v5-0-60c554ec3974@quicinc.com
+> 
+> Changes in v5: Fixed review comments from Konrad.
+> - Use interrupts-extended to introduce interruptions.
+> - Sort the dp_hot_plug_det node by pin number.
+> - Link to v4: https://lore.kernel.org/r/20250730-dts_qcs8300-v4-0-5e2dd12ddf6d@quicinc.com
+> 
+> Changes in v4:Fixed review comments from Krzysztof.
+> - Add the 4 pixel stream register regions and the correspondings clocks of the DP controller.
+> - Change DP controlller compatible to qcs8300-dp.
+> - Rebase to next-20250717.
+> - Link to v3: https://lore.kernel.org/r/20250114-dts_qcs8300-v3-0-d114cc5e4af9@quicinc.com
+> 
+> Changes in v3:Fixed review comments from Konrad, Dmitry.
+> - Correct the Power-domain for DP PHY should be
+>    RPMHPD_MX.[Dmitry][Konrad]
+> - Correct the interconnects path for mdp and align the property order
+>    with x1e80100.dtsi.[Konrad]
+> - Rebase the patch to latest code base and update the dependencies in
+>    the cover letter.
+> - Link to v2: https://lore.kernel.org/r/20241226-dts_qcs8300-v2-0-ec8d4fb65cba@quicinc.com
+> 
+> Changes in v2:Fixed review comments from Konrad, Dmitry and Krzysztof.
+> - Reuse eDP PHY and DPU of SA8775 Platform.[Dmitry][Krzysztof]
+> - Reuse DisplayPort controller of SM8650.[Dmitry]
+> - Correct the regs length, format issues and power-domains.[Konrad]
+> - Integrate the dt changes of DPU and DP together.
+> - Link to v1: https://lore.kernel.org/all/20241127-dp_dts_qcs8300-v1-0-e3d13dec4233@quicinc.com/
+> ~
+> 
+> ---
+> Yongxing Mou (2):
+>        arm64: dts: qcom: qcs8300: add display dt nodes for MDSS, DPU, DisplayPort and eDP PHY
+>        arm64: dts: qcom: qcs8300-ride: Enable Display Port
+> 
+>   arch/arm64/boot/dts/qcom/monaco.dtsi      | 220 +++++++++++++++++++++++++++++-
+>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts |  42 ++++++
+>   2 files changed, 261 insertions(+), 1 deletion(-)
+> ---
+> base-commit: 0f2995693867bfb26197b117cd55624ddc57582f
+> change-id: 20251117-dts_qcs8300-c98a8592d4f8
+> prerequisite-message-id: <20251029-qcs8300_mdss-v13-0-e8c8c4f82da2@oss.qualcomm.com>
+> prerequisite-patch-id: 59af38ff68afe283dccd4295951153e59e512bfc
+> prerequisite-patch-id: 05fc429deb58c4aadd82f7d0d714af7d34d8399e
+> prerequisite-patch-id: 52ee61224c7589b2122799998a8e99829d06eb47
+> prerequisite-patch-id: f664581f48278298bc3501eecf637d1eb16dbf9e
+> prerequisite-patch-id: 465ab53516efbbe38f85409e7ccb3793b05402c6
+> 
+> Best regards,
+Just a friendly reminder.The dt-binding patch has applied to msm-next tree.
 
