@@ -1,62 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-86346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5927CD95F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:54:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39F07CD964F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 14:02:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 622883006615
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 12:54:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 379B230194C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:02:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AD5D32721C;
-	Tue, 23 Dec 2025 12:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00EBB3358C0;
+	Tue, 23 Dec 2025 13:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M803tHby"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JOXtAxZY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2527F4F5;
-	Tue, 23 Dec 2025 12:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B9DBA34;
+	Tue, 23 Dec 2025 13:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766494460; cv=none; b=sGQc4PitDVyNDRvSEPzAUE810j17w4X8RllYOH+8nL5q6r3GBjQzutWiStBfzq/Poz3FJWqCu2PMyL9PAUboRGFW9G3sb12VWJvmNYyJ7D+5V/+mmUXx85wID6q6UVnMwUkKh4Fc7ZxWddJir3vdXkQh5LdQ5debud+4bQIMdYY=
+	t=1766494970; cv=none; b=CoqbPWgl317cqb/4f6Jx7d/xM9ITHUJLL/k769IXIQYrGzSXIVZccUyd8UcLRo66vapfyF6uFTRicnk5+xenxftcB2SKrArNo/lYnxarAfCxGDz6hrcXyVCndYYsJvUaoxpjOXLrzDIOga/FYbXwibd8vlU4x5ith+YJC4ulX3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766494460; c=relaxed/simple;
-	bh=KHfodc6xnjl4ekjBVCgvm0UOgXTUzxfnIsD/WyuNdgs=;
+	s=arc-20240116; t=1766494970; c=relaxed/simple;
+	bh=V0wqiOmpi4CzomRNd3MA/Fpe0+qbU6Doo0s6NTZmI/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xb7SWB8JdU4Ueva8jm33RN823rf06/JbGBiArZz3BSnNqlUNOHexLwR7z5Htk1OCcxFrfFQj97AZkxeoKK4ytfmLzUMOcbL0HU/MjPe35R1HnQcLPv9m5trisDyxsyrVskd3we00m+vfvNI2Mcl0mae/Lt8zGc5ZRfB2xzISrRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M803tHby; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A7EC113D0;
-	Tue, 23 Dec 2025 12:54:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IYBksI3nUGd8mMbsTdxiFekeEaiRcjEooC4Q9sWbR4TR/FQbHRIJxAFsbrhcxEb3XPMjMQ1FmgcErYX4H1EZKXXPUUmHpTG1USWxsJblnHyXQfhioa8iXfuXbhl/fSZfcoVWIcYMeUmVQqyitEh+mKY0zJ3AQXqgLdfV9tvp6IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JOXtAxZY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86685C113D0;
+	Tue, 23 Dec 2025 13:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766494459;
-	bh=KHfodc6xnjl4ekjBVCgvm0UOgXTUzxfnIsD/WyuNdgs=;
+	s=k20201202; t=1766494970;
+	bh=V0wqiOmpi4CzomRNd3MA/Fpe0+qbU6Doo0s6NTZmI/0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M803tHbyEDczI6AoP2oQUbt7vkta82oKc8iQ2rxcAtF2sU8GZ8Z4nqT/beSqoDNXe
-	 jq+q+ssebnPTVbD8hGniUE8HZ9DwrF2giNznZ4wWbkbaCTVd7EVJjHXazWtwIYP0aj
-	 ebAxvXyvXeOc2w9rA2YVEjeFZ84730adPbC0B99SyjV58HXyghQWBgHEW35Or5CPJh
-	 ZQiii4SerjDex2sChT9NqykoxFmB8zYSi1wMOFY7hmgisycXbkxg4BRkBAd6dqyvzz
-	 p9FwlcQRhIipQyRhvYz3QjZXSv1XektgW6hT2cwhkJssnAdK47JsaICXtyF50vUBBc
-	 q5oQ44Doazcnw==
-Date: Tue, 23 Dec 2025 13:54:15 +0100
+	b=JOXtAxZYIghCWzWiYvb+yy0wes7+xe8e/roEQmPo19+qzhou46aEr64ngY4kfi7nm
+	 etI5ah2tueI5yAuYHDmqjn7QEmE8J1yC9I3eFby/IOn8fKlWl0PyFu61Vwkb2gYxb4
+	 cTfXAMI+3FNFXbVCDAyoG+vYl82rNxzlDC3ynlXjF/2nFhmjd0j6hX3pXeNy/CbDFL
+	 fuDdyLyNQuBAwTwjYv6Ju9572hY4hbBNeUnUI0/O+lnRrMFwnfBBD7ZmFTwbNZXjw4
+	 ywrV1wPjZoYQgl4tyAfdPei5JmGsnVT2M5OC3WPPpWIXdKawVvxH6cFVZCBUDkjI+A
+	 PcCJHefRxaGqA==
+Date: Tue, 23 Dec 2025 14:02:46 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com, 
-	konrad.dybcio@oss.qualcomm.com, Rama Krishna <quic_ramkri@quicinc.com>, 
-	Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, Nitesh Gupta <quic_nitegupt@quicinc.com>
-Subject: Re: [PATCH v4 1/2] dt-bindings: PCI: qcom,sa8255p-pcie-ep: Document
- firmware managed PCIe endpoint
-Message-ID: <20251223-glorious-goose-from-betelgeuse-b5b91b@quoll>
-References: <20251223-firmware_managed_ep-v4-0-7f7c1b83d679@oss.qualcomm.com>
- <20251223-firmware_managed_ep-v4-1-7f7c1b83d679@oss.qualcomm.com>
+	Manivannan Sadhasivam <mani@kernel.org>, aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: remoteproc: qcom,sm8550-pas: Add
+ Kaanapali ADSP
+Message-ID: <20251223-impetuous-muskox-of-cubism-a3cfbd@quoll>
+References: <20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com>
+ <20251223-knp-remoteproc-v3-1-5b09885c55a5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,16 +61,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251223-firmware_managed_ep-v4-1-7f7c1b83d679@oss.qualcomm.com>
+In-Reply-To: <20251223-knp-remoteproc-v3-1-5b09885c55a5@oss.qualcomm.com>
 
-On Tue, Dec 23, 2025 at 02:46:20PM +0530, Mrinmay Sarkar wrote:
-> Document the required configuration to enable the PCIe Endpoint controller
-> on SA8255p which is managed by firmware using power-domain based handling.
+On Tue, Dec 23, 2025 at 01:13:47AM -0800, Jingyi Wang wrote:
+> Document compatible for Qualcomm Kaanapali SoC ADSP PAS which looks fully
+> compatible with SM8750, which can fallback to SM8550 except for one more
+> interrupt ("shutdown-ack").
 > 
-> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
->  .../bindings/pci/qcom,sa8255p-pcie-ep.yaml         | 110 +++++++++++++++++++++
->  1 file changed, 110 insertions(+)
+>  Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
