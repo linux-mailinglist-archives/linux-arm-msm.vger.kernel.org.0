@@ -1,123 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-86345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9228CD94F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:39:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5927CD95F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:54:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5119B3026870
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 12:35:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 622883006615
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 12:54:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E906F339855;
-	Tue, 23 Dec 2025 12:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AD5D32721C;
+	Tue, 23 Dec 2025 12:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FuqJCMbK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M803tHby"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92369338917
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 12:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2527F4F5;
+	Tue, 23 Dec 2025 12:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766493344; cv=none; b=th9FSVhtePYUbU+3uKnkfeXlsr9yJe4SMCOtguJjeDBrWlq28K+h5c20au3acymiZRw64lsyCVdRkwUPMS8D6oFr6paq+mFxNqKWqqPpsYoe9QEHPH3zNkJwtMMaNda5+agW7hl8kh88cOXCrUuVP6sSreVWQV3djFewW9g5OTo=
+	t=1766494460; cv=none; b=sGQc4PitDVyNDRvSEPzAUE810j17w4X8RllYOH+8nL5q6r3GBjQzutWiStBfzq/Poz3FJWqCu2PMyL9PAUboRGFW9G3sb12VWJvmNYyJ7D+5V/+mmUXx85wID6q6UVnMwUkKh4Fc7ZxWddJir3vdXkQh5LdQ5debud+4bQIMdYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766493344; c=relaxed/simple;
-	bh=q74XfHjULmeZRVR70YO063B1k67wiYkqtFS+7ft6XU8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iHwH2acTz8M+SISCRR9tuXgZJfmbR5AG9VtH7xVfBxyZOfw1XHIDQl4fPIc73Q8iA1wyMO/ZhYeY9MunQuVvFL+AsTS1NHDA89PxMHZmZECKvMPhzTbfEBMg/9UJd4hOUcfkFqbwsFccFxHtv70jIKuo1IoVwWnhCo2mFBx2QhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FuqJCMbK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17110C113D0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 12:35:44 +0000 (UTC)
+	s=arc-20240116; t=1766494460; c=relaxed/simple;
+	bh=KHfodc6xnjl4ekjBVCgvm0UOgXTUzxfnIsD/WyuNdgs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xb7SWB8JdU4Ueva8jm33RN823rf06/JbGBiArZz3BSnNqlUNOHexLwR7z5Htk1OCcxFrfFQj97AZkxeoKK4ytfmLzUMOcbL0HU/MjPe35R1HnQcLPv9m5trisDyxsyrVskd3we00m+vfvNI2Mcl0mae/Lt8zGc5ZRfB2xzISrRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M803tHby; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A7EC113D0;
+	Tue, 23 Dec 2025 12:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766493344;
-	bh=q74XfHjULmeZRVR70YO063B1k67wiYkqtFS+7ft6XU8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=FuqJCMbKoSr7nAlkhWbosDuqfgXyBovvFv27gNRQ/sdGJFCCQv+wV0IJ+ruSsLof3
-	 6rozBUycIa1wkEHMkLjVv/tCGWSIs6OzO5khD1IzU8Zl7N2G5sPDb+m0ACIdxMy0jB
-	 ACX+KYYNXreuqz98CjeuetiDx9sWJurwSZD1VF18gKlGE3AebLI/rAAwCIbXkycrqT
-	 93vZEbJpEKKHCo0gRuzpxvoWhy15+BssmW1f0tU4r+m14cb42SDixRRN6mfS3tI7cj
-	 9F2wTuDrbn79aInI4gQhFQ8w/JHmnHUZydszsC9K5WV/Tk06/rCyCBxrayjbCpD3/h
-	 /rmTC+GPfw74g==
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-37cd7f9de7cso38957261fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 04:35:43 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVh+tBnjUulCcFnSNNFp1PjTHGe3Nq5yrwTwpc9oRp/1CwDOoUsOaAxg8t19Gy7/bIAsNA2FJz5WZJjTPIZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YykjHz846gEh0QZivb5xXfXiU9ytv0SFYLC9LWODhNebKtlwUM3
-	8B6n2lwX9GOYlycQnT++IrfmwOcsmqExcDCXk55KJFK8OrKCcaj4/2Wk+UI6FXIK5aZW53f5AxD
-	oTnLFd3Wavkv0dSypSlmZ8S9Pgq+tY3LLDFT9O9242A==
-X-Google-Smtp-Source: AGHT+IHzGMp/lUo841FNq6eKIEsyBk22ZwXTxkqvHm+j8oaPP30fI/e45HM5cEWeUxoNo4uYstP9Q7EEle5NpDVyVoc=
-X-Received: by 2002:a2e:a908:0:b0:37e:6884:67e8 with SMTP id
- 38308e7fff4ca-381215e9191mr41558841fa.2.1766493342788; Tue, 23 Dec 2025
- 04:35:42 -0800 (PST)
+	s=k20201202; t=1766494459;
+	bh=KHfodc6xnjl4ekjBVCgvm0UOgXTUzxfnIsD/WyuNdgs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=M803tHbyEDczI6AoP2oQUbt7vkta82oKc8iQ2rxcAtF2sU8GZ8Z4nqT/beSqoDNXe
+	 jq+q+ssebnPTVbD8hGniUE8HZ9DwrF2giNznZ4wWbkbaCTVd7EVJjHXazWtwIYP0aj
+	 ebAxvXyvXeOc2w9rA2YVEjeFZ84730adPbC0B99SyjV58HXyghQWBgHEW35Or5CPJh
+	 ZQiii4SerjDex2sChT9NqykoxFmB8zYSi1wMOFY7hmgisycXbkxg4BRkBAd6dqyvzz
+	 p9FwlcQRhIipQyRhvYz3QjZXSv1XektgW6hT2cwhkJssnAdK47JsaICXtyF50vUBBc
+	 q5oQ44Doazcnw==
+Date: Tue, 23 Dec 2025 13:54:15 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com, 
+	konrad.dybcio@oss.qualcomm.com, Rama Krishna <quic_ramkri@quicinc.com>, 
+	Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>, Nitesh Gupta <quic_nitegupt@quicinc.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: PCI: qcom,sa8255p-pcie-ep: Document
+ firmware managed PCIe endpoint
+Message-ID: <20251223-glorious-goose-from-betelgeuse-b5b91b@quoll>
+References: <20251223-firmware_managed_ep-v4-0-7f7c1b83d679@oss.qualcomm.com>
+ <20251223-firmware_managed_ep-v4-1-7f7c1b83d679@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
- <20251128-qcom-qce-cmd-descr-v9-3-9a5f72b89722@linaro.org>
- <aUFX14nz8cQj8EIb@vaman> <CAMRc=MetbSuaU9VpK7CTio4kt-1pkwEFecARv7ROWDH_yq63OQ@mail.gmail.com>
- <aUF2gj_0svpygHmD@vaman> <CAMRc=McO-Fbb=O3VjFk5C14CD6oVA4UmLroN4_ddCVxtfxr03A@mail.gmail.com>
- <aUpyrIvu_kG7DtQm@vaman>
-In-Reply-To: <aUpyrIvu_kG7DtQm@vaman>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Tue, 23 Dec 2025 13:35:30 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
-X-Gm-Features: AQt7F2oSGCQtIaLV5R5D9XkRDpY-kRDfqZja_OqWHGJExvMJA-6WqMsyJ0COlNU
-Message-ID: <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
-Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
- BAM locking
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Udit Tiwari <quic_utiwari@quicinc.com>, Daniel Perez-Zoghbi <dperezzo@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251223-firmware_managed_ep-v4-1-7f7c1b83d679@oss.qualcomm.com>
 
-On Tue, Dec 23, 2025 at 11:45=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrot=
-e:
->
-> On 17-12-25, 15:31, Bartosz Golaszewski wrote:
-> > On Tue, Dec 16, 2025 at 4:11=E2=80=AFPM Vinod Koul <vkoul@kernel.org> w=
-rote:
->
-> > >
-> > > I am trying to understand what the flag refers to and why do you need
-> > > this.. What is the problem that lock tries to solve
-> > >
-> >
-> > In the DRM use-case the TA will use the QCE simultaneously with linux.
->
-> TA..?
+On Tue, Dec 23, 2025 at 02:46:20PM +0530, Mrinmay Sarkar wrote:
+> Document the required configuration to enable the PCIe Endpoint controller
+> on SA8255p which is managed by firmware using power-domain based handling.
+> 
+> Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+> ---
+>  .../bindings/pci/qcom,sa8255p-pcie-ep.yaml         | 110 +++++++++++++++++++++
+>  1 file changed, 110 insertions(+)
 
-Trusted Application, the one to which we offload the decryption of the
-stream. That's not really relevant though.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
->
-> > It will perform register I/O with DMA using the BAM locking mechanism
-> > for synchronization. Currently linux doesn't use BAM locking and is
-> > using CPU for register I/O so trying to access locked registers will
-> > result in external abort. I'm trying to make the QCE driver use DMA
-> > for register I/O AND use BAM locking. To that end: we need to pass
-> > information about wanting the command descriptor to contain the
-> > LOCK/UNLOCK flag (this is what we set here in the hardware descriptor)
-> > from the QCE driver to the BAM driver. I initially used a global flag.
-> > Dmitry said it's too Qualcomm-specific and to use metadata instead.
-> > This is what I did in this version.
->
-> Okay, how will client figure out should it set the lock or not? What are
-> the conditions where the lock is set or not set by client..?
->
+Best regards,
+Krzysztof
 
-I'm not sure what you refer to as "client". The user of the BAM engine
-- the crypto driver? If so - we convert it to always lock/unlock
-assuming the TA *may* use it and it's better to be safe. Other users
-are not affected.
-
-Bartosz
 
