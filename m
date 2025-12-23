@@ -1,62 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-86402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6967CDA2BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 18:51:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 622BCCDA2C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 18:53:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93BF330115D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 17:51:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 70E79303D897
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 17:51:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B540346E42;
-	Tue, 23 Dec 2025 17:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F2634E74E;
+	Tue, 23 Dec 2025 17:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q/xtCSU0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvjo0HFw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178EA2701CF;
-	Tue, 23 Dec 2025 17:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B1134E261;
+	Tue, 23 Dec 2025 17:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766511913; cv=none; b=VBKYoMh8wt2HqRfIuT/ONq//Fw4QYBue5HXzB/QCEPkYKFEtdZpge1DgBpvgJj+IU4aBTkqehySlLPmH3Pu1dXRIUUPGMzUNnEViKG0KX7bGohOve0540i4TpsQtgbKIHiUTRDhAUha44f8GfW7nPsMVxwN8VF3P/l03+6IIHWo=
+	t=1766511929; cv=none; b=ioUBCvYsDsyiHvwkMCKiz2JYZ7NFiZVMAPJ0myTi1BTgHtZqRvXMfRt+YiSz2ugOV1VtosNJ9KTS0kYAbZLYCZju9yjnC5gJQrkDHOlHr15UAXzg3CD6WNROTvCNC6NDCNoSpNkb08gwovOAlUXYLA2PHskHuXKg3VJRuArZGQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766511913; c=relaxed/simple;
-	bh=Fp74yWwB0EL3oH6IPXUmyxxgfVxbhxLvcA5X9IqTBa0=;
+	s=arc-20240116; t=1766511929; c=relaxed/simple;
+	bh=D/zqMZMrg5bxSBohWp/OUYz4EvL7ZkwbpOyavwaQjSM=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=qUtgtd245IAAUcu6E6Ao8shqkV6Akevts+KTXNL5ihw5M7bYihmww5HN0npYi5o4ClUM7k9RpRRVR4n6U77dnKVSTvZFnwRykf2WET3iSXkYTkHKty0rVk/vyi7b4mD/ue7bNSveJe08wsOfYS6J85UkPIzrRdbH4pAHerjwxfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q/xtCSU0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1040C19421;
-	Tue, 23 Dec 2025 17:45:06 +0000 (UTC)
+	 MIME-Version:Content-Type; b=PXIjFmBOoaiarM2NWEWZvI36okm7F9R+qI9XNzq4InVIKLPutb1L0NdpChD2DnKeQokr+YaNCYTeRti8IDkEkmMlH5UQ196SC1zr87DsbsXb6pK1zseC/O6wLNphbnSqev88rq0B7CX/Gzee2/p5ThBt6pS3hACDmwjObBs/Q/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvjo0HFw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF73C19421;
+	Tue, 23 Dec 2025 17:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766511911;
-	bh=Fp74yWwB0EL3oH6IPXUmyxxgfVxbhxLvcA5X9IqTBa0=;
+	s=k20201202; t=1766511929;
+	bh=D/zqMZMrg5bxSBohWp/OUYz4EvL7ZkwbpOyavwaQjSM=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Q/xtCSU0WBdYo290s9OJ4gg0vUURad0KXkqk2QKqkamz84YEETLMwajEYwJ4007ru
-	 MJVJ2QxPAbnuWV0K73kknyuU3FuUeeJgKWKe+lnid7rH7Sv6XXcLQ+wXuMpOAvSsVv
-	 YG5WoYLjRAT6GeniIa8Ct/jOadaaArcdcggHCkt+18CbCvSWkuNzIPDw9WH5p7Mv8S
-	 Pk4///Fxb324F8Vu4XPF/gb7MnCradJHtw6WhgvBfIs2PewX0GvEtZ9LPRIIAa8um7
-	 1Kg6JxyPFCvBkn/C7lA+Ib869TfiurDzQoyS6mS9gpOnBsEUudCqs4ru82GOIWYbas
-	 oPmly00tmDebA==
+	b=qvjo0HFwSOOPv6GoxFkZW/BIoZo29KqCcJPwrqC30j3UzKgKac1oXPKBJVt0sXx+h
+	 mx+cB4jCnoZDLE3bxmvnCRJK3U+MxwxhwC1a8ldr1l96+4ZyJkXBEl5qNUC21qdsZx
+	 YJfxDCJTgEFrRATdqGufZDczbLaLE6dAaorOxqNBWHx08YNwS0fnE9eJAdHuL1XKrN
+	 2GZVtnylnFHTDD0dULoLuC/59DfFdzlcJm3MgfsTmk6N1qJvuJQAZBpqfasMTjqMYN
+	 YBl/WPdfBVuAjcIRZojgaofYURFPxGrK6X9/vry+47pxh/LidSBf1xF0CZm2m3/ZJD
+	 NfIzrLO5RRI2w==
 From: Vinod Koul <vkoul@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+To: krzk+dt@kernel.org, abel.vesa@linaro.org, conor+dt@kernel.org, 
+ dmitry.baryshkov@oss.qualcomm.com, robh@kernel.org, 
+ Wesley Cheng <wesley.cheng@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com, 
- li.liu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251215-add-displayport-support-for-qcs615-platform-v8-0-cbc72c88a44e@oss.qualcomm.com>
-References: <20251215-add-displayport-support-for-qcs615-platform-v8-0-cbc72c88a44e@oss.qualcomm.com>
-Subject: Re: [PATCH v8 00/12] Add DisplayPort support for QCS615 platform
-Message-Id: <176651190661.759340.9506342080628643827.b4-ty@kernel.org>
-Date: Tue, 23 Dec 2025 23:15:06 +0530
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20251209-linux-next-12825-v8-0-42133596bda0@oss.qualcomm.com>
+References: <20251209-linux-next-12825-v8-0-42133596bda0@oss.qualcomm.com>
+Subject: Re: [PATCH v8 0/9] Introduce Glymur USB support
+Message-Id: <176651192628.759340.3692338667900024623.b4-ty@kernel.org>
+Date: Tue, 23 Dec 2025 23:15:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,42 +61,38 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 15 Dec 2025 20:41:56 +0800, Xiangxu Yin wrote:
-> This series aims to extend the USB-C PHY to support DP mode and enable
-> DisplayPort on the Qualcomm QCS615 platform.
+On Tue, 09 Dec 2025 15:09:36 -0800, Wesley Cheng wrote:
+> **Please consider this for -next
 > 
-> The devicetree modification for DisplayPort on QCS615 will be provided
-> in a future patch.
-> 
+> This series enables the PHY level changes that are required to support
+> the type C based controllers and the multiport controller.  The typeC
+> ports utilize a usb43dp based QMP PHY for the SSUSB path, while using
+> the M31 eUSB2 PHY for the HSUSB path.  For the multiport controller,
+> it will utilize two QMP UNI PHYs for the SSUSB path, and two M31 eUSB2
+> PHYs for the HSUSB path.
 > 
 > [...]
 
 Applied, thanks!
 
-[01/12] dt-bindings: phy: Add QMP USB3+DP PHY for QCS615
-        commit: 70f12a4cc6a04869b2185be999e3849a6c17439f
-[02/12] phy: qcom: qmp-usbc: Rename USB-specific ops to prepare for DP support
-        commit: 9f5f6083b3bd74c7d25737241e32821adb294e14
-[03/12] phy: qcom: qmp-usbc: Add DP-related fields for USB/DP switchable PHY
-        commit: 0599a4b9ee13b10820fa71f058bef8cc6f06b0b6
-[04/12] phy: qcom: qmp-usbc: Add regulator init_load support
-        commit: 3b19374825676e0b548b808772f5ecbe8af4f9da
-[05/12] phy: qcom: qmp-usbc: Move reset config into PHY cfg
-        commit: 5b2dd08459ad1f61dc7037032a5230c0efd9d797
-[06/12] phy: qcom: qmp-usbc: add DP link and vco_div clocks for DP PHY
-        commit: 049e708e7705534a9992b24c5090d133c8efbca6
-[07/12] phy: qcom: qmp-usbc: Move USB-only init to usb_power_on
-        commit: cb2255822509c9dcdd1fad0cd167032dee7dc6c1
-[08/12] phy: qcom: qmp-usbc: Add TCSR parsing and PHY mode setting
-        commit: 9ab26cb7e652f3cdfb3d59fb42907c0229f2a93f
-[09/12] phy: qcom: qmp-usbc: Add DP PHY ops for USB/DP switchable Type-C PHYs
-        commit: f3198fde573be23de1a8196bc5ebb0abe9c7e02f
-[10/12] phy: qcom: qmp-usbc: Add USB/DP exclude handling
-        commit: 8e7670f7465d46bfa72980b310d39491a3a944d6
-[11/12] phy: qcom: qmp: Add DP v2 PHY register definitions
-        commit: c1282d5f85857d72cf947add3f14240fd82da261
-[12/12] phy: qcom: qmp-usbc: Add QCS615 USB/DP PHY config and DP mode support
-        commit: 81791c45c8e0eaeba9a40927eecd082a8500f709
+[1/9] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Add Glymur compatible
+      commit: 2fe80ea29f46332eaf76d8435326e68197bcc9bb
+[2/9] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB UNI PHY compatible
+      commit: 1c0b4539fc6d7cbe352cc12deef8a21d655f9804
+[3/9] dt-bindings: phy: qcom-m31-eusb2: Add Glymur compatible
+      commit: 0278bbd30f7c326740fdcbc3039ce42d7d921cf8
+[4/9] dt-bindings: phy: qcom,snps-eusb2-repeater: Add SMB2370 compatible
+      commit: 18da99126ebce8d8ebc1ee0b84fe983faa138451
+[5/9] phy: qualcomm: eusb2-repeater: Add SMB2370 eUSB2 repeater support
+      commit: 851dd2c9e91f2da1a60050265507a11aa24c767c
+[6/9] phy: qualcomm: qmp-usb: Add support for Glymur USB UNI PHY
+      commit: 7dbba9fb560f35bdf1eb44035f793e3b7f2cdcdb
+[7/9] phy: qualcomm: Update the QMP clamp register for V6
+      commit: c9543cca9417d83f8ca6a8ce0a5279a3fba7a02b
+[8/9] phy: qualcomm: qmp-combo: Update QMP PHY with Glymur settings
+      commit: 5b289913959b9bc93bab9e0beeab269c33c969b7
+[9/9] phy: qualcomm: qmp-combo: Add DP offsets and settings for Glymur platforms
+      commit: d10736db98d25c97bdffacaca69ae0a8d7ca64e3
 
 Best regards,
 -- 
