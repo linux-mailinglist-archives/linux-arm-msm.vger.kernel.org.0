@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-86350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 374EACD9702
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 14:29:27 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62146CD9734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 14:35:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4BB9E301224B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:29:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 61DF130194F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 13:35:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67F82338929;
-	Tue, 23 Dec 2025 13:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E248332ED3;
+	Tue, 23 Dec 2025 13:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Huyf8TTc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k2Abtpno"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364942F5474;
-	Tue, 23 Dec 2025 13:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9A41F3BA4;
+	Tue, 23 Dec 2025 13:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766496557; cv=none; b=NGfG9L4V48H5gNW/6SkadqiF4JhxeE9OTfCFQcYaOZqE2DL7l12oejcVYs5HEILtGRT5tzY7+CC2r5IccaYC+IvodtZmtqzM6MQRZlOIYkBqakaSvmN4Y8oXrrrtweskKo9wJplml5MdMg+tkObkNdCKdlbYXHEJg2RaVfqrwo8=
+	t=1766496924; cv=none; b=G4l7tFcWHP9Q9b+eq0iQJN9Qi990E5RkMLxR9tUwjnF6+A29u4tjhJ0SouHhFgJYRblYF0V4AC34l1JZ4O7TDZlvEbMR676JRLeZ2xT403VAGp8RxWeXt5X24kObtT4IDgDmDYr/ZlRP9u4gjdyheU/9Yq8fbi6XwKHowRTm8fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766496557; c=relaxed/simple;
-	bh=JZWAlyUrlKyOOwYtREmas/qP136s8GOhnReNHA0gubA=;
+	s=arc-20240116; t=1766496924; c=relaxed/simple;
+	bh=pEC+fqxhzWlLt/0FdTPSv6ryY8KxshU87SlXn1Sq1Ns=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j+oeqxtj/xEvig8Iq9mlI9lXS1o+Hqir05ssHit1QHdR5tqb0eGwXAfGte5qfVWYj3hd0rySblXHbSTnObuM2MAHyZ+V1O0wUGtD4YKwN9Y6K57Nd8zG/uQmD+QMRM4CRwJdoAi7GM1jsVT/iCeuViUr9Uf4dj646ccMUKd5Fas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Huyf8TTc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8BEC113D0;
-	Tue, 23 Dec 2025 13:29:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=a1fsUTVNzSD5KoAzOpeJSs/0QpmjpqVYJgyijmcnw+QLkMFa1Yd8M8DAaLb6GgirlLE5+/TJc3eZ6QRiHq7wYZFRaAnO+1WneF6BqbkwheFxC/Pw/hl6qAaiGqWNBWNVysBDyYC4TrLokCV4NCMLnkTj57Cu+h7wCgXGPDeQfX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k2Abtpno; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04566C113D0;
+	Tue, 23 Dec 2025 13:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766496556;
-	bh=JZWAlyUrlKyOOwYtREmas/qP136s8GOhnReNHA0gubA=;
+	s=k20201202; t=1766496923;
+	bh=pEC+fqxhzWlLt/0FdTPSv6ryY8KxshU87SlXn1Sq1Ns=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Huyf8TTcfgUqsI6uSudhVZqJbDsCMc1rXlWLlCbvxyOEfrbHnRZC/telWly7SAosF
-	 ce1nhDA9v7kUtU8JtyB8AOIgNQw5rwUKpPDEjBujxlzNDBze0BokbmfHlAM9OaWorr
-	 kqKOSbEFP9SnxU6V/lT1x3pTxTlR7GHjfvk/ZGJ3XSjyE3cIGOkSkgwcuZbcU7GcvB
-	 8FuYeYh7T2xa0EqkhQX4jeBeN4Q/f3MhSVZMWQjtQKBQsg0hL2J7aeqJv3/pBuE9Ji
-	 46z1L0CunYJQIVvLqTcZjInTAJlOUczn5ukhiarzR0bbqrXhSL7+84wfIhV2atL1GT
-	 uggKZ7nobREeA==
-Date: Tue, 23 Dec 2025 14:29:13 +0100
+	b=k2AbtpnoSwypkZKQX/7JQVRuw57NURAgGBtvF3rqpGhv3T9qlzng4zMDkX3fC6sdr
+	 tcs4BFpJeGohs874TrKvUzKe6MIhI9XRjwfLgv0i2yfsJOxxEkINyvJKyeC/hgVatz
+	 ZeBheQ+H9uP4ouEpV/tOI4kivaSQPbreGPjKR8BiXhv2K+hXHa04V2gx4n5IMhEW55
+	 bLRlpEB15zzOK4/5ocL7xfI+FfA2uogpcGGST1UXkYWZr9jU6ljiDySA3hsCupTc9w
+	 ofipdwVSC7+ZAVVx9T9X8/4eDRUBHHU2iPvGZQap48wVTCWWn5piqH5aRL2OLgSdTt
+	 2mIPmgBHjLHGQ==
+Date: Tue, 23 Dec 2025 14:35:20 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Subject: Re: [PATCH v3 3/5] dt-bindings: remoteproc: qcom,pas: Document pas
- for SoCCP on Kaanapali and Glymur platforms
-Message-ID: <20251223-furry-mighty-agouti-a222f7@quoll>
-References: <20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com>
- <20251223-knp-remoteproc-v3-3-5b09885c55a5@oss.qualcomm.com>
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] media: qcom: camss: Add sm6150 camss support
+Message-ID: <20251223-cheerful-beetle-from-wonderland-c5334a@quoll>
+References: <20251222-sm6150-camss-v2-0-df8469a8343a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,80 +60,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251223-knp-remoteproc-v3-3-5b09885c55a5@oss.qualcomm.com>
+In-Reply-To: <20251222-sm6150-camss-v2-0-df8469a8343a@oss.qualcomm.com>
 
-On Tue, Dec 23, 2025 at 01:13:49AM -0800, Jingyi Wang wrote:
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> index 63a82e7a8bf8..149e993282bb 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> @@ -33,16 +33,22 @@ properties:
->        - description: Handover interrupt
->        - description: Stop acknowledge interrupt
->        - description: Shutdown acknowledge interrupt
-> +      - description: Pong interrupt
-> +      - description: Wake acknowledge interrupt
->  
->    interrupt-names:
->      minItems: 5
-> +    maxItems: 7
->      items:
-> -      - const: wdog
-> -      - const: fatal
-> -      - const: ready
-> -      - const: handover
-> -      - const: stop-ack
-> -      - const: shutdown-ack
-> +      enum:
+On Mon, Dec 22, 2025 at 04:28:38PM +0800, Wenmeng Liu wrote:
+> SM6150 is a Qualcomm flagship SoC. This series adds support to
+> the CSIPHY, CSID, VFE/RDI interfaces in SM6150.
+> 
+> The SM6150 platform provides:
+>  - 2 x VFE (version 170), each with 3 RDI
+>  - 1 x VFE Lite (version 170), each with 4 RDI
+>  - 2 x CSID (version 170)
+>  - 1 x CSID Lite (version 170)
+>  - 3 x CSIPHY (version 2.0.0)
+>  - 1 x BPS (Bayer Processing Segment)
+>  - 1 x ICP (Imaging Control Processor)
+>  - 1 x IPE (Image Postprocessing Engine)
+>  - 1 x JPEG Encoder/Decoder
+>  - 1 x LRME (Low Resolution Motion Estimation)
+> 
+> Tested on Talos EVK board.
+> 
+> Tested with following commands:
+> media-ctl -d /dev/media0 --reset
+> media-ctl -d /dev/media0 -V '"imx577 9-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -d /dev/media0 -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+> media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> yavta -B capture-mplane  -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0 --capture=5
+> 
+> Changes in v2:
+> - Add more resources(BPS, ICP, IPE, JPEG, LRME) and details for CAMSS.
+> - Correct the order of the header files. - bob
+> - Add Csiphy id num, improve the resource name. - Vladimir
+> - Link to v1:
+>   https://lore.kernel.org/all/20251016-sm6150-camss-v1-0-e7f64ac32370@oss.qualcomm.com/
 
-No, no. Stop doing random changes. NAK
-
-Now you remove strict order (see writing bindings) and claim every
-device like SM8550 ADSP PAS has any order.
-
-And it is now de-synced with interrupts. Read writing bindings - this is
-clearly described there at line 90!
-
-You can only grow existing list.
-
-
-
-> +        - wdog
-> +        - fatal
-> +        - ready
-> +        - handover
-> +        - stop-ack
-> +        - shutdown-ack
-> +        - pong
-> +        - wake-ack
->  
->    power-domains:
->      minItems: 1
-> @@ -55,13 +61,21 @@ properties:
->    qcom,smem-states:
->      $ref: /schemas/types.yaml#/definitions/phandle-array
->      description: States used by the AP to signal the Hexagon core
-> +    minItems: 1
->      items:
-> -      - description: Stop the modem
-> +      - description: Stop the remoteproc
-> +      - description: Wake up the remoteproc
-> +      - description: Make the remoteproc sleep
-> +      - description: Ping the remoteproc
-
-So every device like SM8550 PAS has now four smem states... without any
-explanation. Read writing bindings - what does it say?
-
-"... and define constraints specific to the device."
-
-"DO define properties in terms of constraints. How many entries? What are
- possible values? What is the order? All these constraints represent the ABI
-  as well."
-
-It is your homework to read the docs. Not mine.
-
-If you want to change common list you must define strict constraints for
-EVERY user.
+So no changes done in response to what I asked?
 
 Best regards,
 Krzysztof
