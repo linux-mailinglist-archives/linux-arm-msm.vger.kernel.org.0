@@ -1,57 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-86331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED8C8CD9176
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 12:23:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76729CD91E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 12:32:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93FB23011A47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 11:23:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 75AD3308F8E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Dec 2025 11:28:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1C4B32E6BC;
-	Tue, 23 Dec 2025 11:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0D78331A40;
+	Tue, 23 Dec 2025 11:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQ+M0Ad2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yc8UEWTT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6F232E6AC;
-	Tue, 23 Dec 2025 11:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6606327207;
+	Tue, 23 Dec 2025 11:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766489029; cv=none; b=VkRV9z+5Ue8ERrcVu/avl04e13kYKYnmKI8n8FsKm+cLfQNydO8xb4uWYxLGkjRW8UP65opRWz1wEc90+ZuD/voX7HZlH8WqjEgGI7wDZEtK/9v/jV5p4ZlgKZrn+WYno1rFCT+B+B9oXuSlNTFdGeZLX0vRa36RFvZy1VJwp2Y=
+	t=1766489316; cv=none; b=NIcX9NZN5s+zAkIoPN7IGV8qcRC6H+Dn2W+JXdwrIQxPm/RMerXmStzlwiOqnpFtWgJkUngmjkZ9UC7Y9kbcVf2/xgfvYQZCpLL4NjPalrGfTXiTJQcBLBl2Ef1r3Nqv8thtQJxeC/cWpDDWLZhNowlnhg2sh7pCsEtwocrhFHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766489029; c=relaxed/simple;
-	bh=xOFJdug+Q6GJhP8aZlEX44rWqO/E5ErGFBPB3YTE1II=;
+	s=arc-20240116; t=1766489316; c=relaxed/simple;
+	bh=GX0JpN8LsbXoeT78MivzRUSzOyN0t/QpJ0vaPvpj6Vw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=b7pxVw5MLhUBme9UlwsI9fleV9ew8NPcWIKQcd7wOEztkPjziD3DQt7IIDywtGIC5Tt59KIFWrbAcfuzX8Z64TWEf05NYxxx9COrwx0rByGV3hvIR/EaiUiUeI5ojT4ZO8Pxpu576Ul+M+hFayyZ58ZOQp2F2gZcZ6hQomwx1DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQ+M0Ad2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E75CC113D0;
-	Tue, 23 Dec 2025 11:23:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Hm7VwunfIjyTwv3iztI5OKfPzjt+NyDZnMT0UKkabAkh8SR1wd5L/x33Fr2BSaoNFLGGnKpSU1tMBa9RJTa/RFrNjiMmD/Q+0a4Bf0EeoXjr79I70Z832JBl8BvCZupKp1junZGev7FbLHB+5/02l/OStqwJ2G05xwra2cEKZTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yc8UEWTT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4BFC113D0;
+	Tue, 23 Dec 2025 11:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766489028;
-	bh=xOFJdug+Q6GJhP8aZlEX44rWqO/E5ErGFBPB3YTE1II=;
+	s=k20201202; t=1766489316;
+	bh=GX0JpN8LsbXoeT78MivzRUSzOyN0t/QpJ0vaPvpj6Vw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=YQ+M0Ad2Wl1Ra6ojiHVvDUSX2VO8bSvZOQaPWOSBm7t2qcQgMXbEAmeyHEL82arsE
-	 f2hylnkp9Sd9NdKfZAzgqkFi9XSz6qlFZSJmVtFjorzBdvjHBlR3CalzR7QQ0OqALU
-	 LccEk7hetpzvU+q2OFGockT7sy8ob9ph4O+jI6vLWIs7iDrgHmSWCRsxgJ0Rr/gns4
-	 wVcJEfF/y2kDoeZJw1aIxE7Eefg4JW/mzpk9oHf88TB76kjK4OmmWFrhXe8ANMGlex
-	 J3Li4bQonRZ89tCkgiuv7QGQOgf+vqQc9JeYQY8/flAqeCSfdxOmDYtBIV+2ctqILy
-	 F3VcZ/fiXK/Fg==
+	b=Yc8UEWTT5CZtLjvvq3rLBtGaMqeKi5RX8RY99EwhU31zy5c9YaoxEPcLVeeEsBu55
+	 oxjT1rK0jU1J9Pu89JtHkOgpBHBwoE3J691FKauSv4Cu4Un1TW3w1sMk4OmH/kPjdC
+	 BswFL9sCIGfFm5h0inuX5s1nhZcRV/Qtvu6MvKAEZNFSFc7vp90L/lEJz5nMs3KjnF
+	 fXLKpYPCFHshhe/QNurG88gfP8gW2/Y9dauqK39tinWl27jPIryilDmcpKV5HXoUyz
+	 t2D66E/J+gKUcU8PtOuMJ14qVF4IgGNaHsbNjMd9v++QQMmanOr+PEAxMq+WV5aoPQ
+	 hVixx2qEp04eQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>, Miaoqian Lin <linmq006@gmail.com>
-Cc: stable@vger.kernel.org
-In-Reply-To: <20251029123421.91973-1-linmq006@gmail.com>
-References: <20251029123421.91973-1-linmq006@gmail.com>
-Subject: Re: [PATCH] dma: qcom: gpi: Fix memory leak in
- gpi_peripheral_config()
-Message-Id: <176648902567.689692.17832281669717772537.b4-ty@kernel.org>
-Date: Tue, 23 Dec 2025 16:53:45 +0530
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>, 
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+In-Reply-To: <20251105-knp-bus-v2-1-ed3095c7013a@oss.qualcomm.com>
+References: <20251105-knp-bus-v2-1-ed3095c7013a@oss.qualcomm.com>
+Subject: Re: [PATCH v2] dt-bindings: dma: qcom,gpi: Document GPI DMA engine
+ for Kaanapali and Glymur SoCs
+Message-Id: <176648931260.697163.17256012300799003526.b4-ty@kernel.org>
+Date: Tue, 23 Dec 2025 16:58:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,23 +66,15 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 29 Oct 2025 20:34:19 +0800, Miaoqian Lin wrote:
-> Fix a memory leak in gpi_peripheral_config() where the original memory
-> pointed to by gchan->config could be lost if krealloc() fails.
+On Wed, 05 Nov 2025 19:00:42 -0800, Jingyi Wang wrote:
+> Document the GPI DMA engine on the Kaanapali and Glymur platforms.
 > 
-> The issue occurs when:
-> 1. gchan->config points to previously allocated memory
-> 2. krealloc() fails and returns NULL
-> 3. The function directly assigns NULL to gchan->config, losing the
->    reference to the original memory
-> 4. The original memory becomes unreachable and cannot be freed
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] dma: qcom: gpi: Fix memory leak in gpi_peripheral_config()
-      commit: 2387beefdb3284298e98369bb886584e3abae4ed
+[1/1] dt-bindings: dma: qcom,gpi: Document GPI DMA engine for Kaanapali and Glymur SoCs
+      commit: b729eed5b74eeda36d51d6499f1a06ecc974f31a
 
 Best regards,
 -- 
