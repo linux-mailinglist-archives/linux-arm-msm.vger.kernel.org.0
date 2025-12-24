@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-86502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35239CDBB1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 09:42:36 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E147BCDBB23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 09:43:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 86C57302BA94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 08:42:11 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DA381300AFCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 08:43:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2334032ED53;
-	Wed, 24 Dec 2025 08:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9784C32E72C;
+	Wed, 24 Dec 2025 08:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="seaErn9s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nthCTy+H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D961A32ED51;
-	Wed, 24 Dec 2025 08:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A9F278753;
+	Wed, 24 Dec 2025 08:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766565730; cv=none; b=ZXu2ZyKNeB8uLEH6JsDfNpGG+W5BiEYC5lS1uZmFp33RZzSCIxRKqu/OJrhKVn9aynP7NfcywT07R9J3gURD++cdIATsjSB7ZmgH/SuIulNgl1MKITJYkMUtu+pAEbj/GkMIQ+0HeWYZiV7aI05++Qfca1th0b4B+f5mZpzGzYs=
+	t=1766565836; cv=none; b=fITb/mQnwH4AYmnYHD2FnTJH45wwkTB6yfy+alUyAvDfQPqppymtnVbY76gHNPDKtMkG7rapYr2KRmpvq+ZBsLYwCBHwdqw2mfwrFKbmpzoJh5/e1Ftts0IiO7B+Rsk/sFq4k9jdZLy1yuLeratu+yE7VSrnMUvKixhv6+rR5FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766565730; c=relaxed/simple;
-	bh=Sa49CzxpqeU+iuXr/V1DNckSHiPliZ95/1e/RHAhXlg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NMgw5hafCAXvIblligYlDH1G9AXBrACxJNCW6NvMzlyRyzQZdpJPIGgpJCrjY0N5NUoocoBibvKYCD7908CG9Q4CTeblryiF+8DXomhwFQwKB99cVEqyGHbsiNb3dxm9skYdd7sQG2NEIuQu3je+9d9DcVQA+I7l+v4tDTdsUUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=seaErn9s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF98C116B1;
-	Wed, 24 Dec 2025 08:42:05 +0000 (UTC)
+	s=arc-20240116; t=1766565836; c=relaxed/simple;
+	bh=NLqO3+RTBmQp8Usa5qfQwF919Z3LUMDftSlFWyZyFFI=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=UyDSZ2EJuG4rNstCU+B44ZSuKfHRUt0O9GhrHrJ1pzLRThBjCKX9sCt3o5U5kTW9ecHt8x+Tf9+0EINgjRjYlTg1XMsADxn1d0DBG6lDgXTlNEzXYnhGU5cGmlibMd/XgM+1DB9lzCWwueX2BZQn/Ooe+8b2Mj6ioydyprWOsnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nthCTy+H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F085C4CEFB;
+	Wed, 24 Dec 2025 08:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766565729;
-	bh=Sa49CzxpqeU+iuXr/V1DNckSHiPliZ95/1e/RHAhXlg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=seaErn9sohaOS/qsLBsaG5bp9JoGp1mbkIedvUwLtCUsNgAz8fSlUMsCTCzgBihdd
-	 MRuYpwnfCWJ3HlbDf1A3HPjhw1y//6rn7IIlsLadIXKEhkAPmDaZcZ3znH865msUoj
-	 9NzebkYRaLD0hrghvKTxXPasMBxbrSoYU55t5SF2WrcBK08SAavC21tTw10/W4gv/w
-	 QMtS+Iqn2+TUjJynz8gz9x0zx1XRwJF4itxRbfnMygdm52OgWvyxGYmFs+a4dY/XNK
-	 5OmlpLaOUAgLKZtnB0tKeR8fnpqVffOX3fARCLQvHlTR9YJ8DEirrNbBFdOjfo3AN9
-	 2ouGrE5u+zTWg==
-Message-ID: <f11d339f-5400-42d0-bdd1-5723083285bf@kernel.org>
-Date: Wed, 24 Dec 2025 09:42:03 +0100
+	s=k20201202; t=1766565835;
+	bh=NLqO3+RTBmQp8Usa5qfQwF919Z3LUMDftSlFWyZyFFI=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=nthCTy+HiATubzeyvwbfnO7FSJF6++BgfaXcaKbBG/PZYq1eDK2+oWq6OgR0hzsrx
+	 /ySjJg8XEgh0anwlUCVhPuAELDkuxoM8pXYGEhp6RdaC5EjR5Y9fBSxdz+8cMNO+Ux
+	 7wbceCWm6UySB86IAMZxmE+UBAuSbYqjk3MvrgbJTa7tUaDBI3zSXkH1mTMSQVCcsx
+	 ZVL28rG0X+NRQ8/4uR5/F67NMnNE1zPxlRmmawMEctI2/ESmLlxToRETPSX6MjCmrD
+	 WpT9KP8Vvsozma6FsALl2rVmD8XqEZ2U26BWyChuSnsC8QvqWVvTzLwZUsloitEZo/
+	 tW+TTGHWLE++A==
+Message-ID: <6141feba-adb7-4e9e-8821-00528155639b@kernel.org>
+Date: Wed, 24 Dec 2025 09:43:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,6 +49,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3] arm64: dts: qcom: monaco: add QCrypto node
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -57,7 +58,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 References: <20251224-enable-qualcomm-crypto-engine-for-monaco-v3-1-6073430bbc13@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <f11d339f-5400-42d0-bdd1-5723083285bf@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -102,23 +103,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251224-enable-qualcomm-crypto-engine-for-monaco-v3-1-6073430bbc13@oss.qualcomm.com>
+In-Reply-To: <f11d339f-5400-42d0-bdd1-5723083285bf@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/12/2025 09:33, Abhinaba Rakshit wrote:
-> Add Qualcomm Crypto Engine device node for Monaco platform.
+On 24/12/2025 09:42, Krzysztof Kozlowski wrote:
+> On 24/12/2025 09:33, Abhinaba Rakshit wrote:
+>> Add Qualcomm Crypto Engine device node for Monaco platform.
+>>
+>> QCE and Crypto DMA nodes patch was applied as part of
+>> commit a86d84409947 ("arm64: dts: qcom: qcs8300: add QCrypto nodes"),
+>> however was partially reverted by commit cdc117c40537 ("arm64: dts: qcom:
+>> qcs8300: Partially revert "arm64: dts: qcom: qcs8300: add QCrypto nodes"")
+>> due to compatible string being mismatched against schema.
 > 
-> QCE and Crypto DMA nodes patch was applied as part of
-> commit a86d84409947 ("arm64: dts: qcom: qcs8300: add QCrypto nodes"),
-> however was partially reverted by commit cdc117c40537 ("arm64: dts: qcom:
-> qcs8300: Partially revert "arm64: dts: qcom: qcs8300: add QCrypto nodes"")
-> due to compatible string being mismatched against schema.
+> ...due to Qualcomm engineer not ever bothering to build test the code.
+> 
+> Was it build tested now? Typically this is implied by trusting people,
+> but not here. Trust is lost.
 
-...due to Qualcomm engineer not ever bothering to build test the code.
-
-Was it build tested now? Typically this is implied by trusting people,
-but not here. Trust is lost.
+And to be clear - I found more QCrypto DTS patches which were never
+build tested and never tested on the hardware. This was not a single
+case, but a pattern.
 
 Best regards,
 Krzysztof
