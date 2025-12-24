@@ -1,169 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-86593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CBEDCDCC6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 16:56:03 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6257BCDCD1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 17:14:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 509A9300B920
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 15:56:02 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D46223018A0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 16:14:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CE472FFDDC;
-	Wed, 24 Dec 2025 15:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D426F328B45;
+	Wed, 24 Dec 2025 16:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="os+ZvryB";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZYLMcSE6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bHoZ5wnf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CDB2E0413
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 15:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35BF328248;
+	Wed, 24 Dec 2025 16:14:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766591761; cv=none; b=p+VLad5uN4xLSTcC2noFcKKW9TLn1nsrbOPA89IhWT1kjovdQZ/Y93r4TOlbTRjVdxJ63JJeSKuqux4AjqSD2qJnkh5iIw08F3CqKDysG9//wX784YP91QcsqL95f9S8G+AQTxhRlNZj7HongEWYtYKdp1jMCWRqbMWt0Y/Plac=
+	t=1766592886; cv=none; b=eXTp26XIKY4Lk7QfEXXPQGFQu2D08TOANgg6ORUlh7w0w4D3dxyRWTEq+DuNbGpvbc9oUh1n5UFRl4/G4jXNu5zS4Tt/hltj2fk9iPGpQqiVJ2hUUguuizHx0lTInzrXfamcin8CU48f4DniFPMLhhf9VRZKayO/mp7foGZMdlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766591761; c=relaxed/simple;
-	bh=Ap2bTaQx1BIdpb75t15pFDLFfmi2q0i0AxH5RyLceYI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LOxoiVwsPfSD3xZ7nSwyt8BWLjZ+M1dVYjmVeQ20PlVCn9JmTl7UJ3dRQGNdwq6t1lhrwIHkkov/nCPG2lYK1yVItpnWrwazlxazyH4HcNtUoyYNFQjnAreypaVC8q3F+//WuG0kY81sCgL0YV7qf2CNrdDTw9zRiLQ37Emxz5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=os+ZvryB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZYLMcSE6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BOFFtSj1018073
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 15:55:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iWGedSx1FzSKcUjH2oELnqaBpb+rd2rMQldge1V+adI=; b=os+ZvryBbLSlKgIH
-	UG0FOlTmbaja3DtCZCR7C5tqhw5vrpyPiYoHh0rK2EApAtjObYgCfMugLMUQY7jK
-	gNLsoFDJMdyXKHhGFNdfekdDsqagZLb5szh3mAXOulQn5IjXTMa/6RpLsFwa2nVS
-	7323psaow2kKPSt2Dho5VS2j4P1tbGlPf08wA0DDrTCN8d427qd096hj7E5CaF+g
-	9Ojx4+b4yg8IMlBL2VZWEK9oSD2k7Y57RgUBff/VZr/qNP+aFKjtjllN51oEWdob
-	+TbhQr54c+SI1a3/rFxHk/Qwu7xSZKaHxG5WiSJlt2u5qqy0YIMbB9wHuQDTixWS
-	HmunVA==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com [209.85.217.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7xjsb9w2-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 15:55:58 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id ada2fe7eead31-5dfc092492eso3492925137.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 07:55:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766591758; x=1767196558; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iWGedSx1FzSKcUjH2oELnqaBpb+rd2rMQldge1V+adI=;
-        b=ZYLMcSE6inmyZHMy4B2+GvaMMU9Psnj/xpqbyzwp11oAbN3u+ixeEIqsCjZk2YGcwI
-         jHVRsAeV4s/ogZnNo7m0RQFBmlF6hR8LJMAwub+wTDSRoXi48PvJ7W6D4hSlmzeYL5Lw
-         /Hb2jqjxdwBnwvLfie/NfHbagHRtGiKFmn6J7K2i361CWJzsHELL3FtBV1VHz+esWriv
-         Rh3qFHZn71BEebGF4ZcrjG13aiJIKYOaO0yAzFJiBK8kKZTlumxupWF4SdHx/7hpCcyq
-         LiWNlkiWiYyASfYBjHnTGiXlaNcyhc1qm95r0/FL2hWOaD7yp6ryt5vI3bLP+b0xkAN1
-         H0pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766591758; x=1767196558;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=iWGedSx1FzSKcUjH2oELnqaBpb+rd2rMQldge1V+adI=;
-        b=mnr2pd6IZh0KuRlXkOyyOeLMrd4QEv9XHmxW7zoNqdBW88EmhWtsuC7B/5uFc36NAt
-         jAl8iie8Ja/6INt/SUHlboTXUnObY+i3O907aFUDusYDMDWQwWxIrtpvaOz8UdEECz9M
-         jrps+kVUdxt+W0PdFFW1QvduHMV29JpYSQTBtTuJsm9zXlVBBIv1qkiMHBdKJDvVU4A7
-         o5xZSn79Zy6ekA6PigvjUu7dmKGA3rGlyg1iht0p9NuCiyIbQP+jBMA8Ndf64O34rZm4
-         wnV0PYJEW3BGWGfzgDtBvPfIr/zV6RHDWdhCwI4J2MeGbJJ+hXxmgVHhFmmu6ICRvQKk
-         1Snw==
-X-Forwarded-Encrypted: i=1; AJvYcCW8J53oarliyBf0oIKJMZ3hqdyciNjUTFkDBAM9NSUaMgzBXSTJ2eUuVDSddbEK7T4b5RzTqxTpvnSF+rg5@vger.kernel.org
-X-Gm-Message-State: AOJu0YzS6xtvW5VLgcXE65coMSESoR0ZWsrtZ3+jPoa8yd84JamiR+B0
-	JO9Gy14wPMEmsGEci6h5pqoEvGGqCP2UD0E3Hq3COXR+0U7PXMSgMlqnuvUz0sTNR3uskexSxuQ
-	67523fMUwkpnBBsm86I9d6sLsJm0OTpnE0FjXH72DJFgxpXK8d1NFDQ2S6LYYE3GgO5d6AkyWit
-	/i
-X-Gm-Gg: AY/fxX7fqYFOuiQW7sD++bPPKK7w5nDgbq1hJXB4RfuY7H5qKku7bxTiy64Yab4bv3n
-	WcOKOXtYzSWdMwaiEyk2OC2TVy8i7SmF2XaEoF+ay1KiwgsOK0clFw+pyUWJOZPIswUBhSWsCbb
-	33Cghy9u7BC4IXOEhiI8CgzlljM7CJpMXZ1FK/xWU5tI6PFwJwHhpuE9z7MGJc59DlEDQ7jzvAP
-	X8DqhO40ATUSaochn25bP5gVoX/Q0AI8xlS9GFVlDvRqB+ewGUt2RagN4FAFmPRFjqPUQa9QajE
-	yTvj0mz6sDnw0FDuDd36DBatreBWhnz2Of7R8uhsInIRzZa48hIU7ukNd88NAPxVMivpN2jk8/s
-	nYod4939r764M9idD92x5NJyM9XNyNwhoI7WnHVUn2fPf3nZsAwMc7JuhGHCviUd6S55nNMYBjI
-	yWj+ZKswAvgd1MDDxNpPmCkzU=
-X-Received: by 2002:a05:6102:5124:b0:5dd:b100:47df with SMTP id ada2fe7eead31-5eb1a61e6demr4946923137.4.1766591757750;
-        Wed, 24 Dec 2025 07:55:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEERFla3B6dDcluPaHksW0ojIo6+QZYY+sSk/hQdyYhKIIJtQbahJAM6fM9o+u9/xtIUoAfrw==
-X-Received: by 2002:a05:6102:5124:b0:5dd:b100:47df with SMTP id ada2fe7eead31-5eb1a61e6demr4946909137.4.1766591757260;
-        Wed, 24 Dec 2025 07:55:57 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3812262b360sm45158661fa.28.2025.12.24.07.55.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Dec 2025 07:55:56 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dmitry Baryshkov <lumag@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, veygax <veyga@veygax.dev>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm: Replace unsafe snprintf usage with scnprintf
-Date: Wed, 24 Dec 2025 17:55:55 +0200
-Message-ID: <176659174997.4059120.16151098492056445076.b4-ty@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251224124254.17920-3-veyga@veygax.dev>
-References: <20251224124254.17920-3-veyga@veygax.dev>
+	s=arc-20240116; t=1766592886; c=relaxed/simple;
+	bh=puWmGZxXE8UpiT7pGZBgzqUpkzDtlP+dMU+x0yn5VaI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o8I9e0Kl5KllJS7Ug0kpb25rGEvlUP0H8fhxbOpGXTqih9+iz3h00d+pLfZxClCJReTRdpEvm42nC2NeWn0KalCMozuXz2d+t3JRYOESNTe2X58LIEcKYmRHYi36loTffE2u4yd2mESr07Lvq1Yqwv5JE+QxKJCLTRnNeEU7Xro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bHoZ5wnf; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1766592882; x=1798128882;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=puWmGZxXE8UpiT7pGZBgzqUpkzDtlP+dMU+x0yn5VaI=;
+  b=bHoZ5wnfmQL35Z0iP1f2ogQ0sURGKPocalIFLQnIknVmz6ZGu4PQjF9Y
+   1fQWfrKJXcQuy4w+atrsuloalUwc30zwoNxlN/a47/K1prk1wIEBnSDui
+   52h4jQkTBg0u1hp53hWNxbspyh2BysS+oBq4J1LvJ9QhlegHCsmEccGz1
+   aXoBRcLqb0ZtQZHD/SDpvGEyEvbkEpPrfr7K7vsvxNhAUGQsBxz4Qk2Me
+   0pZEPvioCBKYVjImO6TKgK+smOhja4wUltpOljIHLXNVoaQ+UWAePsNXM
+   5Y1n9ney/M+yQHaIYK4ve1aXT+xDxcT2BtvN+p75zv0vgrVlvm5tLlDCX
+   g==;
+X-CSE-ConnectionGUID: PlVl4KhMTyu6hbSY4O29KA==
+X-CSE-MsgGUID: VwINpBxURYelfsfXffvQMQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="93898559"
+X-IronPort-AV: E=Sophos;i="6.21,174,1763452800"; 
+   d="scan'208";a="93898559"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Dec 2025 08:14:38 -0800
+X-CSE-ConnectionGUID: IbXEZ3XjTeGoaTrUH18k5g==
+X-CSE-MsgGUID: BE8WK5MDSv2mgzXQclGqjA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,174,1763452800"; 
+   d="scan'208";a="199282595"
+Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
+  by orviesa010.jf.intel.com with ESMTP; 24 Dec 2025 08:14:33 -0800
+Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vYRVN-000000003FJ-2PxI;
+	Wed, 24 Dec 2025 16:14:29 +0000
+Date: Thu, 25 Dec 2025 00:13:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Simona Vetter <simona@ffwll.ch>,
+	Casey Connolly <casey.connolly@linaro.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	~postmarketos/upstreaming@lists.sr.ht,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	Jami Kettunen <jami.kettunen@somainline.org>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v2 05/11] drm/panel: Add panel driver for Samsung SOFEF01
+ DDIC
+Message-ID: <202512242356.EwESE8Qv-lkp@intel.com>
+References: <20251222-drm-panels-sony-v2-5-82a87465d163@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDE0MCBTYWx0ZWRfX6QOGx9w7qsPO
- bMCCBZU26svgRIKZg7d8p/JpRkrRvAuff68zqAQhTQXJyhvTBsNy8MAeDEu/HlEhweBvKBEWX8c
- /f67kjspJr1oCR8lmAkzswbbcZi6byHlZoHTmJuUEtewv/Jnyr3TQXoH184/3wMNjDvN73MKvfF
- 5t4e7xQE3T97w20+R3CiiBK+fX5EeiXmNGjWneqiyc5lADLwn0OEiI5CtLssTi25ys2tvmC3jXq
- 1tJNLJhA1XMigXxfoDMEZYSfu1eEodp8RN5tLSs4q/+NWwF+JbzMlP0a8V5+79sc6gDglqDK5TJ
- PCjCNZcthiwE7mnfSjuGQ9mO47Kpma5gtgvJCeLBymjIpm7KPyCP/tKst5z0118b0oZ1dIz0Elm
- +xJZzdK6TIrujzbJWTB1No+S6ObpSAgLgIGxt0kq3ZEfT+2I0KO97IjxmYjrsydZlMZmaBsbESM
- ZUvBeA5xHtrfKKn2TIw==
-X-Proofpoint-ORIG-GUID: myzQsy8peFL68-AwMYzjM2_AzlE2Fv9L
-X-Authority-Analysis: v=2.4 cv=YcqwJgRf c=1 sm=1 tr=0 ts=694c0d0e cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=e5mUnYsNAAAA:8 a=Sr6y7Swg9AFsQnQ4lA8A:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
- a=gYDTvv6II1OnSo0itH1n:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-GUID: myzQsy8peFL68-AwMYzjM2_AzlE2Fv9L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-24_04,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512240140
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251222-drm-panels-sony-v2-5-82a87465d163@somainline.org>
 
-On Wed, 24 Dec 2025 12:44:22 +0000, veygax wrote:
-> The refill_buf function uses snprintf to append to a fixed-size buffer.
-> snprintf returns the length that would have been written, which can
-> exceed the remaining buffer size. If this happens, ptr advances beyond
-> the buffer and rem becomes negative. In the 2nd iteration, rem is
-> treated as a large unsigned integer, causing snprintf to write oob.
-> 
-> While this behavior is technically mitigated by num_perfcntrs being
-> locked at 5, it's still unsafe if num_perfcntrs were ever to change/a
-> second source was added.
-> 
-> [...]
+Hi Marijn,
 
-Applied to msm-fixes, thanks!
+kernel test robot noticed the following build warnings:
 
-[1/1] drm/msm: Replace unsafe snprintf usage with scnprintf
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/66691e272e40
+[auto build test WARNING on cc3aa43b44bdb43dfbac0fcb51c56594a11338a8]
 
-Best regards,
+url:    https://github.com/intel-lab-lkp/linux/commits/Marijn-Suijten/drm-panel-Clean-up-SOFEF00-config-dependencies/20251222-073548
+base:   cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+patch link:    https://lore.kernel.org/r/20251222-drm-panels-sony-v2-5-82a87465d163%40somainline.org
+patch subject: [PATCH v2 05/11] drm/panel: Add panel driver for Samsung SOFEF01 DDIC
+config: riscv-allyesconfig (https://download.01.org/0day-ci/archive/20251224/202512242356.EwESE8Qv-lkp@intel.com/config)
+compiler: clang version 16.0.6 (https://github.com/llvm/llvm-project 7cbf1a2591520c2491aa35339f227775f4d3adf6)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251224/202512242356.EwESE8Qv-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202512242356.EwESE8Qv-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/panel/panel-samsung-sofef01.c:389:20: warning: cast to smaller integer type 'enum panel_type' from 'const void *' [-Wvoid-pointer-to-enum-cast]
+           ctx->panel_type = (enum panel_type)of_device_get_match_data(dev);
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1 warning generated.
+
+
+vim +389 drivers/gpu/drm/panel/panel-samsung-sofef01.c
+
+   357	
+   358	static int samsung_sofef01_m_probe(struct mipi_dsi_device *dsi)
+   359	{
+   360		const struct backlight_properties props = {
+   361			.type = BACKLIGHT_RAW,
+   362			.brightness = 100,
+   363			.max_brightness = 1023,
+   364		};
+   365		struct device *dev = &dsi->dev;
+   366		struct samsung_sofef01_m *ctx;
+   367		int ret;
+   368	
+   369		ctx = devm_drm_panel_alloc(dev, struct samsung_sofef01_m, panel,
+   370					   &samsung_sofef01_m_panel_funcs,
+   371					   DRM_MODE_CONNECTOR_DSI);
+   372		if (IS_ERR(ctx))
+   373			return PTR_ERR(ctx);
+   374	
+   375		ret = devm_regulator_bulk_get_const(
+   376			dev,
+   377			ARRAY_SIZE(samsung_sofef01_m_supplies),
+   378			samsung_sofef01_m_supplies,
+   379			&ctx->supplies);
+   380		if (ret < 0)
+   381			return dev_err_probe(dev, ret, "Failed to get regulators\n");
+   382	
+   383		ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+   384		if (IS_ERR(ctx->reset_gpio))
+   385			return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
+   386					     "Failed to get reset-gpios\n");
+   387	
+   388		ctx->dsi = dsi;
+ > 389		ctx->panel_type = (enum panel_type)of_device_get_match_data(dev);
+   390		if (ctx->panel_type == PANEL_TYPE_TC01)
+   391			ctx->mode = &samsung_sofef01_m_61_142_mode;
+   392		else if (ctx->panel_type == PANEL_TYPE_DK01)
+   393			ctx->mode = &samsung_sofef01_m_61_141_mode;
+   394		else
+   395			ctx->mode = &samsung_sofef01_m_60_139_mode;
+   396		mipi_dsi_set_drvdata(dsi, ctx);
+   397	
+   398		dsi->lanes = 4;
+   399		dsi->format = MIPI_DSI_FMT_RGB888;
+   400		dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS;
+   401	
+   402		ctx->panel.prepare_prev_first = true;
+   403	
+   404		ctx->panel.backlight = devm_backlight_device_register(
+   405			dev, dev_name(dev), dev, dsi,
+   406			&samsung_sofef01_m_bl_ops,
+   407			&props);
+   408		if (IS_ERR(ctx->panel.backlight))
+   409			return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
+   410					     "Failed to create backlight\n");
+   411	
+   412		drm_panel_add(&ctx->panel);
+   413	
+   414		ret = mipi_dsi_attach(dsi);
+   415		if (ret < 0) {
+   416			dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
+   417			drm_panel_remove(&ctx->panel);
+   418			return ret;
+   419		}
+   420	
+   421		return 0;
+   422	}
+   423	
+
 -- 
-With best wishes
-Dmitry
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
