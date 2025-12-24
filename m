@@ -1,241 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-86582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 042B8CDC5C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 14:32:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6BCECDC85C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 15:30:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A2F7E3010CE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 13:32:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 593C93026B3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 14:30:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CEBC336EEE;
-	Wed, 24 Dec 2025 13:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C266349AF2;
+	Wed, 24 Dec 2025 14:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dBX+zNDA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OlIRFM1T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazolkn19012052.outbound.protection.outlook.com [52.103.66.52])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39EC2DF6E3;
-	Wed, 24 Dec 2025 13:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.66.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766583043; cv=fail; b=MsCwhiZuhqZzlMKN6sy3ieCADqLxWg80TXJUDfYwmLBdIaY+oaTDtyh/zpQHTIXd8iovQRPRlyuuM4cmlAeiTHGbuOaj+rXufmM8fflucPUFlmvcV8qY+Maw7wwi0JnslyQ6nf3LSZCl0NWuvczz42sgqV7Mk4whHIi5Dl29kgU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766583043; c=relaxed/simple;
-	bh=wBSOSJzDuIX2aK7b6Ye+4eEsfhP9Ix2zyALJLNhLF9w=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=PBm/zWE41g25nWJUTsMMZjQQdaev1T+M3fLD2IuPDhZzVRuqBzug1CL2FSd3IJ9XtRMLaAQTCMhQXYeIvy3WSHYBWfqlzmusLKJ3yd29UFk+0jPJHZlo6ipwaxOUEKxRUvYZ5ca8fkLtEnc48ofCU1ueqpNQJaZu8KhKDZbNCzc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in; spf=pass smtp.mailfrom=sobir.in; arc=fail smtp.client-ip=52.103.66.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sobir.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sobir.in
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BCqr9u6xeTm7AFEqjCp/qjX6bNcc68GovBel2kSGhn/XyZFq0y3YjRn8WEyDrEJ7zxP6kwUY9x1k4tZZottkt0bdhSgJ3o++GchYPsYfUeUfj0zDQLffN1UVfVqty0JW2E5APFytxwUUrKQAxhvAHDplJWreWHTfDvVvSl8MnwrThlyDPbQJ5oyE3iiIImpLmQmVAn/edcwbGu6TX02sgTHRgbH+VlUxNq7uOLwnPM6EoIuZVxWfdbOleaOn4jGbmbJ8mjYDBSKSgtile4ncDpAxQsZFSJan/LywaA2I9vHhqVqh89qW34Has94fYY1Kv42VHYDcQ/y090AxDSzZQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wBSOSJzDuIX2aK7b6Ye+4eEsfhP9Ix2zyALJLNhLF9w=;
- b=IqtRjnbgbT8pTZlwuin4ejfzAlj+wUKRqARhfVz+A3/0NUMT+qMI4fzZl7dDFSsZbBXiMuYPgJZsLo36ICAvhek20MNEApFQrKv1VZTkjQZefebhyYZLRX8+dzzoWGH7aYOdBgYiM7y6HjrQMonSG38rzv0rk7oNgruoT8z6KcDShvtsaj6tr81pXo17wmfa+gmaGNkcz7qYMq0Bw+IR7bHQgEuNrOMErIYsHFwc23UTpVdEz+2UJ0ZtMy7EgmLxcX2XwKFKMPXaPTiiSvReYPkks8aiel3/r07gSoiKRETCIHeGOIApnQdnMg9LGDnC3Z8Js2MGOu+v9fKt7qKMZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from TYUPR06MB6099.apcprd06.prod.outlook.com (2603:1096:400:356::8)
- by TYSPR06MB6339.apcprd06.prod.outlook.com (2603:1096:400:412::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.11; Wed, 24 Dec
- 2025 13:30:35 +0000
-Received: from TYUPR06MB6099.apcprd06.prod.outlook.com
- ([fe80::2223:6c27:d5c2:aa47]) by TYUPR06MB6099.apcprd06.prod.outlook.com
- ([fe80::2223:6c27:d5c2:aa47%5]) with mapi id 15.20.9456.008; Wed, 24 Dec 2025
- 13:30:35 +0000
-From: Teguh Sobirin <teguh@sobir.in>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark
-	<robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav
- Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean
- Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Simona Vetter
-	<simona@ffwll.ch>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "dri-devel@lists.freedesktop.org"
-	<dri-devel@lists.freedesktop.org>, "freedreno@lists.freedesktop.org"
-	<freedreno@lists.freedesktop.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] drm/msm/dpu: Set vsync source irrespective of mdp top
- support
-Thread-Topic: [PATCH v2] drm/msm/dpu: Set vsync source irrespective of mdp top
- support
-Thread-Index: AQHcWqyUhQtHBGjxzUaPcThPu4EOI7Uwxb2AgAAwQYCAAAegfg==
-Date: Wed, 24 Dec 2025 13:30:35 +0000
-Message-ID:
- <TYUPR06MB60994CC9F0097F95C6E51B2EDDB2A@TYUPR06MB6099.apcprd06.prod.outlook.com>
-References:
- <TYUPR06MB6099C539BD2C937F8630FF8EDDD5A@TYUPR06MB6099.apcprd06.prod.outlook.com>
- <aUu5vZdr9RJ-VML8@SoMainline.org>
- <un2arvxos2kuyrqej4p4fs3jfd3kzpa4r5txoitoctfwl7hair@i2a5lu3p3iem>
-In-Reply-To: <un2arvxos2kuyrqej4p4fs3jfd3kzpa4r5txoitoctfwl7hair@i2a5lu3p3iem>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYUPR06MB6099:EE_|TYSPR06MB6339:EE_
-x-ms-office365-filtering-correlation-id: 89ceb22b-6bcf-4c5e-cd3f-08de42f09e7c
-x-microsoft-antispam:
- BCL:0;ARA:14566002|31061999003|461199028|6072599003|8060799015|8062599012|19110799012|51005399006|15080799012|14091999006|12121999013|41001999006|4302099013|3412199025|440099028|10035399007|40105399003|102099032|1602099012;
-x-microsoft-antispam-message-info:
- =?utf-8?B?Ry9WQjBKeGRxVitnbGcxa3pXUG55aHhHQ1RxTmE2VEZBUU1YekN0cjMwa1NT?=
- =?utf-8?B?bFZHUWtEd0FzYXI4UHM4WXZEejVmVTA3UldTdFp1UHJmV3lXODREeFRaRVlG?=
- =?utf-8?B?Zi9PbWNXcEMxZ2JIcVRFd2dDZGdMYnl3YmNkRkNNeEFQeTR5UmRvcUNaTDAx?=
- =?utf-8?B?azNmb1hSMUhjbnA3eFBJSzJ4M3NPU2tBVllpS2U5WDlRRnBUUWxXU0JRcTRK?=
- =?utf-8?B?ZTFERFJTNjN1RkNyOHo1NkNJL3BiNklQSmxWKzNDRytnbXkxbE9LSndjdVZY?=
- =?utf-8?B?YnFCUklNVVAyamtQaGk3aS94Nk9BbFQwWHFiaCtMeFliWFZNWXZWbVgvbHJF?=
- =?utf-8?B?OVNRRVJDUml6UUU1SVY2OWowYTVRQ2JySlFjUHBCWWhUSDhScXpFVlZuYXhE?=
- =?utf-8?B?U1RiVzl3T0htWUtZZ3h0UXZlZXN6YkR1SjBmenNld3hSeW5BNUNjOWtENVI5?=
- =?utf-8?B?eHNNb2xqSENCZTJTaEUxWTkrZHFjK1QzRE15V1l5VUZoajRLSURPbU94SUJ2?=
- =?utf-8?B?Z3RWS1BmcTlOeThFVnBmMUpMeTFRWUdsSlluR1JGTmVRdzZmZXVJRFNVWGNw?=
- =?utf-8?B?Mm9qQnBpOEMxUzlCV1RxcWVWLzRCVFBjb1NrUHJBbFo1NzZlRHFDajJOM01p?=
- =?utf-8?B?MERuNDhXTUdQSWJjdWJpbGppTHc4YWR1R3Evb0ZaWEFNd29Kc0p0OTJONWpP?=
- =?utf-8?B?bzV0eVZXQTcxdHhpUHZQUkpLTlMvVEF1Z0Q4NlNqeHY3M09BWUw5ek1lZFRQ?=
- =?utf-8?B?RUREYjc0RnNQUlVvbHFFdWI0MHJtUzM1YVluWlByRVN2SGZhYTRKSng0bXhj?=
- =?utf-8?B?L0RPRHg2NFBzeUROUHkvZ0pERVNZamRSSzNnN0NwSVplMU1NMVZWbCtIR0Fl?=
- =?utf-8?B?cGMvK1Y1UW9wN0ZiTitpZ2syUzhIbkRxTnkvek9MT2x3bGJvdTd3d2tUcnlq?=
- =?utf-8?B?Vlo5R1J2eDl3dzArdE5pdzVEdW5mektSajlyTmF1RUlOcHhpK25KRmJidUpC?=
- =?utf-8?B?VVQyLy95dFFmVkNja1o3aEkzeEJRS3dxOXF4SldWMDQrRGdWTnBZM0VnTlo0?=
- =?utf-8?B?ZnJLeUtOei85eTZKOWhESFN4ZW5UdDVlWmlGNGlwRHNvQjhEclBKTmlmWTNG?=
- =?utf-8?B?eGJwNFY1bzZybzdBbjNRSCtTbW4zUlN2L1FxV0VCdTBKZE55RUtIa0s0U1ZR?=
- =?utf-8?B?ZlFlbVVvV3g4Ykl5K2RwVk1kbjIwVDgybVpTVEIvWTdueTJEM1psY2p0dzU2?=
- =?utf-8?B?ajNXNHd2NyszV25tM0c1eDY4SHJOYnZPUkZjT3JnTlhkMTZkTzA5OVhOY1Nn?=
- =?utf-8?B?T0IxYmE4bms1T2VXYXNadFdDVittUU1ZTUZQekdqcmc0dzRDWmRoWjFydjI0?=
- =?utf-8?B?R3JWSGZrcHZPcXNZMHVJYlN3TXM4YlVPeEtaYXk0RkJTSXM4SjU1Q0RuY21E?=
- =?utf-8?B?YTYvQ1U1aVR5amZodURzdk1MTzdOZ2JPMWpnY0Z5aXQ2Y2s0ZUZObmc4dEcz?=
- =?utf-8?B?Yzg3Y0JXMis1dGdhYUdpQ1BqUzN1Q0MzZmQ5Mnh2bXEwMGhDeHoxeHBmdi9s?=
- =?utf-8?B?QkQxZjRqT3ppQ0tJb01UT3B6eVU2WXJTVC9oaVgxU292OVU4RHpBcU1NQ21l?=
- =?utf-8?B?OVd4RzRxZjUzOUxBNlBrdGJsRGtDSlpWRGVRMVltQnBZUDVleHY2cVlTYXhF?=
- =?utf-8?B?M3B5MWZqVzl0cWNxdHhJN3FmemErMDNNcUtiYWRrMmZlUklGTTRadmpPUHd1?=
- =?utf-8?B?SkxaWmJNTWRTSkN2MkZhZWZMYUdTeXErZXdlVlNKZiszZGJYUFREbjNCbjVj?=
- =?utf-8?B?Ny9DdjlZY0p1cVJUYmJ2WE9rWlVFdWR2WGdvTlRaMnR3OGxpUEtZb20va0U3?=
- =?utf-8?B?Ny9QOTRnU0V0SFYwci9xVXc4L0ROeC9SWkRaQm9MWVVVQlVCUk82Yk9VYTgz?=
- =?utf-8?Q?IJdJHQs7VRGnWe11aBIHTpQZTCPegqo3?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?M2Y3Y0w1SUkrY25xRGpiZUwreVYvSWJ2b2dMaGZCQzdMSmhnOXRtMjFOdi85?=
- =?utf-8?B?Q3dzNFU3ZkwrQlFQcjNsVlBhM1pmS215TG9WUHVTZGVJQ2xVUHVFWURnVVkx?=
- =?utf-8?B?NWFPdmpRN1VqLytDZlpaTjl5cUd0VFJ0cXdDOTVYYzlTQmhEcVpMKzBrd2V0?=
- =?utf-8?B?dWU2MWFoN0tlNDQyQVlzNlh4N3FyT2QxbWVzSU55QXI2NTUyd1U3RlNMamJZ?=
- =?utf-8?B?R0ZTaE0zUjl5Z1F3Q05KNllxb0RZOFZhS1I1TnQzZ29hTkxrNGMvTWFMNU43?=
- =?utf-8?B?MDBBeERPd2YrWUNFQzhtSUxuNm5IZGZTdEFVYzArQ1N6d3IzZElXNUVLa0ZZ?=
- =?utf-8?B?TStOemZDUFZjUFpXWDVIYnV1Z2M0SllRUkprbVQ3bzVMQ2lTbFpGdzFNN3Rw?=
- =?utf-8?B?MlBSejVEOHVhQnQwZkpZdHdxOEhSUjBieDg3NlRxMzNkc1JPaUJOR1EvLzhE?=
- =?utf-8?B?MndGK1dIK042VFgzc3NpS1BiTUJUSkF5Vis2WjRKNTlqZFlVU3lvbXEzd3hl?=
- =?utf-8?B?YTNEMjAxa05vS1VxUUZkZytxcWxrOVc5QWNYcFZ6U3A2SEVnc0dzdENsZ1Vk?=
- =?utf-8?B?dXdocFBVNUdIT2tWNkVvWTRPcHlIUjFvZk9RVkNFQkVPM2xIeEh3NThWQTY1?=
- =?utf-8?B?bi9QWGdUL0hQTzA5bUdrOW5FY1luS2F6d2s1Z0xxWDZWZW0wektXckVjOEdz?=
- =?utf-8?B?Sjc3cEN5WGtGZDRKMGswK0dvdFJGZ0pNR0tMZU5wUnhCeGdCUE02alZhY1hr?=
- =?utf-8?B?a01SL1psQmYxczI3cmpQdGQ5cDlXd3pCOFd1T01ZdXFWTzA5bXIwcVloQ2hW?=
- =?utf-8?B?ZWZZL1JVem4vYU15a2U1bDYrTnZTbUVsdi9uL2hNZk5rWTF0dXhTMHZXRXRh?=
- =?utf-8?B?M2Rndlh5eEEvOE8yc3RzcVozNm5iN3l4blVIeG5DanNUclMwRHlHUjZ6NEdL?=
- =?utf-8?B?b0FTazZWYzhpRldOMTM0cnN6UjM4bDRVdGdjR1p0blNuTlZQU1ZUQitPZzNv?=
- =?utf-8?B?U0FJbHduS0dsQksrTXdMQlpYT2d0Mi92TTJxWUw1cVNndncvOUluWGlnY25O?=
- =?utf-8?B?VkRiMUR4ZXh1UThneVlhNWNMYUpHRWsrZDFGWHNDaldOdnRhdm5Qbk81bzRB?=
- =?utf-8?B?WlNQSFdZYlNqYUVpOG90bmk4SEIydW5IM2NmMG45Mmk4OFU1NjIxT0ViOXNN?=
- =?utf-8?B?b0M1eld4VDRjbVFGOWtoMXpzZGEyZ3ZyeU1pQmJjWFVqZ1hvQm9hVGpyYTJV?=
- =?utf-8?B?OTJ2Yi9ReFBIWkNwcWdSYTIxK21STEVVam1hc09GV3N5ZjRnVUdIU2F0dVVu?=
- =?utf-8?B?U1Y5RnMxUDRoZWZkbjZqZ3Zmdzk2a0VTcG9oSDk4SWt6TVNoMFVjdGZ3Q0Fm?=
- =?utf-8?B?ajRRdWwwUkFNYW5YbmwxSkhyeWR5MjNQaWcwUDMvNSs3Z013TWUyZ3IvYTF1?=
- =?utf-8?B?NzNISmZJdklMTFFQdEtpYUNqeFFJTW9YRVNMOTlDdlUraG1UTHkzQXBadXNK?=
- =?utf-8?B?LzIydGRSN2pvU1BWU1dRTk5oNUtyVGhOQUVXQ1lpSm9Zd1A4NEJaNERVenk4?=
- =?utf-8?B?Y3FuYSs2ckYrMG9HRnFPdlhKOFZLZlN3ZnVZVnJmYWpLSnEvdUVleDlXcTRz?=
- =?utf-8?B?RkRUNWcrbkRaVU4rcUVnU3g4OVdCRk5JdUZaV21idE5QL0NFYTBSd1RDU3dx?=
- =?utf-8?B?bUoza0poMUlNS1ZpZjBGWnU3MHBqWU1lNmMzY3hjYUNrWU5TNTQ2Q3NVcm8z?=
- =?utf-8?B?Q2dZRncrS2VVdnRVbTNrNHRPQmRka201YUsyQ1FmTG92enpZMHdjbC93NnE1?=
- =?utf-8?Q?854vcOvOPiEfYDoyyzopEWrwKHT812p2AOIQ0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA922EA171
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 14:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766586622; cv=none; b=d29XiKuG+YRx56fbgpl9csSnnPMWU7EfDx1NDmWqpXyoDd4ZYutYio/kletBxII8OPyc1WAqRjViFb2KrNZqNAqrIuXBwRGcMO1ukyLtCJewa3Y206Ar4xZhtwDfayyOkgLGQ1LSZ97o5FGptFL9gZsJxyl17qaesY0PyAhyTHE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766586622; c=relaxed/simple;
+	bh=0D9zhweoSa211IiHIoliGoiegDsF4Vt8fspdCps8d2Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YnibS/cvOc61R2nR6V3NvudMfwbIKxXwgWswojTjYf/B08nxSQqkCWJT9Xs8vx838dYmIVTKy6CGQEBeagrNLe1oCZitblD52TH4NOoZSSn/a4g4anjlU5DclLC+JGpYM7IkFRqMEF2cSAyFrWmyyCLufLaiYVzwDWQeeF0cH4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dBX+zNDA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OlIRFM1T; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO6HEwB678470
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 14:30:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=uN953iS6eEmzv0omwG3U2PvRvqgZptxlJAA
+	pEKpbMJ0=; b=dBX+zNDAcbxfl150SJjWhSVXHGgisWl4Cdu5MukMPsTOQWD/qud
+	Vt48XdJZjw9L1HD+BpZPV2cxpz5rGlZWuADq4NFdxnpUb6y7lWY7VKsigAdg3c3q
+	tWnR8WctPBk43l6BjsqdX6Mac4w3gkX36nAh95HwlV6D5kTI3WQoPSrmleXFPwK6
+	NzQk/9r4zP/MT5X/wI+KwJUxTZUUZVnTppPeWOMYVpZZ8WBWn383ILJVrOTFHDkg
+	87wFnpTwsKoWdYu23glHd+WFfNIh5x9/1fBcGS9/nWz9SJhGGIcGt6rEaI/gNQ2X
+	KvFdAand+LSHIZO2+XrxQP7WNWITc58wlIg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7yvq2ty0-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 14:30:14 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4f4a92bf359so130453641cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 06:30:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766586613; x=1767191413; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uN953iS6eEmzv0omwG3U2PvRvqgZptxlJAApEKpbMJ0=;
+        b=OlIRFM1T1NGWKtFvJgnjgBjhGAxEGRhF2mQQ82z0ilcE72NGJ4jfvzqyfgBd1FVbtL
+         VClhP6KG3O71H3UXAeTiXU2vK110wzLTawVgqWjGsw0YLsLpAdI/vxoiF5aoNknvzC00
+         /EuwHvL3yON9CrD/QhkyOZb//m5tDH+N44Im0EumR6K3SfVTsK2TGKh6R40IWdIpuXzY
+         LV7E1rPQrk9xqcCfwdzBN+zS1rCOLCL1bGqYtBKFLj9yhCsH7UNh4RuMGiW49y//Qv8g
+         zFLEW0Npn5AqM3i52WwFo6RPh4rGcgUai8LABRZydRJNXVXtBSramC+zrhT08iIM9S45
+         WgAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766586613; x=1767191413;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uN953iS6eEmzv0omwG3U2PvRvqgZptxlJAApEKpbMJ0=;
+        b=N+ctEiVIEd4ca9ybMKgkx6W4+LQoo0mmFCvj2lnPAuTTe+kK5wsp6CMJ3W6yGhdxZl
+         pV7aSOoB63OLFtiI2ip2/fuQqLCEL/HjKvxzPyk+0N8M/FwSB1BEVW7vl7+Qbx1VdQqm
+         /3UiSCW1ADqG4/xm/Yqn83YccgdeX0MD9gTLBG5loLCpaKgaubaMhdUuCD4vzBBp/hnJ
+         lPfwNae1Du2vt8Z8mrIWm+doYO9z95YqGpT8+XQRI9tugUq100tu8fRtKSepc2KW+CGr
+         m1aRofhjOi68i7wVSDj/YCV1uXmrZDPHx+LU0JVXOrO7dqxV9KUJKh8ela8z1fRZLwYi
+         fa0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVd5fl2zqidkye+eRWZbSXFA+UlWWNY4dU6s9u7k9pJPD3HNw5GUF+1wUb2Z7OfdSi7Wjqxmkc/4a3k75Jt@vger.kernel.org
+X-Gm-Message-State: AOJu0YxtPUEciW5ZCuHCZgRDg5pgQnpJqyFfVn8T91i3lGwu0H4hm7kN
+	JgqBF4DDsMtgB/72EzByxtP7ThGAOxWekkBfWo5GLXYFsPH1nCL9qNUL3nBfv85+1e/3k+oYiv5
+	ZPST6bBFDBnArBM508mfoC4Sny9Z2ySuhoBkHzufI/h3IfEJn4t7ItID/Rt0mDX5cujrf
+X-Gm-Gg: AY/fxX6wTcfKDjmLyHx/pU8P6EjhP84fdoeB2FbCfAFBDWLwLJdJUCyc77DyN7cCa+A
+	8zudSDIBeJ6oDzSR+qBXGzoex/j3bJS2pwCulveufzcAE5wBGRBXL+f5OL2k/VJ2pVFKoEv7PSw
+	MZRjJ+J7bzNvA4RTmCEo5QWEEvuL/Cmpa4kl+5u46OKaQTdk1GmrchrGEwhzkPr3g8IkOJP+bPW
+	LBcTdlW6JAk0EmzxLLR4dp0v9fpD2+qH2c4RsGAn7VUSrnLpnXK9yQtGBWXWmGJoQs1j8TN7uE3
+	kqtA7LZMK+K/7ZhbwEGBC0q2SoGuOz1uusn37M8rJWwhtJ291s9XwbNyOxVlxzAj3FUr4XlG7w6
+	GSOnWqdZDF0wveKivgkUMHPncaWneBav+mVx031E7E/9knnOoRw==
+X-Received: by 2002:a05:622a:446:b0:4e8:9ca2:b9ea with SMTP id d75a77b69052e-4f4abdb2ee3mr276576931cf.56.1766586612940;
+        Wed, 24 Dec 2025 06:30:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEw9OC5D45n0ob5GBxamYvnr4jL4bzFeiezFrGRyPuTz6012F4z+LAd6Gn3ppgHBEYT1fr/wg==
+X-Received: by 2002:a05:622a:446:b0:4e8:9ca2:b9ea with SMTP id d75a77b69052e-4f4abdb2ee3mr276576051cf.56.1766586612276;
+        Wed, 24 Dec 2025 06:30:12 -0800 (PST)
+Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b916b5777sm18033649a12.33.2025.12.24.06.30.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Dec 2025 06:30:11 -0800 (PST)
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: [PATCH v2] accel/qaic: Handle DBC deactivation if the owner went away
+Date: Wed, 24 Dec 2025 15:30:09 +0100
+Message-ID: <20251224143009.2769836-1-youssef.abdulrahman@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-7141d.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYUPR06MB6099.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89ceb22b-6bcf-4c5e-cd3f-08de42f09e7c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Dec 2025 13:30:35.1614
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6339
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: wABVif32i9SxU43SuP4VdeciZteCqqTU
+X-Authority-Analysis: v=2.4 cv=abZsXBot c=1 sm=1 tr=0 ts=694bf8f6 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=-VEhWQ6g2OJpjJ3o7oYA:9
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: wABVif32i9SxU43SuP4VdeciZteCqqTU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDEyNyBTYWx0ZWRfXzd8xcYaeZtLp
+ lDSqSW5AqBUKcmuImS8tzwF28yC39KCPTFeMOSrwoGSWIWpYAQiIr741uZlPhaNdewo0lJuBKdQ
+ 1lYyiQQtAyg2ao+z1xlNiEI678nn0QmAttYfKBOg+8BytKE9vOuwyES8k/9w89DkcXL4GqRJazV
+ +1lMbzqKfTBDZms1CNJ/uBajLvbClt+xHkdsuyhxWkpLupC2yixSE+iVgyQU/bVmuSf7px2oUnN
+ /e6yRAXroZfjM8JZDXWdBg08V6bS/3y3RTO0R6rzFicQkP1HVrSd8IizaTypv4ixnEBHVmjxxAf
+ JOrVEkreJp80LbkrI2trGyANRWRDNYgxCDBFVupiZyOPNfHAhdSa39y3K27Tpu7j35PA8NBePxM
+ Rb71oGR5BwhbklvMY2fZsGUbQ0/V4LeIsJ5CaSFO0p30VektGTVAO5L37PJ+74k1qK5Kb38kkC/
+ DvM3N1Nw+KPqZuvT5yA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-24_04,2025-12-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240127
 
-DQo+DQo+IE9uIDI0IERlYyAyMDI1LCBhdCAyMS4wMywgRG1pdHJ5IEJhcnlzaGtvdiA8ZG1pdHJ5
-LmJhcnlzaGtvdkBvc3MucXVhbGNvbW0uY29tPiB3cm90ZToNCj4NCj4g77u/T24gV2VkLCBEZWMg
-MjQsIDIwMjUgYXQgMTE6MTA6MzVBTSArMDEwMCwgTWFyaWpuIFN1aWp0ZW4gd3JvdGU6DQo+Pj4g
-T24gMjAyNS0xMS0yMSAxNDowMjowOCwgVGVndWggU29iaXJpbiB3cm90ZToNCj4+PiBTaW5jZSBE
-UFUgNS54IHRoZSB2c3luYyBzb3VyY2UgVEUgc2V0dXAgaXMgc3BsaXQgYmV0d2VlbiBNRFAgVE9Q
-IGFuZA0KPj4+IElOVEYgYmxvY2tzLiAgQ3VycmVudGx5IGFsbCBjb2RlIHRvIHNldHVwIHZzeW5j
-X3NvdXJjZSBpcyBvbmx5IGV4ZWN0dWVkDQo+Pg0KPj4gdHlwbzogZXhlY3V0ZWQuDQo+Pg0KPj4+
-IGlmIE1EUCBUT1AgaW1wbGVtZW50cyB0aGUgc2V0dXBfdnN5bmNfc291cmNlKCkgY2FsbGJhY2su
-IEhvd2V2ZXIgb24NCj4+PiBEUFUgPj0gOC54IHRoaXMgY2FsbGJhY2sgaXMgbm90IGltcGxlbWVu
-dGVkLCBtYWtpbmcgRFBVIGRyaXZlciBza2lwIGFsbA0KPj4+IHZzeW5jIHNldHVwLiBNb3ZlIHRo
-ZSBJTlRGIHBhcnQgb3V0IG9mIHRoaXMgY29uZGl0aW9uLCBsZXR0aW5nIERQVQ0KPj4+IGRyaXZl
-ciB0byBzZXR1cCBURSB2c3luYyBzZWxlY3Rpb24gb24gYWxsIG5ldyBEUFUgZGV2aWNlcy4NCj4+
-Pg0KPj4+IFNpZ25lZC1vZmYtYnk6IFRlZ3VoIFNvYmlyaW4gPHRlZ3VoQHNvYmlyLmluPg0KPj4+
-IC0tLQ0KPj4+IENoYW5nZXMgaW4gdjI6DQo+Pj4gLSBDb3JyZWN0ZWQgY29tbWl0IG1lc3NhZ2Ug
-c3VnZ2VzdGVkIGJ5IERtaXRyeSBCYXJ5c2hrb3YuDQo+Pj4gLSBMaW5rIHRvIHYxOiBodHRwczov
-L2xvcmUua2VybmVsLm9yZy9saW51eC1hcm0tbXNtL1RZVVBSMDZNQjYwOTlDQkJFNTA5MERCMTJB
-MkMxODdFM0RERkRBQFRZVVBSMDZNQjYwOTkuYXBjcHJkMDYucHJvZC5vdXRsb29rLmNvbS8NCj4+
-PiAtLS0NCj4+PiBkcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5jb2Rlci5jIHwg
-MjIgKysrKysrKysrLS0tLS0tLS0tLS0tDQo+Pj4gMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9u
-cygrKSwgMTMgZGVsZXRpb25zKC0pDQo+Pj4NCj4+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUv
-ZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlz
-cC9kcHUxL2RwdV9lbmNvZGVyLmMNCj4+PiBpbmRleCBkMWNmZTgxYTMzNzMuLmY0NjhkMDU0ZjVi
-ZCAxMDA2NDQNCj4+PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5j
-b2Rlci5jDQo+Pj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29k
-ZXIuYw0KPj4+IEBAIC03NzQsMjQgKzc3NCwyMCBAQCBzdGF0aWMgdm9pZCBfZHB1X2VuY29kZXJf
-dXBkYXRlX3ZzeW5jX3NvdXJjZShzdHJ1Y3QgZHB1X2VuY29kZXJfdmlydCAqZHB1X2VuYywNCj4+
-PiAgICAgICAgcmV0dXJuOw0KPj4+ICAgIH0NCj4+Pg0KPj4+ICsgICAgLyogU2V0IHZzeW5jIHNv
-dXJjZSBpcnJlc3BlY3RpdmUgb2YgbWRwIHRvcCBzdXBwb3J0ICovDQo+Pg0KPj4gVW5uZWNlc3Nh
-cnkgY29tbWVudCwgaXQncyBjbGVhciBmcm9tIHRoZSBjb2RlIGZsb3cgdGhhdCB2c3luY19jZmcu
-dnN5bmNfc291cmNlDQo+PiBpcyBwYXNzZWQgZG93biBpbnRvIGJvdGggZnVuY3Rpb25zLg0KPj4N
-Cj4+IFBlcmhhcHMgd2Ugc2hvdWxkIHBhc3MgZGlzcF9pbmZvLT52c3luY19zb3VyY2UgZGlyZWN0
-bHkgaW50bw0KPj4gaHdfaW50Zi0+b3BzLnZzeW5jX3NlbCgpIGFuZCBvbmx5IGluaXRpYWxpemUg
-dnN5bmNfY2ZnIHdoZW4gaHdfbWRwdG9wIGhhcyB0aGUNCj4+IGZ1bmN0aW9uLCB0byBtYWtlIHRo
-aXMgY2xlYXIuDQo+DQo+IE5vLCBiZWNhdXNlIG9uIERQVSA4LjArIFdEIGlzIGFsc28gc2V0dXAg
-cGVyIGludGYuDQo+DQo+Pg0KPj4+ICsgICAgdnN5bmNfY2ZnLnZzeW5jX3NvdXJjZSA9IGRpc3Bf
-aW5mby0+dnN5bmNfc291cmNlOw0KPj4+ICsNCj4+PiAgICBpZiAoaHdfbWRwdG9wLT5vcHMuc2V0
-dXBfdnN5bmNfc291cmNlKSB7DQo+Pj4gICAgICAgIGZvciAoaSA9IDA7IGkgPCBkcHVfZW5jLT5u
-dW1fcGh5c19lbmNzOyBpKyspDQo+Pj4gICAgICAgICAgICB2c3luY19jZmcucHBudW1iZXJbaV0g
-PSBkcHVfZW5jLT5od19wcFtpXS0+aWR4Ow0KPj4+ICsgICAgfQ0KPj4+DQo+Pj4gLSAgICAgICAg
-dnN5bmNfY2ZnLnBwX2NvdW50ID0gZHB1X2VuYy0+bnVtX3BoeXNfZW5jczsNCj4+DQo+PiBUaGlz
-IGNoYW5nZSBpcyBub3QgbWVudGlvbmVkIGluIHRoZSBjb21taXQgZGVzY3JpcHRpb24uICBXaGls
-ZSB0cnVlIHRoYXQNCj4+IHBwX2NvdW50IGlzIG9ubHkgdXNlZCBieSBkcHVfaHdfc2V0dXBfdnN5
-bmNfc2VsKCksIHRoYXQgaXMgc3RpbGwgYSB2YWxpZA0KPj4gZnVuY3Rpb24gdG8gYmUgY2FsbGVk
-IG9uIERQVSA8IDU7IGl0IGRlbm90ZXMgdGhlIGFtb3VudCBvZiBwcG51bWJlcltpXSBhcnJheQ0K
-Pj4gZW50cmllcyBhcmUgdXNlZCBhYm92ZS4NCj4+DQo+Pj4gLSAgICAgICAgdnN5bmNfY2ZnLmZy
-YW1lX3JhdGUgPSBkcm1fbW9kZV92cmVmcmVzaCgmZHB1X2VuYy0+YmFzZS5jcnRjLT5zdGF0ZS0+
-YWRqdXN0ZWRfbW9kZSk7DQo+Pg0KPj4gU2FtZSwgYWxzbyBub3QgbWVudGlvbmVkIGluIHRoZSBj
-b21taXQgZGVzY3JpcHRpb24uICBmcmFtZV9yYXRlDQo+PiBpcyB1c2VkIGJ5IGRwdV9od19zZXR1
-cF93ZF90aW1lcigpIG9uIERQVSA8IDguDQo+Pg0KPj4+IC0NCj4+PiAtICAgICAgICB2c3luY19j
-ZmcudnN5bmNfc291cmNlID0gZGlzcF9pbmZvLT52c3luY19zb3VyY2U7DQo+Pj4gLQ0KPj4+IC0g
-ICAgICAgIGh3X21kcHRvcC0+b3BzLnNldHVwX3ZzeW5jX3NvdXJjZShod19tZHB0b3AsICZ2c3lu
-Y19jZmcpOw0KPj4NCj4+IEJ1dCBhbGwgb2YgdGhlIGFib3ZlIGNvbW1lbnRzIGRvbid0IG1hdHRl
-ciBpZiB0aGUgY2FsbCB0byBzZXR1cF92c3luY19zb3VyY2UoKQ0KPj4gaXMgcmVtb3ZlZCBlbnRp
-cmVseSAtIGl0IGRpZG4ndCBtb3ZlIGFueXdoZXJlIGVsc2UuICBUaGlzIGlzIG5vdCBkZXNjcmli
-ZWQgaW4NCj4+IHRoZSBjb21taXQgbWVzc2FnZS4NCj4NCj4gRnVuLCBJIG1pc3NlZCBpdCBlYXJs
-aWVyLiBUaGFua3MgZm9yIHBvaW50aW5nIGl0IG91dC4NCj4NCj4gVGVndWgsIHNpbmNlIHdlIG5l
-ZWQgdG8gZml4IHdhdGNoZG9nIG9uIE1EUCA4LjArLCBJJ2xsIHNlbmQgdjMgb24gbXkNCj4gb3du
-LCBpZiB5b3UgZG9uJ3QgbWluZC4NCj4+DQo+PiAtIE1hcmlqbg0KPj4NCj4+PiAtDQo+Pj4gLSAg
-ICAgICAgZm9yIChpID0gMDsgaSA8IGRwdV9lbmMtPm51bV9waHlzX2VuY3M7IGkrKykgew0KPj4+
-IC0gICAgICAgICAgICBwaHlzX2VuYyA9IGRwdV9lbmMtPnBoeXNfZW5jc1tpXTsNCj4+PiArICAg
-IGZvciAoaSA9IDA7IGkgPCBkcHVfZW5jLT5udW1fcGh5c19lbmNzOyBpKyspIHsNCj4+PiArICAg
-ICAgICBwaHlzX2VuYyA9IGRwdV9lbmMtPnBoeXNfZW5jc1tpXTsNCj4+Pg0KPj4+IC0gICAgICAg
-ICAgICBpZiAocGh5c19lbmMtPmhhc19pbnRmX3RlICYmIHBoeXNfZW5jLT5od19pbnRmLT5vcHMu
-dnN5bmNfc2VsKQ0KPj4+IC0gICAgICAgICAgICAgICAgcGh5c19lbmMtPmh3X2ludGYtPm9wcy52
-c3luY19zZWwocGh5c19lbmMtPmh3X2ludGYsDQo+Pj4gLSAgICAgICAgICAgICAgICAgICAgICAg
-IHZzeW5jX2NmZy52c3luY19zb3VyY2UpOw0KPj4+IC0gICAgICAgIH0NCj4+PiArICAgICAgICBp
-ZiAocGh5c19lbmMtPmhhc19pbnRmX3RlICYmIHBoeXNfZW5jLT5od19pbnRmLT5vcHMudnN5bmNf
-c2VsKQ0KPj4+ICsgICAgICAgICAgICBwaHlzX2VuYy0+aHdfaW50Zi0+b3BzLnZzeW5jX3NlbChw
-aHlzX2VuYy0+aHdfaW50ZiwNCj4+PiArICAgICAgICAgICAgICAgICAgICB2c3luY19jZmcudnN5
-bmNfc291cmNlKTsNCj4+PiAgICB9DQo+Pj4gfQ0KPj4+DQo+Pj4gLS0NCj4+PiAyLjM0LjENCj4+
-Pg0KPg0KPiAtLQ0KPiBXaXRoIGJlc3Qgd2lzaGVzDQo+IERtaXRyeQ0KWWVzIHBsZWFzZSwgdGhh
-bmsgeW91Lg0KDQpSZWdhcmRzLA0KVGVndWggUy4NCg==
+When a DBC is released, the device sends a QAIC_TRANS_DEACTIVATE_FROM_DEV
+transaction to the host over the QAIC_CONTROL MHI channel. QAIC handles
+this by calling decode_deactivate() to release the resources allocated for
+that DBC. Since that handling is done in the qaic_manage_ioctl() context,
+if the user goes away before receiving and handling the deactivation, the
+host will be out-of-sync with the DBCs available for use, and the DBC
+resources will not be freed unless the device is removed. If another user
+loads and requests to activate a network, then the device assigns the same
+DBC to that network, QAIC will "indefinitely" wait for dbc->in_use = false,
+leading the user process to hang.
+
+As a solution to this, handle QAIC_TRANS_DEACTIVATE_FROM_DEV transactions
+that are received after the user has gone away.
+
+Fixes: 129776ac2e38 ("accel/qaic: Add control path")
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+---
+Changes in V2:
+- Add missing closing bracket in resp_worker()
+- Link to V1: https://lore.kernel.org/all/20251223153151.2232297-1-youssef.abdulrahman@oss.qualcomm.com
+---
+ drivers/accel/qaic/qaic_control.c | 47 +++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+index 428d8f65bff3..53afb647ecc4 100644
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -913,7 +913,7 @@ static int decode_deactivate(struct qaic_device *qdev, void *trans, u32 *msg_len
+ 		 */
+ 		return -ENODEV;
+ 
+-	if (status) {
++	if (usr && status) {
+ 		/*
+ 		 * Releasing resources failed on the device side, which puts
+ 		 * us in a bind since they may still be in use, so enable the
+@@ -1108,6 +1108,9 @@ static void *msg_xfer(struct qaic_device *qdev, struct wrapper_list *wrappers, u
+ 	mutex_lock(&qdev->cntl_mutex);
+ 	if (!list_empty(&elem.list))
+ 		list_del(&elem.list);
++	/* resp_worker() processed the response but the wait was interrupted */
++	else if (list_empty(&elem.list) && ret == -ERESTARTSYS)
++		ret = 0;
+ 	if (!ret && !elem.buf)
+ 		ret = -ETIMEDOUT;
+ 	else if (ret > 0 && !elem.buf)
+@@ -1418,9 +1421,49 @@ static void resp_worker(struct work_struct *work)
+ 	}
+ 	mutex_unlock(&qdev->cntl_mutex);
+ 
+-	if (!found)
++	if (!found) {
++		/*
++		 * The user might have gone away at this point without waiting
++		 * for QAIC_TRANS_DEACTIVATE_FROM_DEV transaction coming from
++		 * the device. If this is not handled correctly, the host will
++		 * not know that the DBC[n] has been freed on the device.
++		 * Due to this failure in synchronization between the device and
++		 * the host, if another user requests to activate a network, and
++		 * the device assigns DBC[n] again, save_dbc_buf() will hang,
++		 * waiting for dbc[n]->in_use to be set to false, which will not
++		 * happen unless the qaic_dev_reset_clean_local_state() gets
++		 * called by resetting the device (or re-inserting the module).
++		 *
++		 * As a solution, we look for QAIC_TRANS_DEACTIVATE_FROM_DEV
++		 * transactions in the message before disposing of it, then
++		 * handle releasing the DBC resources.
++		 *
++		 * Since the user has gone away, if the device could not
++		 * deactivate the network (status != 0), there is no way to
++		 * enable and reassign the DBC to the user. We can put trust in
++		 * the device that it will release all the active DBCs in
++		 * response to the QAIC_TRANS_TERMINATE_TO_DEV transaction,
++		 * otherwise, the user can issue an soc_reset to the device.
++		 */
++		u32 msg_count = le32_to_cpu(msg->hdr.count);
++		u32 msg_len = le32_to_cpu(msg->hdr.len);
++		u32 len = 0;
++		int j;
++
++		for (j = 0; j < msg_count && len < msg_len; ++j) {
++			struct wire_trans_hdr *trans_hdr;
++
++			trans_hdr = (struct wire_trans_hdr *)(msg->data + len);
++			if (le32_to_cpu(trans_hdr->type) == QAIC_TRANS_DEACTIVATE_FROM_DEV) {
++				if (decode_deactivate(qdev, trans_hdr, &len, NULL))
++					len += le32_to_cpu(trans_hdr->len);
++			} else {
++				len += le32_to_cpu(trans_hdr->len);
++			}
++		}
+ 		/* request must have timed out, drop packet */
+ 		kfree(msg);
++	}
+ 
+ 	kfree(resp);
+ }
+-- 
+2.43.0
+
 
