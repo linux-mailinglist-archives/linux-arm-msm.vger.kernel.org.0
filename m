@@ -1,232 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-86463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F070CDB362
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 04:05:34 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D66BCDB3B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 04:17:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id ADBCB300670C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 03:05:33 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3D3E830224B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 03:17:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CB6A223708;
-	Wed, 24 Dec 2025 03:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A9C30AD1F;
+	Wed, 24 Dec 2025 03:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PR4rg3G5";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hx+3GN23"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="go9K74CX";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RoA3E5nu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9D31E2858
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E57430B50D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:16:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766545532; cv=none; b=n8RSQidqk7t2ruygsVNbQ9d8Hs65/gtijnIAz3qMHnC+32nAym3az46bUljbdPN1saEt/MvCAvJNG9mspSAwBlmhKs4B1veQz3ZsW4Gx/KO09nw80HAN+oCGoSbCYLXBiMIhScyMquPHyyWuIVeTm4rTqxxx5AROpnj5mbdPUco=
+	t=1766546218; cv=none; b=Ng1Vq8kDId0oMRsbdp8VPXaJ6/gDGyE7hvuoHCOKAbRNBfXWsGaPtVa3g08dDgRIUVlH37eyZHVVNs28jksLbHFoZq9ZcSEF5g6eGHnSuTTXyFvqPDJug0GyFnRDd1QpCDez7URSFqajgQMLS6pHZZbngZ0Ir/unW1eCTcjRnzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766545532; c=relaxed/simple;
-	bh=L7d9WDfHwlzNrI0KCwmnPnsGCrTqpAM9L8mNj4ddC74=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OFukBdHKlabuLasLVE1H9HknoNpHFbKMHq20g6R8TvM4W5wufqIjoH88mL6k8Y0rbaifL91eHL+tvHhD8Lh5qSnk1EZ2pc62TqCp7Kmzo/6qDmaOxhv4l4yTfO3o9jleEbYDuyb/GvGke96jQC6vrLdmkptMdbkwlwmVldF5Y+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PR4rg3G5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hx+3GN23; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1766546218; c=relaxed/simple;
+	bh=jDy18Bl8S7lV1ZpdQ7ZoPgkwfGh4GA3WGjNchgjieio=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JZhJYR2r562Msl8LxS7ACMO80sWYUzVajoFbKz2IhpHaxlgJL46/sX+ZgkVb37va1kicxBT90RugjRoJlNj3lzE/0HlkNuoIH5R0vRsqpDnAusVRO8fAq3lfDvgHcRaSc+kg76bdt4nxdaZK6Xxg8V0RkUcRHUpSwG1ygpoq71Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=go9K74CX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RoA3E5nu; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO17SHq1597726
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:05:29 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BNGO9eY1018084
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:16:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=FFOhIoxD+udoXEQm8ssn/k
-	1M4rTdS2pHETEOs5w29AI=; b=PR4rg3G5cC9hfSNQTv9U1uBiYrTIIIfxfVvYMv
-	jWwIioks7zaooKSChB8SMYi6r3YweMpXajuQLVKaiAUJ2B6YU8rLUN+ZCH9Q05we
-	5u+BCSJZWRbCuyNvcXKx3lNjoMpgu4lpQftNcQwr65ovIKv+Qtx1bF6pyEd/7bsn
-	G/YrRyZe+XSCjDS7+CRZ07EtSSsIAoXRxP4AgSf4vMMGx6ddI+PUweFxkWEWOm+K
-	39yqc6MneivOfRER1lm0UI604ODvjuj5kGU5FKmIBtvDdf7L6J9vMGY0ub52alHz
-	Zg5XUnE7ZKrP39H3Lra4bEkGRmrwJ4gwpk5jY7Kf74BAWW1A==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8683g83c-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3Nk0WsZK8CkSWt1r4TFyPVt2eoNtbZ1f8MIJx7t15O4=; b=go9K74CXkJnh9R6C
+	XTWY3Seqx6ORTystgebgOMWuMSUaktgVr/n67GGKrlBaZQ0Qo+ItWzBQK3dfY7I4
+	KdDH6twL3+3uk/lykPkcSSSfGAcOsZiby+BO6/aCHFWIB++NWOUFb2u9I9EUt3zs
+	KfV+ssT9UMTOFBzg0Boz3zxHdKQd2Ih8fx/DQe1mYGGA3biykXqG0vtTtISYWM5Z
+	aEkQfHXF/v+ui6w/yIFwdnPYOtRbncxJsF1RNJQjx2N2DqXM/9lTrWFd66D+z9rN
+	9Cn8o4pLwIqJ9RyMsHHYHoHAI/4/xOTs2dzOJNy8+6AqnO//hqdoNC1uKF2GUMBf
+	OAa4zA==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7xjs9kbd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:05:29 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2a13be531b2so119204645ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 19:05:29 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 03:16:48 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-7b8b79cbd76so3397475b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 19:16:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766545528; x=1767150328; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FFOhIoxD+udoXEQm8ssn/k1M4rTdS2pHETEOs5w29AI=;
-        b=hx+3GN23ygUIHKAMirTthBAes9aWyopEqso/Tdjnk+QhoQJmVb1Wi6lD50TMTjrbEj
-         d1ksH7OhJYLjqgj1cg7RCQR3VEek/2HVsosVct1LwinhWpuRaa/e3+hopatkN7pVtfuU
-         3ez/jrarzbj+A8+plFIHPC1qEzgoxMQMx0OslQUS7qLMBaQGV6KrUkrFSlvny6yjNtu6
-         uqtvRZamttCZioOLpk55hA6nXd2/hwWuejwmzPNJvpDYZL9SkB5W0Myp/V8Ep3ZLHu2h
-         l6oPzNnyVADhwR6JWbbuxTOo80aCce/F6lC2YCVGG0bTLpkxYyfvr+KVRw3cNamVjBy1
-         N0mA==
+        d=oss.qualcomm.com; s=google; t=1766546207; x=1767151007; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3Nk0WsZK8CkSWt1r4TFyPVt2eoNtbZ1f8MIJx7t15O4=;
+        b=RoA3E5nu9L0CmBa1M0223FOOM/8+guDPDod/+N9VQMHiXNOPGuD4W7H7LRqryABIts
+         oNf0h2HIbZGrCGPTYk8O7vEk8mj4ZijcV/kNwnzVfnCYXlWOv5ZBFF0RU1SEvaaA7BXa
+         u5/zl6Ao0MPk+FeptIBjZXtP5lD81TAdTfVFBXSVLqEIZQZBa1W8SIdmKyaCHb3zlyCp
+         rf6whEg8bTq/arOoaEiMN60aINpaUfbft28l8hD1hyTiq8RKJ7fzQi3/l9cYeh5F+19J
+         5084cdokUV9hPdg+lJkR0kJoIfufSlWwlCMyY3kqK4hWMlaFvHoWu43NcDzKwybgWosf
+         PcyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766545528; x=1767150328;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FFOhIoxD+udoXEQm8ssn/k1M4rTdS2pHETEOs5w29AI=;
-        b=fqCWwigAeSt7X7OfkO6waLqkL3ZmR1OaBX4aAbcjHXmz4bKJrRRvb9bOjTEslj4erf
-         QYUdwLxsBj9qHBO0fkJmQofdETFoLcGIuAHo1ZKdUmZq/gmDn8zh6I2pcDvYKiRAXrhg
-         PSnn3IthV/eL6gHpgEirT1IzVwotGmLjq8WHdsn3ntRNg7rVjHx+LL2wbayDkIqmrl+u
-         ebs4B1HttL8sRSYVGpky73GiCFhafJ1dRX+Ou/md3JiRc1Uz94kZyxiS7VGBL7Q21EDK
-         JzQwT0pSx1s39T7CuunLVVWGVuLspicw4JgCIyr1HISo73Kp1XK7hKoTUsLM9y1ZKAf0
-         uK2w==
-X-Forwarded-Encrypted: i=1; AJvYcCWpeZMrmLsPw1ui3Bwy3PXKzt8AUMVoRP5cbAAnN+w8RKxa1sOqGW5nlvci5tceuC7qZSsgjRmLVlO2OYom@vger.kernel.org
-X-Gm-Message-State: AOJu0YwoNjjbFuk8zxui8XaP0NMs1L4n06lGv4m+qFMDdMb9DtCfm+lh
-	L/fbCgfHpfCko72cqZCfcdxE0hLmcQ49hOqIASeCs9EV0ZzbMZ1LyvCaLR1BJqQ+gIqRYnPO6q6
-	dvfbVBMXCw8oRUQtQ9qRN4R+u53Zh0iiiufnwq7TBsNffUQyNk0lyUpF79m7tuGJf+3a6mAtssm
-	oWUUs=
-X-Gm-Gg: AY/fxX7fjt23XkU/s5hTIJRemUgRzLH0iKRUI6D50z2HeMlXS42qlLFjF2aicz0iE+g
-	FMvynK712hM/Te9kSC1zNMTuTfwGUgW2v1w8W6qL0uN93RBucX3xd6jXh0ClEm5PRmHR3Ifnxd5
-	lMmh4Zq4LGFX03XqUvvsgdxUM/ZN/RaqYPO+Ppx146feJldvcWpm2aBNYlRcuxJHbvlV8czFIMQ
-	hwKX8Nwm6D9yhoMcXnSlTT8dCh8VTHDrdLEvmnfYutcng0WuxRXQ4a/WH0Vfh/O7nLQZVy2Hu59
-	NNR0sqAthMFdV0C4xZw0nxuZendpP0n+x8GymMwkHy7zqg3JdoEqCzVcSopGStoNdNCvSYzuXdp
-	52Ck3AfQO6MEJXFEt+2LjlAb862Ko7j7SoSAFIamCzOPnhNJpwOlFsvHU
-X-Received: by 2002:a05:7022:61d:b0:11a:3483:4a87 with SMTP id a92af1059eb24-121722b771cmr17037682c88.13.1766545528293;
-        Tue, 23 Dec 2025 19:05:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG93BEwr9RbdIfRstr3iob3AI6olRrNRYusetw+VRPaE/pCjjFrKIVLFO50zD+6M45FOzVPsA==
-X-Received: by 2002:a05:7022:61d:b0:11a:3483:4a87 with SMTP id a92af1059eb24-121722b771cmr17037654c88.13.1766545527574;
-        Tue, 23 Dec 2025 19:05:27 -0800 (PST)
-Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121725548b5sm65186256c88.17.2025.12.23.19.05.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Dec 2025 19:05:27 -0800 (PST)
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Date: Tue, 23 Dec 2025 19:05:26 -0800
-Subject: [PATCH v5] mhi: host: Add support for dual ELF image format
+        d=1e100.net; s=20230601; t=1766546207; x=1767151007;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3Nk0WsZK8CkSWt1r4TFyPVt2eoNtbZ1f8MIJx7t15O4=;
+        b=ISxRiaYUksN9XKGPWT0C2EUpIbmjGTxeBq4o4wNTTKePnnPAtseYHyTHcIk4jhNQbS
+         k5H0u6pHRJYLbFqLUEZmjAIA9E6x+XM/nnm2Q30eE0IMVKj1i5QarJtxNHP1s3pEbTbL
+         k4yw704PlBwVefqdGn9DQF0NBiU2nqQGIWxZ8UPn8klwNsYjoF5FMhf8QoGh6oo+WWdx
+         d0t2ThPQE9gFElO9IfJiImhXcyT2H6IRpPfbB0mMwfS5wwtkQpYobFtanmISrkwAqy7L
+         F150cZ5Qpvp7aQHwwPgqCy6UranmfAzPbkVrz93WaCxvp8BCr7NynDAJLmv3Sw0RKOG8
+         GT/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWowam0nRjJSREksbo8wbSal2A99ei2cEh2GCQ7C5oUb+21x5XH0wkwOFew41kRRelnlhoRf962XGwE0HUa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXlQGy7ron2Dtvi87db5KoXbM3qOpk5O4aQNm8prvhZjb2te4W
+	+BTBWHrqjO6JD1B5+KBrnhb6rrcLFoNaMJMDmyL0FNTkUHUAYnXv4DhqUX5czEthPZUqeqCFYio
+	YIBUKtPtoScrrLfioVqOUER3Z26fusUVeNIL8YzerV2pIqyqHv11eB+XAENKi/CEQtlEd
+X-Gm-Gg: AY/fxX7xmAwTm47T4i8vrSpsE/BkK541DYxbTxgTE8J/QuaOkVP2rwt8pb4hSAIcTGB
+	SWYqpHs724KN3sS4SPlJOLIuyX8oQNyjSChe84H49qI1/XGK5Yb2Z6XF/lG6L4oJhzNeeHs3xc1
+	NCG/Iim2o+51/zjzpQisgiYor0sNRj9KSmNkUGQ6e0O8mB9QR2ARAT0A4BSK5znwbzTHkuLLU/B
+	dfbnDc3xrvaUSgn9Ji9lO6I/iZ1tM2t9GG6LvmtSKbg6nbIlux74ge7veNwQHu+4BQTy4GVT9pg
+	gC5FjtwIUSqmAdsot/sXC9GHrUS3Z4X4u0QJzPpOBS0gqHy8rxxEcbaYU87RULQ1txd4k/ESrDy
+	kbCX2uTxMuJwZV/xn4x77uFTfBashJd4fS8fXpBWlIGwARwe1z7wn/TVsllrjClrKpSMvJXuCHv
+	jXgxV/
+X-Received: by 2002:aa7:868f:0:b0:7f0:61d:d092 with SMTP id d2e1a72fcca58-7fe0d7a28a8mr15002400b3a.21.1766546207305;
+        Tue, 23 Dec 2025 19:16:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHRektK2ratYvVnkQdAMzu6czAfpp3g6ScKADB4adV5uIh/oLuTQWgDuu/FCxCDHzGN/eSLgw==
+X-Received: by 2002:aa7:868f:0:b0:7f0:61d:d092 with SMTP id d2e1a72fcca58-7fe0d7a28a8mr15002373b3a.21.1766546206785;
+        Tue, 23 Dec 2025 19:16:46 -0800 (PST)
+Received: from [10.133.33.224] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7a84368dsm15288617b3a.2.2025.12.23.19.16.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Dec 2025 19:16:46 -0800 (PST)
+Message-ID: <ae532ff4-1a96-4dc1-9fa0-81305624c9c9@oss.qualcomm.com>
+Date: Wed, 24 Dec 2025 11:16:39 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] dt-bindings: remoteproc: qcom,pas: Document pas
+ for SoCCP on Kaanapali and Glymur platforms
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>, aiqun.yu@oss.qualcomm.com,
+        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+        yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+References: <20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com>
+ <20251223-knp-remoteproc-v3-3-5b09885c55a5@oss.qualcomm.com>
+ <20251223-furry-mighty-agouti-a222f7@quoll>
+Content-Language: en-US
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+In-Reply-To: <20251223-furry-mighty-agouti-a222f7@quoll>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251223-wlan_image_load_skip_512k-v5-1-8d4459d720b5@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAHVYS2kC/33PTWrDMBAF4KsErasg68exuuo9ShBjaRyL2JYrO
- UpL8N0rp1BaWrIZeIv55s2NJIweE3ne3UjE7JMPUwnqaUdsD9MJqXclE864qiqu6XWAyfgRTmi
- GAM6ks5+NqviZOmc7lNq1DQpS9ueInX+/26/HkrsYRrr0EeFbZDUTNC0wOYjO4ND9ki/zHOJCM
- 6cVtRb1oZYStcaXkNL+7QKDDeO4L2O71vu0hPhxfySL7eZXZ86qB52zKHaLrlVSN6Aa+Gtv1bP
- 8AXLxCJQFBMa4kFBbdWj+Add1/QSM4CDIeAEAAA==
-X-Change-ID: 20251129-wlan_image_load_skip_512k-ddcfe49db8e3
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Qiang Yu <qiang.yu@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1766545526; l=3460;
- i=qiang.yu@oss.qualcomm.com; s=20250513; h=from:subject:message-id;
- bh=L7d9WDfHwlzNrI0KCwmnPnsGCrTqpAM9L8mNj4ddC74=;
- b=Cx/oxMivL3KjwL0QdFU/ZJfYUgZiKpJY2Kfzj2hsCLOTJibinz2tUObTeJ2aMNUWct8AQs3/e
- 2UTHwVZlc6SAJ9EHHfoLsSeObYQmWcXQDLtTjt67A/FJiBk+WNtd1qN
-X-Developer-Key: i=qiang.yu@oss.qualcomm.com; a=ed25519;
- pk=Rr94t+fykoieF1ngg/bXxEfr5KoQxeXPtYxM8fBQTAI=
-X-Proofpoint-GUID: LSNmpdVPbvNR46yriwGB1g39Ax4-lODP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDAyMyBTYWx0ZWRfX5lZ+zv+mH582
- QUC8d09Fm/Ymz3TzywGg40Bwlq/S11JZiGeDIvT7HNlg1lWosPdoXXf0xaYKs+m/fjfn8D6cY+q
- YdAg02373m8oxqo8CK91OFf+YgR5VEyww9mIifV201qDwIEQ7pOqrl6XqI7fOdQeWsumeuid5hi
- jqX4RZOaFR6A4gSn6ZkfmesOPHncC0dUDU9xv7y1jVcrXI4dv3fHCEeCEGlE26m4tsNF19ovczV
- nnfyW82Lsl+HeCEaYrsZwAq3YHK9ACKGt6kQbstRWo7ZFZIVOnxjjeKLQxWsds7LlXbNG22FkRn
- iz3JEIxNweGFVJGR5VSCZ3MFpwgRHeOKRJS8clluNCAkTW7uZVY18vNKmwTReNIdahAHhkiqdrI
- Iet7k6W4Rw7D2LJ6XDY1xq4/FsiEkFCSCUx6DhzTQJp7eW2QqClW+b46iw0WT75D4OcWWbIzlxH
- O+1AN+iPa5tc+BCBhWw==
-X-Authority-Analysis: v=2.4 cv=HqV72kTS c=1 sm=1 tr=0 ts=694b5879 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDAyNCBTYWx0ZWRfXzXsI/zaQnZNA
+ lx/wNL17HcpmrH9emJlSBm+hlOgQIx8NwfAZ9rUOZ1d0PP0jr01DlgUiGBDYXT66SEJUit/CC+I
+ nnFLMHH+v2Vv/eRGN44dBYi6LDyO6Bw0u8glEoDVgCdkVKlXaohCLyGIR3T1vrqy0XkF659bcqc
+ XxAcNv8fw/Om3o2nKnbmmnDZLq0Axav60Y3/Ie1LAkxYylTDKqj5hLiFxZtxTpmJLCIV3MiWHKc
+ 8XpDPF2uZnHg5hz0H4oEbZ0S3HM+qqTrf3CoYTX+xLYNNdcdkAQ4gDkrVl9j5zKxTcZsTW9Szw0
+ x4N2pFdL5YME1tHwIrVyoOsc5Z1XkxnUZ5r2m1yhWsVIH7AKFa1no8zOGd+wznr7TJeZXv8tuCk
+ c9uUQ+5tptYnktan+Y1ysAImvNIFygf3hnvEEJEuxlIE7kcZy2dVA9uxj6BeozP5UGbZsjN3uWX
+ /JhbGdSCwIOuNWy7RrA==
+X-Proofpoint-ORIG-GUID: r1HHmLaNr1Yp_s1Ld_u8v5STbCC01EoL
+X-Authority-Analysis: v=2.4 cv=YcqwJgRf c=1 sm=1 tr=0 ts=694b5b20 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=yWoLkE6zulz-TMI_RbsA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: LSNmpdVPbvNR46yriwGB1g39Ax4-lODP
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=dRLHVvS3EW7BnV4jGykA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-GUID: r1HHmLaNr1Yp_s1Ld_u8v5STbCC01EoL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-24_01,2025-12-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240023
+ suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512240024
 
-Currently, the FBC image contains a single ELF header followed by segments
-for both SBL and WLAN FW. However, TME-L (Trust Management Engine Lite)
-supported devices (e.g., QCC2072) require separate ELF headers for SBL and
-WLAN FW segments due to TME-L image authentication requirements.
 
-Current image format contains two sections in a single binary:
-- First 512KB: ELF header + SBL segments
-- Remaining: WLAN FW segments (raw data)
 
-The TME-L supported image format contains two complete ELF files in a
-single binary:
-- First 512KB: Complete SBL ELF file (ELF header + SBL segments)
-- Remaining: Complete WLAN FW ELF file (ELF header + WLAN FW segments)
+On 12/23/2025 9:29 PM, Krzysztof Kozlowski wrote:
+> On Tue, Dec 23, 2025 at 01:13:49AM -0800, Jingyi Wang wrote:
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>> index 63a82e7a8bf8..149e993282bb 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>> @@ -33,16 +33,22 @@ properties:
+>>        - description: Handover interrupt
+>>        - description: Stop acknowledge interrupt
+>>        - description: Shutdown acknowledge interrupt
+>> +      - description: Pong interrupt
+>> +      - description: Wake acknowledge interrupt
+>>  
+>>    interrupt-names:
+>>      minItems: 5
+>> +    maxItems: 7
+>>      items:
+>> -      - const: wdog
+>> -      - const: fatal
+>> -      - const: ready
+>> -      - const: handover
+>> -      - const: stop-ack
+>> -      - const: shutdown-ack
+>> +      enum:
+> 
+> No, no. Stop doing random changes. NAK
+> 
+> Now you remove strict order (see writing bindings) and claim every
+> device like SM8550 ADSP PAS has any order.
+> 
+> And it is now de-synced with interrupts. Read writing bindings - this is
+> clearly described there at line 90!
+> 
+> You can only grow existing list.
+> 
+> 
+> 
 
-Download behavior:
-- Legacy: 1. First 512KB via BHI (ELF header + SBL)
-          2. Full image via BHIe
+the interrupt for soccp is defined as 
+"wdog","fatal","ready","handover","stop-ack","pong","wake-ack"
+while other pas could be:
+"wdog","fatal","ready","handover","stop-ack","shutdown-ack"
 
-- TME-L: 1. First 512KB via BHI (SBL ELF file)
-         2. Remaining via BHIe (WLAN FW ELF file only)
+so grow existing list is not work for this,
 
-Add runtime detection to automatically identify the image format by
-checking for the presence of a second ELF header at the 512KB boundary.
-When detected, MHI skips the first 512KB during WLAN FW download over BHIe
-as it is loaded in BHI phase.
+In the v1, got your comments to adjust pas-common.yaml for the interrupt:
+https://lore.kernel.org/all/861b6ede-f168-44e6-85bd-10cf04dbcec7@kernel.org/
 
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
----
-Changes in v5:
-- Remove invalid Reviewed-by and Signed-off-by tags
-- No code changes, only commit message tag corrections
-- Link to v4: https://lore.kernel.org/r/20251223-wlan_image_load_skip_512k-v4-1-a00234a6c578@oss.qualcomm.com
+and in v2, interrupt are moved as part to the "allOf" with if-else and
+also got NAK:
+https://lore.kernel.org/all/20251030-venomous-apricot-falcon-b3fd64@kuoka/
 
-Changes in v4:
-- Detect image format runtime by checking second ELF header instead of using a flag.
-- Link to v3: https://lore.kernel.org/r/20251201-wlan_image_load_skip_512k-v3-1-bedb5498a58a@oss.qualcomm.com
+Could you please share a example for us to understand how to maintain it in
+pas-common.yaml, not define if-else and has strict order at the same time?
+That will be very helpful.
 
-Changes in v3:
-- Reword commit message.
-- Reword comments of standard_elf_image flag
-- Add reviewed-by tag.
-- Link to v2: https://lore.kernel.org/mhi/20250603-standard_elf_image_load_support-v2-1-cce97644e99e@oss.qualcomm.com/
+Thanks,
+Jingyi
 
-Changes in v2:
-- V1 patch is paused because of no user. WLAN team plan to add support for
-  new WLAN chip that requires this patch, so send v2.
-- Change author and SOB with new mail address.
-- Reword commit message.
-- Place standard_elf_image flag after wake_set in struct mhi_controller
-- Link to v1: https://lore.kernel.org/mhi/1689907189-21844-1-git-send-email-quic_qianyu@quicinc.com/
----
- drivers/bus/mhi/host/boot.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index 205d83ac069f15a19ab2d66a63692e5d60334d4c..6ba0f16854d3a839e987f19d782600467b5f9836 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -584,6 +584,17 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
- 	 * device transitioning into MHI READY state
- 	 */
- 	if (fw_load_type == MHI_FW_LOAD_FBC) {
-+
-+		/*
-+		 * Some FW combine two separate ELF images (SBL + WLAN FW) in a single
-+		 * file. Hence, check for the existence of the second ELF header after
-+		 * SBL. If present, load the second image separately.
-+		 */
-+		if (!memcmp(fw_data + mhi_cntrl->sbl_size, ELFMAG, SELFMAG)) {
-+			fw_data += mhi_cntrl->sbl_size;
-+			fw_sz -= mhi_cntrl->sbl_size;
-+		}
-+
- 		ret = mhi_alloc_bhie_table(mhi_cntrl, &mhi_cntrl->fbc_image, fw_sz);
- 		if (ret) {
- 			release_firmware(firmware);
+>> +        - wdog
+>> +        - fatal
+>> +        - ready
+>> +        - handover
+>> +        - stop-ack
+>> +        - shutdown-ack
+>> +        - pong
+>> +        - wake-ack
+>>  
+>>    power-domains:
+>>      minItems: 1
+>> @@ -55,13 +61,21 @@ properties:
+>>    qcom,smem-states:
+>>      $ref: /schemas/types.yaml#/definitions/phandle-array
+>>      description: States used by the AP to signal the Hexagon core
+>> +    minItems: 1
+>>      items:
+>> -      - description: Stop the modem
+>> +      - description: Stop the remoteproc
+>> +      - description: Wake up the remoteproc
+>> +      - description: Make the remoteproc sleep
+>> +      - description: Ping the remoteproc
+> 
+> So every device like SM8550 PAS has now four smem states... without any
+> explanation. Read writing bindings - what does it say?
+>
 
----
-base-commit: ac35e04f8000aaaf98635792464647e7a6f3422e
-change-id: 20251129-wlan_image_load_skip_512k-ddcfe49db8e3
+This change is similar to current interrupt-names property define 6 interrupts
+but has minItems: 5
 
-Best regards,
--- 
-Qiang Yu <qiang.yu@oss.qualcomm.com>
+-  interrupt-names:
+-    minItems: 5
+-    items:
+-      - const: wdog
+-      - const: fatal
+-      - const: ready
+-      - const: handover
+-      - const: stop-ack
+-      - const: shutdown-ack
+
+
+I think this should be "grow existing list" you mentioned above?
+
+Thanks,
+Jingyi
+ 
+> "... and define constraints specific to the device."
+> 
+> "DO define properties in terms of constraints. How many entries? What are
+>  possible values? What is the order? All these constraints represent the ABI
+>   as well."
+> 
+> It is your homework to read the docs. Not mine.
+> 
+> If you want to change common list you must define strict constraints for
+> EVERY user.
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
