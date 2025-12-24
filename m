@@ -1,248 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-86546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43636CDBF0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 11:14:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAB54CDBF24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 11:15:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0060C30141E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 10:11:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9D2FF3026AB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 10:12:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5185E32D448;
-	Wed, 24 Dec 2025 10:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A1833373D;
+	Wed, 24 Dec 2025 10:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c+AOozLx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oColYT7K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777F72FAC14;
-	Wed, 24 Dec 2025 10:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B6A32AAB4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 10:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766571080; cv=none; b=YPkRefUR6JG5KfgNtmAwSjCtnzYGZA6tnhwEPE9V3cYvyy9fZmNDTyYZZOZ+Yarf1B3r8besnDpfBy9K/9RTPvpF1h6ABSTwoSGRdBpb/6HtyRIJ3lQvRluVQE/1Er417/HWObM4pYDjVYdS9MAEdbxGQocx9Cjr+rDfI207rBE=
+	t=1766571122; cv=none; b=nyoBE3lZY4etfFUi3M1dxioO6KC+7cDxX40Lu1SjtftoAXctf5pWS8eg7BS/kV8DjGsf6KkhLPiMr/zOhve5W+007pMO3A63fuK9cPtDo7XcRfDF9SGvqXtIvBjXv1Lav2w3iLgvVjGf9DQV1HvZqE63J9IV513zffIJ5K8MDxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766571080; c=relaxed/simple;
-	bh=1XbbrD+pygxjwX7H0zpvsuIFw0OnTLPT+S2XYMivSK0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=M/4mgb6f5Jiy/zCIMT+X+oTWesPmvJ9xm9n7TXoquUQMjXOOzuKBHPfgQpR/JBvlqjthMB2hjInPsMO/HyKqd941aKNOb8R3Xv3O4Of3glv7U1W1bVMSMiNb5d4jZ/L2cv/17cC02Uuy72ERGgrtNRsOER8usu6vE169oWdHB+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c+AOozLx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO9pujK561263;
-	Wed, 24 Dec 2025 10:11:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=KOKATNxM8R0xd0NYHBl8ac
-	Meakc0YLalQSDQ4AEYxFc=; b=c+AOozLxgBkqu0PI8fcbjuEgf/zmascpMaWUw/
-	wR+4knRye/bsu/9WmqCnOAoL3uZTjkCjH0ESFtj9X+0Qk7INpV7BGXa5hp80hNJr
-	nVl4VgWDc4zCuCvKyn8LIG5RwaS7uohbTLlVzmB6or+gCFvp0f+7izX3DcR6rKIt
-	2v7vtZCiHluPBcd61WGYEgCd2DzALpVokvBHRFXh3nYKWUIrqA7JWEMQg/FVoe78
-	T6KjCT8coiKnWDT6drEr2cfHdVJrQZkbWhs/vbD8Rzfs/oFUa5O2xAO6AsE27KMt
-	Jjg6FluOIWRUyCXg2jKkB026DaDn43/jQdhAwITX0+/kTZJw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7u9cu7fn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Dec 2025 10:11:12 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5BOABB9o000879
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Dec 2025 10:11:11 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Wed, 24 Dec 2025 02:11:07 -0800
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <adrian.hunter@intel.com>, <quic_asutoshd@quicinc.com>,
-        <ulf.hansson@linaro.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <ebiggers@kernel.org>
-CC: <quic_mdalam@quicinc.com>
-Subject: [PATCH] mmc: sdhci-msm: Add quirk to disable CQE for ICE legacy mode
-Date: Wed, 24 Dec 2025 15:40:50 +0530
-Message-ID: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1766571122; c=relaxed/simple;
+	bh=5z1guFUcp3PiZ1mJvphWJEQT9yKrp+OX2pIL0PT9hoQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F04J43z6whIoKt6bZh1P/TQNJ3rmifSUjBPxulP2q/3pkEvWM8ZHlFsApw7vYd+lQ3JyoSJE794szPrTwtdXcoBFaMs3xz7+IS3Pf98VNvwzK1dVJY+QnBz41aubwqdbdclpFUm4VnmQXS1qlPltHGnCBUYXfgc84TbYr4QnqQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oColYT7K; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1766571120; x=1798107120;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5z1guFUcp3PiZ1mJvphWJEQT9yKrp+OX2pIL0PT9hoQ=;
+  b=oColYT7KcXpE0jmvsafQNzlrWsJPqSTpzF12OtIbmAIiJA6wcGhOy05N
+   BDfN68NeJQ295KbLm2aJgm07vi7NL597wSAMAqaEc3v5Jh1vRgIdyyi8H
+   wNeBLo7Jbwj+HtbdTu5UM+ge5sj11VRgWA4ahtyAQXXV70FPxr3zNqvsF
+   A78rNLsYwBC/++WUCwnzMnYEClcom4Xf/j07kF4XpXjWr/sUXcKv8ZYFP
+   epvvNibQryPj2BXseoimv7eNCvRV2Wcn7je7tPTwQWZoSkPIiQ1VEiTsZ
+   3ABvW/UW2CkO4Sfl0cw25qmj6DErU+jJkAsHHNhEY5IECCHIgrnlsTtCJ
+   w==;
+X-CSE-ConnectionGUID: NTB6wQWhR4SZf0hQcp5JDw==
+X-CSE-MsgGUID: jLmLJ/rhRrKRdp+blg3fbw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11651"; a="72273017"
+X-IronPort-AV: E=Sophos;i="6.21,173,1763452800"; 
+   d="scan'208";a="72273017"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Dec 2025 02:11:59 -0800
+X-CSE-ConnectionGUID: zs4kUCMSSFeq0Vrn7sfkqA==
+X-CSE-MsgGUID: 8pqrvxb0Roee+TnO2WMuGQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,173,1763452800"; 
+   d="scan'208";a="205061381"
+Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
+  by orviesa005.jf.intel.com with ESMTP; 24 Dec 2025 02:11:56 -0800
+Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vYLqT-000000002vR-28Mx;
+	Wed, 24 Dec 2025 10:11:53 +0000
+Date: Wed, 24 Dec 2025 18:11:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+	troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, ogabbay@kernel.org,
+	lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Handle DBC deactivation if the owner went
+ away
+Message-ID: <202512241701.p3agYhbp-lkp@intel.com>
+References: <20251223153151.2232297-1-youssef.abdulrahman@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oQhYo_dSsTKfkb5yUAfXppZlWat9ZqkW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDA4NyBTYWx0ZWRfX95i2WxKJThW3
- qepuBNtMvgn6jmLULYJe2hj0T3iOCYeLNJ/cokdwrBcDG9Rcl68TZsk2uEfe82NvhMTr15PLFPO
- 98K2j284YxNi/nFlNiEIMWGI4nZRxbBoeccnThl5DqDN4SGNkldZ9hjUh3ZUKoix1mqyw4Afjsn
- YKfzBo5ZQZ8U9QYxM9IqGWTPy/uIZMusN3W799Fqu0IIPWcZ3Rk6S4hQ0/FOH+SEzpHyj21fTXu
- nnsrBIV7PiVyBoencLoZVotfMnTwDpeHDlzxrjCUK0FP94BGLgi6bAbkh5DTwIpPpRq71Sf0c9A
- ApsQrPzfTsDlWCGjHP72rCR8JVMEChiDKLBjp4+0sPUlIOfeoqAiecYlOOgnArdPT+NDh2yWK0S
- fCjX2odtQcvK83QvGgSrunbDxbJkplLbfHXotsB0yHif3SvKsQecL5EdfvSdj6zB7b8kiyXigwa
- NsMLsBVMes14cTi5Llw==
-X-Authority-Analysis: v=2.4 cv=HsN72kTS c=1 sm=1 tr=0 ts=694bbc40 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=COk6AnOGAAAA:8 a=adGaVkAdHRIPqEJSXlwA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: oQhYo_dSsTKfkb5yUAfXppZlWat9ZqkW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-24_03,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512240087
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251223153151.2232297-1-youssef.abdulrahman@oss.qualcomm.com>
 
-Some hosts require Inline Crypto Engine (ICE) to operate in legacy mode
-instead of Command Queue Engine (CQE) mode for platform-specific
-requirements or compatibility reasons. Introduce a host-level quirk
-`host_disable_cqe` to forcefully disable CQE negotiation and allow ICE
-to function through the legacy request path.
+Hi Youssef,
 
-When the device tree omits the "supports-cqe" property, the driver sets
-`host_disable_cqe = true` and avoids enabling MMC_CAP2_CQE during card
-initialization. This ensures that even CQE-capable hardware falls back
-to legacy SDHCI request handling. A minimal `cqhci_disable_ops` is
-provided with `.cqe_enable = cqhci_host_disable` returning -EINVAL to
-force the fallback. Other ops are left NULL for safe defaults.
+kernel test robot noticed the following build errors:
 
-For builds without CONFIG_MMC_CRYPTO, the driver uses standard
-sdhci_add_host() to avoid unnecessary CQE infrastructure initialization.
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on linus/master v6.19-rc2 next-20251219]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This allows platforms to forcefully opt out of CQE usage and ensure ICE
-operates reliably in legacy mode, providing stable crypto operations
-without command queuing complexity.
+url:    https://github.com/intel-lab-lkp/linux/commits/Youssef-Samir/accel-qaic-Handle-DBC-deactivation-if-the-owner-went-away/20251223-233305
+base:   https://gitlab.freedesktop.org/drm/misc/kernel.git drm-misc-next
+patch link:    https://lore.kernel.org/r/20251223153151.2232297-1-youssef.abdulrahman%40oss.qualcomm.com
+patch subject: [PATCH] accel/qaic: Handle DBC deactivation if the owner went away
+config: i386-randconfig-012-20251224 (https://download.01.org/0day-ci/archive/20251224/202512241701.p3agYhbp-lkp@intel.com/config)
+compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251224/202512241701.p3agYhbp-lkp@intel.com/reproduce)
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- drivers/mmc/host/cqhci-core.c | 28 +++++++++++++++++++++++++++-
- drivers/mmc/host/sdhci-msm.c  | 20 +++++++++++++++-----
- include/linux/mmc/host.h      |  1 +
- 3 files changed, 43 insertions(+), 6 deletions(-)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202512241701.p3agYhbp-lkp@intel.com/
 
-diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-index 178277d90c31..32da3b856db1 100644
---- a/drivers/mmc/host/cqhci-core.c
-+++ b/drivers/mmc/host/cqhci-core.c
-@@ -334,6 +334,12 @@ int cqhci_resume(struct mmc_host *mmc)
- }
- EXPORT_SYMBOL(cqhci_resume);
- 
-+static int cqhci_host_disable(struct mmc_host *mmc, struct mmc_card *card)
-+{
-+	pr_info("%s: Host does not want to use CMDQ\n", mmc_hostname(mmc));
-+	return -EINVAL;
-+}
-+
- static int cqhci_enable(struct mmc_host *mmc, struct mmc_card *card)
- {
- 	struct cqhci_host *cq_host = mmc->cqe_private;
-@@ -1135,6 +1141,18 @@ static const struct mmc_cqe_ops cqhci_cqe_ops = {
- 	.cqe_recovery_finish = cqhci_recovery_finish,
- };
- 
-+static const struct mmc_cqe_ops cqhci_disable_ops = {
-+	.cqe_enable = cqhci_host_disable,
-+	.cqe_disable = NULL,
-+	.cqe_request = NULL,
-+	.cqe_post_req = NULL,
-+	.cqe_off = NULL,
-+	.cqe_wait_for_idle = NULL,
-+	.cqe_timeout = NULL,
-+	.cqe_recovery_start = NULL,
-+	.cqe_recovery_finish = NULL,
-+};
-+
- struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev)
- {
- 	struct cqhci_host *cq_host;
-@@ -1188,7 +1206,15 @@ int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
- 	cq_host->num_slots = NUM_SLOTS;
- 	cq_host->dcmd_slot = DCMD_SLOT;
- 
--	mmc->cqe_ops = &cqhci_cqe_ops;
-+	/*
-+	 * Some platforms may not support CQE reliably.
-+	 * Use host_disable_cqe to force fallback to
-+	 * legacy request path.
-+	 */
-+	if (mmc->host_disable_cqe)
-+		mmc->cqe_ops = &cqhci_disable_ops;
-+	else
-+		mmc->cqe_ops = &cqhci_cqe_ops;
- 
- 	mmc->cqe_qdepth = NUM_SLOTS;
- 	if (mmc->caps2 & MMC_CAP2_CQE_DCMD)
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index da356627d9de..3295e8c9650b 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2200,6 +2200,7 @@ static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
- #endif
- };
- 
-+#ifdef CONFIG_MMC_CRYPTO
- static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
- 				struct platform_device *pdev)
- {
-@@ -2228,7 +2229,8 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
- 		goto cleanup;
- 	}
- 
--	msm_host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
-+	if (!msm_host->mmc->host_disable_cqe)
-+		msm_host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
- 	cq_host->ops = &sdhci_msm_cqhci_ops;
- 
- 	dma64 = host->flags & SDHCI_USE_64_BIT_DMA;
-@@ -2270,6 +2272,7 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
- 	sdhci_cleanup_host(host);
- 	return ret;
- }
-+#endif
- 
- /*
-  * Platform specific register write functions. This is so that, if any
-@@ -2852,10 +2855,17 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	host->mmc_host_ops.start_signal_voltage_switch =
- 		sdhci_msm_start_signal_voltage_switch;
- 	host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
--	if (of_property_read_bool(node, "supports-cqe"))
--		ret = sdhci_msm_cqe_add_host(host, pdev);
--	else
--		ret = sdhci_add_host(host);
-+	/*
-+	 * If "supports-cqe" is not set in DT, disable CQE at host level.
-+	 * This allows ICE to operate in legacy mode.
-+	 */
-+	msm_host->mmc->host_disable_cqe = !of_property_read_bool(node,
-+								 "supports-cqe");
-+#ifdef CONFIG_MMC_CRYPTO
-+	ret = sdhci_msm_cqe_add_host(host, pdev);
-+#else
-+	ret = sdhci_add_host(host);
-+#endif
- 	if (ret)
- 		goto pm_runtime_disable;
- 
-diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-index e0e2c265e5d1..8b963ccbda19 100644
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -565,6 +565,7 @@ struct mmc_host {
- 	int			cqe_qdepth;
- 	bool			cqe_enabled;
- 	bool			cqe_on;
-+	bool			host_disable_cqe;
- 
- 	/* Inline encryption support */
- #ifdef CONFIG_MMC_CRYPTO
+All errors (new ones prefixed by >>):
+
+>> drivers/accel/qaic/qaic_control.c:1471:1: error: function definition is not allowed here
+    1471 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1484:1: error: function definition is not allowed here
+    1484 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1492:1: error: function definition is not allowed here
+    1492 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1515:1: error: function definition is not allowed here
+    1515 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1539:1: error: function definition is not allowed here
+    1539 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1544:1: error: function definition is not allowed here
+    1544 | {
+         | ^
+   drivers/accel/qaic/qaic_control.c:1592:1: error: function definition is not allowed here
+    1592 | {
+         | ^
+>> drivers/accel/qaic/qaic_control.c:1602:2: error: expected '}'
+    1602 | }
+         |  ^
+   drivers/accel/qaic/qaic_control.c:1404:1: note: to match this '{'
+    1404 | {
+         | ^
+   8 errors generated.
+
+
+vim +1471 drivers/accel/qaic/qaic_control.c
+
+129776ac2e3823 Jeff Hugo 2023-03-27  1469  
+129776ac2e3823 Jeff Hugo 2023-03-27  1470  static void free_wrapper_from_list(struct wrapper_list *wrappers, struct wrapper_msg *wrapper)
+129776ac2e3823 Jeff Hugo 2023-03-27 @1471  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1472  	bool all_done = false;
+129776ac2e3823 Jeff Hugo 2023-03-27  1473  
+129776ac2e3823 Jeff Hugo 2023-03-27  1474  	spin_lock(&wrappers->lock);
+129776ac2e3823 Jeff Hugo 2023-03-27  1475  	kref_put(&wrapper->ref_count, free_wrapper);
+129776ac2e3823 Jeff Hugo 2023-03-27  1476  	all_done = list_empty(&wrappers->list);
+129776ac2e3823 Jeff Hugo 2023-03-27  1477  	spin_unlock(&wrappers->lock);
+129776ac2e3823 Jeff Hugo 2023-03-27  1478  
+129776ac2e3823 Jeff Hugo 2023-03-27  1479  	if (all_done)
+129776ac2e3823 Jeff Hugo 2023-03-27  1480  		kfree(wrappers);
+129776ac2e3823 Jeff Hugo 2023-03-27  1481  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1482  
+129776ac2e3823 Jeff Hugo 2023-03-27  1483  void qaic_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
+129776ac2e3823 Jeff Hugo 2023-03-27  1484  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1485  	struct wire_msg *msg = mhi_result->buf_addr;
+129776ac2e3823 Jeff Hugo 2023-03-27  1486  	struct wrapper_msg *wrapper = container_of(msg, struct wrapper_msg, msg);
+129776ac2e3823 Jeff Hugo 2023-03-27  1487  
+129776ac2e3823 Jeff Hugo 2023-03-27  1488  	free_wrapper_from_list(wrapper->head, wrapper);
+129776ac2e3823 Jeff Hugo 2023-03-27  1489  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1490  
+129776ac2e3823 Jeff Hugo 2023-03-27  1491  void qaic_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
+129776ac2e3823 Jeff Hugo 2023-03-27  1492  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1493  	struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
+129776ac2e3823 Jeff Hugo 2023-03-27  1494  	struct wire_msg *msg = mhi_result->buf_addr;
+129776ac2e3823 Jeff Hugo 2023-03-27  1495  	struct resp_work *resp;
+129776ac2e3823 Jeff Hugo 2023-03-27  1496  
+129776ac2e3823 Jeff Hugo 2023-03-27  1497  	if (mhi_result->transaction_status || msg->hdr.magic_number != MANAGE_MAGIC_NUMBER) {
+129776ac2e3823 Jeff Hugo 2023-03-27  1498  		kfree(msg);
+129776ac2e3823 Jeff Hugo 2023-03-27  1499  		return;
+129776ac2e3823 Jeff Hugo 2023-03-27  1500  	}
+129776ac2e3823 Jeff Hugo 2023-03-27  1501  
+129776ac2e3823 Jeff Hugo 2023-03-27  1502  	resp = kmalloc(sizeof(*resp), GFP_ATOMIC);
+129776ac2e3823 Jeff Hugo 2023-03-27  1503  	if (!resp) {
+129776ac2e3823 Jeff Hugo 2023-03-27  1504  		kfree(msg);
+129776ac2e3823 Jeff Hugo 2023-03-27  1505  		return;
+129776ac2e3823 Jeff Hugo 2023-03-27  1506  	}
+129776ac2e3823 Jeff Hugo 2023-03-27  1507  
+129776ac2e3823 Jeff Hugo 2023-03-27  1508  	INIT_WORK(&resp->work, resp_worker);
+129776ac2e3823 Jeff Hugo 2023-03-27  1509  	resp->qdev = qdev;
+129776ac2e3823 Jeff Hugo 2023-03-27  1510  	resp->buf = msg;
+129776ac2e3823 Jeff Hugo 2023-03-27  1511  	queue_work(qdev->cntl_wq, &resp->work);
+129776ac2e3823 Jeff Hugo 2023-03-27  1512  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1513  
+129776ac2e3823 Jeff Hugo 2023-03-27  1514  int qaic_control_open(struct qaic_device *qdev)
+129776ac2e3823 Jeff Hugo 2023-03-27  1515  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1516  	if (!qdev->cntl_ch)
+129776ac2e3823 Jeff Hugo 2023-03-27  1517  		return -ENODEV;
+129776ac2e3823 Jeff Hugo 2023-03-27  1518  
+129776ac2e3823 Jeff Hugo 2023-03-27  1519  	qdev->cntl_lost_buf = false;
+129776ac2e3823 Jeff Hugo 2023-03-27  1520  	/*
+129776ac2e3823 Jeff Hugo 2023-03-27  1521  	 * By default qaic should assume that device has CRC enabled.
+129776ac2e3823 Jeff Hugo 2023-03-27  1522  	 * Qaic comes to know if device has CRC enabled or disabled during the
+129776ac2e3823 Jeff Hugo 2023-03-27  1523  	 * device status transaction, which is the first transaction performed
+129776ac2e3823 Jeff Hugo 2023-03-27  1524  	 * on control channel.
+129776ac2e3823 Jeff Hugo 2023-03-27  1525  	 *
+129776ac2e3823 Jeff Hugo 2023-03-27  1526  	 * So CRC validation of first device status transaction response is
+129776ac2e3823 Jeff Hugo 2023-03-27  1527  	 * ignored (by calling valid_crc_stub) and is done later during decoding
+129776ac2e3823 Jeff Hugo 2023-03-27  1528  	 * if device has CRC enabled.
+129776ac2e3823 Jeff Hugo 2023-03-27  1529  	 * Now that qaic knows whether device has CRC enabled or not it acts
+129776ac2e3823 Jeff Hugo 2023-03-27  1530  	 * accordingly.
+129776ac2e3823 Jeff Hugo 2023-03-27  1531  	 */
+129776ac2e3823 Jeff Hugo 2023-03-27  1532  	qdev->gen_crc = gen_crc;
+129776ac2e3823 Jeff Hugo 2023-03-27  1533  	qdev->valid_crc = valid_crc_stub;
+129776ac2e3823 Jeff Hugo 2023-03-27  1534  
+129776ac2e3823 Jeff Hugo 2023-03-27  1535  	return mhi_prepare_for_transfer(qdev->cntl_ch);
+129776ac2e3823 Jeff Hugo 2023-03-27  1536  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1537  
+129776ac2e3823 Jeff Hugo 2023-03-27  1538  void qaic_control_close(struct qaic_device *qdev)
+129776ac2e3823 Jeff Hugo 2023-03-27  1539  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1540  	mhi_unprepare_from_transfer(qdev->cntl_ch);
+129776ac2e3823 Jeff Hugo 2023-03-27  1541  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1542  
+129776ac2e3823 Jeff Hugo 2023-03-27  1543  void qaic_release_usr(struct qaic_device *qdev, struct qaic_user *usr)
+129776ac2e3823 Jeff Hugo 2023-03-27  1544  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1545  	struct wire_trans_terminate_to_dev *trans;
+129776ac2e3823 Jeff Hugo 2023-03-27  1546  	struct wrapper_list *wrappers;
+129776ac2e3823 Jeff Hugo 2023-03-27  1547  	struct wrapper_msg *wrapper;
+129776ac2e3823 Jeff Hugo 2023-03-27  1548  	struct wire_msg *msg;
+129776ac2e3823 Jeff Hugo 2023-03-27  1549  	struct wire_msg *rsp;
+129776ac2e3823 Jeff Hugo 2023-03-27  1550  
+129776ac2e3823 Jeff Hugo 2023-03-27  1551  	wrappers = alloc_wrapper_list();
+129776ac2e3823 Jeff Hugo 2023-03-27  1552  	if (!wrappers)
+129776ac2e3823 Jeff Hugo 2023-03-27  1553  		return;
+129776ac2e3823 Jeff Hugo 2023-03-27  1554  
+129776ac2e3823 Jeff Hugo 2023-03-27  1555  	wrapper = add_wrapper(wrappers, sizeof(*wrapper) + sizeof(*msg) + sizeof(*trans));
+129776ac2e3823 Jeff Hugo 2023-03-27  1556  	if (!wrapper)
+129776ac2e3823 Jeff Hugo 2023-03-27  1557  		return;
+129776ac2e3823 Jeff Hugo 2023-03-27  1558  
+129776ac2e3823 Jeff Hugo 2023-03-27  1559  	msg = &wrapper->msg;
+129776ac2e3823 Jeff Hugo 2023-03-27  1560  
+129776ac2e3823 Jeff Hugo 2023-03-27  1561  	trans = (struct wire_trans_terminate_to_dev *)msg->data;
+129776ac2e3823 Jeff Hugo 2023-03-27  1562  
+129776ac2e3823 Jeff Hugo 2023-03-27  1563  	trans->hdr.type = cpu_to_le32(QAIC_TRANS_TERMINATE_TO_DEV);
+129776ac2e3823 Jeff Hugo 2023-03-27  1564  	trans->hdr.len = cpu_to_le32(sizeof(*trans));
+129776ac2e3823 Jeff Hugo 2023-03-27  1565  	trans->handle = cpu_to_le32(usr->handle);
+129776ac2e3823 Jeff Hugo 2023-03-27  1566  
+129776ac2e3823 Jeff Hugo 2023-03-27  1567  	mutex_lock(&qdev->cntl_mutex);
+129776ac2e3823 Jeff Hugo 2023-03-27  1568  	wrapper->len = sizeof(msg->hdr) + sizeof(*trans);
+129776ac2e3823 Jeff Hugo 2023-03-27  1569  	msg->hdr.magic_number = MANAGE_MAGIC_NUMBER;
+129776ac2e3823 Jeff Hugo 2023-03-27  1570  	msg->hdr.sequence_number = cpu_to_le32(qdev->next_seq_num++);
+129776ac2e3823 Jeff Hugo 2023-03-27  1571  	msg->hdr.len = cpu_to_le32(wrapper->len);
+129776ac2e3823 Jeff Hugo 2023-03-27  1572  	msg->hdr.count = cpu_to_le32(1);
+129776ac2e3823 Jeff Hugo 2023-03-27  1573  	msg->hdr.handle = cpu_to_le32(usr->handle);
+129776ac2e3823 Jeff Hugo 2023-03-27  1574  	msg->hdr.padding = cpu_to_le32(0);
+129776ac2e3823 Jeff Hugo 2023-03-27  1575  	msg->hdr.crc32 = cpu_to_le32(qdev->gen_crc(wrappers));
+129776ac2e3823 Jeff Hugo 2023-03-27  1576  
+129776ac2e3823 Jeff Hugo 2023-03-27  1577  	/*
+129776ac2e3823 Jeff Hugo 2023-03-27  1578  	 * msg_xfer releases the mutex
+129776ac2e3823 Jeff Hugo 2023-03-27  1579  	 * We don't care about the return of msg_xfer since we will not do
+129776ac2e3823 Jeff Hugo 2023-03-27  1580  	 * anything different based on what happens.
+129776ac2e3823 Jeff Hugo 2023-03-27  1581  	 * We ignore pending signals since one will be set if the user is
+129776ac2e3823 Jeff Hugo 2023-03-27  1582  	 * killed, and we need give the device a chance to cleanup, otherwise
+129776ac2e3823 Jeff Hugo 2023-03-27  1583  	 * DMA may still be in progress when we return.
+129776ac2e3823 Jeff Hugo 2023-03-27  1584  	 */
+129776ac2e3823 Jeff Hugo 2023-03-27  1585  	rsp = msg_xfer(qdev, wrappers, qdev->next_seq_num - 1, true);
+129776ac2e3823 Jeff Hugo 2023-03-27  1586  	if (!IS_ERR(rsp))
+129776ac2e3823 Jeff Hugo 2023-03-27  1587  		kfree(rsp);
+129776ac2e3823 Jeff Hugo 2023-03-27  1588  	free_wrapper_from_list(wrappers, wrapper);
+129776ac2e3823 Jeff Hugo 2023-03-27  1589  }
+129776ac2e3823 Jeff Hugo 2023-03-27  1590  
+129776ac2e3823 Jeff Hugo 2023-03-27  1591  void wake_all_cntl(struct qaic_device *qdev)
+129776ac2e3823 Jeff Hugo 2023-03-27  1592  {
+129776ac2e3823 Jeff Hugo 2023-03-27  1593  	struct xfer_queue_elem *elem;
+129776ac2e3823 Jeff Hugo 2023-03-27  1594  	struct xfer_queue_elem *i;
+129776ac2e3823 Jeff Hugo 2023-03-27  1595  
+129776ac2e3823 Jeff Hugo 2023-03-27  1596  	mutex_lock(&qdev->cntl_mutex);
+129776ac2e3823 Jeff Hugo 2023-03-27  1597  	list_for_each_entry_safe(elem, i, &qdev->cntl_xfer_list, list) {
+129776ac2e3823 Jeff Hugo 2023-03-27  1598  		list_del_init(&elem->list);
+129776ac2e3823 Jeff Hugo 2023-03-27  1599  		complete_all(&elem->xfer_done);
+129776ac2e3823 Jeff Hugo 2023-03-27  1600  	}
+129776ac2e3823 Jeff Hugo 2023-03-27  1601  	mutex_unlock(&qdev->cntl_mutex);
+129776ac2e3823 Jeff Hugo 2023-03-27 @1602  }
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
