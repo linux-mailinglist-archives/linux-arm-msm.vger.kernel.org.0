@@ -1,280 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-86548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAB54CDBF24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 11:15:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F461CDBF1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 11:15:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9D2FF3026AB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 10:12:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9B2CB3027CED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 10:11:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A1833373D;
-	Wed, 24 Dec 2025 10:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0E543346AB;
+	Wed, 24 Dec 2025 10:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oColYT7K"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SjZSYxdt";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="O3vcEA2v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B6A32AAB4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 10:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAD832FA25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 10:11:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766571122; cv=none; b=nyoBE3lZY4etfFUi3M1dxioO6KC+7cDxX40Lu1SjtftoAXctf5pWS8eg7BS/kV8DjGsf6KkhLPiMr/zOhve5W+007pMO3A63fuK9cPtDo7XcRfDF9SGvqXtIvBjXv1Lav2w3iLgvVjGf9DQV1HvZqE63J9IV513zffIJ5K8MDxo=
+	t=1766571108; cv=none; b=o1faZWV6ou0cW0GmF2YR3sasb/ljewnEDQwjSK0UhuRQd1sQp5zoYyFC53DuXFfWlwaHR4f5cF/lWm9FFhUtJumOeWIQlBf1bNuIChbw4ZISqkx/+v3xwMEm+OsegOJ20XhO+2cOEMifOq1M4wntLwQdaJ4I1lhum9URQvnfPw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766571122; c=relaxed/simple;
-	bh=5z1guFUcp3PiZ1mJvphWJEQT9yKrp+OX2pIL0PT9hoQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F04J43z6whIoKt6bZh1P/TQNJ3rmifSUjBPxulP2q/3pkEvWM8ZHlFsApw7vYd+lQ3JyoSJE794szPrTwtdXcoBFaMs3xz7+IS3Pf98VNvwzK1dVJY+QnBz41aubwqdbdclpFUm4VnmQXS1qlPltHGnCBUYXfgc84TbYr4QnqQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oColYT7K; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1766571120; x=1798107120;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5z1guFUcp3PiZ1mJvphWJEQT9yKrp+OX2pIL0PT9hoQ=;
-  b=oColYT7KcXpE0jmvsafQNzlrWsJPqSTpzF12OtIbmAIiJA6wcGhOy05N
-   BDfN68NeJQ295KbLm2aJgm07vi7NL597wSAMAqaEc3v5Jh1vRgIdyyi8H
-   wNeBLo7Jbwj+HtbdTu5UM+ge5sj11VRgWA4ahtyAQXXV70FPxr3zNqvsF
-   A78rNLsYwBC/++WUCwnzMnYEClcom4Xf/j07kF4XpXjWr/sUXcKv8ZYFP
-   epvvNibQryPj2BXseoimv7eNCvRV2Wcn7je7tPTwQWZoSkPIiQ1VEiTsZ
-   3ABvW/UW2CkO4Sfl0cw25qmj6DErU+jJkAsHHNhEY5IECCHIgrnlsTtCJ
-   w==;
-X-CSE-ConnectionGUID: NTB6wQWhR4SZf0hQcp5JDw==
-X-CSE-MsgGUID: jLmLJ/rhRrKRdp+blg3fbw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11651"; a="72273017"
-X-IronPort-AV: E=Sophos;i="6.21,173,1763452800"; 
-   d="scan'208";a="72273017"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Dec 2025 02:11:59 -0800
-X-CSE-ConnectionGUID: zs4kUCMSSFeq0Vrn7sfkqA==
-X-CSE-MsgGUID: 8pqrvxb0Roee+TnO2WMuGQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,173,1763452800"; 
-   d="scan'208";a="205061381"
-Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
-  by orviesa005.jf.intel.com with ESMTP; 24 Dec 2025 02:11:56 -0800
-Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vYLqT-000000002vR-28Mx;
-	Wed, 24 Dec 2025 10:11:53 +0000
-Date: Wed, 24 Dec 2025 18:11:17 +0800
-From: kernel test robot <lkp@intel.com>
-To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-	jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
-	troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, ogabbay@kernel.org,
-	lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] accel/qaic: Handle DBC deactivation if the owner went
- away
-Message-ID: <202512241701.p3agYhbp-lkp@intel.com>
-References: <20251223153151.2232297-1-youssef.abdulrahman@oss.qualcomm.com>
+	s=arc-20240116; t=1766571108; c=relaxed/simple;
+	bh=0+LzigftUlRjypYE7eKHbXMl8C6YbFGHAlET3r9jYMQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=olXJ8avC40ZvoO1mDLRgfQdh74y7eoloW/ylmYmoWff7anNzyRe+T1Zz7b5VymQSJsa+9kO/QRXHUg6R4PEuxWE+e/LOYHXhIZmo6GqeHxvHQi/TxobrgnfnN7O23mgUsX79WsE4FYQKVYwhS0L4ApmiOZSZPZ2OUTWBA0AYubQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SjZSYxdt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=O3vcEA2v; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO9HEed700565
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 10:11:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Svub1lU8ZSgyZ0FEnwysVHAmS9UtLZzdyHUW+Tohk6E=; b=SjZSYxdt2qoOIAnh
+	sPT/EtoFzR/AwExHlaMqaGu92FAjXvr4mI/r4uIFkGszTaRob3AZ65FxNpZmSx+B
+	3zraQBeYRFFTb5xW2K4U8xyfKGiAp6NxTxyKmBv0jmmQJ09FEVR64SJxBdhhy9sl
+	WCiJ5FiweTQixePBqHVC+J1POROYTAWLRCTUa6/99utOu7pdlfCOThZzLn3BdLn6
+	6BQK18B6FA7PT/LjV6H7Ch5smKCsJk9D3N5z/hYMHLNaLOizMdS7n5HFn9+1x6q8
+	xMu0W+z/wm3q+vhcUwb8SDsC1H06QMqda5bEkzaPeHGZ0jClBtj0LNMvJZ7QbLc3
+	GljtdQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7t7jud5y-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 10:11:46 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a0fe4ade9eso61978925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 02:11:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766571105; x=1767175905; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Svub1lU8ZSgyZ0FEnwysVHAmS9UtLZzdyHUW+Tohk6E=;
+        b=O3vcEA2viZ3YgUK9+c0aWZ/HMJMkoqpIY97uhD0jaFrbC1AX7AEFlrgJYdsNDBAJ3x
+         iJHyK4Hw/CTSwucY6NX9pgen0TtpkyKUwSLKs/4vDaCcEf/Uu4Odb3aYQy84G0OoG5fc
+         yxAp3cU35xViShPa6QP8nWTOOBsMWRw/pFPwJjVwHhBKNCESdBO6xbUslzXzsUKYYxUg
+         vvEO3I5LLNPnzNaAWuP6E/neyqRSQlE+D73kZ5mAcjE0bTSE4BWbWEBwUR/lZhwJA8hD
+         nUP85/DCThNJlxJJcYFQum1KvY5ZvazX657dRqdRkuph7ATOonMmEH0aPEHQAtNOa8Hr
+         7e5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766571105; x=1767175905;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Svub1lU8ZSgyZ0FEnwysVHAmS9UtLZzdyHUW+Tohk6E=;
+        b=lSSnsRndgvjspbiMfeYR/XDrrkalr2rexrnmwbwTRq79RTM1Yp8Zot8VHr0SKBwoxl
+         y5fDTD9LHdDLoiPo+hdSCnJbV9I6VwXbZZoTMbDxu8FX5DPNEUxZOB6RvB/fnEt88a8C
+         6Czs84Fev3d8zyhisQYL/Vg7mbEDu8Ap9XTJLI5AuFVOpvx46Q003qxsEpq4hFkRvJik
+         aavj0RUpuMNbUOwKn/6qHIa4yfg7adr2dxdVX7j9VZ6a375p9gQl5mPMUDzsVbNvpe9s
+         cSbLpqCbD7d/HOwDp/0rpTcBAfDN0Nfu7Q8wPw9Qh0dg9hvPpTHGhkEboKGZWsnUvoaz
+         IU1g==
+X-Gm-Message-State: AOJu0YyOWob0FNcMnj/cpOBFaaMJIcHuS5YygmbSXBZZnEzn7He0doSr
+	CT3pJ4A3jQJtZV4+1TEPehsJMxSVgUncH8CgbeIIFIIoH7yIlHUI4hLaJ4uBAh/nr+zN25nd4vr
+	6wQRYr4urGafvUFnaUAPKMueIDS1INJzlsHJPSZhKEyCXUciiToGesUFLl9PYnokRnbqk
+X-Gm-Gg: AY/fxX785Rs43PSW1YOn/2QYWJPFDULye0GUg46vQUCYn43M333/wuueDV/x3ykshdT
+	BMszLA89wOUHHVxn0frs4WUovfLzpvcMQgsUMHOrI15Z/kRVlsMcBfQS4scI4foD3iB2lv1kTGb
+	lQH+X0+FvCBTWnglw7kRBLTj0ss2V2//Kbo149gg/+XJh94/U02NbrARz5sdKsQFgpjXhh58/Iy
+	yAhSK/8tuNDRWHv4RcoxrRa+UQVhVEck+rU+LhwZ4DVGhXM/Ps6YxY+HwszV4VWfhX9LaouAmBe
+	QBM29WhNurEl/0N98ARYZUdlezjw/COe9XqmJo3UTy8rhmfUQfeK6m68BlBCwA+TK5BrYQvudZh
+	7/OVayt01MsJ7QQUlPdm3+oTiYesqklWDX74/+Gaw5Q==
+X-Received: by 2002:a17:903:2cd:b0:2a0:e532:242e with SMTP id d9443c01a7336-2a2f220dd7bmr160503265ad.11.1766571104930;
+        Wed, 24 Dec 2025 02:11:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEPP9Ip+0lDlRJOgiICxJKR2lJuGko3g+A/N9Bn0a9iSgphrPC7hgQ2nkVu84feaV3gcN9RWg==
+X-Received: by 2002:a17:903:2cd:b0:2a0:e532:242e with SMTP id d9443c01a7336-2a2f220dd7bmr160502985ad.11.1766571104446;
+        Wed, 24 Dec 2025 02:11:44 -0800 (PST)
+Received: from [192.168.1.11] ([106.222.232.236])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c66bd3sm151171405ad.1.2025.12.24.02.11.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Dec 2025 02:11:44 -0800 (PST)
+Message-ID: <a0df9078-f05e-40bc-a708-cd03eb86839f@oss.qualcomm.com>
+Date: Wed, 24 Dec 2025 15:41:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251223153151.2232297-1-youssef.abdulrahman@oss.qualcomm.com>
-
-Hi Youssef,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on linus/master v6.19-rc2 next-20251219]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Youssef-Samir/accel-qaic-Handle-DBC-deactivation-if-the-owner-went-away/20251223-233305
-base:   https://gitlab.freedesktop.org/drm/misc/kernel.git drm-misc-next
-patch link:    https://lore.kernel.org/r/20251223153151.2232297-1-youssef.abdulrahman%40oss.qualcomm.com
-patch subject: [PATCH] accel/qaic: Handle DBC deactivation if the owner went away
-config: i386-randconfig-012-20251224 (https://download.01.org/0day-ci/archive/20251224/202512241701.p3agYhbp-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251224/202512241701.p3agYhbp-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202512241701.p3agYhbp-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/accel/qaic/qaic_control.c:1471:1: error: function definition is not allowed here
-    1471 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1484:1: error: function definition is not allowed here
-    1484 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1492:1: error: function definition is not allowed here
-    1492 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1515:1: error: function definition is not allowed here
-    1515 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1539:1: error: function definition is not allowed here
-    1539 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1544:1: error: function definition is not allowed here
-    1544 | {
-         | ^
-   drivers/accel/qaic/qaic_control.c:1592:1: error: function definition is not allowed here
-    1592 | {
-         | ^
->> drivers/accel/qaic/qaic_control.c:1602:2: error: expected '}'
-    1602 | }
-         |  ^
-   drivers/accel/qaic/qaic_control.c:1404:1: note: to match this '{'
-    1404 | {
-         | ^
-   8 errors generated.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 8/8] arm64: dts: qcom: Enable cdsp qmi tmd devices for
+ monaco
+To: Krzysztof Kozlowski <krzk@kernel.org>, andersson@kernel.org,
+        mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, rafael@kernel.org, daniel.lezcano@linaro.org,
+        rui.zhang@intel.com, lukasz.luba@arm.com, konradybcio@kernel.org,
+        amitk@kernel.org, mani@kernel.org, casey.connolly@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20251223123227.1317244-1-gaurav.kohli@oss.qualcomm.com>
+ <20251223123227.1317244-9-gaurav.kohli@oss.qualcomm.com>
+ <2ce05668-e4b1-4943-aebd-9ba57f4c8363@kernel.org>
+Content-Language: en-US
+From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+In-Reply-To: <2ce05668-e4b1-4943-aebd-9ba57f4c8363@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDA4NyBTYWx0ZWRfX/zv+wDkZRlmH
+ LtG666kBIUeS2FW2emMuL1aenNEqf4GByfKukmhjg5756KMnuNhM9p7+sUtjm5QG0nV/2H2uAlH
+ 6ecjgd0SEGf++nqN/9dpqW3bwK6x5uVX6pzJDpAWaU6PCl4tFeaPbdBJPt5RC29Qi5G5hYhz6AO
+ XsGO7o6fyDD87VH58eSmATTNjxSm02R9f3EzrJGlQqi5woCFdeU3OS+SYETN8OC2Z5+pu3SVVyI
+ jRsWStQ9lC/wTYLLB+uIOTdkxOvnngRkPYbOY1q5yC42NHTHdvaWECchNrg4pDkadsMEZEUzuIU
+ 5cMg6ZcPP7KMrCI0HwKTNwKyzKGL8+3bLTX6hcm9ZViMpR1vGrZ6byjzPi89clWzoPjDDhSOCYg
+ 5g5HX7LkgvCCi456aMQb5ZHyq/gOmGSiFGcmE7J+1wGuFoUMbovvLog2Ag4SaqTi34wTRlzYP+k
+ dto23guKja6uWf9ZAcQ==
+X-Authority-Analysis: v=2.4 cv=IvATsb/g c=1 sm=1 tr=0 ts=694bbc62 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=pk+8NuH2X28N4C0eta/h1Q==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=JG_C0qjW1QYSyXvylJMA:9
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: _smqAMOpioeIqWh-mpJr2hkGzoe7eXXx
+X-Proofpoint-ORIG-GUID: _smqAMOpioeIqWh-mpJr2hkGzoe7eXXx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-24_03,2025-12-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240087
 
 
-vim +1471 drivers/accel/qaic/qaic_control.c
+On 12/24/2025 2:28 PM, Krzysztof Kozlowski wrote:
+> On 23/12/2025 13:32, Gaurav Kohli wrote:
+>> Enable cdsp cooling devices and thermal zone cooling map bindings
+>> for cdsp.
+>>
+>> Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/monaco.dtsi | 92 ++++++++++++++++++++++++++++
+>>   1 file changed, 92 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> index 985e37bf4876..1fe148ec5cf7 100644
+>> --- a/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+>> @@ -6217,6 +6217,14 @@ compute-cb@4 {
+>>   					};
+>>   				};
+>>   			};
+>> +
+>> +			cooling {
+>> +				compatible = "qcom,qmi-cooling-cdsp";
+>> +					cdsp_sw: cdsp_sw {
+> Another LLM generated snippet or just mistake?
 
-129776ac2e3823 Jeff Hugo 2023-03-27  1469  
-129776ac2e3823 Jeff Hugo 2023-03-27  1470  static void free_wrapper_from_list(struct wrapper_list *wrappers, struct wrapper_msg *wrapper)
-129776ac2e3823 Jeff Hugo 2023-03-27 @1471  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1472  	bool all_done = false;
-129776ac2e3823 Jeff Hugo 2023-03-27  1473  
-129776ac2e3823 Jeff Hugo 2023-03-27  1474  	spin_lock(&wrappers->lock);
-129776ac2e3823 Jeff Hugo 2023-03-27  1475  	kref_put(&wrapper->ref_count, free_wrapper);
-129776ac2e3823 Jeff Hugo 2023-03-27  1476  	all_done = list_empty(&wrappers->list);
-129776ac2e3823 Jeff Hugo 2023-03-27  1477  	spin_unlock(&wrappers->lock);
-129776ac2e3823 Jeff Hugo 2023-03-27  1478  
-129776ac2e3823 Jeff Hugo 2023-03-27  1479  	if (all_done)
-129776ac2e3823 Jeff Hugo 2023-03-27  1480  		kfree(wrappers);
-129776ac2e3823 Jeff Hugo 2023-03-27  1481  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1482  
-129776ac2e3823 Jeff Hugo 2023-03-27  1483  void qaic_mhi_ul_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-129776ac2e3823 Jeff Hugo 2023-03-27  1484  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1485  	struct wire_msg *msg = mhi_result->buf_addr;
-129776ac2e3823 Jeff Hugo 2023-03-27  1486  	struct wrapper_msg *wrapper = container_of(msg, struct wrapper_msg, msg);
-129776ac2e3823 Jeff Hugo 2023-03-27  1487  
-129776ac2e3823 Jeff Hugo 2023-03-27  1488  	free_wrapper_from_list(wrapper->head, wrapper);
-129776ac2e3823 Jeff Hugo 2023-03-27  1489  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1490  
-129776ac2e3823 Jeff Hugo 2023-03-27  1491  void qaic_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result *mhi_result)
-129776ac2e3823 Jeff Hugo 2023-03-27  1492  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1493  	struct qaic_device *qdev = dev_get_drvdata(&mhi_dev->dev);
-129776ac2e3823 Jeff Hugo 2023-03-27  1494  	struct wire_msg *msg = mhi_result->buf_addr;
-129776ac2e3823 Jeff Hugo 2023-03-27  1495  	struct resp_work *resp;
-129776ac2e3823 Jeff Hugo 2023-03-27  1496  
-129776ac2e3823 Jeff Hugo 2023-03-27  1497  	if (mhi_result->transaction_status || msg->hdr.magic_number != MANAGE_MAGIC_NUMBER) {
-129776ac2e3823 Jeff Hugo 2023-03-27  1498  		kfree(msg);
-129776ac2e3823 Jeff Hugo 2023-03-27  1499  		return;
-129776ac2e3823 Jeff Hugo 2023-03-27  1500  	}
-129776ac2e3823 Jeff Hugo 2023-03-27  1501  
-129776ac2e3823 Jeff Hugo 2023-03-27  1502  	resp = kmalloc(sizeof(*resp), GFP_ATOMIC);
-129776ac2e3823 Jeff Hugo 2023-03-27  1503  	if (!resp) {
-129776ac2e3823 Jeff Hugo 2023-03-27  1504  		kfree(msg);
-129776ac2e3823 Jeff Hugo 2023-03-27  1505  		return;
-129776ac2e3823 Jeff Hugo 2023-03-27  1506  	}
-129776ac2e3823 Jeff Hugo 2023-03-27  1507  
-129776ac2e3823 Jeff Hugo 2023-03-27  1508  	INIT_WORK(&resp->work, resp_worker);
-129776ac2e3823 Jeff Hugo 2023-03-27  1509  	resp->qdev = qdev;
-129776ac2e3823 Jeff Hugo 2023-03-27  1510  	resp->buf = msg;
-129776ac2e3823 Jeff Hugo 2023-03-27  1511  	queue_work(qdev->cntl_wq, &resp->work);
-129776ac2e3823 Jeff Hugo 2023-03-27  1512  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1513  
-129776ac2e3823 Jeff Hugo 2023-03-27  1514  int qaic_control_open(struct qaic_device *qdev)
-129776ac2e3823 Jeff Hugo 2023-03-27  1515  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1516  	if (!qdev->cntl_ch)
-129776ac2e3823 Jeff Hugo 2023-03-27  1517  		return -ENODEV;
-129776ac2e3823 Jeff Hugo 2023-03-27  1518  
-129776ac2e3823 Jeff Hugo 2023-03-27  1519  	qdev->cntl_lost_buf = false;
-129776ac2e3823 Jeff Hugo 2023-03-27  1520  	/*
-129776ac2e3823 Jeff Hugo 2023-03-27  1521  	 * By default qaic should assume that device has CRC enabled.
-129776ac2e3823 Jeff Hugo 2023-03-27  1522  	 * Qaic comes to know if device has CRC enabled or disabled during the
-129776ac2e3823 Jeff Hugo 2023-03-27  1523  	 * device status transaction, which is the first transaction performed
-129776ac2e3823 Jeff Hugo 2023-03-27  1524  	 * on control channel.
-129776ac2e3823 Jeff Hugo 2023-03-27  1525  	 *
-129776ac2e3823 Jeff Hugo 2023-03-27  1526  	 * So CRC validation of first device status transaction response is
-129776ac2e3823 Jeff Hugo 2023-03-27  1527  	 * ignored (by calling valid_crc_stub) and is done later during decoding
-129776ac2e3823 Jeff Hugo 2023-03-27  1528  	 * if device has CRC enabled.
-129776ac2e3823 Jeff Hugo 2023-03-27  1529  	 * Now that qaic knows whether device has CRC enabled or not it acts
-129776ac2e3823 Jeff Hugo 2023-03-27  1530  	 * accordingly.
-129776ac2e3823 Jeff Hugo 2023-03-27  1531  	 */
-129776ac2e3823 Jeff Hugo 2023-03-27  1532  	qdev->gen_crc = gen_crc;
-129776ac2e3823 Jeff Hugo 2023-03-27  1533  	qdev->valid_crc = valid_crc_stub;
-129776ac2e3823 Jeff Hugo 2023-03-27  1534  
-129776ac2e3823 Jeff Hugo 2023-03-27  1535  	return mhi_prepare_for_transfer(qdev->cntl_ch);
-129776ac2e3823 Jeff Hugo 2023-03-27  1536  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1537  
-129776ac2e3823 Jeff Hugo 2023-03-27  1538  void qaic_control_close(struct qaic_device *qdev)
-129776ac2e3823 Jeff Hugo 2023-03-27  1539  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1540  	mhi_unprepare_from_transfer(qdev->cntl_ch);
-129776ac2e3823 Jeff Hugo 2023-03-27  1541  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1542  
-129776ac2e3823 Jeff Hugo 2023-03-27  1543  void qaic_release_usr(struct qaic_device *qdev, struct qaic_user *usr)
-129776ac2e3823 Jeff Hugo 2023-03-27  1544  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1545  	struct wire_trans_terminate_to_dev *trans;
-129776ac2e3823 Jeff Hugo 2023-03-27  1546  	struct wrapper_list *wrappers;
-129776ac2e3823 Jeff Hugo 2023-03-27  1547  	struct wrapper_msg *wrapper;
-129776ac2e3823 Jeff Hugo 2023-03-27  1548  	struct wire_msg *msg;
-129776ac2e3823 Jeff Hugo 2023-03-27  1549  	struct wire_msg *rsp;
-129776ac2e3823 Jeff Hugo 2023-03-27  1550  
-129776ac2e3823 Jeff Hugo 2023-03-27  1551  	wrappers = alloc_wrapper_list();
-129776ac2e3823 Jeff Hugo 2023-03-27  1552  	if (!wrappers)
-129776ac2e3823 Jeff Hugo 2023-03-27  1553  		return;
-129776ac2e3823 Jeff Hugo 2023-03-27  1554  
-129776ac2e3823 Jeff Hugo 2023-03-27  1555  	wrapper = add_wrapper(wrappers, sizeof(*wrapper) + sizeof(*msg) + sizeof(*trans));
-129776ac2e3823 Jeff Hugo 2023-03-27  1556  	if (!wrapper)
-129776ac2e3823 Jeff Hugo 2023-03-27  1557  		return;
-129776ac2e3823 Jeff Hugo 2023-03-27  1558  
-129776ac2e3823 Jeff Hugo 2023-03-27  1559  	msg = &wrapper->msg;
-129776ac2e3823 Jeff Hugo 2023-03-27  1560  
-129776ac2e3823 Jeff Hugo 2023-03-27  1561  	trans = (struct wire_trans_terminate_to_dev *)msg->data;
-129776ac2e3823 Jeff Hugo 2023-03-27  1562  
-129776ac2e3823 Jeff Hugo 2023-03-27  1563  	trans->hdr.type = cpu_to_le32(QAIC_TRANS_TERMINATE_TO_DEV);
-129776ac2e3823 Jeff Hugo 2023-03-27  1564  	trans->hdr.len = cpu_to_le32(sizeof(*trans));
-129776ac2e3823 Jeff Hugo 2023-03-27  1565  	trans->handle = cpu_to_le32(usr->handle);
-129776ac2e3823 Jeff Hugo 2023-03-27  1566  
-129776ac2e3823 Jeff Hugo 2023-03-27  1567  	mutex_lock(&qdev->cntl_mutex);
-129776ac2e3823 Jeff Hugo 2023-03-27  1568  	wrapper->len = sizeof(msg->hdr) + sizeof(*trans);
-129776ac2e3823 Jeff Hugo 2023-03-27  1569  	msg->hdr.magic_number = MANAGE_MAGIC_NUMBER;
-129776ac2e3823 Jeff Hugo 2023-03-27  1570  	msg->hdr.sequence_number = cpu_to_le32(qdev->next_seq_num++);
-129776ac2e3823 Jeff Hugo 2023-03-27  1571  	msg->hdr.len = cpu_to_le32(wrapper->len);
-129776ac2e3823 Jeff Hugo 2023-03-27  1572  	msg->hdr.count = cpu_to_le32(1);
-129776ac2e3823 Jeff Hugo 2023-03-27  1573  	msg->hdr.handle = cpu_to_le32(usr->handle);
-129776ac2e3823 Jeff Hugo 2023-03-27  1574  	msg->hdr.padding = cpu_to_le32(0);
-129776ac2e3823 Jeff Hugo 2023-03-27  1575  	msg->hdr.crc32 = cpu_to_le32(qdev->gen_crc(wrappers));
-129776ac2e3823 Jeff Hugo 2023-03-27  1576  
-129776ac2e3823 Jeff Hugo 2023-03-27  1577  	/*
-129776ac2e3823 Jeff Hugo 2023-03-27  1578  	 * msg_xfer releases the mutex
-129776ac2e3823 Jeff Hugo 2023-03-27  1579  	 * We don't care about the return of msg_xfer since we will not do
-129776ac2e3823 Jeff Hugo 2023-03-27  1580  	 * anything different based on what happens.
-129776ac2e3823 Jeff Hugo 2023-03-27  1581  	 * We ignore pending signals since one will be set if the user is
-129776ac2e3823 Jeff Hugo 2023-03-27  1582  	 * killed, and we need give the device a chance to cleanup, otherwise
-129776ac2e3823 Jeff Hugo 2023-03-27  1583  	 * DMA may still be in progress when we return.
-129776ac2e3823 Jeff Hugo 2023-03-27  1584  	 */
-129776ac2e3823 Jeff Hugo 2023-03-27  1585  	rsp = msg_xfer(qdev, wrappers, qdev->next_seq_num - 1, true);
-129776ac2e3823 Jeff Hugo 2023-03-27  1586  	if (!IS_ERR(rsp))
-129776ac2e3823 Jeff Hugo 2023-03-27  1587  		kfree(rsp);
-129776ac2e3823 Jeff Hugo 2023-03-27  1588  	free_wrapper_from_list(wrappers, wrapper);
-129776ac2e3823 Jeff Hugo 2023-03-27  1589  }
-129776ac2e3823 Jeff Hugo 2023-03-27  1590  
-129776ac2e3823 Jeff Hugo 2023-03-27  1591  void wake_all_cntl(struct qaic_device *qdev)
-129776ac2e3823 Jeff Hugo 2023-03-27  1592  {
-129776ac2e3823 Jeff Hugo 2023-03-27  1593  	struct xfer_queue_elem *elem;
-129776ac2e3823 Jeff Hugo 2023-03-27  1594  	struct xfer_queue_elem *i;
-129776ac2e3823 Jeff Hugo 2023-03-27  1595  
-129776ac2e3823 Jeff Hugo 2023-03-27  1596  	mutex_lock(&qdev->cntl_mutex);
-129776ac2e3823 Jeff Hugo 2023-03-27  1597  	list_for_each_entry_safe(elem, i, &qdev->cntl_xfer_list, list) {
-129776ac2e3823 Jeff Hugo 2023-03-27  1598  		list_del_init(&elem->list);
-129776ac2e3823 Jeff Hugo 2023-03-27  1599  		complete_all(&elem->xfer_done);
-129776ac2e3823 Jeff Hugo 2023-03-27  1600  	}
-129776ac2e3823 Jeff Hugo 2023-03-27  1601  	mutex_unlock(&qdev->cntl_mutex);
-129776ac2e3823 Jeff Hugo 2023-03-27 @1602  }
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+All this is manual code, will fix this.
+
+
+>
+> Best regards,
+> Krzysztof
 
