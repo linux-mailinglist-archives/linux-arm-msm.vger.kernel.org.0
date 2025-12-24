@@ -1,291 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-86471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31681CDB58F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 05:43:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 334EECDB5BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 06:03:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 991C1301B2D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 04:43:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 04C39300F58A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 05:03:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10D31242D88;
-	Wed, 24 Dec 2025 04:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C62D329E4F;
+	Wed, 24 Dec 2025 05:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lptUDiMD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="J72xlBg5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kVig/kiC";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i2cxGFDc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D90A2BDC27
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 04:43:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A0B15530C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 05:03:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766551412; cv=none; b=iEz6vxIaulzfnByHsAIz++hxkyzhB/u/aFWmoPWUZR5Xd3sNxuFQWUymwPLuGpWRCYQ9SImhOiPAO2zOLAC1J6Xy8Pyj0DqsLMCEnVwRlZZu2U7tbXjEuLegdBfevAoLS+KSDAbp7D4mq146+yEYjj+ic20r+0P9FsbUvGdtcv8=
+	t=1766552612; cv=none; b=g3V8+GhHYyqlL0ik54wTE+D5VOV6wn4ab4pWtDvejYI5fEuS/hasEDzXEJf8zKvenwAMzrf51e6xb3v0WKwPq6MI3F1UMjcc9GChtPhhF7BHu+8k9fGl6n5I+b2ToUHhXHw1URj20bpgRV58AFcW3efIJdew84vGsbvzZ5HIGhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766551412; c=relaxed/simple;
-	bh=7AnAY1VSKRpLhFsr6vc0i3JglJIfczIn7APLeqeEZQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OW4jyhwLRSvsIRlWdngWHtU6P3XvhfLBBW9ILTUJI5ng0x9mDXO1KCMEebMfPMxirCrDJHXwq9nO/F2JVLOC2NkitOTfbbJICarHMvGq4rN/fzQ6+iIGVo0phvo2BZi84g0+MCxiwLV/RBxzRkF0jjtQIRFXNfWwOarMm4WAKLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lptUDiMD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=J72xlBg5; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1766552612; c=relaxed/simple;
+	bh=VBHucSIk2mL+cP78ZIxzb1+etZueT3233H8ESPtlA2M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=msYaOAqYnP2k8CKl5snyEL8wTRYIMeBs/9nlcvBu8OMS+ApinxBAMGZQEXtWoWOzImJpr7kbjhX2GhgEFQiGstFBi/zjHO5xn5JjH0FVIqwzhNrbAYQlXPHRPlZos+xgqSpkOl2I5JoZW6CiZDnGt/2O3s88mhbq8RYgAxs1F/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kVig/kiC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i2cxGFDc; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BNL0v9r700440
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 04:43:29 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO17STP1597726
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 05:03:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/NKX/57tYYBCmkhefEDajLW0SWz9CgJw4SMyS6Hgi3A=; b=lptUDiMD8lWvBeu0
-	OzkHjgLNGwbPOmWjlYj670wIGUXDFMgOm2/iVryRX5cASMdgkjfMLBYdLd5hb4Tt
-	jJEensK4SuRIecb+F5JaPP8R16vytpGSOqyBwCCtbkXq3vETxUJHAQE2Rsu6COO4
-	8GwUG834w8LYbXl/drMvCMXHCoKDP1BCYMFclswbkZ9CFpOq0L9JKtBkQCFOjeZq
-	ymGYM0TujPWCRgHUpUgOWNefx5puFOkTaSc8YkeQ17a50/gyqg7Da+eR0OBRN9cK
-	zqYkEexns+3HcoS3LYS9h1ndi+UcJkcUExrwkOsimZgw45WBQOz2Tl5kDr8ep++i
-	nvM/Vw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7t7jtmjk-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=liuHTqwVbAYEe3Lp7EYXcpno
+	orb5ueWy4zH5whvl2ZU=; b=kVig/kiCLit6tPWq0LxVdoL0Q6LwTX3Q2p9wxNaR
+	SY741qmHov681U9Ubq9MWh8W6tnmMaRMMfUMhrNXb49JjJaIXIS0/ZuAfyer38j6
+	NYbSHMURrS2Q36NkmrNfLCoNgS/37B94UrabOqifJH1nmW+Qog7I99v82edmd66C
+	ji7KT4I8j8Io5LwKB5piKUxksdp//zvg3Y6cAcrxohVHwb9b5dKozz9HmA/uh73n
+	Cwt6FJUHx4rZNEnyApv/fDgtVtY3dd/9CXka8NzSsi6hiAQclT2g/kzYzUgx3uQP
+	I3KijO97ZQiT/bKD1gLo9UGTYAs41lVolghXFqtJd69jqQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8683ggju-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 04:43:29 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7d481452732so10943463b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 20:43:29 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 05:03:30 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4f4a92bf359so120603701cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 21:03:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766551408; x=1767156208; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/NKX/57tYYBCmkhefEDajLW0SWz9CgJw4SMyS6Hgi3A=;
-        b=J72xlBg5AJmtqNjZV2c3LcUwRrLip8/essbTt/WccSiXjwZzJIN6dlM6VO+s/Ix6Iw
-         p52AGXQmuPaH9I/jVb1Z5wMSD1EO7gerU3Szm1wJub5QxP5B5Tecv/xHH/tif5578Cfn
-         1WHfHM8wXSyv+VVXPcq8742w64nlvWJ70BDAU0LjpN5ZwlZIK1sXNybNTPrRXG67nFJL
-         KmUNjw/20IR3qavJE5UJukGPMvEd5wX5WBAQ1mPBiIhehbjqh49NFYqtAwkZFQWl81yj
-         YR9/TiOcrZtNEs7cyvuLlAkEdw2VH5POrE234jtTTD4GGxskbC0TYOfveMpvUSs93H1C
-         0lLw==
+        d=oss.qualcomm.com; s=google; t=1766552609; x=1767157409; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=liuHTqwVbAYEe3Lp7EYXcpnoorb5ueWy4zH5whvl2ZU=;
+        b=i2cxGFDc8qwv+4FV8lDzcWe0L8QRan8YNqYp46FjedvBdciPD0zNyj12Up4n9Dnrk8
+         VTUhM9+8uaaRjUMxPtRCFeuD/TRxvm6yX5KMxGtNsV09FNDKkoQkCkkLMUAzT27H8RXt
+         Z5awtfflMtcHrNtNaQdVMogicF9e8zYZ4ictxYSy32C3ZHSMbvTHLyDRNX6YcZ6B0sVI
+         jQ6JTCLL3fnZfftuCf9vUHSlYheJxliYShxfbb+XwrDLOtIeMWfHoFpK/IGHBLztRFRj
+         7478keUjt3nyrIt9Xpwrvcw+qY4NtqJHKmys1sUI4wdNdqIWzrG2uv5l4DjBWLDu377q
+         FRIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766551408; x=1767156208;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/NKX/57tYYBCmkhefEDajLW0SWz9CgJw4SMyS6Hgi3A=;
-        b=JFgEfvX9Ng9yGfCoKB9iOh5CPBH1pL1WXH0N93ZG7rO3NGabD6zUJWQJp0+Z3sp2hR
-         86TYHdW3igIjJTfT9uBoFluXyLQFYUpkOrUvQJd6bL5DVfvwx80iDnIqvGfZVjhdwp9S
-         v+QOLAYJtkOiUof3UkY0avMki6NvkQkR8YlCHKm2pn7ukj3oR7AIF35vRwyzx3039Gs1
-         a5Fory2Udq7j5E2M6fDiQkZ834UmAldzcRKGktfOAIKaq+diEJGgCh0iiehWaC3UHjgi
-         jqOPFbCMCHEbvI+8hnRO8jhSQdIKgBlqyNeqzkqJIHuocHbDSE7p4dAi+obMIypVNdFk
-         3J+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWev9l+YRsQibgqkvq9ByIIQ+DSmQhpxi8/o1dHvpHC8S4zZgMatcfbVNyVNvlNQJarZhygW+cvnzQKo7UR@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrFq4Wx5ieASzz8E+BtfK543BhJpqn/BOusMMwYd9VNNJREbHx
-	IpccHdV155SQyfuqs0s0NG5C0OdVkzKYOvyAgGufLL9yqprchCfh2EYrXdPMlcZUjflGg+oMsRZ
-	/AbmDnoFRgsxvbKMEnj4R8LxydKds7nBuO1wzWl/XO6sjZOaKvuM9hNoH0RfaJVZwBj8F
-X-Gm-Gg: AY/fxX66vifw/ouerxK1QufeK0P1NqKJiSy+SLZEYw4nKu37kX2Lz7aQbo5VrFx1CPk
-	479+ed3K7jrGfkkUWpuYlyWG3P8hDO8t/IbsmffGbU2MPuTKlxJCujuMrzBvxml+gTF4pq1KREJ
-	l7Q+t6KILDuMRxAaAL/6/uSZdw4BI4i7YEQXkJIKur8vMQrLrobjR1IogQX9B2oGs3fhfyQySg7
-	O3UZTbhGe7P8NseJMKTqg8eF3ia1cmiU0gDr+QuwDXdDJr6jQc6Givrk1+b9Qqqf2ZuZhksrG+h
-	KodA3nvIdDGWStAWGWDo/nZrnKMWeDKStHnDEZhwF6cA7uLZDTe9Sw6T8/bas4P6PDGt+i17myX
-	Ewv02P9Mj7SsETEd4ss30CK/0WKe/f2ZwEH3rZ3aM+6aT4E6Xkn/SX+8O3kf9wh75zvjSCJbur/
-	BiiALG
-X-Received: by 2002:a05:6a00:8d8e:b0:7b8:3549:85f9 with SMTP id d2e1a72fcca58-7ff64eca979mr14445114b3a.30.1766551408202;
-        Tue, 23 Dec 2025 20:43:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHvc4FrnFMsQMIBE3qVedvVFkxoaNx3NeqcjjCZI3I6L2rFmIE9Yn6mBYWW9e5zltIVhIzrsA==
-X-Received: by 2002:a05:6a00:8d8e:b0:7b8:3549:85f9 with SMTP id d2e1a72fcca58-7ff64eca979mr14445098b3a.30.1766551407668;
-        Tue, 23 Dec 2025 20:43:27 -0800 (PST)
-Received: from [10.133.33.224] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e88c8f0sm15536300b3a.62.2025.12.23.20.43.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Dec 2025 20:43:27 -0800 (PST)
-Message-ID: <51e0665b-42c4-4084-8019-9fbeaefb5b56@oss.qualcomm.com>
-Date: Wed, 24 Dec 2025 12:43:20 +0800
+        d=1e100.net; s=20230601; t=1766552609; x=1767157409;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=liuHTqwVbAYEe3Lp7EYXcpnoorb5ueWy4zH5whvl2ZU=;
+        b=lTTb4orLauToC97GogD/y8YuN9YAz4xKZrhF91jdQs5IyckUGnQi7/zH44gHeY5YCb
+         0AYWY6R8Yx87lQnD0Fy4Y9LqvVgfE66rbgXzEMMEz48Mw9a+nOh1nfaUiH8oYTGBfTcB
+         q7Flh7qXIBq4PdrNtabv/BBdZ6DjBm00lEHCCBkq49o9M4yjKKPBXdXF3cAV2blwBP4I
+         jMeiLDsJSW6BYW3J9YcX/N4FnF+BhQxd06ffeq9XHd0xZYdvcY8FxkMoBwa7V2mupApi
+         ImzneFXNDmciPcPf8hX93ig/2IwHSLXHeMl7xGJH9CVt0JLcevPAeNSPt99vrCT/Xjyn
+         XRPw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvBbtsVyfsdNBvOWX5zONcUEWYM2ZTQ6DrAARm1f51gN52xKhS+hDomPGDO+leOK+skJwm1VqsmTDK+XO0@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvibNpvi/Cao3zpyZdYZ+7TjEmDWT7qcm5TzET7FXZTgN/F4tc
+	wQX7efCOF8PsV92RSiqKVnh+G2bSfkLfYOb8IGT9gGOlbIU35gp9Q4TFmOs6D+oPHdT0Y26l2ob
+	HZzs+VMF1sNEJjSwMQf0Wl6eno1DudFVT4xE1XY/6ouLmGpegaCOkYeTi9j7YwvrznMgR
+X-Gm-Gg: AY/fxX6kiyZqDjBttyoRPxXe0EteQ9mszHqOPrzsZTdY+Swx/dGOQDACljAP6WWA+L4
+	C/3nrlra48umBNSKwhe4ONXD11FK6+d6Ti3NB/nBo6LzhMa8wfDj9GAO0M+E22zCEKdEMJ6wpT6
+	AShOrK2FiyUj32V8uo0BMYE81A8smPzPhO6R9OC5vryEj7Bu4Y4QKDOnN4x9xmv0ibLYNSj4ZX8
+	GTNjEDcZCyQN+AkYQ+jODbKzqed/3vFacDCBUHFgQm7YBqATkfVDP7LThs2pwux8dqWbjNgAvYT
+	SRLwoxSLAqkrQraddBwsOZ/aOTm9Dr49WXqi67EZr2IFhuhyvNwQcwZkDFcIPckKzMa8u6nsC/S
+	l9l8c94hrCF9eeTyjgDatTOnMBB2Im0llrr9F7QPe3Y09RABbRh2rYU8FYqmpzyv1BsdbRzIGWe
+	OD2Av/FCit4Fz5+/RH8VwJAFE=
+X-Received: by 2002:a05:622a:189e:b0:4ee:1962:dd48 with SMTP id d75a77b69052e-4f4abdcb687mr259476901cf.69.1766552609038;
+        Tue, 23 Dec 2025 21:03:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFyVkbJxFOo4XDM33tNLMgzo3yaDscPLYW6v0rTNHm+5vHoDZokcP0YbQqxOlSX3acngDj1Xg==
+X-Received: by 2002:a05:622a:189e:b0:4ee:1962:dd48 with SMTP id d75a77b69052e-4f4abdcb687mr259476441cf.69.1766552608394;
+        Tue, 23 Dec 2025 21:03:28 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3812262ccefsm40839931fa.23.2025.12.23.21.03.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Dec 2025 21:03:26 -0800 (PST)
+Date: Wed, 24 Dec 2025 07:03:23 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] media: dt-bindings: Add qcom,sm6150-camss
+Message-ID: <3342fv43qdkmm66jgc63hho2kd3xn65p2fv3tyk3573izlxf7i@hgjsp2kwqyuh>
+References: <20251222-sm6150-camss-v2-0-df8469a8343a@oss.qualcomm.com>
+ <20251222-sm6150-camss-v2-1-df8469a8343a@oss.qualcomm.com>
+ <20251223-pompous-inescapable-sponge-3fc9f0@quoll>
+ <c6174a0a-9a76-4284-8675-bb5ca78a7b35@oss.qualcomm.com>
+ <eklzmnlnkanrper7lt46vap54u5giprsmwhwpr4am5ytwyohov@kjqvls5vjani>
+ <6b52d19e-8ff1-4bd6-b854-bcabccc7cd74@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] remoteproc: qcom: pas: Add late attach support for
- subsystems
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Gokul krishna Krishnakumar <gokul.krishnakumar@oss.qualcomm.com>
-References: <20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com>
- <20251223-knp-remoteproc-v3-4-5b09885c55a5@oss.qualcomm.com>
- <aUsUhX8Km275qonq@linaro.org>
-Content-Language: en-US
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-In-Reply-To: <aUsUhX8Km275qonq@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDAzNiBTYWx0ZWRfX6ErpF31cGvpk
- BYVj88/0H2cbveAyCMduL2f9MyEVCumcSBzjkPO3OuJ27zQtFzUVzg35MICMYIXCw6O/cEQplj3
- EqxtZqnRdg9iiUciQBs6+dHaRPJxYDnU9Soio4kR3MB82qFxBlfLTjRAMXRD8GwgcKY9rRknpue
- TLYyF0GPUpQq3DyqSvRbDmgdpPr38F0gdmpYq4ja+7LEDJmcV0e/FxH2RQ6fbdwu03ZBSk+QnBx
- lDnMIeq5tRkngf+FZlID1Qu65eXR0LKBA0G90VPXpToB+nTRwG51t40fh3kpgJD82fcaO/WxsWZ
- wdxLZMoRU0wkbfdGv8aTILNRG+5HT95SK/qkytUmRhLD85THXhClaLcJLPDLOPLb1wWFduyDRet
- zPpKdBbBavGY5etptsFmafjb6iqYXqF9PhoDTO57INq0//pls22qqudAmIA2205v/Qpt+B56APD
- QbfH4ivcI63eYdWAI2w==
-X-Authority-Analysis: v=2.4 cv=IvATsb/g c=1 sm=1 tr=0 ts=694b6f71 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=xPClpbL46aL21xVsldcA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-GUID: 50kc-cNXDZIf9VaAYu8W90JaEWkQ1fFJ
-X-Proofpoint-ORIG-GUID: 50kc-cNXDZIf9VaAYu8W90JaEWkQ1fFJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6b52d19e-8ff1-4bd6-b854-bcabccc7cd74@oss.qualcomm.com>
+X-Proofpoint-GUID: hsSXvHl1nd5WdIHj9f5JrOuyrJGkVNHk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDA0MCBTYWx0ZWRfX2jYYnkl+eIr/
+ 7N4WbYRh45Uz3Zh0nBYLKG/71q3Br1nv0+lwsoUh/dxN2Iw1XCON3E9bCOCxXNc6knL0ABZiJCP
+ +s317lX4FuFjSNB4OOe0t2zz/xcRd4dhiCFwlojmFTWY+vZkobA6Bh99UzfA89NEGhUJcsWSyg0
+ Ql+n5wCtgv+QFrl83oX7p1/+Ig9uc5S9IgIwdFWuc91CuKPj0a/jjWwAMVGd4DOf3uCLJgpXSkQ
+ mYTCYko+Prz646GqNbZ93jeGaoSrTg8u2oPoU79qbgiWPvftRbEA7etCtqTmT72j6ZBp5Nu/S/J
+ pruBoFJZVQvyb+Qqg6XbTB9OqZAmQ8rM/vA6VR7W7UpzTHFs78CaKKSKI+pLoCMWOmQp3kIqBHS
+ l3KS0w4MMAdLUOa/1ti7Y5mhujXdm45jsThELsByIRIsD3bHUk67bjU6RrnA5B8A4gYnWPrWuoA
+ nnSlbpCKpUhK91unmPQ==
+X-Authority-Analysis: v=2.4 cv=HqV72kTS c=1 sm=1 tr=0 ts=694b7422 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=8Qi-EdINfos2Zg447EQA:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: hsSXvHl1nd5WdIHj9f5JrOuyrJGkVNHk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-24_01,2025-12-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240036
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240040
 
+On Wed, Dec 24, 2025 at 12:31:33PM +0800, Wenmeng Liu wrote:
+> 
+> 
+> On 12/24/2025 12:21 PM, Dmitry Baryshkov wrote:
+> > On Wed, Dec 24, 2025 at 11:18:02AM +0800, Wenmeng Liu wrote:
+> > > 
+> > > 
+> > > On 12/23/2025 9:38 PM, Krzysztof Kozlowski wrote:
+> > > > On Mon, Dec 22, 2025 at 04:28:39PM +0800, Wenmeng Liu wrote:
+> > > > > +  interconnects:
+> > > > > +    maxItems: 4
+> > > > > +
+> > > > > +  interconnect-names:
+> > > > > +    items:
+> > > > > +      - const: ahb
+> > > > > +      - const: hf0_mnoc
+> > > > > +      - const: hf1_mnoc
+> > > > 
+> > > > Same comments as before, do not invent names.
+> > > 
+> > > <&mmss_noc MASTER_CAMNOC_HF0 QCOM_ICC_TAG_ALWAYS
+> > > &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> > > <&mmss_noc MASTER_CAMNOC_HF1 QCOM_ICC_TAG_ALWAYS
+> > > &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> > > 
+> > > This platform(qcs615) is different from others. It has two types of sf,
+> > > namely sf0 and sf1.
+> > > The same as it is:
+> > > sc7180 sc8180x sdm670 sdm845 sm8150
+> > > Do you have any suggestions about this?
+> > 
+> > Which _names_ are used on other platforms? This question is quite clear
+> > from Krzysztof's comment.
+> 
+> The platform mentioned above either has no camss ICC node or no support for
+> CAMSS on the upstream, so this is a new one.
 
+I did a quick look for you.
 
-On 12/24/2025 6:15 AM, Stephan Gerhold wrote:
-> On Tue, Dec 23, 2025 at 01:13:50AM -0800, Jingyi Wang wrote:
->> From: Gokul krishna Krishnakumar <gokul.krishnakumar@oss.qualcomm.com>
->>
->> Subsystems can be brought out of reset by entities such as bootloaders.
->> As the irq enablement could be later than subsystem bring up, the state
->> of subsystem should be checked by reading SMP2P bits and performing ping
->> test.
->>
->> A new qcom_pas_attach() function is introduced. if a crash state is
->> detected for the subsystem, rproc_report_crash() is called. If the
->> subsystem is ready either at the first check or within a 5-second timeout
->> and the ping is successful, it will be marked as "attached". The ready
->> state could be set by either ready interrupt or handover interrupt.
->>
->> If "early_boot" is set by kernel but "subsys_booted" is not completed
->> within the timeout, It could be the early boot feature is not supported
->> by other entities. In this case, the state will be marked as RPROC_OFFLINE
->> so that the PAS driver can load the firmware and start the remoteproc. As
->> the running state is set once attach function is called, the watchdog or
->> fatal interrupt received can be handled correctly.
->>
->> Signed-off-by: Gokul krishna Krishnakumar <gokul.krishnakumar@oss.qualcomm.com>
->> Co-developed-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->> ---
->>  drivers/remoteproc/qcom_q6v5.c      | 87 ++++++++++++++++++++++++++++++++-
->>  drivers/remoteproc/qcom_q6v5.h      | 11 ++++-
->>  drivers/remoteproc/qcom_q6v5_adsp.c |  2 +-
->>  drivers/remoteproc/qcom_q6v5_mss.c  |  2 +-
->>  drivers/remoteproc/qcom_q6v5_pas.c  | 97 ++++++++++++++++++++++++++++++++++++-
->>  drivers/remoteproc/qcom_q6v5_wcss.c |  2 +-
->>  6 files changed, 195 insertions(+), 6 deletions(-)
->>
->> [...]
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 52680ac99589..7e890e18dd82 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> [...]
->> @@ -434,6 +440,85 @@ static unsigned long qcom_pas_panic(struct rproc *rproc)
->>  	return qcom_q6v5_panic(&pas->q6v5);
->>  }
->>  
->> +static int qcom_pas_attach(struct rproc *rproc)
->> +{
->> +	int ret;
->> +	struct qcom_pas *pas = rproc->priv;
->> +	bool ready_state;
->> +	bool crash_state;
->> +
->> +	pas->q6v5.running = true;
->> +	ret = irq_get_irqchip_state(pas->q6v5.fatal_irq,
->> +				    IRQCHIP_STATE_LINE_LEVEL, &crash_state);
->> +
->> +	if (ret)
->> +		goto disable_running;
->> +
->> +	if (crash_state) {
->> +		dev_err(pas->dev, "Sub system has crashed before driver probe\n");
->> +		rproc_report_crash(rproc, RPROC_FATAL_ERROR);
-> 
-> Have you tested this case? From quick review of the code in
-> remoteproc_core.c I'm skeptical if this will work correctly:
-> 
->  1. Remoteproc is in RPROC_DETACHED state during auto boot
->  2. qcom_pas_attach() runs and calls rproc_report_crash(), then fails so
->     RPROC_DETACHED state remains
->  3. rproc_crash_handler_work() sets RPROC_CRASHED and starts recovery
->  4. rproc_boot_recovery() calls rproc_stop()
->  5. rproc_stop() calls rproc_stop_subdevices(), but because the
->     remoteproc was never attached, the subdevices were never started.
-> 
-> In this situation, rproc_stop_subdevices() should not be called. I would
-> expect you will need to make some minor changes to the remoteproc_core
-> to support handling crashes during RPROC_DETACHED state.
-> 
-> I might be reading the code wrong, but please make sure that you
-> simulate this case at runtime and check that it works correctly.
-> 
+kodiak, lemans, monaco: ahb, hf_0
 
-Recheked this part, current path has some issue on recovery and subdev handling.
-As in current code, rproc_report_crash is called in the ISR/callback, it may
-take some effort to call it in this attach path.
+x1e80100: ahb, hf_mnoc, sf_mnoc, sf_icp_mnoc
+sm8650: ahb, hf_mnoc
+agatti: ahb, hf_mnoc, sf_mnoc
+sm8550: ahb, hf_0_mnoc
 
+sc8280xp: cam_ahb, cam_hf_mnoc, cam_sf_mnoc, cam_sf_icp_mnoc
+sm8250: cam_ahb, cam_hf_0_mnoc, cam_sf_0_mnoc, cam_sf_icp_mnoc
+sdm660: vfe-mem
 
->> +		ret = -EINVAL;
->> +		goto disable_running;
->> +	}
->> +
->> +	ret = irq_get_irqchip_state(pas->q6v5.ready_irq,
->> +				    IRQCHIP_STATE_LINE_LEVEL, &ready_state);
->> +
->> +	if (ret)
->> +		goto disable_running;
->> +
->> +	enable_irq(pas->q6v5.handover_irq);
->> +
->> +	if (unlikely(!ready_state)) {
->> +		/* Set a 5 seconds timeout in case the early boot is delayed */
->> +		ret = wait_for_completion_timeout(&pas->q6v5.subsys_booted,
->> +						  msecs_to_jiffies(EARLY_ATTACH_TIMEOUT_MS));
->> +
-> 
-> Again, have you tested this case?
-> 
-> As I already wrote in v2, I don't see how this case will work reliably
-> in practice. How do you ensure that the handover resources will be kept
-> on during the Linux boot process until the remoteproc has completed
-> booting?
-> 
-> Also, above you enable the handover_irq. Let's assume a handover IRQ
-> does come in while you are waiting here. Then q6v5_handover_interrupt()
-> will call q6v5->handover(q6v5); to disable the handover resources
-> (clocks, power domains), but you never enabled those. I would expect
-> that you get some bad reference count warnings in the kernel log.
-> 
-> I would still suggest dropping this code entirely. As far as I
-> understand the response from Aiqun(Maria) Yu [1], there is no real use
-> case for this on current platforms. If you want to keep this, you would
-> need to vote for the handover resources during probe() (and perhaps
-> more, this case is quite tricky).
-> 
-> Please test all your changes carefully in v4.
-> 
+I'd obviously hope for some unification here. Other than that, we have
+two clean winners: KLM and X Elite+SM8650+Agatti. Yours proposal is
+different from either of the options. In fact, none of the platforms
+have the same _approach_ as yours. Why?
 
-Thanks for your detailed review, the handover resources was indeed
-neglected in the design, we will re-evaluate this part.
-
-> Thanks,
-> Stephan
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/c15f083d-a2c1-462a-aad4-a72b36fbe1ac@oss.qualcomm.com/
-
-Thanks,
-Jingyi
+-- 
+With best wishes
+Dmitry
 
