@@ -1,103 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-86446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2112CDB0B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 02:07:16 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 111CECDB083
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 02:04:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F1BC530B3141
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 01:04:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 54DCF3009123
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Dec 2025 01:04:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9195926C39E;
-	Wed, 24 Dec 2025 01:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F01101DE4CE;
+	Wed, 24 Dec 2025 01:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B5FzLQH/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Kvs9sRoQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ocinDGIN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UXs8yDEb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75E11DE4CE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3FF21C175
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766538243; cv=none; b=jfnIWY/SakzbNGmAVqcNv7Pt+c03ab6SFnoVwN1UFLNUYEX05iyU7SeDZt0pm6ETSi/ptDJzLtoPOM6PnxpWELMtFdouRepHo+cD1fstOdxYaTMLtb4GJ/JD66OEb1QbcbeoFVaTwy3fiStjlDxPewq3BUhXcOnMkCKrHt0f810=
+	t=1766538245; cv=none; b=T4czXEu/D6hqyn0h7ckG4MgsIlXpEOwIK+jTxo/Y5doWlc7a/CP870B7+utcNXZ12myfRm8UlCF3YpQ7xtM+Hmw4KjWw4FGdwTn47EG2tpsntAHESFVlJTAHezZzCnkGC/QVXDh8Su0DKqszK07D7SHli6xY0II1rAXCy/PQVgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766538243; c=relaxed/simple;
-	bh=sxrbcfgP+1lHt6WjBr3iluImnNCx0aJDmiljrTHbhwQ=;
+	s=arc-20240116; t=1766538245; c=relaxed/simple;
+	bh=wjvfsQWX2SPvZmtfq/QDNeAsj27LvHfOsz915cSO54Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=I2h0kLw7g3y4vVBUfAO6Ctl2GTQgs5boLNsf0BCQlMn1kuuewNKV9Eur/tTPWigTojQrYZoerXJOz6SCKa8BM0a21Ay/waMn5BMsYnKMZqbVOvvPESNKPKl1ZJ4CC3Ahaa46WpalK667tBFRY7dSo2z29I77tDSa/XOSlfLWtVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B5FzLQH/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Kvs9sRoQ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=bHU6DkmfZfcNk9rfbu4JwNNkvnEQc9gccMb1hS4emO2sCF/REtratsUWcPU9If2O6qlb9vt/e2bb58U0/dNfvmRXwU5OCL4hxak7lyEHUHSq6bPubi5EHs9ezAu2Z/9DRTgun4TvlgAqN7nFYp+/RkCFoIujSTtsuD6qkkaCo0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ocinDGIN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UXs8yDEb; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BNFr3ov4134142
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:01 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BNNWPIm1405861
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	O0WcJstQEewLBWylyM1yaF1uo6Aq9IevUZuM4w9v8/c=; b=B5FzLQH/4hdXvpfe
-	zRFH90K8m6qtrg/XEWhQfEiFLYj2sJlborOxSU6Ve5K1V7hKJG6ddM5f5hLHr9O4
-	G5FXrg+x2+sZ9U/OXiaNp/wHJ9rRB0Js17h6g8QCgkkdYEEOM682EJmWdkRJSwhK
-	kQePbxHNlL6j+a/BpNbMONLysUtobbr5nGvrJmzoA9yB0sF9cVMuIU6eE0kaGPiH
-	9zYXOPs5JQjKabNmUxd4fZ+aeTJlgQvTv72a/GeIgJrwdHaN0Dd/bJzy1t13hpI4
-	C6ekVf2ER33wY8q3E2wG5W5TveJk+urBH5JoBUQQ2/ZGy/5+7CIj2iJgKbR7pbjn
-	GsKuwg==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7x46sebd-1
+	wLWwE3+OeE/g9lVfst6cEgHRxD/v4AAQeIf29KzVQzU=; b=ocinDGINcuRyGvWv
+	qgltR7lMm4frTJ+aSKEOdPX0aqzZyqJpD0PaCxOFOPgiQGr8laYQxH2lb7R7e7GV
+	StCQHC4ToUZakKAcrVPgk8iBJI3GUxmqXWxjHc+jc0ITFaURqs/zzdephK0ypwMg
+	c9+RTYdv7+i4SA5bdkwOcom1HHKM1OVl1zHW2rjDg3VtGG2mZKer/0Xt9/vzIZ1t
+	QBiyCjKVR0pAYq4M5lmdEu+yxeZgw7/mFMGtCknAggjID0J53oUXjiHrgmUm4kD9
+	QOuCLmI0lP5EuXkuauAhK0eSR+kY8bj4evofy818VH7lrm0NXy5OxS9h7ifZrQCi
+	9qeA+w==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b7h5cv1jk-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:00 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-88a3822c06bso148684236d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 17:04:00 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 01:04:02 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ed6ff3de05so153864931cf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Dec 2025 17:04:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766538239; x=1767143039; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766538242; x=1767143042; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=O0WcJstQEewLBWylyM1yaF1uo6Aq9IevUZuM4w9v8/c=;
-        b=Kvs9sRoQ9P08HzdC4DJMn2MO4YzQTDPyhtkOOQvcYlFVWQ3NUWQed41qngyEhq/BV3
-         aOjs83fOBgSU41UearGI25roEgB+O39N9lEs6/uMctinY71149U0FNr7aAHbMGdBKLKb
-         8+EN7zF9fIiQl3agBVrE8RU5tQJZfPxXUPEzmy20HSQh3h46HoZrWDcf2CFyNtdyno3C
-         FpjR6f7iuW2QI0lXhF9dtUMYQDLNBAc6KGprKt9hfuyHusa6gfLKIykrBIZEAjq4wbv5
-         faIOyE05O+jnvaCaTg+KDfuPmi1xOybnKVPh93ziCxfzKpKee4Qn82fl+g4dWlM0tWH0
-         lRmg==
+        bh=wLWwE3+OeE/g9lVfst6cEgHRxD/v4AAQeIf29KzVQzU=;
+        b=UXs8yDEb1jrznbtEIg91bL6nI73W3R1rYhjiTKfz7drfKpgC9yuVK4DonizZmL2c05
+         bqIDTEVhP1I33ve9/wy+o36z8dPpVPSfPQURyTdknBXT+SPVJFJX7rfhV0183CKinetK
+         32OtgE5YsNr7CH049ZpHqXjB5G/RxmbDlZazM5J3Rch6762cyf45S6SWGoe05LfLHsvf
+         DafqknEppAhINF3HSnqmLiwelc9X5qBfU4SnqK+Kx/3ocZxrybyMvcHDyJOZe/ltWJn5
+         KrE5ksGnnPz4Pz+rNsHFHXzdL0IzBgFMqfGnOHM/pi0m2eLwZsh2zfGRucH0GHv+MGT7
+         5V5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766538239; x=1767143039;
+        d=1e100.net; s=20230601; t=1766538242; x=1767143042;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=O0WcJstQEewLBWylyM1yaF1uo6Aq9IevUZuM4w9v8/c=;
-        b=ohdtErglQ1qwAW8ZGyBbPfJRwmVv1WT50TqPbAB2K4PexMVs8xiwhMkCILW0iVij11
-         BNCheUtfFZjk+fffGs/mLfDj1y73O2XCkq9cNmTbm4gXbTqRe68m5jCljYivLEaTqLMg
-         7OmfMinYddRfcf0s9tVSIBHvUghQCtgtk0oUe//TXs3wnYwcE4SnOzF/o1cYo7RrdTwV
-         CZeuVEz7io3V1Y/LTyFvMI86O/PXCBSYrsesF4f4DaESKtzZ3Zz9U0Xnblhthm2/G/Wj
-         hFrkb6C82ll8iu9nGrf0u71+25wxx7v5RG2z9P73M1spe9XwDEvQUBLni4IhK/f+aQCY
-         xr9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVBeh5mT5slYlJKYArL4nbJ9JHakRj+IK0VEN2GBMmADnnjvY6ijiWwLmI+IoWJ4DqqQbWfwz4RsFdpFueA@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCrzjES4u93ftF+Nlieu0ZBuuok/msDOIdfPO7XGWLZklO8tUJ
-	00NE+btfFxR85In3+xaQlrS2HBBEnv9CzMzQYRbQqbKaIGHt4fcWD1ZBAMLnu6T8tYPTjqw9ZGw
-	9/29/NAEz06bANVhkR1ZQ9zbUMEQ/PwZw7f6qHI76Gb7ojOJ2d+KbKKWGPZPr7CwFKMXDKnfyl7
-	3Q
-X-Gm-Gg: AY/fxX5ixWStv0fIIzj2NhiP5OqTd0ConDgrop1X1zRkfCu+UDy9UNbx3RnJLWjGoLk
-	sd5s0zQ8HC4zcinPkF8UZhEa9fzqF85/x3MlcK9AkAqMhezJuJnAgGgjyShwuahtceaaqy2+Ew1
-	3C7DC6hHq60ZUbiPxuvkBUr1Gbt3LHkiIf7kRaO9LBtRaq9QafABVf7jsZ2kKIUJvQ+eRXZGrXu
-	G0v9voZ3wnWV48WGy1m4emnbE8GVEd8Cl5eIDTU4UnX/dzyWb60SBxLEhSZXCnc3Xyard6KJMYo
-	ZbQiIY0Zx2QbdwryK5RFvWBYMN6tpBEF2e0XPTyYCDcDVYH7Wv0PM33DVUHEM6gszH4u6UK15pO
-	2k4nfJSEgVIJoiYGjwn6NNBouPA0nPXkxWSftUuzSdOJJFNEJhHnUy9J0MUkx/BeRh17X/I4nP1
-	ooYB8yZtbnZ1w4irCYnIITaro=
-X-Received: by 2002:a05:622a:4d0f:b0:4f1:cd72:f22b with SMTP id d75a77b69052e-4f4abd98192mr256225831cf.52.1766538239464;
-        Tue, 23 Dec 2025 17:03:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQGuGT0UI/67dXu411P/e6eStajQsFB8+nCzwFqQBAvO4esgI+rdZ+y7jVSLNcipwTefBy2w==
-X-Received: by 2002:a05:622a:4d0f:b0:4f1:cd72:f22b with SMTP id d75a77b69052e-4f4abd98192mr256225241cf.52.1766538238937;
-        Tue, 23 Dec 2025 17:03:58 -0800 (PST)
+        bh=wLWwE3+OeE/g9lVfst6cEgHRxD/v4AAQeIf29KzVQzU=;
+        b=qpV11c4a59QPMROF4odVB0qaGjePUDAqsz2GBln/RrONGuW6dh9Prlmr5x7t0tZW1F
+         m4R+DQ39RRadiLrGMMbEdL3pyr76n2xRyB3B/KKCLneBoOWFWQ39XLy/7+htqxETXsW3
+         UW4BZc6OlnbfkO9Yv4YSpfLR9eD7d/k0T6n+LYrPYDym+VETYJCVg7NrBry9vAQlhMCi
+         Rl/pXS2/awuKkjR4rAC5p+ma6AAX5ndiipTvFdBEQRG6RpVFBothGSmmH2V9Bc5jb218
+         iufSK1CuoIVXjL0xXtc0xmuSCG95am1Ujy5bNZLu+pAWYsh+kNqC1pY93o85O79VFoSU
+         MMIA==
+X-Forwarded-Encrypted: i=1; AJvYcCUOzszlWooRMBcX/NUgKJ8B3pZJCdU2JI7qZbP/rSne57821qX9IcvaG3wev7ZOhA9bFYlsZpi1hmJXiTwm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLh2XZi9TArrLFP7/2IG0+vrdNhYummUJ82FxOqjMoqnN6he//
+	sHOUNOljBlaiSPo9DT8vgNb2+2AZN9vzlMz9aYdyKV8mjeLSjqHm3/tjZfGA2ON7ggJV+Ov7vO/
+	nHE87cVykVa9ZMpCtq7ot+9OeNWmUHnfdV+l79oTIa3AYUt+jn4JhD6Tyonv8ehQx7P4x
+X-Gm-Gg: AY/fxX7nHq4Q6LvKz1gPcNhH0GBvIjDv6/AreAtM0sXu5ZnxzjPQtp1hQHfM8Mt9OgI
+	PVmyqKXogrPEFn2MGWqZJvP/abb0MvoT78engHWeEGxmlWNS618r3AMLZjuXBWT2uQc+NG1YsiJ
+	Cz2dNHDmIbXgWUIE6jTpEPbsTFfn4xh3O8NmI2Cw2O+syzrINaxw1AJ6TAXvc/Zy5LjrXchm/HT
+	242BQj1LRt221I5CTiPTEcjClXSjAlRyMHairMiiOsp8MNFcFHEB77IXNZmHi0zQiovFKcVmXvr
+	2TgBN7mBSrkmN8FG5vq5TLqGhR1WSmEsLy/khAMixJ6ZbeAr6SogRfrQ9566DC3adj2230JzrcB
+	0rgDKtLm8xiKrGTpj6tERXGZ7KpGy3K7LOauKQObC9k4XsO9Pow2gRzciuMX0EH8ctGrW96UpbV
+	Cui17uc71Fo59TF8T4saE+qMs=
+X-Received: by 2002:a05:622a:1248:b0:4ec:ef62:8c81 with SMTP id d75a77b69052e-4f4abd8c6bdmr206266701cf.47.1766538241842;
+        Tue, 23 Dec 2025 17:04:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFjEL6KpdvGkaIQESqzuIk0ruXwS4QCPmI+GKo0q+FP+/3F3vrZO4vptQGCTX9RSoNL/0h9gg==
+X-Received: by 2002:a05:622a:1248:b0:4ec:ef62:8c81 with SMTP id d75a77b69052e-4f4abd8c6bdmr206266431cf.47.1766538241402;
+        Tue, 23 Dec 2025 17:04:01 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a18628284sm4545268e87.93.2025.12.23.17.03.55
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a18628284sm4545268e87.93.2025.12.23.17.03.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Dec 2025 17:03:57 -0800 (PST)
+        Tue, 23 Dec 2025 17:03:59 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 24 Dec 2025 03:02:57 +0200
-Subject: [PATCH v3 08/10] drm/display: hdmi_state_helper: don't generate
- unsupported InfoFrames
+Date: Wed, 24 Dec 2025 03:02:58 +0200
+Subject: [PATCH v3 09/10] drm/display: bridge_connector: dynamically
+ generate HDMI callbacks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,7 +105,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251224-limit-infoframes-2-v3-8-7fd3cacfefed@oss.qualcomm.com>
+Message-Id: <20251224-limit-infoframes-2-v3-9-7fd3cacfefed@oss.qualcomm.com>
 References: <20251224-limit-infoframes-2-v3-0-7fd3cacfefed@oss.qualcomm.com>
 In-Reply-To: <20251224-limit-infoframes-2-v3-0-7fd3cacfefed@oss.qualcomm.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -141,96 +140,216 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2020;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6848;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=sxrbcfgP+1lHt6WjBr3iluImnNCx0aJDmiljrTHbhwQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpSzvZLWWWNHwhc00YhsGGHeZN4blSTiSB4fsQ2
- dICD4LJEyWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaUs72QAKCRCLPIo+Aiko
- 1TXpB/9MY/IAmp3a91kMBGdYigbcoUHZMxaQmuYtcY1pIt9hLZ/xDG0HyDeKfdb4ZXPmrbxM+Lr
- sZHIZRai5kkZBYBHRbs1UvhqFPaEKWCBVQ2Okq4Z1fFonAOh7dEtqQxrre3ELHCo/ljQz4N4wif
- r83ry1FetVmArWVlTeM2HjwKHkCtccISoiLzXtBF/vjY/mM4/GPwg3Vgf2yuvlfOviragLloVE3
- bKNPzT63BmazQ/jQ/THvNVxTXxfLg7YxC6jPXiOFdD16vj7gkXrw6SeuFK7IBzesw8H/JFK5eGM
- 6letmWY47KyLynSka/FTDRJs5TQaxz+pxi/8ZGoJLndSd0+D
+ bh=wjvfsQWX2SPvZmtfq/QDNeAsj27LvHfOsz915cSO54Q=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpSzvaCm570BXj+xIjC/HsGcDtU3JpA7khf+YXS
+ u9a7QR7RCeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaUs72gAKCRCLPIo+Aiko
+ 1RcNCACKsTzltXBEDv5JA74NluYiKEOT2sk5yj6c9PVolhP6Av6n3Nd8/t+6XB3cYSb5w1io960
+ 9wqlW7vqJLAveCu+3Z7ebSvwfcaFyBSv3WTPBayBsfMzB6AqlUWornDKj76LVqhdKVSt7WBuDXD
+ vatVEwKidWBUCYmkZVY6bgw3MHh1IavrIwmGwccrpBiOcKQX1569bdMvX2V/vrBdoY8npN/Vf3i
+ 9xPNMTYOWUmhlvG0QOffuyOf6enZ52Ukumfye5R7tjm0nOHqVQZqBI8rEAzGWq6Pp4W1J9M14XP
+ oQc7kGcYfsQuNjirDnckyZJ7oCPqQPN1z3b/dJVZs+CcxwPT
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: 3wQ2siOVUI7mQZk1z52UWEcPTQzUsJUY
-X-Proofpoint-GUID: 3wQ2siOVUI7mQZk1z52UWEcPTQzUsJUY
-X-Authority-Analysis: v=2.4 cv=aOf9aL9m c=1 sm=1 tr=0 ts=694b3c00 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDAwNyBTYWx0ZWRfXzoz8WBPUfHTU
+ agLpf4Cf+r1TySj0/1GVeCOUOOn3eGO/Z6fPCWeq6Z01zyiPYZCCcErgqqjWEbF83bESnjt6tYr
+ ngfMEOq37HEnI306Sf6cShQQCjHgiOv5BdBwhqodUDO2nDERZEQN8dEV+GxFepeKxspAucimVCq
+ Eb5EvbPEpu42kRzOKtamGZyVJCAnuiO0dzOP8y4ei1P/xAbiFOP5FSvPRh7NGlNtYDgYtP6GLs9
+ 0WMzPJAulWhJ+Pg8FN7CFB4hIWiCq1tPPOY/eMq6VBlZd2syAavwndE3JFBGXKvgRRxU/tSlenb
+ 18wybnkXQ8TMbJhGE3H/qcqPUnxzGqjftBiIelv3haCfprCemHogJbSdMqU7VjwTTElRvlMIRd3
+ wGIWYohUHSCrMYsBF4imAQwHdP0Gs+JTR9TLZk+tLZXdxZwpgoJjmHowKaRbncO0bxIweNZcHtb
+ R5WE0W3vfSMm76RG4mQ==
+X-Proofpoint-ORIG-GUID: TvQpbTYTYY2SOHkzC7uyS1eWPy-hjh3f
+X-Authority-Analysis: v=2.4 cv=LeUxKzfi c=1 sm=1 tr=0 ts=694b3c02 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=dmsjDmb_ix4f0IDqKoUA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDAwNyBTYWx0ZWRfX04YQIxnYyd5T
- wmpVbiwzcOqkwPU+nQfx2dNrnJo6foCw+8o4+JI2qLEfT3348Z9hkx07gzi8tAwMfWGcmChNXkZ
- GSVFEgUeW4ITFnLqG7p9ZoWEeKflkHZm2yP4VVySPcT0NqyAtQ0dhK9e10TMCZoKYkQE355oID+
- VjB2bUViB6L7780Xv+R+Z1FxlYxzJZGsSIRrqlC3E2PmpWez9FhaRJhHO0n61FCUcqUHYBvBBsi
- ZJRXb7Hlh7by1krttjwak5AoeV8KkaIZBWSt36u4xrHW/vwGPTuL+5K5H/kvjtlhpcwY7aMhJ3Q
- H5NMAu1SSECEwWIasweXI1FQtUfGOLiVJAMKboE5Vh/2mlyT/ppi8YAXAvrm/ooS44FL9Qmsvav
- 7JLNVMmFPHnQS4rbyAUEuW+J6HQtF8PRpmk4U4pFHxMEEyuxapMT/FvIu+gK1MEjjR+BcfI7Flk
- ZFfO9w1rWqtaRoRJaWg==
+ a=EUspDBNiAAAA:8 a=SmQ2dRXw9u10PpR7_9MA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: TvQpbTYTYY2SOHkzC7uyS1eWPy-hjh3f
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-23_05,2025-12-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 suspectscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512240007
+ spamscore=0 suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512240007
 
-There is little point in generating InfoFrames which are not supported
-by the driver. Skip generating the unsupported InfoFrames, making sure
-that the kernel never tries to write the unsupported frame. As there are
-no remaining usecases, change write_infoframe / clear_infoframe helpers
-return an error if the corresponding callback is NULL.
+The rest of the DRM framework uses presence of the callbacks to check if
+the particular infoframe is supported. Register HDMI callbacks
+dynamically, basing on the corresponding drm_bridge ops.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/display/drm_hdmi_state_helper.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/display/drm_bridge_connector.c | 94 ++++++++++++--------------
+ 1 file changed, 45 insertions(+), 49 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-index e8556bf9e1da..a1d16762ac7a 100644
---- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-@@ -718,6 +718,9 @@ static int hdmi_generate_spd_infoframe(const struct drm_connector *connector,
- 
- 	infoframe->set = false;
- 
-+	if (!connector->hdmi.funcs->spd.write_infoframe)
-+		return 0;
+diff --git a/drivers/gpu/drm/display/drm_bridge_connector.c b/drivers/gpu/drm/display/drm_bridge_connector.c
+index c8858d48199c..2a8f586c6d13 100644
+--- a/drivers/gpu/drm/display/drm_bridge_connector.c
++++ b/drivers/gpu/drm/display/drm_bridge_connector.c
+@@ -123,6 +123,14 @@ struct drm_bridge_connector {
+ 	 * DRM_BRIDGE_OP_HDMI_CEC_NOTIFIER).
+ 	 */
+ 	struct drm_bridge *bridge_hdmi_cec;
 +
- 	ret = hdmi_spd_infoframe_init(frame,
- 				      connector->hdmi.vendor,
- 				      connector->hdmi.product);
-@@ -742,6 +745,9 @@ static int hdmi_generate_hdr_infoframe(const struct drm_connector *connector,
++	/**
++	 * @hdmi_funcs:
++	 *
++	 * The particular &drm_connector_hdmi_funcs implementation for this
++	 * bridge connector.
++	 */
++	struct drm_connector_hdmi_funcs hdmi_funcs;
+ };
  
- 	infoframe->set = false;
+ #define to_drm_bridge_connector(x) \
+@@ -465,12 +473,7 @@ static int drm_bridge_connector_clear_audio_infoframe(struct drm_connector *conn
+ 	if (!bridge)
+ 		return -EINVAL;
  
-+	if (!connector->hdmi.funcs->hdr_drm.write_infoframe)
-+		return 0;
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_AUDIO)
+-		return bridge->funcs->hdmi_clear_audio_infoframe(bridge);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI Audio InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_clear_audio_infoframe(bridge);
+ }
+ 
+ static int drm_bridge_connector_write_audio_infoframe(struct drm_connector *connector,
+@@ -484,12 +487,7 @@ static int drm_bridge_connector_write_audio_infoframe(struct drm_connector *conn
+ 	if (!bridge)
+ 		return -EINVAL;
+ 
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_AUDIO)
+-		return bridge->funcs->hdmi_write_audio_infoframe(bridge, buffer, len);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI Audio InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_write_audio_infoframe(bridge, buffer, len);
+ }
+ 
+ static int drm_bridge_connector_clear_hdr_drm_infoframe(struct drm_connector *connector)
+@@ -502,12 +500,7 @@ static int drm_bridge_connector_clear_hdr_drm_infoframe(struct drm_connector *co
+ 	if (!bridge)
+ 		return -EINVAL;
+ 
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_HDR_DRM_INFOFRAME)
+-		return bridge->funcs->hdmi_clear_hdr_drm_infoframe(bridge);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI HDR DRM InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_clear_hdr_drm_infoframe(bridge);
+ }
+ 
+ static int drm_bridge_connector_write_hdr_drm_infoframe(struct drm_connector *connector,
+@@ -521,12 +514,7 @@ static int drm_bridge_connector_write_hdr_drm_infoframe(struct drm_connector *co
+ 	if (!bridge)
+ 		return -EINVAL;
+ 
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_HDR_DRM_INFOFRAME)
+-		return bridge->funcs->hdmi_write_hdr_drm_infoframe(bridge, buffer, len);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI HDR DRM InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_write_hdr_drm_infoframe(bridge, buffer, len);
+ }
+ 
+ static int drm_bridge_connector_clear_spd_infoframe(struct drm_connector *connector)
+@@ -539,12 +527,7 @@ static int drm_bridge_connector_clear_spd_infoframe(struct drm_connector *connec
+ 	if (!bridge)
+ 		return -EINVAL;
+ 
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_SPD_INFOFRAME)
+-		return bridge->funcs->hdmi_clear_spd_infoframe(bridge);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI SPD InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_clear_spd_infoframe(bridge);
+ }
+ 
+ static int drm_bridge_connector_write_spd_infoframe(struct drm_connector *connector,
+@@ -558,12 +541,7 @@ static int drm_bridge_connector_write_spd_infoframe(struct drm_connector *connec
+ 	if (!bridge)
+ 		return -EINVAL;
+ 
+-	if (bridge->ops & DRM_BRIDGE_OP_HDMI_SPD_INFOFRAME)
+-		return bridge->funcs->hdmi_write_spd_infoframe(bridge, buffer, len);
+-
+-	drm_dbg_driver(connector->dev, "Unsupported HDMI SPD InfoFrame\n");
+-
+-	return 0;
++	return bridge->funcs->hdmi_write_spd_infoframe(bridge, buffer, len);
+ }
+ 
+ static const struct drm_edid *
+@@ -591,18 +569,22 @@ static const struct drm_connector_hdmi_funcs drm_bridge_connector_hdmi_funcs = {
+ 		.clear_infoframe = drm_bridge_connector_clear_hdmi_infoframe,
+ 		.write_infoframe = drm_bridge_connector_write_hdmi_infoframe,
+ 	},
+-	.audio = {
+-		.clear_infoframe = drm_bridge_connector_clear_audio_infoframe,
+-		.write_infoframe = drm_bridge_connector_write_audio_infoframe,
+-	},
+-	.hdr_drm = {
+-		.clear_infoframe = drm_bridge_connector_clear_hdr_drm_infoframe,
+-		.write_infoframe = drm_bridge_connector_write_hdr_drm_infoframe,
+-	},
+-	.spd = {
+-		.clear_infoframe = drm_bridge_connector_clear_spd_infoframe,
+-		.write_infoframe = drm_bridge_connector_write_spd_infoframe,
+-	},
++	/* audio, hdr_drm and spd are set dynamically during init */
++};
 +
- 	if (connector->max_bpc < 10)
- 		return 0;
++static const struct drm_connector_infoframe_funcs drm_bridge_connector_hdmi_audio_infoframe = {
++	.clear_infoframe = drm_bridge_connector_clear_audio_infoframe,
++	.write_infoframe = drm_bridge_connector_write_audio_infoframe,
++};
++
++static const struct drm_connector_infoframe_funcs drm_bridge_connector_hdmi_hdr_drm_infoframe = {
++	.clear_infoframe = drm_bridge_connector_clear_hdr_drm_infoframe,
++	.write_infoframe = drm_bridge_connector_write_hdr_drm_infoframe,
++};
++
++static const struct drm_connector_infoframe_funcs drm_bridge_connector_hdmi_spd_infoframe = {
++	.clear_infoframe = drm_bridge_connector_clear_spd_infoframe,
++	.write_infoframe = drm_bridge_connector_write_spd_infoframe,
+ };
  
-@@ -902,7 +908,7 @@ static int clear_infoframe(struct drm_connector *connector,
+ static int drm_bridge_connector_audio_startup(struct drm_connector *connector)
+@@ -971,11 +953,25 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+ 		if (!connector->ycbcr_420_allowed)
+ 			supported_formats &= ~BIT(HDMI_COLORSPACE_YUV420);
  
- 	if (!funcs->clear_infoframe) {
- 		drm_dbg_kms(dev, "Function not implemented, bailing.\n");
--		return 0;
-+		return -EOPNOTSUPP;
- 	}
- 
- 	ret = funcs->clear_infoframe(connector);
-@@ -928,7 +934,7 @@ static int write_infoframe(struct drm_connector *connector,
- 
- 	if (!funcs->write_infoframe) {
- 		drm_dbg_kms(dev, "Function not implemented, bailing.\n");
--		return 0; /* XXX: temporal until we stop generating unsupported frames */
-+		return -EOPNOTSUPP;
- 	}
- 
- 	len = hdmi_infoframe_pack(&new_frame->data, buffer, sizeof(buffer));
++		bridge_connector->hdmi_funcs = drm_bridge_connector_hdmi_funcs;
++
++		if (bridge_connector->bridge_hdmi->ops & DRM_BRIDGE_OP_HDMI_AUDIO)
++			bridge_connector->hdmi_funcs.audio =
++				drm_bridge_connector_hdmi_audio_infoframe;
++
++		if (bridge_connector->bridge_hdmi->ops & DRM_BRIDGE_OP_HDMI_HDR_DRM_INFOFRAME)
++			bridge_connector->hdmi_funcs.hdr_drm =
++				drm_bridge_connector_hdmi_hdr_drm_infoframe;
++
++		if (bridge_connector->bridge_hdmi->ops & DRM_BRIDGE_OP_HDMI_SPD_INFOFRAME)
++			bridge_connector->hdmi_funcs.spd =
++				drm_bridge_connector_hdmi_spd_infoframe;
++
+ 		ret = drmm_connector_hdmi_init(drm, connector,
+ 					       bridge_connector->bridge_hdmi->vendor,
+ 					       bridge_connector->bridge_hdmi->product,
+ 					       &drm_bridge_connector_funcs,
+-					       &drm_bridge_connector_hdmi_funcs,
++					       &bridge_connector->hdmi_funcs,
+ 					       connector_type, ddc,
+ 					       supported_formats,
+ 					       max_bpc);
 
 -- 
 2.47.3
