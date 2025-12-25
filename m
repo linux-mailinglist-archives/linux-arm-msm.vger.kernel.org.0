@@ -1,206 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-86616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07320CDDA4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 11:17:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1787CDDE57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 16:23:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C4A12301225E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 10:17:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 83B48301B484
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 15:23:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04E7830FC2F;
-	Thu, 25 Dec 2025 10:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CA6732BF38;
+	Thu, 25 Dec 2025 15:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e1W47Ncn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fcFhF0HZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C56225409;
-	Thu, 25 Dec 2025 10:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D1532B9A2;
+	Thu, 25 Dec 2025 15:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766657865; cv=none; b=oiHgnzhloL5m1NwcnecY+LqM+E+R5mkOmtaIGSm3wKO2Ye0Lfb2AuKxx8/0KDbwFyz5ERIKXby8l9vvh0X5tbTlZS2vj0Kh5/nznS+swMqCDi/AsJUVlmvN7l+rwbm3qYtCict1OHEUWWAQrTWtbHtU7WYM3GSda+QoIVcFJx6E=
+	t=1766676117; cv=none; b=ugK/MSfg9T9R98YvY/C2tjeyVuM3wP71OucuknWA/hQy0rLEsCJoLKxXm6hmJMwFEclRJy7YVuGxoEPenuNl+Z3qZ1HDLSJxTLW6rx8O6HDec1ESUUkHC/Pd/Xf2TfLQ/8O/hRrk9T3pCeyEuRMO+z1FZmsFoYkeQlnuh44je44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766657865; c=relaxed/simple;
-	bh=z2zkTqgnaCZ2l0dBJOIwxsTOjEU6LlBHNrA3F5oZGwE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NJGDyuf/vJc8HjWrl8bfHqPqq8YB3iN2iZyAiEbcJy2VlJApqfE8jwXhIgTo66qRGPfbto2IkrGciK81/6vYE9bB+4G9TsI6/QlyVmTxSdkNze24EkmBxMN0viRdr/6q/8VNYGSVJG2AnokBg4pjcBtFZokwusBpEI0kmn9uMzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e1W47Ncn; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1766657864; x=1798193864;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=z2zkTqgnaCZ2l0dBJOIwxsTOjEU6LlBHNrA3F5oZGwE=;
-  b=e1W47NcnnMTpnKkzGLZ18P9tb/wQ7bIAspbweb9lhxnGkmjy1wpjg2tH
-   149kMZCL85Eaoc3AakMOfuRi/6xFpzT//6iKLe7BGTx24xsdGNK4KDEe2
-   NT7/63zg7uKBPbqCiL+kVA5UJOx6KjlN+78LEfTNRKpf+28ksYjppmaXL
-   V3KyqEc+b+c2GVJcTTJ3ZP4wNQgaXyu6pJFqeVfzm10xk8MUB49txRMTU
-   L6BHIa2ZmihKpr5H1MgSf9pQIKauWCIR6R5U+aFn5mlPWMSWiQWC+mws5
-   AhheWDRWVcLWFwW973spLB2hmYIV3Z40bh7fklZCDb3uJ5hfjy3jmyV/V
-   w==;
-X-CSE-ConnectionGUID: +9r7lmHWROK5KfOUlUVTLA==
-X-CSE-MsgGUID: bBv3D1F/R8qr+TWipJUgwA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="71043619"
-X-IronPort-AV: E=Sophos;i="6.21,176,1763452800"; 
-   d="scan'208";a="71043619"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Dec 2025 02:17:44 -0800
-X-CSE-ConnectionGUID: e9oWw/OmSZmybIlP8sqXOQ==
-X-CSE-MsgGUID: 6Y9eA6kYTQSsOs36kMHSbg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,176,1763452800"; 
-   d="scan'208";a="204698249"
-Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
-  by fmviesa005.fm.intel.com with ESMTP; 25 Dec 2025 02:17:38 -0800
-Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vYiPJ-000000003yb-0W6B;
-	Thu, 25 Dec 2025 10:17:30 +0000
-Date: Thu, 25 Dec 2025 18:16:34 +0800
-From: kernel test robot <lkp@intel.com>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Bartosz Golaszewski <brgl@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Andre Draszik <andre.draszik@linaro.org>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: Re: [PATCH v18 01/10] power: reset: reboot-mode: Remove devres based
- allocations
-Message-ID: <202512251820.e0ZKwuCc-lkp@intel.com>
-References: <20251223-arm-psci-system_reset2-vendor-reboots-v18-1-32fa9e76efc3@oss.qualcomm.com>
+	s=arc-20240116; t=1766676117; c=relaxed/simple;
+	bh=azY2UBsk9EgOlqTY1DsvWWfEpwXyPYYwo7yZ5P8NOZ0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NHY9orNZEO3wefmFZOksP8GMjpi1grpQMmxpLKZqRTJ94qdlwf/7/0HoBJzxLm3VBO2g8RWr22a+O0OW0sKwlH5pR2hbIdgTy/9/qma3Xox4RV4GftLWQVd/b/RV+ZLyrZqJewU+5Lo2pCblHEsd23IH500HWG5R897CqnQUFIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fcFhF0HZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BPESViY2110782;
+	Thu, 25 Dec 2025 15:21:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=p7Q76h8F8rG+kI8SGtk3+9MdyPeZgWdBvaR
+	CZ81+WUE=; b=fcFhF0HZ+WhBwz4vIebuZpM1e94gtUmGwyFvCnRwxNR76FNGsjh
+	aaMqv9QOmRYu2l/NlEQePvJZ5GU77a4EaaRUw5UP0xjcb4c0Kio1A2+DS6lScoIN
+	o2Jt4Kq979vsuFoW4RdMiKKqvPT7+b3bsTaxvSpR828fz6H5Mo+eY1sS2tAsYY7L
+	tF7U+wLlYC5VV3eBVU4rBogrzWjpQ6Ww/ugH3hqSGQaeRowQHe5RimV0J7nLjlkF
+	Q18WvPFU/JrxVscy6g2d97AK2o0LQYwZdoWA1Noaxej/6PyCVcFRy5zIxWjkTPR7
+	hJT8kt4H5XWGWKYcYBJoGGoyXuGEGmOzNeA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b827r4frf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Dec 2025 15:21:40 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BPFLbEw006279;
+	Thu, 25 Dec 2025 15:21:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4b5mvn0fw3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Dec 2025 15:21:37 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BPFLaIZ006256;
+	Thu, 25 Dec 2025 15:21:36 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 5BPFLaGZ006250
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Dec 2025 15:21:36 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
+	id 81456592; Thu, 25 Dec 2025 20:51:35 +0530 (+0530)
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
+        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonathan@marek.ca, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
+        quic_vproddut@quicinc.com
+Subject: [PATCH v4 0/5] Add DSI display support for QCS8300 target
+Date: Thu, 25 Dec 2025 20:51:29 +0530
+Message-Id: <20251225152134.2577701-1-quic_amakhija@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251223-arm-psci-system_reset2-vendor-reboots-v18-1-32fa9e76efc3@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oExvvK3gYQFy_6GVBB7Mqu5KXryzT9ZE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI1MDE0NyBTYWx0ZWRfX3uKHUt57TcI+
+ 80PEMIteeqW87k7FlTaCZrGdlD0wwqCkM5mqiZ404CB6NdsZ8YEKgMDl3UeQpT0K9vxVRSzOiLL
+ 97TjqdfB5hX3X4yDQAhyhTK5vZizG0VaCH6zHjZZj1BVyFPQ7qdBesWbekETaVSLczpuJjS0wez
+ GkPQugnRRbxLHm7NrnwVQ46TWyM5oTZAlZNkncVLZ09TZ/vUW4iSvqpeQI0Y4KdVmNrUnIrCDO8
+ /C7woNtfLTSgCr+pF+nuSeqpROYLAJy4/8F+Y1bF9OSokxN3ttjoJCeqYVF2RFRf6+3oaAc5Y/T
+ YvwaNO2lVc/E/Br8qRIDL29B6rdMTNZFmf2Nsf4YwjvqzF+LZtjzsJZnWttH30U1S0qke1FqZQe
+ jO7SOoDq5jYiUOmnMlPpsS6MWANwDQETVAlBuBVaWSwIditlI9FfDAdaaVmdUeIl8TJVAuGorI9
+ TecUWoZRAnixik1pRmw==
+X-Proofpoint-GUID: oExvvK3gYQFy_6GVBB7Mqu5KXryzT9ZE
+X-Authority-Analysis: v=2.4 cv=RbSdyltv c=1 sm=1 tr=0 ts=694d5684 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=3UhwaOG55YdarTGHrZ4A:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-25_01,2025-12-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512250147
 
-Hi Shivendra,
+This series enables the support for DSI to DP bridge port
+(labeled as DSI0) of the Qualcomm's QCS8300 Ride platform.
 
-kernel test robot noticed the following build errors:
+QCS8300 SoC has DSI controller v2.5.1 and DSI PHY v4.2.
+The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
 
-[auto build test ERROR on cc3aa43b44bdb43dfbac0fcb51c56594a11338a8]
+---
+This patch depends on following series:
+https://lore.kernel.org/all/20251117-dts_qcs8300-v7-0-bf42d39e7828@oss.qualcomm.com/
+(Enable DPU and Display Port for Qualcomm QCS8300-ride platform)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shivendra-Pratap/power-reset-reboot-mode-Remove-devres-based-allocations/20251224-011508
-base:   cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
-patch link:    https://lore.kernel.org/r/20251223-arm-psci-system_reset2-vendor-reboots-v18-1-32fa9e76efc3%40oss.qualcomm.com
-patch subject: [PATCH v18 01/10] power: reset: reboot-mode: Remove devres based allocations
-config: powerpc64-randconfig-r072-20251225 (https://download.01.org/0day-ci/archive/20251225/202512251820.e0ZKwuCc-lkp@intel.com/config)
-compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project 4ef602d446057dabf5f61fb221669ecbeda49279)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251225/202512251820.e0ZKwuCc-lkp@intel.com/reproduce)
+Changes in v4: Addressed review comments from konard and Krzysztof
+   - Patch 1: Update commit description to clarify PHY compatible string
+              details.[Krzysztof]
+   - Patch 2: Update commit description to clarify CTRL compatible string
+              details.
+   - Patch 4: Added new lines at few places. [konard]
+   - Patch 5: 
+            - Moved regulator always-on and boot-on properties at the end of
+              the node. [konard]
+            - Added new lines at few places. [konard]
+            - Made the tlmm gpios entries sorted based on gpio index
+              number. [Konard]
+            - Drop output-high property. [konard]
+   - Link to v3 :
+     https://lore.kernel.org/all/20251125013302.3835909-1-quic_amakhija@quicinc.com/
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202512251820.e0ZKwuCc-lkp@intel.com/
+Changes in v3: Addressed review comments from konard and Dmitry
+   - Patch 2: Remove qcom,qcs8300-dsi-ctrl from clk details. [Dmitry]
+   - Remove PHY and CTRL driver support. The CTRL and PHY versions for
+     Monaco are the same as LeMans, and Monaco will use the same CTRL
+     and PHY based on the fallback compatible string [Dmitry/Konard]
+   - Patch 5: Rename the regulator used and arrange the compatible, reg,
+     address and size cell for i2cmux in proper order. [Dmitry]
+   - Link to v2:
+     https://lore.kernel.org/all/20251006013924.1114833-1-quic_amakhija@quicinc.com/
 
-All errors (new ones prefixed by >>):
-
->> drivers/power/reset/reboot-mode.c:94:10: error: call to undeclared function 'kzalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-      94 |                 info = kzalloc(sizeof(*info), GFP_KERNEL);
-         |                        ^
->> drivers/power/reset/reboot-mode.c:94:8: error: incompatible integer to pointer conversion assigning to 'struct mode_info *' from 'int' [-Wint-conversion]
-      94 |                 info = kzalloc(sizeof(*info), GFP_KERNEL);
-         |                      ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> drivers/power/reset/reboot-mode.c:120:2: error: call to undeclared function 'kfree'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     120 |         kfree(info);
-         |         ^
-   drivers/power/reset/reboot-mode.c:145:3: error: call to undeclared function 'kfree'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     145 |                 kfree(info);
-         |                 ^
-   4 errors generated.
-
-
-vim +/kzalloc +94 drivers/power/reset/reboot-mode.c
-
-    66	
-    67	/**
-    68	 * reboot_mode_register - register a reboot mode driver
-    69	 * @reboot: reboot mode driver
-    70	 *
-    71	 * Returns: 0 on success or a negative error code on failure.
-    72	 */
-    73	int reboot_mode_register(struct reboot_mode_driver *reboot)
-    74	{
-    75		struct mode_info *info;
-    76		struct mode_info *next;
-    77		struct property *prop;
-    78		struct device_node *np = reboot->dev->of_node;
-    79		size_t len = strlen(PREFIX);
-    80		u32 magic;
-    81		int ret;
-    82	
-    83		INIT_LIST_HEAD(&reboot->head);
-    84	
-    85		for_each_property_of_node(np, prop) {
-    86			if (strncmp(prop->name, PREFIX, len))
-    87				continue;
-    88	
-    89			if (of_property_read_u32(np, prop->name, &magic)) {
-    90				pr_err("reboot mode %s without magic number\n", prop->name);
-    91				continue;
-    92			}
-    93	
-  > 94			info = kzalloc(sizeof(*info), GFP_KERNEL);
-    95			if (!info) {
-    96				ret = -ENOMEM;
-    97				goto error;
-    98			}
-    99	
-   100			info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
-   101			if (!info->mode) {
-   102				ret =  -ENOMEM;
-   103				goto error;
-   104			} else if (info->mode[0] == '\0') {
-   105				kfree_const(info->mode);
-   106				ret = -EINVAL;
-   107				pr_err("invalid mode name(%s): too short!\n", prop->name);
-   108				goto error;
-   109			}
-   110	
-   111			list_add_tail(&info->list, &reboot->head);
-   112		}
-   113	
-   114		reboot->reboot_notifier.notifier_call = reboot_mode_notify;
-   115		register_reboot_notifier(&reboot->reboot_notifier);
-   116	
-   117		return 0;
-   118	
-   119	error:
- > 120		kfree(info);
-   121		list_for_each_entry_safe(info, next, &reboot->head, list) {
-   122			list_del(&info->list);
-   123			kfree_const(info->mode);
-   124			kfree(info);
-   125		}
-   126	
-   127		return ret;
-   128	}
-   129	EXPORT_SYMBOL_GPL(reboot_mode_register);
-   130	
+Changes in v2: Addressed review comments from Konard and Dmitry
+   - Patch 1: Documented the qcom,qcs8300-dsi-phy-5nm compatible string.
+   - Patch 2: Documented the qcom,qcs8300-dsi-ctrl compatible string.
+   - Patch 3:
+           - Added qcom,qcs8300-dsi-ctrl and qcom,qcs8300-dsi-phy-5nm
+             compatible strings
+             to the Device Tree bindings. [Dmitry/Konard]
+           - Fixed indentation issue. [Dmitry]
+           - Drop the extra empty line. [Dmitry]
+   - Patch 4: Added PHY driver support for qcom,qcs8300-dsi-phy-5nm.
+   - Patch 5: Added CTRL driver support for qcom,qcs8300-dsi-ctrl.
+   - Patch 6: Included qcom,qcs8300-dsi-ctrl and
+     qcom,qcs8300-dsi-phy-5nm
+              compatible strings in the Device Tree. [Dmitry/Konard]
+   - Link to v1:
+     https://lore.kernel.org/all/20250925053602.4105329-1-quic_amakhija@quicinc.com/
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+
+Ayushi Makhija (5):
+  dt-bindings: display: msm-dsi-phy-7nm: document the QCS8300 DSI PHY
+  dt-bindings: msm: dsi-controller-main: document the QCS8300 DSI CTRL
+  dt-bindings: display: msm: document DSI controller and phy on QCS8300
+  arm64: dts: qcom: qcs8300: add Display Serial Interface device nodes
+  arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
+
+ .../display/msm/dsi-controller-main.yaml      |   5 +
+ .../bindings/display/msm/dsi-phy-7nm.yaml     |  30 +--
+ .../display/msm/qcom,qcs8300-mdss.yaml        | 102 +++++++++-
+ arch/arm64/boot/dts/qcom/monaco.dtsi          | 102 +++++++++-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     | 177 ++++++++++++++++++
+ 5 files changed, 402 insertions(+), 14 deletions(-)
+
+base-commit: 563c8dd425b59e44470e28519107b1efc99f4c7b ("next-20251216")
+-- 
+2.34.1
+
 
