@@ -1,171 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-86608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9C16CDD432
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 04:51:11 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC38FCDD52C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 05:32:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6BACC3016370
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 03:51:10 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 782B53002D7D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 04:31:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB00D264A74;
-	Thu, 25 Dec 2025 03:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF63A17BED0;
+	Thu, 25 Dec 2025 04:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R521H4wZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lJKY3UO4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E423EEC3;
-	Thu, 25 Dec 2025 03:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D451228D8CC;
+	Thu, 25 Dec 2025 04:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766634668; cv=none; b=CEQP9VdoUCWF20uujyUznLHm78LJxyaayhy8gTxxJ3FjcWaPL/aBUvUfR/8XzUfzRpLKGYiT+6TcKnw2Cs8gFHfDLMvi8wLPPnV/HlKq8qvomKP9gsCBohODuNpNg4urbsi8vJZLhWESLr8AkAZNAJlIL/LkZ89iU3dSR7u3X3E=
+	t=1766637044; cv=none; b=X4oob/Qoy82Ua+Sz7mISsZlbmfTGLT7T+WT10gec8SPcTxTG4DtDr/k736586fxQl68N2jWAu3j3aCPyiNqNFrLQSLeP16EY0F7T9fjgT1xnBWNtHWuTdQOT9BF7NW2Sg6nHPNbzlbyfPN2f9esxPeyZiLVVRbfKsh9bdlnLd8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766634668; c=relaxed/simple;
-	bh=e5B3SSMk1rIkgvNAsHWBN98zYrKbsmUDNmz3J/BZDiw=;
+	s=arc-20240116; t=1766637044; c=relaxed/simple;
+	bh=0jF1HJwFcGPuiL/DoLAg+iWgJoZ/B5TQNXYupJjw4n0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IZ7jnyc20XmnXTZVgLIrr6oW4MmM/Tw5dJRfNYFvFlSLaj1cffswsP/rRqa40rP2f5r7DleTr8f/wRL5w0S7oU9p4UJN54hjpQkCNC4eUzzV1g8scwiybMjWj1MK4SpyipezTXtx0A2T2Kuyqq74bFQqi5J9EC/QOms3XrIJGq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R521H4wZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994D5C4CEF1;
-	Thu, 25 Dec 2025 03:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766634668;
-	bh=e5B3SSMk1rIkgvNAsHWBN98zYrKbsmUDNmz3J/BZDiw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R521H4wZGoK0XBn6ZlrjT/+I+u7qEaqGP5pmsMY52UVwUMypLD/4D8MEJDFvizqWL
-	 vids4LmB9oPOjL/f7lpXbko/6x7f/wr9SpsD6FlxBZNtDp1KGSljJMM5L+eATAt4Jn
-	 DKAvF7krq4kMeTv+3zm+Yxrvj76Vp34yuP46k6Y4c8rNyfrPfB+Y+Qgv4dNxAqkWGS
-	 6cJKSdDXLupMuLuA0T6aa7ZFcG5FtB1MOsSudXn8aVIVRUm4WZ+3PhSywXBvXj+N6e
-	 Ms/BAhqTDJ/Yjwc+cOb9cQKV7TtwT2QfoWWgJvzzN6NXPI5ZkhLfk8q5FeLM2ljTb4
-	 NK3iutt7aqcKw==
-Date: Wed, 24 Dec 2025 21:51:05 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
-	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: rcg2: compute 2d using duty fraction directly
-Message-ID: <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
-References: <20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com>
- <emy273nvnbzznvufe6fmbysrln6d7lm4xi5rwsuwnj4kjlalvx@7j4dxyd2f25l>
- <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ag+8WrMSNvnNrTa6/ZpvecaWwtPLLyewB2zlNSdz0Q8qyK9mPyG8jxn3vw9r/qklgtvDdFJiJRTpQXWKUXTUcZx/kTgcBBC5Gcj4HkarT2+7OMxizhcCM0MYkR9P0VrMo4KIG98UGfTv49dSHHy14aGtUG4Z7cAXKEPvK/D/tW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lJKY3UO4; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1766637041; x=1798173041;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0jF1HJwFcGPuiL/DoLAg+iWgJoZ/B5TQNXYupJjw4n0=;
+  b=lJKY3UO4FYgaXl5zMRobMVoxUirktUPJlIkRgVkTBJVNldSsu6efy+xB
+   XNBbDcn3Vr9Rj8EdRpmSmcOBRpY3sk02sBZQE2XnZA0YlDxPqjfQMmQcZ
+   8/vPA9sn32G9WmOO3aypA+vYTkRs9XQUTtaNpEXlCxbVlFnS5GfyvTZAS
+   Oy0UNnTdYDa7A13/bb5Scn6twQiHT7ZcJmTEJ8MuVWQdcoNDSarHh+Ymx
+   HCFfv1ce5UNXF7iNSPvryYj9SY5DAY1x3mzIyFfHlE9UWuCiqKuDALEV/
+   u/ry81ukR6smmBvjrv0WxCj+yXdAHG8WHA+AQi/yPlouOCq5ttMDyYgMT
+   Q==;
+X-CSE-ConnectionGUID: TadSnvdERYqJQyRiWe4psw==
+X-CSE-MsgGUID: a76hEBAFTy+9wpnktei18Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="79086189"
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; 
+   d="scan'208";a="79086189"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Dec 2025 20:30:40 -0800
+X-CSE-ConnectionGUID: pDRKGQpkRY6j0z/ltvJafg==
+X-CSE-MsgGUID: QZM6HknrSNmRzybAjm/6kw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,175,1763452800"; 
+   d="scan'208";a="200453480"
+Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
+  by fmviesa008.fm.intel.com with ESMTP; 24 Dec 2025 20:30:38 -0800
+Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vYczj-000000003k9-2jFe;
+	Thu, 25 Dec 2025 04:30:35 +0000
+Date: Thu, 25 Dec 2025 12:30:35 +0800
+From: kernel test robot <lkp@intel.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, adrian.hunter@intel.com,
+	quic_asutoshd@quicinc.com, ulf.hansson@linaro.org,
+	linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, ebiggers@kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	quic_mdalam@quicinc.com
+Subject: Re: [PATCH] mmc: sdhci-msm: Add quirk to disable CQE for ICE legacy
+ mode
+Message-ID: <202512251242.zOsGwwe8-lkp@intel.com>
+References: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
+In-Reply-To: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
 
-On Tue, Dec 23, 2025 at 04:18:20PM +0530, Taniya Das wrote:
-> 
-> 
-> On 12/23/2025 12:39 AM, Bjorn Andersson wrote:
-> > On Mon, Dec 22, 2025 at 10:38:14PM +0530, Taniya Das wrote:
-> >> From: Taniya Das <quic_tdas@quicinc.com>
-> > 
-> > Please use oss.qualcomm.com.
-> > 
-> 
-> My bad, will update it.
-> 
-> >>
-> >> The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
-> >> derives an intermediate percentage `duty_per = (num * 100) / den` and
-> >> then computes:
-> >>
-> >>     d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
-> >>
-> >> This introduces integer truncation at the percentage step (division by
-> >> `den`) and a redundant scaling by 100, which can reduce precision for
-> >> large `den` and skew the final rounding.
-> >>
-> >> Compute `2d` directly from the duty fraction to preserve precision and
-> >> avoid the unnecessary scaling:
-> >>
-> >>     d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
-> >>
-> >> This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
-> >> a single, final rounded division, improving accuracy especially for small
-> >> duty cycles or large denominators. It also removes the unused `duty_per`
-> >> variable, simplifying the code.
-> >>
-> >> There is no functional changes beyond improved numerical accuracy.
-> >>
-> >> Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
-> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> >> ---
-> >> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> >> ---
-> >>  drivers/clk/qcom/clk-rcg2.c | 6 ++----
-> >>  1 file changed, 2 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> >> index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
-> >> --- a/drivers/clk/qcom/clk-rcg2.c
-> >> +++ b/drivers/clk/qcom/clk-rcg2.c
-> >> @@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-> >>  static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-> >>  {
-> >>  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> >> -	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
-> >> +	u32 notn_m, n, m, d, not2d, mask, cfg;
-> >>  	int ret;
-> >>  
-> >>  	/* Duty-cycle cannot be modified for non-MND RCGs */
-> >> @@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
-> >>  
-> >>  	n = (~(notn_m) + m) & mask;
-> >>  
-> >> -	duty_per = (duty->num * 100) / duty->den;
-> >> -
-> >>  	/* Calculate 2d value */
-> >> -	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
-> >> +	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
-> > 
-> > This looks better/cleaner. But for my understanding, can you share some
-> > example numbers that shows the problem?
-> > 
-> 
-> Sure Bjorn, will share the examples.
-> 
+Hi Md,
 
-I don't think these examples need to necessarily be added in the git
-history - in particular since the proposed new style looks more
-reasonable than what's currently is in the code.
+kernel test robot noticed the following build warnings:
 
-So, providing them here would suffice, for me at least.
+[auto build test WARNING on linus/master]
+[also build test WARNING on ulf-hansson-mmc-mirror/next v6.19-rc2 next-20251219]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/mmc-sdhci-msm-Add-quirk-to-disable-CQE-for-ICE-legacy-mode/20251224-181537
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20251224101050.3497746-1-quic_mdalam%40quicinc.com
+patch subject: [PATCH] mmc: sdhci-msm: Add quirk to disable CQE for ICE legacy mode
+config: arm64-randconfig-004-20251225 (https://download.01.org/0day-ci/archive/20251225/202512251242.zOsGwwe8-lkp@intel.com/config)
+compiler: clang version 22.0.0git (https://github.com/llvm/llvm-project 4ef602d446057dabf5f61fb221669ecbeda49279)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251225/202512251242.zOsGwwe8-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202512251242.zOsGwwe8-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/mmc/host/sdhci-msm.c:2121:36: warning: unused variable 'sdhci_msm_cqhci_ops' [-Wunused-const-variable]
+    2121 | static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+         |                                    ^~~~~~~~~~~~~~~~~~~
+   1 warning generated.
 
 
-Adding kunit tests certainly sounds useful though.
+vim +/sdhci_msm_cqhci_ops +2121 drivers/mmc/host/sdhci-msm.c
 
-Regards,
-Bjorn
+67b13f3e221ed8 Shaik Sajida Bhanu 2021-07-16  2120  
+87a8df0dce6ad0 Ritesh Harjani     2020-01-16 @2121  static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+c93767cf64ebf4 Eric Biggers       2021-01-25  2122  	.enable		= sdhci_msm_cqe_enable,
+87a8df0dce6ad0 Ritesh Harjani     2020-01-16  2123  	.disable	= sdhci_msm_cqe_disable,
+c93767cf64ebf4 Eric Biggers       2021-01-25  2124  #ifdef CONFIG_MMC_CRYPTO
+741521fa273fdd Eric Biggers       2024-12-12  2125  	.uses_custom_crypto_profile = true,
+c93767cf64ebf4 Eric Biggers       2021-01-25  2126  #endif
+87a8df0dce6ad0 Ritesh Harjani     2020-01-16  2127  };
+87a8df0dce6ad0 Ritesh Harjani     2020-01-16  2128  
 
-> > Regards,
-> > Bjorn
-> > 
-> >>  
-> >>  	/*
-> >>  	 * Check bit widths of 2d. If D is too big reduce duty cycle.
-> >>
-> >> ---
-> >> base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
-> >> change-id: 20251222-duty_cycle_precision-796542baecab
-> >>
-> >> Best regards,
-> >> -- 
-> >> Taniya Das <taniya.das@oss.qualcomm.com>
-> >>
-> 
-> -- 
-> Thanks,
-> Taniya Das
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
