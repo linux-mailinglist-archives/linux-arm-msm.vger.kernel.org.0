@@ -1,46 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-86612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0237CDD815
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 09:34:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7295ACDD899
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 09:49:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6D5C2300E006
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 08:34:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2246E302EA03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 08:49:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14CD726FDA8;
-	Thu, 25 Dec 2025 08:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 345BA314A7D;
+	Thu, 25 Dec 2025 08:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZD8iJBP8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H3jPgQ7K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA70D2222A9;
-	Thu, 25 Dec 2025 08:34:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABFD1C701F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 08:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766651650; cv=none; b=mA7qu5r4w4RSuT0sjhodgc62fGxx4PeOTIrMCNpVLJfg4hylv2fYczeTjkNISov8b39LVoaUnucfuFbZ4VCHy6OfuPzy+WBxhvqJAt8f0s8We3douaP9scxSNTlGPgla5IKVApYW2vk+q/RdrexPf+pKc5xyy7yTIwJGSeduteE=
+	t=1766652581; cv=none; b=t62IukU8sUUhS8nZGqi33VDpjy1cHBtBElVHDV+GlFMgNlQCZTRRyxvMTKwVVQolAJ9xfRGH/JRK88Q7Py4yH2YEiuoxVpo32e5/utazI4x4+I/V4kkIZf7L7yFHvXHraAvmTzhhn7bNfopkV1qcVhySgSRk98atd6U4AJaLiC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766651650; c=relaxed/simple;
-	bh=T2HvZypfEISRGptuaf4PARKSOQw8mxtwryHv6AL3Jjo=;
+	s=arc-20240116; t=1766652581; c=relaxed/simple;
+	bh=IaUv/bEmXrjpgGeev5PpfBcVPxklP5nZb+aJj6da84s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NMn9TSEKxtSpsGdfaFH95ZRtA4dc2hzf1T6FqDK6GMSDhrYYYYxnmgu/3t3kdoL/xV0nynDLyDQqQQvw0VwAqLHqrc6u92MlZLkxfhck81oQd71AsW/hk+TJi12AG+NoEsesRhNkAOoM75zS4MLxOdXO6OeWvFH51Mezl4+QS6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZD8iJBP8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E406C4CEF1;
-	Thu, 25 Dec 2025 08:34:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766651649;
-	bh=T2HvZypfEISRGptuaf4PARKSOQw8mxtwryHv6AL3Jjo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZD8iJBP85IJWQkgyjUKR+z1STR7btyr2VClR/O3gos+eJg6qtqrAvjNxhXe7eOI4p
-	 /Z2R7CgRNyjkXlsJvdvMIWw36LuwWZugxLGr/fBn0V2ORP6Xh7OblUzkudC2IJ5XtE
-	 31vC356afH+EqUG0TSm+YiWl9BFaXJFPT0c/9FBjwiOHVwvSTDAFIVCHlGfL2ODpvB
-	 X25Tmqj+A0UGa0Y2BhF4j0SBN/J3bm9eWvHWFVxO8MUrqCzPquNrd6ZgW6etnqZSWW
-	 UMXKTCEcQLcKAjUQ9Hb5anMi0P9X0IPaB1wiimF/ekkvUv9cPQwPnffq7IEuBBOvLE
-	 7Q3XoFWd8KzVg==
-Message-ID: <7283e3e7-54f6-4946-b526-2fa180f15c50@kernel.org>
-Date: Thu, 25 Dec 2025 09:33:59 +0100
+	 In-Reply-To:Content-Type; b=oODbchXD7vlwtakyDElhngeT48M2+ih1VlMEziBufq0jDC5QPgCstSpobGhPitfgPzBMYPxyYHMSceEIXxIi7Ssh0V3oIVpb7ALVv4ppGyI/ZqWCqVgPtuSnIhuQ9Uz7kvOENsgh+NYvYIvfsKQ3TLCiF/VU5kqsB0wYc8E8LWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H3jPgQ7K; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-430f5ecaa08so2785380f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 00:49:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766652576; x=1767257376; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yoBDRxVmXrYcyUWaWX2M43BL+d+5SL+xKSZsptXvX8M=;
+        b=H3jPgQ7KOgsizim0eNqQY2zrUgWHSpswyD8Wrf5yk/QeqpMpVP6XI+/XZiU+XPUWOL
+         XvQ5rqM8hPxbgB6fuHTkGsl4vjMfRJU0NTirnWIXOA2RN8Bcs0d0WopI2StKkPVBqLRb
+         PpP2a9QFGLVV3Vxc691HiTe21nKYQUjS1Tz3E5jIa4EOnvZsGDALEG0MfyqgqCeN9csM
+         JKBsZjooq60kPU/PJ0TxIFmysUeSi9ILp+dbPT5sYtNf7pZtRZO3F4Tr518iyBi7pI9x
+         ZZJQ6tQp2WcF92Lu/Pb8cek79ssuW9wzPhQqn+aPTuDy6mMvYw2X/m+ytH6IBovv8D30
+         CgJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766652576; x=1767257376;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yoBDRxVmXrYcyUWaWX2M43BL+d+5SL+xKSZsptXvX8M=;
+        b=SxvgSvh4RV7b0r1ELGTvz6FvGNXw+m3s2B+43tdimtaln7jncfDlgEsoiz48+2zG5B
+         /NMOr7yXSpMuH+WxOqZJ8TuRdRZuNISKutfQZDR3fgfcOaYLZUA62KM01iS+KEoPeijB
+         /3o9DjNPY3drnicrw41aJsqid5IT5tcm+3mVRbSNhvPh6+XIvruRLmGnNJYBSnRNaCWX
+         tbuQRro+SGlpfY0aqpHO+jjMg1nzkk3aDhp8x8zRQw6uVsDbPt2QGZHLb36zWspvlqE6
+         1mN60bKuGPqspdd3SlGF2pfWjUrFEQVfiQm1cm9UjPJZh4n/DBIOVGQ2l8Mc+5DFFyww
+         /f/g==
+X-Forwarded-Encrypted: i=1; AJvYcCVTmlBThdg5XT/whMvrHx9RPdAVA84CNamNobMlb9xIg3g4wymLx1dGOsowWi5f4gUUEcuhh9yfZcaBvvLT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0UgZUug+r+tl3YCS9WNSfZ1GnTAamzwbozEQrsX1bQOteCJa2
+	kM9+6ioJArj2Cnm6qzNr92hueoJqoR8mqJ7YMUigAmVxVbrQjPepOBXiOUwVzmH+1Vo=
+X-Gm-Gg: AY/fxX7iFV/DRYKAom2Dq4AdKYgnn/fGXgXhsA30asPJ0VdNYnPcPr66jWsDWraSGG1
+	3b2OJVAg/TnfjEyYr8f4ksV2YiPsItfv26vYktMwC1E/MPGMoOJyKym020ktzN+I0OtIt+hXFsc
+	SMs0m9qkNeP7XfrBOMC33TF7bMg7qW4XFeXqiWqR7L/eZwai0/i+fvb/ZEnIkmM9oaKv6srTVXc
+	QCUcgIHN6RMa7ySCxFM67S5ywOT52fUN04+zvU697sT4C8fNa0GDm2ooR9gSHIgA7XHyCqK4aHO
+	G44kykKdDE7GkYLBe5c7dZPX0Vp/3XJih0P9eJhXXPnxLZMsiBHP6MLesb270Mxl/B/zT1Hp7YE
+	dqHkl4bcs8LDkIZ87VRa4KfFHoae3cU48psA+/wf28JEJZHhJUopDktcPuyAPypSxoCqXFklUIV
+	uR8INqC8x9QuCosrNo30wb5lj982taZzV5pD+f/vQBXsIJuFSepfU4
+X-Google-Smtp-Source: AGHT+IGB03s/TFHHK32TGVs9YpBfcIdvRZx8YFRPv17geyEukeVgPpI7hyWLxapWo3sPx+1F2nXfzQ==
+X-Received: by 2002:a05:6000:420c:b0:42f:9e75:8605 with SMTP id ffacd0b85a97d-4324e45d3efmr18403483f8f.0.1766652576404;
+        Thu, 25 Dec 2025 00:49:36 -0800 (PST)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea1b36fsm38939643f8f.5.2025.12.25.00.49.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Dec 2025 00:49:35 -0800 (PST)
+Message-ID: <1b8b0f61-6907-4ae3-ac2b-54a3e25045c7@linaro.org>
+Date: Thu, 25 Dec 2025 08:49:34 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,119 +82,67 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
- retimers, dp altmode support
-To: Shawn Guo <shawnguo@kernel.org>, jens.glathe@oldschoolsolutions.biz,
- Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Rob Clark <robdclark@gmail.com>, Jos Dehaes <jos.dehaes@gmail.com>
-References: <20250417-slim7x-retimer-v2-1-dbe2dd511137@oldschoolsolutions.biz>
- <CAAQ0ZWT=s2BdobfkKuBAhw5H761ZH7uCH70i_UOR+wJ6cjSZJA@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 1/6] media: iris: Add buffer to list only after successful
+ allocation
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251224-iris-fixes-v1-0-5f79861700ec@oss.qualcomm.com>
+ <20251224-iris-fixes-v1-1-5f79861700ec@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <CAAQ0ZWT=s2BdobfkKuBAhw5H761ZH7uCH70i_UOR+wJ6cjSZJA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20251224-iris-fixes-v1-1-5f79861700ec@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 25/12/2025 04:29, Shawn Guo wrote:
-> On Fri, Apr 18, 2025 at 12:35 AM Jens Glathe via B4 Relay
-> <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org> wrote:
->>
->> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>
->> comparing with CRD and other dts for a more complete support of the 7X
->> only retimers, gpios, regulators, dp outputs
->>
->> Tested-by: Rob Clark <robdclark@gmail.com>
->> Tested-by: Jos Dehaes <jos.dehaes@gmail.com>
->> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->> ---
->> This patch adds the required nodes to support DP Altmode on all three type-c
->> ports. The definition is derived from the CRD. Since they are all marked 40Gbps,
->> I assume there are 3 PS8830 retimers.
->> This modification is now for ~8 weeks in my tree with little to no complaints. I
->> don't have access to a Yoga Slim 7X, however many people on #aarch64-laptops do
->> and some are using this patch.
->> ---
->> Changes in v2:
->> - removed changes not relevant to retimers and dp altmode (thanks Johan)
->> - Link to v1: https://lore.kernel.org/r/20250417-slim7x-retimer-v1-1-5813a7835903@oldschoolsolutions.biz
->> ---
->>  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 476 ++++++++++++++++++++-
->>  1 file changed, 470 insertions(+), 6 deletions(-)
+On 24/12/2025 06:27, Dikshita Agarwal wrote:
+> Move `list_add_tail()` to after `dma_alloc_attrs()` succeeds when creating
+> internal buffers. Previously, the buffer was enqueued in `buffers->list`
+> before the DMA allocation. If the allocation failed, the function returned
+> `-ENOMEM` while leaving a partially initialized buffer in the list, which
+> could lead to inconsistent state and potential leaks.
 > 
-> Hi,
+> By adding the buffer to the list only after `dma_alloc_attrs()` succeeds,
+> we ensure the list contains only valid, fully initialized buffers.
 > 
-> I'm running a Slim7x China variant (Yoga Air 14s) with Debian 13.
-> While the Debian stock 6.12 kernel works fine to bring up the display
-> (AMOLED eDP panel), newer kernels like 6.18 loses display during boot.
-> I can do either of the following to get the display back to work.
+> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_buffer.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> - Enable PS883X driver (Yes, CONFIG_TYPEC_MUX_PS883X is missing from
-> Debian config [1])
-
-Obviously.
-
-> 
-> OR
-> 
-> - Revert commit 299038d82418 ("arm64: dts: qcom:
-> x1e80100-lenovo-yoga-slim7x: add retimers, dp altmode support")
-> 
-> My understanding is that a PS883X driver is required only for external
-> DP support.  Why would the driver missing impact/break the internal
-> panel support?  Do you guys have any insight on this?  Thanks!
+> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
+> index b89b1ee06cce151e7c04a80956380d154643c116..f1f003a787bf22db6f048c9e682ba8ed2f39bc21 100644
+> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+> @@ -351,12 +351,15 @@ static int iris_create_internal_buffer(struct iris_inst *inst,
+>   	buffer->index = index;
+>   	buffer->buffer_size = buffers->size;
+>   	buffer->dma_attrs = DMA_ATTR_WRITE_COMBINE | DMA_ATTR_NO_KERNEL_MAPPING;
+> -	list_add_tail(&buffer->list, &buffers->list);
+>   
+>   	buffer->kvaddr = dma_alloc_attrs(core->dev, buffer->buffer_size,
+>   					 &buffer->device_addr, GFP_KERNEL, buffer->dma_attrs);
+> -	if (!buffer->kvaddr)
+> +	if (!buffer->kvaddr) {
+> +		kfree(buffer);
+>   		return -ENOMEM;
+> +	}
+> +
+> +	list_add_tail(&buffer->list, &buffers->list);
+>   
+>   	return 0;
+>   }
 > 
 
-You need all drivers to avoid probe deferrals.
+Missing an appropriate Fixes: tag.
 
-Best regards,
-Krzysztof
+Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
+
+---
+bod
 
