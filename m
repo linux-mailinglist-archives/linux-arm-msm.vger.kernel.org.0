@@ -1,348 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-86622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C687ACDDE63
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 16:23:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CB21CDE24E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 23:54:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 843213015127
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 15:23:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4C1433010995
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 22:53:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D3932E696;
-	Thu, 25 Dec 2025 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83D272BE02D;
+	Thu, 25 Dec 2025 22:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EywHsUYV"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="SparbaWU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64ED32D0D2;
-	Thu, 25 Dec 2025 15:21:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09168273D75
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 22:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766676120; cv=none; b=Dw658k5liH+WtRGdamLFWxZC+h14jOkle22ZL5Ll0NFXwvuckKltOICJ/+xlsBiU+8WFnYUtLs3XAusVB1RLHQ8WDttbJ1LoPl3WxLlwA36WcEN4jS43Mdsq7JF9AQBEwdKF1X1c/U9frlSJk2l8mhUszJ9kHpBGHl9/8cjEMEM=
+	t=1766703227; cv=none; b=eB/Kb9SYLyB47EHcr7hFteedBqv/GE7guVuhPz4TJXtUh716ctepTvS/YdbhM7fZzDeGrghwYXTmc5SHGuK5ZHSTWpJKkAQnkcuztRZw+mlqY7LYL6I7FipkXzQSC61KEALTtcaf01r8PI4G747PZatT+psmQJPAIpMUa43NYGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766676120; c=relaxed/simple;
-	bh=Gn/5hdLnvzmJ2e3Ybh7lwgasBZ1cdN0cfjIyqJ1TjXo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZLhsjQ4rEY3xkiN84D0LLL3g6M/49IxHVyIrUbUpWOBdvyXt3Jpw9MY2oSxABY0g6ALhTszLD3gDALlmApBKyUaCfV1JivuBsOr8i/hkmb8nifX37+9d1bmkXKzJR7FgOVdCn+WNgegEBDTBgmIpTfuJ1Oxe7d3esk999JIIgmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EywHsUYV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BPESWI02505444;
-	Thu, 25 Dec 2025 15:21:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=/4F526mnmA1
-	dpNXOIzVljAysEGPsj7fLjWpRMm6pkqk=; b=EywHsUYVJSRH7GgJlGdWXMYTcuM
-	p+jrmsolXjZ9XImzrxFqLEynhB8J4/zNrK58/c2kbtj34Jqd5ntyte49WtFBRM81
-	VMak8zavJg1n66oORIPc468uTvyXX+EBpLELR6D3NBIqrtFrXeEC5WYzzH9hfOAI
-	nEF8GaXtT0cwJGAVTCQHUB6I8xQOIFy8567m+DbGlPZfkPWm5ucdquuY4znhQUxR
-	5heNTd66tSHEdJdH9N0z8CQ6eUkSHE9Ite6LTjGzPxwmxK9eis0nyC/LBt8e27ps
-	KLw4zeFHOvK0YdflWM91cdaVQX5cCvHbYj8uJS7jXCfLDU0yeo5dEjUG01g==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8kywhsnr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Dec 2025 15:21:41 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BPFLbHe006306;
-	Thu, 25 Dec 2025 15:21:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4b5mvn0fwk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Dec 2025 15:21:38 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BPFLahn006254;
-	Thu, 25 Dec 2025 15:21:37 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 5BPFLbJG006293
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Dec 2025 15:21:37 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id 95F665A5; Thu, 25 Dec 2025 20:51:35 +0530 (+0530)
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
-        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonathan@marek.ca, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
-        quic_vproddut@quicinc.com
-Subject: [PATCH v4 5/5] arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
-Date: Thu, 25 Dec 2025 20:51:34 +0530
-Message-Id: <20251225152134.2577701-6-quic_amakhija@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251225152134.2577701-1-quic_amakhija@quicinc.com>
-References: <20251225152134.2577701-1-quic_amakhija@quicinc.com>
+	s=arc-20240116; t=1766703227; c=relaxed/simple;
+	bh=8Bl87sjOeJEeTTZcr4AU4MZuxMspVdlgihJDib5ly6k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WTMITHBP4OOTtphw+b6abC9mFKikdwVtLGwfiFk8jfmV77MfZzkVV4u3yDhNDcyP69OavIWrKaexTHNAHWk4jN1U+cPnhYI+i2B5wGH7QI/rJEikAN7EPCDERaadvpxSABumsZcuh+ohE03y1rtlZPKcm/HDzrqblRWvMh46Upg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=SparbaWU; arc=none smtp.client-ip=91.218.175.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <e13015c9-29b8-46e9-9290-d1d71eb73e51@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1766703213;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UTq5gCCegajzQ2uBoKipxKxU+gvWEXz5erxNVvC4+Ng=;
+	b=SparbaWUMVuyS44P0MyDh26WSZ+4Jq6khpXTArWlLEC0wEngbSMGFJ9ajp5TgHBQrnX1/e
+	p6itN0+cXOnsL9QLmdTGDO4gmGSa4nCpXam2/vpyiCEojoZ2PAy5AqB3coAdtRl2qy/nxV
+	jt6i7Pd22LhBf7p6EIVkNKhbeVhYWRzvRw4Fj5ZEdSsxdHyxVlWbG7UD0mwkgJ4GVoYpyn
+	JK/yAhhicHt3rw7fj7e/MqQZv53jlSPhUUYCYbDoCiiQKxHrJ0+TDFabiXtjeH0bpuTzEr
+	LXbUWchwSDOI2XQXYXT3AVJ90orOxmYav3obSlMURt5CO7RsoRkDouKlBlUMMw==
+Date: Thu, 25 Dec 2025 19:53:26 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Subject: Re: [PATCH] media: iris: set default size when S_FMT is called with
+ zero size
+To: Bryan O'Donoghue <bod@kernel.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Vedang Nagar <quic_vnagar@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <PAqEcmCHEfU40aJzxWzZEpPQfxYCXUAQ9a9lLgcqz47gzKU5z_bOvdOBleE7B3AIZ13bFrkW2ndB0eMgy2TQdw==@protonmail.internalid>
+ <20251012235330.20897-1-val@packett.cool>
+ <c0dbc541-d321-4ce1-9d2d-0c4189ef752f@kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <c0dbc541-d321-4ce1-9d2d-0c4189ef752f@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI1MDE0NyBTYWx0ZWRfXw+/jDqZvGRoT
- nyR88FHnzK+uhqKWn4e8eUL9muPNtQUMley+zdQtnMV9i1eyGrNViVvsCLgmO53KWjTFNxMSKWT
- NVXgkiqEWbirDJqXbjypSeYAF+VdcaVzqvLIL/uzS0FY1cOzo40sFCppfE66J2S8CxBoF+Fp6sa
- 5oT0Px4Tefu9jtT14OZllZB6zwpvAMJv+rJxOdRlndc2H0/gfw1DHcMqbBltzrbqaLpjDotKPH8
- 786g7LNyFeX8qX77/5fneSDYBAw1QubnZA8Xl7HMM0zdvMRhiNPmq5CaUvofJssWx4RDyhjRWM2
- DC9BZRRdT2dB7G5walePu8ie+57U9cbsz2BzYjSb1YGT6n7pb4tXmkstiwsg1m0/CHL4P7BBnoF
- fMB+GRZw+VBxcggA2kYgCRp+Pc8R9G73hOUL5GGz111Hv2ez5D35Db6ceJABGR5T/ESH8oOoqaS
- eQeiHMgNzoWrPrYPU9A==
-X-Proofpoint-GUID: dKyWY9RCRqtCar4Tl6F4ufW5Boa88oDG
-X-Authority-Analysis: v=2.4 cv=MKVtWcZl c=1 sm=1 tr=0 ts=694d5685 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=PkzH0pPD3_lowiemrhkA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: dKyWY9RCRqtCar4Tl6F4ufW5Boa88oDG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-25_01,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0
- adultscore=0 clxscore=1015 suspectscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512250147
+X-Migadu-Flow: FLOW_OUT
 
-Add anx7625 DSI to DP bridge device node.
 
-Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 177 ++++++++++++++++++++++
- 1 file changed, 177 insertions(+)
+On 10/28/25 10:19 AM, Bryan O'Donoghue wrote:
+> On 13/10/2025 00:50, Val Packett wrote:
+>> drivers/media/platform/qcom/iris/iris_vdec.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c 
+>> b/drivers/media/platform/qcom/iris/iris_vdec.c
+>> index ae13c3e1b426..6be09d82e24d 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+>> @@ -196,6 +196,11 @@ int iris_vdec_s_fmt(struct iris_inst *inst, 
+>> struct v4l2_format *f)
+>>       if (vb2_is_busy(q))
+>>           return -EBUSY;
+>>
+>> +    if (f->fmt.pix_mp.width == 0 && f->fmt.pix_mp.height == 0) {
+>> +        f->fmt.pix_mp.width = DEFAULT_WIDTH;
+>> +        f->fmt.pix_mp.height = DEFAULT_HEIGHT;
+>> +    }
+>> +
+>>       iris_vdec_try_fmt(inst, f);
+>>
+>>       switch (f->type) {
+>> -- 
+>
+> Doesn't venus do
+>
+> orig_pixmap = *pixmap;
+>
+> try_fmt();
+>
+> format.fmt.pix_mp.width = orig_pixmp.width;
+> format.fmt.pix_mp.height = orig_pixmp.height;
+>
+> should you fall back to DEFAULT_WIDTH/HEIGHT or to 
+> orig_pixmp.width/height ? 
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 4a8ac26846c6..8d324bf85e4d 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -24,6 +24,69 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	vreg_12p0: regulator-vreg-12p0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_12P0";
-+
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_5p0: regulator-vreg-5p0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_5P0";
-+
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_1p8: regulator-vreg-1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		vin-supply = <&vreg_5p0>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_1p0: regulator-vreg-1p0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P0";
-+
-+		regulator-min-microvolt = <1000000>;
-+		regulator-max-microvolt = <1000000>;
-+
-+		vin-supply = <&vreg_1p8>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_3p0: regulator-vreg-3p0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_3P0";
-+
-+		regulator-min-microvolt = <3000000>;
-+		regulator-max-microvolt = <3000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
- 	dp0-connector {
- 		compatible = "dp-connector";
- 		label = "DP0";
-@@ -36,6 +99,18 @@ dp0_connector_in: endpoint {
- 		};
- 	};
- 
-+	dp-dsi0-connector {
-+		compatible = "dp-connector";
-+		label = "DSI0";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi0_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge_out>;
-+			};
-+		};
-+	};
-+
- 	regulator-usb2-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "USB2_VBUS";
-@@ -316,6 +391,73 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/qcs8300/a623_zap.mbn";
- };
- 
-+&i2c8 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	io_expander: gpio@74 {
-+		compatible = "ti,tca9539";
-+		reg = <0x74>;
-+		interrupts-extended = <&tlmm 93 IRQ_TYPE_EDGE_BOTH>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		reset-gpios = <&tlmm 66 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&io_expander_intr_active>,
-+			    <&io_expander_reset_active>;
-+		pinctrl-names = "default";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9543";
-+		reg = <0x70>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		i2c@0 {
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi2dp_bridge_in: endpoint {
-+
-+							remote-endpoint = <&mdss_dsi0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi2dp_bridge_out: endpoint {
-+
-+							remote-endpoint = <&dp_dsi0_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &pmm8650au_1_gpios {
- 	usb2_en: usb2-en-state {
- 		pins = "gpio7";
-@@ -353,10 +495,31 @@ &mdss_dp0_phy {
- 	status = "okay";
- };
- 
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l5a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge_in>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/qcs8300/adsp.mbn";
- 	status = "okay";
-@@ -414,6 +577,20 @@ ethernet0_mdio: ethernet0-mdio-pins {
- 		};
- 	};
- 
-+	io_expander_reset_active: io-expander-reset-active-state {
-+		pins = "gpio66";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	io_expander_intr_active: io-expander-intr-active-state {
-+		pins = "gpio93";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	dp_hot_plug_det: dp-hot-plug-det-state {
- 		pins = "gpio94";
- 		function = "edp0_hot";
--- 
-2.34.1
+Hi– sorry for the late reply and happy holidays :)
+
+The patch does the fallback *before* try_fmt().
+
+I have just retested everything, even with yesterday's new "misc fixes" 
+patchset 
+(https://lore.kernel.org/all/20251224-iris-fixes-v1-0-5f79861700ec@oss.qualcomm.com/). 
+The issue is still present, the 0x0 size is what iris_vdec_s_fmt gets 
+before try_fmt().
+
+What the rpi-ffmpeg developer said 
+(https://github.com/jc-kynesim/rpi-ffmpeg/issues/103) is:
+
+- V4L2 very clearly says that you should be able to pass anything into 
+S_FMT and it should set the returned values to something valid
+- S_FMT should not only not complain, it should return valid values in 
+the structure passed to it which will then be used in the REQBUFS
+- the buffers being allocated are for the coded bitstream (remember in 
+V4L2 speak OUTPUT=source, CAPTURE=destination); width/height doesn't 
+really mean a lot here but buffer size does
+- 
+https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/dev-decoder.html 
+4.5.1.5 states "width, height: coded resolution of the stream; required 
+only if it cannot be parsed from the stream for the given coded format; 
+otherwise the decoder will use this resolution as a placeholder 
+resolution that will likely change as soon as it can parse the actual 
+coded resolution from the stream"
+
+So since this is a deliberate zero request, and V4L2 requires returning 
+a valid placeholder resolution, it should be DEFAULT indeed.
+
+I'll resend with a comment as requested by Dikshita.
+
+~val
 
 
