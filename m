@@ -1,130 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-86607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40837CDD402
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 04:30:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A9C16CDD432
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 04:51:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C229A301698B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 03:30:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6BACC3016370
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 03:51:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E97802405E7;
-	Thu, 25 Dec 2025 03:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB00D264A74;
+	Thu, 25 Dec 2025 03:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZApuj0II"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R521H4wZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C485723C503
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 03:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E423EEC3;
+	Thu, 25 Dec 2025 03:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766633404; cv=none; b=QymxiBxWGNJpfe6AvOq1nwDHNa3vOzAV2Ngk9/ynlc+bKJwDWiamr1CiPz8mYS26ihgU7ideNpCDi03JC6oo9eOf6prOCZgABT8YbeKL9IuvhH2GNNwKsOSfUhEPSkHYcpjv+jCWF7xN5odZh65GTXrltxU/WpSU6jfJG56c4HM=
+	t=1766634668; cv=none; b=CEQP9VdoUCWF20uujyUznLHm78LJxyaayhy8gTxxJ3FjcWaPL/aBUvUfR/8XzUfzRpLKGYiT+6TcKnw2Cs8gFHfDLMvi8wLPPnV/HlKq8qvomKP9gsCBohODuNpNg4urbsi8vJZLhWESLr8AkAZNAJlIL/LkZ89iU3dSR7u3X3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766633404; c=relaxed/simple;
-	bh=+M4Xl5LlW/5cOFoJEgYjGKQ51NyfYD2j03QdAf0qM90=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OAayRrOb/gMBw1HoVhC1Ias2y1xMl+R+/5DLiALfGdbQnMJfAzIdPc5bLmQG0L7DvF3NrcJM6je+dHf7M42JTn7gv1c/DmRNqCxZ506OH6ospQvOcdQOdktP5OpoUM4CVjfPUjP+ZflT6FnO309EIIGqdok1wAF6CJGVCUoowlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZApuj0II; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F18C2BC86
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 03:30:04 +0000 (UTC)
+	s=arc-20240116; t=1766634668; c=relaxed/simple;
+	bh=e5B3SSMk1rIkgvNAsHWBN98zYrKbsmUDNmz3J/BZDiw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IZ7jnyc20XmnXTZVgLIrr6oW4MmM/Tw5dJRfNYFvFlSLaj1cffswsP/rRqa40rP2f5r7DleTr8f/wRL5w0S7oU9p4UJN54hjpQkCNC4eUzzV1g8scwiybMjWj1MK4SpyipezTXtx0A2T2Kuyqq74bFQqi5J9EC/QOms3XrIJGq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R521H4wZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994D5C4CEF1;
+	Thu, 25 Dec 2025 03:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766633404;
-	bh=+M4Xl5LlW/5cOFoJEgYjGKQ51NyfYD2j03QdAf0qM90=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=ZApuj0IIBU06s0fy8NfS/jwEyP3KlO80634xCKmarJTJWbWnigvvQQcLSOiwuoAjc
-	 gQtaYSbRtEIGHDpca1GEkxS8arcxHWXM06uV7/1tFHsiPwydgz4tZdsTf1FMcAwjpq
-	 r/m/cKXocPfxcs+ocMIKfeXRFl+pGjsNcpZLvoenFCC4pRPc3Ofqr2lMpmp3yqSQxu
-	 nLh9Bm9PnspVftEN7DVl0VV1F7SblUU6BdcaJeUKCce+8ctfJ7/1DLyDZZgjevSio6
-	 Z/GhVtcPtm91iytQBgtRyp0t5rk3+TbIdtj2VLT+vE2iDKXxsZXWPT5/VxDF+oSOEQ
-	 lzRDnsywT4qnw==
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4eda6a8cc12so68408651cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Dec 2025 19:30:04 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVEUjHzMSiFZo/NBdr7VDDQkloEEEViGlEMb7QBiOFWPinvMBd/N1u1SsdhhsCWiNR6z6SOk+bgaUvzgSUn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzg8sJUNK2ioBJiP35gM9NFRtiZm45sPoC6qX6Xaz2DPCDEfYId
-	99pQYilEVFEhhuof924LYc+AyckiTLv0CV3ZIzeo9dj9DSJDxrfoXtqViHzET7gUt8dMKyIwn5J
-	xNDcc6zQ/6EdUBg09CFyZC1OEtp6vwptEsg3vyRM/mA==
-X-Google-Smtp-Source: AGHT+IGxLqnkcNHf5Q5DLHzalcVXaTcMLxekVZzq2lyhhciKKLVeIQgpes8SJ++NinmZx0dWLx40HsuVKR1s+lvLsEU=
-X-Received: by 2002:a05:622a:4818:b0:4f1:ddeb:c4c with SMTP id
- d75a77b69052e-4f4abcf3d08mr282589731cf.21.1766633403195; Wed, 24 Dec 2025
- 19:30:03 -0800 (PST)
+	s=k20201202; t=1766634668;
+	bh=e5B3SSMk1rIkgvNAsHWBN98zYrKbsmUDNmz3J/BZDiw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R521H4wZGoK0XBn6ZlrjT/+I+u7qEaqGP5pmsMY52UVwUMypLD/4D8MEJDFvizqWL
+	 vids4LmB9oPOjL/f7lpXbko/6x7f/wr9SpsD6FlxBZNtDp1KGSljJMM5L+eATAt4Jn
+	 DKAvF7krq4kMeTv+3zm+Yxrvj76Vp34yuP46k6Y4c8rNyfrPfB+Y+Qgv4dNxAqkWGS
+	 6cJKSdDXLupMuLuA0T6aa7ZFcG5FtB1MOsSudXn8aVIVRUm4WZ+3PhSywXBvXj+N6e
+	 Ms/BAhqTDJ/Yjwc+cOb9cQKV7TtwT2QfoWWgJvzzN6NXPI5ZkhLfk8q5FeLM2ljTb4
+	 NK3iutt7aqcKw==
+Date: Wed, 24 Dec 2025 21:51:05 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: rcg2: compute 2d using duty fraction directly
+Message-ID: <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
+References: <20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com>
+ <emy273nvnbzznvufe6fmbysrln6d7lm4xi5rwsuwnj4kjlalvx@7j4dxyd2f25l>
+ <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250417-slim7x-retimer-v2-1-dbe2dd511137@oldschoolsolutions.biz>
-In-Reply-To: <20250417-slim7x-retimer-v2-1-dbe2dd511137@oldschoolsolutions.biz>
-From: Shawn Guo <shawnguo@kernel.org>
-Date: Thu, 25 Dec 2025 11:29:51 +0800
-X-Gmail-Original-Message-ID: <CAAQ0ZWT=s2BdobfkKuBAhw5H761ZH7uCH70i_UOR+wJ6cjSZJA@mail.gmail.com>
-X-Gm-Features: AQt7F2rw8xBeloSC-lgZctKG6bHraSNNiKqYskQJHA16hYsoDpE3YGsT3BC1l9Y
-Message-ID: <CAAQ0ZWT=s2BdobfkKuBAhw5H761ZH7uCH70i_UOR+wJ6cjSZJA@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: add
- retimers, dp altmode support
-To: jens.glathe@oldschoolsolutions.biz, Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>, 
-	Jos Dehaes <jos.dehaes@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
 
-On Fri, Apr 18, 2025 at 12:35=E2=80=AFAM Jens Glathe via B4 Relay
-<devnull+jens.glathe.oldschoolsolutions.biz@kernel.org> wrote:
->
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->
-> comparing with CRD and other dts for a more complete support of the 7X
-> only retimers, gpios, regulators, dp outputs
->
-> Tested-by: Rob Clark <robdclark@gmail.com>
-> Tested-by: Jos Dehaes <jos.dehaes@gmail.com>
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
-> This patch adds the required nodes to support DP Altmode on all three typ=
-e-c
-> ports. The definition is derived from the CRD. Since they are all marked =
-40Gbps,
-> I assume there are 3 PS8830 retimers.
-> This modification is now for ~8 weeks in my tree with little to no compla=
-ints. I
-> don't have access to a Yoga Slim 7X, however many people on #aarch64-lapt=
-ops do
-> and some are using this patch.
-> ---
-> Changes in v2:
-> - removed changes not relevant to retimers and dp altmode (thanks Johan)
-> - Link to v1: https://lore.kernel.org/r/20250417-slim7x-retimer-v1-1-5813=
-a7835903@oldschoolsolutions.biz
-> ---
->  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 476 +++++++++++++++=
-+++++-
->  1 file changed, 470 insertions(+), 6 deletions(-)
+On Tue, Dec 23, 2025 at 04:18:20PM +0530, Taniya Das wrote:
+> 
+> 
+> On 12/23/2025 12:39 AM, Bjorn Andersson wrote:
+> > On Mon, Dec 22, 2025 at 10:38:14PM +0530, Taniya Das wrote:
+> >> From: Taniya Das <quic_tdas@quicinc.com>
+> > 
+> > Please use oss.qualcomm.com.
+> > 
+> 
+> My bad, will update it.
+> 
+> >>
+> >> The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
+> >> derives an intermediate percentage `duty_per = (num * 100) / den` and
+> >> then computes:
+> >>
+> >>     d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+> >>
+> >> This introduces integer truncation at the percentage step (division by
+> >> `den`) and a redundant scaling by 100, which can reduce precision for
+> >> large `den` and skew the final rounding.
+> >>
+> >> Compute `2d` directly from the duty fraction to preserve precision and
+> >> avoid the unnecessary scaling:
+> >>
+> >>     d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+> >>
+> >> This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
+> >> a single, final rounded division, improving accuracy especially for small
+> >> duty cycles or large denominators. It also removes the unused `duty_per`
+> >> variable, simplifying the code.
+> >>
+> >> There is no functional changes beyond improved numerical accuracy.
+> >>
+> >> Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> >> ---
+> >> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> >> ---
+> >>  drivers/clk/qcom/clk-rcg2.c | 6 ++----
+> >>  1 file changed, 2 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> >> index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
+> >> --- a/drivers/clk/qcom/clk-rcg2.c
+> >> +++ b/drivers/clk/qcom/clk-rcg2.c
+> >> @@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+> >>  static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+> >>  {
+> >>  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> >> -	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
+> >> +	u32 notn_m, n, m, d, not2d, mask, cfg;
+> >>  	int ret;
+> >>  
+> >>  	/* Duty-cycle cannot be modified for non-MND RCGs */
+> >> @@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+> >>  
+> >>  	n = (~(notn_m) + m) & mask;
+> >>  
+> >> -	duty_per = (duty->num * 100) / duty->den;
+> >> -
+> >>  	/* Calculate 2d value */
+> >> -	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+> >> +	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+> > 
+> > This looks better/cleaner. But for my understanding, can you share some
+> > example numbers that shows the problem?
+> > 
+> 
+> Sure Bjorn, will share the examples.
+> 
 
-Hi,
+I don't think these examples need to necessarily be added in the git
+history - in particular since the proposed new style looks more
+reasonable than what's currently is in the code.
 
-I'm running a Slim7x China variant (Yoga Air 14s) with Debian 13.
-While the Debian stock 6.12 kernel works fine to bring up the display
-(AMOLED eDP panel), newer kernels like 6.18 loses display during boot.
-I can do either of the following to get the display back to work.
+So, providing them here would suffice, for me at least.
 
-- Enable PS883X driver (Yes, CONFIG_TYPEC_MUX_PS883X is missing from
-Debian config [1])
 
-OR
+Adding kunit tests certainly sounds useful though.
 
-- Revert commit 299038d82418 ("arm64: dts: qcom:
-x1e80100-lenovo-yoga-slim7x: add retimers, dp altmode support")
+Regards,
+Bjorn
 
-My understanding is that a PS883X driver is required only for external
-DP support.  Why would the driver missing impact/break the internal
-panel support?  Do you guys have any insight on this?  Thanks!
-
-Shawn
-
-[1] https://salsa.debian.org/kernel-team/linux/-/merge_requests/1760
+> > Regards,
+> > Bjorn
+> > 
+> >>  
+> >>  	/*
+> >>  	 * Check bit widths of 2d. If D is too big reduce duty cycle.
+> >>
+> >> ---
+> >> base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+> >> change-id: 20251222-duty_cycle_precision-796542baecab
+> >>
+> >> Best regards,
+> >> -- 
+> >> Taniya Das <taniya.das@oss.qualcomm.com>
+> >>
+> 
+> -- 
+> Thanks,
+> Taniya Das
+> 
 
