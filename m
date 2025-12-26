@@ -1,123 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-86625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E59F6CDE2F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 01:39:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25ACFCDE385
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 03:11:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ECD093007C51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 00:39:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DF8B430084EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 02:10:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8D8155C82;
-	Fri, 26 Dec 2025 00:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E42CC1F471F;
+	Fri, 26 Dec 2025 02:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Al7vo+ms"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jCGnRuqU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24A914A60C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 00:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B651EEA55;
+	Fri, 26 Dec 2025 02:10:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766709573; cv=none; b=FiPmP0a9XX1enAZc2jB3Zw9nTrsHbMUuOw/+diheB2x5w4TSLvXuBd/ps06GU3j6ea2qxjUpv3Mf2rYq7B+hvuyi+Ay+Y3f10kz+MJ4oJo4EKN3zwcka7NKmqDBIkA6H7idJf9b4g8vgovfC67+p8bABuSrzS7WihLv0i3pUhow=
+	t=1766715056; cv=none; b=tOJOwpJiTq+HT2fD/DZRIP7J6cwMlMsBPKVfUANdF8tlwKMdM60A1zvMQJ5i3MDQglUDHvz3wsYzTqtyGMSjORi2JauCSz7REtrL0YcHzxJ7bHTOufuYRa5ZxtfEcRm3xhdl0ccS0enPz4zjwgLQvl8plYsYiHRDrpgqh0Tb6VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766709573; c=relaxed/simple;
-	bh=rqFd2l1YfZw44O1FMXMHStYrnVjpIY13jAshnwo2sTw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cLqYI3q9A5pvlWRQQvYzcbuQyW0qgaEiTYM2vrR9m7VA/kaJpNeD6G1rZG56aNzqbuEHCBwEfaU+jVUP9v3r6ZY9mWYhhs/U49IZ6bHnvfsR32K9Ki0fokyHLx5ZjTBZAUYdvj4ncTvJ26YVeamuNNTplR83JZqNpKC14gCPDgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Al7vo+ms; arc=none smtp.client-ip=209.85.208.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-380091744caso6831971fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 16:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766709570; x=1767314370; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p19WqP+sSUrS54uc580t8JVdTnmts4rYJId0mLI6KdQ=;
-        b=Al7vo+msAr08zsYetNJlPo9mim5oZRjGsJTUj337HL4hHW2kwY2jymBCkEVARpTZvF
-         QcIePprTuh3e114i90TSmR0TXLbjUlhYZHTtFbJipV+y4zU2s3v8tN8YeUflcuaCKufO
-         eia1mA+062h1naHvuK+Xe9XwDHI5s7kmc+Ve/DHVW+QcV0dy+l7wbTS0CmYBYm1qcH+k
-         MuVR5FyUsaOl9FOjU5Ii1sobIea0ZNmfNOJgbyG8VaAiz8Wetyx2OEmsQb0tlFpkUrlV
-         o4Mr7Iudm0QVHNzzVEzqGUHvJdQdmN8Jn/iAn9zCO71bXsolwjPyFNz72jaWldE50SmA
-         uaLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766709570; x=1767314370;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p19WqP+sSUrS54uc580t8JVdTnmts4rYJId0mLI6KdQ=;
-        b=M2Fl8rXrStaGzuNis//MkmNvrL/6gwisF6pStCSfvQtOYodIBB08U/iQFj5G29nwhv
-         kVNOoirHSZxND+EKylfUluJACrZfNRx/718Hnxkud6+D+dEcoV1e/iEOnO7JnyQ4huDJ
-         9Ne4lUsS6heQZxADBw1gJi2nBlNhI/9nHxw8lAEoh21Q5b6LOXqFoGM+ArGETgeXKKQo
-         6rWivOC7SMMKyMeQX1UAwzWyZciHTiIPnU4RPrNJ2qsAIhYpPkr/yABsGAPF7HTiTv3w
-         VVhJAyvFxaYT7sUdmv4Qc5KJZ4fsf2cOiPeoU/2bzfKkvjP8CUCUgP4qZuQD9ypm2P1D
-         LlQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXzZHVNKMHQ7tOz0xfly+IBekzbTxV6jev41MlDp+lOh8USg/cfW5ZKh3QTE5R+haGEUPH5l+NFlXZ7QUS2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwEqBi5UbrLOAo12ojLN5WhXmbzkYRdmJIBeXtjPRcyVyD2jaf/
-	2QUmBzKw0K4OfY78Z2GTGFh29xk4K54oFr4PXfWPvPb7QhljH0EvEqr8dzcjJaR/bhAvVmNpR2O
-	MCtWRx6U=
-X-Gm-Gg: AY/fxX5/m/ej6RU6J99V/gQY5IMfHFouYv11tRvQAqdI04wfWDLR+4yO3drNQF5VdHl
-	/OvZ4H6JjFZ1wvTRG3rn5Gm2fwmHtLvT2A/4UyYSmHBeoC9D1MwYSBYIFQJb9CD+JqX+WIYUOkM
-	8UFTh7ujhnAiD2wTKF4vzrWqH5qXoJjRqNlNOcuLIiW+BsnoCVcDcTF3wWthSEvCyvPyVRosVBj
-	34Zi8+siLwD2r6u98S+cAqaZjrkmBEvidCmVFBvOHu/FvAWNrYaUAtsgLiJUdZ2CRd5OXZ5p2Dt
-	HK29u6AdtvuaV9I3kN/cwiMLxTrcFJu9iWkv/vxutl3FWkGkdjGV1heBnRQUj4+alWsIch20orl
-	WJLRJcovsgj41fRS+0EeMVmkdAqGY5evB4s2OpNZ0SnLxsOCL+YzepKk0bhwVPvYpIA93Ja3YBx
-	nZvsz1z5HhLdhExPeShLTZtnXG+Y0bzgBUPAuyi89Lz3W0mZmOraJJ1w==
-X-Google-Smtp-Source: AGHT+IEeJ4dBn/6zZZYsH+vBmg1tZ3L3GoSwiXL4UhkuARiWBKJlDKKWuHs7JA29i8nEZFcHN/u5qg==
-X-Received: by 2002:a05:6512:3a84:b0:592:f383:3aad with SMTP id 2adb3069b0e04-59a17df4092mr4515379e87.8.1766709569795;
-        Thu, 25 Dec 2025 16:39:29 -0800 (PST)
-Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a1861f477sm6201283e87.71.2025.12.25.16.39.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Dec 2025 16:39:28 -0800 (PST)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	s=arc-20240116; t=1766715056; c=relaxed/simple;
+	bh=qzNjEiHKek0BUViMMAly9bAFw8qrM8SiawOOPzj4tfM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PNmzCmd/jE48DoTq6gw2/BfMw3gn+IRm+XmgVLzGWawEr9Xey4gqiDDgAWozlbN2aLD1Khehf9L4c4o0YId4dQqY93EbwlkN+s22KismN440BtZE62HpwJzEPwl+nF4QjXZ2lf68ZzXDQWPf8r7eVHhtLPSEgqz15wWnfCvPFqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jCGnRuqU; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1766715054; x=1798251054;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=qzNjEiHKek0BUViMMAly9bAFw8qrM8SiawOOPzj4tfM=;
+  b=jCGnRuqUW6LKPEiRWzN0rF9Za3FQtE9b0olWlD0dhl7eTQpQtlvwg7RU
+   jaGVxXlSvj2lW0Ggs/fC4sdlD4rcWuUfpPBcqDSgLiHMUSCwQlTUVstNJ
+   u28LMR7q8cL7BkZnm2uRsfC0luf++1xwnPfmWMpAwFXJedJ/nSuYL1Sch
+   Ir5YFusmj4qQgHF7x9YI0vuzXXulcMTcrzX5zHx+loAlsLN+xEDmBe9G+
+   R9zsK8BlW9QpW+8AQnVMqbn7n+GvqlFKWvuhYZmj4LOyamol0ASuz5ONt
+   7GA6py5SXWeVsnImWVR6OJsOu4/vz3TqnRs2kyyYcjXTv11NA1TyScwrh
+   Q==;
+X-CSE-ConnectionGUID: /aK/rs2gRJyuKWXouOQBvw==
+X-CSE-MsgGUID: vKyTamH2QrCLdbI7IeS6dA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11652"; a="72347675"
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; 
+   d="scan'208";a="72347675"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Dec 2025 18:10:53 -0800
+X-CSE-ConnectionGUID: zW7zYLIsR6er2mASNIg1sQ==
+X-CSE-MsgGUID: x2lYUp/ZRXe6oVZ/+ejGTA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,177,1763452800"; 
+   d="scan'208";a="205216291"
+Received: from lkp-server02.sh.intel.com (HELO dd3453e2b682) ([10.239.97.151])
+  by fmviesa004.fm.intel.com with ESMTP; 25 Dec 2025 18:10:50 -0800
+Received: from kbuild by dd3453e2b682 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vYxI0-000000004c9-2OiL;
+	Fri, 26 Dec 2025 02:10:48 +0000
+Date: Fri, 26 Dec 2025 10:10:26 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Gustave Monce <gustave.monce@outlook.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8994-octagon: Fix Analog Devices vendor prefix of AD7147
-Date: Fri, 26 Dec 2025 02:39:23 +0200
-Message-ID: <20251226003923.3341904-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.49.0
+	Manivannan Sadhasivam <mani@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Gokul krishna Krishnakumar <gokul.krishnakumar@oss.qualcomm.com>
+Subject: Re: [PATCH v3 4/5] remoteproc: qcom: pas: Add late attach support
+ for subsystems
+Message-ID: <202512260914.h2eyiELk-lkp@intel.com>
+References: <20251223-knp-remoteproc-v3-4-5b09885c55a5@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251223-knp-remoteproc-v3-4-5b09885c55a5@oss.qualcomm.com>
 
-Trivial change, Analog Devices vendor prefix is "adi", but there is
-a valid "ad" vendor prefix of another company, this may explain why
-the issue hasn't been discovered by the automatic tests.
+Hi Jingyi,
 
-A problem of not described compatible value is out of this change scope.
+kernel test robot noticed the following build warnings:
 
-Fixes: c636eeb751f6 ("arm64: dts: qcom: msm8994-octagon: Add AD7147 and APDS9930 sensors")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[auto build test WARNING on cc3aa43b44bdb43dfbac0fcb51c56594a11338a8]
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-index 4c983b10dd92..7ace3540ef0a 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-@@ -378,7 +378,7 @@ &blsp2_i2c1 {
- 	status = "okay";
- 
- 	sideinteraction: touch@2c {
--		compatible = "ad,ad7147_captouch";
-+		compatible = "adi,ad7147_captouch";
- 		reg = <0x2c>;
- 
- 		pinctrl-names = "default", "sleep";
+url:    https://github.com/intel-lab-lkp/linux/commits/Jingyi-Wang/dt-bindings-remoteproc-qcom-sm8550-pas-Add-Kaanapali-ADSP/20251223-171848
+base:   cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+patch link:    https://lore.kernel.org/r/20251223-knp-remoteproc-v3-4-5b09885c55a5%40oss.qualcomm.com
+patch subject: [PATCH v3 4/5] remoteproc: qcom: pas: Add late attach support for subsystems
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20251226/202512260914.h2eyiELk-lkp@intel.com/config)
+compiler: clang version 19.1.7 (https://github.com/llvm/llvm-project cd708029e0b2869e80abe31ddb175f7c35361f90)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251226/202512260914.h2eyiELk-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202512260914.h2eyiELk-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> Warning: drivers/remoteproc/qcom_q6v5.c:331 function parameter 'early_boot' not described in 'qcom_q6v5_init'
+>> Warning: drivers/remoteproc/qcom_q6v5.c:331 function parameter 'early_boot' not described in 'qcom_q6v5_init'
+
 -- 
-2.49.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
