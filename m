@@ -1,61 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-86624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AA7DCDE276
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 00:12:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E59F6CDE2F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 01:39:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C3F853000E80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Dec 2025 23:12:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ECD093007C51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 00:39:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D752BCF4A;
-	Thu, 25 Dec 2025 23:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8D8155C82;
+	Fri, 26 Dec 2025 00:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="lkZd5uXi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Al7vo+ms"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com [209.85.208.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBFB286890
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 23:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24A914A60C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 00:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766704343; cv=none; b=h/3hzJdHjML2CX7YT62AR+B2Pu4aYmyLucWGaZFrY6LC/PvbEtywmUFtFqnMBVDLVw0g29Q/jdMm24WMCC/WpMvLqfEfM0G4dVpe/gAOPRGK/yIERiTjGF010PPZ3XgsTk7r9pi7eZrifamAM+9ryOf+CLG0TAawxKIHfmuXOo4=
+	t=1766709573; cv=none; b=FiPmP0a9XX1enAZc2jB3Zw9nTrsHbMUuOw/+diheB2x5w4TSLvXuBd/ps06GU3j6ea2qxjUpv3Mf2rYq7B+hvuyi+Ay+Y3f10kz+MJ4oJo4EKN3zwcka7NKmqDBIkA6H7idJf9b4g8vgovfC67+p8bABuSrzS7WihLv0i3pUhow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766704343; c=relaxed/simple;
-	bh=OW+tKFQA4QHklyUUnfA8iHsuCzex8pHOxLOM2jmUq/Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oE5EAjPwIDx2cKqGelmhVuNJN7bT7RALwSIkxnOnO57CGybL1EajL2bcUWZ+KD7TgUO0tqDXvVQ3YjUH4Ix2qVEmsXegnUIhSaXLQZ+npYo9dZkauMJOHoGLqDGU9X6icjtZZ66tB4EtAI+ZiLdxDKM9WpH+FBKWaoQun4vvm1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=lkZd5uXi; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1766704329;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=4m18gDHR/bq9+dI3LebquLZAX4M3bH6VRTOXvEW7BPs=;
-	b=lkZd5uXibstuiFIcCwnY27uJYQf1dw3hiVBYPeyuXmHiKzrv+97jAxOTdx2YnuMZbvmoxa
-	ukJ7qj6ytiWhmDbnbsusniG8imZfHokwTPau5iy5bAuXz5QewR8giPvQx9d1NMwKblrNC5
-	rHbqB/8gWID/MznWh1GZDZ+8RSR+PXe9xlm3KTbm4fg6qrlbNVXtWYd+P3NplDQ4Ke7H0w
-	27XXWIHiALKciHrCDTHor+/5pHOUWpvbf74+asWgLHzo4v+gpEduCwpr4c00seGNJN1+qW
-	rOw8jK/h/nftSseOyLjObW9w1Qip+94P7bbtCyTVDlKtY3kIz34KNuWMIDnCug==
-From: Val Packett <val@packett.cool>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	"Bryan O'Donoghue" <bod@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Vedang Nagar <quic_vnagar@quicinc.com>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>
-Cc: Val Packett <val@packett.cool>,
-	linux-media@vger.kernel.org,
+	s=arc-20240116; t=1766709573; c=relaxed/simple;
+	bh=rqFd2l1YfZw44O1FMXMHStYrnVjpIY13jAshnwo2sTw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cLqYI3q9A5pvlWRQQvYzcbuQyW0qgaEiTYM2vrR9m7VA/kaJpNeD6G1rZG56aNzqbuEHCBwEfaU+jVUP9v3r6ZY9mWYhhs/U49IZ6bHnvfsR32K9Ki0fokyHLx5ZjTBZAUYdvj4ncTvJ26YVeamuNNTplR83JZqNpKC14gCPDgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Al7vo+ms; arc=none smtp.client-ip=209.85.208.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f196.google.com with SMTP id 38308e7fff4ca-380091744caso6831971fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Dec 2025 16:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766709570; x=1767314370; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p19WqP+sSUrS54uc580t8JVdTnmts4rYJId0mLI6KdQ=;
+        b=Al7vo+msAr08zsYetNJlPo9mim5oZRjGsJTUj337HL4hHW2kwY2jymBCkEVARpTZvF
+         QcIePprTuh3e114i90TSmR0TXLbjUlhYZHTtFbJipV+y4zU2s3v8tN8YeUflcuaCKufO
+         eia1mA+062h1naHvuK+Xe9XwDHI5s7kmc+Ve/DHVW+QcV0dy+l7wbTS0CmYBYm1qcH+k
+         MuVR5FyUsaOl9FOjU5Ii1sobIea0ZNmfNOJgbyG8VaAiz8Wetyx2OEmsQb0tlFpkUrlV
+         o4Mr7Iudm0QVHNzzVEzqGUHvJdQdmN8Jn/iAn9zCO71bXsolwjPyFNz72jaWldE50SmA
+         uaLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766709570; x=1767314370;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p19WqP+sSUrS54uc580t8JVdTnmts4rYJId0mLI6KdQ=;
+        b=M2Fl8rXrStaGzuNis//MkmNvrL/6gwisF6pStCSfvQtOYodIBB08U/iQFj5G29nwhv
+         kVNOoirHSZxND+EKylfUluJACrZfNRx/718Hnxkud6+D+dEcoV1e/iEOnO7JnyQ4huDJ
+         9Ne4lUsS6heQZxADBw1gJi2nBlNhI/9nHxw8lAEoh21Q5b6LOXqFoGM+ArGETgeXKKQo
+         6rWivOC7SMMKyMeQX1UAwzWyZciHTiIPnU4RPrNJ2qsAIhYpPkr/yABsGAPF7HTiTv3w
+         VVhJAyvFxaYT7sUdmv4Qc5KJZ4fsf2cOiPeoU/2bzfKkvjP8CUCUgP4qZuQD9ypm2P1D
+         LlQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXzZHVNKMHQ7tOz0xfly+IBekzbTxV6jev41MlDp+lOh8USg/cfW5ZKh3QTE5R+haGEUPH5l+NFlXZ7QUS2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEqBi5UbrLOAo12ojLN5WhXmbzkYRdmJIBeXtjPRcyVyD2jaf/
+	2QUmBzKw0K4OfY78Z2GTGFh29xk4K54oFr4PXfWPvPb7QhljH0EvEqr8dzcjJaR/bhAvVmNpR2O
+	MCtWRx6U=
+X-Gm-Gg: AY/fxX5/m/ej6RU6J99V/gQY5IMfHFouYv11tRvQAqdI04wfWDLR+4yO3drNQF5VdHl
+	/OvZ4H6JjFZ1wvTRG3rn5Gm2fwmHtLvT2A/4UyYSmHBeoC9D1MwYSBYIFQJb9CD+JqX+WIYUOkM
+	8UFTh7ujhnAiD2wTKF4vzrWqH5qXoJjRqNlNOcuLIiW+BsnoCVcDcTF3wWthSEvCyvPyVRosVBj
+	34Zi8+siLwD2r6u98S+cAqaZjrkmBEvidCmVFBvOHu/FvAWNrYaUAtsgLiJUdZ2CRd5OXZ5p2Dt
+	HK29u6AdtvuaV9I3kN/cwiMLxTrcFJu9iWkv/vxutl3FWkGkdjGV1heBnRQUj4+alWsIch20orl
+	WJLRJcovsgj41fRS+0EeMVmkdAqGY5evB4s2OpNZ0SnLxsOCL+YzepKk0bhwVPvYpIA93Ja3YBx
+	nZvsz1z5HhLdhExPeShLTZtnXG+Y0bzgBUPAuyi89Lz3W0mZmOraJJ1w==
+X-Google-Smtp-Source: AGHT+IEeJ4dBn/6zZZYsH+vBmg1tZ3L3GoSwiXL4UhkuARiWBKJlDKKWuHs7JA29i8nEZFcHN/u5qg==
+X-Received: by 2002:a05:6512:3a84:b0:592:f383:3aad with SMTP id 2adb3069b0e04-59a17df4092mr4515379e87.8.1766709569795;
+        Thu, 25 Dec 2025 16:39:29 -0800 (PST)
+Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a1861f477sm6201283e87.71.2025.12.25.16.39.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Dec 2025 16:39:28 -0800 (PST)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Gustave Monce <gustave.monce@outlook.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] media: iris: use fallback size when S_FMT is called without width/height
-Date: Thu, 25 Dec 2025 20:09:10 -0300
-Message-ID: <20251225231127.8642-1-val@packett.cool>
+	devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8994-octagon: Fix Analog Devices vendor prefix of AD7147
+Date: Fri, 26 Dec 2025 02:39:23 +0200
+Message-ID: <20251226003923.3341904-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,51 +91,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-According to 4.5.1.5 of the M2M stateful decoder UAPI documentation,
-providing the width and the height to S_FMT is "required only if it
-cannot be parsed from the stream", otherwise they can be left as 0
-and the S_FMT implementation is expected to return a valid placeholder
-resolution that would let REQBUFS succeed.
+Trivial change, Analog Devices vendor prefix is "adi", but there is
+a valid "ad" vendor prefix of another company, this may explain why
+the issue hasn't been discovered by the automatic tests.
 
-iris was missing the fallback, so clients like rpi-ffmpeg wouldn't work.
-Fix by adding an explicit fallback to defaults.
+A problem of not described compatible value is out of this change scope.
 
-Fixes: b530b95de22c ("media: iris: implement s_fmt, g_fmt and try_fmt ioctls")
-Link: https://github.com/jc-kynesim/rpi-ffmpeg/issues/103
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Val Packett <val@packett.cool>
+Fixes: c636eeb751f6 ("arm64: dts: qcom: msm8994-octagon: Add AD7147 and APDS9930 sensors")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
-v2:
-  - Added small comment as requested
-  - Pulled an R-b (that depended on the comment)
-  - Slightly reworded commit message
-v1: https://lore.kernel.org/all/20251012235330.20897-1-val@packett.cool/
+ arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/media/platform/qcom/iris/iris_vdec.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index 69ffe52590d3..227e4e5a326f 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -231,6 +231,14 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 	if (vb2_is_busy(q))
- 		return -EBUSY;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+index 4c983b10dd92..7ace3540ef0a 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+@@ -378,7 +378,7 @@ &blsp2_i2c1 {
+ 	status = "okay";
  
-+	/* Width and height are optional, so fall back to a valid placeholder
-+	 * resolution until the real one is decoded from the bitstream.
-+	 */
-+	if (f->fmt.pix_mp.width == 0 && f->fmt.pix_mp.height == 0) {
-+		f->fmt.pix_mp.width = DEFAULT_WIDTH;
-+		f->fmt.pix_mp.height = DEFAULT_HEIGHT;
-+	}
-+
- 	iris_vdec_try_fmt(inst, f);
+ 	sideinteraction: touch@2c {
+-		compatible = "ad,ad7147_captouch";
++		compatible = "adi,ad7147_captouch";
+ 		reg = <0x2c>;
  
- 	switch (f->type) {
+ 		pinctrl-names = "default", "sleep";
 -- 
-2.51.2
+2.49.0
 
 
