@@ -1,141 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-86655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0AA9CDEDA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 18:43:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89D13CDEDED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 19:00:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93BB73004BB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 17:43:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7A017300E024
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 18:00:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153B7236A8B;
-	Fri, 26 Dec 2025 17:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 518C12DF6E3;
+	Fri, 26 Dec 2025 18:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pc0PkBLH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OGfgBETZ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IbT6VYCB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A08226CF7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 17:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C3D2874FA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766770996; cv=none; b=in13smGLp/LYOScFvGESiqkTGzX9ZysYD51+lJ2mt2a53iBTldpMmY/jiBA12xCeSgJS96UY6BgghULi87UesmwEtNhgMi3J7KCnT/Y25bV63YJmUOoRGCeN9LcRkECgdFjVsPtDSsjeZ0BQqLf4XqSlAPvatx4FbIW9eghAtP8=
+	t=1766772009; cv=none; b=BVjJ7zVbCw/YlJMrxbNCZuMztcvQm5FwFMlzXCr5RfNx+a/zj8ODhgAxaYcUS1qXakSmLSg6UcE6FeDXp3wGo/GfqnTQej69GQP41NzNqH+Jg5428q8FLArzjJRE1hdXNa8hJzI50q1YnGBYmgz83Df3nHZVqzRI3ujnCRgwSx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766770996; c=relaxed/simple;
-	bh=DkbApBHXFizXs+l3CfaJtpwhufcP1rHmWcrInzAj42k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jHe68D9ntpya10YsmHWKsuzvLgPVvVYa6mvob9SycLZUAxzYbmNgFGG4QsNxkgodUP2pyHf0oVUctpUoStzNMaeS6emQhys9yQK4Ojqc9od+7h1Mg5AFgcAUavAyzDRBWcjiFVfXXMM+PMCVd6eVgfAf1/ZCmrVD+i77UX256js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pc0PkBLH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6BDC2BCB7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 17:43:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766770995;
-	bh=DkbApBHXFizXs+l3CfaJtpwhufcP1rHmWcrInzAj42k=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Pc0PkBLH6rpyuoA/3eBSp3r5NdlV3QDE3VhCJslEV4654bdY37xk1FrN4SC+3hFTN
-	 f4E0Y0DklUWkHOfsOMpjjYGcsMoGjnJgWNfcH9oUnXKUszlF/XBZSdOcMX8/+RH11l
-	 2GonYWsu76nxOmiPNzcy94uJYJnFxuzurMaPKeag9/KuAEHr0Xm6ndSFfNebYMNQ7Q
-	 O2JucRB2Y6ZVyvadeuuT/FbYP4Hr+54OF13PwK7BAB3TJVmkCKVhKFQiUs+lm0TsfG
-	 4EHtJEh6OUAC4sVKCJnOli1J0QXEgPvxogdU6eX9IkmVZH2qRv4kXaDM8zE4/vFQgk
-	 6lTLvrV4vu+2Q==
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78c696717dbso60764537b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 09:43:15 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW0SCE7odBeNfbidoTfyhFZEfxYAtlt65nWornUTpTltWRKxXptzCUJ9CoZqXetc6r1NVh7fEYsULHAqzIJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPXVczI6SL+7L4CWxCj3vP3lgLryqY5cIAsZ5CZRwtNqWRld2Z
-	SV4LCvLqzxCiXIZIv02Tx9WA1X7aQjgVVY28I37k6rNKASQVwcejV3GXLxNI548uzcq+TZ6jctA
-	5LWyfCuNrEOB3ovAJfbUHn/GTijmNYyQ=
-X-Google-Smtp-Source: AGHT+IEThu+SGeShmmu/tYX/llkmUdugrRx2dWhmCKMCWh5GaYfd3cvd12fU6652YXAX2Yh0+H0T9fwaFELFs993l0M=
-X-Received: by 2002:a05:690e:13c8:b0:645:53d0:2d20 with SMTP id
- 956f58d0204a3-6466a8bfd42mr18381088d50.62.1766770994712; Fri, 26 Dec 2025
- 09:43:14 -0800 (PST)
+	s=arc-20240116; t=1766772009; c=relaxed/simple;
+	bh=y/I7q0O4Ga58ZlxZPQG8u8oKJCJD29rWNCtbiWnl85g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DP/+zQftR6J2ok3+kuiFICOPDmVk1i9pYqnaxiJDBH8dgRxPn0CufQABTXy4VEiwrp3ls3+cQdqawqS1ZK4GCP/VXe5Ir527LW9R66vrot3CIrh4CUC8Y+NT8uCdQM13vT+1LlO8QHv0zTxQ7kscMy/eBarnxf6inl/DiTgJEaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OGfgBETZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IbT6VYCB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BQ8baAq889901
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=; b=OGfgBETZxSB9JVKi
+	du1A8RUCqiqIV1/yG3Qq0JVpLyIduPwsKkyZH9Pj+FpC1U2CnpIe0HjUp/3+VRpx
+	TGmShtWSN9wcPa9D3RqEqKOVOp3QLzn1KGlsVWnGb85oPkTmZnltDISzD81UBXGZ
+	6AQMTx4Q0auILoSAURFDir3Z2LaLTcbC9ECWukw+PaW8AhFb7Ov7ccTRQqh/ikKW
+	hW0N4zPxP1SSCkbNDMoygx2GpjPSh2h2wZ8zQgc/B2rasKUjEwOjlAtgF2lSV3xi
+	XFfxw3arHrJR0WuBNDrI1BJbjDEElD2BuxpoP2oVJw20duZfXYdUMIjaFLoFunEl
+	bAvSxQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8xvcbfsu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:01 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bb2303fe94so8424336b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 10:00:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766772001; x=1767376801; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=;
+        b=IbT6VYCBywhZbhCEIri2QmWyMeZpPN6weEBjHNr/t4yUteyj6WukL5iJjB9BT5N+4H
+         T6/EXkmcvQUr0wF/zvlRbzA8gO82yqtzWhtvCTsFak2/w2GzWSIaCgALoJigzK7XOCjq
+         DCnGHgECP5F2cYGC1rLUDnL/jITzNUA1K+ldvcJJPKGqEZ1WYqFkbNC0u3io/+3cnfQv
+         bE3uHWSbvqZu41aKorXqWjwtAnVfDXZOA2CWtr1AoVdpYuqPYJVP2gQjReAYEIbn3pck
+         UwaidpJfCgUm/La454IFS0JHpA4Ki4IO5L4xNNd+Y50oam4ovFHYOftXy0aLOZSRkDuz
+         cl5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766772001; x=1767376801;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=;
+        b=ugztZpzVCYHL1G0vXnungOxDG7+zgCbimjnPZFDehBTEnK0wAXlzoiXZ4zsLVMLJeR
+         KHKEE0hGKQ12CLPmONOR2xw1eCFDaQaPD7rUUWsIUVR0/InLVsWEU9VFtGK6+t5vU5le
+         fSNcA/990L6uYfAE//Tdx9wmP3dIBzTqf1vkwlX0zPBZpDMxdFgkKZSOTOKMGuNaNhLl
+         ta3I5IdbSYsu+xKfZMos2qIOKJ8S7Bp/ZV+NaYEwZ7WGPS2ly5DogQewzz0yliJGsP/g
+         ZnCovblxgieloJKpnkOZ3pBUxLFsm2WZdz7Y4/ds+jSp2fcpd3Dwt4PnPeP3GRFl+jg1
+         bGnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWvUSIXAkd4zdoJB0YHOJvKYNhH97Gs5LhJyZgHzl4xgOtZNP11ipe+UzGukzgtBPdohPeaJ+Zd2kxZvSOr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBNZ8U15QhxpCAffDX5hC20wS31rqR0GtCj9Wqgr5sNHTu+kvs
+	TU8/U5D3jmU0AGM8Wo9gja+MY/uYekNZ7E/o0xtLI5REW6tHMckkXbCZnV9bL+csQDkUjjz+J+g
+	YD/jZcsC9q+gHMvoo4xdTUHPpS34gGZKFm394kTAtyiRbYppEjNb0/ratAoZpUct//spr
+X-Gm-Gg: AY/fxX5asqZcsdeNX9Ilbmq2/sc53zuKxx8JjG5Bgi8mS4Rs45PzkkI6EfUaSIGL9I5
+	Mk6TfAyuOklYSB41iaJCJhr+YHYjWnKeTBtKZVA1twgwsZ+qle0FGRcWIjWAM2zusYoaEImhLQy
+	6b35SrCYLRkv9OseXdMbvA57Xgi/tdB4RrrQcaRos0EaKHlyjg4xhDgF2nQL1YUbQpyQH/3Mblk
+	yv85Zn94VA4HslbmyNcLIUShAsW8Gt1XPvwbJTnm5YLmI3wkgICH80wAH4mojTuC1rVPQvZngtL
+	VaPrq5aw7D87cLyKxa3cnE0HKexOchZvgIQe6iJrwcP/QbzfCv6K/81O3VkarI/a8MnHJ5i6V7/
+	3CiSh7uVYw7TZe9LA+ajI7ofv59rFi1QhJZiezA==
+X-Received: by 2002:a05:6a00:e11:b0:7ab:e844:1e76 with SMTP id d2e1a72fcca58-7ff6420d910mr19282735b3a.5.1766772001163;
+        Fri, 26 Dec 2025 10:00:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrjdKe74XNeyCLrdBcvmvuUM9K5k3eYfkt5yHRiiGMnTiJ4XHanppN7uvWarTMwn+8NtSfwg==
+X-Received: by 2002:a05:6a00:e11:b0:7ab:e844:1e76 with SMTP id d2e1a72fcca58-7ff6420d910mr19282715b3a.5.1766772000625;
+        Fri, 26 Dec 2025 10:00:00 -0800 (PST)
+Received: from [192.168.0.195] ([49.204.27.144])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e0a1a2asm22487141b3a.41.2025.12.26.09.59.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Dec 2025 10:00:00 -0800 (PST)
+Message-ID: <ce162164-d9c4-43c8-a99b-5fae3bb981a5@oss.qualcomm.com>
+Date: Fri, 26 Dec 2025 23:29:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251222-drm-panels-sony-v2-0-82a87465d163@somainline.org>
- <20251222-drm-panels-sony-v2-5-82a87465d163@somainline.org>
- <CAD++jL=X1hX6kmodcOC3+x-w6t+Vg6XTaCMab-Dn=vHAeD82Gw@mail.gmail.com> <aU6XXi2HmgjZY8CY@SoMainline.org>
-In-Reply-To: <aU6XXi2HmgjZY8CY@SoMainline.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Fri, 26 Dec 2025 18:43:03 +0100
-X-Gmail-Original-Message-ID: <CAD++jLn0cFtDhg9WFU2LS6g+cLa7ZMzzcHAJ_W9REVHodFYpAw@mail.gmail.com>
-X-Gm-Features: AQt7F2oBipmE-JjCDy8dZSMq1b64ml7eenWiIcoP2slHVPS-wd747R2LD1C4CGc
-Message-ID: <CAD++jLn0cFtDhg9WFU2LS6g+cLa7ZMzzcHAJ_W9REVHodFYpAw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/11] drm/panel: Add panel driver for Samsung SOFEF01 DDIC
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Sam Ravnborg <sam@ravnborg.org>, 
-	David Airlie <airlied@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
-	Casey Connolly <casey.connolly@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
-	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: rcg2: compute 2d using duty fraction directly
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com>
+ <emy273nvnbzznvufe6fmbysrln6d7lm4xi5rwsuwnj4kjlalvx@7j4dxyd2f25l>
+ <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
+ <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
+Content-Language: en-US
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+In-Reply-To: <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: IcQRLCZdgPXwpj4eq8vnsFTVSltDpgLb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI2MDE2OCBTYWx0ZWRfXxFLRhOEp2hpp
+ XMn89GvqPefw1a+KQg4IX9XqTC84ntExCCDE4QqZf+yi7swMLklArGvyBL4f7UQ+zUiaCuKBoVd
+ Y7+tqT2riHE/Ot9tY9ynlcIQz/hOX+IPLr/nM9qEVhk5Pt2gSCVYkRHvcw7AVb3F3nTu/bh1Auc
+ qN3Ziq9SPEKDQlQ5jjpqLU8fg03cBTWd+9pAgcK+xEaX+TbTCl8nf7blgBFZ9Nv6YfrXLbqtaSW
+ FaQm1T5sdYW78TJmD2cS3nl5GURnf6MH/bCagd2d1++B0vK00WXccYqyBpeDtxJmPvqZjF0dE0e
+ dKRtkZ3kPDbj8wajuLz7p5AUHRTE1DW29GhdUBZE23Er2BpXIjzPjHEIMdi2I6TvgtsWGcDdOGr
+ zgVHDLXJZbx+8v5dCGlIRfpPLkCq09uTOoFjkuw/ATlvJVEMpsz0mN9uigKZrAyPOCcU82K+iOb
+ qeMA61bjQlPMEEhKm5A==
+X-Proofpoint-ORIG-GUID: IcQRLCZdgPXwpj4eq8vnsFTVSltDpgLb
+X-Authority-Analysis: v=2.4 cv=M4xA6iws c=1 sm=1 tr=0 ts=694ecd21 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=CGk/GHK3MkyyyFueakV4jQ==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=62drwnB435mJaXsBqUkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-26_05,2025-12-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512260168
 
-On Fri, Dec 26, 2025 at 3:16=E2=80=AFPM Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
-> On 2025-12-26 14:21:37, Linus Walleij wrote:
 
-> > The sofef00 driver tell us exactly what this sequence is:
-> >
-> > #define sofef00_test_key_on_lvl2(ctx) \
-> >         mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0x5a, 0x5a)
-> > #define sofef00_test_key_off_lvl2(ctx) \
-> >         mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0xa5, 0xa5)
-> >
-> > I would just rename these two to sofef01_test_key_on/off_lvl2()
-> > and use the same helpers in this driver to follow the sofef00 pattern.
->
-> Right, yes.  I think I already brought this up in V1, that some existing
-> Samsung drivers call this (the 0xf0 part) the MCS PASSWORD, others call i=
-t the
-> LEVEL_2_KEY or USER_KEY or ACCESSPROT.
 
-Actually all of the samsung s6e panels are suspected to be s0fef0/1
-display controller variants, which you see if you look inside
-panel-samsung-s6e*, for example panel-samsung-s6e3fc2x01.c has this:
+On 12/25/2025 9:21 AM, Bjorn Andersson wrote:
+> On Tue, Dec 23, 2025 at 04:18:20PM +0530, Taniya Das wrote:
+>>
+>>
+>> On 12/23/2025 12:39 AM, Bjorn Andersson wrote:
+>>> On Mon, Dec 22, 2025 at 10:38:14PM +0530, Taniya Das wrote:
+>>>> From: Taniya Das <quic_tdas@quicinc.com>
+>>>
+>>> Please use oss.qualcomm.com.
+>>>
+>>
+>> My bad, will update it.
+>>
+>>>>
+>>>> The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
+>>>> derives an intermediate percentage `duty_per = (num * 100) / den` and
+>>>> then computes:
+>>>>
+>>>>     d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+>>>>
+>>>> This introduces integer truncation at the percentage step (division by
+>>>> `den`) and a redundant scaling by 100, which can reduce precision for
+>>>> large `den` and skew the final rounding.
+>>>>
+>>>> Compute `2d` directly from the duty fraction to preserve precision and
+>>>> avoid the unnecessary scaling:
+>>>>
+>>>>     d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+>>>>
+>>>> This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
+>>>> a single, final rounded division, improving accuracy especially for small
+>>>> duty cycles or large denominators. It also removes the unused `duty_per`
+>>>> variable, simplifying the code.
+>>>>
+>>>> There is no functional changes beyond improved numerical accuracy.
+>>>>
+>>>> Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>>> ---
+>>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/clk/qcom/clk-rcg2.c | 6 ++----
+>>>>  1 file changed, 2 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+>>>> index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
+>>>> --- a/drivers/clk/qcom/clk-rcg2.c
+>>>> +++ b/drivers/clk/qcom/clk-rcg2.c
+>>>> @@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>>>  static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>>>  {
+>>>>  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>>>> -	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
+>>>> +	u32 notn_m, n, m, d, not2d, mask, cfg;
+>>>>  	int ret;
+>>>>  
+>>>>  	/* Duty-cycle cannot be modified for non-MND RCGs */
+>>>> @@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>>>  
+>>>>  	n = (~(notn_m) + m) & mask;
+>>>>  
+>>>> -	duty_per = (duty->num * 100) / duty->den;
+>>>> -
+>>>>  	/* Calculate 2d value */
+>>>> -	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+>>>> +	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
+>>>
+>>> This looks better/cleaner. But for my understanding, can you share some
+>>> example numbers that shows the problem?
+>>>
+>>
+>> Sure Bjorn, will share the examples.
+>>
+> 
+> I don't think these examples need to necessarily be added in the git
+> history - in particular since the proposed new style looks more
+> reasonable than what's currently is in the code.
+> 
+> So, providing them here would suffice, for me at least.
 
-#define s6e3fc2x01_test_key_on_lvl1(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0x9f, 0xa5, 0xa5)
-#define s6e3fc2x01_test_key_off_lvl1(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0x9f, 0x5a, 0x5a)
-#define s6e3fc2x01_test_key_on_lvl2(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0x5a, 0x5a)
-#define s6e3fc2x01_test_key_off_lvl2(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0xa5, 0xa5)
-#define s6e3fc2x01_test_key_on_lvl3(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0xfc, 0x5a, 0x5a)
-#define s6e3fc2x01_test_key_off_lvl3(ctx) \
-        mipi_dsi_dcs_write_seq_multi(ctx, 0xfc, 0xa5, 0xa5)
+Frequency requirement from customers as below.
 
-So there is also the explanation of the 0xfc command.
+F(10000, P_BI_TCXO, 2, 1, 960),
 
-> Then there are possibly a lot more constants we can glean from other driv=
-ers,
-> though again without confirmation that it's identical on this DDIC.
+For example, with N = 960.
 
-I think the s0fef0/1 drivers and all the panel-samsung-s6e* drivers
-should probably be unified a bit maybe we can just create a
-local s0fef.h file with the above for all these drivers to use?
+Duty cycle(%)| num/den | d_old |NOT_2D(old)| d_new |NOT_2D(new)|Match
+--------------------------------------------------------------------
+0.05         | 1/2000  | 0     |0x0000FFFF |  1    |0x0000FFFE |No
+0.10         | 1/1000  | 0     |0x0000FFFF |  2    |0x0000FFFD |No
+0.3125       | 1/320   | 0     |0x0000FFFF |  6    |0x0000FFF9 |No
+0.50         | 1/200   | 0     |0x0000FFFF |  10   |0x0000FFF5 |No
+0.78125      | 1/128   | 0     |0x0000FFFF |  15   |0x0000FFF0 |No
+2.00         | 1/50    | 38    |0x0000FFD9 |  38   |0x0000FFD9 |Yes
+2.10         | 7/333   | 38    |0x0000FFD9 |  40   |0x0000FFD7 |No
+2.50         | 1/40    | 38    |0x0000FFD9 |  48   |0x0000FFCF |No
+3.00         | 3/100   | 58    |0x0000FFC5 |  58   |0x0000FFC5 |Yes
 
-(If someone has actual datasheets for s0fef0/1 that would be great.)
 
-Yours,
-Linus Walleij
+
+> 
+> 
+> Adding kunit tests certainly sounds useful though.
+> 
+
+Sure, will take a look.
+
+
+-- 
+Thanks,
+Taniya Das
+
 
