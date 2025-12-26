@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-86657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89D13CDEDED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 19:00:25 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28D12CDEDF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 19:00:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7A017300E024
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 18:00:09 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 027143003BC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 18:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 518C12DF6E3;
-	Fri, 26 Dec 2025 18:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD6D4274FE3;
+	Fri, 26 Dec 2025 18:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OGfgBETZ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IbT6VYCB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nH3IY2Pu";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GEkDKG+l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C3D2874FA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601AA2DF68
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766772009; cv=none; b=BVjJ7zVbCw/YlJMrxbNCZuMztcvQm5FwFMlzXCr5RfNx+a/zj8ODhgAxaYcUS1qXakSmLSg6UcE6FeDXp3wGo/GfqnTQej69GQP41NzNqH+Jg5428q8FLArzjJRE1hdXNa8hJzI50q1YnGBYmgz83Df3nHZVqzRI3ujnCRgwSx4=
+	t=1766772033; cv=none; b=g6/8q2Ews70dwbS0Q9AfLQKscpRTCz+7I/t6QSOquAdJ10QCdY7uMMIHNhK55s1NbjEI2GVp5NmB0CIH4khxJkoFCoiJnvcaG0zui6lOmcFc7r+wce4hUa+FF+ICkY3MXASXvyHDha/BWnqSAyybUZu+FGKvfmYtUo12jHpmy6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766772009; c=relaxed/simple;
-	bh=y/I7q0O4Ga58ZlxZPQG8u8oKJCJD29rWNCtbiWnl85g=;
+	s=arc-20240116; t=1766772033; c=relaxed/simple;
+	bh=Tw0hpYujlg+lIGxFPAT+vDw7Mbm9lvuZ7L8uDeKIUek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DP/+zQftR6J2ok3+kuiFICOPDmVk1i9pYqnaxiJDBH8dgRxPn0CufQABTXy4VEiwrp3ls3+cQdqawqS1ZK4GCP/VXe5Ir527LW9R66vrot3CIrh4CUC8Y+NT8uCdQM13vT+1LlO8QHv0zTxQ7kscMy/eBarnxf6inl/DiTgJEaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OGfgBETZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IbT6VYCB; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Jj/ObLZ8rqhwZq5tmBvSi3R/DbSs9YE3jrWNSPLnH14PVhCjVITb+GbgmXvTDy1t7fl9urLV8fxrJBw+pjAVDyoewZzdSgiwrDsyI1p0kQwIiw404U9bbc0HGvCQZDc/ONNLDy4uEMX46HkLno6ca5lP+NM4KQRtInfED5wMsVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nH3IY2Pu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GEkDKG+l; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BQ8baAq889901
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:02 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BQ8bm6p1281146
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=; b=OGfgBETZxSB9JVKi
-	du1A8RUCqiqIV1/yG3Qq0JVpLyIduPwsKkyZH9Pj+FpC1U2CnpIe0HjUp/3+VRpx
-	TGmShtWSN9wcPa9D3RqEqKOVOp3QLzn1KGlsVWnGb85oPkTmZnltDISzD81UBXGZ
-	6AQMTx4Q0auILoSAURFDir3Z2LaLTcbC9ECWukw+PaW8AhFb7Ov7ccTRQqh/ikKW
-	hW0N4zPxP1SSCkbNDMoygx2GpjPSh2h2wZ8zQgc/B2rasKUjEwOjlAtgF2lSV3xi
-	XFfxw3arHrJR0WuBNDrI1BJbjDEElD2BuxpoP2oVJw20duZfXYdUMIjaFLoFunEl
-	bAvSxQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8xvcbfsu-1
+	tMuB0hXI/5B2GptpbNmP+iRFf5l17u1VGLcI/EUuwcQ=; b=nH3IY2PurkfMMKbt
+	fH4fDw1dbuLFkvjZZf4bn9LlAEFebd8WY2/4zGVV0Yy33nSmjl4daGtDZ3A8cMGf
+	0u4l5vXVHsqKUai9o9AcMQr2ZZwQhOcIndgDGl89HlVfzS7oxTAANYmYzDrU5gOa
+	O+WkQqgYbKeaPRgag1bExCo1Xl8UtPsgeuiHqC3EpeMzyLjBILRQ/A2/XEEWvdUZ
+	iNfOyxdnAmu8/k6Y0G3b8LiITCb4suwZoDSC6f6MCIrOZ4+JICBe5z7FMVBkU/mT
+	YrTbClRdes/t6VoWyKUzoOz2UiMLGfjr0uNu8GpKhqnp4FpFJ7lGk5/9XqyIaQn9
+	iZJLRw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b8p4945fw-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:01 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7bb2303fe94so8424336b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 10:00:01 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 18:00:30 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-29f27176aa7so158238125ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Dec 2025 10:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766772001; x=1767376801; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766772029; x=1767376829; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=;
-        b=IbT6VYCBywhZbhCEIri2QmWyMeZpPN6weEBjHNr/t4yUteyj6WukL5iJjB9BT5N+4H
-         T6/EXkmcvQUr0wF/zvlRbzA8gO82yqtzWhtvCTsFak2/w2GzWSIaCgALoJigzK7XOCjq
-         DCnGHgECP5F2cYGC1rLUDnL/jITzNUA1K+ldvcJJPKGqEZ1WYqFkbNC0u3io/+3cnfQv
-         bE3uHWSbvqZu41aKorXqWjwtAnVfDXZOA2CWtr1AoVdpYuqPYJVP2gQjReAYEIbn3pck
-         UwaidpJfCgUm/La454IFS0JHpA4Ki4IO5L4xNNd+Y50oam4ovFHYOftXy0aLOZSRkDuz
-         cl5g==
+        bh=tMuB0hXI/5B2GptpbNmP+iRFf5l17u1VGLcI/EUuwcQ=;
+        b=GEkDKG+lUN02oWxttCIbAaJo3SRP5tDaONHOiTSo9lg0mnt5f5h+/41vtspgAdAw4s
+         C6w65EGhS5iszwHfQbxzU6tom4xxqdpH9nBgxWxUluwwkVs7imTG/gD2LlvnUEzUebpk
+         oGHorY7gRamJ/KrOA9nIKm+TvAQACb0RtcpSfk/o5oPVOkV+F8DnIHMeYBHO7otOerIF
+         vBecJhzwVdBFGxr49zWofpGJnKbcncfbvLzHww5lqL1NFd4Lln0sTFEfgVNrLbEhmpPE
+         4ao4IlIAI9Bze+2jxtXnoAxpMC8Cwk1Kbfo+STAJXcsSiBYxDc35jbtCk0qUdz/1hLlp
+         N1Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766772001; x=1767376801;
+        d=1e100.net; s=20230601; t=1766772029; x=1767376829;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZfYs8xJ+7MQfozKFwq/ifb0ZE64KSo+e0VJzhZF5FyM=;
-        b=ugztZpzVCYHL1G0vXnungOxDG7+zgCbimjnPZFDehBTEnK0wAXlzoiXZ4zsLVMLJeR
-         KHKEE0hGKQ12CLPmONOR2xw1eCFDaQaPD7rUUWsIUVR0/InLVsWEU9VFtGK6+t5vU5le
-         fSNcA/990L6uYfAE//Tdx9wmP3dIBzTqf1vkwlX0zPBZpDMxdFgkKZSOTOKMGuNaNhLl
-         ta3I5IdbSYsu+xKfZMos2qIOKJ8S7Bp/ZV+NaYEwZ7WGPS2ly5DogQewzz0yliJGsP/g
-         ZnCovblxgieloJKpnkOZ3pBUxLFsm2WZdz7Y4/ds+jSp2fcpd3Dwt4PnPeP3GRFl+jg1
-         bGnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWvUSIXAkd4zdoJB0YHOJvKYNhH97Gs5LhJyZgHzl4xgOtZNP11ipe+UzGukzgtBPdohPeaJ+Zd2kxZvSOr@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBNZ8U15QhxpCAffDX5hC20wS31rqR0GtCj9Wqgr5sNHTu+kvs
-	TU8/U5D3jmU0AGM8Wo9gja+MY/uYekNZ7E/o0xtLI5REW6tHMckkXbCZnV9bL+csQDkUjjz+J+g
-	YD/jZcsC9q+gHMvoo4xdTUHPpS34gGZKFm394kTAtyiRbYppEjNb0/ratAoZpUct//spr
-X-Gm-Gg: AY/fxX5asqZcsdeNX9Ilbmq2/sc53zuKxx8JjG5Bgi8mS4Rs45PzkkI6EfUaSIGL9I5
-	Mk6TfAyuOklYSB41iaJCJhr+YHYjWnKeTBtKZVA1twgwsZ+qle0FGRcWIjWAM2zusYoaEImhLQy
-	6b35SrCYLRkv9OseXdMbvA57Xgi/tdB4RrrQcaRos0EaKHlyjg4xhDgF2nQL1YUbQpyQH/3Mblk
-	yv85Zn94VA4HslbmyNcLIUShAsW8Gt1XPvwbJTnm5YLmI3wkgICH80wAH4mojTuC1rVPQvZngtL
-	VaPrq5aw7D87cLyKxa3cnE0HKexOchZvgIQe6iJrwcP/QbzfCv6K/81O3VkarI/a8MnHJ5i6V7/
-	3CiSh7uVYw7TZe9LA+ajI7ofv59rFi1QhJZiezA==
-X-Received: by 2002:a05:6a00:e11:b0:7ab:e844:1e76 with SMTP id d2e1a72fcca58-7ff6420d910mr19282735b3a.5.1766772001163;
-        Fri, 26 Dec 2025 10:00:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFrjdKe74XNeyCLrdBcvmvuUM9K5k3eYfkt5yHRiiGMnTiJ4XHanppN7uvWarTMwn+8NtSfwg==
-X-Received: by 2002:a05:6a00:e11:b0:7ab:e844:1e76 with SMTP id d2e1a72fcca58-7ff6420d910mr19282715b3a.5.1766772000625;
-        Fri, 26 Dec 2025 10:00:00 -0800 (PST)
+        bh=tMuB0hXI/5B2GptpbNmP+iRFf5l17u1VGLcI/EUuwcQ=;
+        b=DzFedGt+d8tOI3l9Icup/dJCL9TqGOEOZSHPxYi35iZtYOsX6lJ4TGn4B8tCD149rn
+         LRH612Fnuyz9elghU0RpvEbVt218BHRAVBkUoyjjXczxDmk1qgAGQDI9mkSs5/6eK9am
+         dkhWmkYh57engazSZkBT2/Vorz4dBgVUBoUMcFVUScKT+4s7TsDL2uSHRI02foUcWMik
+         wVdLBkmFJkO0+LyUGPMcV1nw9x7RdvqgvYNlJUqvgQqPYw509rp70uStzCiJAMK0QYXU
+         phD3iemS7MHCp8wUABXloJo2o1ONP09mSpeDVawnf0OGHjM/rnmPF+l/RmuIBJXVZP8f
+         iLRw==
+X-Forwarded-Encrypted: i=1; AJvYcCUO+lQDSKGHcGtgmJtp6HEJ129fTXSzjHth30bX+254zEMP7C3eeO/JL9djgCyzBxVOqIMeHvrlR0LRvOq2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZXLZIKtlTQ6IRfmx3LDFDBEqMC5sw1rLmGwzV1ohH04MMoZuu
+	CtxZhkC7J9IwevlawKcz+7q7whQ5YNqfUyE/+CODItyNqZ1g/gjqphqjQVlhiwuYGdLcNDaKOuF
+	/tX+iB6TlqHT5Slc8nEwTa6AGnTVOmXxbNmIlgFBxzf3jCiHb4s+aqm1CLomuydPWFuXX
+X-Gm-Gg: AY/fxX5FhgkfAoiLfO6jQjld86WTvPNQqVKPab/HzoHQ60pxkySRDy0DTwdBH4TXpgT
+	gZ4bT5cyLYcBeo0ZRQnt1+Y6eKAqhUSRly3lrEzQFNibd2Bu4dTa2+JbmpyC0R7X2KwwVsznkwl
+	UTpT1RwOHa/br75RAdNcDjfohgJmDIdpCvMCp8kUqpiy1DI7lzQuOCFXRHVzuxmi6Y3UiCyS0GB
+	5uZaNqjsIbCLXRlLD9b3LpaO1ufG4TuuDq1nRmVOfffnUKkLvDcDuWm0sZ1//95MdacQdJkivvr
+	GEvqD9ksWczalGr2Y8aLhVBGp4DvM24xA6oX9tBy90gcS7OtMmPGfANc1Mqug6YIwCazgo72wcL
+	hm9SOwR1InOsZ9MXgKUtTPtsSiOE5+tzSSMW5cA==
+X-Received: by 2002:a17:902:e747:b0:2a0:b02b:2114 with SMTP id d9443c01a7336-2a2f220697cmr236097495ad.11.1766772029149;
+        Fri, 26 Dec 2025 10:00:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTOcClec5lZYyKWh2iYi1rQ15hI+Z9TJS1BmbregQuUi4Yc4X2f6fvZg18gwi1aVYLsphQXQ==
+X-Received: by 2002:a17:902:e747:b0:2a0:b02b:2114 with SMTP id d9443c01a7336-2a2f220697cmr236097165ad.11.1766772028587;
+        Fri, 26 Dec 2025 10:00:28 -0800 (PST)
 Received: from [192.168.0.195] ([49.204.27.144])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e0a1a2asm22487141b3a.41.2025.12.26.09.59.56
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c8d10esm207575495ad.42.2025.12.26.10.00.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Dec 2025 10:00:00 -0800 (PST)
-Message-ID: <ce162164-d9c4-43c8-a99b-5fae3bb981a5@oss.qualcomm.com>
-Date: Fri, 26 Dec 2025 23:29:55 +0530
+        Fri, 26 Dec 2025 10:00:28 -0800 (PST)
+Message-ID: <79483c95-c376-414a-947e-d7bf836c1e94@oss.qualcomm.com>
+Date: Fri, 26 Dec 2025 23:30:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,9 +103,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] clk: qcom: rcg2: compute 2d using duty fraction directly
-To: Bjorn Andersson <andersson@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
         Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
         Imran Shaik <imran.shaik@oss.qualcomm.com>,
         Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
@@ -113,148 +113,60 @@ Cc: Michael Turquette <mturquette@baylibre.com>,
         linux-kernel@vger.kernel.org
 References: <20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com>
  <emy273nvnbzznvufe6fmbysrln6d7lm4xi5rwsuwnj4kjlalvx@7j4dxyd2f25l>
- <fa75d5b1-e805-4d3f-9b6c-a21358d3d4b8@oss.qualcomm.com>
- <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
+ <176661333774.4169.12534802903262524563@lazor>
 Content-Language: en-US
 From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <jxj23rczlysmrrrzdmtaa2ymrntamp2hgkzwnfaxgnnzsqqxoy@l5shaguts5oj>
+In-Reply-To: <176661333774.4169.12534802903262524563@lazor>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: IcQRLCZdgPXwpj4eq8vnsFTVSltDpgLb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI2MDE2OCBTYWx0ZWRfXxFLRhOEp2hpp
- XMn89GvqPefw1a+KQg4IX9XqTC84ntExCCDE4QqZf+yi7swMLklArGvyBL4f7UQ+zUiaCuKBoVd
- Y7+tqT2riHE/Ot9tY9ynlcIQz/hOX+IPLr/nM9qEVhk5Pt2gSCVYkRHvcw7AVb3F3nTu/bh1Auc
- qN3Ziq9SPEKDQlQ5jjpqLU8fg03cBTWd+9pAgcK+xEaX+TbTCl8nf7blgBFZ9Nv6YfrXLbqtaSW
- FaQm1T5sdYW78TJmD2cS3nl5GURnf6MH/bCagd2d1++B0vK00WXccYqyBpeDtxJmPvqZjF0dE0e
- dKRtkZ3kPDbj8wajuLz7p5AUHRTE1DW29GhdUBZE23Er2BpXIjzPjHEIMdi2I6TvgtsWGcDdOGr
- zgVHDLXJZbx+8v5dCGlIRfpPLkCq09uTOoFjkuw/ATlvJVEMpsz0mN9uigKZrAyPOCcU82K+iOb
- qeMA61bjQlPMEEhKm5A==
-X-Proofpoint-ORIG-GUID: IcQRLCZdgPXwpj4eq8vnsFTVSltDpgLb
-X-Authority-Analysis: v=2.4 cv=M4xA6iws c=1 sm=1 tr=0 ts=694ecd21 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=CGk/GHK3MkyyyFueakV4jQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: ezrolK1lNzrh9kRXyU8S5FyTsSA_Fg46
+X-Authority-Analysis: v=2.4 cv=esbSD4pX c=1 sm=1 tr=0 ts=694ecd3e cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=CGk/GHK3MkyyyFueakV4jQ==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=62drwnB435mJaXsBqUkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=p2D3aUV_7dyrOLTwZK4A:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI2MDE2OSBTYWx0ZWRfXzgRDMWw4DOwb
+ jPA14u9TBCFQRb8V3L8YVn5qmlZb1y1rRKsOtIzl6gQUx/N4HfEeuTqoXgp8JAEqsWyGPDxdv+w
+ sVfQuub6Buq0sXW7ZgzSiVxyknOMjca/QEopSSZc2NL22EV5+FIIZTxjnDSJo/wG3NbehS+6j+9
+ gIQNUvRjXooDMALEpF7B9WTT0qwO/s5kkArRwn057MYpl3oxUuJCBtpaZWQtZH8xnrJren5zJun
+ NqyiJXxSifbMvA88ZseK/DqMqRzz2OGbm1L6twLZ5833opGKDaELJSe3m7kqfUMAo/dDZMm61Cd
+ IC6eUfN15JnZtN8I5whBdGNcDJPU5smOddTmwQrdepJDZU/8dBcJXhALnsd4LcScZwtYWoDFb0r
+ wr63rF1IOfjn04mVEm9lIC9YuXx1JJ7XOiuwa7QQiaKgW+PNGr9aXCEVL+y+7ljl6CrKif2IhTJ
+ 5rrnsn8pDKagGpch+Uw==
+X-Proofpoint-GUID: ezrolK1lNzrh9kRXyU8S5FyTsSA_Fg46
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-26_05,2025-12-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512260168
+ lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512260169
 
 
 
-On 12/25/2025 9:21 AM, Bjorn Andersson wrote:
-> On Tue, Dec 23, 2025 at 04:18:20PM +0530, Taniya Das wrote:
+On 12/25/2025 3:25 AM, Stephen Boyd wrote:
+> Quoting Bjorn Andersson (2025-12-22 09:09:54)
+>> On Mon, Dec 22, 2025 at 10:38:14PM +0530, Taniya Das wrote:
+>>> @@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>>  
+>>>       n = (~(notn_m) + m) & mask;
+>>>  
+>>> -     duty_per = (duty->num * 100) / duty->den;
+>>> -
+>>>       /* Calculate 2d value */
+>>> -     d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+>>> +     d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
 >>
->>
->> On 12/23/2025 12:39 AM, Bjorn Andersson wrote:
->>> On Mon, Dec 22, 2025 at 10:38:14PM +0530, Taniya Das wrote:
->>>> From: Taniya Das <quic_tdas@quicinc.com>
->>>
->>> Please use oss.qualcomm.com.
->>>
->>
->> My bad, will update it.
->>
->>>>
->>>> The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
->>>> derives an intermediate percentage `duty_per = (num * 100) / den` and
->>>> then computes:
->>>>
->>>>     d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
->>>>
->>>> This introduces integer truncation at the percentage step (division by
->>>> `den`) and a redundant scaling by 100, which can reduce precision for
->>>> large `den` and skew the final rounding.
->>>>
->>>> Compute `2d` directly from the duty fraction to preserve precision and
->>>> avoid the unnecessary scaling:
->>>>
->>>>     d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
->>>>
->>>> This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
->>>> a single, final rounded division, improving accuracy especially for small
->>>> duty cycles or large denominators. It also removes the unused `duty_per`
->>>> variable, simplifying the code.
->>>>
->>>> There is no functional changes beyond improved numerical accuracy.
->>>>
->>>> Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
->>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>>> ---
->>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->>>> ---
->>>>  drivers/clk/qcom/clk-rcg2.c | 6 ++----
->>>>  1 file changed, 2 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
->>>> index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
->>>> --- a/drivers/clk/qcom/clk-rcg2.c
->>>> +++ b/drivers/clk/qcom/clk-rcg2.c
->>>> @@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
->>>>  static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
->>>>  {
->>>>  	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
->>>> -	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
->>>> +	u32 notn_m, n, m, d, not2d, mask, cfg;
->>>>  	int ret;
->>>>  
->>>>  	/* Duty-cycle cannot be modified for non-MND RCGs */
->>>> @@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
->>>>  
->>>>  	n = (~(notn_m) + m) & mask;
->>>>  
->>>> -	duty_per = (duty->num * 100) / duty->den;
->>>> -
->>>>  	/* Calculate 2d value */
->>>> -	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
->>>> +	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
->>>
->>> This looks better/cleaner. But for my understanding, can you share some
->>> example numbers that shows the problem?
->>>
->>
->> Sure Bjorn, will share the examples.
+>> This looks better/cleaner. But for my understanding, can you share some
+>> example numbers that shows the problem?
 >>
 > 
-> I don't think these examples need to necessarily be added in the git
-> history - in particular since the proposed new style looks more
-> reasonable than what's currently is in the code.
-> 
-> So, providing them here would suffice, for me at least.
-
-Frequency requirement from customers as below.
-
-F(10000, P_BI_TCXO, 2, 1, 960),
-
-For example, with N = 960.
-
-Duty cycle(%)| num/den | d_old |NOT_2D(old)| d_new |NOT_2D(new)|Match
---------------------------------------------------------------------
-0.05         | 1/2000  | 0     |0x0000FFFF |  1    |0x0000FFFE |No
-0.10         | 1/1000  | 0     |0x0000FFFF |  2    |0x0000FFFD |No
-0.3125       | 1/320   | 0     |0x0000FFFF |  6    |0x0000FFF9 |No
-0.50         | 1/200   | 0     |0x0000FFFF |  10   |0x0000FFF5 |No
-0.78125      | 1/128   | 0     |0x0000FFFF |  15   |0x0000FFF0 |No
-2.00         | 1/50    | 38    |0x0000FFD9 |  38   |0x0000FFD9 |Yes
-2.10         | 7/333   | 38    |0x0000FFD9 |  40   |0x0000FFD7 |No
-2.50         | 1/40    | 38    |0x0000FFD9 |  48   |0x0000FFCF |No
-3.00         | 3/100   | 58    |0x0000FFC5 |  58   |0x0000FFC5 |Yes
+> Even better would be to add some KUnit tests for the qcom clk driver
+> functions like this so we know they're still working.
 
 
-
-> 
-> 
-> Adding kunit tests certainly sounds useful though.
-> 
-
-Sure, will take a look.
-
+Sure Stephen, let me take a look.
 
 -- 
 Thanks,
