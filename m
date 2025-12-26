@@ -1,103 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-86673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2DBCCDF0A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 22:25:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57286CDF0F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 22:31:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1524B3006625
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 21:25:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1C476300726C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Dec 2025 21:31:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 643CE823DD;
-	Fri, 26 Dec 2025 21:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 363F8221F0C;
+	Fri, 26 Dec 2025 21:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lLf560TN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SMRvtiNx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C171FB1;
-	Fri, 26 Dec 2025 21:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41901DFE26;
+	Fri, 26 Dec 2025 21:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766784331; cv=none; b=GBMrRTnPMLFNhW1FhfT1EJczpOEfVVmeJASySkA701T+q0h5p0Ih2BabwHBHNSTNA/WSHaw+TaqyMnV6wQJb8UAbUF+HoJ0wTtRis+3ShaOlt3ukT8F5MELeKsyLYFX/u2TCiRC9ihWxMk5dV/Q9gz7Pbb4FEFStCT/OJkkp3B4=
+	t=1766784686; cv=none; b=fkFZ39RoZ0vSwme9uSy4FzWSGExEDk6he5JJlQL8n9Fwtoourwx14+MGvkaaBkF7DLWe6pjb3OxhXWLSRQzNJ7m3pPxksPoeHpnunDj1vU7qWTZQXMgbAmF/gWsmnTkTU+Kx6lARK1Lt6sPmDpAn0Mm4CXkqOhz6Jc2hMx5W/ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766784331; c=relaxed/simple;
-	bh=fuWgL3fSoUo1zmnsTOm9SMRw02AyD/UrzLpmlKJQuck=;
+	s=arc-20240116; t=1766784686; c=relaxed/simple;
+	bh=PFswxSa+01cLTL21nc0xcxfRbtYciZ3l8iddjuYG8AY=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=ert3G9OCJUzAQGDzaZeGQDBFAhe852ykP+fUXl6kZqRJ1x4kKQxnSK3/SzxzDeuIWf8OujHrzGYvxhZW4Yeir0uraDz/Omg4M/6PshBjo1b78QUXcW95KOtrqkscuwePj0K4zY7ImdMgWR38hdTO8B0WbZ9bj40b5/3nOZrhnyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lLf560TN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97627C4CEF7;
-	Fri, 26 Dec 2025 21:25:30 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=sVhfuZWtx4TCbnuTxJJKU3LXeuRvU+9+2u0iM6xiXDp/o2bbLD9rB6LsFOl4OApkPat6Pzz4Akxvx+9EDtBW/dNkH7OfYvh/F35JxgD4dQZoDX+o7IXCyYbIDl4qRhGTB8EngDUo2ozOdeveg/fFf+iIiuI7frcmRJaP+OVGiNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SMRvtiNx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BF5C116B1;
+	Fri, 26 Dec 2025 21:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766784330;
-	bh=fuWgL3fSoUo1zmnsTOm9SMRw02AyD/UrzLpmlKJQuck=;
+	s=k20201202; t=1766784685;
+	bh=PFswxSa+01cLTL21nc0xcxfRbtYciZ3l8iddjuYG8AY=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=lLf560TN31/BTOsy8y2WDhhYT7OPvUF4uncLnel9YRftqG432y3oMFwDb2IpRkxN3
-	 jU+Af2Ybkb5/tuVIO2Syvfc4FmKQMb9YgRBkBz8A0bzW4aiAVJqadvP8zk7sURsFdq
-	 9H6QRDzmEtDhaCqNd5QV0tLlmYc3UCUnzVr10Ose4WBJ3Y3pPdqXm6R5O13/a2MM4E
-	 zjbsHeMoRX6f5Wq3b8rFEOXOqGc+bsufDN0sw/HX6dyFrzRngurTSRvr73Az6LgKOw
-	 K0fHIKD8/Jm840lIFcS8btD1QAYXSzCboBdKHm5WNI3rTPHkEsoWgdGUOnqEF5b8kC
-	 8LPOS/Px9h9jA==
-Date: Fri, 26 Dec 2025 15:25:29 -0600
+	b=SMRvtiNxKBxC7AuDWP5rX9GoafxPQZoxaNc48GccWMhPBz/hG1AbmJ+06mCdkIT94
+	 oTxM4Jst3MYeh097Xlm/INAl0ksfSmuN/xsvAwyEUdIf/b3adUM9qu015aHTkZqX/8
+	 nHAuxWWbWE6B9lQbtU3y1Dv6XKFSZ7gTdfFDzff0Nwwa1tRrkddwqmwtyC8V9Qo48H
+	 TlbdN/oXNK4afvx2FBB/0an4lYR59Wq3SRLQLMUfN8Z/QBfVVHkIvoqiddoefCEifo
+	 GY/2n+rnubmw4TlX9PNHxKOxQ7f0UsjVoNvPlrV+f7aw3E7geTkptBLRStehVJ0h0Q
+	 mJxKrGd/VvuOg==
+Date: Fri, 26 Dec 2025 15:31:23 -0600
 From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Shawn Lin <shawn.lin@rock-chips.com>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
 	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH 3/5] PCI: dwc: Remove MSI/MSIX capability if iMSI-RX is
  used as MSI controller
-Message-ID: <20251226212529.GA4142038@bhelgaas>
+Message-ID: <20251226213123.GA4141314@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7d4xj3tguhf6yodhhwnsqp5s4gvxxtmrovzwhzhrvozhkidod7@j4w2nexd5je2>
+In-Reply-To: <20251109-remove_cap-v1-3-2208f46f4dc2@oss.qualcomm.com>
 
-On Thu, Nov 20, 2025 at 10:30:41PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Nov 20, 2025 at 10:06:03PM +0800, Shawn Lin wrote:
-> > 在 2025/11/10 星期一 14:59, Qiang Yu 写道:
-> > > Some platforms may not support ITS (Interrupt Translation Service) and
-> > > MBI (Message Based Interrupt), or there are not enough available empty SPI
-> > > lines for MBI, in which case the msi-map and msi-parent property will not
-> > > be provided in device tree node. For those cases, the DWC PCIe driver
-> > > defaults to using the iMSI-RX module as MSI controller. However, due to
-> > > DWC IP design, iMSI-RX cannot generate MSI interrupts for Root Ports even
-> > > when MSI is properly configured and supported as iMSI-RX will only monitor
-> > > and intercept incoming MSI TLPs from PCIe link, but the memory write
-> > > generated by Root Port are internal system bus transactions instead of
-> > > PCIe TLPs, so they are ignored.
+In subject, s/MSIX/MSI-X/ to match spec and other usage.
 
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > @@ -1083,6 +1083,16 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
-> > >   	dw_pcie_dbi_ro_wr_dis(pci);
-> > > +	/*
-> > > +	 * If iMSI-RX module is used as the MSI controller, remove MSI and
-> > > +	 * MSI-X capabilities from PCIe Root Ports to ensure fallback to INTx
-> > > +	 * interrupt handling.
-> > > +	 */
-> > > +	if (pp->has_msi_ctrl) {
-> > 
-> > Isn't has_msi_ctrl means you have something like GIC-ITS
-> > support instead of iMSI module? Am I missing anything?
+On Sun, Nov 09, 2025 at 10:59:42PM -0800, Qiang Yu wrote:
+> Some platforms may not support ITS (Interrupt Translation Service) and
+> MBI (Message Based Interrupt), or there are not enough available empty SPI
+> lines for MBI, in which case the msi-map and msi-parent property will not
+> be provided in device tree node. For those cases, the DWC PCIe driver
+> defaults to using the iMSI-RX module as MSI controller. However, due to
+> DWC IP design, iMSI-RX cannot generate MSI interrupts for Root Ports even
+> when MSI is properly configured and supported as iMSI-RX will only monitor
+> and intercept incoming MSI TLPs from PCIe link, but the memory write
+> generated by Root Port are internal system bus transactions instead of
+> PCIe TLPs, so they are ignored.
 > 
-> It is the other way around. Presence of this flag means, iMSI-RX is
-> used. But I think the driver should clear the CAPs irrespective of
-> this flag.
+> This leads to interrupts such as PME, AER from the Root Port not received
+> on the host and the users have to resort to workarounds such as passing
+> "pcie_pme=nomsi" cmdline parameter.
 
-I didn't see any response to this.  Is there a case where we want to
-preserve these capabilities?  To ask another way, is there some
-platform where DWC-based Root Ports can generate MSIs themselves?
+This will be great, thanks a lot for working on this.  This has been a
+long-standing irritation with this DWC IP.
 
-> > > +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
-> > > +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
+> To ensure reliable interrupt handling, remove MSI and MSI-X capabilities
+> from Root Ports when using iMSI-RX as MSI controller, which is indicated
+> by has_msi_ctrl == true. This forces a fallback to INTx interrupts,
+> eliminating the need for manual kernel command line workarounds.
+> 
+> With this behavior:
+> - Platforms with ITS/MBI support use ITS/MBI MSI for interrupts from all
+>   components.
+> - Platforms without ITS/MBI support fall back to INTx for Root Ports and
+>   use iMSI-RX for other PCI devices.
+> 
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware-host.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> index 20c9333bcb1c4812e2fd96047a49944574df1e6f..3724aa7f9b356bfba33a6515e2c62a3170aef1e9 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> @@ -1083,6 +1083,16 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
+>  
+>  	dw_pcie_dbi_ro_wr_dis(pci);
+>  
+> +	/*
+> +	 * If iMSI-RX module is used as the MSI controller, remove MSI and
+> +	 * MSI-X capabilities from PCIe Root Ports to ensure fallback to INTx
+> +	 * interrupt handling.
+> +	 */
+> +	if (pp->has_msi_ctrl) {
+> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
+> +		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
+> +	}
+
+"has_msi_ctrl" doesn't seem like a good name here because there's no
+documentation about what it means, and "has_msi_ctrl" is completely
+generic while "iMSI-RX" is very specific.
+
+And apparently platforms with ITS/MBI *can* generate MSIs from Root
+Ports, but "has_msi_ctrl" would be false for them?  This is really
+hard to read.
+
+pp->has_msi_ctrl is set by qcom_pcie_ecam_host_init() and IIUC, for
+any platform that lacks .msi_init() and the "msi-parent" and "msi-map"
+properties.
+
+The qcom_pcie_ecam_host_init() case is weird because it looks like it
+abuses the pci_ecam_ops.init() callback to initialize MSI stuff, not
+ECAM stuff.  Maybe that MSI init could be done in qcom_pcie_probe()
+right after it calls pci_host_common_ecam_create()?
+
+Bjorn
 
