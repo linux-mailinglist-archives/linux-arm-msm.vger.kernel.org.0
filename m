@@ -1,54 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-86761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AEEDCE5723
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 21:21:03 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E56FCE57F7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 23:31:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1FD0E3009F9D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 20:21:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 088653002A66
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 22:31:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A6E258EDB;
-	Sun, 28 Dec 2025 20:21:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DISBa/r+"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3BB8272E7C;
+	Sun, 28 Dec 2025 22:31:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24428242D79;
-	Sun, 28 Dec 2025 20:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163121256C
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 22:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766953261; cv=none; b=P9uwqM5vESZpLEI4Ey2kQpk1H9AirLaecQVs6SPamFBhvsWpNiUTAfr1zDrJQ5tCwaedwDQfkb60rU9XrWe1xdohuQdzt4eEgce2Fi2P1CzOXlYGbrOFq3SAXO1tCSyu+9xK7/xzzUORPGXIJMcphGYh4u1RLo2CMn1+/3TANJQ=
+	t=1766961077; cv=none; b=CX2pVyVbAY8VLP4hUr++AUbgiMu7IXwFRlCSmNZQYtBGfXWr7m2F6jN+C0u0Wy/meHrX1P2dajy2497OHzYv+CQd5TZ2DwUr0VGZnf324bHzHgbLQcwi8awYOGEAEq0BWqtCYiIfT37ssYi3T0yLQ59KTsfc4AmmXtEOHNstP3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766953261; c=relaxed/simple;
-	bh=jkfT8Y5WEeKtdPkROxqVJmvYhof+xpbfEHNcic/Gtx0=;
+	s=arc-20240116; t=1766961077; c=relaxed/simple;
+	bh=788XqJ5dVAenHvJ78SGTaFTWedi+61qLAlv+c8nO2zM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P2CZqT4YKeB2WeWwXu7U9jOmP24bryI9W00bKeRLsi+s0WZJLC8gd2DV9PTNz7A8eEqV9soe1MKBwYWYxfNUZMDWxkOi4w5Y5WuW6hSCigsQqKmUvqb340Khj2nn1pH9d8PLr+vC7j60R3CcS62c+TWf2anrXJpiZ99K9GqUl/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DISBa/r+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530C4C4CEFB;
-	Sun, 28 Dec 2025 20:20:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766953259;
-	bh=jkfT8Y5WEeKtdPkROxqVJmvYhof+xpbfEHNcic/Gtx0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DISBa/r+gTCPXaCWjl8eJO+1v1j2Y8wzCdQjo6kXQo5FPMMqq10po37sW+vF9Z7NL
-	 iM/pPXDUZ2V3jPWBU5jZr0fSWMkDgnF4kDDSVKd2BRZ4qIW06cSaxDBHhDx5zn2jcf
-	 eWvoVPGCO89KzxNR0FqomsJ6se0z8yU62DREIduT2t2c501XxFcDG6iGpTtegzUjcT
-	 VIL/Xiz+Zd3bavaL84rRbIzJq7fuXvx4INpcEniy457E4lVCmtqFWfZOrJL44p0vzi
-	 oqO8Cd/cGKBlUg/hyYxSwhrfmf1WiD92kydXrHNJCC+/tduCYorfHvqb4ZupBrjg0V
-	 qDMNSuHwzSemw==
-Date: Sun, 28 Dec 2025 12:20:57 -0800
-From: Eric Biggers <ebiggers@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: adrian.hunter@intel.com, quic_asutoshd@quicinc.com,
-	ulf.hansson@linaro.org, linux-mmc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] mmc: sdhci-msm: Add quirk to disable CQE for ICE legacy
- mode
-Message-ID: <20251228202057.GB2431@quark>
-References: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sffMoXCPw72bd8AGngREty426AxMb2wHf0GnoxrCBq0/r5RiEjLqm5xZjT9CVJXwNtRCAS7vL0eIWz/pXFvtGo2HfNKzUqPDgQyors5YU4P5yhK9O+1y23qYSriR9tVt7+iB0VqYZpjF03iCcc2DYl0R2L53DJINBO5sENEq+hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A542A1FA79;
+	Sun, 28 Dec 2025 23:31:06 +0100 (CET)
+Date: Sun, 28 Dec 2025 23:31:05 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
+	Casey Connolly <casey.connolly@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, Martin Botka <martin.botka@somainline.org>, 
+	Jami Kettunen <jami.kettunen@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v2 06/11] dt-bindings: display: panel: Describe Samsung
+ SOFEF03-M DDIC
+Message-ID: <aVGufYAmikItGgYi@SoMainline.org>
+References: <20251222-drm-panels-sony-v2-0-82a87465d163@somainline.org>
+ <20251222-drm-panels-sony-v2-6-82a87465d163@somainline.org>
+ <20251222-godlike-mongoose-of-valor-3eeee0@quoll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,35 +67,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
+In-Reply-To: <20251222-godlike-mongoose-of-valor-3eeee0@quoll>
 
-On Wed, Dec 24, 2025 at 03:40:50PM +0530, Md Sadre Alam wrote:
-> Some hosts require Inline Crypto Engine (ICE) to operate in legacy mode
-> instead of Command Queue Engine (CQE) mode for platform-specific
-> requirements or compatibility reasons. Introduce a host-level quirk
-> `host_disable_cqe` to forcefully disable CQE negotiation and allow ICE
-> to function through the legacy request path.
+On 2025-12-22 09:33:04, Krzysztof Kozlowski wrote:
+> On Mon, Dec 22, 2025 at 12:32:12AM +0100, Marijn Suijten wrote:
+> > Document the Samsung SOFEF03-M Display-Driver-IC and 1080x2520@120Hz DSI
+> > command-mode panels found in the Sony Xperia 5 II and Sony Xperia 5 III.
+> > It requires Display Stream Compression 1.1 which allows the panels to be
+> > driven at 120Hz, even though a 60Hz mode is available too.
+> > 
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > 
-> When the device tree omits the "supports-cqe" property, the driver sets
-> `host_disable_cqe = true` and avoids enabling MMC_CAP2_CQE during card
-> initialization. This ensures that even CQE-capable hardware falls back
-> to legacy SDHCI request handling. A minimal `cqhci_disable_ops` is
-> provided with `.cqe_enable = cqhci_host_disable` returning -EINVAL to
-> force the fallback. Other ops are left NULL for safe defaults.
-> 
-> For builds without CONFIG_MMC_CRYPTO, the driver uses standard
-> sdhci_add_host() to avoid unnecessary CQE infrastructure initialization.
-> 
-> This allows platforms to forcefully opt out of CQE usage and ensure ICE
-> operates reliably in legacy mode, providing stable crypto operations
-> without command queuing complexity.
-> 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Your patchset has multiple white space warnings. Apply and see...
 
-I'm confused.  If CQE isn't supported by the hardware, surely it would
-make more sense for the driver to not advertise the host as being
-CQE-capable at all?  This patch seems to introduce an ambiguous middle
-ground, where the host is CQE-capable but not really.
+I am sorry for missing this.  I've asked b4 upstream to include diff --check
+validation in their prep --check pass as I did not save + reapply my own series
+before sending with this workflow.
 
-- Eric
+- Marijn
 
