@@ -1,105 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-86732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1906CE525B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 16:55:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2C8DCE52FD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 18:01:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id ED7D43002068
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 15:55:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 15AD4300EE54
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 17:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DFE52D46B2;
-	Sun, 28 Dec 2025 15:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C36C5BA3D;
+	Sun, 28 Dec 2025 17:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZfbKYwIt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SyhN8Fj4";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Dp/qrla5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3CC2D3ECF;
-	Sun, 28 Dec 2025 15:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BB41DFF7
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 17:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766937307; cv=none; b=HxnoEggma0Bu/AxXhJl2FdDKyt2Qmo4ZWhIK0lY/iUPzgwNs7V0zQeF1q9ZHwttpdBRKTzDO9zhOfNtA9rUaWyDWCOBa7Xo0KF1EK7z5qgJd9Kj8twpcUWDWetweHUQlIV7wVUMQaDJgxDcT1pbKFUhuU/nXwdtC3Y/odgeoXC4=
+	t=1766941285; cv=none; b=ihqJHTrQfmc2XPeDD8/P1d/b6J83/jCXSR8/ZyU5O6UkRMqWI2i9mj1iFCv//9ps5TepV7k6EPcMSpBLCntOyy7wzphDXbsPuLTLvhFWQFFjf51/3rsyH/vrupS/jrGodKW+ten0FWFAx1Q+heGDG1BvUaYEU2Kk05ueBRHL2x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766937307; c=relaxed/simple;
-	bh=RVhVYNe4HLnYu3SXv6psX9huMD9oykqCFbvAYGZvb8w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uk/c+luUoJBmSddrlAlGsucjJKT0SOwY2PeUknZXGvp+U5zfrz2gg8GNSN3eZUBuYMcf98CgHbgtEePgSI/kc4bDzgtt0pGNHg/Vzx3ro97200HEEmrp/WgxIp9Bc+QXs2ltc98FT2DRbVvG+5/4H1qpch6j0IFBsm9nf3iz9nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZfbKYwIt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E5EC4CEFB;
-	Sun, 28 Dec 2025 15:55:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766937306;
-	bh=RVhVYNe4HLnYu3SXv6psX9huMD9oykqCFbvAYGZvb8w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZfbKYwItChsGLpE7VdLeGKh/S7TL13OUjVBfD4CT1HTyTVeCLVyJWGqT713yjCTR2
-	 R2PiHPE9bvB1rDV1vTr9oW5wi5+pjeyDPVwd/tKuraoqoOA5Ezel9huY700bYWdtBF
-	 Zxobs3TxHSVQHt5aoYmjmvAZtsZO9z2djY2XXzDgamCcEDPYuYvFjlVkQ2JsYBiShk
-	 6LAoOXKDr7S0jfe51n9rpoNBeVkdmwKg6dE+ZioJwRPKkKcWAfTx4ZULUgWGFaVuDM
-	 meu/Uj1td/SdyF6R0D+MYBdzSRa9wcAAh/vvLsoPoEYma/MHULi13MdiEsBCGDhtit
-	 fJk5qX08TbKHQ==
-Message-ID: <b2b48188-1283-4a19-a6b1-9154609f22e6@kernel.org>
-Date: Sun, 28 Dec 2025 15:55:02 +0000
+	s=arc-20240116; t=1766941285; c=relaxed/simple;
+	bh=lCxl2n5aD6Bb9zv77JM6BQ3kRr5ZEjbzp3hesNEVqg0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DsGIYKE0izmM0ErytT2+GWCDuywasTlTpY3qrcnp/bsgYzEXUBt+/3RsqDBxEcQLa0+dZdBpS15sBlQxFBRJrjab/i9L8ZXUtcTnNZG3mbvP+q11rlRriNqEsakKWAZcjru+CfzZ8M3n7Wbh6GPozQTMYtGNJbOQfCvXVFuR99o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SyhN8Fj4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dp/qrla5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BSD1Yqi2134228
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 17:01:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=b+7B9SJgNJm4sR8RVhnBTK
+	Tux/7l5bt1WKzbOSx4CCM=; b=SyhN8Fj4JfHu2Pn5S+cFk04tl0u/LNelNQf+tY
+	D2gcvLE7719Dh6nEBEZyegB0lRiLMOqRL4/+JA2FAV34djTh1Us+Z40oyReEUmy5
+	NOuNfooaYh0JMWMI86yhVYU8/7+zRAG77lMlX3iKJVErQQN/TgcA905uta4+J/KH
+	hFLFH6GHLA+HE0KBHA2JZeuhYuzvfUCuE0g5MHLPwEd6wOFCE1onkjnRw/N5tU6j
+	XCAC8+LFXY9/AUQQxutMAELNIGWC2kL8QSD1+ebG5V9ya4O4bGmiCfx+HZ69Vz5V
+	+cg+xMoXfm909Qj7iZoOMO4EQhJ0Oaiux74uFt4Nt7psYACg==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ba4tntnh6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 17:01:21 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b89c1ce9cfso9800870b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 09:01:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1766941280; x=1767546080; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b+7B9SJgNJm4sR8RVhnBTKTux/7l5bt1WKzbOSx4CCM=;
+        b=Dp/qrla5JFPzsss5uE/azI1GsK+2UPvIBbstcCGgDbLVY8vZK1g7w6HA1f9kLwxFkz
+         m/nSWxAMPrYUFou49FYWXKPWaggBX8XoG4BesUGLqgGOjtYf0bfWXlynCq670XHlu72c
+         kl/bxU7jIrUPaqH7g9q3gGHoLEDQyUrG8siTzq4LT+fLueqxRarxr66zX9YBKVclpyIn
+         7JwoISOt286uOqhsDpExzYmtrArO81VEKcCby4TU2KNjWXZaANJz7UwDlMA7MCGzOCaf
+         eDbvTvV8SS4lhmPhvavhhNlJoNPvm3dxeiRjmz2NLhoS/srm1QPZ/40c08Yq9B7bpMGN
+         Ze8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766941280; x=1767546080;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b+7B9SJgNJm4sR8RVhnBTKTux/7l5bt1WKzbOSx4CCM=;
+        b=JhsmgOBfYK4RY5hcCO270TffFfsAXrHJ+q2Az60y87unKMM3rd0/xJSSR8TTcwBKDC
+         TjjLb4P1rVPnsVo8uJOQiQqMcV8z4wWD2akPHPughwlCd73Ha163teQ4Ndszd39D7MHE
+         y/dyHku/hdHVoOIea21kkMYne+ez/O65uC2VZPBYbOh16YvqJ82tw/MSpAtQVIG/F2cQ
+         NE15SyDlybw+Nnx6mO0BBdScCr5MZL0325q1x8LYq3+bpfG+C2FZtq25Z4fut6ExByyz
+         B+ABJlznS1KD1T0S+pNyHW3LdMGlEN3MUDlk6dKzSJRIv7PaDu+rmkC+Gw9nwavV42ZN
+         WkVA==
+X-Forwarded-Encrypted: i=1; AJvYcCXPXQiExjyK0OiydbQkl+pQR+fBAp2+5/7PdMpLU8PiXE94QhuQ2w+sdzvOY1Kvq5fn90x7PzukL38XHMEk@vger.kernel.org
+X-Gm-Message-State: AOJu0YzT8JNS7VnSWEmsupxCeQrHPbQtxT1JA4unMMP9TFM0kEba0RzY
+	k/WEBbQLQJ164uEGptZNcVmpMtW2Y8whkpaCIF4MiK2OuqsC9fxDh86R06DR82/u6kT30xo3xLC
+	DoxWu/iAMfJH3NCVtZIcJvxaOfE7l8BGTee4LCOCG2F1Pf0JnPC1kJfhKUb7Zdy2fHwK4
+X-Gm-Gg: AY/fxX6CJ4Wg1BJuv3+b6UXP208m9qnAMz6eT/jhX9P+M/TZabXYCiFjHzciNjMiNXf
+	QaFU++iLjYG/GL+TwsVUvEqXrksDNZnNKySISZj0BfHYtDikf/8iWRinaDbHVuQ1AMHD4kxowUP
+	QyPHWIZmRPQAn02NM9vVsPP/uAf44v2WeKLfOH5S+to1O3tOL9lLU+dgwO9peB6xMS6QL8jx8h5
+	b4g9XqZv6XXgCiPzxoCr3eS3GPNAkJZSnZGPe0ESfYiybqqOzPpqU6q8rY0g5RVzDO+/Vb+3FCY
+	vXmuNFnLQ1EwZQAAy3xzeMIWGsQGqVF7pC6Iu0dXKYbj2S2Au519lQvjDiYq7G6vLZsSuGZsxAk
+	6wHjnqJYOJUzpWpjbKQW0R8FV9mi3dvVRI4I=
+X-Received: by 2002:a05:6a00:ac85:b0:7ab:3454:6f22 with SMTP id d2e1a72fcca58-7ff648e4b26mr29080836b3a.16.1766941280325;
+        Sun, 28 Dec 2025 09:01:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHb9mwgHytfvSq+b5K7BOcjZZAV6Gx7cYLWysZuXgYYAy05VYXb5dQJbI15XSLOV5ECpUVkXw==
+X-Received: by 2002:a05:6a00:ac85:b0:7ab:3454:6f22 with SMTP id d2e1a72fcca58-7ff648e4b26mr29080783b3a.16.1766941279755;
+        Sun, 28 Dec 2025 09:01:19 -0800 (PST)
+Received: from work.lan ([2409:4091:a0f4:6806:90aa:5191:e297:e185])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7ae354easm27053925b3a.16.2025.12.28.09.01.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Dec 2025 09:01:19 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH v4 0/5] PCI: Add initial support for handling PCIe M.2
+ connectors in devicetree
+Date: Sun, 28 Dec 2025 22:31:00 +0530
+Message-Id: <20251228-pci-m2-v4-0-5684868b0d5f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] media: iris: gen2: Add sanity check for session stop
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20251224-iris-fixes-v1-0-5f79861700ec@oss.qualcomm.com>
- <Q-o-NbtrkuHq6JVnZdrzAP2vtM8D_RDPSMQNDLQMZhXgOPk4XJDbKa29kt2uelNZ7_mSdoshpl7LpdSQ5GLBYg==@protonmail.internalid>
- <20251224-iris-fixes-v1-5-5f79861700ec@oss.qualcomm.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20251224-iris-fixes-v1-5-5f79861700ec@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAExiUWkC/3WNQQ6CMBAAv0J6toRuW2g8+Q/joZStNBHBVhsN4
+ e8WEpSDXjaZzc7sSAJ6h4Hss5F4jC64/ppA7DJiWn09I3VNYgIFSMYKTgfjaAe0KjkvOatLqzV
+ Jx4NH655L6HhK3Lpw7/1r6UY2b9eEXBOR0YIqUUvLLEOJ6tCHkN8e+mL6rsvTIHMpwtZWHxuSj
+ ao2oqlqK6D5Y/ONDd/fPNlGgioEaNSi+mFP0/QGNszM1R8BAAA=
+X-Change-ID: 20251103-pci-m2-7633631b6faa
+To: Bjorn Helgaas <bhelgaas@google.com>,
+        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, linux-ide@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        Frank Li <Frank.Li@nxp.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4147;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=lCxl2n5aD6Bb9zv77JM6BQ3kRr5ZEjbzp3hesNEVqg0=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpUWJZyvHz/45h4posumn1eViZOd0E2qGRJDadW
+ VpJVYQe0AOJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaVFiWQAKCRBVnxHm/pHO
+ 9XXJB/9VGjuweTs1AAQWECsLaA3eY7wzGJFn+vbSYPinXe47ogqWEn4NoAHg6C08SUvgrNYdAKv
+ XP7Drzzma8hav/IYwzhAHA+uRUebMvbiFVtbvio49KAFO4YNm/tb9IOoWGxoZUrKScGKOnnCieW
+ SWdreBMlvafOu/CRTCc/gVCc1j29qsqdVKQ4bEO/7as9VT2gJDh0b9vVpBbz7Rq80zpByeGYVKM
+ dQuJm4h9KdeUWLPTxRNylnpVwINpQz2q/tgC3RpMPd1hL9dVPOF/9VF6tqblzQpruMYpdLpaU2r
+ odu8CdUoZryRE+YQeC2kL7TCwVzAlsvzUAi5GoxQ27L2Z8Kp
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Authority-Analysis: v=2.4 cv=G+YR0tk5 c=1 sm=1 tr=0 ts=69516261 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=otkVNQseMVp4AOM4PXIA:9
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: zQCsaLKBffFSVgw42CcIpZ0pVNSuI6sc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI4MDE1NiBTYWx0ZWRfX8CQJi9YUZ+T6
+ 51/UssxcGGeNyP4AOm7xBzB2BWOlJ4SsPxN8elAYlXMLIFs+voqGEBMqJUO2ZSfC3hcoQy5/Ow0
+ WAswsi9z444O7QgiyUPLhEIYWbxI1OHc6toQ0TTv3/sG9EuVA2q9wvmCTlM8s1wWTHFI2PEiZro
+ Do2LTU8/3a2Krghh5zqVvZzHQ1xjw8Ia/O9Zza/NtNQj6h1uaOshBV+FADOJUwl/J56am3d9sSK
+ ZTPiinW+LxlcT2crL22Tyhff3FOVjQpL/o4FzFTfZN5+sg0A2uQkzD+RGDBL96OP0NOaVQMw2MC
+ CLSTNGIA1U2QA+d+/z7ZKulEvHtndMeYLql5cQ/5BfToMpaTnnKgfYjnNShx29vPdoGJQdqdyf2
+ FqIzvXhwFwYNkSvQP6fE9rm0tDjcXMPOFcgugmzMeTxIDP8DXrSA8CQ+PMeg2D7hdgvn83jdQ6/
+ NGBjrTqbyfcSdKgLRgw==
+X-Proofpoint-ORIG-GUID: zQCsaLKBffFSVgw42CcIpZ0pVNSuI6sc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-28_06,2025-12-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2512280156
 
-On 24/12/2025 06:27, Dikshita Agarwal wrote:
-> In iris_kill_session, inst->state is set to IRIS_INST_ERROR and
-> session_close is executed, which will kfree(inst_hfi_gen2->packet).
-> If stop_streaming is called afterward, it will cause a crash.
-> 
-> Add a NULL check for inst_hfi_gen2->packet before sendling STOP packet
-> to firmware to fix that.
-> 
-> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> index 6a772db2ec33fb002d8884753a41dc98b3a8439d..59e41adcce9aadd7c60bb1d369d68a4954f62aef 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> @@ -963,6 +963,9 @@ static int iris_hfi_gen2_session_stop(struct iris_inst *inst, u32 plane)
->   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
->   	int ret = 0;
-> 
-> +	if (!inst_hfi_gen2->packet)
-> +		return -EINVAL;
-> +
->   	reinit_completion(&inst->completion);
-> 
->   	iris_hfi_gen2_packet_session_command(inst,
-> 
-> --
-> 2.34.1
-> 
+Hi,
 
-Most of these patches need Fixes: please add.
+This series is an initial attempt to support the PCIe M.2 connectors in the
+kernel and devicetree binding. The PCIe M.2 connectors as defined in the PCI
+Express M.2 Specification are widely used in Notebooks/Tablet form factors (even
+in PCs). On the ACPI platforms, power to these connectors are mostly handled by
+the firmware/BIOS and the kernel never bothered to directly power manage them as
+like other PCIe connectors. But on the devicetree platforms, the kernel needs to
+power manage these connectors with the help of the devicetree description. But
+so far, there is no proper representation of the M.2 connectors in devicetree
+binding. This forced the developers to fake the M.2 connectors as PMU nodes [1]
+and fixed regulators in devicetree.
+
+So to properly support the M.2 connectors in devicetree platforms, this series
+introduces the devicetree binding for Mechanical Key M connector as an example
+and also the corresponding pwrseq driver and PCI changes in kernel to driver the
+connector.
+
+The Mechanical Key M connector is used to connect SSDs to the host machine over
+PCIe/SATA interfaces. Due to the hardware constraints, this series only adds
+support for driving the PCIe interface of the connector in the kernel.
+
+Also, the optional interfaces supported by the Key M connectors are not
+supported in the driver and left for the future enhancements.
+
+Testing
+=======
+
+This series, together with the devicetree changes [2] [3] were tested on the
+Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the NVMe SSD connected
+over PCIe.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts?h=v6.18-rc4&id=d09ab685a8f51ba412d37305ea62628a01cbea57
+[2] https://github.com/Mani-Sadhasivam/linux/commit/40120d02219f34d2040ffa6328f0d406b1e4c04d
+[3] https://github.com/Mani-Sadhasivam/linux/commit/ff6c3075836cc794a3700b0ec6a4a9eb21d14c6f
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
+Changes in v4:
+- Added graph property to SATA in this series and PCI to dtschema:
+  https://github.com/devicetree-org/dt-schema/pull/180
+- Used 'i2c-parent' instead of SMBus port
+- Reworded the -gpios property description
+- Rebased on top of v6.19-rc1
+- Link to v3: https://lore.kernel.org/r/20251125-pci-m2-v3-0-c528042aea47@oss.qualcomm.com
+
+Changes in v3:
+- Changed the VIO supply name as per dtschema
+- Added explicit endpoint properties to port 0 node for host I/F
+- Used scope based cleanup for OF node in pwrseq driver
+- Collected review tags
+- Link to v2: https://lore.kernel.org/r/20251108-pci-m2-v2-0-e8bc4d7bf42d@oss.qualcomm.com
+
+Changes in v2:
+- Incorporated comments from Bartosz and Frank for pwrseq and dt-binding
+  patches, especially adding the pwrseq match() code.
+- Link to v1: https://lore.kernel.org/r/20251105-pci-m2-v1-0-84b5f1f1e5e8@oss.qualcomm.com
 
 ---
-bod
+Manivannan Sadhasivam (5):
+      dt-bindings: ata: sata: Document the graph port
+      dt-bindings: connector: Add PCIe M.2 Mechanical Key M connector
+      PCI/pwrctrl: Add support for handling PCIe M.2 connectors
+      PCI/pwrctrl: Create pwrctrl device if the graph port is found
+      power: sequencing: Add the Power Sequencing driver for the PCIe M.2 connectors
+
+ .../devicetree/bindings/ata/sata-common.yaml       |   3 +
+ .../bindings/connector/pcie-m2-m-connector.yaml    | 133 +++++++++++++++++
+ MAINTAINERS                                        |   7 +
+ drivers/pci/probe.c                                |   3 +-
+ drivers/pci/pwrctrl/Kconfig                        |   1 +
+ drivers/pci/pwrctrl/slot.c                         |  35 ++++-
+ drivers/power/sequencing/Kconfig                   |   8 ++
+ drivers/power/sequencing/Makefile                  |   1 +
+ drivers/power/sequencing/pwrseq-pcie-m2.c          | 160 +++++++++++++++++++++
+ 9 files changed, 345 insertions(+), 6 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251103-pci-m2-7633631b6faa
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
 
