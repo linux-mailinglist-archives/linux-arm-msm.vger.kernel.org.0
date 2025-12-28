@@ -1,156 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-86760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 964DDCE54F0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 18:37:50 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AEEDCE5723
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 21:21:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9628E3004CCD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 17:37:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1FD0E3009F9D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 20:21:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D341E8836;
-	Sun, 28 Dec 2025 17:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A6E258EDB;
+	Sun, 28 Dec 2025 20:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="V/wDRMsQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DISBa/r+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24F199FBA;
-	Sun, 28 Dec 2025 17:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24428242D79;
+	Sun, 28 Dec 2025 20:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766943467; cv=none; b=T+YN7Fzkx6p3wNyrey6gd3eH/RR32+PncXT/DLVSeYMw0bue7aArevaeskvMB599oOJUHE+WA7j1Uvp5mrPApe8UBKCHusc3Ua4jTf/GiBTDIjTmZibEc9pm6bT0ylKIXJp57AgGNKnDd3WfaA9M9qxin0qn1i/galZSRgp4pSM=
+	t=1766953261; cv=none; b=P9uwqM5vESZpLEI4Ey2kQpk1H9AirLaecQVs6SPamFBhvsWpNiUTAfr1zDrJQ5tCwaedwDQfkb60rU9XrWe1xdohuQdzt4eEgce2Fi2P1CzOXlYGbrOFq3SAXO1tCSyu+9xK7/xzzUORPGXIJMcphGYh4u1RLo2CMn1+/3TANJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766943467; c=relaxed/simple;
-	bh=BVyrGvuZxQ32vWuyuPyWhvaKJBjsen6sagC/3IcqpSs=;
+	s=arc-20240116; t=1766953261; c=relaxed/simple;
+	bh=jkfT8Y5WEeKtdPkROxqVJmvYhof+xpbfEHNcic/Gtx0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DO3jADQxkp6FQMxKlyeCKlKSJHjBitcAa5NkeIhwI+HUjDaJUZlGmoPawAYM/ZF+dFr2AzUr26AJrdnM1CVwH4yCKOIngR7OoEre0JqmkhHPYoQaQpwA5d7gWRWyw+ov6E/hHyF98FHrQFQ1v6G/7KD5nbXilPTSStNaF5LMgQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=V/wDRMsQ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-152.bb.dnainternet.fi [81.175.209.152])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 9F8DB4BB;
-	Sun, 28 Dec 2025 18:37:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1766943448;
-	bh=BVyrGvuZxQ32vWuyuPyWhvaKJBjsen6sagC/3IcqpSs=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=P2CZqT4YKeB2WeWwXu7U9jOmP24bryI9W00bKeRLsi+s0WZJLC8gd2DV9PTNz7A8eEqV9soe1MKBwYWYxfNUZMDWxkOi4w5Y5WuW6hSCigsQqKmUvqb340Khj2nn1pH9d8PLr+vC7j60R3CcS62c+TWf2anrXJpiZ99K9GqUl/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DISBa/r+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530C4C4CEFB;
+	Sun, 28 Dec 2025 20:20:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766953259;
+	bh=jkfT8Y5WEeKtdPkROxqVJmvYhof+xpbfEHNcic/Gtx0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V/wDRMsQYkz61hN+SmAYpeteMIET3dbzn84NCONg5GqGOSmCMYHVprroRZOofKUvp
-	 DRAuP2Wwl2hgYN0uyopjD1EL+FUTeQO+9puw4xsQJ8TneYfOeVS0YyqMSoQJZ/tDcm
-	 CJXJJ354O2ddLgV05A9JT32LE2IQcIyZmKoXDAzs=
-Date: Sun, 28 Dec 2025 19:37:24 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
-	Suraj Kandpal <suraj.kandpal@intel.com>
-Subject: Re: [PATCH v4 5/8] drm: renesas: rcar-du: use
- drmm_writeback_connector_init()
-Message-ID: <20251228173724.GR4094@pendragon.ideasonboard.com>
-References: <20251228-wb-drop-encoder-v4-0-58d28e668901@oss.qualcomm.com>
- <20251228-wb-drop-encoder-v4-5-58d28e668901@oss.qualcomm.com>
+	b=DISBa/r+gTCPXaCWjl8eJO+1v1j2Y8wzCdQjo6kXQo5FPMMqq10po37sW+vF9Z7NL
+	 iM/pPXDUZ2V3jPWBU5jZr0fSWMkDgnF4kDDSVKd2BRZ4qIW06cSaxDBHhDx5zn2jcf
+	 eWvoVPGCO89KzxNR0FqomsJ6se0z8yU62DREIduT2t2c501XxFcDG6iGpTtegzUjcT
+	 VIL/Xiz+Zd3bavaL84rRbIzJq7fuXvx4INpcEniy457E4lVCmtqFWfZOrJL44p0vzi
+	 oqO8Cd/cGKBlUg/hyYxSwhrfmf1WiD92kydXrHNJCC+/tduCYorfHvqb4ZupBrjg0V
+	 qDMNSuHwzSemw==
+Date: Sun, 28 Dec 2025 12:20:57 -0800
+From: Eric Biggers <ebiggers@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: adrian.hunter@intel.com, quic_asutoshd@quicinc.com,
+	ulf.hansson@linaro.org, linux-mmc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] mmc: sdhci-msm: Add quirk to disable CQE for ICE legacy
+ mode
+Message-ID: <20251228202057.GB2431@quark>
+References: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251228-wb-drop-encoder-v4-5-58d28e668901@oss.qualcomm.com>
+In-Reply-To: <20251224101050.3497746-1-quic_mdalam@quicinc.com>
 
-On Sun, Dec 28, 2025 at 07:21:37PM +0200, Dmitry Baryshkov wrote:
-> Use drmm_plain_encoder_alloc() to allocate simple encoder and
-> drmm_writeback_connector_init() in order to initialize writeback
-> connector instance.
-
-The patch makes the driver more complex, so the commit message should
-explain why this is a good idea.
-
-> Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-> Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  .../gpu/drm/renesas/rcar-du/rcar_du_writeback.c    | 23 +++++++++++++++-------
->  1 file changed, 16 insertions(+), 7 deletions(-)
+On Wed, Dec 24, 2025 at 03:40:50PM +0530, Md Sadre Alam wrote:
+> Some hosts require Inline Crypto Engine (ICE) to operate in legacy mode
+> instead of Command Queue Engine (CQE) mode for platform-specific
+> requirements or compatibility reasons. Introduce a host-level quirk
+> `host_disable_cqe` to forcefully disable CQE negotiation and allow ICE
+> to function through the legacy request path.
 > 
-> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c b/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
-> index 8cd37d7b8ae2..64cea20d00b3 100644
-> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
-> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_writeback.c
-> @@ -134,7 +134,6 @@ static void rcar_du_wb_conn_reset(struct drm_connector *connector)
->  static const struct drm_connector_funcs rcar_du_wb_conn_funcs = {
->  	.reset = rcar_du_wb_conn_reset,
->  	.fill_modes = drm_helper_probe_single_connector_modes,
-> -	.destroy = drm_connector_cleanup,
->  	.atomic_duplicate_state = rcar_du_wb_conn_duplicate_state,
->  	.atomic_destroy_state = rcar_du_wb_conn_destroy_state,
->  };
-> @@ -202,15 +201,25 @@ int rcar_du_writeback_init(struct rcar_du_device *rcdu,
->  {
->  	struct drm_writeback_connector *wb_conn = &rcrtc->writeback;
->  
+> When the device tree omits the "supports-cqe" property, the driver sets
+> `host_disable_cqe = true` and avoids enabling MMC_CAP2_CQE during card
+> initialization. This ensures that even CQE-capable hardware falls back
+> to legacy SDHCI request handling. A minimal `cqhci_disable_ops` is
+> provided with `.cqe_enable = cqhci_host_disable` returning -EINVAL to
+> force the fallback. Other ops are left NULL for safe defaults.
+> 
+> For builds without CONFIG_MMC_CRYPTO, the driver uses standard
+> sdhci_add_host() to avoid unnecessary CQE infrastructure initialization.
+> 
+> This allows platforms to forcefully opt out of CQE usage and ensure ICE
+> operates reliably in legacy mode, providing stable crypto operations
+> without command queuing complexity.
+> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-Extra blank line.
+I'm confused.  If CQE isn't supported by the hardware, surely it would
+make more sense for the driver to not advertise the host as being
+CQE-capable at all?  This patch seems to introduce an ambiguous middle
+ground, where the host is CQE-capable but not really.
 
-> +	struct drm_encoder *encoder;
-> +
-> +	encoder = drmm_plain_encoder_alloc(&rcdu->ddev, NULL,
-> +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
-> +	if (IS_ERR(encoder))
-> +		return PTR_ERR(encoder);
-> +
-> +	drm_encoder_helper_add(encoder, &rcar_du_wb_enc_helper_funcs);
-> +
-> +	encoder->possible_crtcs = drm_crtc_mask(&rcrtc->crtc);
-> +
->  	drm_connector_helper_add(&wb_conn->base,
->  				 &rcar_du_wb_conn_helper_funcs);
->  
-> -	return drm_writeback_connector_init(&rcdu->ddev, wb_conn,
-> -					    &rcar_du_wb_conn_funcs,
-> -					    &rcar_du_wb_enc_helper_funcs,
-> -					    writeback_formats,
-> -					    ARRAY_SIZE(writeback_formats),
-> -					    1 << drm_crtc_index(&rcrtc->crtc));
-> +	return drmm_writeback_connector_init(&rcdu->ddev, wb_conn,
-> +					     &rcar_du_wb_conn_funcs,
-> +					     encoder,
-> +					     writeback_formats,
-> +					     ARRAY_SIZE(writeback_formats));
->  }
->  
->  void rcar_du_writeback_setup(struct rcar_du_crtc *rcrtc,
--- 
-Regards,
-
-Laurent Pinchart
+- Eric
 
