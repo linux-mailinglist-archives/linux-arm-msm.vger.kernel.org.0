@@ -1,131 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-86763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 017FACE5854
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 23:49:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33772CE59C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 01:13:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 64E32300762B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Dec 2025 22:49:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 67D0630078AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 00:12:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02CC92877E5;
-	Sun, 28 Dec 2025 22:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 777813FBA7;
+	Mon, 29 Dec 2025 00:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LAN243lR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CEF271A9A;
-	Sun, 28 Dec 2025 22:49:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9202B3A1E9E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 00:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766962165; cv=none; b=n7q4K/d/O7Q+IB3t0qeII6kQJGW1+hsOz0MIG2B303CqOrULVBYREqSWnKPNCVDfUZA+F56xJwgjQcUP0gPyRxNf32llZToD0TPovsGiGbD4rzR+eXSo7K+MZ4Ih3rQZZc4GLYm/45R7YCATOnI5uEQt/YOXo3BgOJvIeMHPEmM=
+	t=1766967173; cv=none; b=TscXel/jhzGxeZXeedbDNN02SZ/adOEjQrZYG7Sbh2e5Go6hnhRXsoYo20NQDMdShB6W6JMwFLK14APB3Efo+Eicm2GIMECB2obaGy2FrFlth5T39UIAKpTnOb/bBpQvY4/u9PgKsDVwC+2KZLDKur7TiAzbAvSVEo/BGMeygG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766962165; c=relaxed/simple;
-	bh=3PKL9uB3edz3XFN3H2NDn6U+xyLVc8KlC++fMDHYexk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o4yPpCRDGx3rZ1QyMiQos+wC+aQcgnYbv3U8WJvYB9S4Z5+t3yEKXgW6L/XPj0IDaYtV4g9L8lYVESCRuh7XxuMWQc53lNNeaJNoEU2l/0zFlAR/Egg1EsYQZi3v8KVt/a5M9gxNcrlMyWOaAkyn1uODrDKaVdCAYPPiaRYlLns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B77B71F8D7;
-	Sun, 28 Dec 2025 23:49:14 +0100 (CET)
-Date: Sun, 28 Dec 2025 23:49:13 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Simona Vetter <simona@ffwll.ch>, 
-	Casey Connolly <casey.connolly@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, Martin Botka <martin.botka@somainline.org>, 
-	Jami Kettunen <jami.kettunen@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v2 06/11] dt-bindings: display: panel: Describe Samsung
- SOFEF03-M DDIC
-Message-ID: <aVGvtJ0NekR1ch-k@SoMainline.org>
-References: <20251222-drm-panels-sony-v2-0-82a87465d163@somainline.org>
- <20251222-drm-panels-sony-v2-6-82a87465d163@somainline.org>
- <20251222-godlike-mongoose-of-valor-3eeee0@quoll>
- <f72fed1c-968e-4570-8cde-841bf109bf5d@kernel.org>
+	s=arc-20240116; t=1766967173; c=relaxed/simple;
+	bh=ssCCkzx1dIj2++bhNA1Ei/xkIhM6dwHxoCrlDrpUI60=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZMTJrYCWBkoFeflqbbJWOTEi3fa3f4rAIcHHLNXg54HQXH8zVUzxTS03D//BH04r713BDXOVUEh9IwdMbmrsjN7gT92rlzoeimjZNLf8pW/9Gyl0DYRAVplJiiXu05WUmAF9uO3+2k8Xa+DEK5YLw4GX2agodZ8s0GYnJjDC850=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LAN243lR; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47d3ffb0f44so18286515e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 16:12:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766967167; x=1767571967; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9WzXxaUUQ9sEQkmr39uEkHOj+5A+LDwJkjmpr53iZlU=;
+        b=LAN243lRUFcr6wRfyaDFquylw3+P/BlANxwBiqqacpPMVnPNpuYr+Gcuh2jFtkHVuD
+         La8igOFWY+jr1t4TQt7lsFVQYMyGKZ0LYhSbrqUe/ja6BDB5nY0woKa/ZqSNFbWIxO3J
+         kKkn1mHO5rEUlBMs/X6n1wxHiGGLEfHeIzx/InlXvdGqMft5ofiS7NaSdbisaPSCSVaO
+         UlpEpEZzdfshki7DodZXUHOVFIIQD9GC2NypWE5IQb49TBRXh9msgy6KA/eQ2dLtHe7O
+         j9c/uOVap51ti2ae0rU0Z8RAg0jRhWFAfIRSrlLdqYrtjv4K8s96nrek2L+k/FpwZt/6
+         dXCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766967167; x=1767571967;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9WzXxaUUQ9sEQkmr39uEkHOj+5A+LDwJkjmpr53iZlU=;
+        b=oo/oUtj1zOfedgrE87f7i+SwKiKAvTZ2Pn23qxtmaQUQvZQ2hg3GXuHzwfzpNHMZ2V
+         Y0utxgqthQE8igceSyzJa5Kvly1ICUSaV9qjsjO8zZHDrUN+yNUKqUPULfcM2uihpYJV
+         kGxRI6+BRp4+TELLImHgn1tnjKeCm8P24AcCZOHfsnqOTjGKYH/OmDehWLrGXDWV0fio
+         GRKE4CgKOarSxNG+1jHSup63CooLxYwMBokvJoRADH57mv/Ih/guZ3J1swfMMeoo9p1K
+         PbSmQIyi3EwqohuuAMZePlLBMs3YlCOw8gngd69fE5gACrHtCpefcoqQG376Kj2lYs+l
+         mY3A==
+X-Forwarded-Encrypted: i=1; AJvYcCWRVPQStslqZg/re/cR2vv3xPikcz7PA7F/4CnXbNiCJtf/YePMimRzkplTRXCSfGvmKomuU4j5n19WTYCI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxA7WHtB+nKYPWIQB41WbbnVVQPpxMrcxfsp0SXZmBjRYLZQ2Pc
+	b1vz+3t4BX1ThCV6YWo21Altbsn6g95KODNQWxgBojVGQOIgXGvU38YBLV52AyOV/hY=
+X-Gm-Gg: AY/fxX5Llz4u2j3MobmcrYf0ECHl0mKsdr+hnafEvtGwkDi4d9Lue5xWZAbku6OzqbD
+	QvRkZL7UfrJ5qAzkB74fWLnpdrDjYZiBb5fcNaEXkSI8nTA/JFNL3Mv489HjVBpBD+nZkOQ11hP
+	kNZwkjcekJMjwZ8T2gJ1a2NpxGBk7ViE1ANmQ0LNgdgHQvqedCy1PnUNn1/lYx+6ImH9BmzA/Uo
+	+eueW2OGq0ZjJgg/JniBq/baV3EYk/sNoPmn+lvR234QlRRo6CsbJR70dpvy7zVdYiz9wBXq4WA
+	cIJj9KcuNrOdXwKmG5oOL9lqnbFSGhmA8EHqM+KC4hHefQYVCZTyiwnJWfOcUOp8KQveOwsCgyf
+	+gksr/7zqQpkHUoR45jSAS+DTSQ+X/kBtj8bc+1Pc+kEkd7qwBC5lxD095+MyXPU5A4iDGnA1R4
+	9YgQ+P9IZimCrGRojnS5JcNjGWKkijXhHjWuF6aFwXXuNOhtMLcUdu
+X-Google-Smtp-Source: AGHT+IFpU6dHath/DI6lRZn8hXaVXbJ9CczHi8G+sEXQ8+e10hHeMAr3Ba1/cVvVC7LHB0On1s7JEg==
+X-Received: by 2002:a05:600c:3b0d:b0:477:569c:34e9 with SMTP id 5b1f17b1804b1-47d20021316mr331963275e9.23.1766967166913;
+        Sun, 28 Dec 2025 16:12:46 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47be2724fe8sm663868575e9.1.2025.12.28.16.12.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 28 Dec 2025 16:12:46 -0800 (PST)
+Message-ID: <8d260d93-38cc-459d-b8f5-40bec5497277@linaro.org>
+Date: Mon, 29 Dec 2025 00:12:44 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f72fed1c-968e-4570-8cde-841bf109bf5d@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: qcom: camss: vfe: Fix out-of-bounds access in
+ vfe_isr_reg_update()
+To: Alper Ak <alperyasinak1@gmail.com>, hverkuil@kernel.org,
+ mchehab@kernel.org
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Jonathan Marek <jonathan@marek.ca>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251227102442.44989-1-alperyasinak1@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251227102442.44989-1-alperyasinak1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2025-12-22 09:36:23, Krzysztof Kozlowski wrote:
-> On 22/12/2025 09:33, Krzysztof Kozlowski wrote:
-> >> +  - |
-> >> +    #include <dt-bindings/gpio/gpio.h>
-> >> +
-> >> +    dsi {
-> >> +        #address-cells = <1>;
-> >> +        #size-cells = <0>;
-> >> +        panel@0 {
-> >> +            compatible = "samsung,sofef03-m-amb609vp01";
-> >> +            reg = <0>;
-> >> +
-> >> +            reset-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
-> >> +
-> >> +            vci-supply = <&vreg_l11c_3p0>;
-> >> +            vddio-supply = <&vreg_l14a_1p8>;
-> >> +
-> >> +            port {
-> > 
-> > Not tested :/
+On 27/12/2025 10:24, Alper Ak wrote:
+> vfe_isr() iterates using MSM_VFE_IMAGE_MASTERS_NUM(7) as the loop
+> bound and passes the index to vfe_isr_reg_update(). However,
+> vfe->line[] array is defined with VFE_LINE_NUM_MAX(4):
 > 
-> Ah no, this one is correct. It's the other patch with similar compatible
-> which was not tested.
+>      struct vfe_line line[VFE_LINE_NUM_MAX];
+> 
+> When index is 4, 5, 6, the access to vfe->line[line_id] exceeds
+> the array bounds and resulting in out-of-bounds memory access.
+> 
+> Add a bounds check to ensure line_id is within valid range before
+> accessing the array.
+> 
+> Fixes: 4edc8eae715c ("media: camss: Add initial support for VFE hardware version Titan 480")
+> Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+> ---
+>   drivers/media/platform/qcom/camss/camss-vfe-480.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> index 4feea590a47b..fac111135c78 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+> @@ -237,6 +237,9 @@ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+>   	struct vfe_output *output;
+>   	unsigned long flags;
+>   
+> +	if (line_id >= VFE_LINE_NUM_MAX)
+> +		return;
+> +
+>   	spin_lock_irqsave(&vfe->output_lock, flags);
+>   	vfe_reg_update_clear(vfe, line_id);
+>   
 
-I think you mean:
+A logical bug.
 
-	.output/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
-		from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
-	.output/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'port' is a required property
-		from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
+I think we shouldn't be calling this function at all with a index that 
+is too large though.
 
-Which looks to be fixed by including panel-common-dual.yaml and changing `port`
-to `ports` in the properties and required table?  At least the errors are gone,
-just asking if that is acceptable.
+Something like this instead. An explicit loop for the output lines and 
+another loop for the write-master completions.
 
-Then:
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c 
+b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 4feea590a47bc..d73f733fde045 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -202,11 +202,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+                 writel_relaxed(status, vfe->base + VFE_BUS_IRQ_CLEAR(0));
+                 writel_relaxed(1, vfe->base + VFE_BUS_IRQ_CLEAR_GLOBAL);
 
-	.output/Documentation/devicetree/bindings/display/panel/samsung,sofef01-m.example.dtb: panel@0 (samsung,sofef01-m-amb609tc01): 'vci-supply' does not match any of the regexes: '^pinctrl-[0-9]+$'
-		from schema $id: http://devicetree.org/schemas/display/panel/samsung,sofef01-m.yaml
+-               /* Loop through all WMs IRQs */
+-               for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
++               for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
+                         if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, i))
+                                 vfe_isr_reg_update(vfe, i);
++               }
 
-Which I do not immediately understand how to resolve.  I'd believe there's a
-problem with the conditional inclusion of this vci-supply property based on the
-compatible name, but do not see where the problem lies as other dt-bindings seem
-to write it this way as well.  Can you point this out to me?
++               /* Loop through all WMs IRQs */
++               for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
+                         if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, 
+RDI_COMP_GROUP(i)))
+                                 vfe_buf_done(vfe, i);
+                 }
 
-Alternatively I'll drop the example with vci-supply, but this'll return when
-said panel is committed to DTS.
-
-Lastly checkpatch complains that the "lgd" prefix isn't a valid vendor.  Should
-I add "LG Display" to the list or rename it to "lg,"?
-
-> Actually two others were not tested. We are not a testing service - it
-> is your task.
-
-That is not very kind; sometimes things might slip through and it's nice if CI
-catches them at a last resort.
-
-- Marijn
+---
+bod
 
