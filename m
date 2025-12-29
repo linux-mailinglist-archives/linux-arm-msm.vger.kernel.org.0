@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-86806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75179CE61FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:27:45 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D8ABCE61DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:24:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 13CD0300B8B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:26:55 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 81B84300DAB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:24:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D3F314D3A;
-	Mon, 29 Dec 2025 07:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2856131812E;
+	Mon, 29 Dec 2025 07:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z4JybYQI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiM82rFJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E19314D30;
-	Mon, 29 Dec 2025 07:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8FD31770B;
+	Mon, 29 Dec 2025 07:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766992879; cv=none; b=tuYzHZWaUjMur3IhTyr6U9wSv6cJ3uWRf2hbtt1Z+Dg2k6nZAHdll3q60335aADUi8aiZY8XhPm2118cEQ8EXGD+3zzS9qyCcFqgyH/qgOCLf57lAlK/iLoVT6+4hv7TchkCMNLYmO9GLZzZfCGSmno+NGG/4tHjeS8kM8Zzy7I=
+	t=1766993049; cv=none; b=C+hTVGH0KtSOqj0bTSgproeS2InBEC9US8KoRdCumWTCgN8Ji/UzQzc9SSHVGYCmNPda+HhZ+V/vXFvd0KqWq+qfK1PhDu/oGD6JD4RgM2yv9ZXXx6hZ5T6vlrxH1DuHdx3B0hivieBFYZ49yC3cOc7ZLn3cEuN0d5chtll+7X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766992879; c=relaxed/simple;
-	bh=4dB4OaxVaBYdo6Mh2CdFTMcCYG2VRNM9qBQF3ywr2B4=;
+	s=arc-20240116; t=1766993049; c=relaxed/simple;
+	bh=+tdCpRj8osX1FlMe16CEO5gvakw+XTaV+BWAlaWaJCw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H23mRMmlUKjohsvYbNk0ii5+sJ5QdtjSM1lQU9KX5TPK2GGyroNzSDhernWv9+tqurpAPQT6IFH5IWh/COGyCct9ldt+ZCgINQJCj7ySujfcj112KB+TIiZGv3uqdY0adBPul6ZeBjKKVd6jXjNXkOJY88RvC24UUCOBa1E+5lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z4JybYQI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D94C4CEF7;
-	Mon, 29 Dec 2025 07:21:14 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=SgChshLx7bkctfXMgxaGtR1oaZdHmFG7w2UTqLxNa5qW3noA6wzJY8O7ZUmvQoVC+I6zbHiCChB1ecw2xU0k+4aOgJpcQIg61kxIKf6mvkqjJV5xGUyWfOeDuLbZIwD+gf5iepHpOgGpGGrgHGIOX1/x/YlusG5axs0gPxZJSbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiM82rFJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2503C4CEF7;
+	Mon, 29 Dec 2025 07:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766992878;
-	bh=4dB4OaxVaBYdo6Mh2CdFTMcCYG2VRNM9qBQF3ywr2B4=;
+	s=k20201202; t=1766993045;
+	bh=+tdCpRj8osX1FlMe16CEO5gvakw+XTaV+BWAlaWaJCw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z4JybYQI3V6nLG081uvennCMXGeUgZBEFclIHnGZbqJ31+CM+mtO2rBkGlK0XIJcv
-	 DY4ldFNyQA4cQoLDw/J1L2P9JG+43R++kKkZPhnn0s8njuGnxLUplGkKu2lSdZiZMi
-	 B6MLQj/aTeSERX99EeuNp1n4PRUMFkWwyCsVnPYTXtEqdHnc/mbdv406N+EvDMNpMz
-	 0gPC2AkfOvKCucQbFXA5WIJueDWh1sFRD0/qdrqeeZGtWjAOHBqEKpihUsJb5HxbeT
-	 7VkXYlo2rza0TN6gqxspL3Jcu1rQObEMRgvYX2F3D7jQWV+kB+lbWcD9t22WvDK9Sk
-	 11ytnYasVQ0jQ==
-Message-ID: <448f2efa-5b1e-4855-a62d-2e375938b36f@kernel.org>
-Date: Mon, 29 Dec 2025 08:21:13 +0100
+	b=BiM82rFJWh+d5G+g7fCxEzjTRz0rAd7so+8bFVS2luT51DEjM7qVwyV16Uzrr/VlD
+	 0JJKDu4uLzoqytQ78qPkNfTWHAG77Ba3lC0KL/kWFWGQvUB3ppDnK0KXaMSxQuSSAY
+	 f7+2QM3AxsTRlTNLE+nQ0gm1njzp9I0CjQp0TNkpqEE6aNy2+YneU0kZK5gTlKch8O
+	 fKQQoXzKaI9nLAz2qrLSG3kiiBxV2nzsC7CyddvrgXP+SvY3K9B1kz7XlqIMTk0fTh
+	 VhuMMOinkbFUW9JlkW7DSZj5AWmk7LrY6eOKSOIbRdIadzgAe/M5KbxTHszlesJnuz
+	 +l3OR0+MQbbQw==
+Message-ID: <8288af85-13da-46e3-8d89-71995fbd17f8@kernel.org>
+Date: Mon, 29 Dec 2025 08:23:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,19 +48,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: Commonize IQ-X-IOT DTSI
-To: Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
- YijieYang <yijie.yang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251222-purwa-v1-0-14ab9316e5ff@oss.qualcomm.com>
- <20251222060335.3485729-3-yijie.yang@oss.qualcomm.com>
- <20251222-fluorescent-turkey-of-gallantry-df0906@quoll>
- <b8f0e8d9-449e-4f32-832e-f1d5597ff496@oss.qualcomm.com>
- <6421f044-2b07-4518-9edc-b9b2ef49f4fb@kernel.org>
- <8bcf058f-5bf9-46ce-a188-e94954101f2f@oss.qualcomm.com>
- <4f79d090-7d1c-4fb3-a835-a7e4ff96f79c@oss.qualcomm.com>
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm/gpu: Narrow reg and
+ reg-names for Adreno 610.0 and alike
+To: rob.clark@oss.qualcomm.com
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251227110504.36732-3-krzysztof.kozlowski@oss.qualcomm.com>
+ <CACSVV03H_oii=fuhaeBhUZSJk-2mr08jGqAs30Z_h9tzeDgdtw@mail.gmail.com>
+ <2a35d31a-1a3e-4cd4-ac3a-27104ff12801@kernel.org>
+ <CACSVV03FfvZVzuKGfaJrsXmE7VVxEF5zN4-R7h1PXA11jOO3gw@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,49 +113,48 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <4f79d090-7d1c-4fb3-a835-a7e4ff96f79c@oss.qualcomm.com>
+In-Reply-To: <CACSVV03FfvZVzuKGfaJrsXmE7VVxEF5zN4-R7h1PXA11jOO3gw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 29/12/2025 02:23, Tingwei Zhang wrote:
-> 
-> 
-> On 12/24/2025 8:12 AM, Tingwei Zhang wrote:
+On 28/12/2025 15:59, Rob Clark wrote:
+> On Sat, Dec 27, 2025 at 11:56 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >>
->> On 12/23/2025 9:41 PM, Krzysztof Kozlowski wrote:
->>> On 23/12/2025 04:38, Tingwei Zhang wrote:
->>>> On 12/22/2025 5:11 PM, Krzysztof Kozlowski wrote:
->>>>> On Mon, Dec 22, 2025 at 02:03:28PM +0800, YijieYang wrote:
->>>>>> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
->>>>>>
->>>>>> HAMOA-IOT-EVK and PURWA-IOT-EVK share a similar board design. Extract
->>>>>> the common components into separate files for better maintainability.
->>>>> SoMs do not share actual hardware. DTSI does not represent what looks
->>>>> similar to you, but actually common parts.
->>>> Purwa SOM board and Hamoa SOM board share same design. They share same PCB.
->>>> The difference is only on chip. Purwa SOM board has Purwa and Hamoa SOM board
->>>> has Hamoa on it. 
->>> I do not speak about boards. Read carefully feedback and respond to the
->>> actual feedback, not some other arguments.
+>> On 27/12/2025 23:01, Rob Clark wrote:
+>>> On Sat, Dec 27, 2025 at 3:05 AM Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@oss.qualcomm.com> wrote:
+>>>>
+>>>> DTS files for qcom,adreno-610.0 and qcom,adreno-07000200 contain only one
+>>>> "reg" entry, not two, and the binding defines the second entry in
+>>>> "reg-names" differently than top-level part, so just simplify it and
+>>>> narrow to only one entry.
 >>>
->>> NAK
->> In this change, the SoM hardware except SoC is described by iq-x-iot-som.dtsi since it's common between Hamoa and Purwa. Hamoa and Purwa SoC hardware is described in hamoa.dtsi and purwa.dtsi. Hamoa-iot-som.dtsi includes iq-x-iot-som.dtsi and hamoa.dtsi. This change could reduce the duplicate code and review effort on a totally new purwa-iot-som.dtsi. If we found any bug, it can be fixed in one common file instead of two separate files. Same idea is used in x1-crd.dtsi. X1e80100-crd.dts include x1-crd.dtsi and hamoa.dtsi.
-> Krzysztof,
-> Please let me know your opinion on this. This could be a common case for
-> Hamoa/Purwa boards share same PCB. Share same dtsi file like x1-crd.dtsi
+>>> I'll defer to Akhil about whether this is actually needed (vs just
+>>> incomplete gpu devcoredump support for certain GPUs).  In general
+>>> cx_dbgc is needed to capture state for gpu devcoredump state
+>>> snapshots, but not directly used in normal operations.  It seems
+>>> similar to the situation with mapping gpucc as part of gmu, ie. not
+>>> something the CPU normally deals with directly, but necessary to
+>>> capture crash state.
+>>
+>> I don't get why binding was added with cx_dbgc, but DTS not. Neither
+>> binding nor DTS depends on actual usage, so I assume someone
+>> intentionally did not want DTS to contain cx_dbgc and binding should
+>> follow. Otherwise we should make the DTS complete and make the binding
+>> strict (leading to warnings if DTS is not updated).
+> 
+> I'm not sure about the history.. but I can say that cx_dbgc is only
+> used for gpu state snapshot / devcoredump.  So it would be easy to not
+> notice if it were missing.
+> 
+> We have a similar slightly ugly thing where gpucc is included in the
+> gmu map.. only for devcoredump.  Maybe we need a different way to
+> handle these things that are only mapped for state capture?
 
-It's not the same PCB.  You did not really respond to my first message,
-so I responded to you - I do not speak about boards. Then again you did
-not respond to it and brought some irrelevant arguments.
-
-> would reduce maintenance effort.
-
-Does not matter, I do not question this. Why are you responding to some
-questions which were never asked?
-
-DTSI represents actual shared physical aspect and you cannot share SoM
-physically. It's not the same PCB, because you do not have a socket on
-the SoM.
+No. Either hardware has it or not. If hardware has it, then both DTS and
+binding should have it. If people decided that DTS should not have it
+(for whatever reason), then apparently that's the desired hardware
+description and let's remove it from the binding to match the ABI.
 
 Best regards,
 Krzysztof
