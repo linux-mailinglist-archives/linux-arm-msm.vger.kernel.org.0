@@ -1,141 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-86811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 073DCCE62AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:52:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BF43CE6403
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 09:47:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9EBD13005481
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:52:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A1DB630062DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:47:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFD9926A1A7;
-	Mon, 29 Dec 2025 07:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C92BF22A7F1;
+	Mon, 29 Dec 2025 08:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BC1vgVry"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQLqtw4w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A17925785D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 07:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A61314A8E;
+	Mon, 29 Dec 2025 08:47:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766994751; cv=none; b=jTEpVH+bIE3BxKzZ8kKS8qrK9fQPYS1elbLJBuX5wHuhgsopgaECaDwVUk37+Mk/19VkHtEdBs9/pX2DGYd0Wvd0oYqL6/nIG2vZyCujQyyuygMtUBRs9SobZRxF+wKaaJKkCw3sqVqvhOp5MeV/udh8rV44Pz6AISEImo64lX0=
+	t=1766998033; cv=none; b=jeHhy6ww8ardPW8gT6LW8WW57L+jTof5hUgdKHxEVlVsjHzSeyE+BslnW27l+th3j+mdfdGFQJuxv8MPAdpJ1xDCOTo82yWIEysNeBzx1npox1qGbF6j4pvYavgMrzuZRARSO54dQbRfyHhDyazGC6w4Q3cO2If7s50keR4fxVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766994751; c=relaxed/simple;
-	bh=uJDU7774F/XHA0B0XTRONQLG1mBUzool/kLyuvfVWYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqiVOxZUfQIBt8MItyqzQfF6Ziu1+iqrnX202Zsbdx4pOcgC/dZuAC6b0gZGaxy2yoQB2Fg4cHcLhrUnyV/rprzPxWnj0PniaaqTiHXODbNiUyQOrEPvr1YuWaynTZWOvSeZyswL1kqTfnJQk0tzZMmC6EtXH3/CdE8A3SI+ZtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BC1vgVry; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-37d275cb96cso80064831fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 23:52:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766994748; x=1767599548; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W9rs18lnfFY/HykoHJUbNuPfbr0n92mG5VNAEHVdWKA=;
-        b=BC1vgVryNW8/YK2PLm9waay29X1ECg7IYlH/GftvFDPbXLn1cmUxRxJ5tDBhvLAXD5
-         tRbbicNmOd6zHj+c0sIslfaXzZMNNKefNHBljxshAySzl+0127Cv5TC22MC5TYrnUKBy
-         NS+aR+U92QGyILOR5eZcJm3fq4efkeUiHKYBccMr8arMzgs+KILIPrUiCSsnlhUn1U0V
-         E8knvOpbcEKrySDHcNESvGPSJIBYdVbyyPW5OWyey7A1Zi9XwVwj907+jREdXhklCBLR
-         Vg4UfdEUUNDTPBXsk+VmbCuHsg0Az8MBizD24hPUi3W5DQT7TxR0fcV7GDXVU5CkoQz1
-         +38Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766994748; x=1767599548;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=W9rs18lnfFY/HykoHJUbNuPfbr0n92mG5VNAEHVdWKA=;
-        b=D4dkPY5Cgt0D/1eMeOHF8F8KCwej/NdOp/O557Y5XSvbYtA2sw07wtP769d78NA6L8
-         1Q7Emdx0eApRp3vS2fIsMiXwQ+eigH6AjEUIldEwD494SxjJ27goJSygs4K4ifvt3qXJ
-         kLzwvODyVIM/ru7u+pYOUTS4ETXN/C3OMYTX457GO3Kad2euxIl0IvXNQ0NB4VYpDACt
-         U/JnffpDj1A52MTnt+Y3rlQQLAykLtYqdK0QGbin2tx6Yh9+nrgZDtLtzubiUg1eGYtC
-         rWlOUzntFmzQT9dyWE5guI5rDS4gyXUWNDxZD2OiaRTm4YzbbIGikgg4hGxdHbXh57S7
-         x9lw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5iq1gWH/rUmf/rfcEmHVMk3b9+5gJbzWdGrIQCL69h1v3YTZeq46AjI1lmLJ//uBIU2Gle8QwA/DVsHUY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbCS25uYuJiGla8bO/F48gu+LXIOJYlu2OMNBGbOB4pRHYhkxq
-	T10PILvJOfuiGEGX9SsJ4+Rqyjimn06MfTruFlkU3rMvUnktmuegzFpT
-X-Gm-Gg: AY/fxX44JxDbW1UHsrnJhU5hVkJ4gifHHONenWM/5daOUOXGCyN+N5rQObSNRlJQXTn
-	0aQ+eRprmJVuA7ndEQT6JjXdsUcPXgOlLU+D/QawMIghvIFE01E0CcdXM7y+p9RXFCVLM9VuN2d
-	PNkgsx/ELWtK2kYo0pi8eTG78e/ADWN3knFZTmTI0hRTIN58yiqSJ1R4aSYkwmr2TS1jO9aMVCx
-	rhzrdVVUO+GPOdYjrlHS7txA2LnNJtly9BNLurOp/j/S7AkXLrVi3lMmWyb4siRfNI2Ng5hHx/T
-	dtP8+AcOyt9H3FrAF5Azapbptm07Zxkcj9Mr3nGmdTHu7rNKQ2JDW6CiDbisahnntC2t91OLpzU
-	SvEjD4Wjd/x1vUeJ8AHAJyBU1pxZ6oPdu177TYqBI0V7Zls2/fsD0mAk1QVTmP/xkedQD9Cy85f
-	z2m2PdtPDfhZdb2SRXkzMmjiaqjVM=
-X-Google-Smtp-Source: AGHT+IFBqmjeNgh+c60lum29DrLVr2dbfNlizQapILb6hM0WEBpPRqHwp9gGkFB2ObIIJ9QEFgNRww==
-X-Received: by 2002:a2e:a595:0:b0:37b:9e0b:e0d8 with SMTP id 38308e7fff4ca-3812159c5cemr81261581fa.14.1766994748017;
-        Sun, 28 Dec 2025 23:52:28 -0800 (PST)
-Received: from localhost.localdomain ([176.33.65.121])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382861ef4ccsm13496141fa.23.2025.12.28.23.52.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Dec 2025 23:52:27 -0800 (PST)
-From: Alper Ak <alperyasinak1@gmail.com>
-To: bryan.odonoghue@linaro.org
-Cc: alperyasinak1@gmail.com,
-	hverkuil@kernel.org,
-	jonathan@marek.ca,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	mchehab@kernel.org,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	vladimir.zapolskiy@linaro.org
-Subject: [PATCH v2] media: qcom: camss: vfe: Fix out-of-bounds access in vfe_isr_reg_update()
-Date: Mon, 29 Dec 2025 10:52:17 +0300
-Message-ID: <20251229075217.24679-1-alperyasinak1@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <8d260d93-38cc-459d-b8f5-40bec5497277@linaro.org>
-References: <8d260d93-38cc-459d-b8f5-40bec5497277@linaro.org>
+	s=arc-20240116; t=1766998033; c=relaxed/simple;
+	bh=rMatc21kl1ev6/k1ztoDMiHGAfiu1WB1G7lajpmWxFI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ugmKnpL8WbfWLlO6PcsnR2ApXSLi0SPzMY1ylbwHtaMU+kaJMpOPVeuI18zdH5ozoM6t5Dkbp8aPek/hgDAe4FXZgmV6fJ+BAndClrmHfLeqhC6Wb3DNvX1wZMTyJGh19p88/rGGJyAmsfm2EN+nx72dhopuipgLgU1H52edIOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQLqtw4w; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17C2C4CEF7;
+	Mon, 29 Dec 2025 08:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766998031;
+	bh=rMatc21kl1ev6/k1ztoDMiHGAfiu1WB1G7lajpmWxFI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SQLqtw4wqxe1Uw7gq8R9iagQKIU3D3NhTQwzevt9rg3APPyVBdnP5Fq0eAnxUas7O
+	 icoQzNH3Qln/F3w3Gvt+BQBzfVmlIU0am7I5RjLVWuh7FbzpDtVGgzppbkEKEaKkm1
+	 8KMf5JfMsg+vuJ2WUpX5S6t3mO1nU8zAmWtrYtXkgQqUA35zVBuL5VKOcWF5pucAFF
+	 o1u1VpF2wkrGef43anNecTwATIGigVguE8Pi0cxuBkGP7SEChpGIG2kXmpVu1tqBjE
+	 QnMIK77lFDnn8sNW/shTJwqrsMFl6LRqMNPDAROxGYjbz85rbGgr0F/0E+iPaE1bHA
+	 OkUf4kzFMqwxw==
+Message-ID: <a2b62af6-fe17-4c4b-9dea-4ba9cf312765@kernel.org>
+Date: Mon, 29 Dec 2025 09:47:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Commonize IQ-X-IOT DTSI
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
+ Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251222-purwa-v1-0-14ab9316e5ff@oss.qualcomm.com>
+ <20251222060335.3485729-3-yijie.yang@oss.qualcomm.com>
+ <20251222-fluorescent-turkey-of-gallantry-df0906@quoll>
+ <b8f0e8d9-449e-4f32-832e-f1d5597ff496@oss.qualcomm.com>
+ <6421f044-2b07-4518-9edc-b9b2ef49f4fb@kernel.org>
+ <8bcf058f-5bf9-46ce-a188-e94954101f2f@oss.qualcomm.com>
+ <4f79d090-7d1c-4fb3-a835-a7e4ff96f79c@oss.qualcomm.com>
+ <448f2efa-5b1e-4855-a62d-2e375938b36f@kernel.org>
+ <c7983b8c-5085-43a0-bd5e-1194df2f0ee5@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <c7983b8c-5085-43a0-bd5e-1194df2f0ee5@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-vfe_isr() iterates using MSM_VFE_IMAGE_MASTERS_NUM(7) as the loop
-bound and passes the index to vfe_isr_reg_update(). However,
-vfe->line[] array is defined with VFE_LINE_NUM_MAX(4):
+On 29/12/2025 08:38, Yijie Yang wrote:
+> 
+> 
+> On 12/29/2025 3:21 PM, Krzysztof Kozlowski wrote:
+>> On 29/12/2025 02:23, Tingwei Zhang wrote:
+>>>
+>>>
+>>> On 12/24/2025 8:12 AM, Tingwei Zhang wrote:
+>>>>
+>>>> On 12/23/2025 9:41 PM, Krzysztof Kozlowski wrote:
+>>>>> On 23/12/2025 04:38, Tingwei Zhang wrote:
+>>>>>> On 12/22/2025 5:11 PM, Krzysztof Kozlowski wrote:
+>>>>>>> On Mon, Dec 22, 2025 at 02:03:28PM +0800, YijieYang wrote:
+>>>>>>>> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>>>>>>
+>>>>>>>> HAMOA-IOT-EVK and PURWA-IOT-EVK share a similar board design. Extract
+>>>>>>>> the common components into separate files for better maintainability.
+>>>>>>> SoMs do not share actual hardware. DTSI does not represent what looks
+>>>>>>> similar to you, but actually common parts.
+>>>>>> Purwa SOM board and Hamoa SOM board share same design. They share same PCB.
+>>>>>> The difference is only on chip. Purwa SOM board has Purwa and Hamoa SOM board
+>>>>>> has Hamoa on it.
+>>>>> I do not speak about boards. Read carefully feedback and respond to the
+>>>>> actual feedback, not some other arguments.
+>>>>>
+>>>>> NAK
+>>>> In this change, the SoM hardware except SoC is described by iq-x-iot-som.dtsi since it's common between Hamoa and Purwa. Hamoa and Purwa SoC hardware is described in hamoa.dtsi and purwa.dtsi. Hamoa-iot-som.dtsi includes iq-x-iot-som.dtsi and hamoa.dtsi. This change could reduce the duplicate code and review effort on a totally new purwa-iot-som.dtsi. If we found any bug, it can be fixed in one common file instead of two separate files. Same idea is used in x1-crd.dtsi. X1e80100-crd.dts include x1-crd.dtsi and hamoa.dtsi.
+>>> Krzysztof,
+>>> Please let me know your opinion on this. This could be a common case for
+>>> Hamoa/Purwa boards share same PCB. Share same dtsi file like x1-crd.dtsi
+>>
+>> It's not the same PCB.  You did not really respond to my first message,
+>> so I responded to you - I do not speak about boards. Then again you did
+>> not respond to it and brought some irrelevant arguments.
+>>
+>>> would reduce maintenance effort.
+>>
+>> Does not matter, I do not question this. Why are you responding to some
+>> questions which were never asked?
+>>
+>> DTSI represents actual shared physical aspect and you cannot share SoM
+>> physically. It's not the same PCB, because you do not have a socket on
+>> the SoM.
+> 
+> x1e80100-crd and x1p42100-crd are different boards, yet they share the 
+> same x1-crd.dtsi. Why can’t we apply the same approach here?
 
-    struct vfe_line line[VFE_LINE_NUM_MAX];
 
-When index is 4, 5, 6, the access to vfe->line[line_id] exceeds
-the array bounds and resulting in out-of-bounds memory access.
+You should ask the authors there, not me. I presume that the baseboard
+is the same or very similar. Or pieces of the baseboard are re-used
+which could be visible in the schematics (same MCN numbers etc).
 
-Fix this by using separate loops for output lines and write masters.
-
-Fixes: 4edc8eae715c ("media: camss: Add initial support for VFE hardware version Titan 480")
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
----
- drivers/media/platform/qcom/camss/camss-vfe-480.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-index 4feea590a47b..d73f733fde04 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-@@ -202,11 +202,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 		writel_relaxed(status, vfe->base + VFE_BUS_IRQ_CLEAR(0));
- 		writel_relaxed(1, vfe->base + VFE_BUS_IRQ_CLEAR_GLOBAL);
- 
--		/* Loop through all WMs IRQs */
--		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
-+		for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
- 			if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, i))
- 				vfe_isr_reg_update(vfe, i);
-+		}
- 
-+		/* Loop through all WMs IRQs */
-+		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
- 			if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i)))
- 				vfe_buf_done(vfe, i);
- 		}
--- 
-2.43.0
-
+Best regards,
+Krzysztof
 
