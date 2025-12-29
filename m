@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-86815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B19CCCE674D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 12:08:47 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F287CE67A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 12:13:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0B81A3007FE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 11:08:34 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AE5C130006F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 11:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1675A2F9D82;
-	Mon, 29 Dec 2025 11:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856C62FB965;
+	Mon, 29 Dec 2025 11:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="icdti6Ls"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dbos0lCp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FC62F7AAB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 11:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75062FB0B3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 11:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767006513; cv=none; b=VzhFQ8bOAQFiXvhD/lQGh+4Nfe3FROQNgxjGZouqtJkTZYNqUhKGemncBYwcvRL/KcuHBVnf2cxCRov1FBSR5KfUK94+H7lK3cIB0W7EbsaHCo5fLlczX09R2UZD55XKR0fmCgnZSXQ7+eVyUuou1etuovuKgVzknaLQhl0gMbQ=
+	t=1767006823; cv=none; b=SoYnuU6lnj7fgM+ubcS9LvdpVIG87Xw3ewfTeVp+LKfJWuXkfeVsTLJgchetcVNnHoQxvU8QRdrNqlFiSOvSBUu19CMV9Bb098XsW7kNxHwkivT/Pd/kWfQmTPtOvrYkucgZ2f2X3A+fTybghr+yFOh2lzLKkxW53o+pTrVB3Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767006513; c=relaxed/simple;
-	bh=mvTRMMCL5RZ4BZ6ReS6eys7tkGj6CcSCpfSOhXlEW4U=;
+	s=arc-20240116; t=1767006823; c=relaxed/simple;
+	bh=MNKxZ13dLy0csS0Q8BnwqAOO+/2a6wKxalUKlQsPf5g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohh/4pj/QI8tGtPpRdSxQ499iRWzoxcXgG3msdJQdS2F/mj4M2HjAgS9FXFEwQSufRG0vj+6qynDqJPKg0a3jKK2QbNR/imLbqPzZFb7TfsUp0Ow8FHXzOPuaGwAty1P0u2Y9AaQhrmiKpShZd87WvBYPEtYQXlSUVofWl4zafY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=icdti6Ls; arc=none smtp.client-ip=209.85.208.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=hkyEEDvhkA7/KWzwDZtGyEGKGbmAVzX7AxlE2Q7O6TbudJWBXwhtCS1hOzrUkYDT6FBWM3JhYSdzowyD0YhgJ2VR9e5kxxAiDNj1YVfI2795JPgZ7Sr2qiBuOSroXA3lPNHcon+0BXSdqxpmD1b+s+7UJC6RqLYVoFhSuMqo4NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dbos0lCp; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-64b81ec3701so14142281a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 03:08:29 -0800 (PST)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b7eff205947so1268349266b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 03:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1767006508; x=1767611308; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1767006820; x=1767611620; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=EDNpH0M3uSivXuXT5U5j0XwxOr48cVPii2SiJVOuw30=;
-        b=icdti6LsWw/+HVAON6tthsJrH+7zWnGbaXLy/O6kgmqgAUpIo0a2txy/M6eyF2KSVK
-         TldkctQTplXkYmPqAHLUZBbl16S8pzXtse18TV1fENnabFjxx8uNdeeGsDRZsZfy+HJ2
-         ZAlAHGet5N1gT8uf6t6US3mHFKZ/IdnAIEySPQ+dkKIbhH8KiSdQqtNneZEg1OWDGAhu
-         QE+ZdLIlzY35V0bPgMHxpMobtDsb57tRQSsV/oh/sQAkpclVNmu22RhIhuiuucsJvsrV
-         e/hCWbGYhQ4v7Icjub2Yny6cm6a6PRoQqO6jlXbA2CelkRQLDR5pxVTGxqpWw9jJPvuE
-         1xbg==
+        bh=W0BlcXumR4uZaESfBgC79Dk7xaStWlmJAXD7mWPegz8=;
+        b=dbos0lCpZImZirFV8MHi1oFhHsRnaZHfEpwqDGQXR4D5Ney8Ve53LQ/7RCSA1lD1fc
+         l2xVSM5HWDRQMyrr207Gn22ZwEjcYAXf1JrWQ0LKEemuUfr2eE9A0+ur1NPYQFpYRXly
+         Bu817M0qoY9yzoorP9l0azj2+Rs4ds7glpfE9UXOV948DszKr6yMrUpQd7a0pkcebhEz
+         BPGB24FjFQu1F/jMqDPg/kqKJAXfMCR/9bGauEgqysGFG7SbWIHC21w0IHQAogMKzIMi
+         5CyBLNTb6vdADVrm92rtSaUqyCpR10m8tsd7wFOCj8eFpu6fAIO8buXI6sor1ub2eFmY
+         vOWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767006508; x=1767611308;
+        d=1e100.net; s=20230601; t=1767006820; x=1767611620;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EDNpH0M3uSivXuXT5U5j0XwxOr48cVPii2SiJVOuw30=;
-        b=aOHMhId7SvuzPJdm4yF9soOUusO+y7FY9kYCbtolkiJ3Bmcu56Gr7pgojDuv3LDBVB
-         Y4fnsIWQWnVgFAZ+DvLwStYEhbQIGWRehTDz3GpCN8O91pe9n0arelf1z4xvNza6DpYX
-         Xk4R2DiMkq3iaSWB5k2jediAgc6jslBYF7CQPxylB9G4QiujMRBAAxP6eFATXPPo+6TQ
-         OJmfpgJ76a2QpgsRL+1cNI/aR3/d2zAbDIKtgorpDRO5cNuuwVpBp/hElCDakt80CVzA
-         v5swo4RSrI9oePFt8PWEonEhZ00UIRktT0Qzo1YGeAO1LKk8Zudxi1h+7JgmOuF9mVpd
-         6W6g==
-X-Forwarded-Encrypted: i=1; AJvYcCXHCVxFNAxXABnmoqmV1CfQabWqPb17Sh6Aq+3asrKWq/uAw4vYhqpb8fZl0gD2pKu8cQczJN7eKcXplEe4@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKV8snu22gr27jkNAy9m1IhgnUt8Y2obgjpx3hsdkjcPu0+iBZ
-	ut4JpkO15SjfSJVMSbjWmgkuHCN334CtDhqHAgBHurLpmbVTTJPa3ANUHUR6JbyWT/c=
-X-Gm-Gg: AY/fxX5uMczXWE5nkyistuzUZT6UTAZqDj4n+iApP5ATCZLyyckMGqKu/KuCEm7875V
-	DLf/4hysncLsV4mjWuMAx6+cl/NvQv9bFHDFQiZyHg1q82+X6hz+gOL3UQKK4C2qcKoHL8h6Jn/
-	BdQC03Dvhhiriu9WpC/ksZAIhG/buw8XuF4hAMSuTRUP/PWLs4qna8cjY/gi5vo49lc37GZRVAt
-	9D+ZpV6kQtjRvLp23Hw5DmsfLrSMgWkz8V3fDhhhSjqM9awSEpSrYxTlTuKWJMQqL9rqAF1akYq
-	o9cPhAkmBDVyQ8gGDP2b4L/sBCkVt+ccM3jbasRfve34nyorh+9zB8zG+TV86XjiUOLZRWvQg7U
-	rZUFJ+FPCOrVW42t+1alg8Aq/EUU+rz3i4H8uJWPDplWltKaRQXlm86Of+pHeayA74z2ZR/dqfd
-	FkltbYLm7rhS2+b8nR
-X-Google-Smtp-Source: AGHT+IFdqvRMDU+1HShKXzvNt54ZV5MxDiUe71q1HsCeGk+c7DD7LsfJqZBS0W+l8rfo3mlbyZkzHQ==
-X-Received: by 2002:a17:907:d87:b0:b73:5d8c:dd0d with SMTP id a640c23a62f3a-b80371d69e5mr3256854366b.52.1767006508045;
-        Mon, 29 Dec 2025 03:08:28 -0800 (PST)
+        bh=W0BlcXumR4uZaESfBgC79Dk7xaStWlmJAXD7mWPegz8=;
+        b=XnO/z/UmRpYsfQ4SO3THCKT0CG4C1enZmjG3O2JcNyRn8kz36XoeOFNuel6JRNqcC8
+         /1dPESgw+eMlFwbNMDJpRVi9eDOxp6bBNofNUtwjkqzxNCtR2kHWjw+rKBA4Ev3MfomX
+         MmTrfLVMDCCI2uawuNNyOUore2sV7WsP1IowhGQjSfhJS7YqP7cs7gRK0DCQZnyk0iwb
+         Fz4W9oeq0mjtul4q4X5ysjJAl3+8bSoIf4GjIN3UhvWcSGicBhRGQVZl+QwmNHhZOUsd
+         1UFd8GsbdnoGXE3lPMp2RKfUVXoa5bHEhiAHJllLjDIXkjlV7nIjFKCesULm8OTOMlk1
+         Xf3g==
+X-Forwarded-Encrypted: i=1; AJvYcCVVF06QKZEqloqZQ4GOIfv8T1UArMf8tje6pESbO3wmevHcrB5dhaK9DrUguC20qNL2T6Be2FwpPE+72+wo@vger.kernel.org
+X-Gm-Message-State: AOJu0YzM9JRa06s1wZGLb6lRb3snQoZQba7Njh+A4THqJuza7NTQRUcv
+	rG2nfzYegSaIJhpTN069wFa1BVTdzzv+uP+4XkFWnBni/D8iGBDFDXEtNK9eSWH6DU4=
+X-Gm-Gg: AY/fxX7ZMfrmSw4fxdrQIxVHeAjC0HrkMgVZ7W7qIESCs22/7wXXxAopyXl2VUeNok3
+	EWL5XiH/X8hjWunMZLrvtWyWR2a11I/GrpqJnFbJIXb9i2/6DFZd6sdfy6Xgxn21EECau8Uwv5n
+	9Dru93QwLLDDYCv5VeGnc1iRv0nxy3BVhRBvl7H3TjSkoTxhdzTTbCG4Z7sM8HEztLiq5qDVnTt
+	kIVtr1QcBZcR5sfIsukIn7vcU174V7obNEIUkVGeLdZsq92S0Mow9Qq0P6Db53uN6HZ7KXl0wpU
+	3lOuOPxRDakpnmvs4dtrzHZxEydt8CRYlUFnAidFNYLC+OUEA0+MStn06zK3OorzptHO6woTPcR
+	w+xbO/nj0gZea9TdxRQvvutDpm1ZDLMDCMJdbWAX58eaYOHgEvOdLaxfdv1giJSPrn9/5nhhI0U
+	m2a0BaCvy1nAEoOFsD
+X-Google-Smtp-Source: AGHT+IHpHbSYeUsMKF1bneJOp2e1mcsZqW7jjFgL1tS2yD3fcf9ju47/5ORafIsbEaCJr1G9FTrRbQ==
+X-Received: by 2002:a17:907:94c4:b0:b80:4615:1d2d with SMTP id a640c23a62f3a-b8046151dfbmr2885186966b.3.1767006819915;
+        Mon, 29 Dec 2025 03:13:39 -0800 (PST)
 Received: from linaro.org ([77.64.146.193])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b91494c03sm31698752a12.18.2025.12.29.03.08.27
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037a61595sm3362188366b.8.2025.12.29.03.13.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Dec 2025 03:08:27 -0800 (PST)
-Date: Mon, 29 Dec 2025 12:08:15 +0100
+        Mon, 29 Dec 2025 03:13:39 -0800 (PST)
+Date: Mon, 29 Dec 2025 12:13:37 +0100
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -83,10 +83,10 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Stephan Gerhold <stephan@gerhold.net>,
 	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/8] remoteproc: qcom_q6v5_mss: Add MSM8917
-Message-ID: <aVJhH17XH1srlroL@linaro.org>
+Subject: Re: [PATCH 6/8] remoteproc: qcom_q6v5_mss: Add MSM8937
+Message-ID: <aVJiYSbpmHMGJarA@linaro.org>
 References: <20251228-mss-v1-0-aeb36b1f7a3f@mainlining.org>
- <20251228-mss-v1-4-aeb36b1f7a3f@mainlining.org>
+ <20251228-mss-v1-6-aeb36b1f7a3f@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,112 +96,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251228-mss-v1-4-aeb36b1f7a3f@mainlining.org>
+In-Reply-To: <20251228-mss-v1-6-aeb36b1f7a3f@mainlining.org>
 
-On Sun, Dec 28, 2025 at 03:21:54PM +0100, Barnabás Czémán wrote:
-> Add support for MSM8917 MSS it is similar for MDM9607 MSS
-> only difference is the mss power domain.
+On Sun, Dec 28, 2025 at 03:21:56PM +0100, Barnabás Czémán wrote:
+> Add support for MSM8937 MSS it similar to MSM8917 MSS.
+> It differs primarily in that TZ needs to be informed of
+> the modem start address and pas_id.
 > 
 > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 > ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 46 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 44 insertions(+), 2 deletions(-)
+>  drivers/remoteproc/qcom_q6v5_mss.c | 49 +++++++++++++++++++++++++++++++++++---
+>  1 file changed, 46 insertions(+), 3 deletions(-)
 > 
 > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index ffafbe501a05..2579558fb567 100644
+> index 2579558fb567..2ffcea7dbc79 100644
 > --- a/drivers/remoteproc/qcom_q6v5_mss.c
 > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -259,6 +259,7 @@ enum {
->  	MSS_MSM8226,
->  	MSS_MSM8909,
+> @@ -261,6 +261,7 @@ enum {
 >  	MSS_MSM8916,
-> +	MSS_MSM8917,
+>  	MSS_MSM8917,
 >  	MSS_MSM8926,
+> +	MSS_MSM8937,
 >  	MSS_MSM8953,
 >  	MSS_MSM8974,
-> @@ -749,13 +750,15 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  		goto pbl_wait;
+>  	MSS_MSM8996,
+> @@ -751,6 +752,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
 >  	} else if (qproc->version == MSS_MDM9607 ||
 >  		   qproc->version == MSS_MSM8909 ||
-> +		   qproc->version == MSS_MSM8917 ||
+>  		   qproc->version == MSS_MSM8917 ||
+> +		   qproc->version == MSS_MSM8937 ||
 >  		   qproc->version == MSS_MSM8953 ||
 >  		   qproc->version == MSS_MSM8996 ||
 >  		   qproc->version == MSS_MSM8998 ||
->  		   qproc->version == MSS_SDM660) {
+> @@ -758,7 +760,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
 >  
 >  		/* Override the ACC value if required */
-> -		if (qproc->version == MSS_MDM9607)
-> +		if (qproc->version == MSS_MDM9607 ||
-> +		    qproc->version == MSS_MSM8917)
+>  		if (qproc->version == MSS_MDM9607 ||
+> -		    qproc->version == MSS_MSM8917)
+> +		    qproc->version == MSS_MSM8917 ||
+> +		    qproc->version == MSS_MSM8937)
 >  			writel(QDSP6SS_ACC_OVERRIDE_VAL_9607,
 >  			       qproc->reg_base + QDSP6SS_STRAP_ACC);
 >  		else if (qproc->version != MSS_MSM8909 &&
-> @@ -817,6 +820,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  
+> @@ -821,6 +824,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
 >  			/* Turn on L1, L2, ETB and JU memories 1 at a time */
 >  			if (qproc->version == MSS_MDM9607 ||
-> +			    qproc->version == MSS_MSM8917 ||
+>  			    qproc->version == MSS_MSM8917 ||
+> +			    qproc->version == MSS_MSM8937 ||
 >  			    qproc->version == MSS_MSM8953 ||
 >  			    qproc->version == MSS_MSM8996) {
 >  				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
-> @@ -826,7 +830,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  				 * Set first 5 bits in reverse to avoid
+> @@ -831,7 +835,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
 >  				 * "inrush current" issues.
 >  				 */
-> -				if (qproc->version == MSS_MDM9607)
-> +				if (qproc->version == MSS_MDM9607 ||
-> +				    qproc->version == MSS_MSM8917)
+>  				if (qproc->version == MSS_MDM9607 ||
+> -				    qproc->version == MSS_MSM8917)
+> +				    qproc->version == MSS_MSM8917 ||
+> +				    qproc->version == MSS_MSM8937)
 >  					reverse = 6;
 >  			} else {
 >  				/* MSS_MSM8998, MSS_SDM660 */
-> @@ -2538,6 +2543,42 @@ static const struct rproc_hexagon_res msm8916_mss = {
->  	.version = MSS_MSM8916,
->  };
+> @@ -1466,7 +1471,8 @@ static int q6v5_mpss_load(struct q6v5 *qproc)
+>  			max_addr = ALIGN(phdr->p_paddr + phdr->p_memsz, SZ_4K);
+>  	}
 >  
-> +static const struct rproc_hexagon_res msm8917_mss = {
-> +	.hexagon_mba_image = "mba.mbn",
-> +	.proxy_supply = (struct qcom_mss_reg_res[]) {
-> +		{
-> +			.supply = "pll",
-> +			.uA = 100000,
-> +		},
-> +		{}
-> +	},
-> +	.proxy_clk_names = (char*[]){
-> +		"xo",
-> +		NULL
-> +	},
-> +	.active_clk_names = (char*[]){
-> +		"iface",
-> +		"bus",
-> +		"mem",
-> +		NULL
-> +	},
-> +	.proxy_pd_names = (char*[]) {
-> +		"cx",
-> +		"mx",
-> +		"mss",
+> -	if (qproc->version == MSS_MSM8953) {
+> +	if (qproc->version == MSS_MSM8937 ||
+> +	    qproc->version == MSS_MSM8953) {
+>  		ret = qcom_scm_pas_mem_setup(MPSS_PAS_ID, qproc->mpss_phys, qproc->mpss_size);
+>  		if (ret) {
+>  			dev_err(qproc->dev,
 
-Are you sure mss/pm8937_s1 also works as a power domain? It seems to be
-a plain regulator downstream (similar to msm8226/msm8974).
-
-Same thing applies to MSM8953 as well though and there we seem to have
-decided to model it as a power domain ...
-
-> +		NULL
-> +	},
-> +	.need_mem_protection = false,
-> +	.has_alt_reset = false,
-> +	.has_mba_logs = false,
-> +	.has_spare_reg = false,
-> +	.has_qaccept_regs = false,
-> +	.has_ext_bhs_reg = false,
-> +	.has_ext_cntl_regs = false,
-> +	.has_vq6 = false,
-> +	.version = MSS_MSM8917,
-
-You could set MSS_MDM9607 here to drop the extra diff above (but not
-sure if that would be clearer).
+I think for consistency it would be cleaner if this was a flag like
+"need_mem_protection" (i.e. something like "need_pas_mem_setup"). Then
+you could reuse the actual reset sequence from MSS_MDM9607 similar to
+MSM8917.
 
 Thanks,
 Stephan
