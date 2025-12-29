@@ -1,124 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-86801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDFDCCE615F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:12:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6EEBCE616E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 08:13:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9355F3005AA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:12:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8630F3002FD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671E02F1FE3;
-	Mon, 29 Dec 2025 07:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 166C72E1C6B;
+	Mon, 29 Dec 2025 07:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kix3k768"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qOvph/IR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CAB27FB35;
-	Mon, 29 Dec 2025 07:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2352E228C;
+	Mon, 29 Dec 2025 07:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766992322; cv=none; b=asnjZxGLElCtKeFhMreNsqSgYzLUe6YSJ3zd5c5dnbK2lbfY49L/V3SDHeC61pcRuaR1EVa9PzO9uC1FOvc3IEtW5azlr0DTFZIGH4j8EBUBG7fJfcAypDcuKNo1spJ2pyi6Smud/6WzLVEE/hawnBsddAAy2kA+D1xJDj4O8uw=
+	t=1766992401; cv=none; b=oWKniqTKflAq4rreLp7LOsBCgCwFDB88iPIHGHc/vtIanTq9Xt8OLtMQx4Ujf/FyxbiVFB0XW8n+jE9D4kMJs1i5IdBkwi1/MJts6InSP1niB0MWmZ8JTXNp3f6lwdnIpQGKq32HnGyWND2dC20q3X9DzWJbfuUvxqUlHFiVCnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766992322; c=relaxed/simple;
-	bh=w+EQN4BKYGz+6m9nwb8toGppiuWQhMP7Gh1a+mXh/PQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d5Yd2wMs9pmh1a0lq4GVdj9Cq7Y2a1mTzRP4KXFXuRiEoNYPvkX30SPFPXfgvZSzbS1gRnyHxWdhpKcK/578W/LPlgKMifcHqku8TwOeg2Pwb8JD9Ut9OGFrniw8qqDrsWK8K3Lke/yzunbmWYp/nr8dgxBbboPF93e1blZ2phI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kix3k768; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176D0C4CEF7;
-	Mon, 29 Dec 2025 07:11:54 +0000 (UTC)
+	s=arc-20240116; t=1766992401; c=relaxed/simple;
+	bh=CB+l4wZA4BaOmC9XFQ84yG2DQPQaxXEVtg1dJhfADSY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j2ognHpMVZ5kBvofTbrcdpE2hZvP3rx2TLxnmOTkiBIUHpBWSNru4Pa9cIy5f7fT2ETXjNCwrQPaJO2F5BfiFjYAXj4UUztuv7+TJi3nQyPbCcj/eWBw8Hdm6uUP8VJ/7eyteJWdqw4yUmKaEr6Tr9/o376Ow4QZzL+P9ZWvxP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qOvph/IR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D9C4CEF7;
+	Mon, 29 Dec 2025 07:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766992320;
-	bh=w+EQN4BKYGz+6m9nwb8toGppiuWQhMP7Gh1a+mXh/PQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kix3k7684uS1EW5mx2CCwazHUnrYbnNnoEO3mRjx3dvqEJTWV+I8Le4Kc5Ji+x5Q4
-	 /1rDwhx40c8BM87SHgZ4guLHcASfWeFJ4g6EttB+qZKQuZRJJMPVUVjnmiaPpe1SEH
-	 qy40msXPt3lFz7AwAuRjzcy7U4VhjbHhzQBaVf3un1nURA/Ztdue6cw1FWrN3hRVaf
-	 5HmfyVsg8EjXutcNgiL9KXeGrcN3B4qOcGYde/1RS2nf55hJciz4AUpiQ9RvsAxHIE
-	 08ARUfbc2pHeuxwVWnEkwTYP7VYD6Olukbqk3iCJcyXlcvfYno/8hB9vgsC/f/r8/3
-	 MyH5Jd++NPhag==
-Message-ID: <f87a8caf-6c65-48b8-a372-1ebff95cb6f8@kernel.org>
-Date: Mon, 29 Dec 2025 08:11:52 +0100
+	s=k20201202; t=1766992400;
+	bh=CB+l4wZA4BaOmC9XFQ84yG2DQPQaxXEVtg1dJhfADSY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qOvph/IRDro3Sw4NUjAcd+R3a5wYZW/xHyiiSm08tnIwt0/gDn3f8bCDee4ggXAOi
+	 Flx91RIF5KOqzfL16s2wWAnURarnoqw8j5IWkMrmvjgaiVR0BNL3RYD/4g018tqu7L
+	 I1+I/l14Bs/D/oXuqxZ/O0YH9V76D13QKrhzuvZDWfcCPm9VQDlhY8Wf0Fan5a0p7E
+	 uSXgECf31v5YdJOIK1xkCoronZmYSPHEIsXKunSXx8bzoKHujbgrB1+LO7yWw0sXY5
+	 5ZwVYVQQjTZ348ida7UNlYv3dNh9urOfrSb2sYxy7D7T6yGTyUkJITpKSY/RnWXyZl
+	 R8NUlYMuew9Vg==
+From: Sumit Garg <sumit.garg@kernel.org>
+To: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	akhilpo@oss.qualcomm.com,
+	vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Prakash Gupta <guptap@qti.qualcomm.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: agatti: Fix IOMMU DT properties
+Date: Mon, 29 Dec 2025 12:42:57 +0530
+Message-ID: <20251229071258.456254-1-sumit.garg@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/4] scsi: ufs: phy: dt-bindings: Add QMP UFS PHY
- compatible for Hamoa
-To: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>, vkoul@kernel.org,
- neil.armstrong@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, martin.petersen@oracle.com, andersson@kernel.org,
- konradybcio@kernel.org, taniya.das@oss.qualcomm.com,
- dmitry.baryshkov@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-scsi@vger.kernel.org, nitin.rawat@oss.qualcomm.com
-References: <20251229060642.2807165-1-pradeep.pragallapati@oss.qualcomm.com>
- <20251229060642.2807165-2-pradeep.pragallapati@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251229060642.2807165-2-pradeep.pragallapati@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 29/12/2025 07:06, Pradeep P V K wrote:
-> Document the QMP UFS PHY compatible for Qualcomm Hamoa to support
-> physical layer functionality for UFS found on the SoC. Use fallback to
-> indicate the compatibility of the QMP UFS PHY on the Hamoa with that
-> on the SM8550.
+From: Sumit Garg <sumit.garg@oss.qualcomm.com>
 
-Last sentence is pointless. You keep explaining what you did, but you
-did not say why. Why Hamoa is compatible with SM8550, but not with SM8650?
+Fix IOMMU DT propeties for GPU, display and video peripherals via
+dropping SMMU stream IDs which relates to secure context bank.
 
+This problem only surfaced when the Gunyah based firmware stack is
+ported on Agatti replacing the legacy QHEE based firmware stack. Assigning
+Linux kernel (HLOS) VMID to secure context bank stream IDs is treated
+as a fault by Gunyah hypervisor which were previously ignored by QHEE
+hypervisor.
 
-Best regards,
-Krzysztof
+The DT changes should be backwards compatible with legacy QHEE based
+firmware stack too.
+
+Suggested-by: Prakash Gupta <guptap@qti.qualcomm.com>
+Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/agatti.dtsi | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/agatti.dtsi b/arch/arm64/boot/dts/qcom/agatti.dtsi
+index 8bf5c5583fc2..e705eb24160a 100644
+--- a/arch/arm64/boot/dts/qcom/agatti.dtsi
++++ b/arch/arm64/boot/dts/qcom/agatti.dtsi
+@@ -1613,8 +1613,7 @@ gpu: gpu@5900000 {
+ 					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>;
+ 			interconnect-names = "gfx-mem";
+ 
+-			iommus = <&adreno_smmu 0 1>,
+-				 <&adreno_smmu 2 0>;
++			iommus = <&adreno_smmu 0 1>;
+ 			operating-points-v2 = <&gpu_opp_table>;
+ 			power-domains = <&rpmpd QCM2290_VDDCX>;
+ 			qcom,gmu = <&gmu_wrapper>;
+@@ -1895,8 +1894,7 @@ mdss: display-subsystem@5e00000 {
+ 
+ 			power-domains = <&dispcc MDSS_GDSC>;
+ 
+-			iommus = <&apps_smmu 0x420 0x2>,
+-				 <&apps_smmu 0x421 0x0>;
++			iommus = <&apps_smmu 0x420 0x2>;
+ 			interconnects = <&mmrt_virt MASTER_MDP0 RPM_ALWAYS_TAG
+ 					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+ 					<&bimc MASTER_APPSS_PROC RPM_ALWAYS_TAG
+@@ -2339,10 +2337,7 @@ venus: video-codec@5a00000 {
+ 
+ 			memory-region = <&pil_video_mem>;
+ 			iommus = <&apps_smmu 0x860 0x0>,
+-				 <&apps_smmu 0x880 0x0>,
+-				 <&apps_smmu 0x861 0x04>,
+-				 <&apps_smmu 0x863 0x0>,
+-				 <&apps_smmu 0x804 0xe0>;
++				 <&apps_smmu 0x880 0x0>;
+ 
+ 			interconnects = <&mmnrt_virt MASTER_VIDEO_P0 RPM_ALWAYS_TAG
+ 					 &bimc SLAVE_EBI1 RPM_ALWAYS_TAG>,
+-- 
+2.51.0
+
 
