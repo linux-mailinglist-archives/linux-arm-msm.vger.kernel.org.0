@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-86791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05300CE6085
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:34:21 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B638CE6064
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 07:32:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 04DD9303199E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 06:32:02 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 68A483011916
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Dec 2025 06:32:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF8572D0298;
-	Mon, 29 Dec 2025 06:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B0FB2D0600;
+	Mon, 29 Dec 2025 06:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HkmE7Aug";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e0UsHvOe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QVNi23eL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="F1ruviQZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752A2D0608
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515783A1E98
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:32:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766989921; cv=none; b=tmrDfRdk0PnzOCnrzya1JXecakkJ2Us77dRCiCkhJrEvo/q3tRkZGGTjhtleiODLWeQuqCu3DHzEAAwN7hscuv4u/lNfsmbZ4iCd0XcvVDqcc9KesdeIUNbxe4kmWcLdnuR0dvs9jRh0myOIuqsd3TbGi7SoCsX9RC68/yZdmq4=
+	t=1766989924; cv=none; b=Pq6bTEINtMZAOiNPw3fmn8L+NWqFz9Us1zfL1+zd9rDWEhspHsmUC8tmkj0zZj//mTEpq3UcIA5z08VBNrgu1zutU+0OkODdhbUEVJoFQ8KQCC0vgb9Q2JCIoV2xdiBteU/q55BRwkfiT8SCxTOH4JzSjwaLoy4Q5xdvPhWvV3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766989921; c=relaxed/simple;
-	bh=v55TNg//wC4XAcaHWZTXoCk9GlnNzZOSKMtmlhh/99s=;
+	s=arc-20240116; t=1766989924; c=relaxed/simple;
+	bh=veRINet6awseWXYxyYZwNw5ZPUP0TfC17AyTv/ndWhU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dm3p8CtC+AtYiSlYL05PQGyGQ4hc46qsLB7qXqYIWHs/Vz7VplUcBXzsUVfJHyyhFmxpE1aMqscmstNsDcm0P5CRPrt0QAZTZ0I26YYBgZ4lcVqIsm4eTjXdNpRREtiOJTCJpdD8ZXqp9TY4CHj0XZdtdu8PWvx0P5fl5pyqZiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HkmE7Aug; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e0UsHvOe; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=MRMApXaRhR2cr/B9KaDRcY+bmC+X0nNTLM7sVCBKlm5WijoWtLTqC4mi7DM+l15Pssrx1VStaHiv8VMyW5OE3btZAbSLWn8P5aae8wYHRiwY7cs4oxlnh2644Ses3xoVlUzLGCNshz6aFEo5Xps7RqUspPeGhA1iBhP4FOx8/PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QVNi23eL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=F1ruviQZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BSNaPDi1446519
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:31:59 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BSMu4K53718751
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:32:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aaVi6kTxKFVUUN+LstLP4rB1bASy8KXXeuDqCkR8A3c=; b=HkmE7AugOxT9WlqZ
-	z4vMJHPDN1YMVhBrOqgb8GwUUg+VK+8r/aTQ1FKP3T0VI22dWL5Wo+6EznHE/MhS
-	7db0ooXdMQQUMGZW8aStYKvEfgk06oQSqZHODoia9XtD2ilmnx5FMq+ujHrdjx+I
-	IZBczZbRfI4BdJCeP2kYloStkyiF3DxV2B8QP1Aw++hr559MPncTSDHGt0rO5RVs
-	664uCrKTnYSTlpBvsC27EkYEMMUyJolLI6uvr70nyWnFWCrAyg9XGcbOVse/KhH+
-	LhloOoHsEnpF5xFVlUmOgCLWkzep1GsYHvuvWbBqAlX+98A3agzdwjUzUDOFMvoB
-	YslxLg==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bavrj20nr-1
+	uNmr2Qd+7VE+ZXIXnd9eWAuqPwXoo5DhvxtgK5dWg7k=; b=QVNi23eL1jVD6PLB
+	+PZR4NtMBlXbBD0TX/zDtQzoJZMgMKebRr1UqbyW0CWco22dtHdq69PVTDrnuT+J
+	8qIpabcrzvOa6mUJRKAWqEldyPrz54TlldXp7SHk9BMrosf42XE/zvSCVSTYgV/d
+	GRWv1gGb0VgfWQ1iTUI5P6nZY9Z03oR3PtLf7RAROZtdqMPfC11UGVX4R12N+MSY
+	didDoE3lkrA/t9OVMcO+dPMwuEb+8qGmNna+v+G1Zx0e//xklshYxHxMpKX1kn0y
+	2QhGr73hCDDayv6OblFZaY3Dz4zJKaEkHf/J11oiAGlNgVbSlnz/PO19uQsLJ9Ao
+	BUZR8w==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ba6sg3k9p-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:31:59 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7bf5cdef41dso15317993b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 22:31:59 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 06:32:02 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7b9c91b814cso20061168b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Dec 2025 22:32:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766989917; x=1767594717; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1766989921; x=1767594721; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aaVi6kTxKFVUUN+LstLP4rB1bASy8KXXeuDqCkR8A3c=;
-        b=e0UsHvOehd9+Y+5Ve9NJF2nBWG4tnZYtNB+VrOVTExW/QEzT01yWVoi4HqBoQ7SNlW
-         b32UzqZ0eB1K8VxigcjyMQjcfvfn45vs1vCLsuG0MxPxGtmOKzoDhpt3rPZdI+QUR1Nt
-         wDZnIniRm6ES6YMPxtPdcAuoPPT0tZa10Z80zj/zWBbl5pXsQGnbe4VC9ZM/u+0k90xh
-         I8FTxkIcNlMHqVdbxHPeiJmREt2IO/D80q8WOj/XVdTbxiZFUD4AYK9mIX0oopRG8JDD
-         pOG34VbzcvFCxmrDULF2Uiyg0d7pnDybA2o7IgzT6kcDo2vSRxEuWir1GW4h7IGeXtaw
-         kvKQ==
+        bh=uNmr2Qd+7VE+ZXIXnd9eWAuqPwXoo5DhvxtgK5dWg7k=;
+        b=F1ruviQZ9IDZQ7+MNAUZMCGHMYmWr2gq0ZYU2ybWXqdq5qTUmhQoXMm7quMiGq13E2
+         WBLHnIPzgEfsodLLUQdKZHV84NY5uVvKgmC/Q37rMsAWRJBcIZvYJwCw0qQe1jB1SxLL
+         RFyoB7i8o+rOFaqEJSyXrBCBXGeLa3Qe5NcDaerm9OQX8FiNiG03qSiCnWsObEQQ2ci3
+         MoDfYNr/CK45alVID9KfpQcL8ttIeaBhwsHnJiPy3PkyyJisYNm24LSqwDmLxCB2+TrB
+         ONg3iL5tH6cg/0b1faX6CFse5UmlU4c11TGDwPTcVWxxrHoyiT/jF6X0pj7kguDhElcO
+         uJKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766989917; x=1767594717;
+        d=1e100.net; s=20230601; t=1766989921; x=1767594721;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=aaVi6kTxKFVUUN+LstLP4rB1bASy8KXXeuDqCkR8A3c=;
-        b=usmcCdx/H52TRC6UuAATwAhFrO9bBw0eDamE312A6xtWJ8hVp84XbHw0bT/R9mltMj
-         RKDWMfxzWvgxibheKUkI1CgJJJUY6S5wFk8UNs7IH3rvfjKFKPXGJ2Utk4FJW8tqOqm2
-         VI4iyB9QDZ7MnnvABcrH1nre7xnG8TtsLEmv43Pup3cOtzVeZrBGtRSZG8WjovA30N80
-         9jGSZNC49Y77LdvI2WfhG9/mkIdhL5G8h2QXd3V0ftoN6EobIPdmM50Jm6Ej9TC6Uex3
-         IbqD3Wezmbb5nTCPuUEPUAjA6fnbRIJlmbyHrinTLCTm1atc7lDyImUQJgflCw0z8Omz
-         SzFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXENTiLChcRJI3kab94GBeYBdMVTjaofFwhba2FZia0P7x1xDEPn7bC4KHerx5yqewuGnVH5Y9V+kY0fLk3@vger.kernel.org
-X-Gm-Message-State: AOJu0YwF+eLpsIt+XIZyL1Qg3HfBT2s0hmsigDI4z0phoyhsb8+rR9Sj
-	mKxPok1SviLDkE1Kn+igxLTQa2NhmwG9G2RwV3WPdhFQTTNPY+oawheol8xRPsOPQwaCgeX2uAz
-	W4Q6M0un2We+6tkp7z8HXgJQsL2+ch+r2JwS1p+Shv+YAHJqPXjpj4oHDHfosrIqQBXv1
-X-Gm-Gg: AY/fxX7YzJ2G+WZDNkebKjEx7ek8yr3n4g1ZbtKGrGsWsg8B9G8DXM0EFZ+vVAGTB0V
-	UuZvkhpPwnI+vZpO2zQHl12IWZUf8ZnnGeCpZxjP5YTBOBgGshJeTDp45IY3+CgtcB/TNjFx5Cz
-	7tR9mscrTY4ab1mUnlYnFQzOEOikfpLegKIvhHbpw6hbU+Jo5/hshvZpKeHn8soX34Mrw8OKkFY
-	Omz3GAEN4J/vhQmiepliTmtE2CoW7TDjgb8D4b6rsYmCwrnJhEvVf3AFLcRKNK/jI/EW6kqJgHN
-	Dms3+E/BcMQzIMjUXImCNnuSFvmjlsgUghdGj++g/YmR4D3w2Ivz9o03Zip76heew3QzM170tpL
-	oElMVDObzCMHNlBJ0keV7YVKOS0mAzhB6+7Jd3RMI4c12KJs=
-X-Received: by 2002:a05:6a00:90a2:b0:7e8:4471:ae5c with SMTP id d2e1a72fcca58-7ff67456c12mr24865581b3a.40.1766989917361;
-        Sun, 28 Dec 2025 22:31:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFX0ThBZeW+BigEL8dzVjUuDuXkQS9otcnHN3QgmHmuY+Fxw19HAteXH2bjW3/rRGKbh+msgQ==
-X-Received: by 2002:a05:6a00:90a2:b0:7e8:4471:ae5c with SMTP id d2e1a72fcca58-7ff67456c12mr24865542b3a.40.1766989916512;
-        Sun, 28 Dec 2025 22:31:56 -0800 (PST)
+        bh=uNmr2Qd+7VE+ZXIXnd9eWAuqPwXoo5DhvxtgK5dWg7k=;
+        b=trmY+R80uNalKtOJZSJUY9j16n6l12rz1ocxpIQj+2vzQGDhLVAkFb1dXPMprT652p
+         ONUuvL9u6hSlfJdPSq+f+HTMBNr9pFoLcyOEmyVSPoLry4JyYJoGRGRLiz3Zz7h5XSV1
+         JUoJiCKzjf6yaN33rAq3VDokJ9SnwNmYoDA0qJfsHsGnTlO9u0o5E4TRRhaJvG1B8Ofa
+         m5wY4DPR1OhHe9mVaQN8eMeC6k8WH9OB1RmsrlcAgSuofvyaIvMpS+aNjtGU9i50TOzZ
+         sAHZz6bs4+rV4HwhfRPzg3GWFcadxsIha7nX7XAX36REBzBim49eU2mfIh3aNmqDvmAi
+         ggJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXFj5bs+MBSFO1YLamcAUAHlOeCqmmw3DjfCW7xePKHtVCF0YvEg0EDBXdbXS9MIHEKMczZUKvFWtAMNfpV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvGPeBKRqjfHgo+96akRm5Aq5zT3ANxHjrKwqDA/RjSHtNqHmr
+	lRqSqeBLG8iSUxBQ6s4UYdOlri1h2MczvbwL/FW11G2gvAknR0aZh2ML78eCQdzJf9lnRKHU9BX
+	RfMyoEDEVGAWI3HS7txt7m1d/Gxdq4Vl5Qzs0WdGLZblLsVnYtdOYlHwMg62y1fMtrS3Z
+X-Gm-Gg: AY/fxX57mMukz2X8f/vxkIXgBjBfbfeFaptWZdogcvQryyacNwPkW1SR12TQzYTxdWA
+	k0L9C1t3410SEWSJ04G5r+sV5MjcYK+2LRI2iemdF/MfqO8BAWs2DDTeiydIHUn+d+OBeS/VT4w
+	WRI97uBPMyDO5nEhcDNwBaRE52IR/76CP5Rm8VUXhwWJPyUAkWpl66vzn65DplAYsnCn8Rfdycf
+	1e27wcNy3q1nLr08TyvUQsM++34ZwpRGV96gOVPNL6YuDVqtqcme7NrjFN5tNe3iLyGNKoeVPZw
+	Hpr9gQaKEkSLwAF4Ydb2ULc1uJFfAQdoaVWDsbjA4Vk0lC7HWZPv3E2iH+HaHNLAGCKsZfenAeh
+	Q9wg7fSkv/EbwDSYcpmbxR06lJ0y8RDL6+w6bwRpBitV13Jk=
+X-Received: by 2002:a05:6a00:8014:b0:7aa:e5f2:617d with SMTP id d2e1a72fcca58-7ff651c3519mr28501216b3a.30.1766989921263;
+        Sun, 28 Dec 2025 22:32:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEuWNnJoqqmKSK7EBdRRCNpr9qpD2VwNZsE7kTp8/v1msgyAvsObPIWGy+/LSRKXlLFzuuqKQ==
+X-Received: by 2002:a05:6a00:8014:b0:7aa:e5f2:617d with SMTP id d2e1a72fcca58-7ff651c3519mr28501191b3a.30.1766989920730;
+        Sun, 28 Dec 2025 22:32:00 -0800 (PST)
 Received: from hu-dikshita-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e797ab9sm28308962b3a.59.2025.12.28.22.31.53
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e797ab9sm28308962b3a.59.2025.12.28.22.31.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Dec 2025 22:31:56 -0800 (PST)
+        Sun, 28 Dec 2025 22:32:00 -0800 (PST)
 From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Date: Mon, 29 Dec 2025 12:01:24 +0530
-Subject: [PATCH v2 5/6] media: iris: gen2: Add sanity check for session
- stop
+Date: Mon, 29 Dec 2025 12:01:25 +0530
+Subject: [PATCH v2 6/6] media: iris: Prevent output buffer queuing before
+ stream-on completes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251229-iris-fixes-v2-5-6dce2063d782@oss.qualcomm.com>
+Message-Id: <20251229-iris-fixes-v2-6-6dce2063d782@oss.qualcomm.com>
 References: <20251229-iris-fixes-v2-0-6dce2063d782@oss.qualcomm.com>
 In-Reply-To: <20251229-iris-fixes-v2-0-6dce2063d782@oss.qualcomm.com>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
@@ -118,66 +118,83 @@ To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1766989894; l=1244;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1766989894; l=2070;
  i=dikshita.agarwal@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
- bh=v55TNg//wC4XAcaHWZTXoCk9GlnNzZOSKMtmlhh/99s=;
- b=56U9/cpxgd6FqwYiSraU5YRmgQlKZvQjxUwJu9bnWBH4JEI/08y9dFRLPfHh/+xjtF+B+JGfa
- NF/6E/wSsUaCkusbqS9QCk8PZnYWdaoDaGsRTI4lYzhdNj5QXhj5WnQ
+ bh=ToSP8yw7UHrhfrl6kjhmcJJUW4s5zMFqgwQlqSSUXTg=;
+ b=BBGTPZuqvbZVANhDb1b6tnEdSuZz3vjpRe1l8N0jbAO4T0nOyAX42ahp0+jMiyrVleaN7FZiT
+ F7wbzFHue8kBksFbC4KBNJeQf3YQurHCrnGVmD3tnkzh15mCx6Lzefj
 X-Developer-Key: i=dikshita.agarwal@oss.qualcomm.com; a=ed25519;
  pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-Proofpoint-ORIG-GUID: PZQNGVvXdDgejKFvkTNZW1nALUbf5Ryh
-X-Proofpoint-GUID: PZQNGVvXdDgejKFvkTNZW1nALUbf5Ryh
-X-Authority-Analysis: v=2.4 cv=coiWUl4i c=1 sm=1 tr=0 ts=6952205f cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-GUID: axniw7EQlFWgO4KR3qbLoCmeLgWVFvlA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDA1NyBTYWx0ZWRfXyrKU6lDW8Fuy
+ t7DbhSIqqgrA/wKe5AachEE+exD5K43tns3nhIo67d6xkfkGl+7KBfPUU+R4ViMUKVMG3nOTCVo
+ RHUdbj1DkB6I4x2T6iB+WOaXQ8REpqS5pHWPW2wlSQVFbLtaUeRR6cGw0idE8dBFbtgat+0Ef/C
+ bqHTnBWe3Hue9ncei4AUqNuvqiTCXT83VXRjBO7pcFXyKw/G7dHs+MkDsYQ9LAmAdZ9AEcy/VcQ
+ mQy9T7BC7I0DeuULYvT5PuLVpSGGP4+1+RjF51vzsMi/PoAVdThxPI3f+DN/iPVhrwPiL6UYdZe
+ XJp632RS6gXnQHNie/Kirj33YZwbtjfuvntWhzY5T52V4b2dlAsMLjjtv5qUXPenq75c+LwqhuR
+ r9ZGoeLEmd/oT232/H7HTdu1xOwyjTCcFkEgm3+JHrFZ3kwgWqEN8Wa99xN3y2GhC2Fcq146Olc
+ H0Kj9oHU83durkmM3Bw==
+X-Proofpoint-ORIG-GUID: axniw7EQlFWgO4KR3qbLoCmeLgWVFvlA
+X-Authority-Analysis: v=2.4 cv=Y+L1cxeN c=1 sm=1 tr=0 ts=69522062 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=hJpQIKcYsydMz8RtK9gA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI5MDA1NyBTYWx0ZWRfX9BSGk+/sir44
- Ti4VrH+MuCctV/hArGQevvChSa5DAlptg6ikU9ytsOC8ql8YFqnwpvU37D2Jm1mTOKsgO8b+SCM
- GVGoZJpB9KA+NTWvdEywe269Y/apDO2LgKfEjf2Gk072u7ZvbuIaGhB+UVS1g8m/cPeEwJJP9yT
- ZrB7rHvdyJGTDpsHSuCxyT8WJpctl8CYhe0ajzPrh/5czHEPj2triNKF3iB6x3eFQV8LiR1S/Ld
- ad5gLDVvtI/JI9If/xcAhW3XqSidoEGdk1gFL/0PuRYZxzhas3ELbTEI4T6+bLrr7Fc1tuPH6h4
- A8KDht9C1OmLw3wDNqCMQ5GQ8yBd+NRuu0cv2fu9MrCP/vuegEmiQO7sot7+cM0Ik7gEhQViQPW
- veQjd3otevFJlRYDwipcmK4Gg2RI9nQbQkyxFJ0+QB/Fv7mQqEvGxrEjXsFyDi5wog/XEqDZglK
- rqP2g2psgmMQvjTbCfw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=k0qMZAR7W_WzNVtuHNoA:9
+ a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-29_01,2025-12-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ impostorscore=0 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512290057
 
-In iris_kill_session, inst->state is set to IRIS_INST_ERROR and
-session_close is executed, which will kfree(inst_hfi_gen2->packet).
-If stop_streaming is called afterward, it will cause a crash.
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
-Add a NULL check for inst_hfi_gen2->packet before sendling STOP packet
-to firmware to fix that.
+During normal playback, stream-on for input is followed by output, and
+only after input stream-on does actual streaming begin. However, when
+gst-play performs a seek, both input and output streams are stopped,
+and on restart, output stream-on occurs first. At this point, firmware
+has not yet started streaming. Queuing output buffers before the firmware
+begins streaming causes it to process buffers in an invalid state, leading
+to an error response. These buffers are returned to the driver as errors,
+forcing the driver into an error state and stopping playback.
 
-Fixes: 11712ce70f8e ("media: iris: implement vb2 streaming ops")
+Fix this by deferring output buffer queuing until stream-on completes.
+Input buffers can still be queued before stream-on as required.
+
+Fixes: 92e007ca5ab6 ("media: iris: Add V4L2 streaming support for encoder video device")
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/qcom/iris/iris_vb2.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-index 6a772db2ec33fb002d8884753a41dc98b3a8439d..59e41adcce9aadd7c60bb1d369d68a4954f62aef 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-@@ -963,6 +963,9 @@ static int iris_hfi_gen2_session_stop(struct iris_inst *inst, u32 plane)
- 	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
- 	int ret = 0;
+diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
+index 139b821f7952feb33b21a7045aef9e8a4782aa3c..bf0b8400996ece5c9d449b99609a302da726bf9a 100644
+--- a/drivers/media/platform/qcom/iris/iris_vb2.c
++++ b/drivers/media/platform/qcom/iris/iris_vb2.c
+@@ -193,10 +193,14 @@ int iris_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
+ 	buf_type = iris_v4l2_type_to_driver(q->type);
  
-+	if (!inst_hfi_gen2->packet)
-+		return -EINVAL;
+ 	if (inst->domain == DECODER) {
+-		if (inst->state == IRIS_INST_STREAMING)
++		if (buf_type == BUF_INPUT)
++			ret = iris_queue_deferred_buffers(inst, BUF_INPUT);
 +
- 	reinit_completion(&inst->completion);
- 
- 	iris_hfi_gen2_packet_session_command(inst,
++		if (!ret && inst->state == IRIS_INST_STREAMING) {
+ 			ret = iris_queue_internal_deferred_buffers(inst, BUF_DPB);
+-		if (!ret)
+-			ret = iris_queue_deferred_buffers(inst, buf_type);
++			if (!ret)
++				ret = iris_queue_deferred_buffers(inst, BUF_OUTPUT);
++		}
+ 	} else {
+ 		if (inst->state == IRIS_INST_STREAMING) {
+ 			ret = iris_queue_deferred_buffers(inst, BUF_INPUT);
 
 -- 
 2.34.1
