@@ -1,48 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-86894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CAA9CE881A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 02:51:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88070CE882A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 02:54:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C5EDD3009438
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 01:51:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1F6E530109A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 01:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99A1C25A645;
-	Tue, 30 Dec 2025 01:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3633F2DD5E2;
+	Tue, 30 Dec 2025 01:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VJz+Ym6g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVfzR89D"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D3B139D0A;
-	Tue, 30 Dec 2025 01:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EE928505E;
+	Tue, 30 Dec 2025 01:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767059497; cv=none; b=A9tOZxBsXjIhfrIhizsU04at2FHlmjQzA25Q50PMraeHZ7xKRfVwtPD29DrtuLFe8oyjMvxancfUl0mPh10ERX8T1zsDvwMgu/qGL4qN5m7F+BYXFYyq9kllyyDNqsPh56PMemnZjLzzPzvPk2whqC53IViuSxsPVWZ7JtQ5pLQ=
+	t=1767059641; cv=none; b=ZxbOf/4GVSqQiIgutJP2NKP0uoTL1G4CRNI1GJvoDB/ieETMbQ2lPVxucRTnnckUeh0M+j+NnGaTKe8L5nnGyjZxMfZG3ryQV0/DqU6RUUOb7RLK3H7n7llm7SP3wz1uek4I7F1ZqOVOyfuVsRH46oD0jkio8C8CPB7Bk2fnWkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767059497; c=relaxed/simple;
-	bh=OBturc9gnq7p1Z8WM2OtT8pLKo5/2hWGC55/0eg7aSc=;
+	s=arc-20240116; t=1767059641; c=relaxed/simple;
+	bh=CKjr67pNdP9FP3s3q4y0uZntOZ/ZSmOWBaQJXLaNoPs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZkC1KBtKMzbw3Fu9kG9jaXRgtsBjc1rOJgl7SxYMSQGtFowkE72BS05ACatylsRMS64FAcX3MlDTld448IdiKlYuJ+3jvSEoY+bz6J4IZxhkNSBSUx2sPY1mQphEOAkPMqmnqKMJUcUrdMTfwC7cTyVw0hZKgyNh8Svy0VTOtgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VJz+Ym6g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8D6C4CEF7;
-	Tue, 30 Dec 2025 01:51:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cau4bbVzdBH+PsbTrJXe3C824pPryZiv0xNXgTSJLtSFWtLqjXXDuisErf/+2Aj62oD27nJ9W9gO9sSTuPPA1T1YGLl7NfkC0kc5zV1RfP+a62k6YsLzPiRHlgIiRwLJ8nNBSjQ5n0IsZj/IaTk8dJ+Lk2XSe8T5ZQemCLtSCfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVfzR89D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999E4C4CEF7;
+	Tue, 30 Dec 2025 01:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767059496;
-	bh=OBturc9gnq7p1Z8WM2OtT8pLKo5/2hWGC55/0eg7aSc=;
+	s=k20201202; t=1767059640;
+	bh=CKjr67pNdP9FP3s3q4y0uZntOZ/ZSmOWBaQJXLaNoPs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VJz+Ym6glTYLUQoy5ymhQ18MC/d/L5HltQ+boUi2Jtx1jwuGkU25XLFwpu8AtabSM
-	 4zBEs3l/rvABl1BVY+9DeTXfRj6TaYTGjYliH27VBcfS7N4xY9egB0Vnm2wuXQbYH8
-	 kMdkGa9C52YyZ87g6XzUI64KGIChqPjbGV1I1zZ1N5wiYXxO9rZIYVURNKaay0nu4X
-	 PmclJwuLxUAJv9NVPIW+q+8AuX6ScQgCKpVvxOrkW7YF1fAGBr1AYJnjwkvhgG1l4m
-	 XHvXCI7KQQi3/M/5CT8dxZETzE08F6BzgLa3mOIuIGvmvBOV+sxQKdGQLvtMszXMEc
-	 gbiNA/ZNK5AVQ==
-Date: Mon, 29 Dec 2025 19:51:35 -0600
+	b=IVfzR89D1zKINnkmG/fYk2anvWdfmN2BA8pncIm/7gVXoeGfHuQo5qCS/MSkW0GaR
+	 5eA+bAgfrW2lab/PLgH7O5ceCwBB3+5bqlz4F5tM5zjWxU3yjNpebjAcvhP0ZNkLU9
+	 /9sR6vwPJp7frxPmQVLI6b2i1Z91y3kfGTEcPFW+HoVhyKcgzZwttFNdh4Ilvl5ocQ
+	 U4T4e+2JO5VBdL111rBhVbxFbc83kGqcWbYVnQ/gGEFyvxdm6Xw4tK8Ib60vUtX43g
+	 ObBwHQhC+/44/5Gta63AJTjuck6ZM//GzU0KtBN5EBgRjLf9h0T4yylOwNzN+dYM4R
+	 ZKsT2cO2S6A3w==
+Date: Mon, 29 Dec 2025 19:53:59 -0600
 From: Rob Herring <robh@kernel.org>
 To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sam Ravnborg <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
@@ -68,11 +69,14 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v2 04/11] dt-bindings: display: panel: Describe Samsung
- SOFEF01-M DDIC
-Message-ID: <20251230015135.GA3066456-robh@kernel.org>
+Subject: Re: [PATCH v2 06/11] dt-bindings: display: panel: Describe Samsung
+ SOFEF03-M DDIC
+Message-ID: <20251230015359.GB3066456-robh@kernel.org>
 References: <20251222-drm-panels-sony-v2-0-82a87465d163@somainline.org>
- <20251222-drm-panels-sony-v2-4-82a87465d163@somainline.org>
+ <20251222-drm-panels-sony-v2-6-82a87465d163@somainline.org>
+ <20251222-godlike-mongoose-of-valor-3eeee0@quoll>
+ <f72fed1c-968e-4570-8cde-841bf109bf5d@kernel.org>
+ <aVGvtJ0NekR1ch-k@SoMainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,154 +85,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251222-drm-panels-sony-v2-4-82a87465d163@somainline.org>
+In-Reply-To: <aVGvtJ0NekR1ch-k@SoMainline.org>
 
-On Mon, Dec 22, 2025 at 12:32:10AM +0100, Marijn Suijten wrote:
-> Document the Samsung SOFEF01-M Display-Driver-IC and 1080x2520@60Hz
-> command-mode DSI panels found in many Sony phones:
-> - Sony Xperia 5 (kumano bahamut): amb609tc01
-> - Sony Xperia 10 II (seine pdx201): ams597ut01
-> - Sony Xperia 10 III (lena pdx213): ams597ut04
-> - Sony Xperia 10 IV (murray pdx225): ams597ut05
-> - Sony Xperia 10 V (zambezi pdx235): ams605dk01
-> - Sony Xperia 10 VI (columbia pdx246): ams605dk01
+On Sun, Dec 28, 2025 at 11:49:13PM +0100, Marijn Suijten wrote:
+> On 2025-12-22 09:36:23, Krzysztof Kozlowski wrote:
+> > On 22/12/2025 09:33, Krzysztof Kozlowski wrote:
+> > >> +  - |
+> > >> +    #include <dt-bindings/gpio/gpio.h>
+> > >> +
+> > >> +    dsi {
+> > >> +        #address-cells = <1>;
+> > >> +        #size-cells = <0>;
+> > >> +        panel@0 {
+> > >> +            compatible = "samsung,sofef03-m-amb609vp01";
+> > >> +            reg = <0>;
+> > >> +
+> > >> +            reset-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
+> > >> +
+> > >> +            vci-supply = <&vreg_l11c_3p0>;
+> > >> +            vddio-supply = <&vreg_l14a_1p8>;
+> > >> +
+> > >> +            port {
+> > > 
+> > > Not tested :/
+> > 
+> > Ah no, this one is correct. It's the other patch with similar compatible
+> > which was not tested.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  .../bindings/display/panel/samsung,sofef01-m.yaml  | 120 +++++++++++++++++++++
->  MAINTAINERS                                        |   5 +
->  2 files changed, 125 insertions(+)
+> I think you mean:
 > 
-> diff --git a/Documentation/devicetree/bindings/display/panel/samsung,sofef01-m.yaml b/Documentation/devicetree/bindings/display/panel/samsung,sofef01-m.yaml
-> new file mode 100644
-> index 000000000000..a8ff5223677c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/panel/samsung,sofef01-m.yaml
-> @@ -0,0 +1,120 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/panel/samsung,sofef01-m.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Samsung SOFEF01-M DDI for 1080x2520@60Hz 6.0"/6.1" OLED DSI panels
-> +
-> +maintainers:
-> +  - Marijn Suijten <marijn.suijten@somainline.org>
-> +
-> +description: |
-> +  Samsung SOFEF01-M Display-Driver-IC found in multiple Sony smartphones, paired with
-> +  the following panel:
-> +   - Sony Xperia 5 (kumano bahamut): amb609tc01
-> +   - Sony Xperia 10 II (seine pdx201): ams597ut01
-> +   - Sony Xperia 10 III (lena pdx213): ams597ut04
-> +   - Sony Xperia 10 IV (murray pdx225): ams597ut05
-> +   - Sony Xperia 10 V (zambezi pdx235): ams605dk01
-> +   - Sony Xperia 10 VI (columbia pdx246): ams605dk01
-> +
-> +  The assembly features a Samsung touchscreen compatible with
-> +  samsung,s6sy761.
-> +
-> +allOf:
-> +  - $ref: panel-common.yaml#
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          const: samsung,sofef01-m-amb609tc01
-> +    then:
-> +      properties:
-> +        vci-supply:
-> +          description: DisplayIC Operation supply (3.0V)
+> 	.output/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'ports' does not match any of the regexes: '^pinctrl-[0-9]+$'
+> 		from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
+> 	.output/Documentation/devicetree/bindings/display/panel/samsung,ana6707.example.dtb: panel@0 (samsung,ana6707-amb650yl01): 'port' is a required property
+> 		from schema $id: http://devicetree.org/schemas/display/panel/samsung,ana6707.yaml
+> 
+> Which looks to be fixed by including panel-common-dual.yaml and changing `port`
+> to `ports` in the properties and required table?  At least the errors are gone,
+> just asking if that is acceptable.
 
-The error reported is on the wrong patch. Not sure why, but the problem 
-is here. With 'additionalProperties: false', this property is not 
-factored in and is considered unknown. That can be fixed using 
-'unevaluatedProperties', but instead, move this to the top level 
-'properties'.
+Considering it's a dual interface panel, yes, that's the right change.
 
-> +
-> +      required:
-> +        - vci-supply
-> +
-> +    else:
-> +      properties:
-> +        vci-supply: false
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - samsung,sofef01-m-amb609tc01 # 6.1"
-> +      - samsung,sofef01-m-ams597ut01 # 6.0"
-> +      - samsung,sofef01-m-ams597ut04 # 6.0"
-> +      - samsung,sofef01-m-ams597ut05 # 6.0"
-> +      - samsung,sofef01-m-ams605dk01 # 6.1"
-> +
-> +  port: true
-> +
-> +  reg:
-> +    maxItems: 1
-> +    description: DSI virtual channel
-> +
-> +  reset-gpios: true
-> +
-> +  vddio-supply:
-> +    description: I/O voltage supply (1.8V)
-> +
-> +required:
-> +  - compatible
-> +  - port
-> +  - reg
-> +  - reset-gpios
-> +  - vddio-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    dsi {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +        panel@0 {
-> +            compatible = "samsung,sofef01-m-amb609tc01";
-> +            reg = <0>;
-> +
-> +            reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-> +
-> +            vci-supply = <&vreg_l17a_3p0>;
-> +            vddio-supply = <&vreg_l14a_1p8>;
-> +
-> +            port {
-> +                endpoint {
-> +                    remote-endpoint = <&dsi0_out>;
-> +                };
-> +            };
-> +        };
-> +    };
-> +
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    dsi {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +        panel@0 {
-> +            compatible = "samsung,sofef01-m-ams597ut01";
-> +            reg = <0>;
-> +
-> +            reset-gpios = <&tlmm 90 GPIO_ACTIVE_LOW>;
-> +
-> +            vddio-supply = <&pm6125_l12>;
-> +
-> +            port {
-> +                endpoint {
-> +                    remote-endpoint = <&dsi0_out>;
-> +                };
-> +            };
-> +        };
-> +    };
-
-The first example is enough.
+Rob
 
