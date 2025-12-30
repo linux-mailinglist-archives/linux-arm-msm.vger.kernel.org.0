@@ -1,171 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-86978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6931CE9C9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:28:57 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA28BCE9CAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:34:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5D5093016DF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:28:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4BA38300297D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678EA2309B9;
-	Tue, 30 Dec 2025 13:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5370B1DB375;
+	Tue, 30 Dec 2025 13:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X5kob5xb";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OvUU+Zw4"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="XOoH+vs5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DD41DE8A4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 13:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1FE1A5B84;
+	Tue, 30 Dec 2025 13:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767101333; cv=none; b=Np0BHqqzkvK8zg3QTAsmSMkx+mvi+UNlSHrTwVa39sC6dHZ4B+Atwx4OFOlbU/s55tNnSW0WEmRm8SRaGNgWR3MuYYbZHH5h0zXmIhz1+NAhhj700ha5gOafE1hR6mAprO5qP+O+zawHbgwDK3S788KhqGduEQOLfssv33F1DqA=
+	t=1767101663; cv=none; b=TW7h84MLlW94J4kNxtjMWz2B3ZOcoIMWO6FXzUzgZXBH8VFGFZ/u2nq04gNHSrsjfMai5Lcss47Eu8EVTxEhQQf0OIBKfraLAn7mBG0EdsviA1Rq5QdwLGQwc4JxW72gWiPhqichYZojKZ5midrLzr0mfMADRvEUBgtiNlQ3iec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767101333; c=relaxed/simple;
-	bh=gCE9g7o9NshJ8d3/8lbuNSi3lr3Q2YYPLKNEMOGnsSE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BfzZXZ3SzU623KLcNv/93WWsVhFILAl1WcJtS3Rw8FNWxJeRnVQMCumiFSXGaTgWe6M7dCIv5X3HVS+zKgC5Alkf//PEgF1EsHrT7DGFKm7WyqUh0qfVmyWybqEEDX0YpmIHfkt4nTejTV3VKqyT3SUGIIl1IueqWt1lmGYrZnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X5kob5xb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OvUU+Zw4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BU5SIFo900395
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 13:28:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SbPCrSTHdAIMNZfqnVN4Vn/bScRCYxDUiISVKD+AQEI=; b=X5kob5xb94UNZrZp
-	SCqw6yb08ARzaMl3g4Yznm/uhr+bDna117Rh6Sg5kqHc8m+/+LXEo2/PIBAXQKj2
-	NZkKO7EnRIDFGPDvfJiqojA8hEvWdLA5d3SpfX2Y2ufJKQVYcbgBfQDCGupZRVXg
-	jwUW7xqmlRzWMX+8FZazdNxw2XICaZLH5K8TIuOt48FokmN3AIcgWHdhlXGF1pED
-	2F3P6loAlKEdRUlvLOpy5Q/strGjTGMpuZGT8SxJZa9cuzd7DOftpLbN9F1Q9Exf
-	FpAtg2qsub+b3gah2zquzpsvJh7/ZWT9KTSUqPdyehNyB/jugMGBeN2Safdoxhpb
-	ebe8yw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bc8ky11qv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 13:28:50 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4f357ab5757so45062741cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 05:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767101330; x=1767706130; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SbPCrSTHdAIMNZfqnVN4Vn/bScRCYxDUiISVKD+AQEI=;
-        b=OvUU+Zw4ikJwU9S9lNRAnQQ8U2HiBGOyGhwZ3Zul0bKz0tVJof6oYw2ZXV3dNQKsZB
-         V/aq478TR9mffTq0E8Gk++DTNV+6zgJsynIzVzz8CjJjQA6WbNqPiQPbUg/8t9TxhVhA
-         B+nW6RDy3e/O4aX/QcAdFu49FQUaJDXPP5Bz4a4kVi/BtI4apqpnf3PT6K2JV1+FzBZv
-         Zm+CoK1ka9Y6FlXIFuipRpNWorFmv0jmmfgRWCM++wHp1hG5HiGbsACQ5EoZvxGCoGy1
-         m7N0mgFixX398RW8rxweX3U+dsQFTtXjKNCafYSsflnSKiOyHxbODBHcWxS/7Pe/6gMl
-         5cLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767101330; x=1767706130;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SbPCrSTHdAIMNZfqnVN4Vn/bScRCYxDUiISVKD+AQEI=;
-        b=Yte/eF70X74OJbiQ2YJTl+am0AKOGCH6jxq4NxlSBY9D14CHXjEABh30vw6+CdeK+r
-         aThMUzYIFA6ibKNIGNfHDzq/sfXr3hj4va9EEERyrY9VmP6Le8a2jXWK/hIXFnJwHjIH
-         dcoRMmsQGUM+2M4jeYjPJbkbG1cGCv8acEAcZqkSgDCnZmBVdUIzknBvPtMleSLmKIBf
-         W6v9jSY1g7qEZ8MqRirfI7yO+DgTL8fQ/9sZm9IG2yxhhFFwJvJAEdeRz9ZM5e1ieuo0
-         Li+1cyBUn5bS2/GWKx+DKTu+p+soWMn/QhdeJUseiU3ZChgstoKKKcAjIGxFeoxUFRbu
-         pOKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX7pZ7gYkvvOJeqWQzlEmRT7605T1RbuaSAYjqCj+n+ayUzC2o33HUwywh4vaZ8C/q+Bf5IEM5000uhmqPj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOQrURxvpb43S53fr3aEDTqxj8IOJba2vn1KfrMWIT5Qxp/5TT
-	G/nUoOU11E2/uIxagoB3iCOGnYY5A+EBoxArNiTfOdQg9sfxPuVlaRKVcZsutSPqJLh80j3h70U
-	YeWE1+emhwudXeYajhzLJ8VmZIt338Y7uKVjhEzPBImFIiS8tnTN7/tfiDNATZLIhEOM0
-X-Gm-Gg: AY/fxX4b2k1iRELE3e4ZATzWGrls6yH51TyvpUqHEM0nww01WVwwTbcz/vD4XH0uxtr
-	MY0WDDueRQXB1BuMaNi7EXAtQKPt8RXi6JmAvs8C1G5/ozD+Ld3y8by4wP0YSpzhdKoaodO/m7z
-	0fwDoKBww7cWhPIdD8FonOjRZGk6A67Pvn7NZSwAv7j+kWaZwH32//aoZMKGgyT9RZ5PujyJ4TU
-	0RXOHrqTmZpSpklnghFIxErit5pF+ZEbXmoFCPFXQarpBpiDNbR3IICE79kjfx3VC0GojejNMWq
-	D6MAZ0eElnPQHXXfR2geKkgOzQO7ifuvDWKx18ChMpCHK+qwCMeVrLOrfaq+szel+IdTVwZGTdo
-	YvH5oNP78FMT6tImULLbCLWXqsTapP8VW/Zb1aFj4PuIbRWFQqSemV2WMkMRvVy0VNQ==
-X-Received: by 2002:a05:622a:241:b0:4f3:6170:26f4 with SMTP id d75a77b69052e-4f4abbc06ddmr358865191cf.0.1767101329751;
-        Tue, 30 Dec 2025 05:28:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGDF3yEn4U8C4OQp+pO5mkvPfTN8DijTooC3QyATKwQ9+kddc49uVi89CloOxfApcHCZh7uHQ==
-X-Received: by 2002:a05:622a:241:b0:4f3:6170:26f4 with SMTP id d75a77b69052e-4f4abbc06ddmr358864901cf.0.1767101329256;
-        Tue, 30 Dec 2025 05:28:49 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037f512e3sm3630116366b.67.2025.12.30.05.28.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Dec 2025 05:28:48 -0800 (PST)
-Message-ID: <027c3ba9-70bc-4c03-ac7c-07c7a8a865e7@oss.qualcomm.com>
-Date: Tue, 30 Dec 2025 14:28:46 +0100
+	s=arc-20240116; t=1767101663; c=relaxed/simple;
+	bh=lMq+1h7QC1VVEVe0XAMeUptGZhwTBmsEtr6h+tH9y3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rSz8qU/71369uZLGb4CIzqehVn+mAAGhQkHZXj135oo72WNTSOdJejqq93Oj/R1rW/3qzXuUOv6o7RnOK5R1KAaE6TYMHtTMZv8ykgGoCoNZMP1VTrAc+u5MpdLEsENnZBLfzm9DTgjqmN7wV/3ol6x5u4RvKkymujMOMW+aOGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=XOoH+vs5; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from pendragon.ideasonboard.com (81-175-209-152.bb.dnainternet.fi [81.175.209.152])
+	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 02C4855C;
+	Tue, 30 Dec 2025 14:33:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1767101637;
+	bh=lMq+1h7QC1VVEVe0XAMeUptGZhwTBmsEtr6h+tH9y3c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XOoH+vs52zNezGp8KdFJ7wCNHmgQCZ6w0867mIupmqYVhBGcL1B2t18WajnSVKGZn
+	 Ozk6vFtLg5ieSKRW3hjjbRUheRGDzosVQ8OO/ub5Yni9xLpSajmfAc+fI3w1mrAnXN
+	 2aH0D7wLP32XiL155pPgZtK7UdzbQkjodkBPVsZw=
+Date: Tue, 30 Dec 2025 15:33:54 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, krzk+dt@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org,
+	dave.stevenson@raspberrypi.com, robh@kernel.org,
+	conor+dt@kernel.org, mchehab@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
+Message-ID: <20251230133354.GA24182@pendragon.ideasonboard.com>
+References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
+ <20251114133822.434171-2-loic.poulain@oss.qualcomm.com>
+ <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
+ <CAFEp6-1Tdmr5v0r+q0qeOG6qqA-hiBaF1iTEcmhBA0oTjLgbgg@mail.gmail.com>
+ <aT_Xc6LR161QBRFp@kekkonen.localdomain>
+ <CAFEp6-2PP0ufge0RXTrE2Nrn_sLCN5erokxpJsuGeHq7ZEZ83g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] misc: fastrpc: Replace hardcoded ctxid mask with
- GENMASK
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de,
-        dmitry.baryshkov@oss.qualcomm.com
-References: <20251230062831.1195116-1-ekansh.gupta@oss.qualcomm.com>
- <20251230062831.1195116-3-ekansh.gupta@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251230062831.1195116-3-ekansh.gupta@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjMwMDEyMSBTYWx0ZWRfX7sK7zT59nRPr
- Aa9dQc4UNqIsndk8NT2H+yrGHBEqhsRKL1GF2BulHK7Zz0m9qAPbaBV+raT7VHVF98vDA7tJjvv
- ca9CR9F0jgXd062JsQImL+FMYWkI2AoFuoYL0wfPuXZuV/Xu70eTpQKciFnHnaRSNVV/q1tFPoj
- B1+bkfqDiBfHAvmgue+BzbsZw0fbF0oqb+lQytzMImM+9gDnU/A/78Tz+81AYF09ufFyi20AieC
- 5nms8uRU0aso0RSU7MWtR1KAspOm2MfB42eIRtMkSzB147pb23FEqZSAioIXX20vuFPF3KfNnNK
- VFwJ8naDHfi+6uk4Kbt804Df4UyTCQ9mHAVarsX9YaytMuT3RkIK1dsXnYSvQCDkWNummlJEItd
- 4J1ZEaNFxtOCIFs4094LqfkWUE73a55Jk1BHVngZR0Aa9Xs2eLuMX1CQSGihVF0asiwEvgrx5VW
- SQ24rA5REB9d/mg0xmw==
-X-Proofpoint-ORIG-GUID: io9DeIdvt2AsNO-8OF7MKdhWU3UFAdfu
-X-Authority-Analysis: v=2.4 cv=BuuQAIX5 c=1 sm=1 tr=0 ts=6953d392 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=WZKhdRBjRjmf9s70GbYA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: io9DeIdvt2AsNO-8OF7MKdhWU3UFAdfu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-30_01,2025-12-30_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- spamscore=0 adultscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512300121
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEp6-2PP0ufge0RXTrE2Nrn_sLCN5erokxpJsuGeHq7ZEZ83g@mail.gmail.com>
 
-On 12/30/25 7:28 AM, Ekansh Gupta wrote:
-> Replace the hardcoded context ID mask (0xFF0) with GENMASK(11, 4) to
-> improve readability and follow kernel bitfield conventions. Use
-> FIELD_PREP and FIELD_GET instead of manual shifts for setting and
-> extracting ctxid values.
+On Mon, Dec 15, 2025 at 11:19:51AM +0100, Loic Poulain wrote:
+> On Mon, Dec 15, 2025 at 10:40 AM Sakari Ailus wrote:
+> > On Mon, Dec 15, 2025 at 10:35:15AM +0100, Loic Poulain wrote:
+> > > On Mon, Nov 17, 2025 at 6:30 PM Sakari Ailus wrote:
+> > > > On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
+> > > > > Ensure reset state is low in the power-on state and high in the
+> > > > > power-off state (assert reset). Note that the polarity is abstracted
+> > > > > by the GPIO subsystem, so the logic level reflects the intended reset
+> > > > > behavior.
+> > > >
+> > > > That's an interesting approach to fix DTS gone systematically wrong.
+> > > >
+> > > > I was thinking of the drivers that have this issue, too, but I would have
+> > > > introduced a new GPIO under a different name (many sensors use "enable",
+> > > > too). Any thoughts?
+> > >
+> > > Apologies for missing your point earlier. We can’t really name it
+> > > enable, as it performs the opposite function and that would be
+> > > confusing in the device tree description. A property like reset2 would
+> > > be more accurate, but I suspect such a binding wouldn’t be acceptable
+> > > from a device tree/bindings perspective.
+> >
+> > Many sensor datasheets document a pin called "xshutdown" or alike. That's
+> > not exactly "reset" or "enable" but it can be mapped to either and this can
+> > be seen in the existing bindings. The polarity is effectively the opposite,
+> > yes, but does that matter?
 > 
-> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> I assume naming a pin 'xshutdown' or 'xreset' indicates that its
+> polarity is inverted at the driver level, the driver interprets the
+> shutdown or reset function as being active when the logical level is 0
+> (low), as they actually incorrectly do for the 'reset' gpio.
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 679cd8997a00..f7fb44a8e9c0 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -22,6 +22,7 @@
->  #include <linux/firmware/qcom/qcom_scm.h>
->  #include <uapi/misc/fastrpc.h>
->  #include <linux/of_reserved_mem.h>
-> +#include <linux/bitfield.h>
+> From the driver’s perspective, this naming convention is acceptable;
+> however, it causes the devicetree description to slightly diverge from
+> the datasheet and leaves the reset property effectively inverted (and
+> therefore incorrect).
+> 
+> Honestly, in this specific case, the simplest solution would be to fix
+> the driver, since there is currently no upstream devicetree using this
+> sensor. That would technically break backward compatibility for any
+> out-of-tree DTS (if they exist), but those would have been incorrect
+> in the first place.
 
-nit: these are best when sorted
+I would either fix the driver, or update the DT bindings to indicate the
+polarity should be inverted due to a historical mistake.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I don't think this patch is right. The polarity in DT is meant to
+describe board-level inversion of the GPIO, so you can't consider that
+ACTIVE_HIGH is a DT bug and print a warning.
 
-Konrad
+> But yes, this seems like a good opportunity to discuss and define a
+> more general approach that can be applied to other drivers with
+> similar polarity or naming issues.
+> 
+> Krzysztof, any thoughts?
+
+-- 
+Regards,
+
+Laurent Pinchart
 
