@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-86971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8D81CE9BAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:03:42 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D18ACE9BA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:03:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E9B5330303AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:03:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 437C13005F17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A64892101AE;
-	Tue, 30 Dec 2025 13:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825E52144C7;
+	Tue, 30 Dec 2025 13:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYvLmr6W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mMVAfwjW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FE7212FB3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 13:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDB51D6DA9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 13:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767099780; cv=none; b=dapJ1lJFVhBYANNKzA5JurVj7FVtdCnIGsb0dDU56mA0syHpQJvz8tY3KZdfdQU3Vyo1x1cNZZ/pm6GP+HoIONCe+xq6gOlOGMfor42zwv8lCs7mPjvT+PmMe0wS/URON6+gaI8ZTiGzOTcHT9KxwtbjlvzfaVIfLyREIhTwqtU=
+	t=1767099783; cv=none; b=awU5/kTffwT0xLgyqX6V0ETfo6+pswa6NVrbvWYgteX+FrLN/7SWUrhTkFCfDE4IOrhkh+fxUhdrb1vOTNGczEfw8pZxc8+mWB83BJwzNR+KhpaCH68n9jLgZxK31dkKIOdmfWWfjpPS/dTKHA56YPXXnSV9vFzc2KZcfvaHMHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767099780; c=relaxed/simple;
-	bh=SVJlcDayOcdOuFmlxFZIJno8JEUkvS2rwI28zFq/GdM=;
+	s=arc-20240116; t=1767099783; c=relaxed/simple;
+	bh=ZQ6Y7IFZTaEd6ktsVoxdPOs72CPIs+7PsUG1QLPNjHU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=AVdtNC5GstGE+XfrbnojERcpMESeE95fklchU+/IJoT4BsvH5h2C91BNeYmTzXXV36iRyJH2uwsLHsK4GlvnXLk3f5jaCPwvtV7tRWGjN8Xzt+GtXf4DPaHEm8d5cnllcyOYbwP0XkDJAblxYbI/dY7IkqH526bqZGK4miUpSuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IYvLmr6W; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=a8klY4mrWSiH2irt9qyrPczGoKDmTiFgRZV+yDhnHHzLPTnbZ9JPbmIrMP3StpN75u6+Ap9+/kBEIzuscX/r7kSPlpEhL67Lo82GSli8YQoDApI/j7cx7X4n0u/cisvoa4FkktHpttvJgOc34/Z5jqpTatnn3+kpV5dR+uEm8AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mMVAfwjW; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a1388cdac3so92611465ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 05:02:58 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-29f30233d8aso115629885ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 05:03:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767099778; x=1767704578; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767099781; x=1767704581; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jSJakbOsK6HuPfvndjr4pklixI6V6EaaZEWI2YnlWqA=;
-        b=IYvLmr6WkDXnZXu+1PZPZwoX74HMI+IjjSlk6sYwxa9MNFuQ4egJOr/UUoCoabdAaL
-         w7dDoHPk1HXwVzCDhF1KJWR8K59EZCmUZj4LmuItJKiEOX7zyFsFeaAOZzPspLQaKlOO
-         /tU0msYVgZnPr+XBGJv0G4jrrL0uC0Cep1oJfI6cn0da8ReV+4d4ixPgNO4q94RX0673
-         cFNvC8xwZb1VRkYV1jx3diq6+RvwpNdLjsQTHAhimvAyV9YpB+f6ENTsgXQnAuYZz9Hl
-         uY62Z5KyDNfVokZK88bmO5AgngmFGNBqGAT1GlbIsbzSsG970/xAeR5fxRObwUk+5oiV
-         W+pA==
+        bh=bFt+oA/6TnGUcf1mQLhvyTPCz7K2SXMiNJhoCpH+0PQ=;
+        b=mMVAfwjW+b8cuJ2dwjTdp8T8VEVWy3RZSJRsAaKzXDEE/s7MfXGStu4SM7JO5vj24E
+         apwhy77uafCtmqzIVLjYIEv6KJOJAElq+giAK13P0V4usoDkJMBQu+hTNzqHyGAi+D/B
+         gKUKc0u4llVgnb8G6domyUHQ0jXTBLgns8sQvQDvOgncKF3fSAxJi51YZhXhJn3VM8yR
+         8jHth8edA5vB/VRpYOiLhtqh2Ncgf/g5sLWsWxzV8NAAEjG+E9WDTV853qn1D/Eg3279
+         uWRCPvKssC4lBOFSjE+UNqk5XeY+8IOVOJgtRqspUZo778Q4NrHpvBE5QNriwzoUZGTk
+         QgCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767099778; x=1767704578;
+        d=1e100.net; s=20230601; t=1767099781; x=1767704581;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jSJakbOsK6HuPfvndjr4pklixI6V6EaaZEWI2YnlWqA=;
-        b=AyV+ozNhBbrY9jtoU5/sblNE0JmrsJ7UaMikqbgqxf06eUyb2C1innt3bb8W1uDHph
-         TABIYC9z4kxdBtDWeWgTzB6C4dGv9DrhaMLvwMK+bD6gxinkdZBhdHwP0hO7Pgc8bvg3
-         iC0DgNI3BeDFP4swaCL1cjtc0t/NVgNsuvgGVgg+PFhgjDOmnHeP4I+hgpDK8G1euyFI
-         7hSPcIeVztQUObi6YPDHz25H2RpYmhS7h2FH2cpkpKIvDjeK4BFP/FKLk5cF86DSam7E
-         gl+tJjgw+jzazGQLDJ5rQrNZKAK4fUtcVddtQbPKv+UI88nAC0E/V0R5paekEGjWtaUA
-         0nQw==
-X-Forwarded-Encrypted: i=1; AJvYcCXbd7qv/ALc7pYg9m4Ny97PJBIxJ5EagsLC0A+7oAlpptFUNR4ItN1JEQPAAlashMuzy+yo5Ntha8qOzyFI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7TclRvejtOaRadp13mZTpi5epFcP9PoI6kzR3FKDNT2nlOSrY
-	NwMyaIKEgXPMeSni5LBgRJDP1O7gS6jTppWlz+k3cWCqLqZfxv9b2HOl
-X-Gm-Gg: AY/fxX666YT0GINrV1mMpalQESxsYobWtaOiUsjVHkvAcZPsovHH2eHTAi9FoO9rveT
-	ul1/UNJFjgNNS6C9w6eMMM+4aXGMPIOwgKfvoMx3tOpDUfxl0qlp/NdVXxZKVO1AbA5LmeYt6eu
-	zRCWdzfAwekKEGMFnHyyae/+/TuGhcGMIURrtQhMI1maClv0/lQcvRy+Q0Kev4hAUDEbb/sld0y
-	mFUgqHLPYxiu8lIeb1sLjuM5rHS7TwX3oTDvHmft9++XML2UJsFEU9BbFs8M1ugxQFTx3Yw6slD
-	ptLXJuHib9rn7zij/OxPlY4tnVCLS7FEByt1ZnJXSN/kPGzqmwMkwhQ55t4NPcklp1NX3cJ14sC
-	V/HBpbPl8sGCdlPD8KP0xQvDytUxK2A0vKZhaf8YhzXPzUJaBWXRkd/6WJz97K4TeORX4K/Zl0w
-	/Z0wFUW3oDqNExOaBM0Xd3xID34O9tdKIFp03M
-X-Google-Smtp-Source: AGHT+IHZerZ0LNO2PuMFv7iW0Mjil2vz3+YsCHT76XvPfMWbN4zdO9z4ljPoono1/dOsj9Os3Y/Gyg==
-X-Received: by 2002:a17:903:249:b0:2a0:de4f:c9b with SMTP id d9443c01a7336-2a2f222b700mr347394015ad.4.1767099777888;
-        Tue, 30 Dec 2025 05:02:57 -0800 (PST)
+        bh=bFt+oA/6TnGUcf1mQLhvyTPCz7K2SXMiNJhoCpH+0PQ=;
+        b=o2zaGHm1uaQsdG3J7s603m3ZZyUrBLHVls0kgbTZ0kpvsHmI+8O61HxaNiRJoJfQD3
+         g7FEpnSAHH22r6NaRZmOfeMOp4nr23crbWATCyGPFTFhyX2I06r5HT0cVc1mx3eE0L/R
+         Dn1qU6moOvV5u0f73pBHHtGDXxS7zpNFhGQbAjMaUiXb9cfmxo02TCtif41Js/tuwLho
+         IE40TPpFuPeJGx6lIB1/3cYogbDe9PB6CJGC9LTN/lRDgeyhBv+OVgIqVIiOhXlaQwu5
+         431UTCKod8MWChSIslIeALYF+plXsw1mIBRHZsgn81p94FzHIxXPlai3w7lqKKNqSs6f
+         3+AA==
+X-Forwarded-Encrypted: i=1; AJvYcCU7jrfthKNWUhG838L2EnDTKtHWEkMcbQlcSLf3wUeD4LEZY5vsgQ35v2m14paEY5CGGz4cPnd7j3Obn3Oa@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzdyejx+jWaYk6F0VQHPU5w1cbVfpYATKFzAkXwPtlQNhwtMiDv
+	RcYix7yHDsl3Jxc55h38YSST9n4iwSzo7G88Z8wYiIWMwqAcxwkj6pHX
+X-Gm-Gg: AY/fxX5D8YzUPN0FnsGZyi133TMJvHYDpnsNI3Ku30Pr8OGfNmeyjl0N0kHrV//I3qN
+	sCGDPvXhKVhTuUk1r/RUA/9ebD2Cpo7QOK9IMWSMeNtd7mtfEXXZeG7PJNrfe+0ezMHv3OZI8Fv
+	mdIDDM0Ntv12+7RjCOj5m3i6oMy3K27a3vsKu5i1P7JJ443nlUqIkejGT0dZb/ZB/YqBV4SMmf+
+	i6UHKOTwiLZpaXLMZH95ed88J/Lxwvcw+4+PqhwTOtgKeeGEYfxVGDzstnDIlpbVZwZ98+k0kXV
+	Hjk5f5DhSiX13Z2/2Zp90NryMEU4NeIA0xb5qDlsRt7QrBoApoYLGVzfCmkMx7/QL8b2iDKFgjU
+	NfbdXHfsyq3C/e2Y7yRQymlPYDmjAbJ09bORjHPYsH0GZE5OdMCiGOaHWLO1iNn/Sg1XxmMsDIu
+	bksqgenGF6JnUqkOim19Cjxf6lXjdJCyFDwgUD
+X-Google-Smtp-Source: AGHT+IFOsQ07Jl6rs2Cw6NmpVbi6zdWPsCauR5WaD4vFkdSAOc437iw7lgABjk+ZfmAgdXjbg4je8w==
+X-Received: by 2002:a17:903:fad:b0:295:54cb:16ac with SMTP id d9443c01a7336-2a2f2218accmr324255055ad.18.1767099781202;
+        Tue, 30 Dec 2025 05:03:01 -0800 (PST)
 Received: from test-HP-Desktop-Pro-G3.. ([103.218.174.23])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d6ec6bsm296003075ad.87.2025.12.30.05.02.54
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d6ec6bsm296003075ad.87.2025.12.30.05.02.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Dec 2025 05:02:57 -0800 (PST)
+        Tue, 30 Dec 2025 05:03:00 -0800 (PST)
 From: Sudarshan Shetty <tessolveupstream@gmail.com>
 To: andersson@kernel.org,
 	konradybcio@kernel.org
@@ -82,9 +82,9 @@ Cc: robh@kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Sudarshan Shetty <tessolveupstream@gmail.com>
-Subject: [PATCH v10 2/5] dt-bindings: backlight: gpio-backlight: allow multiple GPIOs
-Date: Tue, 30 Dec 2025 18:32:24 +0530
-Message-Id: <20251230130227.3503590-3-tessolveupstream@gmail.com>
+Subject: [PATCH v10 3/5] backlight: gpio: add support for multiple GPIOs for backlight control
+Date: Tue, 30 Dec 2025 18:32:25 +0530
+Message-Id: <20251230130227.3503590-4-tessolveupstream@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251230130227.3503590-1-tessolveupstream@gmail.com>
 References: <20251230130227.3503590-1-tessolveupstream@gmail.com>
@@ -96,42 +96,120 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update the gpio-backlight binding to support configurations that require
-more than one GPIO for enabling/disabling the backlight.
+Extend the gpio-backlight driver to handle multiple GPIOs instead of a
+single one. This allows panels that require driving several enable pins
+to be controlled by the backlight framework.
 
 Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
 ---
- .../bindings/leds/backlight/gpio-backlight.yaml      | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/video/backlight/gpio_backlight.c | 61 +++++++++++++++++-------
+ 1 file changed, 45 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/leds/backlight/gpio-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/gpio-backlight.yaml
-index 584030b6b0b9..1483ce4a3480 100644
---- a/Documentation/devicetree/bindings/leds/backlight/gpio-backlight.yaml
-+++ b/Documentation/devicetree/bindings/leds/backlight/gpio-backlight.yaml
-@@ -17,7 +17,8 @@ properties:
+diff --git a/drivers/video/backlight/gpio_backlight.c b/drivers/video/backlight/gpio_backlight.c
+index 728a546904b0..037e1c111e48 100644
+--- a/drivers/video/backlight/gpio_backlight.c
++++ b/drivers/video/backlight/gpio_backlight.c
+@@ -17,14 +17,18 @@
  
-   gpios:
-     description: The gpio that is used for enabling/disabling the backlight.
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
+ struct gpio_backlight {
+ 	struct device *dev;
+-	struct gpio_desc *gpiod;
++	struct gpio_desc **gpiods;
++	unsigned int num_gpios;
+ };
  
-   default-on:
-     description: enable the backlight at boot.
-@@ -38,4 +39,13 @@ examples:
-         default-on;
-     };
+ static int gpio_backlight_update_status(struct backlight_device *bl)
+ {
+ 	struct gpio_backlight *gbl = bl_get_data(bl);
++	unsigned int i;
++	int br = backlight_get_brightness(bl);
  
-+  - |
-+    #include <dt-bindings/gpio/gpio.h>
-+    backlight {
-+      compatible = "gpio-backlight";
-+      gpios = <&gpio3 4 GPIO_ACTIVE_HIGH>,
-+              <&gpio3 5 GPIO_ACTIVE_HIGH>;
-+      default-on;
-+    };
+-	gpiod_set_value_cansleep(gbl->gpiod, backlight_get_brightness(bl));
++	for (i = 0; i < gbl->num_gpios; i++)
++		gpiod_set_value_cansleep(gbl->gpiods[i], br);
+ 
+ 	return 0;
+ }
+@@ -52,6 +56,7 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 	struct backlight_device *bl;
+ 	struct gpio_backlight *gbl;
+ 	int ret, init_brightness, def_value;
++	unsigned int i;
+ 
+ 	gbl = devm_kzalloc(dev, sizeof(*gbl), GFP_KERNEL);
+ 	if (gbl == NULL)
+@@ -62,10 +67,22 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 
+ 	def_value = device_property_read_bool(dev, "default-on");
+ 
+-	gbl->gpiod = devm_gpiod_get(dev, NULL, GPIOD_ASIS);
+-	if (IS_ERR(gbl->gpiod))
+-		return dev_err_probe(dev, PTR_ERR(gbl->gpiod),
+-				     "The gpios parameter is missing or invalid\n");
++	gbl->num_gpios = gpiod_count(dev, NULL);
++	if (gbl->num_gpios == 0)
++		return dev_err_probe(dev, -EINVAL,
++			"The gpios parameter is missing or invalid\n");
++	gbl->gpiods = devm_kcalloc(dev, gbl->num_gpios, sizeof(*gbl->gpiods),
++				   GFP_KERNEL);
++	if (!gbl->gpiods)
++		return -ENOMEM;
 +
- ...
++	for (i = 0; i < gbl->num_gpios; i++) {
++		gbl->gpiods[i] =
++			devm_gpiod_get_index(dev, NULL, i, GPIOD_ASIS);
++		if (IS_ERR(gbl->gpiods[i]))
++			return dev_err_probe(dev, PTR_ERR(gbl->gpiods[i]),
++					"Failed to get GPIO at index %u\n", i);
++	}
+ 
+ 	memset(&props, 0, sizeof(props));
+ 	props.type = BACKLIGHT_RAW;
+@@ -78,22 +95,34 @@ static int gpio_backlight_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	/* Set the initial power state */
+-	if (!of_node || !of_node->phandle)
++	if (!of_node || !of_node->phandle) {
+ 		/* Not booted with device tree or no phandle link to the node */
+ 		bl->props.power = def_value ? BACKLIGHT_POWER_ON
+-					    : BACKLIGHT_POWER_OFF;
+-	else if (gpiod_get_value_cansleep(gbl->gpiod) == 0)
+-		bl->props.power = BACKLIGHT_POWER_OFF;
+-	else
+-		bl->props.power = BACKLIGHT_POWER_ON;
++						    : BACKLIGHT_POWER_OFF;
++	} else {
++		bool all_high = true;
++
++		for (i = 0; i < gbl->num_gpios; i++) {
++			if (gpiod_get_value_cansleep(gbl->gpiods[i]) != 0) {
++				all_high = false;
++				break;
++			}
++		}
++
++		bl->props.power =
++			all_high ? BACKLIGHT_POWER_ON :  BACKLIGHT_POWER_OFF;
++	}
+ 
+ 	bl->props.brightness = 1;
+ 
+ 	init_brightness = backlight_get_brightness(bl);
+-	ret = gpiod_direction_output(gbl->gpiod, init_brightness);
+-	if (ret) {
+-		dev_err(dev, "failed to set initial brightness\n");
+-		return ret;
++
++	for (i = 0; i < gbl->num_gpios; i++) {
++		ret = gpiod_direction_output(gbl->gpiods[i], init_brightness);
++		if (ret)
++			return dev_err_probe(dev, ret,
++					"failed to set gpio %u direction\n",
++					i);
+ 	}
+ 
+ 	platform_set_drvdata(pdev, bl);
 -- 
 2.34.1
 
