@@ -1,97 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-86980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A82BCE9CF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:47:47 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 007A5CE9D06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:49:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id CA6043002D21
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:47:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CFEAF3000DF3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:49:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFC477261E;
-	Tue, 30 Dec 2025 13:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C829E2144D7;
+	Tue, 30 Dec 2025 13:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urZZMvpE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FYnlxltm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8769AA59;
-	Tue, 30 Dec 2025 13:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856D4594A;
+	Tue, 30 Dec 2025 13:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767102461; cv=none; b=Oc5ZZVgFSmyNovPeLYyaflWXlbcNcXAcN/xCd60+q19lyAhj3vjtzTCvYF34zVHhP2c7iQ2G1NNFdaZTOAASa6Aoe6iHfCy19k6U0K1u+glussyUXDUgy1Du5TOgdOa4C/ST95e49MUzQVeQzSKfEOmjbkygl4UpZq0IgxZbaM4=
+	t=1767102577; cv=none; b=dceSpLFcPzIMSvbUMBEswk1GgroohDhQ53GZOWiPVjTLaPC+dfOANDjG3aBThwys+MgKcPI0HJ16GO3MvSg7ufSN+QSd9F2o9jxZMMEqxOq3gg/h79soUVnec9wb0P5Nuh06EgEl0vJlCTBSaRoeDLVShG6Hgl8jBPtwZj9us6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767102461; c=relaxed/simple;
-	bh=mxDJL33Kc3e8V4Z31xSzx67G9tUidMS7fxK0LryWXf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g4ZyyCbiYp0+FNo9Rr6zn6HuhUrMhZsPGx8gf89H1Nd+8XiL99Hkn5uE2cOkTkekefw4j2BrEIxEdOR+BYQqxUtHSYQs83xOa9/W+PUXopQMaGwArsQLILPYvwH0GkdELN9ChaMVrSe2/4yV9u5Cbq+3gAW25SCcr56rEFMmmR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urZZMvpE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82647C4CEFB;
-	Tue, 30 Dec 2025 13:47:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767102461;
-	bh=mxDJL33Kc3e8V4Z31xSzx67G9tUidMS7fxK0LryWXf0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=urZZMvpEbsvSCTaFN3l0LsYj9kzUAbfEvnJDH4KpMfc2p7Sxn9H9CHyJZNKTyWnVE
-	 IPrK1TXbZSD6+NAVyBIsW27rrd+C7dHt9Vs7qREyG149aP+coMpnZpO6MGzDjTfbe9
-	 yvFVT+LN2CDDHiPQQiE/vUeJu66LXTtlyJ2ed7ps=
-Date: Tue, 30 Dec 2025 14:47:37 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
-	linux-arm-msm@vger.kernel.org, quic_bkumar@quicinc.com,
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-	dri-devel@lists.freedesktop.org, arnd@arndb.de,
-	dmitry.baryshkov@oss.qualcomm.com, stable@kernel.org
-Subject: Re: [PATCH v3 1/3] misc: fastrpc: Sanitize address logging and
- remove tabs
-Message-ID: <2025123003-ecologist-foothill-09b8@gregkh>
-References: <20251230110225.3655707-1-ekansh.gupta@oss.qualcomm.com>
- <20251230110225.3655707-2-ekansh.gupta@oss.qualcomm.com>
- <a8c6b4d9-83b6-45b5-9432-134023e2eadd@oss.qualcomm.com>
+	s=arc-20240116; t=1767102577; c=relaxed/simple;
+	bh=BMKckrcJbKgUB3ATuX/quQBrW8laOEYXTE5aHAQjjEY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YpR4AHY6jA3uWy5VerUlDsiXI5ng/UUbGkHwPPcWAnJqyWZZFzm0aq7ipd/P5FP9jIeybZPauj6HlPriR1CMphRQOCOUJjY9bt4PSau8MBU/CATycrPUOGYG0IiV7Lu5xYLXXxR9r/ugEjhHHYeAxLSh+udayxqedO768eEL/1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FYnlxltm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B60C4CEFB;
+	Tue, 30 Dec 2025 13:49:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767102577;
+	bh=BMKckrcJbKgUB3ATuX/quQBrW8laOEYXTE5aHAQjjEY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FYnlxltmcpkwxi34H9EuwqNkHpjYwFVroTW9HN2CHYF4AorIOWwuuQijkYDRph0Fn
+	 nFDIz24rrrdFdI0Ygb0iDOekJVoxzRMr7+zYcAo0XJfSObdauZPNLJ/TyLa5z+djh2
+	 sGd5g8T1oPhaAsiCjI/1A1E9aQ8fCOSkScXfClnA2LtWhijDnbtrvmVohv/bm4a/KQ
+	 +a7WFhWPXELeCOvGuN6RLuGR0COcdnj8MxDKA9rmlYVsT+jKpbwcLG7XYHkV96Y1RA
+	 jBsTOkIGvHTJ3VfN3ja2bI/ulskTCH/jzmjdMmPAQcMF4ysByRrEyD7EBQWcbZAVPe
+	 rM/4Zthdg1WUg==
+Message-ID: <954ecfcb-3d5f-4b65-9d59-4a5bdb067803@kernel.org>
+Date: Tue, 30 Dec 2025 14:49:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a8c6b4d9-83b6-45b5-9432-134023e2eadd@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+ dave.stevenson@raspberrypi.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mchehab@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-media@vger.kernel.org,
+ laurent.pinchart@ideasonboard.com
+References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
+ <20251114133822.434171-2-loic.poulain@oss.qualcomm.com>
+ <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
+ <CAFEp6-1zoU2cfVU06MoeOtAwMYN+XAxCwc0ebwaQyo78VNBf2Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <CAFEp6-1zoU2cfVU06MoeOtAwMYN+XAxCwc0ebwaQyo78VNBf2Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 30, 2025 at 02:23:55PM +0100, Konrad Dybcio wrote:
-> On 12/30/25 12:02 PM, Ekansh Gupta wrote:
-> > Avoid printing raw addresses in driver logs by using %p for remote
-> > buffer addresses. This reduces the risk of information leaks and
-> > conforms to kernel logging guidelines. Remove tabs in dev_*
-> > messages.
-> > 
-> > Fixes: 2419e55e532d ("misc: fastrpc: add mmap/unmap support")
-> > Cc: stable@kernel.org
-> > Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> > ---
-> >  drivers/misc/fastrpc.c | 19 ++++++++++---------
-> >  1 file changed, 10 insertions(+), 9 deletions(-)
-> > 
-> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > index ee652ef01534..408fe47e9db7 100644
-> > --- a/drivers/misc/fastrpc.c
-> > +++ b/drivers/misc/fastrpc.c
-> > @@ -1830,13 +1830,13 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
-> >  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
-> >  				      &args[0]);
-> >  	if (!err) {
-> > -		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
-> > +		dev_dbg(dev, "unmap OK: raddr=%p\n", (void *)(unsigned long)buf->raddr);
+On 03/12/2025 11:00, Loic Poulain wrote:
+> Hi Laurent,
 > 
-> Would it be easier if we did away with the uintptr_t, since the protocol
-> seems to assume all addresses are u64s anyway?
+> On Mon, Nov 17, 2025 at 6:30 PM Sakari Ailus
+> <sakari.ailus@linux.intel.com> wrote:
+>>
+>> Hi Loic,
+>>
+>> On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
+>>> Ensure reset state is low in the power-on state and high in the
+>>> power-off state (assert reset). Note that the polarity is abstracted
+>>> by the GPIO subsystem, so the logic level reflects the intended reset
+>>> behavior.
+>>
+>> That's an interesting approach to fix DTS gone systematically wrong.
+>>
+>> I was thinking of the drivers that have this issue, too, but I would have
+>> introduced a new GPIO under a different name (many sensors use "enable",
+>> too). Any thoughts?
+>>
+>> Cc Laurent.
+> 
+> Do you have any feedback on this change?
+> 
+>>
+>>>
+>>> To maintain backward compatibility with DTS files that use an incorrect
+>>> flag, we implement a mechanism similar to:
+>>>   commit 738455858a2d ("ASoC: codecs: wsa881x: Use proper shutdown GPIO polarity")
+>>>
+>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>> ---
+>>>  drivers/media/i2c/ov9282.c | 26 ++++++++++++++++++++++----
+>>>  1 file changed, 22 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/media/i2c/ov9282.c b/drivers/media/i2c/ov9282.c
+>>> index a9f6176e9729..e79b326cdd94 100644
+>>> --- a/drivers/media/i2c/ov9282.c
+>>> +++ b/drivers/media/i2c/ov9282.c
+>>> @@ -160,6 +160,7 @@ struct ov9282_mode {
+>>>   * @sd: V4L2 sub-device
+>>>   * @pad: Media pad. Only one pad supported
+>>>   * @reset_gpio: Sensor reset gpio
+>>> + * @reset_gpio_val: Logical value to reset the sensor
+>>>   * @inclk: Sensor input clock
+>>>   * @supplies: Regulator supplies for the sensor
+>>>   * @ctrl_handler: V4L2 control handler
+>>> @@ -180,6 +181,7 @@ struct ov9282 {
+>>>       struct v4l2_subdev sd;
+>>>       struct media_pad pad;
+>>>       struct gpio_desc *reset_gpio;
+>>> +     unsigned int reset_gpio_val;
+>>>       struct clk *inclk;
+>>>       struct regulator_bulk_data supplies[OV9282_NUM_SUPPLIES];
+>>>       struct v4l2_ctrl_handler ctrl_handler;
+>>> @@ -1127,13 +1129,29 @@ static int ov9282_parse_hw_config(struct ov9282 *ov9282)
+>>>
+>>>       /* Request optional reset pin */
+>>>       ov9282->reset_gpio = devm_gpiod_get_optional(ov9282->dev, "reset",
+>>> -                                                  GPIOD_OUT_LOW);
+>>> +                                                  GPIOD_OUT_HIGH);
+>>>       if (IS_ERR(ov9282->reset_gpio)) {
+>>>               dev_err(ov9282->dev, "failed to get reset gpio %ld",
+>>>                       PTR_ERR(ov9282->reset_gpio));
+>>>               return PTR_ERR(ov9282->reset_gpio);
+>>>       }
+>>>
+>>> +     /*
+>>> +      * Backwards compatibility work-around.
+>>> +      *
+>>> +      * The reset GPIO is active-low, but the driver has always used the
+>>> +      * gpiod API with inverted logic. As a result, the DTS had to
+>>> +      * incorrectly mark the GPIO as active-high to compensate for this
+>>> +      * behavior. Changing the flag in the driver now would break backward
+>>> +      * compatibility with existing DTS configurations. To address this,
+>>> +      * we add a simple value inversion so the driver works with both old
+>>> +      * and new DTS.
 
-Why is a pointer being printed at all?  That shouldn't be needed and is,
-as always, a potential information leak.
+This obviously is not true - driver will fail to work with some of old DTS.
 
-thanks,
+I am surprised that it is second approach last weeks duplicating the
+same problem and claiming the same - the change is backwards compatible,
+while it is not - instead of taking my old explanation from WSA drivers
+and admit the actual case of broken DTS.
 
-greg k-h
+With proper description I could agree, but with incorrect claims - no,
+it's wrong.
+
+Best regards,
+Krzysztof
 
