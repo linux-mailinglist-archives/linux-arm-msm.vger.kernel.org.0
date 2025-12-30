@@ -1,98 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-86897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD8D3CE887C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 03:15:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3A77CE8897
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 03:20:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7A0203011F91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 02:15:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF59F302105C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 02:19:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E66A228CB0;
-	Tue, 30 Dec 2025 02:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 588F82DEA61;
+	Tue, 30 Dec 2025 02:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ToMo+OWX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2wtkVma"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15301F30C3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 02:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298391DFE22;
+	Tue, 30 Dec 2025 02:19:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767060936; cv=none; b=cCm38kjdhzwqyxN9mzR9Ewdp62hM0qio+5QHSMy4Wys9szEufcaBEEeYg24uJ7fc5U8VOk160OPyhOmh/SvLPswBKmCBkctgKFqb0YyffarJ1h7U3e3JEYCOhsTOhNa370N397Pyv4CwpL6WMzQcdAmqWyZMC+XNgWBKixoExtU=
+	t=1767061191; cv=none; b=qQqNPXh0U/jJS7JoUtFb20Qxw8mlSoLaYOG+H/YxlR/+lbfdy4I6Bfmv7CXKosP1vBo2CMltCkJ4CO3hD0rDbkVevTa10YYwpjEkzEHrLS0xRv4emmFRjDTAm2bT2QPTMDn9CKgiwQBSFl+sNxA31N7xmqLyDN71vOGjPrjLriQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767060936; c=relaxed/simple;
-	bh=ZG4Dy8XbUrlgcEriKWoDsAcny2Cr6dB26N5m5m/1Lhs=;
+	s=arc-20240116; t=1767061191; c=relaxed/simple;
+	bh=AcEJsGXNVt3jmOn2Wqt08Ks6kV82blO/9BLT/+ASyxY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgXS6Tof0HsLAu1qMyC/2glKIX9nnkdDgnO2tlOuGZSrEbM43A+6xImaJiJV0OgiY51suvAHtGuYbbvqNJ8mVjx7DB77hCJY3v2Jo9+SbQbtrDjBtbpKFckAvSpzWKI1kEadsS9TGkqOcLtI+HWEFh5eQtsmSk7Uwxg4bO75L/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ToMo+OWX; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-88888c41a13so122258556d6.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Dec 2025 18:15:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767060934; x=1767665734; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4CTvsfTuWHAFbMUmkHWBKdKblUj5Rob5/vs3j6ckuD4=;
-        b=ToMo+OWXyuLQTD265frTE46FVYqHrdrJlpkvBUr5F6JTtfpdzuMQTW5bsvfSL+jgoF
-         AbcG4yc31+D87B1Zaogtd3fUhIRv9fIP1V+BkBavEvN2tlqi4Pt4BhceETHGk56Aacj4
-         KaO1UAfCKebzBB6C3KwCVKGA8B9gShmHUJthwXCurOZtmuZRhfVWhtnBE1Yc8AnJL9LO
-         n3CyRfxRo1D2Uc0gCdSe4j86Ypc4861AtvLLqfX6+nZD9mq9l0oBav/Xsit2XQ5XNuUp
-         5U4Lb9K9hx/nRev0O2fmQcLJ9P4PZM3K2XXiygz26HqUofthsmXuThyeYkm73M3/Fo/r
-         u7gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767060934; x=1767665734;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4CTvsfTuWHAFbMUmkHWBKdKblUj5Rob5/vs3j6ckuD4=;
-        b=oLVsKR7lfTe0oPn9Ztkg/j0YKAJEvf1zXBs3gMBcglo07HqCUic+uObNf1BE2/8TNF
-         qKkIjJs6x3X1VyJNcKhGid8JRuQWDeVyCtqYWCBk/83GovFgC7pTC2VhGmc6qNymejDF
-         z2F0Sgxs3wDtmhZoe/D2LYg70gaeA2J7oVXQe9E/Rh/K+lwpQLaEyhHeP8PRooeDPm/j
-         9l4339yKoQyK11Ikerz4sQkX0LtR0krNqFkrsmyfyDXjIOKTv2d9AlZW799gwzEMHYyk
-         ndj4nmAexa3OAxXcHvljrZtvODVAXfx03L1EvViv5xbQDm+YhjkD94p5mShww9smKjnt
-         sedQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXEkqZNGlbBiRrHvIy3di4amJH2SVQmkHf3Fkys9JV57vSGQz3v4xnHPk0yWGFwhGw+AVPCfzksekvFu/4q@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyag1a8boR7tsRYWpb7vR7E1xvyt4FlxdY8sbZwLIKlUBPap3d1
-	qocd2x1zU9vq4QhfOfVAwhSfhC8KtLy7tCls92Dn+htY/pMxLXs4oR8t
-X-Gm-Gg: AY/fxX6i8Ppl91fA19fMVV8Ur2hCc+LJssGx8kTg89fytBUeU+WsimFbHhTzu1ZeVp3
-	mSpd17dbkYDlt/I34CfrtRwi0V+ZElr/9dafq2AJb12JXsHl1TdSaSDB9/BXMSffa91jxKWoHWb
-	rfn0NOu2YM245KRK2wisAMzv9cqkAJBDdIwDG/QloBdoDIMSl4+IWfocjjZ66v52gFvcb0hhk3g
-	AM+vjhdxXWycFdPRExGt0FWtlLl4ooLeguWw4H58Fota6WCTa7QWwiLOf6yO0yJBntADkUYNTUu
-	UNke1rdHIuvAXAkzkwaZ8GuCNeGMBNHC4n+zgblXZq5+TYcuNwNZ8do1cfjifi5hVV6584E/Ohz
-	1QCC1FqCjkBLkEV8cjoEoQxjyxXKgotIvN/yDnngYmaBhivw+s9R2Ho0e83/wqjwmOFTKmjnTtO
-	bpzk9Prao5AuisLQ==
-X-Google-Smtp-Source: AGHT+IGPi74lMGY512ih57p+7byf/j2B0jGfqIGMNE2IPmwFreQextf4XtV0o/a+3koK6DFeMX3Esw==
-X-Received: by 2002:a05:6214:3206:b0:888:57bd:8c82 with SMTP id 6a1803df08f44-88d7f5b4860mr527175506d6.0.1767060933911;
-        Mon, 29 Dec 2025 18:15:33 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d997aeff4sm256934226d6.29.2025.12.29.18.15.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Dec 2025 18:15:33 -0800 (PST)
-Date: Mon, 29 Dec 2025 21:15:52 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=HKljWHhNFslbAaqgPb7zRcD69h2odn63ZiWLuUt+ol62SMLl7K1xjaRiqyJacKEU0tJSWcGx208cV7SMutO0IzdZpwX0firXcYh16s4YA6pXjMIB1L5lUgJ4OwZ8Ewqqc34+h80TXKJrte1hd9Dqdz/mpCLv3kiUxkx9+hqf9hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2wtkVma; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21F4C4CEF7;
+	Tue, 30 Dec 2025 02:19:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767061191;
+	bh=AcEJsGXNVt3jmOn2Wqt08Ks6kV82blO/9BLT/+ASyxY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O2wtkVmanB+R5JP6REg0A3j986QdZtMIY4PlYNZYkPcq8m3+UrQ2YAxLdBoygV88S
+	 pZ44D4dflJAajbVH/KDIfLi+MNQZzf57/zsDSMvusS6Kh/ufrKnTAQ8YenVJ90WhWO
+	 zldN/6s9u9sHUkrUBG5Dpveh7CXdeOfay4o6bFkhnTb2WP86/MJ8M2OrE+tv0hLMEV
+	 KYvM2a2KCU2H809IMbDiXVYWOOMq968lp/WDJuo3V44OWrhXVuXQZ1wys2WT53VfYf
+	 u85RWbCunqYx20bC9hGn+eNoUudLqkLNoWVLU+Pxjm7GOURzp7qKrIfIFQaYBH6pM1
+	 uSWV6YgylqS8w==
+Date: Mon, 29 Dec 2025 20:19:49 -0600
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Conor Dooley <conor+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Robert Mader <robert.mader@collabora.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH v4 2/5] media: i2c: imx355: Support devicetree and power
- management
-Message-ID: <aVM12D1NHYQRGSuS@rdacayan>
-References: <20251211014846.16602-1-mailingradian@gmail.com>
- <20251211014846.16602-3-mailingradian@gmail.com>
- <98fc4559-11de-43ba-b601-7575cb9d246e@kernel.org>
- <ff9d571a-9b47-4f39-8589-d4c7b190d3bd@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-remoteproc@vger.kernel.org,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Manivannan Sadhasivam <mani@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,sm8550-pas: Drop SM8750
+ ADSP from if-branch
+Message-ID: <176706118935.3209824.5361129598208771094.robh@kernel.org>
+References: <20251223130533.58468-2-krzysztof.kozlowski@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,32 +62,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ff9d571a-9b47-4f39-8589-d4c7b190d3bd@kernel.org>
+In-Reply-To: <20251223130533.58468-2-krzysztof.kozlowski@oss.qualcomm.com>
 
-On Fri, Dec 12, 2025 at 02:45:35AM +0100, Krzysztof Kozlowski wrote:
-> On 12/12/2025 02:43, Krzysztof Kozlowski wrote:
-> > On 11/12/2025 02:48, Richard Acayan wrote:
-> >> +				    imx355->supplies);
-> >> +	if (ret) {
-> >> +		dev_err(dev, "failed to enable regulators: %d\n", ret);
-> >> +		goto error_disable_clocks;
-> >> +	}
-> >> +
-> >> +	usleep_range(5000, 5100);
-> >> +	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-> > 
-> > So you just keep device in reset state forever :/
-> > 
-> > Please see other imx sensor drivers how to fix that.
 
-Sorry that the reset sequence is too confusing. The reset sequence will
-be changed to GPIO_ACTIVE_LOW.
-
-> I already told you this at v1 and you ignored the problem and never
-> responded.
+On Tue, 23 Dec 2025 14:05:34 +0100, Krzysztof Kozlowski wrote:
+> The binding for SM8750 ADSP PAS uses SM8550 ADSP as fallback, thus
+> "if:then:" block with "contains:" and the fallback does not need to
+> mention qcom,sm8750-adsp-pas.
 > 
-> NAK
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml          | 1 -
+>  1 file changed, 1 deletion(-)
+> 
 
-Anyway, I'll move you to CC for the series and carry this in the next
-revision.
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+
 
