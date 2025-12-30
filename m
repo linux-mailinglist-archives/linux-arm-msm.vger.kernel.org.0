@@ -1,112 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-86946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 679A7CE96B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 11:36:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CED2CE96CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 11:37:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A4CF9305E709
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 10:33:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 33BE930184C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 10:36:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09B662E8B64;
-	Tue, 30 Dec 2025 10:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 298492D9EFF;
+	Tue, 30 Dec 2025 10:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dqNk1Rw/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f4w/nnIC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA78212557;
-	Tue, 30 Dec 2025 10:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2216EAE7;
+	Tue, 30 Dec 2025 10:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767090814; cv=none; b=b/XlYdfjWZ8smOUo1odtSJJFtljeA+5+PDCjpXGjps/j+b9hPd3eBHqz30BAbRI/0pqu0g790QnlPVU5zULCGxWy0DxNKku8BwBu9kbMyVTQSjh4m4k8fho/l5CvdmR2adRNASyV9neOYAE9nFF22XR0FjvKYW18UDdFupwJP/c=
+	t=1767090962; cv=none; b=SQ3TxfVVOrrrqXGVBZPYGm93sQoIHvTEx4SRWnWVNU/3nEhmRYvLsoK9SEkkP9b9qgbVIYqbqmg3gRZywxjopMq6LRovSsjq0qW9PDaVc7aVtfQkI7FSaCqO+mJQ/Fti05BBUI6mwIGwtQAivc1AR7gqT6GXiXOPIkjm4AyTNSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767090814; c=relaxed/simple;
-	bh=2M5qqTQPUuHpq7jpnJEUWWC992coczz0E9KoEca4IX4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rBHpCRFQa2SIFfJAwgSzAlv4w3WndowhcLflEoB30ycHhzEbtQvBzF3uvQc8g7dzUyqWQsE65l/UU1jfyC3RFnbEVWe6cBLvgSGwbgu4EHL8tpqsCCWfvjW1+uSutQzj5tSdj0gM1NUwbo0uq2CWl0iZEQIjUS9anldT5nAUWXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dqNk1Rw/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC66C4CEFB;
-	Tue, 30 Dec 2025 10:33:30 +0000 (UTC)
+	s=arc-20240116; t=1767090962; c=relaxed/simple;
+	bh=Gn3RwqUQBzB5nVQ0sZWaLT/mNNpxI1bWWgHK3485eIg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tlM2a3h0H1OMqLMa83msa7Lfe0o8a1ZHZSusJtELwJ1nADT3cslemCn6OqL2ilylkoNZZL4WzTwfuS1IT9W1HmXarHdeuyurGwM/vWp9t2eaL1rB5g7rctjdXXb4zeey/2DF+4KHfr+/9ZhClqlFPMeNedw9cR6Z0/oM8jDIdos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f4w/nnIC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFEBC4CEFB;
+	Tue, 30 Dec 2025 10:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767090813;
-	bh=2M5qqTQPUuHpq7jpnJEUWWC992coczz0E9KoEca4IX4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dqNk1Rw/twkbYPisETknR1rBaeBHS2dqgB1BJ6irdpbxigfRxy4vuPj5jUPJiGQ5U
-	 Khix8UiQyrbuTGVVX/0cvrWrd20/W6T5S54BBWfrLuMjfdRK80uvFfAgjtN6Vfjd2C
-	 j7G2M2nzvUq5gXddnDy2kaUmsuBfdVh6rh+yMGPozwvjpP/WGrckFcbZscFgx7dgRM
-	 uPKbQl6qUijwePBvcfsSEhY7dY73YTiS0OnGf8spquF3YlIwbD96BjFQb9kHXdMnvM
-	 V8PoRsbt4bvQdY6dcHEg+9QTPAQvOdNztjf+POWyFF9iNboK8DPeJV+RfIJpXxFXz5
-	 hlwUdaW0JtSvQ==
-Message-ID: <002b8748-eee3-4bd8-bdb4-365ea949a969@kernel.org>
-Date: Tue, 30 Dec 2025 10:33:28 +0000
+	s=k20201202; t=1767090961;
+	bh=Gn3RwqUQBzB5nVQ0sZWaLT/mNNpxI1bWWgHK3485eIg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=f4w/nnICKw/TEupGp7JyyrW00yk/mYtZVwS9KRygfAJ1Oiy7rFDCN7EJ0XjEXIRSL
+	 5UH2Wl5rBjNFWsjUmNpMJQAJBYt8wbv3Nq7t2B4ZBFZ2oC/dWEaN+cFDVA3rq821ad
+	 jGmsQbHGwZ6S9opO+Np2ibHtKyFClDjderhCjNIooai6rujrgVSEzJDrmMT5uLJ2xx
+	 majXxT5xODLlhQiCp1OkgErEbThnX5hkGBlqp71pyIwb6dkT4DkKoYxGsmuWJ3Gtyq
+	 69Gb2Gu/7p3ivFXsADz2EvMMJ2nx/2fOm4aPet8yV62o7Y+fqkh+cqO9eiDt0jc8ux
+	 OMw4Q6P03xH5g==
+Date: Tue, 30 Dec 2025 11:35:55 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Alex Elder <elder@riscstar.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: Re: [PATCH v3 0/7] PCI/pwrctrl: Major rework to integrate pwrctrl
+ devices with controller drivers
+Message-ID: <aVOrC85Y6mCYU8xL@ryzen>
+References: <20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] media: iris: gen2: Add sanity check for session
- stop
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>,
- Hans Verkuil <hverkuil+cisco@kernel.org>,
- Wangao Wang <wangao.wang@oss.qualcomm.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20251229-iris-fixes-v2-0-6dce2063d782@oss.qualcomm.com>
- <O9VbTIO27YZQtoP7kUJIYBpFFDhMXlbbJR8jyMEolmhNR3bdeVgUurIu8vvs-Fwft5BcsNOje4d3_ofI1hPe8A==@protonmail.internalid>
- <20251229-iris-fixes-v2-5-6dce2063d782@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <20251229-iris-fixes-v2-5-6dce2063d782@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com>
 
-On 29/12/2025 06:31, Dikshita Agarwal wrote:
-> In iris_kill_session, inst->state is set to IRIS_INST_ERROR and
-> session_close is executed, which will kfree(inst_hfi_gen2->packet).
-> If stop_streaming is called afterward, it will cause a crash.
+On Mon, Dec 29, 2025 at 10:56:51PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> Hi,
 > 
-> Add a NULL check for inst_hfi_gen2->packet before sendling STOP packet
-> to firmware to fix that.
+> This series provides a major rework for the PCI power control (pwrctrl)
+> framework to enable the pwrctrl devices to be controlled by the PCI controller
+> drivers.
 > 
-> Fixes: 11712ce70f8e ("media: iris: implement vb2 streaming ops")
-> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 3 +++
->   1 file changed, 3 insertions(+)
+> Problem Statement
+> =================
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> index 6a772db2ec33fb002d8884753a41dc98b3a8439d..59e41adcce9aadd7c60bb1d369d68a4954f62aef 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> @@ -963,6 +963,9 @@ static int iris_hfi_gen2_session_stop(struct iris_inst *inst, u32 plane)
->   	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
->   	int ret = 0;
+> Currently, the pwrctrl framework faces two major issues:
 > 
-> +	if (!inst_hfi_gen2->packet)
-> +		return -EINVAL;
-> +
->   	reinit_completion(&inst->completion);
-> 
->   	iris_hfi_gen2_packet_session_command(inst,
-> 
-> --
-> 2.34.1
-> 
+> 1. Missing PERST# integration
 
-Are you sure this NULL check is concurrency safe ?
+AFAICT, and from reading your reply here:
 
-i.e. that ->session_stop() and ->session_close() cannot be executed 
-concurrently ?
+https://lore.kernel.org/linux-pci/ibvk4it7th4bi6djoxshjqjh7zusbulzpndac5jtqkqovvgcei@5sycben7pqkk/
 
----
-bod
+  I suppose maybe you plan to enhance pwrctrl so it can assert/deassert
+  individual PERST# in the hierarchy?
+
+"No, that plan has been dropped for good. For now, PERST# will be handled
+entirely by the controller drivers. Sharing the PERST# handling with pwrctrl
+proved to be a pain and it looks more clean (after the API introduction) to
+handle PERST# in controller drivers."
+
+Thus, it seems that even after this series, pwrctrl will be missing PERST#
+integration. Perhaps the cover letter could be rephrased to more clearly
+highlight this.
+
+Because it seems a bit weird that the first point of the problem statement
+(missing PERST# integration) will still be the case after this series.
+
+
+Kind regards,
+Niklas
 
