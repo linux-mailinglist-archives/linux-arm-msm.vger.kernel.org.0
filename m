@@ -1,103 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-86943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2F33CE94F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 11:10:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6663BCE95D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 11:25:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 10C55300FE23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 10:09:57 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3080F300294B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 10:25:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1472C2349;
-	Tue, 30 Dec 2025 10:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E5A30C62F;
+	Tue, 30 Dec 2025 10:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ctehTI5y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A8ysGjiS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826528C84A;
-	Tue, 30 Dec 2025 10:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0522874F5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 10:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767089395; cv=none; b=mXMGjJ8oS7+wfepHtXqAPVg0ANV4AI7HxyocHQe0xPFeYgs1AtMV02A2fYhmsjX8Ks/743KAvVDNupxF6KwlKRj8WbuI5Jdrwu3KdbWoiLXsJjrEdafA8FnzmuBygQvV+6Mq4TgwKaAmT2GFcn5BheUem0CLXm9cMCgw3Ru/y+w=
+	t=1767090311; cv=none; b=XUYiBY96+fu60+CbY3Ojy5SJLEZ/NlR02zHgCY2FxEnsF/6FThnXKR2koyN0XystslOUJnDqZAa10PLxyUxX00giy2BPxtOAW7BoBIqkc1VaRiLyqy7W9hkUsYHq7TfOK9JTiBqSL/PpbRtpzl/hWmkohR2TTa2b078rKG21hLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767089395; c=relaxed/simple;
-	bh=wTiXDpfU6q9X5QdMk9Tcxn26k+zyE0H7rCZr5xwZ3ks=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=ZIvUGCP7fVQJqIy9r3EcbiML9XwmgA7ZoAo3WP1I8i2bW7rRTS6XVhrf5D3yCCmFvZzFVU+U6Lnuvc/b+TwSx868dZrk1LHVOodWFfqdDddgFsji+eQtcwZHCSYOKCIOuM8F6fHGzcN9y9NFru1gWh2vFvusrI/q17cjwo6T9O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ctehTI5y; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=wTiXDpfU6q9X5QdMk9Tcxn26k+zyE0H7rCZr5xwZ3ks=; b=c
-	tehTI5yuWGpg8uWZasa2JnFFRnvcbitNFiLLNXjT5x6goUKhCricZHtF8jb5meIz
-	GwGJqQ/rSBCkHH5g8svs6dJtqp9Ihk34EJHS9b5w+aqwfRDRQWkqEmL9vyWJfTY7
-	P3Kx1WTFkw9Md7UqAIx6JwJhcXRVEObJ1gqJQbXCNw=
-Received: from slark_xiao$163.com ( [112.97.82.249] ) by
- ajax-webmail-wmsvr-40-137 (Coremail) ; Tue, 30 Dec 2025 18:08:04 +0800
- (CST)
-Date: Tue, 30 Dec 2025 18:08:04 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Loic Poulain" <loic.poulain@oss.qualcomm.com>
-Cc: mani@kernel.org, ryazanov.s.a@gmail.com, johannes@sipsolutions.net,
-	andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: [PATCH v3 2/2] net: wwan: mhi: Add network support for
- Foxconn T99W760
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20250723(a044bf12) Copyright (c) 2002-2025 www.mailtech.cn 163com
-In-Reply-To: <CAFEp6-2NBa8tgzTH__F4MOg=03-LO7RjhobhaKHmapXXa9Xeyw@mail.gmail.com>
-References: <20251119105615.48295-1-slark_xiao@163.com>
- <20251119105615.48295-3-slark_xiao@163.com>
- <CAFEp6-23je6WC0ocMP7jXUtPGfeG9_LpY+1N-oLcSTOmqQCL2w@mail.gmail.com>
- <4c4751c0.9803.19b3079a159.Coremail.slark_xiao@163.com>
- <CAFEp6-2NBa8tgzTH__F4MOg=03-LO7RjhobhaKHmapXXa9Xeyw@mail.gmail.com>
-X-NTES-SC: AL_Qu2dBfyTtkoj4imZYukfmk8Sg+84W8K3v/0v1YVQOpF8jBLowBkwXUJINHjZyMiRJAKgrRWbTjtF++VreJlyZIwLdz1obbFqRjSDjk80aCdNiw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1767090311; c=relaxed/simple;
+	bh=3bq4wS41sElH6HN97Xk+wCPENH1Pwd1DGUbqR7V7hEA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X6LRZAIefNVZGjbp6YaM9Nglk9Rt7+h2/QJdwCSjlGMyQgOMZl46CfTJi2qLk10ooO7myQ67Ft6RkXApfAyPtF7BRIe5vZOoFP8pQjbLy1B9ogeUIWC5rtmwEYlRtLQUn+4e/4aoG+R13IzZGtYUUbYmpvCgbvoWiIiaebo+7vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A8ysGjiS; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-64b608ffca7so12093270a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 02:25:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1767090306; x=1767695106; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A84L5izMWerjv3l5VUK/ThKlyQecyYUlcn2gwusIU18=;
+        b=A8ysGjiSqf9QeKSn9jN+oHfmfPLwKMWjxRKFA7KgRhQFkBNY2AF+yXGPddzessPIW+
+         8cS3o4T7N95Ko9fQ0LG7JawoP1HqzS+5GISMpSrei/VOiO2pC7pVj7n51L2zytCQ1T6y
+         u33n6i1D8Yp3lhqEXddFDD226QsG1yOmRgxeBjDa2eYsccYWwgI0PF53ORjT+k5bujr2
+         a4o+DLwdLNL/U4i1SIQQv2uKKKfZIR/kFjnwPzr3ksYpD5ZSriSxEr83NPGn+a2lYGvn
+         okD4zuOVnfBC/MR8HrIDxxE4C56mWu+ua/A78TD/t6/FM4fkoQhUE6l9t8n52AhGmxPo
+         WYfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767090306; x=1767695106;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A84L5izMWerjv3l5VUK/ThKlyQecyYUlcn2gwusIU18=;
+        b=EIkpmO6bvvZvmMm5qjTY0Rhb39JfHjJyHwnoXoh8hzxn8Je86FjBxGa5Ma6dMFyJPG
+         9/BUCo/rtcNEOdnpOHAh3QzSocllYHS9yYDAUOHgTkYSsnnVg6ZKuvDaQgKXF1NT9btW
+         EMjryTnLEzvAZtxFlHazxjfc6m96kKQFlJrv9sBX8I+SOe+rFU7s/7+EcgOfBuyi9gia
+         aEzqpo9ULrYRc5jhDqqE7Go3uRwC+u8XU8TdpvRB0dNqc4YBcyg7C29EtMgXy3UJ17GZ
+         OT6FD2JYouZVXDNSkzfkUoSIYp00lWo0Oax1bhFs0XfCejmYBbobynO3el2y9rY+WAgc
+         FoIA==
+X-Forwarded-Encrypted: i=1; AJvYcCXYEoFcutjq0+YiwwnetBVFBFMZ86zCJU6oN/UdkHdaAI1FAWdAtcdOG65ZgvTN5xJz2wmcyIFJ72N79sHr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFh8rW2evaxITwEok/NWF65p7VMNAxvOEWzAhGmIi8rQIFn45/
+	lfr1QxXR6Va6H6V2xYIGR3s0I1sJR+qWbNUmUyrp+DRdU6YgpGu6FZBNMYMv2C+GcT0=
+X-Gm-Gg: AY/fxX5p5AvckRiM6f/NtpTTJCkjN96ttweCIViPLb0FlIiIPvin6bY8q5cH2gzkE8i
+	/k+cp6tT1pC3A2gT1P4u0SkAZ04Tdf8CN46VqKjnje4bZ+aakJvisMu3c/vF/ylFAZEnRxzwjm7
+	VTdMVhIgSpPMAa4V9v2aOmxKDmFEXVA+HwL7yUX5Vt2SP+hz7scZiQSZYIYdDdhN1Ya+UypWHXb
+	/VrXWykslqspVv3gRs+lee1e2flX5+dLZp2AwCefZabX8Vuy0Zc6MB/7eJLLenFC2B97FfR7cJw
+	39PzJwb+weX9pg0iifL79Knx5FV7ZwYMuTwjNWatEBcFcHGvtJO/H4hFe4RHfu4s0QbqippWda+
+	t8oEN6FhRgBZsKX7XJid9gMYO40iLmRNb70pQ4XXpoeyiaKxKwMAM+LWZcI3S5M0L+klXlwXPay
+	n/qahc8GjHiKQ6vCZqXjUaaqCdipd2BYXLsDSy9YrWt5e7KWg4h14/A2pxews+TsyAMw4b6QHI3
+	ojzkHXMbFdvzkwQ88KI0AeUpQBwyHfZbK0SXwko5MIClQMeQBSE8gBPQnQmPeOtpfZyNB1yQnq2
+	YA==
+X-Google-Smtp-Source: AGHT+IHtjFq36fKb/W+hEgTGU8xzmwqZqlmZ4nekHBAp9M3fENMh3Rta2nGIQX3/7oQIixs7qoB9SA==
+X-Received: by 2002:a17:907:6d12:b0:b74:9833:306c with SMTP id a640c23a62f3a-b803719a492mr3238157166b.47.1767090305697;
+        Tue, 30 Dec 2025 02:25:05 -0800 (PST)
+Received: from ?IPV6:2001:1c06:2302:5600:7555:cca3:bbc4:648b? (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037ad806asm3660996166b.23.2025.12.30.02.25.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Dec 2025 02:25:05 -0800 (PST)
+Message-ID: <859778df-4f46-4a32-93ff-dcdae7dacb0f@linaro.org>
+Date: Tue, 30 Dec 2025 10:25:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <703d68c0.93c7.19b6ebaa741.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:iSgvCgD3XwiFpFNpCS1MAA--.4671W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbC5wR53WlTpIQiBgAA35
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] Revert "media: iris: Add sanity check for stop
+ streaming"
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>,
+ Wangao Wang <wangao.wang@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251229-iris-fixes-v2-0-6dce2063d782@oss.qualcomm.com>
+ <20251229-iris-fixes-v2-4-6dce2063d782@oss.qualcomm.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20251229-iris-fixes-v2-4-6dce2063d782@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-CgpBdCAyMDI1LTEyLTMwIDE3OjUwOjM5LCAiTG9pYyBQb3VsYWluIiA8bG9pYy5wb3VsYWluQG9z
-cy5xdWFsY29tbS5jb20+IHdyb3RlOgo+SGkgU2xhcmssCj4KPk9uIFRodSwgRGVjIDE4LCAyMDI1
-IGF0IDk6MDHigK9BTSBTbGFyayBYaWFvIDxzbGFya194aWFvQDE2My5jb20+IHdyb3RlOgo+Pgo+
-Pgo+PiBBdCAyMDI1LTExLTIxIDIwOjQ2OjU0LCAiTG9pYyBQb3VsYWluIiA8bG9pYy5wb3VsYWlu
-QG9zcy5xdWFsY29tbS5jb20+IHdyb3RlOgo+PiA+T24gV2VkLCBOb3YgMTksIDIwMjUgYXQgMTE6
-NTfigK9BTSBTbGFyayBYaWFvIDxzbGFya194aWFvQDE2My5jb20+IHdyb3RlOgo+PiA+Pgo+PiA+
-PiBUOTlXNzYwIGlzIGRlc2lnbmVkIGJhc2VkIG9uIFF1YWxjb21tIFNEWDM1IGNoaXAuIEl0IHVz
-ZSBzaW1pbGFyCj4+ID4+IGFyY2hpdGVjaHR1cmUgd2l0aCBTRFg3Mi9TRFg3NSBjaGlwLiBTbyB3
-ZSBuZWVkIHRvIGFzc2lnbiBpbml0aWFsCj4+ID4+IGxpbmsgaWQgZm9yIHRoaXMgZGV2aWNlIHRv
-IG1ha2Ugc3VyZSBuZXR3b3JrIGF2YWlsYWJsZS4KPj4gPj4KPj4gPj4gU2lnbmVkLW9mZi1ieTog
-U2xhcmsgWGlhbyA8c2xhcmtfeGlhb0AxNjMuY29tPgo+PiA+Cj4+ID5SZXZpZXdlZC1ieTogTG9p
-YyBQb3VsYWluIDxsb2ljLnBvdWxhaW5Ab3NzLnF1YWxjb21tLmNvbT4KPj4gPgo+PiBIaSBMb2lj
-LAo+PiBNYXkgSSBrbm93IHdoZW4gdGhpcyBwYXRjaCB3b3VsZCBiZSBhcHBsaWVkIGludG8gbmV0
-IG9yIGxpbnV4LW5leHQ/Cj4+IEkgc2F3IHRoZSBjaGFuZ2VzIGluIE1ISSBzaWRlIGhhcyBiZWVu
-IGFwcGxpZWQuCj4+IFQ5OVc3NjAgZGV2aWNlIHdvdWxkIGhhdmUgYSBuZXR3b3JrIHByb2JsZW0g
-aWYgbWlzc2luZyB0aGlzIGNoYW5nZXMgaW4gd3dhbgo+PiBzaWRlLiBQbGVhc2UgaGVscCBkbyBh
-IGNoZWNraW5nLgo+Cj5Zb3UgY2FuIHNlZSBzdGF0dXMgaGVyZTogaHR0cHM6Ly9wYXRjaHdvcmsu
-a2VybmVsLm9yZy9wcm9qZWN0L25ldGRldmJwZi9saXN0Lwo+Cj5JZiB0aGUgY2hhbmdlcyBoYXZl
-IG5vdCBiZWVuIHBpY2tlZCB0b2dldGhlciwgcGxlYXNlIHJlc2VuZCB0aGlzIG9uZSwKPmluY2x1
-ZGluZyB0YWdzLgo+Cj5SZWdhcmRzLAo+TG9pYwpIaSBMb2ljLApJIGNoZWNrZWQgYWJvdmUgbGlu
-ayBhbmQgZGlkbid0IGZpbmQgbXkgY2hhbmdlcy4KVGhpcyBpcyBzdHJhbmdlIHNpbmNlIHRoZSBj
-aGFuZ2VzIGluIE1ISSBzaWRlIG9mIHRoaXMgc2VyaWFsIGhhcyBiZWVuIGFwcGxpZWQsIGJ1dCB0
-aGlzIApoYXMgYmVlbiBpZ25vcmVkLgpCVFcsIHRoaXMgY2hhbmdlcyBtYXkgbm90IGJlIGFwcGxp
-Y2FibGUgYmVjYXVzZSBhbm90aGVyIGNoYW5nZSAKaHR0cHM6Ly9wYXRjaHdvcmsua2VybmVsLm9y
-Zy9wcm9qZWN0L25ldGRldmJwZi9wYXRjaC8yMDI1MTEyMDExNDExNS4zNDQyODQtMS1zbGFya194
-aWFvQDE2My5jb20vCmhhcyBiZWVuIGFwcGxpZWQuIAoKU28gZG8geW91IHdhbnQgbWUgdG8gcmVz
-ZW5kIHRoZSBuZXcgY2hhbmdlcyBiYXNlZCBvbiB0aGUgbGF0ZXN0IG5ldCBiYXNlbGluZSA/CkFu
-eSBzZXJpYWxzIHNoYWxsIGJlIGFzc2lnbmVkPyBWNCBzaGFsbCBiZSB1c2VkPwo=
+On 29/12/2025 06:31, Dikshita Agarwal wrote:
+> Revert the check that skipped stop_streaming when the instance was in
+> IRIS_INST_ERROR, as it caused multiple regressions:
+> 
+> 1. Buffers were not returned to vb2 when the instance was already in
+>     error state, triggering warnings in the vb2 core because buffer
+>     completion was skipped.
+> 
+> 2. If a session failed early (e.g. unsupported configuration), the
+>     instance transitioned to IRIS_INST_ERROR. When userspace attempted
+>     to stop streaming for cleanup, stop_streaming was skipped due to the
+>     added check, preventing proper teardown and leaving the firmware
+>     in an inconsistent state.
+> 
+> Fixes: ad699fa78b59 ("media: iris: Add sanity check for stop streaming")
+> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_vb2.c | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
+> index db8768d8a8f61c9ceb04e423d0a769d35114e20e..139b821f7952feb33b21a7045aef9e8a4782aa3c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vb2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vb2.c
+> @@ -231,8 +231,6 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
+>   		return;
+>   
+>   	mutex_lock(&inst->lock);
+> -	if (inst->state == IRIS_INST_ERROR)
+> -		goto exit;
+>   
+>   	if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
+>   	    !V4L2_TYPE_IS_CAPTURE(q->type))
+> @@ -243,10 +241,10 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
+>   		goto exit;
+>   
+>   exit:
+> -	if (ret) {
+> -		iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
+> +	iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
+> +	if (ret)
+>   		iris_inst_change_state(inst, IRIS_INST_ERROR);
+> -	}
+> +
+>   	mutex_unlock(&inst->lock);
+>   }
+>   
+> 
+
+This revert looks strange, should be something like:
+
+commit 9b6b11d31918722b4522b8982141d7b9646c0e48 (HEAD -> next-6.19-camss-v2)
+Author: Bryan O'Donoghue <bod@kernel.org>
+Date:   Tue Dec 30 10:20:01 2025 +0000
+
+     Revert "media: iris: Add sanity check for stop streaming"
+
+     This reverts commit ad699fa78b59241c9d71a8cafb51525f3dab04d4.
+
+     Everything is broken I give up.
+
+     Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+
+diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c 
+b/drivers/media/platform/qcom/iris/iris_vb2.c
+index db8768d8a8f61..139b821f7952f 100644
+--- a/drivers/media/platform/qcom/iris/iris_vb2.c
++++ b/drivers/media/platform/qcom/iris/iris_vb2.c
+@@ -231,8 +231,6 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
+                 return;
+
+         mutex_lock(&inst->lock);
+-       if (inst->state == IRIS_INST_ERROR)
+-               goto exit;
+
+         if (!V4L2_TYPE_IS_OUTPUT(q->type) &&
+             !V4L2_TYPE_IS_CAPTURE(q->type))
+@@ -243,10 +241,10 @@ void iris_vb2_stop_streaming(struct vb2_queue *q)
+                 goto exit;
+
+  exit:
+-       if (ret) {
+-               iris_helper_buffers_done(inst, q->type, 
+VB2_BUF_STATE_ERROR);
++       iris_helper_buffers_done(inst, q->type, VB2_BUF_STATE_ERROR);
++       if (ret)
+                 iris_inst_change_state(inst, IRIS_INST_ERROR);
+-       }
++
+         mutex_unlock(&inst->lock);
+  }
+
+Just `git revert ad699fa78b59241c9d71a8cafb51525f3dab04d4` and add your 
+commit log ?!
+
+---
+bod
 
