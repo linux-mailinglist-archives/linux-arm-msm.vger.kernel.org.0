@@ -1,155 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-86926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 000CCCE8EC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 08:54:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CA4ACE8F07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 08:57:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 49C3A3002068
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 07:54:36 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 14A8A3014705
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 07:56:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D630E2FD7D5;
-	Tue, 30 Dec 2025 07:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89973285066;
+	Tue, 30 Dec 2025 07:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jNNoAaTd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grGfBoqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E932FD7A3;
-	Tue, 30 Dec 2025 07:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4179020C488;
+	Tue, 30 Dec 2025 07:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767081274; cv=none; b=FhwFoCiwjzVZnJThSwVw4XPyZhEuqtjH5YW+AwM9Ut9+37xIJQswsUK39rz/xuA65wk8yS+ZMu5ABopo2JoUTDdsNBuT4ek2XHo6b/7EElXSL4A4Re1GSccCoalaf9OdKtj3GHtziWQNm9IyTRkqimgih5hA+eVH9gBkzi7G+Tc=
+	t=1767081416; cv=none; b=t4w8sHFZxzCnG05E6oqF52aGUgC/Vauq8LUQooinEYiX7i8nDtf2UObsO1v8oPOIlQyPzzrzNxMKRB1ENg5XhsFd+TNmL8OAVt83rMErJSL++mSWDhSn1pe5i8nnY7VgygizLrjS34J/fAxlMN1LMFYvHoba0/JSSozJR5DRVpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767081274; c=relaxed/simple;
-	bh=X95x1hQaSWCAV6YD/01KOZzlmtQARY0C9O48Su3w3vA=;
+	s=arc-20240116; t=1767081416; c=relaxed/simple;
+	bh=JQyJb0YO5UFCqTEMft7JYBt0dtj33bVTcB90Vzhv7nc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UcIvewVdaAxhvVkIPpxeJ6FLP0/VVChTs2l0uIKFIE/sNQfctMn7EVVyTtTkNFFE5rfImnhNRlqWnW1lOzb5l6HuKWj0C//bYyywju5i+zdgB4KEUxMDyKfk2efjsgELgsQYVjoQLBh4jJ+WOlDA0w3c+AiyzX+sLZu+lsLp4pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jNNoAaTd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9A7C4CEFB;
-	Tue, 30 Dec 2025 07:54:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=PbdU1FESE/xrX76rICUkSGJVRwpFNHq33ZUubkLTMaL5UCzD1qzFApBulnjrItULxcD92xn6BQUKtUxT2tDn0l6ZpZzbd0FIoW9H/JaViuhQNkbYN0UTNUPf7LJQ5jxzOfKh6uGjVYPu1xv6ntymAbSHO4YqmOCAmf7ObPdxkak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grGfBoqY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE61C4CEFB;
+	Tue, 30 Dec 2025 07:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767081274;
-	bh=X95x1hQaSWCAV6YD/01KOZzlmtQARY0C9O48Su3w3vA=;
+	s=k20201202; t=1767081415;
+	bh=JQyJb0YO5UFCqTEMft7JYBt0dtj33bVTcB90Vzhv7nc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jNNoAaTd+w2vpO2BzjZeHOtngb7jBEH00qYeuI2F/LGvlsqd8e1orb0CeXpJtRsHt
-	 fRKiAFxscfBDoeA1E2KMlcamRaO5a6BgflB2qH9sy84bG+SygjPMNhNshbM2OhyqrQ
-	 EHv1idzsLJLD7mcBXv3kmXVFvirHNAXia2dkLOcFbeOoluBRqc8Ch2Dwn6Rk3kRING
-	 OUQeBoaJxdW2wGe/2RmVojln0sPwS//9076drbKk7HVykqbchODlnMMUyD1+3XkdeV
-	 58Y6wJJjha9xuZEIf86gZKb2HXySm02KTdsGi0mjtrkG6yWC7PRn7LvVXZxzkZsH0H
-	 DX+uEja1cPufw==
-Date: Tue, 30 Dec 2025 13:24:23 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
-	vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-	robin.clark@oss.qualcomm.com, lumag@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Prakash Gupta <guptap@qti.qualcomm.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: agatti: Fix IOMMU DT properties
-Message-ID: <aVOFL3jmNrFNiYV0@sumit-xelite>
-References: <20251229071258.456254-1-sumit.garg@kernel.org>
- <bylruidduy2u4lsqlhzmohahgkm633hijffi3s2wt5ojeaotk3@awulzz2qdg7h>
- <aVNf-lZ1KcH3tRV_@sumit-xelite>
- <yudvagpfw3tfemvf3wcr62jrlvxfo5yobgsrzj4nechtqdxeu6@i2pfy4ys6qlj>
+	b=grGfBoqYLdMenwlVJlFoKeI96hBqPO466UsO0CBp1nQU4ar+5Lb4RTl5XsuwVBHeQ
+	 KYgpF/mm0VjqL+ciQgRRDgQnygsxEf3B1uDOumDxzVpqGXxioNxx4f5Ki+bVStaVU3
+	 kFwjQE/iU08dumlwXS1zY1fMG/Zg8e79EdU0Dz+Lk6azo44IBIaewupl4SXcp6aaNI
+	 F2ywmbVKxPrWn7+hBg2MuKMyDffJRYu48BjEDYAQ08NhGvqXIcLkvS+R9TYLWIs5jN
+	 D5Vl3zyTWrNWEd0ngDID4dFoMWESa+pzcuyZBwcYy54IliVq1XyxrgW15vMyXRF3j1
+	 EQLF5DT3UzL1Q==
+Date: Tue, 30 Dec 2025 13:26:44 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Subject: Re: [PATCH v2 02/10] serdev: Add serdev device based driver match
+ support
+Message-ID: <fwzmob6ez7c6xbakcd4rq2icp7mdwgdvimss3zybb4ivdds3uo@mwguaz7rekjc>
+References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
+ <20251125-pci-m2-e-v2-2-32826de07cc5@oss.qualcomm.com>
+ <CAMRc=Mc-WebsQZ3jt2xirioNMticiWj9PJ3fsPTXGCeJ1iTLRg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <yudvagpfw3tfemvf3wcr62jrlvxfo5yobgsrzj4nechtqdxeu6@i2pfy4ys6qlj>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mc-WebsQZ3jt2xirioNMticiWj9PJ3fsPTXGCeJ1iTLRg@mail.gmail.com>
 
-On Tue, Dec 30, 2025 at 09:05:28AM +0200, Dmitry Baryshkov wrote:
-> On Tue, Dec 30, 2025 at 10:45:38AM +0530, Sumit Garg wrote:
-> > On Mon, Dec 29, 2025 at 10:00:02PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, Dec 29, 2025 at 12:42:57PM +0530, Sumit Garg wrote:
-> > > > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > > > 
-> > > > Fix IOMMU DT propeties for GPU, display and video peripherals via
-> > > > dropping SMMU stream IDs which relates to secure context bank.
-> > > > 
-> > > > This problem only surfaced when the Gunyah based firmware stack is
-> > > > ported on Agatti replacing the legacy QHEE based firmware stack. Assigning
-> > > > Linux kernel (HLOS) VMID to secure context bank stream IDs is treated
-> > > > as a fault by Gunyah hypervisor which were previously ignored by QHEE
-> > > > hypervisor.
-> > > 
-> > > We are porting the underlaying layer. Can we make it to behave in a way
-> > > similar to the _existing_ software? If DT was a part of the firmware, it
-> > > would have been fine to perform such updates. But as it is not, we
-> > > really should try not to break the interface boundary between firmware
-> > > and the kernel.
-> > 
-> > I support your viewpoint. But in this current case Linux kernel VMID mapping
-> > for secure context bank stream IDs is incorrect. As Konrad mentioned in the
-> > other thread that for secure media streaming use-cases, it rather requires
-> > proper representation via iommu-map such that appropriate VMID can be mapped.
+On Thu, Nov 27, 2025 at 06:32:04AM -0800, Bartosz Golaszewski wrote:
+> On Tue, 25 Nov 2025 15:45:06 +0100, Manivannan Sadhasivam via B4 Relay
+> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> >
+> > Add support to match serdev devices with serdev drivers based on the serdev
+> > ID table defined in serdev_device_driver::id_table.
+> >
+> > The matching function, serdev_driver_match_device() uses the serdev device
+> > name to match against the entries in serdev_device_driver::id_table.
+> >
+> > If there is no serdev id_table for the driver, then serdev_device_match()
+> > will fallback to ACPI and DT based matching.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/tty/serdev/core.c         | 23 ++++++++++++++++++++++-
+> >  include/linux/mod_devicetable.h   |  7 +++++++
+> >  include/linux/serdev.h            |  4 ++++
+> >  scripts/mod/devicetable-offsets.c |  3 +++
+> >  4 files changed, 36 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+> > index b33e708cb245..2b5582cd5063 100644
+> > --- a/drivers/tty/serdev/core.c
+> > +++ b/drivers/tty/serdev/core.c
+> > @@ -85,12 +85,33 @@ static const struct device_type serdev_ctrl_type = {
+> >  	.release	= serdev_ctrl_release,
+> >  };
+> >
+> > +static int serdev_driver_match_device(struct device *dev, const struct device_driver *drv)
+> > +{
+> > +	const struct serdev_device_driver *serdev_drv = to_serdev_device_driver(drv);
+> > +	struct serdev_device *serdev = to_serdev_device(dev);
+> > +	const struct serdev_device_id *id;
+> > +
+> > +	if (!serdev_drv->id_table)
+> > +		return 0;
+> > +
+> > +	for (id = serdev_drv->id_table; id->name[0]; id++) {
+> > +		if (!strcmp(dev_name(dev), id->name)) {
+> > +			serdev->id = id;
+> > +			return 1;
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
 > 
-> Yes, I understand this part. I'm basically suggesting that Gunyah should
-> ignore this SID when programming the actual SMMU (probably like QHEE
-> did).
-
-TBH, I generally dislike as to why the firmware based hypervisor
-behaviour should be encoded in the DT. One can always argue that Gunyah
-is doing the right thing given the purpose of SMMU stream IDs. And if
-Gunyah has to change that behaviour since Agatti DT was based on QHEE
-behaviour then the same behaviour will get replicated on all other Qcom
-SoCs.
-
-So, I would suggest that kernel should follow the expected behaviour
-which is to not program HLOS VMID for stream IDs dedicated for secure
-context bank.
-
+> I don't know if Rob agrees with me but I would very much prefer to see
+> software-node-based approach instead of an ID table matching.
 > 
-> > 
-> > > 
-> > > I'm fine with the change, but I think we should make sure that Gunyah
-> > > doesn't break existing device trees.
-> > 
-> > Sure, this change isn't breaking any DT ABI but brings compliance to
-> > usage of stream IDs.
+> Could you in the pwrseq driver, create a software node for the serdev device
+> you allocate, set its "compatible" to "qcom,wcn7850-bt" and match against it
+> here?
 > 
-> Actually, it does, as you can see from Rob's email. You didn't perform
-> make dtbs_check while submitting this patch.
+> This has several benefits: if you ever need to pass more properties to the
+> serdev devices, you already have a medium for that and you can also leave
+> serdev_device_add() alone. You're comparing the entire name here - what if
+> someone sets device's ID to some value and the name will be "WCN7850.2"?
+> 
+> You could also drop the serdev_id field from struct serdev_device. For matching
+> you could even reuse the of_device_id from the device driver.
+> 
 
-Okay, I missed that. Looks like the GPU DT node already defined minItems
-for the iommus property but the others didn't. I will add following
-change in the next version to fix the warnings.
+I tried this approach and I really liked it since it gets rid of the yet-another
+id_table for serdev (which I didn't like it btw). But there is one concern
+though. We need a generic 'device_get_match_data' implementation for swnode.
+While trying to implement it, I stumbled upon this patch [1] which does the same
+for other usecase, but there was a disagreement on whether swnode should be used
+for driver matching or not. For my usecase, I find it very useful and
+reasonable, but Dmitry Torokhov believes otherwise.
 
-Irrespective on that, the DT forwards and backwards ABI compatibility is
-being maintained with the changes being proposed in this patch-set.
+Maybe I'll include this patch in the next version, CC Dmitry and see where it
+goes.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-index f0cdb5422688..e5e62c5bab42 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-@@ -33,6 +33,7 @@ properties:
-       - const: core
+> Which also makes me think that maybe we should finally think about a generic,
+> fwnode-based device driver matching in the driver model...
+> 
 
-   iommus:
-+    minItems: 1
-     maxItems: 2
+Yes, that would be useful too and will allow me to get rid of the custom
+matching logic in serdev core.
 
-   interconnects:
-diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-index 3f3ee82fc878..8d4371697867 100644
---- a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-@@ -42,6 +42,7 @@ properties:
-       - const: vcodec0_bus
+- Mani
 
-   iommus:
-+    minItems: 2
-     maxItems: 5
+[1] https://lore.kernel.org/all/20240427203650.582989-1-sui.jingfeng@linux.dev
 
-   interconnects:
-
--Sumit
+-- 
+மணிவண்ணன் சதாசிவம்
 
