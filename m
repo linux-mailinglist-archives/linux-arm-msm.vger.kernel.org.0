@@ -1,210 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-86999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C9AFCEA16D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 16:41:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 753FFCEA1FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 17:03:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1000F301CEBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 15:41:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F09813043906
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 16:02:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B7232D0C9B;
-	Tue, 30 Dec 2025 15:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B4C631B111;
+	Tue, 30 Dec 2025 16:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oQt0uCW3"
+	dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b="b7QAS6hG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E927219A79;
-	Tue, 30 Dec 2025 15:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23454246768
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 16:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767109285; cv=none; b=DA5qYJd3SwM8JQLPQ+ciA5H+DsVX7wzpAzi9rotznRJsHy4R80h5JV+shlG+XZWrqdsgHxzUu1wPHRN7r//OilBNalJfgUyw1G0Un0+iOuLPEXkwI7TGf+SQ5z7ORJmsKItHEXG5Zytz98Cf3KsZlkqhKfCP9WxjRtiNzqB+idc=
+	t=1767110570; cv=none; b=VVppaQT/yPEqJGoPXMYcghywmDRxFYfVE7z/UM2DV5SenGmRLTq4sdBH0y9GWXF5NEb0JehVSP9Lkwd0Mw6/cag2DVjgmBgsavXrK7Wz5AO+KwwPkB3PVonP+00Dq7GDVbrjx9EH4Qi3JW+hD1KD9BdUnvlpOZtBiM0krrsOe+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767109285; c=relaxed/simple;
-	bh=jd48LsNLSI+s7QCuEipniUUwm/mwWsBt6Wi2ZRPEBCM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OsYe2xoDxNT2azSYj6jUeeyhAziKsa8TTUPK2YP6fS+AT2vvPz2jvcFxOwhf+ZKA15vkOmLjjOzr3MHdnzxh1iVmlR6aBKpSiRHR8DtZAo7MXrnSmvKs6KSdDEgO8SlK4zXMcdw7TeNi93YfESxNHCpY0v6bqcfy80xpNZLMGa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oQt0uCW3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6ACC19421;
-	Tue, 30 Dec 2025 15:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767109284;
-	bh=jd48LsNLSI+s7QCuEipniUUwm/mwWsBt6Wi2ZRPEBCM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oQt0uCW3f7CuNgtAQvjNGqC73R6NVqGh74DNZ/KRjXN8yOSN5wwZQ3xGzu/PUKqRh
-	 v3kDEFQnBWPnb84ByCqKGSGHPrd5XRLj5k2ZtAIEQPUQwYcA9aPN3I7bLFt1FKcv0b
-	 lBH74TfUq5puyjoHEChOUXC0kkR5iLwJ6cImkoxZeV4E7+XRjetEQWdUvWCvA/rpCM
-	 VR4hZSIZ3qFqPIx1yfgYq1PdSJ/ardnlv+vZ45U7QnMQTC4CE8qmQ61hX8noA8SfBb
-	 FoyJQosL76r7bvsKBygzBlBdrnNum8XSFfMCV0J8kmEcASGXInm4k/PvxZQt/KpHcQ
-	 gDhV8WNAhiyZA==
-Message-ID: <5c53a758-9499-4043-ad89-1cc6f1b12233@kernel.org>
-Date: Tue, 30 Dec 2025 16:41:20 +0100
+	s=arc-20240116; t=1767110570; c=relaxed/simple;
+	bh=Xw6TO8h/kPeXMQ21igMPIJ59SDwm8QLsSUoqZglBoBQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kYhurJS4WXYCg/av+WFK+YZU23PQNh1BjctruhNdQhzGfQkQw+M1k2gOSRS2Ic4nQpcTy1FlcJ1aKw8PTZbcFrUCcQQlDlAv256saHqmYi2m5QA3uMwWgaw9buBdR0plcRM9zsydrtuMN3DRGTHp5YyJ/a2zQtCLwP/tTgbcXjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b=b7QAS6hG; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-7cae2330765so7036689a34.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 08:02:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1767110566; x=1767715366; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3nF06fY/Z52Z+Clk0d49datcv/n2O+xADnW0BhLtR+Y=;
+        b=b7QAS6hGt1E+4PrcvzKWxJObxgYMQcL++KNOYRNZFRtLafNDM/BDZSfpqNtuUylYwW
+         54nfXWqiMPdT9zAUo0DOVcbtR8HpWrIDOX9t/MLP1vt9AHjaIsPoPYmWBcYMNq20VlxP
+         FQXBtQrZwN5rqnPZZ6heWT3lm5ndYeCG2mVUUf5Bx7sTA2TIj/v2/ptJ6dHiNZ+4Ch//
+         vMHkhnwijbZqTv3sNgT9IeHp5FoXaO/TM/KwgiHDnbOgO3nBEEqJ0JpQuxrD/l8tYHat
+         TwauFfxqPlUC8HQoVNug4CNQLBG+Wo/kGnQ4zaQtPcu/YHSvCGOD4t9S97TLRDB1SOvx
+         izLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767110566; x=1767715366;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3nF06fY/Z52Z+Clk0d49datcv/n2O+xADnW0BhLtR+Y=;
+        b=Bj92mLle/bOLTS6HrV37DkbTP3YirZoqcAqXW+QU64IKo1LOW/9EpQ7uP4XTFkluZs
+         Rni/WNpZ34SU1h2AYLen3Kgpl6/IjfrajRxu2aheaZUUsW21AQTQe+uszEXvF5u0XsuK
+         7gkKkDzMJ8HGOUUIWDR/Rgo8FRyMRWlKykbgl2jgkpe93hZ1Pqjvn15lrDTaMfRezR2u
+         1XgvSIJ/QTu2D3JzCOUWD2awv9MVx4KB9wbRw1OwQTZsHkt81yMsmG+aBoQatjHwZReU
+         qJJTEBKx6hvy++FHW1WP0+KE4E8XoyUlFQEnHmgtHAI2/wHIVnBUcx6sHXA1zCq24wLZ
+         Z23g==
+X-Gm-Message-State: AOJu0YykiYQPXE3vTKHaqx8T9ZBJ0i0uvm5p7sGScaiYtJRQ7pSm4GTq
+	LO3WVEc9vSWiZVOtWd6eUUEmcpQLGyBS5e4UE8GVsqGsRCLS/2N7J/B+bdiX0TKjW3ecCk0QdNa
+	NSRwe
+X-Gm-Gg: AY/fxX7B57GcytA6Efo0D+dGWsQmz6s33Ll6AXQGSlIhza+pCsK9PdPMjt+pTVKb1c9
+	ZhGLPmBX6gbJL+z55XqN8uEF50eKoNTnb946ssNCjoCi4embiUy9cTvdPBFjPk6MbC27tjbeYVK
+	7j2b7Tl8dwCZxzjHyP4JXwl8K5e4IJyorQI8/ThOopXsIkI3+mdi67Hz3+Lt3ksI6g1P13qOpm6
+	Gc2dwPX/GveW3xlD56VR+DpcsN4FAe/0mZwk4Qcc8JndI0OIvL3i585gzCsyf5yyPXp7s7V+e1p
+	vAy53oGv8XpCA5Ha3Es9ncJbgHFkEL8REGUbCbakIhxJoSD+22IjTpR9rQHo5jhd6F1A4qh06US
+	E9q53EOVkG6NmEumtFuKV/D9uIOuFg9h5KYidefaAnMGCxpXqDZ0mDjWZo8Q7CMj4qo5rZkjHQH
+	2MeFI=
+X-Google-Smtp-Source: AGHT+IH0zzRE7zHifu5tv1rtpqUc/VKQnCmbhseAtXuWESK7KrUpxUmRxMQzTAEpNlHJkixRota+lQ==
+X-Received: by 2002:a05:6808:1205:b0:450:b249:71bb with SMTP id 5614622812f47-457a292c5bdmr16339873b6e.19.1767110566337;
+        Tue, 30 Dec 2025 08:02:46 -0800 (PST)
+Received: from [127.0.0.1] ([198.8.77.157])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-457b3f1761csm15918931b6e.22.2025.12.30.08.02.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Dec 2025 08:02:45 -0800 (PST)
+From: Jens Axboe <axboe@kernel.dk>
+To: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-block@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20251230-blk_mq_no_ctx_checking-v1-1-2168131383e6@oss.qualcomm.com>
+References: <20251230-blk_mq_no_ctx_checking-v1-1-2168131383e6@oss.qualcomm.com>
+Subject: Re: [PATCH] blk-mq: skip CPU offline notify on unmapped hctx
+Message-Id: <176711056497.410043.6155561525733424852.b4-ty@kernel.dk>
+Date: Tue, 30 Dec 2025 09:02:44 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, krzk+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org,
- dave.stevenson@raspberrypi.com, robh@kernel.org, conor+dt@kernel.org,
- mchehab@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org,
- laurent.pinchart@ideasonboard.com
-References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
- <20251114133822.434171-2-loic.poulain@oss.qualcomm.com>
- <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
- <CAFEp6-1Tdmr5v0r+q0qeOG6qqA-hiBaF1iTEcmhBA0oTjLgbgg@mail.gmail.com>
- <aT_Xc6LR161QBRFp@kekkonen.localdomain>
- <CAFEp6-2PP0ufge0RXTrE2Nrn_sLCN5erokxpJsuGeHq7ZEZ83g@mail.gmail.com>
- <41447e2e-52af-4fe0-8204-7ee7f43841c6@kernel.org>
- <CAFEp6-26NiAcoP-nTaFZrG6AT3QimZsNLfPU07Fj2TwqimBbRg@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <CAFEp6-26NiAcoP-nTaFZrG6AT3QimZsNLfPU07Fj2TwqimBbRg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 
-On 30/12/2025 16:03, Loic Poulain wrote:
-> Hi Krzysztof,
+
+On Tue, 30 Dec 2025 17:17:05 +0800, Cong Zhang wrote:
+> If an hctx has no software ctx mapped, blk_mq_map_swqueue() never
+> allocates tags and leaves hctx->tags NULL. The CPU hotplug offline
+> notifier can still run for that hctx, return early since hctx cannot
+> hold any requests.
 > 
-> On Tue, Dec 30, 2025 at 2:54 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 15/12/2025 11:19, Loic Poulain wrote:
->>> On Mon, Dec 15, 2025 at 10:40 AM Sakari Ailus
->>> <sakari.ailus@linux.intel.com> wrote:
->>>>
->>>> Hi Loic,
->>>>
->>>> On Mon, Dec 15, 2025 at 10:35:15AM +0100, Loic Poulain wrote:
->>>>> Hi Sakari,
->>>>>
->>>>> On Mon, Nov 17, 2025 at 6:30 PM Sakari Ailus
->>>>> <sakari.ailus@linux.intel.com> wrote:
->>>>>>
->>>>>> Hi Loic,
->>>>>>
->>>>>> On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
->>>>>>> Ensure reset state is low in the power-on state and high in the
->>>>>>> power-off state (assert reset). Note that the polarity is abstracted
->>>>>>> by the GPIO subsystem, so the logic level reflects the intended reset
->>>>>>> behavior.
->>>>>>
->>>>>> That's an interesting approach to fix DTS gone systematically wrong.
->>>>>>
->>>>>> I was thinking of the drivers that have this issue, too, but I would have
->>>>>> introduced a new GPIO under a different name (many sensors use "enable",
->>>>>> too). Any thoughts?
->>>>>
->>>>> Apologies for missing your point earlier. We can’t really name it
->>>>> enable, as it performs the opposite function and that would be
->>>>> confusing in the device tree description. A property like reset2 would
->>>>> be more accurate, but I suspect such a binding wouldn’t be acceptable
->>>>> from a device tree/bindings perspective.
->>>>
->>>> Many sensor datasheets document a pin called "xshutdown" or alike. That's
->>>> not exactly "reset" or "enable" but it can be mapped to either and this can
->>>> be seen in the existing bindings. The polarity is effectively the opposite,
->>>> yes, but does that matter?
->>>
->>> I assume naming a pin 'xshutdown' or 'xreset' indicates that its
->>> polarity is inverted at the driver level, the driver interprets the
->>> shutdown or reset function as being active when the logical level is 0
->>> (low), as they actually incorrectly do for the 'reset' gpio.
->>>
->>> From the driver’s perspective, this naming convention is acceptable;
->>> however, it causes the devicetree description to slightly diverge from
->>> the datasheet and leaves the reset property effectively inverted (and
->>> therefore incorrect).
->>>
->>> Honestly, in this specific case, the simplest solution would be to fix
->>> the driver, since there is currently no upstream devicetree using this
->>> sensor. That would technically break backward compatibility for any
->>> out-of-tree DTS (if they exist), but those would have been incorrect
->>> in the first place.
->>>
->>> But yes, this seems like a good opportunity to discuss and define a
->>> more general approach that can be applied to other drivers with
->>> similar polarity or naming issues.
->>>
->>> Krzysztof, any thoughts?
->>
->> You need to first CC me. You sent it to the special bulk email
->> address... Anyway, please be specific about the question.
 > 
-> Ultimately, I’d like to reach a consensus before moving forward with
-> V4, as several approaches have been discussed so far:
-> 
-> 1. Keep the current (incorrect) driver logic: This was the approach I
-> used in V1 of this series, explicitly noting in the DTS that the
-> polarity was incorrect. However, this workaround was fairly rejected
-> as not being an acceptable solution.
-> 
-> 2. Fix the driver logic: This was the approach in V2. It ensures
-> correct behavior going forward, especially since there is currently no
-> upstream DTB using this binding yet. The downside is that it would
-> consistently break any out-of-tree DTBs that *incorrectly* describe
-> the GPIO polarity.
 
-No... It will break EVERY out of tree DTBs, which was previously
-working. It won't break only the ones which were NEVER working...
+Applied, thanks!
 
-Breaking a working out of tree DTBs for a driver used for almost 5 years
-is a no-go.
-
-...unless you get acks from all platform maintainers (so ~40 SoC
-maintainers?). Quite unlikely.
-
-This should stay as is just like I did not fix none of other sensor drivers.
+[1/1] blk-mq: skip CPU offline notify on unmapped hctx
+      commit: 10845a105bbcb030647a729f1716c2309da71d33
 
 Best regards,
-Krzysztof
+-- 
+Jens Axboe
+
+
+
 
