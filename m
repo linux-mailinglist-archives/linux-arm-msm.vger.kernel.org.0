@@ -1,130 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-86979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA28BCE9CAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:34:27 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A82BCE9CF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 14:47:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4BA38300297D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:34:24 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CA6043002D21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Dec 2025 13:47:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5370B1DB375;
-	Tue, 30 Dec 2025 13:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFC477261E;
+	Tue, 30 Dec 2025 13:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="XOoH+vs5"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urZZMvpE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1FE1A5B84;
-	Tue, 30 Dec 2025 13:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8769AA59;
+	Tue, 30 Dec 2025 13:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767101663; cv=none; b=TW7h84MLlW94J4kNxtjMWz2B3ZOcoIMWO6FXzUzgZXBH8VFGFZ/u2nq04gNHSrsjfMai5Lcss47Eu8EVTxEhQQf0OIBKfraLAn7mBG0EdsviA1Rq5QdwLGQwc4JxW72gWiPhqichYZojKZ5midrLzr0mfMADRvEUBgtiNlQ3iec=
+	t=1767102461; cv=none; b=Oc5ZZVgFSmyNovPeLYyaflWXlbcNcXAcN/xCd60+q19lyAhj3vjtzTCvYF34zVHhP2c7iQ2G1NNFdaZTOAASa6Aoe6iHfCy19k6U0K1u+glussyUXDUgy1Du5TOgdOa4C/ST95e49MUzQVeQzSKfEOmjbkygl4UpZq0IgxZbaM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767101663; c=relaxed/simple;
-	bh=lMq+1h7QC1VVEVe0XAMeUptGZhwTBmsEtr6h+tH9y3c=;
+	s=arc-20240116; t=1767102461; c=relaxed/simple;
+	bh=mxDJL33Kc3e8V4Z31xSzx67G9tUidMS7fxK0LryWXf0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rSz8qU/71369uZLGb4CIzqehVn+mAAGhQkHZXj135oo72WNTSOdJejqq93Oj/R1rW/3qzXuUOv6o7RnOK5R1KAaE6TYMHtTMZv8ykgGoCoNZMP1VTrAc+u5MpdLEsENnZBLfzm9DTgjqmN7wV/3ol6x5u4RvKkymujMOMW+aOGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=XOoH+vs5; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from pendragon.ideasonboard.com (81-175-209-152.bb.dnainternet.fi [81.175.209.152])
-	by perceval.ideasonboard.com (Postfix) with UTF8SMTPSA id 02C4855C;
-	Tue, 30 Dec 2025 14:33:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1767101637;
-	bh=lMq+1h7QC1VVEVe0XAMeUptGZhwTBmsEtr6h+tH9y3c=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=g4ZyyCbiYp0+FNo9Rr6zn6HuhUrMhZsPGx8gf89H1Nd+8XiL99Hkn5uE2cOkTkekefw4j2BrEIxEdOR+BYQqxUtHSYQs83xOa9/W+PUXopQMaGwArsQLILPYvwH0GkdELN9ChaMVrSe2/4yV9u5Cbq+3gAW25SCcr56rEFMmmR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urZZMvpE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82647C4CEFB;
+	Tue, 30 Dec 2025 13:47:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1767102461;
+	bh=mxDJL33Kc3e8V4Z31xSzx67G9tUidMS7fxK0LryWXf0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XOoH+vs52zNezGp8KdFJ7wCNHmgQCZ6w0867mIupmqYVhBGcL1B2t18WajnSVKGZn
-	 Ozk6vFtLg5ieSKRW3hjjbRUheRGDzosVQ8OO/ub5Yni9xLpSajmfAc+fI3w1mrAnXN
-	 2aH0D7wLP32XiL155pPgZtK7UdzbQkjodkBPVsZw=
-Date: Tue, 30 Dec 2025 15:33:54 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, krzk+dt@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org,
-	dave.stevenson@raspberrypi.com, robh@kernel.org,
-	conor+dt@kernel.org, mchehab@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-media@vger.kernel.org
-Subject: Re: [PATCH v3 1/4] media: i2c: ov9282: Fix reset-gpio logical state
-Message-ID: <20251230133354.GA24182@pendragon.ideasonboard.com>
-References: <20251114133822.434171-1-loic.poulain@oss.qualcomm.com>
- <20251114133822.434171-2-loic.poulain@oss.qualcomm.com>
- <aRtbwK0Afo50Lh0B@kekkonen.localdomain>
- <CAFEp6-1Tdmr5v0r+q0qeOG6qqA-hiBaF1iTEcmhBA0oTjLgbgg@mail.gmail.com>
- <aT_Xc6LR161QBRFp@kekkonen.localdomain>
- <CAFEp6-2PP0ufge0RXTrE2Nrn_sLCN5erokxpJsuGeHq7ZEZ83g@mail.gmail.com>
+	b=urZZMvpEbsvSCTaFN3l0LsYj9kzUAbfEvnJDH4KpMfc2p7Sxn9H9CHyJZNKTyWnVE
+	 IPrK1TXbZSD6+NAVyBIsW27rrd+C7dHt9Vs7qREyG149aP+coMpnZpO6MGzDjTfbe9
+	 yvFVT+LN2CDDHiPQQiE/vUeJu66LXTtlyJ2ed7ps=
+Date: Tue, 30 Dec 2025 14:47:37 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_bkumar@quicinc.com,
+	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+	dri-devel@lists.freedesktop.org, arnd@arndb.de,
+	dmitry.baryshkov@oss.qualcomm.com, stable@kernel.org
+Subject: Re: [PATCH v3 1/3] misc: fastrpc: Sanitize address logging and
+ remove tabs
+Message-ID: <2025123003-ecologist-foothill-09b8@gregkh>
+References: <20251230110225.3655707-1-ekansh.gupta@oss.qualcomm.com>
+ <20251230110225.3655707-2-ekansh.gupta@oss.qualcomm.com>
+ <a8c6b4d9-83b6-45b5-9432-134023e2eadd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEp6-2PP0ufge0RXTrE2Nrn_sLCN5erokxpJsuGeHq7ZEZ83g@mail.gmail.com>
+In-Reply-To: <a8c6b4d9-83b6-45b5-9432-134023e2eadd@oss.qualcomm.com>
 
-On Mon, Dec 15, 2025 at 11:19:51AM +0100, Loic Poulain wrote:
-> On Mon, Dec 15, 2025 at 10:40 AM Sakari Ailus wrote:
-> > On Mon, Dec 15, 2025 at 10:35:15AM +0100, Loic Poulain wrote:
-> > > On Mon, Nov 17, 2025 at 6:30 PM Sakari Ailus wrote:
-> > > > On Fri, Nov 14, 2025 at 02:38:19PM +0100, Loic Poulain wrote:
-> > > > > Ensure reset state is low in the power-on state and high in the
-> > > > > power-off state (assert reset). Note that the polarity is abstracted
-> > > > > by the GPIO subsystem, so the logic level reflects the intended reset
-> > > > > behavior.
-> > > >
-> > > > That's an interesting approach to fix DTS gone systematically wrong.
-> > > >
-> > > > I was thinking of the drivers that have this issue, too, but I would have
-> > > > introduced a new GPIO under a different name (many sensors use "enable",
-> > > > too). Any thoughts?
-> > >
-> > > Apologies for missing your point earlier. We can’t really name it
-> > > enable, as it performs the opposite function and that would be
-> > > confusing in the device tree description. A property like reset2 would
-> > > be more accurate, but I suspect such a binding wouldn’t be acceptable
-> > > from a device tree/bindings perspective.
-> >
-> > Many sensor datasheets document a pin called "xshutdown" or alike. That's
-> > not exactly "reset" or "enable" but it can be mapped to either and this can
-> > be seen in the existing bindings. The polarity is effectively the opposite,
-> > yes, but does that matter?
+On Tue, Dec 30, 2025 at 02:23:55PM +0100, Konrad Dybcio wrote:
+> On 12/30/25 12:02 PM, Ekansh Gupta wrote:
+> > Avoid printing raw addresses in driver logs by using %p for remote
+> > buffer addresses. This reduces the risk of information leaks and
+> > conforms to kernel logging guidelines. Remove tabs in dev_*
+> > messages.
+> > 
+> > Fixes: 2419e55e532d ("misc: fastrpc: add mmap/unmap support")
+> > Cc: stable@kernel.org
+> > Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> > ---
+> >  drivers/misc/fastrpc.c | 19 ++++++++++---------
+> >  1 file changed, 10 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > index ee652ef01534..408fe47e9db7 100644
+> > --- a/drivers/misc/fastrpc.c
+> > +++ b/drivers/misc/fastrpc.c
+> > @@ -1830,13 +1830,13 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+> >  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+> >  				      &args[0]);
+> >  	if (!err) {
+> > -		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
+> > +		dev_dbg(dev, "unmap OK: raddr=%p\n", (void *)(unsigned long)buf->raddr);
 > 
-> I assume naming a pin 'xshutdown' or 'xreset' indicates that its
-> polarity is inverted at the driver level, the driver interprets the
-> shutdown or reset function as being active when the logical level is 0
-> (low), as they actually incorrectly do for the 'reset' gpio.
-> 
-> From the driver’s perspective, this naming convention is acceptable;
-> however, it causes the devicetree description to slightly diverge from
-> the datasheet and leaves the reset property effectively inverted (and
-> therefore incorrect).
-> 
-> Honestly, in this specific case, the simplest solution would be to fix
-> the driver, since there is currently no upstream devicetree using this
-> sensor. That would technically break backward compatibility for any
-> out-of-tree DTS (if they exist), but those would have been incorrect
-> in the first place.
+> Would it be easier if we did away with the uintptr_t, since the protocol
+> seems to assume all addresses are u64s anyway?
 
-I would either fix the driver, or update the DT bindings to indicate the
-polarity should be inverted due to a historical mistake.
+Why is a pointer being printed at all?  That shouldn't be needed and is,
+as always, a potential information leak.
 
-I don't think this patch is right. The polarity in DT is meant to
-describe board-level inversion of the GPIO, so you can't consider that
-ACTIVE_HIGH is a DT bug and print a warning.
+thanks,
 
-> But yes, this seems like a good opportunity to discuss and define a
-> more general approach that can be applied to other drivers with
-> similar polarity or naming issues.
-> 
-> Krzysztof, any thoughts?
-
--- 
-Regards,
-
-Laurent Pinchart
+greg k-h
 
