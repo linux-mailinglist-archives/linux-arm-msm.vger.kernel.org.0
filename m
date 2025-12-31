@@ -1,42 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-87072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF05ECEB876
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 09:31:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD13ACEB8C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 09:35:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1FA7C3004EE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 08:31:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 35958300C1C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 08:35:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA65B1ADC97;
-	Wed, 31 Dec 2025 08:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D292E22BA;
+	Wed, 31 Dec 2025 08:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qWlNSgs0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8791624DF;
-	Wed, 31 Dec 2025 08:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219E93128B2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Dec 2025 08:35:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767169866; cv=none; b=Yinqm8tVSF9V/eDEmtjDL9r+B/KOuEsWxxI7v3EPYqFbnzhMyvi7vgNBf/Ggfyrc7zn82id8GouY6g0C3TiGS4T5XGnWkMcmlFm58KhuAcn+t6yU9HBu2PaFmVQk18BPpGQI0en2+39C52Ehu8LJ3AyiXW4El/Bv+YAMCrrKHCQ=
+	t=1767170105; cv=none; b=chZ/J/LkUPO5y+JD7mDrByLw41f9xO09LXmkarSWOa5gQBlxzfurj5dUwBBVIu7lKcRF8+uQVDnBaXy9ToMYs9ZsAQSbKwNUYvH1wWK8TbFPFs3NvcwQLBSoDDzQRD9gcyLy7HbCMr/eDtwwX9xku9ZJ1pIldXYaYkeG5gmWCLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767169866; c=relaxed/simple;
-	bh=47SNa6j3A+3sbzDIb/a+4i0TYt0uMEj24MXcNS+8EjI=;
+	s=arc-20240116; t=1767170105; c=relaxed/simple;
+	bh=JDWS9/pcDlSo5dcHYgDW+IDEa86kz1UK7AomgxHRh0Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ckz+Une6ARPq4tCiOmuTcbf4+4cxmS1JCX/nknw/dafweE46wTd4bZMXHQYO2tQmPS0vVyTAnSQa96qgNGj8WQkjyMV+eS9Mz6q8YnXTxzP5O98ihrCEP6TDS6StOW8YY+GbNuIiOOx18NRxZu2s2h+6XviizYr+4U/ZFxa+pko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpip4t1767169836t8268e047
-X-QQ-Originating-IP: fMplGKqgXfykVLGKncaHisjFc0ZxUPSnlLhM2eZrTvU=
-Received: from [127.0.0.1] ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 31 Dec 2025 16:30:34 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13277669007580881109
-Message-ID: <B215717DE5B3F973+806cb099-b491-464b-b9a8-fd12f2cd1e27@radxa.com>
-Date: Wed, 31 Dec 2025 16:30:33 +0800
+	 In-Reply-To:Content-Type; b=ZRlKhlAMqURFa+HEWQoHE+VmSOKdR6typSBJhr//4e8JJOMVKiyH7rf9agpHfIbAHk38Y52KcmC0227iLv4k8DS6OGfRxk+EbVF81E3i6sMy88o1hVbpH7P7ps03wKzWb/f1o0uN+gZNMlCgG7fRpxShXTbkwHPz87O+yenV3Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qWlNSgs0; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37baf2d159bso21913931fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Dec 2025 00:35:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1767170101; x=1767774901; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vpp/z+J+tsEiwPe2KgJPeWCipeCjqxXWZmlQtlixZvA=;
+        b=qWlNSgs08vpR8ThI71PV4rGNUsQvAaGPFLkuh0h2BdSEMF+CPezRQLG1fDIPc3fd7i
+         49EgcvKy8+Oj2T/rvbJrCZRSkTr3u70dfPKtG2xqOVe1XCEHPHxJq5nAmELMXgJ2uypv
+         n+PY4E+OIySYVzMDHKs9rlQTFLJc62EEjjsJ+DCqtIjTWbul2WZai5xg0QQggRpa/c/o
+         q5zHFXEQfJZAPxAv7n12cBxSYN8+Fm2GsrQUlk9o4iVTfdTXnAaZzyGkgc08UXegTCXq
+         TKAvkRGgH1CtXTjZEYQv6cC/GPVAI3z2vzejomNcymDANROMS8UW3Dh4HVDSDq2n8bUt
+         Yr2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767170101; x=1767774901;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vpp/z+J+tsEiwPe2KgJPeWCipeCjqxXWZmlQtlixZvA=;
+        b=nXtqw+QqPk09mGNadXe/jR32QdW5c/ZfjbU1QS+y1hfByIjpVaEOEW0yp4Ih8+lKtr
+         dMZpfNWrNc8142wBbNAC4kb9E2shRdt4YXLLYDD9hnI4aBEi/zPH8ocgvFUbR3TTQA1c
+         ldfjkaa/CBktaV3miekQ+sMV510DUKTYAyCTEu+UqVXxp36/5gRiLX6XBAj3Yg54w+ML
+         whM2/+S4ILrbFmxXUkUI6HD7qOwWfXN3bLVm025WRVataIm/8CjGd1PCaaLM07SMV1yd
+         iUk7IviZTCNGotYW7m1w1KFKgn9Z1YKsLQecmFEYeSFHgdKTglOioIkZzyXj8+aNITmD
+         9uiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWTAozW7NtxjVWuSvDvTyUC2Iri7OZyoZKLGRJdlqc2lcE0DDaWRTrp69jpkAcVyXwKv0ZWnpztMmAq+IEy@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyHdBeocosxkssRnEhv9/FOtOmlTvUoMnLrISbH/wE84PdUpq6
+	vncSKV7vRLOwKnSW1+glFWvJFUuwLGu6ZVsMG7CEDZtrytfjZZq4vHvNonQaROoN/7g=
+X-Gm-Gg: AY/fxX6UAJqWj2QNw8XFZ8JTnsTNzCKb8qP9CD+Vj+PZHjaKfa5ANc5uOB7n4Mv1xG2
+	kB63SHFv8eLGJcE5iHJQipu0UQv15R4oUGC12TDqJGjEQk5ZhWow+Nzue9fQS0o8qJCMHERngiF
+	k/MvA31vip27dbyatjD6PH5BJBH1LakXFsW2r6M9Nc/b6rK57g1TL+pnn8i7zv3VWRE8sh6p4rL
+	AkIjLGlFIxr2wsRyO1Z6eKsTYmUekWsNKpcYJIfCf/tpo9CeDMCW2DfJ51xTETWNKQ6f3OqOSkQ
+	2Ub9YU/X2B1794nZgywfWnR53+Bl/WBPpdSUsfQfLEmiF225baoIdwgzIfIpElBP58kxKKclU0k
+	xY2lkOZSgHTvjBzgweCzNg82aDGxwpGG3+JjnjbYR+3gXxAG4IqTcyc3RneA7gJcLoLltJuXwy2
+	FUjQeNHcUnLvtE7UKo8G34jZ12Kk3e75KiDPii8gPVZNarxj3TNrlG7496v0rTEtaFcQ==
+X-Google-Smtp-Source: AGHT+IHMK7CiqyMcRO6mPySQIRVNL4guO+avS82BCcU/vB06uk+9kxXjB6+ZtfSaA4TXhkYwNr1bmA==
+X-Received: by 2002:a05:6512:3e1b:b0:594:5607:3b1a with SMTP id 2adb3069b0e04-59a17cbfb40mr6988752e87.0.1767170101072;
+        Wed, 31 Dec 2025 00:35:01 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185dd252sm10637734e87.24.2025.12.31.00.35.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Dec 2025 00:35:00 -0800 (PST)
+Message-ID: <8a0083a8-cc5f-4f08-ac8e-7a4516e0de54@linaro.org>
+Date: Wed, 31 Dec 2025 10:34:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -44,68 +81,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] drm/msm/dpu: Check mode against PINGPONG or DSC max
- width
-To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Abhinav Kumar <abhinav.kumar@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250514-max-mixer-width-v1-0-c8ba0d9bb858@oss.qualcomm.com>
- <20250514-max-mixer-width-v1-3-c8ba0d9bb858@oss.qualcomm.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <20250514-max-mixer-width-v1-3-c8ba0d9bb858@oss.qualcomm.com>
+Subject: Re: [RFC PATCH 0/3] media: qcom: camss: support for empty endpoint
+ nodes
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251230022759.9449-1-mailingradian@gmail.com>
+ <1fa74da9-bd3e-43c6-afbc-8cfcbb93af93@linaro.org> <aVSSNGCtvcYCTylu@rdacayan>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <aVSSNGCtvcYCTylu@rdacayan>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: NvWYEgjCCjcVLSxgtlTlvY4dI9qqO/bB+rureEgWsG2ndZ57xis1oDR+
-	lvhMZMFDz63rdna3QJoi2OXN38aTolKdBm9gG4Un2dacRDNpwg0179DuK0mDIOuR9gSfWaw
-	F8wEggcCmEw5ML7TNJYSpKq88f/JNeGEjOsibW+8Sjs+4c+P0O4ioXyCLXfdUh2Rbtmkp41
-	z7q7dlWFEqUHohbE2tNwJ+7gURcoM3/DBeTPNBPI73x3dKOapHmop/gzkjtoYbQZY+XSJdj
-	ZNdEt6t2w9NDKf54p5dkaBkegIV9TE0HGnfydKTeMwmn73IEqhgGa9dGf/nagDf8l4A+4E8
-	7YaqGBDZXddFri8Sgmrb7w1akFAX1yS4KvBaCPX72VdjI+u2fRCN99+5TQiyeHICK/lUsG2
-	XIgJHjed8Ji7O4Fh++CukRPh9x5ZTfNeDMMVxcyzSHjtm+/oXyXnppIfPNMf2jLlIIwVV0q
-	MP/lhMqk7XBWAWfcVUh58aEYzpS84PDh68op6wg5vjQuTV/hJ4TJoYQwfaDUl1QBEEK2NQl
-	sXw118y03LLmPXLZb4cyjMmWaDjxnivT3OldCIXF89QURylOV78tTsbNWJmXS8Ls8z9sssz
-	GFSSQlPB3ZPbnbCSXE3/bYd5sXZdioHKz0ynvX8MZa/wReSVGkQnpR6JqQzTaWNhl4qjQg8
-	gPioBNDZVHjtxdmL9A0R7YCeoflMa4cLWbJySiSvLnq9ZNOvp9J8FhfkNXIEx6+uvdt1Q06
-	z8VT/ao/YIHPpNSyYg2HoRYemhfnwCrkwIQI7YTDva1/9OYMIELk4Vh2/ly6Cy7zoODnvnI
-	MPD2bRsxkHol8YnZMSrFNTbGLcgSVc5772oaPLJnh9WjglNdzX1PJ476FcxbkS8/Snop4pt
-	t2WXZyf43vTrgiED6v+PJFsHBRhhoBSB2fgnu59QTfrogWMOmcXLVAYfRhJq73OEj5SwY1b
-	D8aqxS0C08WjYvSnp2P2CZoSgwM+KNrkxemPKdZDeeGfSV8JRAIZDeWnBMEgLjjd0ykz8kV
-	K2ffFlVwByLrQ2RXZUuszO2izYydsiva6enOyX3A==
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
 
-On 5/15/2025 7:52 AM, Jessica Zhang wrote:
-> Validate requested mode and topology based on the PINGPONG or DSC encoder
-> max width. In addition, drop MAX_HDISPLAY_SPLIT and base LM reservation
-> off of PINGPONG or DSC encoder max width
+On 12/31/25 05:02, Richard Acayan wrote:
+> On Tue, Dec 30, 2025 at 10:18:39AM +0200, Vladimir Zapolskiy wrote:
+>> On 12/30/25 04:27, Richard Acayan wrote:
+>>> This series adds support for empty endpoint nodes. It is currently RFC
+>>> because it continues an ongoing discussion on how to selectively connect
+>>> some CAMSS ports to cameras and leave others disconnected.
+>>>
+>>> The SDM670 patches are for a full example. If agreed on, this should
+>>> expand to SoCs that have CAMSS.
+>>>
+>>> Example SoC dtsi:
+>>>
+>>> 	camss: isp@00000000 {
+>>> 		...
+>>>
+>>> 		status = "disabled";
+>>>
+>>> 		ports {
+>>> 			#address-cells = <1>;
+>>> 			#size-cells = <0>;
+>>>
+>>> 			port@0 {
+>>> 				reg = <0>;
+>>>
+>>> 				camss_endpoint0: endpoint {
+>>> 				};
+>>> 			};
+>>
+>> I do not see this device tree node layout as a valid one. A 'port' provides
+>> an interface description (an option), and an 'endpoint' declares a connection
+>> over a port (the accepted option).
+>>
+>>  From dtschema/schemas/graph.yaml:
+>>
+>>      Each port node contains an 'endpoint' subnode for each remote device port
+>>      connected to this port.
+>>
+>> This is violated in the example given by you above, when a remote device along
+>> with its ports is just missing, thus there is no connection. A forced alternative
+>> reading may (or will) break the legacy, so in this particular case you shall
+>> start from making a change to the shared graph.yaml documentation, since it's
+>> all not about CAMSS or even linux-media specifics.
 > 
-> As noted in the patch, while DPU 8.x+ supports a max linewidth of 8960
-> for PINGPONG_0, there is some additional logic that needs to be added to
-> the resource manager to specifically try and reserve PINGPONG_0 for
-> modes that are greater than 5k.
-> 
-> Since this is out of the scope of this series, add a helper that will
-> get the overall minimum PINGPONG max linewidth for a given chipset.
-> 
-> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 46 +++++++++++++++++++++++++++-----
->   1 file changed, 39 insertions(+), 7 deletions(-)
-> 
-Thanks for the patches! With patch 2&3 applied on top of v6.18, I'm able 
-to get DSI panel and DP monitor working simultaneously on qcs6490.
+> So, if endpoints MUST/SHALL (in IETF RFC 2119 terms) have a remote, then
+> would it be acceptable to label the ports instead, so a board DTS can
+> specify its own fully connected endpoint(s) under the port labels?
 
-Tested-by: Xilin Wu <sophon@radxa.com> # qcs6490-radxa-dragon-q6a
+It could be done. For the record, the solution is not to "label the ports
+instead", but the preliminary added endpoints should be gone, and it implies
+that the labels to the endpoints are gone also.
+
+> 
+> The labels to ports aren't looking as "excessive"[1] as they used to be.
+> Is the original review comment on port labels still relevant?
+> 
+> [1] https://lore.kernel.org/r/565d14e1-1478-4a60-8f70-a76a732cde97@linaro.org
+
+It's relevant with a modulus of 'likely', it's so secondary that I've issued
+my RB at that time. You can write a proper dt graph layout without using dt
+labels, and since it's expected that you touch &camss anyway to change its
+'status' property value etc., you may add ports and endpoints under the same
+labelled &camss device tree node at once. There is no rule to use some labels
+no matter what, but technically you may introduce port labels and add endpoints
+by a port label, this approach is practically found e.g. with Rockchip or
+TI ISP device tree nodes.
 
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+Best wishes,
+Vladimir
 
