@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7765CEBCE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 11:47:36 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40157CEBCFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 11:49:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 296FA300E441
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 10:47:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1AAB5300B8B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 10:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2FE225417;
-	Wed, 31 Dec 2025 10:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6F3B27FB37;
+	Wed, 31 Dec 2025 10:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nsuFObAd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+8Kz6dj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7793A1E9C;
-	Wed, 31 Dec 2025 10:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768331A5B8B;
+	Wed, 31 Dec 2025 10:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767178054; cv=none; b=uLKKw/kN88agN6SrDFbQlWDQ0m9OlrBZiFuxAR0lTXHmd70AR0eqaq/RAzoFpwL2kDFAsRme/7+xjKFwrUWaSJRB/keA7Pdfq+DmWjHDMlMfrU+9Yt8TvG5AhUaxD4XcvRJainW5/LerWQkv6lTQ2Xli965d4azkGoqkoVnis9w=
+	t=1767178149; cv=none; b=SRMNa02/PPnYRDDOsaoTkRuD1um5plxZXKEDoQUSIzsTOr7l6UvXVRQ8O09fOtqbvwuj9/PXGIzeP3hl4lB9DcM0xQdK0mPUhnJS5eHkXTf0ZHY8KEXVwyL+kveGgsSWsySBIn8KcruT37X6W1oNj3nAc6eEmWi4iJjGP5lQYGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767178054; c=relaxed/simple;
-	bh=t3S3T9HkKR2mHTjo6Qg/i0A0uts+ZALqxDoSbC8dPeE=;
+	s=arc-20240116; t=1767178149; c=relaxed/simple;
+	bh=xKxG8Q3tu9eNzZEPJ6KQFeTMoXJ4ZV3jfIZG0vmVC2o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LsZBDlj6gW2T362nAl0hwUYhoEpuuHAnECGxRfozEfhwYjbjWl6Zdea2EhRxANLj5uFVO0MSi91uTK4X6J7kMStflc9qO5VrK3YMFJAzZaXVsrbu4P32WomusPaeQPipdOid5I3ynVhB4BZVRtTBeHkvdIaAvORDWjmu1HdHoUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nsuFObAd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFDFC113D0;
-	Wed, 31 Dec 2025 10:47:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BEkRq9EHfrbQMMvoy7F9bIl5E/pqEkE8FUVfPgqA32dzsW1DFqUoc0KFVlS+ub8GI2IPSarTxakXJjSJFqOraIoiG61hVeUG6ZhN7okOyd7+/MkECa4RByNEGLlPePJhArZ2UCrc8oDTzfeKqcU2kwWkEMZkmjHzU8ITgTrXKW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+8Kz6dj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D0FC113D0;
+	Wed, 31 Dec 2025 10:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767178053;
-	bh=t3S3T9HkKR2mHTjo6Qg/i0A0uts+ZALqxDoSbC8dPeE=;
+	s=k20201202; t=1767178144;
+	bh=xKxG8Q3tu9eNzZEPJ6KQFeTMoXJ4ZV3jfIZG0vmVC2o=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nsuFObAd7k495+dS+Fdad0OzBYtjteTD63Cu2jPI6voAoe+LWDrjaP4lC3ZJNi8Vt
-	 RfV7CTAJpWkRj6PZd8Wqz39L45xZqu7bvwzXH4nPekeAP71fVQ9BqY8oVKR6PojPxv
-	 xj4U0COURbD2bSMRqbemAxiD3joeu3K4gIIqD9TFwNyPVJcdElOCR92uMd+XRETJ5D
-	 Lh2ihaxgX1cAJwdmqrKNFVA7DvIoX/LGOMlle96qTBXpNnq3ouKi9S/LvbL592zJD1
-	 efaGUbINZ491iozWab0ezVC2V5KATNFjkdlpaP1sQlzfUWbb+mPwaUeW4x4EpBbtlZ
-	 yhSPCeMU6xUnQ==
-Message-ID: <cdec91b1-e455-452e-a9d6-47912d0b3aaa@kernel.org>
-Date: Wed, 31 Dec 2025 11:47:28 +0100
+	b=q+8Kz6djTasakuT2qTcQ82WZIS9LOoPyZ4N/VvEH+sBBteOsyGV41cnXS6EdlSuVu
+	 GjbhRuE34FjA7qvxSYL2rlk9thCYpzknmtcxsbzMP/QVQIL5YGG4kcMFuKEfw7Q165
+	 acWJOIKI+6F5YOpXF6F1g9OQZAi7NB1JyyzCQI05FC0plZbFttkXWIwseQL+cPDfZZ
+	 bXJxMCrptxY5UG4Qw/7UYiF37rsVorlPASgwkHnks5gQkR1tD+/1OLGMcvMUbR3ulR
+	 V8m8KS1jBl1RswsmWJNdfOHvVge/mA5NTtZ46FJK+KoRIu5PuTFWgr35bop1uBjaYI
+	 mc7JN2SHyK/Tw==
+Message-ID: <209c49fb-04a6-43dc-a3f1-8451e3946d06@kernel.org>
+Date: Wed, 31 Dec 2025 11:49:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: purwa: Drop the Hamoa workaround
- for PDC
+Subject: Re: [PATCH 1/2] dt-bindings: interrupt-controller: qcom,pdc: Document
+ x1p42100 PDC
 To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
  Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -59,7 +59,7 @@ To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20251231-purwa_pdc-v1-0-2b4979dd88ad@oss.qualcomm.com>
- <20251231-purwa_pdc-v1-2-2b4979dd88ad@oss.qualcomm.com>
+ <20251231-purwa_pdc-v1-1-2b4979dd88ad@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,26 +105,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251231-purwa_pdc-v1-2-2b4979dd88ad@oss.qualcomm.com>
+In-Reply-To: <20251231-purwa_pdc-v1-1-2b4979dd88ad@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/12/2025 11:18, Maulik Shah wrote:
 > Purwa shares the Hamoa (X1E80100) PDC device, but the hardware register
+
+We don't use Hamoa name in upstream.
+
 > bug addressed in commit e9a48ea4d90b ("irqchip/qcom-pdc: Workaround
 > hardware register bug on X1E80100") is already fixed in Purwa silicon.
 > 
-> Hamoa compatible forces the software workaround. Use the Purwa specific
-
-There is no Hamoa compatible, there is no such name in upstream (except
-dtsi), so don't use that name at all. Neither here nor in commit msg.
-
-
-> compatible string for the PDC node to remove the workaround from Purwa.
+> Hamoa compatible forces the software workaround. Add PDC compatible
+> for purwa as "qcom,x1p42100-pdc" to remove the workaround from Purwa.
 > 
 > Fixes: f08edb529916 ("arm64: dts: qcom: Add X1P42100 SoC and CRD")
 
-Explain the bug being fixed here.
+Your are describing wrong bug being fixed... or actually not a bug.
+Every SoC should have dedicated compatible (see writing bindings) and
+missing compatible is not a bug.
 
 Best regards,
 Krzysztof
