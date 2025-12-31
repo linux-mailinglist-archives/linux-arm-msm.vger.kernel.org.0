@@ -1,122 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-87031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37968CEB08E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 03:19:52 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DB59CEB0F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 03:29:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 92C83300925E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 02:19:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3AB1E301F7CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Dec 2025 02:29:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6999A222599;
-	Wed, 31 Dec 2025 02:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF5A92E8B8D;
+	Wed, 31 Dec 2025 02:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BnsauaT3"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="llgjh9Yh";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="dZc4qwW2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53331A0BF1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Dec 2025 02:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CBC2E62A4;
+	Wed, 31 Dec 2025 02:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767147590; cv=none; b=b2gv33pcYb2ZnxRr+vLBNo5OgtH6HM79EEP9b2uelmCD+4Ad9EqYTgXrkslMQrdOMXJcGJm2eRhwqaq1/72XNw4RS2wsBZu1Co6mR9Fp/Oc0kvHSwe+1JCTjT4yRHqK+iMcXbfAiMwdvWat71p59NWzELAr5Lec3KfMSMRnZo9c=
+	t=1767148180; cv=none; b=qvoJvHdZrNI9PojZ1WLgsGc2KayZ8SSxEpJ37Z11ivbYhBzOn9/hsFAcY2jIHq2S9Zt5BStQnLvWDEDi9vefJVTr7riqjNPMFrNGXntXhPunmHae1OlwoNpQE4xf1TrAPIpWeD3ZZAw3pDetTcnIN9YGu4wqrpNkFMNrYCTHrLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767147590; c=relaxed/simple;
-	bh=IHEnzGZQFu2XY1gud4jw/rHZMO4chA7VKbL2h44E930=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uUcGE3vSikFbkq+Foa4HBbsZ2e9zGgf8AkF4kHAkPYxwngKud85rjfIArsBBbFT0JwD31GijN2GqBUJZo1l0PcUyTmJuXIPj/pjPLocFM1wVuHGb6xmr1YlYKXcZW/ZxS+hyfCzugftrUdOeF/brR2sxg1JIPt12+dnPWbIYX9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BnsauaT3; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4f1b147eaa9so83221851cf.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Dec 2025 18:19:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767147588; x=1767752388; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D0kfkuwpnrgAV1ePd0vpthp8gNZsEbHuzyj1n/s8Aq8=;
-        b=BnsauaT3LcB6qSDbqVFDLxBkyxmSp/tlL/iHVaCiQiB2Hzx3UOKViFGX/3aQz2bRvj
-         6E3UsUhB6dqklXjUTWahkmqh7I2cO/ZOAug249Db+Mvjw9EmVaUjdmLLwFefVyey62P3
-         n5qqu1bLHSd074R3Aq664ovJaKVrWnj135XIbwLyz0fi/b86bhQ0LfwGaktgnA3H7jv8
-         GrVTbWfEVsdLz5exxmh5/kreph5aoxa5/WCVyUo/uXxJ5rrQpWGPynfMRrXkO0pr2Pn1
-         b0zklJL+OJYvsFta+u3XTbjnkcwchITee6pUwZcO/u0ksCDGTlAs6Mtbi3PqqrAuiEmH
-         82VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767147588; x=1767752388;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D0kfkuwpnrgAV1ePd0vpthp8gNZsEbHuzyj1n/s8Aq8=;
-        b=hN5CcbAvqApJFnUC10UWjr0H47K6X9uiYDc4aLzKgG++gWBMbI2Ti2QK/RrV235jeb
-         pH0AM7KV1CS19z3XVtMzqPMrjb99yK1RoeDeQ6KVO1XlsPi1HgIM5mKfW8ZelpEX5J49
-         5AK/LQuKiW2yrUrnfk8xye23mkP9IEgICsxBkKA7iP4IUnVPuHtDQMCmNiP2gux20RBu
-         WlgdmWbxwpg0YQigSufrsgCKnf7DbuBzqxjixqFOkdtL3vjrOQ7Zv2GmRgPoG7BO6MC0
-         KzpkmQxm/CNB96w8lnZydVPCVx8kEj7s00ZRJ9KQFHh/fQr5AUNiYRXZvR6lMJBpQsAr
-         3aRA==
-X-Forwarded-Encrypted: i=1; AJvYcCWg0WeYf1TpbaLIGz5u/OzpzlBQzp2faXuGOQ6lOqYx4gWQKEWhd+3CP7/R+JM6hkNUL9OO8uptk2sE+Erw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqW6jkFiYkojHwh5bWV9VhO8Z9OEzROdjIf0gSp3YhwqjbPUF6
-	WdOWVQkXF05C6uQY2/bXgyf6dCU2iznMQ4E3FsNItUN3eXyQQbVVIjlF
-X-Gm-Gg: AY/fxX720EQJePx8Ssf6YyP9Lw54/0APytZUfE0BtebI4W5bA1vHuEY/Vqp6lvKPQYl
-	CpaPOi/78BZhZTFmYwhtss6bRvr6jpS503KmDYICopE+7N6WDegs6vpPFRvARdmQ7zLwh2uTwie
-	9CWgKhBwJqZD97wrbhGHQo/cZuBKAF0WgpqW7mKRxyrrmEWKPMgcFDjKW1x3TN/M/Dx+flP3fY9
-	XP1aKshXunLdPamb8E+B0QuZfSsSa6L/75Co71J3+bcLj5xZo4OudDCtK0dATLhkwZ87V8NhWmg
-	LpLln/dPt9BF1CIMono4hYT+FWsvFQUdx3qp32zuZ//tWF9RmNAnU9DxQFfdaUkpSciU9QVEoOO
-	yfXPfe38j1X6gWJ35TS6UnxNMhU/3sDs4Hx+FQjJnyhhchXaAVriNpeJWRQ/4zrVF2gxr3r9kdI
-	YUXouzCjZemlqN2OjNboISv53X/rYyXyEgVAsMQIGnRZ9RF88ufqpSIvvgqFLokgXXgwsLWCXlw
-	hi5V4BZ/qynlw==
-X-Google-Smtp-Source: AGHT+IFXTMpDXyFdEmEGQVX2R+AnY9cpX7S8SyoKdnFEwTMNIZQs9zv+GdpjMX2DjoIlXn0g3yozlg==
-X-Received: by 2002:a05:622a:1c11:b0:4f1:e0fc:343e with SMTP id d75a77b69052e-4f4abd4c1b5mr608331051cf.37.1767147587668;
-        Tue, 30 Dec 2025 18:19:47 -0800 (PST)
-Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4ac65344bsm252694831cf.28.2025.12.30.18.19.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Dec 2025 18:19:47 -0800 (PST)
-Date: Tue, 30 Dec 2025 21:20:16 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [RFC PATCH 0/3] media: qcom: camss: support for empty endpoint
- nodes
-Message-ID: <aVSIYAC3DTD3dneW@rdacayan>
-References: <20251230022759.9449-1-mailingradian@gmail.com>
- <7b1b0259-90d4-4e7c-8bc5-01e22c371e24@linaro.org>
+	s=arc-20240116; t=1767148180; c=relaxed/simple;
+	bh=QKUOQJYy1OAZREu8NLmLFyIYEva//zI3YXSE64exfM4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=T/8K6VQpSR8GXUO6P6E4tNxRDfUSt21O7LED4rrX6pblArOn26D6BxvtUgYxP24I4Ab8zaW+BA9fX1++bpF4cBFLFgWhyBlEbztYqRkhTJoGmEKXOqdNG9G7L9RPJ2SdiUDZQVJRSRGB86PwqgnFwvV5iWkeEhcfLe1kclyvYa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=llgjh9Yh; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=dZc4qwW2; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1767148170; bh=yM2tikOk3cL7e+3L6VDUhPR
+	7gbUp2upxGsu2yqp3bwU=; b=llgjh9Yh0+3wksVL4rx+WRENFcyVu80S0zv98WHmw57dOH6PWa
+	HkS2eLl6p8Dt2Oqs8dZY2ZQ3fqy2chHVkLz/nhNYJcRj4Vx2YdbC598v5HZOgZ8tvIgIEA/ne5M
+	gZY7n2VYgFar2mIkE5eJ4uJvaH4brKzwb0TLjUh2TEtpAaA52EV7h4jssCdSN3UZ2H1JhXXE6+Z
+	VbiKyXpLXZkspc6DnvlL+1dA9dYBQnq4clDfB3PZ1W5JhyswFcHL7XdhMDoMSFisChAYTj6D9W4
+	JBd369r43SXltBBEBfg3FcN0hChTkinq81dpgcfgz5UkBQxvG228pSjAhFrM6/eMA4A==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1767148170; bh=yM2tikOk3cL7e+3L6VDUhPR
+	7gbUp2upxGsu2yqp3bwU=; b=dZc4qwW2KeN9uADYLYj0+kU/UaxvMMAq0D8evhcs3bEJ+4WyES
+	eeBZXbQ2uOXtcdVfMnrcBwWlVtTUbme76vCw==;
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH v2 0/9] MDM9607/MSM8917/MSM8937/MSM8940 MSS
+Date: Wed, 31 Dec 2025 03:29:27 +0100
+Message-Id: <20251231-mss-v2-0-ae5eafd835c4@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7b1b0259-90d4-4e7c-8bc5-01e22c371e24@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAIeKVGkC/1WMQQ6CMBBFr0JmbU2nBFBX3sOwaHVaJpFCOqbRk
+ N7dys7l+/nvbSCUmAQuzQaJMgsvsYI5NHCfbAyk+FEZjDYdGnNSs4hCb3t0gz4b10F9rok8v/f
+ Kbaw8sbyW9NmjGX/rv59RaWXJtb1DP9jWX2fL8cmRYzguKcBYSvkCmJh1Y5sAAAA=
+X-Change-ID: 20251228-mss-1fa61b7092b5
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1767148170; l=1413;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=QKUOQJYy1OAZREu8NLmLFyIYEva//zI3YXSE64exfM4=;
+ b=NXekz9asLkIOs52oYekxPc7A8E07IiH6RdLq6R7iwoCP6kgVTow/5JT+wYMaHsbqU/YJ2fbKV
+ 8ybvkmvxXogCQv/+sBDL9S1q0NKU6cPHVPf1BivP9WSduyFZSQRLQgF
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-On Tue, Dec 30, 2025 at 09:40:14AM +0000, Bryan O'Donoghue wrote:
-> On 30/12/2025 02:27, Richard Acayan wrote:
-> > This series adds support for empty endpoint nodes. It is currently RFC
-> > because it continues an ongoing discussion on how to selectively connect
-> > some CAMSS ports to cameras and leave others disconnected.
-> > 
-> > The SDM670 patches are for a full example. If agreed on, this should
-> > expand to SoCs that have CAMSS.
-(snip)
-> 
-> I don't think I am 100% understanding what the intent of this series is,
-> i.e. at a high level the problem you're aiming to solve.
-> 
-> Can you elaborate a bit ?
+This patch series add support for MDM9607/MSM8917/MSM8937/MSM8940 mss.
 
-The point is to move the graph nodes entirely to the SoC devicetree so
-the board doesn't have to redefine it. There is an explanation in patch 2,
-but the next revision can try to cut some of the rambling and also
-briefly explain in this cover.
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Changes in v2:
+- qcom_q6v5_mss:
+  - Intorduce need_pas_mem_setup flag
+  - Use mss-supply as a regulator for MSM8917, MSM8937 and MSM8940.
+- qcom,msm8916-mss-pil:
+  - Add compatibles where they needed
+  - Adjust mss-supply description
+- Link to v1: https://lore.kernel.org/r/20251228-mss-v1-0-aeb36b1f7a3f@mainlining.org
+
+---
+Barnabás Czémán (8):
+      remoteproc: qcom_q6v5_mss: Introduce need_pas_mem_setup
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MDM9607
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8917
+      remoteproc: qcom_q6v5_mss: Add MSM8917
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8937
+      remoteproc: qcom_q6v5_mss: Add MSM8937
+      dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add MSM8940
+      remoteproc: qcom_q6v5_mss: Add MSM8940
+
+Stephan Gerhold (1):
+      remoteproc: qcom_q6v5_mss: Add MDM9607
+
+ .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml  |  13 +-
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 235 ++++++++++++++++++++-
+ 2 files changed, 239 insertions(+), 9 deletions(-)
+---
+base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+change-id: 20251228-mss-1fa61b7092b5
+
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
+
 
