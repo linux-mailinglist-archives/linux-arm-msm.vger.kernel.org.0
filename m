@@ -1,44 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-87141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E03BCECF62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 01 Jan 2026 12:08:02 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CFE5CECF6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 01 Jan 2026 12:08:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 00CE6300479C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jan 2026 11:08:01 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7B43A3000B03
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jan 2026 11:08:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFD832C1786;
-	Thu,  1 Jan 2026 11:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EC92C3278;
+	Thu,  1 Jan 2026 11:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L/7uM5NC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="baxmvc6Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834712C11E7;
-	Thu,  1 Jan 2026 11:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451C02C2366;
+	Thu,  1 Jan 2026 11:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767265679; cv=none; b=da4by8c0DSY66wx42S14xIrh7zpWnrzib8zwILFK7DWnsDqDhvY/xNdym4HIt7kvccYVMFN4LC+BF/Ziy89E8cNH4Jlf9z11JgA9OXjHl16n+cjPEWSrY+oSIe8Nsvn+1eJ1ldW2i3cujrLBFbyRrEBNblxoxOTElgvaw8fSN6s=
+	t=1767265705; cv=none; b=jYpONG/oL5WwsrAXDWcfeP2vbh9j0kjDVfoa2z/pSu0r0UScWBWx4kKr4maOG0BHFGmyKFb1STkfnvTizA9f4r+LbblH0rrPb4LDKP4gvzrmxvjGqR06BwoUkJLPkU3lTf2wtN8eDueP0FQzsVhEQQ/NfiJyjyAWPSh2yefuikY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767265679; c=relaxed/simple;
-	bh=W+vJxAgBNm+n//Wn2RLew3QSjtXlLO4Nn+RTa2qEUQk=;
+	s=arc-20240116; t=1767265705; c=relaxed/simple;
+	bh=ToKlYUMhvoalOWqpF9ZeGMqXOoOysB+sEs8bAsqqLoM=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=iGDmv2PioTPesUgbmaaM4R/rN5F8DWRISdZq+IRmtzePzSOW9zcb0V4CIgR/De9xXlkNzG4WXFflRDfmu3l2CUdo0PQ2hU+Sd8e6Z54oSucs64QqaEEUgcM0kCWqjnDfzzI1QazmKbkGk719r4TVwusv0V8h9yUkFtwDXQ2rjkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L/7uM5NC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA0BC4CEF7;
-	Thu,  1 Jan 2026 11:07:55 +0000 (UTC)
+	 MIME-Version:Content-Type; b=fVFtQ8m/1CatmuUGcO75U1B0udJgBKiVkJexNXNfYKDD9ruUaLnaxCUHPjRDueCnM2IE6MqN3qmEG3aD/czoxlEGGVmxHnAva5Nc42id2uwvr3kcEhaHF8XLa7BfEVnDwJLZU1VLsUTIku5YvajshVOM6aDTGwD5mfEdHywk6m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=baxmvc6Y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472BBC19422;
+	Thu,  1 Jan 2026 11:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767265679;
-	bh=W+vJxAgBNm+n//Wn2RLew3QSjtXlLO4Nn+RTa2qEUQk=;
+	s=k20201202; t=1767265704;
+	bh=ToKlYUMhvoalOWqpF9ZeGMqXOoOysB+sEs8bAsqqLoM=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=L/7uM5NCpXTvhIBUkYeNbAgBPF9OZg4ciSNZ8BL+KE8mqF96fUxLICS5cjmpeClG4
-	 4W/s/DugJtCmBSY3aK1JiWHa4y5P0g7Wj9uuct1Xo4cy4Th7YIVntKHy+VNNK6dNTQ
-	 g4XYY44nBN7U1s83HC/zlk52+Yv4t+bFUusC4NMIVLer5Lb7JMdW3/R02p322MIu4i
-	 1CKoCQLYhqY88aGO6wq9j974Sr9yKmmxmBh2Yauh70WsC3TBv0h/YtZOiFporn1QZh
-	 qB7Q/fjjVPxpjuOVKJBAM2+hs6aaVB0xWE/pkZfmF5ggTj4BLhwHh3wXrx5+iPjNq2
-	 YW7uJOR5UW9Fw==
+	b=baxmvc6Y9ow0RIhmu20ZovU+DjhPRkczRDf65NtWTpLVeTG+DP9Qr0F5xTsmxxlii
+	 HA1vVt3EIeX9LLyiiuRtRhVqnuhI5ZJVxeC0jSydB4WTc3AYnlDZ0dA9lC/r+ThJaz
+	 zRY8nKlmHm0WiUsAm4yJY5sWNlORW/hRnMholyDOofi89rAJZFWfoe3i2fVXz6SchC
+	 9j8mULmxncTeVOQ4AR0m7M8pn0dJ3qbrX55axwRxcyrqV89bPoRcQy5VuUb3ec7wmO
+	 +C4opmCCm9zPzsO4qp8u28RZqiLIEgs14SXL/nGKfWLdM/Q9y0/sosR6VLjbbdQvLD
+	 XzhKDVRMTCuYQ==
 From: Vinod Koul <vkoul@kernel.org>
 To: Kishon Vijay Abraham I <kishon@kernel.org>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -47,14 +47,15 @@ To: Kishon Vijay Abraham I <kishon@kernel.org>,
  Abel Vesa <abel.vesa@oss.qualcomm.com>
 Cc: Wenbin Yao <wenbin.yao@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abelvesa@kernel.org>, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
  Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20251216-phy-qcom-pcie-add-glymur-v2-0-566a75672599@oss.qualcomm.com>
-References: <20251216-phy-qcom-pcie-add-glymur-v2-0-566a75672599@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/2] phy: qcom: qmp-pcie: Add support for Glymur
+In-Reply-To: <20251224-phy-qcom-pcie-add-glymur-v3-0-57396145bc22@oss.qualcomm.com>
+References: <20251224-phy-qcom-pcie-add-glymur-v3-0-57396145bc22@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/2] phy: qcom: qmp-pcie: Add support for Glymur
  PCIe Gen4x2 PHY
-Message-Id: <176726567533.201416.1560335358869706527.b4-ty@kernel.org>
-Date: Thu, 01 Jan 2026 16:37:55 +0530
+Message-Id: <176726570092.201416.12927506062894433372.b4-ty@kernel.org>
+Date: Thu, 01 Jan 2026 16:38:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +67,7 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Tue, 16 Dec 2025 10:25:03 +0200, Abel Vesa wrote:
+On Wed, 24 Dec 2025 12:35:00 +0200, Abel Vesa wrote:
 > The Glymur platform comes with two PCIe Gen4 2-lanes controllers.
 > 
 > Add support for their PHYs and document the compatible.
