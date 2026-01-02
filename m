@@ -1,138 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-87208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1216CEE483
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:11:57 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5628CCEE498
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:13:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2C75830012D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:11:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5363D300CBA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:13:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ED432E093F;
-	Fri,  2 Jan 2026 11:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED55E2E7BCA;
+	Fri,  2 Jan 2026 11:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cfcFMgTB"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="E+DJ2rP6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26A62DECB1;
-	Fri,  2 Jan 2026 11:11:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5F12E093F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 11:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767352314; cv=none; b=hea8EjtrwUxiKQLJwpBESmLR7eXWz68tOcs3NTf9hX58C/tk6bc9siN8TTr1r5huhpXwkusbWLbQJqShMiC+x1Vpsa7W24lqt7mzs26weSL9aqJ3ak5/v5jvYSTM9crjF3sZVP/z0maieHOQKDZ64y/8cpQNsNMp+9bcRTtQ+Us=
+	t=1767352423; cv=none; b=hzKuU4PGl+83VMZAWFHL7XnpbxTdj9uj4I9wOHE0qUYsHlVJdPkHS/G0oEyJvpSdto/5BYWuBJI5rKeFb/AoDlpwVePjqVlcI6ie7dsCSiZ/C/+1pSvzQ7POkc7Sjw47yf/Ii0e2h1WKPxF3U9UU2PeTDhpbOGCDNxkFbIAMiHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767352314; c=relaxed/simple;
-	bh=42wbbdTAXRWWe5rBJOMa4OS71wTnCN045GEeI3fs0WQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=TYB3aBPUokeHegT+J+q3ahEzfk+BKptzuMW0e6YSYK/R1C5h2lSehL/CgNmNxYtdPeWOTxEcQ967YDmZ1G6C8yJGmCpHsS3/INYMi7UMY3XGL4XC/yeoYFKmi1a3xUGgiX4gAg44m/l5/VMxFCh+QtPli3CKHKrKnOl+h+o/tXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cfcFMgTB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A920C116B1;
-	Fri,  2 Jan 2026 11:11:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767352314;
-	bh=42wbbdTAXRWWe5rBJOMa4OS71wTnCN045GEeI3fs0WQ=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=cfcFMgTBa51WLM/pdykE83YqJ1wuc3tjgul4JQZ0zIW7lDGopZ/T6Bq/LeSYXACPm
-	 6hXJIaDeYxQ5vARneogeNWqX6eEP4yRhgGvIZGByAzIQChutebN7gNuwTOK2bUCRM7
-	 Tl5nx3yypBMudW2T++A+BT/IMr+CpsQkAFXryMKdBzMkKD0ixkXA+snvP9Ke57Opx1
-	 DWkqKQdJtcBkM14tFB1aZvf1bXprgu3EEL1yprtDE6kPn2fMkGC8hEylZ3LNNhaNxK
-	 CDGn2uETd7pq0F/kAAo2ONIYuWAJJ+RScUtO+8gr2cimwQS64zCfw3XS5O2TwSOxVr
-	 wtdSDyIikmjOA==
-Message-ID: <4db1c69d-2b0f-4e87-9704-d061ecd3d81f@kernel.org>
-Date: Fri, 2 Jan 2026 12:11:49 +0100
+	s=arc-20240116; t=1767352423; c=relaxed/simple;
+	bh=nXFZwZZBKquh8LmMNfYlo2E6H3yvO66kM3Z2AGIucRg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VO6bRbneTubwJY8lU//b1vfT92OuzfZt+naa/T8SQtD1GawgV/2nyTtVDEQA09ppNLDVpamXqbfohXfcQfV7cgne56CaxCnD/IwYUdMycvDSGnp+jjTQeq05gRkhMJV7gIwaDgaRiLemdXPjX+1PZJJQ4BtHtCDyV71N+CzCmzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=E+DJ2rP6; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5957ac0efc2so12815026e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 03:13:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1767352420; x=1767957220; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FsSijJtpaI/oDSTtzaUkeXToSyfCr4FMo1aTrP8qZaU=;
+        b=E+DJ2rP6MxVUCdmBqZoI8P0tCI2IXXRTYgVdh+t0wtuN5qhCvwC8gsXod6vw7KkFDh
+         FX0G8uZKwAKwhcZpD9fB0YcUqH7AYcatZ0IVw7+OSkhch+6ID6Y0kLwrn/R+CRqgVOyD
+         tpN3Dc2+4KHitrxseeIxY9cratYQyTnVB13uoPBYdWVGsqBSkVZ3vCa6OkigVNmpp3fv
+         5m7yPUiqflkZGIPCNgqdLBbFxbNi5+APmnzvs+69Ca5UOHYui3zP27LzMpqQDjSXaz0l
+         +le3YqGnrtn5GgRi2URtYCVep5lwkpa3u3/8tI+TAFBALnLY32FvPFm/rDNuKieBMvCj
+         Ee4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767352420; x=1767957220;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FsSijJtpaI/oDSTtzaUkeXToSyfCr4FMo1aTrP8qZaU=;
+        b=C+ceJvOWIohfRt0rHleon+JS00hVGMRa4rQ+IpdO4+w0ugPVEjRDePkHb+vWcY8fog
+         WB9T/EQfDH7/yBg9C4Rn7sVQ/NbluRJrUoYDvdFKUT54aosP/6H0J+VCC50PlzAAjxOg
+         lZvzYkacsvcienIRdPc4WZHAZ1uVPIH9RT9NLPtI7XqYUhlR+7qLaw2Nos6d2+gMQYUC
+         xR1fNk5fobxgoUqysH6P7QGbm2MW5ZJjQwAYzIrxEWZDX2nqNwcNkHpM1NOfVt6RWvgT
+         qmGda+KwGSTCsuzgk4lvTrj9rxefZQjvCRx65wil5iQzGkOQCDBQ8ZQDl4ZgC+e06c2V
+         XzFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUTdXQZEpEMJjqtuZdK2GJJzVuQZWTXTvVsExqrfYGi2fAyOnaDt/kCHDKomLkJMFrc/70EsIK3N8csEAlT@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGHyHSMw3MwvKYI+yUUqD0Rf+TzqKRBbAGUtCv73URr46+Eh8X
+	erW8zsK52OdI9L/VpKWe+B5jaavFKLyeUjGFs3fJ9ijxxD93OmeykbljcQf6mRA0FXiCVq9NfM6
+	llDpDUgyQU1FVQfM0ztrotkkhh7Hx09ZmFEItzBw50w==
+X-Gm-Gg: AY/fxX69RioRkTP04xAmm9GWoZfP5Rg3JzPh7OPQBEAKgYPP863RGGBhxmkR/hxDNVJ
+	HC5GS5RAMTnuYBCHM0cYO45N1+dHEB302BAYF3BH40bfd7BBip3fgxivm4Hq5Np7uoH3aIvZrN/
+	bxVtD//3Q7u5jjRt/cfgaZ0Pqh6II5jmFWcw1B/JKxg/tMJlBnTXONul+bn9JqD3rugx55dzt1t
+	mnpiaorg9NsQFPOqJjA9Hsm0xSOK/xaqoQuEym/tbG9X+bKAVJVeGKPbvDG7cPTH5uqSZ+quhbr
+	sEZ4oox1d6/EuNPouW/U5tH5AxI=
+X-Google-Smtp-Source: AGHT+IFAdaCcjUwdY3Ew9NHcwLT11KRJipC8z25Ztoxl2WB+caL1mXRBHlm39ALYwigrxotmoGpHP+uwj2P6/o6YWRA=
+X-Received: by 2002:a05:6512:b8b:b0:598:8f92:c33f with SMTP id
+ 2adb3069b0e04-59a17d77435mr14680425e87.51.1767352419706; Fri, 02 Jan 2026
+ 03:13:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: Add Mahua TLMM support
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
- Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
- <20260102-pinctrl-qcom-mahua-tlmm-v1-1-0edd71af08b2@oss.qualcomm.com>
- <7e25da82-6a26-4ade-9247-1bb7abd5615c@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <7e25da82-6a26-4ade-9247-1bb7abd5615c@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com>
+ <20251125-pci-m2-e-v2-2-32826de07cc5@oss.qualcomm.com> <CAMRc=Mc-WebsQZ3jt2xirioNMticiWj9PJ3fsPTXGCeJ1iTLRg@mail.gmail.com>
+ <fwzmob6ez7c6xbakcd4rq2icp7mdwgdvimss3zybb4ivdds3uo@mwguaz7rekjc>
+In-Reply-To: <fwzmob6ez7c6xbakcd4rq2icp7mdwgdvimss3zybb4ivdds3uo@mwguaz7rekjc>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 2 Jan 2026 12:13:27 +0100
+X-Gm-Features: AQt7F2rD4Vva2u72gj0duDgyvxJiVfI_tVGQktahu3E6VwiSEZFuXnq9LhXUXbk
+Message-ID: <CAMRc=MdNTHtzTJ3f3qVHH=qFbK86MzUP0vvx3ogZsXG+iqMUnw@mail.gmail.com>
+Subject: Re: [PATCH v2 02/10] serdev: Add serdev device based driver match support
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
+	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 02/01/2026 12:10, Krzysztof Kozlowski wrote:
-> On 02/01/2026 12:07, Gopikrishna Garmidi wrote:
->> Update the compatible property to accept both "qcom,glymur-tlmm" and
->> "qcom,mahua-tlmm" using enum to allow proper device tree validation
->> for both SoCs.
-> 
-> 1. Why? You explained what, with a lot of redundant words. I do not find
-> "paid by commit line" useful. Drop all the redundancies, do not explain
-> what is "device tree validation". Look at other commits to learn how
-> this is supposed to be written.
-> 
-> 2. Why they are not compatible? You have entire commit msg to say
-> something useful instead stating obvious and repeating the diff.
-> 
-> 3. Subject: You cannot add "support" in the binding. Again, look at
-> other commits.
+On Tue, Dec 30, 2025 at 8:56=E2=80=AFAM Manivannan Sadhasivam <mani@kernel.=
+org> wrote:
+>
+> On Thu, Nov 27, 2025 at 06:32:04AM -0800, Bartosz Golaszewski wrote:
+> > On Tue, 25 Nov 2025 15:45:06 +0100, Manivannan Sadhasivam via B4 Relay
+> > <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > >
+> > > Add support to match serdev devices with serdev drivers based on the =
+serdev
+> > > ID table defined in serdev_device_driver::id_table.
+> > >
+> > > The matching function, serdev_driver_match_device() uses the serdev d=
+evice
+> > > name to match against the entries in serdev_device_driver::id_table.
+> > >
+> > > If there is no serdev id_table for the driver, then serdev_device_mat=
+ch()
+> > > will fallback to ACPI and DT based matching.
+> > >
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualc=
+omm.com>
+> > > ---
+> > >  drivers/tty/serdev/core.c         | 23 ++++++++++++++++++++++-
+> > >  include/linux/mod_devicetable.h   |  7 +++++++
+> > >  include/linux/serdev.h            |  4 ++++
+> > >  scripts/mod/devicetable-offsets.c |  3 +++
+> > >  4 files changed, 36 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+> > > index b33e708cb245..2b5582cd5063 100644
+> > > --- a/drivers/tty/serdev/core.c
+> > > +++ b/drivers/tty/serdev/core.c
+> > > @@ -85,12 +85,33 @@ static const struct device_type serdev_ctrl_type =
+=3D {
+> > >     .release        =3D serdev_ctrl_release,
+> > >  };
+> > >
+> > > +static int serdev_driver_match_device(struct device *dev, const stru=
+ct device_driver *drv)
+> > > +{
+> > > +   const struct serdev_device_driver *serdev_drv =3D to_serdev_devic=
+e_driver(drv);
+> > > +   struct serdev_device *serdev =3D to_serdev_device(dev);
+> > > +   const struct serdev_device_id *id;
+> > > +
+> > > +   if (!serdev_drv->id_table)
+> > > +           return 0;
+> > > +
+> > > +   for (id =3D serdev_drv->id_table; id->name[0]; id++) {
+> > > +           if (!strcmp(dev_name(dev), id->name)) {
+> > > +                   serdev->id =3D id;
+> > > +                   return 1;
+> > > +           }
+> > > +   }
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> >
+> > I don't know if Rob agrees with me but I would very much prefer to see
+> > software-node-based approach instead of an ID table matching.
+> >
+> > Could you in the pwrseq driver, create a software node for the serdev d=
+evice
+> > you allocate, set its "compatible" to "qcom,wcn7850-bt" and match again=
+st it
+> > here?
+> >
+> > This has several benefits: if you ever need to pass more properties to =
+the
+> > serdev devices, you already have a medium for that and you can also lea=
+ve
+> > serdev_device_add() alone. You're comparing the entire name here - what=
+ if
+> > someone sets device's ID to some value and the name will be "WCN7850.2"=
+?
+> >
+> > You could also drop the serdev_id field from struct serdev_device. For =
+matching
+> > you could even reuse the of_device_id from the device driver.
+> >
+>
+> I tried this approach and I really liked it since it gets rid of the yet-=
+another
+> id_table for serdev (which I didn't like it btw). But there is one concer=
+n
+> though. We need a generic 'device_get_match_data' implementation for swno=
+de.
+> While trying to implement it, I stumbled upon this patch [1] which does t=
+he same
+> for other usecase, but there was a disagreement on whether swnode should =
+be used
+> for driver matching or not. For my usecase, I find it very useful and
+> reasonable, but Dmitry Torokhov believes otherwise.
+>
+> Maybe I'll include this patch in the next version, CC Dmitry and see wher=
+e it
+> goes.
 
+Thanks for bringing this to my attention. I think that historically
+software nodes were meant to always be "secondary" but now we have all
+kinds of auxiliary devices that use software nodes as their "primary"
+nodes so maybe we can re-discuss this.
 
-AND I give you this feedback 4 minutes AFTER you sent your patches, so
-you can stop now and fix the same issues for all your future and your
-team's future Mahua patches.
-
-Best regards,
-Krzysztof
+Bart
 
