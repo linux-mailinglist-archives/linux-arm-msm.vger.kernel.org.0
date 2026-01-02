@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73138CEE9F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:03:03 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C809CEE9B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:00:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 49D7D301E186
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 12:59:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 899A23001BD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F9AA30F52C;
-	Fri,  2 Jan 2026 12:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F10D3112B7;
+	Fri,  2 Jan 2026 13:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CvsHpsgT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJAN68iK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46C42D97A5;
-	Fri,  2 Jan 2026 12:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3294231064B;
+	Fri,  2 Jan 2026 13:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767358763; cv=none; b=F1e+IGfifVfNzJ309WBYIXVNMI5mAEx2gAaeQgrLI1yv0HvevugN6a3oR1WICBfirzBXnVDIu/V06nXiAEvOcYdC/KPSSdJp6RKTBue3QuOhcDQL8szTk/aD1GfJkYfiztAf/EhKLoHarBzOlhCjxXnfXs52BSAw9Vgx6EE9hqM=
+	t=1767358837; cv=none; b=qgqPa/zwtONoymEHWFhzIn6Njy2PmjYQk+cAt0RGFYKyd+b7jD1lOF5MYKYcFkfPs3Vw2C43WIvYgo6kL1XSaZPCauH8QMZW8la8pCluZCBiHYMIAYeQurRO1MqBdbkQ3MNOb2Eqfwpl4Y7k8peuHsc7AWymV5C2vncV4mQUDk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767358763; c=relaxed/simple;
-	bh=0HNMklHTvHB9imCtlxW24xEYJEJNLmxGMBEQacuxhWk=;
+	s=arc-20240116; t=1767358837; c=relaxed/simple;
+	bh=SYL+wdant3jj78NTvQkvuiWVMTELRzXJMI2QSY1jnJc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L7IYW/opUHW004RXWakRsErNfDzK4tjr4BbtolpRGY55IF4lvvtIihhCy2N9ubYlXdf28jzLz6w3Hy5nAy36R9FYoeJ/UrqewOR2D9JFwOoza6sHTvnPoMWzv3Q+VzjOexAa/XBWjW44J6lPjgWJfGGUuCG0R69cPlYrhu0ph2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CvsHpsgT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F7CC116B1;
-	Fri,  2 Jan 2026 12:59:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EcW+VT/snH5ZOIBffFHqofW7+0Q49sSpHgqQz2q11KnrTQ84S8TKX/oIK6skE1Ss6mgGNVbRLUTQ21qOsIpF4spYRelrwD9LwKyKInADZlA2n5W32zSywCTWPpEpXeiUb4DzopG0lLdw0RMOS1bVGAA5kHMNxmo7uCt73t4UiB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJAN68iK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527EFC116B1;
+	Fri,  2 Jan 2026 13:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767358762;
-	bh=0HNMklHTvHB9imCtlxW24xEYJEJNLmxGMBEQacuxhWk=;
+	s=k20201202; t=1767358836;
+	bh=SYL+wdant3jj78NTvQkvuiWVMTELRzXJMI2QSY1jnJc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CvsHpsgThBLXO14vVOMA0/dvEKx3MeypV4piHM+TwPJCPVXf1YajRun1aklIcZowA
-	 LfaNbwQTB7RWoKApl4evst8lquRhPUppNLygJg76R2n9Sr8ubqxhDh3eofBlSNiDxv
-	 DXMw6aBUgpyJWXpNAOHwmQ76HqLbX1amsQ6V8Jy6Zv2bcSD0Dp7dr13Xbn/2WzHpWO
-	 5mWrJGcZZRRocVTpOhjtqGTbjauYjK/9TySVNW5c+naF/uHiIhJXfH3j6q3sWWLtqy
-	 MnrmOT6uWA4do46RTwLSvTQ3B2E6E0mIeQ+UEaAPNrVruBv2pI/4EjLp0ynphnWR6F
-	 6nj1o4tFzvWQQ==
-Message-ID: <1dcc9380-c2c2-4263-93ad-71edce86b0da@kernel.org>
-Date: Fri, 2 Jan 2026 12:59:17 +0000
+	b=SJAN68iKcQLvOtIrCHUvFZG7OujeYMAU12vTH3Hw4o26YstmMs/iFnjOtyDWyTNTE
+	 eom0I4Pt1En+uEZQXY56B6ugLii4llQYBiHvuVTYWK65ZVAqN3c6O4IfmcS7MrTbSd
+	 xsUyApwlCaiwrffACUcnoge2rAAPHiCY8HgDSpBcwQcwID0FkDND2XFCNOdkrrpcqN
+	 nso6hGr2pCcgWZl6VY72bRt9hRq93HTCQsazrd7ftUXPt7A2Pvl5x5A3xd+/tsXcjB
+	 /7ae17llu080035Eo8leBBkm6+tNDcbSqSwghZuNcafV6RHRZXZgdYSpT24wm9HOYr
+	 u0yQC+wjeONmw==
+Message-ID: <c8a7fc0d-a402-40b8-b313-6b89d1f5a306@kernel.org>
+Date: Fri, 2 Jan 2026 13:00:32 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,14 +73,20 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 02/01/2026 12:00, Konrad Dybcio wrote:
->> Is there an io-fabric in the world which exceeds 1 microsecond to perform a write transaction ?
-> Writes on arm64 aren't usually observable from the remote endpoint when
-> you would expect them to, they can be buffered unless there's an explicit
-> readback right afterwards (which creates a dependency that the processor
-> will fulfill)
+> Now I don't like that this driver is going
+> 
+> val |= BIT(i);
+> writel(val, foo);
+> // val is "altered" but not really
+> val |= readl(foo);
+> 
+> I didn't notice we were just doing a readback for the sake of a readback
+> in the last revision. MDM9607 should most definitely have it too..
+> Perhaps I should have just read the comment
 
-I don't mean write-combining cache, I mean posted versus non-posted 
-writes which is a feature of the front-side-bus :)
+Yeah this just looks dodgy and inconsistent in this code.
+
+And anyway, why OR those bits in...
 
 ---
 bod
