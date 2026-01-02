@@ -1,336 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-87252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABE4FCEEAAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:26:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3466FCEEADC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:34:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5B8DC3017ED9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:25:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BDAAE30124CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:34:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEAB02DF13A;
-	Fri,  2 Jan 2026 13:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5360C7261D;
+	Fri,  2 Jan 2026 13:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQICTZO3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oX9ohkCy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B402D8DB9
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196251D6BB;
+	Fri,  2 Jan 2026 13:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767360358; cv=none; b=dGjc9+4g+KYLiEQ973y1vmr+OMPFy+t13u7t+ceFbxgHPbyZ2+QiXZHCQNiUyG7+b4EU1BjSRWI8J3HIN2WeP3aLf57fib1d5csQKkFf+iMvANernLIIGi/WvAM9E2nFMR8IUAniA9hf051LojeuzDsriwQJMsfxfT7rIT1LHS0=
+	t=1767360851; cv=none; b=XjeP1WCMBMHFw9pbT1K5GV6WJSWOJyI2ByFWHFOf+RB0MTvRuVHq76QZD5Goyc6lEpG9SaYF9IGX6xm66rVWxaf1JBckGotxx9g5MKu01fdy0IF6UXM17Jn9EwspMqNWnmtWJL8vFxahHM9zDgXPSBWOrfhD50UWXnauuzY+rD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767360358; c=relaxed/simple;
-	bh=KF3VN9f+VPypAemwcvf4dtXqVD5uF0Sn4u7LNBUQAVU=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tLejrPhENwGrJuP7In/diHMfDRWwjePminaCC/NxfldDjcrmbzvVRFFBOsXmnCAswNkCoBIOIa4huFjiuSxl/OlOKA4sS9JxkySsapRB6jfRUED/cIFGjZuL9GX3Q9tEw/KwQaHaJkiYTO33o7xxSqsarI8SOU8OfdXUQo/yWyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQICTZO3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8ECC19423
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:25:57 +0000 (UTC)
+	s=arc-20240116; t=1767360851; c=relaxed/simple;
+	bh=VEKovfwgFEFRzqHc5DA9b9dzuLkYiDUuroCM/My6HyM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EBKu1CFLNq7PoM7DPeMqWwnCGXYSauqiUdy6xMfxymeY7jh41gOIOtVkojJ3dFvc+bWX+ikgPDwmAw5zNTmerVWazAK2mxL0mpaAZDbqwVL9R4H5P/EoVziu4NxmNifOeDk/b2OfOB3nHjy9k13uF/H4asz4BSucYS+f8v1tPlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oX9ohkCy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4BDC116B1;
+	Fri,  2 Jan 2026 13:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767360358;
-	bh=KF3VN9f+VPypAemwcvf4dtXqVD5uF0Sn4u7LNBUQAVU=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=gQICTZO3kllJ64phRVGikSnutdUgdHwmxOwtwUk4YEhe0HIFl3J6xZTrtKeql78f2
-	 J5le21vnup8GM/dUJzXS5LwJKjjjSRh4cSjUac3xizQMCODwJIwEe0IxF6csIPQgfH
-	 hAS3w0QW8LMQtFMa5M2cJoDqYZvfGjSYRO9uSILJSImlO9jJOcOzYI5LgFgQMZmapq
-	 Yo+T0+wGlfaOgGZpS4woIVUX49zlAReZk6YZdxjIBheT6quN5gItoU/7GRHgfpoBBk
-	 ikS1SRtIv9W5HY46fSbgMMTUNFTWvW9l7to9DbWwCVe4ze8oEoGpprFVNmqbVqpkO4
-	 w1CtIjlfAYZaQ==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-37b9728a353so146801431fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 05:25:57 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVWsoM9264/JDnYcaz2JZULOm3Ztk/clnGySqc0Y9Tw53D8jNwyMBP5IBgLtf9IgnKJnFtN47YrUe075I83@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVJ+k1En6m0snR+fNl1X3oPuvHgCPLhYmD8GHDfEPOVRTUuyha
-	DOEjbyd1fzUFp3Esj0je8JeLbYKMsqCE1usRjjCglXw6UIcHYTbkAw8gIinkBtWBgcjFK+j+9iq
-	FxQvdoKg31heKzCS+xBOaKFGxholzCmwgoBbhs5spcA==
-X-Google-Smtp-Source: AGHT+IFHVJSjlpxhjEuVT0/QXQn2++FhCgrKBkU/OwEkhpBCoAmGaRJjp74urE6iT4fK5E4MiDvzh7yk2dC5SoYrdic=
-X-Received: by 2002:a05:651c:241:b0:37a:3189:e7b9 with SMTP id
- 38308e7fff4ca-3812158e5b2mr101927421fa.16.1767360355811; Fri, 02 Jan 2026
- 05:25:55 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 2 Jan 2026 07:25:54 -0600
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 2 Jan 2026 07:25:54 -0600
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20251227-next-15nov_expose_sysfs-v22-2-2d153438ba19@oss.qualcomm.com>
+	s=k20201202; t=1767360847;
+	bh=VEKovfwgFEFRzqHc5DA9b9dzuLkYiDUuroCM/My6HyM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=oX9ohkCyii+h1e50Z5Vh5H4f8tY5Hjzw2EJNiqKkZGIUgaR7R/mIaFZXZBwb5vhJM
+	 SgLWl0oO7tgHbtuBMNojb0n5pOMf3VSKVYyg9N6ciT4RlQ7vqsFLdD3sv0AH5EZiPU
+	 i77Zvm+ioMEZ8bbotFuuP0ofa9rORe0hgH3mOpzQOSdd/P0/K8oN3gg/CxTXvLYG14
+	 7JIFhjYFTrTLsn0wEfzCfHyiJ8wxH4h920buPp4NGFAPL5TIGNQLPPB5EK+Our1pDG
+	 t/blL6bFCwatW0blrIAuLcb14M4dUpSC7kkURwIlOsokBF2FDkHTZM5+E+TohOX5tS
+	 4oyBTGzhNVS6Q==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Brian Norris <computersforpeace@gmail.com>,  Kamal Dasu
+ <kamal.dasu@broadcom.com>,  Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,  Miquel Raynal
+ <miquel.raynal@bootlin.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  Harvey Hunt
+ <harveyhuntnexus@gmail.com>,  Paul Cercueil <paul@crapouillou.net>,
+  Manivannan Sadhasivam <mani@kernel.org>,  Stefan Agner <stefan@agner.ch>,
+  Tudor Ambarus <tudor.ambarus@linaro.org>,  Pratyush Yadav
+ <pratyush@kernel.org>,  Michael Walle <mwalle@kernel.org>,  Nathan
+ Chancellor <nathan@kernel.org>,  Nick Desaulniers
+ <nick.desaulniers+lkml@gmail.com>,  Bill Wendling <morbo@google.com>,
+  Justin Stitt <justinstitt@google.com>,  linux-mtd@lists.infradead.org,
+  linux-kernel@vger.kernel.org,  linux-mips@vger.kernel.org,
+  linux-arm-msm@vger.kernel.org,  llvm@lists.linux.dev
+Subject: Re: [PATCH 7/7] mtd: spi-nor: hisi-sfc: Simplify with scoped for
+ each OF child loop
+In-Reply-To: <20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
+	(Krzysztof Kozlowski's message of "Fri, 2 Jan 2026 13:49:34 +0100")
+References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
+	<20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
+Date: Fri, 02 Jan 2026 14:33:59 +0100
+Message-ID: <86a4yw87g8.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251227-next-15nov_expose_sysfs-v22-0-2d153438ba19@oss.qualcomm.com>
- <20251227-next-15nov_expose_sysfs-v22-2-2d153438ba19@oss.qualcomm.com>
-Date: Fri, 2 Jan 2026 07:25:54 -0600
-X-Gmail-Original-Message-ID: <CAMRc=MewoxcijL_OYi=LwWMJmYCSsYFQ2j+koOF5b2_w8VyGsg@mail.gmail.com>
-X-Gm-Features: AQt7F2rI3NWR6QuodOzhEpXpogsjLgXzH51rPaAO3w7SLsaoq_EOT9bRmjfQdNo
-Message-ID: <CAMRc=MewoxcijL_OYi=LwWMJmYCSsYFQ2j+koOF5b2_w8VyGsg@mail.gmail.com>
-Subject: Re: [PATCH v22 2/2] power: reset: reboot-mode: Expose sysfs for
- registered reboot_modes
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Sebastian Reichel <sre@kernel.org>, Bartosz Golaszewski <bgolasze@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Fri, 26 Dec 2025 19:56:34 +0100, Shivendra Pratap
-<shivendra.pratap@oss.qualcomm.com> said:
-> Currently, there is no standardized mechanism for userspace to discover
-> which reboot-modes are supported on a given platform. This limitation
-> forces tools and scripts to rely on hardcoded assumptions about the
-> supported reboot-modes.
+Hi Kyzystof,
+
+Thanks for the cleanup.
+
+On Fri, Jan 02 2026, Krzysztof Kozlowski wrote:
+
+> Use scoped for-each loop when iterating over device nodes to make code a
+> bit simpler.
+
+Nit: the commit message is a bit too dry. I had to go and look what the
+difference between the two variants was. I could make an educated guess
+by looking at the patch, but still.
+
+If you end up doing a v2, a one-liner explanation of the difference
+between the two loop variants would be nice to have.
+
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
+
 >
-> Create a class 'reboot-mode' and a device under it to expose a sysfs
-> interface to show the available reboot mode arguments to userspace. Use
-> the driver_name field of the struct reboot_mode_driver to create the
-> device.  For device-based drivers, configure the device driver name as
-> driver_name.
->
-> This results in the creation of:
->   /sys/class/reboot-mode/<driver>/reboot_modes
->
-> This read-only sysfs file will exposes the list of supported reboot
-> modes arguments provided by the driver, enabling userspace to query the
-> list of arguments.
->
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 > ---
->  drivers/power/reset/reboot-mode.c | 139 +++++++++++++++++++++++++++++++++++++-
->  include/linux/reboot-mode.h       |   1 +
->  2 files changed, 137 insertions(+), 3 deletions(-)
+>  drivers/mtd/spi-nor/controllers/hisi-sfc.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 >
-> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
-> index fba53f638da04655e756b5f8b7d2d666d1379535..96d0201697a539c6d048dac021db97e4e3063366 100644
-> --- a/drivers/power/reset/reboot-mode.c
-> +++ b/drivers/power/reset/reboot-mode.c
-> @@ -6,10 +6,12 @@
->  #include <linux/device.h>
->  #include <linux/init.h>
->  #include <linux/kernel.h>
-> +#include <linux/list.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/reboot.h>
->  #include <linux/reboot-mode.h>
-> +#include <linux/slab.h>
->
->  #define PREFIX "mode-"
->
-> @@ -19,6 +21,42 @@ struct mode_info {
->  	struct list_head list;
->  };
->
-> +struct sysfs_data {
-
-Let's make this more descriptive? struct reboot_mode_sysfs_data?
-
-> +	const char *mode;
-> +	struct list_head list;
-> +};
-> +
-> +static ssize_t reboot_modes_show(struct device *dev, struct device_attribute *attr, char *buf)
-> +{
-> +	struct sysfs_data *sysfs_info;
-> +	struct list_head *head;
-> +	ssize_t size = 0;
-> +
-> +	head = dev_get_drvdata(dev);
-> +	if (!head)
-> +		return -ENODATA;
-> +
-> +	list_for_each_entry(sysfs_info, head, list)
-> +		size += sysfs_emit_at(buf, size, "%s ", sysfs_info->mode);
-> +
-> +	if (!size)
-> +		return -ENODATA;
-> +
-> +	return size + sysfs_emit_at(buf, size - 1, "\n");
-> +}
-> +static DEVICE_ATTR_RO(reboot_modes);
-> +
-> +static struct attribute *reboot_mode_attrs[] = {
-> +	&dev_attr_reboot_modes.attr,
-> +	NULL,
-> +};
-> +ATTRIBUTE_GROUPS(reboot_mode);
-> +
-> +static const struct class reboot_mode_class = {
-> +	.name = "reboot-mode",
-> +	.dev_groups = reboot_mode_groups,
-> +};
-> +
->  static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
->  					  const char *cmd)
+> diff --git a/drivers/mtd/spi-nor/controllers/hisi-sfc.c b/drivers/mtd/spi-nor/controllers/hisi-sfc.c
+> index db948da2c4c5..54c49a8423a2 100644
+> --- a/drivers/mtd/spi-nor/controllers/hisi-sfc.c
+> +++ b/drivers/mtd/spi-nor/controllers/hisi-sfc.c
+> @@ -394,15 +394,12 @@ static void hisi_spi_nor_unregister_all(struct hifmc_host *host)
+>  static int hisi_spi_nor_register_all(struct hifmc_host *host)
 >  {
-> @@ -62,6 +100,61 @@ static int reboot_mode_notify(struct notifier_block *this,
->  	return NOTIFY_DONE;
->  }
->
-> +static int reboot_mode_create_device(struct reboot_mode_driver *reboot)
-> +{
-> +	struct sysfs_data *sysfs_info;
-> +	struct sysfs_data *next;
-> +	struct list_head *head;
-> +	struct mode_info *info;
-> +	int ret;
-> +
-> +	head = kzalloc(sizeof(*head), GFP_KERNEL);
-> +	if (!head) {
-> +		ret = -ENOMEM;
-> +		goto error;
-> +	}
-> +
-> +	INIT_LIST_HEAD(head);
-> +
-> +	list_for_each_entry(info, &reboot->head, list) {
-> +		sysfs_info = kzalloc(sizeof(*sysfs_info), GFP_KERNEL);
-> +		if (!sysfs_info) {
-> +			ret = -ENOMEM;
-> +			goto error;
-> +		}
-> +
-> +		sysfs_info->mode = kstrdup_const(info->mode, GFP_KERNEL);
-> +		if (!sysfs_info->mode) {
-> +			kfree(sysfs_info);
-> +			ret = -ENOMEM;
-> +			goto error;
-> +		}
-> +
-> +		list_add_tail(&sysfs_info->list, head);
-> +	}
-> +
-> +	reboot->reboot_mode_device = device_create(&reboot_mode_class, NULL, 0,
-> +						   (void *)head, reboot->dev->driver->name);
+>  	struct device *dev = host->dev;
+> -	struct device_node *np;
+>  	int ret;
+>  
+> -	for_each_available_child_of_node(dev->of_node, np) {
+> +	for_each_available_child_of_node_scoped(dev->of_node, np) {
+>  		ret = hisi_spi_nor_register(np, host);
+> -		if (ret) {
+> -			of_node_put(np);
+> +		if (ret)
+>  			goto fail;
+> -		}
+>  
+>  		if (host->num_chip == HIFMC_MAX_CHIP_NUM) {
+>  			dev_warn(dev, "Flash device number exceeds the maximum chipselect number\n");
 
-No, why pass the list? You should create an instance of struct sysfs_data per
-device_create(). If it needs to contain a list, then let it contain a list but
-don't allocate the list_head, that's really unusual.
-
-> +
-> +	if (IS_ERR(reboot->reboot_mode_device)) {
-> +		ret = PTR_ERR(reboot->reboot_mode_device);
-> +		goto error;
-> +	}
-> +
-> +	return 0;
-> +
-> +error:
-> +	list_for_each_entry_safe(sysfs_info, next, head, list) {
-> +		list_del(&sysfs_info->list);
-> +		kfree_const(sysfs_info->mode);
-> +		kfree(sysfs_info);
-> +	}
-> +
-> +	kfree(head);
-> +	reboot->reboot_mode_device = NULL;
-> +	return ret;
-> +}
-> +
->  /**
->   * reboot_mode_register - register a reboot mode driver
->   * @reboot: reboot mode driver
-> @@ -113,16 +206,39 @@ int reboot_mode_register(struct reboot_mode_driver *reboot)
->  	reboot->reboot_notifier.notifier_call = reboot_mode_notify;
->  	register_reboot_notifier(&reboot->reboot_notifier);
->
-> +	ret = reboot_mode_create_device(reboot);
-> +	if (ret)
-> +		goto error;
-> +
->  	return 0;
->
->  error:
-> -	list_for_each_entry(info, &reboot->head, list)
-> -		kfree_const(info->mode);
-> -
-> +	reboot_mode_unregister(reboot);
->  	return ret;
->  }
->  EXPORT_SYMBOL_GPL(reboot_mode_register);
->
-> +static inline void reboot_mode_unregister_device(struct reboot_mode_driver *reboot)
-> +{
-> +	struct sysfs_data *sysfs_info;
-> +	struct sysfs_data *next;
-> +	struct list_head *head;
-> +
-> +	head = dev_get_drvdata(reboot->reboot_mode_device);
-> +	device_unregister(reboot->reboot_mode_device);
-> +	reboot->reboot_mode_device = NULL;
-> +
-> +	if (head) {
-> +		list_for_each_entry_safe(sysfs_info, next, head, list) {
-> +			list_del(&sysfs_info->list);
-> +			kfree_const(sysfs_info->mode);
-> +			kfree(sysfs_info);
-> +		}
-
-This loop is duplicated, can you please factor it out into a dedicated
-function?
-
-> +	}
-> +
-> +	kfree(head);
-> +}
-> +
->  /**
->   * reboot_mode_unregister - unregister a reboot mode driver
->   * @reboot: reboot mode driver
-> @@ -131,7 +247,11 @@ int reboot_mode_unregister(struct reboot_mode_driver *reboot)
->  {
->  	struct mode_info *info;
->
-> +	if (!reboot->reboot_mode_device)
-> +		return -ENODEV;
-> +
->  	unregister_reboot_notifier(&reboot->reboot_notifier);
-> +	reboot_mode_unregister_device(reboot);
->
->  	list_for_each_entry(info, &reboot->head, list)
->  		kfree_const(info->mode);
-> @@ -199,6 +319,19 @@ void devm_reboot_mode_unregister(struct device *dev,
->  }
->  EXPORT_SYMBOL_GPL(devm_reboot_mode_unregister);
->
-> +static int __init reboot_mode_init(void)
-> +{
-> +	return class_register(&reboot_mode_class);
-> +}
-> +
-> +static void __exit reboot_mode_exit(void)
-> +{
-> +	class_unregister(&reboot_mode_class);
-> +}
-> +
-> +subsys_initcall(reboot_mode_init);
-> +module_exit(reboot_mode_exit);
-> +
->  MODULE_AUTHOR("Andy Yan <andy.yan@rock-chips.com>");
->  MODULE_DESCRIPTION("System reboot mode core library");
->  MODULE_LICENSE("GPL v2");
-> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
-> index 4a2abb38d1d612ec0fdf05eb18c98b210f631b7f..b56783c32068096325f92445b9530d1856c4826c 100644
-> --- a/include/linux/reboot-mode.h
-> +++ b/include/linux/reboot-mode.h
-> @@ -5,6 +5,7 @@
->  struct reboot_mode_driver {
->  	struct device *dev;
->  	struct list_head head;
-> +	struct device *reboot_mode_device;
-
-Why can't this be part of struct (reboot_mode_)sysfs_data?
-
-Bart
-
->  	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
->  	struct notifier_block reboot_notifier;
->  };
->
-> --
-> 2.34.1
->
->
+-- 
+Regards,
+Pratyush Yadav
 
