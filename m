@@ -1,125 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-87253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3466FCEEADC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:34:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DC42CEEB09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:42:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BDAAE30124CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:34:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3D12130124EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:42:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5360C7261D;
-	Fri,  2 Jan 2026 13:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 134F5311968;
+	Fri,  2 Jan 2026 13:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oX9ohkCy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOmDCOES"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196251D6BB;
-	Fri,  2 Jan 2026 13:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02E21FC101
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767360851; cv=none; b=XjeP1WCMBMHFw9pbT1K5GV6WJSWOJyI2ByFWHFOf+RB0MTvRuVHq76QZD5Goyc6lEpG9SaYF9IGX6xm66rVWxaf1JBckGotxx9g5MKu01fdy0IF6UXM17Jn9EwspMqNWnmtWJL8vFxahHM9zDgXPSBWOrfhD50UWXnauuzY+rD8=
+	t=1767361346; cv=none; b=uGdy5uqmBlSlQjZI+J/5wgjDjjcE3hdUAIqv0Odm5gZO5Ufuj6+KBXayqi/nPjuF+83plzjQee2gTTUk5xiCJSDmSU4wxl++FkjN/bgAU19MTxFg7p6fGfivGfE3nXJT2qbVkcojYh8ZUrankKfLGoOn3l50etHTYIc9VSHuHS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767360851; c=relaxed/simple;
-	bh=VEKovfwgFEFRzqHc5DA9b9dzuLkYiDUuroCM/My6HyM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EBKu1CFLNq7PoM7DPeMqWwnCGXYSauqiUdy6xMfxymeY7jh41gOIOtVkojJ3dFvc+bWX+ikgPDwmAw5zNTmerVWazAK2mxL0mpaAZDbqwVL9R4H5P/EoVziu4NxmNifOeDk/b2OfOB3nHjy9k13uF/H4asz4BSucYS+f8v1tPlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oX9ohkCy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4BDC116B1;
-	Fri,  2 Jan 2026 13:34:02 +0000 (UTC)
+	s=arc-20240116; t=1767361346; c=relaxed/simple;
+	bh=QiDbzp86OV3z2nQyUC9ZSUVCTpZMqOOFmDhGBEdF0rM=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OaMJX3eIjXpR/O9zWmZ1em0BhjPtHvsA3Y4HvmLwGEzf5x6QQySBvxN2vkIZDwrfaQDWMnjOrDuC9GS1503Du15aal9yiEtCTRVI8HMxpMhs/d6SKHcfE/bkpwOSudo2+aneWfOoDAlcsCMgT+xxbu7IaZki4xzn8FnarTApwkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOmDCOES; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F6C2BC9E
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767360847;
-	bh=VEKovfwgFEFRzqHc5DA9b9dzuLkYiDUuroCM/My6HyM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=oX9ohkCyii+h1e50Z5Vh5H4f8tY5Hjzw2EJNiqKkZGIUgaR7R/mIaFZXZBwb5vhJM
-	 SgLWl0oO7tgHbtuBMNojb0n5pOMf3VSKVYyg9N6ciT4RlQ7vqsFLdD3sv0AH5EZiPU
-	 i77Zvm+ioMEZ8bbotFuuP0ofa9rORe0hgH3mOpzQOSdd/P0/K8oN3gg/CxTXvLYG14
-	 7JIFhjYFTrTLsn0wEfzCfHyiJ8wxH4h920buPp4NGFAPL5TIGNQLPPB5EK+Our1pDG
-	 t/blL6bFCwatW0blrIAuLcb14M4dUpSC7kkURwIlOsokBF2FDkHTZM5+E+TohOX5tS
-	 4oyBTGzhNVS6Q==
-From: Pratyush Yadav <pratyush@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Brian Norris <computersforpeace@gmail.com>,  Kamal Dasu
- <kamal.dasu@broadcom.com>,  Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,  Miquel Raynal
- <miquel.raynal@bootlin.com>,  Richard Weinberger <richard@nod.at>,
-  Vignesh Raghavendra <vigneshr@ti.com>,  Harvey Hunt
- <harveyhuntnexus@gmail.com>,  Paul Cercueil <paul@crapouillou.net>,
-  Manivannan Sadhasivam <mani@kernel.org>,  Stefan Agner <stefan@agner.ch>,
-  Tudor Ambarus <tudor.ambarus@linaro.org>,  Pratyush Yadav
- <pratyush@kernel.org>,  Michael Walle <mwalle@kernel.org>,  Nathan
- Chancellor <nathan@kernel.org>,  Nick Desaulniers
- <nick.desaulniers+lkml@gmail.com>,  Bill Wendling <morbo@google.com>,
-  Justin Stitt <justinstitt@google.com>,  linux-mtd@lists.infradead.org,
-  linux-kernel@vger.kernel.org,  linux-mips@vger.kernel.org,
-  linux-arm-msm@vger.kernel.org,  llvm@lists.linux.dev
-Subject: Re: [PATCH 7/7] mtd: spi-nor: hisi-sfc: Simplify with scoped for
- each OF child loop
-In-Reply-To: <20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
-	(Krzysztof Kozlowski's message of "Fri, 2 Jan 2026 13:49:34 +0100")
-References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
-	<20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
-Date: Fri, 02 Jan 2026 14:33:59 +0100
-Message-ID: <86a4yw87g8.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=k20201202; t=1767361345;
+	bh=QiDbzp86OV3z2nQyUC9ZSUVCTpZMqOOFmDhGBEdF0rM=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=MOmDCOESvgZvn+ifjH+LGySpJaAPb9+QWHap++YPOs1gQi2ZjLeI4I8lMT5saspH8
+	 SBwcqAbSLudXngqOa2Bl7RZ37i30afoBv16DZgIVd2T4g6v0ajU/q4M8K3dJnpz8Hv
+	 587bI7dRAs/3JfgyDVRJXfIJ+A5WjaW06kAHep9D9qIpUnAjdW11ZdO9q8ZuHI5RMa
+	 6cx3jOilS0TEq+W1dcMPWrIF+q4d6Vr2sCYxQDWVA+rDWmjOBjCRjQ1JX0RtNIPS1+
+	 cLXkV3AAxVBtwHVzyOxWUy6/+ASNUQlphHBSVVe6J7Aq5jK4t2jkNmWQrezcUpkm9f
+	 kKol0luXprRMw==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-37cef3ccb82so86406921fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 05:42:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXhE5RqOfAcK/uWknVTXStCs3F2/p/pJcTKeiGwspYAn8HOkFbImXrCw9ZUcHpcYISdEXRWqkPL7KQm0coX@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWzqO+eA0fgQYGzEXCvXgp+mcafD3t+iSmFQG3FfNu3XZzPOZG
+	gjl0vwBTH5C/6l8Svstd6x95KmBVOQ8HTTLrU8vb7y4m+ksrrb94cK/ocHPeTVlYawKTVR6WasJ
+	ey5NorjN0B+OTkXFNHCAfHuRXEPRjkhqsxzWJ1/buoA==
+X-Google-Smtp-Source: AGHT+IGIcl+tQnzZyIQ2EQINe1SwzJ0awYFUootTV9cZBCixeoA2aPtRm1nCrUjFdIlmzOh7EKI+cIsHpsAnfU2vxGo=
+X-Received: by 2002:a05:651c:211f:b0:380:c72:d495 with SMTP id
+ 38308e7fff4ca-381216e11c8mr144853711fa.32.1767361344053; Fri, 02 Jan 2026
+ 05:42:24 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 13:42:23 +0000
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 13:42:22 +0000
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20251229-pci-pwrctrl-rework-v3-1-c7d5918cd0db@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com> <20251229-pci-pwrctrl-rework-v3-1-c7d5918cd0db@oss.qualcomm.com>
+Date: Fri, 2 Jan 2026 13:42:22 +0000
+X-Gmail-Original-Message-ID: <CAMRc=Me0P=k+_x34eioKHhjdKApAqJ_5BD_gaEMAzF=Nundg7A@mail.gmail.com>
+X-Gm-Features: AQt7F2pMTDzs-dKRByK2NKQ68tOfmNo9Q8YeKt5yT69D7P1BrThAh4OfifpsU2M
+Message-ID: <CAMRc=Me0P=k+_x34eioKHhjdKApAqJ_5BD_gaEMAzF=Nundg7A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] PCI/pwrctrl: tc9563: Use put_device() instead of i2c_put_adapter()
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
+	Brian Norris <briannorris@chromium.org>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Niklas Cassel <cassel@kernel.org>, 
+	Alex Elder <elder@riscstar.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Kyzystof,
-
-Thanks for the cleanup.
-
-On Fri, Jan 02 2026, Krzysztof Kozlowski wrote:
-
-> Use scoped for-each loop when iterating over device nodes to make code a
-> bit simpler.
-
-Nit: the commit message is a bit too dry. I had to go and look what the
-difference between the two variants was. I could make an educated guess
-by looking at the patch, but still.
-
-If you end up doing a v2, a one-liner explanation of the difference
-between the two loop variants would be nice to have.
-
-Acked-by: Pratyush Yadav <pratyush@kernel.org>
-
+On Mon, 29 Dec 2025 18:26:52 +0100, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 >
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> The API comment for of_find_i2c_adapter_by_node() recommends using
+> put_device() to drop the reference count of I2C adapter instead of using
+> i2c_put_adapter(). So replace i2c_put_adapter() with put_device().
+>
+> Fixes: 4c9c7be47310 ("PCI: pwrctrl: Add power control driver for TC9563")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > ---
->  drivers/mtd/spi-nor/controllers/hisi-sfc.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/mtd/spi-nor/controllers/hisi-sfc.c b/drivers/mtd/spi-nor/controllers/hisi-sfc.c
-> index db948da2c4c5..54c49a8423a2 100644
-> --- a/drivers/mtd/spi-nor/controllers/hisi-sfc.c
-> +++ b/drivers/mtd/spi-nor/controllers/hisi-sfc.c
-> @@ -394,15 +394,12 @@ static void hisi_spi_nor_unregister_all(struct hifmc_host *host)
->  static int hisi_spi_nor_register_all(struct hifmc_host *host)
->  {
->  	struct device *dev = host->dev;
-> -	struct device_node *np;
->  	int ret;
->  
-> -	for_each_available_child_of_node(dev->of_node, np) {
-> +	for_each_available_child_of_node_scoped(dev->of_node, np) {
->  		ret = hisi_spi_nor_register(np, host);
-> -		if (ret) {
-> -			of_node_put(np);
-> +		if (ret)
->  			goto fail;
-> -		}
->  
->  		if (host->num_chip == HIFMC_MAX_CHIP_NUM) {
->  			dev_warn(dev, "Flash device number exceeds the maximum chipselect number\n");
 
--- 
-Regards,
-Pratyush Yadav
+Huh, these are indeed confusing APIs, the find vs get variants.
+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
