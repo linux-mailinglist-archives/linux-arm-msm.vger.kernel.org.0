@@ -1,173 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-87272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B128CEF075
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 18:07:10 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F6CCEF0A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 18:14:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4F9FD3009C26
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 17:07:09 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 137F33002535
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 17:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8AC32C0277;
-	Fri,  2 Jan 2026 17:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 664EC2868A7;
+	Fri,  2 Jan 2026 17:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBNpKR2r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qutM4XzB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24192882AA
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 17:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5E0276049
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 17:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767373625; cv=none; b=UD3siZZkmb3r4tT8uxkDjlJ28xeFDOFmJifryGFTOtpBAo+V0PIVs0eg9oNkatNNcfO9KajGrm8R2G18Ioed1EoCLHxK4TeO/GjBnFBGgqwtujKZ3rbU7WAD3a5VrIyPJ26FvcVxv2xbg74bqvDb95AddpHzp1OB+kDsFkIJI0k=
+	t=1767374057; cv=none; b=idwqfnPSHHEImuTS+v35uuzcL+w1KrVBLphjZboJ0Gw1VNIseprR5daeMELujZItQxViiMc8dxQQRW76Vr3h1AUELIO7cyU/0y3Drf2N4MBSCnQr6mywa4FIKG5g+jsxX6vU2N78i0N40EtfMqvKgwpWuKu1Ejv3h67ZQLaHTJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767373625; c=relaxed/simple;
-	bh=iarWZx1KlsRgp9E3GRi6XuMvkRnvVPn8FvNMJ9e/S4s=;
+	s=arc-20240116; t=1767374057; c=relaxed/simple;
+	bh=R6dmOb7p8xJel1QxDvWRfkmJfdH87GHXzodWhp+pqzQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JYvjWoPl0Xt+QBuHz2Ms73Qq3mfk7ypRfo15IW/rWAVHem8hUhLeSGswvsorpyQz3KSwQ/yFVstugvhNJ0Uzr3xj1N7iA09UK7Lcp0pWqvXImBOPdFXDuy9ri6eEDEv6+nPW1d8dgQcwRM0uF88wz86pHBV9HMTTJgoE7Lg2JYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBNpKR2r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF70C116D0
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 17:07:05 +0000 (UTC)
+	 To:Cc:Content-Type; b=NWo2ug00bWjWYUwi460stnz+3dAavnzXCYsJv37jXxcrOKxGy79fiGDmPlk/gKfdz/sTv3lsH7POo6XnEagyB1Z7AUgPfhfsYSQq5pjZP8w9DuK3ZCl6ydRjcV0oNhqVTbVSG3Y61dBc5iwG2v6AKaYuX1Nvgqv8zQo6Z+xFpW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qutM4XzB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEBFC19425
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 17:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767373625;
-	bh=iarWZx1KlsRgp9E3GRi6XuMvkRnvVPn8FvNMJ9e/S4s=;
+	s=k20201202; t=1767374057;
+	bh=R6dmOb7p8xJel1QxDvWRfkmJfdH87GHXzodWhp+pqzQ=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=aBNpKR2rMRsc1AH3kIXOVt4tUKSFp5nE7Y0b9eIV8GwBTRNwaC991eQzTVYUR9dvO
-	 5UIHOs2EXd8EDjj3CR5F3eylIrfA/XHUEFaa8T8XM2Y1Qy0pl/1zDoyBXlSsVLadr9
-	 lP3gc0j17QUa4SeiGbuylJFnXeiu2WAX3EWf/CQQ2oC7j5QnAaBEsqjwEGS33WmYwM
-	 aYUE67bdGdEqA1JqIqogyZj4iXM/TYQitzNuFT64MfSZCkgGLoG6nsWfzqck/c1oKP
-	 alqP8vIryOZtlZgNJwUYGbx3i1ILSonwb2u1YBmp7J57R0kIxWR0Qf+t6vLURr+VIC
-	 c5vMN/var4pOg==
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-595819064cdso167807e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 09:07:04 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUISOx0wu+gU1V4qJe/tf+9OsOlWFF8KonOvhNSI5t3VjiRmXAdOgRHL6t5hg4c7ZLuBv1DC4sNYSwpP0BB@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqZPsChbLrSAM4fBxIzX5tpIEycA/NcWqE20x0JFUdzegARooI
-	i3k83rq3te0cXCf9obiR0H9QdVpSXc6puG+FCk+G9XlSyl4hnCDujgiNvpFXUyI5PB35DqUpvre
-	pfLlTjNM3adm9C9Rcg6QO+YeNz0Pt0owpfNqGLEhLMQ==
-X-Google-Smtp-Source: AGHT+IFvH0jCrfHsGU86qSQyaKtWG6m7X68xvVItz+xwat1KYNlZLswI9WXmMoLpE+qcpLYknysIBNbQN/+lMNMdWwI=
-X-Received: by 2002:a05:6512:3412:b0:59a:1443:2f72 with SMTP id
- 2adb3069b0e04-59b5657e5a4mr103415e87.4.1767373623264; Fri, 02 Jan 2026
- 09:07:03 -0800 (PST)
+	b=qutM4XzBI043D7B/jJARhLR2e5HfrWl/uOdrZ9Xi4USlB7OQU/Yt3yqy+8hrB4O6X
+	 z4i/sUoO1X+ypn2NJ74rppttl9J4VKOqujDw3QM4O5jBHuh7OjAAFlPDC8a0vaNc4K
+	 FLz1bXc393A8RxFUfpSg6FUfa9pQnfNfNceecwU2qPhzM1aO9dFeUVBmAN5rPMyCmb
+	 N9DIcoklGZsv0Zg9qpo+ZCei7TeoEjj/H15mx+49EoUTgTj10EGoQD9/G/rzS4ZG7w
+	 M8XBZr1L2TQNuWP9a8mAw2SGZl8mR/MnZnLqmKdcJ7+V0xdKvNZP3Dw2XF6BYjTeuh
+	 NvbSIJY9ZMyOA==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-598efcf3a89so12058069e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 09:14:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWXfuWhEM9hJFwhTd+OIhL/J+qHMCklvcg3Ujc8yUGRQJ+kh4z1Gq+NCJ7KCdQkoqV84ZK7wBgSFHERaZJ4@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIg1LMsikL9P7zMFQGVKmwdLQBky5dBTtBVPDGuzpuq1V55LQ4
+	KYTUUWbQqwxrSedYkxurIiDYP7FY2Kc8+qXhrq59+0cZu9u6jPYCLovtey5XnV+LmSm8BlGuWl7
+	/twnUnacjB/zgpASHYCH8e4Xy7GcjOJlAcZiLXXLiUw==
+X-Google-Smtp-Source: AGHT+IHV2zByoLl6AUOgy1s7wJzSUumpVgbYasCQ8jZfLwQVGm88Ij0ul2K30P8OfX5b1FsgpDShkqlq2bAFvN8YTbU=
+X-Received: by 2002:a05:6512:3f09:b0:595:81c1:c55 with SMTP id
+ 2adb3069b0e04-59a17d74426mr16156505e87.8.1767374055558; Fri, 02 Jan 2026
+ 09:14:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251231-wcn3990-pwrctl-v1-0-1ff4d6028ad5@oss.qualcomm.com>
- <20251231-wcn3990-pwrctl-v1-4-1ff4d6028ad5@oss.qualcomm.com>
- <CAMRc=Mey1ScNmosipLFg6mmABjeG2SO2L-pyjwTuOpOYOHZjqg@mail.gmail.com> <CAO9ioeU2JjzDwkGQzxc963kakNyZCtaSRAmLu=1kOAMGQeuZRQ@mail.gmail.com>
-In-Reply-To: <CAO9ioeU2JjzDwkGQzxc963kakNyZCtaSRAmLu=1kOAMGQeuZRQ@mail.gmail.com>
+References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
+ <20251128-qcom-qce-cmd-descr-v9-3-9a5f72b89722@linaro.org>
+ <aUFX14nz8cQj8EIb@vaman> <CAMRc=MetbSuaU9VpK7CTio4kt-1pkwEFecARv7ROWDH_yq63OQ@mail.gmail.com>
+ <aUF2gj_0svpygHmD@vaman> <CAMRc=McO-Fbb=O3VjFk5C14CD6oVA4UmLroN4_ddCVxtfxr03A@mail.gmail.com>
+ <aUpyrIvu_kG7DtQm@vaman> <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
+ <aVZh3hb32r1oVcwG@vaman> <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
+ <aVf5WUe9cAXZHxPJ@vaman>
+In-Reply-To: <aVf5WUe9cAXZHxPJ@vaman>
 From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 2 Jan 2026 18:06:51 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MdCxXg6Hbn_qPVsux2aAfN8cqpG946rS2Sb9J_Cjy0ZQg@mail.gmail.com>
-X-Gm-Features: AQt7F2qM1LfACBr1uzyMAUsYIaKhzaqm_3nrsJwq14yD6V3d3exkT5MSIFxHS6o
-Message-ID: <CAMRc=MdCxXg6Hbn_qPVsux2aAfN8cqpG946rS2Sb9J_Cjy0ZQg@mail.gmail.com>
-Subject: Re: [PATCH 04/14] wifi: ath10k: snoc: support powering on the device
- via pwrseq
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
-	linux-pm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Date: Fri, 2 Jan 2026 18:14:02 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Mdaucen4=QACDAGMuwTR1L5224S0erfC0fA7yzVzMha_Q@mail.gmail.com>
+X-Gm-Features: AQt7F2o_SWu6QkybNXv1EzXBF2ZAUPo7cvQ3Ie-kbYTBiaz38B4U0n86nK8RvVg
+Message-ID: <CAMRc=Mdaucen4=QACDAGMuwTR1L5224S0erfC0fA7yzVzMha_Q@mail.gmail.com>
+Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
+ BAM locking
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Udit Tiwari <quic_utiwari@quicinc.com>, Daniel Perez-Zoghbi <dperezzo@quicinc.com>, 
+	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 2, 2026 at 4:10=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
+On Fri, Jan 2, 2026 at 5:59=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wrote:
 >
-> On Fri, 2 Jan 2026 at 13:07, Bartosz Golaszewski <brgl@kernel.org> wrote:
-> >
-> > On Wed, Dec 31, 2025 at 12:36=E2=80=AFAM Dmitry Baryshkov
-> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> On 02-01-26, 10:26, Bartosz Golaszewski wrote:
+> > On Thu, Jan 1, 2026 at 1:00=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wr=
+ote:
 > > >
-> > > The WCN39xx family of WiFi/BT chips incorporates a simple PMU, spread=
-ing
-> > > voltages over internal rails. Implement support for using powersequen=
-cer
-> > > for this family of ATH10k devices in addition to using regulators.
+> > > > >
+> > > > > > It will perform register I/O with DMA using the BAM locking mec=
+hanism
+> > > > > > for synchronization. Currently linux doesn't use BAM locking an=
+d is
+> > > > > > using CPU for register I/O so trying to access locked registers=
+ will
+> > > > > > result in external abort. I'm trying to make the QCE driver use=
+ DMA
+> > > > > > for register I/O AND use BAM locking. To that end: we need to p=
+ass
+> > > > > > information about wanting the command descriptor to contain the
+> > > > > > LOCK/UNLOCK flag (this is what we set here in the hardware desc=
+riptor)
+> > > > > > from the QCE driver to the BAM driver. I initially used a globa=
+l flag.
+> > > > > > Dmitry said it's too Qualcomm-specific and to use metadata inst=
+ead.
+> > > > > > This is what I did in this version.
+> > > > >
+> > > > > Okay, how will client figure out should it set the lock or not? W=
+hat are
+> > > > > the conditions where the lock is set or not set by client..?
+> > > > >
+> > > >
+> > > > I'm not sure what you refer to as "client". The user of the BAM eng=
+ine
+> > > > - the crypto driver? If so - we convert it to always lock/unlock
+> > > > assuming the TA *may* use it and it's better to be safe. Other user=
+s
+> > > > are not affected.
 > > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > > ---
-> >
-> > [snip]
-> >
+> > > Client are users of dmaengine. So how does the crypto driver figure o=
+ut
+> > > when to lock/unlock. Why not do this always...?
 > > >
-> > >  static void ath10k_snoc_wlan_disable(struct ath10k *ar)
-> > > @@ -1762,7 +1779,27 @@ static int ath10k_snoc_probe(struct platform_d=
-evice *pdev)
-> > >                 goto err_release_resource;
-> > >         }
-> > >
-> > > -       ar_snoc->num_vregs =3D ARRAY_SIZE(ath10k_regulators);
-> > > +       /*
-> > > +        * Backwards compatibility, ignore the defer error from pwrse=
-q, if it
-> > > +        * should be used, we will get an error from regulator get.
-> > > +        */
 > >
-> > Can you elaborate on this? I'm not exactly following. I suppose you
-> > mean the regulator_get() will return -EPROBE_DEFER? One of the
-> > supplies exposed by the PMU?
+> > It *does* do it always. We assume the TA may be doing it so the crypto
+> > driver is converted to *always* perform register I/O with DMA *and* to
+> > always lock the BAM for each transaction later in the series. This is
+> > why Dmitry inquired whether all the HW with upstream support actually
+> > supports the lock semantics.
 >
-> Yes. devm_pwrseq_get() can return -EPROBE_DEFER in two cases:
-> - it is not supposed to be used
-> - it is supposed to be used, but the driver hasn't probed yet.
+> Okay then why do we need an API?
+>
+> Just lock it always and set the bits in the dma driver
 >
 
-Yes but normally driver core would still create a devlink between the
-device binding to the PMU node and the consumer of its regulators -
-this device - so we can expect that it will always be the first one,
-no? Unless we need this driver to be firmware-agnostic.
+We need an API because we send a locking descriptor, then a regular
+descriptor (or descriptors) for the actual transaction(s) and then an
+unlocking descriptor. It's a thing the user of the DMA engine needs to
+decide on, not the DMA engine itself.
 
-> There is no simple way to distinguish between these two cases, but:
-> - if it is not supposed to be used, then regulator_bulk_get() will
-> return all regulators as expected, continuing the probe
-> - if it is supposed to be used, but wasn't probed yet, we will get
-> -EPROBE_DEFER from regulator_bulk_get() too.
->
-> I can write that in a comment, if you think that it makes the code more o=
-bvious.
->
-
-Yes, please make it more descriptive. Ideally I'd like to improve the
-API to avoid such confusion in the future.
+Also: only the crypto engine needs it for now, not all the other users
+of the BAM engine.
 
 Bartosz
-
-> >
-> > Bart
-> >
-> > > +       ar_snoc->pwrseq =3D devm_pwrseq_get(&pdev->dev, "wlan");
-> > > +       if (IS_ERR(ar_snoc->pwrseq)) {
-> > > +               ret =3D PTR_ERR(ar_snoc->pwrseq);
-> > > +               ar_snoc->pwrseq =3D NULL;
-> > > +               if (ret !=3D -EPROBE_DEFER)
-> > > +                       goto err_free_irq;
-> > > +
-> > > +               ar_snoc->num_vregs =3D ARRAY_SIZE(ath10k_regulators);
-> > > +       } else {
-> > > +               /*
-> > > +                * The first regulator (vdd-0.8-cx-mx) is used to pow=
-er on part
-> > > +                * of the SoC rather than the PMU on WCN399x, the res=
-t are
-> > > +                * handled via pwrseq.
-> > > +                */
-> > > +               ar_snoc->num_vregs =3D 1;
-> > > +       }
-> > > +
->
->
->
-> --
-> With best wishes
-> Dmitry
 
