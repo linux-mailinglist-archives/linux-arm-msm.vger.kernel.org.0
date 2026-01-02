@@ -1,55 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-87276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01BF7CEF463
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 21:09:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB54FCEF566
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 22:10:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B2D2D300F701
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 20:09:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1A240300C2B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 21:10:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 665923191BD;
-	Fri,  2 Jan 2026 20:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FE2D2D6619;
+	Fri,  2 Jan 2026 21:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vO8kVrAz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lKMiGmme"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A24283FD9;
-	Fri,  2 Jan 2026 20:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EB8219A8D;
+	Fri,  2 Jan 2026 21:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767384548; cv=none; b=n6A4A0Bh90TP0GMHph2ZxGCYKwXSRYtcsRiBtnKTQW06lNBgypOJ0UAVLsOMUrxnah5I0g4y0t8SgDJah02+DjnFjRIxUFXp6tZrvf63SSvuxXCdWtgaDrCrk+hR3Ns5/VML1+7DyodzOY2lfn4rzeYtSb8LEB3rZv2cwdAbeQA=
+	t=1767388215; cv=none; b=LW3F0S/WbntPUQBa1qkapTl8glkCnXVLxQveNc916ImcAuIg8RQXHWDPrRBDYDyMepBM1qQ2dWdefBbEpp/z6ey6VeMXERkKvNR/wlxeWV94aOlOI1kxLuqon1BfH/6ZF5cg21xdqSH8p5HkguySfq+KWwwgYIZF+wakUMK1umM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767384548; c=relaxed/simple;
-	bh=oymSXkxOcDYFhq/jwF9K5FzcF4xS6NMFspHfgFjDGig=;
+	s=arc-20240116; t=1767388215; c=relaxed/simple;
+	bh=lQTcRdEeiie90zb13gty2n3r50qs7Iq/ZfMmtsuIQrE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=du0G97us1DaMGtz9EXubkASKrNviRV1x/tLhWvNqsgOTPZeemvgjx/zCbY89fuNEplk/ir6Snv+9AX2V7zDyJEKi6JSNkT3GdSQEQCtqqNA4P+akp/BpjEKNL1OmBPAjl+djrPgOaffgvOH3MYdWN/gD9BDUgxJavaGHCt6RdPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vO8kVrAz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE8FC116B1;
-	Fri,  2 Jan 2026 20:09:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=PRHa5nlQeyNz4lmvjG2KI9h8lgvh29kfIDx/HF0QW7c0yUtj45+ZpATGAr8NcT1riEJ1M0UFfQyeiNdBmGXA7/jhTR8QPTkEe5bdiDyzxCQJBFMcZs30IE1gNCqA2HviQXb6LwQQ5oUc2qUI68v98LW5nypxZoUD0AoFmBxzgTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lKMiGmme; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB75FC116B1;
+	Fri,  2 Jan 2026 21:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767384547;
-	bh=oymSXkxOcDYFhq/jwF9K5FzcF4xS6NMFspHfgFjDGig=;
+	s=k20201202; t=1767388213;
+	bh=lQTcRdEeiie90zb13gty2n3r50qs7Iq/ZfMmtsuIQrE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vO8kVrAzBRdUzZl74ZLoIMjM8wytaZ/P3K9bABpN61psf+OVeohnyZB7WCUG8odlO
-	 QyB0yZE6PW6ZcX+CKrUJd5z7BlnrESm0l7cQsAgCGo8quagRLwGdxiorOl3Dvq1Gog
-	 +3uw1qbCpAXnlFlOJtyAO0JmXOmxDHkcHbeYX6w3JZJbGdoOnYIL1BIEaL0wM/x4AW
-	 n4kxivQSPdhwlhjgYFkZWG3Z8Uso4elt7di5eMzbzK+WSnqEKkuRt3/C/v5hYh8IUv
-	 +APXknpy/l+zLcpKM5xuiH6tu5xmmoC6ycxaOf3R/5gdB3uJIaxOnQXif6hR4bk/HE
-	 9Sqnmp/483agA==
-Date: Fri, 2 Jan 2026 14:09:04 -0600
+	b=lKMiGmmeQaniXcs1vjJ60EZzMY0HIBbADuqd+jgYK44IBNcy9dl0HUPYd9VnxzqXs
+	 iRR1o/wJN/NdrXBzss1ORoeNhuBJdcXZVOVsr7YUJ2jOsce2/GxzA8p8hJ23pRoOdd
+	 ZcbyXjPJ1Tf1EdrnTk47XW3uDuo8bSTMunwuNernbWdhS6oM3yCSeNMPtFIBnnzClk
+	 rp9dB6J193vbmt3McWDG2Zzjaa0B22D5s2k6MvG6rbNzpPXzOHkoqL4+3IzoHOe4Mj
+	 ZLdNLv0XjxleAYYPr1Qh6hry+IaRqcAkssUxLvbrlIL0H5bWhNQSlguHX93fKaW0/3
+	 KI4rq1Kc/0qWQ==
+Date: Fri, 2 Jan 2026 15:10:10 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>, 
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	sumit.garg@kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Enable eMMC variant
-Message-ID: <nbmkrvppluonhvs7gjttsyw2nvxq45y44rz6f5w2ytci2mq3sx@m7c5nc5pujll>
-References: <20260102104638.3802715-1-varadarajan.narayanan@oss.qualcomm.com>
- <e00630b9-56f0-4a30-84ef-8b691ea7af3e@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Taniya Das <taniya.das@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	llvm@lists.linux.dev
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-kaanapali: Fix double array
+ initializer
+Message-ID: <j2qvtpdsak2z2l3o5ckpin7zun4wo3c5uc6jvutfdkfbqebfxa@zvbg6tmph7eg>
+References: <20251224112257.83874-3-krzysztof.kozlowski@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,115 +61,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e00630b9-56f0-4a30-84ef-8b691ea7af3e@kernel.org>
+In-Reply-To: <20251224112257.83874-3-krzysztof.kozlowski@oss.qualcomm.com>
 
-On Fri, Jan 02, 2026 at 12:08:03PM +0100, Krzysztof Kozlowski wrote:
-> On 02/01/2026 11:46, Varadarajan Narayanan wrote:
-> > RDP433 can have NAND or eMMC based on a board level rework. Since the
-> > same GPIOS are used for both the interfaces, only one of them can be
-> > used. Add a new DTS file to disable NAND and enable eMMC.
-> > 
-> > Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile             |  2 +-
-> >  .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 32 +++++++++++++++++++
-> >  .../boot/dts/qcom/ipq9574-rdp433-emmc.dts     | 26 +++++++++++++++
-> >  3 files changed, 59 insertions(+), 1 deletion(-)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 6f34d5ed331c..d5fe12ef4300 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -26,7 +26,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
-> > -dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb ipq9574-rdp433-emmc.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > index bdb396afb992..e4ae79b2fcd9 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > @@ -169,6 +169,38 @@ data-pins {
-> >  			bias-disable;
-> >  		};
-> >  	};
-> > +
-> > +	sdc_default_state: sdc-default-state {
-> > +		clk-pins {
-> > +			pins = "gpio5";
-> > +			function = "sdc_clk";
-> > +			drive-strength = <8>;
-> > +			bias-disable;
-> > +		};
-> > +
-> > +		cmd-pins {
-> > +			pins = "gpio4";
-> > +			function = "sdc_cmd";
-> > +			drive-strength = <8>;
-> > +			bias-pull-up;
-> > +		};
-> > +
-> > +		data-pins {
-> > +			pins = "gpio0", "gpio1", "gpio2",
-> > +			       "gpio3", "gpio6", "gpio7",
-> > +			       "gpio8", "gpio9";
-> > +			function = "sdc_data";
-> > +			drive-strength = <8>;
-> > +			bias-pull-up;
-> > +		};
-> > +
-> > +		rclk-pins {
-> > +			pins = "gpio10";
-> > +			function = "sdc_rclk";
-> > +			drive-strength = <8>;
-> > +			bias-pull-down;
-> > +		};
-> > +	};
-> >  };
-> >  
-> >  &qpic_bam {
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> > new file mode 100644
-> > index 000000000000..ffd96b1b1c65
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> > @@ -0,0 +1,26 @@
-> > +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+On Wed, Dec 24, 2025 at 12:22:58PM +0100, Krzysztof Kozlowski wrote:
+> [GCC_QMIP_VIDEO_VCODEC_AHB_CLK] element in clk_regmap array is already
+> initialized, as reported by W=1 clang warning:
 > 
-> Odd license. We don't take GPL v3.
+>   gcc-kaanapali.c:3383:36: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
 > 
-> > +/*
-> > + * IPQ9574 RDP433 eMMC board variant device tree source
-> > + *
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "ipq9574-rdp433.dts"
+> Fixes: d1919c375f21 ("clk: qcom: Add support for Global clock controller on Kaanapali")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 > 
-> I find it discouraged practice. Although if Bjorn is fine with it, you
-> still need proper compatibles.
+> ---
 > 
+> Does anyone even build this code before sending it to upstream?
 
-Nah, I don't fancy including .dts files. But I do see that I've let a
-few of those slip by over the years.
+It hope the author does...but I of couse sanity check the result through
+an allmodconfig build across a few different architectures before
+pushing.
 
-The general approach for these cases has been to rename dts->dtsi and
-create the two dts files.
+But it seems passing '--environment "W=1"' to tuxmake doesn't actually
+enable these warnings :(
 
-I wonder though if this would be better served by an overlay, as it's
-the same board, but with modifications applied?
+Thanks for the report, and the fixes.
 
 Regards,
 Bjorn
 
+> ---
+>  drivers/clk/qcom/gcc-kaanapali.c | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> Best regards,
-> Krzysztof
+> diff --git a/drivers/clk/qcom/gcc-kaanapali.c b/drivers/clk/qcom/gcc-kaanapali.c
+> index 182b152df14c..b9743284927d 100644
+> --- a/drivers/clk/qcom/gcc-kaanapali.c
+> +++ b/drivers/clk/qcom/gcc-kaanapali.c
+> @@ -3380,7 +3380,6 @@ static struct clk_regmap *gcc_kaanapali_clocks[] = {
+>  	[GCC_QMIP_VIDEO_CV_CPU_AHB_CLK] = &gcc_qmip_video_cv_cpu_ahb_clk.clkr,
+>  	[GCC_QMIP_VIDEO_CVP_AHB_CLK] = &gcc_qmip_video_cvp_ahb_clk.clkr,
+>  	[GCC_QMIP_VIDEO_V_CPU_AHB_CLK] = &gcc_qmip_video_v_cpu_ahb_clk.clkr,
+> -	[GCC_QMIP_VIDEO_VCODEC_AHB_CLK] = &gcc_qmip_video_vcodec_ahb_clk.clkr,
+>  };
+>  
+>  static struct gdsc *gcc_kaanapali_gdscs[] = {
+> -- 
+> 2.51.0
+> 
 
