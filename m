@@ -1,118 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-87200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84110CEE3F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:01:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01E7FCEE408
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:03:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 48DDB30006C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:01:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 250E83015172
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:02:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282592D8795;
-	Fri,  2 Jan 2026 11:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B912E03F2;
+	Fri,  2 Jan 2026 11:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="WExSHlO7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWZWoXSU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09222848A2
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 11:01:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CD32DCBFD
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 11:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767351716; cv=none; b=RgX+XGdophI44SGBOezoB73K7VV336bOia6KpAPn6l3fU6m47CnQa14t1Iul9h0AVYOScjp7JQl5MLmJt4sMCGa5Q8WFuwd8OlM9Xm0juHRteFaKHegisGHEp54BSh4LxROVYIQQwZYx/wyva7J9cLfQqL7zgLWlLvHuvAt8blE=
+	t=1767351755; cv=none; b=dydWmbwcC4GqL6SOzODbyOpoHoMzADWQD8LcI2NO72s0Jsp662VnUorv1do6Qoal7B2cIUNrnU16T/XhNNxgYwcs5GU0O2UhmeK/lyxiIFBCPGBGl37QO1D2WgPOTayag42RSogZKc0Qgh5NvSU4T7zcW1XQLO1KQzCW5OsOnKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767351716; c=relaxed/simple;
-	bh=9UDeYok/BJSXrNjF4lcUGB7JPmuZT9lTApjjMDY4D4E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EL8xYlUjOA93wZueSbDDL3s1jj6YU589zz8oRUaDia9V3QVZm3sBx2opP/MTLuUTyLlQm2vcAHBHbnRvuBVCOsBUP4xgyvI0SSxfuZmnGyTtT7i3GfFuYwDdQmZtFp6tGw5W++/WCgJXvnO2lY2hJ2ErMZHzEf3pD/e2pZmff5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=WExSHlO7; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <f86a904e-110e-448f-96e0-22bc6b3e4b38@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1767351711;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vkWUTbMUXcsUBKxk7Q4uqatV2kc7EcEmJyk1cMSmT/Q=;
-	b=WExSHlO7kdABt7zUP3Srbg695zH20nbErw9NrbIjEFtCUPdwie5Rx78z0+BO4FbwRsPtZY
-	ca4W3mJbYSzwFuyri6zyTGrVZgU2P9lplWhasWLPN6d2X8U7zS29ieb5iGWBfL/PnDznty
-	7qASZoJb8owhojx3yLkpcf3mDgZOUQ8Ak8zzyYdVFrAhSrST7QTUBvsWAJ9twMfBMLrxP5
-	6XpxWgDdM+ZsUPKjbKM4y3uI0f31NhXqSZvX+ltHn6u40XChWbqJW5ir2Ijl0ThHYulDu1
-	3TOvOtDnoFmr/nYoWHsXmBrZH40rSrExID/BknxWAD3LEeBZpUkI6ujjA8vvLw==
-Date: Fri, 2 Jan 2026 08:01:44 -0300
+	s=arc-20240116; t=1767351755; c=relaxed/simple;
+	bh=uZX+vZnqM+JTaGOZAXSO9Ba8hrCSXHZafMX0t5RiEJ8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EGJyK1q2Qp0ExD7lUyEOP9NgAEz9ZsLuvo9JI7GXYjbX1Y8nlpH4pyWXWL8ozSZYzZRu48nNUffXAM8p9jyIzf1voJ1FfxHl23xAyxVpsGWpwX22WA3HBSJFJAmqwNJz74hmXu1p7Qb4hHmXjiGRNe3SrqdSJrxO2osVN/OgSQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWZWoXSU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D16C19424
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 11:02:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767351755;
+	bh=uZX+vZnqM+JTaGOZAXSO9Ba8hrCSXHZafMX0t5RiEJ8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=nWZWoXSUg/0dcfGTBe4DdtAvoT0eNObZVq8Bm5q6nAFOAO3Jf9GLvaG3/tyvONHcV
+	 UL6VKT8Mc3kq1Y3TeQ85VKVkIbthH1NipiWQqulO664DssUhRi1qMiVYOSRgIiooRM
+	 A5X3t4gKL2BWBX9vRVRnXqRCiawPgrw0PkK6vWXvnA6xzxhjHF8YSZtPS2XOlZXaPp
+	 bxOgwkt1BXurY6MFji4KEUvshmlbopIXqW1xZEZ+5Dxe0mcXUQkWFuFP0bMx167/ij
+	 nlauE/R3FD87e2JukFXN7U14MXYTmskJuUpMXKIvJRyz9g/GSj/Z4yif2QDCkonJ9e
+	 VgYTRveWRm/tg==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5959105629bso11862471e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 03:02:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUgbxoplQEEIIMo+NIoXrC8kmf4rTKySZp5tKzyHKS5VPjKHa2dJO3MeF3tWEepJXME4qm7cwA+ilHIWUdS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxh2tLuZ6cA04/SJe1VeHAcrm1b/7FI6clPg/sIOvyWiQOXm54+
+	vratzIoANneE8Xym4Sv/tR+OtXw69rgQ1gInTYknNLlhxGLV/NT5cIlob33mLjO1ntoMCRjN87X
+	5sl3CCvtFNJuuQMAbJby6rlN4KZZRtuEkEut3VrAGfQ==
+X-Google-Smtp-Source: AGHT+IER5Ned9nJ723yU7Uzu6gtn0g6aZr/0yAwum1t54+3rwVPoOpPAFG9MSH91C23iKYxPGeAWfKbWYG4EzGGJ9jk=
+X-Received: by 2002:a2e:ab1b:0:b0:37b:9b28:4282 with SMTP id
+ 38308e7fff4ca-38121561689mr122757011fa.11.1767351753675; Fri, 02 Jan 2026
+ 03:02:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v10 0/5] Enable support for AV1 stateful decoder
-To: Bryan O'Donoghue <bod@kernel.org>,
- Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Nicolas Dufresne <nicolas.dufresne@collabora.com>,
- Hans Verkuil <hverkuil+cisco@kernel.org>
-References: <20251210-av1d_stateful_v3-v10-0-cf4379a3dcff@oss.qualcomm.com>
- <DjKkpb96k7gGFmmmqsmLvO6sKcd02WwZq67n9hY4c75sajI_hENGebzfUBW3Xs3WGJ_oXdeYkNcV-T7UkXO6Xw==@protonmail.internalid>
- <ae5531fa-a3a4-4fc5-8580-3a790bec4961@packett.cool>
- <de8fe895-79ae-4540-9879-64d6f8f9e239@kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <de8fe895-79ae-4540-9879-64d6f8f9e239@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+References: <20251231-wcn3990-pwrctl-v1-0-1ff4d6028ad5@oss.qualcomm.com> <20251231-wcn3990-pwrctl-v1-5-1ff4d6028ad5@oss.qualcomm.com>
+In-Reply-To: <20251231-wcn3990-pwrctl-v1-5-1ff4d6028ad5@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 2 Jan 2026 12:02:21 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MemZbtrvFSpqvdkTq3jaF-hk999H1iK8GEpn6xfPqX-zg@mail.gmail.com>
+X-Gm-Features: AQt7F2onLz_Ggs7LDoVQk2cMiOLUKiEtoEPQjMhArb-R5reMaYZSN3-gdK5tykA
+Message-ID: <CAMRc=MemZbtrvFSpqvdkTq3jaF-hk999H1iK8GEpn6xfPqX-zg@mail.gmail.com>
+Subject: Re: [PATCH 05/14] power: sequencing: qcom-wcn: add support for WCN39xx
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
+	linux-pm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 1/2/26 7:44 AM, Bryan O'Donoghue wrote:
-> On 02/01/2026 10:43, Val Packett wrote:
->>
->> On 12/10/25 3:59 PM, Deepa Guthyappa Madivalara wrote:
->>> Hi all,
->>>
->>> This patch series adds initial support for the AV1 stateful decoder
->>> codecs in iris decoder. Also it adds support for AV1 stateful decoder
->>> in V4l2. The objective of this work is to extend the Iris decoder's
->>> capabilities to handle AV1 format codec streams, including necessary
->>> format handling and buffer management.
->>
->> This is awesome, thanks!
->>
->> I've tested it with rpi-ffmpeg as well, and it works great (only
->> required one interesting logic change..
->> https://github.com/jc-kynesim/rpi-ffmpeg/pull/108) \o/
->>
->>> unsupported content with bitdepth 10 (66 tests)
->>> Iris decoder supports only 8bit NV12
->>
->> Any chance we could get 10-bit support soon as well?
->>
->> 10-bit is massively popular with AV1, especially with home encodes (see
->> e.g. https://wiki.x266.mov/docs/encoders/SVT-AV1#encoder-optimization
->> and the ab-av1 tool's defaults)
->>
->>
->> Thanks,
->> ~val
->>
+On Wed, Dec 31, 2025 at 12:36=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
 >
-> Can you give a Tested-by so ? 
+> The WCN39xx family of WiFi/BT chips incorporates a simple PMU, spreading
+> voltages over internal rails. Implement power sequencing support for
+> this generation of WCN chips. Unlike later devices, they don't have
+> separate enable GPIO lines, letting the chip figure out the necessary
+> parts on its own.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
 
+Looks good to me, I'll pick it up once the bindings are in next.
 
-Sure, if that's helpful..
-
-Tested-by: Val Packett <val@packett.cool>
-
-for the series
-
+Bart
 
