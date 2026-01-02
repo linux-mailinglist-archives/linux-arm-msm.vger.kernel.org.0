@@ -1,122 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-87171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAED9CEE0E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 10:27:06 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1BFBCEE0FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 10:29:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 72EEA300307F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 09:27:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 74D53300090D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 09:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27AB22D7D2A;
-	Fri,  2 Jan 2026 09:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 405512D6E6F;
+	Fri,  2 Jan 2026 09:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bcGZrTP1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RZVRLh7X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010C827F16C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 09:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E621F7580;
+	Fri,  2 Jan 2026 09:29:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767346024; cv=none; b=cb2Al4gRRjuh9ie+levz36fPDITy9mx0uv59U7YJGbd8lWuJeRqy0l1+63XsyN7lQCn6pvhPb9pctZSrZs3HO+uihdIZj1P9R37igV7Qd6CiGfA5eY1FuB2LnAFCWg4y18xGHsqhP2i8oq/t7T6RGY5f33EUnsv8dmFspjc4+m0=
+	t=1767346178; cv=none; b=n6jg6e+jPhw3IJ++iXsIu9IaW1KKoaakgcZRj3BPx3NTo+88LDS7Y18DXEVvyZWNfKs/5cx8zmP5vSViAebd1E/9yw6Q7gsIsrQnBWwcPxpJQqvoeM0SWxbKBGe7COjc5UCDFoJmpJemtopp4bmmpLqYE56qq3aoZvVVT7cRfm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767346024; c=relaxed/simple;
-	bh=zhOdsilIOpFy7RE9BrjIwOGH+E2b1jt2eSTpNCSig2k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jFJFYJx0fL0qmLRtte4N+zCtrLMQS7narNCNMie5BDt6P/15jS6LUyVepafKYajV793z6hOpVvYy1OrDmuXNI5PMKePOmb/Tzv98AX6heAcdlq4ZDxiAfaZW1oI4t3hdhaXu7OvgCLtoIQ177Gcnc5vuSYRS1dpYrJ2k8P9TZ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcGZrTP1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E412C19424
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 09:27:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767346023;
-	bh=zhOdsilIOpFy7RE9BrjIwOGH+E2b1jt2eSTpNCSig2k=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=bcGZrTP1czIbKinXhirw5u1G2cgaQ0imIvOr7jlOhlKwDTDRPNVPYJhxTsxXWPzhl
-	 tyHtGIyOqUNBWggexEd13+l2thCqqwnweO19qSUhc0vRovllz1SxmJY8s8JosMhWeH
-	 B6RFnSVkn8SoXrrn9zPwcXcP+6HKvatgmQAu+NR5cKmO6gDbL72kCmf1vlT/GctgQd
-	 FKv3Pqu6TK1nW0LcUIic8H+8oRKcuD7e/TL6mD+KLgrcJDCGgIDh/EOHl2BDPUbl3o
-	 WO0qMD0qty30EEfVKY+p8fQHzwouftoDHMb+zKQlCpkyXgE8RcTs5g5yvCqo0JLCx1
-	 L7CKe/b1vaEPQ==
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59577c4c7c1so11897353e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 01:27:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW/1zUQKt0T+qQ5xHPF0IabSzRfbxLIQAYipBLJqEFiZ+djhuKK/s+YmejxtuRx1LEGAAoUPD6bprdhIZQc@vger.kernel.org
-X-Gm-Message-State: AOJu0YykmkKm2WJgv2RiBMywS30ZJy+mJ3c6TnOOgjjP0z4B8J0LZZLC
-	W5ma3O36vyS4fjXlSLooAvZhTEh3pIJ9/G2si485wMwfCkDrpU+XSWkReShevZyuKKosCY9xQkU
-	wLhJ5DZQQ8KCxwhe2vdUdWFcrJdpcmsMMxQ0CgNWlOg==
-X-Google-Smtp-Source: AGHT+IGS6HyGkOxL4zMMncygsftVJSozubE2oliBcuDCo0C8dufE1QbfRsrXj1oTZQ3PuFzr/9pnA6p2PmqiWL0TJ2U=
-X-Received: by 2002:a05:6512:3408:b0:59b:2086:2c with SMTP id
- 2adb3069b0e04-59b2086022fmr7537605e87.8.1767346022140; Fri, 02 Jan 2026
- 01:27:02 -0800 (PST)
+	s=arc-20240116; t=1767346178; c=relaxed/simple;
+	bh=bfvc0nsDaqL3faZDfWl4JZOSetSF4XhQ++l5FyC/mY0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TBVgZR2AYpDO6GA76byQKmG8w8Z800fz8PKgd3xqhwu6j6IZr6l+f61blwKMvn7j4+VJBUCxSVRHwHVvod2lm5wDEPAPfrFcaqmINQa6lyGBAD4HtXlGDqMTPRLOUo03Pyl44q1gvt4Dr+FWZtB9hklrvM04P5tAv7VHa/MpKug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RZVRLh7X; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 602894JE035910;
+	Fri, 2 Jan 2026 09:29:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	oaW0Z6j0ZPnwG0r3uuBK5kv3RVSJzkfV4NzktJbSi/E=; b=RZVRLh7X4ntl8dfB
+	tRQ0x4n5v3aI1mKFBP4ymFSYVg/Kgz+lPoPYML3uJ0k3SKf1I2GT3lzsuMwnEUIW
+	RI5vvgJBfWsaGv3bKlaZx/RctV1RzlXnFsqJ3M9gO0AjtfgE2cARuIckXqZa07zZ
+	uu6iW7eypk14uyq+iGn/t5kEICxXWX8+5TltRfJ6ZhowAMpIO0JL4SCnB2/9Ll82
+	1vYohLTQ7vV9JDdF//iifyvE/HrNKhizH5oL6YnDkdg5noaNpvKSH1hmR+8XzLz1
+	30XOYDob4FkFMGjbU5XBykF+0DYkJP+7rpl4Ok2gluoblTR2zAEKK9+8Lyq/7e1U
+	QTO3fA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bcx74c48q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Jan 2026 09:29:19 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 6029TIAB006914
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Jan 2026 09:29:18 GMT
+Received: from [10.216.5.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 2 Jan
+ 2026 01:29:10 -0800
+Message-ID: <58b496b5-2847-4af7-8a34-e227e4324deb@quicinc.com>
+Date: Fri, 2 Jan 2026 14:59:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251128-qcom-qce-cmd-descr-v9-0-9a5f72b89722@linaro.org>
- <20251128-qcom-qce-cmd-descr-v9-3-9a5f72b89722@linaro.org>
- <aUFX14nz8cQj8EIb@vaman> <CAMRc=MetbSuaU9VpK7CTio4kt-1pkwEFecARv7ROWDH_yq63OQ@mail.gmail.com>
- <aUF2gj_0svpygHmD@vaman> <CAMRc=McO-Fbb=O3VjFk5C14CD6oVA4UmLroN4_ddCVxtfxr03A@mail.gmail.com>
- <aUpyrIvu_kG7DtQm@vaman> <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
- <aVZh3hb32r1oVcwG@vaman>
-In-Reply-To: <aVZh3hb32r1oVcwG@vaman>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 2 Jan 2026 10:26:49 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
-X-Gm-Features: AQt7F2pObE1W--bUw5Y840QtJiQ3WP88EyUtNwKC7BerIjnzNxXQ-dH1OgcfROM
-Message-ID: <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
-Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
- BAM locking
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Udit Tiwari <quic_utiwari@quicinc.com>, Daniel Perez-Zoghbi <dperezzo@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/5] dt-bindings: display: msm-dsi-phy-7nm: document
+ the QCS8300 DSI PHY
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <dmitry.baryshkov@oss.qualcomm.com>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <andersson@kernel.org>,
+        <robh@kernel.org>, <robh+dt@kernel.org>, <krzk+dt@kernel.org>,
+        <konradybcio@kernel.org>, <conor+dt@kernel.org>,
+        <andrzej.hajda@intel.com>, <neil.armstrong@linaro.org>,
+        <rfoss@kernel.org>, <Laurent.pinchart@ideasonboard.com>,
+        <jonathan@marek.ca>, <jonas@kwiboo.se>, <jernej.skrabec@gmail.com>,
+        <quic_rajeevny@quicinc.com>, <quic_vproddut@quicinc.com>
+References: <20251225152134.2577701-1-quic_amakhija@quicinc.com>
+ <20251225152134.2577701-2-quic_amakhija@quicinc.com>
+ <20251227-doberman-of-radical-variation-d30aaf@quoll>
+Content-Language: en-US
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+In-Reply-To: <20251227-doberman-of-radical-variation-d30aaf@quoll>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zYsvGjGcXceGOpTB8rFMlvFOrGNmFuGV
+X-Proofpoint-GUID: zYsvGjGcXceGOpTB8rFMlvFOrGNmFuGV
+X-Authority-Analysis: v=2.4 cv=HNvO14tv c=1 sm=1 tr=0 ts=69578fef cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=fWUcj0S4klb-w0UgOPsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDA4NSBTYWx0ZWRfX5dJyz1g8G/Ja
+ 2vXNwTFU1hMK6ZsyFw0HozPYioy/cwffwIZRjGX5+rdMsSjFgGH5vq9tHbzBVGrJG5pJYjZCbA5
+ kj6vAih44inI5tN0KPlYRHSG6xFDDzovdJMy6zYYSnMdeiKoi/GZvBbo1TtLogKn1bjtEAlJL2x
+ pkafdL6lEskRwffpmi1u2msJxkDDD/vV4HQjBi6vURfLFaG6YdZ6nMZtpZK4xXD7ijVnfUjzkoU
+ g+4W6k0JQBzr410vBvBvt6ek9xQCHoG7U+OHtgNDdjBhzqYREdaFQVEt6GZG6RXxrVpUPhdB8sN
+ 0bQ+VN2JLFopRoyVC39lJQtIFDGzRBjDHDTgIlF6U0gkZPAO1YdyH23DGrtdwIbo/pJngKyXbxF
+ 4M0Y2T27982MvE85ECWMuAHFpG/G+L0EnLIk5ZnSNPCaza+QlL6IxvcZXb8MOXc4NTpncRFoe0o
+ q5D8BKIPNak2Aa+voyg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-01_07,2025-12-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601020085
 
-On Thu, Jan 1, 2026 at 1:00=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wrote:
->
-> > >
-> > > > It will perform register I/O with DMA using the BAM locking mechani=
-sm
-> > > > for synchronization. Currently linux doesn't use BAM locking and is
-> > > > using CPU for register I/O so trying to access locked registers wil=
-l
-> > > > result in external abort. I'm trying to make the QCE driver use DMA
-> > > > for register I/O AND use BAM locking. To that end: we need to pass
-> > > > information about wanting the command descriptor to contain the
-> > > > LOCK/UNLOCK flag (this is what we set here in the hardware descript=
-or)
-> > > > from the QCE driver to the BAM driver. I initially used a global fl=
-ag.
-> > > > Dmitry said it's too Qualcomm-specific and to use metadata instead.
-> > > > This is what I did in this version.
-> > >
-> > > Okay, how will client figure out should it set the lock or not? What =
-are
-> > > the conditions where the lock is set or not set by client..?
-> > >
-> >
-> > I'm not sure what you refer to as "client". The user of the BAM engine
-> > - the crypto driver? If so - we convert it to always lock/unlock
-> > assuming the TA *may* use it and it's better to be safe. Other users
-> > are not affected.
->
-> Client are users of dmaengine. So how does the crypto driver figure out
-> when to lock/unlock. Why not do this always...?
->
+On 12/27/2025 4:43 PM, Krzysztof Kozlowski wrote:
+> On Thu, Dec 25, 2025 at 08:51:30PM +0530, Ayushi Makhija wrote:
+>> The QCS8300 MDSS DSI PHY is the same 5nm PHY IP as on SA8775P, with
+>> identical register layout and programming model. Model this by using
+>> a QCS8300 specific compatible with a qcom,sa8775p-dsi-phy-5nm fallback,
+>> and update the schema to require this two entry form for QCS8300 while
+>> keeping existing single compatible users valid.
+> 
+> Last sentence is redundant. I asked to explain the hardware, not to tell
+> us how Devicetree works. Write concise and informative commit msgs which
+> tell non-obvious things. Not what you did. I alreaded asked this - do
+> not state the obvious, do not copy the subject.
+> 
+> The only useful part of your commit msg is first sentence - two lines,
+> so 33%. Remaining four lines, so 66%, is obvious.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-It *does* do it always. We assume the TA may be doing it so the crypto
-driver is converted to *always* perform register I/O with DMA *and* to
-always lock the BAM for each transaction later in the series. This is
-why Dmitry inquired whether all the HW with upstream support actually
-supports the lock semantics.
+Hi Krzysztof,
 
-Bart
+Can you please check below commit description is it appropriate  ?
+
+QCS8300 uses the same 5nm MDSS DSI PHY IP as SA8775P, sharing an identical
+register layout and programming model. Introduce a QCS8300-specific compatible
+with a fallback to `qcom,sa8775p-dsi-phy-5nm` to reflect this hardware reuse.
+
+Thanks,
+Ayushi
 
