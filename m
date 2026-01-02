@@ -1,90 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-87186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8438ACEE2CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 11:33:51 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8674DCEE2ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 11:43:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ADCBB300DCB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 10:33:39 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 899F83003077
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 10:43:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93492DC34E;
-	Fri,  2 Jan 2026 10:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82662DCC1F;
+	Fri,  2 Jan 2026 10:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hL1NA0mP"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="M/x8nmCp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50972D6E4F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 10:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DCC2DC76C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 10:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767350017; cv=none; b=r5n3f36Mt31oTba3kungmZLGRyBuIE3ZfkiJSId2VbhoqYcpM9K05DZTPoZWAD2ui51f2b1VKZr1rC5eCNeV2xjWPu92U3t7K/JDXDxrOWu+vX2PXVMoW8txTX9FdrG9Vvmj7MhIs9+lkPrrhbBe3CSXAbUwhBDkU8YtoyOivko=
+	t=1767350605; cv=none; b=HO4Z/UfoDE3vyu8NWtS/DoabIE1gPmXEjAiMm76tUfE//Gi1acUtiQ60wbQdN4M9cCopNQv1Jr+tqO/wFHmIIc2RV57ExcWaYIhAGZfxPZBoH1W5pUrBZL3UiRkC1OHY8tfLOVJFUzw4UKlst4zVgf3dFoUZ9ZFEJ6yBWClBMB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767350017; c=relaxed/simple;
-	bh=A0qONLkVZbPsPnKckIfQkcczqlnRmA9L8RYgFTezUw8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PXJ4U7h0CWtLKMgKTKg5cSXKNCINdDPSd2fRBTCptZa/0PZJe/gxijV1aBbHUQsTJytLfDPkJGJ5fb2EL1otHw6+74m/w41pClYw/OxSdKiEr1gbkJS6oSMtZ/wVLyZDFTEHljjUsKorachZTEWxeRHuM9g06fxKGsHWQjONY1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hL1NA0mP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637B0C2BCB4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 10:33:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767350017;
-	bh=A0qONLkVZbPsPnKckIfQkcczqlnRmA9L8RYgFTezUw8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=hL1NA0mPb5yOQ9xMUzwBPK5mLRdXyfnjnt8KEVGMu4Jg+WQyfgDy2jPKb8UeGiq44
-	 JYkyTKQsGCat2fAZP7gad2Abnp1LZXTyOk7tMxNh9SCe8VLGHZ0fTjGmh8Jpv3FNAy
-	 53/YFPER+P3tUvSKzP/B3qUgFv10UwlQFJlHQyUkEL/oc7uldl+wMGA2wSrNKSovp7
-	 FlYCK3lwf6ohbtmvVZSkH6dFA3ZcYnfPdHPFFx22YzQUiZkxolLYwAEzqygjOUJYqR
-	 jM7aGyVCn1ad0vxDNEOXEgWxgbxNOQBRY9FEQXofbukvXnGoD0X4GCXWyMtOd4I7b+
-	 bAxcmsX5SxWOw==
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5957db5bdedso13789746e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 02:33:37 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWh2SeCfldBdCG+AUK/9TAenh6iQ9qCzotFT83zkKIlXe7/9EHpCztbkAv8qrDeApFsKtFpowgDAzczeX5e@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9LYFci8/XtjNjRz0IWhF5iqS122Q+idcDg4YlNdi42QV/BASo
-	grD3AKH3kqqKZiECo0/QH2yxdhKGdE0yVMnYZmUhvssxG2ph5asnWS+cquj+m68asjElOsuWMXK
-	HYzGVOa+AOzkm5Dzt/0uAd2E9GAniH+Dh5R1RfrWLQQ==
-X-Google-Smtp-Source: AGHT+IFz1P8JUDB3m78xG4JMv2W0HVtLRZ/WsXZNHNG01D4tm87qUYlJcn7VJnG4LRHgTHHzEjfbyGcJwlzlvzauRbA=
-X-Received: by 2002:a05:6512:3b0a:b0:595:8350:5824 with SMTP id
- 2adb3069b0e04-59a17d18081mr13844896e87.7.1767350015887; Fri, 02 Jan 2026
- 02:33:35 -0800 (PST)
+	s=arc-20240116; t=1767350605; c=relaxed/simple;
+	bh=/Qvz2n7NNcxKi0p/Lmq8yoka79LYyN+s9ZSy1pLpJ6U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d/mmG6k8iZgcNWk8Nx4pWw3yWoWhE0Lavk9iuUWA+wgNtTSf4w4z6xX5glEOVQ5a2lFlsqQCG+UNKR6fcniXHjOBgSdNk1Y84/EV8KbHBzoso87MkjBoUgc4i4Tj3aHPfBWKiGxTCGn4NZp4wYG2Kjy2CgB6SVmfQZ4viCnphgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=M/x8nmCp; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <ae5531fa-a3a4-4fc5-8580-3a790bec4961@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1767350591;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RiWYsYquJgHtXI3YvPw6Yn2oD7sMmr28t22F+xPgFhs=;
+	b=M/x8nmCpjjnflWqySpvPmd4IDN2pTiLNfxeKTmuGo8rOs2LEH4ngnPWqyCfTU9uK6Ghn9/
+	ci5cVD2yP77QwypzJCy+L2FfrCLky2r3Iczl/LSRDmqtCMTnZjTsq3UCngOlydzOWZg77o
+	vvKW1vmK1eopBFix2U4+PIseIU32bs/IpiFLXXXt1XlsiiX0cJ3CjTI27Hs0/xX2t619z2
+	SRfnHZJkCyrnD+Z25ORlfpJZDaywCQZCzbMW7ZQdb/SqtUPXtMO7udbxPOrNslo8yOyZfd
+	JeDqK6jxL5f6YvcjqENXDu1OGZOksqhkmUGg38Ss6MwS2R7ioOp1X8wWglKY+A==
+Date: Fri, 2 Jan 2026 07:43:02 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251231-wcn3990-pwrctl-v1-0-1ff4d6028ad5@oss.qualcomm.com> <20251231-wcn3990-pwrctl-v1-11-1ff4d6028ad5@oss.qualcomm.com>
-In-Reply-To: <20251231-wcn3990-pwrctl-v1-11-1ff4d6028ad5@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 2 Jan 2026 11:33:24 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Mese6Zyn45oZCzv3G6eg3w8Obvwq6TE4-MnXT8w7P6fgw@mail.gmail.com>
-X-Gm-Features: AQt7F2qL-yjjeTVapL27TBw0paXaPtMV-m6Ka4LrQJAKTqWS7TV8j8nK3HvZ8xw
-Message-ID: <CAMRc=Mese6Zyn45oZCzv3G6eg3w8Obvwq6TE4-MnXT8w7P6fgw@mail.gmail.com>
-Subject: Re: [PATCH 11/14] arm64: dts: qcom: qrb4210-rb2: describe WiFi/BT properly
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
-	linux-pm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v10 0/5] Enable support for AV1 stateful decoder
+To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>
+References: <20251210-av1d_stateful_v3-v10-0-cf4379a3dcff@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <20251210-av1d_stateful_v3-v10-0-cf4379a3dcff@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Dec 31, 2025 at 12:36=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> The onboard WiFi / BT device, WCN3988, has a simple on-chip PMU, which
-> further spreads generated voltage. Describe the PMU in the device tree.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+On 12/10/25 3:59 PM, Deepa Guthyappa Madivalara wrote:
+> Hi all,
+>
+> This patch series adds initial support for the AV1 stateful decoder
+> codecs in iris decoder. Also it adds support for AV1 stateful decoder
+> in V4l2. The objective of this work is to extend the Iris decoder's
+> capabilities to handle AV1 format codec streams, including necessary
+> format handling and buffer management.
+
+This is awesome, thanks!
+
+I've tested it with rpi-ffmpeg as well, and it works great (only 
+required one interesting logic change.. 
+https://github.com/jc-kynesim/rpi-ffmpeg/pull/108) \o/
+
+> unsupported content with bitdepth 10 (66 tests)
+> Iris decoder supports only 8bit NV12
+
+Any chance we could get 10-bit support soon as well?
+
+10-bit is massively popular with AV1, especially with home encodes (see 
+e.g. https://wiki.x266.mov/docs/encoders/SVT-AV1#encoder-optimization 
+and the ab-av1 tool's defaults)
+
+
+Thanks,
+~val
+
 
