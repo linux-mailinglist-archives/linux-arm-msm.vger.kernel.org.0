@@ -1,108 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-87279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 631F0CEF654
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 23:03:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A06DCCEF6DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 23:31:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BD72E300BB8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 22:02:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6A4E9300F32A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 22:31:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 902203C465;
-	Fri,  2 Jan 2026 22:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A698422578D;
+	Fri,  2 Jan 2026 22:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b="PL7mhzsY"
+	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="gPi+yOgI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from adishatz.org (ns314768.ip-37-187-26.eu [37.187.26.192])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from aposti.net (aposti.net [185.119.170.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDD928504F;
-	Fri,  2 Jan 2026 22:02:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.26.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E894224FA;
+	Fri,  2 Jan 2026 22:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.119.170.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767391373; cv=none; b=AvBmBgNztUWYhv8yNjhqVHaHwmR5+o01TMXJpEG4ZmvOGiO9zl9fHnIz2V4+40YQuH5mEQHzlUsNlrKSxhw9dLWHWsrAsA3ZXxY39oYPQwSGS0B1ypFJMKAXPYbwcI1q7zJLOVPWJin1+RES24F8hug5Xz8z2Wqlf/Hx3nRtde8=
+	t=1767393086; cv=none; b=nMy5w/oOhFwLIzsGqP6SU9DzFI8SKTts3VSjTSAJZE6JaPB8lwnqIaGlTrcuBwWXQJAjzBguf7LNG+vG/7zunJOVwX8S7Cc0cBvSBV4mz665DVdOBbnvBD/CofFu4ntTGza5T3NYdvwlre0/RMipcD1+ii9MJxRlM7j4Tl0OLAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767391373; c=relaxed/simple;
-	bh=0ajJhV1/3hImaEK9n273jA0jaSryeQ3IzNEx6UDDV24=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gydIFPNsq2+9h0qqw1sXUTTg+Y+TyoFVbgh34SrDuylp8Jyf7WUlUXKpgZ8kyxSNK09v6MZOOhLrZhiun6dxAW0sA1UMHrVJEWnALSLaWv2pwrZOOWyAU/9chLacXqIbNVn6SKUjb0D1FFC/ZH660ValG3XgAQIfoxDVSE856fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org; spf=pass smtp.mailfrom=adishatz.org; dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b=PL7mhzsY; arc=none smtp.client-ip=37.187.26.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adishatz.org
-Received: from p-si-bellegarde (88-167-17-4.subs.proxad.net [88.167.17.4])
-	by adishatz.org (Postfix) with ESMTPSA id 963A04C01FB;
-	Fri,  2 Jan 2026 22:52:39 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adishatz.org;
-	s=mail; t=1767390759;
+	s=arc-20240116; t=1767393086; c=relaxed/simple;
+	bh=Ayzy4d12cCBIDnDvxTp6pffsaMCVkd33OsiCXsJGxJc=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=UMWePh7hPmppI4xXrfHebUDnfkRMMIuHjghWMHxAsM4U6A4hX/fSTHA4mvW1h4dWSEc0h0v/iOSdzZRI3PDq4USQ7Zh33ctTEmV6xzRQnsYejm+mKpgBwl9iBRVoT+gpNRizIqfgY0SfFMshbF6WPwlgvvC3KHDK4M0za3DlE/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=gPi+yOgI; arc=none smtp.client-ip=185.119.170.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
+	s=mail; t=1767392595;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=5kOO4pxmf3hNOobaYEaYpomPQ+IoW8Idvt4kA1liQ08=;
-	b=PL7mhzsYtPjR4Ip5bsHk5wcOnQ5U1f+XVnykkNhIeOrW2SkQvXE1P40xtT/ePAvXPp3oRr
-	McJwADisqAQ/rANNwwWXbwpMqiVcBlhriIgxNwbMMBXurvUOF9+eZMAkO2sSKAnawMcDzc
-	0vtoPhxsKiEKFc5ZCPmv7ed9qeZ2uLUaQJViG9wbLCD0M3/CTgV9tY6Su3QwvZyoJIpAwu
-	xP4E7yIlI/KyPvIuo8n1v+BFHOCPErz2ULY7vRrjbwgmSbHzi2e5rsnYCE7eQ8eTJA8U/g
-	ZxvgqkcjRw+LloTZXUT37npGwcIiF8hdYPZ18PcxOQ8BGAYe/xvCUAFvWazRuA==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=cedric.bellegarde smtp.mailfrom=cedric.bellegarde@adishatz.org
-From: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
-To: srini@kernel.org
-Cc: lgirdwood@gmail.com,
-	broonie@kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	=?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
-Subject: [PATCH] ASoC: qcom: q6asm: drop DSP responses for closed data streams
-Date: Fri,  2 Jan 2026 22:52:25 +0100
-Message-ID: <20260102215225.609166-1-cedric.bellegarde@adishatz.org>
-X-Mailer: git-send-email 2.52.0
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=61H6RqsGuCa4a5uaIvZ0gNRDCPUVUQgGp5iWxLp0eXQ=;
+	b=gPi+yOgIHaXxLndZNYkjdzjFO/QcOh/jMHayuu23Slzgml8v5JJMwuqOPjlcwB2noz0hn+
+	ufbyGL8LfP4mlYZyYQWhThU0cBtTESAvYHK2/TUIL/P8P9tQG5fJ6/10eWfHi134RLMUPE
+	TWgRuO4+cEfKFN9diizuZMUOvfPqzlg=
+Message-ID: <5f4f0697622ee26db9c3e09b1a8b64157666eb0b.camel@crapouillou.net>
+Subject: Re: [PATCH 3/7] mtd: rawnand: ingenic: Simplify with scoped for
+ each OF child loop
+From: Paul Cercueil <paul@crapouillou.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Brian Norris
+	 <computersforpeace@gmail.com>, Kamal Dasu <kamal.dasu@broadcom.com>, 
+ Broadcom internal kernel review list	
+ <bcm-kernel-feedback-list@broadcom.com>, Miquel Raynal	
+ <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, Vignesh
+ Raghavendra <vigneshr@ti.com>, Harvey Hunt <harveyhuntnexus@gmail.com>,
+ Manivannan Sadhasivam	 <mani@kernel.org>, Stefan Agner <stefan@agner.ch>,
+ Tudor Ambarus	 <tudor.ambarus@linaro.org>, Pratyush Yadav
+ <pratyush@kernel.org>, Michael Walle	 <mwalle@kernel.org>, Nathan
+ Chancellor <nathan@kernel.org>, Nick Desaulniers	
+ <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, Justin
+ Stitt <justinstitt@google.com>, linux-mtd@lists.infradead.org,
+ linux-kernel@vger.kernel.org, 	linux-mips@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev
+Date: Fri, 02 Jan 2026 23:22:12 +0100
+In-Reply-To: <20260102124927.64703-10-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
+	 <20260102124927.64703-10-krzysztof.kozlowski@oss.qualcomm.com>
+Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
+ keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
+ LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
+ FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
+ z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
+ +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
+ 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
+ 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
+ 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
+ dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
+ 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
+ rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
+ lBwgAhlGy6nqP7O3u7q23hRU=
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-'Commit a354f030dbce ("ASoC: qcom: q6asm: handle the responses
-after closing")' attempted to ignore DSP responses arriving
-after a stream had been closed.
+Hi Krzysztof,
 
-However, those responses were still handled, causing lockups.
+Le vendredi 02 janvier 2026 =C3=A0 13:49 +0100, Krzysztof Kozlowski a
+=C3=A9crit=C2=A0:
+> Use scoped for-each loop when iterating over device nodes to make
+> code a
+> bit simpler.
+>=20
+> Signed-off-by: Krzysztof Kozlowski
+> <krzysztof.kozlowski@oss.qualcomm.com>
 
-Fix this by unconditionally dropping all DSP responses associated with
-closed data streams.
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
 
-Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
----
- sound/soc/qcom/qdsp6/q6asm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Cheers,
+-Paul
 
-diff --git a/sound/soc/qcom/qdsp6/q6asm.c b/sound/soc/qcom/qdsp6/q6asm.c
-index e7295b7b2461..3c4a24c9dba2 100644
---- a/sound/soc/qcom/qdsp6/q6asm.c
-+++ b/sound/soc/qcom/qdsp6/q6asm.c
-@@ -638,7 +638,6 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			client_event = ASM_CLIENT_EVENT_CMD_OUT_FLUSH_DONE;
- 			break;
- 		case ASM_STREAM_CMD_OPEN_WRITE_V3:
--		case ASM_DATA_CMD_WRITE_V2:
- 		case ASM_STREAM_CMD_OPEN_READ_V3:
- 		case ASM_STREAM_CMD_OPEN_READWRITE_V2:
- 		case ASM_STREAM_CMD_SET_ENCDEC_PARAM:
-@@ -657,8 +656,9 @@ static int32_t q6asm_stream_callback(struct apr_device *adev,
- 			break;
- 		case ASM_DATA_CMD_EOS:
- 		case ASM_DATA_CMD_READ_V2:
-+		case ASM_DATA_CMD_WRITE_V2:
- 			/* response as result of close stream */
--			break;
-+			goto done;
- 		default:
- 			dev_err(ac->dev, "command[0x%x] not expecting rsp\n",
- 				result->opcode);
--- 
-2.52.0
-
+> ---
+> =C2=A0drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c | 4 +---
+> =C2=A01 file changed, 1 insertion(+), 3 deletions(-)
+>=20
+> diff --git a/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c
+> b/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c
+> index 47dc3efcee92..f1e2c82936b3 100644
+> --- a/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c
+> +++ b/drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c
+> @@ -438,7 +438,6 @@ static int ingenic_nand_init_chips(struct
+> ingenic_nfc *nfc,
+> =C2=A0				=C2=A0=C2=A0 struct platform_device *pdev)
+> =C2=A0{
+> =C2=A0	struct device *dev =3D &pdev->dev;
+> -	struct device_node *np;
+> =C2=A0	int i =3D 0;
+> =C2=A0	int ret;
+> =C2=A0	int num_chips =3D of_get_child_count(dev->of_node);
+> @@ -449,11 +448,10 @@ static int ingenic_nand_init_chips(struct
+> ingenic_nfc *nfc,
+> =C2=A0		return -EINVAL;
+> =C2=A0	}
+> =C2=A0
+> -	for_each_child_of_node(dev->of_node, np) {
+> +	for_each_child_of_node_scoped(dev->of_node, np) {
+> =C2=A0		ret =3D ingenic_nand_init_chip(pdev, nfc, np, i);
+> =C2=A0		if (ret) {
+> =C2=A0			ingenic_nand_cleanup_chips(nfc);
+> -			of_node_put(np);
+> =C2=A0			return ret;
+> =C2=A0		}
+> =C2=A0
 
