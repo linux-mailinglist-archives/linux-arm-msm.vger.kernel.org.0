@@ -1,201 +1,353 @@
-Return-Path: <linux-arm-msm+bounces-87257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD3A0CEEB51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:58:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D24EBCEEB66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 14:59:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AD1AB300D492
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:58:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 48ABC3021048
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 13:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3A72312819;
-	Fri,  2 Jan 2026 13:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FB1231280A;
+	Fri,  2 Jan 2026 13:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fhpC6dug";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WlK1gP2w"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c7cc4rvX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A840312803
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB5B312819
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:58:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767362285; cv=none; b=TFsZwWilVv2xtvob5iwBQSaanGixcEpyihlSPdJ2S7kvZ17IsJFJAcMZDJXizSCVY/gDgL5ZwixE67gG4JWdYm1WjgbeKyH5V2ri72N85noYRpZkKcyUaNoyhWTMus9ysSVKLTV9f9/ugsfXIIzwdLtZyAzMzIJ2KGfwavtSjQk=
+	t=1767362301; cv=none; b=A/4jq98tCsjA/p5Wa5BwQ0SPeQdBry/+01C/5lt3A6D4JjQujNZwN4hMhmRbCZDPfkyinSKVGsibhFn3Rw/G5JWhW4O/wLryKIltVfEeZEQu53w408ucpJrXdA2A7uMqLBfSwcIvdUkWud6EWd6oGL+Nn2+QMCzJmdUD3FeLkw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767362285; c=relaxed/simple;
-	bh=1sV8MipC1LWZdrArTgWJG14vnKiaAJ4m/AHNLobfCKQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IkOfOtlSi0ZPCaPjsq4+S6PPwRrSqhlwmA66ZUX4zuoI3Ej+lGSZUg6uel6DoX/pN0pMH+j/7ODfXPPn5OMUWksBiRP68BkAuvjj5BhiGNFJiuQpMwdvnxNIYZGRbIJdBJhJ/RgubIQsCfD2rGffBf1Zi3dCmP9SHoa3W3WtnXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fhpC6dug; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WlK1gP2w; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6029WEC2207477
-	for <linux-arm-msm@vger.kernel.org>; Fri, 2 Jan 2026 13:58:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SXZonBfFrLlWUInQu9VdJssXOsC/CpSwdoDF+7WOCOo=; b=fhpC6dug0bQrpgy2
-	8862cfilctnWJ2fwxDGm4JVnWUyVIDo1jBvIhZvwS9WbyjLRAjhl4l/NvRm5zjYs
-	jnTl6ruMe7Fq0C9jiONvjwbun0MR5QWOa2VOitaQMoHx+I4SuBZ1WH8HitqmENuw
-	g1QTgynYQrLTOx99YMtnBVh7ajuj+9S8fydjNxBDRAg12ziv7xdCYrq2QWEJkRJ7
-	aYsYKbGU0G4PwjoCyxlnpuV/irz4m0BALm7Cb7/bviGVfAM508hDsKlmwHvSH+PV
-	7iE1B0t2I0li5bOt/1OwX28iNwGebNWsZdEGaOZowYFvrk5wGX0y+tBk+siqhM7u
-	W3mK/w==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bcx74cm8f-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 13:58:02 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4f34c24e2cbso41335991cf.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 05:58:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767362282; x=1767967082; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SXZonBfFrLlWUInQu9VdJssXOsC/CpSwdoDF+7WOCOo=;
-        b=WlK1gP2wXmrT/looXthQ+YhEfZKN6g1G0nZDi7NsDuyM+TpIKLL48aJS5hmrp0Kzcw
-         r/YvHLSfhFS+KhUG95LPZcgonv5C2lweDbYrExWBImvNAfoY4WV4E5LYpx4z/lew22Oj
-         +IM0HKjSANpnKxgP/otE5UDz/9JYdcJ84OW2faoQ7naqepXPRNbciamFUEIPU38kTjSG
-         BSGCJzJfwQljVDILCXKzrJTdWmqIqKnzmi8SFXPLOeXU3UzUr59iSGCsa+ruV/Sa4Nd0
-         XfGCZiZWuH5pLaLptHn1bIHkb67ywe2xkxtX7FhLSydljz8QRAmUNGxsgQdGUVisAbXb
-         reKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767362282; x=1767967082;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SXZonBfFrLlWUInQu9VdJssXOsC/CpSwdoDF+7WOCOo=;
-        b=KRr0vHKvaML+EMYrLJoTKUkv2yv4dmCE6YNGs06g0LVEsxPQRftfpHW28JPJvLOUhy
-         182jlEyEUzBy9UAobAXcI6OtLc316Ggq24ib9bcvir6p3Ix80C9B77bvJu8F3pPytoGg
-         PLMElcsS7mvOZYUHUHndRsuhqROrAdGE8tgbx6PJcrMg7ZosUXaxGXu66WVEG15VU4BR
-         1UBhXLh7m7QMORKxYvyXmgNkbx61jAJVp+nliNah9SRKX6xyFOxogLJZxE44Sd7Th7cC
-         XxvJywO3PLJYEfawjG8ERlsbr9T9t0C+atdr27m6ukkhfwUgLmACvDEpaFJW65gxt7tB
-         tkSQ==
-X-Gm-Message-State: AOJu0Yy0mUGNA3xTiOtjDG58cA46pF+gYsoAJt1ra/SIuZ0JXwrDmpE2
-	rhy49QbRgEGoiSLLsbgF1SRiBraHY44fB2gglB8gs3qa/QZ01Jdf1cHHYkHCMEeLlNN7G2H8oF4
-	D9DrCJeOvlx4uIcW4lB5A9SAwQvKCY+9P9GIiYRAztTMYdfBOaIpFF7QrDlhvAQUho55E
-X-Gm-Gg: AY/fxX7ihNZQGYbBW0cY55kDZ7t6D6ZCVTKFSEIhFnDJw/4iZ6lDNJc4egN/0S0JRWQ
-	lrSd3w03v20QdnsOB4mMa45sUnhn3SQTtTfSBjLcVvsqIhPLBy1eGSvQdEh12JiKb79oBoAGXoS
-	33BVuxj5qBSg2j7sZ+Duf1xQ34UxdbPQZRrtfVEIx7oVlRbqERVCxeMO6Hb0izlkdDO7XksCThc
-	Butl64FyuLfH2bKSoTNTNmZcEVfwTyJxXZzyAVFMV/G68U+YdPB8Bwz2fICKHutRaqLs/YuNQ5q
-	A+tOdPaI3RfTnEaaV6ZigFvWRF83cU2VohB4iKccXI9VuaMFuHiv++IhfKJLhFSZEZGHAhpBdh2
-	OhrBNynHR2ezvq3NJLlRvkCSIUQzNJwmt5uwxJUYmJSakws/QyptdxYin2fR8EOntOg==
-X-Received: by 2002:ac8:66c7:0:b0:4f4:b373:ebf with SMTP id d75a77b69052e-4f4b3730f72mr333863571cf.8.1767362282312;
-        Fri, 02 Jan 2026 05:58:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH7Y/WQ8VpeHWMYOtwRnUu1StCNtd8fnIuIk1RT/81Hf/IE5HzOME5xziQdtKVDZLPfJJayvA==
-X-Received: by 2002:ac8:66c7:0:b0:4f4:b373:ebf with SMTP id d75a77b69052e-4f4b3730f72mr333863211cf.8.1767362281838;
-        Fri, 02 Jan 2026 05:58:01 -0800 (PST)
-Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b9ef904bcsm43228684a12.22.2026.01.02.05.57.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jan 2026 05:58:01 -0800 (PST)
-Message-ID: <e917e98a-4ff3-45b8-87a0-fe0d6823ac2e@oss.qualcomm.com>
-Date: Fri, 2 Jan 2026 14:57:56 +0100
+	s=arc-20240116; t=1767362301; c=relaxed/simple;
+	bh=31ykytoW852VWU5JBxm2IrOAbb5cvwau/SyqJlfcMJw=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kumucXHRWgpoO+Rx4kza5s7m7Bs2lLd1HDPK0TzGPPntjW8hRAjJNBdas/Ra2MOowYnwlxZB8cVAf/ErlM1JzY1RGIs4oY0z92ygavc5uurIweb09QedBVWmC4ECeewbu0yxYpuwFJwfYfk1N8PdOR1sZyr19aEpM/XaFrQ4kis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c7cc4rvX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784FCC19422
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 13:58:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767362300;
+	bh=31ykytoW852VWU5JBxm2IrOAbb5cvwau/SyqJlfcMJw=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=c7cc4rvXCb4ioFu1FbQuq4Zas4fgOcreY1mX7B+tmeDE6cq5gjpkTuPEICnxfDDTE
+	 19MQOap6gEm+3mBxsua1Cy0KdUQjQT70bke+1uo7xAhJgRPlm+HnUVbzt3VrwCWNB5
+	 OcR0g1A+TRui0g0g2QNsd3WW2QoaPM5bUxpWPQSA/aV60Q1e8Rqo0kmb0J8vurtgvT
+	 rZctjlKFoy65eXVmzfzBdcm7R/qJ/oFUBFJBYNKYeDKY50pZIHb4BV6aSKNi0qNXzi
+	 C0gLGCiZPa6dSqU6MxWSsqh/BinsHLeo66tBfSUfsNUmOta0lEfILjqdj4vWDCJqLf
+	 2PRWr9ACE4jNA==
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-597d712c0a7so12515101e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 05:58:20 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUYVNiWIyfaPWlKeVscYQyAf4a1GX+gTQBjMK0V5vengyITl06s8hKcZaIORcFAAIIuXeeJnKyPIAoEz9/s@vger.kernel.org
+X-Gm-Message-State: AOJu0YymgqXBKqtg+MS1Hwqw9VUQJS6tu7Q4NpeU3rCx5KrfMy0uioDj
+	v/EpQQdkpg4ZFkY6AMKJsbqLifUvB1fnaIsfwyM6DnTcrXY1hpsCMHOSt2tQmdVM+vlQASnX9B5
+	tUxXii/jPZxOBwXxhSpGq1PjzzHDkmHt+GyzzkSr1dA==
+X-Google-Smtp-Source: AGHT+IEBVqRnjW8TA5v8Ve6PA8XvKbnhZNz5qSwKcfkioI6Th2RtaPojju4JVzaiNauZXPZION7H54IW/Ffsvg5KTbU=
+X-Received: by 2002:a05:6512:3b8e:b0:59a:103d:2917 with SMTP id
+ 2adb3069b0e04-59a17ddc928mr14190519e87.47.1767362295592; Fri, 02 Jan 2026
+ 05:58:15 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 13:58:14 +0000
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 13:58:14 +0000
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20251229-pci-pwrctrl-rework-v3-2-c7d5918cd0db@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] clk: qcom: gcc: Do not turn off PCIe GDSCs during
- gdsc_disable()
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski
- <brgl@kernel.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Abel Vesa <abelvesa@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        manivannan.sadhasivam@oss.qualcomm.com, stable@vger.kernel.org
-References: <20260102-pci_gdsc_fix-v1-0-b17ed3d175bc@oss.qualcomm.com>
- <a42f963f-a869-4789-a353-e574ba22eca8@oss.qualcomm.com>
- <edca97aa-429e-4a6b-95a0-2a6dfe510ef2@oss.qualcomm.com>
- <500313f1-51fd-450e-877e-e4626b7652bc@oss.qualcomm.com>
- <4d61e8b3-0d40-4b78-9f40-a68b05284a3d@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <4d61e8b3-0d40-4b78-9f40-a68b05284a3d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: FKnWKXm-t0zwk-mIDbdlMlzKfweOfv-O
-X-Proofpoint-GUID: FKnWKXm-t0zwk-mIDbdlMlzKfweOfv-O
-X-Authority-Analysis: v=2.4 cv=HNvO14tv c=1 sm=1 tr=0 ts=6957ceea cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=LvUvCMLUZ1wwccowk60A:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDEyMiBTYWx0ZWRfX4PjTIrpZRtmY
- Awf+aNreu5Kfqus5ef13T7Gfbt/Nd5YQvIpJEATdN5nA3wjdw4+oeNuvaebX1a+Xdwn3hi1qD1Z
- k6OiJRBMFt1FAah3nuZv8lT+/Qgg+9dDVHgRaSZ7GI3yFBBc6THQ/86Q62bDSIZLpJH9wVDtThz
- LEN4hRwnTt49uxClSOkNwid7MYvPT/mK6eGK9QH3tq3wTTzflNIOvpUQpaH6syVB7lxJjKfvvj/
- Jm4ivQ1xAlSm7QpLFmOM+yR5jdRJiNGBR5X4FlyH/l3o02XQInRY8P6LDfKfq8AVH265FgrpnYE
- 1Yt4JqlBTkZWKZd5Yu68FB9+TWWrmYnI+BRnp68UOdz/3Q4E4oi+kTijuI68nO6dhzPNHhX+iuM
- S0To4F7S/prALH7/5AqswXl6glvKXfAZ8ZldymZGEq3bWwplwKHMyYn6Fvjx5BJVsXvC4hTMCDh
- JjHPZ1vOJAAy+bLzTLg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-02_02,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601020122
+References: <20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com> <20251229-pci-pwrctrl-rework-v3-2-c7d5918cd0db@oss.qualcomm.com>
+Date: Fri, 2 Jan 2026 13:58:14 +0000
+X-Gmail-Original-Message-ID: <CAMRc=Md=U_xEByDJSrYsTRVn=gtP-SR+-gjV-FynALWv64x5RA@mail.gmail.com>
+X-Gm-Features: AQt7F2ovqLUZjzR05gl01dAnpi4RVt0fhD8PtaHqPrmFHCrAZ_52yiaqj2h8GIE
+Message-ID: <CAMRc=Md=U_xEByDJSrYsTRVn=gtP-SR+-gjV-FynALWv64x5RA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}'
+ callbacks
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
+	Brian Norris <briannorris@chromium.org>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Niklas Cassel <cassel@kernel.org>, 
+	Alex Elder <elder@riscstar.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Chen-Yu Tsai <wenst@chromium.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
 
-On 1/2/26 2:19 PM, Krishna Chaitanya Chundru wrote:
-> 
-> 
-> On 1/2/2026 5:09 PM, Konrad Dybcio wrote:
->> On 1/2/26 12:36 PM, Krishna Chaitanya Chundru wrote:
->>>
->>> On 1/2/2026 5:04 PM, Konrad Dybcio wrote:
->>>> On 1/2/26 10:43 AM, Krishna Chaitanya Chundru wrote:
->>>>> With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
->>>>> can happen during scenarios such as system suspend and breaks the resume
->>>>> of PCIe controllers from suspend.
->>>> Isn't turning the GDSCs off what we want though? At least during system
->>>> suspend?
->>> If we are keeping link in D3cold it makes sense, but currently we are not keeping in D3cold
->>> so we don't expect them to get off.
->> Since we seem to be tackling that in parallel, it seems to make sense
->> that adding a mechanism to let the PCIe driver select "on" vs "ret" vs
->> "off" could be useful for us
-> At least I am not aware of such API where we can tell genpd not to turn off gdsc
-> at runtime if we are keeping the device in D3cold state.
-> But anyway the PCIe gdsc supports Retention, in that case adding this flag here makes
-> more sense as it represents HW.
-> sm8450,sm8650 also had similar problem which are fixed by mani[1].
+On Mon, 29 Dec 2025 18:26:53 +0100, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> To allow the pwrctrl core to control the power on/off sequences of the
+> pwrctrl drivers, add the 'struct pci_pwrctrl::power_{on/off}' callbacks and
+> populate them in the respective pwrctrl drivers.
+>
+> The pwrctrl drivers still power on the resources on their own now. So there
+> is no functional change.
+>
+> Co-developed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+>  drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c | 27 +++++++++++++++---
+>  drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c | 20 +++++++++----
+>  drivers/pci/pwrctrl/slot.c               | 48 ++++++++++++++++++++++----------
+>  include/linux/pci-pwrctrl.h              |  4 +++
+>  4 files changed, 75 insertions(+), 24 deletions(-)
+>
+> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c b/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c
+> index 4e664e7b8dd2..0fb9038a1d18 100644
+> --- a/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c
+> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c
+> @@ -52,11 +52,27 @@ static const struct pci_pwrctrl_pwrseq_pdata pci_pwrctrl_pwrseq_qcom_wcn_pdata =
+>  	.validate_device = pci_pwrctrl_pwrseq_qcm_wcn_validate_device,
+>  };
+>
+> +static int pci_pwrctrl_pwrseq_power_on(struct pci_pwrctrl *ctx)
+> +{
+> +	struct pci_pwrctrl_pwrseq_data *data = container_of(ctx, struct pci_pwrctrl_pwrseq_data,
+> +							    ctx);
+> +
+> +	return pwrseq_power_on(data->pwrseq);
+> +}
+> +
+> +static void pci_pwrctrl_pwrseq_power_off(struct pci_pwrctrl *ctx)
+> +{
+> +	struct pci_pwrctrl_pwrseq_data *data = container_of(ctx, struct pci_pwrctrl_pwrseq_data,
+> +							    ctx);
+> +
+> +	pwrseq_power_off(data->pwrseq);
+> +}
+> +
+>  static void devm_pci_pwrctrl_pwrseq_power_off(void *data)
+>  {
+> -	struct pwrseq_desc *pwrseq = data;
+> +	struct pci_pwrctrl_pwrseq_data *pwrseq_data = data;
+>
+> -	pwrseq_power_off(pwrseq);
+> +	pci_pwrctrl_pwrseq_power_off(&pwrseq_data->ctx);
+>  }
+>
+>  static int pci_pwrctrl_pwrseq_probe(struct platform_device *pdev)
+> @@ -85,16 +101,19 @@ static int pci_pwrctrl_pwrseq_probe(struct platform_device *pdev)
+>  		return dev_err_probe(dev, PTR_ERR(data->pwrseq),
+>  				     "Failed to get the power sequencer\n");
+>
+> -	ret = pwrseq_power_on(data->pwrseq);
+> +	ret = pci_pwrctrl_pwrseq_power_on(&data->ctx);
+>  	if (ret)
+>  		return dev_err_probe(dev, ret,
+>  				     "Failed to power-on the device\n");
+>
+>  	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_pwrseq_power_off,
+> -				       data->pwrseq);
+> +				       data);
+>  	if (ret)
+>  		return ret;
+>
+> +	data->ctx.power_on = pci_pwrctrl_pwrseq_power_on;
+> +	data->ctx.power_off = pci_pwrctrl_pwrseq_power_off;
+> +
+>  	pci_pwrctrl_init(&data->ctx, dev);
+>
+>  	ret = devm_pci_pwrctrl_device_set_ready(dev, &data->ctx);
+> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+> index 0a63add84d09..0393af2a099c 100644
+> --- a/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c
+> @@ -434,15 +434,20 @@ static int tc9563_pwrctrl_parse_device_dt(struct tc9563_pwrctrl_ctx *ctx, struct
+>  	return 0;
+>  }
+>
+> -static void tc9563_pwrctrl_power_off(struct tc9563_pwrctrl_ctx *ctx)
+> +static void tc9563_pwrctrl_power_off(struct pci_pwrctrl *pwrctrl)
+>  {
+> +	struct tc9563_pwrctrl_ctx *ctx = container_of(pwrctrl,
+> +					struct tc9563_pwrctrl_ctx, pwrctrl);
+> +
+>  	gpiod_set_value(ctx->reset_gpio, 1);
+>
+>  	regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+>  }
+>
+> -static int tc9563_pwrctrl_bring_up(struct tc9563_pwrctrl_ctx *ctx)
+> +static int tc9563_pwrctrl_power_on(struct pci_pwrctrl *pwrctrl)
+>  {
+> +	struct tc9563_pwrctrl_ctx *ctx = container_of(pwrctrl,
+> +					struct tc9563_pwrctrl_ctx, pwrctrl);
+>  	struct tc9563_pwrctrl_cfg *cfg;
+>  	int ret, i;
+>
+> @@ -502,7 +507,7 @@ static int tc9563_pwrctrl_bring_up(struct tc9563_pwrctrl_ctx *ctx)
+>  		return 0;
+>
+>  power_off:
+> -	tc9563_pwrctrl_power_off(ctx);
+> +	tc9563_pwrctrl_power_off(&ctx->pwrctrl);
+>  	return ret;
+>  }
+>
+> @@ -591,7 +596,7 @@ static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+>  			goto remove_i2c;
+>  	}
+>
+> -	ret = tc9563_pwrctrl_bring_up(ctx);
+> +	ret = tc9563_pwrctrl_power_on(&ctx->pwrctrl);
+>  	if (ret)
+>  		goto remove_i2c;
+>
+> @@ -601,6 +606,9 @@ static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+>  			goto power_off;
+>  	}
+>
+> +	ctx->pwrctrl.power_on = tc9563_pwrctrl_power_on;
+> +	ctx->pwrctrl.power_off = tc9563_pwrctrl_power_off;
+> +
+>  	ret = devm_pci_pwrctrl_device_set_ready(dev, &ctx->pwrctrl);
+>  	if (ret)
+>  		goto power_off;
+> @@ -610,7 +618,7 @@ static int tc9563_pwrctrl_probe(struct platform_device *pdev)
+>  	return 0;
+>
+>  power_off:
+> -	tc9563_pwrctrl_power_off(ctx);
+> +	tc9563_pwrctrl_power_off(&ctx->pwrctrl);
+>  remove_i2c:
+>  	i2c_unregister_device(ctx->client);
+>  	put_device(&ctx->adapter->dev);
+> @@ -621,7 +629,7 @@ static void tc9563_pwrctrl_remove(struct platform_device *pdev)
+>  {
+>  	struct tc9563_pwrctrl_ctx *ctx = platform_get_drvdata(pdev);
+>
+> -	tc9563_pwrctrl_power_off(ctx);
+> +	tc9563_pwrctrl_power_off(&ctx->pwrctrl);
+>  	i2c_unregister_device(ctx->client);
+>  	put_device(&ctx->adapter->dev);
+>  }
+> diff --git a/drivers/pci/pwrctrl/slot.c b/drivers/pci/pwrctrl/slot.c
+> index 3320494b62d8..14701f65f1f2 100644
+> --- a/drivers/pci/pwrctrl/slot.c
+> +++ b/drivers/pci/pwrctrl/slot.c
+> @@ -17,13 +17,36 @@ struct pci_pwrctrl_slot_data {
+>  	struct pci_pwrctrl ctx;
+>  	struct regulator_bulk_data *supplies;
+>  	int num_supplies;
+> +	struct clk *clk;
+>  };
+>
+> -static void devm_pci_pwrctrl_slot_power_off(void *data)
+> +static int pci_pwrctrl_slot_power_on(struct pci_pwrctrl *ctx)
+>  {
+> -	struct pci_pwrctrl_slot_data *slot = data;
+> +	struct pci_pwrctrl_slot_data *slot = container_of(ctx, struct pci_pwrctrl_slot_data, ctx);
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(slot->num_supplies, slot->supplies);
+> +	if (ret < 0) {
+> +		dev_err(slot->ctx.dev, "Failed to enable slot regulators\n");
+> +		return ret;
+> +	}
+> +
+> +	return clk_prepare_enable(slot->clk);
+> +}
+> +
+> +static void pci_pwrctrl_slot_power_off(struct pci_pwrctrl *ctx)
+> +{
+> +	struct pci_pwrctrl_slot_data *slot = container_of(ctx, struct pci_pwrctrl_slot_data, ctx);
+>
+>  	regulator_bulk_disable(slot->num_supplies, slot->supplies);
+> +	clk_disable_unprepare(slot->clk);
+> +}
+> +
+> +static void devm_pci_pwrctrl_slot_release(void *data)
+> +{
+> +	struct pci_pwrctrl_slot_data *slot = data;
+> +
+> +	pci_pwrctrl_slot_power_off(&slot->ctx);
+>  	regulator_bulk_free(slot->num_supplies, slot->supplies);
+>  }
+>
+> @@ -31,7 +54,6 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+>  {
+>  	struct pci_pwrctrl_slot_data *slot;
+>  	struct device *dev = &pdev->dev;
+> -	struct clk *clk;
+>  	int ret;
+>
+>  	slot = devm_kzalloc(dev, sizeof(*slot), GFP_KERNEL);
+> @@ -46,23 +68,21 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+>  	}
+>
+>  	slot->num_supplies = ret;
+> -	ret = regulator_bulk_enable(slot->num_supplies, slot->supplies);
+> -	if (ret < 0) {
+> -		dev_err_probe(dev, ret, "Failed to enable slot regulators\n");
+> -		regulator_bulk_free(slot->num_supplies, slot->supplies);
+> -		return ret;
+> -	}
+>
+> -	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_slot_power_off,
+> +	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_slot_release,
+>  				       slot);
+>  	if (ret)
+>  		return ret;
+>
+> -	clk = devm_clk_get_optional_enabled(dev, NULL);
+> -	if (IS_ERR(clk)) {
+> -		return dev_err_probe(dev, PTR_ERR(clk),
+> +	slot->clk = devm_clk_get_optional(dev, NULL);
+> +	if (IS_ERR(slot->clk))
+> +		return dev_err_probe(dev, PTR_ERR(slot->clk),
+>  				     "Failed to enable slot clock\n");
+> -	}
+> +
+> +	pci_pwrctrl_slot_power_on(&slot->ctx);
+> +
+> +	slot->ctx.power_on = pci_pwrctrl_slot_power_on;
+> +	slot->ctx.power_off = pci_pwrctrl_slot_power_off;
+>
+>  	pci_pwrctrl_init(&slot->ctx, dev);
+>
+> diff --git a/include/linux/pci-pwrctrl.h b/include/linux/pci-pwrctrl.h
+> index 4aefc7901cd1..bd0ee9998125 100644
+> --- a/include/linux/pci-pwrctrl.h
+> +++ b/include/linux/pci-pwrctrl.h
+> @@ -31,6 +31,8 @@ struct device_link;
+>  /**
+>   * struct pci_pwrctrl - PCI device power control context.
+>   * @dev: Address of the power controlling device.
+> + * @power_on: Callback to power on the power controlling device.
+> + * @power_off: Callback to power off the power controlling device.
+>   *
+>   * An object of this type must be allocated by the PCI power control device and
+>   * passed to the pwrctrl subsystem to trigger a bus rescan and setup a device
+> @@ -38,6 +40,8 @@ struct device_link;
+>   */
+>  struct pci_pwrctrl {
+>  	struct device *dev;
+> +	int (*power_on)(struct pci_pwrctrl *pwrctrl);
+> +	void (*power_off)(struct pci_pwrctrl *pwrctrl);
 
-Perhaps I should ask for a clarification - is retention superior to
-powering the GDSC off? Does it have any power costs?
+I'd say that returning int here would not hurt and could spare you changing
+the code in the future if anyone requires error reporting.
 
->> FWIW I recall I could turn off the GDSCs on at least makena with the old
->> suspend patches and the controllers would come back to life afterwards
-> In the suspend patches, we are keeping link in D3cold, so turning off gdsc will not have any effect.
+Bart
 
-What do you mean by it won't have any effect?
-
-> But if some reason we skipped D3cold like in S2idle case then gdsc should not be off, in that case
-> in resume PCIe link will be broken.
-
-Right, obviously
-
-Konrad
+>
+>  	/* private: internal use only */
+>  	struct notifier_block nb;
+>
+> --
+> 2.48.1
+>
+>
+>
 
