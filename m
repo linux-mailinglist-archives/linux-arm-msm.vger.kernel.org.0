@@ -1,278 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-87235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D215CEE8DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 13:40:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66CFDCEE8E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 13:40:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B2E563014AD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 12:40:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0D75C30213F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 12:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311A130F7F3;
-	Fri,  2 Jan 2026 12:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D647930F7F3;
+	Fri,  2 Jan 2026 12:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KTS6x8EV";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jxKAX7jh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OgF4v1Ws";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kC9v94Ke"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A9C2D47F3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 12:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A5C30FC01
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jan 2026 12:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767357628; cv=none; b=DnsdLBatvXl/GfnQiL2dMdLs/Vqte/rUAVUozKhxt83DjX7zc86a6nrhCzkoSx1Pwx6Z/d87/bBFPF6hhtU4uJPIBt4ZQKS8v8/pKwbR6MAvrgKADCOGZbH6jclqmhUfvtrNEqnypyYNoipFzxoQlpzAtOOfsD78xvpjuYoPfC8=
+	t=1767357630; cv=none; b=WXA9LQukRXpndnxiHe+qDDp/KDGh6LfwCr50NaZTzj4lCD1+Nmqh5XmIGY2PcAgR37HNDU55NLlhqOa5hZ1U6ANorYxCLYEda+e5vMtg3F4XjyjrKaNefcWIIlPrX/AnUHkrFeZlmI7i+FZE+YcDG+PG1t34QpF6Iiyblj7rkaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767357628; c=relaxed/simple;
-	bh=vV2nmrOl+t4OdYmghvPwINneUWYZKWPyzTh+ELChZx4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=L0BL63KicEXLpeYG+iYbd81xoRN454eX8HUE8r/PmBdHAZPsJWfOKys4gmqeBEc8kFjOzyFJ8sLjiunuSp/cHc4uhNQNH1bhEpDuXtH+IuSS/4C6eVpZu5+dEZ2PAQgNqG1sdtrxd4sZTUa77odVUBlctod++ArkWzRcclE0vRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KTS6x8EV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jxKAX7jh; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1767357630; c=relaxed/simple;
+	bh=x79WgESDywKc/k1LfXdmzcnvokVNdyJs4aX1bPJzvW4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XeTUQyYGNZl81wHMVjaPN+rXndCQX731fwAtEbAXL+SGbkFsP4otJg3V0R8NPiATK0cBdxf165js/+E+ZKOKCFW+revbTHL+OjslEwz5P5YMil1czjHDCUlpv7l0eXq5YcmtcSfb5XTFbe+K/8vxQ1Y2+ol8zb5/hHQ/K7iv7/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OgF4v1Ws; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kC9v94Ke; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 602BnlIJ1095111
-	for <linux-arm-msm@vger.kernel.org>; Fri, 2 Jan 2026 12:40:25 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6029WFFJ618063
+	for <linux-arm-msm@vger.kernel.org>; Fri, 2 Jan 2026 12:40:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=wDzocy7j+gQrNEnjx+nc/YBJjQhj3MoB0EM
-	yBICOBZI=; b=KTS6x8EVWsOGxLM+qZHr3aZdLFJC2TdCT89WL7ilH72yRoTOt+E
-	a9Ez0W3y1WTFjdaENTFKDICKGGYhjm3L8PtscP9shdHF5VQBGNqbdlhV3r+uYd7F
-	BVng3GDSG7+UPCYRFq1aBSJw5fO8OoeavoymedQudxaY25G9ILtT1sGy3sK/XZmu
-	BhuJwIk4D+/PvR1YJCaOa6w25FeJf32+0+UAqjF0p8BMQQxBQuoYRd6j6Co9FpXE
-	Ic6K6hpheLmHu0sCHkjQbc0at9fdke7T1lQtFg13DZX70fznSmLez0Zhh1Ss4vZT
-	497KC/0MKw2S38x45rihSZ+ze82OuqlJc2Q==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bedg402p2-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ubBqoDh70LfpD1YdjSu3eNR7Ap2N2rxgOpRV9qaJMes=; b=OgF4v1WsFy7iYcjL
+	llWOPaoqD6gc2M0+BRmNysbL85aGTm8v0E5I2ReD+k3oqLG3+pstsRt3qKRCu4r/
+	YgO476xZR9C4Yu8TYRqw7RtNV1dCPrmdB7KRmrC5oWdReGYtM03mgOjv148fNCpn
+	NuUnEy7cJVk93RzgxizQ3zI7yVOXRfYTuctBc2FqGAsr2SVlIHMUnIlTqmWizU1k
+	nQPUcF3ol9ZKYOzy93QdV827b/hKV9hjBSd1xHeTyua4pGPR/7Avmk//9FCTU4UC
+	/rJAony9w865eryTz5IImbeHZE+mhsy3BdGeRWKHp41M3QleZUesopDYrH7EkIwh
+	kU4Y2Q==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4beb4wrcun-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 12:40:25 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2a31087af17so253428745ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 04:40:25 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 12:40:28 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-88fd7ddba3fso38735716d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 04:40:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767357624; x=1767962424; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wDzocy7j+gQrNEnjx+nc/YBJjQhj3MoB0EMyBICOBZI=;
-        b=jxKAX7jhbGeoggszZe3rQLYLjzHXHZRjLOEjm4PfLpDu5iqPcB//iOgWWVcQlpLrDh
-         RceTqoIM5k2WE93mBQ4q5Q+76JJK10LZ6v4l805ubXRI2KMR219vY4aR7romSzYnjBJJ
-         xH5xv12vjEdEGgQD2JICEw4COB5gX0phhEn5lDmLudIK8Si+hPlpEQBVnNkiuFC3Ir4m
-         ycZ1FPMKFOlFzLpgScJkfhve7loD3Epw3RDD2CatF+eyoeYl+bNtyeZfKnpQQZjlv1AA
-         JfY2kpM5/PGMKJsQ4tiwWixSqkhSjilGB0dsLXPgXGUKpxe57zL2X5jbPgkzMxdgtUAf
-         xkSQ==
+        d=oss.qualcomm.com; s=google; t=1767357627; x=1767962427; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ubBqoDh70LfpD1YdjSu3eNR7Ap2N2rxgOpRV9qaJMes=;
+        b=kC9v94Ke10FNNDWeUFOiRa9gqNajvreqlLHFZzq7KNylYcwu0mpiJC7yODMmIb19Do
+         13ewO7wS/hf5fnNTGmP1/yV7NZNjmFJsTiHIj3MdPCPu6eVSbWWUKS5/RuWEdRpisdHl
+         cQonxRFwTJ4GqLMTRHqH7x2nmyjoDNE7lpS7ciUPlFObN/LvFPpVEs7WrLvag81qOhjF
+         0lBe4bMN8mQooozmhU2ijsfotUQRM+k8NQRz9yY5xYYTg5/SFMGV0zn3vgsP5PmSqwSi
+         MZITBhBdrxjE/Ck+IpJrEyplPMq3I/I4omPCdUWVbvaqkf2yBWKFhrsfjGw4z7/LakoY
+         8ibw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767357624; x=1767962424;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wDzocy7j+gQrNEnjx+nc/YBJjQhj3MoB0EMyBICOBZI=;
-        b=jwnQ/OM56v0P/Bnsw07ejutCG0I1LOmg6gFaTCNxlWz2J41eFceordQWNe3/ZdLucd
-         QEOVh187otLPjSiwEFn+IbQjPp8F3PaMcB5FdwdQJc7HK4WWu4BwPCbNKTcJbsgi2hMH
-         usGjrLUDuOp1SWqNYbrCM1hhihg1v85mvDSsDDNJsuTOs0LeaGOC4/LcBh6T9scUM++A
-         fQ7DYR+c0Y/AycFkJJC52Prh3UQlD/wF038vB6/3slRVyiI7zdg+S9Ey+T8kT1udrnTK
-         5JQmZJ1bMoZM35bBmY/aM8QQJYimsL8zwsWyZ46QWx5oPBsOFx/lZzKBNeKNRJzlPvSA
-         YMXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXeZKnTaHeo7Kuc91oe8+2qMnLwRphmzC8WdEKr0Ip8ahycg15Z3fewLb/NNG6ffu5YroRQkjGVlAFq/Q0S@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmreE5NVaflqExER7sKjwhr3fJIpMc5x1X2is4EvcIYKkr2zcB
-	llL64tV6UMJ+ynMHkTfyCvOSgQn0uPGisj4mzXmn40eNHGwjNWGF7O+0eMCbJpyUrJOVgi6doTq
-	tbLRntgfxTtkG1etI8dRUpQySRKhtNF4Ld2zYtWiaXfBxPXWcA8OOEz67OVelRDb4dORX
-X-Gm-Gg: AY/fxX5PkvefVzH/pXf2oor9GzlLS2LGsbLSQL+YZNW2O5pT87C1wVnW44OW1byrD3F
-	oULyGSBG/nQ4vDZi9QWg9WNVyYmTSilG1WodUVniQWID7/TaK5YXaXaR+Xg3A2so5ZqaNb8Km3H
-	mIrw1TPjXTsPGzYsxUNvKmJg7oxcnq3NuMXU2IzONcsk+X8sYwzu0pRYtCgFzGTe8PJNeXUCA9P
-	OzfFluz1lcQhWWF/yo1RcQIl+9y5MOZJmo6uDg5gORyj8MXv806epqT4JXwEeNoVQYuMJhEHsoa
-	DoupbTLJ3P/Jok84ROfUG1w3JSeg3STRc+WnGIRQi2DEErFsqHRVjsRw1sk5wXrbDfvGi7j3uwD
-	jQQzKyf5YbkUrrifyhYK/2xml4KGV0s0nRM2OHQiH
-X-Received: by 2002:a17:902:d488:b0:29f:2b8a:d3d with SMTP id d9443c01a7336-2a2f2202ccamr395490565ad.4.1767357624376;
-        Fri, 02 Jan 2026 04:40:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE8A/uRbQ2+nH9MV72MQr84R+/Z3/LjbIDBmGCuDgNg5Cy+ibvYVOtw6HxMTm6h0Elj7WTxmg==
-X-Received: by 2002:a17:902:d488:b0:29f:2b8a:d3d with SMTP id d9443c01a7336-2a2f2202ccamr395490445ad.4.1767357623880;
-        Fri, 02 Jan 2026 04:40:23 -0800 (PST)
-Received: from hu-neersoni-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c1e7ca0baf3sm36141763a12.34.2026.01.02.04.40.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jan 2026 04:40:23 -0800 (PST)
-From: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-To: adrian.hunter@intel.com, ulf.hansson@linaro.org, ebiggers@kernel.org,
-        abel.vesa@linaro.org
-Cc: linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, neeraj.soni@oss.qualcomm.com,
-        Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-Subject: [PATCH v4] mmc: host: sdhci-msm: Add support for wrapped keys
-Date: Fri,  2 Jan 2026 18:10:18 +0530
-Message-Id: <20260102124018.3643243-1-neeraj.soni@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1767357627; x=1767962427;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ubBqoDh70LfpD1YdjSu3eNR7Ap2N2rxgOpRV9qaJMes=;
+        b=o9qir2bc7y5F22RGfePo+OxlLzpadpnHyXnovfCmwy1ZFF9nul4ZIzqz4fl8GvR1lp
+         M6vua+ddC/O3BH+VpoolwjkIibj/WLOU2+m64ZlXKp9AVxIb+QZeiamfWQamzQzWDXRh
+         2PNZL0SqKWO7cNUgjeAf4hVjOL8PnWG+GpgOH/OCd/k1alsEvPSZQOcYThZFtO/uJ+pv
+         JMR4DpByh56atIoOOs/nUGeJv9Z9BhmLBDdcuFWs6RS/EGx8HOfAO7LQIHx08gbizO+Q
+         gTI0fRmr468nLy+ZO1RxYxpAdgMOj+bmFpekk7CEcBPaH5PfRbTPAVzOIy3g70NI9JGs
+         AN1A==
+X-Forwarded-Encrypted: i=1; AJvYcCWksScNZ7sd/ZYGOOLbMexNasSdh/XldzWUahqtdVqE/iXJxS7qMbOVRXCk0Iwv9qGr960R66Qvts0XWH6l@vger.kernel.org
+X-Gm-Message-State: AOJu0YzY5JH3q3m3IJ0HDzCuWQ0DRBTFLplafWEhatJLSGe3lSYqOeR0
+	f720PojjvXeHXwtmYP7DeVba7Y7YoV7+VyPIKxYbdev8n4AIxz6+A3mMuwVF01ss/fqcONvbBAO
+	ZJ2tzyGPEu7ro0WrFfDJAMhJjnTNQQMzJScoZ9H4JT3vlm4l+oPtwLWJ0UaZYSqb6GJwG
+X-Gm-Gg: AY/fxX7nh04cYB/sIVdHYhk778fOR9y8d7dJJIvC3bQQ7RDxksQ2SqJF+w9HQ0N8wPv
+	hJDw0CXiTBOASnpBjDDWnWpbO/WgzRF6MmwM/XQW+sHdiMCAl8aKxvm2Ej4nkB/XEamOHQTlFbI
+	XDRwPAbqXLgmhQ+SoRERBV24GSXXAnrGky3RM2bsdMU5OuxzwWR87AofEO24nQ/HBg9osB6Lh82
+	iilTZ5oBtWetWqNpADzurwp7n+eJpqYV7GWji0Cycm0D3TADJ2yJkd7gX4bsNOeQ0ozNIWtOz8t
+	FobsGIAt+CMzVXSZ34y15q59XX95eBzdceWu87Ey1x5U+NWldf7EOCq1U/58rxvK7jDzwg0SKV5
+	vz2wDJMiTZUlIFjjZnExJUJZW2IefUwsl7dZQdz96Ny0VPsvRTq/ZnIk8d58V8J7RmQ==
+X-Received: by 2002:a05:6214:252a:b0:7d0:8b28:aaa4 with SMTP id 6a1803df08f44-88d8452929emr512192276d6.6.1767357627410;
+        Fri, 02 Jan 2026 04:40:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHUyM1aSteHj74TNcIlszcFmzlamaA60legzWxRh88FQD/NtIa5jcJoEc61i1k70PkYhGpbDw==
+X-Received: by 2002:a05:6214:252a:b0:7d0:8b28:aaa4 with SMTP id 6a1803df08f44-88d8452929emr512192036d6.6.1767357626989;
+        Fri, 02 Jan 2026 04:40:26 -0800 (PST)
+Received: from [192.168.119.72] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382861ef4ccsm45978701fa.23.2026.01.02.04.40.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Jan 2026 04:40:25 -0800 (PST)
+Message-ID: <91d2e5f7-7d93-4909-9ed2-6b19abf0b448@oss.qualcomm.com>
+Date: Fri, 2 Jan 2026 13:40:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: aRdTiG7c3hjasZd4ADRb8Z1_OYg_W8aU
-X-Authority-Analysis: v=2.4 cv=IssTsb/g c=1 sm=1 tr=0 ts=6957bcb9 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=qqNy_vziDfUGqepx9HcA:9 a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: aRdTiG7c3hjasZd4ADRb8Z1_OYg_W8aU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDExMSBTYWx0ZWRfX3sCKG47c49G6
- mdtD8Jyd6uT3mpE4g/JK00jkLMipFInFiKzM+Cg2VsSsSHYWTwOTt9K0bNoqxmjMRxoRhnlq7C0
- J8T+fCcedd9YyJweCQ1Ae4SvDHnJ7u4aZcl3mKOtvvuYAgKnN52/L/NHrgm5Qy4ndcMmH4+gg2a
- pGPq0reG4bCd5kLrEYKSdZgT/DN7zmstfPjR6fmee612UY3NOncSAW8LIYnrHuUTnCFTV/hHNQq
- 8ZHrfpBGUcAKym2JN1PNGVIjQ/2H7b+RQbD4qVXGunT/0U0VKIZf7FXnFwefIupSpWNqHvaHj3e
- Hy4sfxaWipoP7HK+gKeBBl51xKmaQkXgbqlGIhsfZtzZv1D47vcCv/bw+1b1F6E3FBtThV7C2aP
- CprdyUZ7BgRVYRez4wqofy7blZGn2ugJIi4hajwRqVcYItJF3LF71QqisY8qEJxIFkKU2OA6MOd
- TsVhtQ3aZc2OLaClTDA==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] pinctrl: qcom: glymur: Add Mahua TLMM support
+To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
+        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
+ <20260102-pinctrl-qcom-mahua-tlmm-v1-2-0edd71af08b2@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260102-pinctrl-qcom-mahua-tlmm-v1-2-0edd71af08b2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: oELR9Lu94OyQoitSNJHKrxnHzVQ0EOlP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDExMiBTYWx0ZWRfX4rMUACDQOtuf
+ Ss77zJK6Nnf4QMwh+f6eOvMXFLh6PuVpykSiOKuJxZuZGKKxGhqApIFMYiNzcYNtbsShbzdVGE0
+ 6CdU7PFDGEnhwuVaE1sWYRA4doG7+MwU6PtOrqQNYx0hXCLAd58CarGVJuHmB+NfK/FgBbXAu3V
+ 8Z5Rk7/USPkNTwZBzPhvCClxm3wu11pVzHf4N43t15JVOk9icnT9x914UslfzRaQkc2nAI/DkHa
+ Mu+aY0wqYVzpBHYJ+QBik2kwHxbEZYmXo92fnUuzwGB+jUFrzQl2X99IKOLROahfo/XbAWWxhHu
+ KZ5o1ctD332fMq/vI6ZOreVeaJVgS7zdf3kam0eLi99OzhluLpWLB/HBgNPY+jKTmZk89nJqIES
+ evEjvDdOC86dgQu6O/Gdsq0yG9nAi2nMEMjmFMtMGvHZ1QRekdu7c6wae9jq0w+SMPDvdO8LdAe
+ blWe9CT63vwaSxH2tpg==
+X-Authority-Analysis: v=2.4 cv=I5pohdgg c=1 sm=1 tr=0 ts=6957bcbc cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=9J1-as2qgA27kOtx8oUA:9
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-GUID: oELR9Lu94OyQoitSNJHKrxnHzVQ0EOlP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-02_01,2025-12-31_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601020111
+ bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 impostorscore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601020112
 
-Add the wrapped key support for sdhci-msm by implementing the needed
-methods in struct blk_crypto_ll_ops and setting the appropriate flag in
-blk_crypto_profile::key_types_supported.
+On 1/2/26 12:07 PM, Gopikrishna Garmidi wrote:
+> Introduce support for the Mahua TLMM (Top Level Mode Multiplexer)
+> in the pinctrl-glymur driver. Mahua shares the same pin configuration
+> as Glymur but requires a different PDC wake IRQ mapping.
+> 
+> Changes include:
+> - Add mahua_pdc_map[] with Mahua-specific GPIO to PDC IRQ mappings
+> - Define mahua_tlmm msm_pinctrl_soc_data structure
+> - Update device match table to include "qcom,mahua-tlmm" compatible
+> - Modify probe function to use of_device_get_match_data() for dynamic
+>   SoC-specific data selection
+> 
+> Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-glymur.c | 43 ++++++++++++++++++++++++++++++++---
+>  1 file changed, 40 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
+> index 335005084b6b..bf56a064d09c 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-glymur.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
+> @@ -1729,6 +1729,25 @@ static const struct msm_gpio_wakeirq_map glymur_pdc_map[] = {
+>  	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
+>  };
+>  
+> +static const struct msm_gpio_wakeirq_map mahua_pdc_map[] = {
+> +	{ 0, 116 },   { 2, 114 },   { 3, 115 },	  { 4, 175 },	{ 5, 176 },
+> +	{ 7, 111 },   { 11, 129 },  { 13, 130 },  { 15, 112 },	{ 19, 113 },
+> +	{ 23, 187 },  { 27, 188 },  { 28, 121 },  { 29, 122 },	{ 30, 136 },
+> +	{ 31, 203 },  { 32, 189 },  { 34, 174 },  { 35, 190 },	{ 36, 191 },
+> +	{ 39, 124 },  { 43, 192 },  { 47, 193 },  { 51, 123 },	{ 53, 133 },
+> +	{ 55, 125 },  { 59, 131 },  { 64, 134 },  { 65, 150 },	{ 66, 186 },
+> +	{ 67, 132 },  { 68, 195 },  { 71, 135 },  { 75, 196 },	{ 79, 197 },
+> +	{ 83, 198 },  { 84, 181 },  { 85, 199 },  { 87, 200 },	{ 91, 201 },
+> +	{ 92, 182 },  { 93, 183 },  { 94, 184 },  { 95, 185 },	{ 98, 202 },
+> +	{ 105, 157 }, { 113, 128 }, { 121, 117 }, { 123, 118 }, { 125, 119 },
+> +	{ 129, 120 }, { 131, 126 }, { 132, 160 }, { 133, 194 }, { 134, 127 },
+> +	{ 141, 137 }, { 144, 138 }, { 145, 139 }, { 147, 140 }, { 148, 141 },
+> +	{ 150, 146 }, { 151, 147 }, { 153, 148 }, { 154, 144 }, { 155, 159 },
+> +	{ 156, 149 }, { 157, 151 }, { 163, 142 }, { 172, 143 }, { 181, 145 },
+> +	{ 193, 161 }, { 196, 152 }, { 203, 177 }, { 208, 178 }, { 215, 162 },
+> +	{ 217, 153 }, { 220, 154 }, { 221, 155 }, { 228, 179 }, { 230, 180 },
+> +	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
 
-Tested on SC7280 eMMC variant.
+Over the "common" base, Glymur has GPIO143 (PCIE3a_RST) and Mahua has GPIO155
+(PCIE3b_RST). Both SoCs GPIO maps seem to contain both, but Mahua has a _unused
+suffix for the missing 143, which makes sense given the bus isn't bifurcated
+there.
 
-How to test:
+The _RST (PERST#) pin is driven by the SoC so I don't think it's useful to
+have it as a wakeup source, unless someone decides to connect something that's
+not PCIe to it (+Mani)
 
-Use the "v1.3.0" tag from https://github.com/google/fscryptctl and build
-fscryptctl that supports generating wrapped keys.
+Perhaps we could unify these maps?
 
-Enable the following config options:
-CONFIG_BLK_INLINE_ENCRYPTION=y
-CONFIG_QCOM_INLINE_CRYPTO_ENGINE=y
-CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
-CONFIG_MMC_CRYPTO=y
-
-Enable "qcom_ice.use_wrapped_keys" via kernel command line.
-
-$ mkfs.ext4 -F -O encrypt,stable_inodes /dev/disk/by-partlabel/vm-data
-$ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
-$ fscryptctl generate_hw_wrapped_key /dev/disk/by-partlabel/vm-data > /mnt/key.longterm
-$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
-$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
-$ rm -rf /mnt/dir
-$ mkdir /mnt/dir
-$ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
-$ dmesg > /mnt/dir/test.txt
-$ sync
-
-Reboot the board
-
-$ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
-$ ls /mnt/dir # File should be encrypted
-$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
-$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
-$ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
-$ cat /mnt/dir/test.txt # File should now be decrypted
-
-Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-
----
-This is a reworked version of the patchset
-https://lore.kernel.org/all/20241101031539.13285-1-quic_spuppala@quicinc.com/
-that was sent by Seshu Madhavi Puppala.
-
-My changes rebase it to use the custom crypto profile support.
-
-Changes in v4:
-- Updated the link for fscryptctl tool in commit message to "https://github.com/google/fscryptctl".
-- Aligned the indentation at few places.
-- Unwrapped few lines of code.
-
-Changes in v3:
-- Updated commit message with test details and moved "Signed-off-by" above the
-  scissors line.
-
-Changes in v2:
-- Updated commit message for clarity.
-
-Changes in v1:
-- Added initial support for wrapped keys.
----
- drivers/mmc/host/sdhci-msm.c | 47 +++++++++++++++++++++++++++++++-----
- 1 file changed, 41 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 4e5edbf2fc9b..8ac4aee2cb3b 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1911,11 +1911,6 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
- 	if (IS_ERR_OR_NULL(ice))
- 		return PTR_ERR_OR_ZERO(ice);
- 
--	if (qcom_ice_get_supported_key_type(ice) != BLK_CRYPTO_KEY_TYPE_RAW) {
--		dev_warn(dev, "Wrapped keys not supported. Disabling inline encryption support.\n");
--		return 0;
--	}
--
- 	msm_host->ice = ice;
- 
- 	/* Initialize the blk_crypto_profile */
-@@ -1929,7 +1924,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
- 
- 	profile->ll_ops = sdhci_msm_crypto_ops;
- 	profile->max_dun_bytes_supported = 4;
--	profile->key_types_supported = BLK_CRYPTO_KEY_TYPE_RAW;
-+	profile->key_types_supported = qcom_ice_get_supported_key_type(ice);
- 	profile->dev = dev;
- 
- 	/*
-@@ -2009,9 +2004,49 @@ static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
- 	return qcom_ice_evict_key(msm_host->ice, slot);
- }
- 
-+static int sdhci_msm_ice_derive_sw_secret(struct blk_crypto_profile *profile,
-+					  const u8 *eph_key, size_t eph_key_size,
-+					  u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_derive_sw_secret(msm_host->ice, eph_key, eph_key_size,
-+					 sw_secret);
-+}
-+
-+static int sdhci_msm_ice_import_key(struct blk_crypto_profile *profile,
-+				    const u8 *raw_key, size_t raw_key_size,
-+				    u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_import_key(msm_host->ice, raw_key, raw_key_size, lt_key);
-+}
-+
-+static int sdhci_msm_ice_generate_key(struct blk_crypto_profile *profile,
-+				      u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_generate_key(msm_host->ice, lt_key);
-+}
-+
-+static int sdhci_msm_ice_prepare_key(struct blk_crypto_profile *profile,
-+				     const u8 *lt_key, size_t lt_key_size,
-+				     u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_prepare_key(msm_host->ice, lt_key, lt_key_size, eph_key);
-+}
-+
- static const struct blk_crypto_ll_ops sdhci_msm_crypto_ops = {
- 	.keyslot_program	= sdhci_msm_ice_keyslot_program,
- 	.keyslot_evict		= sdhci_msm_ice_keyslot_evict,
-+	.derive_sw_secret	= sdhci_msm_ice_derive_sw_secret,
-+	.import_key		= sdhci_msm_ice_import_key,
-+	.generate_key		= sdhci_msm_ice_generate_key,
-+	.prepare_key		= sdhci_msm_ice_prepare_key,
- };
- 
- #else /* CONFIG_MMC_CRYPTO */
--- 
-2.34.1
-
+Konrad
 
