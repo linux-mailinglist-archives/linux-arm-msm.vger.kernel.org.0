@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09C05CEE45F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:09:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C313CEE477
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 02 Jan 2026 12:11:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5731B3026B27
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:08:16 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 044243008575
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jan 2026 11:11:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9910D2E22B5;
-	Fri,  2 Jan 2026 11:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1682E11B8;
+	Fri,  2 Jan 2026 11:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTTrgXXO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eFgj7Y+4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C2E2DF12E;
-	Fri,  2 Jan 2026 11:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCDF2620FC;
+	Fri,  2 Jan 2026 11:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767352088; cv=none; b=mz5OfR1yPQ0y+PfjnJlzZzzxI+ZAZNtDG5X8vcwCppBwqrtxL/VnYJDQyiMQxlFr7sTi9zkQWjhPBeYy8SaV9VWOX8yVrj5YPUpMztvkx1ICVQpRWOylxHPqezPPDdvH+UeQiAUvuKMPv/sQOhB4+m2h06lN55ZAQnwSBt4nMhA=
+	t=1767352265; cv=none; b=Op2LcYoFaTDUH2ZneiHh0iWER37OPoXy5VhQFt7w8hdC0QsHvR57z6/FgyLLW35UIwR/f+2n7rTVnwT1uKXnex4LoE6iPy/g7xtvD7sHGogPysq3WG+JgoxstX8GjMzS2nhzavxjls9dMMKGlC0uyvWZRsMWVsb37EOmitoIM2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767352088; c=relaxed/simple;
-	bh=ysRNhpAwson+Oshwgl2G6gmQBVLIdPZnAlKqIkwEhe8=;
+	s=arc-20240116; t=1767352265; c=relaxed/simple;
+	bh=dkjzjZd16Blz9ZKipiLDZzZfb2FyFwPvCZwnjotlRTQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E0Vh1aMsLzIFwlCQTv0gjbc589sKX+1xdG26U2gQ9/fygeL3+LWeJ1nsTHJLrWS0TA9VltdVs9RZVSFOqkCpEkpcQyOCgSq/IhPKcWwSjETCXokiZ76vuVXAak85AsNHD3CfnX2pm4yHW9sfIc3Pw3AQNlmr7usNz825Uhx3nKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTTrgXXO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A3C116B1;
-	Fri,  2 Jan 2026 11:08:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IHQ53/i+scJQLhueHAAyD4WjFGj7vkknSoolwWZZSesJERbrPswCoAmDoi0ZqYEIMH8V8BHnNoumQO8ZoImGwgjEfGzjha4xHxibhFyUp9D/zXit16rgBquv2nFwsdWihet/Y9tUEGxpnIQ4xeHzUvh8jbOkM0vXahOx66S0j+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eFgj7Y+4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D84C116B1;
+	Fri,  2 Jan 2026 11:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767352088;
-	bh=ysRNhpAwson+Oshwgl2G6gmQBVLIdPZnAlKqIkwEhe8=;
+	s=k20201202; t=1767352264;
+	bh=dkjzjZd16Blz9ZKipiLDZzZfb2FyFwPvCZwnjotlRTQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WTTrgXXOqL8HmmhrJDgkaI208qmnSCb7yweAhrZHeP2xL9I2OgEt30b8NnsMxTv2K
-	 jZDcN9zm9TrURrwHZkvuUyPasTTIet5dLBxiXY8v1hKHFf3TO3qLXfRpKtbcXOT2PI
-	 Iv2P+e4GWnV0mPhLV5hQIogZRVuy0RsTwMast2pBpbMkVtHgiOuNAZyUHUB5RXjAUO
-	 hFWBwoiPBGb1EEyhTgXKCayEizk+MqhnKngZKe6t9V9+QR9qLU1ogwiOMDuu5ZNsij
-	 tO5wndC8DiAlU6e0f+OYr44YUt6GHqHQhVT662Mp6ljSN69azADqk7Te+KVNCwxhko
-	 ty1tmF1JioyfQ==
-Message-ID: <e00630b9-56f0-4a30-84ef-8b691ea7af3e@kernel.org>
-Date: Fri, 2 Jan 2026 12:08:03 +0100
+	b=eFgj7Y+4zroavaKTh12v7WWILLlLHmwLRhvVgU4R7lhxnBdjFsqCNjbaHF0PzG3aj
+	 ZBY1wx2tGByoGRt3QRisYAIzmyTiRiLw8XiaM6TkEQ+bsJ2VbNeNpGbSm3GWZh3Msj
+	 y8cIAF+7mWFlqLbWI0GnXEtXCfRwvVl7dFi4Q1M/ll/hjI1nEUMsDICe9ckEzAGdXL
+	 HnA5dOBlOdFXTKCMJMnMbjB3eap3LS7s/Sh0v+S7YW9JERqrklmydyMJoe2sZ9r7T+
+	 O3RuKeKL/VuxHmraDt+kNvnHvd1XTHtF0jSYqpkY0vxtqrQ43WiBtnENmqP0wLkheC
+	 4M99ROe37Fqeg==
+Message-ID: <7e25da82-6a26-4ade-9247-1bb7abd5615c@kernel.org>
+Date: Fri, 2 Jan 2026 12:10:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,13 +48,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Enable eMMC variant
-To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
- andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: Add Mahua TLMM support
+To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: sumit.garg@kernel.org
-References: <20260102104638.3802715-1-varadarajan.narayanan@oss.qualcomm.com>
+References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
+ <20260102-pinctrl-qcom-mahua-tlmm-v1-1-0edd71af08b2@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -100,101 +106,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260102104638.3802715-1-varadarajan.narayanan@oss.qualcomm.com>
+In-Reply-To: <20260102-pinctrl-qcom-mahua-tlmm-v1-1-0edd71af08b2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/01/2026 11:46, Varadarajan Narayanan wrote:
-> RDP433 can have NAND or eMMC based on a board level rework. Since the
-> same GPIOS are used for both the interfaces, only one of them can be
-> used. Add a new DTS file to disable NAND and enable eMMC.
-> 
-> Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  2 +-
->  .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 32 +++++++++++++++++++
->  .../boot/dts/qcom/ipq9574-rdp433-emmc.dts     | 26 +++++++++++++++
->  3 files changed, 59 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 6f34d5ed331c..d5fe12ef4300 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -26,7 +26,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
-> -dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb ipq9574-rdp433-emmc.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> index bdb396afb992..e4ae79b2fcd9 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> @@ -169,6 +169,38 @@ data-pins {
->  			bias-disable;
->  		};
->  	};
-> +
-> +	sdc_default_state: sdc-default-state {
-> +		clk-pins {
-> +			pins = "gpio5";
-> +			function = "sdc_clk";
-> +			drive-strength = <8>;
-> +			bias-disable;
-> +		};
-> +
-> +		cmd-pins {
-> +			pins = "gpio4";
-> +			function = "sdc_cmd";
-> +			drive-strength = <8>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		data-pins {
-> +			pins = "gpio0", "gpio1", "gpio2",
-> +			       "gpio3", "gpio6", "gpio7",
-> +			       "gpio8", "gpio9";
-> +			function = "sdc_data";
-> +			drive-strength = <8>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		rclk-pins {
-> +			pins = "gpio10";
-> +			function = "sdc_rclk";
-> +			drive-strength = <8>;
-> +			bias-pull-down;
-> +		};
-> +	};
->  };
->  
->  &qpic_bam {
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> new file mode 100644
-> index 000000000000..ffd96b1b1c65
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
-> @@ -0,0 +1,26 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+On 02/01/2026 12:07, Gopikrishna Garmidi wrote:
+> Update the compatible property to accept both "qcom,glymur-tlmm" and
+> "qcom,mahua-tlmm" using enum to allow proper device tree validation
+> for both SoCs.
 
-Odd license. We don't take GPL v3.
+1. Why? You explained what, with a lot of redundant words. I do not find
+"paid by commit line" useful. Drop all the redundancies, do not explain
+what is "device tree validation". Look at other commits to learn how
+this is supposed to be written.
 
-> +/*
-> + * IPQ9574 RDP433 eMMC board variant device tree source
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "ipq9574-rdp433.dts"
+2. Why they are not compatible? You have entire commit msg to say
+something useful instead stating obvious and repeating the diff.
 
-I find it discouraged practice. Although if Bjorn is fine with it, you
-still need proper compatibles.
+3. Subject: You cannot add "support" in the binding. Again, look at
+other commits.
 
 
 Best regards,
