@@ -1,101 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-87333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37C79CF04B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 20:05:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C906CF04E0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 20:23:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4FDD83018D72
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 19:05:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 50C8D300913D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 19:23:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BC0F2DA757;
-	Sat,  3 Jan 2026 19:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856C725F994;
+	Sat,  3 Jan 2026 19:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="etc9+Zcd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngReHhb0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44898247295
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 19:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E01217C220;
+	Sat,  3 Jan 2026 19:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767467099; cv=none; b=uMgvGEIY4DCIWuYHpygAQq+y5WK9yzZKiO0xjAyunTB9n7lzIwTfbrr5Q8ipUnCnk9uTIZyg5ozbf2v/tiry4/+mnRDYwn0KkvZG/yWfC3HIBqLLJ1ozQJ+SI1us1GNJ9bngLBybijfEL7LjMk6USKOevsuWiLT5tB4qjJ9qIv4=
+	t=1767468213; cv=none; b=UEbgsCGgc2t5NAUK49yS96HjRNqKHXxpZXvW6jjqH1uVWSfR0cbZChlsmQSzVkwZKutLiW+TLXpQ8jgmj1dAnOTdsh1iriBcL9fzHjMTmsiyppW5e3EpDL6cCkykst4KKdUacgjOBIhQsW8Ms+0rBVKHlOFg7n6It9go4FWA3zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767467099; c=relaxed/simple;
-	bh=1ocYjoxF+BmL+4lAR0aruV6XJ3WNgsR/AMGWfp36r6k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=egMnh118MMR1+KRWm71V8PsJWycthZPelvtihpgYVnjdCKvQjm70TzbZm5hcq7try4emQFItuM+dJ39rjrWyvFO8+wL7CXgNa0P0lnfWkqwkemz6S3gV+HTnzf92+xxBAJ4TCEXbjGNbxu0aLtIdorNyV8yYT6F7u9mF8yDOWWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=etc9+Zcd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED56BC2BCB5
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 19:04:58 +0000 (UTC)
+	s=arc-20240116; t=1767468213; c=relaxed/simple;
+	bh=kFPBzT8l+WwHu+3My5hbLBVwoqHKka5P/1LTiFfRdf8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pzef/c9M9RvuBIT9wjPtea1Itbkds1prcCftI0SZfP9fEK04e9XMakl31fZLe0XCN0VJUtJQZ4AB9X9e60Ysh/9leNbnDw+1oDQCEiuzkiRlX5qhfW139hxXTvyliPQZNquYEGpVbmJIS4Li1IPlZ9AP0vEj74E0dEWD0/S+RQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngReHhb0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DA3C113D0;
+	Sat,  3 Jan 2026 19:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767467099;
-	bh=1ocYjoxF+BmL+4lAR0aruV6XJ3WNgsR/AMGWfp36r6k=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=etc9+ZcdqCIrYyQ4cUv5E4eBKzzFNmLGesHDUaXD8T9GohIu8676468nEQ1L35VO3
-	 Zb67TrkvVEHXvQQfMpaNSZVPaQ97xy2Qlibzl7u7QdylwZHmxWNmnbhPDayy67F9Xz
-	 2cAdzgA4vpkREurDa2yjS0yxqr9nGpR0S43v6vVAHjN4QU/ZDnEZgXeHrg4whxbnBc
-	 zBGXs8gxC9h4ckfGKL50QEQ92lFJ85Z0B6voje7abfjo5HM4ubMLlHh1PNRSHSD+46
-	 bDq9FrUersHMewD8kw3RizkquzQY67Qo0Sen/Ere6j4kq04w+hZpiOpw2c0jEA90pn
-	 Zq8W+O5oPOAnw==
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-78fdb90b670so81690987b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jan 2026 11:04:58 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVZ/nj08Q9kvyZ+eN9uc+oZ9o6rAdB/N3DORZ2kjynt2xeDEJS1pE2e4+LA69cRM+0WFIrJP4ZF6tNIxIga@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMgkqtouMGi/bRzcExsbwFLyJakpuaEJ7TSrIEXlQ/TKMovzZN
-	5ycdQvupHmwt8hszt14CQ3Gp3SPYEsofPD7SLVrLHQwZmZXNVwliESmd9l7SUVRiS+9gyZhBhA7
-	9LHsYihRfbQB+8Ku/le5QVQGZ63zeyTU=
-X-Google-Smtp-Source: AGHT+IHbZhHaHEdWDQjutRDr8SPOwbSZ030Zf28/79XflrWl5n95Y1lTs89sR/aKwmdnEx8TvadlNTwYTO0FXJaNx3U=
-X-Received: by 2002:a05:690c:c93:b0:78f:a7aa:b67e with SMTP id
- 00721157ae682-78fb3e6370amr383069257b3.0.1767467097982; Sat, 03 Jan 2026
- 11:04:57 -0800 (PST)
+	s=k20201202; t=1767468212;
+	bh=kFPBzT8l+WwHu+3My5hbLBVwoqHKka5P/1LTiFfRdf8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ngReHhb0xBx1x5fvYtOfgcpLEILzqu49lQW1bMb2wRc3+BW1vWJdoV/liivSukWbi
+	 Wr1u0+WC02baG/7qzxuTHFHic6PVnSamdiPxhEqTgA1S2pA1eqYyInnK8Yq7O5/pa1
+	 cl2RU6O4se6+wNz0wv5fa0sTosXv7JI6nHpQxOqCzUdzlR3V5lzLornbt5v4CC52Wv
+	 K6NU1UCrStxzBWELoCL6XaOEUwgpoF1/dezzddv3CKdw8etbedWu0aGGeJ5bgKxD0h
+	 Hx+Y7xYCdQlhaa0yCF5YVhge9J70WfDqFLK3pVNIX1+38Kw2MCSO0IgV/T3FqAtpNA
+	 9fVyAIlQ2ZFFg==
+Date: Sat, 3 Jan 2026 21:23:21 +0200
+From: Mike Rapoport <rppt@kernel.org>
+To: Eugen Hristev <eugen.hristev@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+	pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net,
+	david@redhat.com, mhocko@suse.com, tudor.ambarus@linaro.org,
+	mukesh.ojha@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org, jonechou@google.com,
+	rostedt@goodmis.org, linux-doc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
+Subject: Re: [PATCH 18/26] mm/memblock: Add MEMBLOCK_INSPECT flag
+Message-ID: <aVlsqdgXSBLIE9Xi@kernel.org>
+References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+ <20251119154427.1033475-19-eugen.hristev@linaro.org>
+ <aVImIneFgOngYdSn@kernel.org>
+ <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251223-i2c-adap-dev-config-v1-0-4829b1cf0834@oss.qualcomm.com> <20251223-i2c-adap-dev-config-v1-11-4829b1cf0834@oss.qualcomm.com>
-In-Reply-To: <20251223-i2c-adap-dev-config-v1-11-4829b1cf0834@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Sat, 3 Jan 2026 20:04:47 +0100
-X-Gmail-Original-Message-ID: <CAD++jLn+vWZ=BrHEcYLDVKkOjt8W7NcVziYgFkeyoC7ZBYHOWw@mail.gmail.com>
-X-Gm-Features: AQt7F2o3USLd11IPN75yO0DWWTRzw0lHx5hiKCrp6xftEOAkEo84jaNFImuzgt4
-Message-ID: <CAD++jLn+vWZ=BrHEcYLDVKkOjt8W7NcVziYgFkeyoC7ZBYHOWw@mail.gmail.com>
-Subject: Re: [PATCH 11/12] i2c: nomadik: set device parent and of_node through
- the adapter struct
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, 
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, Andi Shyti <andi.shyti@kernel.org>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Vignesh R <vigneshr@ti.com>, 
-	Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
-	Tony Lindgren <tony@atomide.com>, Andreas Kemnade <andreas@kemnade.info>, 
-	Kevin Hilman <khilman@baylibre.com>, Roger Quadros <rogerq@kernel.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Patrice Chotard <patrice.chotard@foss.st.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, 
-	linux-rpi-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
 
-On Tue, Dec 23, 2025 at 11:05=E2=80=AFAM Bartosz Golaszewski
-<bartosz.golaszewski@oss.qualcomm.com> wrote:
+On Sat, Jan 03, 2026 at 08:36:40AM +0200, Eugen Hristev wrote:
+> 
+> 
+> On 12/29/25 08:56, Mike Rapoport wrote:
+> > Hi Eugen,
+> > 
+> > On Wed, Nov 19, 2025 at 05:44:19PM +0200, Eugen Hristev wrote:
+> >> This memblock flag indicates that a specific block is registered
+> >> into an inspection table.
+> >> The block can be marked for inspection using memblock_mark_inspect()
+> >> and cleared with memblock_clear_inspect()
+> > 
+> > Can you explain why memblock should treat memory registered for inspection
+> > differently?
+> 
+> It should not, at a first glance.
+> 
+> The purpose of the flag is to let memblock be aware of it.
+> The flag is there to have a "memblock way" of registering the memory,
+> which inside memblock , it can translate to a meminspect way of
+> registering the memory. It's just an extra layer on top of meminspect.
+> With this, it would be avoided to call meminspect all over the places it
+> would be required, but rather use the memblock API.
 
-> Configure the parent device and the OF-node using dedicated fields in
-> struct i2c_adapter and avoid dereferencing the internal struct device.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+memblock APIs are not available after boot on many architectures, most
+notable being x86.
 
-Provided the overall concept is deemed sound:
-Acked-by: Linus Walleij <linusw@kernel.org>
+But regardless, I can't say I understand why using memblock APIs for
+meminspect is better than using meminspect directly.
+I'd imagine that using meminspect register APIs would actually make it more
+consistent and it would be easier to identify what memory is registered
+with meminspect.
 
-Yours,
-Linus Walleij
+In the end, memblock_alloc*() returns dynamically allocated memory, just
+like kmalloc(), the difference is that memblock is active very early at
+boot and disappears after core MM initialization.
+
+> And further, inside memblock, it would be a single point where
+> meminspect can be disabled (while preserving a no-op memblock flag), or
+> easily changed to another API if needed.
+> Ofcourse, one can call here directly the meminspect API if this is desired.
+> Do you think it would be better to have it this way ?
+> 
+> Thanks for looking into it,
+> Eugen
+
+-- 
+Sincerely yours,
+Mike.
 
