@@ -1,185 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-87290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26EE2CEFB87
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 06:57:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC733CEFBCA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 07:36:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7AD3F3015105
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 05:57:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 18D95300B2AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 06:36:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 231F42741B6;
-	Sat,  3 Jan 2026 05:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DE522DFA5;
+	Sat,  3 Jan 2026 06:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZggmQhCQ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NOlcxBaX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JrbvOruB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388752405ED
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 05:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8471F8691
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 06:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767419854; cv=none; b=Q4NQrJL2fIHF36BWGwcRCNuEyQK6jclfn7VaiC3XPLi39Tn8x/jtqjBlVMFwZokG1yLaAT5Fsuwn8Tf1IXBpSTqIf1blxTxUBvlIl3/K3Ndu7+oopnpVBxjkmJzOgd0ZreAzy/zJk8YDg6z9q4Mbklb+7bwK2X107LQFgLU/bt4=
+	t=1767422216; cv=none; b=toStEu0TZhtNdQgKRs0l4KMylYOxL8riJy++ZeqS4FaSTdxPUS9K/+vptCa3To1SgiFR0svXzzAGLvJRpsrFWXpLno8GALM5kWqa+/77wR7XJR/ZyZ3V02E6EXkFoj//QwkEjEizwZKU6Wl+Qrrh/DMRdELAs4AdmPT7xPO1ESM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767419854; c=relaxed/simple;
-	bh=2pAbQ7vKfrqSqpvKuGBPoFyWbimAgVMkbmR4XRUDqZc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aTd2HtfmNqCGPrF0Q0o5owWh1Lq56bJEia4OZI8ObPcoqn2CrOV0PkAQT0i52JHB80onIUaQiKwVFhO+WFDTCj+P1EAqC319WImMr2y+zV5e6hxSAjxmqujesFGm7SmwqT5nL5K1CJyvO61G1SK3iSCFOZirLsla+sqKtrsAuyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZggmQhCQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NOlcxBaX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6033jkY13013779
-	for <linux-arm-msm@vger.kernel.org>; Sat, 3 Jan 2026 05:57:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	L2wPt/bh0eDEJhclxcj9TAW/aPcYy5+cyfmqyWSjfD0=; b=ZggmQhCQbkrPJS/C
-	804V7SE9FcYCV/aFIknFLRSE4v8Dt16X7M6cxB/Gq7rgVLpbVHJUGMjCBriLpjHU
-	Aqa6OeEeWE7IyyKHuCuwXX1p1lMEaiyXGbEhDuirLYxbz8AeTr3c0qX15tYSmVYZ
-	d1t5NhT18vM/KHdkaO7qrT7XN493F0faIUcpEbMutqQB3T64kEhv1f3IX74+Ll3o
-	q81JJ/iCF3IN66GXiIUwgVYQtB56phMAgV+ShjqXzeIUtVl+VGQMnLUW6t33Ljjb
-	yM78BA9SEnBf3qrI9ZzdBKyZEqz0ozlDzoyPziLxO6pJxtDBJaTzc28ZgSijaJR0
-	KByr0g==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4beug6r4r1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jan 2026 05:57:31 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-34e5a9de94bso27361909a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 21:57:30 -0800 (PST)
+	s=arc-20240116; t=1767422216; c=relaxed/simple;
+	bh=GcSJTsIdgVF1gHPqEGPZ9hEjZebFvNeOtsDBF78oZCo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lcYIEVInYXomZFMR2aacHyhjrUs6J3nONz6NSoGc10v568dK5KkjY+MRxCuyf8p1/hax0reUYVrvOPVtLlBYzOJmp6kOKZ/s5LfM7lmeoo7WAeZvLVPb0wjS9k73mRpC4KNvKx/GSmPIrkuXt9DqNivyr+ils+bPlWRpKA5K4Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JrbvOruB; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7b8bbf16b71so12712781b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jan 2026 22:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767419850; x=1768024650; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L2wPt/bh0eDEJhclxcj9TAW/aPcYy5+cyfmqyWSjfD0=;
-        b=NOlcxBaXmKwfj3rANUW7E43230Xp8D2XxkAwljpgDcP6PxDhJBcLKXK58vq65+eC9T
-         XeKsxHBZv9m7wAPBKVB2eL+aTsMETSC/Wsoqtc5N3gIrS0aHtanVnjWE/NmtnMEAR159
-         wFRNbeluFN4MudkRhgAYVXuufWSD3uQH9izYHbDbvJOMSCi3nC/3GEzZGoAcwegXwo+p
-         BUHIjxHCxcxpJgQQRhKZ2nZQ2IKye7B8qhEIj0MhNV8pGeulJoLfv23C5Bbr7hVEuaCQ
-         d5R+qwg48j5sn6liJc5DHArbpfcJJ8La/JOF5UEWHAFcoNUb3YJ6ih3zad+wPvUPpjhE
-         5rvQ==
+        d=linaro.org; s=google; t=1767422213; x=1768027013; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n009qAjQa1f/gx1JlFPWaK6vp1HVpsaalQe/6LgsF9o=;
+        b=JrbvOruBrh8lmpIc7RX7dnszwqV0ZJvn2pS9G1dhEGqecM0sSS3ZzGk6+hKHsts9eB
+         C+xP39BkTmzg9evARoi3qoeyq8kZMHZqd11kFj5vYzUOT0YJlcQikJy2h7RKXFZNKe3T
+         YA4iYlXRVO/irzy+dZLvgkPjRdXcBD3JIEuQylFoThLU8A12V6+ye6KnIIi1SNK9/Byp
+         J7VpDq0SiCBMqmX/Lf2+mbyUNhsDSVuZ6CZxv6A9v1EHFBfLjQ/ucuQHQAJP520mcf/3
+         PT2WniBjQ4BN4bXjevPkvTcKpkcc0kRPT/749qf5ZqeYp4MwFJGf0D6Uqv1P6oFi6lTM
+         41CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767419850; x=1768024650;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=L2wPt/bh0eDEJhclxcj9TAW/aPcYy5+cyfmqyWSjfD0=;
-        b=J1cAaNhPqfixNb/OR3HZXoRPwXYmmOSRkAzKIe3hdh533JkKcSm53/Or/F7tTfXWXT
-         LwdNoKMzAyK/1EX2daPNOqmj98IY1iV01irGgLo/rUkw3KnYv1h3njACUZLFwzrQEbqk
-         03+B56AjedmdM2bBYucu/gFNhtaOd//s+2YVR4JKLfKszf8QzuWCODKmb46PsxaWKQZW
-         uQuWBRkG/01wvuGV2V/7GhZZjn7bjUopPyhVXC2lc5Y9JlYwU6jKDXSB/5roPz0FFg5i
-         YeYNQKuot3RZHOKgHBKq/q/eQ6+eMyss2kGL3am5X2j4BezFAGlROPMKMBb0ESbzGWVu
-         1OAg==
-X-Forwarded-Encrypted: i=1; AJvYcCXnpHqXYgCliHXh4j5J0W8hLbs6fT3ROHoC/vXyN1EFZ0ZZTGUUh01E++EzFnkMxzAhww338aRiVatKmvyD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCL1uliGGzvBql7jfKegLEC9WUcQHR03SvnZ65yerXlQ/6Forl
-	YYVMBHbZvCsigLD+wQLBWaehHDTOpT24cl3LC9jhtTRRVdO1NM7g07roodMJ1U1Dat+EV+1/jar
-	skf0Y78loAEgyU1H0l+7d5aMj2zY27ypky7I8jJQCOrtDPjc6WRdMaXlYmtngBFlKsWsM
-X-Gm-Gg: AY/fxX44v8GM/QYJZFC63Vp9aRC0JAKd8My/TWRBTDE6tJrMW44jVTsC7mBLRcXeyIx
-	Yn620EjS3vRlOM6HWAPJqNp7LJsQsQXQ5JQHQah7BXBcfTxRUNaGEDEkv5d6AzvzoZHHVtGHMPi
-	wIPQopF72skecQvLNBFE+e70FCnorv1K8fRgtO79KDtTrH2akSe0cC9JJlvOps7/krXcwb34XRl
-	vpMQHjyOMqF1H75CvciWNMqxIISEYupQDTQ4uFrcEfv1r7NcwPam+HlkKLa/07W17w0W81yBEGO
-	O9lIfrmeKp75iz2/FrbqCv9MnFfvEfUCgsZpJmcTmhwfdBWK27GcyhQ/LeJ845oS3cK+zwALkKg
-	uAID3LnMkPM386ciwTls2U5qRCK7gW6hJVQ==
-X-Received: by 2002:a17:90b:2e08:b0:340:ad5e:ca with SMTP id 98e67ed59e1d1-34e92139e3amr39340772a91.12.1767419850113;
-        Fri, 02 Jan 2026 21:57:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEpcCg9fX+H0Pn+w+Tps8ZXvwhpB5foLwu3uwOPMtZE7QA+g21xkYFtg/YbNaZowr2UC0nDaw==
-X-Received: by 2002:a17:90b:2e08:b0:340:ad5e:ca with SMTP id 98e67ed59e1d1-34e92139e3amr39340751a91.12.1767419849639;
-        Fri, 02 Jan 2026 21:57:29 -0800 (PST)
-Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f475f1726sm754760a91.4.2026.01.02.21.57.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jan 2026 21:57:28 -0800 (PST)
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-Date: Sat, 03 Jan 2026 11:27:07 +0530
-Subject: [PATCH v2 3/3] arm64: dts: qcom: hamoa: Extend the gcc input clock
- list
+        d=1e100.net; s=20230601; t=1767422213; x=1768027013;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n009qAjQa1f/gx1JlFPWaK6vp1HVpsaalQe/6LgsF9o=;
+        b=bOJkWynLWEwTcUSK2OM+bvUbBM6n3s9xKuYlsPsWKdOb1hoJ0wYUqlyBDJp7jtLh9h
+         PNaorEyO1vOL6Yuy33WI4ih7eTFM9j47a3CkLNKKqmnIhlquoZGfM1fMqJYDPoKVWALV
+         DRiXMrl1Nh9Kk4Aqcna266qyD3Wgt4dlLNSNpPx+W38TzwSJGFM4SqBja8zXz6JYRMIA
+         NhSah4y6F3IddNxmJNWFIh+VLVj/43f/d4QelxF2stjxDtyvax3IAf+OJWpJn/efwJND
+         8sfifHINnj+o7O0PMf0o0Wr3ihyGTawsTENfIH0uj081z3zol7zatrV1FBb0EFkQFGzr
+         QE8A==
+X-Gm-Message-State: AOJu0Yw4TWrdPyE637rSSN1bLOwNc2yuW2Y/KK2UQ09atZ1QEagobFc7
+	L7lSnDEKMh5WpYc6k4M+GjTOOlBdJEdYrOKjShPA5C9ZgCzqjZnKCGwdvpBa6ZPaaW0=
+X-Gm-Gg: AY/fxX7ifBwlljYxll/dskFK8hqpPSJdr+zy0c3zKYIGT3qU8HxCaKJONSRN9MLWkgv
+	dYuZLa/BRg4G+/9H1UqlbQUECIYaBHzNnelOlW4nk8Wl7nQ4pwzYV+mvSNNtAxLSG5rH53fajrl
+	yhPbWWuk6rjY5v3yH08/UmH5zPD7axBDGGeaHGIzG9mWs+7y9k4z3dKpDL4jgKB7/2E9K5MvO2A
+	ABv9xJgBwvgGje7JlyXVKDpbCezaI4LZclhVmBoBY3sZxkkd/Qq+kWb6bOP/n1TrOhLC+V/tX2/
+	KEGDo1XT7F55LwCp95tYoqZNs7TnXBOaQvSYKU9iAdw/BWWhXNX/2ZD6HkkCDdftUii462uaqbg
+	I5m75cPykV4nzct3lqUTreUR+DjD097vUJk3sh1c2+3a7DvHk3p2Sq/lJftwjZwjO5Qm4EKYydG
+	718i2FnuAmhqNoZEm+ZfeXEi18oQ7/4eFpjS/knpbbwzUPBQzjTJFX8IG/lWcqEm76
+X-Google-Smtp-Source: AGHT+IFjVDKmB/xNuLtQKRYfU/ITUXwxCDRtTDnOfIZDb5jRoUr7iNoQ0th445p4ZZcSbNCPgjHtMA==
+X-Received: by 2002:a05:6a00:140f:b0:807:c2b9:38ec with SMTP id d2e1a72fcca58-807c2b93f63mr22110230b3a.15.1767422213430;
+        Fri, 02 Jan 2026 22:36:53 -0800 (PST)
+Received: from ?IPV6:2405:6e00:642:d187:9f0f:f4ff:8fd1:e7bf? ([2405:6e00:642:d187:9f0f:f4ff:8fd1:e7bf])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7e0a2e3esm41753812b3a.37.2026.01.02.22.36.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Jan 2026 22:36:52 -0800 (PST)
+Message-ID: <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
+Date: Sat, 3 Jan 2026 08:36:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/26] mm/memblock: Add MEMBLOCK_INSPECT flag
+To: Mike Rapoport <rppt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+ mhocko@suse.com, tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
+References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
+ <20251119154427.1033475-19-eugen.hristev@linaro.org>
+ <aVImIneFgOngYdSn@kernel.org>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+Content-Language: en-US
+In-Reply-To: <aVImIneFgOngYdSn@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260103-ufs_symbol_clk-v2-3-51828cc76236@oss.qualcomm.com>
-References: <20260103-ufs_symbol_clk-v2-0-51828cc76236@oss.qualcomm.com>
-In-Reply-To: <20260103-ufs_symbol_clk-v2-0-51828cc76236@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Abel Vesa <abelvesa@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-aa3f6
-X-Proofpoint-GUID: Bqw4HQz3cmgNPm5esQCT10rBnfIiH-Z2
-X-Authority-Analysis: v=2.4 cv=P6Y3RyAu c=1 sm=1 tr=0 ts=6958afcb cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=us8TmX896EGkFYs_XRIA:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: Bqw4HQz3cmgNPm5esQCT10rBnfIiH-Z2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAzMDA1MiBTYWx0ZWRfX8rpEUREeKdoc
- IGTMC/iygOqfUQSbNlumOEx9m2njBAe5wn4iWsEctSD+qKM+1tbQbsPfPPQ9ea8LfrNexT02WXu
- Gh5cgv16ixmkPuAlajAEipTmvV/aUzJGHw1h5AZ5ILkEikHK08T0QTOWqoUQPbUrMQONUfLQi1Z
- kHf3Bx6SnR7D8rOYlMswJdPTVJtEEp5vmjugFiMQFjlIAIY1fmiVS2OBzaUYIDiYiKXnJNj1Tx1
- wGZ9+7dYjcWh1vcCcD9HEhb1L04gKc2MlssQVp3i+dzGHTa6x/jCH1rUaGJnkIDZWGOWxGoas/z
- sWpa/hd8IUFDYnHUP3yKDShvUBlN8Zy1vybEqYe/8Df4D+rPzp1RKoizW+isPOk4lGJAzycT3Pd
- aZYGTH6UDIYYTYiZS94fUSaVMBXHpBeKE9f818PhQI6VeTQbpmKY9XYgO4G2R7DvEPa6AT7KTnf
- 0uH6jrjuA9EFyB8h8sg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-02_04,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 malwarescore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601030052
 
-The recent dt-bindings were updated for the missing RX/TX symbol clocks
-for UFS.
 
-Extend the existing list to make sure the DT contains the expected
-amount of 'clocks' entries.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/hamoa.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+On 12/29/25 08:56, Mike Rapoport wrote:
+> Hi Eugen,
+> 
+> On Wed, Nov 19, 2025 at 05:44:19PM +0200, Eugen Hristev wrote:
+>> This memblock flag indicates that a specific block is registered
+>> into an inspection table.
+>> The block can be marked for inspection using memblock_mark_inspect()
+>> and cleared with memblock_clear_inspect()
+> 
+> Can you explain why memblock should treat memory registered for inspection
+> differently?
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-index bb7c14d473c9c523e1501f9379ee7049c6287e96..21ab6ef61520695d977f9d741ce633cf537171ac 100644
---- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-@@ -834,6 +834,9 @@ gcc: clock-controller@100000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
-+				 <0>,
-+				 <0>,
-+				 <0>,
- 				 <0>;
- 
- 			power-domains = <&rpmhpd RPMHPD_CX>;
+It should not, at a first glance.
 
--- 
-2.34.1
+The purpose of the flag is to let memblock be aware of it.
+The flag is there to have a "memblock way" of registering the memory,
+which inside memblock , it can translate to a meminspect way of
+registering the memory. It's just an extra layer on top of meminspect.
+With this, it would be avoided to call meminspect all over the places it
+would be required, but rather use the memblock API.
+And further, inside memblock, it would be a single point where
+meminspect can be disabled (while preserving a no-op memblock flag), or
+easily changed to another API if needed.
+Ofcourse, one can call here directly the meminspect API if this is desired.
+Do you think it would be better to have it this way ?
+
+Thanks for looking into it,
+Eugen
+
+
+> 
+>> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+>> ---
+>>  include/linux/memblock.h |  7 +++++++
+>>  mm/memblock.c            | 36 ++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 43 insertions(+)
+>>
+>> diff --git a/include/linux/memblock.h b/include/linux/memblock.h
+>> index 221118b5a16e..c3e55a4475cf 100644
+>> --- a/include/linux/memblock.h
+>> +++ b/include/linux/memblock.h
+>> @@ -51,6 +51,10 @@ extern unsigned long long max_possible_pfn;
+>>   * memory reservations yet, so we get scratch memory from the previous
+>>   * kernel that we know is good to use. It is the only memory that
+>>   * allocations may happen from in this phase.
+>> + * @MEMBLOCK_INSPECT: memory region is annotated in kernel memory inspection
+>> + * table. This means a dedicated entry will be created for this region which
+>> + * will contain the memory's address and size. This allows kernel inspectors
+>> + * to retrieve the memory.
+>>   */
+>>  enum memblock_flags {
+>>  	MEMBLOCK_NONE		= 0x0,	/* No special request */
+>> @@ -61,6 +65,7 @@ enum memblock_flags {
+>>  	MEMBLOCK_RSRV_NOINIT	= 0x10,	/* don't initialize struct pages */
+>>  	MEMBLOCK_RSRV_KERN	= 0x20,	/* memory reserved for kernel use */
+>>  	MEMBLOCK_KHO_SCRATCH	= 0x40,	/* scratch memory for kexec handover */
+>> +	MEMBLOCK_INSPECT	= 0x80,	/* memory selected for kernel inspection */
+>>  };
+>>  
+>>  /**
+>> @@ -149,6 +154,8 @@ unsigned long memblock_addrs_overlap(phys_addr_t base1, phys_addr_t size1,
+>>  bool memblock_overlaps_region(struct memblock_type *type,
+>>  			      phys_addr_t base, phys_addr_t size);
+>>  bool memblock_validate_numa_coverage(unsigned long threshold_bytes);
+>> +int memblock_mark_inspect(phys_addr_t base, phys_addr_t size);
+>> +int memblock_clear_inspect(phys_addr_t base, phys_addr_t size);
+>>  int memblock_mark_hotplug(phys_addr_t base, phys_addr_t size);
+>>  int memblock_clear_hotplug(phys_addr_t base, phys_addr_t size);
+>>  int memblock_mark_mirror(phys_addr_t base, phys_addr_t size);
+>> diff --git a/mm/memblock.c b/mm/memblock.c
+>> index e23e16618e9b..a5df5ab286e5 100644
+>> --- a/mm/memblock.c
+>> +++ b/mm/memblock.c
+>> @@ -17,6 +17,7 @@
+>>  #include <linux/seq_file.h>
+>>  #include <linux/memblock.h>
+>>  #include <linux/mutex.h>
+>> +#include <linux/meminspect.h>
+>>  
+>>  #ifdef CONFIG_KEXEC_HANDOVER
+>>  #include <linux/libfdt.h>
+>> @@ -1016,6 +1017,40 @@ static int __init_memblock memblock_setclr_flag(struct memblock_type *type,
+>>  	return 0;
+>>  }
+>>  
+>> +/**
+>> + * memblock_mark_inspect - Mark inspectable memory with flag MEMBLOCK_INSPECT.
+>> + * @base: the base phys addr of the region
+>> + * @size: the size of the region
+>> + *
+>> + * Return: 0 on success, -errno on failure.
+>> + */
+>> +int __init_memblock memblock_mark_inspect(phys_addr_t base, phys_addr_t size)
+>> +{
+>> +	int ret;
+>> +
+>> +	ret = memblock_setclr_flag(&memblock.memory, base, size, 1, MEMBLOCK_INSPECT);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	meminspect_lock_register_pa(base, size);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +/**
+>> + * memblock_clear_inspect - Clear flag MEMBLOCK_INSPECT for a specified region.
+>> + * @base: the base phys addr of the region
+>> + * @size: the size of the region
+>> + *
+>> + * Return: 0 on success, -errno on failure.
+>> + */
+>> +int __init_memblock memblock_clear_inspect(phys_addr_t base, phys_addr_t size)
+>> +{
+>> +	meminspect_lock_unregister_pa(base, size);
+>> +
+>> +	return memblock_setclr_flag(&memblock.memory, base, size, 0, MEMBLOCK_INSPECT);
+>> +}
+>> +
+>>  /**
+>>   * memblock_mark_hotplug - Mark hotpluggable memory with flag MEMBLOCK_HOTPLUG.
+>>   * @base: the base phys addr of the region
+>> @@ -2704,6 +2739,7 @@ static const char * const flagname[] = {
+>>  	[ilog2(MEMBLOCK_RSRV_NOINIT)] = "RSV_NIT",
+>>  	[ilog2(MEMBLOCK_RSRV_KERN)] = "RSV_KERN",
+>>  	[ilog2(MEMBLOCK_KHO_SCRATCH)] = "KHO_SCRATCH",
+>> +	[ilog2(MEMBLOCK_INSPECT)] = "INSPECT",
+>>  };
+>>  
+>>  static int memblock_debug_show(struct seq_file *m, void *private)
+>> -- 
+>> 2.43.0
+>>
+> 
 
 
