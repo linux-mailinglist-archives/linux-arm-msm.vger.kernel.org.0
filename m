@@ -1,131 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-87306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB44ACF0091
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 15:04:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81F16CF014E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 15:56:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C439C30155E9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 14:04:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DDB5F300EE43
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 14:56:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36AFA29AAE3;
-	Sat,  3 Jan 2026 14:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA29130BF69;
+	Sat,  3 Jan 2026 14:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZyCPuDYE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j2Yh5lya"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B862236E8;
-	Sat,  3 Jan 2026 14:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728983FF1;
+	Sat,  3 Jan 2026 14:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767449067; cv=none; b=m2KKSw16X2lAwQJk5lJf6Ch/VUS7wA5qI+2xk1n6LDagvdoSuOcq1q2hmR/9TMflr5K8HZDw4he+qXnfUViO/rJmsVo1SYpVNXNkKOjSousnqtVC7E5YLWSbsUkxxHlalZ8b4CB7ASIAr+9QTxuQv7zYxbBBqwCBKRkCXD2wZ9E=
+	t=1767452192; cv=none; b=iZL2PObFzPD0fM55PwAeT7xOPBTa4msMp4VruLKgeWRYFZHSgicQZaKqrOqFxvtBLOJcGmDk2rQQn94W5eaPY3Rfx5z7corm/QpXq1N9XJWnldzJ2zH/m8AaHhg6Akvn2Y1Ftp7/m+gdzcfngXM/6+8aTzwTx959o/ELeSnzA6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767449067; c=relaxed/simple;
-	bh=syKu65UAaIGDJS4fMnnR8hxOJACzJd2yCnXi+ctXt0Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pQBBJnfgvog2MMbeMXcZjog6l7A4K3rIgununzahjOnibzTVgDdQcaE91G0jU7ogoQvw6jBBSWnsZ5DBKwa1HywqFZ7wbLLSpPa/otYInPUZ0/H/qGPFRdEwlgSE4saDHO5zQS4nTb7wtHL1Qyko+2Aiqpot6vaqNyOGgI6F6H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZyCPuDYE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F90C113D0;
-	Sat,  3 Jan 2026 14:04:22 +0000 (UTC)
+	s=arc-20240116; t=1767452192; c=relaxed/simple;
+	bh=x2QN1I4wepPchqVnDuJiY1AyTZaeb/D3c4nw1BGU+Zg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EXD8T7EutF6PAtQjsIc0cy+QJOJPF80QQkENKoRzM3GzARARmaNxdvkDCLmqgjsQQQThQWGSz2xgDW4AgkBgY2wjn4CNfv5PXJKQ+CzxUqDvStJLtgrh4aZzLWHZ//rkc4oZR7LBBl0oRlyjA7STfOPEuUCh8ArAvwbipEMBouI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j2Yh5lya; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019F6C113D0;
+	Sat,  3 Jan 2026 14:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767449066;
-	bh=syKu65UAaIGDJS4fMnnR8hxOJACzJd2yCnXi+ctXt0Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZyCPuDYEHl2uogK0wSMUra/m/NoBsltB3jyk0V6mWfQQKv731Q8VE8nZl9dqTxBIq
-	 FIPlnDm734Es3EMeoKn8+rQgTTqYOIDq+PJhzeKcm0ECXUqepkpsNfdb8fkNnSIZnN
-	 flMwk6dAs5lz2PG0OKG9bXBntEdI7qaB16FZJ5/MKa7QybW+5RbhxHCM7u/WewzvO0
-	 +5kAX9vb9wFzsFFqhJubPtu8cTC7/uDhj8DFTpG7eK3+FsAhgBa9oUF8NlluZ6/RF/
-	 7tR1QtV/qnUCkm0WdkGhnQ1ZCPLappsF2lzpj0KYBdtRuwoalEL3D6p1LvJ9CftPnx
-	 ld7ghLGQ9yFFg==
-Message-ID: <2cef182c-b96c-4403-8a13-4eef6293d812@kernel.org>
-Date: Sat, 3 Jan 2026 15:04:20 +0100
+	s=k20201202; t=1767452192;
+	bh=x2QN1I4wepPchqVnDuJiY1AyTZaeb/D3c4nw1BGU+Zg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j2Yh5lya7TE0mR+nRdKnEqfkYGsNTvxJu5vljye/vREK0/v7Y31scMSRR4ldBC/Ww
+	 32VdwyzdqEsyL7FayJjUhQHgmR6MYCvIiSNw6+/XwT+PRVw9C55CRdUyICMq3/e3iZ
+	 44GpLdnVapZpz0g2pnPPYGFRhwy2vq5Vbhhg9uwynynu+8z9MuC7nbsZON+qOHYA4S
+	 IiTKDsYNDvkbAamvpQHRKO8mU4aCuUK6ujBld8lmkbARZpnU+ecJDdPZEwoi/ogaRS
+	 NJ59/vtrVsC730X6ovaheh52g/b/AuQGPlO9EqfBAHCSfi6nU4ev0pJAFeuNuOBJZ3
+	 nJiIbAzFVrZrQ==
+Date: Sat, 3 Jan 2026 08:56:27 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, rafael@kernel.org, daniel.lezcano@linaro.org, 
+	rui.zhang@intel.com, lukasz.luba@arm.com, konradybcio@kernel.org, amitk@kernel.org, 
+	mani@kernel.org, casey.connolly@linaro.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v1 2/8] remoteproc: qcom: probe all child devices
+Message-ID: <evb5tn2cht7wk76fuc2wpsyxepknigfw37633n6ypuapstbceh@tn5glmi65bdv>
+References: <20251223123227.1317244-1-gaurav.kohli@oss.qualcomm.com>
+ <20251223123227.1317244-3-gaurav.kohli@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom,x1e80100-gcc: Add missing
- UFS mux clocks
-To: Taniya Das <taniya.das@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>,
- Abel Vesa <abelvesa@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
- Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
-References: <20260103-ufs_symbol_clk-v2-0-51828cc76236@oss.qualcomm.com>
- <20260103-ufs_symbol_clk-v2-1-51828cc76236@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260103-ufs_symbol_clk-v2-1-51828cc76236@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251223123227.1317244-3-gaurav.kohli@oss.qualcomm.com>
 
-On 03/01/2026 06:57, Taniya Das wrote:
-> Add some of the UFS symbol rx/tx muxes were not initially described.
+On Tue, Dec 23, 2025 at 06:02:21PM +0530, Gaurav Kohli wrote:
+> From: Casey Connolly <casey.connolly@linaro.org>
 > 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Generalise the qcom,bam-dmux child node support by probing all
+> remoteproc children with of_platform_populate(). This will be used to
+> enable support for devices which are best represented as subnodes of the
+> remoteproc, such as those representing QMI clients.
+
+Please flip this around, start with the description of the problem
+you're trying to solve.
+
+> 
+> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+
+This must have your signed-off-by, where you certifies the origin of
+this patch.
+
 > ---
+>  drivers/remoteproc/qcom_q6v5.c     | 4 ++++
+>  drivers/remoteproc/qcom_q6v5_mss.c | 8 --------
+>  2 files changed, 4 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+> index 58d5b85e58cd..a02839c7ed8c 100644
+> --- a/drivers/remoteproc/qcom_q6v5.c
+> +++ b/drivers/remoteproc/qcom_q6v5.c
+> @@ -6,6 +6,7 @@
+>   * Copyright (C) 2014 Sony Mobile Communications AB
+>   * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+>   */
+> +#include <linux/of_platform.h>
+>  #include <linux/kernel.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/interconnect.h>
+> @@ -351,6 +352,8 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+>  		return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
+>  				     "failed to acquire interconnect path\n");
+>  
+> +	of_platform_populate(q6v5->dev->of_node, NULL, NULL, q6v5->dev);
 
+There are other child nodes here, in particular the GLINK and SMD edges.
+Do we really want platform_devices registered for them?
 
+Regards,
+Bjorn
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
+> +
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_q6v5_init);
+> @@ -361,6 +364,7 @@ EXPORT_SYMBOL_GPL(qcom_q6v5_init);
+>   */
+>  void qcom_q6v5_deinit(struct qcom_q6v5 *q6v5)
+>  {
+> +	of_platform_depopulate(q6v5->dev);
+>  	qmp_put(q6v5->qmp);
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_q6v5_deinit);
+> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> index 91940977ca89..d40565c1cc62 100644
+> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> @@ -238,7 +238,6 @@ struct q6v5 {
+>  	struct qcom_rproc_pdm pdm_subdev;
+>  	struct qcom_rproc_ssr ssr_subdev;
+>  	struct qcom_sysmon *sysmon;
+> -	struct platform_device *bam_dmux;
+>  	bool need_mem_protection;
+>  	bool has_alt_reset;
+>  	bool has_mba_logs;
+> @@ -2029,7 +2028,6 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+>  static int q6v5_probe(struct platform_device *pdev)
+>  {
+>  	const struct rproc_hexagon_res *desc;
+> -	struct device_node *node;
+>  	struct q6v5 *qproc;
+>  	struct rproc *rproc;
+>  	const char *mba_image;
+> @@ -2163,10 +2161,6 @@ static int q6v5_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto remove_sysmon_subdev;
+>  
+> -	node = of_get_compatible_child(pdev->dev.of_node, "qcom,bam-dmux");
+> -	qproc->bam_dmux = of_platform_device_create(node, NULL, &pdev->dev);
+> -	of_node_put(node);
+> -
+>  	return 0;
+>  
+>  remove_sysmon_subdev:
+> @@ -2186,8 +2180,6 @@ static void q6v5_remove(struct platform_device *pdev)
+>  	struct q6v5 *qproc = platform_get_drvdata(pdev);
+>  	struct rproc *rproc = qproc->rproc;
+>  
+> -	if (qproc->bam_dmux)
+> -		of_platform_device_destroy(&qproc->bam_dmux->dev, NULL);
+>  	rproc_del(rproc);
+>  
+>  	qcom_q6v5_deinit(&qproc->q6v5);
+> -- 
+> 2.34.1
+> 
 
