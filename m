@@ -1,119 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-87334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C906CF04E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 20:23:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 481EACF0708
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 04 Jan 2026 00:29:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 50C8D300913D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 19:23:36 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 29C13300647E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 23:29:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856C725F994;
-	Sat,  3 Jan 2026 19:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7B1F28D82A;
+	Sat,  3 Jan 2026 23:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngReHhb0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9U15b9R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E01217C220;
-	Sat,  3 Jan 2026 19:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25981F09A3
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 23:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767468213; cv=none; b=UEbgsCGgc2t5NAUK49yS96HjRNqKHXxpZXvW6jjqH1uVWSfR0cbZChlsmQSzVkwZKutLiW+TLXpQ8jgmj1dAnOTdsh1iriBcL9fzHjMTmsiyppW5e3EpDL6cCkykst4KKdUacgjOBIhQsW8Ms+0rBVKHlOFg7n6It9go4FWA3zs=
+	t=1767482981; cv=none; b=QQfNTGv5GGNkfQiTniGAHkBXUcohJmhKbiWPb320+htiA5h1mtPp8Ybys1fRojBYKTbkISiSrVNb5mgfzr49casxNOLYTdo1WVsj7OqkASXwRijU+iYVH91SnIqS0B37m2JDEWhgrlKgR0YATLe+ot+FAVKFw00krLS5z/wuTME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767468213; c=relaxed/simple;
-	bh=kFPBzT8l+WwHu+3My5hbLBVwoqHKka5P/1LTiFfRdf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pzef/c9M9RvuBIT9wjPtea1Itbkds1prcCftI0SZfP9fEK04e9XMakl31fZLe0XCN0VJUtJQZ4AB9X9e60Ysh/9leNbnDw+1oDQCEiuzkiRlX5qhfW139hxXTvyliPQZNquYEGpVbmJIS4Li1IPlZ9AP0vEj74E0dEWD0/S+RQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngReHhb0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DA3C113D0;
-	Sat,  3 Jan 2026 19:23:24 +0000 (UTC)
+	s=arc-20240116; t=1767482981; c=relaxed/simple;
+	bh=yrlIZZmC5Lkf636QMdCK3gAWLqc/QTEizMpkoKTohjo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=I7g4XueHf0KX3nYzt73OBiFUr6/YGb/1ueRr7iENIsA1fHOoaRjJLE0Fm1aLAgHxQrb3xdHe4Cz3X7aydbm+eo823zzUNAIszIBSzRbLbL3FLji9/7D5l7z5FCwosqIp+YsEqMz1fE5HgtsWERJEPx7XqSHSx+M3Zx22qi03n0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9U15b9R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E30FC4AF0B;
+	Sat,  3 Jan 2026 23:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767468212;
-	bh=kFPBzT8l+WwHu+3My5hbLBVwoqHKka5P/1LTiFfRdf8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ngReHhb0xBx1x5fvYtOfgcpLEILzqu49lQW1bMb2wRc3+BW1vWJdoV/liivSukWbi
-	 Wr1u0+WC02baG/7qzxuTHFHic6PVnSamdiPxhEqTgA1S2pA1eqYyInnK8Yq7O5/pa1
-	 cl2RU6O4se6+wNz0wv5fa0sTosXv7JI6nHpQxOqCzUdzlR3V5lzLornbt5v4CC52Wv
-	 K6NU1UCrStxzBWELoCL6XaOEUwgpoF1/dezzddv3CKdw8etbedWu0aGGeJ5bgKxD0h
-	 Hx+Y7xYCdQlhaa0yCF5YVhge9J70WfDqFLK3pVNIX1+38Kw2MCSO0IgV/T3FqAtpNA
-	 9fVyAIlQ2ZFFg==
-Date: Sat, 3 Jan 2026 21:23:21 +0200
-From: Mike Rapoport <rppt@kernel.org>
-To: Eugen Hristev <eugen.hristev@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
-	pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net,
-	david@redhat.com, mhocko@suse.com, tudor.ambarus@linaro.org,
-	mukesh.ojha@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
-	linux-hardening@vger.kernel.org, jonechou@google.com,
-	rostedt@goodmis.org, linux-doc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
-Subject: Re: [PATCH 18/26] mm/memblock: Add MEMBLOCK_INSPECT flag
-Message-ID: <aVlsqdgXSBLIE9Xi@kernel.org>
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <20251119154427.1033475-19-eugen.hristev@linaro.org>
- <aVImIneFgOngYdSn@kernel.org>
- <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
+	s=k20201202; t=1767482981;
+	bh=yrlIZZmC5Lkf636QMdCK3gAWLqc/QTEizMpkoKTohjo=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=E9U15b9RxY6HTYs6wpRuWwsmCm4OU8ivllYcEyE2knOFNPiBusMUjUKDpZz6g2cs2
+	 60/u4xJvoMD9fO1XPikWOC6Td8bT8qpS0ZnDjvM9XoFfnIWQu3aPZNLVfZCv3JSu7v
+	 vNmBkg55lYvymbtUXxIg0vVaKerIC5AMKQ8ZyjRNcVYtGot3A72L1sMdczTc8gSrt7
+	 5YNfVDOH6fQV3uiSZbN1lkLXo7u67gTGl4i8kF81pfNJnbk5EUc3CH+sFc1nrlq403
+	 SwXAJdbQewUUPyaNeJIRp77912vc+uRumzuKe6nSZqGTgNUg+XBWVRtsEEyQa04zTj
+	 xodVamwZZpnZw==
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfauth.phl.internal (Postfix) with ESMTP id B831BF40069;
+	Sat,  3 Jan 2026 18:29:39 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-12.internal (MEProxy); Sat, 03 Jan 2026 18:29:39 -0500
+X-ME-Sender: <xms:Y6ZZaeesRuDLLoCJ67QcNN-RasOsGOFeJ3Vhg79_u5ZPi7alvY7DWw>
+    <xme:Y6ZZaTD88Y8d0pPH5o6dmhda915lkc3vzwY9TN8u_FPx3kHgpdw0x0u1lvM_PqwOV
+    1KioqlqL2qgwL-M1VaT7eBaRzewVdr6DoQNNA-jCFUgE_VRkTrELzE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelvdekiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfrrhgrthih
+    uhhshhcujggruggrvhdfuceophhrrghthihushhhsehkvghrnhgvlhdrohhrgheqnecugg
+    ftrfgrthhtvghrnheptdelledvjedtieduhfdtveefueejhffgteelieefffelveettdeg
+    veekhefhledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepmhgvodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqddugeejfedujedt
+    tdekqdeftddvleekfeeitddqphhrrghthihushhhpeepkhgvrhhnvghlrdhorhhgseihrg
+    gurghvphhrrghthihushhhrdgtohhmpdhnsggprhgtphhtthhopedvvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtvghfrghnsegrghhnvghrrdgthhdprhgtphhtth
+    hopehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhrtghpthhtohep
+    sggtmhdqkhgvrhhnvghlqdhfvggvuggsrggtkhdqlhhishhtsegsrhhorggutghomhdrtg
+    homhdprhgtphhtthhopehkrghmrghlrdgurghsuhessghrohgruggtohhmrdgtohhmpdhr
+    tghpthhtohepphgruhhlsegtrhgrphhouhhilhhlohhurdhnvghtpdhrtghpthhtoheptg
+    homhhpuhhtvghrshhfohhrphgvrggtvgesghhmrghilhdrtghomhdprhgtphhtthhopehh
+    rghrvhgvhihhuhhnthhnvgiguhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhhitg
+    hkrdguvghsrghulhhnihgvrhhsodhlkhhmlhesghhmrghilhdrtghomhdprhgtphhtthho
+    pehjuhhsthhinhhsthhithhtsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:Y6ZZaQ7mQXPQkcM4NvdmDqFOL812AD7VtG0uOOwUNuaOKuldo7cKrA>
+    <xmx:Y6ZZadcuuUbRXaECpqepJDIaKplrZbJZa4BxI7qZ0jPeNJOZS4zSTw>
+    <xmx:Y6ZZafe3HOucT5EYIwZCRjzwdVLXkIFe_j6Eoe9LeTskBgOVbqUp6A>
+    <xmx:Y6ZZaaExh7RtaodQZNUCVajs76K9DnvNnhTpsnGk-iPIQVV9lr1H6Q>
+    <xmx:Y6ZZaWHYvgqSjc0X8gGrH6Fx_Kfz73xdC9aa3PF1PZU_GL1Y392Hn-Qm>
+Feedback-ID: id4c94969:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8F3E63020061; Sat,  3 Jan 2026 18:29:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
+X-ThreadId: A8SErWKoyjPZ
+Date: Sun, 04 Jan 2026 00:28:48 +0100
+From: "Pratyush Yadav" <pratyush@kernel.org>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: "Brian Norris" <computersforpeace@gmail.com>,
+ "Kamal Dasu" <kamal.dasu@broadcom.com>,
+ "Broadcom internal kernel review list" <bcm-kernel-feedback-list@broadcom.com>,
+ "Miquel Raynal" <miquel.raynal@bootlin.com>,
+ "Richard Weinberger" <richard@nod.at>,
+ "Vignesh Raghavendra" <vigneshr@ti.com>,
+ "Harvey Hunt" <harveyhuntnexus@gmail.com>,
+ "Paul Cercueil" <paul@crapouillou.net>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Stefan Agner" <stefan@agner.ch>,
+ "Tudor Ambarus" <tudor.ambarus@linaro.org>,
+ "Michael Walle" <mwalle@kernel.org>, "Nathan Chancellor" <nathan@kernel.org>,
+ "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
+ "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
+ linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ llvm@lists.linux.dev
+Message-Id: <230bd4a1-7ccf-479e-acbb-8eb8440ec0e1@app.fastmail.com>
+In-Reply-To: <e2e72720-5541-44cc-a000-c469d7873c06@oss.qualcomm.com>
+References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
+ <20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
+ <86a4yw87g8.fsf@kernel.org>
+ <e2e72720-5541-44cc-a000-c469d7873c06@oss.qualcomm.com>
+Subject: Re: [PATCH 7/7] mtd: spi-nor: hisi-sfc: Simplify with scoped for each OF child
+ loop
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Sat, Jan 03, 2026 at 08:36:40AM +0200, Eugen Hristev wrote:
-> 
-> 
-> On 12/29/25 08:56, Mike Rapoport wrote:
-> > Hi Eugen,
-> > 
-> > On Wed, Nov 19, 2025 at 05:44:19PM +0200, Eugen Hristev wrote:
-> >> This memblock flag indicates that a specific block is registered
-> >> into an inspection table.
-> >> The block can be marked for inspection using memblock_mark_inspect()
-> >> and cleared with memblock_clear_inspect()
-> > 
-> > Can you explain why memblock should treat memory registered for inspection
-> > differently?
-> 
-> It should not, at a first glance.
-> 
-> The purpose of the flag is to let memblock be aware of it.
-> The flag is there to have a "memblock way" of registering the memory,
-> which inside memblock , it can translate to a meminspect way of
-> registering the memory. It's just an extra layer on top of meminspect.
-> With this, it would be avoided to call meminspect all over the places it
-> would be required, but rather use the memblock API.
+(writing from my phone so please excuse the formatting)
 
-memblock APIs are not available after boot on many architectures, most
-notable being x86.
+On Sat, Jan 3, 2026, at 1:38 PM, Krzysztof Kozlowski wrote:
+> On 02/01/2026 14:33, Pratyush Yadav wrote:
+>> Hi Kyzystof,
+>> 
+>> Thanks for the cleanup.
+>> 
+>> On Fri, Jan 02 2026, Krzysztof Kozlowski wrote:
+>> 
+>>> Use scoped for-each loop when iterating over device nodes to make code a
+>>> bit simpler.
+>> 
+>> Nit: the commit message is a bit too dry. I had to go and look what the
+>> difference between the two variants was. I could make an educated guess
+>> by looking at the patch, but still.
+>
+> Really? That's old and widely used syntax, replaced so many times and
+> sorry, but really obvious.
+>
+> We should not explain core kernel API in commit msgs, except maybe first
+> months of usage.
 
-But regardless, I can't say I understand why using memblock APIs for
-meminspect is better than using meminspect directly.
-I'd imagine that using meminspect register APIs would actually make it more
-consistent and it would be easier to identify what memory is registered
-with meminspect.
+Dunno. It's the first time I'm seeing these. So this was my first reaction. I think the patch would read nicer if you explain why the new variant is better even if it is widely used.
 
-In the end, memblock_alloc*() returns dynamically allocated memory, just
-like kmalloc(), the difference is that memblock is active very early at
-boot and disappears after core MM initialization.
+Anyway, I don't want to waste either of our energy arguing this, so if you don't want to add the one liner, that's fine by me too.
 
-> And further, inside memblock, it would be a single point where
-> meminspect can be disabled (while preserving a no-op memblock flag), or
-> easily changed to another API if needed.
-> Ofcourse, one can call here directly the meminspect API if this is desired.
-> Do you think it would be better to have it this way ?
-> 
-> Thanks for looking into it,
-> Eugen
+>> 
+>> If you end up doing a v2, a one-liner explanation of the difference
+>> between the two loop variants would be nice to have.
 
 -- 
-Sincerely yours,
-Mike.
+Regards,
+Pratyush Yadav
 
