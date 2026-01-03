@@ -1,61 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-87316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96C4ACF027C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 17:01:59 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E950ACF0294
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 03 Jan 2026 17:03:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C554D3013EAE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 16:01:50 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 45BD7300486E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 16:03:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93C2413959D;
-	Sat,  3 Jan 2026 16:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BBBE21507F;
+	Sat,  3 Jan 2026 16:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IF/ARlkW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u47nYwSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7833C1F;
-	Sat,  3 Jan 2026 16:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F5A1DED4C;
+	Sat,  3 Jan 2026 16:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767456109; cv=none; b=cH5W+cODMtpxg2hzYoigKZHilCYgvbmmpC84XkonauHcevNkNDtB4HMheWySFnJ/unseZpkh/DYrPn2J/NRWEeQ1OhlZyFFXF8EiYyBdBl927NztllzeGAeQ9z0yET0t1flyUywGJwkJg+ScMaDQiIFEsS39uCkDLtOYsp7zg/4=
+	t=1767456185; cv=none; b=JP3ejt4qs2prK+tb/DLMwYnh+DfkkDRm4gQFFo7nKaJ9M7Ufcc3TGRvWyIXQBzn8i8iPfRQek3PqyeDPisQjBbi9UNqCInpHpsjoDWuzfLjkXbAJqCCepvnZ6GmQl4PDlWfyv6ZahdgnyjnQdhkhOJWINE8OhqL6uzshfbPAc6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767456109; c=relaxed/simple;
-	bh=TTzyM30cr/hEsnmjoGkCUz/GaOUvJy+291pNbgjoMVg=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qaUlzwOOoq0cR6Ps0X7vSi937D4PyjY4ljEj1Sv15ipfqyftIyArSKDH7c+yfNIwD104jXRRrTIw8uieaEBte8ZgA0KECmK6GuaU+mVwMnw4pfZXs2c0XzLIPxaW/gnYDVILLP8F1RsM6Q3sRLdZxFG9V9Py1z4ppJUrXsinsec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IF/ARlkW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B59C113D0;
-	Sat,  3 Jan 2026 16:01:47 +0000 (UTC)
+	s=arc-20240116; t=1767456185; c=relaxed/simple;
+	bh=9dgNMg9WfEeZx00hbAC0YpEF/0WX0CU/tJfCl2/C81Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SgIWwrNxgsdPQhO2BFUIkQ5MC/kMNtFaEqLuseta4Fh/N+xxtrSPBSYIkDHYCiyNn7ySYdas77YbgK9CWRF1Av/8QsnYZW/uEn8bItW3Nu3LKemQK3rdOdkLvDOhcYhF/BuB5SdSFTf3gOXD0zuWo2XgW2PdrCFa4OFetK4EU0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u47nYwSg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292C9C113D0;
+	Sat,  3 Jan 2026 16:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767456108;
-	bh=TTzyM30cr/hEsnmjoGkCUz/GaOUvJy+291pNbgjoMVg=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=IF/ARlkWr7KTQ5Fm4QCUcDi5Q1NWV1g1LqbywqzSOwty/ZCpajyrwHUat5cjK1Dnp
-	 9NZdKGLJqWClejnR0b3sMYaeNGiYXjgygsekvwFV4chxcdTRN5W7WAaYgpJWikc//s
-	 xDAdURVx10Bk4Gz0JrdeVIX04iNMcOsrurh7Rm7l2T2+Wbj7GCYAOdusOWH/xBoYSk
-	 tZ7hvT5oX88HP4T4Kd2bcGhi4BXjN4+FopHu5+ZZ/BjsE3QW3xx2O9HsTBdvee45cT
-	 5KCUGtgznkZCL6i81rsOg5FleAfTxlmsuZiQE536nlSYYgpHy62+5CnCAU+yWsKpdX
-	 wm9CEmgUYB7+A==
+	s=k20201202; t=1767456185;
+	bh=9dgNMg9WfEeZx00hbAC0YpEF/0WX0CU/tJfCl2/C81Q=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=u47nYwSgrTN2ibSb11P6lUyzCCS9SdK216WggLkh7vqk0mULVB+w6xd4Vb6sMBQzY
+	 GSoja3ibvJhEBeapjpLBOLNeCoYr5gbEMdIh16wXyRzDXuPV8b0Yhj4w5RGg5nZf4b
+	 pBV31pCYb1kj2s2v23MZh4SWNzEk9AnAZ6vXn9OAdTlpdfRjSsxE6ukg8B2IpjRgpa
+	 6WDeYMMLoNXR0lQg6Y60AZzYGsthv36tbmexfwm4ziOWv/j5ohSFxzwkqBx7iefx/L
+	 J3/3f2AQeGRBNNpc8/VcmvTTIqwamLtcqtOPEnOgsZRX6YWpwpkBXaiP9yl7Xs3O5d
+	 5GKcd+YVliOGg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+To: Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Gaurav Kohli <quic_gkohli@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,sm8550-pas: Drop SM8750 ADSP from if-branch
-Date: Sat,  3 Jan 2026 10:01:46 -0600
-Message-ID: <176745610338.2631079.885451348924031995.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v9 0/4] DRM/MSM: Support for Adreno 663 GPU
+Date: Sat,  3 Jan 2026 10:02:55 -0600
+Message-ID: <176745617461.2631416.12790593319351767238.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251223130533.58468-2-krzysztof.kozlowski@oss.qualcomm.com>
-References: <20251223130533.58468-2-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20251230-a663-gpu-support-v9-0-186722e25387@oss.qualcomm.com>
+References: <20251230-a663-gpu-support-v9-0-186722e25387@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +81,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 23 Dec 2025 14:05:34 +0100, Krzysztof Kozlowski wrote:
-> The binding for SM8750 ADSP PAS uses SM8550 ADSP as fallback, thus
-> "if:then:" block with "contains:" and the fallback does not need to
-> mention qcom,sm8750-adsp-pas.
+On Tue, 30 Dec 2025 18:03:24 +0530, Akhil P Oommen wrote:
+> This series adds support for Adreno 663 gpu found in SA8775P (Lemans)
+> chipsets. The closest gpu which is currently supported in drm-msm is A660.
+> Following are the major differences with that:
+>         1. gmu/zap firmwares
+>         2. Recommended to disable Level2 swizzling
 > 
+> Verified kmscube/weston/glmark2-es2.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: remoteproc: qcom,sm8550-pas: Drop SM8750 ADSP from if-branch
-      commit: 332c03279bc81a1a88d8dc5dd23f3c956d99d882
+[1/4] arm64: dts: qcom: lemans: Add gpu and gmu nodes
+      commit: 6940c66825e4c27c53b33e367806ac1dc922583d
+[2/4] arm64: dts: qcom: lemans: Add GPU cooling
+      commit: 4a6488a8070b95702d6f5dec444fbddfaaaff8cf
+[3/4] arm64: dts: qcom: lemans-evk: Enable Adreno 663 GPU
+      commit: dbff283922e32eaa3d81233b69c02ef2abe7ee9b
+[4/4] arm64: dts: qcom: qcs9100-ride: Enable Adreno 663 GPU
+      commit: 247b55ddf76ee65b1a63e5c834341a07996de07d
 
 Best regards,
 -- 
