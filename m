@@ -1,149 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-87335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 481EACF0708
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 04 Jan 2026 00:29:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AC54CF072D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 04 Jan 2026 00:58:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 29C13300647E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 23:29:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D3329300EA3F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Jan 2026 23:58:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7B1F28D82A;
-	Sat,  3 Jan 2026 23:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BD5D2877ED;
+	Sat,  3 Jan 2026 23:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9U15b9R"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IcmhY4Q1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25981F09A3
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 23:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B43C191F94
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jan 2026 23:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767482981; cv=none; b=QQfNTGv5GGNkfQiTniGAHkBXUcohJmhKbiWPb320+htiA5h1mtPp8Ybys1fRojBYKTbkISiSrVNb5mgfzr49casxNOLYTdo1WVsj7OqkASXwRijU+iYVH91SnIqS0B37m2JDEWhgrlKgR0YATLe+ot+FAVKFw00krLS5z/wuTME=
+	t=1767484681; cv=none; b=CeIBOBJ+UgIuvPhVNKesIcUfBFtufrzT0hyOofGbPmdr7xPuIWreTwgss9tkdqTx5dQ8+IH9CV0kSzgpbQ1jKkrwXrTQg5TYWgSji44pI8uoshryDLvZOa3466WGGtMOxu4lMG+f9btrPc2ao0dcWg+av+7kZfqe9gFWPsSipGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767482981; c=relaxed/simple;
-	bh=yrlIZZmC5Lkf636QMdCK3gAWLqc/QTEizMpkoKTohjo=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=I7g4XueHf0KX3nYzt73OBiFUr6/YGb/1ueRr7iENIsA1fHOoaRjJLE0Fm1aLAgHxQrb3xdHe4Cz3X7aydbm+eo823zzUNAIszIBSzRbLbL3FLji9/7D5l7z5FCwosqIp+YsEqMz1fE5HgtsWERJEPx7XqSHSx+M3Zx22qi03n0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9U15b9R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E30FC4AF0B;
-	Sat,  3 Jan 2026 23:29:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767482981;
-	bh=yrlIZZmC5Lkf636QMdCK3gAWLqc/QTEizMpkoKTohjo=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=E9U15b9RxY6HTYs6wpRuWwsmCm4OU8ivllYcEyE2knOFNPiBusMUjUKDpZz6g2cs2
-	 60/u4xJvoMD9fO1XPikWOC6Td8bT8qpS0ZnDjvM9XoFfnIWQu3aPZNLVfZCv3JSu7v
-	 vNmBkg55lYvymbtUXxIg0vVaKerIC5AMKQ8ZyjRNcVYtGot3A72L1sMdczTc8gSrt7
-	 5YNfVDOH6fQV3uiSZbN1lkLXo7u67gTGl4i8kF81pfNJnbk5EUc3CH+sFc1nrlq403
-	 SwXAJdbQewUUPyaNeJIRp77912vc+uRumzuKe6nSZqGTgNUg+XBWVRtsEEyQa04zTj
-	 xodVamwZZpnZw==
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfauth.phl.internal (Postfix) with ESMTP id B831BF40069;
-	Sat,  3 Jan 2026 18:29:39 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-12.internal (MEProxy); Sat, 03 Jan 2026 18:29:39 -0500
-X-ME-Sender: <xms:Y6ZZaeesRuDLLoCJ67QcNN-RasOsGOFeJ3Vhg79_u5ZPi7alvY7DWw>
-    <xme:Y6ZZaTD88Y8d0pPH5o6dmhda915lkc3vzwY9TN8u_FPx3kHgpdw0x0u1lvM_PqwOV
-    1KioqlqL2qgwL-M1VaT7eBaRzewVdr6DoQNNA-jCFUgE_VRkTrELzE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelvdekiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfrrhgrthih
-    uhhshhcujggruggrvhdfuceophhrrghthihushhhsehkvghrnhgvlhdrohhrgheqnecugg
-    ftrfgrthhtvghrnheptdelledvjedtieduhfdtveefueejhffgteelieefffelveettdeg
-    veekhefhledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepmhgvodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqddugeejfedujedt
-    tdekqdeftddvleekfeeitddqphhrrghthihushhhpeepkhgvrhhnvghlrdhorhhgseihrg
-    gurghvphhrrghthihushhhrdgtohhmpdhnsggprhgtphhtthhopedvvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtvghfrghnsegrghhnvghrrdgthhdprhgtphhtth
-    hopehmihhquhgvlhdrrhgrhihnrghlsegsohhothhlihhnrdgtohhmpdhrtghpthhtohep
-    sggtmhdqkhgvrhhnvghlqdhfvggvuggsrggtkhdqlhhishhtsegsrhhorggutghomhdrtg
-    homhdprhgtphhtthhopehkrghmrghlrdgurghsuhessghrohgruggtohhmrdgtohhmpdhr
-    tghpthhtohepphgruhhlsegtrhgrphhouhhilhhlohhurdhnvghtpdhrtghpthhtoheptg
-    homhhpuhhtvghrshhfohhrphgvrggtvgesghhmrghilhdrtghomhdprhgtphhtthhopehh
-    rghrvhgvhihhuhhnthhnvgiguhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhhitg
-    hkrdguvghsrghulhhnihgvrhhsodhlkhhmlhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehjuhhsthhinhhsthhithhtsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:Y6ZZaQ7mQXPQkcM4NvdmDqFOL812AD7VtG0uOOwUNuaOKuldo7cKrA>
-    <xmx:Y6ZZadcuuUbRXaECpqepJDIaKplrZbJZa4BxI7qZ0jPeNJOZS4zSTw>
-    <xmx:Y6ZZafe3HOucT5EYIwZCRjzwdVLXkIFe_j6Eoe9LeTskBgOVbqUp6A>
-    <xmx:Y6ZZaaExh7RtaodQZNUCVajs76K9DnvNnhTpsnGk-iPIQVV9lr1H6Q>
-    <xmx:Y6ZZaWHYvgqSjc0X8gGrH6Fx_Kfz73xdC9aa3PF1PZU_GL1Y392Hn-Qm>
-Feedback-ID: id4c94969:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8F3E63020061; Sat,  3 Jan 2026 18:29:39 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1767484681; c=relaxed/simple;
+	bh=Nc0bv4pj2jQS1zXWwXvjiUVnCrXsy+PQZzamWQEOi/Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=osbTzp3lAeeGG1melGaaP9qs6AX10OZkxga29TO/rZ85hnvHz+kyYEP2HkIkIayDNgUcQVXdpbmJuP8LhcrqjYul662F0037GSQmywalwPnU2NOkaaQa4vbj0opX9GbQbxukKmCYrllM/eCn4OInHLUOTUOR6mSTM+gs6ha9SbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IcmhY4Q1; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5942708701dso1312871e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jan 2026 15:57:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1767484677; x=1768089477; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dB1LagwegptwwLHmXyd1osJA27FSZTcIsYt0ExTrUgg=;
+        b=IcmhY4Q1VROUpEIn0PP0vEUnJ3UnOVKso3pWBHmiMrDJtyunw54KWFgXkpxy15saTO
+         9SiOAl71hK3KC9gstLtRuPRgvhP3HzHHwAnlwR5OxnJGFZU5WJR0NYosfRdqxobgzuvF
+         HXDipGhaxZsfx34XxO3j2X9ABG7ogtHl3WBnnB+xcI7kq5JfBpVDt97ztu9gc4pLsRgs
+         pNc3pfO8kfpBc1tx/WSioIqY+SmKxvCjIWr7Ej8p31hM9uQIv90FMZUlDbzEnkUqvgJh
+         MTkUoDiKLk4HVlCmDnVIoqFAcktaJAAolg08LtoeCbMOHCLTx/lb33+7vzGuJ122SkMs
+         rWYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767484677; x=1768089477;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dB1LagwegptwwLHmXyd1osJA27FSZTcIsYt0ExTrUgg=;
+        b=ibbA1gOa4+kbKXhFSQTpJvT05k6rQwQs3jrpUicDF4Kdq4Cz6aOWijGy9mUtDuO7xf
+         YRd+V99g9MseFslEKLbzPrDYk4PlwzUxFhALy/Yr5FPFpVWLVEPNbIGjaWUMhzyaPbAw
+         jKKoB4vUp56O6AKbMmCZ8KGRNCxarAujZjr3F64uefJIN/oOJB6FI2MS3fLpv2XTgDHN
+         GL54gkZk5SKjxqFgBUGUIpFQfY+ZLoy09A3TBlQ2C8y3QEsPzqDzPxoJ/K4wyvtLffep
+         +1vbS7fcV/6k1Y4JEzpmZGS4t5bz+JMO+V7h98e9AGRQ6X7xx7phjkog9uqVcNPxGJJY
+         ClVA==
+X-Forwarded-Encrypted: i=1; AJvYcCX//CyvStnHgsmZOkeHjL8SGElctGIAB/8gdII9/vizdjhJri1Sys+9J7bYcEZUEokzfqFdSq0aXvA9jOvk@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywy4Kyz+pEYHUBAMFKVCFXImnfgPikmUCB1MnoHYgKZfoA9HMJh
+	OuSCcN3ZXOoyjExC0OgmvTFzgDO0hga38eLctE39ew1iOnwGxVX8AmpTl4yQU/wrCLs=
+X-Gm-Gg: AY/fxX6nSNk5WflBtc4U641D0CAzEZWOOfQjrbCqa/UJ8vy1GeDAAoHlKxiitSitMCc
+	D79P45fCs+c5sVLz/mPDDPjwPwp3eUNyanxI/dm8KJC7Sejs58cRG8LlRsGUr9Jy+ygcqf3rdVS
+	y1NKPDkLLNxiyTgQrQvjOTE9SrEJQgOwnW03C7cCwrK4uJYVVsfVwRR4DejhxcvFEwLTBAmLYMP
+	0t4RBXeRbSfraTbLvV9f7Fvh6DLhjPWDxBLcIho5V4tvdbbPuWT5EHII42M1KWtvvfw5r7FLHRr
+	h/nSqaYjay4o5qk3t6zFlASaXMPNDdyETZmZ5h8J8LAIY0ZaSf5evV/m4PR4K003VeQB+M4NCC+
+	LQDzZe603VxBnfEtiNh86D6sxn2fTRePnsx4d6zOuYd1LDiRIwk/27+A7MIRHvEoj80PQ3llQxR
+	9Sas2UaqWkS2QtJXoA5I2EdRh6F1fuIa1v71LIwGlsDCDBDb8b8PWvMt8vTtZYuoXC1g==
+X-Google-Smtp-Source: AGHT+IHsnTa0hbn+0Wh1C3VR25cgPSQ44uvQseVE0kXGNojATuxFAd6n7Pd80xTUUipMQpgZdEmtvQ==
+X-Received: by 2002:a05:6512:3ba3:b0:597:d7d6:eae1 with SMTP id 2adb3069b0e04-59a17d74eb7mr10048358e87.2.1767484677292;
+        Sat, 03 Jan 2026 15:57:57 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185dd90esm13558109e87.31.2026.01.03.15.57.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Jan 2026 15:57:55 -0800 (PST)
+Message-ID: <ad801501-cd9f-41f5-97b3-bf8b628d6e1d@linaro.org>
+Date: Sun, 4 Jan 2026 01:57:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A8SErWKoyjPZ
-Date: Sun, 04 Jan 2026 00:28:48 +0100
-From: "Pratyush Yadav" <pratyush@kernel.org>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: "Brian Norris" <computersforpeace@gmail.com>,
- "Kamal Dasu" <kamal.dasu@broadcom.com>,
- "Broadcom internal kernel review list" <bcm-kernel-feedback-list@broadcom.com>,
- "Miquel Raynal" <miquel.raynal@bootlin.com>,
- "Richard Weinberger" <richard@nod.at>,
- "Vignesh Raghavendra" <vigneshr@ti.com>,
- "Harvey Hunt" <harveyhuntnexus@gmail.com>,
- "Paul Cercueil" <paul@crapouillou.net>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Stefan Agner" <stefan@agner.ch>,
- "Tudor Ambarus" <tudor.ambarus@linaro.org>,
- "Michael Walle" <mwalle@kernel.org>, "Nathan Chancellor" <nathan@kernel.org>,
- "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
- "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] mtd: spi-nor: hisi-sfc: Simplify with scoped for each
+ OF child loop
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Pratyush Yadav <pratyush@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Brian Norris <computersforpeace@gmail.com>,
+ Kamal Dasu <kamal.dasu@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
+ Harvey Hunt <harveyhuntnexus@gmail.com>, Paul Cercueil
+ <paul@crapouillou.net>, Manivannan Sadhasivam <mani@kernel.org>,
+ Stefan Agner <stefan@agner.ch>, Tudor Ambarus <tudor.ambarus@linaro.org>,
+ Michael Walle <mwalle@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
  linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  llvm@lists.linux.dev
-Message-Id: <230bd4a1-7ccf-479e-acbb-8eb8440ec0e1@app.fastmail.com>
-In-Reply-To: <e2e72720-5541-44cc-a000-c469d7873c06@oss.qualcomm.com>
 References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
  <20260102124927.64703-14-krzysztof.kozlowski@oss.qualcomm.com>
  <86a4yw87g8.fsf@kernel.org>
  <e2e72720-5541-44cc-a000-c469d7873c06@oss.qualcomm.com>
-Subject: Re: [PATCH 7/7] mtd: spi-nor: hisi-sfc: Simplify with scoped for each OF child
- loop
-Content-Type: text/plain
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <e2e72720-5541-44cc-a000-c469d7873c06@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-(writing from my phone so please excuse the formatting)
-
-On Sat, Jan 3, 2026, at 1:38 PM, Krzysztof Kozlowski wrote:
+On 1/3/26 14:38, Krzysztof Kozlowski wrote:
 > On 02/01/2026 14:33, Pratyush Yadav wrote:
 >> Hi Kyzystof,
->> 
+>>
 >> Thanks for the cleanup.
->> 
+>>
 >> On Fri, Jan 02 2026, Krzysztof Kozlowski wrote:
->> 
+>>
 >>> Use scoped for-each loop when iterating over device nodes to make code a
 >>> bit simpler.
->> 
+>>
 >> Nit: the commit message is a bit too dry. I had to go and look what the
 >> difference between the two variants was. I could make an educated guess
 >> by looking at the patch, but still.
->
+> 
 > Really? That's old and widely used syntax, replaced so many times and
 > sorry, but really obvious.
->
+
+The made conversion changes are not exactly the ones, which were asked to
+be done.
+
+Commit 34af4554fb0c ("of: Introduce for_each_*_child_of_node_scoped()
+to automate of_node_put() handling") says it clearly:
+
+     Note that, in the vast majority of cases, the _available_ form should be
+     used and as code is converted to these scoped handers, we should confirm
+     that any cases that do not check for available have a good reason not
+     to.
+
+So, likely this and many other similar changes miss information in their
+commit messages, why for_each_available_child_of_node_scoped() form is
+inapplicable, thus it still could be improved.
+
 > We should not explain core kernel API in commit msgs, except maybe first
 > months of usage.
-
-Dunno. It's the first time I'm seeing these. So this was my first reaction. I think the patch would read nicer if you explain why the new variant is better even if it is widely used.
-
-Anyway, I don't want to waste either of our energy arguing this, so if you don't want to add the one liner, that's fine by me too.
-
->> 
+> 
+>>
 >> If you end up doing a v2, a one-liner explanation of the difference
 >> between the two loop variants would be nice to have.
+> 
 
 -- 
-Regards,
-Pratyush Yadav
+Best wishes,
+Vladimir
 
