@@ -1,52 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-87339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2EDECF0E52
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 04 Jan 2026 13:15:13 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88B0CCF0F78
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 04 Jan 2026 14:11:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C9B153007CA8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jan 2026 12:15:12 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A422030019EC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jan 2026 13:11:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 370361C84D0;
-	Sun,  4 Jan 2026 12:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A8362FB085;
+	Sun,  4 Jan 2026 13:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Lr5vxxAd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LaitkZen"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4361528B40E;
-	Sun,  4 Jan 2026 12:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738BF2FBE0F
+	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jan 2026 13:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767528911; cv=none; b=OQlg1UrBxtiJsIv+vb2QSadmDXof5zWjFaPmmpwkbFbrV0SFbkRCRYF5RjNuHrjL/A6oTrH13h01ozxGF3Q9nkNKiByu4rbNXen1RioJ+0q59TZmB/BxX4gpUoqtl3D8uMcKXlvy2yKyOY+8xUqXC8S9bHtrD1/aykOFg3Db3TU=
+	t=1767532301; cv=none; b=Zo+G1ajrxzrB0n2dDKWM0jrjie1BhaLWJAQg5tL1FaqSlKFXbBRLF8m8JQ5C7Vo7O/i1RjyEp0Ou/5jmubJgV85bQxlnyBt3pEGIz8vVqnUF3VXoVYWQhD6DGCTg4E87oQf2PwbqYV44piCrhBG5DcLBdUgQEQPwF4E1VhhDPvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767528911; c=relaxed/simple;
-	bh=/dcgl6fhKLzV82E+jE58MTQl1JF31mR6yh3gg7IUP5s=;
+	s=arc-20240116; t=1767532301; c=relaxed/simple;
+	bh=VJZpShq8bBRB1Lik7KHqd9TCYpB1jo8XV3QyZlKbldM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q8/ZrRIHKHQ5j3f44nLFvHXgJHB/zd3OnpUHFMbrltgGd9GpJNPJ6cGx/PLqntbTZpcyoQD2YqWBMsR7YNwi52zbDeuxRtBzantOUHGnLFkJOCUasE9To5laU5diddPs3Qmojy5iuHHE3lj3SZTMWDOJyIQF39ohv9Gfy9eH7X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Lr5vxxAd; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.88.125.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 7B6CB534065A;
-	Sun, 04 Jan 2026 13:14:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1767528896;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=BdObZdis05b2pLPTLS1ls4b/aglfuMcdxn030lr4BJA=;
-	b=Lr5vxxAdwVrEFA/P6HGyy6mJvXGePly4h4wm1MNHIEG50D6S5OmZk/4s/8v2vDoxzs569e
-	6yWFJm1fGoWe28S1s1mrMURfreapQ7k1u9m9IFD1FK08rS41mF4ilVIvFqaDJ2XBRNIhX5
-	7/9kKOpN+nDQrfkIKjnKMCggY7FBXcE=
-Message-ID: <9a3361f9-1faa-45ad-ba81-769a5a26d951@ixit.cz>
-Date: Sun, 4 Jan 2026 13:14:56 +0100
+	 In-Reply-To:Content-Type; b=PcGP/cWd3K6wumQJVhDmTHEkDXXjsrw0NZge7trk9DDkP+F7+Uiij214eEaK9vp2+nuNFa+k41Am32AXBc/g3O6GyJXnAZQyr1bpQah79qY/OwkLa7ZC2+Av6CZp6FTo19U9KeBjS9DyT4gfBRG70qg3JqXMZeqn24LBXsjCr40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LaitkZen; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a0fe77d141so151638385ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jan 2026 05:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767532299; x=1768137099; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/qTyygG5/o7qaoK0/PThRHBBj4/zlp1eAtD/QV9Abjg=;
+        b=LaitkZenhkTrGw/+Q7eKzoQ28dXgxyAiwQ1cv2u2lHc1qMI5a818ck95QM322L2PZa
+         O85In3JJaT8NlI66RkSVJ2LpPaqDTMBtlj6mUN71CrdS3j1qi0V5FN0le4mqafkOhCS7
+         36uHd8nnpRZDhHO7txsi1nlLL7BP3BSaZEsBYlNypmda/41xxwrU5XchronUuDY+ZY31
+         o4xNxtwdv4frOuC0Odlz0TmPnuBVBTQ7eFLXwk5FnOgOVvFXmamLQxqWsEtThcuFYgJt
+         wEXBtpA+fhWwJUyYvVbYHJxAa5TFvF+v4q3FtDWQ+DuEjtj2mXjHT6LaRZLhbUznbpW2
+         ucLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767532299; x=1768137099;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/qTyygG5/o7qaoK0/PThRHBBj4/zlp1eAtD/QV9Abjg=;
+        b=AomfY0B779DVKTI5Q9/9UjJLnI/rUTAXQzqbmd/P1IOFkvuaVv9Js7BAndoM8P4AaM
+         xNkFDcZ40apVIo67skcJvw0eGSSd2c9BlO6YljYCmRDcoriTFZxY3jbPV97Ra3aoH+Qr
+         FyqLRLPLk4gQLe6Eq1A+ayHzxIMRTMSvEL5mkqnHPM2wcKBfeeRuWKPtnNikXZ0KB/Th
+         D4VJyDxckHW+I0KRGbR0RUTFfIxxqDlHh/nOtgoL5gE7ZtR1zOal0yo3SXdXSjm9n0bv
+         lGoHN+oMpYLTuPklbNkJKl6UMgMjHGvU1cwT7zqEH0lFyPoTjVXtaN8aQcpEtW08gCAo
+         dwpg==
+X-Forwarded-Encrypted: i=1; AJvYcCVfJTvv7G/xhwaNfPq+p5u4qT3oqJuH9q0CmYS4PJoaTuW+36rQzqQvp/1GQrS8SZcbHoHTlYOAjWxCzm02@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSdWfBEC+rUxvtZcdDkGCTyc7sIFy7pE8VBx3BIfQJsspXTUpJ
+	evVX2SAO3+6USJzRS347Y3Hy0JUtZzOG365XxJvnVFIU4D2V/o0YR7fv
+X-Gm-Gg: AY/fxX6FJdj2Zv1Bp4BwgNFP5sErrQE1WiiiYDMZ4IgxvOXgx+pOdrGAeZhXrzyN8go
+	Tx2UyjizT5LLLzp3FZWoWEUdbaJq9X4h8fCxnf0+PAcHANbOvgIZ4/nl09wkzny8RA32jK6IyGo
+	YcbGXkkugCXTjEjYct3rPa/CIRc7OTW6LCzKgHg9LQVIkLNxFGf/Vvp4By29M1IUnW1ZOkWkgg6
+	8ssQ0q60bHBDdp+EnIbBlZu5K+F2uni3Y1tXAYA+7kPxBkl2w1edmgCUtGN7fZhWb+zp5WOmJoP
+	U9TYYvlXUIdAtuQFAYVXJx8terPcnh8ijMFIM2/tauYKzz6ytaUnHeNjCwiYjW7/QFRC+UpRKc5
+	9Fh66SC12N1hyejWGsWRfiE7ZooE9B/83bET4CjVMNL5k+OUBHrvw404luV9EH9Kv1H5DeWDBG/
+	FlmtL+uyomCHR5TMiz9wNMWVSO/PCJRxvLdwlZ1wumsZOTlRc=
+X-Google-Smtp-Source: AGHT+IHePctFlLcSlAy7erM/DvmylqsXn1Hu92E9o0E6BRcrSD397KbRiasrImtJD1K29Gz8rAeezA==
+X-Received: by 2002:a17:903:2f0b:b0:2a0:9970:13fd with SMTP id d9443c01a7336-2a2f293cf1emr405004855ad.43.1767532298695;
+        Sun, 04 Jan 2026 05:11:38 -0800 (PST)
+Received: from [192.168.31.239] ([167.103.54.183])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d4d36esm429359175ad.63.2026.01.04.05.11.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Jan 2026 05:11:38 -0800 (PST)
+Message-ID: <f6ff2086-19f2-46cc-ac89-d8ef3847b9f0@gmail.com>
+Date: Sun, 4 Jan 2026 18:41:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,99 +82,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add
- placeholders and sort
-To: longnoserob@gmail.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251205-slpi-v3-0-a1320a074345@gmail.com>
- <20251205-slpi-v3-3-a1320a074345@gmail.com>
+Subject: Re: [PATCH v10 1/5] dt-bindings: arm: qcom: talos-evk: Add QCS615
+ Talos EVK SMARC platform
+To: Krzysztof Kozlowski <krzk@kernel.org>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251230130227.3503590-1-tessolveupstream@gmail.com>
+ <20251230130227.3503590-2-tessolveupstream@gmail.com>
+ <2e533b51-399a-47e8-bc3e-ab61797d6762@kernel.org>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
- 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
- lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
- 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
- dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
- F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
- NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
- 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
- AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
- k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
- ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
- AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
- AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
- afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
- loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
- jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
- ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
- VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
- W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
- zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
- QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
- UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
- zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
- 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
- IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
- jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
- FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
- aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
- NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
- AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
- hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
- rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
- qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
- 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
- 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
- 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
- NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
- GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
- yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
- zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
- fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
- ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20251205-slpi-v3-3-a1320a074345@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: tessolveupstream@gmail.com
+In-Reply-To: <2e533b51-399a-47e8-bc3e-ab61797d6762@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/12/2025 14:59, Robert Eckelmann via B4 Relay wrote:
-> From: Robert Eckelmann <longnoserob@gmail.com>
-> 
-> We know these devices are present, most of them are supported by
-> downstream and close to the mainline kernels.
-> 
-> This is very handy when rebasing the integration tree with the support.
-> 
-> No functional changes.
-> 
-> Reviewed-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
-> ---
->   .../dts/qcom/sdm845-xiaomi-beryllium-common.dtsi   | 29 ++++++++++++++++------
->   1 file changed, 22 insertions(+), 7 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> index ab450d44b3f6..3444908b4a6b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-> @@ -227,6 +227,12 @@ vreg_l26a_1p2: ldo26 {
->   	};
->   };
->   
-> +&cci_i2c0 {
-> +	status = "okay";
 
-I must overlooked, but the `cci_i2c0` was never disabled, so you can 
-drop the status = "okay"; from here.
 
-David
+On 30-12-2025 20:33, Krzysztof Kozlowski wrote:
+> On 30/12/2025 14:02, Sudarshan Shetty wrote:
+>> Add binding support for the Qualcomm Technologies, Inc. Talos EVK
+>> SMARC platform based on the QCS615 SoC.
+>>
+>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>> ---
+> 
+> 
+> Why did you decide to drop the tag and where did you explain that?
+> 
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
+> It looks like you received a tag and forgot to add it.
+> 
+> If you do not know the process, here is a short explanation:
+> Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
+> of patchset, under or above your Signed-off-by tag, unless patch changed
+> significantly (e.g. new properties added to the DT bindings). Tag is
+> "received", when provided in a message replied to you on the mailing
+> list. Tools like b4 can help here. However, there's no need to repost
+> patches *only* to add the tags. The upstream maintainer will do that for
+> tags received on the version they apply.
+> 
+> Please read:
+> https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
+> 
+> If a tag was not added on purpose, please state why and what changed.
+> </form letter>
+> 
 
-> +
-> +	/* IMX363 @ 10 */
-> +};
-> +
-[...]
+I apologize for missing the Acked-by tag in this version.
+I will make sure to include all received tags in the next patch
+as per the submission guidelines.
+> Best regards,
+> Krzysztof
+
 
