@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24022CF371E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 13:12:46 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0E71CF3760
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 13:15:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C040B300D823
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 12:12:10 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D647930150FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 12:13:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B35C332919;
-	Mon,  5 Jan 2026 12:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACD5336EE8;
+	Mon,  5 Jan 2026 12:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQu7mXCc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P0tKgL6i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F6331229;
-	Mon,  5 Jan 2026 12:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFAA336EDD;
+	Mon,  5 Jan 2026 12:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767614509; cv=none; b=XvRPSCdf1JlqX62mP2hiERB/BTSKV6NFXsyodIVIVj7zs6vOwwvQa/3DZFTT7umkZvbT0JWkPqPQqg7bl+PtlIhxt3Y4kOSHuyrXmqQK0C362+iBi9PlvIc/QKk6QYbDsuWpgEvLEwYSPAqFv3EwsDGB5MTsi/++jiVxXyOI8PA=
+	t=1767614652; cv=none; b=uMfT77TKgrfCy5zkAo37rLSNc4n/IkX5H4DYz8KHyCxnpBs3OHRVUfp4MOWT/n4M9zf9+5ODt31xl29nVZcYdGvFkNYS3Iowb5TtQ13syTHt3U0p/kfewHBsTvIKY9PZntGjGxZuudfxjKyI0HJ9z3GV3TzZ3Sb+f2u9+3Vi8Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767614509; c=relaxed/simple;
-	bh=QcdmxJz4FP4+VSOW9Ieo3rRgPZujTkh5eFBKn03FmFU=;
+	s=arc-20240116; t=1767614652; c=relaxed/simple;
+	bh=HXEHB1dIVFTpjBmO9SHxaWFkxb7szZeh8x39PznC9wQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fg6oTlAFL0jCsteEke6un69j74Yu/gWNoPuv/Kp/hARlVN3CHCsw++lM8n52wvKwV+Lq/q+ZE+ygtj8hwLyQIOMJk0GFPed15mpWml0slXeP0inSa4ahSLlLo0Wuv2s1yrZlRb2dbmJrpzmI7lvSM9Oz8YpFHpqmwPJ9gOQNwLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQu7mXCc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD86C116D0;
-	Mon,  5 Jan 2026 12:01:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=asJNy7A0eU9s63ORVPI4aVY3MEMV0hux2yv2RqZL5lok3/hK8yXJwccWuC/9uYrWypPXqG5FFQQY+KMdn+X60fXXsZC/WO1DhK1UO2KqMr2TNhOht6WLPmvqIdomW89cbaVk8Y4oXbKrkOoDifh//epbAVCW8Fpzjx+zAUHJbZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P0tKgL6i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DDEC19421;
+	Mon,  5 Jan 2026 12:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767614507;
-	bh=QcdmxJz4FP4+VSOW9Ieo3rRgPZujTkh5eFBKn03FmFU=;
+	s=k20201202; t=1767614650;
+	bh=HXEHB1dIVFTpjBmO9SHxaWFkxb7szZeh8x39PznC9wQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EQu7mXCcbF90YAVH7COQe0U9cVh3koQB9aPQTjrwtZ/SZ3SO1/ghYPoRwmyp++M2J
-	 8c94pvPszY8IUsUIIbg7Zu7RDKskHnjuJntOGjhjbzp/2VrobAkmFUoGliMK833jqQ
-	 FgRayhSnu0M4irDiFukrY0u4jZ98xaFoQH73FKZRqEkNi/oYizf6WRou1Fp+VYyw62
-	 hfQTgtvcjmydXjzQ2nmQaqMqyXwfxm8DqbRbrTnKzVmY3YiMi5NIh8XYEIrMLF5MxW
-	 bu+RaPGZhfsy1q6yts5RhqSo4BhC1fFp1rnixr86+KJiVpog2NuBQGPyTjZoghU/oY
-	 XWmrEmGuhibgQ==
-Message-ID: <96e317a1-d564-4c66-b71c-ea03acc20ce7@kernel.org>
-Date: Mon, 5 Jan 2026 13:01:43 +0100
+	b=P0tKgL6ipjDcTHiJLgSReTJFk/C0fJHdYlxi8oT491q7XvMZf1hAo691BdaRYxi8j
+	 XvSwxYS1SBJLWjvtATzFVVLXhuFaDtwbfmj3Mq4eLTW2Kv346f+TrBvltJLfe6UNet
+	 kO8EXC8TTeD7QCO1lA0lZyAzrsL2ECS1VGplV13k/7H2s/4ED+L78jEmV+9dgjt5TF
+	 q/wKqhDuqBA5uGg0LR97c4He1Q0iD1HVq2Iq8PQITJCwCjCs3gNhb3OS51JYFtP7eV
+	 3krN2o/gJkTUxmMSo96iETf4UWOTEB3Tzm72fJPlJR9J0pE031llHvMXziERTkIM8n
+	 j9WfDmyQU0I0g==
+Message-ID: <b046f769-6586-487c-8c11-f3eabefe78f4@kernel.org>
+Date: Mon, 5 Jan 2026 13:04:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,13 +48,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] dt-bindings: arm: qcom: add Acer Swift SFA14-11
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: add Acer Swift SFA14-11 device
+ tree
 To: weifu wu <wwfu06@163.com>, andersson@kernel.org, konradybcio@kernel.org
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260105110431.2596253-1-wwfu06@163.com>
- <20260105110431.2596253-3-wwfu06@163.com>
+ <20260105110431.2596253-2-wwfu06@163.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -100,48 +101,84 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260105110431.2596253-3-wwfu06@163.com>
+In-Reply-To: <20260105110431.2596253-2-wwfu06@163.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/01/2026 12:04, weifu wu wrote:
-> Add DT binding documentation for Acer Swift SFA14-11 laptop based on Qualcomm X1E78100 SoC.
+> Add initial device tree for Acer Swift SFA14-11 laptop based on Qualcomm X1E78100 SoC.
 
-Can you please slow down and address the feedback? EACH one.
+Still not properly wrapped.
 
-> This introduces a new compatible string for the Acer Swift SFA14-11 board.
-
-Drop, redundant.
+You keep ignoring feedback, so for the last time: can you please read
+it, respond to it and implement it?
 
 > 
-> Eliminate duplicate data and add the device model to the compatible entry.
+> This enables basic peripherals including eDP panel, backlight, USB and PCIe.
+> 
+> Tested by building dtbs and booting on the target hardware.
 
-Not relevant.
+Irrelevant. I already wrote that you cannot test by building.
+
+I am not reviewing the rest because you keep ignoring EXISTING feedback,
+except one more comment
+
 
 > 
 > Signed-off-by: weifu wu <wwfu06@163.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ------
->  1 file changed, 6 deletions(-)
+>  arch/arm64/boot/dts/qcom/Makefile             |    2 +
+>  .../dts/qcom/x1e78100-acer-swift-sfa14-11.dts | 1650 +++++++++++++++++
+>  2 files changed, 1652 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 55d4afa9a70e..09c488973961 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1068,12 +1068,6 @@ properties:
->        - items:
->            - enum:
->                - acer,swift-sfa14-11
-> -          - const: acer,swift-sfa14-11
-> -          - const: qcom,x1e78100
-> -          - const: qcom,x1e80100
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 76cf0115a00a..d8b4d91dec82 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -326,6 +326,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
+>  x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
+> +x1e78100-acer-swift-sfa14-11-el2-dtbs  := x1e78100-acer-swift-sfa14-11.dtb x1-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM) += x1e78100-acer-swift-sfa14-11.dtb x1e78100-acer-swift-sfa14-11-el2.dtb
+>  x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
+>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s.dtb x1e78100-lenovo-thinkpad-t14s-el2.dtb
+>  x1e78100-lenovo-thinkpad-t14s-oled-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s-oled.dtb x1-el2.dtbo
+> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts b/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
+> new file mode 100644
+> index 000000000000..b962d00f756d
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
+> @@ -0,0 +1,1650 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2024, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +#include "hamoa.dtsi"
+> +#include "hamoa-pmics.dtsi"
+> +
+> +/ {
+> +	model = "Acer Swift 14 Go Pro AI (SFA14-11)";
+> +	compatible = "acer,swift-sfa14-11", "lenovo,thinkpad-t14s", "qcom,x1e78100", "qcom,x1e80100";
 
-There is no such hunk.
+I told you did not test it. You never replied to it. This is wrong and
+simple dtbs_check would tell you that. You never asked for any
+clarification, just sent the same THIRD TIME.
 
-Please organize the patch documenting the compatible (DT bindings)
-before the patch using that compatible.
-See also:
-https://elixir.bootlin.com/linux/v6.14-rc6/source/Documentation/devicetree/bindings/submitting-patches.rst#L46
+So I am done with this, NAK.
+
+Respond to EACH of the reviews according to mailing list style.
 
 
 Best regards,
