@@ -1,57 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-87486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F6C9CF445C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 16:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAB42CF41E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:31:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 584B6300CF36
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 15:01:51 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0974F3009219
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 101A433A028;
-	Mon,  5 Jan 2026 14:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 401B133A712;
+	Mon,  5 Jan 2026 14:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfYaoE+i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U9Tp6Kii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1D1314B86;
-	Mon,  5 Jan 2026 14:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A4A33A6F0;
+	Mon,  5 Jan 2026 14:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622107; cv=none; b=HbOuy69fDyyAgtQOvUr6A0YvV8GmK1/MIIv1jgh8zK/2YpVAfuUpDJtBiQ04EKA10OqIWeErylK9/kmBuCABI8AsqXYBlK+6gtypoaT3yWp49NGn54Nwjy78Qrdd+U4Q0Z3fWp9YvXtEVyyrZFUy0BijNUZAPvtfpOgHcjfvdbQ=
+	t=1767622110; cv=none; b=lMOnRlg/ps8KoTZCCZXTMp+J1KSzaIU7rSSF/zxdF/uZO+RjNHD8kCiXElTyHR0ZKjgpFDplIr1bu1d+DdnAHrYBNPdxkUg/DpS6+IaIySONhpsGpEqli+1MuYnxaWnIy+p8Mr8ebMsj31+gEMUViipvqayepiPAzbv44DkfLDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622107; c=relaxed/simple;
-	bh=rgwvarEcd76+ypLeUaD3y5gBAR7/Pau59dCY4GHKs20=;
+	s=arc-20240116; t=1767622110; c=relaxed/simple;
+	bh=aJh9t1bM6vf+VmVosxIK7IbHvrg9FWsW2VSp0svG2Zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KYoy4DMB7rKu7DmV3FEcZn+l19x0pvFC/fWcByPIuXeViMU+uXupE+1oX0aAN0fAbExHk51Pe0mlwh2Hm1NbTJf0Yw4MEOJRmDFPzxRvDZeRUKwJSaiFs+6CplRUXXnwFJroxJApEemvvP0Ee5NLLm6as5gwpPC8wsLrprBfoMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfYaoE+i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCDCC2BCB6;
-	Mon,  5 Jan 2026 14:08:25 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Q0hsqRJl8BbTd9sq3g3rZ4vHAqKxZD4mDiPjUCpVzBBDi5vgzxhqh/h/HKlo+VZmlTMwmB/KXhIgYO6gMXYJ9aYJnOylBPKQs7OaUaq4Iv0wiL8qmxI/e6wKYf8dFO2taWLg3rk0NTHcYNhPWOKMli+eVn9YJqjw3VKWAz+T8yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U9Tp6Kii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1B0C2BCB3;
+	Mon,  5 Jan 2026 14:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622106;
-	bh=rgwvarEcd76+ypLeUaD3y5gBAR7/Pau59dCY4GHKs20=;
+	s=k20201202; t=1767622109;
+	bh=aJh9t1bM6vf+VmVosxIK7IbHvrg9FWsW2VSp0svG2Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfYaoE+iJt3A/dAECy12Cc67LNgXCaER1hX/c5/PUOPIzTlVmsE9Mm5cxgwEMj55r
-	 g1ebwpwXZS2OpQjla3TOLPEIQle3PLBNaraREG4FRwlbalh+L6h4tdaWCD4xC84ZlY
-	 Ib2nNEiix6ynC70B+Nu7/AcIUC9/AJqsaKzEtmjDiOo19pDBcifegPrUx43XjO7eFC
-	 6I2Em+3gd/79nhQ9i1PMUMHjruToyCCbjH6gjrJFs0D8j0g9iBBLTf6ChE9BJx6YMy
-	 WL9Ogkr1H/lxwrWXVtbxUANl5AHyoiaGzW/vFBhlFbekXhJVdTadeUkDhJyK5XCkP6
-	 HjA/pveEXRpxA==
+	b=U9Tp6KiixL4SZK+/Ueu0twwIlMKdhEjIMUbYiGdl045pCtHJYEUjgqWpxBbipuWwL
+	 f7bNEV6wPVV9BSVXv6DtSxDgdn7Ne7rChs33QhcUcjgCiKAUb17/r5BVTuPEEBGpBg
+	 dO+mw9fE55d/Y0OwY7ARRN2PuwjWnZ83ycAcGwVU5zYVfjybmWoazgJYEuD+i38hRf
+	 B8g6pkqKYjNI4RNVSUHvIibQrTRcV5I/+fqLfNpBV6/hppH5zVURH+fpWk1luH+orV
+	 2hNUEXfRuBvd+MZG+iDpHajFEE8oKoZvdF0QLTUt0mci3IafaHUIgeQGOPr25bWxA2
+	 DQa7MY3WD7PMQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable options for Qualcomm Milos SoC
-Date: Mon,  5 Jan 2026 08:07:33 -0600
-Message-ID: <176762206365.2923194.14017762679747233922.b4-ty@kernel.org>
+To: Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Maud Spierings <maud_spierings@hotmail.com>
+Cc: dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: x1e80100-vivobook-s15: add more missing features
+Date: Mon,  5 Jan 2026 08:07:34 -0600
+Message-ID: <176762206363.2923194.7383607598616456313.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251219-milos-defconfig-v1-1-f58012ac8ef6@fairphone.com>
-References: <20251219-milos-defconfig-v1-1-f58012ac8ef6@fairphone.com>
+In-Reply-To: <20251220-asus_usbc_dp-v3-0-5e244d420d0f@hotmail.com>
+References: <20251220-asus_usbc_dp-v3-0-5e244d420d0f@hotmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +78,28 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 19 Dec 2025 12:39:03 +0100, Luca Weiss wrote:
-> Enable the pinctrl, clock and interconnect drivers for the Qualcomm
-> Milos SoC. This is required for booting The Fairphone (Gen. 6).
+On Sat, 20 Dec 2025 12:38:56 +0100, Maud Spierings wrote:
+> There are still many missing features on this machine, add the ps8830
+> retimers for display over usb-c, the simple bridge/HDMI port and set up
+> to use IRIS.
 > 
+> Currently IRIS gives a ETIMEDOUT, not sure what that is coming from.
 > 
+> lots of these patches are very strongly based on the work of other
+> maintainers of these snapdragon machines, like the HDMI part on that of
+> Neil Armstrong, many thanks to those who laid the baseline for me to
+> follow.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: defconfig: Enable options for Qualcomm Milos SoC
-      commit: 94d5285f2fe5a3e2e9b8de88b73711a1173c4159
+[1/3] arm64: dts: qcom: x1e80100-vivobook-s15: enable ps8830 retimers
+      commit: c0d377798d6f6d3efddee5ef7d96b608a071f833
+[2/3] arm64: dts: qcom: x1e80100-vivobook-s15: add HDMI port
+      commit: 34d76723c41018ef52480ca3849b3ed3afbd8b22
+[3/3] arm64: dts: qcom: x1e80100-vivobook-s15: enable IRIS
+      commit: b7415c490d8d75b8dc7500b9c02cf8e5852110e6
 
 Best regards,
 -- 
