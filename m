@@ -1,200 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-87360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA6FBCF1BD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 04:36:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB493CF1CD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 05:39:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ECA7A3025FAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 03:36:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9C5C3300FF8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 04:39:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 620963203AB;
-	Mon,  5 Jan 2026 03:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 665A23233E8;
+	Mon,  5 Jan 2026 04:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QlidGvy7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fTFl2tS5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e7GZ72+m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6169F320393
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 03:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4095A322B69;
+	Mon,  5 Jan 2026 04:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767584182; cv=none; b=AtSH2wiWAecd57R4FCFWW5vI5LwF5wd7RP2dXaBuAnWXxON/88mIDAEMbUCpSlXxC32z1EKsbpInfm30HW+mZ/tMF3FhrU/pBeqCSx/TGguKhIxwgQkkEtlaZxng2UP61Mh2iYjGlAFpOsMzLUnQiVkRmovWMS0HshObM09cNFE=
+	t=1767587947; cv=none; b=Tu/pVVw89ISoU6etlqF0/WYdAt+sZluSgB3njOV40RdlABeAyTYt2vHsWFcrarrJrx3eOGq0Z8dC9Ywp+XnTzjbgzA+WusxZLNa8l8bf9FvjBnNiDnQkjmboxbs6k78SRYxhs3zeHJ6os0hVninirZJ2p0HL8HJHEmN5ucMrykU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767584182; c=relaxed/simple;
-	bh=RK3mM+JyW4Cnvvc6n/DM00kKog3bKewO3ETWD1g4amI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NPMRZHW6dmOU72JZBh/9oYT1NuHCt+ZACSNZncDvNgIpxVNKe+PrltCGVM/EZ/aC+gss2ZcovxpBcTdCiY96vcE7HDn8W04bHITTMbw1uXkovVx4UVV1oELbaoMd4dzU53hn33Mo6jEoJUj3bHQleJUcxpOxX1/8cPYeBeNHXoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QlidGvy7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fTFl2tS5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6053Enxq3541362
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 Jan 2026 03:36:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Jjx6sjiI6K21BuWUx0qBdRxfRjPTICLiJZHLgsGwlsk=; b=QlidGvy7VaDjk/Y1
-	NApr5qoNNV7mjJsV0lywGMPqxjVHJHLowohwZ8PrWMtrUGH37xWV6Smm+x2tftzK
-	c8P7EPE2a0zrPIZ90CQTLJmKudfxh/MiNLQcpoEaYBh/CI2RtiidgnMcOChUNeTR
-	IdwjsuGT3hCl533N0KT51zmNq6GO4h+TewUt80IVRDKsEc6swxcX6rKNa3t0oLyE
-	0WkXpYOnhFqo1Z9AOKd9l3bgpWBEjb2cHsPzBLXOc3OqXpw4VS0Jo1RY1V5X0LF9
-	/tBDtHqFkRsfYaGTN3GHmm1v3b9S3gZr9GfsdVQyBCcoRfbhkDsBHv+m+zLN+Ek7
-	nXIdpQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bg57sg1ge-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 03:36:18 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b471737e673so17507161a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jan 2026 19:36:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767584178; x=1768188978; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jjx6sjiI6K21BuWUx0qBdRxfRjPTICLiJZHLgsGwlsk=;
-        b=fTFl2tS5oPnH0Iy1UuhTeCmoy1JTsqdmzfE3DF+v+lluEzfS0Tl04rzW1e/toi5toX
-         4UrCZmw9/Dj3+It2lysQtK2CldFh6SPjqeloTQpbD3FEpfcwzBl6kgDnL+vlwEqDM0Kq
-         pqO5WWQEkAkjL1Pa44DMQarVT3RKKHpMn7T7+U82SUjaOnfRBKs0M5GZA7+qmuuOZpL5
-         qTQPZ1p6XOHFC1TXNnXbazsU3QhUb1Vih0Qjc1B2beqQTcF9DLhn4OjBQzbWXoiK0tQF
-         ugKihlff+sbHhKEeZkR/nyr15SLimhzZEXvQ1b/UqMUGPGaA+7Njs0N7wFHhlLDmFH9M
-         bl1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767584178; x=1768188978;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Jjx6sjiI6K21BuWUx0qBdRxfRjPTICLiJZHLgsGwlsk=;
-        b=LVkQGJ/3e2pH5dS5+XgpItstgnjDAmhGWWJOGglJ+sSX0n04y8CfjIGMGyOoE3YCPM
-         LDgozmeJ3mdYm4VyBFQ9Y7imvBnkQropLDc4Ep46W4fCKUPuNrmCdn3Tcyu334qMn5NP
-         QxwunTP8rnnEfD5u7zAEnPC9N6r5QBRFrDRsfCesIIevYo/KMdUUdB+zHFKnpjtSG3u0
-         Lqv0OoaFcUNwdS3zfN9h2JDFLuqS3R8Tn14lRVAnVwNHSR5wU23um8v8BFNJyLMU+t1U
-         kr+SX516mGJEnK/E/ealkopNlAvSxXl/D8b8wlp5Swblx7RODEgybYF54/1kgS8Dx15E
-         f3dg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQmuvHBhmkKe0qq+5Wtt9ezXs/ERhTH8LUapF9XW0h4xVYbhCkXiniJE0aMlhBg+Mm/U3y0q9ogQLSbLU0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDobMNe6kSUhEyPqrcc/NC6cTLf/dkQv8aNs/9Ea1GeBe/Qrt+
-	oytznGfmAtuy9EeACdUAzZmqMYyAXAe35pwNSfo4bQrERqeg6ZlZsg4F50xPNlorKj84kCqrj46
-	ZZ0nkStyhhuAN0p/ZoolzLJZEDKSwLJPdYHNFyFsy9xnKvXWXtnZZtmokMYoF/j3jPhht
-X-Gm-Gg: AY/fxX6BjeoTucoIbiZwoy9bbPzHpsbSm4jBI9k0rLkCDUKsRG/1WCmBZ54i9uHVE4/
-	kpFnDmltNn+gRLnBgaY5R1CWQtSM111c01Wy3L6Ncp2mQVw5ZAS6VSbwZoho8r/mRkF2xV9XezW
-	h43sQ33SD3px4CyqWbDAniyCBDeZ6FwJUAcI6al5uJzXYALQJ+ddO4OathL07kLeaJJCmKw54lY
-	Yd4/G4Zxg0VjeBgn4AkQ/lC4LXvm32B67BO5KT26e2Hf/fN2rtVyMNvkeWONPMrRTou9t5miu42
-	s0udfNSMtfJUMQDAC7YgUWnSQ4s3pBWj0+uNHZ31k6MWnHASyOLxDfQR4esdOJS+h497ZAKif9g
-	Y6hSokAqecZD4TQQgfuGlQjJR0C2dC5V7B2+8KUfVRr2lf5LIKd5Zb97mFnwPW48V
-X-Received: by 2002:a05:7022:6290:b0:11a:4016:4491 with SMTP id a92af1059eb24-121722e1205mr54700719c88.24.1767584177739;
-        Sun, 04 Jan 2026 19:36:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF5btsRlhlcTOBkTuAvXfkwyaAUU+fgoiuLOy1yCZxWtMb/49h7AYDyvyO1x2PD1mAyS6iVwQ==
-X-Received: by 2002:a05:7022:6290:b0:11a:4016:4491 with SMTP id a92af1059eb24-121722e1205mr54700694c88.24.1767584177093;
-        Sun, 04 Jan 2026 19:36:17 -0800 (PST)
-Received: from [10.110.40.60] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1217253c23csm164772468c88.9.2026.01.04.19.36.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Jan 2026 19:36:16 -0800 (PST)
-Message-ID: <4d9c38b2-d2c7-49a0-8034-e7874e000466@oss.qualcomm.com>
-Date: Mon, 5 Jan 2026 11:36:10 +0800
+	s=arc-20240116; t=1767587947; c=relaxed/simple;
+	bh=P3Jq1/GVbTG8qT5KcFiU+nHcsgTcm+kO3ZGimEdDNJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mRPClii5l9cN0myeniOP98c1V+VI0v57zktX02xycX3DnLamUBjwt6ebmKmJkFSFMj8kqsBXz79Ee41IfuEkzHK9cTtRUBdAchrm5DQxCz+5kNeiGOBj56+D1L6fgKVx7AfZkq2XjtOi2oShihC0aqfjqTh3QEtikzK+M+A0dpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e7GZ72+m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95908C116D0;
+	Mon,  5 Jan 2026 04:39:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767587945;
+	bh=P3Jq1/GVbTG8qT5KcFiU+nHcsgTcm+kO3ZGimEdDNJE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=e7GZ72+mIQ4KRIyoikDFPLu/wxaryCH0j+pq4JyW5qik0/eGYC/otBRpeiF2z+Wah
+	 PEmtkWlcYNl6No9/if9sJkNJD+ZAvMwwtO0gQxeywkG2X7WldXCittCfP1cbxUVoB0
+	 ypI7ghlGueNq3dh9wMlBe52zGQrnnkvNF/8Ddegx1vMSNF23UzqfCVTvGKVRWPUnr1
+	 wEqIpQhIsWRG2JMSvdGXxz4DhWbSaSpVE/eXgZJQOwdenM2s70h6a0yPKBtjgIOQjk
+	 xDAfIg7v2T1tRFlyqjhA2Bd8jNt3K1+BNPKA58CsEIMrpcHzt/WMt+D6Dkxs7/XC0p
+	 LGU9vKhOEszyQ==
+Date: Mon, 5 Jan 2026 10:08:58 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Enable eMMC variant
+Message-ID: <aVtAYqwmjPPRmWzV@sumit-xelite>
+References: <20260102104638.3802715-1-varadarajan.narayanan@oss.qualcomm.com>
+ <e00630b9-56f0-4a30-84ef-8b691ea7af3e@kernel.org>
+ <nbmkrvppluonhvs7gjttsyw2nvxq45y44rz6f5w2ytci2mq3sx@m7c5nc5pujll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] Bluetooth: btqca: Add WCN6855 firmware priority
- selection feature
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com
-References: <20251231075817.2611848-1-shuai.zhang@oss.qualcomm.com>
- <20251231075817.2611848-3-shuai.zhang@oss.qualcomm.com>
- <wxfba3ldef52mwuhthyh76qd3ppmmhmhuzhck3yziju2iil2vy@6elo3tzkjdvq>
-Content-Language: en-US
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <wxfba3ldef52mwuhthyh76qd3ppmmhmhuzhck3yziju2iil2vy@6elo3tzkjdvq>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=UJ/Q3Sfy c=1 sm=1 tr=0 ts=695b31b2 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=n7h1oodGu2A6BxIyKk0A:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDAzMSBTYWx0ZWRfX3X1tnm6uVm8L
- wMwdveTtqRsl9wjTWArhl12zA9kbqreCICQYwMFjfxQUb1YIdPFQQYoX7wydrvnM5sZ/zZUMfrW
- uxDmxyes5dzU8QBO81DlTb/2qBCjSlwtxA8k+Gckpqwf9gQNQ5Sxbu7wd8QkzZbXwvqT39aQIaR
- pOcrGcCjQu1UTFxFU2A2wL0qXq9Umtha43ZibMU8QfxT0va09oZ7kKiuhQwpzoYxwjyq581GQ96
- QVQjh28kUiK+EheSfEeJNFu+dtvgLDGua30PuUkMoccl7RXzV/Qo70W7YoSi5wu+080AsFRdgGD
- /qEaBdkshk8khiTKFB3i747l8uY9Zmgpi6k26T+sCT8ctwAv500kx1vYi/IR4tploHn4obW4udk
- bUWUWhmf+VugXnWzzE5CRZFELV+qUBzLX7vJ3YjaPnHTiaU22ZHHOt1O2cmqEC1FpbAm6dpyqjJ
- mK4ugdJ4bFf45JLU7yQ==
-X-Proofpoint-ORIG-GUID: CoYSnfR9gyL4khspW8Ou-aTDTudcbSot
-X-Proofpoint-GUID: CoYSnfR9gyL4khspW8Ou-aTDTudcbSot
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-04_07,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601050031
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nbmkrvppluonhvs7gjttsyw2nvxq45y44rz6f5w2ytci2mq3sx@m7c5nc5pujll>
 
-Dear
+On Fri, Jan 02, 2026 at 02:09:04PM -0600, Bjorn Andersson wrote:
+> On Fri, Jan 02, 2026 at 12:08:03PM +0100, Krzysztof Kozlowski wrote:
+> > On 02/01/2026 11:46, Varadarajan Narayanan wrote:
+> > > RDP433 can have NAND or eMMC based on a board level rework. Since the
+> > > same GPIOS are used for both the interfaces, only one of them can be
+> > > used. Add a new DTS file to disable NAND and enable eMMC.
+> > > 
+> > > Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/Makefile             |  2 +-
+> > >  .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 32 +++++++++++++++++++
+> > >  .../boot/dts/qcom/ipq9574-rdp433-emmc.dts     | 26 +++++++++++++++
+> > >  3 files changed, 59 insertions(+), 1 deletion(-)
+> > >  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > index 6f34d5ed331c..d5fe12ef4300 100644
+> > > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > @@ -26,7 +26,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
+> > > -dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
+> > > +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb ipq9574-rdp433-emmc.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
+> > >  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
+> > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> > > index bdb396afb992..e4ae79b2fcd9 100644
+> > > --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> > > @@ -169,6 +169,38 @@ data-pins {
+> > >  			bias-disable;
+> > >  		};
+> > >  	};
+> > > +
+> > > +	sdc_default_state: sdc-default-state {
+> > > +		clk-pins {
+> > > +			pins = "gpio5";
+> > > +			function = "sdc_clk";
+> > > +			drive-strength = <8>;
+> > > +			bias-disable;
+> > > +		};
+> > > +
+> > > +		cmd-pins {
+> > > +			pins = "gpio4";
+> > > +			function = "sdc_cmd";
+> > > +			drive-strength = <8>;
+> > > +			bias-pull-up;
+> > > +		};
+> > > +
+> > > +		data-pins {
+> > > +			pins = "gpio0", "gpio1", "gpio2",
+> > > +			       "gpio3", "gpio6", "gpio7",
+> > > +			       "gpio8", "gpio9";
+> > > +			function = "sdc_data";
+> > > +			drive-strength = <8>;
+> > > +			bias-pull-up;
+> > > +		};
+> > > +
+> > > +		rclk-pins {
+> > > +			pins = "gpio10";
+> > > +			function = "sdc_rclk";
+> > > +			drive-strength = <8>;
+> > > +			bias-pull-down;
+> > > +		};
+> > > +	};
+> > >  };
+> > >  
+> > >  &qpic_bam {
+> > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
+> > > new file mode 100644
+> > > index 000000000000..ffd96b1b1c65
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
+> > > @@ -0,0 +1,26 @@
+> > > +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> > 
+> > Odd license. We don't take GPL v3.
+> > 
+> > > +/*
+> > > + * IPQ9574 RDP433 eMMC board variant device tree source
+> > > + *
+> > > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > > + */
+> > > +
+> > > +/dts-v1/;
+> > > +
+> > > +#include "ipq9574-rdp433.dts"
+> > 
+> > I find it discouraged practice. Although if Bjorn is fine with it, you
+> > still need proper compatibles.
+> > 
+> 
+> Nah, I don't fancy including .dts files. But I do see that I've let a
+> few of those slip by over the years.
+> 
+> The general approach for these cases has been to rename dts->dtsi and
+> create the two dts files.
 
-On 1/1/2026 1:23 AM, Dmitry Baryshkov wrote:
-> On Wed, Dec 31, 2025 at 03:58:17PM +0800, Shuai Zhang wrote:
->> Historically, WCN685x and QCA2066 shared the same firmware files.
->> Now, changes are planned for the firmware that will make it incompatible
->> with QCA2066, so a new firmware name is required for WCN685x.
->>
->> Test Steps:
->>   - Boot device
->>   - Check the BTFW loading status via dmesg
->>
->> Sanity pass and Test Log:
->> QCA Downloading qca/wcnhpbftfw21.tlv
->> Direct firmware load for qca/wcnhpbftfw21.tlv failed with error -2
->> QCA Downloading qca/hpbftfw21.tlv
->>
->> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
->> ---
->>   drivers/bluetooth/btqca.c | 25 +++++++++++++++++++++----
->>   1 file changed, 21 insertions(+), 4 deletions(-)
->> @@ -936,8 +944,17 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->>   
->>   	err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->>   	if (err < 0) {
->> -		bt_dev_err(hdev, "QCA Failed to download NVM (%d)", err);
->> -		return err;
->> +		if (!firmware_name && soc_type == QCA_WCN6855) {
-> Same comment as for the first patch: move this one level up,
-> incorporating err < 0 check.
+That sounds better to me.
 
+> 
+> I wonder though if this would be better served by an overlay, as it's
+> the same board, but with modifications applied?
 
-Thank you for your suggestion, I will update it.
+I am not sure how overlay is a better fit here. AFAIK, the DT overlay is
+generally used for plug and play hardware mezzanines. But here we are
+dealing with the default boot medium which can either be eMMC or NAND.
+Can a developer easily reverse the board modifications to boot from a
+different medium?
 
+And this DT is not only going to be consumed by the kernel but rather
+the bootloader (U-Boot) in this case where there isn't a concept of DT
+overlays which the prior stage can apply.
 
->
->> +			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
->> +						  "hpnv", soc_type, ver, rom_ver, boardid);
->> +			err = qca_download_firmware(hdev, &config, soc_type, rom_ver);
->> +		}
->> +
->> +		if (err) {
->> +			bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
->> +				   config.fwname, err);
->> +			return err;
->> +		}
->>   	}
->>   
->>   	switch (soc_type) {
->> -- 
->> 2.34.1
->>
+-Sumit
 
