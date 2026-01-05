@@ -1,69 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-87542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C9A1CF5528
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:16:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49474CF552E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:16:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F3595302EAFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:38 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9F55B3030235
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A681318872A;
-	Mon,  5 Jan 2026 19:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83018342511;
+	Mon,  5 Jan 2026 19:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRbZu16J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IMun4oJF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7605E33987A;
-	Mon,  5 Jan 2026 19:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FC1341ACC;
+	Mon,  5 Jan 2026 19:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767640596; cv=none; b=nZIP1+vSetN1SiTsz/CINvjwUJ27iupi3xtSQwbayPZoavFmQ+9tGhMOvtNhn7rE4aZglj7PiQbMhuQFqQjPOdqFxnt03/4aSIRMFlTTVs5C8o2mPEgW8CCZ4gjhdNl07lzjtQ+SE+0ztbkuKlqBD9se/71ORZ6TTZS3csDuQCQ=
+	t=1767640597; cv=none; b=kETTFc2eQk+5DxJvDIkLl1k/qme1antTK6mKsOw+D/WR3jacvXMPl7kYlhY60E3dexlY92ba8MVTRiK593lHM/9aD+FKp8NFjO7LJGdiBsbE7XwhbWy0RALGvOxY2acp3ztuceY5MO5viiLa9Xq5adRPoVAaVg5LT95Y2cmc1/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767640596; c=relaxed/simple;
-	bh=6NTPGQSzR8P8uoDmYviebKFpUL21wqkHF4476elollI=;
+	s=arc-20240116; t=1767640597; c=relaxed/simple;
+	bh=aHi9Ar/BCu8LO0olnN7E9hJY194M8f/2qnXUMIgdZ0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NHE02S/gxFAeOQn1SnCUeySXKrvFmLiZoaqsZtmQoqf9Lg6Mfccd/YV1JGe/rn6kTF9HCLJBtVdz699/HrfjGhEaBQAfrTfrhZ7MrMCWHwKcC52BM4X1+BPxNdFYy8TKnojvuAVOCswUWZdce9pgir5mENsZ/dTj6g5cfgQRSZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRbZu16J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21E0C2BCB0;
-	Mon,  5 Jan 2026 19:16:34 +0000 (UTC)
+	 MIME-Version:Content-Type; b=kb+NYairDtmeD8iftUl4wxrccJF6KF14XQWh8ZyeLvXN1N6nCTCx5HxNzhYq4nW9IyEyhcQiXzBg0qzI0QwxqlBXcH8QX1ZLO1n29BnTxDcvaFXCqUF2UwHlOJTFvRdiNLEHYwf6a1CW12wM90uoI0zAt65u180q9SE2EbBCUPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IMun4oJF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457F8C19424;
+	Mon,  5 Jan 2026 19:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767640596;
-	bh=6NTPGQSzR8P8uoDmYviebKFpUL21wqkHF4476elollI=;
+	s=k20201202; t=1767640597;
+	bh=aHi9Ar/BCu8LO0olnN7E9hJY194M8f/2qnXUMIgdZ0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRbZu16JNwTsfEQaacAM93EIUbAs0/6VI34n4CvF06mwZ/Y/DaUvDg4sIx33HwZBb
-	 3gfDfuugQ6n5N4K7VumAN3ElbfCTcZj9+jZHpope+wcC51CN7Nc5f/wRkAiy2SLbEo
-	 QammlwtzIjPegFfP2UzM46jB/8x/xiL7d0nokoDFDoUceSDXALNs71ixBWyLiNsVmN
-	 HTtIycmwdGBJYmxdyQmMfBl30deShq5NCuGrAkI1+OA/7mJuDAmVgD8tJ0lgJYlt+q
-	 RQrlcwlOYKnLq8xpToOv2oCGcko6S/F7t0F0PcVyKWSz18S+68Su951o7UhXlnbVCE
-	 kL3Bw17MwxqqQ==
+	b=IMun4oJFbz0L/L4kfVRXIhy1LqE1vRaYE0tOyiSFbHPBnnNG1OES7ctmld6uvMpkk
+	 qZjeG3iDNea1R+a44yAa6/iNiSZgKy5Ps59n9Fng/52daY9hwhdyVCuExuQHM9cESL
+	 1yXt2/aRVXTBYtaYCqMHM05SQ3UHB5n6lGWehhSg/sxYYjNr3bdA7N56ULtHdny6Ia
+	 amvYKIGxYD8rqP0SMecWBaRSZ7UG6+/uSnrUROqe7booYVOcm/fYJlTPkYYFRtfuxo
+	 ldJZ9oWB2Z8+hyuwhgmmr0HHz64RnTVxvyyMyijvJ3Sw3BmHeo4AhFVsHpYg8gP6Dg
+	 o/Zf6fo+eV9jw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
+	Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Abel Vesa <abelvesa@kernel.org>,
-	stable@vger.kernel.org
-Subject: Re: (subset) [PATCH RESEND v5 3/3] arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the DP PHYs
-Date: Mon,  5 Jan 2026 13:16:16 -0600
-Message-ID: <176764058413.2961867.6085786733249123604.b4-ty@kernel.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: lemans: add QCrypto node
+Date: Mon,  5 Jan 2026 13:16:17 -0600
+Message-ID: <176764058417.2961867.12477683092965187285.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251224-phy-qcom-edp-add-missing-refclk-v5-3-3f45d349b5ac@oss.qualcomm.com>
-References: <20251224-phy-qcom-edp-add-missing-refclk-v5-0-3f45d349b5ac@oss.qualcomm.com> <20251224-phy-qcom-edp-add-missing-refclk-v5-3-3f45d349b5ac@oss.qualcomm.com>
+In-Reply-To: <20251224-enable-qualcomm-crypto-engine-for-lemans-v2-1-a707e3d38765@oss.qualcomm.com>
+References: <20251224-enable-qualcomm-crypto-engine-for-lemans-v2-1-a707e3d38765@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,22 +65,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 24 Dec 2025 12:53:29 +0200, Abel Vesa wrote:
-> The DP PHYs on X1E80100 need the ref clock which is provided by the
-> TCSR CC.
+On Wed, 24 Dec 2025 15:50:24 +0530, Abhinaba Rakshit wrote:
+> Add Qualcomm Crypto Engine device node for LeMans platform.
 > 
-> The current X Elite devices supported upstream work fine without this
-> clock, because the boot firmware leaves this clock enabled. But we should
-> not rely on that. Also, even though this change breaks the ABI, it is
-> needed in order to make the driver disables this clock along with the
-> other ones, for a proper bring-down of the entire PHY.
+> QCE and Crypto DMA nodes patch was applied as part of the
+> commit 7ff3da43ef44 ("arm64: dts: qcom: sa8775p: add QCrypto nodes"),
+> however was partially reverted by commit 92979f12a201 ("arm64: dts: qcom:
+> sa8775p: Partially revert "arm64: dts: qcom: sa8775p: add QCrypto nodes"")
+> due to compatible-string being miss-matched against schema.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the DP PHYs
-      commit: 0907cab01ff9746ecf08592edd9bd85d2636be58
+[1/1] arm64: dts: qcom: lemans: add QCrypto node
+      commit: 173c43d0e4a435a95568d6b912d0d45c37d6d75f
 
 Best regards,
 -- 
