@@ -1,210 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-87404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 843BCCF3050
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 11:40:06 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F7F4CF3137
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 11:54:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7056F30019CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 10:40:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EE1023021E6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 10:51:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E04923168E3;
-	Mon,  5 Jan 2026 10:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C7622F3C19;
+	Mon,  5 Jan 2026 10:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E4w95ArU";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z05SunUy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HtppC0V1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AB0314D0A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 10:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F85A330B0C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 10:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767609601; cv=none; b=cG0Y5TPRKqaWsFngwd0tsA0ypLWemwnY5T4vrb9Qs1SofqPAKRYKm2i3TZrxmYmF4+f2555BYmJqGDPUF4Z3pDZHU1ZnrN9AraDZuhQFhnGewERrU6pmH3iE4BM0aOeWbxIf+rQ49iVHcclV1fbrXMfl18dbtKBWOp0crU1OoP8=
+	t=1767609893; cv=none; b=Jw2+n4Sf+7zaqhcWl+Jf/y/NGA7u8Bb24Zq+GZvp+ggnCye1bRtkzvrLgdKgx4rXgc4hjoEyIEBqfOGeUS16gvpx3vaKW59BGyQTQNr8oPTuDfamM4ixFKWq3hZoUSsMW3RitH+V8WeCgiQrs8TJs1B+P/gCiQ1tvbpH/0YBX8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767609601; c=relaxed/simple;
-	bh=iYABdkIGzyGoYhfLH9V0tmKXDo499up2rJn5D6C5Njo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=IDd9YM4j8eBsYWMW1AxichQmd5ww3SFcgf8unWPzi3WwOgMlfT8FRrlHZQFdVc4MufkS7i7paIq93B+2qNn6hiEcx0u2wNQTYzHES9KKLpj/zAe2G5IJdoNQSRGvtwUO8LBA7c3+EXyGh8lm4Pgd3VrI1WRZwRLr07MZVuXyg6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E4w95ArU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z05SunUy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6058ZqmH1208136
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 Jan 2026 10:39:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=W6OEsqhTURLyjbRdZA3xDi
-	nJ+/ccBBlqgXNuogfrel0=; b=E4w95ArU12W0tf50x4hzegSxtSr6bWCPNEkBn9
-	5/2wxeL0qhn/Z45gukBZlqNhvHBxG8zGhG+swigIA1pNi73DpBdN/wAbr9VlR0Cb
-	ZsIpCcnMeclHQa7Lw8+WSf6MJltx+r6zRlngrL2MLQ259Dsf/VGa1gxK4alZpl4z
-	Wt57TSt0DSx9f9TnLWNAsrVm8oMkkdFcmxxtsCv0D5+mk9oqOxfFTbQTbPtzTMMa
-	cgWanEoHBsvcn/wwlsE73k90mv+YNvGSl7HTu9YhLIHjalKtjiqHvUrIcCLF0Q3c
-	xytWgSBtH5dK+qMRit8HqaqRQmT+XoC/VQZU52nfTFi8EUtQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bev9hc4ex-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 10:39:56 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-29f2b45ecffso235809095ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 02:39:56 -0800 (PST)
+	s=arc-20240116; t=1767609893; c=relaxed/simple;
+	bh=YrRC31Ddb3y3jWG2tEbxQRfA1GAM+XHLkS0gA2ZsWYk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LyvgnqEunLNNLg2OwWT5WsDJSzvsdLlmMmeu4fJcvFuUWb4/CyumSq/u1TqPN5usCOMz7+M9efGa0YmHNlZFcn95ryMfAIWv7HduWRU9cBJnw4hAtEdOWPRrJ5u4cOYJSQESsxdHdiG3Ybjgc6q1EaDx3dxMjGM4oAuzCKQgzjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HtppC0V1; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-65cf3d51c95so8145753eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 02:44:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767609596; x=1768214396; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=W6OEsqhTURLyjbRdZA3xDinJ+/ccBBlqgXNuogfrel0=;
-        b=Z05SunUyWxlmItTjJOM+vK8AHksCFD3dkGyz0cRFxxCHv1hzfwKNyAuWeuDTcQL58P
-         yphlh73uPJXnp72odGRQzVvrTji/iHYXuDNOpsmdqDWICaIW9MrDk1roG/nIiT8DZFbl
-         6zAw3QhQuzpAP2DC87JfOqkNZJeCsGmF2weO3Rm9xiCp7dfUu0zsOByXejRT30xnJGRp
-         ltVpdRW0zgaErOdUOty6q7jy+Z1rWlVKRppXeDLOh5XVAL3LusEYHZJ1DNn1+SjSiKlZ
-         8er5Cd1L8RbrBU/RyojfdEIuwJejGHW8WpsrF9Hp46AqjNbFJD2OKaqHnAsFna5MKskZ
-         v9mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767609596; x=1768214396;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1767609889; x=1768214689; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W6OEsqhTURLyjbRdZA3xDinJ+/ccBBlqgXNuogfrel0=;
-        b=JTpvwmpfQLuWG4OJrdMejMqctzyYeFXUAiYlbLwUcx5XTKFAn+8KOnTU7oSuxv5As5
-         ozIzDe6lTjlrzMJFmEYI01Y4ee9k93QPRTlmc43SwzeRaJBzp8OZrnAov97fm4LOpPr7
-         JwHc3dz1S15iCqk5aYIn4wosrT3kKRP91Mmb4RllAtyKKVDX8yFSQSP7NO1OCw+VOUe3
-         XEGyyfDJeBKClnTH9PK8s4rPFRlS6iNk17fkDCSu7r5vPtILaduNIJ52sGk2ytB90Hqs
-         Tw59mUX/nKXo8e2SURqrHtoBE8pIgnoZO3ZyatCGr4vUw8AyfWAO0BlBel6pNRvSjbb1
-         eRug==
-X-Forwarded-Encrypted: i=1; AJvYcCWZwddvUArltgRXF/EjgPJMLreKaFtHKmqmYrl1be0yWwIGxdCcAlI3EmjIN9Xw40/l4sh1HsxyA8Q+onXu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnE9nUmWyif4CW+urLI1MqIyMoUsjvEwW3HJXlg+xwop5UUHYO
-	rcdlUYx6mAaancp7ypTE8oMx/7Wf02GxVgv5fRLjMpxgeU8gvqC9pN0tEy6m0RP7oN03hAloOL+
-	7CcEQxoVjDo10Gv8zHAN84KVmF3I1/sY66OxkaccjzuclG5lrjvz8FWfFvNUlltjPBG6W
-X-Gm-Gg: AY/fxX5G4kd1qRFe0sQ0NyG1XrbdLYLjQH3YkUeWTti8YtHdeH5eDmvnCR/+/ZsYwto
-	PeBAAA7R9JaA6j9at8F1KJauBpxH6ftQy+HMvGZ8ZJNih/TJnMr2oQHACB0g25lAws7rJ+OOvKj
-	JbolGHsYZrXzYASsc4B130wyu5l2rf8wQ9cJcRC1ePNP5Bv9GtZsA0M+MxzadwQqTXPcxSO0k9M
-	YMO4wzyVNb59ET/HdkK27ObF8y5WpPYr8AwseJLDPJ/gqkH8C2ao+ky1Bu1PKm1MVwSkh0tlmE9
-	+U9O8qEnYkp+BvM5vzGcw//MsNbEUGzARWJeDet+7KZThNk6oyPISw0ZSfzDSmTnP/mjw746I3C
-	lemKjo4FUb/Gg7mVhk6Z6Vs3ELTGQ9TJX5g==
-X-Received: by 2002:a17:903:3b86:b0:2a0:8966:7c9a with SMTP id d9443c01a7336-2a2f2c5e17cmr413761105ad.58.1767609595921;
-        Mon, 05 Jan 2026 02:39:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHVjiLiSTCrOoXEpqBatBcTb1pPd1TrPv0DrgncFboyYAicxqqtYDHs5+4LkaH5FuCgC7JmXQ==
-X-Received: by 2002:a17:903:3b86:b0:2a0:8966:7c9a with SMTP id d9443c01a7336-2a2f2c5e17cmr413760935ad.58.1767609595488;
-        Mon, 05 Jan 2026 02:39:55 -0800 (PST)
-Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d7111fsm440496075ad.85.2026.01.05.02.39.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jan 2026 02:39:55 -0800 (PST)
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-Date: Mon, 05 Jan 2026 16:09:50 +0530
-Subject: [PATCH v2] clk: qcom: rcg2: compute 2d using duty fraction
- directly
+        bh=oAaHf6yOWNsJkhvl6QiZWHrv6AwqRWjpGt7OkO97AzM=;
+        b=HtppC0V1yh5HVlYFayHotHrT+hTylAjXHdh2zpwCoZm4WC8nmfGkYp3fdoGQg726gI
+         xA/HyeNmbON+eNamIrM+HRDSZGihAqsi0ZtwnDILfFLSab/hTFcQ1hlwnSwJp/2aG9oD
+         NooaIv+FBC/ID0aDmohnLRZjEFN0TASrg/kFbtABa8EI+UuOC2SmgAgeEHa/2nps6Yny
+         DtShXBsS2RhOO1GzOHxE5ultcEy2Zd8wWmtHI3hDLPQBlxkeOwgFrPqjbwyG7zu3Aa62
+         6b2Gvb8quAQbh1aCA0ZixxWUDVufm968c9Jtv+RoXP+HsxSGj8TsSAFGBMz8+aRrko5O
+         ruiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767609889; x=1768214689;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oAaHf6yOWNsJkhvl6QiZWHrv6AwqRWjpGt7OkO97AzM=;
+        b=nk0GKZR88xwYsyBRGnzi0TsEINmIh32+r8BNOO6si6yE3PBIn18/2hDVkghR4D0XCJ
+         5dQuhumZLy6Iwzyg/sVWVdHSv1zHT2w6zSkFvUiDKiyfnGn5addWskIcjMJ3LlVwhRhE
+         GM3vY6SWucIqmc7Azna5ptfuCmUz3C0oYSfUhjf2Nl604wE/3rWTqt9PjxLHtVodFkhQ
+         gXlC0mgJib9Wska2kd5S1CDhXmj1oVkCaFQ0UU/VeJ9fxg0mUWcfyxsFzQdi2Pr1Xp+3
+         0UdHgY2PbiDzaC2eRqfkuZxkRNp6joZpr47V80dHeQdvLy57xymXtJQPng+oM6vwEtNo
+         VGhg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXAcs3RLtksMyMLO9mpGNJISyCdwKG/CGFyeS75WR4kwCKteJipjpvCIyrCT2vLAYR6UZDnBo+D3z2vEqK@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZmTJceayaEJek5x6cV6iIhGQAMZSHsXEOiGDjZ7ShkdJ5nYYO
+	yNo9pwxAmWH2ISr6+HzVE/9w7ZM2mKHJ5KFuxP/FPaYo9UszGVyvZz7skSDf8Dwcib+ju9kuF+x
+	blWu79LeryteARQ9lmwQCxDvp6I8NsSxXtlH7020GPw==
+X-Gm-Gg: AY/fxX70cjuwqfQKZzN53UR2sc98cQB34z1PEoq/F1s376byjXaWdXisJ0Ab3u1qi+k
+	rbx1YS5bfWNGC6hctSTonigHGSlKYmmZ4XFF8CbjLGBecKFxo8c1RdKKU6bADJ3dlHEYpnWe/gw
+	JxI3jG1AieuC9TVTrjkZeNZThqcNKCc417PImErdp3kklrPacb0MPI+nhAf/eEsfkbsOGNpcdlv
+	6/IsQI3XjHr1fd3VN89Z71dFEziA3lqZR2LjPH1KN02GlTqfTW/6/U+gnrwPFmZp4wKnfjFt5HH
+	Enar4fB7oIh4lRzHSwwF7zg5nA==
+X-Google-Smtp-Source: AGHT+IEMgsYCEaejUCdRz1sFVJJFyHx3BrnIrdCUbB11wMQOevmpe/rOaRtrABvM7gz2Me7LPQlUE3P0caYucuHtfEQ=
+X-Received: by 2002:a05:6820:1626:b0:65c:f583:d3cd with SMTP id
+ 006d021491bc7-65d0eab7e3fmr23544956eaf.55.1767609889583; Mon, 05 Jan 2026
+ 02:44:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260105-duty_cycle_precision-v2-1-d1d466a6330a@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAPWUW2kC/4WNXQqDMBCEryL73IhZaq196j2KSH7WGlDTJhoaJ
- Hdv6gX6MvDNMDM7eHKGPNyKHRwF441dMuCpADWK5UnM6MyAFdYcEZne1tirqCbqX47UUWBNe6n
- PKAUpISFXczKYzzH76DKPxq/WxeMl8J/7ZzBwxpmstLhSO2ghm7v1vnxvYlJ2nsss0KWUvleaL
- Ka/AAAA
-X-Change-ID: 20251222-duty_cycle_precision-796542baecab
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-aa3f6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDA5MyBTYWx0ZWRfXyS1/AMssyPhP
- ziGimdBpCwMSOGyC6y6PHaKgbuipOykOI1IQgTXY0ChAYRE/aWkxZyXBAxX38XnsTmhOZFfLy11
- a67QPEUE5gt/d6Wg01lF2Cs4CzWL81oDBm/GvJEvPXTAgEqWDYrk5k5Z8E/Ti1kzJAISZ+Btae6
- rR5yJ1jOFeiR+UY0v0eV/H9R+2Q+Pf5Qvph4zlwFGgozSLOs8Od/arpGDBwbiLPNh0aT+i1Ghj7
- zMIPdXXJCka4FmV7/Q9C+2XcYZeRmZJ7roIThmmnvCYMlOCFN5XToaa1QfOzAlz2WEeh0TSlgNb
- 5vsfPN8HlcoUFa9vasLgDQ8/7Cm8vShqgcEKQKGNhAkH0oo7JdoOK9OvP05HNVKjUb7GNyDKSF/
- CLINrLSscLcUSEPKfORrgWD6BFX2MSKr3P8lLS48hqwJqkK6Y7gfleeboO4PjgH3Jjpkpl/f/qy
- OFhTbePfyfxajK467Pg==
-X-Proofpoint-GUID: o-DE7c4HNxjgOz7Q57pc4WzED-z0fwsO
-X-Authority-Analysis: v=2.4 cv=RrbI7SmK c=1 sm=1 tr=0 ts=695b94fc cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=igsz0PQQFTjIY3ArcIwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: o-DE7c4HNxjgOz7Q57pc4WzED-z0fwsO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_01,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 spamscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601050093
+References: <20251208020844.5310-4-krzysztof.kozlowski@oss.qualcomm.com> <ebaf9e48-07c6-4b00-b773-312e0c9a8e21@oss.qualcomm.com>
+In-Reply-To: <ebaf9e48-07c6-4b00-b773-312e0c9a8e21@oss.qualcomm.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Mon, 5 Jan 2026 11:44:38 +0100
+X-Gm-Features: AQt7F2pJVcziQCylElUKsMUche4vaefoDeBwc087wyFI1gv6lzxDTfIojMTspwk
+Message-ID: <CAHUa44GU=Hb+L4St5Ryeh4AV-SAWBbzH-npEyek=TT1KPw2Awg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] tee: qcomtee: call: Fix confusing cleanup.h syntax
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	Sumit Garg <sumit.garg@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The duty-cycle calculation in clk_rcg2_set_duty_cycle() currently
-derives an intermediate percentage `duty_per = (num * 100) / den` and
-then computes:
+On Sun, Jan 4, 2026 at 11:42=E2=80=AFPM Amirreza Zarrabi
+<amirreza.zarrabi@oss.qualcomm.com> wrote:
+>
+>
+> On 12/8/2025 1:08 PM, Krzysztof Kozlowski wrote:
+> > Initializing automatic __free variables to NULL without need (e.g.
+> > branches with different allocations), followed by actual allocation is
+> > in contrary to explicit coding rules guiding cleanup.h:
+> >
+> > "Given that the "__free(...) =3D NULL" pattern for variables defined at
+> > the top of the function poses this potential interdependency problem th=
+e
+> > recommendation is to always define and assign variables in one statemen=
+t
+> > and not group variable definitions at the top of the function when
+> > __free() is used."
+> >
+> > Code does not have a bug, but is less readable and uses discouraged
+> > coding practice, so fix that by moving declaration to the place of
+> > assignment.
+> >
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.co=
+m>
+> > ---
+> >  drivers/tee/qcomtee/call.c | 17 ++++++++---------
+> >  1 file changed, 8 insertions(+), 9 deletions(-)
+> >
+>
+> Reviewed-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
 
-    d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
+I'm picking up this.
 
-This introduces integer truncation at the percentage step (division by
-`den`) and a redundant scaling by 100, which can reduce precision for
-large `den` and skew the final rounding.
-
-Compute `2d` directly from the duty fraction to preserve precision and
-avoid the unnecessary scaling:
-
-    d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
-
-This keeps the intended formula `d ≈ n * 2 * (num/den)` while performing
-a single, final rounded division, improving accuracy especially for small
-duty cycles or large denominators. It also removes the unused `duty_per`
-variable, simplifying the code.
-
-There is no functional changes beyond improved numerical accuracy.
-
-Fixes: 7f891faf596ed ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
----
-Changes in v2:
-- Update the author email to use OSS.
-- Link to v1: https://lore.kernel.org/r/20251222-duty_cycle_precision-v1-1-b0da8e9fdab7@oss.qualcomm.com
----
- drivers/clk/qcom/clk-rcg2.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index e18cb8807d73534c6437c08aeb524353a2eab06f..2838d4cb2d58ea1e351d6a5599045c72f4dc3801 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -755,7 +755,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- {
- 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
--	u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
-+	u32 notn_m, n, m, d, not2d, mask, cfg;
- 	int ret;
- 
- 	/* Duty-cycle cannot be modified for non-MND RCGs */
-@@ -774,10 +774,8 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- 
- 	n = (~(notn_m) + m) & mask;
- 
--	duty_per = (duty->num * 100) / duty->den;
--
- 	/* Calculate 2d value */
--	d = DIV_ROUND_CLOSEST(n * duty_per * 2, 100);
-+	d = DIV_ROUND_CLOSEST(n * duty->num * 2, duty->den);
- 
- 	/*
- 	 * Check bit widths of 2d. If D is too big reduce duty cycle.
-
----
-base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
-change-id: 20251222-duty_cycle_precision-796542baecab
-
-Best regards,
--- 
-Taniya Das <taniya.das@oss.qualcomm.com>
-
+Thanks,
+Jens
 
