@@ -1,64 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-87494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05624CF4215
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:33:25 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A4E8CF4146
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:19:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1C8FC3018CA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:32:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F259530312D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:18:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE42433C198;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC16333C194;
 	Mon,  5 Jan 2026 14:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXMSFs+q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1RISvcF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F91E277C9A;
-	Mon,  5 Jan 2026 14:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE8A3195E8;
+	Mon,  5 Jan 2026 14:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622123; cv=none; b=r/sG7b+R/f2ttwZZsGGTyhoVta+wvntvdCu/I5xaFzFmi2fAHegI5cxwotJLzzit/NTPu3INvCMCdEG/7OtB7+qVp4Y/tgOmT/a2hn0OgdRR5AYHr5Kq/0sTHdMaff38sNfsZuftASM2Vbo0BUEotmAcikf1L0YefAbE+0RtPyA=
+	t=1767622125; cv=none; b=SHrNAXLIv9F0BUXJukLMH7ZUWctyTJ5eTsKjLahLu6X8PAAaPumddsOUb9WdwnRrOA37JR2B6VCKOaLijas3srmUssVM6GOyJuKfCjp/YcHfJx3NbJpVnaOdNV1Tb0QmAGftFFPO+Jz0Zvng/8JF6yKjDwwhyJn7T3vsihlz2ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622123; c=relaxed/simple;
-	bh=inRMPpvRg9GgLohYKESF7uoo/L1yGUB2AXPVoDf4dvg=;
+	s=arc-20240116; t=1767622125; c=relaxed/simple;
+	bh=FwlatwWwhf0j0Y/c0cpnobxyOHFmby7rIDXpobArU1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SVCRXFswusAqvZhDYdFn6vyZ2tPsM6a6iJ1gWqYYWrxdfx62FmIGL2aIU/5U057I5yKRqeRYLK1Br0ZWWYzPEE8hzquoiIc7grN6yU0ghp/IO/6enIAOcRSGArL+7gBqvs2x4wrqgYtBwppwZmQc8aujWHsLZsSWJWX0L17hIrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXMSFs+q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B408C4AF0D;
-	Mon,  5 Jan 2026 14:08:41 +0000 (UTC)
+	 MIME-Version:Content-Type; b=NggcQasvkxByYoKdiPwM+fy7IZiKwkD2ydAAZJnJlYiYYMaibMJ7hbXG11rc+bysg/l3Pz9eQ5F91BaJdH3ZQN5wpuhVSgHPhFYUu3hjHkNjhMrr12/OGWNHh9qZzTvTYQ9w9dxPmPohnPGDxc/zxqPu+oydLz8vuIsX1Nw3yJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1RISvcF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1250C16AAE;
+	Mon,  5 Jan 2026 14:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622122;
-	bh=inRMPpvRg9GgLohYKESF7uoo/L1yGUB2AXPVoDf4dvg=;
+	s=k20201202; t=1767622123;
+	bh=FwlatwWwhf0j0Y/c0cpnobxyOHFmby7rIDXpobArU1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXMSFs+qTDUfoYXPFnoBdz2bapqlfHgrJZXbwAQpxst4hH3ewL2EnxJgweMZCigNF
-	 r026KmcubaMm1zSBtW86XwB0DTFiWN2rdWa8xTVdFkrISnVFMFyMWoGx0M3PlVZyZB
-	 f2t6ETS2v7ioxNSIFLjFgwr2iCyn9AZJIOJwlB2NS8OIHSzkd89CCdv+uSkHR9aRDW
-	 6PwaiUbWnOms6Yt6j8Spus+itoricPsoXQy0YkQICdCeB7wsglsvlRZUbtR5tyzg2M
-	 rAh3dnyb+KAPMVHvA6Ad0xo+VIJBdFQ50Qru8smUffhmDh2OYDqDWOlMcD+c8Dw92E
-	 R5VQSV+twBLSA==
+	b=m1RISvcFPcrVrw4O9LlhP6dtkdNs0gk2ZpzQZGnFceyVaeP+Evwbl9C4luZOqVKFJ
+	 Fr0lo3bRlusiW4pKOaLGVesMtLwrwHQYxhJVZKbPnnq6GfDD8ZtHbNWDZyqQHsCkJZ
+	 QW+gYeApPkyIkBvIlxTzk3BWVZSgcufv4hGeGyymOc0yx6GmL1b4FDOM27gP9kS/Mb
+	 yNCO2dnfKJBwESn/4LLSS13XIvpoY4NXa25ztz5BfpraDP8D53UqtEoR4w7SzokE21
+	 P16QOf1r3DEReP0AQ05GWUEevjhaAqsjMc/KQVsbmDZ00DMUWu36rYfJtbE3anNyvK
+	 DiqjZYgFwrTrQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Tingguo Cheng <tingguoc@hu-tingguoc-lv.qualcomm.com>
-Cc: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
-	kernel@oss.qualcomm.com,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: hamoa-iot-evk: enable pwm rg leds
-Date: Mon,  5 Jan 2026 08:07:41 -0600
-Message-ID: <176762206414.2923194.3519328517461927165.b4-ty@kernel.org>
+	linux-clk@vger.kernel.org,
+	Abel Vesa <abelvesa@kernel.org>
+Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8x50: Use floor ops for SDCC RCGs
+Date: Mon,  5 Jan 2026 08:07:42 -0600
+Message-ID: <176762206408.2923194.11853047530908161551.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251114-add-rgb-led-for-hamoa-iot-evk-v3-1-5df1fcd68374@oss.qualcomm.com>
-References: <20251114-add-rgb-led-for-hamoa-iot-evk-v3-1-5df1fcd68374@oss.qualcomm.com>
+In-Reply-To: <20251124212012.3660189-1-vladimir.zapolskiy@linaro.org>
+References: <20251124212012.3660189-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,17 +64,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 14 Nov 2025 00:13:03 -0800, Tingguo Cheng wrote:
-> Add RED and GREEN LED channels for the RGB device connected to PMC8380C
-> PWM-LED pins. Omit BLUE channel to match default hardware setup where
-> it's tied to EDL indicator.
+On Mon, 24 Nov 2025 23:20:10 +0200, Vladimir Zapolskiy wrote:
+> In line with commit a27ac3806b0a ("clk: qcom: gcc-sm8450: Use floor ops
+> for SDCC RCGs") done to fix issues with overclocked SD cards on SM8450
+> powered boards set floor clock operations for SDCC RCGs on SM8550 and
+> SM8650 powered boards, tested on SM8550-HDK and SM8650-HDK respectively.
 > 
+> This change fixes initialization of some SD cards, where the problem
+> is manifested by the SDHC driver:
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: hamoa-iot-evk: enable pwm rg leds
-      commit: e50c63e89236beb249507f986c3458b2b670cfd6
+[1/2] clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
+      commit: 1c06e3956054fb5a0930f07b02726b1774b6c700
+[2/2] clk: qcom: gcc-sm8650: Use floor ops for SDCC RCGs
+      commit: 8c4415fd17cd5979c31a4bf303acc702e9726033
 
 Best regards,
 -- 
