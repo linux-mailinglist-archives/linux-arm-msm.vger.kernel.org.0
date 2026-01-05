@@ -1,236 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-87515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 304D4CF4441
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 16:01:36 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39E31CF4AFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 17:30:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9E64D3015E1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 15:01:31 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 109163007495
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 16:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 645E6347BD9;
-	Mon,  5 Jan 2026 15:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 720653376A9;
+	Mon,  5 Jan 2026 14:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="W2kEYN4L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UYIsr1MR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2D9347FC0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 15:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DCF33769A;
+	Mon,  5 Jan 2026 14:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767625290; cv=none; b=GxO58bZtPNjuS2Foi4iJeR+fer+57nI04l+wlgIyWMqVxDecoEUV/jDtm/STJcLw4Nia9emlvFp5aUPiwMN3AjTAqHWsUxf0cwakP+fHe4cpSmfFMzR71U1TgAe3MrkQAbDK++IAIfOO7rqya3taK+I72NZnYlD/wdjcUvnOoU4=
+	t=1767622098; cv=none; b=DhiXpRMdIRg7Dcg3I3BIoe8Bz/J6YISMn5tnf5gvO8IdEidd3pM9rYvOlSvjQy4jaOqP8YTGCRuU1C5cnaDHW5LW4qplDZ4xOKh7UvFjT0o3Zt5egmCSYHJPu8yCRICo3fWHURUTY4DUsGvqxR11dlEtmN27rxUhbB7ZpLRY178=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767625290; c=relaxed/simple;
-	bh=ahAgD0Fs7SzussxHCSmv8Dl6KtgI+0MaddlvsYlBKR4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m0rtIP8Y5+gRhWwhbbJ2DO4uFw/3QMnMTZLwtXxZd45wuQBBKNPM+GgTYqGrFcT6yMHrQUQUiHg1dGshOvjKm490XYQy5XSGHZuYPjUu8iFmZKnlXHudBDCjklDwnQQc3qSKUjl9tgX6LYkZH3EXzvZ3DFJG9Q52BTf9JzSjqTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=W2kEYN4L; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Message-ID: <8269249f-48a9-4136-a326-23f5076be487@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1767625286;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fOxQLFGEW0RANVkVfAKLLDgXb3+7inse/Fs/vs8oviw=;
-	b=W2kEYN4LQUJDBeZ+ZAdPcAe/LDR9TS8MijYUcz83M03A4wybZiEd9P3eDX64FZ5lkLiJiO
-	rtiKXW4fp59dcKjLS7kdQ4zqrsPZwvKv9vprNY8ytZO/r//2q/LW71RJcLEnKnkuUkqJ93
-	0lUn3aVzgScqCY7OlRrvfRYWmsr0ic4=
-Date: Mon, 5 Jan 2026 10:01:22 -0500
+	s=arc-20240116; t=1767622098; c=relaxed/simple;
+	bh=nwN0pQFhi+ijUzj8bmiwYI/Ad969wX2RiAkWTI6e2LE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RW4CWlcJVkukwXCxLnsmIhFq0g9RxqkfcP92eS2GMAGVYNK7FKdExg1BSFV6mXf7VWucRWdJYf+w80/ffGzkIdWvRpQCbmy+7fhhrjuvz/c3BZgsUrk5pZncNFcOOG76ObNmxtV/Kfz3YMPJxnVRS8No9h+hdrF5Ynor4A5nuDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UYIsr1MR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0D2C16AAE;
+	Mon,  5 Jan 2026 14:08:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767622097;
+	bh=nwN0pQFhi+ijUzj8bmiwYI/Ad969wX2RiAkWTI6e2LE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UYIsr1MRTcrgmQEUb0i3nd43Se9IZpuAr0VMWrP/5nVIdhIJRG7DeaAFpgBlhonoF
+	 /VxGaL+47Q7iJN8+4ETRh0Lkw8VCCdExEudACWpMQTv3cHViP944WV6ve7OubkvZQ7
+	 7cOPiQd0r/d1cS5Il482FEUHDTjaUMHSDZkU4B8JS2eyJ5bsmbDeDJCNsIjBnkQkwW
+	 KlmSflF0793w3ZhSupkAWvw0pU3Fc3zrLZ9lY5t8KVMd7RRLAr97qoaEtQ7CcGO352
+	 DaeDZpPweNwb6p8Cx40fdo+BuYhuPeOJ7++FxVPZFzW9kLc+x1fgrgFa/im1oY4pLd
+	 oNldLET5QyQ8Q==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7] arm64: dts: qcom: lemans-evk: Add OTG support for primary USB controller
+Date: Mon,  5 Jan 2026 08:07:26 -0600
+Message-ID: <176762206397.2923194.2060104930644124439.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251128102507.3206169-1-krishna.kurapati@oss.qualcomm.com>
+References: <20251128102507.3206169-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 0/5] PCI/pwrctrl: Major rework to integrate pwrctrl
- devices with controller drivers
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Bartosz Golaszewski <brgl@bgdev.pl>, Bartosz Golaszewski <brgl@kernel.org>,
- linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>,
- Brian Norris <briannorris@chromium.org>,
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
- Chen-Yu Tsai <wenst@chromium.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20251216-pci-pwrctrl-rework-v2-0-745a563b9be6@oss.qualcomm.com>
- <39e025bd-50f4-407d-8fd4-e254dbed46b2@linux.dev>
- <n2vboqjh45bwhs3czpey3alxwi7msohir7m3lk45mecouddwew@byi2emazszqq>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Sean Anderson <sean.anderson@linux.dev>
-In-Reply-To: <n2vboqjh45bwhs3czpey3alxwi7msohir7m3lk45mecouddwew@byi2emazszqq>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 12/23/25 09:05, Manivannan Sadhasivam wrote:
-> On Fri, Dec 19, 2025 at 12:19:36PM -0500, Sean Anderson wrote:
->> Hi,
->> 
->> I have a few comments on the overall architecture. I did some work to
->> add PERST as well (sent as replies to this message).
->> 
->> On 12/16/25 07:51, Manivannan Sadhasivam wrote:
->> > Hi,
->> > 
->> > This series provides a major rework for the PCI power control (pwrctrl)
->> > framework to enable the pwrctrl devices to be controlled by the PCI controller
->> > drivers.
->> > 
->> > Problem Statement
->> > =================
->> > 
->> > Currently, the pwrctrl framework faces two major issues:
->> > 
->> > 1. Missing PERST# integration
->> > 2. Inability to properly handle bus extenders such as PCIe switch devices
->> > 
->> > First issue arises from the disconnect between the PCI controller drivers and
->> > pwrctrl framework. At present, the pwrctrl framework just operates on its own
->> > with the help of the PCI core. The pwrctrl devices are created by the PCI core
->> > during initial bus scan and the pwrctrl drivers once bind, just power on the
->> > PCI devices during their probe(). This design conflicts with the PCI Express
->> > Card Electromechanical Specification requirements for PERST# timing. The reason
->> > is, PERST# signals are mostly handled by the controller drivers and often
->> > deasserted even before the pwrctrl drivers probe. According to the spec, PERST#
->> > should be deasserted only after power and reference clock to the device are
->> > stable, within predefined timing parameters.
->> > 
->> > The second issue stems from the PCI bus scan completing before pwrctrl drivers
->> > probe. This poses a significant problem for PCI bus extenders like switches
->> > because the PCI core allocates upstream bridge resources during the initial
->> > scan. If the upstream bridge is not hotplug capable, resources are allocated
->> > only for the number of downstream buses detected at scan time, which might be
->> > just one if the switch was not powered and enumerated at that time. Later, when
->> > the pwrctrl driver powers on and enumerates the switch, enumeration fails due to
->> > insufficient upstream bridge resources.
->> >
->> >
->> > Proposal
->> > ========
->> > 
->> > This series addresses both issues by introducing new individual APIs for pwrctrl
->> > device creation, destruction, power on, and power off operations.
->> 
->> I wrote my own PCI power sequencing subsystem last year but didn't get
->> around to upstreaming it before the current subsystem was merged. This
->> approach (individual APIs for each power sequence) was how I did it. But
->> I think the approach to do everything in probe is rather elegant, since
->> it integrates with the existing device model and we don't need to modify
->> existing drivers.
->> 
->> To contrast, in U-Boot the second issue doesn't apply because driver
->> probing happens synchronously and config space accesses are done after
->> devices get probed. So you have something like
->> 
->> host bridge probe()
->> pci_scan_child_bus()
->>    discover root port
->>    root port probe()
->>       initialize slot resources (power supplies, clocks, etc.)
->>    allocate root port BARs
->>    discover root port children
->> 
->> I guess your approach is the only way to do it in Linux given the
->> asynchronous nature of driver binding. What is the overhead for hotplug
->> switches like? Maybe it makes sense to just treat all switches as
->> hotplug capable when PCI power sequencing is enabled?
->> 
+
+On Fri, 28 Nov 2025 15:55:07 +0530, Krishna Kurapati wrote:
+> Enable OTG support for primary USB controller on EVK Platform. Add
+> HD3SS3220 Type-C port controller present between Type-C port and SoC
+> that provides role switch notifications to controller.
 > 
-> Pwrctrl doesn't care if the underlying bridge is hotplug capable or not. It just
-> handles the power control for the device if it happens to have resource
-> dependency in DT. For example, if the PCIe switch requires pwrctrl and the
-> corresponding DT node has the resources described, pwrctrl framework will just
-> turn ON the switch. Then during PCI bus scan, PCI core will enumerate the switch
-> and check whether the downstream ports are hotplug capable or not and handles
-> the bus resource accordingly.
 > 
 
-I'm saying that we allocate enough address space for each bridge as if
-it was hotplug capable, to ensure we don't run out of space later on.
+Applied, thanks!
 
->> > Controller
->> > drivers are expected to invoke these APIs during their probe(), remove(),
->> > suspend(), and resume() operations. This integration allows better coordination
->> > between controller drivers and the pwrctrl framework, enabling enhanced features
->> > such as D3Cold support.
->> 
->> How does PERST work? The only reference I can find to GPIOs in this
->> series is in the first patch. Is every driver supposed to add support
->> for PERST and then call these new functions?
-> 
-> Yes. We can come up with some generic controller specific APIs later to reduce
-> duplication, especially if GPIO is used for PERST#. But that's currently not in
-> scope for this series.
-> 
->> Shouldn't this be handled
->> by the power sequencing driver, especially as there are timing
->> requirements for the other resources referenced to PERST? IMO if we are
->> going to touch each driver, it would be much better to consolidate
->> things by removing the ad-hoc PERST support.
->> 
-> 
-> It is not that straightforward. Initially, my goal was to abstract pwrctrl away
-> from controller drivers, but then that didn't scale. Because, each controller
-> drivers have different requirement, some may use GPIO for PERST# and some use
-> MMIO.
+[1/1] arm64: dts: qcom: lemans-evk: Add OTG support for primary USB controller
+      commit: 3b226dc2a0c39de609ecb383a92d9ed99d7aebc8
 
-Can't you resolve that by exposing a GPIO controller for the signal?
-
-Of course for compatibility we will want to support old devicetrees, so
-maybe we should just add a method on the host bridge to control PERST.
-And then pwrctrl could try to use it as a fallback.
-
-> Also, some drivers do more work during the PERST# deassert, like checking
-> for Link up as in drivers/pci/controller/pci-tegra.c.
-
-Yeah, but is this actually necessary? We should just be able to toggle
-the reset and then try to read a config register after 100 ms. If the
-link is up the access will succeed. If it's down at that point then the
-device doesn't follow the PCIe spec and we can't really be sure the link
-will ever come up. The relevant code even has a comment
-
- * FIXME: If there are no PCIe cards attached, then calling this function
- * can result in the increase of the bootup time as there are big timeout
- * loops.
-
-Which would be avoided by delaying asynchronously in the pwrseq driver.
-
-> For sure, it would be doable to rework those drivers for pwrctrl, but that is
-> not practically possible and requires platform maintainer support. So to make
-> the pwrctrl adoption easier, I went with the explicit APIs that the drivers can
-> call from relevant places.
-> 
->> > The original design aimed to avoid modifying controller drivers for pwrctrl
->> > integration. However, this approach lacked scalability because different
->> > controllers have varying requirements for when devices should be powered on. For
->> > example, controller drivers require devices to be powered on early for
->> > successful PHY initialization.
->> 
->> Is this the case for qcom? The device I tested (nwl) was perfectly
->> happy to have the PCI device show up some time after the host bridge
->> got probed.
->> 
-> 
-> Not for Qcom, but some platforms do LTSSM during phy_init(), so they will fail
-> if the device is not powered ON at that time.
-
-Do you have a specific driver in mind?
-
-> The challenge with the pwrctrl framework is that, it has to work across all
-> platforms and with the existing drivers without major rework. The initial design
-> worked for Qcom (somewhat), but I couldn't get it to scale across other
-> platforms.
-
---Sean
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
