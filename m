@@ -1,187 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-87540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C5F4CF5362
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 19:20:05 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAD2BCF5525
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:16:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CE8253028F70
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 18:16:53 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 533C13008F54
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67AC132571B;
-	Mon,  5 Jan 2026 18:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E91C1F1537;
+	Mon,  5 Jan 2026 19:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BWdNe6sk";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="W4B+P2ji"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZLilpzwu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96123254B5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 18:16:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10153398A;
+	Mon,  5 Jan 2026 19:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767637012; cv=none; b=OmJ6R7Jhkbmvymj2T9m//LpIGzvHmd+YJJHgonPQ+yHo/NTRwZbdiyxJ8Uy0oT8pZUIC9QfwqlYcxye20Hjmp2+y6zQUMS7XPlpKqQy28bnQjQFjIPV2onqNYC0NZUH8pXonJFd69ze5bluX9XGGAxUEA/j2N1LbiWypF1BLsBk=
+	t=1767640595; cv=none; b=cGB4gjHYwNaKlQAispFEVtJmOj6RbJAZtUSrkdOZr/1l6q92XQaGq0n0iF74/GWQ3DbErTI+HveinF4i1xxqZ9HhZC3qbPHHylyYcd6gpc9b/woUIV6C9xfbGRCy28cNNKE8yuMOlWCRYL2lNc4HCGaGf1ZgRrpirid70HMwCCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767637012; c=relaxed/simple;
-	bh=9d4AsoILpOYhFOv7ydnu456xsSCdCM+PZdVzhXYes7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k0r5Ug/mKR6TpuxjqXwjnFPyHieSa96zrVgW/Qal5arynl5xxLRY639ANkUTwFAIfTvO2yRsEJfIlAa39m45AFpnLjNqWbOKcJ3BjLb6hgLyEQk/xHX9fS7iTajvUEcm8BbwCPDQ639rdcIxLVXQguVFsiVIH+ot3BkispDfqK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BWdNe6sk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W4B+P2ji; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 605HPDdh610528
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 Jan 2026 18:16:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w52BulNVFU+lzS+SO0meiPZlKCDrq/1WBOqtA2zReK4=; b=BWdNe6skBfbyahVh
-	obkgpomt/z1pLwhVWwvvB3MRj/Jn0oMGSu2oXUDlTmNAaqy3RnfN87nbCiApuRkz
-	MJrZ5hLEiQQHGxlp/+oi2/2pcNMGIAgo+UbVXNFDEadhMeHPaNU0KWZ72EISaA7/
-	lXCDLwbkBzZzBnv2dLib5m4hQ/XEGXANQuQYKSYtr4+YkrynquB/EXfLmP/NmWCD
-	iWfirE/yNHwK36DtiG1EbJUpsyzQkgpOT8/N+6Tv33M6XXhs4R+Nkh/wCYBm44Xs
-	mBj2RKvk2NYfNvBWXWFtTCrG/R/zOkUMJEvcnD5vk3/HqXWf4NrOUiftU6rCt88r
-	x6yovQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bgaus1d94-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 18:16:50 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7b9ef46df43so299493b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 10:16:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767637009; x=1768241809; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w52BulNVFU+lzS+SO0meiPZlKCDrq/1WBOqtA2zReK4=;
-        b=W4B+P2jiReKtwQ0i0f3A/2vw242v+X0I0/FfI363JrzpS6C3/8/viEhYQ00KQr9H9o
-         +hjNXpIKTivB++eR503X77tMcpZRyWzmqv5m0OqQ9juPfGKJnY9IkaxdVfcNHYMs78x/
-         HKHaNukMLrJNnMWLvNaLScVSkzWUa7VX6D92jRkn04MccC/vBfmnj4/71EZVpDUyQ4XQ
-         UI3gCf8Ox9pHFi8xBjsXMw+vHTOHZgReJUZMkkPUVTc/GchFHerMkMe0f+tOQUpnps8P
-         X7uAVqFIispnGv/I1fGkxxBybmuCTnSWrMip7hYISD28Zn0jOKXsqxBK9lAB94jEguOa
-         uemA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767637009; x=1768241809;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w52BulNVFU+lzS+SO0meiPZlKCDrq/1WBOqtA2zReK4=;
-        b=GVqhQBy+dRsPHYgMbvENbSaRpraDigSaL8A3sRK6g4iMMz3fvP1RtNgkCXASQGhcg5
-         +DBpl4s+lRgiFWFOTzujhjvz1DteR7HqnEDUa7Z//sSx2Z6b9RVIDKHGdxN/ZAH2Tcmy
-         40hvioNq0YjqqKDA9zmO1a/NDyVpdfNFHrh7gNyJR5rlT7IeucnXU9OIb6MBpcxvkeWl
-         BnlcOCYqVRdfgcaq5NTCrXHSj7gFfwYahwZIYD4Uz+/uI17W0O9nL59C+qbBooeF3IFY
-         vufG+4HFzu15oDt8Z4JBaoEaEKJYOlkSStWxF+btt/S9cGevPHu2dogTxITztiMqyt3z
-         SnOg==
-X-Forwarded-Encrypted: i=1; AJvYcCX8r5e5cfObzxncvk0//3aNlyC8agVFbgmDUqJTxUnvTSI37Pm1kY8U8MQ3/zx/hma22URLrhUvW8ewNBXd@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdoBkzAXECxp2v9hAqtRElobQqwpVn388JmfmVy3KtFeq4j5Ys
-	GRdZa4F8onhh3y5gjkIMM733aOFA3AuG8M1ZwxBM8tBJmK5kFvdh/UIsNCNZ2u6UexWhQwMx97W
-	gmnqtkebJFHWDWgW40AnCiRYRCZGdNkAVoQwusMJOI81MFwtOeJvVXB5rd57jSQUlq610
-X-Gm-Gg: AY/fxX7ReoABt0OFd7nxgZ+clGmL6Ibl4OhhVU4Z3WefAUoVHaCDDCVfKKKqdOlWGN5
-	utfBvV9APZdpqCHwQenJMVEpfTI0oITcxAh/o0ffTL9BysReCnGwcKn6JarBJ9JXNB+EwfnP536
-	ZeuGo3tqNtM4HaUOp+qUXQyWx7Vz9Ne9FYtMA4ulSr94v9w1qPVTbJBi0XuGe0aRd0fs/eoj9ME
-	y9ib51Uwr4fhkpdm0Gg5+WZxfFgsJflA34u0cH4AUIUQmLLUBGFFdZXyqvdTzl1UM1qQyc5lTze
-	0HUMiuYR1BudYo/4szVrJ02FaxM6Bn1ip5jYWSHWUEOSbpK/kSLt+jfmo2e8eJ6W8XqyonbIT/e
-	0ppUUoL9DTqVtpZJ72MvnQ1rw8nmI5lXF8Ye9RNQ9atUuLeN7hLkUVpMvZMuplMfC3vOHeOdRGi
-	ETLU0c
-X-Received: by 2002:a05:6a00:3393:b0:7b8:7f5d:95aa with SMTP id d2e1a72fcca58-8188173183emr471291b3a.27.1767637009463;
-        Mon, 05 Jan 2026 10:16:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMHu4SsqjEOd4T8C1y20KfwPG3UOOyJPNbJiN3J0S5bcm7ss6s6QX48g3Cn1Hda5n/4PFdlg==
-X-Received: by 2002:a05:6a00:3393:b0:7b8:7f5d:95aa with SMTP id d2e1a72fcca58-8188173183emr471265b3a.27.1767637008973;
-        Mon, 05 Jan 2026 10:16:48 -0800 (PST)
-Received: from ?IPV6:2405:201:c408:b07b:6589:c739:d9cc:4910? ([2405:201:c408:b07b:6589:c739:d9cc:4910])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8187a42cfabsm385102b3a.62.2026.01.05.10.16.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jan 2026 10:16:48 -0800 (PST)
-Message-ID: <acbb37a1-3189-4d4e-5c05-55b13cd40a7f@oss.qualcomm.com>
-Date: Mon, 5 Jan 2026 23:46:40 +0530
+	s=arc-20240116; t=1767640595; c=relaxed/simple;
+	bh=povE5y5MY7Uwze3qy6H5gHZ1SQ221k5BK3sT4JoYWGs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=k8bxjuZBgwk0KnDEfDGXQJmetAsqLyQGNXSwU/qJEI6pD2O1TA7N5OQNI36wI3gAAsiDv2gLKD63yHgk0rYSawIIBjCbZHFMRZbYluDlN0ihSoEm4eq2Q7LAG+5GX6C/kFTDa+I3nnS+zGEKX3Z6dx0mHR3lAtUUteqRwWsBCLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZLilpzwu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB85C116D0;
+	Mon,  5 Jan 2026 19:16:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767640594;
+	bh=povE5y5MY7Uwze3qy6H5gHZ1SQ221k5BK3sT4JoYWGs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZLilpzwuyqmHP8n/r5pXfEADIgh+en0I5Bz/Oqta/W9EVsmck2dKAAnlGrWTJ5Olq
+	 Fo7saD73xUX6XAK5tMtR0fgkYgamXHid3fkt+YSw8kQnWqtqQ0l3Y4w6We6TqbQWkE
+	 rXYEUpt2hdNs/7141RHssAmVmxGpeP48gTA9gHRNKvTz8nX5oFBi4FIGGd0LKe5zeA
+	 u3iDPdRCfPkH3fq+FpaeuLR92EGa8cYD4ZcmLdjoiLUibaylMFFaYBaPgOsHh8s6eW
+	 ZgR0IhX7iNCDEH8IApQa9xI1fIgwQglQvrAyJF3I2zs59vOGoeblzEdeh0NhEaPeef
+	 hJf27d+Y2vpDw==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Abel Vesa <abelvesa@kernel.org>,
+	stable@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH RESEND v5 0/3] phy: qcom: edp: Add missing ref clock to x1e80100
+Date: Mon,  5 Jan 2026 13:16:15 -0600
+Message-ID: <176764058412.2961867.5718279320057221936.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251224-phy-qcom-edp-add-missing-refclk-v5-0-3f45d349b5ac@oss.qualcomm.com>
+References: <20251224-phy-qcom-edp-add-missing-refclk-v5-0-3f45d349b5ac@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v19 01/10] power: reset: reboot-mode: Remove devres based
- allocations
-Content-Language: en-US
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Yan
- <andy.yan@rock-chips.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Moritz Fischer <moritz.fischer@ettus.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Andre Draszik <andre.draszik@linaro.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>
-References: <20251228-arm-psci-system_reset2-vendor-reboots-v19-0-ebb956053098@oss.qualcomm.com>
- <20251228-arm-psci-system_reset2-vendor-reboots-v19-1-ebb956053098@oss.qualcomm.com>
- <CAMRc=McEB+yVYxropzsqLExZCU5Pd_iy_=5N3pTxu28-ZX=7_w@mail.gmail.com>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <CAMRc=McEB+yVYxropzsqLExZCU5Pd_iy_=5N3pTxu28-ZX=7_w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 8qlXitouO9KWi8Lk5qYCaLBltoVVLGTU
-X-Authority-Analysis: v=2.4 cv=DP6CIiNb c=1 sm=1 tr=0 ts=695c0012 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=VO0Mc1whj1O5pWEdU38A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-GUID: 8qlXitouO9KWi8Lk5qYCaLBltoVVLGTU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDE1OSBTYWx0ZWRfX7AdycUCRrJcP
- 9fXz6H+/z1uFDnnbprnDlEXrApsbpE6S7F61UWuJqNTOaBPt8aBmMDA/jgAicwdmtWaLtUjklnq
- LrCEg43P1mWBGeT7gJqBYJ4t26P11IMSXi5VhaIYlPt1o4NRwofts9NaFhmy6ObCiV5zuvw6cDH
- W1RYzDqhtF6QLKcPNOTBjCiTkhvwE7NHqg6/OVW9Fbz8GsiPmx14wU8mLL60z/G4G3H03WypHlZ
- KNbCN3XKRPbAi4G9p2MrmCqy3LTuLtbXJsdvh+oSnLad3PzJctl338HfS/tfiQYWrmbF9W87VuY
- kqiJmyaLt326O6UxBoqBiocRuCUDibbWUWm724IA+E9YtWiuRJ/2lkVHEm+uGuUkyDyMyhNVU19
- wj1JTmni5DZyA+RW6oW+QVNWNXl/qnl7H/8UhQc8fH9yi5arZmp31T3z8A3lEwbNOOeA9WHKnmY
- zQ+nPORmTttVwi0KQMA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- malwarescore=0 phishscore=0 adultscore=0 spamscore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601050159
 
 
-
-On 1/2/2026 3:35 PM, Bartosz Golaszewski wrote:
-> On Sun, Dec 28, 2025 at 6:20 PM Shivendra Pratap
-> <shivendra.pratap@oss.qualcomm.com> wrote:
-
-[snip]
-
+On Wed, 24 Dec 2025 12:53:26 +0200, Abel Vesa wrote:
+> According to documentation, the DP PHY on x1e80100 has another clock
+> called ref.
 > 
->> +                       pr_err("reboot mode %s without magic number\n", prop->name);
+> The current X Elite devices supported upstream work fine without this
+> clock, because the boot firmware leaves this clock enabled. But we should
+> not rely on that. Also, when it comes to power management, this clock
+> needs to be also disabled on suspend. So even though this change breaks
+> the ABI, it is needed in order to make we disable this clock on runtime
+> PM, when that is going to be enabled in the driver.
 > 
-> If this is an error, shouldn't we bail out?
-> 
->> +                       continue;
+> [...]
 
-This is not an error as per original design of reboot-mode framework.
-The code as of now says, if the reboot-mode node has an entry without
-proper magic value, ignore it, and, process the next.
+Applied, thanks!
 
-thanks,
-Shivendra
+[1/3] dt-bindings: phy: qcom-edp: Add missing clock for X Elite
+      (no commit info)
+[2/3] phy: qcom: edp: Make the number of clocks flexible
+      (no commit info)
+[3/3] arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the DP PHYs
+      commit: 0907cab01ff9746ecf08592edd9bd85d2636be58
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
