@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-87465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EDD8CF40FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:15:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20C51CF40B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:10:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EBCBE30CD9EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:08:11 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4B40B303EB75
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF93B29B229;
-	Mon,  5 Jan 2026 14:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61AE82C0F8E;
+	Mon,  5 Jan 2026 14:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NGShol8L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sKe+2d/r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E641298991;
-	Mon,  5 Jan 2026 14:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2506428B3E7;
+	Mon,  5 Jan 2026 14:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622077; cv=none; b=SIlcTwezw8hh5HVRL9oE8bP+MWJMj76j5LOuX7cLPPlxKGGyI4tNkxJDebUAv4NBYbpsruCANlZGf+0g9kVdXEY91rED4hapM2uOgbHuftcn9xzltcBAuUt9Wh7aAvpYX/mg9PDYkMTTR+nY8oMcTQN8FvPKhsw/+AppYzhNCG0=
+	t=1767622079; cv=none; b=vF0Ocwwnyx4s5P6HnT659FreiDWushfQj+hGJlgiBbr0Le5ZwnIab17HWQ5dA3DH8VlJTdL0+F/3iIqtqCGAafj/3sD1IYXbgNe/J4+UOo+RN6g7yequGS8d6QCC/7jYfy5b7BwzJsx+1nECHRGvHTJVyvtJmq1NoIhr+Cm9wXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622077; c=relaxed/simple;
-	bh=c4sWJ4xGHFMsifFablIa0HXZuPmynaHtewNzlY/P0qA=;
+	s=arc-20240116; t=1767622079; c=relaxed/simple;
+	bh=h4mjCJChvn5YkA8mFrxKeasEgzSmTrzJxVW+yN2m3ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UseeVaJjv9gwtt4i7BwQBM//ugFy7UpT07Rw97L3N8gMTTsHYCaPaN+WRd7J9Z9RTFgktvVgzEWhzL7Az699EohPYEwKHdxdYv0oKM7xyIE+5aqJEzJH6ONzZxTjWLoXIbI16f0WmHmWM+4K5QWUgElo8Zw94DyFCSjEyUZmjGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NGShol8L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADB9C2BC87;
-	Mon,  5 Jan 2026 14:07:56 +0000 (UTC)
+	 MIME-Version:Content-Type; b=pGrbx2r1uIScJgKMbLKgj3kU5lpSLwgazbbk5vOPJOyocvp9IPCEt8sQznunGApVAg/Uy7QXw3TVTh+B+ATxL/5OyXI1Kp5tiBIUAtu9l27jLPijVamBbOo/wW9JITF7TPdKvy20BMJVDiVYaJGKvM+D6TrH83wXYS/M8g4VXUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sKe+2d/r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD34C16AAE;
+	Mon,  5 Jan 2026 14:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622077;
-	bh=c4sWJ4xGHFMsifFablIa0HXZuPmynaHtewNzlY/P0qA=;
+	s=k20201202; t=1767622078;
+	bh=h4mjCJChvn5YkA8mFrxKeasEgzSmTrzJxVW+yN2m3ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGShol8LteRebSNNiomZu2tzv3XfmGMc3LQWW/aIK6X88BhaPzChvezIfigSkYywZ
-	 SBnt9pquG1Z2PdrkhRGx13lCvJmcoN2gacTZDAnf/sTKRnCvgroJfWoTj5CxuL6NB/
-	 2CTsu2vzZN3Dt80aQJNxHiMCfT4kzUiCXWLNq/wc+plRmVqcVZQy0pZ7EdoCQWRr2I
-	 dJ454tjhcaTao8SyWpAayAHU80d+z0iDE8GAfbe8TUtLUj5AA277QWcq9P/x5OqO2p
-	 BYGDDRBgYLxS+BZNIaLEZ3iPjYQTPN3uoibCdo+b2iOtk4PUBSZ1GgasWnHDwbYTSz
-	 95liPLgGlQPpQ==
+	b=sKe+2d/rFdAvy3fGy8MFaYMCJ9uJjcCwtUrGwkyP7Vcdgg/eZBpDFT54o72j4YDE1
+	 nXCshyRMJ/QcLKEh4FVHU/b8GZ2V9GLtMDaoZuH38onFOoBzKmdhuLRXh8R3Swmr1l
+	 0TKXxAF+9uu/Pfp4Ef6FR/3wsU+GcZP4yhsuXAd7no0c6bukRGvZUMwR1/qakOZeU3
+	 ggpAMMIr+rOQmfK+zFL8NMIq9yOD/qfNNJvvSvlDXEC4nib+fO6bPJbFuJHz4bPDIi
+	 TNW/+USuv9qHrSi8aFe31RIL8y+9rFzsF/PWstzsK+kEbTjT8GHxIxBaKywDDhPB4w
+	 2NNSIDiZynCBg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Dylan Van Assche <me@dylanvanassche.be>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sam Day <me@samcday.com>,
 	David Heidelberg <david@ixit.cz>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	phone-devel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Introduce framebuffer for Oneplus 6 and 6T
-Date: Mon,  5 Jan 2026 08:07:12 -0600
-Message-ID: <176762206390.2923194.7151237302667512164.b4-ty@kernel.org>
+Subject: Re: [PATCH 0/3] ath10k calibration variants for sdm845 phones
+Date: Mon,  5 Jan 2026 08:07:13 -0600
+Message-ID: <176762206375.2923194.12723826670757222058.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251206-sdm845-oneplus-fb-v1-0-19b666b27d6e@ixit.cz>
-References: <20251206-sdm845-oneplus-fb-v1-0-19b666b27d6e@ixit.cz>
+In-Reply-To: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
+References: <20251110-sdm845-calibration-variants-v1-0-2c536ada77c2@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,18 +66,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 06 Dec 2025 18:45:41 +0100, David Heidelberg wrote:
-> Unfinished bits of framebuffer support was laying long enough in
-> downstream forks, let's push it.
+On Mon, 10 Nov 2025 16:37:45 +0100, David Heidelberg wrote:
+> Let's leaverage linux-firmware and use calibration from the board-2.bin.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] arm64: qcom: sdm845-oneplus-enchilada: Sort nodes alphabetically
-      commit: 9bf9c47cd8e54d0653147bc7a7e6c135607286be
-[2/2] arm64: dts: qcom: sdm845-oneplus: Add framebuffer
-      commit: b0d5c96e860c28159541e7bb8ed277b0fee13a0c
+[1/3] arm64: dts: qcom: sdm845-oneplus: add ath10k calibration variant
+      commit: 252f98ecb3c71acd818592443496252ecd5ccd6f
+[2/3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add ath10k calibration variant
+      commit: ea6926f61a857531d02a72bb5b040e23573fb393
+[3/3] arm64: dts: qcom: sdm845-shift-axolotl: Add ath10k calibration variant
+      commit: 31deed7b05079b2eb24589d37778466a2a55f4f2
 
 Best regards,
 -- 
