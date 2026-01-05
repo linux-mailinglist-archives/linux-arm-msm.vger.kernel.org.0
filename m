@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C031CF2C80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:34:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF750CF2C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:35:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 95DEA304A598
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:30:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A100B30213EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 829E632E141;
-	Mon,  5 Jan 2026 09:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23FC032E68F;
+	Mon,  5 Jan 2026 09:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uX0b+CEF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LAHZInqo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D832BF5D;
-	Mon,  5 Jan 2026 09:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF3E2D7DD7;
+	Mon,  5 Jan 2026 09:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767605445; cv=none; b=Y8UIjQjgxxvmFBPK6gMNoQ3LUhdPkzjhaMvhLHjEope9QZ7lQCxHpIfR7cf6z12ODmc6PGH9sBVMep2NVoKbRoHMA8mRb5nj4dRscceSxOvJIC5IXHihMEE+MSfJFAJuRB30QajCHL0Cjbwg9kB55xD5NdAdbdhLjawoLTuxhuI=
+	t=1767605502; cv=none; b=SXebdbdJdtLkl52MkUnCcgZi2iyLEPk2VtobFAf4Ou94BfrfGfBOQbdIpku1WSQzllvdK7caIrxc4kZfAWX4nneMoy2auzjepKvkkdbn9TXX2p6fzScW5SWQypQ0239K0N8N2Gr9dvZq9+m18Nt3B6rj4XqocFmC9cn3y5KR4Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767605445; c=relaxed/simple;
-	bh=lyV7qVwbr8SDoYsnumOFtad80gHwrzHRh3mFSKwuj8Y=;
+	s=arc-20240116; t=1767605502; c=relaxed/simple;
+	bh=buCCHg0ba3oRyfPYs2IfryJS9rIaI596PL5cBFqlJL4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tshUK6VrksMX1miu5DpbboRoFP4GxrEnxdkbpOTvWigTxB+JUE6Fi0pdEIYj5k/JYgaWqS2q2owHC8/wvf7vRI868IHkKkeRKZsQjMtyBNhVgyYA7kyHo1AMYNJoxAA4boo7S3xo+2VWH0845OkaD1HafEsh81mCd1ivd+ZqzAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uX0b+CEF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B81DC116D0;
-	Mon,  5 Jan 2026 09:30:42 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PIhxjfUZh0vIZ65ZuPr9mE37ie41XpH44IhGih6Ddq0+uGEYqhRE0hP8gTK9ByBVjIpnukqDLAe1r7VAY6OT3OIYUuoFif2GJPOvVuanm+FoMK4driewntfzJe85gJ9PCgKFxexcU3bx0NH7G60/yi43nYYwgmYu3aDLC0dSSNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LAHZInqo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0369C116D0;
+	Mon,  5 Jan 2026 09:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767605445;
-	bh=lyV7qVwbr8SDoYsnumOFtad80gHwrzHRh3mFSKwuj8Y=;
+	s=k20201202; t=1767605501;
+	bh=buCCHg0ba3oRyfPYs2IfryJS9rIaI596PL5cBFqlJL4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uX0b+CEFa5pDea6gkjd0bcCv2N+lW7iDGDCbpcyMcJEwjI7waQocG4XrYu6+wgiqR
-	 l9WDDGUHqoD9QXBRf18FWVCLBJ7B1mEsmypncNDzXbc92H0Qf1BXNPLNQ0pJZejGfI
-	 vzyGMFOjCuSilo0Z9SbE+enX7K61E2P6gvNSWlXPgSadMObbYV4rkUJn6uGhNFRTqU
-	 fJU42VGmbAEoUdMw3pDZvZqVihy/lOWFNSWDzkhTuDB2kzCpDTnw6cwKHYADzIOUWy
-	 /h3Kwj7VAoHZUz1c9/Zr9TaxVfRHkdzwpURuO/ELEA8FHqR6225ACreBy4k/38rRtM
-	 HNCmBX1vnvoFg==
-Message-ID: <b03a69a1-1f5a-4dae-a6d4-851f18e43917@kernel.org>
-Date: Mon, 5 Jan 2026 10:30:41 +0100
+	b=LAHZInqoBfVw+bgM9WEgx5ndb15X30HkcU45VqhzUuiuobmAa8yIrpnhElsyaOgmW
+	 Bfya3X0HYpL8t/IPUyiwRfhDhaYluRE/TE0nHjawRedztMc+fziVlovfDP78m4bLEB
+	 YuUvTBjf7kWokWyJrtFZB+WRyeX5nIeAltY69MAo2rPyhB/Knu2dQPxIjxzV3J356d
+	 QRrDOtURSQcGKe+9nzyQpdGlSgY7B7e1iSGXTceeYQjEYtX2Vf5zL22EfQs8FMZQON
+	 8QdwNA09CsS4S0NY6UBHi36GNWscff2HPzdpSPM00If6662N2vvZwWbzfW1w64LJ22
+	 z3ClinEZdvBIA==
+Message-ID: <eaab0f94-b7e4-446f-b13e-db5b715b1c52@kernel.org>
+Date: Mon, 5 Jan 2026 10:31:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,14 +48,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] ASoC: codecs: wsa884x: fix codec initialisation
+Subject: Re: [PATCH 1/4] ASoC: codecs: wsa883x: fix unnecessary initialisation
 To: Johan Hovold <johan@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
  Mark Brown <broonie@kernel.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>, linux-sound@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  stable@vger.kernel.org
 References: <20260102111413.9605-1-johan@kernel.org>
- <20260102111413.9605-4-johan@kernel.org>
+ <20260102111413.9605-2-johan@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -101,7 +101,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260102111413.9605-4-johan@kernel.org>
+In-Reply-To: <20260102111413.9605-2-johan@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -110,25 +110,22 @@ On 02/01/2026 12:14, Johan Hovold wrote:
 > the same ATTACHED status but initialisation should only be done when
 > transitioning from UNATTACHED to ATTACHED.
 > 
-> Fix the inverted hw_init flag which was set to false instead of true
-> after initialisation which defeats its purpose and may result in
-> repeated unnecessary initialisation.
+> This avoids repeated initialisation of the codecs during boot of
+> machines like the Lenovo ThinkPad X13s:
 > 
-> Similarly, the initial state of the flag was also inverted so that the
-> codec would only be initialised and brought out of regmap cache only
-> mode if its status first transitions to UNATTACHED.
+> [   11.614523] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+> [   11.618022] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+> [   11.621377] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+> [   11.624065] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+> [   11.631382] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
+> [   11.634424] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
 > 
-> Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
-> Cc: stable@vger.kernel.org	# 6.5
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Signed-off-by: Johan Hovold <johan@kernel.org>
-> ---
+> Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+> Cc: stable@vger.kernel.org	# 6.0
+> Cc: Srinivas Kandagatla <srini@kernel.org>
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Tested on Lenovo T14s:
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 
 Best regards,
