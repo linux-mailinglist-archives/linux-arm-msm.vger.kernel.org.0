@@ -1,55 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-87530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D99C3CF4EEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 18:12:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09A3ACF4FE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 18:27:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4AC2B31228B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 16:57:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0AF0D3044843
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 17:26:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA2A130FF3C;
-	Mon,  5 Jan 2026 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313E42DEA86;
+	Mon,  5 Jan 2026 17:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIvrz8ip"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="acnHXp8l";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JihDbq+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91D329B789;
-	Mon,  5 Jan 2026 16:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1BD33AD87
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 17:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767632269; cv=none; b=XrWbmV6p8D0AngAPl5IkDPlVMxpezBpLgjYGIY+JHVRH7xMs+5EpGZoVxnspxXrZoixgWxnkAoU2EVIlCNIRTQ9odFE3qANeOSjp9iasw7LLmGpzdGsILTLHcUpv1eFG8TCYAErhL5NFZJp0TTPnLberSM9MBQEAXwvlutw8DFM=
+	t=1767633637; cv=none; b=jkjeRUldMz9qWRmeaurSwjfZFhcKdAIGWya/gGQSGef3h4GC8fGNLABcPZCgJ0IotkellatsK2ZmM7kIVShJ4R/MOe1GHm8qmEUvHzek98JfZ/AoLWVCQjgBTUhiLgdi5YgOQ3mZXIxC3xzBbMEcECi/QY7/YAvNwSyXyxTKbpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767632269; c=relaxed/simple;
-	bh=W6A+ZbgvXWxmIhQQO+pkrulwGT2OpNToskDqCQ8Evno=;
+	s=arc-20240116; t=1767633637; c=relaxed/simple;
+	bh=HkvBiaLkZQB/XCm2RcDqyMZQP4FwmPg7nmbZ8Yw17sA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ki/N96jS3PGpJ2xKYNeN1i5C+8gLPFCFtAiZklA61rsv8IiEKW+xFbA0B10DVkBrkYxO1hG0hmg2KTAz67BZ7fEVhwsgy9P2QWh3+WYSXhDRki1lzEq2eHrKYc8266RvHQ3nQOVno28zEpcaNtQ8nf7UW47NxOeiB0Oo5NCmSVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIvrz8ip; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B7DC116D0;
-	Mon,  5 Jan 2026 16:57:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767632268;
-	bh=W6A+ZbgvXWxmIhQQO+pkrulwGT2OpNToskDqCQ8Evno=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MIvrz8ipqPmsRrnnlR8GcVhOdpVZLCgOpcg+IrVwZuffSMZEur35XAVrwKQpf+wxI
-	 khsSO7erRkvHYWIGBFC1rtci+zcyue30B61/6zgnky/owJioDxOXe5jRaFGCHR7NYs
-	 x405GXBzTA1WC6eYFfOslEaX7YA01OLnyhd6RZhrSf2dakHP5hliSA1qluL1hHkNqt
-	 OuFzDPI9nzNtzfb5Py/D3zC6731oLDwZvGrKXTgnlTuPTZwoa+Q7R0kg/JbJdgnhyz
-	 ndj48rNmVTfyM4g/iTAm4fRLMLF1HkTMDQ8oQaDk5LLUWwCCUTchGWQOrUOFepkt0x
-	 nJM0zF46+RqJw==
-Date: Mon, 5 Jan 2026 22:27:41 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=TUag5Y3fHHG0/XHIq8e++hngY825mDhLUzMXEbDO1mWlePYWVj1eiBYUxs446wUAzy7dIcPweZa6uHmiORHTiwzABsVl8eCVIPyW0BMhom5yhhxWPpD2zVm9/7cEHrbkVvcumchIKxEGjuuc06m2vXxo8TTZiHku3jkgm/+Jy9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=acnHXp8l; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JihDbq+a; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 605A5QtF091251
+	for <linux-arm-msm@vger.kernel.org>; Mon, 5 Jan 2026 17:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DHiFrg5t/UNh1oQC2wzIPwwhl3MV3upU6x3ntNRIRB0=; b=acnHXp8la7C7Qwb6
+	NclaxRUMrTjWhEI/h+smfGyqHrAokffUI299zfOdbBbXNDvrsDUkLS7quiTsA8Me
+	tf8JEKHW3C70/f/KNWnwsq7/tvvR2zuTdARFcQ0Yrr7i8zAvpySTJCTHrDdUe8S6
+	66Lb9s2a9Wfp/Sd2J+91eZiyLI0AFJAnpRvWtdImsEoV8S0sDATdBYP/GApXynD8
+	eXRi1Vj3lDsyDA7eUDGkx0R9xbR/znwbZPQSiKwXeqIiiyiq72zttKrSqQZEa53n
+	w+9aLJAnzLJAc9rdyUX74Lt/JVkIBfH0uMUKWtE848k5fjLIE6ZV/kjPJV6pgstc
+	57ZoOw==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bg4v62a5e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 17:20:31 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b9208e1976so575033b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 09:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767633630; x=1768238430; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DHiFrg5t/UNh1oQC2wzIPwwhl3MV3upU6x3ntNRIRB0=;
+        b=JihDbq+adagLmOXxAfGtg4+KQfq84v59ytcncBEO9zJtEr+r+sYhhPh0CFDObXM885
+         wGpsE7Ih1+q5wRfIypIbNW9m44iVux+F2lkvJOvf7KqwfTTOGqD0Zc7HLFF11OwkNGis
+         P+ZzuVdhql/F3M4Cs5cVKyG8B08KXa2T86WLjUwrHrhoTXQxyieqaphQPlUnwHvbjP8O
+         cknTYxilHx046dn4wyQRAJxR4uI7aeJSCX9eNfmCHEQ1qVBL53Eb0GswPC+FJMXC6d/D
+         10tcpuUl3+1t+g9cv3cGtJWU5lrr4xc63W5Vxzt/WD0FXXmKHEdDDt3dSu9AFRzvufB/
+         W96Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767633630; x=1768238430;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DHiFrg5t/UNh1oQC2wzIPwwhl3MV3upU6x3ntNRIRB0=;
+        b=pauT8rtcdTv/OSR0tyBTB1fNNZulgNZvFzJaLijmnbxpsDm7pwKh8z3pizcysod1Hp
+         DfVPAQvRPitgDCbsM8LpfzQhbOwklo5OISdacnBNLw7AMeVJAWdeMyjClvfDk81cY8ZD
+         IFHTNDru22jB6yR1VUJc4fwPlIYZMimDAFGceDw3C7cqyqlrEauBk74y2+3KgdADJqT6
+         hUmmBmAJYsot1hcgxO5HaAXozKWJcKQV3BPziKaZ+qJNT+RW1lukGHxLuz3G3rkcuafV
+         13/jYGagFTk6rVRdud34d5ZEiTfxvFPZH3H86dx0NfO8NoQ/k2EcjBDocxaUYEWdyqdR
+         /AfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX09JzX86T03axe1GxP/vdS1CzSPGOiuw0HMGFLMZia92JyS13+6KVqFP4l29e+gdvKsZ/z3JE1EM2HaJF1@vger.kernel.org
+X-Gm-Message-State: AOJu0YywtAOFlGhv5HEWHfkhb4L2nFPBRlFMapQMEV2F8Td4utdfNRmg
+	/u4Gh7jPWNEHRx47vne9bSRkOpE2R5F0NZtHfnoklSbuiTKDztbDq1uh3YgmGcQAq0emek/kEyo
+	/rCiQFSio7u8zm66ZH9sRvcWo3gP2tMuvUOTpkknZcsKBNUGNnIzr1AafukiBjs09LHCl
+X-Gm-Gg: AY/fxX4/41t0+rd/MFVXIjONQAmk7FcuCytGWAnDBcKYmRRBsBtvd1kk/C06MVQpMOf
+	ngBxLxPYEiKRpwayursFEkTwp8vCN6hc58fUwF6YpZ1vbWu/Iovvk4895whuOa598JtgSj/aheb
+	/9GDATyBPWu+6U7IvzN5NKP1rtBHeGPpgDxbO20ughb5Ns5xoLxh4FZMwKq/LbQ/z+LB9sRTt1o
+	tRqLTEcFr/ur9MLWlzfA6iuNzusaY752WblwPfiBpozJS8d65f223mp9BlSy2HVjEup2p+nAkF5
+	Y6T/A6LGJ16pqNsF+UyxIfR2MpVwpo1KMpPhM409uFzJgMz5mavwQMPaU5nHVD/27gc30ESm0ZK
+	5j41gJ8+vHpU/4Ju3o28riKdk2Q==
+X-Received: by 2002:a05:6a20:a126:b0:35b:b97f:7bd2 with SMTP id adf61e73a8af0-389822aa534mr55363637.10.1767633629738;
+        Mon, 05 Jan 2026 09:20:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IElAgZKmBLzSEgsjbdp00nEWJPVoGLSNwfo1YQ/FYe6i4rtPXr90JULXq/r66u1BxMJh1qbkQ==
+X-Received: by 2002:a05:6a20:a126:b0:35b:b97f:7bd2 with SMTP id adf61e73a8af0-389822aa534mr55337637.10.1767633629141;
+        Mon, 05 Jan 2026 09:20:29 -0800 (PST)
+Received: from work ([120.56.194.222])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4bfc9789e4sm203107a12.7.2026.01.05.09.20.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jan 2026 09:20:28 -0800 (PST)
+Date: Mon, 5 Jan 2026 22:50:22 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] soc: qcom: rpmh-rsc: Register s2idle_ops to
- indicate s2ram behavior in s2idle
-Message-ID: <filahffwq5th2if7jm3ytpea3pqblracdcl7pkp3bg3wyqg3by@qdxvwzt7a2fd>
-References: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
- <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
+        Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
+        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] pinctrl: qcom: glymur: Add Mahua TLMM support
+Message-ID: <zaf4uoms75wc7yvmrmqs53couefqsv5oie2hbiwvhitqonbs4u@aq6bcvf4nq3o>
+References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
+ <20260102-pinctrl-qcom-mahua-tlmm-v1-2-0edd71af08b2@oss.qualcomm.com>
+ <91d2e5f7-7d93-4909-9ed2-6b19abf0b448@oss.qualcomm.com>
+ <dayj662qu7tb3l2fuq4sfdxunvkk2rt777vm7dfvdazbwiwpzn@mysrwdbdptqt>
+ <adlhkus5gvum6fkd7bxjohwlsiumw7w6w4c36vzphjz7my2644@pmobztmgpdvx>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,159 +122,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
+In-Reply-To: <adlhkus5gvum6fkd7bxjohwlsiumw7w6w4c36vzphjz7my2644@pmobztmgpdvx>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDE1MSBTYWx0ZWRfX3QbtnUyS+Yff
+ cFtrEgrOKHsVvZEiOZmNBwpLcfuzHkYTDdOw9zo95vJb2TwAEL/xwcFcLIZI/nJrNo+2AjTb4Ox
+ 2SZnwN15IzsO0OlTaOHkYioePaOJaTp5qha+AMXjsQ8deb6gNYDweIGdMKma9EgnS6Nbfk5DHi2
+ aJkA20ru5nVf3eXhI9wZXrqZC2tI8I2gggf19Pqfj/BgF+Yap6Whx9+CpR1Bmqklaz0SUvxSnSS
+ HQgBuY8NgUphgMkCCnwtxli/HYEByPm8Gwy01+gS8Xj3WvImiIHDsDqIYq7IpC6l4rQQRAzQrDo
+ GBr0abv+6C6ZrAHkc8tobsN3bU+zVuW5h8kvf0Y7ZBzEo7TgZAXdTy61X5wfvtBSSRho5PT6kAB
+ xOlViYpuAefnImv1LNGiqMjas744JEaYRa2I+0NxgUiipNj5ddJKNmNTL5x7EYwrskoL66V41TY
+ xjX8SOBd5FaVxAcgnUQ==
+X-Proofpoint-ORIG-GUID: GERtasewxxde0teom3Aw_Ox52ZKSs5mi
+X-Authority-Analysis: v=2.4 cv=c4ymgB9l c=1 sm=1 tr=0 ts=695bf2df cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=3dEILRYKsVIWdVk4w2Qziw==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=qW_9IeAHNZvJjEDOEU8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: GERtasewxxde0teom3Aw_Ox52ZKSs5mi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601050151
 
-On Mon, Jan 05, 2026 at 08:04:54AM -0600, Bjorn Andersson wrote:
-> On Thu, Jan 01, 2026 at 10:21:57PM +0530, Manivannan Sadhasivam wrote:
-> > Hi,
+On Mon, Jan 05, 2026 at 09:31:03AM -0600, Bjorn Andersson wrote:
+> On Mon, Jan 05, 2026 at 11:04:44AM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Jan 02, 2026 at 01:40:22PM +0100, Konrad Dybcio wrote:
+> > > On 1/2/26 12:07 PM, Gopikrishna Garmidi wrote:
+> > > > Introduce support for the Mahua TLMM (Top Level Mode Multiplexer)
+> > > > in the pinctrl-glymur driver. Mahua shares the same pin configuration
+> > > > as Glymur but requires a different PDC wake IRQ mapping.
+> > > > 
+> > > > Changes include:
+> > > > - Add mahua_pdc_map[] with Mahua-specific GPIO to PDC IRQ mappings
+> > > > - Define mahua_tlmm msm_pinctrl_soc_data structure
+> > > > - Update device match table to include "qcom,mahua-tlmm" compatible
+> > > > - Modify probe function to use of_device_get_match_data() for dynamic
+> > > >   SoC-specific data selection
+> > > > 
+> > > > Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
+> > > > ---
+> > > >  drivers/pinctrl/qcom/pinctrl-glymur.c | 43 ++++++++++++++++++++++++++++++++---
+> > > >  1 file changed, 40 insertions(+), 3 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
+> > > > index 335005084b6b..bf56a064d09c 100644
+> > > > --- a/drivers/pinctrl/qcom/pinctrl-glymur.c
+> > > > +++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
+> > > > @@ -1729,6 +1729,25 @@ static const struct msm_gpio_wakeirq_map glymur_pdc_map[] = {
+> > > >  	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
+> > > >  };
+> > > >  
+> > > > +static const struct msm_gpio_wakeirq_map mahua_pdc_map[] = {
+> > > > +	{ 0, 116 },   { 2, 114 },   { 3, 115 },	  { 4, 175 },	{ 5, 176 },
+> > > > +	{ 7, 111 },   { 11, 129 },  { 13, 130 },  { 15, 112 },	{ 19, 113 },
+> > > > +	{ 23, 187 },  { 27, 188 },  { 28, 121 },  { 29, 122 },	{ 30, 136 },
+> > > > +	{ 31, 203 },  { 32, 189 },  { 34, 174 },  { 35, 190 },	{ 36, 191 },
+> > > > +	{ 39, 124 },  { 43, 192 },  { 47, 193 },  { 51, 123 },	{ 53, 133 },
+> > > > +	{ 55, 125 },  { 59, 131 },  { 64, 134 },  { 65, 150 },	{ 66, 186 },
+> > > > +	{ 67, 132 },  { 68, 195 },  { 71, 135 },  { 75, 196 },	{ 79, 197 },
+> > > > +	{ 83, 198 },  { 84, 181 },  { 85, 199 },  { 87, 200 },	{ 91, 201 },
+> > > > +	{ 92, 182 },  { 93, 183 },  { 94, 184 },  { 95, 185 },	{ 98, 202 },
+> > > > +	{ 105, 157 }, { 113, 128 }, { 121, 117 }, { 123, 118 }, { 125, 119 },
+> > > > +	{ 129, 120 }, { 131, 126 }, { 132, 160 }, { 133, 194 }, { 134, 127 },
+> > > > +	{ 141, 137 }, { 144, 138 }, { 145, 139 }, { 147, 140 }, { 148, 141 },
+> > > > +	{ 150, 146 }, { 151, 147 }, { 153, 148 }, { 154, 144 }, { 155, 159 },
+> > > > +	{ 156, 149 }, { 157, 151 }, { 163, 142 }, { 172, 143 }, { 181, 145 },
+> > > > +	{ 193, 161 }, { 196, 152 }, { 203, 177 }, { 208, 178 }, { 215, 162 },
+> > > > +	{ 217, 153 }, { 220, 154 }, { 221, 155 }, { 228, 179 }, { 230, 180 },
+> > > > +	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
+> > > 
+> > > Over the "common" base, Glymur has GPIO143 (PCIE3a_RST) and Mahua has GPIO155
+> > > (PCIE3b_RST). Both SoCs GPIO maps seem to contain both, but Mahua has a _unused
+> > > suffix for the missing 143, which makes sense given the bus isn't bifurcated
+> > > there.
+> > > 
+> > > The _RST (PERST#) pin is driven by the SoC so I don't think it's useful to
+> > > have it as a wakeup source, unless someone decides to connect something that's
+> > > not PCIe to it (+Mani)
+> > > 
+> > 
+> > PERST# by definition is an optional reset line, but on most of the *recent*
+> > designs, OEMs always connect it to PERST# line. So practically, I don't think it
+> > make sense to mark this GPIO as a wakeup source.
 > > 
 > 
-> Many thanks for looking into this problem, Mani.
+> This assumes that all the OEMs uses the particular PCI instance. If they
+> choose to route this GPIO to some other use case, they would have to
+> figure out that we omitted one entry in this table and patch it with
+> the appropriate data in order to have their GPIO wakeup capable.
 > 
-> > This is just an attempt to let the device drivers know of the quirky platform
-> > behavior of mimicking s2ram in s2idle for older Qcom SoCs (pre-Hamoa and
-> > non-chromebooks) using RPMh. This information is important for the device
-> > drivers as they need to prepare for the possible power loss during system
-> > suspend by shutting down or resetting the devices.
-> > 
-> 
-> Is this really what happens? What _exactly_ is the purpose of
-> pm_suspend_via_firmware() and pm_resume_via_firmware()?
-> 
-> The kernel-doc for pm_suspend_via_firmware() states "return true if
-> platform firmware is going to be invoked at end of system suspend...in
-> order to complete it".
-> 
-> To me this indicates that the purpose of this mechanism is to signal
-> Linux that we're running on a target where platform firmware will cut
-> power once we reach the bottom of the suspend chain, so the individual
-> drivers has to save/restore state in order to prepare for this.
+> Wouldn't it be better to put the correct information in this table at
+> this time? If we have a concrete reason not to, I think we should
+> include something useful in the commit message to help the poor engineer
+> faced with this task...
 > 
 
-Yes!
-
-> But if I understand the bottom of the s2idle sequence, is that all we do
-> is enter idle and the kernel will pick the lowest idle idle-state, which
-> based on the psci-suspend-param will signal the system that the
-> resources needed by the CPU subsystem can be powered down.
-> 
-> But it's not really powering things down, it's releasing the vote of the
-> CPU subsystem - which if the driver didn't vote means power will be
-> lost. So for any drivers that relies on the implicit vote from the CPU
-> subsystem to sustain their operation this flag is correct.
-> 
-> For many IP blocks, the register state and/or some functionality will be
-> retained in this state - e.g. register state will be retained, or
-> functionality will be sustained by sleep power. So they can safely
-> ignore the flag.
-> 
-> In some cases state isn't retained when this happens, so e.g. PHY
-> drivers does perform save and restore operations, despite the flag
-> currently not indicating that power will be lost.
-> 
-> 
-> What's unique with Makena in this regard, is that in this state the PCIe
-> link can not be sustained, so we either need to tear things down, or the
-> PCIe controller needs to vote directly on those resources it need in
-> order to sustain its link.
-> 
-> It seems to me that this patch uses the global flag, in order to signal
-> the PCIe stack specifically, that it needs to save/restore state. I'm
-> concerned that support for retaining state in the PCIe subsystem isn't a
-> global question.
-> 
-
-No, this is not a PCIe stack limitation, but PCIe client driver limitation
-like NVMe. PCIe stack does save and restore the device config space during
-system suspend (even during runtime suspend sometimes).
-
-But the NVMe driver will only shutdown the controller if this global flag is set
-or other conditions are satisfied. Otherwise, it will just park the device in
-low power state. So if the target enters s2ram (deep sleep) or CXPC in Makena,
-controller context will be lost, leading to resume failure.
-
-We tried to fix the issue in the NVMe driver so far, but all efforts ended up in
-vain. NVMe maintainers preferred to rely on some PCI/PM APIs for this. Initially
-I looked into creating one such API, but then figured out that I can just make
-use of this global flag and not touch the NVMe driver at all.
-
-This worked well for s2ram, so I resent a patch submitted by Konrad in 2024 [1].
-But for s2idle and Makena, I thought I could reuse the same global flag and
-achieve the same net result.
-
-[1] https://lore.kernel.org/all/20251231162126.7728-1-manivannan.sadhasivam@oss.qualcomm.com
-
-> 
-> 
-> Then parallel to this discussion, we have the actual s2ram feature
-> showing up on some targets, where the SoC actually do power off. Here
-> the automatic retaining of register and functional state is not going to
-> happen - device drivers must save and restore state.
-> 
-
-AFAIK, atleast on compute targets, s2ram == s2idle + CXPC. Only difference is
-that the system wide low power mode transition will happen in PSCI
-SYSTEM_SUSPEND phase as opposed to CPU_SUSPEND.
-
-Only on auto targets, we have the 'deep sleep' feature which behaves like x86
-s2ram i.e., turning off power to most of the components. But from Linux POV,
-both are just s2ram. This is one more motivation for me to use this global flag
-for s2ram.
-
-Oh there is one more limitation with doing CXPC without D3Cold (link retention).
-Linux cannot handle PCIe wakeup reliably. So if you have WLAN or USB keyboard
-connected to a PCIe-USB hub, wakeup will not work and will result in PCIe link
-down with upstream. We need to have a hw mechanism to handle PCIe wakeup. But
-that is not currently supported and I don't know when that support will land.
-
-So if wakeup is not supported, I thought doing D3Cold + CXPC would be better in
-terms of power saving (not much difference, but still...). This is the only
-motivation for me to use this flag for all pre-Hamoa SoCs. 
-
-> Do we force all "pre-Hamoa" targets into this same behavior? Or do we
-> have a different flag for saying "at the end of suspend power will be
-> lost" there?
-> 
-
-If you don't agree with the above reasoning, I can just limit its usage to
-Makena and s2ram.
-
-> 
-> PS. Think the commit message of the change itself falls short in
-> capturing the problem. The commit message of this change will become the
-> documentation on which many future discussions will be based.
-> 
-
-Sorry about that. I will add more context while sending non-RFC version.
-
-> > For implementation, s2idle_ops is registered during the boot of the rpmh-rsc
-> > driver based on the machine compatible limited to Makena (SC8280XP) as a
-> > proof-of-concept. If this approach gets consensus, I plan to have a helper
-> > that lists the compatibles of all SoCs exhibiting this behavior. Since there is
-> > no reliable way to find out whether s2idle is the only low power state supported
-> > or not during boot, I resorted to compatible based matching.
-> > 
-> > One could argue that this s2idle_ops should be registered in the PSCI driver
-> > similar to s2ram [1]. But I didn't prefer that since from PSCI point of view,
-> > only CPUs should be parked in low power states during s2idle (CPU_SUSPEND) and
-> > the peripherals should not be affected. Though in the past, an argument [2] was
-> > raised citing the PSCI spec wording that allows the vendors to implement system
-> > level low power states during CPU_SUSPEND. But that argument was not well
-> > received by the PSCI maintainers.
-> > 
-> 
-> It makes sense to me to have PSCI only manage CPUs and its necessary
-> peripherals.
-> 
-> But the definition of pm_suspend_via_firmware() in our case would then
-> be, "if your driver piggybacks on e.g. the CPU subsystem's vote for
-> critical resources, you might be in for a surprise".
-> 
-> Which makes me feel that the Makena quirk should be in the PCIe
-> controller driver...
-> 
-
-Do you still think so?
+There is no concrete reason actually. I just mentioned that in practical
+usecase, I never saw an OEM routing the PERST# signal to other wakeup capable
+functionality. But the possibility still exists, so I'm not completely against
+it.
 
 - Mani
 
