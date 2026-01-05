@@ -1,244 +1,413 @@
-Return-Path: <linux-arm-msm+bounces-87535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FAD2CF51BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 18:57:17 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DA0BCF51FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 18:59:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4C08B301559D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 17:57:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 603573007933
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 17:59:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C2E52D372D;
-	Mon,  5 Jan 2026 17:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A931833BBC4;
+	Mon,  5 Jan 2026 17:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kBTYcP7G";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WJfjdw3M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPPvo3uN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A3033F38C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jan 2026 17:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701C0338598;
+	Mon,  5 Jan 2026 17:59:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767635835; cv=none; b=sNdoD+AlXmoUYTDb4fL+fRlBkhXSiC4gw61N+jPh6lrGJEdAHgTlI+uiM3BdNzCC9bSPbWtCl2Nnwl6Xqvd3ODcS1d7JWDZlPKSnNXsIYhF1IHrFoHy5I3pBEqFHZ/ZL/2dW268DXYYkFdHAj8n23gUiQmA+O0yiLXNswvzk4XA=
+	t=1767635963; cv=none; b=kbwJr0uxlIQSTVCFPWt/+V56tIcI8OaOtVMe63JfRoFVQdruHpOcrCN1Crz1OI6QfBUL4nCD0tj8nLH2Iq7bfs/F6IIICduAbW6/LLSJvH2y1kd523B++LBaFy5XMi1laMHnH27nLyUpgqobDWvuFx5mDCywks1YbDv3eNs9X2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767635835; c=relaxed/simple;
-	bh=pyEGqOvXdHfsPS8mT2RifqqvTmsMWYWxCpCvhaasfpA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AAkktpr3MRm/VHFMqTh/BiFX9f26mQBYR8py+R9pMQbCVbwcJC6bfGMYfUDfSC+heuUHOOyivjU8xI0juhy5epzBxWTUvFkYEeTSBVsfmZFg0e/YW7Ao3gBSsOxdPqpXabf17Swh7aSlTdCwLNdRkuJ3s6H3j28PH35QvL4e+3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kBTYcP7G; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WJfjdw3M; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 605GK2PY3337814
-	for <linux-arm-msm@vger.kernel.org>; Mon, 5 Jan 2026 17:57:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	luFQohOzUtSfFErML01fuIAdonSt43+90znEjAeHo9g=; b=kBTYcP7GTT32LIEU
-	jBm5osAqY0ijXTXPYf4V7qJnig8su9EKz6kSpKk2PesX+ZD1FBeCkablOidbsPHO
-	w1KdIMiC3TfWpe6zwIbCTXdH0xcT/s0Jl255bjkd7wPl1pDazLuv0QwvqpvMc8tf
-	C2hqMvvfkWbx1kwhkcanSzpcvZLX4D0kfM2yYIPPjhUpTKaCSd6Gw3kYkHx5xi8q
-	C22fAqTOoV/55LT+S+ZhsuTlgHnfVa7XwNghcR0Ymxg4wh6dkqM/72Z92dOirAm9
-	VeNVqxxfH0ZNRiMlNT0vWIfmDbvKv+7YavPKAVAL0QVXlwgYLK8WZ24Zb95L69OG
-	FWMs7g==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bggqu091s-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 17:57:13 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-34c43f8ef9bso1791647a91.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 09:57:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767635832; x=1768240632; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=luFQohOzUtSfFErML01fuIAdonSt43+90znEjAeHo9g=;
-        b=WJfjdw3MFVbI9DtRp6FnfHX1Sq1dUnYRH0FHh16hqBpRBRCQNBfEoepPCsvn2gU7TX
-         Jr/PM+X3CPWjTAE5wYfl4DSsicABNR9qov8vpov1rsi23SQV61dcANWYh41oIdY0LrdJ
-         kdrvscQTrGVfK8A+/wLcZE88PMgu6IHVJz8Z0bS0YhOIY1wAS4FAVguWe9WsY0qG5qQ0
-         Abv1uy/5yEfqSgEFy86Du1pb5pexmWEdejyDzRNNyUQ+J5JtijvWCYaVgx31nRv2wJlw
-         Od7xGQVrGS7gZUV/i06DBImD5qfQs+oqG5Ixw3hOE2VLyOkjc5ap7uECcYrC6TNabnOr
-         rbqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767635832; x=1768240632;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=luFQohOzUtSfFErML01fuIAdonSt43+90znEjAeHo9g=;
-        b=wUorcP7CaGHb3zQFUmBYWsUhn0OuBk7jUuYbHFbi7A7ehkgPneukr8jPBx5sRrgFwN
-         gX7D3EG6aIgB6+EMA+/ZhEhgT9pul4BHvL7yt/Bw5os2isc5ZuAVLnehXdeFLXbsK2u/
-         GKcRnfTvRho4+d4Bt1ByuRuTvdVtLtYA9Wljrs0q/JLfO7vpXzANkT3ycZNxsVB6vsdt
-         jPSdXtQ9qqJ69XqIvU5pG/O30ED6BnIMr8kt/UdtqR+zvImW56s2j2cD6yh6a0IXi1tY
-         bGXizuJ7MMyrNV1pgWzdeS8w+L8gzlQpDvtetWb6vb8bOCMc1VFkdG02jAwVxBIPC41K
-         xwVw==
-X-Forwarded-Encrypted: i=1; AJvYcCW87s3mtmjmdKwpRUtNKh/5AAhA+PqNzI3x9m33X048fhkj1pmZ49Erb2Or+8XlCa6OG/vXnWEeqeR2XWyy@vger.kernel.org
-X-Gm-Message-State: AOJu0YytY0EmIPIf0QWrg12m4Zcr9AvcH8BpOlC1lWXrizBrxc00bzLz
-	TEKzrHQ/In82faU/bu62yGM7ym1yNg34INFlpivQAQCdVLI29MgXcxO4iPHztTmJm/3eQYt5XTb
-	o9HZRMvYKsS6YmhItzIhJZWLk3SEbR/eLEgT0Aex+R/oJTxROAQBSoAjWxgFAZnZ+g89N
-X-Gm-Gg: AY/fxX7Y5vC/yqcf4CfQH7Atmb0rwZc7/X9OZxjHsNSN8HmQ+SPQBgzWoc79mGESGXD
-	iSXYGQS1BWWJoa2/1xl9O7rioVbz51keqU1jF9cJnLSy4HOm1oKnDTIsfxtzJKR+qnUNCj3dl9n
-	AvK8pqyM4SjlCpYYp2gGhqGNJDdGO+CAjp4GDRfjXFcbCt0eyDdfUQsaEIoLFWMfocW06b2hcp6
-	jpiGRlUt86BvpK7WN9Xl15LEd/C7lq2kLWVjuC7jmGBRVpPWGXvxx9Nqia+cU1Ws5LXkgFG+Qoq
-	xzqcmVf7omfL9dX3GtyNEVonppcwUni9ACGFsk04nv+q35iNUf7M5UKIXQKLj1JgDH2woNWQhIH
-	MGYsmQMaOWZRNmX6Jx9uVvpU7AL7B05R8Dq9p9ef8uvw+KSJ/cQ==
-X-Received: by 2002:a17:90b:5825:b0:34a:a16d:77c3 with SMTP id 98e67ed59e1d1-34f5f83ddc3mr14791a91.2.1767635831922;
-        Mon, 05 Jan 2026 09:57:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IElruqKiFOG7DhNDu5zJlxmkqXIl8agGfM9DEGHevp6QtmhWxaqcdqCqo8PIRXDBYKFtHOY+Q==
-X-Received: by 2002:a17:90b:5825:b0:34a:a16d:77c3 with SMTP id 98e67ed59e1d1-34f5f83ddc3mr14767a91.2.1767635831388;
-        Mon, 05 Jan 2026 09:57:11 -0800 (PST)
-Received: from [192.168.0.107] ([183.82.31.185])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f5f7a557asm14022a91.3.2026.01.05.09.57.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jan 2026 09:57:11 -0800 (PST)
-Message-ID: <19b2dd07-ed70-4eaa-8395-6a62d52ec862@oss.qualcomm.com>
-Date: Mon, 5 Jan 2026 23:27:07 +0530
+	s=arc-20240116; t=1767635963; c=relaxed/simple;
+	bh=38lfFq1vG3Ei2s2fHA+ybdTaOcqKJy6oNtVPeQ/HGOE=;
+	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=M8gvllhdj41b4skGv2tXFyQs0QLZqvvx04MnyioaOeeNk5j2nD8oQpcJRx3VW67kVcpLGsxMWnjyTjOOBLsQIql6PornmtRRudzcRd17sY6M3shX2dY3NHrkaQodKrQpTPj8uWrfBGWcHREtBnJZ3Rw3CVIPCPT05MqDDpwd6xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPPvo3uN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF10C116D0;
+	Mon,  5 Jan 2026 17:59:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767635963;
+	bh=38lfFq1vG3Ei2s2fHA+ybdTaOcqKJy6oNtVPeQ/HGOE=;
+	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
+	b=iPPvo3uNxklgiQNoVAOPnGdixavH/RJn7uefogsdZJ8EIbNu2vI5XvKnMr+CvUOTH
+	 ToB4IeUG53IbB/Prqd8OjJKAIirnbqJKHDX8nZ7ONL+AMT7p7IF/JEyxo+D65TgLXL
+	 Kqvpok2PQiiytLa64rJ13MTCGU/JcrM4XJqGrpoBATdjqJgr1TwGlbX7Um9rbMqjyl
+	 KENTZwO20N1+jZniv2QWQ11gyIO25jQ5/9+M9+SvaePsOfI1jNrlrIQ/5wUgOJO/Lu
+	 euYuxOQOOIB2sx0eclcAs3+oPKiY25rQqJc6N9fTBSN7RP87whgDRRGEgKR5xDv6LI
+	 0b50b2K6La+tQ==
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 05 Jan 2026 11:59:21 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] remoteproc: qcom_q6v5_wcss: support IPQ9574
-To: mr.nuke.me@gmail.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        andersson@kernel.org, mathieu.poirier@linaro.org,
-        linux-kernel@vger.kernel.org
-Cc: krzk+dt@kernel.org, Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20251219043425.888585-1-mr.nuke.me@gmail.com>
- <20251219043425.888585-6-mr.nuke.me@gmail.com>
- <a14e40b7-b70b-4658-9dee-7e5e6265ad5f@oss.qualcomm.com>
- <12223416.nUPlyArG6x@nukework.gtech>
- <55d70e0b-7a6b-4979-9ae9-4443e54ab584@oss.qualcomm.com>
- <7f6754a4-4a3b-4b6f-9220-a1790a9ba393@gmail.com>
-Content-Language: en-US
-From: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
-In-Reply-To: <7f6754a4-4a3b-4b6f-9220-a1790a9ba393@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDE1NiBTYWx0ZWRfXznhW0wrmz85x
- 7a+cBLr065y3xsny3V4oS71rJ2fnzCaTHgdXG83oNVkpcQj3RgmJ59vOQ/BJBMljeUsyZowpnMO
- 3k4Q7jQbzXQONEtKXrNH2kF9aknNCCmjb4Ko+e1MoraUnwkAs1++dvVCVfH2A0YiNRihuH2iori
- YPjENQFpnQQBhI0Lg55suHfodNjTXyvwqCll++Rt7fFzNDG3GNqrKAeVzH5LBfbkSVFhV/W6OWj
- +6PsKs6CPc7Ui5snZYT8946HQpYatBjJFUTiZIYg0K4BW1yZ3JrV/7XKbcLjmE3RUzfYocLTV4Z
- +T8bm662t3R73ocwHlAoNMxX38jgpffiLtmkW4jCeqBpHUdmnFoJc98vA3Nc0xpnHwnTqFZRcVh
- uuu+dGRGtadoxQTVWN+74dDzoPSM8uM+NNbwYQclGi46/fUQ6oakqaaj6SJiOdzPve3JsyUyRu1
- TupjIihuBHzsUhWIlYA==
-X-Proofpoint-ORIG-GUID: c0I_Kn27QAOvnt94ldoTIQbDXFyI9kST
-X-Authority-Analysis: v=2.4 cv=fr/RpV4f c=1 sm=1 tr=0 ts=695bfb79 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=V6Ol1F/91haf34TWKFX4Fg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8
- a=CDNBFjyWLGXVnZMhk_0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: c0I_Kn27QAOvnt94ldoTIQbDXFyI9kST
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601050156
+Cc: linux-arm-msm@vger.kernel.org, andersson@kernel.org, krzk+dt@kernel.org, 
+ devicetree@vger.kernel.org, konradybcio@kernel.org, conor+dt@kernel.org, 
+ linux-kernel@vger.kernel.org
+To: weifu wu <boss@oi-io.cc>
+In-Reply-To: <tencent_9C28E18B378E0835E704B3173AC4045BA606@qq.com>
+References: <tencent_9C28E18B378E0835E704B3173AC4045BA606@qq.com>
+Message-Id: <176763568528.3016971.2841916910009383489.robh@kernel.org>
+Subject: Re: [PATCH 2/2] [PATCH v1 2/2] arm64: dts: qcom: add Acer Swift
+ SFA14-11 device tree
+
+
+On Sun, 04 Jan 2026 22:37:08 +0800, weifu wu wrote:
+> Add initial device tree for Acer Swift SFA14-11 laptop based on
+> Qualcomm X1E78100 SoC. This enables basic peripherals including
+> eDP panel, backlight, USB and PCIe.
+> 
+> Tested by building dtbs and booting on the target hardware.
+> 
+> Signed-off-by: weifu wu <boss@oi-io.cc>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |    2 +
+>  .../dts/qcom/x1e78100-acer-swift-sfa14-11.dts | 1650 +++++++++++++++++
+>  2 files changed, 1652 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
+> 
+
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: attempting to guess base-commit...
+ Base: tags/v6.19-rc1-22-g328407ba89ae (exact match)
+ Base: tags/v6.19-rc1-22-g328407ba89ae (use --merge-base to override)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for tencent_9C28E18B378E0835E704B3173AC4045BA606@qq.com:
+
+arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dtb: / (acer,swift-sfa14-11): compatible: 'oneOf' conditional failed, one must be fixed:
+	['acer,swift-sfa14-11', 'lenovo,thinkpad-t14s', 'qcom,x1e78100', 'qcom,x1e80100'] is too long
+	['acer,swift-sfa14-11', 'lenovo,thinkpad-t14s', 'qcom,x1e78100', 'qcom,x1e80100'] is too short
+	'acer,swift-sfa14-11' is not one of ['qcom,apq8016-sbc', 'schneider,apq8016-hmibsc']
+	'acer,swift-sfa14-11' is not one of ['asus,sparrow', 'huawei,sturgeon', 'lg,lenok', 'samsung,matisse-wifi', 'samsung,milletwifi']
+	'acer,swift-sfa14-11' is not one of ['asus,nexus7-flo', 'lg,nexus4-mako', 'sony,xperia-yuga', 'qcom,apq8064-cm-qs600', 'qcom,apq8064-ifc6410']
+	'acer,swift-sfa14-11' is not one of ['qcom,apq8074-dragonboard']
+	'acer,swift-sfa14-11' is not one of ['qcom,apq8060-dragonboard', 'qcom,msm8660-surf']
+	'acer,swift-sfa14-11' is not one of ['qcom,apq8084-mtp', 'qcom,apq8084-sbc']
+	'acer,swift-sfa14-11' is not one of ['microsoft,dempsey', 'microsoft,makepeace', 'microsoft,moneypenny', 'motorola,falcon', 'samsung,ms013g', 'samsung,s3ve3g']
+	'acer,swift-sfa14-11' is not one of ['htc,memul', 'microsoft,superman-lte', 'microsoft,tesla', 'motorola,peregrine', 'samsung,matisselte']
+	'acer,swift-sfa14-11' is not one of ['wingtech,wt82918hd']
+	'acer,swift-sfa14-11' is not one of ['asus,z00t', 'huawei,kiwi', 'longcheer,l9100', 'samsung,a7', 'sony,kanuti-tulip', 'square,apq8039-t2', 'wingtech,wt82918', 'wingtech,wt82918hdhw39']
+	'acer,swift-sfa14-11' is not one of ['sony,kugo-row', 'sony,suzu-row']
+	'acer,swift-sfa14-11' is not one of ['qcom,msm8960-cdp', 'samsung,expressatt']
+	'acer,swift-sfa14-11' is not one of ['sony,huashan']
+	'acer,swift-sfa14-11' is not one of ['lge,hammerhead', 'samsung,hlte', 'sony,xperia-amami', 'sony,xperia-honami', 'sony,xperia-togari']
+	'acer,swift-sfa14-11' is not one of ['fairphone,fp2', 'htc,m8', 'oneplus,bacon', 'samsung,klte', 'sony,xperia-aries', 'sony,xperia-castor', 'sony,xperia-leo']
+	'acer,swift-sfa14-11' is not one of ['samsung,kltechn']
+	'acer,swift-sfa14-11' is not one of ['longcheer,l9360']
+	'acer,swift-sfa14-11' is not one of ['acer,a1-724', 'alcatel,idol347', 'asus,z00l', 'gplus,fl8005a', 'huawei,g7', 'lg,c50', 'lg,m216', 'longcheer,l8910', 'longcheer,l8150', 'motorola,harpia', 'motorola,osprey', 'motorola,surnia', 'qcom,msm8916-mtp', 'samsung,a3u-eur', 'samsung,a5u-eur', 'samsung,e5', 'samsung,e7', 'samsung,fortuna3g', 'samsung,gprimeltecan', 'samsung,grandmax', 'samsung,grandprimelte', 'samsung,gt510', 'samsung,gt58', 'samsung,j3ltetw', 'samsung,j5', 'samsung,j5x', 'samsung,rossa', 'samsung,serranove', 'thwc,uf896', 'thwc,ufi001c', 'wingtech,wt86518', 'wingtech,wt86528', 'wingtech,wt88047', 'yiming,uz801-v3']
+	'acer,swift-sfa14-11' is not one of ['xiaomi,riva']
+	'acer,swift-sfa14-11' is not one of ['xiaomi,land']
+	'acer,swift-sfa14-11' is not one of ['flipkart,rimob', 'motorola,potter', 'xiaomi,daisy', 'xiaomi,mido', 'xiaomi,tissot', 'xiaomi,vince']
+	'acer,swift-sfa14-11' is not one of ['lg,bullhead', 'lg,h815', 'microsoft,talkman', 'xiaomi,libra']
+	'acer,swift-sfa14-11' is not one of ['sony,karin_windy']
+	'acer,swift-sfa14-11' is not one of ['huawei,angler', 'microsoft,cityman', 'sony,ivy-row', 'sony,karin-row', 'sony,satsuki-row', 'sony,sumire-row', 'sony,suzuran-row']
+	'acer,swift-sfa14-11' is not one of ['arrow,apq8096-db820c', 'inforce,ifc6640']
+	'acer,swift-sfa14-11' is not one of ['oneplus,oneplus3', 'oneplus,oneplus3t', 'qcom,msm8996-mtp', 'sony,dora-row', 'sony,kagura-row', 'sony,keyaki-row', 'xiaomi,gemini']
+	'acer,swift-sfa14-11' is not one of ['xiaomi,natrium', 'xiaomi,scorpio']
+	'acer,swift-sfa14-11' is not one of ['asus,novago-tp370ql', 'fxtec,pro1', 'hp,envy-x2', 'lenovo,miix-630', 'oneplus,cheeseburger', 'oneplus,dumpling', 'qcom,msm8998-mtp', 'sony,xperia-lilac', 'sony,xperia-maple', 'sony,xperia-poplar', 'xiaomi,sagit']
+	'acer,swift-sfa14-11' is not one of ['8dev,jalapeno', 'alfa-network,ap120c-ac']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq4019-ap-dk01.1-c1', 'qcom,ipq4019-ap-dk04.1-c3', 'qcom,ipq4019-ap-dk07.1-c1', 'qcom,ipq4019-ap-dk07.1-c2', 'qcom,ipq4019-dk04.1-c1']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq5018-rdp432-c2', 'tplink,archer-ax55-v1']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq5332-ap-mi01.2', 'qcom,ipq5332-ap-mi01.3', 'qcom,ipq5332-ap-mi01.6', 'qcom,ipq5332-ap-mi01.9']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq5424-rdp466']
+	'acer,swift-sfa14-11' is not one of ['mikrotik,rb3011', 'qcom,ipq8064-ap148']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq8074-hk01', 'qcom,ipq8074-hk10-c1', 'qcom,ipq8074-hk10-c2']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq9574-ap-al02-c2', 'qcom,ipq9574-ap-al02-c6', 'qcom,ipq9574-ap-al02-c7', 'qcom,ipq9574-ap-al02-c8', 'qcom,ipq9574-ap-al02-c9']
+	'acer,swift-sfa14-11' is not one of ['qcom,kaanapali-mtp', 'qcom,kaanapali-qrd']
+	'swir,mangoh-green-wp8548' was expected
+	'acer,swift-sfa14-11' is not one of ['qcom,qrb2210-rb1']
+	'acer,swift-sfa14-11' is not one of ['fairphone,fp5', 'particle,tachyon', 'qcom,qcm6490-idp', 'qcom,qcs6490-rb3gen2', 'radxa,dragon-q6a', 'shift,otter']
+	'acer,swift-sfa14-11' is not one of ['qcom,qdu1000-idp', 'qcom,qdu1000-x100']
+	'acer,swift-sfa14-11' is not one of ['qcom,qru1000-idp']
+	'acer,swift-sfa14-11' is not one of ['qcom,qar2130p']
+	'acer,swift-sfa14-11' is not one of ['acer,aspire1', 'qcom,sc7180-idp']
+	'google,coachz-rev1' was expected
+	'google,coachz' was expected
+	'google,coachz-rev1-sku0' was expected
+	'google,coachz-sku0' was expected
+	'google,homestar-rev2' was expected
+	'google,homestar-rev3' was expected
+	'google,homestar' was expected
+	'google,kingoftown-rev0' was expected
+	'google,kingoftown' was expected
+	'google,lazor-rev0' was expected
+	'google,lazor-rev1' was expected
+	'google,lazor-rev3' was expected
+	'google,lazor-rev9' was expected
+	'google,lazor' was expected
+	'google,lazor-rev1-sku2' was expected
+	'google,lazor-rev3-sku2' was expected
+	'google,lazor-rev9-sku2' was expected
+	'google,lazor-sku2' was expected
+	'google,lazor-rev1-sku0' was expected
+	'google,lazor-rev3-sku0' was expected
+	'google,lazor-rev9-sku0' was expected
+	'google,lazor-sku0' was expected
+	'google,lazor-rev4-sku4' was expected
+	'google,lazor-rev9-sku4' was expected
+	'google,lazor-sku4' was expected
+	'google,lazor-rev4-sku5' was expected
+	'google,lazor-rev5-sku5' was expected
+	'google,lazor-rev9-sku6' was expected
+	'google,lazor-sku6' was expected
+	'google,mrbland-rev0-sku0' was expected
+	'google,mrbland-sku1536' was expected
+	'google,mrbland-rev0-sku16' was expected
+	'google,mrbland-sku1024' was expected
+	'google,pazquel-sku5' was expected
+	'google,pazquel-sku1' was expected
+	'google,pazquel-sku6' was expected
+	'google,pazquel-sku0' was expected
+	'google,pazquel-sku22' was expected
+	'google,pazquel-sku21' was expected
+	'google,pompom-rev1' was expected
+	'google,pompom-rev2' was expected
+	'google,pompom' was expected
+	'google,pompom-rev1-sku0' was expected
+	'google,pompom-rev2-sku0' was expected
+	'google,pompom-sku0' was expected
+	'google,quackingstick-sku1537' was expected
+	'google,quackingstick-sku1536' was expected
+	'google,trogdor' was expected
+	'google,trogdor-sku0' was expected
+	'google,wormdingler-rev0-sku16' was expected
+	'google,wormdingler-sku1024' was expected
+	'google,wormdingler-sku1025' was expected
+	'google,wormdingler-rev0-sku0' was expected
+	'google,wormdingler-sku0' was expected
+	'google,wormdingler-sku1' was expected
+	'qcom,sc7280-crd' was expected
+	'google,zoglin' was expected
+	'google,zoglin-sku1536' was expected
+	'qcom,sc7280-idp' was expected
+	'qcom,sc7280-idp2' was expected
+	'google,evoker' was expected
+	'google,evoker-sku512' was expected
+	'google,herobrine' was expected
+	'google,villager-rev0' was expected
+	'google,villager' was expected
+	'google,villager-sku512' was expected
+	'google,zombie' was expected
+	'google,zombie-sku512' was expected
+	'google,zombie-sku2' was expected
+	'google,zombie-sku514' was expected
+	'acer,swift-sfa14-11' is not one of ['lenovo,flex-5g', 'microsoft,surface-prox', 'qcom,sc8180x-primus']
+	'acer,swift-sfa14-11' is not one of ['huawei,gaokun3', 'lenovo,thinkpad-x13s', 'microsoft,arcata', 'microsoft,blackrock', 'qcom,sc8280xp-crd', 'qcom,sc8280xp-qrd']
+	'acer,swift-sfa14-11' is not one of ['lenovo,tbx605f', 'motorola,ali']
+	'acer,swift-sfa14-11' is not one of ['sony,discovery-row', 'sony,kirin-row', 'sony,pioneer-row', 'sony,voyager-row']
+	'acer,swift-sfa14-11' is not one of ['inforce,ifc6560']
+	'acer,swift-sfa14-11' is not one of ['fairphone,fp3', 'motorola,ocean']
+	'acer,swift-sfa14-11' is not one of ['sony,mermaid-row']
+	'acer,swift-sfa14-11' is not one of ['xiaomi,lavender']
+	'acer,swift-sfa14-11' is not one of ['google,sargo']
+	'acer,swift-sfa14-11' is not one of ['qcom,sdx55-mtp', 'qcom,sdx55-telit-fn980-tlb', 'qcom,sdx55-t55']
+	'acer,swift-sfa14-11' is not one of ['qcom,sdx65-mtp']
+	'acer,swift-sfa14-11' is not one of ['qcom,sdx75-idp']
+	'acer,swift-sfa14-11' is not one of ['qcom,ipq6018-cp01', 'qcom,ipq6018-cp01-c1']
+	'acer,swift-sfa14-11' is not one of ['qcom,qcs404-evb-1000', 'qcom,qcs404-evb-4000']
+	'acer,swift-sfa14-11' is not one of ['qcom,monaco-evk', 'qcom,qcs8300-ride']
+	'acer,swift-sfa14-11' is not one of ['qcom,qcs615-ride']
+	'acer,swift-sfa14-11' is not one of ['qcom,sa8155p-adp']
+	'acer,swift-sfa14-11' is not one of ['qcom,sa8295p-adp', 'qcom,sa8540p-ride']
+	'acer,swift-sfa14-11' is not one of ['qcom,sa8775p-ride', 'qcom,sa8775p-ride-r3']
+	'acer,swift-sfa14-11' is not one of ['qcom,lemans-evk', 'qcom,qcs9100-ride', 'qcom,qcs9100-ride-r3']
+	'acer,swift-sfa14-11' is not one of ['huawei,planck', 'lenovo,yoga-c630', 'lg,judyln', 'lg,judyp', 'oneplus,enchilada', 'oneplus,fajita', 'qcom,sdm845-mtp', 'shift,axolotl', 'samsung,starqltechn', 'samsung,w737', 'sony,akari-row', 'sony,akatsuki-row', 'sony,apollo-row', 'thundercomm,db845c', 'xiaomi,beryllium', 'xiaomi,beryllium-ebbg', 'xiaomi,polaris']
+	'acer,swift-sfa14-11' is not one of ['oneplus,billie2']
+	'acer,swift-sfa14-11' is not one of ['qcom,qrb4210-rb2']
+	'acer,swift-sfa14-11' is not one of ['qcom,sm4450-qrd']
+	'acer,swift-sfa14-11' is not one of ['fxtec,pro1x']
+	'acer,swift-sfa14-11' is not one of ['lenovo,j606f']
+	'acer,swift-sfa14-11' is not one of ['sony,pdx201', 'xiaomi,ginkgo', 'xiaomi,laurel-sprout']
+	'acer,swift-sfa14-11' is not one of ['sony,pdx213']
+	'acer,swift-sfa14-11' is not one of ['sony,pdx225']
+	'acer,swift-sfa14-11' is not one of ['xiaomi,curtana', 'xiaomi,joyeuse']
+	'acer,swift-sfa14-11' is not one of ['google,sunfish']
+	'acer,swift-sfa14-11' is not one of ['fairphone,fp4']
+	'acer,swift-sfa14-11' is not one of ['nothing,spacewar']
+	'acer,swift-sfa14-11' is not one of ['microsoft,surface-duo', 'qcom,sm8150-hdk', 'qcom,sm8150-mtp', 'sony,bahamut-generic', 'sony,griffin-generic']
+	'acer,swift-sfa14-11' is not one of ['qcom,qrb5165-rb5', 'qcom,sm8250-hdk', 'qcom,sm8250-mtp', 'samsung,r8q', 'samsung,x1q', 'sony,pdx203-generic', 'sony,pdx206-generic', 'xiaomi,elish', 'xiaomi,pipa']
+	'acer,swift-sfa14-11' is not one of ['microsoft,surface-duo2', 'qcom,sm8350-hdk', 'qcom,sm8350-mtp', 'sony,pdx214-generic', 'sony,pdx215-generic']
+	'acer,swift-sfa14-11' is not one of ['qcom,sm8450-hdk', 'qcom,sm8450-qrd', 'samsung,r0q', 'sony,pdx223', 'sony,pdx224']
+	'acer,swift-sfa14-11' is not one of ['qcom,sm8550-hdk', 'qcom,sm8550-mtp', 'qcom,sm8550-qrd', 'samsung,q5q', 'sony,pdx234']
+	'acer,swift-sfa14-11' is not one of ['qcom,qcs8550-aim300-aiot']
+	'acer,swift-sfa14-11' is not one of ['qcom,sm8650-hdk', 'qcom,sm8650-mtp', 'qcom,sm8650-qrd']
+	'acer,swift-sfa14-11' is not one of ['qcom,sm8750-mtp', 'qcom,sm8750-qrd']
+	'acer,swift-sfa14-11' is not one of ['qcom,x1e001de-devkit']
+	'acer,swift-sfa14-11' is not one of ['lenovo,thinkpad-t14s-lcd', 'lenovo,thinkpad-t14s-oled']
+	'acer,swift-sfa14-11' is not one of ['medion,sprchrgd14s1', 'tuxedo,elite14gen1']
+	'acer,swift-sfa14-11' is not one of ['asus,vivobook-s15', 'asus,zenbook-a14-ux3407ra', 'dell,inspiron-14-plus-7441', 'dell,latitude-7455', 'dell,xps13-9345', 'hp,elitebook-ultra-g1q', 'hp,omnibook-x14', 'lenovo,yoga-slim7x', 'microsoft,romulus13', 'microsoft,romulus15', 'qcom,x1e80100-crd', 'qcom,x1e80100-qcp']
+	'acer,swift-sfa14-11' is not one of ['qcom,hamoa-iot-evk']
+	'acer,swift-sfa14-11' is not one of ['asus,zenbook-a14-ux3407qa-lcd', 'asus,zenbook-a14-ux3407qa-oled']
+	'acer,swift-sfa14-11' is not one of ['hp,omnibook-x14-fe1', 'lenovo,thinkbook-16', 'qcom,x1p42100-crd']
+	'qcom,apq8016' was expected
+	'qcom,apq8026' was expected
+	'qcom,apq8064' was expected
+	'qcom,apq8074' was expected
+	'qcom,msm8660' was expected
+	'qcom,apq8084' was expected
+	'qcom,msm8226' was expected
+	'qcom,msm8926' was expected
+	'qcom,msm8929' was expected
+	'qcom,msm8939' was expected
+	'qcom,msm8956' was expected
+	'qcom,msm8960' was expected
+	'qcom,msm8960t' was expected
+	'qcom,msm8974' was expected
+	'qcom,msm8974pro' was expected
+	'samsung,klte' was expected
+	'qcom,msm8976' was expected
+	'qcom,msm8916' was expected
+	'qcom,msm8917' was expected
+	'qcom,msm8937' was expected
+	'qcom,msm8953' was expected
+	'qcom,msm8992' was expected
+	'qcom,apq8094' was expected
+	'qcom,msm8994' was expected
+	'qcom,apq8096-sbc' was expected
+	'qcom,msm8996' was expected
+	'qcom,msm8996pro' was expected
+	'qcom,msm8998' was expected
+	'qcom,ipq4018' was expected
+	'qcom,ipq4019' was expected
+	'qcom,ipq5018' was expected
+	'qcom,ipq5332' was expected
+	'qcom,ipq5424' was expected
+	'qcom,ipq8064' was expected
+	'qcom,ipq8074' was expected
+	'qcom,ipq9574' was expected
+	'qcom,kaanapali' was expected
+	'swir,wp8548' was expected
+	'qcom,qrb2210' was expected
+	'qcom,qcm6490' was expected
+	'qcom,qdu1000' was expected
+	'qcom,qru1000' was expected
+	'qcom,sar2130p' was expected
+	'qcom,sc7180' was expected
+	'google,coachz-rev2' was expected
+	'google,coachz-rev2-sku0' was expected
+	'google,homestar-rev23' was expected
+	'google,lazor-rev2' was expected
+	'google,lazor-rev4' was expected
+	'google,lazor-rev2-sku2' was expected
+	'google,lazor-rev4-sku2' was expected
+	'google,lazor-rev2-sku0' was expected
+	'google,lazor-rev4-sku0' was expected
+	'google,lazor-rev9-sku10' was expected
+	'google,lazor-sku10' was expected
+	'google,lazor-rev5-sku4' was expected
+	'google,lazor-rev9-sku15' was expected
+	'google,lazor-sku15' was expected
+	'google,lazor-rev5-sku6' was expected
+	'google,lazor-rev9-sku18' was expected
+	'google,lazor-sku18' was expected
+	'google,mrbland-sku768' was expected
+	'google,pazquel-sku4' was expected
+	'google,pazquel-sku2' was expected
+	'google,pazquel-sku20' was expected
+	'google,hoglin-rev3' was expected
+	'google,hoglin' was expected
+	'google,hoglin-sku1536' was expected
+	'google,senor' was expected
+	'google,piglin' was expected
+	'qcom,sc7280' was expected
+	'google,zombie-sku3' was expected
+	'qcom,sc8180x' was expected
+	'qcom,sc8280xp' was expected
+	'qcom,sdm450' was expected
+	'qcom,sdm630' was expected
+	'qcom,sda660' was expected
+	'qcom,sdm632' was expected
+	'qcom,sdm636' was expected
+	'qcom,sdm660' was expected
+	'qcom,sdm670' was expected
+	'qcom,sdx55' was expected
+	'qcom,sdx65' was expected
+	'qcom,sdx75' was expected
+	'qcom,ipq6018' was expected
+	'qcom,qcs404-evb' was expected
+	'qcom,qcs8300' was expected
+	'qcom,qcs615' was expected
+	'qcom,sa8155p' was expected
+	'qcom,sa8540p' was expected
+	'qcom,sa8775p' was expected
+	'qcom,qcs9100' was expected
+	'qcom,sdm845' was expected
+	'qcom,sm4250' was expected
+	'qcom,qrb4210' was expected
+	'qcom,sm4450' was expected
+	'qcom,sm6115' was expected
+	'qcom,sm6115p' was expected
+	'qcom,sm6125' was expected
+	'qcom,sm6350' was expected
+	'qcom,sm6375' was expected
+	'qcom,sm7125' was expected
+	'qcom,sm7150' was expected
+	'qcom,sm7225' was expected
+	'qcom,sm7325' was expected
+	'qcom,sm8150' was expected
+	'qcom,sm8250' was expected
+	'qcom,sm8350' was expected
+	'qcom,sm8450' was expected
+	'qcom,sm8550' was expected
+	'qcom,qcs8550-aim300' was expected
+	'qcom,sm8650' was expected
+	'qcom,sm8750' was expected
+	'qcom,x1e001de' was expected
+	'qcom,x1e78100' was expected
+	'qcom,x1e80100' was expected
+	'qcom,hamoa-iot-som' was expected
+	'asus,zenbook-a14-ux3407qa' was expected
+	'qcom,x1p42100' was expected
+	'qcom,apq8096' was expected
+	'qcom,mdm9615' was expected
+	'qcom,qcm2290' was expected
+	'google,lazor-rev5' was expected
+	'google,lazor-rev5-sku2' was expected
+	'google,lazor-rev5-sku0' was expected
+	'google,lazor-rev6-sku4' was expected
+	'google,lazor-rev6-sku6' was expected
+	'google,hoglin-rev4' was expected
+	'google,zombie-sku515' was expected
+	'qcom,qcs404' was expected
+	'qcom,sm6150' was expected
+	'qcom,qcs8550' was expected
+	'google,lazor-rev6' was expected
+	'google,lazor-rev6-sku2' was expected
+	'google,lazor-rev6-sku0' was expected
+	'google,lazor-rev7-sku4' was expected
+	'google,lazor-rev7-sku6' was expected
+	'google,piglin-rev3' was expected
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dtb: /: failed to match any schema with compatible: ['acer,swift-sfa14-11', 'lenovo,thinkpad-t14s', 'qcom,x1e78100', 'qcom,x1e80100']
 
 
 
-On 1/5/2026 9:39 PM, mr.nuke.me@gmail.com wrote:
-> 
-> 
-> On 12/29/25 6:35 AM, Konrad Dybcio wrote:
->> On 12/23/25 9:21 PM, Alex G. wrote:
->>> On Friday, December 19, 2025 7:20:04 AM CST Konrad Dybcio wrote:
->>>> On 12/19/25 5:34 AM, Alexandru Gagniuc wrote:
->>>>> Q6 based firmware loading is also present on IPQ9574, when coupled
->>>>> with a wifi-6 device, such as QCN5024. Populate driver data for
->>>>> IPQ9574 with values from the downstream 5.4 kerrnel.
->>>>>
->>>>> Add the new sequences for the WCSS reset and stop. The downstream
->>>>> 5.4 kernel calls these "Q6V7", so keep the name. This is still worth
->>>>> using with the "q6v5" driver because all other parts of the driver
->>>>> can be seamlessly reused.
->>>>>
->>>>> The IPQ9574 uses two sets of clocks. the first, dubbed "q6_clocks"
->>>>> must be enabled before the Q6 is started by writing the Q6SS_RST_EVB
->>>>> register. The second set of clocks, "clks" should only be enabled
->>>>> after the Q6 is placed out of reset. Otherwise, the host CPU core that
->>>>> tries to start the remoteproc will hang.
->>>>>
->>>>> The downstream kernel had a funny comment, "Pray god and wait for
->>>>> reset to complete", which I decided to keep for entertainment value.
->>>>>
->>>>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->>>>> ---
->>>>
->>>> [...]
->>>>
->>>>> @@ -128,6 +137,12 @@ struct q6v5_wcss {
->>>>>
->>>>>       struct clk *qdsp6ss_xo_cbcr;
->>>>>       struct clk *qdsp6ss_core_gfmux;
->>>>>       struct clk *lcc_bcr_sleep;
->>>>>
->>>>> +    struct clk_bulk_data *clks;
->>>>> +    /* clocks that must be started before the Q6 is booted */
->>>>> +    struct clk_bulk_data *q6_clks;
->>>>
->>>> "pre_boot_clks" or something along those lines?
->>>
->>> I like "pre_boot_clocks".
->>>
->>>> In general i'm not super stoked to see another platform where manual and
->>>> through-TZ bringup of remoteprocs is supposed to be supported in parallel..
->>>>
->>>> Are you sure your firmware doesn't allow you to just do a simple
->>>> qcom_scm_pas_auth_and_reset() like in the multipd series?
->>>
->>> I am approaching this from the perspective of an aftermarket OS, like OpenWRT.
->>> I don't know if the firmware will do the right thing. I can mitigate this for
->>> OS-loaded firmware, like ath11k 16/m3 firmware, because I can test the driver
->>> and firmware together. I can't do that for bootloader-loaded firmware, so I try
->>> to depend on it as little as possible. I hope that native remoterproc loading
->>> for IPQ9574 will be allowed.
->>
->> These are two parallel questions. I didn't even know that the bootloader
->> preloaded firmware on these platforms (are you sure that's the case?)
->>
->> qcom_scm_pas_auth_and_reset() is usually preceded by qcom_mdt_pas_init() +
->> qcom_mdt_load_no_init() where *you* supply the loadable firmware for the
->> remote processor.
-> 
-> What I mean is that the init sequence is implemented in the trustzone firmware which is loaded at boot time. Irrespective of what Q6 and M3 firmware I supply, if trustzone doesn't cooperate, I can't start the remoteproc. I don't have that problem when the init sequence is implemented in the kernel.
-> 
->> The init sequence provided by this interface will be at worst identical to
->> what you're proposing here (except abstracted out), and at best containing
->> some fixes and/or workarounds that may be necessary.
-> 
-> I think this portrays the TZ path as somehow superior. That's not how things work in my use casee.
 
-Adding my 2 cents here, in some platforms, the regions which you are accessing
-as part of the init sequence might be access protected by Trustzone.
-This might lead to the kernel bringup failing due to an access violation.
-
-This was the motivation behind me asking if this worked in my previous email.
-Using the TZ interface, as suggested by Konrad, should work in any case.
-
-Thanks,
-Vignesh
-
-> 
-> The bootloader/FW versions depends on when and who made the device. So while the newest TZ from upstream may have the latest fixes, I have no guarantee that they will be present on a given device at runtime. The best solution I found to get consistent behavior across devices is to do these sequences from the kernel. Is there something incomplete in my init sequence that I can fix?
-> 
->  > Please try using PAS and see if that works.
-> 
-> I found the v6 of the multipd series [1]. It needed some minor adjustments to compile. I went as far as loading the Q6 firmware and starting the remoteproc without error. I did not test any further.
-> 
-> Alex
-> 
-> [1] https://patchwork.kernel.org/project/linux-remoteproc/patch/20231110091939.3025413-1-quic_mmanikan@quicinc.com/
-> 
-> 
 
 
