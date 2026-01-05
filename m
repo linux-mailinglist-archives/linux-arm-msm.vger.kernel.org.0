@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-87544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6B00CF5537
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:16:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39821CF5576
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:18:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3200430318E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6180530DDB18
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0ACC3431F5;
-	Mon,  5 Jan 2026 19:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D9E344054;
+	Mon,  5 Jan 2026 19:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rT55W6WU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hfSFsVlz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9741E342CB8;
-	Mon,  5 Jan 2026 19:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365D3337B8C;
+	Mon,  5 Jan 2026 19:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767640598; cv=none; b=LxWrnx7F7VFT+t89mi2F5hEPT8pTSOfeBHqfohSOnoArRVw677QQJvnxQgoRTmBbhpG4HOA2G2hMRRby/g0qZa41n7hiTAjBalWFCxKgZ2mcbcKjRSt50lorVR+8kSaodoeazOPSwMq7ZatJgoIEXu/oqlZ94b2bKk3ELi8BD94=
+	t=1767640599; cv=none; b=WBkzP6pCsKyx8k6kH3GwPU4/Pg8jSKe4QE2VJEapuAeL/rJqFNG75vb3CpcsaZmG3KpegybvJZQZgu/8mPdbp7PqfqDZiyEnLEqyKWRaSDvtCNCbbQfQAO06N3m8CpWgENvsZ0IGitEKlwFjniWa0Cq18e5EfcTO3zGV6yt15ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767640598; c=relaxed/simple;
-	bh=pBljs1/FMQUZyoLtluD0z1yUFNDf4wiTWSLCG9KI6fM=;
+	s=arc-20240116; t=1767640599; c=relaxed/simple;
+	bh=xuImhXP+cNSM5R+oQNq40Trs0AeZW5f8bbImVFJ6wnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QzoFAcCef/etqZWRnRtlo7STx2LTeXG6s+Cd3DG/XBvb2MzLlGbIvj9EGlQShVD6+YWv7A3bWB1u+YN08Uco7+OMjk6TYoj2mCV6MsX26YbcCYjf0hezI2c+oWcTnMEYM0dSa42cE2pC556wuqLjH86TblEZvU1w4Uam+DhCizk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rT55W6WU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34008C116D0;
-	Mon,  5 Jan 2026 19:16:37 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qDozVPSoZh+hJHdK7OIeN0tjCWJ4pqZWRkl6xDCt/Dwqd3BDBfbekKxesvj03CeCyI1GF8tdUPE+InyGCwrGgYgzQaerfdpW+bc3c0pwAzr5yp+ohsSvBysv1YRH4G2t/5UwvfznPvcQEXuLeYtCjMUYasoMy0sDZBy/7vLopc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hfSFsVlz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA95C19424;
+	Mon,  5 Jan 2026 19:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767640598;
-	bh=pBljs1/FMQUZyoLtluD0z1yUFNDf4wiTWSLCG9KI6fM=;
+	s=k20201202; t=1767640599;
+	bh=xuImhXP+cNSM5R+oQNq40Trs0AeZW5f8bbImVFJ6wnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rT55W6WU7tINamoV6J3IN7Px+My9N6Xj29aHFfPqLan7M9Pn7mU09L3yG3/KhATxg
-	 KTiEjZYC3WkV6Vp4QFGtSF4MGSPjy72x2BucEGG7irKFjeAZnvOtCsJMenqONwyBrt
-	 aJ2QboJEUmygUvCB7Yw9rsgszMyIKyrBc3/DecgumOckpCNleimpU5DEkdY52UOZ8L
-	 pdckD1Fr2M2NZrahg15Qx2wlN0H9CJIU+Fs9gWK8+hBH5GHC2Wr0cUQuV4K+5WvoaM
-	 PK89Nar2tSjgey/lD6OAqMAJC8kPkVti+mynQhO/DEm8jKEsgoHumFnB5vy90V73OA
-	 1M9VRMuZxthww==
+	b=hfSFsVlz1cnH1Jjs6tUQdjY5jgwfCqZqzVrIO9c9sa2PjTwDVRBU7DJgW/tZ7seJX
+	 2jRYFgje4zrTp4yz3tTa687g4iO5DTokJ0qRBZnK/1onBWsEOnviFHJq8wo4zzlqaE
+	 vsP2KgFR5NkHbd2KPUFdRk9Adg2ppt/msobQGBkc3mU6j4jvhlmu3AS/wnPTIxkfms
+	 WzUuKR69hSWoIASUCLN+2McPd/N6FASQ0upfZXp/Jhoz/CNaijCWc+x2YNTH92b6xo
+	 8uwTQy54P9vIvBl7w1DBrFrWGEI/wzYpn3LVzXMhdR/Xvuufmh4H0hdzF1IUogotgM
+	 9rQ99n/5W7iPA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Ettore Chimenti <ettore.chimenti@linaro.org>,
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: monaco: add QCrypto node
-Date: Mon,  5 Jan 2026 13:16:18 -0600
-Message-ID: <176764058418.2961867.8978724825685350296.b4-ty@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-medion-sprchrgd-14-s1: correct firmware paths
+Date: Mon,  5 Jan 2026 13:16:19 -0600
+Message-ID: <176764058416.2961867.8767181298228995774.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251224-enable-qualcomm-crypto-engine-for-monaco-v3-1-6073430bbc13@oss.qualcomm.com>
-References: <20251224-enable-qualcomm-crypto-engine-for-monaco-v3-1-6073430bbc13@oss.qualcomm.com>
+In-Reply-To: <20251224-fix-medion-v1-1-305747dff79a@oss.qualcomm.com>
+References: <20251224-fix-medion-v1-1-305747dff79a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,21 +68,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 24 Dec 2025 14:03:02 +0530, Abhinaba Rakshit wrote:
-> Add Qualcomm Crypto Engine device node for Monaco platform.
+On Wed, 24 Dec 2025 03:09:13 +0200, Dmitry Baryshkov wrote:
+> Per the agreement, the firmware paths (even for devices not supported in
+> linux-firmware) should follow the SoC/Vendor/device pattern. Update
+> firmware names for Medion SPRCHRGD 14 S1 to follow that pattern.
 > 
-> QCE and Crypto DMA nodes patch was applied as part of
-> commit a86d84409947 ("arm64: dts: qcom: qcs8300: add QCrypto nodes"),
-> however was partially reverted by commit cdc117c40537 ("arm64: dts: qcom:
-> qcs8300: Partially revert "arm64: dts: qcom: qcs8300: add QCrypto nodes"")
-> due to compatible string being mismatched against schema.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: monaco: add QCrypto node
-      commit: 6691966f4afc06c674b7679a772b7423cd16c545
+[1/1] arm64: dts: qcom: x1e80100-medion-sprchrgd-14-s1: correct firmware paths
+      commit: a1a515c21dd70d1b761ccbf6efc9dd1ba6d26d77
 
 Best regards,
 -- 
