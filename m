@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-87495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A4E8CF4146
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:19:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4A0CF4459
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 16:02:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F259530312D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:18:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 609D730275B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 15:01:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC16333C194;
-	Mon,  5 Jan 2026 14:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E83433C502;
+	Mon,  5 Jan 2026 14:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1RISvcF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M+3I1OYe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE8A3195E8;
-	Mon,  5 Jan 2026 14:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FB433B970;
+	Mon,  5 Jan 2026 14:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622125; cv=none; b=SHrNAXLIv9F0BUXJukLMH7ZUWctyTJ5eTsKjLahLu6X8PAAaPumddsOUb9WdwnRrOA37JR2B6VCKOaLijas3srmUssVM6GOyJuKfCjp/YcHfJx3NbJpVnaOdNV1Tb0QmAGftFFPO+Jz0Zvng/8JF6yKjDwwhyJn7T3vsihlz2ss=
+	t=1767622129; cv=none; b=MtjohYn5+ereK6+u5EsKZZeaJZs41ujotjY8/ebwJDaqUZR1K/f2+UnIkUVWjE90o3GXmt0rUZz1kclUjo3auNGfxncLxVVdWuigzGsjo71sJXRJnuyJ3oHRASkHZwuJCRXDfuHlJ6bVzlxg0x2gLZ+8OP3vhDGjmVmoalNCOu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622125; c=relaxed/simple;
-	bh=FwlatwWwhf0j0Y/c0cpnobxyOHFmby7rIDXpobArU1g=;
+	s=arc-20240116; t=1767622129; c=relaxed/simple;
+	bh=gSxg3cOQf8M4Zytg8sXxM+YQE4kaMcWFngZQS56Ibfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NggcQasvkxByYoKdiPwM+fy7IZiKwkD2ydAAZJnJlYiYYMaibMJ7hbXG11rc+bysg/l3Pz9eQ5F91BaJdH3ZQN5wpuhVSgHPhFYUu3hjHkNjhMrr12/OGWNHh9qZzTvTYQ9w9dxPmPohnPGDxc/zxqPu+oydLz8vuIsX1Nw3yJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1RISvcF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1250C16AAE;
-	Mon,  5 Jan 2026 14:08:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=h2K7UCSuvPLPkIJA5VachRmAZ+VcRGC4mLf4qwUw8ADq5hGp7v1AYYUlONOcIZAuZg8xmT6Pc9i1SyU7hL0d8n0Jr9aByPXGWARjqQJFHA+mY8KOPQK3nT05J9JHpXyRtQVOaLfQEOc6ZXEX2+bBBpHYWdb6JgK+7aP7VAPuTZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M+3I1OYe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EDEC16AAE;
+	Mon,  5 Jan 2026 14:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622123;
-	bh=FwlatwWwhf0j0Y/c0cpnobxyOHFmby7rIDXpobArU1g=;
+	s=k20201202; t=1767622126;
+	bh=gSxg3cOQf8M4Zytg8sXxM+YQE4kaMcWFngZQS56Ibfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1RISvcFPcrVrw4O9LlhP6dtkdNs0gk2ZpzQZGnFceyVaeP+Evwbl9C4luZOqVKFJ
-	 Fr0lo3bRlusiW4pKOaLGVesMtLwrwHQYxhJVZKbPnnq6GfDD8ZtHbNWDZyqQHsCkJZ
-	 QW+gYeApPkyIkBvIlxTzk3BWVZSgcufv4hGeGyymOc0yx6GmL1b4FDOM27gP9kS/Mb
-	 yNCO2dnfKJBwESn/4LLSS13XIvpoY4NXa25ztz5BfpraDP8D53UqtEoR4w7SzokE21
-	 P16QOf1r3DEReP0AQ05GWUEevjhaAqsjMc/KQVsbmDZ00DMUWu36rYfJtbE3anNyvK
-	 DiqjZYgFwrTrQ==
+	b=M+3I1OYewDrIBzH7WKpRm0I4iNE+TTB15w0atPBVgfmfTQnVn0HoX9/BSJcfHgQ1/
+	 Z8vR+Z+8hzcJ9iwliNNn1FSZU8mKtGiTaVOc4cTtlS3KuDcX3dKR56AEQ7qHbfhHAM
+	 F+r+QnlIltwvZlw9C7l7+QODoF9V5KnHi2qGmEOCvW51XkE65HqVcDpWaEJNlbh6mV
+	 lUwWWOzYgapqoPf0NVVYaKdv9r5XT+1GBW0BAy92yYJMrn3sdL6QpM91kKPoLLmMi3
+	 1TRpdp/26pcWHcUsRkWuu4pM0gZp4DL5gsUhW3/UvFOH6ii2WOda9N1jjTiibonFG/
+	 30RPYDh0SiKZw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
+	Haotian Zhang <vulab@iscas.ac.cn>
+Cc: linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	Abel Vesa <abelvesa@kernel.org>
-Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8x50: Use floor ops for SDCC RCGs
-Date: Mon,  5 Jan 2026 08:07:42 -0600
-Message-ID: <176762206408.2923194.11853047530908161551.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: Return correct error code in qcom_cc_probe_by_index()
+Date: Mon,  5 Jan 2026 08:07:44 -0600
+Message-ID: <176762206373.2923194.12576641356609051710.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251124212012.3660189-1-vladimir.zapolskiy@linaro.org>
-References: <20251124212012.3660189-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20251217041338.2432-1-vulab@iscas.ac.cn>
+References: <20251217041338.2432-1-vulab@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,23 +62,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 24 Nov 2025 23:20:10 +0200, Vladimir Zapolskiy wrote:
-> In line with commit a27ac3806b0a ("clk: qcom: gcc-sm8450: Use floor ops
-> for SDCC RCGs") done to fix issues with overclocked SD cards on SM8450
-> powered boards set floor clock operations for SDCC RCGs on SM8550 and
-> SM8650 powered boards, tested on SM8550-HDK and SM8650-HDK respectively.
+On Wed, 17 Dec 2025 12:13:38 +0800, Haotian Zhang wrote:
+> When devm_platform_ioremap_resource() fails, it returns various
+> error codes. Returning a hardcoded -ENOMEM masks the actual
+> failure reason.
 > 
-> This change fixes initialization of some SD cards, where the problem
-> is manifested by the SDHC driver:
+> Use PTR_ERR() to propagate the actual error code returned by
+> devm_platform_ioremap_resource() instead of -ENOMEM.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
-      commit: 1c06e3956054fb5a0930f07b02726b1774b6c700
-[2/2] clk: qcom: gcc-sm8650: Use floor ops for SDCC RCGs
-      commit: 8c4415fd17cd5979c31a4bf303acc702e9726033
+[1/1] clk: qcom: Return correct error code in qcom_cc_probe_by_index()
+      commit: 1e07ebe744fb522983bd52a4a6148601675330c7
 
 Best regards,
 -- 
