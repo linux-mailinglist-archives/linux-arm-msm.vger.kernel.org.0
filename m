@@ -1,116 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-87381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBFA6CF2410
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 08:46:39 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A25EDCF2470
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 08:53:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AF9243020685
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 07:45:57 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C60193000B7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 07:53:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D34C1DB34C;
-	Mon,  5 Jan 2026 07:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A08A2D97BB;
+	Mon,  5 Jan 2026 07:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tgd70OPn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLNvTwzm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397744A35;
-	Mon,  5 Jan 2026 07:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FA92C0281;
+	Mon,  5 Jan 2026 07:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767599156; cv=none; b=izdw6ABlSmoj0UBz5CUfTEJiNjGed8D+HniDktIhM+pdfDCEnakc81MM5upTYZys04nufy3mHDEE5XYf1HeWsZYpv3PPyfBnAJFSq7e4F8Sf9FxXzSeScDX/twR1vVBAp+jGLlzNkm4il/qgASgR5GtHG5RCFTJLw5SMcf1cazU=
+	t=1767599586; cv=none; b=Xryt029OBMWKzCCcOpi7yxuc8QeDC8WKlFZIRaIlWUcfVGxpelJX6KPooZrKYTG+FBCpJgftZCVRj+qZWQRvrcCM1IP/ilulWXHi08NwUcyJRsLkefTc/PF10c5NtwGrf8wGFPTFV/1EiL0aDvSY4Xj/RkGqmI5mWBZXvM7JRhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767599156; c=relaxed/simple;
-	bh=k6Tt5yTwHGvGjAYNj5vnutG3De0UqSFPh6CVE9bICIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mbqY5bce8ZnFt3jjT6OQNR5mdYc8zEd85OKYmgc5G+Dse8EIghZqgTjmxoAPyL0FOMWzinY3ZF0kOv1iag/EbnXx7hiEzq/CpL8Fz1/jug4Jqku4R8bxCQDTk2mkukrtYeFNl0NtCc9bp3KRJ40ForqPSUndaO+MsDmL5MhMSJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tgd70OPn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24ABC116D0;
-	Mon,  5 Jan 2026 07:45:48 +0000 (UTC)
+	s=arc-20240116; t=1767599586; c=relaxed/simple;
+	bh=Vl9Fn6kZeCMLR1Ud+b/QmBMv3YvMdmFK0HP02rXbN+M=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=B4BIfcnUQU8n9EfLdiO+LXaXQVg0pppa64itJAVG1arbQbdxuSBcwN3ofG4CCmH1RtUCYVu08HHGXro8cCVZZtP/1Btg4EYUxhGhwBtBcZ0LaRSS7AlJ3Kfed6jDE2wp2DQPFwom1z7V1xRFoY6ikf/rkTbAr4BGDo0CwRaGBHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLNvTwzm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70913C19421;
+	Mon,  5 Jan 2026 07:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767599155;
-	bh=k6Tt5yTwHGvGjAYNj5vnutG3De0UqSFPh6CVE9bICIQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Tgd70OPnYQqVw0gUaYhdLwpZd5uyr3gmOOwrOOISPEe1PV+NfPyxEgvyKroSXQFyS
-	 RPLee18ZDQreq/UEC8Vzaon3yiJSreHoRw+zRJdWkWWZQP/Eq9UoICMFdwF5ewenMt
-	 6f8f1FBgqBx9nZnYCqaaOO6xXsQj1b/ckDCRe6yMQSEmvjZmNj1rIqhoVrVW+oAkv3
-	 q/knFwQZk8DXriN2bIqDVH0rS/m/Ofc9M+BXWuoHKFclPvp/aL2hY+Sq4iBYGjO/S7
-	 GXAOZZjEyPHFr1x+oLCf9qdvAn47y6gwh+RgAeKt/YjyoAT9CfCc7jyWWOk/Dwl9r6
-	 CQHuY5T/Qyg0Q==
-Date: Mon, 5 Jan 2026 13:15:45 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Brian Norris <computersforpeace@gmail.com>, 
-	Kamal Dasu <kamal.dasu@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Miquel Raynal <miquel.raynal@bootlin.com>, 
-	Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
-	Harvey Hunt <harveyhuntnexus@gmail.com>, Paul Cercueil <paul@crapouillou.net>, 
-	Stefan Agner <stefan@agner.ch>, Tudor Ambarus <tudor.ambarus@linaro.org>, 
-	Pratyush Yadav <pratyush@kernel.org>, Michael Walle <mwalle@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
-	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
-	linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, llvm@lists.linux.dev
-Subject: Re: [PATCH 4/7] mtd: rawnand: qcom: Simplify with scoped for each OF
+	s=k20201202; t=1767599585;
+	bh=Vl9Fn6kZeCMLR1Ud+b/QmBMv3YvMdmFK0HP02rXbN+M=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=FLNvTwzmBC4xn47pAo7WQakISc5qNVy905ywL+KdRXqSBdJpxCqpVqntzwL7cpNm8
+	 foXBQl94KmegRQjGxYIAYR1doIkP+umcM6Cwy2/E+Wogjuf+CyyZCmok0JvVHMVIHD
+	 zzjKfKaVmUBPHgsD2c3BXJOJC1sFMO2MPwgZj4Qu72X+0veEm3DObxFnjCCoAmcfgn
+	 RID3v+DWFyuWGLyvdhDMXI1sR8x88tMCuZo97ZOeTXqr/YEZrailxp352d4wTgU2PJ
+	 +A+8RDoJLiNejbLcKqaS95nsxqjzATzte8JEncyWJ0SkwpHtmMka9QhqSKTuXXzEKn
+	 U/O0Gg9RwdSwA==
+From: Srinivas Kandagatla <srini@kernel.org>
+To: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20260102124808.64219-2-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260102124808.64219-2-krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH] slimbus: qcom-ngd: Simplify with scoped for each OF
  child loop
-Message-ID: <yy6nfsezapap7o2pnbydczoh6376crzr33oibkuwonygxnhsky@ongy4c6cy67m>
-References: <20260102124927.64703-8-krzysztof.kozlowski@oss.qualcomm.com>
- <20260102124927.64703-11-krzysztof.kozlowski@oss.qualcomm.com>
+Message-Id: <176759958394.16703.16018114241492921567.b4-ty@kernel.org>
+Date: Mon, 05 Jan 2026 07:53:03 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260102124927.64703-11-krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 
-On Fri, Jan 02, 2026 at 01:49:31PM +0100, Krzysztof Kozlowski wrote:
+
+On Fri, 02 Jan 2026 13:48:09 +0100, Krzysztof Kozlowski wrote:
 > Use scoped for-each loop when iterating over device nodes to make code a
 > bit simpler.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-- Mani
-
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index 4dd6f1a4e797..b7e79b76654d 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2206,16 +2206,14 @@ static int qcom_nand_host_init_and_register(struct qcom_nand_controller *nandc,
->  static int qcom_probe_nand_devices(struct qcom_nand_controller *nandc)
->  {
->  	struct device *dev = nandc->dev;
-> -	struct device_node *dn = dev->of_node, *child;
-> +	struct device_node *dn = dev->of_node;
->  	struct qcom_nand_host *host;
->  	int ret = -ENODEV;
->  
-> -	for_each_available_child_of_node(dn, child) {
-> +	for_each_available_child_of_node_scoped(dn, child) {
->  		host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
-> -		if (!host) {
-> -			of_node_put(child);
-> +		if (!host)
->  			return -ENOMEM;
-> -		}
->  
->  		ret = qcom_nand_host_init_and_register(nandc, host, child);
->  		if (ret) {
-> -- 
-> 2.51.0
 > 
 
+Applied, thanks!
+
+[1/1] slimbus: qcom-ngd: Simplify with scoped for each OF child loop
+      commit: 6af1ec752dd456ffbff48fa3c9f717470ae83e9e
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Srinivas Kandagatla <srini@kernel.org>
+
 
