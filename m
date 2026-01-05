@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45593CF2B09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:19:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C031CF2C80
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:34:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 124EC3004B98
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:14:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 95DEA304A598
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:30:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DF9E310655;
-	Mon,  5 Jan 2026 09:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 829E632E141;
+	Mon,  5 Jan 2026 09:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tdlH/CZJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uX0b+CEF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C4F27F754;
-	Mon,  5 Jan 2026 09:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D832BF5D;
+	Mon,  5 Jan 2026 09:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767604462; cv=none; b=ZlOVsJkfmkM2w+kplXNL3LipBEKd/oWQ5gGUM+O/PGZgmdE/XnawsrzWyfGs+tFPl81PbOz7fvmyJn2K2pcEgPb1aPEXxkpqX9yWO5Gaf2932rWyHy8hHCwxY4KQ5RO+gHSTea1O7vu7Wu3q3HwFzuumlp4j2GC+A4rt7hkd72o=
+	t=1767605445; cv=none; b=Y8UIjQjgxxvmFBPK6gMNoQ3LUhdPkzjhaMvhLHjEope9QZ7lQCxHpIfR7cf6z12ODmc6PGH9sBVMep2NVoKbRoHMA8mRb5nj4dRscceSxOvJIC5IXHihMEE+MSfJFAJuRB30QajCHL0Cjbwg9kB55xD5NdAdbdhLjawoLTuxhuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767604462; c=relaxed/simple;
-	bh=agkPuuHbAzZNBlw1lOOFzsbzPHMlfF7fPXuvgZvIaj0=;
+	s=arc-20240116; t=1767605445; c=relaxed/simple;
+	bh=lyV7qVwbr8SDoYsnumOFtad80gHwrzHRh3mFSKwuj8Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KJZwSoR89ndsgZ7+/oTQkNU0UKMucO567LeaI5Er3dw386yc5uB0+c5eIzYyPAGY5H+eSQ8GAzFvWy68uCIcRfY042iXyNnEYsyPvSNNmAQB+vvxvVWwLyGkfB2YlOUOIMAhYM7DgBhDxOwy8dve5oEdz1GQWOyPomYRQEb2rUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tdlH/CZJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D104C19421;
-	Mon,  5 Jan 2026 09:14:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tshUK6VrksMX1miu5DpbboRoFP4GxrEnxdkbpOTvWigTxB+JUE6Fi0pdEIYj5k/JYgaWqS2q2owHC8/wvf7vRI868IHkKkeRKZsQjMtyBNhVgyYA7kyHo1AMYNJoxAA4boo7S3xo+2VWH0845OkaD1HafEsh81mCd1ivd+ZqzAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uX0b+CEF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B81DC116D0;
+	Mon,  5 Jan 2026 09:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767604462;
-	bh=agkPuuHbAzZNBlw1lOOFzsbzPHMlfF7fPXuvgZvIaj0=;
+	s=k20201202; t=1767605445;
+	bh=lyV7qVwbr8SDoYsnumOFtad80gHwrzHRh3mFSKwuj8Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tdlH/CZJmVzQ17RVLIvXZAhcOyghx5ondOrK76opd7wiLRqX+o2JfzAcDXwYWXWPb
-	 f0MiN25CF4FzBsimQVARel997xSzkKVno2g9Io9hc31pxA4djZUcycUr06FLtnY+B2
-	 U6hJLkI4yS2SlU4FFQvArrgghRsd2cPP98x1DJuBca+3vu7ZWDS+/I24eqLKkniFrh
-	 MpDJsAL1dc2e5CDhiknylpy1QVquTVYeipLNF9bm1p2lxt6+azOZjl4Vg+hfjQXxpW
-	 y2Cftz70xjm8KrLNGC6HapwQeFdLwH0mKeQ4UOCdsyTwsMXFMMN50swUWt9+wmkZ4M
-	 +PoNlxmApRH9w==
-Message-ID: <ab9f56e4-217a-431d-b7b1-2f5352927969@kernel.org>
-Date: Mon, 5 Jan 2026 10:14:18 +0100
+	b=uX0b+CEFa5pDea6gkjd0bcCv2N+lW7iDGDCbpcyMcJEwjI7waQocG4XrYu6+wgiqR
+	 l9WDDGUHqoD9QXBRf18FWVCLBJ7B1mEsmypncNDzXbc92H0Qf1BXNPLNQ0pJZejGfI
+	 vzyGMFOjCuSilo0Z9SbE+enX7K61E2P6gvNSWlXPgSadMObbYV4rkUJn6uGhNFRTqU
+	 fJU42VGmbAEoUdMw3pDZvZqVihy/lOWFNSWDzkhTuDB2kzCpDTnw6cwKHYADzIOUWy
+	 /h3Kwj7VAoHZUz1c9/Zr9TaxVfRHkdzwpURuO/ELEA8FHqR6225ACreBy4k/38rRtM
+	 HNCmBX1vnvoFg==
+Message-ID: <b03a69a1-1f5a-4dae-a6d4-851f18e43917@kernel.org>
+Date: Mon, 5 Jan 2026 10:30:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,13 +48,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] [PATCH v1 2/2] arm64: dts: qcom: add Acer Swift
- SFA14-11 device tree
-To: weifu wu <boss@oi-io.cc>, andersson@kernel.org, konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <tencent_9C28E18B378E0835E704B3173AC4045BA606@qq.com>
+Subject: Re: [PATCH 3/4] ASoC: codecs: wsa884x: fix codec initialisation
+To: Johan Hovold <johan@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
+ Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20260102111413.9605-1-johan@kernel.org>
+ <20260102111413.9605-4-johan@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -100,66 +101,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <tencent_9C28E18B378E0835E704B3173AC4045BA606@qq.com>
+In-Reply-To: <20260102111413.9605-4-johan@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/01/2026 15:37, weifu wu wrote:
-> Add initial device tree for Acer Swift SFA14-11 laptop based on
-> Qualcomm X1E78100 SoC. This enables basic peripherals including
-> eDP panel, backlight, USB and PCIe.
+On 02/01/2026 12:14, Johan Hovold wrote:
+> The soundwire update_status() callback may be called multiple times with
+> the same ATTACHED status but initialisation should only be done when
+> transitioning from UNATTACHED to ATTACHED.
 > 
-> Tested by building dtbs and booting on the target hardware.
+> Fix the inverted hw_init flag which was set to false instead of true
+> after initialisation which defeats its purpose and may result in
+> repeated unnecessary initialisation.
 > 
-> Signed-off-by: weifu wu <boss@oi-io.cc>
+> Similarly, the initial state of the flag was also inverted so that the
+> codec would only be initialised and brought out of regmap cache only
+> mode if its status first transitions to UNATTACHED.
+> 
+> Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+> Cc: stable@vger.kernel.org	# 6.5
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Johan Hovold <johan@kernel.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |    2 +
->  .../dts/qcom/x1e78100-acer-swift-sfa14-11.dts | 1650 +++++++++++++++++
->  2 files changed, 1652 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 76cf0115a00a..d8b4d91dec82 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -326,6 +326,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
->  x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
-> +x1e78100-acer-swift-sfa14-11-el2-dtbs  := x1e78100-acer-swift-sfa14-11.dtb x1-el2.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM) += x1e78100-acer-swift-sfa14-11.dtb x1e78100-acer-swift-sfa14-11-el2.dtb
->  x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
->  dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s.dtb x1e78100-lenovo-thinkpad-t14s-el2.dtb
->  x1e78100-lenovo-thinkpad-t14s-oled-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s-oled.dtb x1-el2.dtbo
-> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts b/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
-> new file mode 100644
-> index 000000000000..b962d00f756d
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
-> @@ -0,0 +1,1650 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2024, Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/gpio-keys.h>
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +
-> +#include "hamoa.dtsi"
-> +#include "hamoa-pmics.dtsi"
-> +
-> +/ {
-> +	model = "Acer Swift 14 Go Pro AI (SFA14-11)";
-> +	compatible = "acer,swift-sfa14-11", "lenovo,thinkpad-t14s", "qcom,x1e78100", "qcom,x1e80100";
 
-Regardless what you say in cover letter, you never bothered to test it.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Tested on Lenovo T14s:
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 
 Best regards,
 Krzysztof
+
 
