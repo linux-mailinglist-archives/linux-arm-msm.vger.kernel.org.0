@@ -1,70 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-87546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EA2FCF557F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:19:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 089E9CF5555
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 20:17:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5E7A630F1C45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3ACB730360C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 19:16:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 337BA3451A3;
-	Mon,  5 Jan 2026 19:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 923BF345731;
+	Mon,  5 Jan 2026 19:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mt6TBbDv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JDlnqbku"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056713112B4;
-	Mon,  5 Jan 2026 19:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4B2342511;
+	Mon,  5 Jan 2026 19:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767640601; cv=none; b=esOvd9HO6uwCd6vM8QnA+ol0JzTAch+0JUcryyTiC6ATR9bvZhhH98GGLzs5HW7SlIIQGse3M+7kdGThG462HDd4X7v8EcC3jHqDYePLmnPTstUDhvBymdGKtTQrBIuqUwZPNDkdfmGG/HJ9gY6mwJGk/aLpYX0IAWVRakcBggE=
+	t=1767640602; cv=none; b=lK87gEIDE4bSdJruC/+MnXlj0j2XMpUw5/nyHnvLUwBa7mDsiUFvaiJT5sFkCi+6XAwUZjtp+pnZzyJndIyAOpepsoWK3gwYroH3bI144iZM1m043RA0IRlPyqNi9lfOXObNTqSQ+q1WOTywIGJgVu91pT9clATNtUMcDmdPQCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767640601; c=relaxed/simple;
-	bh=+ius9zQo9Q9QI7YzArmNKIVZiGB4iJha+FfrhltYWEk=;
+	s=arc-20240116; t=1767640602; c=relaxed/simple;
+	bh=8ccsC1ObfOGFL11PecJTXOFCfWNzGQVsUYEdR3WgLP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t/Vd9+5TCa2l+5nKKed3HcgPXCqkLTD++Jb1IrQmBNg90Zoy1xRRj5ol6sMP2m5N8Bp5Rs1gBFpRoK7JUbLVNhvBpuvhlRDs1BG1iOEWLMhNrnY7PvqsoYKS2iiNPC1JJsuqJQhcaGgvtLkLbi0KASHtu4n2sR3XlmoV3Nw+iO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mt6TBbDv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47203C116D0;
-	Mon,  5 Jan 2026 19:16:39 +0000 (UTC)
+	 MIME-Version:Content-Type; b=EQUMdqxUmhQBKqLIzkw+fccO3zRamresxXur5eHYK4t+28Qe6BXX10VDY0nEuhFR4Wdx+SUlBfHT1F9+TNW/NfEmxoOFdQHckoqg3wzMBXwe3eAfG9vP69J6EgEHG6X1FCmvIObbB+uVrdjHs7B7OnX/gZbPk+/11GM2DdjgrSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JDlnqbku; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FDDC2BCAF;
+	Mon,  5 Jan 2026 19:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767640600;
-	bh=+ius9zQo9Q9QI7YzArmNKIVZiGB4iJha+FfrhltYWEk=;
+	s=k20201202; t=1767640602;
+	bh=8ccsC1ObfOGFL11PecJTXOFCfWNzGQVsUYEdR3WgLP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mt6TBbDvYj98Ndc4pMoDVLu/oUfPNrlt8cnJYbAVLV0Y+Yn8GlcUGz59WjcoMLLgg
-	 RHt58PTXGJxVpr7h4eqaYOaGxLke/hzvytoWBPoHuazcla39ojQ/69lV7w80mJiuZO
-	 G48Tkp0R1YAJ//QEF7e4M6MwpxXAKxXkty9ykGAGkklgDpU37YyoYOTri7lkb1y7l1
-	 L6NvF7IxHWj3itahe3K7bMbOFfrU8HWkG/jmdQT/3ImMFnZDswNx0id79/Jdi2rYE3
-	 MjaKMwi7tCaUuU92w9DpWof4FhLoSEctD5BDb88KM80Zx8gHh3oh+HUNscy5LMjBKD
-	 d1itd1+txJrCw==
+	b=JDlnqbkualOgSBoReZXlE1OIWdQxv49Gjx5KRhy+NDHk/rHoB/dIhyX6NZYeNWnDY
+	 kmLhMBf2p6BEPtHTkkkuR0STlt4gBXDCow55uFBHusLZBmwQ3Yv283hPI18bdE5AHA
+	 MXpC16ubA4H6cGY5wNtnYs4H0OorjhvGwPEzNJ79mWzNezCoPRm3+OcrH29acesfrn
+	 fImH8fKr0va32XwCVKk4ubfrVb2ASy6ZXQ891kPQH1T6w4Ic1+p3pFOj2dC9L2Q2eh
+	 RgnSCsaChgxUL7MGpmmNW5Ev5IdiHYgWh5UCT6qkZvpJRYj6Crf1B8wgf0upRHAAx1
+	 AdYPhvub5iJRg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+To: Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Vincent Knecht <vincent.knecht@mailoo.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v9] arm64: dts: qcom: msm8939: Add camss and cci
-Date: Mon,  5 Jan 2026 13:16:20 -0600
-Message-ID: <176764058405.2961867.13783282805903485831.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v4 0/2] Add TRNG node for x1e80100 SoC
+Date: Mon,  5 Jan 2026 13:16:21 -0600
+Message-ID: <176764058422.2961867.10479516458501056256.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260104-camss-8x39-vbif-v9-1-0d47c7afbb2f@apitzsch.eu>
-References: <20260104-camss-8x39-vbif-v9-1-0d47c7afbb2f@apitzsch.eu>
+In-Reply-To: <20251223-trng_dt_binding_x1e80100-v4-0-5bfe781f9c7b@oss.qualcomm.com>
+References: <20251223-trng_dt_binding_x1e80100-v4-0-5bfe781f9c7b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,16 +72,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 04 Jan 2026 19:31:53 +0100, André Apitzsch wrote:
-> Add the camera subsystem and CCI used to interface with cameras on the
-> Snapdragon 615.
+On Tue, 23 Dec 2025 10:18:14 +0530, Harshal Dev wrote:
+> Add device-tree nodes to enable TRNG for x1e80100 SoC
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8939: Add camss and cci
-      commit: a502697b840d8377742e1f31000cb52695df33e7
+[2/2] arm64: dts: qcom: x1e80100: add TRNG node
+      commit: 8d83fd4f08f655d0fd3c9c1fdfb7243f9116126c
 
 Best regards,
 -- 
