@@ -1,70 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-87474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06A20CF425D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:36:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4008FCF4326
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:43:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DA7A630E3D24
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:31:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 91C2E3153747
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:37:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBC56334C19;
-	Mon,  5 Jan 2026 14:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8998033506D;
+	Mon,  5 Jan 2026 14:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VE1u4f1o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q92hqr6A"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECF9334C06;
-	Mon,  5 Jan 2026 14:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E53A334C3B;
+	Mon,  5 Jan 2026 14:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622091; cv=none; b=pi+jAvIlqKXkFVqSKi6ekBVMSoiNAfAFXi/RwisLgb5LY8Z32kEnccyK7rhaiH61NLVOW5laJGNSIpeSXuCCsVCuQdhAC96yzoWVYMqV/yEC9kDw9lY+T+cdbrHg/NZFxaDjyE17TWs2HV+2emcLlg4sCR1Ay3dvWaVXEVrfz3I=
+	t=1767622092; cv=none; b=NBZ1fy0wXb+Q21lR7/5xW6YmJkAE0qE/l+sAks+b6briJFQBy5YT9rJw9hQ4mjSdKadzaEUrGsCv128WqnOWHBlwjQlv2vXjuAUJISnhHnWgDFLihs76yGHuz7Tr2anolWGJuXxSA52Atvar3vSlMhdUbRBwPRUzTl8UgnXCpbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622091; c=relaxed/simple;
-	bh=JbU6/9RTZj0D3k+N0ksRUgHeEcLhzPVkjOPCWjbnR3U=;
+	s=arc-20240116; t=1767622092; c=relaxed/simple;
+	bh=SB2ajjVTteseBB/ot2A8Te/hirodq1dq/MFLbMupgFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QzjvnVt+kjL70vXz7zqUoNYKsoOlyciJpnROAZW2jVS8uWL55yncGAbkafwYFlXDIvgqlDuThSrnBBQMRpSKwkD332W5TQDutjnF/02eT2KjUVsL1qfAB8V7tPDFadPlIE2udkrUnykitAXatG/9cGFcNJk8ddI7wUgU5TUWqdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VE1u4f1o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C96C19424;
-	Mon,  5 Jan 2026 14:08:09 +0000 (UTC)
+	 MIME-Version:Content-Type; b=rGNlgESohEzAuVj4oeDnk71y05QntmIeaBpo8Amc49CZuABef2rlD9LZekC5iOk4YPicwTTHgzbJ2USUj5UeFYVNMVkugngAxo8J1NbO6WlIaIyAj7tXV3ioVdr1eZRpA6zvM0pFQ72QeapYW4KDrvkteLEdliRSZcD1htX2T1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q92hqr6A; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1C3C19421;
+	Mon,  5 Jan 2026 14:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622091;
-	bh=JbU6/9RTZj0D3k+N0ksRUgHeEcLhzPVkjOPCWjbnR3U=;
+	s=k20201202; t=1767622092;
+	bh=SB2ajjVTteseBB/ot2A8Te/hirodq1dq/MFLbMupgFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VE1u4f1oKtMGMAxJ73glVXHgah1CU6v+nKvD2R5qHByQOysDuoe1nHE9YDMph34gc
-	 oBerRwcWP8IHV+ydHnumbnK2uu3l8Jy0Lz6/vtRs21lmF9XwnN2gykZ9IJplXGciG+
-	 jcqFTJ1CD3pxuaQ6UNnjsMLufGqTvZN2PUBiT7Gwl1Tk42Jb7a/IWD+/jcxnZAu5bZ
-	 asYzgo8ElRHDGq6m4A5cLXCNgfSF51sWg1TWRWgU5kdE7GKtu7wEYYKHBgvZogFYD8
-	 /w2x8G0E2QoJ7lJ6QjA7/ER5kCst+TIlCHMqCSihmyAn+pQrh/9DZI2aUQrkKRaSk5
-	 fzygvuoZ10lJw==
+	b=Q92hqr6AHtLQPwqe+/8GMJKFf39v8DyzytrLzoWPwaIFwfLllIFhCH7EykL+CCH7n
+	 NI0g8K+aDuRqzMqM1MrNN4kITf9oE4AZ8wy0yx49X5b+8z0fmG3StU1v0bu5CRFaqW
+	 /M0UmowWlpdBZA/qZtyg1P8+tkpcFaDjGLcHlm64aNdNMaKWB1hDTt53SlTABARlHw
+	 4eHLlzXyOAmRK0Js5NVVsb1DaZSVfiBE4tnJROPnj1D0zIu/JKTnfUeGfrT0n7GyOB
+	 v8/7YqZXUmYaKW7xx7L5ZGhK65xhlPqzDtDNKToHcUu5dLEgCKflVwcdrqDPzSjgyB
+	 MM4b6k2K0vBxA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	George Moussalem <george.moussalem@outlook.com>
-Cc: linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Roger Shimizu <rosh@debian.org>,
 	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: (subset) [PATCH 0/2] Make standalone compatible for IPQ5018 tsens v1 without RPM
-Date: Mon,  5 Jan 2026 08:07:21 -0600
-Message-ID: <176762206407.2923194.17383971400718113415.b4-ty@kernel.org>
+Subject: Re: [PATCH v7 0/2] arm64: dts: qcom: Add qcs6490-rubikpi3 board dts
+Date: Mon,  5 Jan 2026 08:07:22 -0600
+Message-ID: <176762206399.2923194.13075616829729338390.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20250818-ipq5018-tsens-fix-v1-0-0f08cf09182d@outlook.com>
-References: <20250818-ipq5018-tsens-fix-v1-0-0f08cf09182d@outlook.com>
+In-Reply-To: <20251126-rubikpi-next-20251125-v7-0-e46095b80529@thundersoft.com>
+References: <20251126-rubikpi-next-20251125-v7-0-e46095b80529@thundersoft.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,21 +66,32 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 18 Aug 2025 15:33:45 +0400, George Moussalem wrote:
-> The tsens IP found in the IPQ5018 SoC should not use qcom,tsens-v1 as
-> fallback since it has no RPM and, as such, must deviate from the
-> standard v1 init routine as this version of tsens needs to be explicitly
-> reset and enabled in the driver.
+On Wed, 26 Nov 2025 00:07:01 +0800, Hongyang Zhao wrote:
+> RUBIK Pi 3 (https://rubikpi.ai/), a lightweight development board based on
+> Qualcomm Dragonwing™ QCS6490 platform, is the first Pi built on Qualcomm
+> AI platforms for developers.
 > 
-> Accordingly, update the tsens node in the IPQ5018 dts and remove the
-> fallback compatible.
+> This commit enables the following features:
+>     Works:
+>     - Bluetooth (AP6256)
+>     - Wi-Fi (AP6256)
+>     - Ethernet (AX88179B connected to UPD720201)
+>     - Two USB Type-A 3.0 ports (UPD720201 connected to PCIe0)
+>     - USB Type-A 2.0 port
+>     - USB Type-C
+>     - M.2 M-Key 2280 PCIe 3.0
+>     - FAN
+>     - RTC
+>     - 40PIN: I2C x1, UART x1
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: ipq5018: Remove tsens v1 fallback compatible
-      commit: 60fb18fbc234efb2d59472a889282dba2df3402a
+[1/2] dt-bindings: arm: qcom: Add Thundercomm RUBIK Pi 3
+      commit: 640565d3f3654b7e8848c5bcf01843f04bfa769a
+[2/2] arm64: dts: qcom: Add qcs6490-rubikpi3 board dts
+      commit: f055a39f6874b0e86926fe17f40b676cf287ac11
 
 Best regards,
 -- 
