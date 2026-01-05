@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C92BCF2FD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 11:31:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10D51CF2FDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 11:32:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9CDD5303F0E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 10:27:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1ABBF30088AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 10:27:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA8742F4A1E;
-	Mon,  5 Jan 2026 10:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3344A2F0C7E;
+	Mon,  5 Jan 2026 10:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJcaFNeg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enRZ4P3x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7F0283FF5;
-	Mon,  5 Jan 2026 10:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0628126E709;
+	Mon,  5 Jan 2026 10:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767608850; cv=none; b=U2rZViATid28Mw654ucQ/aD/YlgOHsaPqv/68eepDicO8oh2n0FeDXxT1Sz3XB75e+ASZdfrSiEsSx/bPs2UGyA8pwMN3MljWeeMLUSt3PjM7W3isR0ICgS5N2hlG1/9oq1pBXKUw0xv7OCLnHsi1PdQ3WE9S0DFgz7kOI59xEg=
+	t=1767608873; cv=none; b=tmgNG3Ow4CT7KtSn1S2GIoEbEK9ArJltqa5pEPzGwiH4X+w42x8lsnrQjMT0ag3OcbUDXmCZsrMfyzxtEFHfrPFB2W5ZGvDfrMInBWTL3+1Lpz0pUaKACeRBzaVCPi86PbFF7d0bFJAd34auEOZsZkWutAmdWrmPx+lxg4g/SoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767608850; c=relaxed/simple;
-	bh=tHZP27js8nNBjqfbpBB0iyyjY4FiRMnDTtqC76yuBuA=;
+	s=arc-20240116; t=1767608873; c=relaxed/simple;
+	bh=rWp+IZYVgKKrnyDRcqVZg9wDyGjGRjz7dYhUeKz/QkI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sJZXegvzEIcYcXHnEuQm9CtYCyc7kk1LofpajT3yTs56YVZeE3Di+nz2YaIYYFUPoddfYJrq8xw/zL/2TQnZAKA+bqv6mwz8kFFS/jgD4YeWBYMbXIkViwayhGu/O7pofPY6nGuy8rThBraTvegTh2fW3NtRhjohgbn3C4f62h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FJcaFNeg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FBCC116D0;
-	Mon,  5 Jan 2026 10:27:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IM+GrYBaHufO5nxj2XRTuwlJ5TMnpgVwwoDXQUpUE2YDlRiyCB5jzZd5JsQ0pZX1Mfm1Dp5uUuHfqCNGvGu7A2nQ1kEdSwY1AdYkvhVuVBbeUX6WzphdUqNiTZ0kzgTa4Nhh53NbB3MTMC2oYk9+BlCSmvCxHTAEh35rSLEk1HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enRZ4P3x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D92C116D0;
+	Mon,  5 Jan 2026 10:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767608850;
-	bh=tHZP27js8nNBjqfbpBB0iyyjY4FiRMnDTtqC76yuBuA=;
+	s=k20201202; t=1767608871;
+	bh=rWp+IZYVgKKrnyDRcqVZg9wDyGjGRjz7dYhUeKz/QkI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FJcaFNegojs9po/V70SsceZyfjr2ETN7eR2erpaZRIlxhNxiafztqHNBSmxvR06bR
-	 +zhoV8MCJk3Qy7H0DlXfVO2QR1FhPBXDb53thv67jDgk+U7OoH86tt7yqmxGOkWre1
-	 uiSh3s48Ue0GZoc00Ftmahbo1PDHeYO+WEHLZER6KcPAnHliydY38S8Hcsuh1mxTY8
-	 nE6CmpVML4wAYxqYU2FEs0xsVFm5YJOsNiBfLnonbyLDJTfRP1SaK2ubxZP/teha0y
-	 EsXs4brD+HEMnI2ulUXHR4wT7xfA40K/Qm26O3vDiVkD9e/4pQv39qtsOgUUOrxHXp
-	 ND5SgUnosuoZA==
-Message-ID: <94c029d9-8036-4bc1-b76f-52d0618fcdf8@kernel.org>
-Date: Mon, 5 Jan 2026 11:27:26 +0100
+	b=enRZ4P3xmZABSw0ahJdphNgaXdPoiZ9uJ5kjfvjeJHUxl/q7AkTpb0yHXI/zBz1Xy
+	 qwEfgt+PjcniTbkEto/M/WlcsyrhOG/f33Glti6pmO2BNpqV+OIXRBnXn2Kh8zcnw+
+	 4asQd81G+4PrxOi4f4s5VgTJTwrqDukZHwry9omChy7dm2aX6ygXB8BrfROuZq8tzX
+	 wQ+bGHyqzHVSP10aCWby1yjFj51TJK7l+YFtuNUcyP40mFvnrPtTJcjqqPaE+Lj9xp
+	 1qEXUylz0XTo6kzqCuKhNLcY1FmDxtF6ziK+c7QzjVrXx+nIqxCWMOZLqxCB+3AkOQ
+	 w/cAp6a1WWkig==
+Message-ID: <1a6e45d3-70ce-4d59-ad20-d2bf471e3977@kernel.org>
+Date: Mon, 5 Jan 2026 11:27:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,13 +48,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: add Acer Swift SFA14-11
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: add Acer Swift SFA14-11 device tree
 To: weifu wu <wwfu06@163.com>, andersson@kernel.org, konradybcio@kernel.org
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260105101239.2591419-1-wwfu06@163.com>
- <20260105101239.2591419-2-wwfu06@163.com>
+ <20260105101239.2591419-3-wwfu06@163.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -100,20 +100,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260105101239.2591419-2-wwfu06@163.com>
+In-Reply-To: <20260105101239.2591419-3-wwfu06@163.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/01/2026 11:12, weifu wu wrote:
-> Add DT binding documentation for Acer Swift SFA14-11 laptop based on Qualcomm X1E78100 SoC.
+> Add initial device tree for Acer Swift SFA14-11 laptop based on Qualcomm X1E78100 SoC.
 > 
-> This introduces a new compatible string for the Acer Swift SFA14-11 board.
+> This enables basic peripherals including eDP panel, backlight, USB and PCIe.
 > 
-> Signed-off-by: weifu wu <wwfu06@163.com>
-> ---
+> Tested by building dtbs and booting on the target hardware.
 
-You received review already. Don't ever send the same patches AGAIN.
-This basically hides previous review deep in the mailboxes.
+NAK, nothing improved. Still not tested. Building DTBS is not a testing.
 
 Best regards,
 Krzysztof
