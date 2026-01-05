@@ -1,187 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-87461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 056E1CF4040
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:05:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F24ECF40EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:14:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 735333001000
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:04:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AE418302EA16
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:07:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CB123EA86;
-	Mon,  5 Jan 2026 14:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61B419E968;
+	Mon,  5 Jan 2026 14:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WgmcNYEw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rTl3YDMK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E56145B3E;
-	Mon,  5 Jan 2026 14:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8897A145B3E;
+	Mon,  5 Jan 2026 14:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767621898; cv=none; b=qeK4aI/6e+VHYaF/vzx2dvi7GaFwrd91xvnVLDkVBdUvzWsz8kcUdeU38vtU14JCkenY3fzmsxFUIbts6T9AxzMZkajQCC6Z92gM5fxciSr2wUvhvdXX8iS1anBEtzvQFeRjS1DSJqbJYrvSfJ7ndVH4IsEHMLqoK2ftShlQjnk=
+	t=1767622073; cv=none; b=ref7MjaQMbT7TEm8crkftOXixGXtYYE3+fwOwuB5XFIkbNN258C51dM1NfLyuq/p7qhepu67PpQ+yQzx1PUwdSgUDctcDREayvuCKlcR9REuV6jw5CcHlGzAiZSPslixTuwoi2R9Cyp1iHPVHFESuOPc2x1jk+pW76xVYoygGdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767621898; c=relaxed/simple;
-	bh=f974cHD/ROsMpt/DTUHyheRaIu8QqxsRAeYLWROE4z8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tr6hcps8mNa6/msJx0+AUxaaGftSxhwQPRq3Pu/VJP4LNc0W96pRvU0kCM77l9we+DOAOVCKz2UCcZPsOEvbu8sJvCfjL6Ic2Gta3VldLY2LCQyM5RS38+mA4KM9nVt5oDyVHu97SP6CKKuXUgMc2R0txFzDcM5CmbaMxwRa/ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WgmcNYEw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C00CC116D0;
-	Mon,  5 Jan 2026 14:04:56 +0000 (UTC)
+	s=arc-20240116; t=1767622073; c=relaxed/simple;
+	bh=i8bZaPFlOf40SqEPngu3fEwOhlByKQgqUEY5qg8pNnE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cnfSYYKuo7Tb1iWTi7uX4YPzS49r7hc0GWOKIXc6dZiv1zWfqjFRkyGkuIHX5aJw6x/XFbtH9RepweA3k9+SeGPQBJKSwBk+pcbeFjX3HN3qoZmdbpNr7h890BMqX18xNQf+w0fMhtja54LNoLxH7Vf3W8obmGAh7C0ZZUEr9Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rTl3YDMK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83CDC116D0;
+	Mon,  5 Jan 2026 14:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767621897;
-	bh=f974cHD/ROsMpt/DTUHyheRaIu8QqxsRAeYLWROE4z8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WgmcNYEwh6zNc+w0KIV8+yGmOEAucAnX4HvdNe8nlI1lD9U92vzU/Hd4CoBHgM1tt
-	 YbcSUCkfEmtmMvBzbyqHnv5x0Dg4EqZ+9pso8JUF0DPFgW4MJOdfvqJQ6qf+qvPZLU
-	 XLpd3R17Cs5RjeoyR6rPKChv0MZ2LRYjvRvgC4+q6uvVFbtvitQsB0tQuP2SCgnAjJ
-	 J1M3dI5gVLFM9eedMLKUVgLVE6Sa76nbHRrli+v88PZYAT6BQB0DV7O8gxlcegvkpB
-	 h5JKNLyWmVYu0FN14IvuEg1g//xVtWripJC3ULgbtjlqnz6Iy/HClOjvnc0VcwWUqJ
-	 nLukjNo4hHPrg==
-Date: Mon, 5 Jan 2026 08:04:54 -0600
+	s=k20201202; t=1767622073;
+	bh=i8bZaPFlOf40SqEPngu3fEwOhlByKQgqUEY5qg8pNnE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rTl3YDMKaMXhCDNrAxarlVZLp/fyrNTHiyzL3gLZl9ww2gTmyW2b8QgQXWsHLLGH1
+	 lCZZnDljTnpMxkU5KZoMTRmjYA9s1z+D3Tugx8Fs6UyWaqvl9X1idRoe4b9+qjZHHi
+	 oDrfUR0d4XbI51kBbItjpINAv6PI3KxJQyKEsx1nYbE8NaQSNa80ES1Zx0OD3GtSMh
+	 m0TBFwDk5gMOdluyzKTMUCHAAC4XkINEiI+ngW70YygLrj9qAvR82761fgWrHrGy9T
+	 xU2h0ighbtX9dGPmGQxbshXDVyaFwWkhT/IU1FOz3ANYCkNkZWTS+v1mgDsbOA+ie+
+	 gheb8comkaB3A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>
-Cc: konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, mani@kernel.org
-Subject: Re: [RFC PATCH 0/1] soc: qcom: rpmh-rsc: Register s2idle_ops to
- indicate s2ram behavior in s2idle
-Message-ID: <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
-References: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Abel Vesa <abelvesa@kernel.org>
+Cc: Taniya Das <taniya.das@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] arm64: dts: qcom: x1e80100: Fix USB combo PHYs SS1 and SS2 ref clocks
+Date: Mon,  5 Jan 2026 08:07:09 -0600
+Message-ID: <176762206421.2923194.528670029626982446.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251103-dts-qcom-x1e80100-fix-combo-ref-clks-v1-1-f395ec3cb7e8@linaro.org>
+References: <20251103-dts-qcom-x1e80100-fix-combo-ref-clks-v1-1-f395ec3cb7e8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 01, 2026 at 10:21:57PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
+
+On Mon, 03 Nov 2025 18:51:40 +0200, Abel Vesa wrote:
+> It seems the USB combo SS1 and SS2 ref clocks have another gate, unlike
+> the SS0. These gates are part of the TCSR clock controller.
 > 
-
-Many thanks for looking into this problem, Mani.
-
-> This is just an attempt to let the device drivers know of the quirky platform
-> behavior of mimicking s2ram in s2idle for older Qcom SoCs (pre-Hamoa and
-> non-chromebooks) using RPMh. This information is important for the device
-> drivers as they need to prepare for the possible power loss during system
-> suspend by shutting down or resetting the devices.
+> At least on Dell XPS 13 (9345), if the ref clock provided by the TCSR
+> clock controller for SS1 PHY is disabled on the clk_disable_unused late
+> initcall, the PHY fails to initialize. It doesn't happen on the SS0 PHY
+> and the SS2 is not used on this device.
 > 
+> [...]
 
-Is this really what happens? What _exactly_ is the purpose of
-pm_suspend_via_firmware() and pm_resume_via_firmware()?
+Applied, thanks!
 
-The kernel-doc for pm_suspend_via_firmware() states "return true if
-platform firmware is going to be invoked at end of system suspend...in
-order to complete it".
+[1/1] arm64: dts: qcom: x1e80100: Fix USB combo PHYs SS1 and SS2 ref clocks
+      commit: 3af51501e2b8c87564b5cda43b0e5c316cf54717
 
-To me this indicates that the purpose of this mechanism is to signal
-Linux that we're running on a target where platform firmware will cut
-power once we reach the bottom of the suspend chain, so the individual
-drivers has to save/restore state in order to prepare for this.
-
-But if I understand the bottom of the s2idle sequence, is that all we do
-is enter idle and the kernel will pick the lowest idle idle-state, which
-based on the psci-suspend-param will signal the system that the
-resources needed by the CPU subsystem can be powered down.
-
-But it's not really powering things down, it's releasing the vote of the
-CPU subsystem - which if the driver didn't vote means power will be
-lost. So for any drivers that relies on the implicit vote from the CPU
-subsystem to sustain their operation this flag is correct.
-
-For many IP blocks, the register state and/or some functionality will be
-retained in this state - e.g. register state will be retained, or
-functionality will be sustained by sleep power. So they can safely
-ignore the flag.
-
-In some cases state isn't retained when this happens, so e.g. PHY
-drivers does perform save and restore operations, despite the flag
-currently not indicating that power will be lost.
-
-
-What's unique with Makena in this regard, is that in this state the PCIe
-link can not be sustained, so we either need to tear things down, or the
-PCIe controller needs to vote directly on those resources it need in
-order to sustain its link.
-
-It seems to me that this patch uses the global flag, in order to signal
-the PCIe stack specifically, that it needs to save/restore state. I'm
-concerned that support for retaining state in the PCIe subsystem isn't a
-global question.
-
-
-
-Then parallel to this discussion, we have the actual s2ram feature
-showing up on some targets, where the SoC actually do power off. Here
-the automatic retaining of register and functional state is not going to
-happen - device drivers must save and restore state.
-
-Do we force all "pre-Hamoa" targets into this same behavior? Or do we
-have a different flag for saying "at the end of suspend power will be
-lost" there?
-
-
-PS. Think the commit message of the change itself falls short in
-capturing the problem. The commit message of this change will become the
-documentation on which many future discussions will be based.
-
-> For implementation, s2idle_ops is registered during the boot of the rpmh-rsc
-> driver based on the machine compatible limited to Makena (SC8280XP) as a
-> proof-of-concept. If this approach gets consensus, I plan to have a helper
-> that lists the compatibles of all SoCs exhibiting this behavior. Since there is
-> no reliable way to find out whether s2idle is the only low power state supported
-> or not during boot, I resorted to compatible based matching.
-> 
-> One could argue that this s2idle_ops should be registered in the PSCI driver
-> similar to s2ram [1]. But I didn't prefer that since from PSCI point of view,
-> only CPUs should be parked in low power states during s2idle (CPU_SUSPEND) and
-> the peripherals should not be affected. Though in the past, an argument [2] was
-> raised citing the PSCI spec wording that allows the vendors to implement system
-> level low power states during CPU_SUSPEND. But that argument was not well
-> received by the PSCI maintainers.
-> 
-
-It makes sense to me to have PSCI only manage CPUs and its necessary
-peripherals.
-
-But the definition of pm_suspend_via_firmware() in our case would then
-be, "if your driver piggybacks on e.g. the CPU subsystem's vote for
-critical resources, you might be in for a surprise".
-
-Which makes me feel that the Makena quirk should be in the PCIe
-controller driver...
-
-Regards,
-Bjorn
-
-> Moreover, RPMh is the entity that implements the s2ram like deeper low power
-> state during system suspend. So it made sense to add the ops in this driver.
-> 
-> Note: This series is compile tested only. If one tests this series on Makena
-> platform, NVMe should get shutdown during suspend as confirmed by the dmesg log
-> similar to below after resume:
-> 
-> 	nvme nvme0: 12/0/0 default/read/poll queues
-> 
-> This series, together with the upcoming PCIe D3Cold support should allow Makena
-> (and other similar SoCs once added) to enter the deep low power mode a.k.a CXPC.
-> 
-> [1] https://lore.kernel.org/all/20251231162126.7728-1-manivannan.sadhasivam@oss.qualcomm.com
-> [2] https://lore.kernel.org/all/54cc4221-ba5f-4741-9033-20874265ca01@oss.qualcomm.com
-> 
-> Manivannan Sadhasivam (1):
->   soc: qcom: rpmh-rsc: Register s2idle_ops to indicate s2ram behavior in
->     s2idle
-> 
->  drivers/soc/qcom/rpmh-rsc.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
-> -- 
-> 2.48.1
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
