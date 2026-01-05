@@ -1,239 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-87571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A992CF5E97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 23:56:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C28E0CF5E7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 23:53:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 599A6305B1D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 22:56:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 26B7630A6EB3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 22:50:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7D3A312835;
-	Mon,  5 Jan 2026 22:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7F4313537;
+	Mon,  5 Jan 2026 22:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="I/OVZgTR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewhgjP4j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011039.outbound.protection.outlook.com [40.107.130.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA5F31281C;
-	Mon,  5 Jan 2026 22:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767653301; cv=fail; b=U2i6aBmOoPtVMc2avs2Vj64PedmAv2ctmzTXKKIZFkMUnjKk6hAiBmAIBFBqr+WBuNQoM4MG7qSSGReRxg0tgGkFDwOuyRiCV53wuK2dWbl864kW6EOJI1cZKA/Akp/LwtnOaXLgNjFEcBRrvgWjhLMWmGRjQgpIH3tnFhtCZJA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767653301; c=relaxed/simple;
-	bh=W22vmKstXYkmIGhE5qiPeFJ0wc/jLIRMR6F2v6Pa+AA=;
-	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=VH9FNbXB7I2Lin3k/GTvuTpkmLc/lnBJDWCxEjafxwVlDvvOURNSipraMRmSuq2Y+qs6jlz9tbpViE7+Gs+aic07F0TEiIv7TQzC/SXO4GsO4xs5VtpOq34Qytn/H7s4leX55dCTMESz6yxDkJRHdjaSfBr4L3sbfdMxcgxDsI0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=I/OVZgTR; arc=fail smtp.client-ip=40.107.130.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Jazu1BFCU6Uo+DHL0apQGwSxvwdzM+ENshe0U3TjGpUkl2qvucVUvokl+L9eJgeEJ3BtoRrTU7O+oeRwlsjfGKomuGgr+aji+njTgRVmY4kToLAZPYJVcAbgo85nia/QpBn/BH6PFjbeiiIG2kUdv5ex2sgBuR63fyZASU7J2k5EJXipbGWjgxwJuBR/kZ6c2m3ifNA+4iJVVtC0aEMN9lNXBqiqNLB9VNygfQZ2a33YuXpMXn0+DjTlB5N6eR/mFJDTUqKcNMSC25Ea1FL48gF1l4AFHkE3O7JCoxBHNwM4Mw1GhoqkjrecyrXeV5kJw6uJAkzhRpY8DylXMrnLBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XC/ywaSProtu82uFSFteem/sxrv8h4ktguruv15MNyM=;
- b=Cbr/6NagccFRCB+5ot2K+Xt/g+t+LdbkZBOT38nI9jQvgyTjOjMZb0aJuGifA19xymqWu7/CDmimmKr6Mdp5I/AUn/Aunke5AFvK5gAT/opCPX0fWYFIEd3BXRpgjTv+P3oNT82Lhzl78dKm74vPA7CJC4Fjwz727FtvKqaoXWAupZ+9buxkATm1RMYlMdLzthLVkBq4qKISNqWrQGqT0KIZ4mAGQta/qqVvNGise9DkqKSbezwJCg8Mi30J9DSgOyKr3Vr3zUphjOZ+XYmwhHIOcowjm+EuQKQkRma8klHBC9O4mOy8fSpycFrcdCeDPEmifs90vitQQrq6OlcJHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XC/ywaSProtu82uFSFteem/sxrv8h4ktguruv15MNyM=;
- b=I/OVZgTRD9byPPGKBBM2eLvzMX4i2za47TrNetONSeAgusm9AHX5iiT6eS856uydN4+q8Ths3TjlN1Na5OXfAC5eZzppJdSgxni8RlR93kZ9JWmsoPV6hubepC/aR4pKYmxTuT2VgfeZYDIeS1K83yBI2cSFuR01zSlN9Bbtl4OUqCWvQ/YstAmGy8k3dKUu9wxPEWbGTEYWa+npVbXnmwCCn9gfDjIUuLzNypNEdhS+45vwuVbT25UNkKjAViCZvCc5XZATWaEcs5HVJzuBtppMGM3jp/lY5xK0nOTifHx/dG1/lHMXE4WdMMStMNuE2+43XqDWNlyn+olMkwpspA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from DU2PR04MB8951.eurprd04.prod.outlook.com (2603:10a6:10:2e2::22)
- by DB9PR04MB8185.eurprd04.prod.outlook.com (2603:10a6:10:240::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Mon, 5 Jan
- 2026 22:48:08 +0000
-Received: from DU2PR04MB8951.eurprd04.prod.outlook.com
- ([fe80::753c:468d:266:196]) by DU2PR04MB8951.eurprd04.prod.outlook.com
- ([fe80::753c:468d:266:196%4]) with mapi id 15.20.9478.004; Mon, 5 Jan 2026
- 22:48:08 +0000
-From: Frank Li <Frank.Li@nxp.com>
-Date: Mon, 05 Jan 2026 17:46:59 -0500
-Subject: [PATCH v3 9/9] crypto: atmel: Use dmaengine_prep_config_single()
- API
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260105-dma_prep_config-v3-9-a8480362fd42@nxp.com>
-References: <20260105-dma_prep_config-v3-0-a8480362fd42@nxp.com>
-In-Reply-To: <20260105-dma_prep_config-v3-0-a8480362fd42@nxp.com>
-To: Vinod Koul <vkoul@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>, 
- Sagi Grimberg <sagi@grimberg.me>, Chaitanya Kulkarni <kch@nvidia.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, 
- "David S. Miller" <davem@davemloft.net>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, Koichiro Den <den@valinux.co.jp>, 
- Niklas Cassel <cassel@kernel.org>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org, 
- mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767653229; l=1301;
- i=Frank.Li@nxp.com; s=20240130; h=from:subject:message-id;
- bh=W22vmKstXYkmIGhE5qiPeFJ0wc/jLIRMR6F2v6Pa+AA=;
- b=/I/d6fpB01MN67Py+YACfmjmrTztW973jnCLAwaw/w5KRbznbaxVnORbO8oXKZtDE6W3R/Ek0
- Ep9FgXaRCTkDnTN8Cn2wbOvelR6vDqIP3FisTE+/JdIGLrwZSZzNpY/
-X-Developer-Key: i=Frank.Li@nxp.com; a=ed25519;
- pk=I0L1sDUfPxpAkRvPKy7MdauTuSENRq+DnA+G4qcS94Q=
-X-ClientProxiedBy: SJ0PR03CA0345.namprd03.prod.outlook.com
- (2603:10b6:a03:39c::20) To DU2PR04MB8951.eurprd04.prod.outlook.com
- (2603:10a6:10:2e2::22)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A50305057;
+	Mon,  5 Jan 2026 22:50:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767653411; cv=none; b=jJG9V9l/L42cBRcf1b92zvO1ay2DQ385lBiyNW5Ttn9K9QZ0a/gjSO3rRejon3pJQjnpH32KvhaAIEvCF2/mx+02Ecwju4AF4ZDcjLahOclNK8BMPZyquw3P3O1E6KJ4oBG/B4juH4qyO3FrTpq4jk+fZ4So9DwIYw2ZnJBnyMg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767653411; c=relaxed/simple;
+	bh=31D6qoX8lgsXUYGBg7xPU+7XAZ30YbSieRYrZ/lfYKI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kS0jnvDhCwjmtzmdvAHz7FHzxatgCxgFO9ubBGqchPxsLbtyiFqZ1U96AyUwEaBvlAAvbBp1HZjaMFT+uGMXAW6AOvvOKCM0JEGgl/TOJJuFi9kcnaVbko+mEkllWuTJ1BmrdGrKHr3fWWPDB3t0SRBSAHQAJHYnpKWS2v4xdYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewhgjP4j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D73C16AAE;
+	Mon,  5 Jan 2026 22:50:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767653410;
+	bh=31D6qoX8lgsXUYGBg7xPU+7XAZ30YbSieRYrZ/lfYKI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ewhgjP4jI4POND3+QAJ8bXdQIBgP3tHufyiYg0J/QT7F80ckP4QsLTwewu2TlNJDy
+	 q/8BBmefcnK+e3rJ9jnTqmTMnJN323LktWsth/y1zhUArwP+6Z9OQJtmz+9YZ01haO
+	 MhFFawTYQIiDXZ0V7dm5hhQtDrKrp5xzJrbX1HLilog6J/NoqivdJkL03fwKycqoHE
+	 xf+A6ccdXmIUgIedcxqcIVqmYemPtsKQ4WMZSwo7L5X15o+zh0dW8dbLvGGczr8iax
+	 BTYBT+tm87xCTpYmxIuERoxF6GOUJBDUJSIppFZwqmzAWc23uSwQkNHjkQy/XS2oLU
+	 qGTMXvo2lGJUA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Vinod Koul <vkoul@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/9] Various dt-bindings for Milos and The Fairphone (Gen. 6) addition
+Date: Mon,  5 Jan 2026 16:50:06 -0600
+Message-ID: <176765340206.2986820.1001501110439471396.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
+References: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU2PR04MB8951:EE_|DB9PR04MB8185:EE_
-X-MS-Office365-Filtering-Correlation-Id: c880b358-f8f9-4fae-aca1-08de4cac7ef5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|52116014|7416014|376014|1800799024|366016|19092799006|921020|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TnU0cnJmb3loUFBnejBROUZsaTRTUVBsaWl0M3hBZHEybkMrUUZrOHhjVlZH?=
- =?utf-8?B?V1JhMkpqMWo0bTF1czJnQ1dIWm5McUhXb2RZSVMraTlBWXN4UnJmU28zVy9W?=
- =?utf-8?B?V0VBMXpSSWZ5akttZUIxdktocStjTlhyRm9NazZwS0VaelN0akpKdUtmZlBF?=
- =?utf-8?B?REtxV296U3c3dHlCa09NRTFGUlNTamFZUlNBUFdMSldZMStwaDB5ak54M25J?=
- =?utf-8?B?OGdkMXVWbUk0YzZMS01vS2J0MXVidVgrQk9aRnBnUUdrbGEwS3dpQnVTcjlj?=
- =?utf-8?B?UW1QQWNaU2JvUjhXMEd1Y0hCa2UzL3Q4emQzRzBVaUlLeHYxZnR5VDV0eXI4?=
- =?utf-8?B?QnJsV2FsTUMzT1EvL3ZINTNXYkZ2T091bFBZUTFiL3A3SXdNVW8yOXNrQkdU?=
- =?utf-8?B?dHFnZDF5YUYxMVVLSzEwRG1pdTNBT3NUeHFxNlNiZ0lOdXBlamUxeU1jbW9P?=
- =?utf-8?B?Ylc4QjZrWkNpVmt4U2tIMjJhWWJWdFhvV1pPa0JJdSt1OS9RS0NpK1c4czNt?=
- =?utf-8?B?NmcxRDN0V25FSzhUbGNoazlXQ0JNN0pablZ5WEVQZTRja1ZRK1lMdHRDQjZ6?=
- =?utf-8?B?Nm1rMS84Y3dNditzVkM1ZEw2a2JUS3BlS2FDN20wcHdqbEdKNm42NzByNzQr?=
- =?utf-8?B?cWdObHp2VzZXeUJLTjgvUkRDR0ZNOHJrRGE1MFBRcCs0T2xXdU5URWoySkdv?=
- =?utf-8?B?K3ZwM3AydmVCRldYaTNTZWpid0dFa1BMVHNUaU5DM3VDUkNyU3pkei9WWWRp?=
- =?utf-8?B?alFCQ0Rma1I3RjBqYm9UYUdlV20xcG5IU3g1VWhkMVNvSDNlazJRUCtOamdL?=
- =?utf-8?B?cS93bEtqY0ZwZDNNNVcvUVJMVWl6TFNydUxVMFRkaTZnT2oreXlDUlBwNlhO?=
- =?utf-8?B?RDlNVHVQdkhpMjhzbFZMY1g4aUJCbVhxZEVUckNSL202ayt0TFJwSklZVHJZ?=
- =?utf-8?B?NnJwRFZIeTBHVm83a3hvKzJycXVWOURwbi9hWVF1VFBqQW1EdXEwVE1RRlps?=
- =?utf-8?B?cVF2VmdndkJVQ0l4TWpXMUZZdnJnZTlyaXlyTzc2VGlUcVpxYXRpamkvYndM?=
- =?utf-8?B?dkZZcE4vN3kxZkdvNlZtUC93U3JLc0QyUWo3QVZrOFk2aTU4THJFZnhSc2lN?=
- =?utf-8?B?NHRRTkpsMFk3YzJWWG92VDhOeFQvOE42S25IQzVjVlpGRW8zR2VlNmw5dVJk?=
- =?utf-8?B?bTA2bDROWGdQaWl5T01ONVE1cWFDQ0d6V2hESUlSdmN1WFhaK0c1NzQ1ajYx?=
- =?utf-8?B?bFFqb1diRVlMb0NJUVpSWEtMdkRMRkQvQThzSWN4V1VuMEVoOG9aQWpGS0VO?=
- =?utf-8?B?VXZyMXdycFg3ckdFTkN3dVVDbEdpaEwzcjFuWEluSkdVQTNKUG8xYmJGcURw?=
- =?utf-8?B?cHNLMFJVV2FTUExKN3RndDJUeitsYXl4S0pKcDA4bnM2UGJwc0h3cWU0VHRF?=
- =?utf-8?B?a0NONDdScEpnVENuc2gzTk9Qa3A2S0xmN2ZZUHNETXZHN29LMktYRHVxUDIw?=
- =?utf-8?B?TzBDQmg3TTM2eCs1bkFJRHVMdG10NVlTSzVSd2xaLzh0cVdxUEdlYlpyamlF?=
- =?utf-8?B?aWZKYzVaRHU2NkJ0cEUwc1B1L3BSRVN3K0QzSUZzQ0E0dUhSZFozT2t1TVZ4?=
- =?utf-8?B?TEJRamRHaTUxMVFPV21zVmpUSlY4aFg1cWNCckFtVmVFekVlSGh1aWJ2TmxS?=
- =?utf-8?B?dVBzOFRMeDRzNjZuS3p1N2d4VVE1S29qOVUxS2Z5eUllR0t1NzFITWdJTm9I?=
- =?utf-8?B?N2YvZS9LUmt6VE90NEVKcUtURTNxWkhXSmpzRFNRcmRMaXc2bXBOeDEwOUd5?=
- =?utf-8?B?ZXdZRm5uUEV4aFhVRytzN3ZnMWkrWTcxNWpXV0xsSmprU05lMTZoQ1ZtVldw?=
- =?utf-8?B?ZHdhUmFLWjZGb1EwTnhCMmtuSmRsT0FQdmQ0TUhLbU1UL1lBRm9hSndlSFRa?=
- =?utf-8?B?eVd3cnVxYklxbUJEbnZPcm95aDJGd0g5ZkQvVk5pbVZGTGx3VlQ2TVRpSk1q?=
- =?utf-8?B?OTJLQWZhRjc0L1NSZFFhcFVldllhWlhmUmltTENlMlJCWWM2MUY2SkdUakQr?=
- =?utf-8?B?dkpuK1BObnFsMWdJWTdJMUpKVkZQcTY4eWEwZz09?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8951.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(7416014)(376014)(1800799024)(366016)(19092799006)(921020)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Z21jd0kycFFIT2ZVdHZUalM2U1lEN25OK0JiS0luTHpZNlFpdUU4RFluQUxS?=
- =?utf-8?B?MU95c3EwQVhqOW9xSVJmSlR6STR2WDRGS09tTjVrNnFzckZwWThySk90ZUFm?=
- =?utf-8?B?cTBBbGtTWVljQjB2a0F4MURmeCtkRm1DbkdiSktOMklZUHVYV045b1BJTVlF?=
- =?utf-8?B?VlJSMW9tdnM5WU1wamtrNjhPaEd6MlNLaDN5MjU2Z0dPNmNSQlNaL1ZRVFda?=
- =?utf-8?B?dElqSDF4RzErV0piZC9YVDNCOWQ4WGlaU1AvYWhuLzVrVG5NR1dVZVg0L1Rr?=
- =?utf-8?B?VWpTMlRHQ0ZERHBpdjdXYU9uYUJoT2d4SXZ4MTdmbTZqaG1YVzFRM1RzaFdI?=
- =?utf-8?B?ZWcyUU1oVFR6MHRxRWJWZFpnYkthR3NMYkNkMUJWTVM5aVllZXluVlVXTndH?=
- =?utf-8?B?QW9GMGFSME5idVI0a1VhQ3g1OVk3RG53UEVPTzUvMGt0Yjhkb20rVXg0c1Nv?=
- =?utf-8?B?bjR6aVhlZmVIZEpBTTJYTjZ3aVBlYy9Yc25yWTBQeTNqN3k1OUZ4YktXR0Rw?=
- =?utf-8?B?ZG53TDVHSTJ4c29rdzFJd3h4YjIvUjdnWDBRbDNpOVRYMWw5dWgrWXpmSnpJ?=
- =?utf-8?B?VFRSQ3Y2ZC8yOHF3amE3Zjg3dk9wRHZCajh2a3paM2RJNzZxVTBQeHBhV3Jj?=
- =?utf-8?B?a3FESjNWUFkxWEJBbitpUnB5bUVLayt6Tngra3hMdGMvc3RxdXMwQTNIR0ZF?=
- =?utf-8?B?ZVNJbWcveThRTjhmRDhLWnZJZk9kakxlVkRIalZXYjA0d0s3SUlsZlZOMERE?=
- =?utf-8?B?VHV6bDZoMGdKbHVaS2dyN3F4TWU3aG40b3Q0SVpkbnNaemhxWVhwSmpteXpV?=
- =?utf-8?B?bzNKVzA5YjI3OE9Sek5rZVlEVngvY0FkcW92OGw0Z2p4L25nZ3lMTU5lZ2No?=
- =?utf-8?B?bG9tcXFVWWNNN1F4eDR0OTBUWjNjUXZwb1FIMlQyUnlZcjdrTjZubGJkYndH?=
- =?utf-8?B?eldDb1lsY0VPVFhiclNEVmc1OWF5UUtaUEFhcmh2SEdlS2xmbFBDU3JIMFBy?=
- =?utf-8?B?TElVcXIrejU5Z2k0Qkhxa0pFVFZKaFJjSEUwTmtpdkk5RTJHZktlRG9RVEty?=
- =?utf-8?B?MVhLT3N3cjliVUYzL0NEb3FDQldQVHJablBSWDJyWkRQNENiTWRLR0Q5Wmgw?=
- =?utf-8?B?RnhtVnVlYTVyRGdQdEpVOW4reWhHcDdhNVRTc1A4TmgrUVBoa1pVUFg1WGNW?=
- =?utf-8?B?cFVyeVhkeXU2bHl6bjFOYjRUYUhHMDI1MDRLOXIybU4rZDEyaEZVK1RuRWxN?=
- =?utf-8?B?U0x5c0pOUHdUZFVzMTY5NlJjTmFTUC82cmswdjBNMTBqdEtDWWFTdm5UNnFq?=
- =?utf-8?B?MHlZT1k3Q1hUZ21qZDhHZExVbEN6Y1ZuMjZUY1Z6WTVLL1lMU0UzTkJaMk5y?=
- =?utf-8?B?V0dJaHd3d2FMdnVuSnhMSG1wZGhTMitsZG12MG9NSFIzYWphT3hxN252cDll?=
- =?utf-8?B?V1pka0hJeGVwUjI5MGpISW82TmNMZ3lLZTFKTUJidERXVEhQa1dlY1BFbzEr?=
- =?utf-8?B?aFg1bjV4c1pxdzhTZzdYRUJpaHg5QVNndXE0SlNEMkRPSXhiZ21lVXI2ejJD?=
- =?utf-8?B?TmE1VzhvQXhLZXpQUEZjSHFHZ3ZSNUZaT3laS0s5RFAveWJva243K2w2NDVH?=
- =?utf-8?B?UUUwT2lJczhYdUVGZ2Q5NitlaWVjdWJxRmRHVHY5Sk1XSnhPeVZkQUZBTCtv?=
- =?utf-8?B?MTk0VnNqVTgxQ3FnSTF5d1BPMWxRSjJjRHFCRnhrVE41YmRwVEx2Wno2TGly?=
- =?utf-8?B?SGZXUTl6SkpkRFl5V1JRWFJyNmlSMUthc2s3bzl6c3FLVDBITjYzTkFsaDRK?=
- =?utf-8?B?dG45SFpTVDFhbm1ha1hxVFUxbTNVNkdtQlFwaVlpU1ZQTzVYZnRXcXZocUtn?=
- =?utf-8?B?bHpwZmtmZ3NkZ2lFQzFXbUZIVkNSZjJpNjJsWGkyLzNRTm5VVHdBWEhLQ3lr?=
- =?utf-8?B?WVRiMUdRL2FadGZaYXFjeTdEd25tRmxoWXRZZGx5cnh4OCtLc0NxOW1oYURo?=
- =?utf-8?B?N0I3QUJPdFZzUVdHcFAwWVB1VnlNYW1uaEFJY0ZQUWFZYnZrWW8zQ0I2TDhX?=
- =?utf-8?B?WUlkeExGallnVHUxWTlzcXMraXhYaU1HQ1YxNkZkSmZzams2YkJPdkpDMW4y?=
- =?utf-8?B?R0ZjRVFpZFFUcXFZTDNNVCtMeFdzT1N1aWRnekNlVC9FUFU5YjNLZTU3WjRD?=
- =?utf-8?B?NE90SS9CT2QzbzJsdHYxNTZ1Z2lnd3FTZG82WTBLTmFvN0w0UmN4QThOQUZI?=
- =?utf-8?B?a252VlBVMmpVSEdURjFCcFg1UUdqOEF1MzdOUjNsTjBtMmpJK0tmRUJ4K3lo?=
- =?utf-8?B?WDJKV1dMTkFXb0lZTmtEQkFMNkZYUEpDZi9WRDBTaHFmK1BIYU0yQT09?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c880b358-f8f9-4fae-aca1-08de4cac7ef5
-X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8951.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2026 22:48:08.2379
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jQXYbZXof/+UDcPXb0THIQwfFyfeOqT2JMKO64IZaW7WiWr0qO7gMfzClOyu1ozmH9qmujJiDkG7N8+Pt0MVWw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8185
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Using new API dmaengine_prep_config_single() to simple code.
 
-No functional change.
+On Wed, 10 Dec 2025 10:43:24 +0900, Luca Weiss wrote:
+> Document various bits of the Milos SoC in the dt-bindings, which don't
+> really need any other changes.
+> 
+> @Rob: Please pick up the cpufreq, crypto, and pdc dt-bindings, they've
+> been on the list since many months and weren't picked up by any
+> maintainers, so it would be nice if you could take them through your
+> tree. The patch for arm/qcom.yaml will be handled by Bjorn I think.
+> 
+> [...]
 
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
----
- drivers/crypto/atmel-aes.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+Applied, thanks!
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index 3a2684208dda9ee45d71b4bc2958be293a4fb6fe..e300672ffd7185b0f5bf356c2376681537047def 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -795,7 +795,6 @@ static int atmel_aes_dma_transfer_start(struct atmel_aes_dev *dd,
- 	struct dma_slave_config config;
- 	dma_async_tx_callback callback;
- 	struct atmel_aes_dma *dma;
--	int err;
- 
- 	memset(&config, 0, sizeof(config));
- 	config.src_addr_width = addr_width;
-@@ -820,12 +819,9 @@ static int atmel_aes_dma_transfer_start(struct atmel_aes_dev *dd,
- 		return -EINVAL;
- 	}
- 
--	err = dmaengine_slave_config(dma->chan, &config);
--	if (err)
--		return err;
--
--	desc = dmaengine_prep_slave_sg(dma->chan, dma->sg, dma->sg_len, dir,
--				       DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
-+	desc = dmaengine_prep_config_sg(dma->chan, dma->sg, dma->sg_len, dir,
-+					DMA_PREP_INTERRUPT | DMA_CTRL_ACK,
-+					&config);
- 	if (!desc)
- 		return -ENOMEM;
- 
+[2/9] dt-bindings: crypto: qcom,prng: document Milos
+      commit: f50da52e5b2ed73913cc6d0db7c81cd33ced3ae7
+[3/9] dt-bindings: qcom,pdc: document the Milos Power Domain Controller
+      commit: 42f2799124a4d0081b0c8c50980e37769e8d6880
+[4/9] dt-bindings: arm: qcom: Add Milos and The Fairphone (Gen. 6)
+      commit: d88771fda13f2e97a056d471b7b7c11bd17da148
+[5/9] arm64: dts: qcom: pm8550vs: Disable different PMIC SIDs by default
+      commit: 446f4802aa6eb972718b8708188df533b38dbabe
+[6/9] arm64: dts: qcom: Add PM7550 PMIC
+      commit: 57e89dfdfa28810f8c1a44bdd301fca287ff83d1
+[7/9] arm64: dts: qcom: Add PMIV0104 PMIC
+      commit: 8f42f255dfb80e57af98191e7a4e18f7d1cdcb7e
+[8/9] arm64: dts: qcom: Add initial Milos dtsi
+      commit: d9d59d105f98665187d90a49d9099675491990f6
+[9/9] arm64: dts: qcom: Add The Fairphone (Gen. 6)
+      commit: e25834d7691f0661fa9700c167c48d18752f62bf
 
+Best regards,
 -- 
-2.34.1
-
+Bjorn Andersson <andersson@kernel.org>
 
