@@ -1,71 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-87572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C28E0CF5E7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 23:53:29 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47CA6CF5EA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 23:58:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26B7630A6EB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 22:50:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C59D33043920
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 22:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7F4313537;
-	Mon,  5 Jan 2026 22:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37DE32836AF;
+	Mon,  5 Jan 2026 22:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewhgjP4j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dKoXhy8P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A50305057;
-	Mon,  5 Jan 2026 22:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092AA4C81;
+	Mon,  5 Jan 2026 22:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767653411; cv=none; b=jJG9V9l/L42cBRcf1b92zvO1ay2DQ385lBiyNW5Ttn9K9QZ0a/gjSO3rRejon3pJQjnpH32KvhaAIEvCF2/mx+02Ecwju4AF4ZDcjLahOclNK8BMPZyquw3P3O1E6KJ4oBG/B4juH4qyO3FrTpq4jk+fZ4So9DwIYw2ZnJBnyMg=
+	t=1767653921; cv=none; b=qFLkNhAOW7FQcl+WcaOEHY7INKBD/WPHMLHl3XfAMAPl581iLo62LZNi/MopiBOwA0t/4Iz71FwuYDBLHK34G9NjjmjdUqb1mjTPYKV2l1Tto9LE7B1o7XPtxpxyeU9PePS8gjdR0lGeDpKDjxr93EAc8TbHJY6y48AExAawRkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767653411; c=relaxed/simple;
-	bh=31D6qoX8lgsXUYGBg7xPU+7XAZ30YbSieRYrZ/lfYKI=;
+	s=arc-20240116; t=1767653921; c=relaxed/simple;
+	bh=57Y8OhPb0RdZXNMjxm6zVtmsLCS976QesMyxc2EBE3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kS0jnvDhCwjmtzmdvAHz7FHzxatgCxgFO9ubBGqchPxsLbtyiFqZ1U96AyUwEaBvlAAvbBp1HZjaMFT+uGMXAW6AOvvOKCM0JEGgl/TOJJuFi9kcnaVbko+mEkllWuTJ1BmrdGrKHr3fWWPDB3t0SRBSAHQAJHYnpKWS2v4xdYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewhgjP4j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D73C16AAE;
-	Mon,  5 Jan 2026 22:50:09 +0000 (UTC)
+	 MIME-Version:Content-Type; b=nyBGVOLsvFq+hlRQuJjJFGU+lmLurry7ISRq0xFOEUpSOlwiNzRiqiCk4kzJgzgp1pAw9XasfK3QeRsS5eHhMDnYsm2+A2llkSBBJ8VW6NY+l1bRcgFn3ahOL2jDDlWbtb/vpnfDXhvuD/MTJTZffz08fvS1aKEbcJQKuMLqbac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dKoXhy8P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E28C116D0;
+	Mon,  5 Jan 2026 22:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767653410;
-	bh=31D6qoX8lgsXUYGBg7xPU+7XAZ30YbSieRYrZ/lfYKI=;
+	s=k20201202; t=1767653920;
+	bh=57Y8OhPb0RdZXNMjxm6zVtmsLCS976QesMyxc2EBE3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewhgjP4jI4POND3+QAJ8bXdQIBgP3tHufyiYg0J/QT7F80ckP4QsLTwewu2TlNJDy
-	 q/8BBmefcnK+e3rJ9jnTqmTMnJN323LktWsth/y1zhUArwP+6Z9OQJtmz+9YZ01haO
-	 MhFFawTYQIiDXZ0V7dm5hhQtDrKrp5xzJrbX1HLilog6J/NoqivdJkL03fwKycqoHE
-	 xf+A6ccdXmIUgIedcxqcIVqmYemPtsKQ4WMZSwo7L5X15o+zh0dW8dbLvGGczr8iax
-	 BTYBT+tm87xCTpYmxIuERoxF6GOUJBDUJSIppFZwqmzAWc23uSwQkNHjkQy/XS2oLU
-	 qGTMXvo2lGJUA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Vinod Koul <vkoul@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	b=dKoXhy8PphpPNPQyctzXS0XHOTt/dcW1d3000+w5MghP3P4D+HpA/3NvPIWZCXdno
+	 Tf7mqXJHL0BMgUe4E2BTTw9KKuXPNGufXSKw/kkxxTksGoTNcdOXERj+H6dRT2cSOg
+	 S/4XaH2Mz0bAE750Zw1A0tK8K6cSSvOfI2gQgTj/K0UZp2J91/5yeR0j/w0haqIBvW
+	 gtiKwroqz/OluIdw15azPae9Sa9pb0dGYktG5nn+3aT3T+Vvoajs1ghah5Vsw5sM8H
+	 l33fBbvu1iOB2WsKxua255VCktaOZ4QjAe68fk/Ts1qTcpUMaQ5OVOI5HtmtyU4/fp
+	 PTgXf8OTzNkTA==
+From: Will Deacon <will@kernel.org>
+To: konrad.dybcio@oss.qualcomm.com,
+	robin.clark@oss.qualcomm.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	robin.murphy@arm.com,
+	joro@8bytes.org,
+	bibek.patro@oss.qualcomm.com
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	iommu@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v4 0/9] Various dt-bindings for Milos and The Fairphone (Gen. 6) addition
-Date: Mon,  5 Jan 2026 16:50:06 -0600
-Message-ID: <176765340206.2986820.1001501110439471396.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
-References: <20251210-sm7635-fp6-initial-v4-0-b05fddd8b45c@fairphone.com>
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+Subject: Re: [PATCH v5] iommu/arm-smmu-qcom: add actlr settings for mdss on Qualcomm platforms
+Date: Mon,  5 Jan 2026 22:58:19 +0000
+Message-ID: <176764799410.1451727.17568755330994660848.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251209052323.1133495-1-bibek.patro@oss.qualcomm.com>
+References: <20251209052323.1133495-1-bibek.patro@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,38 +69,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-
-On Wed, 10 Dec 2025 10:43:24 +0900, Luca Weiss wrote:
-> Document various bits of the Milos SoC in the dt-bindings, which don't
-> really need any other changes.
+On Tue, 09 Dec 2025 10:53:23 +0530, bibek.patro@oss.qualcomm.com wrote:
+> Add ACTLR settings for missing MDSS devices on Qualcomm platforms.
 > 
-> @Rob: Please pick up the cpufreq, crypto, and pdc dt-bindings, they've
-> been on the list since many months and weren't picked up by any
-> maintainers, so it would be nice if you could take them through your
-> tree. The patch for arm/qcom.yaml will be handled by Bjorn I think.
+> These are QoS settings and are specific to per SoC thus different
+> settings, eg: some have shallow prefetch while others have no
+> prefetch.
+> 
+> Aswell, this prefetch feature is not implemented for all the
+> platforms, capturing to those are implemented to the best of my
+> knowledge.
 > 
 > [...]
 
-Applied, thanks!
+Applied to iommu (arm/smmu/updates), thanks!
 
-[2/9] dt-bindings: crypto: qcom,prng: document Milos
-      commit: f50da52e5b2ed73913cc6d0db7c81cd33ced3ae7
-[3/9] dt-bindings: qcom,pdc: document the Milos Power Domain Controller
-      commit: 42f2799124a4d0081b0c8c50980e37769e8d6880
-[4/9] dt-bindings: arm: qcom: Add Milos and The Fairphone (Gen. 6)
-      commit: d88771fda13f2e97a056d471b7b7c11bd17da148
-[5/9] arm64: dts: qcom: pm8550vs: Disable different PMIC SIDs by default
-      commit: 446f4802aa6eb972718b8708188df533b38dbabe
-[6/9] arm64: dts: qcom: Add PM7550 PMIC
-      commit: 57e89dfdfa28810f8c1a44bdd301fca287ff83d1
-[7/9] arm64: dts: qcom: Add PMIV0104 PMIC
-      commit: 8f42f255dfb80e57af98191e7a4e18f7d1cdcb7e
-[8/9] arm64: dts: qcom: Add initial Milos dtsi
-      commit: d9d59d105f98665187d90a49d9099675491990f6
-[9/9] arm64: dts: qcom: Add The Fairphone (Gen. 6)
-      commit: e25834d7691f0661fa9700c167c48d18752f62bf
+[1/1] iommu/arm-smmu-qcom: Add actlr settings for mdss on Qualcomm platforms
+      https://git.kernel.org/iommu/c/f91879fdf70b
 
-Best regards,
+Cheers,
 -- 
-Bjorn Andersson <andersson@kernel.org>
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
