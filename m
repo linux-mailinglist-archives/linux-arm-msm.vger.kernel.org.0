@@ -1,69 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-87489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 153B1CF437A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:47:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4437CF434D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:46:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 92E6331076DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:40:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3E8F1319BE8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:39:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A798433AD8D;
-	Mon,  5 Jan 2026 14:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97C3433B6CF;
+	Mon,  5 Jan 2026 14:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bUb5V8Nq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="czbmKYn+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59603315D47;
-	Mon,  5 Jan 2026 14:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDC033ADA0;
+	Mon,  5 Jan 2026 14:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622114; cv=none; b=Ww87qqTkIgpdEDmYIq8fSgJU/yQ7qhxdSBCAhNcHmzMB2mtMQVO850O/uzVIMyOIxxrGeV2ibfSsDCfhXY3xt1pBMuQ1EkR0IE/AM79OShbU7s/VbfFW2w6FLJnl/GehDY317KS1NjXh+sa7CHr2vIjf1IdnzMVbCvk4hloCSf4=
+	t=1767622117; cv=none; b=KTe+NQceX1eH4m6i4MLDz1dIw0MV143upA480NloYULWW5DUzCTGZeKfejd834A3FnnG8BEGSVAiBFyhs3AqdUibm5kGeI2fcNdy89YbmGg9CTqweU08YGizKfS7jDnMCiWEzfW2TlIm4Y/MSPKDiITR4SFmrdpob6+ZJxlejyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622114; c=relaxed/simple;
-	bh=lhRqkJCiNXB/Z5CTm0DjouaCzn5YbbAFUtBaa7SbiDU=;
+	s=arc-20240116; t=1767622117; c=relaxed/simple;
+	bh=fA8iZVmp6FG+0x4WWdqEhtCEmf0AzlPRgIyhqeuEwKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sFGWg+w2GKXUUWhmvu106z9x9fK4nBU2abc76qq4+CySYvzIS11oLyxO6+NWFk2Q+8KgdQJFxQl0W4/0kLVOCK1onGOeDaVReBIEqJHSUxSNRhCl2yAcdrKVhOyDcOSjjUlw/PxVGEvdPl6a4rEyMXM29mjwmbw0+uIQp9G13D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUb5V8Nq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38600C2BCB3;
-	Mon,  5 Jan 2026 14:08:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=lHRUzfE+/ertoYT3OkPb8qoLu2XfvqsxHTcMo7MxTR33EM1t9ZqLC6Zc+DFRI6oYPl6B/p5Dx2W+5xT401C/SOtWQfIC4L/ckRX5FlQNz8pox9+kjiTenmqcNqIA4reLZwsDpKmgezdyphO4qR55jM+5NMewKcrEZz0f6hikOKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=czbmKYn+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4386C2BCFA;
+	Mon,  5 Jan 2026 14:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622113;
-	bh=lhRqkJCiNXB/Z5CTm0DjouaCzn5YbbAFUtBaa7SbiDU=;
+	s=k20201202; t=1767622115;
+	bh=fA8iZVmp6FG+0x4WWdqEhtCEmf0AzlPRgIyhqeuEwKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bUb5V8Nq+E7wDEUQSZnxy0EkhZUz6L4b7PrbHKAE1K8RHbT3yRXt1WYNIcHpRlTDf
-	 9kzCmAWZWTqL/8x3+doFRK8ZevmNuE2YQg3hhYoW+/QEu6wqs6pCUvm+l99MGyE+mQ
-	 qlKioxCtyOQxZYOqf25XFhsjufqa1dYtCIF2FMGU9k8mN9fK7zDebkQjFjOdf9yZoD
-	 jqIdA1979GgdHwkSKOXmP941pzu7Av9YQcrzCYGOY5jDO7F2LjZ2lsUBrB0FRgl9tY
-	 FDoMy+Id56EWGR/PkZgWCh2nxwaWmcaOs+O5OuzXCyEDKXrukKoI1uuPgHSUeSDoMG
-	 KvxZnRArgsscA==
+	b=czbmKYn++78QRFPJk92OFEUbyvjNIE1NGpWIyKBBn17o4Dpqmtp6OxObFkd4Rlhuh
+	 XNCYi6yszjZGPaj5+hMCLxcLGElhgp96MEjQAJ2rdDm++S9yVXanGUbPWPHqDa1Dmw
+	 EQLXv6Cp1OGpCiVFFEoWbMgFBZFdEJF0mWeSr7Cb6hbNfV1MrclH1a4QxTF0WHlRJ6
+	 Sema3m+RhZxWJXN6kTLFI6RRXEGtICscLLnCrBLfHiK4jnRW6m2OlIb/0siYvcIIf0
+	 ciFVgQg/jCkJP8SgCHdtQjRImoPVqWlOLsgsXl2NbH9cYGwLRet/3+pgRgi6qc1hfW
+	 VwuNyibVHHVIw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: bryan.odonoghue@linaro.org,
-	mchehab@kernel.org,
+To: konradybcio@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	cros-qcom-dts-watchers@chromium.org,
-	catalin.marinas@arm.com,
-	will@kernel.org,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: linux-arm-kernel@lists.infradead.org,
-	quic_svankada@quicinc.com,
-	linux-media@vger.kernel.org,
+	broonie@kernel.org,
+	Riccardo Mereu <r.mereu.kernel@arduino.cc>
+Cc: linux@roeck-us.net,
+	Jonathan.Cameron@huawei.com,
+	wenswang@yeah.net,
+	naresh.solanki@9elements.com,
+	michal.simek@amd.com,
+	nuno.sa@analog.com,
+	chou.cosmo@gmail.com,
+	grantpeltier93@gmail.com,
+	eajames@linux.ibm.com,
+	farouk.bouabid@cherry.de,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	quic_nihalkum@quicinc.com
-Subject: Re: (subset) [PATCH v6 0/2] qcom: qcs8300: Add qcs8300 camss support
-Date: Mon,  5 Jan 2026 08:07:36 -0600
-Message-ID: <176762206420.2923194.7249195555946524673.b4-ty@kernel.org>
+	linux-spi@vger.kernel.org,
+	m.facchin@arduino.cc,
+	Riccardo Mereu <r.mereu@arduino.cc>
+Subject: Re: (subset) [PATCH v3 0/6] arm64: qcom: add support for Arduino UnoQ SBC
+Date: Mon,  5 Jan 2026 08:07:37 -0600
+Message-ID: <176762206403.2923194.16796715404880463820.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251107162521.511536-1-quic_vikramsa@quicinc.com>
-References: <20251107162521.511536-1-quic_vikramsa@quicinc.com>
+In-Reply-To: <20251120155825.121483-1-r.mereu.kernel@arduino.cc>
+References: <20251120155825.121483-1-r.mereu.kernel@arduino.cc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,25 +78,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 07 Nov 2025 21:55:19 +0530, Vikram Sharma wrote:
-> QCS8300 is a Qualcomm SoC. This series adds bindings and devicetree
-> and driver changes to bring up CSIPHY, TPG, CSID, VFE/RDI interfaces
-> in QCS8300.
+On Thu, 20 Nov 2025 16:58:19 +0100, Riccardo Mereu wrote:
+> From: Riccardo Mereu <r.mereu@arduino.cc>
 > 
-> QCS8300 provides
-> - 2 x VFE, 3 RDI per VFE
-> - 5 x VFE Lite, 6 RDI per VFE
-> - 2 x CSID
-> - 5 x CSID Lite
-> - 3 x TPG
-> - 3 x CSIPHY
+> This patch series adds support for Arduino UnoQ single board computer.
+> UnoQ combines Qualcomm QRB2210 microprocessor and STMicroelectronics
+> STM32U585 microcontroller.
+> 
+> In some files we decided to keep UnoQ code name as "imola".
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: qcs8300: Add support for camss
-      commit: ec593a86dfa1bbb5ef02165711f7ed8bb1046e29
+[1/6] dt-bindings: vendor-prefixes: Add Arduino name
+      commit: d16ffac771715a8c94611b6f8088a3e800bcf5bf
+[4/6] dt-bindings: arm: qcom: Add arduino imola, UnoQ codename
+      commit: 311d173da672397a58498841299ec613ff9eb96b
+[5/6] arm64: dts: qcom: agatti: add uart2 node
+      commit: 925ac1f6ec75a773e0ec8b91673b647f6d456ccb
+[6/6] arm64: dts: qcom: qrb2210: add dts for Arduino unoq
+      commit: 3f745bc0f11f66465e3fa19eb0c808c5b39cb0e5
 
 Best regards,
 -- 
