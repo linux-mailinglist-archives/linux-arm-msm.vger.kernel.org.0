@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-87492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F7CBCF4389
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:48:24 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05624CF4215
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:33:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4CD17306434A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:38:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1C8FC3018CA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:32:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8346433BBDD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE42433C198;
 	Mon,  5 Jan 2026 14:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KAhfCBie"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXMSFs+q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B694533B967;
-	Mon,  5 Jan 2026 14:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F91E277C9A;
+	Mon,  5 Jan 2026 14:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622121; cv=none; b=ieh95KShrFJQlQmHAMSix/PGuzTmWqRNBOWrtr7iUHBW2W4/wNJCbVVuOQq68D4+mIhyEdzYGFWKOI1uQLv1vXJ8o/hELY1CmDhxfSTDBAYBTIlEyDkq62b38I5SFQglA9jsZGyQjl2o6xq5FzzvHsV5bd0IPsW+Afg1AveUl6w=
+	t=1767622123; cv=none; b=r/sG7b+R/f2ttwZZsGGTyhoVta+wvntvdCu/I5xaFzFmi2fAHegI5cxwotJLzzit/NTPu3INvCMCdEG/7OtB7+qVp4Y/tgOmT/a2hn0OgdRR5AYHr5Kq/0sTHdMaff38sNfsZuftASM2Vbo0BUEotmAcikf1L0YefAbE+0RtPyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622121; c=relaxed/simple;
-	bh=6O3+y+HG0ndxtLBKPQttb3kVoj31kwuojSEzjwVFkgQ=;
+	s=arc-20240116; t=1767622123; c=relaxed/simple;
+	bh=inRMPpvRg9GgLohYKESF7uoo/L1yGUB2AXPVoDf4dvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pRYZ7bhwPMhkoGm4difMlhGe6Mr4joDuM5PPkkJIrrVk0kGPwEpCjbmVBdp0xbfoZMO6UfCP7+3fTa2yIO8dpyoyKSIpM4MoRgu0RujifnJAISFJ6keulx7a2xa5LoGGi8B2jTiMBVstrEOJMbE6aichms81Q9DWdmeGx2fsCE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KAhfCBie; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C26C32781;
-	Mon,  5 Jan 2026 14:08:38 +0000 (UTC)
+	 MIME-Version:Content-Type; b=SVCRXFswusAqvZhDYdFn6vyZ2tPsM6a6iJ1gWqYYWrxdfx62FmIGL2aIU/5U057I5yKRqeRYLK1Br0ZWWYzPEE8hzquoiIc7grN6yU0ghp/IO/6enIAOcRSGArL+7gBqvs2x4wrqgYtBwppwZmQc8aujWHsLZsSWJWX0L17hIrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXMSFs+q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B408C4AF0D;
+	Mon,  5 Jan 2026 14:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622119;
-	bh=6O3+y+HG0ndxtLBKPQttb3kVoj31kwuojSEzjwVFkgQ=;
+	s=k20201202; t=1767622122;
+	bh=inRMPpvRg9GgLohYKESF7uoo/L1yGUB2AXPVoDf4dvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAhfCBie1Xg0Sd5NeIvaj0DHnZTUYf0yfdrLTbA6av+K5Elz4HX0QuKY6/HkFhoCI
-	 iwH8TLiHYaoXfZQTFyn/Lpw1LYF3oyjJPclB0RspaJGXmki6gwzRlI+zMR7Jbe/ZPV
-	 rnYUKbh7TCTPfa8h1KSrnJFVLtpcHH3wAvFLInIdSTZ5jTMGV/Y7eq8BobUHynFY97
-	 ZXj0WBwJVkOmgZWaUgH4RSWvfiWNT47VFK1pX9JqV2/owU9ZNzoUcLZCJIUETqvSKF
-	 SReBmjpY368T9kFJ+OL/EhVDqkOgLl8Ag9X0qOPoN6H4L8ycfA2WmCQvv3snbpZXgM
-	 Rl6GvaWYEAt0A==
+	b=AXMSFs+qTDUfoYXPFnoBdz2bapqlfHgrJZXbwAQpxst4hH3ewL2EnxJgweMZCigNF
+	 r026KmcubaMm1zSBtW86XwB0DTFiWN2rdWa8xTVdFkrISnVFMFyMWoGx0M3PlVZyZB
+	 f2t6ETS2v7ioxNSIFLjFgwr2iCyn9AZJIOJwlB2NS8OIHSzkd89CCdv+uSkHR9aRDW
+	 6PwaiUbWnOms6Yt6j8Spus+itoricPsoXQy0YkQICdCeB7wsglsvlRZUbtR5tyzg2M
+	 rAh3dnyb+KAPMVHvA6Ad0xo+VIJBdFQ50Qru8smUffhmDh2OYDqDWOlMcD+c8Dw92E
+	 R5VQSV+twBLSA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Nickolay Goppen <setotau@mainlining.org>
-Cc: linux-arm-msm@vger.kernel.org,
+	Tingguo Cheng <tingguoc@hu-tingguoc-lv.qualcomm.com>
+Cc: Tingguo Cheng <tingguo.cheng@oss.qualcomm.com>,
+	kernel@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	linux@mainlining.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: Add support for SDM660 CDSP and ADSP FastRPC
-Date: Mon,  5 Jan 2026 08:07:39 -0600
-Message-ID: <176762206417.2923194.10858113169390489876.b4-ty@kernel.org>
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: hamoa-iot-evk: enable pwm rg leds
+Date: Mon,  5 Jan 2026 08:07:41 -0600
+Message-ID: <176762206414.2923194.3519328517461927165.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251110-qcom-sdm660-cdsp-adsp-dts-v3-0-d1f1c86e2e6d@mainlining.org>
-References: <20251110-qcom-sdm660-cdsp-adsp-dts-v3-0-d1f1c86e2e6d@mainlining.org>
+In-Reply-To: <20251114-add-rgb-led-for-hamoa-iot-evk-v3-1-5df1fcd68374@oss.qualcomm.com>
+References: <20251114-add-rgb-led-for-hamoa-iot-evk-v3-1-5df1fcd68374@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +69,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 10 Nov 2025 21:55:05 +0300, Nickolay Goppen wrote:
-> This series adds support for SDM660 CDSP remoteproc and also adds
-> FastRPC support for ADSP.
+On Fri, 14 Nov 2025 00:13:03 -0800, Tingguo Cheng wrote:
+> Add RED and GREEN LED channels for the RGB device connected to PMC8380C
+> PWM-LED pins. Omit BLUE channel to match default hardware setup where
+> it's tied to EDL indicator.
 > 
 > 
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: sdm630/660: Add CDSP-related nodes
-      commit: c0c32a9e3493f9987fd6635bbaf7260dfc09ee29
-[2/3] arm64: dts: qcom: sdm630: Add missing vote clock and GDSC to lpass_smmu
-      commit: a044cc859dc93c7a32f0c24745242bd3f0a04db5
-[3/3] arm64: dts: qcom: sdm630: Add FastRPC nodes to ADSP
-      commit: af2ce7296643767a81c96d12a8d367afc5091df2
+[1/1] arm64: dts: qcom: hamoa-iot-evk: enable pwm rg leds
+      commit: e50c63e89236beb249507f986c3458b2b670cfd6
 
 Best regards,
 -- 
