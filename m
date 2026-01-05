@@ -1,57 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-87481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 594BFCF413D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:19:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E0CCF4251
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:35:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7B07F302BB96
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:18:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A15653077652
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D94337BB3;
-	Mon,  5 Jan 2026 14:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439953385BE;
+	Mon,  5 Jan 2026 14:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y+Q6qas0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QkOlDxSW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCD3337BAB;
-	Mon,  5 Jan 2026 14:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC2255F3F;
+	Mon,  5 Jan 2026 14:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767622099; cv=none; b=rwGJm9wsbiLWwpaqrhHqpSH11Vbr5Jh77GTqnlHRAPyqBhY/R15O8wUCNAlgvy9nXI318pSOSr4t5xGM3aEePmpyY11dnox6MY6xmlMBYXI6WN0fm7ev5ZBptTQEP9PvDo56mANkjvodZxVsZIe22enBVfUoglzVjDcvwSV8V1w=
+	t=1767622101; cv=none; b=k+TruaSC6PM2bbiWOloG5vENytH8W3JS67AG3BcWYQB+hu/nmVPS8qCJREDdVtPq2wvoL6/mFQjCp5XSUcvceHA95ZT4bO4WpFziGGLEJAxhXjCjdnILy/W0MC5RF/jFjxqI8KqW2vIIcMtMvqnQYaZ5Cxn8kZFBdIX6N+INvPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767622099; c=relaxed/simple;
-	bh=+gsM4tZBW+duEJ1CNrXpEyjGX+4OF30WvH6kUiXoNiQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tHZYVIsoc4XYoSbUz3n6yGqKpg2t9jNT2kdUvj3nmqib1CfV5FyrVMc3hkIgLY6wyGHRkPXZybFNNDl/Y8bexIJVnNjplJiKx1GYcXriLBbstfnSEXXimVcE1JZeZTyP30n57aC+QGAzg/rkHGfpaCAPp5TfPJJO3l1Hjuf2Qjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y+Q6qas0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AB9C116D0;
-	Mon,  5 Jan 2026 14:08:18 +0000 (UTC)
+	s=arc-20240116; t=1767622101; c=relaxed/simple;
+	bh=to8eUGgU5EWZAgOuezn8x6O8LJS981ABlZcMFiTj9eA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NRGdJR8VudwVfOMEcygUXWeyhH+osTJ8ZU7VX9t6oJOLHO0uFRw905u4wpfTpveR6+p7VUwFxZGP/KZpgJEVOel3npH0KkwHHrKWcjCbSiW0jyg2bYB0W8XF6Ma9F0fI0qdc29bO3Ss4a41dYpaVi2uaoKe95lUQRQsZYGT3OZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QkOlDxSW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2F1C16AAE;
+	Mon,  5 Jan 2026 14:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767622099;
-	bh=+gsM4tZBW+duEJ1CNrXpEyjGX+4OF30WvH6kUiXoNiQ=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=Y+Q6qas0IL8QgC9RbomZYmuRiq6UIW47LjHZVyLHB0d0+a9Vfn/cg3oJgPW3Vo2Pw
-	 u8HsgexYrmB4jtCc+AMPvVEq4nQwuOiSQknAucmBQG0B8CQt+/iqLwmQr8d41hQdg0
-	 sQvmKyH8lr6y6sq3f7vvLWmQxGYi8pgl1MOrXAZSU41NPvDXF6wRK0r82GicVEHSti
-	 NC5adXMEC0arr28Mbw5ufSrgT6/dasNsMQnGEcW++6AmF9gXAOMrwt34lagEKkZBgh
-	 d9Q1tUCpTMqL50SXdnEJEvmceWU/i/5B1sW9ZwrT3+QwWTr71GOi+RVatovUlcJrzW
-	 cdOkc0gp53W+Q==
+	s=k20201202; t=1767622100;
+	bh=to8eUGgU5EWZAgOuezn8x6O8LJS981ABlZcMFiTj9eA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QkOlDxSWXUUyKCP9uNk+abQz2nPiWIwu2ZjYHmuvbfTeIdEL73FkVYogM72EYxMe2
+	 XDNZ4Y+eZcDcA1vv9rd1ao4EPLbzQdQuXgmskVhUSOS+hK/16InmszmnBUZ5huDPx6
+	 St/ahnG17FZ1ejmWQ8PBPfloVgGHLyxXvz4eF55zSfFjG+HZHUyV/t05mhu54pxZQI
+	 mHzAsfzTVOPsfkO0Vbapwt+uUEWo6TkFbt/LMRcZLnl6OZ7Dcli1ER0/CdI9HFRodf
+	 nenHJ2OEucMZOo/c/c0X6RdR0R7pfnjEUt2D5y8xDh9uICylFVLTBcelotokaFiZUf
+	 zWK2u0p9teJ5w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: [PATCH] clk: qcom: videocc-sm8750: Constify qcom_cc_desc
-Date: Mon,  5 Jan 2026 08:07:28 -0600
-Message-ID: <176762206392.2923194.13091505187833672085.b4-ty@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v2 1/2] arm64: dts: qcom: hamoa: Add sound DAI prefixes for DP
+Date: Mon,  5 Jan 2026 08:07:29 -0600
+Message-ID: <176762206364.2923194.15000641449194582431.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251208020621.4514-2-krzysztof.kozlowski@oss.qualcomm.com>
-References: <20251208020621.4514-2-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20251217120051.98198-3-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20251217120051.98198-3-krzysztof.kozlowski@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +65,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 08 Dec 2025 03:06:22 +0100, Krzysztof Kozlowski wrote:
-> Static 'struct qcom_cc_desc' is not modified by drivers and can be made
-> const for code safety.
+On Wed, 17 Dec 2025 13:00:52 +0100, Krzysztof Kozlowski wrote:
+> Sound DAI devices exposing same set of mixers, e.g. each DisplayPort
+> controller, need to add dedicated prefix for these mixers to avoid
+> conflicts and to allow ALSA to properly configure given instance.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] clk: qcom: videocc-sm8750: Constify qcom_cc_desc
-      commit: 77d0ea71b30bcb9f06d36a804542851081d4da3c
+[1/2] arm64: dts: qcom: hamoa: Add sound DAI prefixes for DP
+      commit: d12cd85a4ff494bb73e2e8f8af7ed66851241941
+[2/2] arm64: dts: qcom: x1e78100-t14s: Add audio playback over DisplayPort
+      commit: ba439ad9134c8b9ce033056c059cd161d30afec7
 
 Best regards,
 -- 
