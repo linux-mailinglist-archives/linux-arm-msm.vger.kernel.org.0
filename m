@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9308DCF2CA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:36:21 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FF30CF2C68
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 10:32:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A722D3023560
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:32:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DEEAB3002855
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 09:32:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E664132E720;
-	Mon,  5 Jan 2026 09:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59A7A32ED34;
+	Mon,  5 Jan 2026 09:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKw+vsmH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PsvxWCcH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4668F32E6BB;
-	Mon,  5 Jan 2026 09:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325062D6E6F;
+	Mon,  5 Jan 2026 09:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767605527; cv=none; b=utvCYyaFV3+5f+1G+MGrmfYk6zTTrXETC3c+fK8WXRKcYsrnHjJD1HS87c0qA9ANTMlg5i6AgYgw5JZF3caSlpji0pjuytUkvEoNjyZtXkegkYVj8qwdlqg+WIZgUR1zyR/kDsskyZN6D67NyfNdw6e/EaM77yHDWHL/x/MfTwQ=
+	t=1767605550; cv=none; b=L0+SEnQZDelMwVdpOjPOmp4U+wYcV8/l9fbn6qMN26LP6Ce8VMaOvDptqPfeBuuP8bAm9E09Rit648f51p4fexUAiIXjBvnvTz+lq0lLzVuau29hsI36KV5nWOI4wb5aHOZjRUyzK6YHn1GQWD8jn/R0lHwrNFMe1jLC9yODilE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767605527; c=relaxed/simple;
-	bh=n+bFMDoUPH60Ja/pc3Rf9JwRu9AY9ehDcGmwOikXvNA=;
+	s=arc-20240116; t=1767605550; c=relaxed/simple;
+	bh=L2iZSDaNgg+OlqEOxHPDEzFP2VUyQ7MQIZTqlD6Yvf8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qGTROBvyh0RHEeWvsgzLebQZ5wVb2eeZdJcMyRSNchcH8EDpi+YAt0ErolZQMrkESFUQL9OloEB7WCK5oBQ9iUJqnUSc/RAeTdS8fAhXTGwJj41Q/dt7nd3pHvVAqNyhlDMY/HnU+BgaFn9OkeWNN83sMBvlcSdwckZSXm5gCus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKw+vsmH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4065C116D0;
-	Mon,  5 Jan 2026 09:32:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=k49D/egxfFwbZ/3/HQeFOQm+dtT6ns+Q7WJDVu67feAtsovjbFUovcLGBLriIWgBxBsRXsEQ9FIK1Qu0dGKvUUS6JlERr9sGcAhXlp2b6M18Aaq0SYm5sc9khOYpDw0Efq+tPvPR2gApAnep+VWaOddxSTU9HGGUBsIvOMcnD2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PsvxWCcH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4240DC116D0;
+	Mon,  5 Jan 2026 09:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767605526;
-	bh=n+bFMDoUPH60Ja/pc3Rf9JwRu9AY9ehDcGmwOikXvNA=;
+	s=k20201202; t=1767605549;
+	bh=L2iZSDaNgg+OlqEOxHPDEzFP2VUyQ7MQIZTqlD6Yvf8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WKw+vsmHjNHkkNSMg9PBp7cjaNW1zGANrwhSEuNpXSvPx218/7WZUfSWgdU0LuDgP
-	 vcSRK5tGtAjQP9NZBBoKyJl7UtMaXVcBRldEhOKg7j0WLXLJofCmUTM0jomMp35txx
-	 SIfqb9U4MotFBzEqhA9fIlEIoEdt4J4IuC61LTTV+OV6lcIcq7EoIOOCCCk0rxoP22
-	 yHW6DgMvdxs2YIvlI2caSIdlabwQYxoB9/qwDKP76LJu7McyXo2bV3GWdRCriGCsYF
-	 XhUj07SZ0ygBsVhOGTDvflp7VTuWHIKcr1EqM7wbrYTjOR4Chyj+AmDxrgcdegR5D6
-	 YU654bbvP0/cQ==
-Message-ID: <df6ef95e-eca8-4590-8f79-f850e523dcec@kernel.org>
-Date: Mon, 5 Jan 2026 10:32:03 +0100
+	b=PsvxWCcHhOg/bozlvWR6YpooT1iDcuQI1pgaePChcb/Q54R0cXU8Be5WwZHw9XBOg
+	 4+0Ma1dWNE7jfnOZLgqVagNpSaRx75PqiQgvQCfWkmNT+v/424dJ2ZcBWDYL76TgB0
+	 qy2bEtgraHQUlAbakfH3iLLvtaNKJumbreP7j+6cWvqRiib/wT00AZkcvH2/GVVKK6
+	 5wlgkw/Kn7kd9DIlmYOs9wY0d9si8DzbFhU3zOyjTGUZKO6cTkAy/yVDJrkvSKNuPZ
+	 I+fpXGhHj41oYgIgY53MviTY3nG4I9dGSqFz2A8hmNk0PFMGAH/pZsRsmxaTYZq9u/
+	 VqnfvrWY2g5XA==
+Message-ID: <cd725087-14f3-4c9f-ae1a-147bbd362460@kernel.org>
+Date: Mon, 5 Jan 2026 10:32:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,14 +48,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] ASoC: codecs: wsa881x: fix unnecessary initialisation
+Subject: Re: [PATCH 4/4] ASoC: codecs: wsa883x: suppress variant printk
 To: Johan Hovold <johan@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
  Mark Brown <broonie@kernel.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20260102111413.9605-1-johan@kernel.org>
- <20260102111413.9605-3-johan@kernel.org>
+ <20260102111413.9605-5-johan@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -101,21 +100,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260102111413.9605-3-johan@kernel.org>
+In-Reply-To: <20260102111413.9605-5-johan@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 02/01/2026 12:14, Johan Hovold wrote:
-> The soundwire update_status() callback may be called multiple times with
-> the same ATTACHED status but initialisation should only be done when
-> transitioning from UNATTACHED to ATTACHED.
+> Drivers should generally be silent on successful probe.
 > 
-> Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-> Cc: stable@vger.kernel.org	# 5.6
-> Cc: Srinivas Kandagatla <srini@kernel.org>
+> Demote the codec variant printk to debug level and instead add a warning
+> in case an unknown variant is ever encountered.
+> 
 > Signed-off-by: Johan Hovold <johan@kernel.org>
 > ---
-
+>  sound/soc/codecs/wsa883x.c | 17 +++++++++--------
+>  1 file changed, 9 insertions(+), 8 deletions(-)
+> 
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
