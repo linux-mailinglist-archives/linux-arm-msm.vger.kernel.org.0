@@ -1,262 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-87460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76E40CF4025
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:02:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 056E1CF4040
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 05 Jan 2026 15:05:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id ECE7A3003FF2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:02:32 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 735333001000
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jan 2026 14:04:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A21B7231A41;
-	Mon,  5 Jan 2026 14:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CB123EA86;
+	Mon,  5 Jan 2026 14:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WgmcNYEw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E8E276046;
-	Mon,  5 Jan 2026 14:02:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E56145B3E;
+	Mon,  5 Jan 2026 14:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767621751; cv=none; b=AwusUtbqZlHHoSSksin654EqqCW1G81RrTOqz3H2d1BtJKJ9aOZhtFz6tSpXyRbmm1s//kbFxms3O+0+QI/D4vH7CObyP5KAQJLbbhIKi4XGQ8sUuHkcWTNOjeH0jjdCMYNXiGUKykFS2UnRjmIX7o9rQCmqNn+9xUodIsdsq3s=
+	t=1767621898; cv=none; b=qeK4aI/6e+VHYaF/vzx2dvi7GaFwrd91xvnVLDkVBdUvzWsz8kcUdeU38vtU14JCkenY3fzmsxFUIbts6T9AxzMZkajQCC6Z92gM5fxciSr2wUvhvdXX8iS1anBEtzvQFeRjS1DSJqbJYrvSfJ7ndVH4IsEHMLqoK2ftShlQjnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767621751; c=relaxed/simple;
-	bh=lr9KRQvUSzishcVfoM3mkXrgrwXP51P7dZ69iITxYDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=inCdy/XNBzkJx3Z5QTgmGqLNOmw8yO/Zh4OePTFBoesH3LPqOAaey+Wz/lC1J3g+26lDJ/9fQR257bVkv0FfXM8VYIIOIZafkhn4uE2kPDenZ0IGHd7qn7XU+M+wBoig4KDH6VIvB6HG2D398D3z2OnGL3Uu2mSMyN7gBH+J/Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.92.39.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpsz20t1767621659t7d83f390
-X-QQ-Originating-IP: 53eMKruBCBwdR5W5Egryq/zqXjgdWwfvH5WQniWkHZU=
-Received: from [192.168.0.109] ( [121.207.53.173])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 05 Jan 2026 22:00:57 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 19132313025302152
-EX-QQ-RecipientCnt: 10
-Message-ID: <64CBDD3CF274E966+d1faba44-e3aa-4c2f-9819-a24e4ddca468@radxa.com>
-Date: Mon, 5 Jan 2026 22:00:39 +0800
+	s=arc-20240116; t=1767621898; c=relaxed/simple;
+	bh=f974cHD/ROsMpt/DTUHyheRaIu8QqxsRAeYLWROE4z8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tr6hcps8mNa6/msJx0+AUxaaGftSxhwQPRq3Pu/VJP4LNc0W96pRvU0kCM77l9we+DOAOVCKz2UCcZPsOEvbu8sJvCfjL6Ic2Gta3VldLY2LCQyM5RS38+mA4KM9nVt5oDyVHu97SP6CKKuXUgMc2R0txFzDcM5CmbaMxwRa/ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WgmcNYEw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C00CC116D0;
+	Mon,  5 Jan 2026 14:04:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767621897;
+	bh=f974cHD/ROsMpt/DTUHyheRaIu8QqxsRAeYLWROE4z8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WgmcNYEwh6zNc+w0KIV8+yGmOEAucAnX4HvdNe8nlI1lD9U92vzU/Hd4CoBHgM1tt
+	 YbcSUCkfEmtmMvBzbyqHnv5x0Dg4EqZ+9pso8JUF0DPFgW4MJOdfvqJQ6qf+qvPZLU
+	 XLpd3R17Cs5RjeoyR6rPKChv0MZ2LRYjvRvgC4+q6uvVFbtvitQsB0tQuP2SCgnAjJ
+	 J1M3dI5gVLFM9eedMLKUVgLVE6Sa76nbHRrli+v88PZYAT6BQB0DV7O8gxlcegvkpB
+	 h5JKNLyWmVYu0FN14IvuEg1g//xVtWripJC3ULgbtjlqnz6Iy/HClOjvnc0VcwWUqJ
+	 nLukjNo4hHPrg==
+Date: Mon, 5 Jan 2026 08:04:54 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>
+Cc: konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, mani@kernel.org
+Subject: Re: [RFC PATCH 0/1] soc: qcom: rpmh-rsc: Register s2idle_ops to
+ indicate s2ram behavior in s2idle
+Message-ID: <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
+References: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] firmware: qcom: scm: Add SCM storage interface
- support
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Xilin Wu <sophon@radxa.com>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-mtd@lists.infradead.org, Junhao Xie <bigfoot@radxa.com>
-References: <20251218180205.930961-1-bigfoot@radxa.com>
- <155C9F219E5A9219+20251218180205.930961-2-bigfoot@radxa.com>
- <kmdf2rws5yf2wcyqkoyredpyg2njqwxgjq5qbsqmmimlqktfli@cjthcl3zw4un>
-From: Junhao Xie <bigfoot@radxa.com>
-In-Reply-To: <kmdf2rws5yf2wcyqkoyredpyg2njqwxgjq5qbsqmmimlqktfli@cjthcl3zw4un>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: Nty3yXuijLhXC0TiQzPiFOc5PeHCFklySlXc7ebC4GqMEIAZcHg5zSRV
-	5zEX7foSRsnZZyM0XChQx6x3eLshB4yKXjGOUaukaXo5xv0oSe1lLz8KMwk8F6e61x3h5U4
-	Y3l/zEALeMcaHDa7Vv59hgQh+63jCwamk0i4Wk6xo560Rp6yJKLdo8ljwXd0U3WnSPU63lo
-	cVwaoC/vr9cvbMEm7bjcq4JsTDCGaYCtnMBjn91MxIR9HOnkIlUeMyfco93ozdHDFsJLk64
-	qtv/DXy90ExtrWJvwvwLjx6udIzgQ7bb9B2cLs4D9i/F5BQKETXezE7iW+WPsCKqXW5paBt
-	0ab8U6lBpF3PVOZCnKzQ2idYKrcJzASz/ifoLoKb9miFoBUtw/bs8Cp9fkCfjiPQPQdjc2b
-	aD9OUj0J6dbzJscBKUkTEjNoCsC4qJRfKdsKmorzvCxv57ckOf9lv3gNVeT5hmW0VEw4gKB
-	S6zt18+vJ6bpLPjZwWDsG4uIgyvyv+4y58v7IFQ/R2lwGzkXYI8rFuLUc1zCB4zXk9ARmSJ
-	AoHzMm0Ts10cBbS4TsxhW8j/VsbieD7N5iRHOxiZxpNVZDHZ236RXP+4kH8iL7qfmvVzdIq
-	cjCt4LTGfkm01fGj37mMRrVwlJNUg4T1KaYIcL9PtdkUyPJjmcW9lOYJB/b2uuKgOIXGjmv
-	Tho+xKZKGwA5st3wcP13D594AE7onRIZTswtAjGyGaJJ+xCxS/AlY3FJXMi+p5igXv4Sd+o
-	02vdlybuvZW+kHzkfY2vtcJt0LBo7YeIXTXJmzR84wL2w6Eg4Cqtjb+H4b2RuLLmhT2ZPES
-	yWL4pefJ71iabaGxy4TckyMdZ8Wh4fbyJMAKKqxCqOgzfSq7MWbmDlEzA1dm2qAmDapfmb6
-	7GJjQ98ZU1iTlm985wjUBWOqUEtWvcmQSXprIBIne/9+jRU7yCyM7vHWW5GVI7rP9LPOiq5
-	bWERWSJtb/UYXPq2MWszKBDV+YtSTz6Rf9NhDkVV9GM+g31sIgSg7zpachr70RzUpOcVZeB
-	6WBbSfjhH9jkNlsxwO
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
 
-On 2026/1/4 1:22, Bjorn Andersson wrote:
-> On Fri, Dec 19, 2025 at 02:02:04AM +0800, Junhao Xie wrote:
->> Add infrastructure to support accessing TrustZone-protected storage
->> devices through SCM (Secure Channel Manager) calls. Some Qualcomm
->> platforms protect their firmware storage (typically SPI NOR flash)
->> via TrustZone, making it inaccessible from the non-secure world.
->>
->> Currently allowlisted for Radxa Dragon Q6A (QCS6490) where it has been
->> validated. Additional platforms can be added as they are tested.
->>
-> By adding the relevant compatible, I'm able to read something from the
-> SPI-NOR on the SC8280XP CRD as well.
->
-> This brings us to the next question, what data do you actually have in
-> your SPI-NOR? In what way do you use the mtd device that is presented?
->
-> On the laptop targets, the SPI-NOR is partitioned with a GPT partition
-> table, and there's one of more partitions that would be of interest to
-> parse/access from the kernel...
+On Thu, Jan 01, 2026 at 10:21:57PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
+> 
 
-On the Radxa Dragon Q6A, the SPI-NOR stores boot firmware (XBL, TZ, etc.)
-and is accessed via SCM only when the system is booted from SPI-NOR.
+Many thanks for looking into this problem, Mani.
 
-Earlier Q6A revisions used LE firmware, where the QSPI controller was
-directly accessible from Linux. This platform is now transitioning to WP,
-where QSPI is exclusively used by TZ and SPI-NOR can only be accessed via
-SCM, similar to laptop platforms.
+> This is just an attempt to let the device drivers know of the quirky platform
+> behavior of mimicking s2ram in s2idle for older Qcom SoCs (pre-Hamoa and
+> non-chromebooks) using RPMh. This information is important for the device
+> drivers as they need to prepare for the possible power loss during system
+> suspend by shutting down or resetting the devices.
+> 
 
-The exposed MTD device provides generic access to this storage. One of its
-practical uses is firmware update and recovery. Since Q6A is a development
-board, being able to update boot firmware directly from Linux (for example
-using edl-ng together with this patch series) is preferred over EFI capsule
-based flows.
+Is this really what happens? What _exactly_ is the purpose of
+pm_suspend_via_firmware() and pm_resume_via_firmware()?
 
->> Signed-off-by: Junhao Xie <bigfoot@radxa.com>
->> Tested-by: Xilin Wu <sophon@radxa.com>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c       | 183 +++++++++++++++++++++++++
->>   drivers/firmware/qcom/qcom_scm.h       |   3 +
->>   include/linux/firmware/qcom/qcom_scm.h |  47 +++++++
->>   3 files changed, 233 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 731074ca1ebbe..b117e1b58e363 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -66,6 +66,21 @@ struct qcom_scm_mem_map_info {
->>   	__le64 mem_size;
->>   };
->>   
->> +struct qcom_scm_storage_cmd {
->> +	__le64 storage_type;
->> +	__le64 slot_num;
->> +	__le64 lun;
->> +	__le64 guid_ptr;
->> +	__le64 storage_cmd;
->> +};
->> +
->> +struct qcom_scm_storage_cmd_details {
->> +	__le64 lba;
->> +	__le64 length;
->> +	__le64 data_ptr;
->> +	__le64 data_size;
->> +};
->> +
->>   /**
->>    * struct qcom_scm_qseecom_resp - QSEECOM SCM call response.
->>    * @result:    Result or status of the SCM call. See &enum qcom_scm_qseecom_result.
->> @@ -111,6 +126,15 @@ enum qcom_scm_qseecom_tz_cmd_info {
->>   	QSEECOM_TZ_CMD_INFO_VERSION		= 3,
->>   };
->>   
->> +enum qcom_scm_storage_result {
-> These aren't really "enumerations", they are specifically defined
-> constants, please use #define.
+The kernel-doc for pm_suspend_via_firmware() states "return true if
+platform firmware is going to be invoked at end of system suspend...in
+order to complete it".
 
-I will convert them into macros.
+To me this indicates that the purpose of this mechanism is to signal
+Linux that we're running on a target where platform firmware will cut
+power once we reach the bottom of the suspend chain, so the individual
+drivers has to save/restore state in order to prepare for this.
 
->> +	STORAGE_RESULT_SUCCESS			= 0,
->> +	STORAGE_RESULT_NO_MEMORY		= 1,
->> +	STORAGE_RESULT_INVALID_PARAMETER	= 2,
->> +	STORAGE_RESULT_STORAGE_ERROR		= 3,
->> +	STORAGE_RESULT_ACCESS_DENIED		= 4,
->> +	STORAGE_RESULT_NOT_SUPPORTED		= 5,
->> +};
->> +
->>   #define QSEECOM_MAX_APP_NAME_SIZE		64
->>   #define SHMBRIDGE_RESULT_NOTSUPP		4
->>   
->> @@ -2214,6 +2238,159 @@ static void qcom_scm_qtee_init(struct qcom_scm *scm)
->>   	devm_add_action_or_reset(scm->dev, qcom_scm_qtee_free, qtee_dev);
->>   }
->>   
->> +#if IS_ENABLED(CONFIG_MTD_QCOM_SCM_STORAGE)
->> +
->> +int qcom_scm_storage_send_cmd(enum qcom_scm_storage_type storage_type,
->> +			      enum qcom_scm_storage_cmd_id cmd_id,
->> +			      u64 lba, void *payload, size_t size)
->> +{
->> +	struct qcom_scm_res scm_res = {};
->> +	struct qcom_scm_desc desc = {};
->> +	struct qcom_scm_storage_cmd *cmd;
->> +	struct qcom_scm_storage_cmd_details *details;
->> +	size_t buf_size;
->> +	void *payload_buf;
->> +	int ret;
->> +
->> +	buf_size = sizeof(*cmd) + sizeof(*details);
->> +	if (payload)
->> +		buf_size += size;
->> +	void *data __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
->> +							 buf_size,
->> +							 GFP_KERNEL);
->> +	if (!data)
->> +		return -ENOMEM;
->> +	memset(data, 0, buf_size);
->> +	if (payload) {
->> +		payload_buf = data + sizeof(*cmd) + sizeof(*details);
->> +		memcpy(payload_buf, payload, size);
->> +	}
->> +
->> +	cmd = data;
->> +	cmd->storage_type = storage_type;
-> storage_type is CPU endian, cmd->storage_type is __le64, so all of these
-> needs cpu_to_le64().
+But if I understand the bottom of the s2idle sequence, is that all we do
+is enter idle and the kernel will pick the lowest idle idle-state, which
+based on the psci-suspend-param will signal the system that the
+resources needed by the CPU subsystem can be powered down.
 
-I will add the missing endian conversion for all le values.
+But it's not really powering things down, it's releasing the vote of the
+CPU subsystem - which if the driver didn't vote means power will be
+lost. So for any drivers that relies on the implicit vote from the CPU
+subsystem to sustain their operation this flag is correct.
 
->> +	cmd->storage_cmd = cmd_id;
->> +
->> +	details = data + sizeof(*cmd);
->> +	details->lba = lba;
-[...]
->> +static bool qcom_scm_storage_machine_is_allowed(void)
->> +{
->> +	struct device_node *np;
->> +	bool match;
->> +
->> +	np = of_find_node_by_path("/");
->> +	if (!np)
->> +		return false;
->> +
->> +	match = of_match_node(qcom_scm_storage_allowlist, np);
->> +	of_node_put(np);
->> +
->> +	return match;
-> This function can be rewritten as:
->
-> 	return !!of_machine_device_match(qcom_scm_storage_allowlist);
+For many IP blocks, the register state and/or some functionality will be
+retained in this state - e.g. register state will be retained, or
+functionality will be sustained by sleep power. So they can safely
+ignore the flag.
 
-I will replace this with a check using __qcom_scm_is_call_available(),
-which avoids the need for a machine allowlist and provides a more
-generic capability-based test, Thank you for your suggestion!
+In some cases state isn't retained when this happens, so e.g. PHY
+drivers does perform save and restore operations, despite the flag
+currently not indicating that power will be lost.
 
->> +}
->> +
-[...]
->> --- a/include/linux/firmware/qcom/qcom_scm.h
->> +++ b/include/linux/firmware/qcom/qcom_scm.h
->> @@ -53,6 +53,36 @@ enum qcom_scm_ice_cipher {
->>   	QCOM_SCM_ICE_CIPHER_AES_256_CBC = 4,
->>   };
->>   
->> +enum qcom_scm_storage_cmd_id {
-> As with qcom_scm_storage_result above, this isn't really an enumeration,
-> but as it provides you with the type for the function parameters below,
-> I think it's okay. So, feel free to leave this and qcom_scm_storage_type
-> as is.
->
-> Regards,
-> Bjorn
->
 
-Thank you for the review, I will incorporate these changes in v2.
+What's unique with Makena in this regard, is that in this state the PCIe
+link can not be sustained, so we either need to tear things down, or the
+PCIe controller needs to vote directly on those resources it need in
+order to sustain its link.
 
-Best regards,
-Junhao Xie
+It seems to me that this patch uses the global flag, in order to signal
+the PCIe stack specifically, that it needs to save/restore state. I'm
+concerned that support for retaining state in the PCIe subsystem isn't a
+global question.
 
+
+
+Then parallel to this discussion, we have the actual s2ram feature
+showing up on some targets, where the SoC actually do power off. Here
+the automatic retaining of register and functional state is not going to
+happen - device drivers must save and restore state.
+
+Do we force all "pre-Hamoa" targets into this same behavior? Or do we
+have a different flag for saying "at the end of suspend power will be
+lost" there?
+
+
+PS. Think the commit message of the change itself falls short in
+capturing the problem. The commit message of this change will become the
+documentation on which many future discussions will be based.
+
+> For implementation, s2idle_ops is registered during the boot of the rpmh-rsc
+> driver based on the machine compatible limited to Makena (SC8280XP) as a
+> proof-of-concept. If this approach gets consensus, I plan to have a helper
+> that lists the compatibles of all SoCs exhibiting this behavior. Since there is
+> no reliable way to find out whether s2idle is the only low power state supported
+> or not during boot, I resorted to compatible based matching.
+> 
+> One could argue that this s2idle_ops should be registered in the PSCI driver
+> similar to s2ram [1]. But I didn't prefer that since from PSCI point of view,
+> only CPUs should be parked in low power states during s2idle (CPU_SUSPEND) and
+> the peripherals should not be affected. Though in the past, an argument [2] was
+> raised citing the PSCI spec wording that allows the vendors to implement system
+> level low power states during CPU_SUSPEND. But that argument was not well
+> received by the PSCI maintainers.
+> 
+
+It makes sense to me to have PSCI only manage CPUs and its necessary
+peripherals.
+
+But the definition of pm_suspend_via_firmware() in our case would then
+be, "if your driver piggybacks on e.g. the CPU subsystem's vote for
+critical resources, you might be in for a surprise".
+
+Which makes me feel that the Makena quirk should be in the PCIe
+controller driver...
+
+Regards,
+Bjorn
+
+> Moreover, RPMh is the entity that implements the s2ram like deeper low power
+> state during system suspend. So it made sense to add the ops in this driver.
+> 
+> Note: This series is compile tested only. If one tests this series on Makena
+> platform, NVMe should get shutdown during suspend as confirmed by the dmesg log
+> similar to below after resume:
+> 
+> 	nvme nvme0: 12/0/0 default/read/poll queues
+> 
+> This series, together with the upcoming PCIe D3Cold support should allow Makena
+> (and other similar SoCs once added) to enter the deep low power mode a.k.a CXPC.
+> 
+> [1] https://lore.kernel.org/all/20251231162126.7728-1-manivannan.sadhasivam@oss.qualcomm.com
+> [2] https://lore.kernel.org/all/54cc4221-ba5f-4741-9033-20874265ca01@oss.qualcomm.com
+> 
+> Manivannan Sadhasivam (1):
+>   soc: qcom: rpmh-rsc: Register s2idle_ops to indicate s2ram behavior in
+>     s2idle
+> 
+>  drivers/soc/qcom/rpmh-rsc.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> -- 
+> 2.48.1
+> 
 
