@@ -1,61 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A07ACCF8AEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 15:08:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0815FCF8AE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 15:08:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E7693301C92F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 13:58:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9CC8E305328E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 14:07:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE8D21F0E29;
-	Tue,  6 Jan 2026 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93401286419;
+	Tue,  6 Jan 2026 14:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="ivXSWcis"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dhgT7hGB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017D915ADB4;
-	Tue,  6 Jan 2026 13:56:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C1326FD9A;
+	Tue,  6 Jan 2026 14:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767707806; cv=none; b=jn5mB6BtLNgZfZ9P5E3o+Wxa8AGdJuQRMru/nYjAC3KZnIX63cSwDfS6/W+y9z6xsbCZSizzRxYQi+65T8izv8gQ4BR56vjupuE7VqQDf28ZlX6kFTdJgdUauoZpE6iD8aETVXKca01aVsAbKFxjw04auN+0lj4Q/YpGMz/KeqM=
+	t=1767708001; cv=none; b=VAwOIu62X30HcLqO2t+qCFVvoU3BXbeR7AGVnHUXaQ5C2Q/9Z3rbfBi0tjj+9cBOoQtyA53kDSa6E6uTV2SzEB15UcvnfVX9xyZQ5Z5SrxRVtQ1Gte1HVLTDlUUr2lpikFNL30rEQWDZA/jvKtlBdXMsJXm85gAjfKPCKy99JJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767707806; c=relaxed/simple;
-	bh=pfQiOuZ4XOOOotDbPS1EoD1xSf8srGOyZ0ZupqTSqac=;
+	s=arc-20240116; t=1767708001; c=relaxed/simple;
+	bh=P98Jjcl+mgxzrWbHTl9Bj6JEDNwdl9d4sAXMQ5Ojz/U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t8IiqZ662Ze9qFoInVX/mFXi5yCjvvvGcKTc0rh/NCjm+EoAyZWuhE04B27mTWB+02SNJPkvSJ9jFET0xUytjNh3UC+e9d4ZBe0ppMbFl4N2jhvtZs0pyrxMYHXEpOJt6QGo609RPOJB/dPBBBaLWYUW0q28Oly7UcpG+uPCWN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=ivXSWcis; arc=none smtp.client-ip=199.89.1.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 011.lax.mailroute.net (Postfix) with ESMTP id 4dlt4k2K3Pz1XM6J5;
-	Tue,  6 Jan 2026 13:56:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1767707795; x=1770299796; bh=HHxxMZqBE2l+kDaygIMQhIid
-	nhwPw5dkZDBjh6m6dJQ=; b=ivXSWcisYW3pcvdx/7sZaRhda+sQZ1ahVadlGjBR
-	o02d+Dk/H2yJ86zNL8dKwMNyG8vZMxXHKxMXoUndHrWzu7lt/2hMWBJyTH4DTfAs
-	CJTwXinq8rkCn8tLdUXS4z9GU3FC4pD1UOKGm5obmbr6EcHEShe+kex7e467pH89
-	oWoIQOJS+kIJcNl2/OYxywsIZV+DJRqIe+tLIKTEXEr36LuoYZLebK0HuZHPwUTu
-	0tYpoPawGMV6yVGOQSMjm+L3IZhmNPEitFgR9qaGNGTWispkUrJnD1n0qo3FYx6f
-	5arXD5vkGze6Rw1Rtr4WgsJxil+fm6fsD3yh0FSu5cv0MQ==
-X-Virus-Scanned: by MailRoute
-Received: from 011.lax.mailroute.net ([127.0.0.1])
- by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id SwVQiiFuNJm7; Tue,  6 Jan 2026 13:56:35 +0000 (UTC)
-Received: from [192.168.50.14] (c-73-231-117-72.hsd1.ca.comcast.net [73.231.117.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4dlt4c0rB5z1XPpVB;
-	Tue,  6 Jan 2026 13:56:31 +0000 (UTC)
-Message-ID: <280591c4-5522-4d38-b22a-efe9ba456cb2@acm.org>
-Date: Tue, 6 Jan 2026 05:56:30 -0800
+	 In-Reply-To:Content-Type; b=TT+sUDAfwWfizW/Qj/n6/kAe+VWQom4UmmZ5FjlAz7aqb2vR0ZHHQuubzKpXETuPz3pw7e3rKTokAIors8Es+NQolxp629RMDq91h61IzZ9CYXNR/gX7EQinfMajvZjQfO8wgkuQA/dSzs2uw2U9pDNQfSUXw4a473rOm4NBoys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dhgT7hGB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA10BC116C6;
+	Tue,  6 Jan 2026 13:59:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767708000;
+	bh=P98Jjcl+mgxzrWbHTl9Bj6JEDNwdl9d4sAXMQ5Ojz/U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=dhgT7hGBhClaKwrpoIgLQB8L6ZoTliSCG80xew94sIMbTvclpZxqTAcI3goGdkChQ
+	 N0a/dGJ2Qs2ZYhlMF+K5cj+XVnAYDTYowtzJSTU/ZuAnc1fhmccZ/VN9tokNXot4uy
+	 iXrCFK9hp0smRqQf18weHBtsdwgrsr/h5htypjYAHQv+ZEdXIwgybgQH9gzM6twg1L
+	 i8XCXh3eE+gB6LJvdG5cjU73+mqJaxrF19yG1ICaAS//AJGKsD2ZGIZkmsedTrr3zR
+	 jTdLRegLk7aMh0A5uberjTQcbrYXb+szF8+wnrl6NS7QJjZJJxR8ktSc1t5BEO0vgt
+	 ZmGTLtQSMEblg==
+Message-ID: <b2480095-a4c6-4164-ad50-51a58db5ac4f@kernel.org>
+Date: Tue, 6 Jan 2026 14:59:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,40 +48,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 3/4] scsi: ufs: core Enforce minimum pm level for sysfs
- configuration
-To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>, mani@kernel.org,
- alim.akhtar@samsung.com, avri.altman@wdc.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org,
- James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+Subject: Re: [PATCH v3 1/3] media: dt-bindings: Add qcom,sm6150-camss
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260106134008.1969090-1-ram.dwivedi@oss.qualcomm.com>
- <20260106134008.1969090-4-ram.dwivedi@oss.qualcomm.com>
+References: <20260106-sm6150-camss-v3-0-d1d5c4d02b0b@oss.qualcomm.com>
+ <20260106-sm6150-camss-v3-1-d1d5c4d02b0b@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20260106134008.1969090-4-ram.dwivedi@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <20260106-sm6150-camss-v3-1-d1d5c4d02b0b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 1/6/26 5:40 AM, Ram Kumar Dwivedi wrote:
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index 19154228780b..ac8697a7355b 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -972,6 +972,7 @@ struct ufs_hba {
->   	enum ufs_pm_level rpm_lvl;
->   	/* Desired UFS power management level during system PM */
->   	enum ufs_pm_level spm_lvl;
-> +	enum ufs_pm_level pm_lvl_min;
->   	int pm_op_in_progress;
->   
->   	/* Auto-Hibernate Idle Timer register value */
+On 06/01/2026 10:04, Wenmeng Liu wrote:
+> Add bindings for the Camera Subsystem on the SM6150 SoC
+> 
+> The SM6150 platform provides:
+> - 2 x VFE (version 170), each with 3 RDI
+> - 1 x VFE Lite (version 170), each with 4 RDI
+> - 2 x CSID (version 170)
+> - 1 x CSID Lite (version 170)
+> - 3 x CSIPHY (version 2.0.0)
+> - 1 x BPS (Bayer Processing Segment)
+> - 1 x ICP (Imaging Control Processor)
+> - 1 x IPE (Image Postprocessing Engine)
+> - 1 x JPEG Encoder/Decoder
+> - 1 x LRME (Low Resolution Motion Estimation)
+> 
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+> ---
 
-Please do not introduce new kernel-doc warnings and update the 
-documentation block above this data structure when adding new members.
 
-Thanks,
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Bart.
+Best regards,
+Krzysztof
 
