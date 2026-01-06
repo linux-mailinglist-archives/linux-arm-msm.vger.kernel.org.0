@@ -1,156 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-87626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78FD3CF6BE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 06:11:47 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC091CF6C65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 06:26:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4609F302BA49
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 05:11:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C4F3A301B66C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 05:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E0902F1FE1;
-	Tue,  6 Jan 2026 05:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62138307AF2;
+	Tue,  6 Jan 2026 05:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mG8hQxYD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fn7eNbq+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFE929BDB1;
-	Tue,  6 Jan 2026 05:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260CF3043BD;
+	Tue,  6 Jan 2026 05:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767676304; cv=none; b=TeXDM62cYT6fAiX6FAPqP4SkmiLIp6z24WsqSkg2ucmakgYMfMRTtcO2ik5Cp6goqhyeNpmy/nRHHbzGSyozeH68GQE3OlD3/Qk43l5Hc5Sn0BvKNXVftG+APE/MKME0OwUZSLqe1/F1MDKrZ2eLT8fyMP7twllER2U8MfUPCIA=
+	t=1767676775; cv=none; b=BGgiLgm/xWlwWzhbx0Yz3NkCVP0ZTDjN74iH34FWfcu0Vf32QtChiRTDfCVqYYVayTiQquptF8B6SnyUeIYW4fUm8Qw8BSz0R5ApAiS4AHMyLJ6uhTVQzQfIJ95NtlqsC3TY8CmHrA6ZtnYRe4mKv030PhukxqpnisRIGaekjZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767676304; c=relaxed/simple;
-	bh=MeOgU2HeYQTOFxvAKe6Pe9Z3WRZHdgp6s14oa7RIzAY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EmsJdDxZFwoCvDeFGEKPMOEGRHF8NDY+VM/HM1rIpjHxI4zH/rO2FcrjxE254Yg7S7ELoWo5w2B2amQl8xf0/IwTCB1WB+HZlRC84wVFasaPy/qvVyjKTjvfN9oLG5jSXATx3LnsY04ujMxQajvFpE1dx5bvtVRY2z1AL3cFYPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mG8hQxYD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6063R0Hw529766;
-	Tue, 6 Jan 2026 05:11:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	DhK0OvXcW0x+DJMxcMruZCbOIvsE1qca4ehQ64wghkE=; b=mG8hQxYDVvIZWSHP
-	Dff4MqLSoPLWSjF4v3ytMhKHHUBr2K4u6b1bQzmqUiURQmtp4WKB8ai2sGxU5uCL
-	Oeg26CGDOb9ujDuDdqiXaBt3dLtMhoL+JGJ/hB1G5yiVuPpIHvBzMCIQOfedYXHH
-	iVi7JjPMguAHTfBrQBbFETkOUtXuc8KAdL9Mwdg31KLPPCltqWhqB0Bcpld+RvvC
-	fUiTJsK+1m2S7lujgdBv+Sx9dgWm5wgbA555sDy7UHdZisQWA0Z3MWZW9J+PNCmC
-	IGJF5NCK+kWBSpaeOM+McxdCe0L1rAkWygC7ucsEWJdbNyq7xjj+Woiq3NpCD6eS
-	K3+rfw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bggqu1uq9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Jan 2026 05:11:37 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 6065BaeH030628
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Jan 2026 05:11:36 GMT
-Received: from [10.218.1.24] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 5 Jan
- 2026 21:11:33 -0800
-Message-ID: <ec9e420a-932d-4265-8cac-dee003933898@quicinc.com>
-Date: Tue, 6 Jan 2026 10:41:20 +0530
+	s=arc-20240116; t=1767676775; c=relaxed/simple;
+	bh=h2nYGKojRr759U41EwbB4BsmLSlNtVAL8aBfQlF4xTY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QEvab8v0OkivgC5x5s8h9gRIKtgw3phGDP/0vy3NAuETeRcTP/32h8/Jvl2mHi+YtqaQjv+2H3avzBL8p08m0S9wWR5kI+VS3FBKiAlpyT4Q5l5kcOLpMZ4Ft19XW4z+vqkkyf2ylzrUm+2c4lrsjw4Hpcct2f2Zs6b5Jpex6/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fn7eNbq+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7117FC116C6;
+	Tue,  6 Jan 2026 05:19:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767676774;
+	bh=h2nYGKojRr759U41EwbB4BsmLSlNtVAL8aBfQlF4xTY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Fn7eNbq+r0jsnqP0Mix+RIWDvZUr1tdAgbjsrEGr2Ms9oW27hgMlnJw0ZkpSpIB7H
+	 VFVpNZUQpOrDUTBWHMpyZi9/eKY0Qb+AnhG52J5zL8WWqo88g/p5j0J5Zy85RsIztz
+	 P2mn8L1AGv1qK0pNNdB/HsIJIkBXeXj+VG0BiSfhQJOHcPXQkEZQG6mMUihoezwrSB
+	 w8K6ZeXkX1jI/ZfTN4Zm7awLzTo9nbMlCOwvaMpLHDKzcXwj3pixaITdVMhWoVjGKB
+	 KrSBHZeR6A15yHPveYgjG/D2gFY70Y8Q5JReXwCWQqbWYvWeEnIvCRk91nnGFYGIc8
+	 dYoNqcI1m3mfg==
+Date: Tue, 6 Jan 2026 10:49:19 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Richard Zhu <hongxing.zhu@nxp.com>, 
+	Lucas Stach <l.stach@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Greentime Hu <greentime.hu@sifive.com>, 
+	Samuel Holland <samuel.holland@sifive.com>, Chuanhua Lei <lchuanhua@maxlinear.com>, 
+	Marek Vasut <marek.vasut+renesas@gmail.com>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Pratyush Anand <pratyush.anand@gmail.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-tegra@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 2/2] PCI: dwc: Add multi-port controller support
+Message-ID: <m5ukeugo2lazipljqpubyvm7j3xk2j5o7i2xgdbkkhii57xmyk@lh32qdzjhe4n>
+References: <20260105-dt-parser-v1-0-b11c63cb5e2c@oss.qualcomm.com>
+ <20260105-dt-parser-v1-2-b11c63cb5e2c@oss.qualcomm.com>
+ <aVvkmkd5mWPmxeiS@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] crypto: qce - Add runtime PM and interconnect
- bandwidth scaling support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        <herbert@gondor.apana.org.au>, <thara.gopinath@gmail.com>,
-        <davem@davemloft.net>
-CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>
-References: <20251120062443.2016084-1-quic_utiwari@quicinc.com>
- <a2c6cbdb-a114-423f-a315-6e5e9ab84e5a@oss.qualcomm.com>
-Content-Language: en-US
-From: Udit Tiwari <quic_utiwari@quicinc.com>
-In-Reply-To: <a2c6cbdb-a114-423f-a315-6e5e9ab84e5a@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDA0MSBTYWx0ZWRfX6ZTprt+tpwlN
- 16jLjBxBfWnAK0ahmQHORf+morRDL3KuPnCg5FQGZj+4NnSQUN9q/Qo6LCFB5rnRBO7n/5jGTdR
- yaGkeLg+RFj/b2DoGY0yF93t78Hue4Ct2OIJYBDpsHSN1Npwn0Q0ekf+lIQCrEk9i+0JOp3y/Ke
- diBiAqYNfyHkk+Caiywet512IUWUHwgTNxdLn4//blLM0rd7m633fhl8wNZwf+nNRTh/mRAX8Pf
- wbcuSNEPoca5lFp56ofDiClyDvR7VLtIZ1pddbzhof2u+EMo+w3dMGs2t/zc2psJm4NN2QG/EyP
- B3rLDyUT9PBnB1sq1VBy8rHTokI5M2s9F3SXMBD/asj/kEl8IBwuYp7An2M6DkG0NANwHeebIme
- tGKIheGFmyG35+K6aDHtVwj5vphw3QYMsKUPTd0lhE+ovTEiqtwhqilT/95ETRFBRs9bPdIVA+I
- 15fJnNYSyz/+pjKpYfg==
-X-Proofpoint-ORIG-GUID: epd_anbIQ1cKMAdDNmlATPrRySZSN6gd
-X-Authority-Analysis: v=2.4 cv=fr/RpV4f c=1 sm=1 tr=0 ts=695c9989 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=S-ec_UsR21Fgmf9DpLIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: epd_anbIQ1cKMAdDNmlATPrRySZSN6gd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_02,2026-01-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 adultscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601060041
+In-Reply-To: <aVvkmkd5mWPmxeiS@ryzen>
 
-
-
-On 12/5/2025 4:59 PM, Konrad Dybcio wrote:
-> On 11/20/25 7:24 AM, quic_utiwari@quicinc.com wrote:
->> From: Udit Tiwari <quic_utiwari@quicinc.com>
->>
->> The Qualcomm Crypto Engine (QCE) driver currently lacks support for
->> runtime power management (PM) and interconnect bandwidth control.
->> As a result, the hardware remains fully powered and clocks stay
->> enabled even when the device is idle. Additionally, static
->> interconnect bandwidth votes are held indefinitely, preventing the
->> system from reclaiming unused bandwidth.
+On Mon, Jan 05, 2026 at 05:19:38PM +0100, Niklas Cassel wrote:
+> On Mon, Jan 05, 2026 at 05:57:55PM +0530, Sumit Kumar wrote:
+> > The current DesignWare PCIe RC implementation supports only the controller
+> > (Host Bridge) node for specifying the Root Port properties in an assumption
+> > that the underlying platform only supports a single root Port per
+> > controller instance. This limits support for multi-port controllers where
+> > different ports may have different lane configurations and speed limits.
+> > 
+> > Introduce a separate dw_pcie_port structure to enable multi-port support.
+> > Each Root Port can have independent lane count, speed limit through pcie@N
+> > child nodes in device tree. Add dw_pcie_parse_root_ports()
+> > API to parse these child nodes.
+> > 
+> > Equalization presets and link width detection currently use common DBI
+> > space for all the root ports. Per-port DBI space assignment for these
+> > features will be added in future.
+> > 
+> > Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 > 
-> [...]
+> Hello Sumit,
 > 
->> @@ -90,13 +93,17 @@ static int qce_handle_queue(struct qce_device *qce,
->>   	struct crypto_async_request *async_req, *backlog;
->>   	int ret = 0, err;
->>   
->> +	ret = pm_runtime_resume_and_get(qce->dev);
->> +	if (ret < 0)
->> +		return ret;
->> +
+> Is there a reason why you represent this as a list of ports rather than a
+> simple array?
 > 
-> This is quite new, but maybe we could use
+> The number of ports is known by parsing the device tree, so it should be
+> static, no?
 > 
-> ACQUIRE(pm_runtime_active_try, pm)(qce->dev);
-> ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm)
-> if (ret)
-> 	return ret;
+> At least to me, this seem similar to e.g. how a gpio_device has multiple
+> gpio_descriptors "struct gpio_desc *descs":
+> https://github.com/torvalds/linux/blob/master/drivers/gpio/gpiolib.h#L68C1-L68C26
 > 
-> and drop the goto-s
+> A list is usually used for something that is dynamic.
+> I don't think that the number of ports to a PCIe controller will be dynamic.
 > 
-> Konrad
+> I can see that struct qcom_pcie in pcie-qcom.c has struct list_head ports,
+> but that does not necessarily mean that we need to have a list of ports in
+> pcie-designware-host.c. (pcie-qcom could also be modified to have an array
+> of ports if there is a desire for similar design pattern.)
+> 
 
-Thanks for the review and suggestion konrad.
+Only reason why I went with lists in pcie-qcom is flexibility. There are useful
+helpers available for traversing the lists and they seem much more elegant to
+use rather than manually traversing the array in C.
 
-The optimization you proposed is more of an incremental refinement 
-rather than a functional fix, and I’d prefer to keep this patch focused 
-so it’s easier to review and backport. Would it be acceptable to merge 
-this as-is and handle that optimization in a small follow-up patch?
+But to be frank, I don't really care which one is used as there is going to be
+only a handful of ports at max anyway and there is not much overhead.
 
-If you consider it a hard requirement for this series, I can rework it, 
-but my preference is to land the functional PM support first and then 
-iterate.
+- Mani
 
-Best regards,
-Udit
+-- 
+மணிவண்ணன் சதாசிவம்
 
