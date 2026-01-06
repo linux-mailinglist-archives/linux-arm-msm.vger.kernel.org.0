@@ -1,241 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-87706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A92CACF8B56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 15:14:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5891DCF8C27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 15:24:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 22256304D4AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 14:13:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1BBB530963F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 14:18:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 759EFC8E6;
-	Tue,  6 Jan 2026 14:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4112130E837;
+	Tue,  6 Jan 2026 14:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LmNdD/gu";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GiBemit5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOOHiz+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE905233722
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 14:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C86D3126C1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 14:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767708712; cv=none; b=tsfzFIuQ2jrenYcfAyVVuE4Nz4CGg+dr6k+tZVN9wbSlj48D/De7BxMDXIhvDbxxiPR2P9cOvdmqR5cBjZ3WN1VDkxmKmGrDO/+z8JAcia/bIo653VMsju/W3Oh1AVrCC0bzXE6ZafGHpCTJoph/RGOkh+om6tRLh9chM7msWUQ=
+	t=1767709088; cv=none; b=KM2vP+DHxzip0/qw9V4CqcbMJsUKCepMo5FrqcmYtLIGA+pCUNbU6IyfMwXVmtY1hspLIxyTWxbTESsuyjRkr3tm1tOL8aAkw3tvrrS850EidbC9/ENU8Ix9fiIP7/5YiOEcuTrqCDrRHQdAy+zQnu+YaojYFynW8/qiTwpm69A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767708712; c=relaxed/simple;
-	bh=CrRAiIbO/vVnAvGROcns70SoLhi/4G0NRfHWFjMslls=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cJYlr7/epuDYp0X4kfM+hYORdbCe5PT+ODQXfMjWgy2KHKOb7U2U2k2SRWqoTV8N5Ai38zHKCuRtJGYZRLATKGyVhpiqpHSpPAVL4mrru412qHrYHJP2J8sRXwi1gIKRH/3oxqJ5adhYFtsgLCr9a1JVtqjAYXyNHvWRRN0S680=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LmNdD/gu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GiBemit5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 606A09LL3073053
-	for <linux-arm-msm@vger.kernel.org>; Tue, 6 Jan 2026 14:11:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C6oOMkFH1icyX+oG4Y2/26sOMMPItpGKJI0jnUs3F/U=; b=LmNdD/guSW5DSi4s
-	1w3S3tW1ZHT8h4PRC2IQEMhcklzJJTm4Zm4VQJdjFtQsMzyuXsNNAWQib8pEWAaW
-	VanOTmQyhxO38IdghxIGegGHgAKZbZY/CMwyRnEKjqmdkeSMhrMTPwKMp1dCMoDK
-	HcbNudAz5aiexv/ZYsIJhXcZ7/QgBmjAS1vd5Y04cR1VmdnXHffVWJLwY4R6PVXa
-	kK1uPA4eJumFcYDjzBsZsiRXd6IHgnM9p8aQjmcEIwlpruOn1cbu7tl4VMHJtwYm
-	am7gC1weHxGvRQQHaCLmZusYVlOhH8QYMeRvI7rQd3V5Fawzdehx37cE45kVKKs2
-	nabjRw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bgrf7j22p-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 14:11:49 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b99763210e5so1968846a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 06:11:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767708709; x=1768313509; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C6oOMkFH1icyX+oG4Y2/26sOMMPItpGKJI0jnUs3F/U=;
-        b=GiBemit5UYXcqRaRBkccbuJdDVHWczrDRGsB8yu9i7cLtpPg4K9jzXXAsWARGgzEuk
-         i65YLvUBjbZ+ix1r0OBB2tkzq+TAb/1m3AQnoCSBYxqOMWdXAZE23oSG8JLOZ6XTA/Lh
-         oVIWT1Be5cZh5QXh3IQ7rI42iX0+Aj09zCgSwQNh21zD9SbVAJeOxIIb5JPn2dNlecP0
-         I4pgtwA9ok3SmC98BkHmNfFKh4AeLrOq+T2pAuCTToLcWx1lufVERwAs4a5JLMRy2yM1
-         wrYViovl5/dW6NGSM8KcokGSG12LK5JeuNZwvnOTeirdJKHozSmKvNeB38f/wHwPuFmV
-         gVkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767708709; x=1768313509;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C6oOMkFH1icyX+oG4Y2/26sOMMPItpGKJI0jnUs3F/U=;
-        b=NMaQH+69zIaXitxhOil+OdlfvTrCgTI6MxTi+RQN+oF2PSYfxx5nnpZbXKwimmJErI
-         IUmESLiyX7hasRX7IT/eLVj9aDVnrDPioxOhwa8je+rXtbrGF991yzKnvkoZpEIFnAoy
-         P4lWoHsTXniuXWDj52EH2vM+JUWnzVxwk7aPjsMJBuJHV/4HyPXjZpWcz25UYyU9rXCW
-         DPrKji2toeBvB2h2vq/hZDNWeLfIrE1y6mM+zFl142fguiy7WrvKaTja/2x3+JeVrhgU
-         rO+YIYLfl09Hb6mkA4BJ6Y1vbaQdX7ZNoGXGJ7fGg1OsY+DkUkyuUyPkaav34Pt9GiuY
-         XF4g==
-X-Forwarded-Encrypted: i=1; AJvYcCXu1J4Iow+bU4+UsryQtB3MNBLexUeRzd5Dj6IRjS2gTkFoIcl7zCvZNajoRqEHvWkZ932xAKQ46nHvK4by@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxr1NHAxfh9B2FVBf9woOh9bQT2dMSUyItunOsfblZmrB88sHw8
-	zYPP6wt9uRqAI9KyHZrQXZ6RhzZX3mcMpWooG+aaN++ehJHywWmW2ItYxE5ADj0a/E/lNc5Wy4Z
-	n9QgmoK9joDDbpwiu3l+7tbG4TMb9JVMzSp//8wf2ym5HBTb/qsdL8Q+Ezjcip1kijMCI
-X-Gm-Gg: AY/fxX6/jtITjl1KDQoYElHhgWBRR+wmqcSRUv6nyz+RuJgKW4HTSmrDaPxgM8D6m2B
-	azOSiKVhzlQTPnP7T6bMtLGUJQgnUW839EQBxY0yZKxBJOWmS4NZxL4QHFZAg8fPNm0bGOuDzMM
-	vR+G6W6YosXiM7H+sO7iOSuinuuhXu0MBesxQO2IM3ymtHf2Jt5gXW/xywM5nP6eJcUSfwcGyuk
-	U5dWF9KxeNsIc3V/c/6q/Sy7BfbmBMkUOE6HStbhA/j6SMWFLI7+ZIXyj3w6EpbDGxgjk3g9Ph5
-	Ctscby98jztFwwYsLs3md16gYhkm65FiFmnXTq/XbauVJ7J5GaJDX/6O5esCByzAx8+ryrug9IX
-	20VITyWyvGFuqDkBv1PccBpKbp3t3Q8PYyTe32u418dOq1t+FHks=
-X-Received: by 2002:a05:6a20:9193:b0:366:14af:9bb8 with SMTP id adf61e73a8af0-389823e669bmr2747144637.66.1767708709183;
-        Tue, 06 Jan 2026 06:11:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHkNJzHueZJopbOADbo0HQYswpQnnoxRAE8m7ARtjucQr/D5znXt4T4E4ZptoObFHwYrocHNw==
-X-Received: by 2002:a05:6a20:9193:b0:366:14af:9bb8 with SMTP id adf61e73a8af0-389823e669bmr2747114637.66.1767708708558;
-        Tue, 06 Jan 2026 06:11:48 -0800 (PST)
-Received: from [10.217.216.105] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cc9e7e8afsm2568498a12.29.2026.01.06.06.11.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 06:11:48 -0800 (PST)
-Message-ID: <01468d87-0e2f-4328-89d7-d1fa6952d355@oss.qualcomm.com>
-Date: Tue, 6 Jan 2026 19:41:41 +0530
+	s=arc-20240116; t=1767709088; c=relaxed/simple;
+	bh=9Ym168jY0juUmceNY7e8j0i+6pSJU5pRFOBf6YtVzDo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ra3bh2273hT0wVxr+pC9GOsS7Nb5FE63BGsc65WNysVMZLZojM4SemZSGT64WywpOTv+Gyr6uPwwxzwx//rFXeOh0QWDZchDKPb277qwbONLsJfPDwDX5/4elAenACNzK0Ek4Kdj3N4L7oUYTbe01zCbN3ganw8IIbmS5FkGqH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOOHiz+z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD620C2BCAF
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 14:18:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767709087;
+	bh=9Ym168jY0juUmceNY7e8j0i+6pSJU5pRFOBf6YtVzDo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=bOOHiz+z351DggBlKZJG1l4SIBZi5rGrJuMJFrTSuCC2bhYg3GVmw+EzTJ8+4o8d6
+	 mfYKrjdZQleutU3LNIOJvytnRti1+tJxYEb5+FMc6i0af14bQLGN0lgtW7mtsU2Nzu
+	 6ryFz4M8Vn1p9iUNI1fLTWCa+m4bpeR2lNFEDKERvGn1VG6CP12akkl/4e/LRbhqaQ
+	 62Twt75lEl7bQuHsNLBEHkd+BPwKedPvj2JfLdCbCO/vQwTZc6DBtiCiXsT/Efz4cM
+	 7UiMgJqXCVK8SCkbDxCkKvsHQiwcHjxf2pPEiyTaEp11J2cA9WDICgY+7wYxuhNMRE
+	 KZcuMKroFvL4g==
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-37b9d8122fdso7720161fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 06:18:07 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU/B4uzGDXAMRqaHLXgXsI9hqPyLAxLOm0QZWsRpJ1DEbQQtP6GhVjgDfR16VlVpEE+w4ZNmNlhBP+5xLxK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzo0ZCd3PFOejeM/xp+sdaYhtH09xDUh9nPAhQQt0SKWUnO/Y5z
+	8GVal1Ne8Z7bL7Dv4N+yAciD+WntHMf90ZGE+O3ZPlPobrq5qI41BfLuLwTVRiv3wrUQ6f/y7Oz
+	qTHMDkAtgD1fziWbD/mWQHnwPaMuc4IGIMNcVqSyXYA==
+X-Google-Smtp-Source: AGHT+IGMmSz6Ltdahe1rVY6f+YVLJmMwESu8W203AziADCClkRGLN7rkSW5dIW6LKxsDjFSC7ntBorz6/82D0HbV854=
+X-Received: by 2002:a2e:bc15:0:b0:37a:9558:5bda with SMTP id
+ 38308e7fff4ca-382eaa05568mr8077901fa.14.1767709085885; Tue, 06 Jan 2026
+ 06:18:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/4] arm64: dts: qcom: hamoa: Add UFS nodes for
- x1e80100 SoC
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: vkoul@kernel.org, neil.armstrong@linaro.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, martin.petersen@oracle.com,
-        andersson@kernel.org, konradybcio@kernel.org,
-        taniya.das@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, nitin.rawat@oss.qualcomm.com,
-        Konrad Dybcio
- <konrad.dybcio@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-References: <20260105144643.669344-1-pradeep.pragallapati@oss.qualcomm.com>
- <20260105144643.669344-4-pradeep.pragallapati@oss.qualcomm.com>
- <7gi7sh5psh5v4y5mrbgln6j2cjeu5mogdw2n3a6znjtqyjcyuk@kxpe566v57p3>
- <e396bef2-e5bf-4e6d-98f4-37977d5d93ec@oss.qualcomm.com>
- <dbkrbec6t2agwk2swe7olz6zkhyphpbcl7dpmlwie4esvbbvro@s7ybpmaod3d5>
-Content-Language: en-US
-From: Pradeep Pragallapati <pradeep.pragallapati@oss.qualcomm.com>
-In-Reply-To: <dbkrbec6t2agwk2swe7olz6zkhyphpbcl7dpmlwie4esvbbvro@s7ybpmaod3d5>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 9c8bVLjBig8Wkgs5Wh4m5iUN_1mLwIhA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDEyMyBTYWx0ZWRfXy+bxzr1qvxKv
- DbA/FBgD8iFcCMMXw+VrkPB3MlJKNtgao+lRYq2/LipVgJLokQQIJaRxTfmkZJOERLjn/h2CFAv
- kRewhG/rANITpiGd7SaQHDwD3sphRufctnM78DWdPAOhyDa+EvBjyalzOmnYBHX18bBARqRfIJf
- RzDtE6Yo0A0iUwjdedLoohynb8c6NcojsKGd4I866Z8ep6vTYeRcq7STZk9t+vuWONT2/BS6Oh9
- 9Ww+RHPaPeNTZ8SiHhd2fx2cJrh9W8aGl3oap55fqRJtsNTjw25tnOLaE106Ot7116Og+fXk9Fr
- Qny9EpndvKd6gr2sH3VcNbD3WKAlS5nlUkM8s9erOzXT3JnVnWBnRfSJMvdGKmGdmq5coEUk02Y
- J/MBCafp3luQ4ePsrsdNQ6OomipaVuOq9J7UqoFuhtQNEzy82/uTS48Sdtc6bXqFMg2KILLjJy6
- nagFXX6tpBFdK/DQY7A==
-X-Proofpoint-GUID: 9c8bVLjBig8Wkgs5Wh4m5iUN_1mLwIhA
-X-Authority-Analysis: v=2.4 cv=FK0WBuos c=1 sm=1 tr=0 ts=695d1825 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=i9k5oBss9a2rpNCq0dQA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601060123
+References: <20251223-i2c-adap-dev-config-v1-0-4829b1cf0834@oss.qualcomm.com>
+ <20251223-i2c-adap-dev-config-v1-6-4829b1cf0834@oss.qualcomm.com> <CAMuHMdW5ffiW_vEuDjV5bnmTeduhoqph7t8rsaFEVO7RXOM8jg@mail.gmail.com>
+In-Reply-To: <CAMuHMdW5ffiW_vEuDjV5bnmTeduhoqph7t8rsaFEVO7RXOM8jg@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Tue, 6 Jan 2026 15:17:54 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MctSufFn4Ku_8KBHmThvNOXo94DJDep-hzBem1yGw4wkg@mail.gmail.com>
+X-Gm-Features: AQt7F2rlYGWw0wYVcdfcu_38DzK8jJE5ZLbWHuaZHuyFfl6BwHPNSW4tcfiCMeQ
+Message-ID: <CAMRc=MctSufFn4Ku_8KBHmThvNOXo94DJDep-hzBem1yGw4wkg@mail.gmail.com>
+Subject: Re: [PATCH 06/12] i2c: rcar: set device parent and of_node through
+ the adapter struct
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Wolfram Sang <wsa+renesas@sang-engineering.com>, 
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, Andi Shyti <andi.shyti@kernel.org>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Vignesh R <vigneshr@ti.com>, 
+	Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
+	Tony Lindgren <tony@atomide.com>, Andreas Kemnade <andreas@kemnade.info>, 
+	Kevin Hilman <khilman@baylibre.com>, Roger Quadros <rogerq@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Patrice Chotard <patrice.chotard@foss.st.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Linus Walleij <linusw@kernel.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, 
+	linux-rpi-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jan 6, 2026 at 10:14=E2=80=AFAM Geert Uytterhoeven <geert@linux-m68=
+k.org> wrote:
+>
+> Hi Bartosz,
+>
+> On Tue, 23 Dec 2025 at 11:05, Bartosz Golaszewski
+> <bartosz.golaszewski@oss.qualcomm.com> wrote:
+> > Configure the parent device and the OF-node using dedicated fields in
+> > struct i2c_adapter and avoid dereferencing the internal struct device.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.co=
+m>
+>
+> Thanks for your patch!
+>
+> > --- a/drivers/i2c/busses/i2c-rcar.c
+> > +++ b/drivers/i2c/busses/i2c-rcar.c
+> > @@ -1149,8 +1149,8 @@ static int rcar_i2c_probe(struct platform_device =
+*pdev)
+> >         adap->algo =3D &rcar_i2c_algo;
+> >         adap->class =3D I2C_CLASS_DEPRECATED;
+> >         adap->retries =3D 3;
+> > -       adap->dev.parent =3D dev;
+> > -       adap->dev.of_node =3D dev->of_node;
+> > +       adap->parent =3D dev;
+> > +       adap->of_node =3D dev->of_node;
+> >         adap->bus_recovery_info =3D &rcar_i2c_bri;
+> >         adap->quirks =3D &rcar_i2c_quirks;
+> >         i2c_set_adapdata(adap, priv);
+>
+>     [....]
+>     ret =3D rcar_i2c_clock_calculate(priv);
+>     [...]
+>     ret =3D i2c_add_numbered_adapter(adap);
+>
+> As rcar_i2c_clock_calculate() uses rcar_i2c_priv_to_dev(priv):
+>
+>     #define rcar_i2c_priv_to_dev(p)         ((p)->adap.dev.parent)
+>
+> I believe this will deference dev.parent before it is initialized by
+> the newly added code in i2c_register_adapter().
+>
+> Let's check...
+>
+>     Unable to handle kernel NULL pointer dereference at virtual
+> address 0000024c when read
+>     [0000024c] *pgd=3D80000040004003, *pmd=3D00000000
+>     Internal error: Oops: 206 [#1] SMP ARM
+>     Modules linked in:
+>     CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted
+> 6.19.0-rc3-koelsch-04401-g9e22366a23cd #2288 NONE
+>     Hardware name: Generic R-Car Gen2 (Flattened Device Tree)
+>     PC is at device_property_read_u32_array+0x0/0x14
+>     LR is at i2c_parse_timing+0x14/0x30
+>     [...]
+>     Call trace:
+>      device_property_read_u32_array from i2c_parse_timing+0x14/0x30
+>      i2c_parse_timing from i2c_parse_fw_timings+0x28/0x12c
+>      i2c_parse_fw_timings from rcar_i2c_probe+0x1cc/0x534
+>      rcar_i2c_probe from platform_probe+0x58/0x90
+>
 
+Thanks for the heads-up. I'm still waiting for Wolfram to decide if
+these changes will be accepted or not before sending a v2.
 
-On 1/6/2026 7:22 PM, Manivannan Sadhasivam wrote:
-> On Tue, Jan 06, 2026 at 06:30:05PM +0530, Pradeep Pragallapati wrote:
->>
->>
->> On 1/6/2026 1:36 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Jan 05, 2026 at 08:16:42PM +0530, Pradeep P V K wrote:
->>>> Add UFS host controller and PHY nodes for x1e80100 SoC.
->>>>
->>>
->>> Minor nits below. With those fixed,
->>>
->>> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
->>>
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->>>> Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
->>>> Signed-off-by: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/hamoa.dtsi | 123 +++++++++++++++++++++++++++-
->>>>    1 file changed, 120 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
->>>> index f7d71793bc77..33899fa06aa4 100644
->>>> --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
->>>> @@ -835,9 +835,9 @@ gcc: clock-controller@100000 {
->>>>    				 <0>,
->>>>    				 <0>,
->>>>    				 <0>,
->>>> -				 <0>,
->>>> -				 <0>,
->>>> -				 <0>;
->>>> +				 <&ufs_mem_phy 0>,
->>>> +				 <&ufs_mem_phy 1>,
->>>> +				 <&ufs_mem_phy 2>;
->>>>    			power-domains = <&rpmhpd RPMHPD_CX>;
->>>>    			#clock-cells = <1>;
->>>> @@ -3848,6 +3848,123 @@ pcie4_phy: phy@1c0e000 {
->>>>    			status = "disabled";
->>>>    		};
->>>> +		ufs_mem_phy: phy@1d80000 {
->>>> +			compatible = "qcom,x1e80100-qmp-ufs-phy",
->>>> +				     "qcom,sm8550-qmp-ufs-phy";
->>>> +			reg = <0x0 0x01d80000 0x0 0x2000>;
->>>> +
->>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
->>>> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
->>>> +				 <&tcsr TCSR_UFS_PHY_CLKREF_EN>;
->>>> +
->>>> +			clock-names = "ref",
->>>> +				      "ref_aux",
->>>> +				      "qref";
->>>> +			resets = <&ufs_mem_hc 0>;
->>>> +			reset-names = "ufsphy";
->>>> +
->>>> +			power-domains = <&gcc GCC_UFS_MEM_PHY_GDSC>;
->>>> +
->>>> +			#clock-cells = <1>;
->>>> +			#phy-cells = <0>;
->>>> +
->>>> +			status = "disabled";
->>>> +		};
->>>> +
->>>> +		ufs_mem_hc: ufs@1d84000 {
->>>
->>> ufshc@
->> ok, i will update in the next patchset.
->>>
->>>> +			compatible = "qcom,x1e80100-ufshc",
->>>> +				     "qcom,sm8550-ufshc",
->>>> +				     "qcom,ufshc",
->>>> +				     "jedec,ufs-2.0";
->>>
->>> Drop jedec compatible as Qcom UFS controller cannot fallback to generic ufshc
->>> driver.
->> "jedec,ufs-2.0" was set to const in dt-bindings, dropping now will lead to
->> dtbs_check failures. is it ok, if i continue with it ?
-> 
-> I was implying that you need to drop it from both binding and dts. It was
-> incorrect from the start anyway, so there is no ABI breakage. But make sure you
-> justify it in the description.
-> 
-sure, i will update in my next patchset.
-
-> - Mani
-> 
-
+Bartosz
 
