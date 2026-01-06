@@ -1,117 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-87679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A50B5CF8542
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 13:34:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B71DCF85F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 13:46:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9443B30217AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 12:34:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 287833047977
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 12:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 658B532ABC7;
-	Tue,  6 Jan 2026 12:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA9832C926;
+	Tue,  6 Jan 2026 12:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dF9TEjc4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZzCn7GqG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OclxdEJ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197A30DEC4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 12:34:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754C930DEA4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 12:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767702881; cv=none; b=I/7f6stkZqODQhK2EItkalFjTrGuIo2Y3CejhVvb5lWJY80wN0LXHWsLtu5GxwCVndDF+lAP13aYfIVjDFni7QiSzNIoc9LbUCBAKnjeOXF1dUAl+vsvuEdx0NTnmoN4U1/qfia8/fkIODdHCYI+e5s8wn2fGWQql0r7/nsF1a0=
+	t=1767702908; cv=none; b=sLP7eTAm2xN3gSQ0Endk4zQJBGkj8STUs8nvFO5kFaA+2Cv1UaxjIu3gGABSxHx3JFbLkOYAS73svhxj3I0bVR7EZP83l2oCpb9tLY6vTXi/cvPHObtBf7h8SvFVFLZJHBlb8FrXq5odDoSJLQ9cfGd5YqCAW9OwVmKFGvVFq54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767702881; c=relaxed/simple;
-	bh=4+orIZPsoech51NuQIOn2Zg7FT06+LCoqm268lCdbzw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dt85h3iTiyFsepPGYts2VxrcE6s4p/CVXh/9fS+BTV9YSUbU8/OOOnBL0hR8iGC9jzYaqWGzIuWxCdcM6tuO6AuvlDJnwT33VnxF2RIX77S87/197yFth5R09gLppZLNy3O0jdzVv+wRhFlCNLdf2pJlUp7chODem+XpB+ZpV3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dF9TEjc4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0262BC2BCB7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 12:34:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767702881;
-	bh=4+orIZPsoech51NuQIOn2Zg7FT06+LCoqm268lCdbzw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=dF9TEjc4HgBMrZUUq91Tj2e4CPtQhzmgsRA430rRdKdqccx2nuTIp1NqWVxQYiT9e
-	 p2jG4PhFoesnEBHxai9oKdE/EJZLoANYWvG2Mz8B/5YvSJw3iU9rmhr9pcFC+YiDLN
-	 Rb+5TwTxF1QTQtzqIAv9ugu9ljR2ARFLVkFzZ8GsuR5rUf9HChdIg3jBfSz3Mp5mpt
-	 IlEfRJ14wDVMunk7NCIHbwqQ6Lt+tXun8m2Jz+gO4NUF5BJy4PvEbfAnkXkepknAze
-	 0aLSd7t72DKr6iuuwGXvpYJyxptV6/V4Ve5czBswFKrmhZkmXNHT4/UflOMt11Ru/9
-	 KqHl0ZOLcH/tA==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-37b95f87d4eso8396051fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 04:34:40 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV5CHJcBK9s57UDqTlVbSZ5SPvIzGgjvTbR9VwyH4gQCM7Wo+BYiaBpeB/RhmIWmStU2sU8t11U3JvqT3n/@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHrUFHGGiz2L8acBCoKD00391AOLeh4ngdREjwQtNj5bnshstb
-	AJfBUtnY1O14tCFykWjxniFC3aOXtTK4Uez00FPkxSEBt8o+6/5UJ3aNaUeEPG2gklVac/j3I98
-	ofNoPQPewyazjtOUXvQerzm4Dw8NVyvJsDJKhx4A+Tg==
-X-Google-Smtp-Source: AGHT+IFlaA7Jb0UAvj2/ADx9U7kF+/J52SI2sl5w+0mIAGkNff+OpGPevDWqlcbK5aCbGbh5tDkw5EZ2yIDJMwYezoc=
-X-Received: by 2002:a2e:a543:0:b0:37b:8d78:e4bf with SMTP id
- 38308e7fff4ca-382eaaff24cmr7493291fa.43.1767702879378; Tue, 06 Jan 2026
- 04:34:39 -0800 (PST)
+	s=arc-20240116; t=1767702908; c=relaxed/simple;
+	bh=2RDD/rzxwkAra6ZrjYNETweAEEQKDMYqwdqSTtF1kJs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ptem1TlwuDZ6EzIsk3MNks5XMnxeSiDxQ7xh9zTt+Bcz+VHG5vszGZf1OTgQza60Kg2e5l3iTNVj7BLUqE1SCLC/M0X8Nqb2lNJxg2flMb0t9dvYRAMFyVqwaSY1ajVa1K2L2tFfF+SoUPc40y2Mymv37EMw6tpGCdeNfh16qoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZzCn7GqG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OclxdEJ/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 606BJfCx2253762
+	for <linux-arm-msm@vger.kernel.org>; Tue, 6 Jan 2026 12:35:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=H48IToLSo0oZ7+JTTa9/pt
+	0c6xxpM1rP2eGa/2HD16s=; b=ZzCn7GqGr1B/Sh0DSsZiDuNGpIqEIJefsbVN9w
+	J2y8p5RJNw2H2i949qs+jpboc3VbTUwPGxP2ON07irNtwT56YMCFRHePR9IX5JVM
+	OJneITMUEzTtN/5OokgMkuGqp/gChQgEUsdnIkTyFxFSb9n11mnYJ3LIhzo8AJf5
+	9YzG0PhGE3UrdOLrXgm0Ohr1Na8dY55mvjZ19NnTCefnZBbvHlUNI8Osuyq+QXhN
+	PivvQ9fLRczfil+HQrUrZ2i1UzLAW7BZCOHOOck1htcu8Ln2lRxnTWS3Roz4045O
+	RbFgff/+oCQ2N2yiSijD5NMNiCaaumhHmV3Dq7f+jkGV8MfQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bgu421bve-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 12:35:04 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7b89c1ce9cfso1103190b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 04:35:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767702903; x=1768307703; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=H48IToLSo0oZ7+JTTa9/pt0c6xxpM1rP2eGa/2HD16s=;
+        b=OclxdEJ/kOZBOtANFrLR1faLOeO2uEg9qny/wqvct4ayMHDj75bj1MYs9TF4+InQNm
+         m0Y40ttbJVEsMfbhrAFzbKD45+6N7tFLTetgZAjEYUU495BS6gmnOKOOxgkYVMhDWfk2
+         S5bue51H7QyanVKqXkl0MI0XKNAnuB5Cah0RGxDgLngc35fA3WuiulX+cgXfbc+gbHlO
+         SWMFKQHW5faBIFJFf6GjbZ+ScA8FhjTD7LM2gsGxpXNJLsLibgfHNUmGVG0t0+nhd4oJ
+         we0Stx8dQpi/nUd5M7EGjWeZyvcSSRiswHQO2LpXVe6BRWddWs9rDYNVmxxoncABgcH2
+         YhxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767702903; x=1768307703;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H48IToLSo0oZ7+JTTa9/pt0c6xxpM1rP2eGa/2HD16s=;
+        b=H3NTtSiE8cr0gmV0UolQZ1RPry66i0m/jMR47MBWk0FjSbS2x4G1sQkMAQdXo6Af4G
+         Z+y7/m2wnwAvIEop3r+2J0o2e11vYWSCnSqjMgR2GAMsaQ47K2P+QUdpnIoPdbThHZ6G
+         2GpTVAVSRznWBptzrOKpehQHlFgOVXwCcueYi9Qi0VGviUG8xB68ML3Y43hoxUIYGit3
+         nts48pMrTzG6Pe3ssAJE4xoCQeQpLHUIz8eqewSkxVe0DJrAaeOXXj+hEk9jGVXECX/w
+         bLLHFmxXUtU7O8fNsnNwkOt8S8Sw5HxZm4ryS0oI2Rthdv3wNWmHNblBfYLSouvmHRcy
+         bWPA==
+X-Gm-Message-State: AOJu0YwrUis+TCN3B0EbCRRYAaIo6TCKUiEDFpMaHi7BdxGkZZ/9x8Sj
+	R8bijQREZDrJpvDDM5duRkaEpSJXNt3nQYIjV9IMrCK4nXodW++OrNdJ3Ws+adtDbgsvKGKguew
+	J+zIaivco/ENOueHxmzNY8gpWKwsZC8XgDfHt5gUAqch2Ce44JAnHou3PWKSycvlkgHd+
+X-Gm-Gg: AY/fxX6CgBPYZuOcjXelUPlGBhda41gYDIPOqvsoniJxIw/CMeslK6tR8/jWaDmCG93
+	kiS0LyQAt7tbnd5Utr/F8muxxOaXIQEyVawH4qjpnGMQ7ZkXy7X/fgT0Irt0vwDP97DAPeObcL1
+	tS9KDoTtlEwrvjFaEeZcpDaJRIUTi76WLGEKq8vQOmeerBq60Q+sVKZfgqs0fBMXbo5KhRFtp+B
+	gU2xDq27M/SpIr+JtvTajhnH9c6+jkoyeYYI2xN2qJpVXXiqzYCtVtEE36Ye8PEV35chqoPVgjh
+	dCQOGBrksaneOnqmP9r7ZyiS69HVaZMKq9eXxcn5l4i9zB/AhPxP/D/SniwqwK47BlJ2ehZZYVl
+	7KQOv79/rvCUIue+HwmzM5N+/nQhKweC7IPUtWYpOY04=
+X-Received: by 2002:a05:6a00:3016:b0:800:8fdf:1a54 with SMTP id d2e1a72fcca58-81882ed4e63mr2747041b3a.34.1767702903181;
+        Tue, 06 Jan 2026 04:35:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOpXYXpBJuyP7pW/B6ADInveqDxUCY8PGABjDrGn2VzGcMZufzwWDAr64QqHfVmjl12wUTow==
+X-Received: by 2002:a05:6a00:3016:b0:800:8fdf:1a54 with SMTP id d2e1a72fcca58-81882ed4e63mr2747003b3a.34.1767702902651;
+        Tue, 06 Jan 2026 04:35:02 -0800 (PST)
+Received: from hu-msarkar-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819c59e83bcsm2161583b3a.56.2026.01.06.04.34.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jan 2026 04:35:02 -0800 (PST)
+From: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+Subject: [PATCH v5 0/2] Add firmware-managed PCIe Endpoint support for
+ SA8255P
+Date: Tue, 06 Jan 2026 18:04:44 +0530
+Message-Id: <20260106-firmware_managed_ep-v5-0-1933432127ec@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251228-arm-psci-system_reset2-vendor-reboots-v19-0-ebb956053098@oss.qualcomm.com>
- <20251228-arm-psci-system_reset2-vendor-reboots-v19-6-ebb956053098@oss.qualcomm.com>
- <CAMRc=Me8WQ=aMd-NJ1yzzHzqU8fT1u4eb7as=EjSpZ+Rpv9+rg@mail.gmail.com> <87f25d02-2805-9da7-0d7f-05ce8a022d25@oss.qualcomm.com>
-In-Reply-To: <87f25d02-2805-9da7-0d7f-05ce8a022d25@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Tue, 6 Jan 2026 13:34:26 +0100
-X-Gmail-Original-Message-ID: <CAMRc=McH6jsaKROyMGAhH_gGSiQtqvuVmrUODgtSp0hX8g06=A@mail.gmail.com>
-X-Gm-Features: AQt7F2ofSXIpLVNOI-neQtNGPzXdFSY34QulJ5QeYug3Q7OJAdE6o0yIqoiRcKk
-Message-ID: <CAMRc=McH6jsaKROyMGAhH_gGSiQtqvuVmrUODgtSp0hX8g06=A@mail.gmail.com>
-Subject: Re: [PATCH v19 06/10] power: reset: Add psci-reboot-mode driver
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>, 
-	John Stultz <john.stultz@linaro.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	Moritz Fischer <moritz.fischer@ettus.com>, Mark Rutland <mark.rutland@arm.com>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, Andre Draszik <andre.draszik@linaro.org>, 
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	Srinivas Kandagatla <srini@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGYBXWkC/33Oyw6CMBAF0F8hXVtCW/rQlf9hDCnQgSbysNWqI
+ fy7hRULdDPJneSemQl546zx6JRMyJlgvR36GPghQVWr+8ZgW8eMaEY5oURgsK57aWeKTve6MXV
+ hRgzAa05ULjhXKDZHZ8C+V/Vyjbm1/jG4z3ok0GX73wsUZ1hqyQijkmUSzoP36f2pb9XQdWkca
+ GED21Jyn2KRAlCSlFooBeUPKt9QlO1T+fIVyIqUitVCHneoeZ6/n279Q1MBAAA=
+X-Change-ID: 20251216-firmware_managed_ep-ff5d51846558
+To: Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        quic_vbadigan@quicinc.com, quic_shazhuss@quicinc.com,
+        konrad.dybcio@oss.qualcomm.com,
+        Mrinmay sarkar <mrinmay.sarkar@oss.qualcomm.com>,
+        Rama Krishna <quic_ramkri@quicinc.com>,
+        Ayiluri Naga Rashmi <quic_nayiluri@quicinc.com>,
+        Nitesh Gupta <quic_nitegupt@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1767702896; l=1972;
+ i=mrinmay.sarkar@oss.qualcomm.com; s=20250423; h=from:subject:message-id;
+ bh=2RDD/rzxwkAra6ZrjYNETweAEEQKDMYqwdqSTtF1kJs=;
+ b=RcRXJTuHXS3IOCpT9XJohvlvjxO+96rSlKeLrn4BV2krx74hIryOnirhFt60X+Ez5z3jbPLH1
+ s1edtGTgzxNB48cNCGfSFDK2dwrn99aUr6/rZ9NSNMhr3k38MHyji1v
+X-Developer-Key: i=mrinmay.sarkar@oss.qualcomm.com; a=ed25519;
+ pk=5D8s0BEkJAotPyAnJ6/qmJBFhCjti/zUi2OMYoferv4=
+X-Authority-Analysis: v=2.4 cv=dYuNHHXe c=1 sm=1 tr=0 ts=695d0178 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=3jyur01tNAjp9li57p8A:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: g_bvU654v6tgTJw4HW0gXY9PbwgVGpDT
+X-Proofpoint-ORIG-GUID: g_bvU654v6tgTJw4HW0gXY9PbwgVGpDT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDEwOCBTYWx0ZWRfXzUHTiMxO2PXI
+ A1jLIiNdKBktOcPVzwvy3Zf02lI3lHA1Iu+oGDuO7XTg80Q1UhQH25RqDChYckXAIqI7KnQEKT1
+ ZgWH8kxL1bSXhVc2+XSRLymR9CXV5thc+N5MFQsGr1jlCS/gv0YETbentYC3/iIlxt5BoL59IOp
+ dT6p1NbTf9GHoBA4mH6BbGnAs6eOsJnx4tAsm53g3rsEfs5u9JBcumLw+e4e+4OKevDLD6MTa8k
+ Or0UoKOub1tI9SZnfGQnUMjEpM/D2jBIB7i/QMdOUzVvJQ7hPBlHgqbU+CF9J1thviLDxXYDH4V
+ J8rhra/D/8zsErK4FtjDIS3+6dQeTCEFkLHuFWeF++q18NDpZuO0OGCKRzEBkMZmcPCgGlKnEmW
+ Ug2ZDHJMVqXbV/vqVoONI+GKU+sRYT1EM21qg4Ix2a5Eg1elXLTxPyIsYdm0lux+BTIo7ycaXZW
+ bs1csM2yfXSvlB8Pj8g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ clxscore=1015 spamscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601060108
 
-On Mon, Jan 5, 2026 at 7:06=E2=80=AFPM Shivendra Pratap
-<shivendra.pratap@oss.qualcomm.com> wrote:
->
-> >> +static int __init psci_reboot_mode_init(void)
-> >> +{
-> >> +       struct faux_device *fdev;
-> >> +
-> >> +       fdev =3D faux_device_create("psci-reboot-mode", NULL, &psci_re=
-boot_mode_ops);
-> >> +       if (!fdev)
-> >> +               return -ENODEV;
-> >
-> > This will always create this device for everyone who includes this
-> > module. Move the of_find_compatible_node(NULL, NULL, "arm,psci-1.0")
-> > call from probe() here instead and don't create the device if it
-> > fails.
->
-> Ack.
-> Will move both calls to init before creating the faux device.
->
-> psci_np =3D of_find_compatible_node(NULL, NULL, "arm,psci-1.0");
-> and
-> np =3D of_find_node_by_name(psci_np, "reboot-mode");
-> --
->
+This patch series introduces support for Qualcomm SA8255P platform
+where PCIe Endpoint resources are managed by firmware instead of
+Linux driver. So the Linux driver should avoid redundant resource
+management and relies on runtime PM calls to inform firmware for
+resource management.
 
-On a second glance - and I may be totally wrong - would it be possible
-to switch to using the auxiliary bus and create this device from
-drivers/firmware/psci/psci.c? That would be even cleaner.
+And document the new compatible string "qcom,sa8255p-pcie-ep" for
+SA8255P platform in the device tree bindings.
 
-Bart
+Tested on Qualcomm SA8255P platform.
+
+Signed-off-by: Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+---
+Changes in v5:
+- Added Reviewed-by tag in dt-binding patch.
+- Updated patch 2 as per comment by Mani.
+- Link to v4: https://lore.kernel.org/r/20251223-firmware_managed_ep-v4-0-7f7c1b83d679@oss.qualcomm.com
+
+Changes in v4:
+- Updated compatible string.
+- Updated dt binding file name to match with compatible.
+- Link to v3: https://lore.kernel.org/r/20251217-firmware_managed_ep-v3-0-ff871ba688fb@oss.qualcomm.com
+
+Changes in v3:
+- Updated compatible string in dt binding example node.
+- Link to v2: https://lore.kernel.org/r/20251216-firmware_managed_ep-v2-0-7a731327307f@oss.qualcomm.com
+
+Changes in v2:
+- Updated dt binding as suggested by Krzysztof.
+- Updated compatible string to match file name and compatible.
+- Updated driver as suggested by bjorn.
+- Link to v1: https://lore.kernel.org/r/20251203-firmware_managed_ep-v1-0-295977600fa5@oss.qualcomm.com
+
+---
+Mrinmay Sarkar (2):
+      dt-bindings: PCI: qcom,sa8255p-pcie-ep: Document firmware managed PCIe endpoint
+      PCI: qcom-ep: Add support for firmware-managed PCIe Endpoint
+
+ .../bindings/pci/qcom,sa8255p-pcie-ep.yaml         | 110 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  61 ++++++++++--
+ 2 files changed, 163 insertions(+), 8 deletions(-)
+---
+base-commit: 563c8dd425b59e44470e28519107b1efc99f4c7b
+change-id: 20251216-firmware_managed_ep-ff5d51846558
+
+Best regards,
+-- 
+Mrinmay Sarkar <mrinmay.sarkar@oss.qualcomm.com>
+
 
