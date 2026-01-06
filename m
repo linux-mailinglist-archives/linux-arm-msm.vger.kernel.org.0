@@ -1,117 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-87674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BDA8CF7FEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 12:16:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 083B6CF818E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 12:40:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BE6253001032
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 11:16:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0FE9E309EE28
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 11:34:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8911B326947;
-	Tue,  6 Jan 2026 11:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CF91327783;
+	Tue,  6 Jan 2026 11:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z1K0/H+X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D3pWQots"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4416131AABC;
-	Tue,  6 Jan 2026 11:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FA53271E3
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 11:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767698188; cv=none; b=gErKgHZ4vyVqqHvLOOp8bJs90wupE12lvJ0Nw5FUKkWBTNaoXnD+pOcVPn0iT/c8J613pCeMsgFr7tDzKI1yYyyge+tVwowtBywzCIQaMNY/4okoNGGYGiR01B2NScNMUy7ex9NB00IOqjxPTLHSe5/Jp+zaKdMdyLNlMbyort4=
+	t=1767699244; cv=none; b=mnGPjKX11k9PpGgmeXIMGUOwuX+EIwEqcvRdj0WGSPauzckpY/XoEx87tbOMSC8o5UxBvxuCiyois7jSsoFGbU6m1q/BGZdRsMzxWi0b5sjzGpAQTEfbAQWjCqt118U7+tlrhXd7rYtQGQprWPSyKmDHzC8CtoZ35bRgBMtxmPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767698188; c=relaxed/simple;
-	bh=KAZTfW562W1oYvg6yLMZiwveTP/LAQQ3kkh1Vqc/32Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JZsELDpu6nrX91Tk9EEov0VYE7hskRopsDsT1vcOxmB7K7lWnJC0pKfyj2oVdM8M33f6VZ5L9oB7hwAsNT12f/GOGiQTnyHg6VlT+u+XwgyvbzIlRjbBLTKCBgMX+ymIajr0ZJmeiqcs1rhLxpZbM4vVJakkHjOqWWoSx7RJGbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z1K0/H+X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528DEC116C6;
-	Tue,  6 Jan 2026 11:16:19 +0000 (UTC)
+	s=arc-20240116; t=1767699244; c=relaxed/simple;
+	bh=e7aQPfqZchv7cdvTlfV1PMxXNwB4FVHC6zfkDDRF1xc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bfeiQgYw5l24vz67NSqHGiUliGcRIY6siWbns8Vch6AyswyRCtJQjquPUc6sGGvFmqvsJlOfQBgNyzlXVl66R3nOG8TcYfVdwRc7Lkt73IutuKraSRi3MhEnFp7acW5Gy0Eom0hGSnSCeCgmxJdpgKKMo2nfxJFpqaqbZHpug/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D3pWQots; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85838C2BCB2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 11:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767698187;
-	bh=KAZTfW562W1oYvg6yLMZiwveTP/LAQQ3kkh1Vqc/32Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z1K0/H+XpY/nY87i0BbOhrc0NiRe8qTneWo9Kclay0A+/ZiYEVXM8rM2Ru8hsNf8y
-	 PxNWW770aUY0dfnswiMYnNUyiXyMopWxWKymiXrW+XiA+s5Y09ERidRRZG782OYHhD
-	 4chf+I3fc+I8JmctmpRXqsR1iNYjVBnbR4j2HQFYpy59lZTrFG7rUnvWhWWj//5go4
-	 LXdUEq9t2WGgtOv7/a88UHej4y9EJJGE/vb9oors6pxeMGccynmmEkVG5rYPDW4Rsq
-	 79BH7p4Wrb3LzWNxaEbPknCyslDbxH1Y7TENlLw78noR/6XK39CD77/BuMLy05qqQB
-	 oJUN+EE7CvPnw==
-Date: Tue, 6 Jan 2026 12:16:16 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Greentime Hu <greentime.hu@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Chuanhua Lei <lchuanhua@maxlinear.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Pratyush Anand <pratyush.anand@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 2/2] PCI: dwc: Add multi-port controller support
-Message-ID: <aVzvANWTavhabhEB@ryzen>
-References: <20260105-dt-parser-v1-0-b11c63cb5e2c@oss.qualcomm.com>
- <20260105-dt-parser-v1-2-b11c63cb5e2c@oss.qualcomm.com>
- <aVvkmkd5mWPmxeiS@ryzen>
- <m5ukeugo2lazipljqpubyvm7j3xk2j5o7i2xgdbkkhii57xmyk@lh32qdzjhe4n>
- <aVzqMqTUWIuKhgmC@fedora>
+	s=k20201202; t=1767699244;
+	bh=e7aQPfqZchv7cdvTlfV1PMxXNwB4FVHC6zfkDDRF1xc=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=D3pWQotsytWQtCtlHl5KBBCHpCDnrh7CFamjX4YScQ7WoLh13Zl9OaZHtoCtxxxl3
+	 o0QGkHNE4AHUeZuUk5AJtntDfydeVGfflbOafjnQfozmfyrnJn1MaRBqBdaVHykAzY
+	 mOXtOYE837Zcjo6/WqWZp+vYxZnlPesQJdM/nfQAOAW4yjdVeqZZTeWQBJ+w9K0264
+	 G3//SWOkJj73OT7eYK2X5D3hskxFA9Bo6bJEdpCNwP/m1bGkuD9X7ja82R2IJM2InP
+	 czZFhnEW5bVPb3TQMvEURHBmVHoV/4180rwsrSsV9pNvOtqDKyMpqH5CzAzax77nBt
+	 R/IIOShwS8LAg==
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59911cb8c3cso930542e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 03:34:04 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVkB1ATaFc9ippcqZomiZUl047+Bk7MhDPm5DrKoNSdCzZtDJiRC8lT+u43lonVyMcAvlSw9TJCAgiSnmBW@vger.kernel.org
+X-Gm-Message-State: AOJu0YwktDRepCwaOxEVfV8DtMhSq/5IWcMfHVzvWz/Z0MFBXgpBEkNr
+	Nwl5b70pL70EzJd4aQ+9W/sxCShfWNtE8FvNer2l++3E7ARpf1fpf5S9HkwGSLbFsEMLeslO8DA
+	PxdVFVVlbECYq2Z3FHXZtb7v9aI+v/L2slZgV74y+qA==
+X-Google-Smtp-Source: AGHT+IH6WUvrwJ3e6JIw+OZTKRmcLjomwAx5325+HpSyUiSTaP3mUf/7LgYZd13U9tO3lCh2JtbVraYQqOh0LYYUFzc=
+X-Received: by 2002:a05:6512:32c7:b0:595:82ed:ff28 with SMTP id
+ 2adb3069b0e04-59b65258a07mr1027826e87.32.1767699243013; Tue, 06 Jan 2026
+ 03:34:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aVzqMqTUWIuKhgmC@fedora>
+References: <20260106-wcn3990-pwrctl-v2-0-0386204328be@oss.qualcomm.com>
+ <20260106-wcn3990-pwrctl-v2-1-0386204328be@oss.qualcomm.com> <20260106-excellent-pygmy-puffin-97f7d5@quoll>
+In-Reply-To: <20260106-excellent-pygmy-puffin-97f7d5@quoll>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Tue, 6 Jan 2026 12:33:50 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MfVsFY1T_PpT8nQ5AjcYrk_hy2Rgd6L0-Z7L0oB8D0uMw@mail.gmail.com>
+X-Gm-Features: AQt7F2pSNlyD56O3PupToeH6RHiDz4jFG1ufbKtVNPwZRdtJy5ouVmj8OutkSdU
+Message-ID: <CAMRc=MfVsFY1T_PpT8nQ5AjcYrk_hy2Rgd6L0-Z7L0oB8D0uMw@mail.gmail.com>
+Subject: Re: [PATCH v2 01/14] regulator: dt-bindings: qcom,wcn3990-pmu:
+ describe PMUs on WCN39xx
+To: Krzysztof Kozlowski <krzk@kernel.org>, Mark Brown <broonie@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
+	linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 06, 2026 at 11:55:46AM +0100, Niklas Cassel wrote:
-> For iterating, to avoid manually traversing the array, we could do like
-> libata and create a simple macro, e.g. ata_qc_for_each():
-> https://github.com/torvalds/linux/blob/v6.19-rc4/drivers/ata/libata-eh.c#L851-L854
-> https://github.com/torvalds/linux/blob/v6.19-rc4/include/linux/libata.h#L1657-L1659
-> 
-> And at least personally, I think my brain will parse dw_pcie_port_for_each() { }
-> faster than it parses list_for_each_entry(port, &pcie->ports, list) { },
-> since it is more unique, but perhaps I am the weird one here :)
+On Tue, Jan 6, 2026 at 9:00=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.org=
+> wrote:
+>
+> On Tue, Jan 06, 2026 at 03:01:11AM +0200, Dmitry Baryshkov wrote:
+> > WCN3990 and other similar WiFi/BT chips incorporate a simple on-chip PM=
+U
+> > (clearly described as such in the documentation). Provide DT schema
+> > covering other Qualcomm WiFi/BT chips to cover these devices too.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >  .../bindings/regulator/qcom,wcn3990-pmu.yaml       | 100 +++++++++++++=
+++++++++
+> >  1 file changed, 100 insertions(+)
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+>
 
-Or... for_each_dw_pcie_port()
+Mark, the bindings describe a device controlled by a pwrseq driver for
+which C changes are later in the series. Is it alright if I take it
+through the pwrseq tree?
 
-We also don't need to supply an integer to the macro, we could do like e.g.
-for_each_nhlt_endpoint():
-https://github.com/torvalds/linux/blob/v6.19-rc4/include/acpi/nhlt.h#L63-L64
-
-which has does "for (unsigned int __i = 0; " in the macro.
-
-
-Kind regards,
-Niklas
+Bart
 
