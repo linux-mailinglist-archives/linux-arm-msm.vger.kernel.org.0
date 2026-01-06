@@ -1,169 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-87577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9A15CF6130
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 01:23:55 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D779CF61F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 01:55:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 66E063018F69
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 00:22:18 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CFD86300530A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 00:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89A307081A;
-	Tue,  6 Jan 2026 00:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6DA67404E;
+	Tue,  6 Jan 2026 00:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UvVajx7a";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eNQ1yfRv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j74sl45r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1650A33987
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 00:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AF61F419A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 00:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767658937; cv=none; b=DDK0q4PSGQ3215xTjTLxST1Gi5pt5EmgRKCIwjdDOhx84S2zxU+PP7xMEVX0ozJ8BAuTMu3jyOBdniFR+qzEdvUQjrJZnUFFrE7467EqFlv+VVeEV8eSCHuzOGrJIQvazIirIfg4O+Wxjfzp75JDp3eh8U1IbsQL4MatBdf6Y4Q=
+	t=1767660904; cv=none; b=Pzc8XiO/aNy5PYxuuwbFZyehsanJ0XEE+y1003NC2jnoEmHulgx9uULAUa3ythkRBgT9wStW6ntmPeRYqO4mPpGtC6pnD0tGFzaR4o57Zlgv0O44NhHr/U5T6ZErjanRjEEvyHzQpaNYWLhGs3LjYdgdkwOAkU/uowhAh+iXOl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767658937; c=relaxed/simple;
-	bh=psGaNMYCcA3vTNboHCsJCf0mbGjKts7x2MCloWKs00Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p8ErOA8/ZSj92m23Xe64FwQVWLrMrV4vUoRNpcDJOuevcM2Y0vZQfjrbZlycof8mdaDwCZ54rU0iFBBtf2jVFb1jbwh9ghDP3mHn7ti4waV7DqZzcbxgQCrB3gpjUAkGdbj1uArKG7a/qJi8e5OL8fUuYz7ch7viymaDMax2XPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UvVajx7a; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eNQ1yfRv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 605MV6iu4032721
-	for <linux-arm-msm@vger.kernel.org>; Tue, 6 Jan 2026 00:22:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xybdF3OLB2P8zb7gKJjMg29j
-	Qi8VyXoqHV6TjiefLPg=; b=UvVajx7a6P2iguxLmIsaWGb9IWTcZmy71o5u509u
-	y/TMIBu4ErdCCV3jX71qVwz3wHUQBBzUXu080aVTDESHAGCiwA+6bQ2mtyVp2oOg
-	qN9DVCX1J39X5o1euaoEAvDfsUNb5cU0H3SlWpQOSNT/ZKCY5QfPR4FUOw4Uudya
-	1H+rbyriqojW6aslVweyNKgSxBgYA4oB4Omqt1VlcwqwFt8GacWa/pDfPPDb1Vs8
-	V52HzTyPnHALMMbS2nMftz1HHq8rFt8criyuhU3nN5NEVVHK669MaxgdtmWdihrE
-	udY/GAIddcgSbT3nSm9feY1lLtFZRb2uifErrwXrMT/KLA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bg79njy9n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 00:22:14 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ee1b7293e7so15832391cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 16:22:14 -0800 (PST)
+	s=arc-20240116; t=1767660904; c=relaxed/simple;
+	bh=PQyafS4r9bueZ+5O2gfE7pkljY2Ij6CGy5ABtviIEw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u3oRQRZoEPc3GVbmnqwVTVE426J/RlYXn89IemyStnBx06CGsW9fbPHMF7fV79JKeim0Hy/i3F5eEr7EKd27S9WzGx8eQFJRVb3UO5kjOcwdFWWqSxtkVzlaHm3OjloawDzPQRNjQP7tiiGVlhgRheBdqrkf8eyYK9XwZ6DjPPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j74sl45r; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-598ed017e4cso22538e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jan 2026 16:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767658934; x=1768263734; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xybdF3OLB2P8zb7gKJjMg29jQi8VyXoqHV6TjiefLPg=;
-        b=eNQ1yfRvIv6Mfq1KJER6fFtw3zxJxIp90HVJe3fru14cP1vJlQAaFQk6Qqeu3d1qb0
-         0iDGXr8VhDh88mebX6QBoVoitdBZAn6EuaMF5iMMAldGsKoIgMEqpBe5DJRB1kcCJXOa
-         TlxFhpbiRr3EeNyaYtzTRTVR+/6cZioJ8UK/KoTr1HoRe1R3bjUaC4tBd/sYXMwrJLYn
-         b2AOg3T8hdMMdHt9U36tUU2WHDA7sdGzMcAwIcQLCytaZN8TQGeHbnL2pnZL6FucI4b1
-         eOqj0RpQmKzMVML9RPjDiM6OvKMA6Mx3po7x9i+5iefyOz6oP6zsdZxIz/T5gzcqTsDU
-         PNIA==
+        d=linaro.org; s=google; t=1767660901; x=1768265701; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iOVE9Djm+VI8eLyAhm3qz2g6Vm8wktIAJcPE+KPknjs=;
+        b=j74sl45r0Hw2JP2GJu//oOg3L3F9Ca3Z1cFUTdplW3DFzO0dlvoG9g1wl2t1wHQgKe
+         MHleSD8rf6mAJvMVWiZnfO4DoWyiT+Np0X46+F5zL4F9jZqVZg8r9TbeBSoYtqazXK9K
+         2JREz0Ytgj9g/0ugUi9w6HpNODusYQ7oHuBCYCVUoQ83WMP2ev3JDS8gSENaFgna91uB
+         fvDUrZMDF4ynoXV4x9BAXwjs7t0YeA4P4tdN0adyVlFf9iPzZU6wfX+tuRxU1oVYXQk5
+         mBXTcyud/Ph0Ehotf30JRDtPeJu8LkqyVg8cX0XuCdMAs+bxkhQG60CdPktlLlb3X6sy
+         z3xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767658934; x=1768263734;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xybdF3OLB2P8zb7gKJjMg29jQi8VyXoqHV6TjiefLPg=;
-        b=o94K9tzeD822zsBU0ez+VP5hc+ryfKR1YrRANOJ5kFNW/PzQv3UCOQi+jglaOD5r4A
-         YUj8vYnsJJsbb+RVj+9olBWtJtXsvMLzz6SG0s0BlzPfyApPxG0csF7f85V8D4+YyJ9M
-         3mS5gdVbZkEEFRcHQA9ifMcaCCv9WDEkSfv04yby0b+7l2FnPgXK4UIHv3m4CdDbjn0t
-         qvPbboU49oj5NeycMLR4iSY3sCP6nJWVcp/lsfu0nfVBDLC7U08lXRZAF1EBk3NqdbWc
-         Mobfojc2YdmPjKhewSRH+B6vjlVnK2KKxIJ7oizLqHlKj/jWACjzeDyhJs+6TCF/3aIj
-         XdGg==
-X-Forwarded-Encrypted: i=1; AJvYcCUPJWynORhKB9D/CVNWb0kxKkBZpcxcAo2UuGkY8ihTIgPAwlQZ4TI6+k+OLejculQlU18ttFP7ELH0sV68@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvNXY6HlyRF82Xf+TzoKkf2r4NzEISGyN1+tfE7NacWj0cyR/k
-	fBP7wtA2NCuVqX3WncnJ8JN9X+Ge7rjrcZWlhyIeLf3cIeBnDdKX0ILp4ZfupMRlM+hPSwaxKOq
-	gnn7NXRm8n36n2i7i6J6HC2ncg6/arplVeU3oIZWGoI1+SRyWL/wDdz9LIKKVcLZdU66q
-X-Gm-Gg: AY/fxX7JxNG6LqUC6EJG4ypvIfw+SECyoc3SbCoaR0fzt4vho7PospCAUvf9lZXs8+o
-	WcLzH434hWKvYqyFsSv1rdgumxxEUbTEoZS8dKOSGUvhJiTb/UPTAOdCCm4bq/ILFYl9Z7DiA11
-	6l8zOGt5UFRxI8AouA7OoXqYkOIfoYG5o8jIZxw9lvNn07So0dT0UjGGy6qn5qqFAfJd8TPCMUI
-	QoQ97AhIGcCxEeowKwXaoMPpmjhcCcVNlYXQq/9Im3t70V77vXoUqFEzbWgOlcwiOWDplktx9nB
-	N/eR/+H9YIOMxXu0YLlvAkLh7o0UzNy195q7L004gJSWwohg+nx/4v4BP5xNAAwJpVXuCl2TokA
-	8ry1NB3zR6l8B6KOrgRpGA7n97gSDC6tYRKeUMCgeNBVKTgfIZV/m2dw7KEOZ7UTtLZ1YirN/dX
-	nbZzrYSjY4E5j8x+gy72Bqf4M=
-X-Received: by 2002:a05:622a:8c5:b0:4ee:296c:c7cf with SMTP id d75a77b69052e-4ffa781ff88mr18987071cf.71.1767658934188;
-        Mon, 05 Jan 2026 16:22:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGoXYD14IHksD1lnlNPMEXn3NfkOeFfiW71G0cqJJxj/ih1y5qOGzlZ11rH5lAKk4LFtCoKHg==
-X-Received: by 2002:a05:622a:8c5:b0:4ee:296c:c7cf with SMTP id d75a77b69052e-4ffa781ff88mr18986851cf.71.1767658933816;
-        Mon, 05 Jan 2026 16:22:13 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382eb39fc3esm1539781fa.9.2026.01.05.16.22.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jan 2026 16:22:13 -0800 (PST)
-Date: Tue, 6 Jan 2026 02:22:10 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com
-Subject: Re: [PATCH v6 2/2] Bluetooth: btqca: Add WCN6855 firmware priority
- selection feature
-Message-ID: <zen64arf23paingmokzix55xa5p5loi7e2qrf7bvajkiodekmj@nsqa533afk6c>
-References: <20260105055646.3816296-1-shuai.zhang@oss.qualcomm.com>
- <20260105055646.3816296-3-shuai.zhang@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1767660901; x=1768265701;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iOVE9Djm+VI8eLyAhm3qz2g6Vm8wktIAJcPE+KPknjs=;
+        b=tVp2fO/SkgXtBV/qpuruUuTQ0/9mxdGvLvxdpIteHD7QsZaHWmh8zcwMcLYqatl8ho
+         JKGUGnk1LSrKWiJDCLqSyGIshSU+grpWm/t0mswfglacjwhBvKyafV/l4Af6Rv5PVdl9
+         T6OGFaZgmNgQdapX2Jr0RBhYvqcjITfc2O3vIovo0Dwz19E5S53KRpEA0wm6DYpEjqok
+         oPQ/Y8VNj1x4Zo5CVpCFuoN7aKTEU8bS7t2skqr02gnCoQwzK0Xwyj9o10znRA42XddZ
+         9uOu/iYXLkhPLS+bgS6JVl1U+lvdeU8qoe9x44IKaSuOTpb+PyexYnguy7LCrF1v1+q9
+         7eyA==
+X-Forwarded-Encrypted: i=1; AJvYcCUbRQiiqaN57+X2fa5yBfQ6AqjOStWiy1on4moZ+qFu4Cb8JYXNRgq0faEBniuMNW8GlRTVBnBDd1YCVAyl@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYOcnY8Orqy0iw0opdk8KlNa6a3ro7htR+8k/QiI+BG8/kWSap
+	K6NMLD/qFrLVqQP87Aw+WFAaNvIptQwkqU+Ti27jza/YDpXAFCoNoaoBuTdAxQcbkFk=
+X-Gm-Gg: AY/fxX5Fz80zGZh1PumYMb/TxCDBqy1hwyB9OEq3mXc31XE+8MIPQhese2xNGod0f9W
+	+Mdq0POI6WZs0Vd/TBt9JW5OPc6FkR4pHk26mTzvgosaHVI+Hw9GfzZHA0+qwhfYGa9Y7BUGSkC
+	9ANxaCipiBLEdpUOs0QKWxVcvl6ckPk+19+DXWEAo19nFwnkXMJsUm+skXzQ/jSJb5yfMwlapn0
+	1342K0J+ywLR5qbBaVdl0VTkaUt944jHHAbgRtoUQSObOFBgG5fWc93uSy2Rf5DTfirWzD0/SNL
+	fz9Gm3WYK9LjeyTY3nYHOthT2RjngvFpBa3+UZh47JG7a+b0FLyGAKusaGWGMWZXlsZ5S9SYUYe
+	ondlrTSizXdHLlm36Lpnike8KjIeGRbEA7AFAIAz86be/qyie/RgYb5Gr5vMYkN5aijCk7spl6Z
+	LDOyx2x2yGorONDgNv3Hxfst+CiEE8DC5VeB8lXYpZ5d+CmoeVRl2zj0+4Oidv+mhTgA==
+X-Google-Smtp-Source: AGHT+IHC/duOmQ+zt3AcbVWsYdFh+VT+t8MI6iZRXfzwdOci9FOkfNN1NdasVjBEh3f1S9ijpf6tNg==
+X-Received: by 2002:a05:6512:3d0f:b0:594:33db:2836 with SMTP id 2adb3069b0e04-59b65261885mr297993e87.6.1767660900684;
+        Mon, 05 Jan 2026 16:55:00 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65cea50bsm180639e87.10.2026.01.05.16.54.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jan 2026 16:54:59 -0800 (PST)
+Message-ID: <718f3a1d-fd55-4a1f-a9c8-0778a3f8caac@linaro.org>
+Date: Tue, 6 Jan 2026 02:54:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260105055646.3816296-3-shuai.zhang@oss.qualcomm.com>
-X-Proofpoint-GUID: doz_fa7XMo8VkYONtLRoXT3zc6AQKlVK
-X-Proofpoint-ORIG-GUID: doz_fa7XMo8VkYONtLRoXT3zc6AQKlVK
-X-Authority-Analysis: v=2.4 cv=Y8P1cxeN c=1 sm=1 tr=0 ts=695c55b6 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=nHHXIsCO6AQyv1VF1mQA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDAwMSBTYWx0ZWRfXws9w8j7j9vf4
- GsLKLu2UsIl6nzv7uWiflcsLurzK3QlspXD0xTAqE42smePn4I4ORksp5z2sC9bez2e1D88HZLR
- Ds0XPBdjVySZdDAOoqW5BmqzLpkFHtBVm9B9vJO7UsnI9tJpELP2OIQCrdxjziDzH8ysrNRwPmw
- Mp1vCYzbC58IdmzIu3/kVhznFDdDsE8EkzzXigeA+GXsFh3MzdZK2OfUp3rvfCBgR+hy2QDBLO7
- HuURu5KLJp64Lae0VpEzfkK3NKSz9P0GbsrOe14sOFQTZnasr6tQc942pxzqLQjuoHqP4ojqLkQ
- uFhlswPkDfcC18bZHgExd6yQ+chz30RsjfSJCnpliXBziKWnq3/ED4+qIED6fZE8BBg9Q5fKl8X
- iQhHYpWAhSQctlxQugxpuKYEtMT4g7wDiVCwpAHvaHfNFAOSUvYuNrllTIflqpU5JXr/hu7j7L5
- xYvp/MqaPhYrQyqygmQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_02,2026-01-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601060001
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sm8650: Enable S5KJN1 image sensor
+To: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251023025913.2421822-1-vladimir.zapolskiy@linaro.org>
+ <176745617446.2631416.7464905538168539576.b4-ty@kernel.org>
+ <v2ju7tu2cuedk6rnpidjrgkj7viz3dznwrlsu73w3ayon4mnx7@yacrjyyizhro>
+ <ppak5acapxe2ih4cy6gjfqfftagpukcbtezeetljuf3ocaen7q@gnxdalhu2ndv>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <ppak5acapxe2ih4cy6gjfqfftagpukcbtezeetljuf3ocaen7q@gnxdalhu2ndv>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 05, 2026 at 01:56:46PM +0800, Shuai Zhang wrote:
-> Historically, WCN685x and QCA2066 shared the same firmware files.
-> Now, changes are planned for the firmware that will make it incompatible
-> with QCA2066, so a new firmware name is required for WCN685x.
-> 
-> Test Steps:
->  - Boot device
->  - Check the BTFW loading status via dmesg
-> 
-> Sanity pass and Test Log:
-> QCA Downloading qca/wcnhpbftfw21.tlv
-> Direct firmware load for qca/wcnhpbftfw21.tlv failed with error -2
-> QCA Downloading qca/hpbftfw21.tlv
-> 
-> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-> ---
->  drivers/bluetooth/btqca.c | 23 +++++++++++++++++++----
->  1 file changed, 19 insertions(+), 4 deletions(-)
-> 
+Hi Bjorn.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On 1/5/26 18:09, Bjorn Andersson wrote:
+> On Mon, Jan 05, 2026 at 09:58:33AM -0600, Bjorn Andersson wrote:
+>> On Sat, Jan 03, 2026 at 10:02:59AM -0600, Bjorn Andersson wrote:
+>>>
+>>> On Thu, 23 Oct 2025 05:59:10 +0300, Vladimir Zapolskiy wrote:
+>>>> Enable Samsung S5KJN1 image sensor on SM8650-QRD and SM8650-HDK/RCC boards.
+>>>>
+>>>> The changeset is based and tested on v6.18-rc2 and it has two dependencies:
+>>>> 1) added Qualcomm SM8650 CAMSS support:
+>>>> - https://lore.kernel.org/linux-media/20251017031131.2232687-1-vladimir.zapolskiy@linaro.org
+>>>>
+>>>> 2) a new Samsung S5KJN1 camera sensor driver:
+>>>> - https://lore.kernel.org/linux-media/20251023025356.2421327-1-vladimir.zapolskiy@linaro.org
+>>>>
+>>>> [...]
+>>>
+>>> Applied, thanks!
+>>>
+>>> [1/3] arm64: dts: qcom: sm8650: Add description of MCLK pins
+>>>        commit: 0ddb0d63453f320806727604702b6f6636a645c3
+>>> [2/3] arm64: dts: qcom: sm8650-qrd: Enable CAMSS and Samsung S5KJN1 camera sensor
+>>>        commit: 328407ba89ae6656c143967ba65465c50150aaf8
+>>> [3/3] arm64: dts: qcom: sm8650-hdk: Add support for the Rear Camera Card overlay
+>>>        commit: 1c20a021de58a23bdc264b91d75e944d19e49ba2
+>>>
+>>
+>> Not sure how I missed Konrad's requests for the additional adjustments.
+>> @Vladimir, please send follow up patches to correct the content that was
+>> merged into linux-next.
+>>
+> 
+> Sorry, it seems rather that b4 produced a thank-you letter for both v1
+> and v2, as I applied v2.
+> 
+> Please help me double check the content of the branch, I'll try to
+> figure out how to use b4.
 
+Everything on qcom-linux/arm64-for-6.20 seems to be in fine order, the v2 of dts
+changes is properly applied, and nothing else is needed to be done here.
+
+The sensor drivers found on SM8x50 boards are expected to be merged into v6.20:
+*  https://git.linuxtv.org/sailus/media_tree.git/log/?h=devel
 
 -- 
-With best wishes
-Dmitry
+Best wishes,
+Vladimir
 
