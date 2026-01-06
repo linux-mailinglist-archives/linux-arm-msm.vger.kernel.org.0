@@ -1,184 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-87747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C27A9CFAB1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 20:32:44 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C72E7CFABC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 20:42:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B18793153776
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 18:51:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 921923115794
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 19:05:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CC412D8DC4;
-	Tue,  6 Jan 2026 18:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE47E3590D2;
+	Tue,  6 Jan 2026 19:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C3a054qM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N7bkBITR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A22C311979
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 18:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576CF34F484
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jan 2026 19:05:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767725465; cv=none; b=KdsSjK8f6ieIwTynft6HN4Q88PAzyyDUCigie0Q+YpCqci2Lui6B1lORh19GRUAtsDolPsL4aUKVnQniONf8l75uosFS7jaqeDEjW0CuP4gR059vJrGmxbSqFEqnBP8uo1ehIwwwPRxfCI+NNmPp/KvmTW0GVZs6XVve4HBQ5f0=
+	t=1767726343; cv=none; b=h5W2plOZXUVUNpZOZIQcu4pUHXNcus2vA1fX7k5fiqnb0XnhnOHa4OXAMoGDkyzRAE507yb53WPLAdwze7CVPhyrB8zjBTIRT0BjV5e6nG140nWVeLVD1FEV7wh6MPsPtzoe4k7BMSie6ddm/6YYEMSJdDZZfNappjLorZIVRxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767725465; c=relaxed/simple;
-	bh=7LU2IieSdrwxa9q8owXuIsOk8it20eQCQUVEuE/0NtE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JjBwjzGsoRBm7KsNFc/ODnneFuiaTBqjpAR06MjwgZhPx9En9cNxPKZ1gKZ93Va6Eh3C5FVu+hDysoetTbqP0KrfVozO40jBRCZZHi4pZeishCpdQK8xtAQU2y2ad15CvzYao7PLTUgquZSJHH4wnpZYxR7HzHoplqaRO4og6eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9033A497;
-	Tue,  6 Jan 2026 10:50:52 -0800 (PST)
-Received: from [10.57.46.241] (unknown [10.57.46.241])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E77303F6A8;
-	Tue,  6 Jan 2026 10:50:57 -0800 (PST)
-Message-ID: <9a86120e-c0be-4ed5-a3de-cc7f164da154@arm.com>
-Date: Tue, 6 Jan 2026 18:50:55 +0000
+	s=arc-20240116; t=1767726343; c=relaxed/simple;
+	bh=Jof7jOFgcaRLMomwqn8p7+/6+iRi1m/y3bzTdQIGqlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvzWijhE9VUnWhO9QOaOy9m+qKR5kkiqi5KmU9U6uyxx4phXnjzSzZ9LkXdoEcs7wDnmYtmxPxkqf/j9RusIzpPI22OF0vPuGWwhrNvPDO+YpnbVGmxYs6c1/56MBPSDtvpCfVJIcXpDDbPWasz6HN+Tn2EBQXKWVE9QogLKPY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C3a054qM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N7bkBITR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 606H1Nde822621
+	for <linux-arm-msm@vger.kernel.org>; Tue, 6 Jan 2026 19:05:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=PnExPef8cl/W7C0NmYsrDUDP
+	tkQ5SmQs4VU42ioQmqk=; b=C3a054qM8LODfGtLZD+57WqS3eIH7oXSdPPghxd5
+	UotksFkshR91fKLHfFh033KVU+/kWbj9eVnbLnN612DdvW/tHUIXTYeA7gF9jcdV
+	8wI1odCLe5DixtvI9iUSWc7D8WnW68SB/S5Uvb7ahtWHiYq2DXdeaZ02AYomc5cd
+	DBo6tL1pfsKj+OUtGXNTJarClZCXK03HFPdO1mUqvzOMNQBWRtn3dr3IKiAtHpnK
+	xUgocWHEc6b5vn27YQ8eLYWk6a8261YTwR5QYikajjFvdt0ff87NgkARzSHFPbiU
+	VtpvsJijmjV53PHJ4ducGOqkTmd6QPw4S+ByeHm4Wsn/cw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bh6e80d97-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 19:05:41 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4ffb4222a4eso884721cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 11:05:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767726341; x=1768331141; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PnExPef8cl/W7C0NmYsrDUDPtkQ5SmQs4VU42ioQmqk=;
+        b=N7bkBITRKRLfqTbd2C3rlsDwyk5EGWB1XwUb4CX9YuZGpifpoVqT5Sj08pEM+5mmvn
+         iT8DuoFdw7VtM71/f4rJ2w9+y69qrsE0ho9iNGuO2TwH4CSOzmLHZPj+NhJzV2C9E5zm
+         hjRLfKWvL1OYGrlCUNXOGBUi0Jm8Td1I/0TocnSTBOToSACFRMB9Zz4hC61kat70+O9e
+         0Rx/mrvNY68yZWUVOFBwwlvYG/N5EXent275IqxgOX4z2WPDpnngkSRkxmBOBboRxwuQ
+         cFJ+zt+NFpk0f6878GHtQlvddSiwXnQl+r98i5wJZWUwZOHJOVuT870MZLeJ8OxvFuRr
+         WQfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767726341; x=1768331141;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PnExPef8cl/W7C0NmYsrDUDPtkQ5SmQs4VU42ioQmqk=;
+        b=v5/pKBNzan9OHVf+g2NJW7d6LrVKWraE/q8AwQmnn4IRWaZwXFbPt9xZc945duv+26
+         3fmHf3O2qwpUKK7h66E1PUiZtUEZnnw3hCHeJzE3zky9Va/qeveAm4RXdxdq/sLFbmhp
+         9DvcEZWvnC9ZpZEB/nU4CYp9eAQbYQBBuEczpVIxFwtRSSupa3xcNsyZ2xy6/QVSMRGK
+         FifbA7diUsNkI6BGyafp7+7+5xyL+j3Kv1aaWjppOs+j3bn8lxpyj8ht+H6nP9HqOmcv
+         jX5exRF7We927S3DAwKxyZboybz+83LP3Ze0NrWVy37sxoDgNtIWT51rMZWFFKwPgBJ9
+         kGTw==
+X-Forwarded-Encrypted: i=1; AJvYcCVJGtKmx4lEExNrmDTN7NJClYo9wBhx/OaVu9bDBXdV64Ujjc7fJtu7D6Roxnth3FWGeu2NaCWon+2BNOdo@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAl9MMOVfBwkv2ebb7n+CbF9Yi3x1Js5hYDfvpsl4ivVrpDfOC
+	vVcNvbiZq1kh9l/7pAQBIaCBRxg2k/SsvG/f3eJGaujOpDhleRfoM0UsmsdQGq230T7RGIvt/1e
+	5UlNhph23TnOSfYNNPFOTIzvAJ8pTsdm8LnRwPQys0Or1Kgk4Jt9tYDx934BbhVXNw6/a
+X-Gm-Gg: AY/fxX6DvvUdnGfl1uEq3ZgG7B8vZfhVRs7zKIgw0m5t/LcVISeHuZk+C5uPIMPpH0q
+	J83q5doIXAFiQTtkX3uzVu/8S8KCSG1ys+1WlDssAyvctb+nX+aFTYgGBUJvVdZEf87DK+VIS/d
+	G0Y8rmzc2ah7VrHfo4+2IV79QXsGD7QB+ob0gzCf40GssngTyLDf1HnPR8cJ0XuxLVXg7XVFsHe
+	v7Y1gJQ47W+6coyG3sKbL6lrIuG52ikCHbiBB8rRqYpTGafYjbINGxoG0dnaPBKex+EzkIOtDld
+	PlIIyTRYqmxAMT9HJoFfpQxORYJOPSMtrCVCJ4ffJ8kTa4Qd6pIM8Whx/w6I4qBcnxpQZn9sNI9
+	7Kd5cadsPpOaCZCP6e/MD+KLdKMXX4so0cF/cJ48FbhEw84xSK8JHe2W02loLKFV9jGvGoA/qqi
+	oLCxdi7deCabT5Sgf80xO7onQ=
+X-Received: by 2002:a05:622a:4184:b0:4f1:b9c7:18e7 with SMTP id d75a77b69052e-4ffa769902bmr53511741cf.4.1767726340578;
+        Tue, 06 Jan 2026 11:05:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVpXiBpqgf+IvbViiedT0amY3frlnLBZ1F6bvBA99wLJJveEExSGo3UHoQQSia6uOOo+1k3A==
+X-Received: by 2002:a05:622a:4184:b0:4f1:b9c7:18e7 with SMTP id d75a77b69052e-4ffa769902bmr53511181cf.4.1767726340003;
+        Tue, 06 Jan 2026 11:05:40 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d0d22csm762779e87.37.2026.01.06.11.05.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jan 2026 11:05:39 -0800 (PST)
+Date: Tue, 6 Jan 2026 21:05:36 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: linux-firmware@kernel.org, linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PULL]: Update firmware for Qualcomm AIC100
+Message-ID: <7bng2llowofthbhuagrwnmh4mt2xliudmtyjfinmd6pj2i4vvv@sigtzabqdeof>
+References: <8ada0f35-9663-4932-b7c1-53c00f3cdf92@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REGRESSION] qcom: iommu: nullpointer dereference on boot on
- apq8064
-To: Jason Gunthorpe <jgg@ziepe.ca>,
- Christian Schrefl <chrisi.schrefl@gmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>,
- Matti Vaittinen <mazziesaccount@gmail.com>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-References: <569d7de2-cfcd-4d28-8bbf-14a0179f665e@gmail.com>
- <20260105180213.GG125261@ziepe.ca>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260105180213.GG125261@ziepe.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8ada0f35-9663-4932-b7c1-53c00f3cdf92@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDE2NSBTYWx0ZWRfX1OS0O0QKKlqR
+ L2adD9Cg9wc8vncl75oMrmDEkep9Jb0tAPp7hcq2k8sKKKIX4hUbR0abPF+GT4+9Zq+DkWchOtk
+ eP32t+4y2Eyv+lUc4WNpXVMox/ydP/bYoNA9LoZhWd9g+y7gPEFJB1eRNod5IfW4J9R6WkRZQD6
+ cLDeT98uPOdgMdnVJq1aSyX+fPVSfbtjsShydpBcuMbP/PMs4FJPwMcVmspKPKgZceWhwZC12RN
+ 3L1kdKnP+9Z94stAmHf8wseaxZEjAtMrgAUSaRStCnAPzRAMZ5WQG9s/ATxofzOa89WSnQUn0xx
+ EujFA4SlOEHaCF4pqzlpST8iYTyAOdBR5aGtPyNLbduuGAKn3eZeLuckFrSriEiahm30m9XRD7y
+ E7cyfK7Oi5cauLbGHvVTJTMhHPQExmLbv/nx7o/ydWKADxjXIZaQX6W6GN068b8qY7oUwOOlUxi
+ ZIYlPqmdPT0feeXKWfA==
+X-Authority-Analysis: v=2.4 cv=F45at6hN c=1 sm=1 tr=0 ts=695d5d05 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=SlpdmATz_RgLBfTfWzQA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: 1aJ256I9a5EtfCe97sg-PODh_SH5SBDd
+X-Proofpoint-GUID: 1aJ256I9a5EtfCe97sg-PODh_SH5SBDd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 impostorscore=0
+ phishscore=0 adultscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601060165
 
-On 2026-01-05 6:02 pm, Jason Gunthorpe wrote:
-> On Mon, Dec 29, 2025 at 11:26:42PM +0100, Christian Schrefl wrote:
->> Hi everyone,
->>
->> I've found a panic on boot with v6.19-rc3 on the asus-nexus7-flo tablet with a APQ8064 CPU.
->>
->> I've bisected it down to commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing into the proper
->> probe path"). Reverting the drivers/iommu/iommu.c changes (removing the added if block)
->> fixes the crash, but that presumably exists for a reason.
->> The diff for the fix:
->> ```
->> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
->> index 2ca990dfbb88..9f32d70b207d 100644
->> --- a/drivers/iommu/iommu.c
->> +++ b/drivers/iommu/iommu.c
->> @@ -453,14 +453,6 @@ static int iommu_init_device(struct device *dev)
->>           * already having a driver bound means dma_configure has already run and
->>           * found no IOMMU to wait for, so there's no point calling it again.
->>           */
->> -       if (!dev->iommu->fwspec && !dev->driver && dev->bus->dma_configure) {
->> -               mutex_unlock(&iommu_probe_device_lock);
->> -               dev->bus->dma_configure(dev);
->> -               mutex_lock(&iommu_probe_device_lock);
->> -               /* If another instance finished the job for us, skip it */
->> -               if (!dev->iommu || dev->iommu_group)
->> -                       return -ENODEV;
->> -       }
->>          /*
->>           * At this point, relevant devices either now have a fwspec which will
->>           * match ops registered with a non-NULL fwnode, or we can reasonably
->> ```
+On Tue, Jan 06, 2026 at 11:39:50AM -0700, Jeff Hugo wrote:
+> The following changes since commit 61a76356fe7fc29479fef362abc1f47bb40eb52f:
 > 
->> [    5.900971] Call trace:
->> [    5.900999]  qcom_iommu_of_xlate from of_iommu_xlate+0x7c/0x9c
+>   Merge branch 'upd-wcn6750' into 'main' (2026-01-06 15:37:35 +0000)
 > 
-> Did you look at what line in qcom_iommu_of_xlate() is crashing with
-> NULL pointer?
+> are available in the Git repository at:
 > 
-> It wasn't so obvious to me what it could be..
-
-Comparing the "Code:" line from the dump against a local build, this
-looks to be the dereference of master->num_mids at the start of the
-loop.
-
-> Though this looks really weird:
+>   https://github.com/quic-jhugo/linux-firmware aic100_1_20_2_7
 > 
->          struct msm_iommu_ctx_dev *master = dev_iommu_priv_get(dev);
->          int sid;
+> for you to fetch changes up to 3ff97fca3cccae8c68b14c3bfe9785f25287bf1a:
 > 
->          if (list_empty(&(*iommu)->ctx_list)) {
->                  master = kzalloc(sizeof(*master), GFP_ATOMIC);
+>   qcom: Update aic100 firmware files (2026-01-06 11:25:03 -0700)
 > 
-> So maybe master is NULL and !list_empty()?
 
-AFAICS that could happen if of_xlate has run once, and then for whatever
-reason dev->iommu is torn down and the whole process started from
-scratch a second time - although I'm struggling to see any obvious cause
-for that in the absence of any other visible errors or async probe
-races (and assuming that the IOMMUs on this platform ever actually
-worked at all, of course...)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-However it certainly stands out as a bit wrong that of_xlate is touching
-the IOMMU instance itself - that should never have been expected to work
-well. Does the diff below help?
 
-Thanks,
-Robin.
-
------>8-----
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 819add75a665..e57780fc3287 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -360,14 +360,11 @@ static int msm_iommu_domain_config(struct msm_priv *priv)
-  /* Must be called under msm_iommu_lock */
-  static struct msm_iommu_dev *find_iommu_for_dev(struct device *dev)
-  {
-+	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-  	struct msm_iommu_dev *iommu, *ret = NULL;
--	struct msm_iommu_ctx_dev *master;
-  
-  	list_for_each_entry(iommu, &qcom_iommu_devices, dev_node) {
--		master = list_first_entry(&iommu->ctx_list,
--					  struct msm_iommu_ctx_dev,
--					  list);
--		if (master->of_node == dev->of_node) {
-+		if (iommu->dev->fwnode == fwspec->iommu_fwnode) {
-  			ret = iommu;
-  			break;
-  		}
-@@ -378,6 +375,7 @@ static struct msm_iommu_dev *find_iommu_for_dev(struct device *dev)
-  
-  static struct iommu_device *msm_iommu_probe_device(struct device *dev)
-  {
-+	struct msm_iommu_ctx_dev *master;
-  	struct msm_iommu_dev *iommu;
-  	unsigned long flags;
-  
-@@ -388,6 +386,8 @@ static struct iommu_device *msm_iommu_probe_device(struct device *dev)
-  	if (!iommu)
-  		return ERR_PTR(-ENODEV);
-  
-+	master = dev_iommu_priv_get(dev);
-+	list_add(&master->list, &iommu->ctx_list);
-  	return &iommu->iommu;
-  }
-  
-@@ -604,14 +604,13 @@ static int insert_iommu_master(struct device *dev,
-  	struct msm_iommu_ctx_dev *master = dev_iommu_priv_get(dev);
-  	int sid;
-  
--	if (list_empty(&(*iommu)->ctx_list)) {
-+	if (!master) {
-  		master = kzalloc(sizeof(*master), GFP_ATOMIC);
-  		if (!master) {
-  			dev_err(dev, "Failed to allocate iommu_master\n");
-  			return -ENOMEM;
-  		}
-  		master->of_node = dev->of_node;
--		list_add(&master->list, &(*iommu)->ctx_list);
-  		dev_iommu_priv_set(dev, master);
-  	}
-  
-
+-- 
+With best wishes
+Dmitry
 
