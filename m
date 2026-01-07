@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-87768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE047CFBF4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 05:30:33 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E947CFBF50
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 05:30:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9E8B3300CF3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 04:30:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EFBDD303504D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 04:30:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCAE42517AA;
-	Wed,  7 Jan 2026 04:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B370255F3F;
+	Wed,  7 Jan 2026 04:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGpJL8iX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R18fp8af"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9E62586C8
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 04:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECF424501B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 04:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767760231; cv=none; b=SLKiFIJPxYLfaSNnr8oE+wCVNDn5Felf+5kcF/cDAaNhp2b+bhwap+WRIWeeZ9jILImsb9Dw9Unal7DJ8huzg4/wMcx6eIOBCiqn5daBljTUxx0E8Gb+FyeLZ1G9nnsMTOiruXeDqadHJLFwMFNbtAs/gg7uQ4ueJxCxTnINJ2w=
+	t=1767760233; cv=none; b=RyK6fog8UnlIj7fhJ50HGvTrd868h1xz863iNRJtbDkLMxJx+cV+DNpudNleMmmbRYe6UObi/9A3WQgEPPMZ9yFGh6S4VGu5K0kDfOoX20L6dyKZKCM6RDy7lWjfZzS2xu40VdSw+IvVSN4OoXqSjnwwn3X19q9Y8zShRGswefM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767760231; c=relaxed/simple;
-	bh=fDVcLsjtaSQrcZIbZdkcTcovh9DZTWgcaFEXLUhSgvY=;
+	s=arc-20240116; t=1767760233; c=relaxed/simple;
+	bh=J9Fz7sRtOqzGWUn4OaalbhQscMbkEKJaXUTx0SI3dAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qS24qKvOCSRmmpsv4gu6uOItcqUXwHw7DLK5LygpS6x06qS/henRSHStn0LHQ2Ic1H59gf0vHQehXw5q/WnK2PHB6FQwK75CcEyq40c9XzlII/s4yGnWSXE2qSBXxNeCLc98A3/Ug/lLLFELZp3Y2r52dlEBthOP9Gao2c53F1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jGpJL8iX; arc=none smtp.client-ip=209.85.160.174
+	 MIME-Version; b=sZyhgCkTyvyOcvyytjpcg+tZw4qQ8O3pGF1rmf9BYPOZCCnwD3y1kwlhjMRIejTGh7+4C2TOt6SfyfJ8gF2Rhw6/MZ0gUBNd+8frynbCs5Y7WiOuryIT5/FtUie13n0vZMSK1TkwaRMnuKSS9zvHEq+NufNIGnvSNIcREbbu09I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R18fp8af; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4edb6e678ddso23865271cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 20:30:29 -0800 (PST)
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8c15e8b2f1aso154593685a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 20:30:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767760229; x=1768365029; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767760231; x=1768365031; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2hGaL0MxK+NmABcI5TTIgjIohzsC70UY7Qw6Wih7kXI=;
-        b=jGpJL8iXJJ0aqjIb0M0fcz7AiK2TmrD69DWQMF2mUOMwPvmdRk8qIgSrBuXj6D/6bH
-         Vy35pl6BvUCBVv8XBB8kaDcnOg3ZcIK0hO/LcuJGmmz4U15dvi7fkZ0ovJecIpGI8v2D
-         wRpCgJMecAEOi/aDSRiUxnj2+51D0l/JVPSZBSQ0mjHoeIgL7dHPJJ5tJU7CiO28Z6ls
-         QNoc9zyGqXn3HmT7SZs6bKHy/upZsvtR4onZi61UPV3mD7HH/ahA5xSA43z2N3YQMEch
-         Kb2YbH5JHa341+Cm694sSvJC+ulktypqv0wpPC4uJA0xZuUtmcwqbOJwRN+qUMuV3Nv+
-         IhsA==
+        bh=IF0PSXd7nxzcgib/fF2QxJQOQ3zAiN3r11lfYK9VD2k=;
+        b=R18fp8afWgdLQq2YpIcpyl7GB8W+qc5jhai+abXLs2hLpONAo4oe71rXsoNY7nDWJK
+         RvAV3YvTozO+pXJ1jju936Lpb/iOZacj9uQT5ewHptvZhCWhonaj8MIdXxbsCXTHktY7
+         u5H1n8BXZ6/Pm6nXF1cZCEcTWiw60QYiz7L2KNKHWa4iYgIja6chQG1dkckyCKAttW4v
+         hYJVbSTVVqZTg5kVN564rGyeEcYkd+GRT+jhWbQgUaMV1Q7PwDUDpHCNJM+SRIgoxJfM
+         feIXTn/EvbeuD+y8hQrgjIhqAOnBuKlH2EGXLc0fyehsFlUVvHbYWuc0SrasmeTP87UG
+         c21w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767760229; x=1768365029;
+        d=1e100.net; s=20230601; t=1767760231; x=1768365031;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2hGaL0MxK+NmABcI5TTIgjIohzsC70UY7Qw6Wih7kXI=;
-        b=EglGNb4fkHotutSCgiLwgB49FBE5vZWbkEbM327+Py2kXXS2o4BoDm1UMexMBN4B8b
-         q4hOj1DPvCg4xxvrdhH7YWuWLcgcH0K8VuADl1cfxBmBVAlJQpc53VjWUDkidSMl8Vlb
-         tqIx5XHmZYHvCdbaZto0DreuU3ryOw/HKde1oJQqi547aseyBryUr/UQfMOmrbQuaKl3
-         3trOgh0ZSX/UYP0CVr66px62BTSzscPqviy6w7cZq+68eQCeMCspLCfTQ3ysnmKFD4bm
-         vRieHaJ7k9SPfRwQEtC/FXcFXpDBGM30UJQsK82YBZ2B+yGSEHzKZHZg3FvugerfoZUD
-         oibA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZmz0JUVG1Vg83Yx5+HoEG8CiF4NzHVqfDJavXD/Ye/i2X/zRYhb3YXROVz1l/uqsZXllf3X/EiBt7ZC5o@vger.kernel.org
-X-Gm-Message-State: AOJu0YzW4JTijgrzPfVphKUDaMxpU9jxQxB0Qfptbi/0CLhrDwIQuUFr
-	+XUFa1AAdX7m9XmKCw1UQq81YHh3zrMDg5HLcggwphtOhFCXv3qBa14r
-X-Gm-Gg: AY/fxX5nEVycoyp9tYg5z49x8N+76uc2m5XJX6vsd8oEC+kM7wu4nqFVQa+zEYnuMzY
-	eC8f3By6xwVQdHrBy+0+d2DAx20QgVjiHbfoodiCV9rL7kHk3760ZbarwLjqzH8qUPpy9tIBijI
-	RgEkdJ3sWGn5Jot2bl6AbBjnEYtrdYaw0x2SiP72Oa/Uh5pHW4JgdyjudL5nI01BbcB/txs6w3Y
-	TJFnSiucmxHYD4kYE/GVgtRoE5Det9hbGD+j0b8huSMgX1lEb9GwPO2c3ncTG6YmUFBdZRIq0FV
-	cH9nPRbkyP9YmpyE2qsmq4fmMVxoc3nF5C2nJRcjVN++sEJjI8LJrIDiGbXcrHNNKSv+HmuTWka
-	hIr9Ri4GZgcKiEzUDvASqD0auAAiIRUagO2uOlPNaFx8DVYZfohX7FhdzPFFwJawqtWX+gMPkGH
-	VNLzztd5Ahj6uXd6w36jTPArMMHETTqJrySb5atTscfJtAdkN7x/dFWZ/ox8QVTvvbTClATEWXv
-	Nk=
-X-Google-Smtp-Source: AGHT+IEud5ZgaGMtj39i8NtiPek1sxZaWg0gmVmp2ihrTT9ZWXwJJriiz+SVjRHkqwT7lsJZxEyGqA==
-X-Received: by 2002:a05:622a:1e13:b0:4ed:b82b:1984 with SMTP id d75a77b69052e-4ffb4854e7fmr17317691cf.30.1767760228801;
-        Tue, 06 Jan 2026 20:30:28 -0800 (PST)
+        bh=IF0PSXd7nxzcgib/fF2QxJQOQ3zAiN3r11lfYK9VD2k=;
+        b=aINYT4bCbdul19sJT5Kl/ZWyiY8WyQNidVYmffCIIiB8fRLGRwhZsVt3sbI5RX3RCN
+         6G0qexeXy290ni85Sllw9+Ka6kzQZAmO8MTpfy7DlVFjF1U2K4fe3M9zbIO6hSnRz9w1
+         qm+4cg5Mk1TJsOdhuEyfTXD2zbG9w2jjw9fHNZf/nwI4qVRQb9LWcmJE57KGBaclvp9H
+         cj3ck/wb04Z/CJzVnU5mI4R4vw3nfmgefEoSA0qQ+MmgB7eqYeQndnK1yWXqdERRBcir
+         BvKthPHtpz7Tfpsrqz2Etdk6Dv+EbJJC1HVqNkWYKb3DPZNZl5gemgCiifX4l73Fs0Sw
+         YpfA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVxhCIpGksHnf501v/2DNOgTJTiqBX5tsReJAof9DP/s5XAo+1ZDn+7pV+YHGYfwhIby8oz8Lx9fjuDude@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPE2p3AfW5Op3oYm3EXGoFx0/dLAOYazHzZf2uyTg4JcI4atZe
+	0MOhr/ao/dQ2wM5ZeWUJypzVxpaY6cP1zlQqMzxdGw7smzPVZDsDMWvs
+X-Gm-Gg: AY/fxX4rMFBs6+XKSRqvp/fyQn9Sd/kGQGqGQqaUDdAkv4NTJRzww0RPUKn7pbHiCeR
+	VHyrk75MPnZw8B24SYkOcWGT28IkPS6s2YTgcjTAxrbp6MNT6O6ot9fYXU1joLiAp2zJUv820Yh
+	zsUyW+5cEVr0WVtFe2oECPUdeuVJ5UlKxNVDg9ZafU5W6T4jYJ8YQbP4yAdTGaZDMdUzgyXimLu
+	/U4UGaPd1rIIO1DPd98/1Vn+Xt8S+8l35wfz4v5vTMNi6R5NBvG1RQIvLJcbo8F45uz5SIm3EyM
+	8DnHukabzW/M1G8V1saAoINrsP8jLKHnVV6VkML0YsYTCoscKBaySiiMpIuTkwZvRygyjJYKevT
+	4yJkEz5YtvnAQfJYUrj8GiaoHZ4yNMh8lyP3Fl5kjw0LVuXuG1TzbOEpudLhnUOpU+N5bJ+g7DF
+	61+SswPRZHK25X8JKmdQ4sHQlEx+ZYAB5yYRik623lUr1/7zV+x37/8xfCnfX71Eh1MNgVbPN8O
+	7k=
+X-Google-Smtp-Source: AGHT+IETyC4X98OhIHBp46gznYzJBy3d02/tkM3F4X2Rh0LLVtLU+yZjpl9/TdjSUKepyeyPRAiyrA==
+X-Received: by 2002:a05:620a:1904:b0:8b2:f1f3:900e with SMTP id af79cd13be357-8c38941c68dmr155122085a.62.1767760230642;
+        Tue, 06 Jan 2026 20:30:30 -0800 (PST)
 Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ffa8d39950sm24478311cf.1.2026.01.06.20.30.28
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4a6441sm309316385a.7.2026.01.06.20.30.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jan 2026 20:30:28 -0800 (PST)
+        Tue, 06 Jan 2026 20:30:30 -0800 (PST)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -91,9 +91,9 @@ Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	David Heidelberg <david@ixit.cz>,
 	phone-devel@vger.kernel.org,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v6 2/5] media: i2c: imx355: Support devicetree and power management
-Date: Tue,  6 Jan 2026 23:30:41 -0500
-Message-ID: <20260107043044.92485-3-mailingradian@gmail.com>
+Subject: [PATCH v6 3/5] arm64: dts: qcom: sdm670: label the camss ports instead of endpoints
+Date: Tue,  6 Jan 2026 23:30:42 -0500
+Message-ID: <20260107043044.92485-4-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260107043044.92485-1-mailingradian@gmail.com>
 References: <20260107043044.92485-1-mailingradian@gmail.com>
@@ -105,211 +105,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A device tree compatible makes it possible for this driver to be used on
-Open Firmware devices. Initialization of power-managed resources such as
-the reset GPIO and voltage regulators can be specified in the device
-tree and handled by the driver. Add support for this so the Pixel 3a can
-use the driver.
+Endpoints cannot be pre-defined since dcf6fb89e6f7 ("media: qcom: camss:
+remove a check for unavailable CAMSS endpoint") was applied, probing all
+endpoint nodes and requiring them to have a remote. There is no sensible
+remote in the SoC devicetree because camera sensors are board-specific.
+
+The ports are meant to be extended by a board devicetree in order to
+define fully configured endpoints and connect the ports to camera
+sensors. For nodes that are only meaningful if extended, labels are
+usually assigned. Label these ports so they can be extended directly.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
 ---
- drivers/media/i2c/imx355.c | 116 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 108 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/i2c/imx355.c b/drivers/media/i2c/imx355.c
-index 776107efe386..4ac8495d1a3d 100644
---- a/drivers/media/i2c/imx355.c
-+++ b/drivers/media/i2c/imx355.c
-@@ -3,9 +3,13 @@
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index b8a8dcbdfbe3..3eb4eaf7b8d7 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -1776,28 +1776,16 @@ ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
  
- #include <linux/acpi.h>
- #include <linux/clk.h>
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
-+#include <linux/of.h>
- #include <linux/pm_runtime.h>
-+#include <linux/regulator/consumer.h>
- #include <linux/unaligned.h>
- 
- #include <media/v4l2-ctrls.h>
-@@ -125,6 +129,15 @@ struct imx355 {
- 	 * Protect access to sensor v4l2 controls.
- 	 */
- 	struct mutex mutex;
-+
-+	struct gpio_desc *reset_gpio;
-+	struct regulator_bulk_data *supplies;
-+};
-+
-+static const struct regulator_bulk_data imx355_supplies[] = {
-+	{ .supply = "avdd" },
-+	{ .supply = "dvdd" },
-+	{ .supply = "dovdd" },
- };
- 
- static const struct imx355_reg imx355_global_regs[] = {
-@@ -1515,6 +1528,55 @@ static const struct v4l2_subdev_internal_ops imx355_internal_ops = {
- 	.open = imx355_open,
- };
- 
-+static int imx355_power_off(struct device *dev)
-+{
-+	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-+	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-+	struct imx355 *imx355 = to_imx355(sd);
-+
-+	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-+
-+	regulator_bulk_disable(ARRAY_SIZE(imx355_supplies), imx355->supplies);
-+	clk_disable_unprepare(imx355->clk);
-+
-+	return 0;
-+}
-+
-+static int imx355_power_on(struct device *dev)
-+{
-+	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-+	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-+	struct imx355 *imx355 = to_imx355(sd);
-+	int ret;
-+
-+	ret = clk_prepare_enable(imx355->clk);
-+	if (ret) {
-+		dev_err(dev, "failed to enable clocks: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = regulator_bulk_enable(ARRAY_SIZE(imx355_supplies),
-+				    imx355->supplies);
-+	if (ret) {
-+		dev_err(dev, "failed to enable regulators: %d\n", ret);
-+		goto error_disable_clocks;
-+	}
-+
-+	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-+	usleep_range(5000, 5100);
-+	gpiod_set_value_cansleep(imx355->reset_gpio, 0);
-+	usleep_range(8000, 8100);
-+
-+	return 0;
-+
-+error_disable_clocks:
-+	clk_disable_unprepare(imx355->clk);
-+	return ret;
-+}
-+
-+static DEFINE_RUNTIME_DEV_PM_OPS(imx355_pm_ops, imx355_power_off,
-+				 imx355_power_on, NULL);
-+
- /* Initialize control handlers */
- static int imx355_init_controls(struct imx355 *imx355)
- {
-@@ -1689,16 +1751,26 @@ static int imx355_probe(struct i2c_client *client)
- 				     "external clock %lu is not supported\n",
- 				     freq);
- 
--	/* Initialize subdev */
--	v4l2_i2c_subdev_init(&imx355->sd, client, &imx355_subdev_ops);
+-				port@0 {
++				camss_port0: port@0 {
+ 					reg = <0>;
 -
--	/* Check module identity */
--	ret = imx355_identify_module(imx355);
-+	ret = devm_regulator_bulk_get_const(imx355->dev,
-+				      ARRAY_SIZE(imx355_supplies),
-+				      imx355_supplies,
-+				      &imx355->supplies);
- 	if (ret) {
--		dev_err(imx355->dev, "failed to find sensor: %d", ret);
-+		dev_err_probe(imx355->dev, ret, "could not get regulators");
- 		goto error_probe;
- 	}
+-					camss_endpoint0: endpoint {
+-						status = "disabled";
+-					};
+ 				};
  
-+	imx355->reset_gpio = devm_gpiod_get_optional(imx355->dev, "reset",
-+						     GPIOD_OUT_LOW);
-+	if (IS_ERR(imx355->reset_gpio)) {
-+		ret = dev_err_probe(imx355->dev, PTR_ERR(imx355->reset_gpio),
-+				    "failed to get gpios");
-+		goto error_probe;
-+	}
-+
-+	/* Initialize subdev */
-+	v4l2_i2c_subdev_init(&imx355->sd, client, &imx355_subdev_ops);
-+
- 	imx355->hwcfg = imx355_get_hwcfg(imx355->dev);
- 	if (!imx355->hwcfg) {
- 		dev_err(imx355->dev, "failed to get hwcfg");
-@@ -1706,13 +1778,26 @@ static int imx355_probe(struct i2c_client *client)
- 		goto error_probe;
- 	}
+-				port@1 {
++				camss_port1: port@1 {
+ 					reg = <1>;
+-
+-					camss_endpoint1: endpoint {
+-						status = "disabled";
+-					};
+ 				};
  
-+	ret = imx355_power_on(imx355->dev);
-+	if (ret) {
-+		dev_err(imx355->dev, "failed to power on sensor: %d", ret);
-+		goto error_probe;
-+	}
-+
-+	/* Check module identity */
-+	ret = imx355_identify_module(imx355);
-+	if (ret) {
-+		dev_err(imx355->dev, "failed to find sensor: %d", ret);
-+		goto error_power_off;
-+	}
-+
- 	/* Set default mode to max resolution */
- 	imx355->cur_mode = &supported_modes[0];
- 
- 	ret = imx355_init_controls(imx355);
- 	if (ret) {
- 		dev_err(imx355->dev, "failed to init controls: %d", ret);
--		goto error_probe;
-+		goto error_power_off;
- 	}
- 
- 	/* Initialize subdev */
-@@ -1752,6 +1837,9 @@ static int imx355_probe(struct i2c_client *client)
- error_handler_free:
- 	v4l2_ctrl_handler_free(imx355->sd.ctrl_handler);
- 
-+error_power_off:
-+	imx355_power_off(imx355->dev);
-+
- error_probe:
- 	mutex_destroy(&imx355->mutex);
- 
-@@ -1768,7 +1856,11 @@ static void imx355_remove(struct i2c_client *client)
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 
- 	pm_runtime_disable(imx355->dev);
--	pm_runtime_set_suspended(imx355->dev);
-+
-+	if (!pm_runtime_status_suspended(imx355->dev)) {
-+		imx355_power_off(imx355->dev);
-+		pm_runtime_set_suspended(imx355->dev);
-+	}
- 
- 	mutex_destroy(&imx355->mutex);
- }
-@@ -1779,10 +1871,18 @@ static const struct acpi_device_id imx355_acpi_ids[] __maybe_unused = {
- };
- MODULE_DEVICE_TABLE(acpi, imx355_acpi_ids);
- 
-+static const struct of_device_id imx355_match_table[] __maybe_unused = {
-+	{ .compatible = "sony,imx355", },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, imx355_match_table);
-+
- static struct i2c_driver imx355_i2c_driver = {
- 	.driver = {
- 		.name = "imx355",
- 		.acpi_match_table = ACPI_PTR(imx355_acpi_ids),
-+		.of_match_table = imx355_match_table,
-+		.pm = &imx355_pm_ops,
- 	},
- 	.probe = imx355_probe,
- 	.remove = imx355_remove,
+-				port@2 {
++				camss_port2: port@2 {
+ 					reg = <2>;
+-
+-					camss_endpoint2: endpoint {
+-						status = "disabled";
+-					};
+ 				};
+ 			};
+ 		};
 -- 
 2.52.0
 
