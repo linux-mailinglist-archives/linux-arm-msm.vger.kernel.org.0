@@ -1,120 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-87882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02D5ECFDB42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:38:30 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C961DCFDAEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:32:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 27430307DBD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:32:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 40FC3300181E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:32:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC7BC2EAB64;
-	Wed,  7 Jan 2026 12:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5475030BB91;
+	Wed,  7 Jan 2026 12:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GkGk6XqK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ivCOlkKs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41058F49;
-	Wed,  7 Jan 2026 12:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25012301472;
+	Wed,  7 Jan 2026 12:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767789125; cv=none; b=J0b2PjCfjJopP9osph3ACd89XGjhmB+DWvaUCbS3UcEg1QVuYek8gvuhcwhwXzY46d9z5mBgM1fxMT588FGB5E+rifXwRm5pm4AwCqwdb+/iBgUhVYP+uyCAz2pPSdr48STISOerGpCrvaDqoqMdRBlj3u3Rot+qDuSvHtzBC08=
+	t=1767789144; cv=none; b=o77OZjHQCFYhmwvNk7LoJ1ltLRBpyEDL0pF56kuyNQp6zPKqwN9UQ6PI0r0qliMmeUl2ebIZRNx7T1L2qp1moyahC2lL8IKgE+tf84CnjE4nFTvfVO920zSc6bQXWknXyotBSYBlouraqa9UWYOOu0isZURiDCPUVAXBbEa8mRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767789125; c=relaxed/simple;
-	bh=sfYlyiZoeUZcVn7NwfS5gMgyWT0pMwsrWiexLPWG+Lo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uG7zBLOL8Sa38Kd9Lw5AXBHKt8+6deQ8Gh9OAyDuagPMdPV4bjGCW9u/qtV0XDtXI/Qg6yJkbtcVZsCqnU74BqxPAvtq8V2d7OJ9jollj3jiNltsMcERz29Ki72gEtkcrnNLCtzZgWR3Jyg7Y5cue+pW/6BJH/7hn0q2hiJBuEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GkGk6XqK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A34EC4CEF7;
-	Wed,  7 Jan 2026 12:31:59 +0000 (UTC)
+	s=arc-20240116; t=1767789144; c=relaxed/simple;
+	bh=2Nqjd5umGqQTshG/6KasLg0SyW2HMZV1B1Lxjp2ecFg=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=eQjq1Tcmwzasrsa6/6wSkWN4Jc2tnS3RT5FC8ko9w+PTgz4AXQeLy2SIbRDrYuCVnEswi4uO9ZZ6Q/K+8NpMy+9ip2pt01EPG3bJrjpXFsRRyqJ7526PSuzeVzFRqoYHXuCApUk+g3F5TaoOVYZUpulf/COUbZQK6SvyYLIVnLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ivCOlkKs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E98FC4CEF7;
+	Wed,  7 Jan 2026 12:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767789125;
-	bh=sfYlyiZoeUZcVn7NwfS5gMgyWT0pMwsrWiexLPWG+Lo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GkGk6XqKLaGl/8j/tUCkvHRUPu5FGXepJy0ojmFTNwzNgDtZLbY42vyoyRm8ZEM4B
-	 91dywEkuqYf+i7YOFLywI8jwoJeO0ARjqIOZQ/R8OcBK1EY0JcXRGUMp7KelNJQTdx
-	 BepyMOchxH7/DqNmQGJiphOUtpskRIjSh7wjC/YphZ11lVghKdhVVdrFPPq5npC2qP
-	 bTXpfYMTuEcWvSW409C5JF1kRiFXeNuCFp+GMefGV8i2fkI6GtxbgKruLxJ/1NOtGJ
-	 cHOqiYvJa26ydKn34QsC8rh0WpC0Y+cg+fwTROdmKdLrNCjuLKa8FvuhD9d4hBr7gw
-	 7Wsqff3rWNJCQ==
-Date: Wed, 7 Jan 2026 18:01:56 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, linux-ide@vger.kernel.org
-Subject: Re: [PATCH v4 5/5] power: sequencing: Add the Power Sequencing
- driver for the PCIe M.2 connectors
-Message-ID: <pqix44ld4icxhmvaranezas7j77wcrmkfpj4xyxgxir3tmfwx7@fswnr25k2f43>
-References: <20251228-pci-m2-v4-0-5684868b0d5f@oss.qualcomm.com>
- <20251228-pci-m2-v4-5-5684868b0d5f@oss.qualcomm.com>
- <CAMRc=MfPq7+ZbWTp7+H388hqHoX27qbbHsLHO+xeLaceTwZLVA@mail.gmail.com>
- <z33axfsiox73f2lklhiaulekjnqxnqtkycfylybwqnqxtx2fck@3qtas4u6mfnz>
- <CAMRc=McS8a-1cH_y+kpze=zj2-PksHDO3SE=p3XnbEueUQt9xA@mail.gmail.com>
+	s=k20201202; t=1767789142;
+	bh=2Nqjd5umGqQTshG/6KasLg0SyW2HMZV1B1Lxjp2ecFg=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
+	b=ivCOlkKs/3FPom4CAQW/8n5+RtJ+Ktgpa46WuEDsbvA9PTBeWuC7vV4+xBeDgQh6I
+	 F+ikAwBIMxkTYm3UK5stlQN0iulvCSSl6E2JV1u4QXCSkGcTAkSB2mkHdzw/EdIDvc
+	 FUSAzwPfQKz6h4ZHo8/hDOFRATtO4FNaGq9u8a+Hb0DB/mfzr37+BspAyH9jtluOP9
+	 BThkvDxk9LJUGONm+dsYPaEtV1NScUVsoM3A4nX+KbKavoAkonyRlYC4BOBp/n+kNt
+	 uNOpMaeFLn9fsFJzYYAUv+hgwkrlZmLWtZDdw79Ff4blsc6mcmnifNIw3KUSZqGA+X
+	 RP1wITi7KGfyw==
+Message-ID: <57ad1884d9080ebc37abf8b96ab71abf@kernel.org>
+Date: Wed, 07 Jan 2026 12:32:20 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 04/10] drm/connector: make clear_infoframe callback
+ mandatory for HDMI connectors
+In-Reply-To: <20251224-limit-infoframes-2-v3-4-7fd3cacfefed@oss.qualcomm.com>
+References: <20251224-limit-infoframes-2-v3-4-7fd3cacfefed@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, "Abhinav
+ Kumar" <abhinav.kumar@linux.dev>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Andy
+ Yan" <andy.yan@rock-chips.com>, "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>, "Chen-Yu
+ Tsai" <wens@kernel.org>, "Chun-Kuang Hu" <chunkuang.hu@kernel.org>, "Dave
+ Stevenson" <dave.stevenson@raspberrypi.com>, "David Airlie" <airlied@gmail.com>, "Dmitry
+ Baryshkov" <lumag@kernel.org>, =?utf-8?b?SGVpa28gU3TDvGJuZXI=?= <heiko@sntech.de>, "Jernej
+ Skrabec" <jernej.skrabec@gmail.com>, "Jessica Zhang" <jesszhan0024@gmail.com>, "Jonas
+ Karlman" <jonas@kwiboo.se>, "Laurent Pinchart" <Laurent.pinchart@ideasonboard.com>, "Liu
+ Ying" <victor.liu@nxp.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, "Matthias Brugger" <matthias.bgg@gmail.com>, "Maxime
+ Ripard" <mripard@kernel.org>, =?utf-8?b?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, "Neil
+ Armstrong" <neil.armstrong@linaro.org>, "Philipp Zabel" <p.zabel@pengutronix.de>, "Raspberry
+ Pi Kernel Maintenance" <kernel-list@raspberrypi.com>, "Rob Clark" <robin.clark@oss.qualcomm.com>, "Robert
+ Foss" <rfoss@kernel.org>, "Samuel Holland" <samuel@sholland.org>, "Sandy
+ Huang" <hjc@rock-chips.com>, "Sean Paul" <sean@poorly.run>, "Simona Vetter" <simona@ffwll.ch>, "Thomas
+ Zimmermann" <tzimmermann@suse.de>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=McS8a-1cH_y+kpze=zj2-PksHDO3SE=p3XnbEueUQt9xA@mail.gmail.com>
 
-On Wed, Jan 07, 2026 at 10:51:11AM +0100, Bartosz Golaszewski wrote:
-> On Wed, Jan 7, 2026 at 10:39 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
-> >
-> > > > +
-> > > > +static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-> > > > +{
-> > > > +       struct device *dev = &pdev->dev;
-> > > > +       struct pwrseq_pcie_m2_ctx *ctx;
-> > > > +       struct pwrseq_config config = {};
-> > > > +       int ret;
-> > > > +
-> > > > +       ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> > > > +       if (!ctx)
-> > > > +               return -ENOMEM;
-> > > > +
-> > > > +       ctx->of_node = dev_of_node(dev);
-> > >
-> > > Since you're storing the node address for later, I'd suggest using
-> > > of_node_get() to get a real reference.
-> > >
-> >
-> > If CONFIG_OF_DYNAMIC is not enabled, then of_node_get() will just return the
-> > passed pointer. I always prefer using dev_of_node() since it has the CONFIG_OF
-> > and NULL check. Though, the checks won't apply here, I used it for consistency.
-> >
+On Wed, 24 Dec 2025 03:02:53 +0200, Dmitry Baryshkov wrote:
+> We already require both hdmi_write_infoframe and hdmi_clear_infoframe
+> for bridges implementing DRM_BRIDGE_OP_HDMI. It makes sense to require
+> the clear_infoframes callback for HDMI connectors utilizing
+> drmm_connector_hdmi_init().
 > 
-> I think it's just more of a good practice to take a reference to any
-> resource whenever you store keep it for longer than the duration of
-> the function even if the actual reference counting is disabled in some
-> instances.
-
-Good practice you inherited from writing Rust code :)
-
-> If ever we switch to fwnodes, the circumstances may be
-> different than static devicetree.
 > 
-> You can also do "ctx->of_node = of_node_get(dev_of_node(dev));", all
-> the NULL-checks are there.
-> 
+> [ ... ]
 
-This may not be needed. I can use of_node_get() here, but the APIs are just
-fragile such that neither dev_of_node() nor of_node_get() increments the
-refcount always.
+Acked-by: Maxime Ripard <mripard@kernel.org>
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks!
+Maxime
 
