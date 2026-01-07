@@ -1,69 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-87954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41044CFFA57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:06:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9FBCFFA3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:06:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3466430230F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1877F303166F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8928934F48D;
-	Wed,  7 Jan 2026 18:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5F93563D5;
+	Wed,  7 Jan 2026 18:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyYIkfaF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQFw7jGM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5501834E772;
-	Wed,  7 Jan 2026 18:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CE034A799;
+	Wed,  7 Jan 2026 18:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767811111; cv=none; b=U0IfCmxgtsV/E89ZR3krGrRkM6YDvLery329sEon3A89EK0YGyhy0C/ItMuXIth9H1xrqrH3Fg76Ki6B9J5LhzaTZUxh942NG3mW4Nkqxmx+h699lB8VR+6KZ3IlZVSRfUpZ8EDOcmjzNbEAocfFgnbpx0+BHEidg7Qi54Y8DfQ=
+	t=1767811113; cv=none; b=E5SfbaMm31vm9g6xCh6dqHRLI9ZcQreE2hQchA8vdrj7kVD98rUpt1AJveHYRnuplNOeI7Z7BQylPV+gfYrhCixQzcsvuyGsjrF7VgOB0QZrYznX7CUP9e0ZAAQAxwIJr37LOyTI/mDpoVlivvj5QrVbGsxii6QbaICOWesXT3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767811111; c=relaxed/simple;
-	bh=giwVjXZaInPGem3clXozi1NVnQJ6c/GXXvkKUWc/mdg=;
+	s=arc-20240116; t=1767811113; c=relaxed/simple;
+	bh=oHrbReaf1HeVn8B+9mxlpHHQuipBO6k8H6//aRo1H0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kNgdlhgK7lHfmMFeRzLqG1tcSVSMb/4zrifYB7sfr7SBt1bhC6vF4vt35sfK5DWzp1GWadV4T9tlIr6rm29lBgJ5azYudAmws4BpEkS7VIBuCHnRok0OUHgINbg7k3Fna1qCSBlJbBZX1x+4/RHrJ6My4d+6rpyZ8ACM1xvjPjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyYIkfaF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27B8C19423;
-	Wed,  7 Jan 2026 18:38:29 +0000 (UTC)
+	 MIME-Version:Content-Type; b=JvsKrjPtePP2Go9v/hB8zpDa6gCL+eFiuVU6fKi8xv95YAIO1iwqjQrMf5u7r/DV5kZRwGJQqN1uVy3VccinZoayV1QgnCL+RCJmRfO1solC0peBocbiGK88X6G7iRcSa88SG5zcT8qeFWv/Pagso1Rmst6VuJFmWn3viv2sVnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQFw7jGM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC5EC19424;
+	Wed,  7 Jan 2026 18:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767811111;
-	bh=giwVjXZaInPGem3clXozi1NVnQJ6c/GXXvkKUWc/mdg=;
+	s=k20201202; t=1767811112;
+	bh=oHrbReaf1HeVn8B+9mxlpHHQuipBO6k8H6//aRo1H0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyYIkfaFNbrooZvS1bn+upWyNOkmpmanoQJKjmWVyJGSPv7YnzQheRu4wn8uQz8AW
-	 T6+mnsZ3Mhl1bFTJoO6+7N9LCrGW0CJVK2s16lwq4Irg9NlTUjXkiBepUnmw2r8018
-	 nvXBEvvET+svEA76HYqZgg8wS28wTxjfbV444ObhSh+5zy1PNLGb2X9ZzjaY/QUErp
-	 PNZC+SlFWClZAWOPLwFmrrDwFmfVKXIXjVRvHRxqN4NEWHkJogs86UlqeRQ10+ttS3
-	 Hq/CcqtPOvsU0WOfo2UHnMd+DqAk9K2D3acqINZC3uBnjvzEEpxpWbKBSSie0nWtwW
-	 uj2qrOe+WvoPA==
+	b=aQFw7jGMhxJkzKM2gGRr//xnmvizt205SAVQ8vHz1LX3G5lsD9oBHUqoqztYLp2B0
+	 lLEyws8HA68dQwFCf0wNwTTngYQ23uMzoXVc5QzzGyQbvVsEWFTkM30Ai61WdYb97G
+	 qHK4PeNlsVeL9i6xZ/9hQmOek977ta08BeSFBwc+wO0ax4qImqIfDKTtcO8s+JXL+U
+	 a4ygXJvIrPoKWgB/PojdHqQeBAR5jQnOiPJeniRgazfFnzoph7qG99123KSIeYrB2m
+	 SJj8JzhAUkrGo9ByII0oyT55v38737VoDxcy65JfxRRwiD7+pjH2APeHXF4KrqvyEE
+	 Zo40e7bQFbaiw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
 	Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	Petr Hodina <petr.hodina@protonmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
 	linux-clk@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH 0/4] Bring the IP0 resource from ICC to clk-rpmh on QCS615
-Date: Wed,  7 Jan 2026 12:38:19 -0600
-Message-ID: <176781109957.3262943.14829046212346314366.b4-ty@kernel.org>
+	phone-devel@vger.kernel.org
+Subject: Re: [PATCH v2] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
+Date: Wed,  7 Jan 2026 12:38:20 -0600
+Message-ID: <176781109953.3262943.6850960519948721977.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
-References: <20250627-topic-qcs615_icc_ipa-v1-0-dc47596cde69@oss.qualcomm.com>
+In-Reply-To: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
+References: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,20 +76,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 27 Jun 2025 21:37:54 +0200, Konrad Dybcio wrote:
-> This is how it should have been right from the beginning, but it seems
-> like nobody took a good look at the initial submission.
+On Wed, 07 Jan 2026 12:44:43 +0100, Petr Hodina wrote:
+> Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
+> clocks are enabled during clock operations, preventing potential
+> stability issues during display configuration.
 > 
-> This series is essentially the same as the previous [1] again.
 > 
-> Compile-tested only.
-> 
-> [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: qcs615: Drop IPA interconnects
-      commit: 8b7f2aa05c02c13aa017a70401b5f8a3ce0c0f57
+[1/1] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
+      commit: 17f1ae4148fa50f43b3afbd4fdd7b500928c9605
 
 Best regards,
 -- 
