@@ -1,69 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-87796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 311BFCFC534
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 08:25:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE6E9CFC633
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 08:36:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id CBC0630022E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 07:25:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E13873010288
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 07:32:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FC36279DC0;
-	Wed,  7 Jan 2026 07:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCF9F22256F;
+	Wed,  7 Jan 2026 07:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSNEt9uh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hsg6TQFj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD0627464F;
-	Wed,  7 Jan 2026 07:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8931F1D6AA;
+	Wed,  7 Jan 2026 07:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767770726; cv=none; b=arUPKvqk4nBm/tsOFE+GYB8fSTXGLEshxPrpJC+9CGZ16L/pPOWX6sJ0InZ0LxsioQ/o8sLSzELkJW+s4zZ5Eaimn65Uk8/0vEQ0A4+Vs6Ygn3TJRXC0TUtHjce6NkmyGMXDiwQQZ5ZwmpK3nJauC+Wi9UwIRwd+uHZIFE73uRc=
+	t=1767771132; cv=none; b=Nh+Vhv/fLs1g/03zBc39u2zL9OiAhpx1Xfg4phL2u0uVqDDiQwsQcEEuMBgAEtkwlemR78GPlvMvE3C7UL7rXElz7OFb6/AoS3gc38Y1c3BGSeKrztKksapRKIkrZLTAKTpYBIOzoPV5mZk4cxKIVFJf9TxI5m/bF995gP1NoJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767770726; c=relaxed/simple;
-	bh=thvN0uwh9YXtpsZeWiYP8vtN1ZIvl9+T57j472g1vtw=;
+	s=arc-20240116; t=1767771132; c=relaxed/simple;
+	bh=Me1MQB8p4vt4d18ujl8lzsSIszAY2TFC1Bnkr0Wan3o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l+vKret2GGjmH3OHr0A1oz+nAReKXdu6w8kLQTRQjdglBM2o9oqclPeBbkFuVXT/5/HQMQcdtBOfZjdZ3EANOiZkXtwYBoVWC4WCW4fwaTCq7/cYw89IbFnVflWNzup9SmzxFwTnwhDk1vjDxBSQM+O2R01hrozyC/VPfTwdVcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSNEt9uh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E243AC4CEF7;
-	Wed,  7 Jan 2026 07:25:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1767770725;
-	bh=thvN0uwh9YXtpsZeWiYP8vtN1ZIvl9+T57j472g1vtw=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cf8qMQSexHWb3qMvIbfdzo5yozN4SdiSmFECKy2u9j8HYgSam6nbOmrpsLEWb0E86Q5yCwX3t5dHPF68uvVIeydRaRi6UXCnBRnh7mB3v/zb7F9V19JODqw5oxwWCjW2lTRiSo//hEJAe6ykuZT8kbWB9u+Ic15QeGabjI+uhvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hsg6TQFj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7FFC4CEF7;
+	Wed,  7 Jan 2026 07:32:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767771132;
+	bh=Me1MQB8p4vt4d18ujl8lzsSIszAY2TFC1Bnkr0Wan3o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xSNEt9uh6FURccWWG/op4JE2Hj9fZu3+Gikub2zir/ZSlbNAMKO83yYi8eM0F1yaq
-	 VGmzRkGp7iy2JQs3ywAsXQLpTKQGHiWa6kl9UXD3X390xOwP64O7W3c8oOfp9KfhId
-	 uKlZMsYN8kxtIJSqWfH4DtEd0fG0q8zygEZdB83k=
-Date: Wed, 7 Jan 2026 08:25:22 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-	bryan.odonoghue@linaro.org, dmitry.baryshkov@oss.qualcomm.com,
-	andersson@kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-	quic_arandive@quicinc.com, quic_shazhuss@quicinc.com,
-	quic_cchiluve@quicinc.com
-Subject: Re: [PATCH v1] serial: qcom_geni: Fix BT failure regression on RB2
- platform
-Message-ID: <2026010708-bucked-backstage-fd78@gregkh>
-References: <20260107064834.1006428-1-praveen.talari@oss.qualcomm.com>
+	b=Hsg6TQFj/oUMayh4cZF+X9LT4XX5vFPzNYkQ8uHoaj39fYWJRqgnU1482zomDZYa4
+	 UeHkKvgYOzeFywDLUN6mK45KpYDfdzC8sguox8VQHdUBnss9poY5+9YW2vw9EHFjgi
+	 Jc67gR0og5u5BXtAAoOt1npPV+U9lbXB3qTW7qoVCiFYzAoZN4/4/RVc72VP6q24hD
+	 vY0DglecAbJH77Yep1c72HyrTZ9kYOXWhZIeQLdjoDlMhWE+oW4en8IwVM7/ABkgB2
+	 ruaShzbqiZKCdNU1r3A3+yt5kMpu1i7VHXc3tFmN8nSmuLP+vuU65T5JfSesq+zfkp
+	 zOQGwZuQKCIlg==
+Date: Wed, 7 Jan 2026 08:32:09 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org, 
+	quic_mmanikan@quicinc.com, linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, George Moussalem <george.moussalem@outlook.com>
+Subject: Re: [PATCH v9 2/6] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
+Message-ID: <20260107-sticky-gopher-of-weather-f2b369@quoll>
+References: <20260106105412.3529898-1-varadarajan.narayanan@oss.qualcomm.com>
+ <20260106105412.3529898-3-varadarajan.narayanan@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260107064834.1006428-1-praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20260106105412.3529898-3-varadarajan.narayanan@oss.qualcomm.com>
 
-On Wed, Jan 07, 2026 at 12:18:34PM +0530, Praveen Talari wrote:
-> A regression in linux-next causes Bluetooth functionality to fail during
-> bootup on the RB2 platform, preventing proper BT initialization. However,
-> BT works correctly after bootup completes.
+On Tue, Jan 06, 2026 at 04:24:08PM +0530, Varadarajan Narayanan wrote:
+> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> 
+> Add new binding document for hexagon based WCSS secure PIL remoteproc.
+> IPQ5018, IPQ5332 and IPQ9574 follow secure PIL remoteproc.
+> 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> [ Dropped ipq5424 support ]
+> Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+> ---
 
-You mean "6.19-rc1", not "linux-next" here.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
 
