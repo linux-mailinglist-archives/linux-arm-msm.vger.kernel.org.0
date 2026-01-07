@@ -1,81 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-87881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1192ECFDA2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:24:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02D5ECFDB42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:38:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 970EA300D400
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:24:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 27430307DBD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:32:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160A5328256;
-	Wed,  7 Jan 2026 12:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC7BC2EAB64;
+	Wed,  7 Jan 2026 12:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFJ5sp8f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GkGk6XqK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA22327210;
-	Wed,  7 Jan 2026 12:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41058F49;
+	Wed,  7 Jan 2026 12:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767788632; cv=none; b=hqlbdSy9tfv5S8Pd1mXuLPKDeC2YAIq+b4chNcYrXr30+MJwVu7s6Oy+OmfgjEEYQYy6zBfz7iInpX+Mr9Y+pjlbPaAB8ZThobeIoMA3t6Ky1k/a5csRHDUPMjxRO7NqdOrUrGGZ8QGsTTdC0QUDVUsm5D11u6JkWGrEjOtBS6k=
+	t=1767789125; cv=none; b=J0b2PjCfjJopP9osph3ACd89XGjhmB+DWvaUCbS3UcEg1QVuYek8gvuhcwhwXzY46d9z5mBgM1fxMT588FGB5E+rifXwRm5pm4AwCqwdb+/iBgUhVYP+uyCAz2pPSdr48STISOerGpCrvaDqoqMdRBlj3u3Rot+qDuSvHtzBC08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767788632; c=relaxed/simple;
-	bh=b8Etf9Ux2d/4mljHjahgtB9DZrTyWaQ9AiYmAkqWiiQ=;
-	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=PpaRyElczx0n7xOjhPO/vf2ELfTvadkhHrvpCl6b8Je3AVxhpqcTkt5gVhrGzbiFHfR/NKJwk9wuyPuLr2sWVc/ftWOKaHMcMhcxG3U0GgerLzr1X7m3G+22eU7VeXZxgqNN4tkZQOGXlAX0KX5pgZ8/wRb0aAqsN0XJIxlG7zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFJ5sp8f; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6F3C4CEF7;
-	Wed,  7 Jan 2026 12:23:50 +0000 (UTC)
+	s=arc-20240116; t=1767789125; c=relaxed/simple;
+	bh=sfYlyiZoeUZcVn7NwfS5gMgyWT0pMwsrWiexLPWG+Lo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uG7zBLOL8Sa38Kd9Lw5AXBHKt8+6deQ8Gh9OAyDuagPMdPV4bjGCW9u/qtV0XDtXI/Qg6yJkbtcVZsCqnU74BqxPAvtq8V2d7OJ9jollj3jiNltsMcERz29Ki72gEtkcrnNLCtzZgWR3Jyg7Y5cue+pW/6BJH/7hn0q2hiJBuEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GkGk6XqK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A34EC4CEF7;
+	Wed,  7 Jan 2026 12:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767788631;
-	bh=b8Etf9Ux2d/4mljHjahgtB9DZrTyWaQ9AiYmAkqWiiQ=;
-	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
-	b=IFJ5sp8fiVS99y8gOAM4iABccbY1d+5f1Mf0fJtCVx9tusrJ4qVgCssKPQL5h3i1I
-	 c9Ac9h/h6V6DtuzySwROCCPfpp3BAAdyc9MK+8x/vVuVYF6yyAVJ1MlgniNkZzf8ax
-	 fwFepEaKVZLDUhKgCZLH+vXV/qExuYvgBohl10UQVZAihqhUQqNpC2TQHdZN1Qo51P
-	 HYp+EbzAG8SQ6YdrIRf2v9Oc+inbXg3aAUM77lr1SDmkiAdjp4Hdozzq0zhhIwZ+Vr
-	 c5lIvP9fRJse7vzi8Qg/8IGTv5vdo5FDSbKZ7bFZph3AwUDH4cZgZWVhwYMg3jeWdR
-	 I8sUlKhCJ8B5g==
-Message-ID: <49d2e8155d4ab283053c79f08c3e5334@kernel.org>
-Date: Wed, 07 Jan 2026 12:23:48 +0000
-From: "Maxime Ripard" <mripard@kernel.org>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v3 02/10] drm/vc4: hdmi: implement clear_infoframe
-In-Reply-To: <20251224-limit-infoframes-2-v3-2-7fd3cacfefed@oss.qualcomm.com>
-References: <20251224-limit-infoframes-2-v3-2-7fd3cacfefed@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, "Abhinav
- Kumar" <abhinav.kumar@linux.dev>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Andy
- Yan" <andy.yan@rock-chips.com>, "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>, "Chen-Yu
- Tsai" <wens@kernel.org>, "Chun-Kuang Hu" <chunkuang.hu@kernel.org>, "Dave
- Stevenson" <dave.stevenson@raspberrypi.com>, "David Airlie" <airlied@gmail.com>, "Dmitry
- Baryshkov" <lumag@kernel.org>, =?utf-8?b?SGVpa28gU3TDvGJuZXI=?= <heiko@sntech.de>, "Jernej
- Skrabec" <jernej.skrabec@gmail.com>, "Jessica Zhang" <jesszhan0024@gmail.com>, "Jonas
- Karlman" <jonas@kwiboo.se>, "Laurent Pinchart" <Laurent.pinchart@ideasonboard.com>, "Liu
- Ying" <victor.liu@nxp.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn
- Suijten" <marijn.suijten@somainline.org>, "Matthias Brugger" <matthias.bgg@gmail.com>, "Maxime
- Ripard" <mripard@kernel.org>, =?utf-8?b?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, "Philipp Zabel" <p.zabel@pengutronix.de>, "Raspberry
- Pi Kernel Maintenance" <kernel-list@raspberrypi.com>, "Rob Clark" <robin.clark@oss.qualcomm.com>, "Robert
- Foss" <rfoss@kernel.org>, "Samuel Holland" <samuel@sholland.org>, "Sandy
- Huang" <hjc@rock-chips.com>, "Sean Paul" <sean@poorly.run>, "Simona Vetter" <simona@ffwll.ch>, "Thomas
- Zimmermann" <tzimmermann@suse.de>
-Content-Transfer-Encoding: 7bit
+	s=k20201202; t=1767789125;
+	bh=sfYlyiZoeUZcVn7NwfS5gMgyWT0pMwsrWiexLPWG+Lo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GkGk6XqKLaGl/8j/tUCkvHRUPu5FGXepJy0ojmFTNwzNgDtZLbY42vyoyRm8ZEM4B
+	 91dywEkuqYf+i7YOFLywI8jwoJeO0ARjqIOZQ/R8OcBK1EY0JcXRGUMp7KelNJQTdx
+	 BepyMOchxH7/DqNmQGJiphOUtpskRIjSh7wjC/YphZ11lVghKdhVVdrFPPq5npC2qP
+	 bTXpfYMTuEcWvSW409C5JF1kRiFXeNuCFp+GMefGV8i2fkI6GtxbgKruLxJ/1NOtGJ
+	 cHOqiYvJa26ydKn34QsC8rh0WpC0Y+cg+fwTROdmKdLrNCjuLKa8FvuhD9d4hBr7gw
+	 7Wsqff3rWNJCQ==
+Date: Wed, 7 Jan 2026 18:01:56 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	linux-pm@vger.kernel.org, linux-ide@vger.kernel.org
+Subject: Re: [PATCH v4 5/5] power: sequencing: Add the Power Sequencing
+ driver for the PCIe M.2 connectors
+Message-ID: <pqix44ld4icxhmvaranezas7j77wcrmkfpj4xyxgxir3tmfwx7@fswnr25k2f43>
+References: <20251228-pci-m2-v4-0-5684868b0d5f@oss.qualcomm.com>
+ <20251228-pci-m2-v4-5-5684868b0d5f@oss.qualcomm.com>
+ <CAMRc=MfPq7+ZbWTp7+H388hqHoX27qbbHsLHO+xeLaceTwZLVA@mail.gmail.com>
+ <z33axfsiox73f2lklhiaulekjnqxnqtkycfylybwqnqxtx2fck@3qtas4u6mfnz>
+ <CAMRc=McS8a-1cH_y+kpze=zj2-PksHDO3SE=p3XnbEueUQt9xA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=McS8a-1cH_y+kpze=zj2-PksHDO3SE=p3XnbEueUQt9xA@mail.gmail.com>
 
-On Wed, 24 Dec 2025 03:02:51 +0200, Dmitry Baryshkov wrote:
-> Implement the clear_infoframe callback, disabling corresponding
-> InfoFrame type.
+On Wed, Jan 07, 2026 at 10:51:11AM +0100, Bartosz Golaszewski wrote:
+> On Wed, Jan 7, 2026 at 10:39 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
+> >
+> > > > +
+> > > > +static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
+> > > > +{
+> > > > +       struct device *dev = &pdev->dev;
+> > > > +       struct pwrseq_pcie_m2_ctx *ctx;
+> > > > +       struct pwrseq_config config = {};
+> > > > +       int ret;
+> > > > +
+> > > > +       ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> > > > +       if (!ctx)
+> > > > +               return -ENOMEM;
+> > > > +
+> > > > +       ctx->of_node = dev_of_node(dev);
+> > >
+> > > Since you're storing the node address for later, I'd suggest using
+> > > of_node_get() to get a real reference.
+> > >
+> >
+> > If CONFIG_OF_DYNAMIC is not enabled, then of_node_get() will just return the
+> > passed pointer. I always prefer using dev_of_node() since it has the CONFIG_OF
+> > and NULL check. Though, the checks won't apply here, I used it for consistency.
+> >
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> I think it's just more of a good practice to take a reference to any
+> resource whenever you store keep it for longer than the duration of
+> the function even if the actual reference counting is disabled in some
+> instances.
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
+Good practice you inherited from writing Rust code :)
 
-Thanks!
-Maxime
+> If ever we switch to fwnodes, the circumstances may be
+> different than static devicetree.
+> 
+> You can also do "ctx->of_node = of_node_get(dev_of_node(dev));", all
+> the NULL-checks are there.
+> 
+
+This may not be needed. I can use of_node_get() here, but the APIs are just
+fragile such that neither dev_of_node() nor of_node_get() increments the
+refcount always.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
