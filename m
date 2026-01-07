@@ -1,102 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-87940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21351CFF595
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 19:15:17 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 733D3CFF5CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 19:15:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D31683004E25
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 18:15:14 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B1EF730049E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 18:15:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 514A6354AFE;
-	Wed,  7 Jan 2026 18:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FD4A359F9D;
+	Wed,  7 Jan 2026 18:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VTI+JdNA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="j4jM5agl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Md2Ezqvu";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eF8vknuZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA9E352FB9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 18:15:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072A73587B1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 18:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767809711; cv=none; b=uo/qXg8tp29TUzEg21E9L2LNDZaH+yepaR3e0HTtehnJKJH4SB4G5m+qz29hGwkGrfGVQWE/cNi++tzQ9uobFCZzybWaQ1+ysLjJhEu4wZUKM8niiy9OV9qVPp5ogthbg/nXxXWwFXVmsLWrZBtbeFJRx9fWzYs5fsBDUU5ueS4=
+	t=1767809714; cv=none; b=iNvHENcowO29MYQmZ8ZUdlKjWDfA/Gh+QRQ2p+2Hi3tcxgjanopAfl8UPgx//oRKlDx+OFsb0mHmF7woLziD5dRa3tng/vVHwNIYei72161ArhpOxTIDmUq9odF9NZwdEPul14w9RsKl8RfT7NV343fssAtNGXtMRgYGhPM2gWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767809711; c=relaxed/simple;
-	bh=i9/GyfQ7oCfW1uA2EJ42B3bpRaDaBcnVtDJI1DBQZYU=;
+	s=arc-20240116; t=1767809714; c=relaxed/simple;
+	bh=LT/feZw0CtZODegcFJ+4Vz9a++4eaSKUzh1MRBMJ8BM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=X1R5BvMLJa4Cu4kbwXrEO/XEjDqYgTW1Cp+ddAmtwRTheKYrqGJR8GHlhboeFqmU/QJQkNU3xKzqs1L56gYpN38i2gBHUzYTjWrbPxRVdPlpRgJ37IMs19F/IGxvguKW4iroWIqwBX6ecOdJVQu3qe7e5l1+eUOrY5RjWcK1bYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VTI+JdNA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=j4jM5agl; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=Gfem+6i52K4qW1YZZbpyg0K6ZoGOS934GYmvJ9meuxAJn8WBBGWHs4NiNA4EQBfl228oVMaHidQjTnEd9WN2+edSA5rqQCrxR/GhJMoyy4n0+dmDbK4HMT5ztG3/ers7A3ex/iWrJop24x2Q3PS0jBmHe4jG1cv3eL/1HwbG88A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Md2Ezqvu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eF8vknuZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 607H3R602453883
-	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 18:15:09 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 607GQsBg1981267
+	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 18:15:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	j2BT4ALqtU5AjsTQozcF6Tmng8niaFOYcGnl/GxzzY8=; b=VTI+JdNAvshkdlek
-	Yfh5hok2VL+Ruv93fw7t3nX3JTZAOcnt9yVVeRWzxIrMrpZlkehYKArntaZh4Dhs
-	py6Lp/1rh389bEb6TO0Y+qlxVSCg2M/0T8nIrcc9kP8/orpoqquwDZOkto1AWxb/
-	cEICWw743ZtkcFMhW8qvlQ9DH1/Cd1MfDCaYRGvFcInihEn1//0v7/KskZESWGo3
-	Y69JP2reux4mxVQZ3r0Lqk9ULcvavssUs4wagaNQHwAX5YaN1Dx+U04imhGQi0iP
-	4UE/I2Koa/YNC1rzxkWL1UO7K1dW95kL0fNUN/pRltO3ShXQHw2WkytmT//QMryO
-	taMxNQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhmnbhpte-1
+	iDMa/3+oiy4vVFgOo69jkSU/S1Hmln8yfU7tzvohWvc=; b=Md2EzqvuQa88+NJo
+	eO9CT6W6zNA2/mmL8bAXb6GdF2TgbDZwRiPcGhExvC1k/rcBmLe+40l0vu3MF44S
+	QoUy/eggghWay8HBTYciFmcK5g2Aaf1FDZD9rolR0ZkMC1fbK/4XwkN295/ny6OD
+	7Hj8ZpUvDJbaSgxgOTfCtEZ/BOyzVnuN1jYl2TiJ7O858oy/50DcJLZtCL/98fOS
+	wCygVIIJJAKqG1PSF668wIDMDoHtjoc5LvKMAp7ude/wxjONNzUeXjIqQCv44rac
+	XA1DZJ9KsfhFk550JzlbWRLh4b1Kazpk8gIsV1iwDBjhCZWAHHgTWxHTv9A6e2dC
+	QiQ2Fw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhdavk62t-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 18:15:08 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b9ff555d2dso667847385a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 10:15:08 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 18:15:10 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b2e235d4d2so911651985a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 10:15:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767809708; x=1768414508; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1767809710; x=1768414510; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j2BT4ALqtU5AjsTQozcF6Tmng8niaFOYcGnl/GxzzY8=;
-        b=j4jM5aglQJ0ReL1JEzuvljRFK7eW6wJjhE/zm6Bz6oUxcFe5c/t5O5DDgTd0ZIXahh
-         0hvBuaS3DqTWZ82rHCzVmYuOO7K9u3XnqcAhG8QKmnUi5jZJY6s+bJZaLcwY9HDFlJpJ
-         jpFx7dXm6Ez4waNFxqA5p8+yZF7P/Ouhrsp88MRVwNZ85g/jRciBW/xhOa9MVt1NW8iE
-         Nu8No1s7bY82oS4PUEIGQxBToixKpRjVDl1tdbWQb7cTpMJJkJrdVFIpU6G/TSa2pHDq
-         GPxsgk2BDTtYjdqNXy+UvQOtA8Dl+sSQMXDzc4UX7Wbzm1gE56drTPxGMXQ1GMvocf8O
-         2bNg==
+        bh=iDMa/3+oiy4vVFgOo69jkSU/S1Hmln8yfU7tzvohWvc=;
+        b=eF8vknuZERuZPFoj7N71BxtZ32AYvLKWEVpoZu8KTuDPyxe5s9iC35r2NLQTUJqFWe
+         9woeYC1gQnMh8WbnqW5phq52aWuPyfpY4Aw3it2lPdgzBVYdQzb/iqdnrA8fxXk0WCEH
+         1jmZrBiHsWZVgF3xiLGVVcmV9G2lgoL5kYtR7H1zxXdV+TJM2pDigMS4SLIV71cOGCdS
+         5Rig0FZoc0BySRqzjqUpXruf4P19VTcEQPWPlstqMZHvk+vPpmtjZjMwouND+Zt2mvKR
+         gfpj5iHRqOX9RFjGhVGrEKLcjIsJG2KrtO+OUNAtLqpQ17iN8s9CBnJtXEeBcr5uLxkP
+         jw4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767809708; x=1768414508;
+        d=1e100.net; s=20230601; t=1767809710; x=1768414510;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=j2BT4ALqtU5AjsTQozcF6Tmng8niaFOYcGnl/GxzzY8=;
-        b=aIepR0x7ocicmTZGIq4jhvsxqkLUrOAXmuEgbmXJekltrZGycz5xAVs0Lm2gcVCmvV
-         lanJIZrfrXMYk6oodhYuedrsWDXnIh0VO1BatA4PY1FXMyvNxOXv1tSxfWfuKz01av8u
-         UpXW0zjZhTbkIPTxS5H8CZwob5XIkvWR8A9xZ/dkeiL18yR5R8fVplzc3U8lJPyNRoMX
-         bLQxtl3rS5mMNlE595GNNaPJSi/1HAOHDAsr8zXLKibRmqlosTOYkmPH01aFJhgjzwvy
-         svVyGBYIFmsvtjEeInaqBv3k41NhyBYLP73eF7z82QUYkbwv1Z0yPnI6dxjAJgR6Td9/
-         RFcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZRcf5aV3pZogV2sQc8xDKlBV7b/y/qw6RAOhPRXxCYxZ/sVllGpyGTTYlNojZl7C6wF+jlmKKygcwdZ/7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrgQgNrMkFCUclqzJ1WIAZ3AA3lW9J84091EtGSHspKXtnDmNK
-	R2IUVhA0qV67cqDigGO4t09ZwpLfcL2qN3sLVIv743fgzPH6fNLa1HbyKV5iqavXDKrzsV3bhcH
-	do2zkAPBuGD2n3Gc+mhxueQno0dSBtQ6j/wmofPDrEaqP4QkuWJNQFxQg3tbzQsabM33X
-X-Gm-Gg: AY/fxX7VomEdLk+IIp/IG8tCmNF/FycPRmL41Fj+apYHAF7Gq6wdA6SwWthKVnJ7kkp
-	vl15dYxN//1qjf36bAVZx3uBlUAZClTs4j3MgU5qfof6fqSIdeYpzkk3HEtzILq9XGfkTdu02+9
-	sFSBJenoMt0s71VkwERK7yHCV1giHyOj668vv6baj7jAbdzwhM+ianlRydDkBS4T/0SPjGPK0+t
-	Igh3UDcXyFR5Nv/dDrdZruNlR+27G19ZVDePoF/I/3FGNdN4U/AiodlybeU5Gvf/thxI+CgGqic
-	qFQVvvf77cVK7Bwy9PDb+C+u905uAfBudJVJcgs29vBaSuZxgjGpW+/UTIACEVnAiEwxJyvbIw9
-	mVAyt2e5Lje6sR9TmRHo+OX9eIEfb5tyEQ+vL0cjCWVoec955PEMXpLTfZ59GDRzl8TRwCzIL/c
-	A9pvqALhXhS/llEyIpJEzvhxs=
-X-Received: by 2002:a05:620a:bcd:b0:8a9:be12:75cf with SMTP id af79cd13be357-8c3893f7d8cmr453746485a.61.1767809707642;
-        Wed, 07 Jan 2026 10:15:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQiBI0nmEwHGDiwmCMtLl/jayFaEU1m0Axo7cKoiE+2HfeOqOTLbx0TrveKVWGZFW8ipORjw==
-X-Received: by 2002:a05:620a:bcd:b0:8a9:be12:75cf with SMTP id af79cd13be357-8c3893f7d8cmr453739285a.61.1767809707118;
-        Wed, 07 Jan 2026 10:15:07 -0800 (PST)
+        bh=iDMa/3+oiy4vVFgOo69jkSU/S1Hmln8yfU7tzvohWvc=;
+        b=QRKQKxDN/4nttuaVSShZrZxi5ISn3685RxmdmnEODpKRlYV7leyQY/qE59N8XHQxby
+         b1odLk9ROvSdiL8e1ldRD1BbVilZB3NHZhJ8XdAK8TsypSSHcY+rHinwwE7wO3yv9t7o
+         Lxr1925khzxOCCR7eqmHc4Ifvli+FnOrI0D9WTebeeYUW+6XQB6nDgB7CwB1ywqJ8b4f
+         9eOy5N5313rqmXlcU0JszgeU9w4FlHkgJHaKrIsMCRdlBReYkHUfUT1ETWB/1cYDAc/c
+         +8JbBwiCGgZny4DhJJVKpo5ynyHASL1nDiysWBcYm9FXfeKhVXop7ibpBy7YFxUOGelA
+         Fmjw==
+X-Forwarded-Encrypted: i=1; AJvYcCWjEqZOxR6HccO7O7oOqcPIYLuZU820HR2KS4dJmG7HFwq/0BvBwFWl/Deude/srUScl5ywW/rAz1ShnhCI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLaLqGH4mp/FugdR1OuSztMf2Teor9GuYKeVnGf001IW65gCeb
+	z1zagC9gn60Otcfpv0SNyOeJMkA+oFgZDnBNHRrZJVUK3Ng3ynswf3gMyoETRKoDWpvfezpI5YO
+	nQxDK+h186m7UvSNYpMSbkWrno/cfliUGH1spG7v68XJkH3J1XmrcXV2cR/QLHqjbw73I
+X-Gm-Gg: AY/fxX6+lIfEREPvyIijaaDC0mFTXwHuGcayHXEGzJlOrGVGb/kKiIOoDqE8HXlw7R4
+	Ws2fsdfIVsdOw2FTnAHd3mZ1RLCmnsCWdxyZV5i0AG9ydgqNHDxKpRkNIhrOWJ9O5H9z1w8bd3Q
+	Wi7pIAfwud3pzZbc5Zunmy10hYBkmliZ1McjP//TQGs4rfWo+laYC/knvTy9YDPObMm7TKMsgr6
+	vVA8Lf0E7rvo6g+RoU972q4M2XRzqz7EpdWVTEHsm0G8jpSKszmeDTW9kaEZFIJKSSp3kJcoGsk
+	t2aFIpUiso/dacAm8zHtJ4z0RmOnuwJD/+v7S07kd1ZIdKpOlsCiUm3EMtJbhj14brt145jjpK8
+	+sbYGvHucop2fixRRI4nTzdUFL3q5bl/wrJsEWG6J0otiAKCZLviw4f1DDjKBD5gDBb8OmaOl+W
+	GgW+Yl7y8KLtQ+2Fw/XHhYfD0=
+X-Received: by 2002:a05:620a:284d:b0:8b0:f8c4:a5ff with SMTP id af79cd13be357-8c38939548dmr415672685a.23.1767809709956;
+        Wed, 07 Jan 2026 10:15:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNnSAiO2TN35uowVz5nUxPTarPKtrJKczFdjq8YtoRDL79CU00FYbWgXjKjI0hV5LSFGnXqg==
+X-Received: by 2002:a05:620a:284d:b0:8b0:f8c4:a5ff with SMTP id af79cd13be357-8c38939548dmr415665885a.23.1767809709293;
+        Wed, 07 Jan 2026 10:15:09 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d6988asm1436884e87.80.2026.01.07.10.15.06
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d6988asm1436884e87.80.2026.01.07.10.15.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jan 2026 10:15:06 -0800 (PST)
+        Wed, 07 Jan 2026 10:15:07 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 07 Jan 2026 20:15:00 +0200
-Subject: [PATCH v4 03/10] drm/sun4i: hdmi_enc: implement clear_infoframe
- stub
+Date: Wed, 07 Jan 2026 20:15:01 +0200
+Subject: [PATCH v4 04/10] drm/connector: make clear_infoframe callback
+ mandatory for HDMI connectors
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,7 +105,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-limit-infoframes-2-v4-3-213d0d3bd490@oss.qualcomm.com>
+Message-Id: <20260107-limit-infoframes-2-v4-4-213d0d3bd490@oss.qualcomm.com>
 References: <20260107-limit-infoframes-2-v4-0-213d0d3bd490@oss.qualcomm.com>
 In-Reply-To: <20260107-limit-infoframes-2-v4-0-213d0d3bd490@oss.qualcomm.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -140,77 +140,181 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1354;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5425;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=i9/GyfQ7oCfW1uA2EJ42B3bpRaDaBcnVtDJI1DBQZYU=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ2bcoiW5J9/tWb3J4tHugrKAs3JeyiZt4rWpsWICpksuC
- jCtyXnbyWjMwsDIxSArpsjiU9AyNWZTctiHHVPrYQaxMoFMYeDiFICJiH5k/1/oclnK/Zz/ja8L
- v6t7HOL18cg1yeBbaeqq8pOvrnf+XBOj/s8szY+lzvBERUkLGakuejhjjs20u3oewa9eNacmbZf
- ZErVva/T+iCPe/yKqIoU+z/jzp+2KV28zo9cVjnoraUd13pIVM4oiTrkH6U3OTdOSsJwVt8L5h/
- /T3zkX1/bOvsVXv8vj+1+jxyrXD8c0ec7+2mYVenlOTuTBvsSSQqvGuY38Xj3Tv9TeX6BzUVOlc
- 4rNlrpcI3a1MhGFq3s68l8oMFjf+RBpdHu3yN9MrYxg6YlHexbMklnWv1mXiTVGP2Lax/1P8qs4
- j9ptzHJSW9Jgcn/7ST4zM4W/whffsC+fsnRj8rbPKZ+zAA==
+ bh=LT/feZw0CtZODegcFJ+4Vz9a++4eaSKUzh1MRBMJ8BM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpXqKkh8Uw4zR96uxdfP3B5zJVi4OZsf/KLRV9b
+ W7ObW3B+sCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaV6ipAAKCRCLPIo+Aiko
+ 1b8ZCACVHXOVdotvxgogUT3C9rJjVAwz5C7cHtd38CQCrPUocd+kYKlETxwvuPGlVJvCHUeAM8X
+ 5/dbL3WQ4QoPcR1iBb8oDv1v6oB7mJeoOsV/aJpocz5lRWP8NYncKNG1ePRkGEpeU3WHjpZqIFS
+ kYhO2EzWmB1sJ9inh/CWFfZvf4ElzxfTYGmj/kCkM/z5sVjYqKRiqW7x7HsR8MtVNsWKFqCfk3V
+ dVqKuC0OSU4IUdW2h3I1weh+JiTliULMhONr5eVnvaNom/JZ5QKI3oJK+lJB7grw4QWcRHvOVP2
+ EkMSiWdtnpNVOEWxdQ2Q6yJ+NQAxzjfP/bYkeyAmuPwG08rp
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDE0NCBTYWx0ZWRfX/+23tCKJcXZu
- Kd+3NUyBSH9884uohIWMpdolu0fTzEdkWHYrxqWfrAzViNapgObPzyaGirjUnDv9UeNeRzPmvhr
- pnH0Y23CbuJpUGGvcECSI587M9qaHiqn3EhzZDx32WJW5ZiRxa2W/5vFZsyeS0SPYGylVoSlZ3U
- q9C/G5g7kvFfud9mHL7c99Q2dTKz+aS6QVaAlA890wt+41fUVKBkFTqBaCoCg2qvy22s5E4TVMD
- qxHcTM8lNyMCDdI+T9Ql9O1z/Igo9nUVrlwGlvnY4gdtg9tlsBHWLlUzXezNyzCnq9ufZIJJFl3
- eDN8KmlOaRWJ+sPtGTbwKmVRy8gbi4tiLh7dqbQcU0wnHJlPemq/tDGEiZ/Nhee7Rc5XJDYu5Wz
- 3NDM1L0L7WVMtWr2fH3RBNQotO4bXUd4lXxmRRjdd/QYXIdH+8y9oAISW/vAdYAQ/zCyl1+pcJk
- xf9LYEhvmTQ95KwHyiw==
-X-Proofpoint-GUID: oCNxuIaD_4dwuc2dI_7hy270UqGdgPhC
-X-Authority-Analysis: v=2.4 cv=eIkeTXp1 c=1 sm=1 tr=0 ts=695ea2ac cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDE0NCBTYWx0ZWRfX7qkqX37gPvAz
+ U+7wQdiO2G/yz4N/WTxwWsiGPV8e3RqqjLeO0N28ql+2/nZtwbL6d/Cu6wBhxYWdZ6hkLfCzQdJ
+ 3YJ4O9L6Ygpi2FM5Sf545PctBG4haIv/sU9Xvny0nG2wp7pzSSP09wM/hDVot/i0wlRIq0ikRwc
+ 9GPRNghQbFIZ3pmSnmdWwUC8EpftTfmjy0IWFbHmmjejaK4wMeO2jxvLAecNtHRvae/a/to1Ibq
+ 1JMWaasC8pvytG387LxsERzLU9PF/3BWlGSgaIqPsD6yf19FKJIxu3xzUx2ux+fqE0m2P6Q0c30
+ UB1t+mO8G2IJrdARQbpV2CRpKdgaW0eIdpDUjCyk3Q3/KMzr0kqKiVyP8X4vq05lYR5DUPK8mCl
+ m7uMLa60uQDvj4i15ENlyJW4WnAzYPKEVM1vO7eGc+TGTTBJHZK1W1vpm1D7hvg7FApxGx1XBv7
+ T6AzjKF+edtwlg/3/Rw==
+X-Proofpoint-ORIG-GUID: GFzjc_qbLAInsFQu-pYrh1DU18SjjlL4
+X-Authority-Analysis: v=2.4 cv=comWUl4i c=1 sm=1 tr=0 ts=695ea2ae cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=J8re_t9gDAGCMx8MSDUA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: oCNxuIaD_4dwuc2dI_7hy270UqGdgPhC
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9fyoTQa5ixSHU3Y6h0oA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: GFzjc_qbLAInsFQu-pYrh1DU18SjjlL4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-07_03,2026-01-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 malwarescore=0 suspectscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601070144
+ impostorscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601070144
 
-In preparation to making clear_infoframes callbacks required, add a stub
-to the sun4i driver.
+We already require both hdmi_write_infoframe and hdmi_clear_infoframe
+for bridges implementing DRM_BRIDGE_OP_HDMI. It makes sense to require
+the clear_infoframes callback for HDMI connectors utilizing
+drmm_connector_hdmi_init().
 
+Acked-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/drm_connector.c                    |  4 ++++
+ drivers/gpu/drm/tests/drm_connector_test.c         | 15 +++++++++++++++
+ drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c | 22 ++++++++++++++++++++++
+ include/drm/drm_connector.h                        |  2 +-
+ 4 files changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-index ab0938ba61f7..6263ee15880a 100644
---- a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
-@@ -40,6 +40,14 @@
- #define drm_connector_to_sun4i_hdmi(c)		\
- 	container_of_const(c, struct sun4i_hdmi, connector)
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index 4d6dc9ebfdb5..40e025712c9b 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -600,6 +600,10 @@ int drmm_connector_hdmi_init(struct drm_device *dev,
+ 	if (!(max_bpc == 8 || max_bpc == 10 || max_bpc == 12))
+ 		return -EINVAL;
  
-+static int sun4i_hdmi_clear_infoframe(struct drm_connector *connector,
-+				      enum hdmi_infoframe_type type)
-+{
-+	drm_warn_once(connector->dev, "clearing of AVI infoframe is not implemented\n");
++	if (!hdmi_funcs->clear_infoframe ||
++	    !hdmi_funcs->write_infoframe)
++		return -EINVAL;
 +
+ 	ret = drmm_connector_init(dev, connector, funcs, connector_type, ddc);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/gpu/drm/tests/drm_connector_test.c b/drivers/gpu/drm/tests/drm_connector_test.c
+index 22e2d959eb31..f356ea695ae7 100644
+--- a/drivers/gpu/drm/tests/drm_connector_test.c
++++ b/drivers/gpu/drm/tests/drm_connector_test.c
+@@ -25,7 +25,22 @@ struct drm_connector_init_priv {
+ 	struct i2c_adapter ddc;
+ };
+ 
++static int accept_infoframe_clear_infoframe(struct drm_connector *connector,
++					    enum hdmi_infoframe_type type)
++{
 +	return 0;
 +}
 +
- static int sun4i_hdmi_write_infoframe(struct drm_connector *connector,
- 				      enum hdmi_infoframe_type type,
- 				      const u8 *buffer, size_t len)
-@@ -236,6 +244,7 @@ static struct i2c_adapter *sun4i_hdmi_get_ddc(struct device *dev)
- 
- static const struct drm_connector_hdmi_funcs sun4i_hdmi_hdmi_connector_funcs = {
- 	.tmds_char_rate_valid	= sun4i_hdmi_connector_clock_valid,
-+	.clear_infoframe	= sun4i_hdmi_clear_infoframe,
- 	.write_infoframe	= sun4i_hdmi_write_infoframe,
++static int accept_infoframe_write_infoframe(struct drm_connector *connector,
++					    enum hdmi_infoframe_type type,
++					    const u8 *buffer, size_t len)
++{
++	return 0;
++}
++
+ static const struct drm_connector_hdmi_funcs dummy_hdmi_funcs = {
++	.clear_infoframe = accept_infoframe_clear_infoframe,
++	.write_infoframe = accept_infoframe_write_infoframe,
  };
  
+ static const struct drm_connector_funcs dummy_funcs = {
+diff --git a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+index 80f819a9ff5b..cfa14a6eb97f 100644
+--- a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
++++ b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+@@ -78,7 +78,22 @@ static int set_connector_edid(struct kunit *test, struct drm_connector *connecto
+ 	return ret;
+ }
+ 
++static int accept_infoframe_clear_infoframe(struct drm_connector *connector,
++					    enum hdmi_infoframe_type type)
++{
++	return 0;
++}
++
++static int accept_infoframe_write_infoframe(struct drm_connector *connector,
++					    enum hdmi_infoframe_type type,
++					    const u8 *buffer, size_t len)
++{
++	return 0;
++}
++
+ static const struct drm_connector_hdmi_funcs dummy_connector_hdmi_funcs = {
++	.clear_infoframe = accept_infoframe_clear_infoframe,
++	.write_infoframe = accept_infoframe_write_infoframe,
+ };
+ 
+ static enum drm_mode_status
+@@ -91,6 +106,8 @@ reject_connector_tmds_char_rate_valid(const struct drm_connector *connector,
+ 
+ static const struct drm_connector_hdmi_funcs reject_connector_hdmi_funcs = {
+ 	.tmds_char_rate_valid	= reject_connector_tmds_char_rate_valid,
++	.clear_infoframe = accept_infoframe_clear_infoframe,
++	.write_infoframe = accept_infoframe_write_infoframe,
+ };
+ 
+ static enum drm_mode_status
+@@ -103,6 +120,8 @@ reject_100mhz_connector_tmds_char_rate_valid(const struct drm_connector *connect
+ 
+ static const struct drm_connector_hdmi_funcs reject_100mhz_connector_hdmi_funcs = {
+ 	.tmds_char_rate_valid	= reject_100mhz_connector_tmds_char_rate_valid,
++	.clear_infoframe = accept_infoframe_clear_infoframe,
++	.write_infoframe = accept_infoframe_write_infoframe,
+ };
+ 
+ static int dummy_connector_get_modes(struct drm_connector *connector)
+@@ -2441,6 +2460,7 @@ static int reject_avi_infoframe_write_infoframe(struct drm_connector *connector,
+ }
+ 
+ static const struct drm_connector_hdmi_funcs reject_avi_infoframe_hdmi_funcs = {
++	.clear_infoframe = accept_infoframe_clear_infoframe,
+ 	.write_infoframe = reject_avi_infoframe_write_infoframe,
+ };
+ 
+@@ -2543,6 +2563,7 @@ static int reject_hdr_infoframe_write_infoframe(struct drm_connector *connector,
+ }
+ 
+ static const struct drm_connector_hdmi_funcs reject_hdr_infoframe_hdmi_funcs = {
++	.clear_infoframe = accept_infoframe_clear_infoframe,
+ 	.write_infoframe = reject_hdr_infoframe_write_infoframe,
+ };
+ 
+@@ -2790,6 +2811,7 @@ static int reject_audio_infoframe_write_infoframe(struct drm_connector *connecto
+ }
+ 
+ static const struct drm_connector_hdmi_funcs reject_audio_infoframe_hdmi_funcs = {
++	.clear_infoframe = accept_infoframe_clear_infoframe,
+ 	.write_infoframe = reject_audio_infoframe_write_infoframe,
+ };
+ 
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 8f34f4b8183d..4543833acdec 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -1253,7 +1253,7 @@ struct drm_connector_hdmi_funcs {
+ 	 * called multiple times, once for every disabled infoframe
+ 	 * type.
+ 	 *
+-	 * The @clear_infoframe callback is optional.
++	 * The @clear_infoframe callback is mandatory.
+ 	 *
+ 	 * Returns:
+ 	 * 0 on success, a negative error code otherwise
 
 -- 
 2.47.3
