@@ -1,79 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-87776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F476CFC0A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 06:05:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E43CCFC0C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 06:16:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1AED33028F56
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 05:05:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9273B30407E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 05:16:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C07DF23A98E;
-	Wed,  7 Jan 2026 05:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 020712620DE;
+	Wed,  7 Jan 2026 05:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pcyRdJkw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YQrBYa9s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBF414F9D6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 05:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29A33C2D
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 05:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767762332; cv=none; b=b8XA+oxKgE8Q52P9gX+7zu5D2W5Ex+143H2I43hMbCeCc4svM7J5WyyOicH+k9QC8KZXcRh1cWojHA6d5GZQfd5xDA3DUFS2+PM+Zuov+ADaAUx4DnloHfvApH7BGQNOGXVXdQy9K9bnL6Dvojv0qrHU3ISvK3ykEg5gZZ1RVqs=
+	t=1767763000; cv=none; b=cso/FNwygMQrPR4uclTv1rG51R9pvTZkl3dKFpYLzdy3upA/uJhER9klGaV0pl2+Tg/MqK8gAvnN5wmN1wIXXPBE0L/oeAMcctQaPwOezM8omfF6Ytb2ubQTNeVxdYh8mTwpfmn53mPToEWcjZ+gzv501KsCBnBxbWbE1GfPsRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767762332; c=relaxed/simple;
-	bh=pd2/fcqUhJclWH32KEWbh64pvXRMyiVQrFA49oFqlMo=;
+	s=arc-20240116; t=1767763000; c=relaxed/simple;
+	bh=r0Z/FGLdNUJcWaP0KFFmDyvF1sQpF0U/FrXBPBCEVeg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZJv/h6vAHOoTuFE6RhOiay0+qWPBbMPaBFISbA3/WbJ2qingbovvJbl1PEJNEU2HngWLIrlH9LRT3DCZSdeHRWrRZ87XsOCGpCPOfmtPekkiYju9GMbJaCDuPL9B+WLQGr1/2j3UXPyqffdMjqD6sW8xFp+4eal/d7EHWIJrBIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pcyRdJkw; arc=none smtp.client-ip=209.85.208.176
+	 In-Reply-To:Content-Type; b=dnC4YlMmuxNLh1UUXzI1sKoaAVwCcd80WT0Aac8Gx78KWI5wJa/7A2PlI4eIYmYNQT+WRgVan6SLSFzVcJNFs19ur1Y720SoR79VAR3CurF771hnw4fVEjs1x5nKRgGriuIJ0zzn/1EPj4C5PVrlbbVx/qMwNN4A99vs3/xls4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YQrBYa9s; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-382fc524cf3so1430441fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 21:05:30 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-59b6babd619so114541e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 21:16:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1767762329; x=1768367129; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1767762996; x=1768367796; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KElYrA/rOSwZEsZrUs10djaGaBsLTXTb05RNZ4yG4gk=;
-        b=pcyRdJkwi5Q4ddoYEs9LdcYzz28eRTj2mcBqi3D76R7yTmtFvT0qc/97qly/NK3Ouq
-         eRMFQkxoOomaytTcVqriiwGjgPWsOythSo5JpPWqYZKotB1Z+TglA6GKKuABfgvTaPO1
-         r0fo0o9QzHCA46E8xDY7cy/2wWU0IyKEro6T2bkt7s6bZNL0Ztal+bXVv8yckJFltD24
-         ZBOEe8Hx6ZDqwe1ipB3YEpOkzVfqoFhHU6E36msAhuqHHuVR1FvNbtWRTaOg3v+TPdgE
-         nGDvlTRC6ssQAeYHeyitsV35sUQo66X0+eD4lEUTs9W4dcjrqCZ4RdJKeFd2TlYHnK79
-         /F4A==
+        bh=rqAELyi4+X9hoxR9GKK5xZxWKWw4/73gk/G+MxbQFVg=;
+        b=YQrBYa9s8m08TXv6+GSJc9guZIiPsJ6VjOe3NCsO/Y/A9koHl6fW1JFGy3hFpNlAHb
+         YEjSh2ppdiMHy//btSKDx/HzctBzqRz9Zv51BBmLkw898f3Y7vF/+34VS/kRhYtZGIdT
+         nqz7UOZ9q9ywLy287cmeniOqrOAteX+a/4LJA1kZksTuC/5V41skF1btJmviznJAwr7n
+         +nAH7X7T1R8RtKrty8qTwUg9+J93XpifS4fkcASzZZ96FXT72yTgX5xilqvc5KDeeo3L
+         3yK7cvDwqgmnx+wtscwbieJLAalqAvZifclU3DRmfE6ymnCG534AWPQ0QbS82WcZ5SWw
+         3R7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767762329; x=1768367129;
+        d=1e100.net; s=20230601; t=1767762996; x=1768367796;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KElYrA/rOSwZEsZrUs10djaGaBsLTXTb05RNZ4yG4gk=;
-        b=ZNSxN5TcdY+WYbrFowMr6HTYX6v4QalM+PzcF8huHlOHqUl9KyHQq9VbShHq+3hqGQ
-         bA2Uc2fajpivvYaUWCVOlodTPNS6O80xa3UFt7Khr2nWtkYnoIgYn/9y3bPKZxrq7yoR
-         C5luhIc61aJnN0X5KpCZHMN1Ekrkr+bT97M3hzFhzEzeje0rdI65dTBDFbF0HAiC4GsL
-         +b0giT3tyz0b0LIQzyUJbDkA5fmVkfus4O2agza2ycj1YVCsxFwTrmdAJyrWBg3IURG1
-         Cl+lqnzVFjqCmiPHhG5MVikIVHeZGrkAXf3EPHJbb4yVDs43R1ZvWuHdOzJ1x+IsAxme
-         giRg==
-X-Forwarded-Encrypted: i=1; AJvYcCWsdD74NQM29jog3uQFo33fRAhfxZ6p4hOIm4oN7NxbpsJQ3LJMimipg5Fdu4W7w0ExLs2cxQ6oAWl3b7v9@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8TYSeBznccboLFkEfxfd1ho1KpUGiwiSN3bU291FHI5JUKE05
-	9OYJDpaS1IAJ+/hYxc4abPMDasOFlM8lPtU2R64GdtrKbxqZVRkORcllFFyriOZFTJw=
-X-Gm-Gg: AY/fxX7cHrqcuLyL4CkrsHdgkmr2c4/G8I5iuuwQuyYmib4eY5cOYbBtNV1SH2Ly/Kr
-	8nM90aNS7Zixg3jwmNNUbXT8M1rSwY9hcewmSFDT7KCVT3PGpJFtWnPV4C4XKt4zEdy+1E/AT9w
-	7Qlpfa46t9e/pZ2z3+/QrdlUvuti9Wo1h5pfMBaUCDldjr4ruAckEaPXl6Cv6SQE7FVoq/ooAiU
-	Nlu/G0FRva9D/UJKhr8YTZecX/+VfQ7hQOOwOOcPeW9TSxglPBXLw2Gk9jHu1E9n6g5vURpq5sT
-	h0diKZh+XvjHgRuJ9np2zFt5xLgHT8+tGk3EYKGoMB/D8a2aQGRKxTGf1j8oVnbl06VbYwD+LeV
-	Xh7C0uPP6sefW7J9Cz6Y4lZDlE42oZjLYTpu/ksgW1MGtoFAxjRkcb2ClmDp2S3bIM0fL/NbVhF
-	H/UNz1gHsYzZ/uQApcUcFhKL0k45ieEBUx7QIZypo7X7cAQKU2tAWwq7L/b4drKhxO6g==
-X-Google-Smtp-Source: AGHT+IEiZZ20zSl7p6JXD26XIIhK+kk4PNHiCUsnUoutwqu0xYqDlZyc/SSOIPlJXZxKrfSpdnUXNQ==
-X-Received: by 2002:a05:6512:3e03:b0:597:d7a1:aa9c with SMTP id 2adb3069b0e04-59b6f043c1bmr252030e87.3.1767762328756;
-        Tue, 06 Jan 2026 21:05:28 -0800 (PST)
+        bh=rqAELyi4+X9hoxR9GKK5xZxWKWw4/73gk/G+MxbQFVg=;
+        b=qHfqL23fFo/M+Sig4N9RFenu8JmOzVmBqEmNEugJKGcime+uk/5/rPocvbv+G+iULA
+         OqzWuK9jifdR7AsIBI3kuy1i1DwDhlXPA98Kqw5au2NZy4dTHIvy9eMIlCJxQWmBDP9y
+         q3DxqMRCYqWJcZPlByWQAgK8/43f9clSTSPOmup1ehjulyt1Ofpg8foJOSkLLtXZReNZ
+         hx+pg3DqDf+3b8atv3kFeBcInouuYdM3SXnQOFAkpgfG9WOLLFLrwUVvf8SY3OhzA3uC
+         i4JBZihTqwD2k8v4ESFGH9tZSEjC0J51T65yeELBxa4ZofksgBwUJ7T6OFkfVdrvssMJ
+         JhYA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaC5Aqu8OtsU/ik1+lbZtnoikK0aSr/9zRKKSmog8dw9ohvKi0mkLhhn3eqHKLU1aB8KoPudag+HtLE4mT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzo7ggucNfqJsKzO0VFRPC/4oMXUxB0vGSp35zCmhS33IDiSe5r
+	fJvdLUHytzxSDuKrP4kUcZ4kcBIZo2A/LDvIRHacSw5rdxM9VLWxWdhh3o4mlSVFGYcIR2QCg4I
+	uJXRB
+X-Gm-Gg: AY/fxX4HG5eiMIAlVYuCR2pqg3JVuIZyx9iUUmfmcrygsIrl1vEv0Eeh0LB+yODsOTj
+	RM913ZZmIhWc1C05/f9l/sHfnF5pNE0y5pUQrxKapQUodi/JvaZPkq7M+hEIXnVAXoUXlnf1CwH
+	MhgaaB3G2y4/FA8qceSgmkSFbmL26ee1hRG6w2UHJxi61/h1AaqfzA/hj009ChIYIplhdDkWuRx
+	p5LdbKxEBrGyyvIPYS8wSu40+jC6pxO/OBaZ9bZibn/3tEMjonywvFHn6QLayKUE6KV01XKMW3L
+	U24U1pj8NsIdpdCEUoZrifvdeISAaE7LoPHcxvjzmcQx7SDvoV7JXlK46zSH/L9jQfcTAMPzJMy
+	lQQeZyoIEP3Bb8dlGAqmIjs7S0Z0v9Ie1BK0zXVgZzuO/r7w5j+GVbM6qfw47LQecC1ZsfXpi84
+	YLVIBoaA3h8vgu7QgtDMuOjQ38WQZGB1uIS4fRhxW/h/jS2hEGY+JiXptJEByPfPHrhw==
+X-Google-Smtp-Source: AGHT+IHpD7HZvIJALwMPTqhikXe6Kx/ivzmXk1SXf0Q/2OaBXAZk7P6dm/tG48Z5K4TR/Q3NzHJ81w==
+X-Received: by 2002:a05:6512:4016:b0:595:9161:f837 with SMTP id 2adb3069b0e04-59b6f047f21mr207025e87.4.1767762995882;
+        Tue, 06 Jan 2026 21:16:35 -0800 (PST)
 Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b6addaab0sm693410e87.28.2026.01.06.21.05.27
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d5db5fsm1087038e87.56.2026.01.06.21.16.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 21:05:28 -0800 (PST)
-Message-ID: <bbf0dcd9-d0f2-49a6-a2f2-6ec9376f2f59@linaro.org>
-Date: Wed, 7 Jan 2026 07:05:27 +0200
+        Tue, 06 Jan 2026 21:16:35 -0800 (PST)
+Message-ID: <e91414c6-fc89-4b38-a5be-f282c8601b5f@linaro.org>
+Date: Wed, 7 Jan 2026 07:16:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,189 +82,54 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-To: Richard Acayan <mailingradian@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: talos-evk-camera: Add DT overlay
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Robert Mader <robert.mader@collabora.com>, Bryan O'Donoghue
- <bod@kernel.org>, David Heidelberg <david@ixit.cz>,
- phone-devel@vger.kernel.org
-References: <20260107043044.92485-1-mailingradian@gmail.com>
- <20260107043044.92485-6-mailingradian@gmail.com>
+ Konrad Dybcio <konradybcio@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+References: <20260106-sm6150_evk-v2-0-bb112cb83d74@oss.qualcomm.com>
+ <20260106-sm6150_evk-v2-4-bb112cb83d74@oss.qualcomm.com>
+ <ndexzb5bo2rxjsj7jkf3bevbb6vmtjpuuhxbonpf3v5csxnjtu@sotufkkvfc4r>
+ <f09670ed-1aba-4622-94b2-85ade831f7fa@oss.qualcomm.com>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20260107043044.92485-6-mailingradian@gmail.com>
+In-Reply-To: <f09670ed-1aba-4622-94b2-85ade831f7fa@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/7/26 06:30, Richard Acayan wrote:
-> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
-> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
-> support for it.
+On 1/7/26 05:05, Wenmeng Liu wrote:
+> On 1/7/2026 2:23 AM, Dmitry Baryshkov wrote:
+>> On Tue, Jan 06, 2026 at 05:39:56PM +0800, Wenmeng Liu wrote:
+>>> Enable IMX577 via CCI on Taloss EVK Core Kit.
+>>>
+>>> The Talos EVK board does not include a camera sensor
+>>> by default, this overlay reflects the possibility of
+>>> attaching an optional camera sensor.
+>>> For this reason, the camera sensor configuration is
+>>> placed in talos-evk-camera.dtso, rather than
+>>> modifying the base talos-evk.dts.
+>>>
+>>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/Makefile              |  2 +
+>>>    arch/arm64/boot/dts/qcom/talos-evk-camera.dtso | 63 ++++++++++++++++++++++++++
+>>
+>> Is it possible to attach other sensors? If so, overlay name should
+>> depicit which sensors are attached (compare this to the RBn boards where
+>> specifying "vision kit" defines all sensors attached to the device).
 > 
-> Co-developed-by: Robert Mader <robert.mader@collabora.com>
-> Signed-off-by: Robert Mader <robert.mader@collabora.com>
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   .../boot/dts/qcom/sdm670-google-sargo.dts     | 104 ++++++++++++++++++
->   1 file changed, 104 insertions(+)
+> Okay, we previously had a discussion on this. I will rename the file to
+> talos-evk-camera-imx577.dtso.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> index ed55646ca419..ec447fe3959a 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> @@ -172,6 +172,34 @@ vreg_s2b_1p05: vreg-s2b-regulator {
->   		regulator-min-microvolt = <1050000>;
->   		regulator-max-microvolt = <1050000>;
->   	};
-> +
-> +	cam_front_ldo: cam-front-ldo-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_front_ldo";
-> +		regulator-min-microvolt = <1352000>;
-> +		regulator-max-microvolt = <1352000>;
-> +		regulator-enable-ramp-delay = <135>;
-> +
-> +		gpios = <&pm660l_gpios 4 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&cam_front_ldo_pin>;
-> +		pinctrl-names = "default";
-> +	};
-> +
-> +	cam_vio_ldo: cam-vio-ldo-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_vio_ldo";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		regulator-enable-ramp-delay = <233>;
-> +
-> +		gpios = <&pm660_gpios 13 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&cam_vio_pin>;
-> +		pinctrl-names = "default";
-> +	};
->   };
->   
->   &apps_rsc {
-> @@ -392,6 +420,61 @@ vreg_bob: bob {
->   	};
->   };
->   
-> +&camss {
-> +	vdda-phy-supply = <&vreg_l1a_1p225>;
-> +	vdda-pll-supply = <&vreg_s6a_0p87>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&camss_port1 {
-> +	camss_endpoint1: endpoint {
-> +		clock-lanes = <7>;
 
-Please remove the copied bogus 'clock-lanes' property, here it has no impact
-and here it's value is just some random number.
-
-> +		data-lanes = <0 1 2 3>;
-> +		remote-endpoint = <&cam_front_endpoint>;
-> +	};
-> +};
-> +
-> +&cci {
-> +	pinctrl-0 = <&cci1_default>;
-> +	pinctrl-1 = <&cci1_sleep>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&cci_i2c1 {
-> +	camera@1a {
-> +		compatible = "sony,imx355";
-> +		reg = <0x1a>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <19200000>;
-> +
-> +		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
-> +
-> +		avdd-supply = <&cam_front_ldo>;
-> +		dvdd-supply = <&cam_front_ldo>;
-> +		dovdd-supply = <&cam_vio_ldo>;
-> +
-> +		pinctrl-0 = <&cam_front_default &cam_mclk2_default>;
-> +		pinctrl-names = "default";
-> +
-> +		rotation = <270>;
-> +		orientation = <0>;
-> +
-> +		port {
-> +			cam_front_endpoint: endpoint {
-> +				data-lanes = <1 2 3 4>;
-> +				link-frequencies = /bits/ 64 <360000000>;
-> +				remote-endpoint = <&camss_endpoint1>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->   &gcc {
->   	protected-clocks = <GCC_QSPI_CORE_CLK>,
->   			   <GCC_QSPI_CORE_CLK_SRC>,
-> @@ -490,6 +573,14 @@ &pm660_charger {
->   	status = "okay";
->   };
->   
-> +&pm660_gpios {
-> +	cam_vio_pin: cam-vio-state {
-> +		pins = "gpio13";
-> +		function = "normal";
-> +		power-source = <0>;
-> +	};
-> +};
-> +
->   &pm660_rradc {
->   	status = "okay";
->   };
-> @@ -508,6 +599,12 @@ led-0 {
->   };
->   
->   &pm660l_gpios {
-> +	cam_front_ldo_pin: cam-front-state {
-> +		pins = "gpio4";
-> +		function = "normal";
-> +		power-source = <0>;
-> +	};
-> +
->   	vol_up_pin: vol-up-state {
->   		pins = "gpio7";
->   		function = "normal";
-> @@ -547,6 +644,13 @@ &sdhc_1 {
->   &tlmm {
->   	gpio-reserved-ranges = <0 4>, <81 4>;
->   
-> +	cam_front_default: cam-front-default-state {
-> +		pins = "gpio9";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-
-Likely this one could be omitted, the proper and expected GPIO configuration
-should be done by the GPIO framework itself.
-
-> +
->   	panel_default: panel-default-state {
->   		te-pins {
->   			pins = "gpio10";
+Other camera or display .dtso names commonly repeat the name given by
+the vendor, and the bare minimum is to name it the commit message or in
+the code. Is it Arducam 12.3MP IMX577 Mini Camera Module or something else?
 
 -- 
 Best wishes,
