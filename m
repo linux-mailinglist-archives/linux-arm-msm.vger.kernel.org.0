@@ -1,140 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-87923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4DE6CFFA37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:06:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D081FCFFBFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:26:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D9EDD300429C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7BCB53041F50
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:26:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3565332E130;
-	Wed,  7 Jan 2026 14:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7050A3431FD;
+	Wed,  7 Jan 2026 14:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fvRV1H1u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJGp+/42"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30E83314B9;
-	Wed,  7 Jan 2026 14:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1845233D6E1;
+	Wed,  7 Jan 2026 14:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767795123; cv=none; b=hDZdeq6WvB91hqxPEHr0yATFtS7CCXRUUwLM/c1GalRNoYBqJjceIxMV50YGyB4FKj5zAuqySh6L5Ru4Y3Cn1ON0HwHrAyRWCSMCYYSgo3HcAzm7v6k7DezTba5/pAczTf6BcuRyx9XzXEVlwmm7vH2j3UlEmpKE3+X4YNMOt8w=
+	t=1767796599; cv=none; b=q2r4KccmGj9SxpzQ9biDIHe23gxthBRMejwxtMPMlKA0pa/pUrn+dCPWijobSI9HMejDZY5y0JIIbWohpSfWs2Ac+sUD58yszLPu6Tj3Qyu2HwEE9bi8fABfhuHcNviDAWlA9LqU53SWka/tEW8E10sDYeb/MX2rJex6fPoN4P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767795123; c=relaxed/simple;
-	bh=U+tk3DDPxGRKAhejJMqtVSVcBPgVBuu7LnM0goJ2LSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GE0BwPVB6TWZ6hKPCtIHtkUj441dzGskkKlGopYuEmgyJeSMr5mXVQXX6MUbkQ+is3SF/Mh1ZERqSUBAraMP5OTKaS177fe4TtuIHG1TtrwTb5w0FPhMAYxKKP7tWha2JiUiyRfYemtYQrg/3DBxh7w0pv/+J+NDBR4LoLd3pDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fvRV1H1u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9899C4CEF7;
-	Wed,  7 Jan 2026 14:11:57 +0000 (UTC)
+	s=arc-20240116; t=1767796599; c=relaxed/simple;
+	bh=XwWSLB55x1rNencsXn/TLrmA6eEpbslMnGuzUkhuAZY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FAwHG5a3nVXvD5GuiPubA+3U32GsGXflxURdM2vdixcJEDDN5hv7eSQ4LTtcmytO67ohPDpvZMXLNhlW5oxvcuupMADB2n/2Tmjx3TqFXS+Ds9eMp05lPyJwhzN7Y1OIy+HK65zHJrc+NcwSRd5uf6yrum4N3rJRZuLgL3CKnAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJGp+/42; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A703C4CEF7;
+	Wed,  7 Jan 2026 14:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767795122;
-	bh=U+tk3DDPxGRKAhejJMqtVSVcBPgVBuu7LnM0goJ2LSw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fvRV1H1usYTN8WUp+R+IukOXQSFU/Pke39RM2ESLwFwZB17ZjhDvYFalRYwKvAxie
-	 ZJo2L3847X4YgkYL+r9RvtA+Xx84RLfFpw9RPdZuccnPWJ6F8x1WbOMCKRkSZSI7Sy
-	 GkvYTKxmirpO0pFl/izlDcrXshXOcSvqCEt2bLiG+bvpAaOiI35u1bJaRxJQJNUgBn
-	 WazN6jZLtpCQeTVaB1lwn5jMUHmGqypxVcPQh1CkohHKKgXBo7ISrxMXxid/dDi973
-	 c8gBUNU2fe1OPRJSA0kMTu5zItxg2xGL4pzTHFc98Dr2TIueIQTEReYzgMFByes9fn
-	 bkgK0z02fyC2w==
-Message-ID: <e2c07fbb-fd80-48a4-b0da-2f8db057198a@kernel.org>
-Date: Wed, 7 Jan 2026 15:11:55 +0100
+	s=k20201202; t=1767796598;
+	bh=XwWSLB55x1rNencsXn/TLrmA6eEpbslMnGuzUkhuAZY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eJGp+/42xRifMjAf5rrJuTTUE42Vv6ojPGiVs3rklIv2y8HD+hCl1URycRStDpbiY
+	 Y5mhpDNIk9SCsBSZTSCxeBdqmHSy6CwFDiwhfTXYqbG5z8+42tSEcB0xQJgj/cAJx1
+	 7gLokOWP7SpUejdKujEOKG8LLOcc6FBd7mcc0QkD02TadGtPWF8s9nxU5wvrgGyNJo
+	 k9D1+7EjoU39UtwWs1JL/VbFq8ysrmYqsMMVnRqy2aZ1vzyy2uYE8JHyTrNDvA70Na
+	 jf6BAzdP3w0dwvzGzoVi7COcmoN7A/NW4+Le/t+VbOqbJYZyFhtL23E8/SJSwh3a+X
+	 7QRER6Vk8KsOg==
+Date: Wed, 7 Jan 2026 15:36:31 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-pm@vger.kernel.org, linux-ide@vger.kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 0/5] PCI: Add initial support for handling PCIe M.2
+ connectors in devicetree
+Message-ID: <aV5vb1VlQYeWNcv1@ryzen>
+References: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: backlight: qcom-wled: Document ovp
- values for PMI8950
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
- Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Kiran Gunda <quic_kgunda@quicinc.com>, Helge Deller <deller@gmx.de>,
- Luca Weiss <luca@lucaweiss.eu>, Konrad Dybcio <konradybcio@kernel.org>,
- Eugene Lepshy <fekz115@gmail.com>, Gianluca Boiano <morf3089@gmail.com>,
- Alejandro Tafalla <atafalla@dnyon.com>
-Cc: dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Daniel Thompson <daniel.thompson@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-fbdev@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260107-pmi8950-wled-v1-0-5e52f5caa39c@mainlining.org>
- <20260107-pmi8950-wled-v1-1-5e52f5caa39c@mainlining.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260107-pmi8950-wled-v1-1-5e52f5caa39c@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
 
-On 07/01/2026 14:31, Barnabás Czémán wrote:
-> Document ovp values supported by wled found in PMI8950.
+On Wed, Jan 07, 2026 at 07:41:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> Hi,
 > 
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->  .../bindings/leds/backlight/qcom-wled.yaml           | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
+> This series is an initial attempt to support the PCIe M.2 connectors in the
+> kernel and devicetree binding. The PCIe M.2 connectors as defined in the PCI
+> Express M.2 Specification are widely used in Notebooks/Tablet form factors (even
+> in PCs). On the ACPI platforms, power to these connectors are mostly handled by
+> the firmware/BIOS and the kernel never bothered to directly power manage them as
+> like other PCIe connectors. But on the devicetree platforms, the kernel needs to
+> power manage these connectors with the help of the devicetree description. But
+> so far, there is no proper representation of the M.2 connectors in devicetree
+> binding. This forced the developers to fake the M.2 connectors as PMU nodes [1]
+> and fixed regulators in devicetree.
 > 
-> diff --git a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> index a8490781011d..306fb6642617 100644
-> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
-> @@ -98,8 +98,6 @@ properties:
->      description: |
->        Over-voltage protection limit. This property is for WLED4 only.
->      $ref: /schemas/types.yaml#/definitions/uint32
-> -    enum: [ 18100, 19600, 29600, 31100 ]
+> So to properly support the M.2 connectors in devicetree platforms, this series
+> introduces the devicetree binding for Mechanical Key M connector as an example
+> and also the corresponding pwrseq driver and PCI changes in kernel to driver the
+> connector.
+> 
+> The Mechanical Key M connector is used to connect SSDs to the host machine over
+> PCIe/SATA interfaces. Due to the hardware constraints, this series only adds
+> support for driving the PCIe interface of the connector in the kernel.
+> 
+> Also, the optional interfaces supported by the Key M connectors are not
+> supported in the driver and left for the future enhancements.
 
-minimum and maximum should stay here. Or alternatively enum with all the
-values, but I think first options is enough.
+For me, it is not clear if there is a dependency or conflict with your
+"major pwrctrl rework series":
+[PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl devices with controller drivers
 
-Best regards,
-Krzysztof
+Does one need to go before the other, or are they completely unrelated
+and can be merged in any order without conflicts?
+
+
+Kind regards,
+Niklas
 
