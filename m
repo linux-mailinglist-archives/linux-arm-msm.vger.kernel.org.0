@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D21ECFE432
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 15:23:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE460CFE444
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 15:24:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 318D7305745C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 14:18:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF05B308E659
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 14:19:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06C6E340DB8;
-	Wed,  7 Jan 2026 14:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D0A340DB8;
+	Wed,  7 Jan 2026 14:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LqRiFW1D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ff2XA2uk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D183081AD;
-	Wed,  7 Jan 2026 14:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D4C3081AD;
+	Wed,  7 Jan 2026 14:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767795493; cv=none; b=j8TD5W7DTzFzfY1eENG9Py3p2kWjGiSDS/iHYxt3ij2hRy9qKW1rlvJWDVRAa047kdVdRGXCysrDbp61cKjNaYL70L0cfMVFgZrISxngeA6X+lWm0x1RqYyxgg2Nu0UOcxjLLV/1hWDh/oZQ1pGOS9g5iUwOauguoEmdY2jX9xg=
+	t=1767795559; cv=none; b=KY+SUv9Gse9qhJlKgDDjEdYv5QBHtTv/a6Qk16qS5jc1N6PejDU9tJXJ9m1JvOG3eqDuVLx6bsSE09x7vF73pUvd+bnL6s4gyuqcKp7ZENpB+6So9oCxT+915OaR/etGVnG3h82fOVMAr5uZdY08T52UeVWK86xtPXRPMCByg3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767795493; c=relaxed/simple;
-	bh=oaU6c2WnN5qqHgA65soH/Tit7bcM5//KWWPGIZ+MTTc=;
+	s=arc-20240116; t=1767795559; c=relaxed/simple;
+	bh=NrKcL0K9ADZrDd40Kubu2XrKTn83JBz7p/hudoTIFHw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NAlJWxhh/3PzJbOR1puL0meOADOAYpcxyqyhMD3pePfzKYofc4i0r4Q8ZOV5QZqnO3Agf24FHSiE49JpjXokECJKR5hVD0pVW5sjCcA9ZlObWHTYpdEHG7KsjY/G/kim6O6K2XZzKN/hoXcfEEdl56pnZUYPkHKj8L9uUKu9ps8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LqRiFW1D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29451C4CEF1;
-	Wed,  7 Jan 2026 14:18:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iPbVr0V6yjwBTbvcawTgZpLcntcYp32213UJFMoCHUBO48bGua0LyGDc+hhrHVAfPdYYIBC2k9sibDXwZNSnQqqp0xXT17QZVZRkz9X/5j1mFoeXwSL2csGCfPeasNILFObxM+G0LvECLSxmoRujwvjQgFvol7IYYX70fMP/U0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ff2XA2uk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05293C4CEF1;
+	Wed,  7 Jan 2026 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767795493;
-	bh=oaU6c2WnN5qqHgA65soH/Tit7bcM5//KWWPGIZ+MTTc=;
+	s=k20201202; t=1767795559;
+	bh=NrKcL0K9ADZrDd40Kubu2XrKTn83JBz7p/hudoTIFHw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LqRiFW1D4GnjSTedLLUU2mJBkolXcWU70mRlrFT/sVljH2mtckhsweWbOImiH7wjN
-	 W8Au0/N/22RA4cvKKSjDHlx1fI8Ijfz7WCHULsDIthM/1z0C0zjsOBPZnSi/HkyVsz
-	 J1wu4P49Iv7rRt1GJ7UP0u2yIbfxB93Obb2nVtOeLUISiv7jDutn5Z0gjEWOIJ2jNp
-	 Eo3RsvTyJkk8aOwiWhux+GrWM4tLX4GqglNrDKa/9+f+DFVrsC5couNXZgoGlRJ2M6
-	 WMeE5DAyn4GHnaighAxpYmLvcqlio/2GexeXP6hu3Oxjw1+oaL/LaFGB9Sv1RcGWpl
-	 dqiV1r0fxtlCA==
-Message-ID: <d51c9d8b-b0ec-4110-869e-dee4c4b41ff5@kernel.org>
-Date: Wed, 7 Jan 2026 15:18:07 +0100
+	b=Ff2XA2uknvs1WDIcNLPV/0KOKg+KJ9M5ydg9C31mg/NhaMX4Q6vujWS/UcJ1WTfTm
+	 w+QAjvsHC/Xo+q8f8RUmE9n+gF5XpwvTfjj2IQKfK0k8GUmFyGFsBhVn14qpmbZMUV
+	 b0tnzuyS/g0dXndOU9iIkpxUK32DWcQ20//a0GUYo1WPvw4O6Dnci/YRSV3WnuNMR8
+	 /1sBiqfEw1Rfz7pRg26G2ObP1ASzp201ffnIJsfAGno2G22ajMsMa2K008S5lF9bbu
+	 nP84YrGX0g4oqfQSu6mAohVZjchDtoui2kiLSd2N4rduxy2DDsQ6QoC4DZhZ3bxiPC
+	 5J4RbQdCgYNQA==
+Message-ID: <00cbcb95-2bd4-4a15-a250-963af30076b6@kernel.org>
+Date: Wed, 7 Jan 2026 15:19:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: crypto: qcom,inline-crypto-engine:
- document the Milos ICE
+Subject: Re: [PATCH 3/6] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document
+ the Milos QMP UFS PHY
 To: Luca Weiss <luca.weiss@fairphone.com>,
  Herbert Xu <herbert@gondor.apana.org.au>,
  "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
@@ -64,7 +64,7 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org
 References: <20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com>
- <20260107-milos-ufs-v1-1-6982ab20d0ac@fairphone.com>
+ <20260107-milos-ufs-v1-3-6982ab20d0ac@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,16 +110,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260107-milos-ufs-v1-1-6982ab20d0ac@fairphone.com>
+In-Reply-To: <20260107-milos-ufs-v1-3-6982ab20d0ac@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/01/2026 09:05, Luca Weiss wrote:
-> Document the Inline Crypto Engine (ICE) on the Milos SoC.
+> Document the QMP UFS PHY on the Milos SoC.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
