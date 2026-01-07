@@ -1,150 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-87880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9E23CFDAA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:30:03 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1192ECFDA2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 13:24:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 78D9330B7AEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:23:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 970EA300D400
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 12:24:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5665327C13;
-	Wed,  7 Jan 2026 12:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160A5328256;
+	Wed,  7 Jan 2026 12:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q41OJl5w"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFJ5sp8f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13DD327BF6;
-	Wed,  7 Jan 2026 12:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA22327210;
+	Wed,  7 Jan 2026 12:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767788625; cv=none; b=KnMGo8cPiGsTP/wH5SHDw4JnzbVPLb22vu2TdXFAenT7qo5iqHKWccRScBt0pHo//nrwgo04xqO46g7O/jed0FlN7R6Rc+sQPOE6G3IXKjIvScU3r64paH54dtD7SUIipizhetDxS8tavzzKHTH2TZgZPy96TnN1H7lqhOQQePI=
+	t=1767788632; cv=none; b=hqlbdSy9tfv5S8Pd1mXuLPKDeC2YAIq+b4chNcYrXr30+MJwVu7s6Oy+OmfgjEEYQYy6zBfz7iInpX+Mr9Y+pjlbPaAB8ZThobeIoMA3t6Ky1k/a5csRHDUPMjxRO7NqdOrUrGGZ8QGsTTdC0QUDVUsm5D11u6JkWGrEjOtBS6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767788625; c=relaxed/simple;
-	bh=U+amxbSOoYQbK/xsz0wmkUqTLQp0tiL1lBiG3B9K0nk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YVZS6XRdl3+PS/smYfXfkLauRNK64JxkBjlp5psC8aMkKaik9dAnk/MlDSRiICNk/MyOBHWP9W/ibcGQLLJe+tK5suaq3PZVkSNAkrenoQRm30kPmXbe0c9iUe9rXBwbOZo1Y/gsjrTuR5nXonWc3x72y/51RmChKcBlsJER+Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q41OJl5w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62BFC19422;
-	Wed,  7 Jan 2026 12:23:36 +0000 (UTC)
+	s=arc-20240116; t=1767788632; c=relaxed/simple;
+	bh=b8Etf9Ux2d/4mljHjahgtB9DZrTyWaQ9AiYmAkqWiiQ=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=PpaRyElczx0n7xOjhPO/vf2ELfTvadkhHrvpCl6b8Je3AVxhpqcTkt5gVhrGzbiFHfR/NKJwk9wuyPuLr2sWVc/ftWOKaHMcMhcxG3U0GgerLzr1X7m3G+22eU7VeXZxgqNN4tkZQOGXlAX0KX5pgZ8/wRb0aAqsN0XJIxlG7zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFJ5sp8f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6F3C4CEF7;
+	Wed,  7 Jan 2026 12:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767788625;
-	bh=U+amxbSOoYQbK/xsz0wmkUqTLQp0tiL1lBiG3B9K0nk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q41OJl5w7VkYd4FjA2qYUC7vz/pZwWhX3C8Suuom+WLMcUNk7owgmQH9EpuVIil/Q
-	 ZLNnnA3U4lXTkGAytypr4npJrQ/7bUs1OijZDZw/bBzbt0JWdzsCJYbweBBfRRzQbc
-	 v2XOOniMcbwCsWbgj4jjA415aZKljbY7AX1dVyTxE+eLhHqrm9jB0ZRKo1LXVOqtGZ
-	 mumRWJ67sOf1t1L4j6H4h1+dKEU+wPlzY5DA9MdJA1Ve5Bq1wr5lhOfaeXCEZtj9Eb
-	 cQ92gCQ9db3s5k3M0bjON4WVUM30Q3JaxI9pI6x+S6GlEqSF4Rclqt+8PuPBT62WSl
-	 EXU53e0m02YYw==
-Date: Wed, 7 Jan 2026 17:53:32 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>, 
-	Mika Westerberg <westeri@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Shevchenko <andy@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
-Message-ID: <o6zgxnr7gmzd5mwmkccbe7ch7baj3lxuecltzo24ukj2vfujxu@bxnaci5oqsic>
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <fimuvblfy2cmn7o4wzcxjzrux5mwhvlvyxfsgeqs6ore2xg75i@ax46d3sfmdux>
- <uc7utm7tbtmkk6osaoydibd5evtpm246sjrpkx3lpclpk4srea@a4g65oduswau>
- <p4fwvwbhwbdpiqvspjq4stjyuxy5pqvdei3wfianw4aeujmgbx@utumnrffangf>
+	s=k20201202; t=1767788631;
+	bh=b8Etf9Ux2d/4mljHjahgtB9DZrTyWaQ9AiYmAkqWiiQ=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
+	b=IFJ5sp8fiVS99y8gOAM4iABccbY1d+5f1Mf0fJtCVx9tusrJ4qVgCssKPQL5h3i1I
+	 c9Ac9h/h6V6DtuzySwROCCPfpp3BAAdyc9MK+8x/vVuVYF6yyAVJ1MlgniNkZzf8ax
+	 fwFepEaKVZLDUhKgCZLH+vXV/qExuYvgBohl10UQVZAihqhUQqNpC2TQHdZN1Qo51P
+	 HYp+EbzAG8SQ6YdrIRf2v9Oc+inbXg3aAUM77lr1SDmkiAdjp4Hdozzq0zhhIwZ+Vr
+	 c5lIvP9fRJse7vzi8Qg/8IGTv5vdo5FDSbKZ7bFZph3AwUDH4cZgZWVhwYMg3jeWdR
+	 I8sUlKhCJ8B5g==
+Message-ID: <49d2e8155d4ab283053c79f08c3e5334@kernel.org>
+Date: Wed, 07 Jan 2026 12:23:48 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 02/10] drm/vc4: hdmi: implement clear_infoframe
+In-Reply-To: <20251224-limit-infoframes-2-v3-2-7fd3cacfefed@oss.qualcomm.com>
+References: <20251224-limit-infoframes-2-v3-2-7fd3cacfefed@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, "Abhinav
+ Kumar" <abhinav.kumar@linux.dev>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Andy
+ Yan" <andy.yan@rock-chips.com>, "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>, "Chen-Yu
+ Tsai" <wens@kernel.org>, "Chun-Kuang Hu" <chunkuang.hu@kernel.org>, "Dave
+ Stevenson" <dave.stevenson@raspberrypi.com>, "David Airlie" <airlied@gmail.com>, "Dmitry
+ Baryshkov" <lumag@kernel.org>, =?utf-8?b?SGVpa28gU3TDvGJuZXI=?= <heiko@sntech.de>, "Jernej
+ Skrabec" <jernej.skrabec@gmail.com>, "Jessica Zhang" <jesszhan0024@gmail.com>, "Jonas
+ Karlman" <jonas@kwiboo.se>, "Laurent Pinchart" <Laurent.pinchart@ideasonboard.com>, "Liu
+ Ying" <victor.liu@nxp.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, "Matthias Brugger" <matthias.bgg@gmail.com>, "Maxime
+ Ripard" <mripard@kernel.org>, =?utf-8?b?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, "Neil
+ Armstrong" <neil.armstrong@linaro.org>, "Philipp Zabel" <p.zabel@pengutronix.de>, "Raspberry
+ Pi Kernel Maintenance" <kernel-list@raspberrypi.com>, "Rob Clark" <robin.clark@oss.qualcomm.com>, "Robert
+ Foss" <rfoss@kernel.org>, "Samuel Holland" <samuel@sholland.org>, "Sandy
+ Huang" <hjc@rock-chips.com>, "Sean Paul" <sean@poorly.run>, "Simona Vetter" <simona@ffwll.ch>, "Thomas
+ Zimmermann" <tzimmermann@suse.de>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <p4fwvwbhwbdpiqvspjq4stjyuxy5pqvdei3wfianw4aeujmgbx@utumnrffangf>
 
-On Wed, Jan 07, 2026 at 02:12:28PM +0200, Dmitry Baryshkov wrote:
-> On Wed, Jan 07, 2026 at 05:17:09PM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Nov 26, 2025 at 06:27:13PM +0200, Dmitry Baryshkov wrote:
-> > > On Wed, Nov 12, 2025 at 02:55:29PM +0100, Bartosz Golaszewski wrote:
-> > > > Bjorn, Konrad: I should have Cc'ed you on v1 but I just went with what
-> > > > came out of b4 --auto-to-cc. It only gave me arm-msm. :( Patch 7 from
-> > > > this series however impacts Qualcomm platforms. It's a runtime dependency
-> > > > of patches 8 and 9. Would you mind Acking it so that I can take it into
-> > > > an immutable branch that I'll make available to Mark Brown for him to
-> > > > take patches 8-10 through the ASoC and regulator trees for v6.19?
-> > > > 
-> > > > Problem statement: GPIOs are implemented as a strictly exclusive
-> > > > resource in the kernel but there are lots of platforms on which single
-> > > > pin is shared by multiple devices which don't communicate so need some
-> > > > way of properly sharing access to a GPIO. What we have now is the
-> > > > GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
-> > > > doesn't do any locking or arbitration of access - it literally just hand
-> > > > the same GPIO descriptor to all interested users.
-> > > > 
-> > > > The proposed solution is composed of three major parts: the high-level,
-> > > > shared GPIO proxy driver that arbitrates access to the shared pin and
-> > > > exposes a regular GPIO chip interface to consumers, a low-level shared
-> > > > GPIOLIB module that scans firmware nodes and creates auxiliary devices
-> > > > that attach to the proxy driver and finally a set of core GPIOLIB
-> > > > changes that plug the former into the GPIO lookup path.
-> > > > 
-> > > > The changes are implemented in a way that allows to seamlessly compile
-> > > > out any code related to sharing GPIOs for systems that don't need it.
-> > > > 
-> > > > The practical use-case for this are the powerdown GPIOs shared by
-> > > > speakers on Qualcomm db845c platform, however I have also extensively
-> > > > tested it using gpio-virtuser on arm64 qemu with various DT
-> > > > configurations.
-> > > > 
-> > > > I'm Cc'ing some people that may help with reviewing/be interested in
-> > > > this: OF maintainers (because the main target are OF systems initially),
-> > > > Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
-> > > > in audio or regulator drivers and one of the goals of this series is
-> > > > dropping the hand-crafted GPIO enable counting via struct
-> > > > regulator_enable_gpio in regulator core), Andy and Mika because I'd like
-> > > > to also cover ACPI (even though I don't know about any ACPI platform that
-> > > > would need this at the moment, I think it makes sense to make the
-> > > > solution complete), Dmitry (same thing but for software nodes), Mani
-> > > > (because you have a somewhat related use-case for the PERST# signal and
-> > > > I'd like to hear your input on whether this is something you can use or
-> > > > maybe it needs a separate, implicit gpio-perst driver similar to what
-> > > > Krzysztof did for reset-gpios) and Greg (because I mentioned this to you
-> > > > last week in person and I also use the auxiliary bus for the proxy
-> > > > devices).
-> > > 
-> > > Hi,
-> > > 
-> > > I'm sorry if this was already reported and fixed. On Qualcomm RB5
-> > > platform with this patchset in place I'm getting the following backtrace
-> > > (and then a lockup):
-> > > 
-> > 
-> > On Rb3Gen2 this breaks UFS:
-> > 
-> > 	ufshcd-qcom 1d84000.ufshc: cannot find GPIO chip gpiolib_shared.proxy.4, deferring
+On Wed, 24 Dec 2025 03:02:51 +0200, Dmitry Baryshkov wrote:
+> Implement the clear_infoframe callback, disabling corresponding
+> InfoFrame type.
 > 
-> CONFIG_GPIO_SHARED_PROXY=y ?
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Ah, it was selected as =m and not part of initramfs, so it didn't get loaded.
-Building it as =y fixed the issue. But that was such an implicit dependency.
+Acked-by: Maxime Ripard <mripard@kernel.org>
 
-Also, it should only be used for shared GPIOs, isn't it? But on my board, UFS is
-not using a shared GPIO. So why is it coming into the picture?
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks!
+Maxime
 
