@@ -1,71 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-87955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D9FBCFFA3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:06:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 705AFCFFD33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:47:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1877F303166F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 400993278C92
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5F93563D5;
-	Wed,  7 Jan 2026 18:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7B1359F84;
+	Wed,  7 Jan 2026 18:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQFw7jGM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zjtv75C8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CE034A799;
-	Wed,  7 Jan 2026 18:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD770358D2A;
+	Wed,  7 Jan 2026 18:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767811113; cv=none; b=E5SfbaMm31vm9g6xCh6dqHRLI9ZcQreE2hQchA8vdrj7kVD98rUpt1AJveHYRnuplNOeI7Z7BQylPV+gfYrhCixQzcsvuyGsjrF7VgOB0QZrYznX7CUP9e0ZAAQAxwIJr37LOyTI/mDpoVlivvj5QrVbGsxii6QbaICOWesXT3k=
+	t=1767811114; cv=none; b=Y7/e21abYvLtVQR7sf6Ygb0aTHxJWgR4uzuOId/L99QwL/GjT+YBpe6kiSQOyJGboHj0w1yxwLDx+z7hO7nlGoYr5Ew/opm/Caaso9DJDQ/t0jJXm6badicWkarav61HDx6DmFoqWSW+r3TRU/F2QRKxap/oK8laQqCJg1WaXYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767811113; c=relaxed/simple;
-	bh=oHrbReaf1HeVn8B+9mxlpHHQuipBO6k8H6//aRo1H0U=;
+	s=arc-20240116; t=1767811114; c=relaxed/simple;
+	bh=UnoGgK3rZulvQ7+7qKRL2PAUxy2h9dm7tc2RPR5H5pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JvsKrjPtePP2Go9v/hB8zpDa6gCL+eFiuVU6fKi8xv95YAIO1iwqjQrMf5u7r/DV5kZRwGJQqN1uVy3VccinZoayV1QgnCL+RCJmRfO1solC0peBocbiGK88X6G7iRcSa88SG5zcT8qeFWv/Pagso1Rmst6VuJFmWn3viv2sVnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQFw7jGM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC5EC19424;
-	Wed,  7 Jan 2026 18:38:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=RZXn4e5wkWfwEJVsnKFhnQvRVKu/l+HwmDyUj+moJDDVGFBC9Z9B3RydeC/AnRzozbKTMjOzZXgyQwYQnqgCLQyJH85POV/gHxoVPui8haBoaGXK8qRfeERPZ/uKGENV3mroWNEqA7g8uy8Ymu9IjyEyGEr+C92SDFBWYOm8x9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zjtv75C8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11763C19423;
+	Wed,  7 Jan 2026 18:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767811112;
-	bh=oHrbReaf1HeVn8B+9mxlpHHQuipBO6k8H6//aRo1H0U=;
+	s=k20201202; t=1767811114;
+	bh=UnoGgK3rZulvQ7+7qKRL2PAUxy2h9dm7tc2RPR5H5pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQFw7jGMhxJkzKM2gGRr//xnmvizt205SAVQ8vHz1LX3G5lsD9oBHUqoqztYLp2B0
-	 lLEyws8HA68dQwFCf0wNwTTngYQ23uMzoXVc5QzzGyQbvVsEWFTkM30Ai61WdYb97G
-	 qHK4PeNlsVeL9i6xZ/9hQmOek977ta08BeSFBwc+wO0ax4qImqIfDKTtcO8s+JXL+U
-	 a4ygXJvIrPoKWgB/PojdHqQeBAR5jQnOiPJeniRgazfFnzoph7qG99123KSIeYrB2m
-	 SJj8JzhAUkrGo9ByII0oyT55v38737VoDxcy65JfxRRwiD7+pjH2APeHXF4KrqvyEE
-	 Zo40e7bQFbaiw==
+	b=Zjtv75C8bU6LOSZ3PZHsIZhImci8OB9N3l4n+g4QJw9+EZUskkZVAM1UPtmIWq8qD
+	 9y/QTHTfTxYeOHOawoKRbbL6WzEkQNUcZ9t+s6O58Apsi/7VGvWziIs5WaDXdB3xIT
+	 ZZ4PTBLu72sZtSwmLEO3QscMYE8XJSixFJRNEqmKAKNd+EAEgG7e2pE1qc+hBXwn3x
+	 7R8UKQBuL2Q0mUw7X6NTXCKWmje4q8fy/C+ZG61+QtwTbCNWAZOHIOYRNySKRWDYn1
+	 iIPWudv/JqxQTi8ZwuwCYId8saayD+UOlRFVcAhLT7cLWzNCC0xoZEU1dm//iCbSlV
+	 khtt+7PhnJH5g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Michael Turquette <mturquette@baylibre.com>,
+To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Petr Hodina <petr.hodina@protonmail.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	phone-devel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
-Date: Wed,  7 Jan 2026 12:38:20 -0600
-Message-ID: <176781109953.3262943.6850960519948721977.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: (subset) [PATCH 0/3] Add the support for SM8750 Camera clock controller
+Date: Wed,  7 Jan 2026 12:38:21 -0600
+Message-ID: <176781109968.3262943.4143830345398842895.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
-References: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
+In-Reply-To: <20251202-sm8750_camcc-v1-0-b3f7ef6723f1@oss.qualcomm.com>
+References: <20251202-sm8750_camcc-v1-0-b3f7ef6723f1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +75,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 07 Jan 2026 12:44:43 +0100, Petr Hodina wrote:
-> Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-> clocks are enabled during clock operations, preventing potential
-> stability issues during display configuration.
+On Tue, 02 Dec 2025 15:56:24 +0530, Taniya Das wrote:
+> Support the Camera clock controller for SM8750 Qualcomm SoC.
+>  - The camera MCLK BIST clock controller, which is required
+>    for functional MCLKs.
+>  - The camera CC (clock controller) for managing camera-related
+>     clocks.
+>   - Additionally, the Rivian ELU PLL is utilized within the
+>     SM8750 clock controller, so support for this PLL is also added.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
-      commit: 17f1ae4148fa50f43b3afbd4fdd7b500928c9605
+[1/3] clk: qcom: clk-alpha-pll: Add support for Rivian ELU PLL
+      (no commit info)
+[3/3] clk: qcom: camcc: Add camera clock controller driver for SM8750 SoC
+      commit: f9580bafd39cff31bd51031e8784ea44acddf20e
 
 Best regards,
 -- 
