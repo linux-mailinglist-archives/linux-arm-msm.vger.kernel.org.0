@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5066CFE02A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 14:41:13 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B16ECFDFB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 14:37:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C9E13307A04C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 13:36:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 981FE3000E9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 13:37:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DB2033ADA1;
-	Wed,  7 Jan 2026 13:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 140CA33D6ED;
+	Wed,  7 Jan 2026 13:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uTXF5jde"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mouWI9Zf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FE533AD81;
-	Wed,  7 Jan 2026 13:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D867724397A;
+	Wed,  7 Jan 2026 13:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767792982; cv=none; b=ub3SRXQxp5i8kqy6iw8Zmac84PK0s0cbA8sTYTCYyJONYk/HssVlMs2g65ku81fJg48Bj4zcmoGC7tcR9710VDyIR7Z8GZG26flOQznRHEtehCm3CEODGsgvgaUCVV9HzgCfGiv+CT9I71FgbGUkJtoG38F9sd8ZmRr2yy1SsEc=
+	t=1767793029; cv=none; b=XSVntW+iERaRzZ7i6pSK0VM4R9OT6lWTe0VWoRxI+02uGXZhAATy2blvtlAS96ZusheWE45sXONccdsVd3fLNF+v1RLPZzsAPiuAaeIOaJBuHb54nVYc3Gd2KTM48QzDorg4dTtlMVafPUobq8SDYNLLwcClpYY64SRoDQPgr6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767792982; c=relaxed/simple;
-	bh=mI811ysUftQcMtpeo5RrxFJYgCXdBmBHwvEGT1q3MvQ=;
+	s=arc-20240116; t=1767793029; c=relaxed/simple;
+	bh=LEUoa7l62g+TJDfOSn+FtDTHetT0GTOmCxQjZ+1AEjE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qRhv2TPJo9jkWkhXOq0pwyTh1cedZAmfCWoHK6rHk6wuDI0N42pRNtHpb49XDMW5SM0r+Riop8KZ+FLa8rcCznHKEQNXlbd11bpn1PSF6QSHefWs9lpgE62O9sz1zBAIdiOLbfHpY1qNZzDKC7kLYEyIlyQYcEH2QIwVBfjwqxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uTXF5jde; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B50C4CEF7;
-	Wed,  7 Jan 2026 13:36:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=DYcbvKQnfHSfMdcO5qcXZsDyDWefqjN7rcSA4Ho0m5LUtzPl1aFI51LMRCokUdzuV+XYkNxROXvjGBchQ9rzzVp+R9gjDnj5ZycfUVQUrpgwMej7RuO/6MMdJQzqK/aCUNmmAIzp9OGWA52vUcVBkkqnpS5WzJjpoyHEgaaI3+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mouWI9Zf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18926C4CEF7;
+	Wed,  7 Jan 2026 13:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767792981;
-	bh=mI811ysUftQcMtpeo5RrxFJYgCXdBmBHwvEGT1q3MvQ=;
+	s=k20201202; t=1767793026;
+	bh=LEUoa7l62g+TJDfOSn+FtDTHetT0GTOmCxQjZ+1AEjE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uTXF5jdetqfJ3xOWyEnQR88EVRGddmFTzeVG9zevtKjaLhCTW8u87GHmskaU/sKdb
-	 e1jLB78Gf2RIE4hFAQRdtnigt6X5kHJpXiox6Z9vG9o/RD6drxWkgjJnPJMyeBVSEV
-	 9UQN5fWeVw0U3uPvFUFuL5kZeDVh6htNfODxPyAgJC1Ch/3YI+SLQ96vZ30tX522HL
-	 ZcRYODAYCcDw69gl2ErLu7HsvIvK9FP484rytrNhaBjfsiSMo2aiT36TjoawfhUT7I
-	 tQF7RzKH/FOIfnnweq9dIHUiq7SbXS9d/M8p7Wv1EgYRomXb4eNB0iD1ZyeF44VD7g
-	 KdWheSSjeqPJw==
-Message-ID: <504ff36c-c94d-4f8b-8256-7957b65220ea@kernel.org>
-Date: Wed, 7 Jan 2026 13:36:16 +0000
+	b=mouWI9Zf32XLOQEelSa+xFNC/a0QZxxOxrNj1fDX69KtJEaIDyhDaRz+5vrWE8bup
+	 dLARXI52uUwF1Uj/hQNk05OMMzTtvh4Ain9n6i29PkSabkkV08dmyqidZ/NX/hbh6M
+	 XpYHRTuJi65V/B/GsNj13w9At+O7Cy79BhshquL/WZzRkayDWoNgZNNfO/P6L9qbZb
+	 tx+96BiTOS0SLxMeFzn71n1LBC46Gcji3Dt84L0ySNF2t/E0qhDEGqLFSEJdi+oMbq
+	 7vwIT3idtOyr3LO8L0dC580q0yO0B4joAY0sPvqo4EdVOTPL1ljGbR5sHOC+z47xwb
+	 lCUZ4FNwmd7nA==
+Message-ID: <a352539e-13a2-44f2-802c-f92747115732@kernel.org>
+Date: Wed, 7 Jan 2026 13:37:00 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,8 +48,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/5] arm64: dts: qcom: sdm670: label the camss ports
- instead of endpoints
+Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355
+ front camera
 To: Richard Acayan <mailingradian@gmail.com>,
  Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -62,69 +62,171 @@ Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
 References: <20260107043044.92485-1-mailingradian@gmail.com>
- <28CgF9YCOaN5FtWGxctJJCrmISao7MbyK7VAR52q-4dLe3QCWkEA2er5PzLxV9c1Wi8KEHlRKE3bjR1J5hkxLQ==@protonmail.internalid>
- <20260107043044.92485-4-mailingradian@gmail.com>
+ <EH_uOtpcVsNitfFOqaxIc6mwDxTGSTrk6KihkoFf_tDOuglAxp2x9I70hChJgfC43qZUQKje80MW4gngc29-Mw==@protonmail.internalid>
+ <20260107043044.92485-6-mailingradian@gmail.com>
 From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260107043044.92485-4-mailingradian@gmail.com>
+In-Reply-To: <20260107043044.92485-6-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 07/01/2026 04:30, Richard Acayan wrote:
-> Endpoints cannot be pre-defined since dcf6fb89e6f7 ("media: qcom: camss:
-> remove a check for unavailable CAMSS endpoint") was applied, probing all
-> endpoint nodes and requiring them to have a remote. There is no sensible
-> remote in the SoC devicetree because camera sensors are board-specific.
+> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
+> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
+> support for it.
 > 
-> The ports are meant to be extended by a board devicetree in order to
-> define fully configured endpoints and connect the ports to camera
-> sensors. For nodes that are only meaningful if extended, labels are
-> usually assigned. Label these ports so they can be extended directly.
-> 
+> Co-developed-by: Robert Mader <robert.mader@collabora.com>
+> Signed-off-by: Robert Mader <robert.mader@collabora.com>
 > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->   arch/arm64/boot/dts/qcom/sdm670.dtsi | 18 +++---------------
->   1 file changed, 3 insertions(+), 15 deletions(-)
+>   .../boot/dts/qcom/sdm670-google-sargo.dts     | 104 ++++++++++++++++++
+>   1 file changed, 104 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index b8a8dcbdfbe3..3eb4eaf7b8d7 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -1776,28 +1776,16 @@ ports {
->   				#address-cells = <1>;
->   				#size-cells = <0>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> index ed55646ca419..ec447fe3959a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
+> @@ -172,6 +172,34 @@ vreg_s2b_1p05: vreg-s2b-regulator {
+>   		regulator-min-microvolt = <1050000>;
+>   		regulator-max-microvolt = <1050000>;
+>   	};
+> +
+> +	cam_front_ldo: cam-front-ldo-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "cam_front_ldo";
+> +		regulator-min-microvolt = <1352000>;
+> +		regulator-max-microvolt = <1352000>;
+> +		regulator-enable-ramp-delay = <135>;
+> +
+> +		gpios = <&pm660l_gpios 4 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&cam_front_ldo_pin>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	cam_vio_ldo: cam-vio-ldo-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "cam_vio_ldo";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +
+> +		gpios = <&pm660_gpios 13 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&cam_vio_pin>;
+> +		pinctrl-names = "default";
+> +	};
+>   };
 > 
-> -				port@0 {
-> +				camss_port0: port@0 {
->   					reg = <0>;
-> -
-> -					camss_endpoint0: endpoint {
-> -						status = "disabled";
-> -					};
->   				};
+>   &apps_rsc {
+> @@ -392,6 +420,61 @@ vreg_bob: bob {
+>   	};
+>   };
 > 
-> -				port@1 {
-> +				camss_port1: port@1 {
->   					reg = <1>;
-> -
-> -					camss_endpoint1: endpoint {
-> -						status = "disabled";
-> -					};
->   				};
+> +&camss {
+> +	vdda-phy-supply = <&vreg_l1a_1p225>;
+> +	vdda-pll-supply = <&vreg_s6a_0p87>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&camss_port1 {
+> +	camss_endpoint1: endpoint {
+> +		clock-lanes = <7>;
+> +		data-lanes = <0 1 2 3>;
+> +		remote-endpoint = <&cam_front_endpoint>;
+> +	};
+> +};
+> +
+> +&cci {
+> +	pinctrl-0 = <&cci1_default>;
+> +	pinctrl-1 = <&cci1_sleep>;
+> +	pinctrl-names = "default", "sleep";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&cci_i2c1 {
+> +	camera@1a {
+> +		compatible = "sony,imx355";
+> +		reg = <0x1a>;
+> +
+> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +
+> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +		assigned-clock-rates = <19200000>;
+> +
+> +		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
+> +
+> +		avdd-supply = <&cam_front_ldo>;
+> +		dvdd-supply = <&cam_front_ldo>;
+> +		dovdd-supply = <&cam_vio_ldo>;
+> +
+> +		pinctrl-0 = <&cam_front_default &cam_mclk2_default>;
+> +		pinctrl-names = "default";
+> +
+> +		rotation = <270>;
+> +		orientation = <0>;
+> +
+> +		port {
+> +			cam_front_endpoint: endpoint {
+> +				data-lanes = <1 2 3 4>;
+> +				link-frequencies = /bits/ 64 <360000000>;
+> +				remote-endpoint = <&camss_endpoint1>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+>   &gcc {
+>   	protected-clocks = <GCC_QSPI_CORE_CLK>,
+>   			   <GCC_QSPI_CORE_CLK_SRC>,
+> @@ -490,6 +573,14 @@ &pm660_charger {
+>   	status = "okay";
+>   };
 > 
-> -				port@2 {
-> +				camss_port2: port@2 {
->   					reg = <2>;
-> -
-> -					camss_endpoint2: endpoint {
-> -						status = "disabled";
-> -					};
->   				};
->   			};
->   		};
+> +&pm660_gpios {
+> +	cam_vio_pin: cam-vio-state {
+> +		pins = "gpio13";
+> +		function = "normal";
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+>   &pm660_rradc {
+>   	status = "okay";
+>   };
+> @@ -508,6 +599,12 @@ led-0 {
+>   };
+> 
+>   &pm660l_gpios {
+> +	cam_front_ldo_pin: cam-front-state {
+> +		pins = "gpio4";
+> +		function = "normal";
+> +		power-source = <0>;
+> +	};
+> +
+>   	vol_up_pin: vol-up-state {
+>   		pins = "gpio7";
+>   		function = "normal";
+> @@ -547,6 +644,13 @@ &sdhc_1 {
+>   &tlmm {
+>   	gpio-reserved-ranges = <0 4>, <81 4>;
+> 
+> +	cam_front_default: cam-front-default-state {
+> +		pins = "gpio9";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+>   	panel_default: panel-default-state {
+>   		te-pins {
+>   			pins = "gpio10";
 > --
 > 2.52.0
 > 
-
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
