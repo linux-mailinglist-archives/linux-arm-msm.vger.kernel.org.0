@@ -1,334 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-87922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AA41CFE4DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 15:30:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86C3CCFE483
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 15:27:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 40875315EEB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 14:23:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6A0DB30084D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 14:21:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AADE332EBC;
-	Wed,  7 Jan 2026 14:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F3B3338596;
+	Wed,  7 Jan 2026 14:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XPzz7upi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DrmMxHN9";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HlJtf0EY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD906331A46;
-	Wed,  7 Jan 2026 14:11:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC143385A3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 14:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767795086; cv=none; b=Z4j0Tynk6wPb5MOEDjdpkn65R76hY7R2ETySdNkIMOEmggICORVoQ3Jw45j+jvJz4qYk4ziqfqaMAoL5KZanBW1RR9wwARQ4v8uAaf1TtVWxARDNuOLBlR/hv7DT+w3DbgUs4Ybp8dl9JIL/qkPfxIiVIEmVvoydSK2kec1STds=
+	t=1767795198; cv=none; b=UJYDzHOGWIDWmY2YF7SOodwDSc1kex/8ATH1x3vUbW9FYE4iNgYom2RI+gSyiFpm/n5+yi1Zp3ibHBD4LM9SUyAHCNQY1K2R1WnEpiOhOvPfgCpiIURSzTdnhloxvlTzcxlA92XI3IXuRX4U3qk5afbrNIO0hIdLiw+KpfgpPXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767795086; c=relaxed/simple;
-	bh=XwVyKvloCickKIupGifF7yuIjrVZYEDak/SyKG5qnog=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eFwnQ83rGzzkrunz7umQL4leYpIC3e+KegElF6ioRuM61unKChBApFzEqRchDcGDMhNgC5M8Dapi2Fol9U6s98gdJQH89jjZZ2kOA5Gp1+DMPToe0lwwxpSRRBkaMU8ogYvHQWO79xcFwFPxKwfNrzI03AwRhD4fKxCPfT/LewM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XPzz7upi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A124C2BC9E;
-	Wed,  7 Jan 2026 14:11:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767795086;
-	bh=XwVyKvloCickKIupGifF7yuIjrVZYEDak/SyKG5qnog=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=XPzz7upi6wknkQZun8ZNiHm1ANCzjoOj+i0yX6AKzSVM1f4E3uSXclLvAyMBgBXk3
-	 yPXbxud9WAwO4n0RxOKXLQLzxRTWF9pkPL5ZLCQs0G1ax1PAqPOe4o9TcLTrtwmbQ0
-	 lsIaKIFzWbVuvtfRM/oNmd4nRPmtOdB8Lfl52Ppz+EtoLIGHurYdMA5tFs8/zL+kH2
-	 xErHyz5DplNX/u72rN697/kaC/ktmPbctElorhT/JYlkbBOg7qZMVBiIVB7ax6idwZ
-	 lt2V9USUD0aKtAvx3MqmP4nbuA1jfKayZCpZUUDRgf6VR9oRGUfho8nSwXDm0HucrH
-	 VpuKm0krHzIAw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 109DFCFD647;
-	Wed,  7 Jan 2026 14:11:26 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Wed, 07 Jan 2026 19:41:27 +0530
-Subject: [PATCH v5 5/5] power: sequencing: Add the Power Sequencing driver
- for the PCIe M.2 connectors
+	s=arc-20240116; t=1767795198; c=relaxed/simple;
+	bh=rV7uwDQK9sVXXMMSbCrFkdiROsOoC7NEJyUS/32GXfE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dH66IpaXnkDgzgLecf8N1mtyty5jF4boGqHnj2C9Oey77x5lFPdRcAvgoGLMcvyn3vjEbfamWytF8AdizyJgTS8zIRtUe5NrFVITEIu6Qe7SUtkbpPuEyNyjF3s8UVvEoXx4G/P0FdO3ZePKc/5bjpqitc9EPVUYRpEpcmTyAAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DrmMxHN9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HlJtf0EY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6078dv5H2578076
+	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 14:13:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	i88csJUcM2ULCrqraGjde9aKEzx82JPtrxGeziCgzEU=; b=DrmMxHN9fMHEppWv
+	Xj5gayauNSS8e1mPVGpyWWqwnIjNqm9W5d4QjFtObGKEPP1wy0h0EnFKuDkDQl50
+	kNcvZPQ0qyHGhvJMw5K1IKBzBgtt1mhs077WbJAYYq7oY4FNnDiISvtSiLjd9Bwr
+	Irc4BojmDTTiDWqAAzQF/qayX/cDJBoax+NPc749Upi4dZyJnT2E330Ln+CAvQl2
+	edV9ikj04F0s7Wugk77UXB3uNeBqKdnqAWj3axGFzw9DHseUOMjBFhJAf8ViX7SG
+	BdnyNPiM7YGN5LTry9r3HsjuSXCzg90FdtgcY22XBDMEr4qtDday3GjwNYnkOOLk
+	Tokrrg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhm658ykj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 14:13:09 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-88882c9b4d0so6734596d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 06:13:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767795189; x=1768399989; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i88csJUcM2ULCrqraGjde9aKEzx82JPtrxGeziCgzEU=;
+        b=HlJtf0EYNkI3kCfJCUIMu3i/0JPjQHFKYnVDDPqsy+blESUiHX6gMEHb4NRtu1UXlE
+         jK3ywHztRJNMWFCn68Oaopvmj8r9aHc97FTelQ8UaWKKQnRpCIiuMcqGn27BD/+/fp3a
+         Qx+hoKylqqBE/zKHGBMaKr1sJ7HyGhKuhmoXxjVwbxrmItZ/kEbnxcNuXptQKVjPunAn
+         AQ645X0aYMxb9i2aIXtDc2ih8cgwPlJo47dzx2RJxINu2+pHcQtR2kFTYlz6VFkjNgVV
+         dGnC4Km+v5gkHtr6pi4TNprzNFkWWJq+Hkfu4z5zOdXZ/alLzXfjWjZmNwQg5p1pJ6LF
+         x3Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767795189; x=1768399989;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i88csJUcM2ULCrqraGjde9aKEzx82JPtrxGeziCgzEU=;
+        b=RNs3CCMsGm8Hb/nwtSfbI5WegZ8pCJhlfsNw7SFj+NLCE1aWpJpc9c/K906as68LUb
+         4iFL3RTnHovvKarRuldEM+d+4aiIg8PEncFvF6qx9DUGvHGZBG1bc4keKZdQir1Z6GC/
+         QWNqHffSbFyJYjOv7cam3f0rdSOVIgrlw5gxkxElR/5MI/x8eAIc3SJsy6uuSlTsKS8y
+         aPjuEOZMO0/LFudpJIU8grfmW1M8YSm2H2LZ8vzxn+YJoalLG+eo1UCD468Ea9apLSnj
+         WiFYijPA6SQyElpHz6AZMlc0/sUKwOI4eB8eFVahVVRr0fUSdK+dMJDnvT5s9Udg98Xe
+         F6vw==
+X-Forwarded-Encrypted: i=1; AJvYcCWm1S5CWGuT4R15PO1gXS1JjQjhWitqboi9zFDsi2PC4Nylpr+YI/xwOsZMoEPsG7SEcEeAV4dDlnMU9uF9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyzth0XcUPsfn8DqRHDW4SeE82SpTPpA+Z/5VRE3gAJkPDffVpg
+	sAPPiN38iZtUdxYtoMYoTXOGnqyzrnTuHoOUHwyPjwBIw/FGT2i0i7x5kN70cmMsN0lgBaUcbef
+	/PA9OIfxeCixjaouiRhZDi4iod3wqZvXMhBNchYdBXfpfYqjW/j+ukI+GjqorloW0jpap
+X-Gm-Gg: AY/fxX5tMUk0CdL/NqVR9aUjT+zD5HNHaAu36D26eR0fV4DeM09R+P/W6GQNBCpky52
+	H/7gl8e8h1XBR1EKsRECLJPrq2ADvZaAdz101AtOjWDKcdWR2phJWT5xnnoLJRlU4pcbmvAE349
+	cDiIfxqkclmbckTvXetataEjTSOBVNpW8uWBgxnKZBIeHxqHoDT00xnoSMKznLsGAxmeadKNnoh
+	mbT6jE4MNbL4IOUtZ6dzZVjeZl4PvjRIGbjL2ztoGMAF+7exEcdT0pXqyB6/rE7acPumhMzIZEO
+	wwdG7MHuAi5bwdIE4jGqrcx1yB/QDG/TjlS157V4g7HScoWpN0szMxr6r6U1vY/Q8PfsFkDe8CL
+	DW2z/b3PWJpBMfGwAIPe4RXWJoJHqaCvebUzGrNGPdTNeRfcxZFGxxUUZ7sn51frAzdc=
+X-Received: by 2002:a05:622a:4cd:b0:4ee:1063:d0f3 with SMTP id d75a77b69052e-4ffb4a8df70mr25633641cf.11.1767795189093;
+        Wed, 07 Jan 2026 06:13:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBwq+C7m0bosWHj3HTwVxZmMkUGfTBcl5hp78f4iYACKooL8OU/CX/+Ny3sPLi5gByEeejsQ==
+X-Received: by 2002:a05:622a:4cd:b0:4ee:1063:d0f3 with SMTP id d75a77b69052e-4ffb4a8df70mr25632931cf.11.1767795188359;
+        Wed, 07 Jan 2026 06:13:08 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507bf6d89csm4659986a12.35.2026.01.07.06.13.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jan 2026 06:13:07 -0800 (PST)
+Message-ID: <db0ee006-44bb-4587-b4d5-3f767cedc3cc@oss.qualcomm.com>
+Date: Wed, 7 Jan 2026 15:13:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-pci-m2-v5-5-8173d8a72641@oss.qualcomm.com>
-References: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
-In-Reply-To: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
-To: Bjorn Helgaas <bhelgaas@google.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
- Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-pm@vger.kernel.org, linux-ide@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7839;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=ozwbSbXg0129q31uwPEZPEFupIS0sT29S7CybwHBuR4=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpXmmMOKotm7Invr6pw7wYUmqpa9qZHY6R8kuiM
- ulDavXHnAiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaV5pjAAKCRBVnxHm/pHO
- 9RL+B/44vHuZPYOwFq3QIVtLc7E3gvXBbgTII/xat+kENiTaxYW8FEA88uclERV9DgCEX+zdZNy
- IWP3wRVTnE6PnIW8mFtbiHBlBOYTstVy8X6PK66Pepv50/q/EB1AzMzk4/fFXP6xCsCwLcR8fsg
- cjY7/cdjQ2HtETW5JRLnFQE6B3amVv9ItkxCs4G7CyEd+UQPtE+4GTYTc2095KSn6qpMKzDrHbR
- Y3ZWivfppB15ss9DoN5E0zLW55IkV72ZUs1Cd2D1eb8m2emjy1rmvMuqECCWlKeZwoH1WZ5YURM
- g//ZwzmwXLuoZcJFGa1/R9e+bHfBaLjbDF6/P2JesHumLoNF
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: msm8953-xiaomi-daisy: fix backlight
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+        Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kiran Gunda <quic_kgunda@quicinc.com>, Helge Deller <deller@gmx.de>,
+        Luca Weiss <luca@lucaweiss.eu>, Konrad Dybcio <konradybcio@kernel.org>,
+        Eugene Lepshy <fekz115@gmail.com>,
+        Gianluca Boiano <morf3089@gmail.com>,
+        Alejandro Tafalla <atafalla@dnyon.com>
+Cc: dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+References: <20260107-pmi8950-wled-v1-0-5e52f5caa39c@mainlining.org>
+ <20260107-pmi8950-wled-v1-5-5e52f5caa39c@mainlining.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260107-pmi8950-wled-v1-5-5e52f5caa39c@mainlining.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=XpL3+FF9 c=1 sm=1 tr=0 ts=695e69f5 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=OuZLqq7tAAAA:8 a=tgJsgVuRmq43osI8c0oA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=AKGiAy9iJ-JzxKVHQNES:22
+X-Proofpoint-ORIG-GUID: pO6A8TtFHnGP9QH47WeOABBrFewMT7OL
+X-Proofpoint-GUID: pO6A8TtFHnGP9QH47WeOABBrFewMT7OL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEwOSBTYWx0ZWRfX0Yyhyu/QzSQy
+ eQUr4+XutU3/EcuKADexmNxzPeVjDdTtaTKv3Ui36B/47/XpxpOcQsWNT3/YA/EdFLZ9xrFtr3k
+ bEEOePGWTO8xh0jfa0A53tKQeFXIPi3Ge81mZriBhKuZJCLEf7bu5BWQxV0/rNvuGNVSzZmea1e
+ TnyvBd6MytMVrRhia9FBXepTTUc2VSi4gBpT81BKsn9UU1XpzXrb704R9sKkWYW66tGP4eMonE/
+ +9fivEA0IjQY52LD7S6w+8DremlkZ9y0awtrRd7GyVlXPicstGGMjixN0eqWDmxUqV4jrc+zpZN
+ XEzPra+aWgo3m0nTiSLemfhMTy56koV+DN3q+qibwj3H3RlxqV8jVuluI0PWWxmSxJmUompSVXE
+ lOUEZmJbxgibHAQg+lE/2Us3l9POyDCCBCRhbVzDEHuN5OBDddzA4JWihdSLsMilY6RD913sM/q
+ 6VkwuQz0Ujz6dJSH2yw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-07_02,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601070109
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On 1/7/26 2:31 PM, Barnabás Czémán wrote:
+> Set qcom,num-strings to 3 instead of 2 for avoid stripes.
 
-This driver is used to control the PCIe M.2 connectors of different
-Mechanical Keys attached to the host machines and supporting different
-interfaces like PCIe/SATA, USB/UART etc...
+"""
+The backlight on this device is connected via 3 strings. Currently,
+the DT claims only two are present, which results in visible stripes
+on the display (since every third backlight string remains unconfigured).
 
-Currently, this driver supports only the Mechanical Key M connectors with
-PCIe interface. The driver also only supports driving the mandatory 3.3v
-and optional 1.8v power supplies. The optional signals of the Key M
-connectors are not currently supported.
+Fix the number of strings to avoid that
+"""
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- MAINTAINERS                               |   7 ++
- drivers/power/sequencing/Kconfig          |   8 ++
- drivers/power/sequencing/Makefile         |   1 +
- drivers/power/sequencing/pwrseq-pcie-m2.c | 169 ++++++++++++++++++++++++++++++
- 4 files changed, 185 insertions(+)
+Konrad
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5b11839cba9d..2eb7b6d26573 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20791,6 +20791,13 @@ F:	Documentation/driver-api/pwrseq.rst
- F:	drivers/power/sequencing/
- F:	include/linux/pwrseq/
- 
-+PCIE M.2 POWER SEQUENCING
-+M:	Manivannan Sadhasivam <mani@kernel.org>
-+L:	linux-pci@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-+F:	drivers/power/sequencing/pwrseq-pcie-m2.c
-+
- POWER STATE COORDINATION INTERFACE (PSCI)
- M:	Mark Rutland <mark.rutland@arm.com>
- M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index 280f92beb5d0..f5fff84566ba 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -35,4 +35,12 @@ config POWER_SEQUENCING_TH1520_GPU
- 	  GPU. This driver handles the complex clock and reset sequence
- 	  required to power on the Imagination BXM GPU on this platform.
- 
-+config POWER_SEQUENCING_PCIE_M2
-+	tristate "PCIe M.2 connector power sequencing driver"
-+	depends on OF || COMPILE_TEST
-+	help
-+	  Say Y here to enable the power sequencing driver for PCIe M.2
-+	  connectors. This driver handles the power sequencing for the M.2
-+	  connectors exposing multiple interfaces like PCIe, SATA, UART, etc...
-+
- endif
-diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing/Makefile
-index 96c1cf0a98ac..0911d4618298 100644
---- a/drivers/power/sequencing/Makefile
-+++ b/drivers/power/sequencing/Makefile
-@@ -5,3 +5,4 @@ pwrseq-core-y				:= core.o
- 
- obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)	+= pwrseq-qcom-wcn.o
- obj-$(CONFIG_POWER_SEQUENCING_TH1520_GPU) += pwrseq-thead-gpu.o
-+obj-$(CONFIG_POWER_SEQUENCING_PCIE_M2)	+= pwrseq-pcie-m2.o
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-new file mode 100644
-index 000000000000..e01e19123415
---- /dev/null
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -0,0 +1,169 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_graph.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/pwrseq/provider.h>
-+#include <linux/regulator/consumer.h>
-+#include <linux/slab.h>
-+
-+struct pwrseq_pcie_m2_pdata {
-+	const struct pwrseq_target_data **targets;
-+};
-+
-+struct pwrseq_pcie_m2_ctx {
-+	struct pwrseq_device *pwrseq;
-+	struct device_node *of_node;
-+	const struct pwrseq_pcie_m2_pdata *pdata;
-+	struct regulator_bulk_data *regs;
-+	size_t num_vregs;
-+	struct notifier_block nb;
-+};
-+
-+static int pwrseq_pcie_m2_m_vregs_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_enable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_disable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_vregs_unit_data = {
-+	.name = "regulators-enable",
-+	.enable = pwrseq_pcie_m2_m_vregs_enable,
-+	.disable = pwrseq_pcie_m2_m_vregs_disable,
-+};
-+
-+static const struct pwrseq_unit_data *pwrseq_pcie_m2_m_unit_deps[] = {
-+	&pwrseq_pcie_m2_vregs_unit_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_m_pcie_unit_data = {
-+	.name = "pcie-enable",
-+	.deps = pwrseq_pcie_m2_m_unit_deps,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data = {
-+	.name = "pcie",
-+	.unit = &pwrseq_pcie_m2_m_pcie_unit_data,
-+};
-+
-+static const struct pwrseq_target_data *pwrseq_pcie_m2_m_targets[] = {
-+	&pwrseq_pcie_m2_m_pcie_target_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data = {
-+	.targets = pwrseq_pcie_m2_m_targets,
-+};
-+
-+static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
-+				 struct device *dev)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+	struct device_node *endpoint __free(device_node) = NULL;
-+
-+	/*
-+	 * Traverse the 'remote-endpoint' nodes and check if the remote node's
-+	 * parent matches the OF node of 'dev'.
-+	 */
-+	for_each_endpoint_of_node(ctx->of_node, endpoint) {
-+		struct device_node *remote __free(device_node) =
-+				of_graph_get_remote_port_parent(endpoint);
-+		if (remote && (remote == dev_of_node(dev)))
-+			return PWRSEQ_MATCH_OK;
-+	}
-+
-+	return PWRSEQ_NO_MATCH;
-+}
-+
-+static void pwrseq_pcie_free_resources(void *data)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = data;
-+
-+	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pwrseq_pcie_m2_ctx *ctx;
-+	struct pwrseq_config config = {};
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->of_node = of_node_get(dev->of_node);
-+	ctx->pdata = device_get_match_data(dev);
-+	if (!ctx->pdata)
-+		return dev_err_probe(dev, -ENODEV,
-+				     "Failed to obtain platform data\n");
-+
-+	/*
-+	 * Currently, of_regulator_bulk_get_all() is the only regulator API that
-+	 * allows to get all supplies in the devicetree node without manually
-+	 * specifying them.
-+	 */
-+	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev), &ctx->regs);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get all regulators\n");
-+
-+	ctx->num_vregs = ret;
-+
-+	ret = devm_add_action_or_reset(dev, pwrseq_pcie_free_resources, ctx);
-+	if (ret)
-+		return ret;
-+
-+	config.parent = dev;
-+	config.owner = THIS_MODULE;
-+	config.drvdata = ctx;
-+	config.match = pwrseq_pcie_m2_match;
-+	config.targets = ctx->pdata->targets;
-+
-+	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-+	if (IS_ERR(ctx->pwrseq))
-+		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+				     "Failed to register the power sequencer\n");
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
-+	{
-+		.compatible = "pcie-m2-m-connector",
-+		.data = &pwrseq_pcie_m2_m_of_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pwrseq_pcie_m2_of_match);
-+
-+static struct platform_driver pwrseq_pcie_m2_driver = {
-+	.driver = {
-+		.name = "pwrseq-pcie-m2",
-+		.of_match_table = pwrseq_pcie_m2_of_match,
-+	},
-+	.probe = pwrseq_pcie_m2_probe,
-+};
-+module_platform_driver(pwrseq_pcie_m2_driver);
-+
-+MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>");
-+MODULE_DESCRIPTION("Power Sequencing driver for PCIe M.2 connector");
-+MODULE_LICENSE("GPL");
-
--- 
-2.48.1
-
-
+> 
+> Fixes: 38d779c26395 ("arm64: dts: qcom: msm8953: Add device tree for Xiaomi Mi A2 Lite")
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+> index ddd7af616794..59f873a06e4d 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-daisy.dts
+> @@ -157,7 +157,7 @@ &pm8953_resin {
+>  
+>  &pmi8950_wled {
+>  	qcom,current-limit-microamp = <20000>;
+> -	qcom,num-strings = <2>;
+> +	qcom,num-strings = <3>;
+>  
+>  	status = "okay";
+>  };
+> 
 
