@@ -1,100 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-87814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 971DCCFC8E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 09:17:25 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 314E4CFC970
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 09:25:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 059A13001BD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 08:17:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EC301300D4B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 08:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987ED28E571;
-	Wed,  7 Jan 2026 08:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671A627FB26;
+	Wed,  7 Jan 2026 08:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Aul2oRo7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ey14xgLU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PT2KrZ+p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246A94C6D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 08:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3329C275861;
+	Wed,  7 Jan 2026 08:20:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767773836; cv=none; b=czfw0bJsivMqeMcd1q+0+Oig0CM9vywR6XyZKCJUlnwnrZAA1OhQX5hn21SCzOXrGhytz+5p8ftUXFIt8NVSm1FfEJjONs4lQ3SfYDu/Zo7Pytmu1cO1pRsBVWD3LNfExbQcp7y8OcTmva2iqiY1ywsUt5g1d2G7rS8+1dVXxfE=
+	t=1767774019; cv=none; b=qCsYQYxDYs5YD+felES3CIU5GjIcPhNyC2TlFzQ1upUardDE3tV5pr9JPqjr4EpkJnAL0l/NDry4E3YSGRru/oPrpez+djhx1bhqdgRP9nqIaiVWXFci4nFf+MrlbvuhyT4QZ8U8lyDaUAt29kUC3i9xwatRZzHHRwGyKcqXcLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767773836; c=relaxed/simple;
-	bh=ldXPkGLNn3RJg18xZxfZG7HSQHf0UxCv71TUKV6kLoA=;
+	s=arc-20240116; t=1767774019; c=relaxed/simple;
+	bh=WCbeW1bpn87qif8FFWkiBawGLmbFs524ju/8yNAvbFI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ndXfViqjqlgQlRpl+eMW55qdVTpsHNUvdooj1yCCObe4undCLx2YK/lcjNYmoPhc74LoRvTK74jL1T+2N58rGWD9K1HUTfXws2L4boSFHlpKwwxAtZ/aGvosdZPbH7pLryPfk9ESCUX0M4EruHApyGsg8oJTc6E+ofKQbZKiJqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Aul2oRo7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ey14xgLU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6077JIDJ1476329
-	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 08:17:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	U2iE+15PNQebJJTmVX478oR3/nqce794ugguGlPvuY4=; b=Aul2oRo7WPYlZIMS
-	rgkpkGBuC54TiaQM3AFEU/gzPpcRCPfeWtC+NSdej51HsExYTlUvx6KLrmvi9/H7
-	FtTKTD2WhSaZed3PaiywkECAyVRFah1alXzdWzHLBkxM7fOIc0ng4aiipcWhqCIf
-	qJtuF+QQP5zylpYiSmSmLtPfERWSdcJVsRxKZMDIcufL/p76uhxHqOTfchRHR4VD
-	mlpPddY20c6N4Mb4T9Jb8vMQdBUHVq4Lj9PJ5vbJ4iVloWa47aYN5+5mebVaKJao
-	tRXd6jEV2ajXxS6oFe+naK7q01cwn1YJBRaIf7EAdaegmb1HGultSznYJYbNnuaY
-	sP992A==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhayhshra-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 08:17:14 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-88a3356a310so45444146d6.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 00:17:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767773833; x=1768378633; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U2iE+15PNQebJJTmVX478oR3/nqce794ugguGlPvuY4=;
-        b=Ey14xgLUa5ryI+wNAY+urR8dZhfmaYAVdl5adVhaleZEIZD4+GgXrEJUvBgO8RnDJX
-         sx7FQw7SStn/c+33Ql+Fishs9wZCT7bqB99PT/94Gs5yIOyMAKU2AnelOLsfEahXIbXB
-         U8MRwUeOCBm+hjt51bmg4Poopza/uhzEs0JOq0tTTLVwO1VFiTiy0g8CHHdBzbWyqaLV
-         OKd0iNCLohgZ4ILD4RySvU07aV+86qJMNHxuhnzo04ZmIR9Rn/b9qjjTYVXv1FfG9OiE
-         pE5JeOpm7k6CSotSctqPrpwLpN1lphS6JErwRpp0zBTsH6IZXLpktxfRi+VwmtbvDLzJ
-         31nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767773833; x=1768378633;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U2iE+15PNQebJJTmVX478oR3/nqce794ugguGlPvuY4=;
-        b=Uk8BCssdYBUQOr6pNNtfxiX7ikHaMLruGw293Ppq3WSARnkZclkKmWhVxZTY77qyIi
-         9Nh/DJwu64y5/g3qCSfBihj6B7BLT3ulyfF/qUz9+7Zd3hgKOIWnRJO/QND/F5LDtHEG
-         WwcKgbmX4ceytjP4Z78uYhmlTctOJkvFVVYq/8VWT0P4GaSdl/a+P9CwnCbqgloyMpew
-         +8CgKByffMhwZKdzKCy1RJk+UIZMY1fPlJSlbybD7PktnYxbxIUaAQa2DZihs27c76rx
-         ipeeAuKaf0THytMnH3yOawPVrgInGyXsRzyIm43X4Gp1FGr8hlBFflQVFv8wQ3SsLYnE
-         lf4A==
-X-Forwarded-Encrypted: i=1; AJvYcCUNVvIgTxZIJWFXcf14Tcsni1X7yrjvIjMvt3cQ9HBE6goMjtOJWdWHCwKNEBwEyO/wECpDWqdBPfv7qOS8@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMgNVhx1KUIEwTOccRQxwJIJB56EThou8LExOOMhTwy3exjUBM
-	JV1YA302QcKsssF2IOlrmI3oKdWZY2p0UnSwVQEv7RvfZWdSGW2ljMYwBdnL3uf+2JuVRXzq5rl
-	yNFXg4EP02ZgTrGFYGwsn8pEJfmygMb21eSHRxS/dbkkHTqLOXjFSdZKPUMI4BNQk2CpX
-X-Gm-Gg: AY/fxX4lgUaZWV3X8MVDXJUb/FZrryTBG+JRC2+qiuHc97+5CdCbgF4QFv44iVpOoev
-	iY+sbEDrUkYV8b1lKPTT3bEg+ra0VdzmGIOS1CJ8NxRliRHHsFXRSehXb9dEsYf/8dBjcd3j4Ct
-	NfNbpo3XPAKHefYNzrAktIzATpdUy3Tn72rsU+MTJTnVrcdSpusjkJzGKicad3+bw/Ut3hjbFB4
-	eRemQcp/ud66PjkWc06VP1t63x44Wc1c/EriOg6qrdxSWuGlKjbgsdiZsNTMPSATrTEvJSIkg7z
-	qPGxLJtmuYAbliZX0zneLlXc8Nh3Wxb2KKuPqtH8S8645D2Q/YMSweWWWKvhT92FFPpJuRiR1MK
-	PPR9FRHNx5xBRE0WiVW2clLvXr4I67ed4kl/txoE4X9DG7PDqYmjC35dWk68B6n5ogCcNND7V
-X-Received: by 2002:a05:6214:5906:b0:880:4dd2:1d15 with SMTP id 6a1803df08f44-89084234e9fmr20476356d6.44.1767773833039;
-        Wed, 07 Jan 2026 00:17:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEgI2M46l1hZz0zobajaGBNbSLWEqTTf+RNOEJNRuWYa5RNpyEqJHelvJSG2u3yIkeg2cdpxQ==
-X-Received: by 2002:a05:6214:5906:b0:880:4dd2:1d15 with SMTP id 6a1803df08f44-89084234e9fmr20476096d6.44.1767773832565;
-        Wed, 07 Jan 2026 00:17:12 -0800 (PST)
-Received: from [10.38.247.225] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89077268016sm28921426d6.46.2026.01.07.00.17.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jan 2026 00:17:12 -0800 (PST)
-Message-ID: <6a74e675-b011-4e1d-860c-4c3232beb2a2@oss.qualcomm.com>
-Date: Wed, 7 Jan 2026 16:17:04 +0800
+	 In-Reply-To:Content-Type; b=AX8EtXQZz7jWqdo6qzYHLsFCRF87j08Skj2F4R0G+rWkNzqDru6HIgXbk6eX4AGw5ft6xI04pY1DNs5tjpA6c2wbhgBI2WR5MxQk6cQqVayDBOgn51CmvhNuBUxQbLkGEsjsX09wit3OIDlON3v3k6pyFr91m8wXhP6+jHm9V2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PT2KrZ+p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7461DC4CEF7;
+	Wed,  7 Jan 2026 08:20:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767774018;
+	bh=WCbeW1bpn87qif8FFWkiBawGLmbFs524ju/8yNAvbFI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PT2KrZ+pEATACSkbs3D0/FGQJF36QYNdAdslTFEEv3fl90O48kjdL9bQjwzgvpBW0
+	 pdwjaY36HO0YRqBue7TW9/djpMMgElVCRMO944JYBfX14igdQu4VN9Mxil2rQhGMhI
+	 G2liSqMEO0qSHgcfkc8SlLtDFa1EsdXMhCL7MHeeO0LS1lDNRnmSB4kG4E6FobJYAv
+	 EXHpHdnbyz6yo9fZXk2LE92zx3UwVYJzEGjUlTZopL1J74F0+hvXCUfC+tirJP3/qJ
+	 SriQoAvFPAZWFYftp0TTRnCuCtEivqJtVVJt6dytv8iRSgvb3M/W8MnCR3vJPSbpJl
+	 PzXa3ihkF0Z3w==
+Message-ID: <b724795f-1a76-4cc2-9417-2e4dd7dc7305@kernel.org>
+Date: Wed, 7 Jan 2026 09:20:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,87 +48,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document sm6150
- compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org
-References: <20260106-sm6150_evk-v2-0-bb112cb83d74@oss.qualcomm.com>
- <20260106-sm6150_evk-v2-1-bb112cb83d74@oss.qualcomm.com>
- <20260107-tungsten-barracuda-of-management-5edb0b@quoll>
+Subject: Re: [PATCH v3 1/2] dt-bindings: leds: leds-qcom-lpg: Add support for
+ PMH0101 PWM
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Fenglin Wu <quic_fenglinw@quicinc.com>, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ kamal.wadhwa@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ jingyi.wang@oss.qualcomm.com
+References: <20251215-knp-pmic-leds-v3-0-5e583f68b0e5@oss.qualcomm.com>
+ <20251215-knp-pmic-leds-v3-1-5e583f68b0e5@oss.qualcomm.com>
+ <20251217-quiet-wandering-gaur-c9c6fe@quoll>
+ <f6ca8c43-9f00-4dd8-9e11-90f2a4e8d18e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-In-Reply-To: <20260107-tungsten-barracuda-of-management-5edb0b@quoll>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <f6ca8c43-9f00-4dd8-9e11-90f2a4e8d18e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDA2NiBTYWx0ZWRfX5G4s3Ft2WfW6
- T8XhF9ZvoNJnTGXsQZVS5Oqbgaaf4N3kzN2OF2BrmJTtTKUzUnLhBIU6ISvh/OIJicGKALuKgeh
- mGCrrOkjyNtnhRyQwPx9GglUV1HplE88HtGfT1wtmv54GFqDTh5lcuZDVojiFvzHlgZN5YiolOP
- WNLxvcFu3vxikfwGG3MwZvCJUO2FjR9g3zEy6T6kDwRFe8pmsKPKSk3rzVeaeZCC0i2u4mSrOF/
- S0Mcwmv/cfb/Xk4zr00aHFbZfyB1miIsHCt3/8FuGCiXobFE1To0SLJKuU3Erbvk/fCjyvx8sb3
- 7vSSjgL+qekd9NvwjdEqt9idmgF+16JHdPxguErkRvjSHRxXAOKOVeZrP+Ntmv8+i8XuaruEuAn
- +AcyAf65AlkARf+iI5NFga2nZsLtk7fEC/4ucPTitqlttAl59Y9scV+ziu+fDlc//BVGUAz9Dn6
- gNkLuhbxDW77l/+sylg==
-X-Authority-Analysis: v=2.4 cv=VI7QXtPX c=1 sm=1 tr=0 ts=695e168a cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=BatDUjzfUMZcbphu-t4A:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: 6jLegnO0Ul25tSHcIEw7xzH8MhQAq9K4
-X-Proofpoint-ORIG-GUID: 6jLegnO0Ul25tSHcIEw7xzH8MhQAq9K4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-06_03,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601070066
 
-
-
-On 1/7/2026 4:00 PM, Krzysztof Kozlowski wrote:
-> On Tue, Jan 06, 2026 at 05:39:53PM +0800, Wenmeng Liu wrote:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sm6150-cci
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 3
->> +          maxItems: 3
->> +        clock-names:
->> +          items:
->> +            - const: soc_ahb
+On 22/12/2025 14:06, Jishnu Prakash wrote:
+> Hi Krzysztof,
 > 
-> Same question as before. I did not see any resolution of this in
-> changelog or commit msg.
+> On 12/17/2025 1:45 PM, Krzysztof Kozlowski wrote:
+>> On Mon, Dec 15, 2025 at 04:41:04PM +0530, Jishnu Prakash wrote:
+>>> Add support for PMH0101 PWM modules which are compatible with the PM8350c
+>>> PWM modules.
+>>>
+>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>>> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>>>  1 file changed, 1 insertion(+)
+>>
+>> So how many nvmem entries it has? You need to define it in schema.
+>>
 > 
-Will update commit msg in next version:
+> PMH0101 PWM has 2 nvmem entries, the same as PM8350C. But I see that
+> PM8550 PWM was earlier added under the "if:then" condition for the number
+> of nvmem entries and you made this change which removed that line:
 
-For this platform, it uses soc_ahb instead of camnoc_axi.
+Right, code is fine.
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-
-How about this?
-
-Thanks,
-Wenmeng
-
-
+Best regards,
+Krzysztof
 
