@@ -1,150 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-87864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E094ACFD73D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 12:44:55 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02B47CFD774
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 12:46:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 27C013001BC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 11:44:55 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6746E3064D5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 11:46:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72453308F07;
-	Wed,  7 Jan 2026 11:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6674238166;
+	Wed,  7 Jan 2026 11:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqlN334W"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Zcu5foUb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f68.google.com (mail-ed1-f68.google.com [209.85.208.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409A72E228C;
-	Wed,  7 Jan 2026 11:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6281530AD10
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 11:45:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767786293; cv=none; b=fOksGfi4cEwgPyF54pPiKHvKZUrwY2j8emCaV1ErV/aoRUx+3SQe8i25QDhEPqcand7ssU9M+nY66Jk6XBoNsLVEU+SsH6HnOTitW1r3cV7slHJRoVYzKnpyAT63eoXbTOuKbk9PE+lYcqJsk2Jh0BB7Wh+9auRkoDZ8Za0uzzc=
+	t=1767786341; cv=none; b=llJTe1AFnsaljH8ZQOT3XtrDxAvspb6KqZt5GtyDtCEQHmWvlVcwnUh8Km3ZXCH1ctJUPXOiIF+x0Jdnju+J9gwUZM8H8H8MGhkTFeza7IQBSKoHy+ZuNqgB5vrxDZXA+BZ77MLh77g1qF1BwqSJqxocax5tvlyuVH23trXqGmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767786293; c=relaxed/simple;
-	bh=i12dijGR2EG5TROlBAmjQZIcGVlj0wQM3L9IkBSHFK8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nBWIkpJsszILROG3nRlDYk76b1fY4vfLXYR5s7Ynzf3KVRCrHnlDbaos1Paezzd1u+2WGIVZLD4/++Oimzqx/3Bqb8h+pSzr+oFa/xccnFQjtE9EsbY3x9P5PdHYiBu7IFHVCjCf23Ysu+//mxdsuOYkAdXO8tq8AddPnpT0bck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqlN334W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B73D1C4CEF7;
-	Wed,  7 Jan 2026 11:44:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767786292;
-	bh=i12dijGR2EG5TROlBAmjQZIcGVlj0wQM3L9IkBSHFK8=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=nqlN334WX/TxihteSi+cCHq2vtVfblVpOeOxwUcMH7tl8POZAXBErk8tlfwy6KiH6
-	 dCIcme6hB0I0NPs/IF1+C0fi5tX5HAv6OFnFUWHBgdBIed+kt2k+3MRAlp+jzNr9ar
-	 uGeeEYWdQXr53Sa+nf7DRrqI8+KW/rXNReIiMI/Cm+R1a96IRuKAjjmomCz1NZFZL7
-	 NroZBHgFA/GNLNGBxjwdc3CpWh36q6RilYZP4a1WtF7dpjbTvAhetMVFUh8W/DAETE
-	 6qM793cd/Z5mjXsqzhNCbRdKUaRCgNPZ/7DE3rp4lpDhosEKrehfgqkCXb195Dcc/X
-	 hYEtDZwO53d4g==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC968CD5856;
-	Wed,  7 Jan 2026 11:44:52 +0000 (UTC)
-From: Petr Hodina via B4 Relay <devnull+petr.hodina.protonmail.com@kernel.org>
-Date: Wed, 07 Jan 2026 12:44:43 +0100
-Subject: [PATCH v2] clk: qcom: dispcc-sdm845: Enable parents for pixel
- clocks
+	s=arc-20240116; t=1767786341; c=relaxed/simple;
+	bh=XITZCtSRKvRZYv1vfYHqWD2cWdlJH8jfh7yoZWFbXVw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=uAwID1c5YmZY9yuOn6IzSlJgin+fYETt2XnklMLAPbrnbkgVW7+v8pzn2WTRF5MnKynBqyL6mkVCSA27kI+Nv+lim5Z+/O5hxnVBObPYN+tkUCI2TKL+qn+VjEdCLSEWwxsJZRTw/RhAzZOQFr37zPPvCVaF5Oa5y5hZanVtw88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Zcu5foUb; arc=none smtp.client-ip=209.85.208.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f68.google.com with SMTP id 4fb4d7f45d1cf-64c893f3a94so1094859a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 03:45:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1767786338; x=1768391138; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ob3g5q5jWnPVuY+nnqbiqZRINNocwJ2SJ68hLxsq1uU=;
+        b=Zcu5foUbjgdPaUQDYc5+/SllehXppG/lkUWAvteV20Lv3wry+ikStyxVwZ2tho9lnn
+         Zcobi0znWwhKJ1fHCdLh4w4/yulf/dh06tmESm1vH1oItwygNs54NM/7idCgn6B61qea
+         +4fhb2CHOapjhAVsU6u3Vx7wf7eQHkt4IYkmjV5oBdkkAyLAClMA46BZXNrjnsJyXUF2
+         eoPdqV7DrC+TVGYvZH2/DQ137S7jCiE35x0s5M0YqP5isnSuqxZekYoT5gtqoowhH1JZ
+         klc+N3W/Rz9DqK8qJgA5NMshkkCPoy13TAOlNJfhHKmflEpdHHmaZbwhhWbjN5ZpDCDe
+         akBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767786338; x=1768391138;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ob3g5q5jWnPVuY+nnqbiqZRINNocwJ2SJ68hLxsq1uU=;
+        b=BmEFmcz5R0CVcBtTH/nxPiqa4xQ5VoJdf9QjVkeTMKhQhenRwsYIOv5xN4qVWOINrS
+         awMqWRXWwyj4EQ34rHIxooO+rDHpadAk3qma4YD4JA0MKC+QJx0WUkyVLyVth3l1BwE4
+         9xJetmx45wzzM5Sw7yUFud81vW2k/uPk5ykIRgtbgZscIypZrhMYkXjB6Xt+RhSlncJ0
+         wWkFZg2m0hVDgAE/vsQKcZRa8ikwQUddyAE3Mc1YzCxF0Fmi3l8lA7V2wWdO/OARKt2f
+         v65TbSX8YapflypV6+KPO9o/kK3+PnT1QUBSQPSI9q5rHKBWeQOOMRsRkdwW3cU21Pb9
+         4Eow==
+X-Gm-Message-State: AOJu0YyYQKU6+mnddQqirj5/y5ma1KvBvDagLU4ZkLTfsfvEJMmDZG05
+	vAGIwNfttRtIvneuoXhpEFHievtwQeo5l47XntaTZyYVaRnRyC8qqrZrpuV2LGrw+fQ=
+X-Gm-Gg: AY/fxX73mfDiBbcb3WvfmUm59qRw+RP14I6SCVdXL5vw/c/j8dE3n5b6cp1cdmMi058
+	08Db9X4RlBKrzMu8EQNIck5sSo+o2Rg0NoZQ1bPXUjgwvc6altVKH3uSLRWgUuVFjJ/ahRrvhg3
+	55iNBWBK2H/Xt97uYg4uynoeISpx2TUQhyh7BkexuzxWTKV3W2rxrTw7dg3FAOEjUzbq2N15C5+
+	AtKyOO46EqhbK2g5MDv8WuqiA4Aj5vkve5uv17Wo413bw8fVnNRqY02KodCmvM44fLMQNEpvu2X
+	nhjchfYYgU88GYIN2BJhs6SVyNjdZtOAhXlCtfIAZip7zGKR4MbHYgQwbBqPgmQeFSyYCX0/Egj
+	fkP1mG/PhHZAHXUl8YnLjcXdEuHDVlxj0OvtvLu/KEiBelP2E3rGqXuEnyTWkYE8tPEMrK1iBJI
+	hsuCNg7FKGAPW7Lg==
+X-Google-Smtp-Source: AGHT+IF+cPqxULnBUelcUpCMFoIf2W5SbdC3yAUiVTr+97+8pbT8Xepe9yvm6GNT+o8qSLb+2Lu6+w==
+X-Received: by 2002:a17:906:ef0c:b0:b79:eba9:83b4 with SMTP id a640c23a62f3a-b8444c5a60bmr291635566b.6.1767786337696;
+        Wed, 07 Jan 2026 03:45:37 -0800 (PST)
+Received: from localhost ([195.169.149.3])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a4d0290sm483752666b.32.2026.01.07.03.45.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jan 2026 03:45:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
-X-B4-Tracking: v=1; b=H4sIACpHXmkC/22NzQ6CMBCEX4Xs2Rq62EY9+R6GA/RHNjFgurUBS
- d/dQuLN4zeZ+WYFdoEcw7VaIbhETNNYAA8VmKEbH06QLQxYo5IoUXDsenpSXIQlNm/eBsJK7XV
- nSqO+QJm+gvM079p7W3ggjlNY9pckt/QnbP4LkxS16FFZfz6pRqG+0UzxaD7Q5py/CAgnTbYAA
- AA=
-X-Change-ID: 20251212-stability-discussion-d16f6ac51209
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Petr Hodina <petr.hodina@protonmail.com>, 
- David Heidelberg <david@ixit.cz>, Taniya Das <quic_tdas@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-clk@vger.kernel.org, phone-devel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767786291; l=2169;
- i=petr.hodina@protonmail.com; s=20260107; h=from:subject:message-id;
- bh=rhHlOC5VvJkw1jNcO5wjpQE+ODSzLv7eBLSkXsZ0iyw=;
- b=WTR4lz69OoEn9zFkm8BKk7lSNL6QEdFohSqc+8MLAekv3FMBPnv7HPsoadbU3e3BuDvuWolXZ
- r5ZqrFE4sdpAeoGdrfVv6WacO2nwHCegWEbP4Qbn6nUKp3eJInBeEf7
-X-Developer-Key: i=petr.hodina@protonmail.com; a=ed25519;
- pk=3QaVc6AaAu1IsyyH86+LIOOFhD7kCws8Xhe+wwyE7Bg=
-X-Endpoint-Received: by B4 Relay for petr.hodina@protonmail.com/20260107
- with auth_id=594
-X-Original-From: Petr Hodina <petr.hodina@protonmail.com>
-Reply-To: petr.hodina@protonmail.com
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 07 Jan 2026 12:45:37 +0100
+Message-Id: <DFIBYFY6L63Q.1A8WFXEQ7DYUT@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>, "Jessica
+ Zhang" <jessica.zhang@oss.qualcomm.com>
+Subject: Re: [PATCH v3 00/12] drm/msm/dpu: rework format handling code
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Sean Paul" <sean@poorly.run>,
+ "Marijn Suijten" <marijn.suijten@somainline.org>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Jordan Crouse"
+ <jordan@cosmicpenguin.net>, "Jessica Zhang" <jesszhan0024@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251114-dpu-formats-v3-0-cae312379d49@oss.qualcomm.com>
+In-Reply-To: <20251114-dpu-formats-v3-0-cae312379d49@oss.qualcomm.com>
 
-From: Petr Hodina <petr.hodina@protonmail.com>
+On Fri Nov 14, 2025 at 4:43 AM CET, Dmitry Baryshkov wrote:
+> - Rework mdp_format.c in order to make format table manageable
+> - Rework layout population for UBWC formats in DPU driver
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> Changes in v3:
+> - Readded disappeared YUV flag to PSEUDO_YUV_FMT_TILED
+> - Link to v2: https://lore.kernel.org/r/20250905-dpu-formats-v2-0-7a67402=
+8c048@oss.qualcomm.com
+>
+> Changes in v2:
+> - Dropped DX flag from the tiled NV12 format structure (Jessica)
+> - Changed round_up(foo, 192) to the roundup() as the former one is
+>   supposed to be used with power of 2 argument (Jessica)
+> - Fixed undefined varuables warning in
+>   _dpu_format_populate_plane_sizes_ubwc() by dropping the always-true
+>   condition (LKP)
+> - Link to v1: https://lore.kernel.org/r/20250705-dpu-formats-v1-0-40f0bb3=
+1b8c8@oss.qualcomm.com
+>
+> ---
+> Dmitry Baryshkov (12):
+>       drm/msm/disp: set num_planes to 1 for interleaved YUV formats
+>       drm/msm/disp: set num_planes and fetch_mode in INTERLEAVED_RGB_FMT
+>       drm/msm/disp: set num_planes, fetch_mode and tile_height in INTERLE=
+AVED_RGB_FMT_TILED
+>       drm/msm/disp: simplify RGB{,A,X} formats definitions
+>       drm/msm/disp: simplify tiled RGB{,A,X} formats definitions
+>       drm/msm/disp: pull in common YUV format parameters
+>       drm/msm/disp: pull in common tiled YUV format parameters
+>       drm/msm/disp: drop PSEUDO_YUV_FMT_LOOSE_TILED
+>       drm/msm/dpu: simplify _dpu_format_populate_plane_sizes_*
+>       drm/msm/dpu: drop redundant num_planes assignment in _dpu_format_po=
+pulate_plane_sizes*()
+>       drm/msm/dpu: rewrite _dpu_format_populate_plane_sizes_ubwc()
+>       drm/msm/dpu: use standard functions in _dpu_format_populate_plane_s=
+izes_ubwc()
 
-Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-clocks are enabled during clock operations, preventing potential
-stability issues during display configuration.
+Seems to work as expected according to our messages in IRC, no issues
+seen booting up Phosh or SuperTuxKart.
 
-Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
-Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
----
-We are currently running the latest linux-next snapshots (next-202511*
-and next-202512*) and have encountered random freezes and crashes on the
-Pixel 3, as well as crash dumps on the OnePlus 6 and 6T.
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
 
-This commit fixes the stability issue. I've checked other SDM dispcc
-files and they also contain this configuration.
+Regards
+Luca
 
-For safety I also set the configuration for `disp_cc_mdss_pclk1_clk_src`
-though it should be sufficient only for `disp_cc_mdss_pclk0_clk_src`.
-
-Kind regards,
-Petr
----
-Changes in v2:
-- Remove commits from v1 and introduce proper fix.
-- Link to v1: https://lore.kernel.org/r/20251213-stability-discussion-v1-0-b25df8453526@ixit.cz
----
- drivers/clk/qcom/dispcc-sdm845.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
-index 2f9e9665d7e9..78e43f6d7502 100644
---- a/drivers/clk/qcom/dispcc-sdm845.c
-+++ b/drivers/clk/qcom/dispcc-sdm845.c
-@@ -280,7 +280,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
- 		.name = "disp_cc_mdss_pclk0_clk_src",
- 		.parent_data = disp_cc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-@@ -295,7 +295,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
- 		.name = "disp_cc_mdss_pclk1_clk_src",
- 		.parent_data = disp_cc_parent_data_4,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_pixel_ops,
- 	},
- };
-
----
-base-commit: f96074c6d01d8a5e9e2fccd0bba5f2ed654c1f2d
-change-id: 20251212-stability-discussion-d16f6ac51209
-
-Best regards,
--- 
-Petr Hodina <petr.hodina@protonmail.com>
-
+>
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    |  174 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/msm_media_info.h | 1155 ------------------=
+------
+>  drivers/gpu/drm/msm/disp/mdp_format.c          |  614 +++++++------
+>  3 files changed, 391 insertions(+), 1552 deletions(-)
+> ---
+> base-commit: b179ce312bafcb8c68dc718e015aee79b7939ff0
+> change-id: 20250705-dpu-formats-0d5ae4d1a1b9
+>
+> Best regards,
 
 
