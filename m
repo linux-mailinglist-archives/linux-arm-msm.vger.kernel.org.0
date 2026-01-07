@@ -1,131 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-87926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE460CFE444
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 15:24:29 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48956CFF09A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 18:15:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF05B308E659
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 14:19:20 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7E9D630019EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 17:15:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D0A340DB8;
-	Wed,  7 Jan 2026 14:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5FE34C154;
+	Wed,  7 Jan 2026 14:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ff2XA2uk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvB+4JhK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D4C3081AD;
-	Wed,  7 Jan 2026 14:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA6B3346A9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 14:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767795559; cv=none; b=KY+SUv9Gse9qhJlKgDDjEdYv5QBHtTv/a6Qk16qS5jc1N6PejDU9tJXJ9m1JvOG3eqDuVLx6bsSE09x7vF73pUvd+bnL6s4gyuqcKp7ZENpB+6So9oCxT+915OaR/etGVnG3h82fOVMAr5uZdY08T52UeVWK86xtPXRPMCByg3s=
+	t=1767796795; cv=none; b=WHBsSoEHz+xy3rTxeWehhrCmEKXmXsgLt8+iiu7CY9AbIGO/c2+BgtY6Xw0MeSk+R5RtLcrauTAJVfCuwJg8c9SspN/XC6HMhoMr8rEQqQl9LpKeMFsMS966yGchzhFP/ilOZ6qdNr/Ma5khgTkY0WZHpzUsQDhdDfAKGFB3ATo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767795559; c=relaxed/simple;
-	bh=NrKcL0K9ADZrDd40Kubu2XrKTn83JBz7p/hudoTIFHw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iPbVr0V6yjwBTbvcawTgZpLcntcYp32213UJFMoCHUBO48bGua0LyGDc+hhrHVAfPdYYIBC2k9sibDXwZNSnQqqp0xXT17QZVZRkz9X/5j1mFoeXwSL2csGCfPeasNILFObxM+G0LvECLSxmoRujwvjQgFvol7IYYX70fMP/U0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ff2XA2uk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05293C4CEF1;
-	Wed,  7 Jan 2026 14:19:14 +0000 (UTC)
+	s=arc-20240116; t=1767796795; c=relaxed/simple;
+	bh=Q75PUVfRtuY8QWTxv6BMBpiw7g7hOg3wxodzSzfH9tM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jKaPct7Goan7iMGSne/oXDAKQ4oCy2KnbH7aFAaIQ3HktMVjFEw/O6PeaLCDg5zB2SQZb/zem2pAD26wdmpRPFoXt6As2jbRQYZv5ILqzAVMcbH+Is0z/LDz8C08zw/EcrB8825tuypY1T0YLcSawjrF3beCu1g/WjigFfpDqUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvB+4JhK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77913C4CEF7;
+	Wed,  7 Jan 2026 14:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767795559;
-	bh=NrKcL0K9ADZrDd40Kubu2XrKTn83JBz7p/hudoTIFHw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ff2XA2uknvs1WDIcNLPV/0KOKg+KJ9M5ydg9C31mg/NhaMX4Q6vujWS/UcJ1WTfTm
-	 w+QAjvsHC/Xo+q8f8RUmE9n+gF5XpwvTfjj2IQKfK0k8GUmFyGFsBhVn14qpmbZMUV
-	 b0tnzuyS/g0dXndOU9iIkpxUK32DWcQ20//a0GUYo1WPvw4O6Dnci/YRSV3WnuNMR8
-	 /1sBiqfEw1Rfz7pRg26G2ObP1ASzp201ffnIJsfAGno2G22ajMsMa2K008S5lF9bbu
-	 nP84YrGX0g4oqfQSu6mAohVZjchDtoui2kiLSd2N4rduxy2DDsQ6QoC4DZhZ3bxiPC
-	 5J4RbQdCgYNQA==
-Message-ID: <00cbcb95-2bd4-4a15-a250-963af30076b6@kernel.org>
-Date: Wed, 7 Jan 2026 15:19:13 +0100
+	s=k20201202; t=1767796795;
+	bh=Q75PUVfRtuY8QWTxv6BMBpiw7g7hOg3wxodzSzfH9tM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LvB+4JhKbda4mmj0X3qM85nhPeACCBo00ZgxyMhayuSlC0L0OS7D9mSimB8nX5BeX
+	 8WuokuV9MKk1J4NrOnxQcRJWsH5d8aGN2b+fXmBuva8SsAjAtsbCFJWNLzLlK8NJAw
+	 fiIy5fa9X3gXTqmXtgarkOrjpugV3CeNN6QoWaC196EHcQtyBmeAHXgLMPiDU7GFcE
+	 oHXjrt+iyi1LwU0dT5bd+Rx2oOvaN8sLMkyeKfuyzdIHLtRoUgrfOg8ZHe3k0IoqV1
+	 m5bCtTgZk3Y1WRXqeu5YyFdWdXo7L7kf5U4kjSbl8lh5b2BEEiB7WqZtoFAKnS4Bjk
+	 bYnvf1urtFHZw==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1vdUhM-000000000ym-15Vg;
+	Wed, 07 Jan 2026 15:39:44 +0100
+Date: Wed, 7 Jan 2026 15:39:44 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Simone Flavio Paris <simone.flavio.paris@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [BUG REPORT] arm64: dts: qcom: x1e80100: Audio routing issues on
+ ThinkPad T14s Gen 6
+Message-ID: <aV5wMKBZMIESIMbC@hovoldconsulting.com>
+References: <CAG=QoF1cr3cFzgjRicLSr7KbwygQaHju1WKE_LK_U9Qmsgv13g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document
- the Milos QMP UFS PHY
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com>
- <20260107-milos-ufs-v1-3-6982ab20d0ac@fairphone.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260107-milos-ufs-v1-3-6982ab20d0ac@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG=QoF1cr3cFzgjRicLSr7KbwygQaHju1WKE_LK_U9Qmsgv13g@mail.gmail.com>
 
-On 07/01/2026 09:05, Luca Weiss wrote:
-> Document the QMP UFS PHY on the Milos SoC.
+On Wed, Jan 07, 2026 at 03:09:10PM +0100, Simone Flavio Paris wrote:
+
+> I am testing the latest experimental kernels on the Lenovo ThinkPad
+> T14s Gen 6 (Snapdragon X Elite).
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> I have encountered a specific issue with the audio subsystem: while
+> the DSP and ALSA stack appear fully functional (firmware loads,
+> streams are processed without errors), there is no analog output on
+> speakers or headphones.
+> 
+> I have performed extensive diagnostics and manual mixer path
+> configurations to rule out userspace/UCM issues. Below is a detailed
+> technical report of the current status, routing attempts, and logs.
+> 
+> I hope this information helps in refining the machine driver or
+> topology profiles for this specific device. I am available to test
+> patches if needed.
+> 
+> [Technical Report]
+> 
+> Target Hardware: Lenovo ThinkPad T14s Gen 6 (21N1) - Snapdragon X
+> Elite (X1E80100)
+> OS: Ubuntu 25.10 (Debian-based)
+> Kernel: 6.17.0-8-generic #8-Ubuntu SMP PREEMPT_DYNAMIC aarch64
 
+You need to report this to your distro as this is not a mainline issue.
 
+IIUC, Ubuntu disables audio by default until you pass a kernel parameter
+due to the lack of speaker protection.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
+Johan
 
