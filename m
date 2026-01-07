@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-87851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2483ACFD6B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 12:36:23 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC504CFD75C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 12:45:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D6971304BE54
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 11:34:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 61F5B30024C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 11:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B0ED30CD82;
-	Wed,  7 Jan 2026 11:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1930231D38F;
+	Wed,  7 Jan 2026 11:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="azJMKiqn";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="bCbcgfC+"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HmLDRmNZ";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="XoHpDI7p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BF130B518;
-	Wed,  7 Jan 2026 11:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A5A31618B;
+	Wed,  7 Jan 2026 11:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767785658; cv=none; b=n5ECAH+FVGJWPeAJkJL0pb5vPxuqIG3VzuL1oDjSug6cbrJg+IE4VVz+hCkD9Pi4mwyhmBnEA8dZo11J3c39kV99ltVabvj/q9fKOF6LGRy58bNkpfU1c4SpzQWNMvBg2x7WKhHdwiYjnNSlgFqINEhWHSBt3cemlOVh8fnzMXA=
+	t=1767785664; cv=none; b=Fn58zAr/jAJDgsK6Eg41UDUX7q3kBXNabZR2/leIx4wkI6FkgZWdSoFSENWdRS6k29/KXZeI8MXqBuj5dwIn3uKj15v8NXbRN05ubagWfJOY5/MtYOSRUenSAKHnMwrNHodzitV9JNgs60q7dwp2J1a9TQw8sepk1emlrsCAVYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767785658; c=relaxed/simple;
-	bh=v3y6BKCRfQELd+QFeuVLU636e8JRgFSuITFn3Km670E=;
+	s=arc-20240116; t=1767785664; c=relaxed/simple;
+	bh=YxOIBnO2ge4Q3ZvVGY59uUkodhu/6SAouH6WatcD2Z8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J0Kgy0CLwuKJKma4YYJRN5uzJozSB8tD24i4/1uUjZdOO2fxUQQFhtgPa7NlpDooNjPF6kyFWJHZVaBBzPPTvLWzyMWXEuhUvtg4rpiL2rbdX1h+oHbMZRGf3mFdgcpncUp5A+V6FRj5HjwInAGXVh0rNm+f2Sm5ebpwZMbDLjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=azJMKiqn; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=bCbcgfC+; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=k/zh0RC4syoA5PpPqjAkwWGylUHZ/u9w1zcH6+dKZBeXUFpFeieoEx6RegwcoZj7lb6QZ38v2ZIrIHDnUmWbScDX9qYcXnS7csGb9DHiw9IlEHBGYjqJQc3ur046TmhkUfQ0qFobQ9WsBMS4SEzFuKpaHYvmwRKOHlPc8byoAag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HmLDRmNZ; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=XoHpDI7p; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1767785647; bh=lvcUWeWG4ocGMd/LM7wdDnD
-	m7WvRiDqDBfo4mNiRxIQ=; b=azJMKiqno+bajOIBqxFmXCCRjlSrsOyuT4MHdxeCaqzBKMpUK5
-	M9jtKfqiJwGHwVHIcXry160sX4KX0m6/PYql8Hj8rIvATUE+iTMpf5bPj7HsVOUUJ0E0de7OH65
-	pRyuO7CvJOozzG40WzT16NWcmpnQ4Kzpcm4FFnUf6hQd3efQT6O5eUd6hFw6z6ku6LI9woqG5RT
-	v7m36ly3/xd95jI21vB12uNxx6iOc5XpHphTdGBME7VqKo2HHL3s4W7ahgOOlU2e16aICXl+q/V
-	9qr8dCw4f5x+qIg19Ld77yqMDi6XyCmZ0tri+CZcrjIzmWLk9I2ZC7NRrx9ocUtN9dQ==;
+	h=To:Message-Id:Subject:Date:From; t=1767785648; bh=vnZv3kXX9ltYhuUBaGr8yAN
+	zc3cPPQykabClqonqnYg=; b=HmLDRmNZrD/3PooFT6rYAOTImFd3zkBS60oWfjUwoNfw3o/YlS
+	DL1v2BInAUoLQl/DGbkhVd9YJ5UV6PpDNIHKSugb20P2l8sQQj/cg4qpm9fw0QwGsAw806rqSUN
+	AFkpspgS71M10LhBK3wUNYQT0bTCJdabRjzVI695RxfKi8UiACjw4c/ThKbUQLP7uzDSNFuSaUh
+	4aXQLZzu97mDz0DtwxZ9oVhDjPZPGDRreDFiReJEvH4UZJ/b4wF30G1/rqlesnseF64SOaOmqF0
+	amwd+d3/V55fF4Yy0Ez+rs9ZD4azE9uNnMHFkewHpPLtZaWV3zwEJjofIfv9DstN4YQ==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1767785647; bh=lvcUWeWG4ocGMd/LM7wdDnD
-	m7WvRiDqDBfo4mNiRxIQ=; b=bCbcgfC+dU0CXIWHkfBO19dQbdTvmzXoRuGYExYRjuAInEWRu7
-	gpcupYW1VSHSC+piNGvUPNPJReK8wmYA+CDA==;
+	h=To:Message-Id:Subject:Date:From; t=1767785648; bh=vnZv3kXX9ltYhuUBaGr8yAN
+	zc3cPPQykabClqonqnYg=; b=XoHpDI7pAOih+BV9hdgD10bGv9frQtOhY4+j7+JJS2l8+Nty+L
+	4nzhAj12VAEVZ1uHJ8ZS+mItAFwjfASBszBQ==;
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Wed, 07 Jan 2026 12:34:03 +0100
-Subject: [PATCH v4 3/9] remoteproc: qcom_q6v5_mss: Add MDM9607
+Date: Wed, 07 Jan 2026 12:34:04 +0100
+Subject: [PATCH v4 4/9] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add
+ MSM8917
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260107-mss-v4-3-9f4780345b6f@mainlining.org>
+Message-Id: <20260107-mss-v4-4-9f4780345b6f@mainlining.org>
 References: <20260107-mss-v4-0-9f4780345b6f@mainlining.org>
 In-Reply-To: <20260107-mss-v4-0-9f4780345b6f@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -61,171 +62,62 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>
 Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767785644; l=4797;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1767785644; l=1720;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=NUR6xPl+7LxxVTvMrW+DcBkL8bU+1LgGiAcd6bbD55U=;
- b=WFsJ/Rlu9W1SSv+YoWEzBzAJ/gx/KT3r5hF8LN5NbDIRMBPJp+Z+erJjTV9NaH6TJc3pTTqLg
- DPUbxq/foZHBh7riPyeO/IpX2tig/ALkSD6ZS8oyIEKKBYu7mLekTIS
+ bh=YxOIBnO2ge4Q3ZvVGY59uUkodhu/6SAouH6WatcD2Z8=;
+ b=L7o21qDI7vlFSD7WwfF6FMRK15k578qpLNzoMpTLrATO67QaaKbIXYljZJXID64ZzEIzeUPHJ
+ xNiWLWx6ZnYA5pCtxRJjFnNZTSwnlcRySIzk46l/EJ/ukbUrYuuka4W
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-From: Stephan Gerhold <stephan@gerhold.net>
+Add the compatible for MSS as found on the MSM8917 platform.
 
-Add support for MDM9607 MSS it have different ACC settings
-and it needs mitigation for inrush current issue.
-
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-[Reword the commit, add necessary flags, rework inrush current mitigation]
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- drivers/remoteproc/qcom_q6v5_mss.c | 72 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 66 insertions(+), 6 deletions(-)
+ .../devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml         | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index 3c404118b322..1b50535add20 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -124,6 +124,7 @@
- #define QDSP6v56_CLAMP_QMC_MEM		BIT(22)
- #define QDSP6SS_XO_CBCR		0x0038
- #define QDSP6SS_ACC_OVERRIDE_VAL		0x20
-+#define QDSP6SS_ACC_OVERRIDE_VAL_9607	0x80800000
- #define QDSP6v55_BHS_EN_REST_ACK	BIT(0)
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+index 4e0d2fe0e46c..74202dd34703 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+@@ -21,6 +21,7 @@ properties:
+           - qcom,msm8226-mss-pil
+           - qcom,msm8909-mss-pil
+           - qcom,msm8916-mss-pil
++          - qcom,msm8917-mss-pil
+           - qcom,msm8926-mss-pil
+           - qcom,msm8953-mss-pil
+           - qcom,msm8974-mss-pil
+@@ -90,7 +91,7 @@ properties:
+     description: PLL proxy supply (control handed over after startup)
  
- /* QDSP6v65 parameters */
-@@ -256,6 +257,7 @@ struct q6v5 {
- };
+   mss-supply:
+-    description: MSS power domain supply (only valid for qcom,msm8974-mss-pil)
++    description: MSS power domain supply
  
- enum {
-+	MSS_MDM9607,
- 	MSS_MSM8226,
- 	MSS_MSM8909,
- 	MSS_MSM8916,
-@@ -747,15 +749,19 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 			return ret;
- 		}
- 		goto pbl_wait;
--	} else if (qproc->version == MSS_MSM8909 ||
-+	} else if (qproc->version == MSS_MDM9607 ||
-+		   qproc->version == MSS_MSM8909 ||
- 		   qproc->version == MSS_MSM8953 ||
- 		   qproc->version == MSS_MSM8996 ||
- 		   qproc->version == MSS_MSM8998 ||
- 		   qproc->version == MSS_SDM660) {
- 
--		if (qproc->version != MSS_MSM8909 &&
--		    qproc->version != MSS_MSM8953)
--			/* Override the ACC value if required */
-+		/* Override the ACC value if required */
-+		if (qproc->version == MSS_MDM9607)
-+			writel(QDSP6SS_ACC_OVERRIDE_VAL_9607,
-+			       qproc->reg_base + QDSP6SS_STRAP_ACC);
-+		else if (qproc->version != MSS_MSM8909 &&
-+			 qproc->version != MSS_MSM8953)
- 			writel(QDSP6SS_ACC_OVERRIDE_VAL,
- 			       qproc->reg_base + QDSP6SS_STRAP_ACC);
- 
-@@ -801,6 +807,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 
- 		if (qproc->version != MSS_MSM8909) {
- 			int mem_pwr_ctl;
-+			int reverse;
- 
- 			/* Deassert QDSP6 compiler memory clamp */
- 			val = readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-@@ -816,13 +823,30 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 			    qproc->version == MSS_MSM8996) {
- 				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
- 				i = 19;
-+				reverse = 0;
-+			} else if (qproc->version == MSS_MDM9607) {
-+				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
-+				i = 19;
-+				/*
-+				 * Set first 5 bits in reverse to avoid
-+				 * "inrush current" issues.
-+				 */
-+				reverse = 6;
- 			} else {
- 				/* MSS_MSM8998, MSS_SDM660 */
- 				mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
- 				i = 28;
-+				reverse = 0;
- 			}
-+
- 			val = readl(qproc->reg_base + mem_pwr_ctl);
--			for (; i >= 0; i--) {
-+			for (; i >= reverse; i--) {
-+				val |= BIT(i);
-+				writel(val, qproc->reg_base + mem_pwr_ctl);
-+				val = readl(qproc->reg_base + mem_pwr_ctl);
-+				udelay(1);
-+			}
-+			for (i = 0; i < reverse; i++) {
- 				val |= BIT(i);
- 				writel(val, qproc->reg_base + mem_pwr_ctl);
- 				/*
-@@ -830,7 +854,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
- 				 * wait for 1us for both memory peripheral and data
- 				 * array to turn on.
- 				 */
--				val |= readl(qproc->reg_base + mem_pwr_ctl);
-+				val = readl(qproc->reg_base + mem_pwr_ctl);
- 				udelay(1);
- 			}
- 		} else {
-@@ -2410,6 +2434,41 @@ static const struct rproc_hexagon_res msm8996_mss = {
- 	.version = MSS_MSM8996,
- };
- 
-+static const struct rproc_hexagon_res mdm9607_mss = {
-+	.hexagon_mba_image = "mba.mbn",
-+	.proxy_supply = (struct qcom_mss_reg_res[]) {
-+		{
-+			.supply = "pll",
-+			.uA = 100000,
-+		},
-+		{}
-+	},
-+	.proxy_clk_names = (char*[]){
-+		"xo",
-+		NULL
-+	},
-+	.active_clk_names = (char*[]){
-+		"iface",
-+		"bus",
-+		"mem",
-+		NULL
-+	},
-+	.proxy_pd_names = (char*[]){
-+		"mx",
-+		"cx",
-+		NULL
-+	},
-+	.need_mem_protection = false,
-+	.has_alt_reset = false,
-+	.has_mba_logs = false,
-+	.has_spare_reg = false,
-+	.has_qaccept_regs = false,
-+	.has_ext_bhs_reg = false,
-+	.has_ext_cntl_regs = false,
-+	.has_vq6 = false,
-+	.version = MSS_MDM9607,
-+};
-+
- static const struct rproc_hexagon_res msm8909_mss = {
- 	.hexagon_mba_image = "mba.mbn",
- 	.proxy_supply = (struct qcom_mss_reg_res[]) {
-@@ -2672,6 +2731,7 @@ static const struct rproc_hexagon_res msm8926_mss = {
- 
- static const struct of_device_id q6v5_of_match[] = {
- 	{ .compatible = "qcom,q6v5-pil", .data = &msm8916_mss},
-+	{ .compatible = "qcom,mdm9607-mss-pil", .data = &mdm9607_mss},
- 	{ .compatible = "qcom,msm8226-mss-pil", .data = &msm8226_mss},
- 	{ .compatible = "qcom,msm8909-mss-pil", .data = &msm8909_mss},
- 	{ .compatible = "qcom,msm8916-mss-pil", .data = &msm8916_mss},
+   resets:
+     items:
+@@ -230,6 +231,7 @@ allOf:
+               - qcom,mdm9607-mss-pil
+               - qcom,msm8909-mss-pil
+               - qcom,msm8916-mss-pil
++              - qcom,msm8917-mss-pil
+     then:
+       properties:
+         power-domains:
+@@ -273,6 +275,7 @@ allOf:
+           contains:
+             enum:
+               - qcom,msm8926-mss-pil
++              - qcom,msm8917-mss-pil
+               - qcom,msm8974-mss-pil
+     then:
+       required:
 
 -- 
 2.52.0
