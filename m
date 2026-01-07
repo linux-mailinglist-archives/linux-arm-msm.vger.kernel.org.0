@@ -1,141 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-87757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B829CFB105
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 06 Jan 2026 22:17:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BF91CFBC52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 03:47:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B2D1D300349B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jan 2026 21:17:11 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CB91230021C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 02:47:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4918E2E7167;
-	Tue,  6 Jan 2026 21:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2E3B1DD9AC;
+	Wed,  7 Jan 2026 02:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VJ/EMUWx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lFwxsRpb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fECoZuIq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE4F296BBF;
-	Tue,  6 Jan 2026 21:17:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3591578F4A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 02:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767734230; cv=none; b=ct7l0FEIOZOj1Z8y1kphmDowpNanySuv6cbFplLli4eAAELFpXQ4RPv9ENsdkj/mqrbmCTV5z7BXxE+/k8Ttcdjdk9kN/0XOJ2wbgGzguqMlehz0trKnpcRTXPSA06m0Uoe1zzYnafeor5REEme3svsjkbIk6f8nWgjGDL9WjqI=
+	t=1767754046; cv=none; b=TaBKkRWOHAGGe3eiVtBA8SFn5fM7n8SRIO2mhPYbn7MJhU43G8+yRGjNEDTVKeGrCS3v/wqyMPBBZ+jlT/vllurNGcGM7k1GZ5gOwaAHBbMsjr7aTMGkBBSST0bphF87+eLAK81q4QKXaNTeKxXEkKoQ/DHpEKqhunVWPR5SgiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767734230; c=relaxed/simple;
-	bh=QLjWo0t79X6kihc/yxh2M5ASDv7kRQJ7SHHK2+hjnB8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yi9ezBw5q1oSh7K5QqeptwMjyYy7QsFLuJvfPGvbDuEgI6R8sFfZtLsAJgxoDHXgKbcHQEHVn5zmwH8esSJy70EZL2sgkSAw8P4nf98MXCY+wRUyFEm/BuXURN+WAdVYzb7mkZJwXKYIDQi+/T8Qa3BhY5RCukyud2yGwktM41c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VJ/EMUWx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654D4C116C6;
-	Tue,  6 Jan 2026 21:16:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767734229;
-	bh=QLjWo0t79X6kihc/yxh2M5ASDv7kRQJ7SHHK2+hjnB8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VJ/EMUWx5xOJ6jpzJjm0a8IJNcQXZ0IMgt5F25rQqG1hlEHkjqG5BZPoexNzSRB8n
-	 ICw7PV+KEBh86ODxQ5AoDVhaagYgn4YkBkB7CinZ0kCJNIsvVJNgoQ24oai3nms+oY
-	 DGjicaEv3qk8rwdLUAR52lasyYpCOLODRpkmPpw8N9jw46UqQsJ4dN1c+wRHkh4w0w
-	 vAWV3JJqa5D5ZWBys99/vUGTlSTYxtlq91mFh/GizjZCkTWeLyK7i0hMO9WYJMcptw
-	 bYIqbO0v07rxEjX/JKZpJcj9Gb/MCwfYETeSB1I2AacmE+ZRsN55wlYVEi1ec6R8lK
-	 z4a5G4ksV4N9Q==
-Date: Tue, 6 Jan 2026 22:16:56 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Greentime Hu <greentime.hu@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Chuanhua Lei <lchuanhua@maxlinear.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Pratyush Anand <pratyush.anand@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 2/2] PCI: dwc: Add multi-port controller support
-Message-ID: <aV17yIhuOFLGYi8r@fedora>
-References: <20260105-dt-parser-v1-0-b11c63cb5e2c@oss.qualcomm.com>
- <20260105-dt-parser-v1-2-b11c63cb5e2c@oss.qualcomm.com>
- <aVvkmkd5mWPmxeiS@ryzen>
- <m5ukeugo2lazipljqpubyvm7j3xk2j5o7i2xgdbkkhii57xmyk@lh32qdzjhe4n>
- <aVzqMqTUWIuKhgmC@fedora>
- <5gne3bureusi45sy4zqr2zrfvt4ba4uxgnsfdnjeh2eno5zspe@ldvhq2nilsan>
+	s=arc-20240116; t=1767754046; c=relaxed/simple;
+	bh=aVUjkqBKuLkFvoFxQhqbD8RO9yFMzlqB2n0vIoOV57U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sz9h72zl4wJgTuQDHYrgm8WD4h2zgzS2tnr31ACCNkOIy359hz5oOI078He0n0v7CgaKFGrYRfwaDTUw3B1yEiQwLJ8ZehYErs/z8O97rFgzKqdCzcgoACyWFmmYd76CFsn549gfYpHY2ZQw5razJFgestcW5L7U0RqvvJEzPcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lFwxsRpb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fECoZuIq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 606KaNMn4048554
+	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 02:47:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WiWzdhAD6zcmAW6Rhaf/VVCt0T+Y+P8B0EWKCRqfOA0=; b=lFwxsRpbEGQCqcuW
+	NBSCiNw2EqqnwqMZSulvcgCTtl4jaQ4BMyHKP1+QRW3tMmcEtK8zdQlMYhWzRjCf
+	m9WgAW0Ys7Nck31M1iF7vBBTLp6PGqq95RLjX3MK/9aoBEtzAA5xqUjPZfKCeqi5
+	wtAMkTXsIhS1Oa6FLcuQSqfxUyUxOEXcQaVk5ZnGZ9f5C6162Dxw79zgQ6/7pTYe
+	PgnWyF1LFusceWc0XCt7uehp/1EhHaguFxib0VaKg6frys9rr9KVMFwwnhUPLL5f
+	O/9DkqZgppWeLkVtdEARf9U9XxpQAjwqygv4Ww4DBbUBC8xIyp8uH42HQx8L2SQ8
+	s/DkJg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bh25rt9yy-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 02:47:24 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-88a32bf024cso18413606d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 18:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767754043; x=1768358843; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WiWzdhAD6zcmAW6Rhaf/VVCt0T+Y+P8B0EWKCRqfOA0=;
+        b=fECoZuIq7tlMYjWsr1Knvy8vXAVH3XNK1o4e1CfrI4PpNkVS5+DzgKGAPzNyF1SSYl
+         CFu+QbQkcCQYJDJo31fUKd8cZS0SfUHotpt83ztRF0QVFw9QUEjtMQ0zEARplQF5tJQS
+         2TOogFhxwWBYgpBp7hBnVy72zAU+8vb86+RdeI4XrWGJB9UK1Ucj64yhprC9Aa8JNfS9
+         mf/PNXYKzm38oommuvK+Lc9VoSxNKc433psO0wHL5ilW7p867M6Bqz7uLrBzb/ytfSAI
+         PSwQKc6hPWI/V6ylEcjNaHsvngjN8ruJ2vgYf+B9nVm+3ZuUU9fT7cIyxIUYVYmgbrzM
+         4hyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767754043; x=1768358843;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WiWzdhAD6zcmAW6Rhaf/VVCt0T+Y+P8B0EWKCRqfOA0=;
+        b=bXICUda8dXeMNF2WOth2HznYFgje8IRn3yxtQhcDg5++zMBvxQTYkJAAky6NLjB2eR
+         pQW6e53jegv4U+ZNMYPyyLnYUCNKUAvUcOpEuMSY4EuD3RWPA8VXVT7Iz85r59qwXQZU
+         z1CwdVCPplbG4Mid1v6F56pKwzXbdgoGNO1bnVp70kmAnHmBupWFEc5TECBunj1RzmDm
+         NhxdcizIXGCkbig+LIGp/+vceKHZGu/tkeJQ8gBPoz1H1rAHdEaHo7bKXAhRnugOMkUL
+         h8C600pZw8Wnlv7ktf3Zc+KbU9mDIhRxVpy+CrU32EyUtWsBWWE3kmsC5ZBJmfsNzqvr
+         iEcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPbKPtNXqLH7KS1ogSD5POf+I7rSMcQyFloZo4KPf6SeosIEU4RO5/NSfIRHTCl8vsa2mwD9/+VLwTXXYH@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxMYJ82lU7nl3Xmg53WgERTn5ta9lPskPIQSo20Ycef5nvvauu
+	XYQdUDK9bzUbjuo75gGM299DJdJ0V5tcn+BlJ1EnqwovHCPDrF8/rk4e+yO46cw1tuDGskHBaNV
+	geEaBAc/Ondk7wD/yuAbjAGtJkkPOlX3/6Jukr1ZkbQGWSw/PZTqr39/OVln4UuXSVw8r
+X-Gm-Gg: AY/fxX7scKPXU8r16lQIwGagbdw9kdlDakl81pfn0SYR0zUaqfQmgCv49AX6AD3Ehou
+	fgBFu+r8dfbmNTCKAPuSvM6cWByeGelTUGGVUgNYNg51g7WYhFkpzSr3wKuUuaeOG0coOox8Sdv
+	FMF6FXATXjFZdr8GHCvpJcEKb0nb9iXX0nRrtLSFyUv23FBT/RrYyoCbSfY2LRVJdde60KnH+8F
+	ccn0pFfi2bPmJrI+P4YDUNdmfQrJEWYtLu6tsSrI2RAOC+7PUFgh1S73tHLeKAOBt1mVgz05DEm
+	12KQHBfwYPfOKX8eo5fU841GFq+aiscWBMGioVuBtnZIyyhNJAZgjT8KwpUD4o/Qf0jnnuSpjCl
+	FZ3/gv6VjE4BBObtQ+4Py4mnaGKO8D1sT/wwHLCmqLI9rI9kN9bKSjTdMioLpvd45MM+ZSfU1
+X-Received: by 2002:a05:6214:4a85:b0:890:7329:4cc8 with SMTP id 6a1803df08f44-89084183bffmr16456026d6.8.1767754042978;
+        Tue, 06 Jan 2026 18:47:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUrHLKpex8Xy1L5oDQg4t4M46YX3NbV1JQUe4hRL6xcQN4GUC2xlX5yB+xllsl3kFs8YQs9Q==
+X-Received: by 2002:a05:6214:4a85:b0:890:7329:4cc8 with SMTP id 6a1803df08f44-89084183bffmr16455826d6.8.1767754042504;
+        Tue, 06 Jan 2026 18:47:22 -0800 (PST)
+Received: from [10.38.247.225] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89077284f23sm24910446d6.57.2026.01.06.18.47.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jan 2026 18:47:22 -0800 (PST)
+Message-ID: <9730440b-b4ef-4b9a-ac77-37945c5b4f5c@oss.qualcomm.com>
+Date: Wed, 7 Jan 2026 10:47:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5gne3bureusi45sy4zqr2zrfvt4ba4uxgnsfdnjeh2eno5zspe@ldvhq2nilsan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: talos: Add CCI definitions
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+References: <20260106-sm6150_evk-v2-0-bb112cb83d74@oss.qualcomm.com>
+ <20260106-sm6150_evk-v2-2-bb112cb83d74@oss.qualcomm.com>
+ <z2co4ligqcydhk5cxzjdi72nuhf2gm36hrf4qae5hb36m7yvbs@sen7esib2k2x>
+Content-Language: en-US
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+In-Reply-To: <z2co4ligqcydhk5cxzjdi72nuhf2gm36hrf4qae5hb36m7yvbs@sen7esib2k2x>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: tp-rj6m-niIlr3jN2jKWJsKST-u1oOV1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDAyMSBTYWx0ZWRfX8PvX+7+oo5yi
+ eQJw6X6nPVYbJRSVx61I3eb1hds2FKPOF65qWWpKkWjorZnaFjCVCirC4VA8OSNaDxiOEJhYqRY
+ +Jmh15woPoTQAv2nDKXACPg+HXgnleG5821DvvVsEIIHdeYqW6Q8TpgbQSd9qBv0QQnHzxOZ1ur
+ vMQGu2m1nRrtBy93XTiysQbG9I8S89cHHHdSQnfvY6zDBP+Glvu3Wn89OpTgYG0FFscu9QKXigZ
+ Oq951laR90080XLl3OFAdddhZjKeSTcPH0RmrB0QynDqiH122+3z8wn4ZBtwx7zioeG5TDAGpxZ
+ KOzCBnW4/OBbArtjEvJfOhzGwonhsQgDzYIgefFwgCXx2vpGQZnBLexVm37M386S9Zp2TG07LWl
+ rW0uljPCM9yRlNSX4Yl9xmNqcItdYgLRW9jmHOxU6XcFemLMv8XDwsuMPxVeC17G+j4SddxIrSI
+ T/XCBN6oov+LPmZUzqw==
+X-Proofpoint-ORIG-GUID: tp-rj6m-niIlr3jN2jKWJsKST-u1oOV1
+X-Authority-Analysis: v=2.4 cv=G48R0tk5 c=1 sm=1 tr=0 ts=695dc93c cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=eyU4tusHGcKmyRKv_OMA:9
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_03,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601070021
 
-On Tue, Jan 06, 2026 at 06:41:09PM +0530, Manivannan Sadhasivam wrote:
-> > One advantage I can see, instead of doing:
-> > 
-> > +	struct dw_pcie_port *port = list_first_entry(&pci->pp.ports,
-> > +						struct dw_pcie_port, list);
-> > +	return dw_pcie_wait_for_link(pci, port);
-> > 
-> > for drivers with only one port (most drivers), we could just instead do:
-> > 
-> > +	return dw_pcie_wait_for_link(pci, pci->pp.port);
-> > 
-> > To simply get the first element in the array. No need to sprinkle
-> > list_first_entry() everywhere in all the drivers if they just have one port.
-> > 
-> > 
-> > For iterating, to avoid manually traversing the array, we could do like
-> > libata and create a simple macro, e.g. ata_qc_for_each():
-> > https://github.com/torvalds/linux/blob/v6.19-rc4/drivers/ata/libata-eh.c#L851-L854
-> > https://github.com/torvalds/linux/blob/v6.19-rc4/include/linux/libata.h#L1657-L1659
-> > 
+
+
+On 1/7/2026 2:27 AM, Dmitry Baryshkov wrote:
+> On Tue, Jan 06, 2026 at 05:39:54PM +0800, Wenmeng Liu wrote:
+>> Qualcomm Talos SoC contains single controller,
+>> containing 2 I2C hosts.
+>>
+>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/talos.dtsi | 72 +++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 72 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+>> index e1dfaff9b6bf8641b19a685e74d60ad4e1e99d41..461a39968d928260828993ff3549aa15fd1870df 100644
+>> --- a/arch/arm64/boot/dts/qcom/talos.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+>> @@ -1549,6 +1549,42 @@ tlmm: pinctrl@3100000 {
+>>   			#interrupt-cells = <2>;
+>>   			wakeup-parent = <&pdc>;
+>>   
+>> +			cci_default: cci0-default-state {
+>> +				cci_i2c0_default: cci-i2c0-default-pins {
 > 
-> I specifically do not want to introduce custom helpers. That's one of my primary
-> motivation for using lists :)
+> These need to be split, having just one host per state.
+ACK.>
+>> +					/* SDA, SCL */
+>> +					pins = "gpio32", "gpio33";
+>> +					function = "cci_i2c";
+>> +					drive-strength = <2>;
+>> +					bias-pull-up;
+>> +				};
+>> +
+>> +				cci_i2c1_default: cci-i2c1-default-pins {
+>> +					/* SDA, SCL */
+>> +					pins = "gpio34", "gpio35";
+>> +					function = "cci_i2c";
+>> +					drive-strength = <2>;
+>> +					bias-pull-up;
+>> +				};
+>> +			};
+>> +
+>> +			cci_sleep: cci-sleep-state {
+>> +				cci_i2c0_sleep: cci-i2c0-sleep-state {
+> 
+> The same
+ACK.>
+>> +					/* SDA, SCL */
+>> +					pins = "gpio32", "gpio33";
+>> +					function = "cci_i2c";
+>> +					drive-strength = <2>;
+>> +					bias-pull-down;
+>> +				};
+>> +
+>> +				cci_i2c1_sleep: cci-i2c1-sleep-state {
+>> +					/* SDA, SCL */
+>> +					pins = "gpio34", "gpio35";
+>> +					function = "cci_i2c";
+>> +					drive-strength = <2>;
+>> +					bias-pull-down;
+>> +				};
+>> +			};
+>> +
+>>   			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
+>>   				pins = "gpio4", "gpio5";
+>>   				function = "qup0";
+>> @@ -3785,6 +3821,42 @@ videocc: clock-controller@ab00000 {
+>>   			#power-domain-cells = <1>;
+>>   		};
+>>   
+>> +		cci: cci@ac4a000 {
+>> +			compatible = "qcom,sm6150-cci", "qcom,msm8996-cci";
+>> +
+>> +			reg = <0x0 0x0ac4a000  0x0 0x4000>;
+> 
+> Extra double space.
+ACK.>
+>> +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
+>> +			power-domains = <&camcc TITAN_TOP_GDSC>;
+>> +			clocks = <&camcc CAM_CC_SOC_AHB_CLK>,
+>> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
+>> +				 <&camcc CAM_CC_CCI_CLK>;
+>> +			clock-names = "soc_ahb",
+>> +				      "cpas_ahb",
+>> +				      "cci";
+>> +			pinctrl-0 = <&cci_default>;
+>> +			pinctrl-1 = <&cci_sleep>;
+>> +			pinctrl-names = "default", "sleep";
+>> +
+>> +			#address-cells = <1>;
+>> +			#size-cells = <0>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			cci_i2c0: i2c-bus@0 {
+>> +				reg = <0>;
+>> +				clock-frequency = <1000000>;
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +			};
+>> +
+>> +			cci_i2c1: i2c-bus@1 {
+>> +				reg = <1>;
+>> +				clock-frequency = <1000000>;
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +			};
+>> +		};
+>> +
+>>   		camss: isp@acb3000 {
+>>   			compatible = "qcom,sm6150-camss";
+>>   
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
-You are the maintainer.
+Will fix in next version.
 
-IMO it would still be nice if we could avoid sprinkling:
-
-+struct dw_pcie_port *port = list_first_entry(&pci->pp.ports,
-+                                             struct dw_pcie_port, list);
-
-all over the glue drivers somehow, especially those that will only have a
-single port. Perhaps by introducing a macro?
-
-In case you don't like the idea of introducing a macro to get the first
-port...
-Since most glue drivers only seem to use the port when calling
-dw_pcie_wait_for_link(), perhaps we could introduce an alternate version
-of dw_pcie_wait_for_link(), that can be called by glue drivers that only
-have a single port.
-
-
-Kind regards,
-Niklas
+Thanks,
+Wenmeng
 
