@@ -1,265 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-87771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01358CFBF6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 05:30:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE395CFBFED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 05:42:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9FA81300319F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 04:30:40 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 216D03029D37
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 04:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA27256C6D;
-	Wed,  7 Jan 2026 04:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C495A242D67;
+	Wed,  7 Jan 2026 04:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4fjOTG4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cRIG66WO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F5025A2CF
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 04:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FBE1A256B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 04:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767760237; cv=none; b=mrsIDM3zAM/LB6Zm1o95ZSf7xLt/xUqMYBkAWe1AcplxnoL7f9cGdI9HZMXvXDgbz1/4S9mfqAxW0BibzDX/wxMBn4+vzqY0/G2HCrxUZczXPCg/64fIQATF9S2VVR6HxcV/wTHEwCDANPXZ/NrLn8r/OWaKhJyD6iWwsqXSjdo=
+	t=1767760928; cv=none; b=Re8QsoaEJ9JUSXC6yxgk+Dc0y3VCMGaAJJfvtHE9pUgim4EYzWyVS9mIUpB+7OYxqcnSIt7yLFtqVJLz0F/If50yDXZ2ZT8crmTLCaN3+JB+zuDnFctgurpyhOxMTK5szgOlMMS6U+NRfERtqP8vXAJsUz1U0bdJkiWJYcuWg0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767760237; c=relaxed/simple;
-	bh=tpKwT8BRmh+4TfFD5KNeHQ94D71yYWXSxwOTFbPdyGw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyW5munR2OIw4tO/u3UaVFSelswbwVlisFrAM9Npr6i1w1RV4QVlTD4OYVWMIsqUW3JCF61ClR5d1GL+KL7dkf9ax4vRmg1W85gj1/d2fcvEbZI90126Yl6DS0zzS9zPIIzhkFOcThdQjOzSqBe7VT1aAauarnzqdZbstASSXRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4fjOTG4; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-88a2d21427dso17162716d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 20:30:35 -0800 (PST)
+	s=arc-20240116; t=1767760928; c=relaxed/simple;
+	bh=G+lJppHttUXeF/evLjii3rbMw6q86usTSMy6wwMLUz0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pTzyuCCqhV0XaZohAeeJzi+XCEcykvclduPmDfixkvYS9CAOiox5UikuQbdw7bqoKeq0V6Fu7OlRzBjctf17Cgl14fT0l2vm3u8I5FZQLTlXwd/Kiuc0HsApznCp+SVoBGCTcGbNaRUg9L6rep1cTGJ7gXIuk50H5yJlkiuwoy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cRIG66WO; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-382f6ca9fbcso1437741fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jan 2026 20:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767760234; x=1768365034; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1767760923; x=1768365723; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7t6ijxVnxYYl+Qkqm4DID3uci/fVGDoUjERuFcxrn4c=;
-        b=B4fjOTG4mOvAhBOfr0wWH4se+wTU+6IcVJHIAo95btzjvkgt5/USUPVJe8LywjASu+
-         ZeWF9bkkUZvFB+RKNNuGjUoUd0IUEsPEmUAcdcDKxqG6Rpodn7V3EoIp6lLXKI0THB45
-         wfC20cNZVZS5GUz+3vV8D2ZX5VzjBYodLHDZWfFivsZDCeX/YnDhOnR9ulnTGr0FxqTF
-         BwVtg9W6zxkoEa0wRwUcOQdYUfEW9Ac15uC4cInLD4Y8BkbopobRKseHXYZ95yhvE0qW
-         v+MgWwrZVqJ+1ovxdM22dVaXoydKwUHLZ0VBCDCf6EhkB0IXneedaQhqbfyx7vRwCRoI
-         kpIQ==
+        bh=YkfCVyd53/ucNy9M3nl2k9rQ6JcMrMCnqE4mBt0wduk=;
+        b=cRIG66WOs+/PB1MILgK+JM+FyyIqfnRFld+voZ2EWjUV28RABeJpWd8oA/Cs3R91bo
+         r5FJTbfUYoea97SQsYQ+oWPH7FkWCAsBW7oFDID6QlmzRxMGFZTZkQFSqk56OxJkSq+f
+         ob3mF+EWopRyaGnV8G0WeiWZn2I5cr1DtUgmPGdXVVi9KvvcbBkzoyUMk5KQH6lOCf4L
+         Y8Mj02u0rY/jzzuwyRbrteo2myffJxrghiXUbBjkuIlicZmE1zw9DQUnFQQfUD10JURH
+         bvBQe2Kyl4F4XI/3y39C0O+c4B92McD0NtD34QJr1GYVFRD4LHga3IDujmV47Eeh1hOp
+         ByQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767760234; x=1768365034;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7t6ijxVnxYYl+Qkqm4DID3uci/fVGDoUjERuFcxrn4c=;
-        b=XKRYn5dyr3ETpXOe4CelOeI739MH14QRU1gy7LOXLShEIdbPYCf0sao2TDf0IuL1HN
-         1Ub+03A00GmYQVyN3+s79Mtt4c+5xiUX0QEVLc0wgUNYxLg1pgaHL2oZrhYwHcqgqpUv
-         dhVIuanCHh/FOpGNDbw3oNvlBQD243xnVaQdbtL5ivCvVMo4Q+pWuMBojzSsSxGqMhNX
-         l3IpDsT/XiugqvC2yvBa8148hmHNk77ylt4z7zicwyHTwgj5+G6yK3wUX4/NjnucOWGf
-         pDdmO0Xh95LrQCIdGDN1eYUYEw98vhM6aoVJtIFaghvFlF5xhgBFKyS1saJ1itq5vYJE
-         6nRg==
-X-Forwarded-Encrypted: i=1; AJvYcCXhgiZNwvT3reTek4sf02zq1BbGi64buUEkubX3aFettRQqJzz1ZmgASYCuOUnKzz0JN8QlGVD8HtAmrZeU@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHarpFze8YzeRzrGXobSySa4ppUNPoxoC3UUJe8/+Nt7rjPIfN
-	DWxxTxJM5kwa/sE6EI62TF3I54ea1yPt9s02fhDYVzpKBRfmtXOCjoId
-X-Gm-Gg: AY/fxX5pXa63vwP8sgCHoJJophmqssv4rEvyi3IVpYLMcr1aAr2RtuKGYPFYtWjlkVx
-	nKUvCjVVcHbRtbYaXiCje5z0non36hQwRJ1Ix0hAqRHD6rrK154zzKa9mdvBxO3zhvfGCCqKgA9
-	QlhMuup2D6SLT27GnqT7nAnssBR0/OIPH9xhYBtQrURpzIVaV19CZ38jJKj93JzMFclHlz9mEgr
-	EFE65r9gPGFJAGGs5UgN9dGIImzqbp0bjE86dbUKMIps17dZwYg2hoeMarWbBnDE/dlVuPouKN7
-	Yzaprt87o/fHbO7YRmhyS1ezEbpx1L3VdgwJLgfkcNKVhsGlQws8XxKuhFbSHcSSF6Ijp4j82gc
-	i5fkA/ZVIQMpMbQtyFI2GOCDBeyhtyI1mNvhwNk3vluTAi7ZAYZKwdiRaAa31PGUXydWssdP64L
-	9CE6+uscTdsjCAM1bF9Q8F+Lvx9oJ/kWKVVaXan4h5S6jtlvgySOtLmlZGbV7pvrxyU678ezJD6
-	94=
-X-Google-Smtp-Source: AGHT+IFl+7lp7gXI2x/Wcl/yop0i6XbQOu37mNnFxGVaw+VUl/pbW+ltRx+mYf0geBGnFrjp0xheOw==
-X-Received: by 2002:a05:6214:598e:b0:888:8557:69e6 with SMTP id 6a1803df08f44-8908427568fmr16304366d6.47.1767760234146;
-        Tue, 06 Jan 2026 20:30:34 -0800 (PST)
-Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890772346f8sm26755086d6.35.2026.01.06.20.30.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jan 2026 20:30:33 -0800 (PST)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Robert Mader <robert.mader@collabora.com>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	phone-devel@vger.kernel.org,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v6 5/5] arm64: dts: qcom: sdm670-google-sargo: add imx355 front camera
-Date: Tue,  6 Jan 2026 23:30:44 -0500
-Message-ID: <20260107043044.92485-6-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260107043044.92485-1-mailingradian@gmail.com>
-References: <20260107043044.92485-1-mailingradian@gmail.com>
+        d=1e100.net; s=20230601; t=1767760923; x=1768365723;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YkfCVyd53/ucNy9M3nl2k9rQ6JcMrMCnqE4mBt0wduk=;
+        b=a1yUVSj2Ckq7JLBwrCMgAQBhQxM8s0JDB4gCe0demCFgfJWeM8egQQd3oFqcY0GjR9
+         dZOqaczSQoQzZ1C5BJRH93FqxfFZ0X1wJlNLrqDqk8GALJT7+ueh9Y/OzI3IAJUz2w49
+         o/fh54+wW5CL9dPMyGdio3bmQEu2IYm0Okzmn+VtG0SB1no4eLX1v23WGXxxgILXHqwk
+         At0Ip6L9Le0LSkkm2nbm6rkNCELJ6AQF3jznSMZnAbtypr4fVBWv/gpfP7ngXFsJ6EiF
+         ZJTQn7rK9e0ZQE/UnwKVzZhQwCI1Zz4P6RIjwin2n2IYxTDvOq05l0tpUVa+ZisZXJJn
+         bLAA==
+X-Forwarded-Encrypted: i=1; AJvYcCUXLgU0vuS02bepb65cjK35WUIj7ER8kCl5f+wIRjKhRE0QoMsBWGXn03fvvVrnyM2u47MfDUNk4hJanHsd@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXCgnpgHVJSLUVKWfGj86DaoZbeK3aZY27DEHkmgenwZp/tvaX
+	Vge7pwYDmBQ31JJazVxkRljucfX/j8Caw4OpamPr0sBscPbEV+vy8+LE8dkIti49dBs=
+X-Gm-Gg: AY/fxX51zRllnRUmH1xIh4wTy3QhLl71lkoMsUkPNQQI0X2lwpe+LM1nnxKLRRtpY83
+	Dve8ye6Qr+n6uP3jcDtQ54LUn3/tqTd8A0FhkvD1GkKJo749fK5JKgGXF9qaMFiW5qeNvku6J5z
+	UvDz3hSdTTE6hNZqE/mv2oa2S/jWZP78VRd4aRuHIi0UqYSoXKitS4egSP0ZPtYMHO+OLBaBo+5
+	DKnE8SGXRtXSq+zr40cqKh9TWlxLKUAI6LbbxvQrNqRj/5poO3CW89UbN6p9AlBZhd+G3puWuVO
+	xWqnT812T/h+1dUkKLViS+O/rP4F0Gx8Zk6A3DAdW3Y5OtJ79AjhosUG+MkkOCWp+xpoGVaPRW9
+	DwVCpFeBHqs7ozg3uySCkDQ67mgxDiZJjTd3Bt7vBJKQ8e7scSk6lgluxOkm2xSM8rEkUqLfjCZ
+	oQo5o5j8zPJqiWtElciXX4WVm4nEQF/bxFmFkRe34GKtUrB0hmW0dozyieUIf+/v7ARg==
+X-Google-Smtp-Source: AGHT+IFuxyEOJSsVILPAwetJUmHD+jF6p5U6vU9/JjiGrP44p16/Cr5nFrGos/EVs9geMZQAqG0x9Q==
+X-Received: by 2002:a2e:b8c8:0:b0:37f:c5ca:7428 with SMTP id 38308e7fff4ca-382ff5ae8a2mr1609001fa.0.1767760922695;
+        Tue, 06 Jan 2026 20:42:02 -0800 (PST)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382eb8f146bsm8786921fa.36.2026.01.06.20.41.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jan 2026 20:42:01 -0800 (PST)
+Message-ID: <e5c52f0c-a5bb-49d9-a673-9dbaffe3e689@linaro.org>
+Date: Wed, 7 Jan 2026 06:41:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/5] dt-bindings: media: i2c: Add Sony IMX355
+To: Richard Acayan <mailingradian@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Robert Mader <robert.mader@collabora.com>, Bryan O'Donoghue
+ <bod@kernel.org>, David Heidelberg <david@ixit.cz>,
+ phone-devel@vger.kernel.org
+References: <20260107043044.92485-1-mailingradian@gmail.com>
+ <20260107043044.92485-2-mailingradian@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20260107043044.92485-2-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
-mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
-support for it.
+On 1/7/26 06:30, Richard Acayan wrote:
+> The IMX355 camera sensor is a camera sensor that can be found as the
+> front camera in some smartphones, such as the Pixel 3, Pixel 3 XL, Pixel
+> 3a, and Pixel 3a XL. It already has a driver, but needs support for
+> device tree. Document the IMX355 to support defining it in device tree.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   .../bindings/media/i2c/sony,imx355.yaml       | 115 ++++++++++++++++++
+>   1 file changed, 115 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml b/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
+> new file mode 100644
+> index 000000000000..33d253ca0e4f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
+> @@ -0,0 +1,115 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/i2c/sony,imx355.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Sony IMX355 Sensor
+> +
+> +maintainers:
+> +  - Richard Acayan <mailingradian@gmail.com>
+> +
+> +description:
+> +  The IMX355 sensor is a 3280x2464 image sensor, commonly found as the front
+> +  camera in smartphones.
+> +
+> +allOf:
+> +  - $ref: /schemas/media/video-interface-devices.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: sony,imx355
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  avdd-supply:
+> +    description: Analog power supply.
+> +
+> +  dvdd-supply:
+> +    description: Digital power supply.
+> +
+> +  dovdd-supply:
+> +    description: Interface power supply.
+> +
+> +  reset-gpios:
+> +    description: Reset GPIO (active low).
+> +    maxItems: 1
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/$defs/port-base
+> +    additionalProperties: false
+> +
+> +    properties:
+> +      endpoint:
+> +        $ref: /schemas/media/video-interfaces.yaml
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          data-lanes:
+> +            items:
+> +              - const: 1
+> +              - const: 2
+> +              - const: 3
+> +              - const: 4
+> +
+> +        required:
+> +          - link-frequencies
+> +
+> +    required:
+> +      - endpoint
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - avdd-supply
+> +  - dvdd-supply
+> +  - dovdd-supply
+> +  - port
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,camcc-sdm845.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        camera@1a {
+> +            compatible = "sony,imx355";
+> +            reg = <0x1a>;
+> +
+> +            clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +
+> +            assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> +            assigned-clock-rates = <24000000>;
+> +
+> +            reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
+> +
+> +            avdd-supply = <&cam_front_ldo>;
+> +            dvdd-supply = <&cam_front_ldo>;
+> +            dovdd-supply = <&cam_vio_ldo>;
+> +
+> +            pinctrl-names = "default";
+> +            pinctrl-0 = <&cam_front_default>;
+> +
+> +            rotation = <270>;
+> +            orientation = <0>;
+> +
+> +            port {
+> +                cam_front_endpoint: endpoint {
+> +                    data-lanes = <1 2 3 4>;
+> +                    link-frequencies = /bits/ 64 <360000000>;
+> +                    remote-endpoint = <&camss_endpoint1>;
+> +                };
+> +            };
+> +        };
+> +    };
 
-Co-developed-by: Robert Mader <robert.mader@collabora.com>
-Signed-off-by: Robert Mader <robert.mader@collabora.com>
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- .../boot/dts/qcom/sdm670-google-sargo.dts     | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-index ed55646ca419..ec447fe3959a 100644
---- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-@@ -172,6 +172,34 @@ vreg_s2b_1p05: vreg-s2b-regulator {
- 		regulator-min-microvolt = <1050000>;
- 		regulator-max-microvolt = <1050000>;
- 	};
-+
-+	cam_front_ldo: cam-front-ldo-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "cam_front_ldo";
-+		regulator-min-microvolt = <1352000>;
-+		regulator-max-microvolt = <1352000>;
-+		regulator-enable-ramp-delay = <135>;
-+
-+		gpios = <&pm660l_gpios 4 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&cam_front_ldo_pin>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam_vio_ldo: cam-vio-ldo-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "cam_vio_ldo";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-enable-ramp-delay = <233>;
-+
-+		gpios = <&pm660_gpios 13 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&cam_vio_pin>;
-+		pinctrl-names = "default";
-+	};
- };
- 
- &apps_rsc {
-@@ -392,6 +420,61 @@ vreg_bob: bob {
- 	};
- };
- 
-+&camss {
-+	vdda-phy-supply = <&vreg_l1a_1p225>;
-+	vdda-pll-supply = <&vreg_s6a_0p87>;
-+
-+	status = "okay";
-+};
-+
-+&camss_port1 {
-+	camss_endpoint1: endpoint {
-+		clock-lanes = <7>;
-+		data-lanes = <0 1 2 3>;
-+		remote-endpoint = <&cam_front_endpoint>;
-+	};
-+};
-+
-+&cci {
-+	pinctrl-0 = <&cci1_default>;
-+	pinctrl-1 = <&cci1_sleep>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&cci_i2c1 {
-+	camera@1a {
-+		compatible = "sony,imx355";
-+		reg = <0x1a>;
-+
-+		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+
-+		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-+		assigned-clock-rates = <19200000>;
-+
-+		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
-+
-+		avdd-supply = <&cam_front_ldo>;
-+		dvdd-supply = <&cam_front_ldo>;
-+		dovdd-supply = <&cam_vio_ldo>;
-+
-+		pinctrl-0 = <&cam_front_default &cam_mclk2_default>;
-+		pinctrl-names = "default";
-+
-+		rotation = <270>;
-+		orientation = <0>;
-+
-+		port {
-+			cam_front_endpoint: endpoint {
-+				data-lanes = <1 2 3 4>;
-+				link-frequencies = /bits/ 64 <360000000>;
-+				remote-endpoint = <&camss_endpoint1>;
-+			};
-+		};
-+	};
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -490,6 +573,14 @@ &pm660_charger {
- 	status = "okay";
- };
- 
-+&pm660_gpios {
-+	cam_vio_pin: cam-vio-state {
-+		pins = "gpio13";
-+		function = "normal";
-+		power-source = <0>;
-+	};
-+};
-+
- &pm660_rradc {
- 	status = "okay";
- };
-@@ -508,6 +599,12 @@ led-0 {
- };
- 
- &pm660l_gpios {
-+	cam_front_ldo_pin: cam-front-state {
-+		pins = "gpio4";
-+		function = "normal";
-+		power-source = <0>;
-+	};
-+
- 	vol_up_pin: vol-up-state {
- 		pins = "gpio7";
- 		function = "normal";
-@@ -547,6 +644,13 @@ &sdhc_1 {
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
-+	cam_front_default: cam-front-default-state {
-+		pins = "gpio9";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	panel_default: panel-default-state {
- 		te-pins {
- 			pins = "gpio10";
 -- 
-2.52.0
-
+Best wishes,
+Vladimir
 
