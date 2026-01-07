@@ -1,201 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-87933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B738CFFA54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:06:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BF9DCFFE14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 20:58:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F056730402AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:05:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9846130AFCF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 19:26:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 887FB3A5261;
-	Wed,  7 Jan 2026 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9601A36996A;
+	Wed,  7 Jan 2026 16:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fYju7L+I";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="h/Fxan6V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAzxLaZj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E39036BCC6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jan 2026 16:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B3B34D93A;
+	Wed,  7 Jan 2026 16:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767803193; cv=none; b=XZhsGNPO4uhGwttvZ+GQJwTP3cCk7lOpp00CjmIORZ6g7mIngauVwdhZcQLylPwdRFAzLdnhzExPVovjJuHV5L+afmRwyN+iW2c08McIhR+BncQLa6RR9CR6FIyXRGBGnw+KGqxTiL9LTNGspgPJEmU/EFyBpiyg+JLbTt9v7AE=
+	t=1767804681; cv=none; b=MzR01FBxZD4Ni+ZSMq3/F11uxwCHFy8c8INfocOvCz4E9XI4q5v2Q/BT74hIfz3eKcsOYazadDV44kORYoSEIJMpCwI4zJdMdyWfS3r9R43iaMSlwFXG/xiAIyzPpy3B/X2aQAkyWUxHFFSeyPF+bGTBpMK/0S7YK7Z1b+k94sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767803193; c=relaxed/simple;
-	bh=2x9xDxBToaXTCBYFDIYv05vZJbgZ4PBJqhfAhSY8pig=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NcTlwb0T8D6mE6zYceLXZuLSfkUbeAsw4XEwbwCXJpaRmInraxUYg3jl4pouPaW7UNHg1I28ylx0cZMLbpYOcuN/s5rOJUiKeGYj8Hj6mE+FKBiEAOT9gV6os5+LaXRvMZb7gnHyJlAtwAKOgD9yGWkVDhQnItsnBju6SNoBlwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fYju7L+I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=h/Fxan6V; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 607CsSxX2239468
-	for <linux-arm-msm@vger.kernel.org>; Wed, 7 Jan 2026 16:26:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=sdJG1Y01vCrF0JbBkwN03nhMGX6I2ALsHnt
-	HWedu01s=; b=fYju7L+IKwLiAXbIS/ZOkm5vV6Wo+oGNpp257Kdzg3XBZqdEbQL
-	cwltbWuGCJGg0QbbwToafHeY7ypoEnA3mn6PTEGfSRsKi6xGXljwdRWzL7sArPtp
-	Ag3mY8la2EwfxVj9/cfh1QaD1u+R9RhMjKPzRI7do+DEUMMSY8+7SLgn8fiP6LYB
-	QO+YDZJY+Kiut5OZt2C0XgLR8xaiL+qEn0+Um95QZSN3nXRIsMpYHKo2LAEZmXzt
-	61Pyt9QhfVea/4R++EpKo9w03LVyM9sfZl0opWk5SrxaXfbOz4DZ8fDKyvjKiH+I
-	Ci1JLgbORXI1SolI3hkEspl/kqQE3Of51EA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhqwg0pdv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 16:26:21 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c52d37d346dso209358a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 08:26:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767803181; x=1768407981; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sdJG1Y01vCrF0JbBkwN03nhMGX6I2ALsHntHWedu01s=;
-        b=h/Fxan6Vb4jqN0EoqG8mApc17okfxe1Zu5Y2YfQOwi3SgY23gwgL5NjyfYd2ABIfcj
-         4uDqvk1M0KMdEVaSS0OsZZlpD+el22vyXnT5fyqfNmQDoXQB2ueIBA98usW9iIXNXgSz
-         key9hoxybfvT4rYanvzim5mZsvzwpwYwmTCN/szKqatMMgmsrez0LAKt0cNGvXNWRzZ1
-         /jckq1hFdOc2byH1dqqB+VN4tk+TUlP1hYaCkLEXSETU/edPF0UBBxT+Qibcf7G0LCEn
-         6PzpXFB4hs9axVZP2ZK03wPFCZrp0O2bNd+LDQdgxT5CGf5D9S9jI/zxrQHKkUl8hNwb
-         eltA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767803181; x=1768407981;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sdJG1Y01vCrF0JbBkwN03nhMGX6I2ALsHntHWedu01s=;
-        b=skXRsMhndv6pTj+IYp127gRdZhxEsJoMMGNXfciwOC1tmm+xpf6GmnE7sU6cF3taFh
-         g7455+0s+IcEnitBTCHaXCRs2sOhdKhzTyeeSsyKv0PyQjp1DgGyNY3Kw/aaX6sfzJqt
-         M21WzH1NMBC0GNQC7zRphX9/iJCdpYEBLUTf+pyhpPYfDVSyRdEi+hgqEruNyT+ZqQsd
-         PlehgNgDs+/j0Mwjwh163VSnYR0QTAjU9NqycSazBisUaKuVIyxHDYCZ9Rr7cEdd3vTn
-         yV4ZInQwBwyqYV1e/+IcaYb79DsVz8/LOKkDLVHPSXblVZJ1UJuKvBpjri2VbSm6RdrT
-         kTkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVWWbH6jiLkrUAwDnOj9XKas6VyrketTPB7h4mvqozLh0BHPINXpNaoClpEgL/fBBRmNHzRmplD3bWhydON@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt7Y113O0solQAGj3GWinR8xZVucIFqJdJYsc7fa9RXXaEey/c
-	HvNsbxBEJR64gEOFLaXBFxIR6hUOBMuzM6hUaVCwGS+OmWs+hpwH3khnHyImI92JCnjNAme3BHY
-	h57fke1wD7e07+YFbGqSxDZJQqrChFw+R22iInqBDQW6zVXoik6f2YLbONakJTgUuliga
-X-Gm-Gg: AY/fxX7apYw4dQGhNifUXYJiArG6RZPKOKvxQRRnfYeLaeF3EbzPRfM/pAgm1SKQ9uf
-	Igv0g/Ylm3SEKfhj4Mp50pp2GTT9O73q4nwdk4xfFoG7hVbxtQIoCJvX+RTREJYcUFjRcPJlASi
-	SiRghKxWVLv5apmYT7m2BXMt87OjRCRlIMMbARpLnGdYqd3Lc9Yvaznh2B0K3j+IBMi8C9KobbV
-	BS8fECvSxlhXPtrxPIFD0dUmNpZ4DUy81bsTdJbWdtp/lPxv5fPOM7O8V7gfd8CAqcGL5Ypi1GF
-	WcUWv8tqVGQqqU9oJ9WNi8sZJKVCTXjgrx57K5C5ELgQTKlrk2TIXQNypjQ6HU+dmzqORPGAMKk
-	KEKghtcX/tNVEdU4lg6EYVpsY9H3506u/oFu9/i/+Qt8=
-X-Received: by 2002:a05:6a00:1bc8:b0:7f0:d758:3145 with SMTP id d2e1a72fcca58-81b7d85ed03mr2731136b3a.6.1767803180694;
-        Wed, 07 Jan 2026 08:26:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIkFq9pewu116DJ9lbUIG6SZW/vLM/WJHYfVd5h7OElim2xGDI/bvt5L8IqRNMpkM4NjyAaQ==
-X-Received: by 2002:a05:6a00:1bc8:b0:7f0:d758:3145 with SMTP id d2e1a72fcca58-81b7d85ed03mr2731117b3a.6.1767803180090;
-        Wed, 07 Jan 2026 08:26:20 -0800 (PST)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819bb0dfd29sm5354738b3a.25.2026.01.07.08.26.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jan 2026 08:26:19 -0800 (PST)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Praveen Talari <praveen.talari@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org, bryan.odonoghue@linaro.org,
-        dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-        quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com
-Subject: [PATCH v2] serial: qcom_geni: Fix BT failure regression on RB2 platform
-Date: Wed,  7 Jan 2026 21:56:10 +0530
-Message-Id: <20260107162610.1582626-1-praveen.talari@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1767804681; c=relaxed/simple;
+	bh=7vo3OqbSKQ+nBZ2yjy5ffdZQBlKltTm0UqmJZBQLtyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+Iyu/dcRkT91B271Q7cZDzTgLI6FjGkU7UdVTWgWNYnoHHqQOqUCF/HnYM+byaJknwDSOVeWaVh/905CTAAc+1MsR+dfvg6IG4JE0CUhvNrI6QNARFSxCjoyAe9xW0eEPBpPJLmUdv/wYera163NmnCoQOt3UUX6p54sLUBfbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAzxLaZj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38997C4CEF1;
+	Wed,  7 Jan 2026 16:51:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767804679;
+	bh=7vo3OqbSKQ+nBZ2yjy5ffdZQBlKltTm0UqmJZBQLtyw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DAzxLaZjqOGAK4CTlUaMGFauRapzGCFPT8Iuo2BjgAOg2dWUnhMdXpV7DbGz5GO17
+	 SB97Ou3OgTAeEl5fnXFoumqDVowgREk9RSVid8qCPp0fu/FlYyPauV8Ym1vlMsHBXd
+	 nAzJ3O/hYWhcMe9VlfCAWP500kp/0L2C7p9tKAf7Anq6HLkQDTyNVzeBCaVkBZIe16
+	 NxHfgkF+KSXkGBVHCYhiOjQnipcWeaDMbDbrAKNqiR4OJgW3WcU5u95cB7/3ETGydT
+	 b0/Ze31wYj3MyAXQjsZhbIg2HPpvfiRIgvH/d50sVOGZBhqAIK0RKOTHDK3Qr1tCu+
+	 cP5JJkPWcdR4w==
+Date: Wed, 7 Jan 2026 22:21:11 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>, 
+	alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, James.Bottomley@hansenpartnership.com, 
+	martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V4 3/4] scsi: ufs: core Enforce minimum pm level for
+ sysfs configuration
+Message-ID: <p7icfbp2p6kpzcywfdgq6z33p3icrs3trtn2cmgf5lsgcxg34k@jtixkr6njmm5>
+References: <20260106134008.1969090-1-ram.dwivedi@oss.qualcomm.com>
+ <20260106134008.1969090-4-ram.dwivedi@oss.qualcomm.com>
+ <7547e933-1cbd-4bf9-bc8a-fb0c78b11337@rock-chips.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 4PpYTC39MCx4h-uxjXLE5XrUFvZIiPRE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA3MDEyOSBTYWx0ZWRfX0ZJCJmLsuI6Z
- hbb6fMCwSl/nDWh2q9jCfn1nZcyPJdHReadUyKMlYYX1tUz3rWLTavBLoDMFKu4tNk+Hq4USIPr
- IdKbtt3owQwAHPVPT+mzzgJJfQm0ic/rZDGZD9y1Xa+vc/0CY5ns4mlVOmnl/p56jHIZWUFvLc/
- S/Leix94dpsTPGol4ioB/NgIYch+sq7I4T7TTvTmlCbNf+Hy8n0OPp5Du5528Io3Sef4RN31EOW
- fM/YK/Y4tUjVUVwGIFhPO1N9UYBFdnCnSXKZvZ/nr+8Bf4azyf/bNTqveB9OXtVGmoOJI/Iiv83
- CmpOOffTmlTKadZvFiWsckQpmhAem4ihLHw0SHkHuNKQwB2FbEFhGx8uGRtQJERTNCN04BxhZ2D
- plRyrFTiBxb8WUs217tJXZCYC1Q6YvhmAhvoBz3QU4+FFnY/z4QlO/r75Qonbk6TPlBVDmnNntj
- 07x3+6k3tT1weXEGbmg==
-X-Authority-Analysis: v=2.4 cv=Pa7yRyhd c=1 sm=1 tr=0 ts=695e892d cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=-jOfXJ57FaXOfPmQh3oA:9
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: 4PpYTC39MCx4h-uxjXLE5XrUFvZIiPRE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-07_02,2026-01-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601070129
+In-Reply-To: <7547e933-1cbd-4bf9-bc8a-fb0c78b11337@rock-chips.com>
 
-Commit 10904d725f6e ("serial: qcom-geni: Enable PM runtime for serial
-driver") caused BT init to fail during bootup on the RB2 platform,
-preventing proper BT initialization. However, BT works correctly after
-bootup completes.
+On Tue, Jan 06, 2026 at 10:27:29PM +0800, Shawn Lin wrote:
+> 在 2026/01/06 星期二 21:40, Ram Kumar Dwivedi 写道:
+> > Some UFS platforms only support a limited subset of power levels.
+> > Currently, the sysfs interface allows users to set any pm level
+> > without validating the minimum supported value. If an unsupported
+> > level is selected, suspend may fail.
+> > 
+> > Introduce an pm_lvl_min field in the ufs_hba structure and use it
+> > to clamp the pm level requested via sysfs so that only supported
+> > levels are accepted. Platforms that require a minimum pm level
+> > can set this field during probe.
+> > 
+> > Signed-off-by: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+> > ---
+> >   drivers/ufs/core/ufs-sysfs.c | 2 +-
+> >   include/ufs/ufshcd.h         | 1 +
+> >   2 files changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/ufs/core/ufs-sysfs.c b/drivers/ufs/core/ufs-sysfs.c
+> > index b33f8656edb5..02e5468ad49d 100644
+> > --- a/drivers/ufs/core/ufs-sysfs.c
+> > +++ b/drivers/ufs/core/ufs-sysfs.c
+> > @@ -141,7 +141,7 @@ static inline ssize_t ufs_sysfs_pm_lvl_store(struct device *dev,
+> >   	if (kstrtoul(buf, 0, &value))
+> >   		return -EINVAL;
+> > -	if (value >= UFS_PM_LVL_MAX)
+> > +	if (value >= UFS_PM_LVL_MAX || value < hba->pm_lvl_min)
+> 
+> It makes sense that some platform support a limited subset of power
+> levels. But each level is in increasing order of power savings, and you
+> set it to UFS_PM_LVL_5. Don't you support UFS_PM_LVL_0 the full active
+> mode?
+> 
 
-The issue occurs when runtime PM is enabled and uart_add_one_port() is
-called before wakeup IRQ setup. The uart_add_one_port() call activates
-the device through runtime PM, which configures GPIOs to the "qup_x"
-pinmux function during runtime resume. When wakeup IRQ registration
-happens afterward using dev_pm_set_dedicated_wake_irq(), these GPIOs
-are reset back to the "gpio" pinmux function, which impacts the RX GPIO
-and leads to Bluetooth failures.
+These are the suspend levels, not runtime levels. So yes, our platform doesn't
+support full power mode when it is in suspend state.
 
-Fix this by ensuring wakeup IRQ setup is completed before calling
-uart_add_one_port() to prevent the pinmux function conflict.
+- Mani
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Closes: https://lore.kernel.org/all/20251110101043.2108414-4-praveen.talari@oss.qualcomm.com/
-Fixes: 10904d725f6e ("serial: qcom-geni: Enable PM runtime for serial driver")
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
-v1 -> v2
-- Updated commit text.
-- Added Tested-by in commit text
----
- drivers/tty/serial/qcom_geni_serial.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> >   		return -EINVAL;
+> >   	if (ufs_pm_lvl_states[value].dev_state == UFS_DEEPSLEEP_PWR_MODE &&
+> > diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+> > index 19154228780b..ac8697a7355b 100644
+> > --- a/include/ufs/ufshcd.h
+> > +++ b/include/ufs/ufshcd.h
+> > @@ -972,6 +972,7 @@ struct ufs_hba {
+> >   	enum ufs_pm_level rpm_lvl;
+> >   	/* Desired UFS power management level during system PM */
+> >   	enum ufs_pm_level spm_lvl;
+> > +	enum ufs_pm_level pm_lvl_min;
+> >   	int pm_op_in_progress;
+> >   	/* Auto-Hibernate Idle Timer register value */
+> 
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 6ce6528f5c10..46a9c71630d5 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1888,12 +1888,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto error;
- 
--	devm_pm_runtime_enable(port->se.dev);
--
--	ret = uart_add_one_port(drv, uport);
--	if (ret)
--		goto error;
--
- 	if (port->wakeup_irq > 0) {
- 		device_init_wakeup(&pdev->dev, true);
- 		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
-@@ -1906,6 +1900,12 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 		}
- 	}
- 
-+	devm_pm_runtime_enable(port->se.dev);
-+
-+	ret = uart_add_one_port(drv, uport);
-+	if (ret)
-+		goto error;
-+
- 	return 0;
- 
- error:
-
-base-commit: 6cd6c12031130a349a098dbeb19d8c3070d2dfbe
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
