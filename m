@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-87799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBE7ACFC618
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 08:35:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 521DCCFC723
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 07 Jan 2026 08:49:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 028983009FDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 07:35:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3ABAE300C28F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jan 2026 07:45:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 429A22BE7AC;
-	Wed,  7 Jan 2026 07:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CDD28850B;
+	Wed,  7 Jan 2026 07:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nzoD4Gfi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pYjdyRFC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CDB25F99B;
-	Wed,  7 Jan 2026 07:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393102877F4;
+	Wed,  7 Jan 2026 07:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767771328; cv=none; b=BhzGBoTeC1da646xU8y81jBvn2lee3vDnKKZgtxJoKJ+duwspejQ/EMhpQoRkWLMghDGDFpti9F7W5qy8wi41jh/tXyt1tE6mkNiC7c7fFXwAOEweULoBgBCdaIneiVExfiFVMufMOX1KmP3d90j/vGJOinY3XC1vLYxdqA/H2o=
+	t=1767771505; cv=none; b=su5D0wPWXQEz1ATDZ3pS6pdu8lwPzaXIFciQb1O+sIPQibH0LtNX+VycKbG10RowaU3U9DfxgpNwrJbudEnqSKCx6KL4bVUX7MtZFlT5iPvnqk7aJtmZcPP7T3viYUdwJKqiwYOLDMHzbWDcZF4JyjOv0e+zxA1EtjyRtMpAh2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767771328; c=relaxed/simple;
-	bh=JxK/sfpMBjul47uCw1GUClA/LRnvepcpBa/ZVdT9bSA=;
+	s=arc-20240116; t=1767771505; c=relaxed/simple;
+	bh=zBBSW57kO3abF8Yx3PD+kRbUG1WaWnGVNFtQrxvNE8U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jOqJATSK3mje5I+/QPnTnkg9to5BlcBsZkqyCfssOdMfGlGO054AAP14yhYhP4E4mEoYcmAlfUMZmOmru/9ZdN+/TP7EyH/qdP5hpNrlp5jINNkdqAVvpmEBxkN8tj9gZqiBAUsbfahskvfnnLnelm35D2F6LSvMjk3IMxq9FSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nzoD4Gfi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B454C4CEF7;
-	Wed,  7 Jan 2026 07:35:27 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gd50M0S4mtqUMajw8aNt4YyTQn28J+qawjtWOnkVxDEL8+Mp06+b7s041RSmenfzN7DVury3DrSu1K9sLp0f6ahbqEofz1Btsf2HmIyXfp6vM+RiycVJviY1DzysdFx4xWbw1urIZJGQ6HKWf8uLrrpWHKqwEFF+3MTrW04OAxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pYjdyRFC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3430FC4CEF7;
+	Wed,  7 Jan 2026 07:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767771327;
-	bh=JxK/sfpMBjul47uCw1GUClA/LRnvepcpBa/ZVdT9bSA=;
+	s=k20201202; t=1767771504;
+	bh=zBBSW57kO3abF8Yx3PD+kRbUG1WaWnGVNFtQrxvNE8U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nzoD4Gfi6iBch8kWj2ojN9VLT+Z5tUj0XeONDF+EDWczaYgOXM1lrV1gfRDn9uZiR
-	 tLgiRCflOdiTqYvgtCZpKK30svw4TaJO5a5ZhnSdnyZ3ag/jvpe439Z1m4tWuQvjzg
-	 7NIBex9mGR4xkY6p99+NhaSF1pZLjWSoMHSKTdKBz+9tNMKaiaDQ/HHnmjbkz9dVtV
-	 R+ie0DqZgw7qP6PsHD5IjrVw0T21eUHAtjpJxRBdqcewy4CZlYklHSZxdZVlaPSfHM
-	 sHLoD0eHVcb/e3RpIQQTlgqVhfshjVKPhfibsB3c0H/7jVlCReOqZugD60i6iJ5rg1
-	 dzMG67bVVRdgg==
-Date: Wed, 7 Jan 2026 08:35:25 +0100
+	b=pYjdyRFCSl2SmJSVtyBpHu2UPLsW0cEXOQSIqlSmNY4qEP+mcYo6w/Tcwpv57aNiH
+	 qfuZR/gsqcqfbFSsVnquS4NoAT5ENNINaLzpaboi3osLm91UhIgutb1bCWXuvLCMD5
+	 h9kfjSrvCBUK52IPwY9ZvdSHnrhcjBllwHkaMiRGNCH1FysivBS6HLy3LsSOUSYlO1
+	 4si7u+UH5KOVwpTyYxDrXoKMbJEsL8whyXbEO7vM7gPRddvR9wvxP39DXbjVqg25xI
+	 edTlq19ZETrrk6inDPX3w2mCSBTEsLzCRjLLstoV5WqG7Hkpam9M/1NhCQg7QKTh0A
+	 Hex8H+pLPmLhA==
+Date: Wed, 7 Jan 2026 08:38:22 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>, 
-	linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Robert Mader <robert.mader@collabora.com>, 
-	Bryan O'Donoghue <bod@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v6 1/5] dt-bindings: media: i2c: Add Sony IMX355
-Message-ID: <20260107-aspiring-unselfish-dogfish-963c1e@quoll>
-References: <20260107043044.92485-1-mailingradian@gmail.com>
- <20260107043044.92485-2-mailingradian@gmail.com>
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com, 
+	bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Anjana Hari <anjana.hari@oss.qualcomm.com>
+Subject: Re: [PATCH V4 2/4] dt-bindings: ufs: Document bindings for SA8255P
+ UFS Host Controller
+Message-ID: <20260107-deft-mouflon-of-shopping-baaece@quoll>
+References: <20260106134008.1969090-1-ram.dwivedi@oss.qualcomm.com>
+ <20260106134008.1969090-3-ram.dwivedi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,52 +60,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260107043044.92485-2-mailingradian@gmail.com>
+In-Reply-To: <20260106134008.1969090-3-ram.dwivedi@oss.qualcomm.com>
 
-On Tue, Jan 06, 2026 at 11:30:40PM -0500, Richard Acayan wrote:
-> The IMX355 camera sensor is a camera sensor that can be found as the
-> front camera in some smartphones, such as the Pixel 3, Pixel 3 XL, Pixel
-> 3a, and Pixel 3a XL. It already has a driver, but needs support for
-> device tree. Document the IMX355 to support defining it in device tree.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../bindings/media/i2c/sony,imx355.yaml       | 115 ++++++++++++++++++
->  1 file changed, 115 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml b/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
-> new file mode 100644
-> index 000000000000..33d253ca0e4f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
-> @@ -0,0 +1,115 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+On Tue, Jan 06, 2026 at 07:10:06PM +0530, Ram Kumar Dwivedi wrote:
+> +unevaluatedProperties: false
 > +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +        ufshc@1d84000 {
 
-Drop blank line.
+Completely messed indentation.
 
-<form letter>
-This is a friendly reminder during the review process.
+Why did we ask to drop the unnecessary soc node? To make it simpler.
 
-It looks like you received a tag and forgot to add it.
+Even if you do not believe that code should be simpler, you should
+immediately spot the odd indentation.
 
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions of patchset, under or above your Signed-off-by tag, unless
-patch changed significantly (e.g. new properties added to the DT
-bindings). Tag is "received", when provided in a message replied to you
-on the mailing list. Tools like b4 can help here. However, there's no
-need to repost patches *only* to add the tags. The upstream maintainer
-will do that for tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
-
-Read carefully last sentence above.
+For such trivialities you cannot get this patch merged. It's third
+revision which you send carelessly.
 
 Best regards,
 Krzysztof
