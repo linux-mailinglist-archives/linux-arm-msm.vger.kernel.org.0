@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-88005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8E0DD047CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:43:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77154D04334
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:10:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 885F73041A58
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:34:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7804F33F0371
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5714392830;
-	Thu,  8 Jan 2026 08:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C364C364E9E;
+	Thu,  8 Jan 2026 08:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="WpThb7Wn"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LGPP1rIZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE283904D7;
-	Thu,  8 Jan 2026 08:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D6938FEED
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 08:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767859289; cv=none; b=lio0DhiTam6QL2PskN4523iEj0pfatN6CMDV+4EUn9nnlHdcJc1Eu7L+98dFQ8y8/lRaUcrw7knHIK0YEoqvh7FBz+djkxTckVcjiShZu2A8tdl+zS4GSUc2LHRItHKlbuuqiVgfhNlJ+9neVwNDOx0FdMI3qF/lqM6LiolwGOs=
+	t=1767859291; cv=none; b=BHHIX2QtCgncCE3uEoobh/R95u/tAiDkAhjPBtEQpTxJoTzczMmo/yTZ6D7huK244+qcMrtQdeQ8fTuve94B7NKXpTb6sTHjr16cim7EcCffkHfCW0wWbSlO/UHj28j+EKWFHnnizxfn9iaxXfSDNDj6I6Ra428JcUikzjRs+54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767859289; c=relaxed/simple;
-	bh=pi/yUiE0GLIh3NoCUC5adF6wKjp71KSefaDgIXV/uPc=;
+	s=arc-20240116; t=1767859291; c=relaxed/simple;
+	bh=AWU+PLSApT8kjesX7dOkFXgGY2hpp0B4x81yGGBbha0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrZ37YQ1RUNK4DrmsIk05zCvLJJPXRGUM/AHFUzwUjfx8/mIEeT72yJZQ2lCo29MPGa/o/1hvghQpFyByFGk+6Y7zEV/D8wggQ6YuoZYuSqETu9sTq1Rks38M2N0LRmoeuQO33xkL3Z20liF/QN2UTd1+FL9KxnnNVqspTB1DGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=WpThb7Wn; arc=none smtp.client-ip=185.171.202.116
+	 MIME-Version; b=gAT19YNVCTebXGtc/mrXtgznBnQiRfTnT7sj4yE+oD8vvKHLbDZr6z1h/mDd8NWOPKRf/UjAURQTLIHcIwqz/iGFvvlnv+2dGGHg2Z1ufmrlzoXn3DlHtMgO6Qkroi4tD4KQ8/wx9x4CjWjnLHsxMABgQkTifHoFXXqnjdrCQaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LGPP1rIZ; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 87C82C1ECB2;
-	Thu,  8 Jan 2026 08:00:43 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id CB8DE1A26FB;
+	Thu,  8 Jan 2026 08:01:13 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id B2E87606B6;
-	Thu,  8 Jan 2026 08:01:09 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C89B9103C8674;
-	Thu,  8 Jan 2026 09:01:04 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id A1526606B6;
+	Thu,  8 Jan 2026 08:01:13 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CB7A6103C871A;
+	Thu,  8 Jan 2026 09:01:08 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1767859268; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1767859271; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=KSlMJCkHN3qoiesq+GZbeTPd6cykEBxG8JM7oiO9bAg=;
-	b=WpThb7WnTLTjv6c3UMgD6PN7ieEy+h4Z0Co7PGHP+cV/EFDGteAmJkRw0KTj1RIDc8vwD9
-	UtHTcN0uguWgtoElr4gvb9ygr4NlU7mAhQ/WSNhsK7v9joBryZk/szAgY69JyA4Nwk1vk7
-	ZNJA8z0w82gvktlSNTlKNaipw36EL4bwnjT5HVQhJyrNNdu3u9DBvXFc3j7RwE+2ReoAKm
-	uyS25bO6w8lTD+0OHulFdThdQCUkRmVriJEZls4gNRqSo8tG5OsGaMzdmwqlnK6x5VYu6k
-	3T9mQ5xXrFVKqWeQGrCCkuCFuZlKn0lwq+RlJF37LJ4J8T5p8bgYDbnszlCUyg==
+	bh=EguoN5UoBIxCjveRFklA6CdlXXdagmARsUp7EB8KNWQ=;
+	b=LGPP1rIZeWxgTSot/j+xUX/DsrK2yB9uod8XnSgb+GSVYEZr67WSBq+hPJ1ZG5OFxjFexG
+	4NBgg1oc2PVOE+YsnpTVSuAhfBwJWcm6De4b7ygJ3bzhXTWBlEpFE/4sj1jzQ62DNkH7HW
+	ECnkBXSvvqFfhNY2QLajYADoiXbuAPSiK9Ui0y+XVUjsCN3zXNc6y1MysAdz3TXSJgYDyc
+	kYwRclVlMOIgkWm24fvTMPXulL/p05l2CxdNB7mUDK6pFsaiE+XmL/qiP1o6Udy15WiWYK
+	bi3gwU4npmHqgwlTO9FmgdpGbpM7hPQbmtri6QtwFpKAZdBKmclGSXorgKAxyA==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -79,9 +79,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Tariq Toukan <tariqt@nvidia.com>
-Subject: [PATCH net-next v22 04/14] net: phy: dp83822: Add support for phy_port representation
-Date: Thu,  8 Jan 2026 09:00:29 +0100
-Message-ID: <20260108080041.553250-5-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v22 05/14] dt-bindings: net: dp83822: Deprecate ti,fiber-mode
+Date: Thu,  8 Jan 2026 09:00:30 +0100
+Message-ID: <20260108080041.553250-6-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
 References: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
@@ -94,135 +94,45 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-With the phy_port representation introduced, we can use .attach_port to
-populate the port information based on either the straps or the
-ti,fiber-mode property. This allows simplifying the probe function and
-allow users to override the strapping configuration.
+The newly added ethernet-connector binding allows describing an Ethernet
+connector with greater precision, and in a more generic manner, than
+ti,fiber-mode. Deprecate this property.
 
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/dp83822.c | 71 +++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 26 deletions(-)
+ Documentation/devicetree/bindings/net/ti,dp83822.yaml | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
-index 33db21251f2e..c012dfab3171 100644
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -11,6 +11,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/phy.h>
-+#include <linux/phy_port.h>
- #include <linux/netdevice.h>
- #include <linux/bitfield.h>
+diff --git a/Documentation/devicetree/bindings/net/ti,dp83822.yaml b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
+index 28a0bddb9af9..23c70d863c39 100644
+--- a/Documentation/devicetree/bindings/net/ti,dp83822.yaml
++++ b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
+@@ -47,6 +47,9 @@ properties:
+        is disabled.
+        In fiber mode, auto-negotiation is disabled and the PHY can only work in
+        100base-fx (full and half duplex) modes.
++       This property is deprecated, for details please refer to
++       Documentation/devicetree/bindings/net/ethernet-connector.yaml
++    deprecated: true
  
-@@ -811,17 +812,6 @@ static int dp83822_of_init(struct phy_device *phydev)
- 	int i, ret;
- 	u32 val;
- 
--	/* Signal detection for the PHY is only enabled if the FX_EN and the
--	 * SD_EN pins are strapped. Signal detection can only enabled if FX_EN
--	 * is strapped otherwise signal detection is disabled for the PHY.
--	 */
--	if (dp83822->fx_enabled && dp83822->fx_sd_enable)
--		dp83822->fx_signal_det_low = device_property_present(dev,
--								     "ti,link-loss-low");
--	if (!dp83822->fx_enabled)
--		dp83822->fx_enabled = device_property_present(dev,
--							      "ti,fiber-mode");
+   rx-internal-delay-ps:
+     description: |
+@@ -141,7 +144,11 @@ examples:
+         tx-internal-delay-ps = <1>;
+         ti,gpio2-clk-out = "xi";
+         mac-termination-ohms = <43>;
++        mdi {
++          connector-0 {
++            media = "BaseF";
++          };
++        };
+       };
+     };
 -
- 	if (!device_property_read_string(dev, "ti,gpio2-clk-out", &of_val)) {
- 		if (strcmp(of_val, "mac-if") == 0) {
- 			dp83822->gpio2_clk_out = DP83822_CLK_SRC_MAC_IF;
-@@ -950,6 +940,48 @@ static int dp83822_read_straps(struct phy_device *phydev)
- 	return 0;
- }
- 
-+static int dp83822_attach_mdi_port(struct phy_device *phydev,
-+				   struct phy_port *port)
-+{
-+	struct dp83822_private *dp83822 = phydev->priv;
-+	int ret;
-+
-+	if (port->mediums) {
-+		if (phy_port_is_fiber(port))
-+			dp83822->fx_enabled = true;
-+	} else {
-+		ret = dp83822_read_straps(phydev);
-+		if (ret)
-+			return ret;
-+
-+#if IS_ENABLED(CONFIG_OF_MDIO)
-+		if (dp83822->fx_enabled && dp83822->fx_sd_enable)
-+			dp83822->fx_signal_det_low =
-+				device_property_present(&phydev->mdio.dev,
-+							"ti,link-loss-low");
-+
-+		/* ti,fiber-mode is still used for backwards compatibility, but
-+		 * has been replaced with the mdi node definition, see
-+		 * ethernet-port.yaml
-+		 */
-+		if (!dp83822->fx_enabled)
-+			dp83822->fx_enabled =
-+				device_property_present(&phydev->mdio.dev,
-+							"ti,fiber-mode");
-+#endif /* CONFIG_OF_MDIO */
-+
-+		if (dp83822->fx_enabled) {
-+			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASEF);
-+		} else {
-+			/* This PHY can only to 100BaseTX max, so on 2 pairs */
-+			port->pairs = 2;
-+			port->mediums = BIT(ETHTOOL_LINK_MEDIUM_BASET);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int dp8382x_probe(struct phy_device *phydev)
- {
- 	struct dp83822_private *dp83822;
-@@ -968,27 +1000,13 @@ static int dp8382x_probe(struct phy_device *phydev)
- 
- static int dp83822_probe(struct phy_device *phydev)
- {
--	struct dp83822_private *dp83822;
- 	int ret;
- 
- 	ret = dp8382x_probe(phydev);
- 	if (ret)
- 		return ret;
- 
--	dp83822 = phydev->priv;
--
--	ret = dp83822_read_straps(phydev);
--	if (ret)
--		return ret;
--
--	ret = dp83822_of_init(phydev);
--	if (ret)
--		return ret;
--
--	if (dp83822->fx_enabled)
--		phydev->port = PORT_FIBRE;
--
--	return 0;
-+	return dp83822_of_init(phydev);
- }
- 
- static int dp83826_probe(struct phy_device *phydev)
-@@ -1172,6 +1190,7 @@ static int dp83822_led_hw_control_get(struct phy_device *phydev, u8 index,
- 		.led_hw_is_supported = dp83822_led_hw_is_supported,	\
- 		.led_hw_control_set = dp83822_led_hw_control_set,	\
- 		.led_hw_control_get = dp83822_led_hw_control_get,	\
-+		.attach_mdi_port = dp83822_attach_mdi_port		\
- 	}
- 
- #define DP83825_PHY_DRIVER(_id, _name)				\
+ ...
 -- 
 2.49.0
 
