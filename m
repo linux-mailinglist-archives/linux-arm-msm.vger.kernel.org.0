@@ -1,226 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-88060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A977FD04499
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:19:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B78A6D03FB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:45:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 96AAF30E3F89
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:56:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C421535BEAE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:24:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E953843900D;
-	Thu,  8 Jan 2026 10:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 104024266B3;
+	Thu,  8 Jan 2026 10:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XKNkTeMK";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KI9Pt/zg"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ndMGUbSV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC0848A2A8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 10:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ED43A4ACC;
+	Thu,  8 Jan 2026 10:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767867834; cv=none; b=oJW+UFr0cgQ8kVxrYKFkmQfRtreRJuMl6GjbXOJmz99e5SCQ9/G6cvLuLoE3S+BACYCEpDgR/639NJuEaUhEDwP2nzTteRz9g3qzBZCSlpMayaBKQTaITVfggxu+yfl0OhrMbMNJDxW485G3eP8BxNUY5bhDVQfj/fhjsgFmmhA=
+	t=1767869821; cv=none; b=gXb7wXbGnh6FoUXhInrm3M4fFwcLiOuS3FTk1yihfiVBhB8ruG91q8grssTJk+R94vktvIIMcoOpEiEwxpjmTh1V5jVzPdSK8E2iiEemcL/CPfV6ggQrcCmXm3OSQF9pgdQe8Spy0akFQBwsWpH+edopex6bqrwUols7s+hY/sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767867834; c=relaxed/simple;
-	bh=TUTWgpNm1TPO3rhQkPk8Rp5XfBeBRk/H26ZsFO0CRho=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DnfYNKDyuacDmHdW14EcOhx5yPeWWQX8JR8E3AskrPhd6iko0YziCu3S+WFGPPoRcjzEeBCx8xkxQvlhj9bow/3p0UqiKlK4VuObTfZRfC3AE3DAK9FI2Xs6NckBkH/Wmj1PLLKssdEhwLTIVNjm3F/ASl9zOCRox1WLwf01N00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XKNkTeMK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KI9Pt/zg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6083n12X2593287
-	for <linux-arm-msm@vger.kernel.org>; Thu, 8 Jan 2026 10:23:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	87P6R0ap1kQ5Ug+b9yjjfz1CXJ5er0/QhW3Gccn4SkY=; b=XKNkTeMKZpuwgBbH
-	Kao9iWr68bd8ub/kxt1sk3r6XDVIfc1eLOdQSJpxhFgI+s8hIRrA8GWZyOAJmdp5
-	iqMvddwtwa7ZpsS/0dD/2NtzHPFEmop8sY5o7nD1LGEWK52X/V7G0/QS082/OTHt
-	Tw68LnJmibjiLq7bdIsLEMtmpvH+udU2teuPNJ8L+qmB5L2W+r5a3tdp5/9UrkWM
-	ix/x2TJ4fgWaDc7n6M8YM1EsoLOZqswgQDElUcKFKk/forAxIqTADbSb17dPMLdk
-	Vzy3t++FUrsSTkm4MCN14QSDmqIzxsgWxJYC5XeQgw0uYOy71jWm8hw2p9sKdLWm
-	aRQjIA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bhn294ax5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 10:23:43 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c231297839so106023885a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 02:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767867822; x=1768472622; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=87P6R0ap1kQ5Ug+b9yjjfz1CXJ5er0/QhW3Gccn4SkY=;
-        b=KI9Pt/zgfjU7fpIylnYWDM7d6fZXbfQTSqCir0XaLoMikTpTKKE5ZNHL6Eu7mGNAnX
-         dML3aFSOGK/6pCQp5JCTg33FkIR+qxmm7U2Jj8QiGOEKI4/ntRpVALE6u5IQ2PaqCFHJ
-         ubzaXjD8bYGMHdvc3zBwDGPFlb3S9qD+qstQMaLl3uRajW66W89Ca9R11LhcmZUGfDzX
-         k9298j1wisKYdEnxtdIYXOm3rVBO9I2kAc1quToQ6DMfvqlw3Vt8nelUL1ZWgTRy6Wds
-         N2acWBM5ViBmiBnlfRVmY2kcaXB+zT2vm6ANd5HBG+xbMpgr2VwXZ7J8pvelTN+boFEJ
-         wFKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767867822; x=1768472622;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=87P6R0ap1kQ5Ug+b9yjjfz1CXJ5er0/QhW3Gccn4SkY=;
-        b=AI3MqSPKX06P6r3tpQ7FuTu04HYHNhb7oIzrw8JlsjIgF0puQSuaPyKE6H686+rB+F
-         Bq4f2kcHqwZU2abrNWybH2+IDLhiQaNyzKjDB41epKL8Lzk9bgB8toOu6YJpiKb2PVRC
-         ouMvtS71FI9eHrbvOb7JxQF7QUqEDh0qvtZd4qZijczq7BObM2IguAwiUgLzuJ1I8e2a
-         m9qoCqU4WyLVZH2oqe7UjtdqHeIkZ8deKfIF1azMj9yaA9sqAYvV9suFZsMJ5Gei1RTX
-         JjGpHweWLEMVq2wFvwjvmFXWYIU3kCXDzgG4d9E0VBb/sLur0pibjX7HjxoSb9QxvfUW
-         wJfA==
-X-Gm-Message-State: AOJu0YxGq54IeA4deMpNqulZFmt0J6F5NYokLgNTCmSeSg47M5uP/hnJ
-	j0y48D6nhyfFnoAkra3hIRS3ax0H3/SMMrap7WrInkrRpIRQ0j1n/tCxXgLXaozPwPgrLgYK/BP
-	MB6WsqHQND0gDNs5xt6syixSWVKgq91Uc16SvUvQIAmWMKlwVHsyl3vV7o5KdUS1uGzW/
-X-Gm-Gg: AY/fxX7LGCOhmajqkQ/gJGXUWTFq6RCU3Ag6DD/mYtP4T3YIjsQ+ZSTfYaMImTz3KjE
-	uJM5HZqjWhjDl/bq0dLvZa7XZCevnaWVrHF9d59Qf+m7R7txTGwkOx9+CsHBOea4M9h+NLqUNlK
-	gjd9M7eksI8BE0+O2eqLRkpiILtlwiL4nVQYEPNYcwEhlI1v8cgFzmTY6N43JcNU79KUuvsQ7Kp
-	hDmz+FVBhJc/FuqHNnb5ME9/X8+AqT+cJUUyDDyFh49s/SRmDHjvF2JXKNlnn2hR4Y4HDN/dP8e
-	2FazwKZMyabFXZHWmyprsJVPPegplLusezrRgo+BTx9FwKgvO46MVzug0wYiVMKFgP3srialSoh
-	1RUK+XzInOPEzRtdP6nUX5SasHdEov42uqaaFHLUTuR8y24V4gukoNPQTliF+SUQmoRI=
-X-Received: by 2002:a05:620a:370a:b0:8b2:1f04:f8b with SMTP id af79cd13be357-8c3893e7e43mr552673785a.6.1767867822134;
-        Thu, 08 Jan 2026 02:23:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0KFQ2Bsta73gDJBBrdKOWowFphVPDnjRGLBkPCmSRLk4U75oKm+O91pIOUnBTTCaQqi6q8g==
-X-Received: by 2002:a05:620a:370a:b0:8b2:1f04:f8b with SMTP id af79cd13be357-8c3893e7e43mr552672285a.6.1767867821686;
-        Thu, 08 Jan 2026 02:23:41 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507bf65c07sm7171853a12.23.2026.01.08.02.23.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Jan 2026 02:23:41 -0800 (PST)
-Message-ID: <d03335ba-2870-483b-aa35-89be284c219e@oss.qualcomm.com>
-Date: Thu, 8 Jan 2026 11:23:38 +0100
+	s=arc-20240116; t=1767869821; c=relaxed/simple;
+	bh=R/veCd+MoZYz+/H4HoR6cR9O2PqmUFTICzNu+LpTN+o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ctGqSrwaTLdkC1Gkhl4V/9tyT8AF4blei8tz2s8phghAEnlIVgK1Yi7wNB791tDA61gA/Wwov4OoKHBtQNA6JQ083AQlv/Vwu2v3vN24kWkJYUzzUAFpEQvzSh/+zAzS4Go/BvcpeA8MPR0gTL3Q+ayPC/d6CKSzX0Hbx8zTEy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ndMGUbSV; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1767869814; x=1799405814;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=R/veCd+MoZYz+/H4HoR6cR9O2PqmUFTICzNu+LpTN+o=;
+  b=ndMGUbSVLyNwuC06rTIJp0yIERQyjC+1yUbcbjno3ldJe0/CB4+A4d4H
+   ixxrPcdKxM35kEM0R8lyjY2S7IKmf+bo/aYN10mw63Tk8Vz2CQ8qMeEnn
+   DMhCVCic62X7oyIq3AW/u1Q8PYGpcFK9dXp9qFwtczYQRq7uHCBwFxRGA
+   /5MeF6YYHWadpxeu6NnQKytB57SH2jMVCYKEnnM2MNQ8Ei6zuBp5oUE3H
+   a9w45/K6EB9m77HDOb3RjXrmnxl8kaPut1xAZId9aHgpg27eYajnKtrRV
+   qGJrfWHVcFtRdDFB8Eb+Tbet6OWzEiDU/+oFwWMWh7BwL+RwMr8fxwYls
+   Q==;
+X-CSE-ConnectionGUID: OEw2tnupQJ+15WH4rRCS0g==
+X-CSE-MsgGUID: e3HQ+yLDT4ipJxb4WWIWSA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="80354590"
+X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
+   d="scan'208";a="80354590"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 02:56:28 -0800
+X-CSE-ConnectionGUID: TLQoBmzxTyqlR0Bd+co+kQ==
+X-CSE-MsgGUID: q8cFpDAKSr2AxYqPiM0Nmw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
+   d="scan'208";a="203615538"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by fmviesa009.fm.intel.com with ESMTP; 08 Jan 2026 02:56:21 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id 3DE2E98; Thu, 08 Jan 2026 11:56:20 +0100 (CET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
+	Stefan Roese <sr@denx.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH v5 00/13] dmaengine: introduce sg_nents_for_dma() and convert users
+Date: Thu,  8 Jan 2026 11:50:11 +0100
+Message-ID: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] clk: qcom: cmnpll: Account for reference clock
- divider
-To: Jie Luo <jie.luo@oss.qualcomm.com>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Luo Jie <quic_luoj@quicinc.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com,
-        quic_leiwei@quicinc.com, quic_pavir@quicinc.com,
-        quic_suruchia@quicinc.com
-References: <20260106-qcom_ipq5332_cmnpll-v2-0-f9f7e4efbd79@oss.qualcomm.com>
- <20260106-qcom_ipq5332_cmnpll-v2-1-f9f7e4efbd79@oss.qualcomm.com>
- <0ff8041a-c876-419e-8f18-7656e29549a3@oss.qualcomm.com>
- <b132680b-5e85-4239-a42f-f6e79471486b@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <b132680b-5e85-4239-a42f-f6e79471486b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: d816WK0dIjpqMlzNMw2tNZDIAMK3ADyq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDA2OSBTYWx0ZWRfX7CnkLJ5EvjFa
- dZLuuVxcwoiQxWgUaTcyguoj13z7GLwFcXWUT+oreoU61x7gpQUW7Bn9efswjNkU7FaSFJTpiWT
- CQNplH5u1tXPWt30IH+A0OXng+3zKQCt9GZknJFwNH73myDDrBKYpzfWPPFCeDEbAWsHyzkv6Rq
- iM3XgJBOjfgwv1AJdspxJ2RlMM3OLVY9USC5hP+cZm4D2IY0I3GpBT4iX+c53PX4nay19+Wt7vu
- dQcIj3Wvt/TM23byFZmrl/+0c70xTH7g4tB1n+VPYbm+dT+HPFaLwRXAucLGhX3IRXLqnmw/ldC
- 255Llt1eD0wL0Q2LAvIVMXMFk1Gm4URjY6BsbCahNkY9vHf/P/O/EtiSfFfGUOIDdVqU1JeqUHo
- /QRx53BToOfGm5W6y1vqwVqdGuXByueezWzpLerbbcfmwHpbf+dFEFtWJLj/ilOoCtcZtFVPB5r
- qwF2yfyO95Cc2hqCPng==
-X-Authority-Analysis: v=2.4 cv=P7k3RyAu c=1 sm=1 tr=0 ts=695f85af cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=1sg49MWMQMLtxiueOoAA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: d816WK0dIjpqMlzNMw2tNZDIAMK3ADyq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-08_02,2026-01-07_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601080069
+Content-Transfer-Encoding: 8bit
 
-On 1/8/26 7:39 AM, Jie Luo wrote:
-> 
-> 
-> On 1/7/2026 8:16 PM, Konrad Dybcio wrote:
->> On 1/7/26 6:35 AM, Luo Jie wrote:
->>> The clk_cmn_pll_recalc_rate() function must account for the reference clock
->>> divider programmed in CMN_PLL_REFCLK_CONFIG. Without this fix, platforms
->>> with a reference divider other than 1 calculate incorrect CMN PLL rates.
->>> For example, on IPQ5332 where the reference divider is 2, the computed rate
->>> becomes twice the actual output.
->>>
->>> Read CMN_PLL_REFCLK_DIV and divide the parent rate by this value before
->>> applying the 2 * FACTOR scaling. This yields the correct rate calculation:
->>> rate = (parent_rate / ref_div) * 2 * factor.
->>>
->>> Maintain backward compatibility with earlier platforms (e.g. IPQ9574,
->>> IPQ5424, IPQ5018) that use ref_div = 1.
->>>
->>> Fixes: f81715a4c87c ("clk: qcom: Add CMN PLL clock controller driver for IPQ SoC")
->>> Signed-off-by: Luo Jie <jie.luo@oss.qualcomm.com>
->>> ---
->>>  drivers/clk/qcom/ipq-cmn-pll.c | 11 +++++++++--
->>>  1 file changed, 9 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
->>> index dafbf5732048..369798d1ce42 100644
->>> --- a/drivers/clk/qcom/ipq-cmn-pll.c
->>> +++ b/drivers/clk/qcom/ipq-cmn-pll.c
->>> @@ -185,7 +185,7 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
->>>  					     unsigned long parent_rate)
->>>  {
->>>  	struct clk_cmn_pll *cmn_pll = to_clk_cmn_pll(hw);
->>> -	u32 val, factor;
->>> +	u32 val, factor, ref_div;
->>>  
->>>  	/*
->>>  	 * The value of CMN_PLL_DIVIDER_CTRL_FACTOR is automatically adjusted
->>> @@ -193,8 +193,15 @@ static unsigned long clk_cmn_pll_recalc_rate(struct clk_hw *hw,
->>>  	 */
->>>  	regmap_read(cmn_pll->regmap, CMN_PLL_DIVIDER_CTRL, &val);
->>>  	factor = FIELD_GET(CMN_PLL_DIVIDER_CTRL_FACTOR, val);
->>> +	if (WARN_ON(factor == 0))
->>> +		factor = 1;
->>
->> FWIW the docs tell me the value of this field is '192' on IPQ5332..
->>
->> Konrad
-> 
-> Although the register description lists the default value as 192, the
-> actual runtime value is 125 on IPQ5332, as shown in the dump below.
-> 
-> # devmem 0x9B794
-> 0x00006C7D
-> 
-> # cat /sys/kernel/debug/clk/clk_summary | grep cmn_pll -B 2
->  xo-clk                              1       1        0        48000000
->   0          0     50000      Y   deviceless
-> no_connection_id
->     ref-48mhz-clk                    2       2        0        48000000
->   0          0     50000      Y      deviceless
-> no_connection_id
->        cmn_pll                       3       3        0
-> 6000000000  0          0     50000      Y         deviceless
->          no_connection_id
 
-Aaah I totally forgot about the xo rate in the calculations.. 1 vs 2
-vs 100-something threw me off :)
+A handful of the DMAengine drivers use same routine to calculate the number of
+SG entries needed for the given DMA transfer. Provide a common helper for them
+and convert.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I left the new helper on SG level of API because brief grepping shows potential
+candidates outside of DMA engine, e.g.:
 
-Konrad
+  drivers/crypto/chelsio/chcr_algo.c:154:  nents += DIV_ROUND_UP(less, entlen);
+  drivers/spi/spi-stm32.c:1495:  /* Count the number of entries needed */
+
+Changelog v5:
+- fixed W=1 warning (Vinod)
+- `make W=1` the whole folder in allyesconfig and allmodconfig configurations
+
+v4: <20251124121202.424072-1-andriy.shevchenko@linux.intel.com>
+
+Changelog v4:
+- fixed compilation errors (Vinod)
+
+v3: <20251113151603.3031717-1-andriy.shevchenko@linux.intel.com>
+
+Changelog v3:
+- added missed EXPORT_SYMBOL() (Bjorn)
+- left the return type as signed int (as agreed with Bjorn)
+- collected tags (Bjorn)
+
+v2: <20251110103805.3562136-1-andriy.shevchenko@linux.intel.com>
+
+Changelog v2:
+- dropped outdated patches (only 9 years passed :-)
+- rebased on top of the current kernel
+- left API SG wide It might
+
+v1: https://patchwork.kernel.org/project/linux-dmaengine/patch/20161021173535.100245-1-andriy.shevchenko@linux.intel.com/
+
+*** BLURB HERE ***
+
+Andy Shevchenko (13):
+  scatterlist: introduce sg_nents_for_dma() helper
+  dmaengine: altera-msgdma: use sg_nents_for_dma() helper
+  dmaengine: axi-dmac: use sg_nents_for_dma() helper
+  dmaengine: bcm2835-dma: use sg_nents_for_dma() helper
+  dmaengine: dw-axi-dmac: use sg_nents_for_dma() helper
+  dmaengine: k3dma: use sg_nents_for_dma() helper
+  dmaengine: lgm: use sg_nents_for_dma() helper
+  dmaengine: pxa-dma: use sg_nents_for_dma() helper
+  dmaengine: qcom: adm: use sg_nents_for_dma() helper
+  dmaengine: qcom: bam_dma: use sg_nents_for_dma() helper
+  dmaengine: sa11x0: use sg_nents_for_dma() helper
+  dmaengine: sh: use sg_nents_for_dma() helper
+  dmaengine: xilinx: xdma: use sg_nents_for_dma() helper
+
+ drivers/dma/altera-msgdma.c                   |  6 ++---
+ drivers/dma/bcm2835-dma.c                     | 19 +-------------
+ drivers/dma/dma-axi-dmac.c                    |  5 +---
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  6 ++---
+ drivers/dma/k3dma.c                           |  9 ++-----
+ drivers/dma/lgm/lgm-dma.c                     |  9 ++-----
+ drivers/dma/pxa_dma.c                         |  5 ++--
+ drivers/dma/qcom/bam_dma.c                    |  9 ++-----
+ drivers/dma/qcom/qcom_adm.c                   |  9 +++----
+ drivers/dma/sa11x0-dma.c                      |  6 ++---
+ drivers/dma/sh/shdma-base.c                   |  5 ++--
+ drivers/dma/xilinx/xdma.c                     |  6 ++---
+ include/linux/scatterlist.h                   |  2 ++
+ lib/scatterlist.c                             | 26 +++++++++++++++++++
+ 14 files changed, 52 insertions(+), 70 deletions(-)
+
+-- 
+2.50.1
 
 
