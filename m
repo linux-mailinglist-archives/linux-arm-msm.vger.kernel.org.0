@@ -1,32 +1,32 @@
-Return-Path: <linux-arm-msm+bounces-88120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37B64D04A03
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:01:29 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55493D04A5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:03:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8E59630754A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 16:54:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 51E553039979
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 17:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 975192F6904;
-	Thu,  8 Jan 2026 16:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67B4328B60;
+	Thu,  8 Jan 2026 16:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="o6ybf19F"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="glfExQLs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDF62DC792;
-	Thu,  8 Jan 2026 16:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F9328247;
+	Thu,  8 Jan 2026 16:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767891228; cv=none; b=HQnDexXtm5vBZY+HC/Ot2vxjFNEImcWuuT/aIThMnKXpMwGjzi6cqqnw2t25upHXSZ9drUpbOnWiEqAqEOSPM10zvFU1bIHl3ZArNvwDx0E/k0G2oS6joItCmbUD6mIwFXDiXaBR9z7Kyfn4IV38rjKiVwgPRHvDMk9MTe1ueLk=
+	t=1767891564; cv=none; b=LR1UZG/CBf6bPFTkJwS9cn4gK7gzwl5kOm3uRd5FG17oRTdZ982FdCOhedTdUCAucjPXH7eEI8PVuswB9w1SS2cRo8L/dcqs/xcovEgyOrWURpg9uzd08/1bLGOZYpLsk2iFo57HSapySIv/qF+3Ulrvmcw0VvlXN3HDAhRKdZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767891228; c=relaxed/simple;
-	bh=H6ZzK5qb8nWtFLSe4fdBJd3Sr6s7l07yqSi7M31fQTU=;
+	s=arc-20240116; t=1767891564; c=relaxed/simple;
+	bh=XzZZXjdtvOICb4xYlhqyG/RZmZePmoROzaSn75hfqto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ewQnuSUfY7sWw/fd/aj+F93tCqDIhQfmm56/A4R2i97eCdPB491G0wFmQrLyCEXg+JTA240kTYDlroM+81sxRxUNgXDebTmVUCI/dvGHhhs4G3FQbuAj3DN7S6dYtsGkc4dZXhSxuifcd0mPcGtdUIU5lBy7WTDrDKaynmpCFks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=o6ybf19F; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=A6oDxSW4dgoHL1Cvm11Rbi8Zn9MJj65sYOjbKWzNTkcy757wLknMEXstgCDTo8okiOPdqfvRZIVwXnQJHTi/bF9Uf8o7BavEZQZA+hw5XCBdqv3VjkultgEXWxGVc8pw62R8ESX6Qba89JjhPb35UBQuXIDcQME6rh1+uhKg5a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=glfExQLs; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -34,13 +34,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=3siOpUNTPvOetSwU3kkXTXaIQvHOmBaMe0L2dosaTxU=; b=o6ybf19FQhA2/H0eXyYAWhtYCg
-	E8J7QNNibSepM+CpqXDcjTCEXSDmnR7+vAORpbZk4kTZVsegRNEgFkFKinfF9y0Z2M4cnpsdnuDzL
-	I2rpUSBEqhBNs9pXdH3OOo7nj6AT4CkgeTF8RlYKVLskcyCD3aEgYDT3wNANa9m+a3ws=;
+	bh=uQf5+PqsoN/BZz1kHM8KDEKsf5OhkvBgMB2wQzEFpJI=; b=glfExQLsR0hZ4sRZ6CiLG573SM
+	wBfOXMbUFFxOZY0aGirZkoLAPPLhb7Uy2OCOlhjO8QuWzJy2/NrAYmRaGRLcpQzTNpMwGI/O8zgCS
+	s6c7DAwdGU1XdQgDQPPuzKaT5+tzcufSpp6+sW1oJzTinQtTqpaGtsvYsKtnqCJ886RA=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1vdtGL-001zEW-Ds; Thu, 08 Jan 2026 17:53:29 +0100
-Date: Thu, 8 Jan 2026 17:53:29 +0100
+	id 1vdtLq-001zJe-M6; Thu, 08 Jan 2026 17:59:10 +0100
+Date: Thu, 8 Jan 2026 17:59:10 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Cc: davem@davemloft.net, netdev@vger.kernel.org,
@@ -67,11 +67,11 @@ Cc: davem@davemloft.net, netdev@vger.kernel.org,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Tariq Toukan <tariqt@nvidia.com>
-Subject: Re: [PATCH net-next v22 02/14] net: ethtool: Introduce
- ETHTOOL_LINK_MEDIUM_* values
-Message-ID: <b8da3ec2-0775-4d81-8867-4993325a1e6c@lunn.ch>
+Subject: Re: [PATCH net-next v22 03/14] net: phy: Introduce PHY ports
+ representation
+Message-ID: <aa13419e-2e4e-4e26-ba35-54d640a49815@lunn.ch>
 References: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
- <20260108080041.553250-3-maxime.chevallier@bootlin.com>
+ <20260108080041.553250-4-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,49 +80,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260108080041.553250-3-maxime.chevallier@bootlin.com>
+In-Reply-To: <20260108080041.553250-4-maxime.chevallier@bootlin.com>
 
-On Thu, Jan 08, 2026 at 09:00:27AM +0100, Maxime Chevallier wrote:
-> In an effort to have a better representation of Ethernet ports,
-> introduce enumeration values representing the various ethernet Mediums.
+On Thu, Jan 08, 2026 at 09:00:28AM +0100, Maxime Chevallier wrote:
+> Ethernet provides a wide variety of layer 1 protocols and standards for
+> data transmission. The front-facing ports of an interface have their own
+> complexity and configurability.
 > 
-> This is part of the 802.3 naming convention, for example :
+> Introduce a representation of these front-facing ports. The current code
+> is minimalistic and only support ports controlled by PHY devices, but
+> the plan is to extend that to SFP as well as raw Ethernet MACs that
+> don't use PHY devices.
 > 
-> 1000 Base T 4
->  |    |   | |
->  |    |   | \_ pairs (4)
->  |    |   \___ Medium (T == Twisted Copper Pairs)
->  |    \_______ Baseband transmission
->  \____________ Speed
+> This minimal port representation allows describing the media and number
+> of pairs of a BaseT port. From that information, we can derive the
+> linkmodes usable on the port, which can be used to limit the
+> capabilities of an interface.
 > 
->  Other example :
+> For now, the port pairs and medium is derived from devicetree, defined
+> by the PHY driver, or populated with default values (as we assume that
+> all PHYs expose at least one port).
 > 
-> 10000 Base K X 4
->            | | \_ lanes (4)
->            | \___ encoding (BaseX is 8b/10b while BaseR is 66b/64b)
->            \_____ Medium (K is backplane ethernet)
+> The typical example is 100M ethernet. 100BaseTX works using only 2
+> pairs on a Cat 5 cables. However, in the situation where a 10/100/1000
+> capable PHY is wired to its RJ45 port through 2 pairs only, we have no
+> way of detecting that. The "max-speed" DT property can be used, but a
+> more accurate representation can be used :
 > 
-> In the case of representing a physical port, only the medium and number
-> of pairs should be relevant. One exception would be 1000BaseX, which is
-> currently also used as a medium in what appears to be any of 1000BaseSX,
-> 1000BaseCX, 1000BaseLX, 1000BaseEX, 1000BaseBX10 and some other.
+> mdi {
+> 	connector-0 {
+> 		media = "BaseT";
+> 		pairs = <2>;
+> 	};
+> };
 > 
-> This was reflected in the mediums associated with the 1000BaseX linkmode.
+> >From that information, we can derive the max speed reachable on the
+> port.
 > 
-> These mediums are set in the net/ethtool/common.c lookup table that
-> maintains a list of all linkmodes with their number of pairs, medium,
-> encoding, speed and duplex.
+> Another benefit of having that is to avoid vendor-specific DT properties
+> (micrel,fiber-mode or ti,fiber-mode).
 > 
-> One notable exception to this is 100BaseT Ethernet. It emcompasses 100BaseTX,
-> which is a 2-pairs protocol but also 100BaseT4, that will also work on 4-pairs
-> cables. As we don't make a disctinction between these,  the lookup table
-> contains 2 sets of pair numbers, indicating the min number of pairs for a
-> protocol to work and the "nominal" number of pairs as well.
-> 
-> Another set of exceptions are linkmodes such 100000baseLR4_ER4, where
-> the same link mode seems to represent 100GBaseLR4 and 100GBaseER4. The
-> macro __DEFINE_LINK_MODE_PARAMS_MEDIUMS is here used to populate the
-> .mediums bitfield with all appropriate mediums.
+> This basic representation is meant to be expanded, by the introduction
+> of port ops, userspace listing of ports, and support for multi-port
+> devices.
 > 
 > Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 > Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
