@@ -1,212 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-87979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-87980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35E1CD00F4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 05:10:22 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65E1AD00F57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 05:14:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C5AAE30019C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 04:10:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4B7EE301B11F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 04:14:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF1F422A1E1;
-	Thu,  8 Jan 2026 04:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3CD42877F4;
+	Thu,  8 Jan 2026 04:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="onlxjerQ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EXxyPJme"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QjObOs85"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42754218AAB
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 04:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22296286D4E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 04:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767845418; cv=none; b=Ha4sKcP/9TEmOBuU/h9U5pwmhAJJEcetkfjBWb1nvfQd1NdW1ASyPPGXCk67pyEZmVCXTeNeiPTIpL8I5+AFc8f9o9ETSHv9qibyd7srOoMNaeT1z1V7noHZC3CrVDzpb6yHmExgZajasYkVAVQuBuRGS1E0V2PHmxufyZTW1M0=
+	t=1767845688; cv=none; b=hTlC0fyhRg5a4i2BenlsLI9KFfQoH7niCtlDTfNl1MigIK2Ie4a4tyceMik9z6kPhGYH7Yw2U/uLu/sLxIVLXC8Ypub8xvGnbzOTjPJPc2ClmhufUApU1qKa9yIq33dhelGTUvIaWBTuVN28lgKgp9N1g1popdmJBvyi3/Nnvbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767845418; c=relaxed/simple;
-	bh=XFhoZ5x5fstnRn03ZJ3LWbpq39XK196e/qLVYWM+ZaA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lIgoRCGHcL7b2GSvKKWX8/TVKV8uJb600WuH5ibVgezYd7Sy6VhcGHWbeZAECRyhuUrXX0RrXpkg/kQlnqvC4wrpR3EinpOUDlZ36R0GZ8HiA9qyQ62O2VUINFyMSb7OElQTCkyKU3I/adrSQNO2UzkxO1qoOgihiMIhWEWqutw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=onlxjerQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EXxyPJme; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60817ndq4049328
-	for <linux-arm-msm@vger.kernel.org>; Thu, 8 Jan 2026 04:10:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=FNaXqbbK1giRl6p9hVlDrl1OgCWpM3KoyXR
-	PC9Jmvj0=; b=onlxjerQIFWeAk7ZPHyRZ7FxnNZ8jN4DJtOFUexuTscN6M3TEoj
-	M331VNhnAAIUF4PDJhADBWpU0h2VeJ4kA4oLj7S7o47fM5vUB61J/Ir76hsHEHmL
-	FlVGAKilu2mel0C885IPgA2RapHV3UikD8WRY8Pe1AA3FF/kWF8uXpYT5obABWPX
-	GkF99330a9b4K53uFPXIPbGmLJ2BWiCbCxWUPiEIkJlltVGBbln/ry/szWssrhwB
-	nGiOpqhxVvSbwPksi7eNCm72VL53sozHR3gyKKxNd5Ec3E7bed6Zm2JeUS8q/tY4
-	mVWU2aFhGxL6oVXP668Z1c+Ud9mm57JuF4g==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bj2n8gh63-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 04:10:16 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7f89d880668so2686730b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 20:10:16 -0800 (PST)
+	s=arc-20240116; t=1767845688; c=relaxed/simple;
+	bh=5v+QV2skJk4921XwaaCIdZfyxCtahUKTYMsazQJoUKw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uC9tzXqbz5dr6nS/+xzQzyQVnf3kUd1lL1tFiWpF3Z8ZbCsW+jvVbPIlc5Xo/CPbBOQvy1GNY3Rm6lswUuf6He9tw1RVuR16eK+SMhQTw1pMC+H0HMHq7ymkf2JBbbTm4cqmGthT3a/msLvqDtYlFMnYkXcBbciwNaIc1NanhfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QjObOs85; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8b2ea2b9631so313239285a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 20:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767845416; x=1768450216; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FNaXqbbK1giRl6p9hVlDrl1OgCWpM3KoyXRPC9Jmvj0=;
-        b=EXxyPJmeEPaLEC4SzpVVm1Ejbe0EXTCZA23gfCsIX96vC77w4S68NrPCbSWh1vD35R
-         fk5EM72rKXVh4yNgc6wSSBlzXbaPMosztQs/gne6DG+ivx400Iv7Vj4hA/VUjbb7ywX8
-         SpktpLpEHBlkLpPpa18jpN+DGzRP2KZ89PWli8559T2JfxTxpWvCaL9DHTY2/1P4Fatj
-         hBurhYdI/3ifP9o0lnnX1wDfXGER2rKlgq8jrRDCYBcnw3meTRWEhb3WSo2rPF0/bp6G
-         otWopL8jTxS0OQ3N01biSiVyRP1Hvl0JGUiqGcMAE6r8kRqb0LGbq+r6olxFt/3TYAtH
-         a+GA==
+        d=gmail.com; s=20230601; t=1767845686; x=1768450486; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2yAjFIwjl4VMJZ1+V1C6pz96OIbw8JbCPoa9P5fH03s=;
+        b=QjObOs85/sJzp7tOXRyN7XC9v6hjIbf3RFCh4drQXSL23apYWZLl7XKZrp10+OPmM0
+         nYwlwkXUnEQ0kkmegsFl1PV0FQd5D6hZbWihISb4vUnf+u/TW9GgR7PMcrXLecbMU8s0
+         2dt5NH0wNNON148WOnic3bj7J6SFGWblXysL6wicEI18dhkmveIurjEOHLTZt5HtgPgH
+         E1JhnSBe+yAOHCDhD+I6oq8IKJ3pkuYPai49DpZeD+tTfPj6sTXzsfaIwVUTDCoL/cOA
+         PdzLJpbLt1/nVS62HWi+B1XLkKdf9sUmzuC5+Yy/K1IuKdzywlxPpS59Nht9WdyAELG/
+         XmSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767845416; x=1768450216;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FNaXqbbK1giRl6p9hVlDrl1OgCWpM3KoyXRPC9Jmvj0=;
-        b=XnST5ZCfmjWrP0ZUH+ZaHeqKupsjpjSpIBT8gs272VUieD4Ui0bLsRFjQTQbXHziQf
-         /qwbhVcQVgnLl91slcD/vgDucEdgNeWXGhNF8kYp8YptXLYYz6GWCAEB8pNYGjoPQ1O2
-         AWiQgiFNLhWUSSW6HAMfeXM2D3BR86FhMl9s+CJNx6e+jNzzY+7ADNysQAYZb41IP3Sk
-         fd23npT3dDL+pV7gHUeK/KeDClDeAL1dTeyY6DNxKZWJ1khQDCnsGHF7PGjOhGD2zBkB
-         ZM2aAZ3cwsQf2z5Db9hjJr/0XIjZEg4E4CDSVeGp56TeMUSsbcQ4jnhwx4n/ehmiIjRK
-         8+AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUOwgvLdDeFQf82W69iIMwYHMXqK4RRdIbOZUOiHvrZeLa5H+26hWyAH3q8dFHhVqiaRUAGWyP72Gh4g4+y@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWX/KQKuoWmLmqUBEPg2KUXKpJ6ZTPTDgoMOyFHHeJumK5UCyU
-	dImNHKlKOd6y+U/XFl1m41ggXwEZvUBs3h3f4m6//DCvjKlZUg6Dy1X/t/L+M6Rf7q/3n2qYyAa
-	K7aDRSSJakM5InGXG4xm+bsSs1kQlm7JxX6d6iBTN1yNfE8myHJCiC30un4jZyYNxqtkj
-X-Gm-Gg: AY/fxX78Nb7pJwef5k1zRI6xx1LDvWJl8fZhGtudrC3ClTTXOubMPn3CwdGp74SW1Cl
-	pOVSPoaO2XEWOyp+lU4HI9oHPYUWGsYe/r0C5kQN2ui3Kss8GPa9xHuyw8YJX1e6kWjj1h49lmY
-	01m/tnzfRwPpvGiC+KXvq3vyVQZC6yl08pJQzmLqSQ8SfJfZjnWVav7LdJgKeGTPvh/MU0+yVtZ
-	OJ7hwtwavgeVpWE+IPo0yzHhTqAzLfyzbxO5tYhmUaVHpoOFQ2926jGQTKJx+NY9EfWyHTYZL3d
-	hm9a+KuoKD7vIb7QqDlOPYa3G5RFMR85xg0qDHK3EoUExjI11iG1ATFfNoyHcU0/GVNw2qt4lIY
-	5RrP2+6bgcEb58B1YlabdCqJy5qAtiX+DvAzyb2UkfmQ=
-X-Received: by 2002:a05:6a00:4097:b0:7a1:49f7:ad04 with SMTP id d2e1a72fcca58-81b7d8629ecmr4663794b3a.14.1767845415666;
-        Wed, 07 Jan 2026 20:10:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsIsj4G1RlZDDwzB00zO0+YeLjBmdALSvffZ0JT8wd8df+o3ycOmGhKJrOwI2gH0oVv2Z2Tw==
-X-Received: by 2002:a05:6a00:4097:b0:7a1:49f7:ad04 with SMTP id d2e1a72fcca58-81b7d8629ecmr4663773b3a.14.1767845415048;
-        Wed, 07 Jan 2026 20:10:15 -0800 (PST)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819c52f88casm6201921b3a.34.2026.01.07.20.10.10
+        d=1e100.net; s=20230601; t=1767845686; x=1768450486;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2yAjFIwjl4VMJZ1+V1C6pz96OIbw8JbCPoa9P5fH03s=;
+        b=K+0u/Jfix2szwUX5K/biOXRS7ExHP09V1BSnfcgjvo4fSPBLedD5stXV3kWJGHTlug
+         ty37P/+zwQUdP34xlRAjbdF/m8OX7zoK4UAbWysT7KAC654YMSe5lzaDWAFdPKYIrC3q
+         OJQ6IPCmYe9qZjHu6fAW97zHNfjdK/62tmk4Hyq6/9Fg4pgSZPrRxM4JPS9bSlCcHE7o
+         w7htFwWrBrnHTfZF4gde6owkqGH2NcP/vWhBD792+fuiR2p0nLp70MQllacIsZMdUkBH
+         Eq+q44G8UIGrV6P7UmeP5BJAdMOAdhtijXoqPimcIW9II3XlmpHiEnxabK2Umto3dvej
+         ajvg==
+X-Forwarded-Encrypted: i=1; AJvYcCVw+aoXS4ow+KHbUli2pXu7SfgGdj+j5yYQmE2QGNWH8PcFboC9QL3+JeefYrnCA/7IOm9vXpby5z+OzpbN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLm5pcRCG9Dv58fLfU13NhUgRkwSwEMaBpYI9VPzqQ2JvIXKPP
+	Tx+qV4QUwOGOZFUzjMEeSOX6rbztdYqT48aH9Zp3fsPj6fit+HT+lW64
+X-Gm-Gg: AY/fxX5wEUXhuV/L9jvPzXZlQOywlic4EoKbMZPtyq8fboOevy2M/CYf+2zxPodyE3h
+	iE4eFv4Ks+xfhgZvDEngbCV4hT7vso/rirTfLnz2DLfZS1zG+3t+p9EJrmp2X8y8gdPNw+fMdJC
+	2HOZAH49bfraTewYS6RWuAVBDax2emPnb+eNi8Vuw259qxEZpE7AYfhMoYaxz13t1aBQUJQAzY9
+	OOg4IGDou6BgNWPCw3ZJVqqF84YgqXToV7mOQ19HquqKL1V5nA+DxYt3p6pnfgt68CEP0s+rxYq
+	aJFq4wA5NZW5dhFhueQFjq4uYxhihG5dyQopMSN4vxEKDcTr+eASi9nOkccbnDGsmmHe+ft7WqP
+	O6zAg8HSXB1fOrKtSNtZ0s1d0On9NdsY6/B7LMDkWS33KzuRnRpRb9gfZ/VudB933A9AjfBcFLs
+	jl8ZbGdrkc/af/dw==
+X-Google-Smtp-Source: AGHT+IF3KLEAoIR6iLJwpBg2iAqPNGhRNw28m2GAujrjVEQ/ioKoivK+pFkCUvt4wmrDlxfnphqTjA==
+X-Received: by 2002:a05:620a:1a01:b0:8b2:e922:5282 with SMTP id af79cd13be357-8c389384396mr587730185a.26.1767845685882;
+        Wed, 07 Jan 2026 20:14:45 -0800 (PST)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4a7962sm499071885a.11.2026.01.07.20.14.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jan 2026 20:10:14 -0800 (PST)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Praveen Talari <praveen.talari@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org, bryan.odonoghue@linaro.org,
-        dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org
-Cc: prasad.sodagudi@oss.qualcomm.com, mukesh.savaliya@oss.qualcomm.com,
-        quic_vtanuku@quicinc.com, aniket.randive@oss.qualcomm.com,
-        chandana.chiluveru@oss.qualcomm.com
-Subject: [PATCH v3] serial: qcom_geni: Fix BT failure regression on RB2 platform
-Date: Thu,  8 Jan 2026 09:40:06 +0530
-Message-Id: <20260108041006.1874757-1-praveen.talari@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        Wed, 07 Jan 2026 20:14:45 -0800 (PST)
+Date: Wed, 7 Jan 2026 23:15:06 -0500
+From: Richard Acayan <mailingradian@gmail.com>
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Robert Mader <robert.mader@collabora.com>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v6 2/5] media: i2c: imx355: Support devicetree and power
+ management
+Message-ID: <aV8vSuCDhqCcuwuL@rdacayan>
+References: <20260107043044.92485-1-mailingradian@gmail.com>
+ <20260107043044.92485-3-mailingradian@gmail.com>
+ <aV6qnjyXV-yTLqVl@kekkonen.localdomain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=d+j4CBjE c=1 sm=1 tr=0 ts=695f2e28 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=-jOfXJ57FaXOfPmQh3oA:9
- a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: K1dekWfgWaJcUk021V9_RosaXP8B5cPu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDAyNCBTYWx0ZWRfX/zDezLmsIwaa
- Mwqvvb5tvH8KVTecJWwYIQk9CAiY49UUkB/dZhdwRnTdC8gC/ftI5de/VLXRqrFqOszNhgibHQR
- AP7sQz4Trs/AMHQdKylzy1yBVNdrfBsxSuwWK1Xkm88peSfhXuyZ7/kU/sfNv5vIOt9MOzeOlE3
- x5yl6pVZSqwX26yVVay/YFXK5cqp1mjL8IJSFLASn7vEx8fvRZccPTRMZrKkIz0j0LjRRD0Q8Vm
- n/wbR9IrCd4RYaw1MVNEBXkh4mpwS4stEUNrYe+d10/0DPY+D083yRDiEEUUDw7Rl/7ksQS109W
- 1LsY1R5mPtPYiWr90JtV707En8Oa40CBGqQvpnUZ+c833PxZ8wmz9pCfXbgYmEC1EMtorZtLCCJ
- wfhIrkpziCiTq65MXMfBSiNexadruNP1UFLGwtLr7Kp84FNOLmcWSKszLC+U3x4fBFAPZAfFDzA
- 8VD1ulyXAg/uGC84F4g==
-X-Proofpoint-GUID: K1dekWfgWaJcUk021V9_RosaXP8B5cPu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-07_05,2026-01-07_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 phishscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601080024
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aV6qnjyXV-yTLqVl@kekkonen.localdomain>
 
-Commit 10904d725f6e ("serial: qcom-geni: Enable PM runtime for serial
-driver") caused BT init to fail during bootup on the RB2 platform,
-preventing proper BT initialization. However, BT works correctly after
-bootup completes.
+On Wed, Jan 07, 2026 at 08:49:02PM +0200, Sakari Ailus wrote:
+> Hi Richard,
+> On Tue, Jan 06, 2026 at 11:30:41PM -0500, Richard Acayan wrote:
+> > A device tree compatible makes it possible for this driver to be used on
+> > Open Firmware devices. Initialization of power-managed resources such as
+> > the reset GPIO and voltage regulators can be specified in the device
+> > tree and handled by the driver. Add support for this so the Pixel 3a can
+> > use the driver.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> > Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
+> 
+> Uh-oh.
+(snip)
+> > +static int imx355_power_on(struct device *dev)
+> > +{
+> > +	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
+> > +	struct v4l2_subdev *sd = i2c_get_clientdata(client);
+> > +	struct imx355 *imx355 = to_imx355(sd);
+> > +	int ret;
+> > +
+> > +	ret = clk_prepare_enable(imx355->clk);
+> > +	if (ret) {
+> > +		dev_err(dev, "failed to enable clocks: %d\n", ret);
+> > +		return ret;
+> > +	}
+> > +
+> > +	ret = regulator_bulk_enable(ARRAY_SIZE(imx355_supplies),
+> > +				    imx355->supplies);
+> > +	if (ret) {
+> > +		dev_err(dev, "failed to enable regulators: %d\n", ret);
+> > +		goto error_disable_clocks;
+> > +	}
+> > +
+> > +	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
+> > +	usleep_range(5000, 5100);
+> > +	gpiod_set_value_cansleep(imx355->reset_gpio, 0);
+> > +	usleep_range(8000, 8100);
+> 
+> Where do these values come from? Apparently 1 ms is required (after lifting
+> xshutdown) before reading identification register and 10 ms is required
+> (from the same point of time) before streaming can be enabled.
 
-The issue occurs when runtime PM is enabled and uart_add_one_port() is
-called before wakeup IRQ setup. The uart_add_one_port() call activates
-the device through runtime PM, which configures GPIOs to the "qup_x"
-pinmux function during runtime resume. When wakeup IRQ registration
-happens afterward using dev_pm_set_dedicated_wake_irq(), these GPIOs
-are reset back to the "gpio" pinmux function, which impacts the RX GPIO
-and leads to Bluetooth failures.
+I don't have the hardware specification. The sequence seemed to last
+12-13 ms. Dividing the delays are a guess and the camera can usually
+open at least a few times.
 
-Fix this by ensuring wakeup IRQ setup is completed before calling
-uart_add_one_port() to prevent the pinmux function conflict.
+The final 8 ms wait can be extended to 10 ms (assuming xshutdown is the
+same as the reset line). Is there a minimum time for asserting the reset
+(currently 5 ms), or can it be reduced to 1 ms?
 
-Fixes: 10904d725f6e ("serial: qcom-geni: Enable PM runtime for serial driver")
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Closes: https://lore.kernel.org/all/20251110101043.2108414-4-praveen.talari@oss.qualcomm.com/
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
-v2 -> v3
-- Updated TAGs order.
-- Removed uart_remove_one_port() in error case of wakeup registration.
+New sequence (maybe, if the docs support it):
 
-v1 -> v2
-- Updated commit text.
-- Added Tested-by in commit text
----
- drivers/tty/serial/qcom_geni_serial.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 6ce6528f5c10..e6b0a55f0cfb 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1888,12 +1888,6 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto error;
- 
--	devm_pm_runtime_enable(port->se.dev);
--
--	ret = uart_add_one_port(drv, uport);
--	if (ret)
--		goto error;
--
- 	if (port->wakeup_irq > 0) {
- 		device_init_wakeup(&pdev->dev, true);
- 		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
-@@ -1901,11 +1895,16 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 		if (ret) {
- 			device_init_wakeup(&pdev->dev, false);
- 			ida_free(&port_ida, uport->line);
--			uart_remove_one_port(drv, uport);
- 			goto error;
- 		}
- 	}
- 
-+	devm_pm_runtime_enable(port->se.dev);
-+
-+	ret = uart_add_one_port(drv, uport);
-+	if (ret)
-+		goto error;
-+
- 	return 0;
- 
- error:
-
-base-commit: 6cd6c12031130a349a098dbeb19d8c3070d2dfbe
--- 
-2.34.1
-
+	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
+	usleep_range(1000, 2000);
+	gpiod_set_value_cansleep(imx355->reset_gpio, 0);
+	usleep_range(10000, 11000);
 
