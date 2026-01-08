@@ -1,183 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-88147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE588D06498
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 22:25:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 370B1D0657C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 22:37:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3CA2430C7C0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 21:20:33 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3CFDA302781F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 21:36:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B10E33B943;
-	Thu,  8 Jan 2026 21:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67622329C56;
+	Thu,  8 Jan 2026 21:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VGeD8CwN";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="FvrdQ2l+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FW3yrVG3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1C033A9CD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 21:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4872D6E68
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 21:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767907165; cv=none; b=awBKogIf12GSjtmQeZIT/TVGcw7wt9f4i6sC1GWiggwnbt0yuhlZrPck0gzKhIbCkgznkdv39IL/IsRz0QxaURW7J8s70vfOahExaWf5AJ+4GjSNuAR26+7Lo16adRrZAqbK6StTrwisPhsMWvWh2zipYDTM+w/Ds8eA2kJxSZA=
+	t=1767908209; cv=none; b=g3RUcfopD8lUeX915p7MtlrdAFw97X8z7d2ROstvxRQQxnNQrHuGn6oBB+8B9HOCTQzgk0tjmcZvaX5JJAbjQJTmGg6gXoP2qdnEmR9ZpRMVGyzpW6466k1eYkrntGLi0dauXW7fLqNGeN1Qq1OJiJZurAICPmU6lWCX+g68gmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767907165; c=relaxed/simple;
-	bh=sZzvWmWZLBAg2O8T5kHMnq76Z89GPT7Dybdt2RJStY0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sfvGWOj5uQsMpJF7R+sxKQ6MgJ8l0FkHDhXxKRHWgNANuOOotUkuSu0Oa86KEJf4gPrLHrVcJLxEJChby7h8hKipl8EmqhvGdc//Bl8zmtx+BPXXZ1/6+V+H/7ft8vgSyl6tDxurAb6CU4ZgDVM6cP92TJ0WZe6q45frIFZyl98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VGeD8CwN; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=FvrdQ2l+; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1767907159;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3iSY8oAi4l99NVbVblMxVH7Z37bTmCz2IXU4yciXqd0=;
-	b=VGeD8CwNjNpT0+OcP3ykQYSKrIspCWtRfqcY+BA4AXnQknbKi9fE/loz3a8j3ZrZ/i4rFE
-	knvpuctxGtupHVHsu/FltvM8Ses8lle1YNa8UuvnqMaGHMKwn4tR1a7t16wbORqQ6+9KCs
-	F5Ac8tb3VIgumF8WcPe62EQseVwbWeU=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-4Dxj1LyAO82fuezqXxIpVg-1; Thu, 08 Jan 2026 16:19:17 -0500
-X-MC-Unique: 4Dxj1LyAO82fuezqXxIpVg-1
-X-Mimecast-MFC-AGG-ID: 4Dxj1LyAO82fuezqXxIpVg_1767907157
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-93f5ac349ecso3578969241.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 13:19:17 -0800 (PST)
+	s=arc-20240116; t=1767908209; c=relaxed/simple;
+	bh=TZRcR/La8sU9V7mWVhKV+xchY2Yai9plkmM90nGGXZg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tAvpUDYMQFDb1SFayDsVW+ZoY+m6P5Ns3pvpaOImnevrEwc5p0+VIvNJnAfNMw2oJCUF7eJccFQK32WfGy021jil26t+jbmQk2Ov/HrbASfyWGtRdVXTrZ5dY0/4GYFdAJ0NWIedFfJjwiWeUDf1Grp0dBisxxAMekNTqhP88cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FW3yrVG3; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-382fd8aaa6eso22447551fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 13:36:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1767907157; x=1768511957; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3iSY8oAi4l99NVbVblMxVH7Z37bTmCz2IXU4yciXqd0=;
-        b=FvrdQ2l+/qQk9eqw0ibjDksVpVJizL7ErXiOPWCtNZYs3v0u+sf4Ky7+9A3GpwTp8x
-         xelrGuTl6Z36iZd7y8Gy9RZ573wpLlpuMjSs3LNbI48l2sbNgJVM2r3OyPnN0XZ6OXbt
-         aCFAof3pKlnBQfzXCIALePBeISsJQKS1dtMlZwDZZ+SPz3n8jnFuRXfApeA5+vGPpE/C
-         +AOq0c6v28wMdXGh1gzauNXuS3Ik7DaHrYILOTu7/+Z/1u2DlU8c+7PgrBc63f/Ys2qK
-         KY+xuRZSVHasYduUTYRtWxADEpUhYsfMtGTmeG7utUqEQ7FZT99ZWFbm0/gT9kW9g1I2
-         4OFQ==
+        d=gmail.com; s=20230601; t=1767908206; x=1768513006; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cqbx+nBwTy8ehc/EWm5BAgZ35l9VwydtmAp8+5UCQfg=;
+        b=FW3yrVG3t0C/LYdp9XUu9gzxnniOAICHH+7zCxNIuEyPi9aCCFeAUWsoE4f8NYMzn7
+         A4/HhGVd8FvshjhAnQWStKbHvrYSMO0NnxenVKSvbVTNmUc2HnNSwW6uDgg0sKRh8ICO
+         lFkmVmfbCYHQC+M5VHD/k+g3v6ha0kzGSAbY/qkpDfzJHCulmikkpUjC4k+xz4JkWxN3
+         QDQlH2ZVbbBTYl/JIL9BqLSrRhIdy1/LMnU3hQ/EBASUNl03e2DRNLtwZNj6a8/1pzDx
+         ye/6VkHsaA8YB/hFcyc2BE0QxFvmfTsk4bGeXrz2/ZGLRGr9P/FEV8+KejMIWAibRH56
+         +wgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767907157; x=1768511957;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3iSY8oAi4l99NVbVblMxVH7Z37bTmCz2IXU4yciXqd0=;
-        b=rahSXUqs1gFpsUwPXNC2y5Ep9rl7dWPbxcvx0vL1nQosAhQ5C4I4ywAoDtKbMZ7p6r
-         vYjbSfG1go576UJlIT7la4CNPjET8eBY10J0vTYVbwAOZe5peiUrpk+iyKlyKiD7dxig
-         n+aAGePBlwtNR7yMA38h0ax/0A8oycZpqWTdDLuFc9KfQQSH9YKRcfDQ0/DcN/cYnkNp
-         972c8fov3DcpFp7S/gyjV0xrKFY/8L33WdQa4uxgZbNvS+1SN+ZvpCpjxluph8bXpMJu
-         ufC87PjvXAoH+/SV6zHQMOCpvQJp8AxgS2tWSiMGgjKFObjdcsQ970oWKt696XXG/yz0
-         B7KA==
-X-Forwarded-Encrypted: i=1; AJvYcCVhxW8L8v0KVVEsSg7G9NDbU4ity2UnPaxpbtx0/2f4mx+YO6wX1KavBVpJibBU6AB9TmTNtH3lG7sc61/Y@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfCj06FWPQdJe6NpcMjbnWLRUG3g/lOdeKbQjAkzScmTk+rrbz
-	uotymTSjr9DSph28/bVLaXM6EiZtGn2gSYbcZbtfCwJuI80WT/WLkUh2DSe5o3ygzusaAkaZIq2
-	JfKOgPAm67XWEWAp/FLJ9gIGSG2qlcLacogE2mPWtpdo8kR5R8+PGKhhW3tlUegYlUIY=
-X-Gm-Gg: AY/fxX4eFMCOBAebR3Jua9BHH6ZynvD9PmtK8yZ9x3gGlcXCSkpbgjROkqCpgG2kyf+
-	xT8umCOMGoM423/Vor8mPAojNeIcdkRETmfibgMHpgOjiDEuYPkNv5gciEmAGJCNM5oJyoDPHkh
-	qW6amlOUeChB0dK6rhCvilCaNXG0NSVF2bm1YOqrI8BONnopB/twVggHFhJXPMU1HyAd3Y/DbiP
-	7FW7h4p2zovJlWuYmW2mIfr3whBUr+B+PybseHn4zPEsV3cFvnzs4KO6RS5aT6Re3kO5M8Dh58I
-	QoC/49dQPW58pIc9y3yf2E6rz7Vr9fTFB8I4qQ1lRUVAusvg4IQflSdRS6AIlnaih6BRq4C8ktB
-	kNSjKdYZrQVvQlLY=
-X-Received: by 2002:a05:6102:3a0f:b0:5dd:83de:badc with SMTP id ada2fe7eead31-5ecb690ac30mr2675970137.38.1767907157168;
-        Thu, 08 Jan 2026 13:19:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF0uRMIjA7XLKaSnU3wOhkRdxgxZI3Tqx0E2gNf3CGsOIh420QNoFs2vKVMT8dIcPxOmBSZqA==
-X-Received: by 2002:a05:6102:3a0f:b0:5dd:83de:badc with SMTP id ada2fe7eead31-5ecb690ac30mr2675959137.38.1767907156687;
-        Thu, 08 Jan 2026 13:19:16 -0800 (PST)
-Received: from [10.30.226.224] ([2600:382:811f:d757:daa5:b867:12a3:9d12])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.19.08
+        d=1e100.net; s=20230601; t=1767908206; x=1768513006;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cqbx+nBwTy8ehc/EWm5BAgZ35l9VwydtmAp8+5UCQfg=;
+        b=TIRXT2wlTALspkZH7/A5W8V0D9ZzyA11aUnv35fnSzNMNyCosYyN9kLbs6l2d0gIl5
+         I8D/YwQXvPEB95rG30cdX4pzb0g84Wc5kgEESFz4f7/p+AN3sErGTHIZsaWQxuF1Sm2p
+         F+nSdUoBWbWCi8D9Nsg8yWCPOASo0hu3Rroxfz8QpvnpzhKhdLlvO2rKNZ3bbbsPIMLx
+         746ZT3+Ce8mqlfol/H447fpVXEUnHFV7CGa5dhWV9lHitO75cjlo1FB5aCw6WhU+/0il
+         8+L8i2LUkMphNZrzVkcqB0ouY6MYpLPqV313kgMxcwKZ+KvTGu6ZduOpLGF+Jrl6dXe7
+         /6HQ==
+X-Gm-Message-State: AOJu0YxwsMJKBNhVhZdXs10ZzwpO8S6uJ62HdPOj+ToaEK1AGpfYN/MD
+	X2ooly3C6cARlnN/MyFPepeEv9ryAy4fLoRUv8frcf8DdVnB9VOBk92QBiKI5T6TJL4Je/g=
+X-Gm-Gg: AY/fxX4RxOpHQSKFh39hUWr5E3VLnGzWsYjbUag6z0iB+yzP3lqfac9Bbinv+/uPhLI
+	yNS5OHMCghtCdkxoeokCYz+/Fw+Fc7x7F97Fc19FJLfAIrLW5Y0hqBj/TXjSevU3Fb8j5UtXhcQ
+	CUajYOj75oHBAZ08/P+ATdCdTJox6zlDE+UaInMwjQ8p41oo1ikOO/K9rJPsoZS+V25B3+tTs+7
+	MOXEPfoDK95jx55Ow/aA5wm0+S9oqySCZm0MMi92h5/tIFINZRDsjhivT5om3MdixjE2yR23VVv
+	sXjC2eERgC6JEQCELG/vzuA4aQjWWW+du+b1hIhiKjIBmBnDmuUADXyGDr0ce6d24JoMHRSZHK5
+	MWzrJwghfOlnO6MNrODukcv1+EhJWkfErXwG0XgMdBWBHlYVcjQFcgtmNT9mvo0US9+ggngfiyS
+	lJ1duNN/xSlDRb
+X-Google-Smtp-Source: AGHT+IFMaV8dzIQb/uzOgwkOhBBFvf5v6hGkMaSQ2siFokcp+laluHB0fDW4rArK+YdxprRFy/48uw==
+X-Received: by 2002:a2e:b8d0:0:b0:382:88f2:fe25 with SMTP id 38308e7fff4ca-382ff880808mr21325141fa.45.1767908205699;
+        Thu, 08 Jan 2026 13:36:45 -0800 (PST)
+Received: from DESKTOP-BKIPFGN ([45.43.86.16])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-383140e641dsm4140401fa.50.2026.01.08.13.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 13:19:16 -0800 (PST)
-From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 08 Jan 2026 16:16:42 -0500
-Subject: [PATCH 24/27] drm/msm/dsi_phy_14nm: convert from
- divider_round_rate() to divider_determine_rate()
+        Thu, 08 Jan 2026 13:36:45 -0800 (PST)
+From: Kery Qi <qikeyu2017@gmail.com>
+To: robin.clark@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org,
+	Kery Qi <qikeyu2017@gmail.com>
+Subject: [PATCH] drm/msm/dpu: vid: guard hw_pp before accessing merge_3d
+Date: Fri,  9 Jan 2026 05:36:34 +0800
+Message-ID: <20260108213634.1905-1-qikeyu2017@gmail.com>
+X-Mailer: git-send-email 2.50.1.windows.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260108-clk-divider-round-rate-v1-24-535a3ed73bf3@redhat.com>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Brian Masney <bmasney@redhat.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1932; i=bmasney@redhat.com;
- s=20250903; h=from:subject:message-id;
- bh=sZzvWmWZLBAg2O8T5kHMnq76Z89GPT7Dybdt2RJStY0=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5Hb1v5vpP9/g2Zw1x0vb3l5Xs8vY4qIY9ZTV6M3/p
- vSpfvMlO0pZGMS4GGTFFFmW5BoVRKSusr13R5MFZg4rE8gQBi5OAZjIVyGG/znrI46vWXPXmZ1n
- evhLw6XT1O2//926j2222YecHWXuxbMZ/mm/r2e/wuzs0x9mvcteoup47ENm0fYpEwKEL07zVn7
- mzAEA
-X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
- fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+Content-Transfer-Encoding: 8bit
 
-The divider_round_rate() function is now deprecated, so let's migrate
-to divider_determine_rate() instead so that this deprecated API can be
-removed.
+dpu_encoder_phys_vid_setup_timing_engine() dereferences phys_enc->hw_pp
+when checking/using the merge_3d block.
 
-Note that when the main function itself was migrated to use
-determine_rate, this was mistakenly converted to:
+hw_pp is not guaranteed to be present for a video phys encoder until the
+virtual encoder atomic_mode_set path assigns it. If this function is
+reached on an error/unwind path (or after a partial setup) before hw_pp is
+assigned, the merge_3d checks can trigger a NULL pointer dereference and
+crash the kernel.
 
-    req->rate = divider_round_rate(...)
+Guard merge_3d accesses with a hw_pp NULL check.
 
-This is invalid in the case when an error occurs since it can set the
-rate to a negative value.
-
-Fixes: cc41f29a6b04 ("drm/msm/dsi_phy_14nm: convert from round_rate() to determine_rate()")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-
+Fixes: f87f3b80abaf ("drm/msm/dpu: don't always program merge_3d block")
+Fixes: dfa35bac9930 ("drm/msm/dpu: use struct dpu_hw_merge_3d in dpu_hw_pingpong")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
 ---
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-To: Dmitry Baryshkov <lumag@kernel.org>
-To: David Airlie <airlied@gmail.com>
-To: Simona Vetter <simona@ffwll.ch>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: Jessica Zhang <jesszhan0024@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index fdefcbd9c2848a1c76414a41b811b29e5fed9ddc..a156c7e7cea83286e7ad47aa9818761670c68e89 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -628,12 +628,7 @@ static int dsi_pll_14nm_postdiv_determine_rate(struct clk_hw *hw,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 0ba777bda253..5e5acbe9147f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -308,7 +308,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+ 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
+ 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+ 	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
+-	if (intf_cfg.mode_3d && phys_enc->hw_pp->merge_3d)
++	if (intf_cfg.mode_3d && phys_enc->hw_pp && phys_enc->hw_pp->merge_3d)
+ 		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
  
- 	DBG("DSI%d PLL parent rate=%lu", pll_14nm->phy->id, req->rate);
+ 	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
+@@ -322,7 +322,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+ 				phys_enc->hw_intf,
+ 				phys_enc->hw_pp->idx);
  
--	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
--				       NULL,
--				       postdiv->width,
--				       postdiv->flags);
--
--	return 0;
-+	return divider_determine_rate(hw, req, NULL, postdiv->width, postdiv->flags);
- }
+-	if (phys_enc->hw_pp->merge_3d)
++	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d)
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d, intf_cfg.mode_3d);
  
- static int dsi_pll_14nm_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
-
+ 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
 -- 
-2.52.0
+2.34.1
 
 
