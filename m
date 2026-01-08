@@ -1,166 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-88113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12DB5D04995
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:58:09 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AC2DD04566
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:25:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B17FC3145B4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 786AC303BC06
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 16:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC0F2BB13;
-	Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2400121B9C5;
+	Thu,  8 Jan 2026 16:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="usb4MmHJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gPJzyNQB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A112AD32
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9E519E97F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 16:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767887419; cv=none; b=LEsE2D3wkCedvT6B5c77AuFLYulXA0nhXW/VWn2/gz8Zj/7SU2BS2iUgF2RDHlrM4lvFBFNt6h6qv6CB768LgN6Ck9L4mAfGgctF1YnRHNq74gNpRdXXwHC3umU1/eO6+cyZ7UTnMx4fvSNnFKqy2yPlDT99n8qSvcuCj4R+gPY=
+	t=1767888468; cv=none; b=gYFpV7ioAEi+B+WBZ3reqrRMU3Z9iA96p6e4LBS1quIoBkZLcETu77jid0fQtrVdTKOSg4YV+72vt9AYL2CPtbEXbVKEifhZE3ZXSmkjtC/13c9YMELpEGI3wy5yTYP1VQHNC7ZcEJ/57cp8087gmjgJxc3RCzsH6d9iYAjYJrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767887419; c=relaxed/simple;
-	bh=KGaO4EypoOGLhlEAtkWsb6d+AORWtthHeHFesJA4a2E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LxsX/1NniRwY4i9pxkXE5CdkW0OFUT2igxsp76D4ItDKS+yCKuHfdWyBcNIlK6M7BUQjFAvzR+C1Ln6VoDUHiu3iJdiOqf8DDfrvKeN9nKQLg3b5RBOLnSadxzwPrRjuJAhchj4laKFT7M/JCRxwKxFy9GO5F08bLBG6VPJKZe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=usb4MmHJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E89EC2BCB2
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767887419;
-	bh=KGaO4EypoOGLhlEAtkWsb6d+AORWtthHeHFesJA4a2E=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=usb4MmHJvMLPE8uELsbbUngRbBgpdUECKMmpwddwY189gnOVhVBEvsoZsN2ANAdRb
-	 t7YJmkUsI9dpY6rq3gm5zN+eWtCpnRWzMnswxbZt/3shCn1wvzBb6oYQm2AxSMd8L2
-	 aCjReJjs2BJSzqIfnDjwdIh0H+pIVeALv4Qb2w9gNm6PwbE6R8fAcA/k6cuBuzoyj2
-	 NhNfiv4Ogfl7hnnK2f4+nk9nB3DplTx6QoLshFLps02T775YICN3NhywEhdZfnZKkX
-	 vbjmlj1v8ZjzZvhG86NGzW0fQaG98pdSVWRSeYI9YPWE3FowX1Y01DeD7yYI2lNiZ5
-	 Cbw/z69BwcSyg==
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59b78886454so989935e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 07:50:19 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUJlANHhGlaL5Anwsm94RqBkMB/nzhfuwqP/j9JKtel6LxjGp7N8vx6UJ67ts1pBArlIY6dBAyDy5va5b4G@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqCgegEgHCYvXh+e9Ao8UqA2avb82v3a6n35LxfAvFVh08inNF
-	gseykJgN/KrxYas54cZjifmrp7fZDcw58cW1Obu20L6tmurXTkQ/j5ICC3fE3kvWpCk71jucVMP
-	1Dm3YGqUPYzBeZYHN8DBgbEALnke3H3CYGA3hiFs+lQ==
-X-Google-Smtp-Source: AGHT+IG2+2F01A/KIFuHK5i46mt9KUdYZatvNxavAnjoIfZZaIpd0eF4zkN5fLaXr4bY1KSJ4MsEy0n1PYP8LkHGkdo=
-X-Received: by 2002:a05:6512:6d0:b0:598:f031:dc2e with SMTP id
- 2adb3069b0e04-59b6ef02957mr2037319e87.1.1767887416901; Thu, 08 Jan 2026
- 07:50:16 -0800 (PST)
+	s=arc-20240116; t=1767888468; c=relaxed/simple;
+	bh=hbq4/W/YT1F2KaupP7lFjIsAXhr1Ga/gdbdjOJfduHM=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=IA+1VRSAc2VOXnzONqx7ewHqiiUoznTB9KlzLhMES+33PYXXrFqiOC3ANcZgIbBhsR1LsiBfW1KyYKtnnWYuFV6Y4+EcYbj3G46CGjGnl8Rqxy4OUK0rrJvtlYmzCQr8rqC/5HTP3ZsyDUrwgDe997DSFBJNxf/FCEX4VA2qhms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gPJzyNQB; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-47788165c97so20371115e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 08:07:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1767888464; x=1768493264; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7DBTz/lbvXhEQEV6ZtSo3RgwmEle7n+kvmz64QebNMQ=;
+        b=gPJzyNQBgxvF9Ebm3QkUuzIbNWSb0uZtBJFGqfzSTfYyQDik6QSMp4JuOUmmTcgmIx
+         sUo8JHqY2HorWSgttN6PyJipWD7FbiM96F7FCN2VFoFRF3KRQ22cZyuucXMgaP6/8oZH
+         3Jd7wg73J2c4e6VS2sXdxIAviSGc7eGpsRtKqReE73o7mfjODzaoJkzq5mXXZj5nA/Mt
+         LPCWayLz/HpgMDyHXhYhLB85wp9BI1ApYIp48CpKF59BIj4C8zNQ0W9lPmPmYHgwItl/
+         rP3IOlt5bktfaxCR57oCoGijkVjfpmZJGTmfIaVy5PXTnTDVmNhQQD/zdY6pvNRT15mb
+         mtrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767888464; x=1768493264;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7DBTz/lbvXhEQEV6ZtSo3RgwmEle7n+kvmz64QebNMQ=;
+        b=jEPen0T0Mg+iS3Xfk/dh8POGttT0YI95t+r+jXHqeM23C4ZAFVnMi/oMl/27xQUeaN
+         spYjpcExiIXWTEL93iXY8cdv5t9QF6/AaAja22UUMtAInnzITnb1YvtjGgvReVjDtLUh
+         eRprD2tUYSzPGpc61SwNF1UXYpj/ghxgWxiemBf2MkKtSdoKGPTuBfEgltkCG9MeEKpm
+         bXV56hEAUHTaZX8HyIQX399v6HQRkKOKVvcorijMzzZcc1lo72G4FW9/g28fmBwFsLBZ
+         gtYJPuyiPm0eqfPlT1FCZQh+Z+nZ6kO889IEPbRH6eXXhGFnTN/gFenItZ4YNoFVzLAH
+         vEYA==
+X-Forwarded-Encrypted: i=1; AJvYcCUAtnIkhTnYC8EKLXcveyLNxMOYELaQ57pmqyvV7HloF3BXyqOqsSE88hv0HsZUoRZG0RXX3fGkJV+DnD5j@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLb286+t4602vPzp+Zs5Vc/W/5SYzr3DzY+2L62Jb36Br6AasS
+	L9hGW0487nQ91B+eFbLZo2mQMDJ0yezQnz/NkIz6eRz9H7Bb6C3sb6+mzMN2MFfgF9VoVMCD57T
+	4CCIvfhzdeQNMtn6btw==
+X-Google-Smtp-Source: AGHT+IEO61c6TkZz/86mc/fyFkwWFW5LTEzhYmLyOElq55K/6sHbmhaCJ0Qo8xpHZev+T6S1nwRZjKWIEJKKzW0=
+X-Received: from wmlm26.prod.google.com ([2002:a7b:ca5a:0:b0:479:36b0:ff54])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:3112:b0:477:7f4a:44b4 with SMTP id 5b1f17b1804b1-47d84b26d08mr75677725e9.1.1767888464327;
+ Thu, 08 Jan 2026 08:07:44 -0800 (PST)
+Date: Thu, 08 Jan 2026 16:07:31 +0000
+In-Reply-To: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org> <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org>
-In-Reply-To: <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Thu, 8 Jan 2026 16:50:04 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
-X-Gm-Features: AQt7F2obhuvUlvgUZPHF2Ox96e1T1TX-fbUl1bOPtAWt-u2PKGO9E-yuFxHItZY
-Message-ID: <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
-To: Michael Walle <mwalle@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
+X-Developer-Key: i=aliceryhl@google.com; a=openpgp; fpr=49F6C1FAA74960F43A5B86A1EE7A392FDE96209F
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6461; i=aliceryhl@google.com;
+ h=from:subject:message-id; bh=hbq4/W/YT1F2KaupP7lFjIsAXhr1Ga/gdbdjOJfduHM=;
+ b=owEBbQKS/ZANAwAKAQRYvu5YxjlGAcsmYgBpX9ZN+0wnx9w0LDMduz613MpMKku8f0voThE3Z
+ VzJVjwhM/yJAjMEAAEKAB0WIQSDkqKUTWQHCvFIvbIEWL7uWMY5RgUCaV/WTQAKCRAEWL7uWMY5
+ RhMXEACFw5E17eKTmxVsYmy97LYcw5RX+DOlTERXnLWyfaTGCutXDAMFYjO7Cgyx+2/qtxqCb99
+ hqDf4YYo3waLduiBL4An1/5xi73UuveVXb5QI2UU/IJH0WuTRV1HqeJkJ1IONrrkyW4noiadkVn
+ Gw0eYLMfquuDYyOoUaErOw4VxStseS9p+FmlVRd/Ptf9SioxTfAJcd4phn5ghFDcv4n68RkedVX
+ q4IOWzJeW6Z5Og/KeZ61MnjiheBZN+inCavhoLY1/50CajqYdCNp0IBKTria754kM1uj15kCHUu
+ rbMNXd3o96bQovwfPVHwjT3gBTKyVajwwNIJbhMg1NckrQGcL91mFLkD7bwdx1bQhtx7Pw3ZiyC
+ adN2XCGu97NVvZmRLGGovP1S6SY7VhMawU9B9m/E8REl/X4Nt33rR8AEJUrmcz9yMBtfdtCEHq6
+ QVkQ95QrPSf47m6PiDvjCPHicsXk8NeU0Ov6x1ucR0Ctpke9AMvT2Uu1zvSiDrJGXEJ7dsQkBeM
+ Hkus5GvVkeYMcl7ZKC9NDu83ngLhyrCerTytirGraddM5y1Df5LVmtDeXHwnZLxX7rVxO0kWE4y
+ kLY8maZejGtiEnO+uENM35VvKbvwGzNNApaxvBCpT/qEKian2IAu9pRgHonllLlMU5kKWHkQL9r wXLj8nU1Xc+Xczg==
+X-Mailer: b4 0.14.2
+Message-ID: <20260108-gpuvm-rust-v2-1-dbd014005a0b@google.com>
+Subject: [PATCH v2 1/3] drm/gpuvm: take GEM lock inside drm_gpuvm_bo_obtain_prealloc()
+From: Alice Ryhl <aliceryhl@google.com>
+To: Danilo Krummrich <dakr@kernel.org>, Daniel Almeida <daniel.almeida@collabora.com>
+Cc: Matthew Brost <matthew.brost@intel.com>, 
+	"=?utf-8?q?Thomas_Hellstr=C3=B6m?=" <thomas.hellstrom@linux.intel.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, Steven Price <steven.price@arm.com>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?utf-8?q?Bj=C3=B6rn_Roy_Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Frank Binns <frank.binns@imgtec.com>, Matt Coster <matt.coster@imgtec.com>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sumit Semwal <sumit.semwal@linaro.org>, 
+	"=?utf-8?q?Christian_K=C3=B6nig?=" <christian.koenig@amd.com>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-media@vger.kernel.org, Alice Ryhl <aliceryhl@google.com>
+Content-Type: text/plain; charset="utf-8"
 
-On Thu, Jan 8, 2026 at 3:46=E2=80=AFPM Michael Walle <mwalle@kernel.org> wr=
-ote:
->
-> >
-> > The changes are implemented in a way that allows to seamlessly compile
-> > out any code related to sharing GPIOs for systems that don't need it.
->
-> The problem here is that the aarch64 defconfig has ARCH_QCOM enabled
-> and thus it will get enabled for any platforms, right?
->
+When calling drm_gpuvm_bo_obtain_prealloc() and using immediate mode,
+this may result in a call to ops->vm_bo_free(vm_bo) while holding the
+GEMs gpuva mutex. This is a problem if ops->vm_bo_free(vm_bo) performs
+any operations that are not safe in the fence signalling critical path,
+and it turns out that Panthor (the only current user of the method)
+calls drm_gem_shmem_unpin() which takes a resv lock internally.
 
-On arm64 with defconfig, yes. I want to make it transparent for
-platforms that don't have shared GPIOs though. I'm aware of issues and
-am actively fixing all that are reported to me. Another set of fixes
-will be in tomorrow's linux-next.
+This constitutes both a violation of signalling safety and lock
+inversion. To fix this, we modify the method to internally take the GEMs
+gpuva mutex so that the mutex can be unlocked before freeing the
+preallocated vm_bo.
 
-> I haven't grokked everything, but does GPIO_SHARED=3Dy makes any sense
-> without GPIO_SHARED_PROXY? It seems to me that the probing of shared
-> pins will be deferred indefinitely.
->
+Note that this modification introduces a requirement that the driver
+uses immediate mode to call drm_gpuvm_bo_obtain_prealloc() as it would
+otherwise take the wrong lock.
 
-Do you have a use-case where there are shared GPIOs that are needed at
-boot time when there are no modules? I am aware of the issue where
-false-positive shared GPIOs are detected, I posted a fix for that too.
-Without logs, I can't really tell if that's the case for you though.
-:(
+Fixes: 63e919a31625 ("panthor: use drm_gpuva_unlink_defer()")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+---
+ drivers/gpu/drm/drm_gpuvm.c           | 69 ++++++++++++++++++++++++-----------
+ drivers/gpu/drm/panthor/panthor_mmu.c | 10 -----
+ 2 files changed, 48 insertions(+), 31 deletions(-)
 
-> > The practical use-case for this are the powerdown GPIOs shared by
-> > speakers on Qualcomm db845c platform, however I have also extensively
-> > tested it using gpio-virtuser on arm64 qemu with various DT
-> > configurations.
-> >
-> > I'm Cc'ing some people that may help with reviewing/be interested in
-> > this: OF maintainers (because the main target are OF systems initially)=
-,
-> > Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
-> > in audio or regulator drivers and one of the goals of this series is
-> > dropping the hand-crafted GPIO enable counting via struct
-> > regulator_enable_gpio in regulator core), Andy and Mika because I'd lik=
-e
-> > to also cover ACPI (even though I don't know about any ACPI platform th=
-at
-> > would need this at the moment, I think it makes sense to make the
-> > solution complete), Dmitry (same thing but for software nodes), Mani
-> > (because you have a somewhat related use-case for the PERST# signal and
-> > I'd like to hear your input on whether this is something you can use or
-> > maybe it needs a separate, implicit gpio-perst driver similar to what
-> > Krzysztof did for reset-gpios) and Greg (because I mentioned this to yo=
-u
-> > last week in person and I also use the auxiliary bus for the proxy
-> > devices).
->
-> This broke my board (using the arm64 defconfig, works without
-> GPIO_SHARED of course). I'm seeing two issues here with my board
-> (arch/arm64/boot/dts/ti/k3-am67a-kontron-sa67*):
->
->  (1) It's GPIO controller (gpio-davinci) doesn't support
->      .get_direction so I'm getting ENOTSUPP during probing of the
->      (some?) shared GPIOs.
->
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index 8a06d296561d1a4b61a7137f8017a78d4ada3a7c..0de47e83d84df11a53e40fe82d069882e46149b6 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -1602,14 +1602,48 @@ drm_gpuvm_bo_create(struct drm_gpuvm *gpuvm,
+ }
+ EXPORT_SYMBOL_GPL(drm_gpuvm_bo_create);
+ 
++/*
++ * drm_gpuvm_bo_destroy_not_in_lists() - final part of drm_gpuvm_bo cleanup
++ * @vm_bo: the &drm_gpuvm_bo to destroy
++ *
++ * It is illegal to call this method if the @vm_bo is present in the GEMs gpuva
++ * list, the extobj list, or the evicted list.
++ *
++ * Note that this puts a refcount on the GEM object, which may destroy the GEM
++ * object if the refcount reaches zero. It's illegal for this to happen if the
++ * caller holds the GEMs gpuva mutex because it would free the mutex.
++ */
++static void
++drm_gpuvm_bo_destroy_not_in_lists(struct drm_gpuvm_bo *vm_bo)
++{
++	struct drm_gpuvm *gpuvm = vm_bo->vm;
++	const struct drm_gpuvm_ops *ops = gpuvm->ops;
++	struct drm_gem_object *obj = vm_bo->obj;
++
++	if (ops && ops->vm_bo_free)
++		ops->vm_bo_free(vm_bo);
++	else
++		kfree(vm_bo);
++
++	drm_gpuvm_put(gpuvm);
++	drm_gem_object_put(obj);
++}
++
++static void
++drm_gpuvm_bo_destroy_not_in_lists_kref(struct kref *kref)
++{
++	struct drm_gpuvm_bo *vm_bo = container_of(kref, struct drm_gpuvm_bo,
++						  kref);
++
++	drm_gpuvm_bo_destroy_not_in_lists(vm_bo);
++}
++
+ static void
+ drm_gpuvm_bo_destroy(struct kref *kref)
+ {
+ 	struct drm_gpuvm_bo *vm_bo = container_of(kref, struct drm_gpuvm_bo,
+ 						  kref);
+ 	struct drm_gpuvm *gpuvm = vm_bo->vm;
+-	const struct drm_gpuvm_ops *ops = gpuvm->ops;
+-	struct drm_gem_object *obj = vm_bo->obj;
+ 	bool lock = !drm_gpuvm_resv_protected(gpuvm);
+ 
+ 	if (!lock)
+@@ -1618,16 +1652,10 @@ drm_gpuvm_bo_destroy(struct kref *kref)
+ 	drm_gpuvm_bo_list_del(vm_bo, extobj, lock);
+ 	drm_gpuvm_bo_list_del(vm_bo, evict, lock);
+ 
+-	drm_gem_gpuva_assert_lock_held(gpuvm, obj);
++	drm_gem_gpuva_assert_lock_held(gpuvm, vm_bo->obj);
+ 	list_del(&vm_bo->list.entry.gem);
+ 
+-	if (ops && ops->vm_bo_free)
+-		ops->vm_bo_free(vm_bo);
+-	else
+-		kfree(vm_bo);
+-
+-	drm_gpuvm_put(gpuvm);
+-	drm_gem_object_put(obj);
++	drm_gpuvm_bo_destroy_not_in_lists(vm_bo);
+ }
+ 
+ /**
+@@ -1745,9 +1773,7 @@ EXPORT_SYMBOL_GPL(drm_gpuvm_bo_put_deferred);
+ void
+ drm_gpuvm_bo_deferred_cleanup(struct drm_gpuvm *gpuvm)
+ {
+-	const struct drm_gpuvm_ops *ops = gpuvm->ops;
+ 	struct drm_gpuvm_bo *vm_bo;
+-	struct drm_gem_object *obj;
+ 	struct llist_node *bo_defer;
+ 
+ 	bo_defer = llist_del_all(&gpuvm->bo_defer);
+@@ -1766,14 +1792,7 @@ drm_gpuvm_bo_deferred_cleanup(struct drm_gpuvm *gpuvm)
+ 	while (bo_defer) {
+ 		vm_bo = llist_entry(bo_defer, struct drm_gpuvm_bo, list.entry.bo_defer);
+ 		bo_defer = bo_defer->next;
+-		obj = vm_bo->obj;
+-		if (ops && ops->vm_bo_free)
+-			ops->vm_bo_free(vm_bo);
+-		else
+-			kfree(vm_bo);
+-
+-		drm_gpuvm_put(gpuvm);
+-		drm_gem_object_put(obj);
++		drm_gpuvm_bo_destroy_not_in_lists(vm_bo);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(drm_gpuvm_bo_deferred_cleanup);
+@@ -1861,6 +1880,9 @@ EXPORT_SYMBOL_GPL(drm_gpuvm_bo_obtain);
+  * count is decreased. If not found @__vm_bo is returned without further
+  * increase of the reference count.
+  *
++ * The provided @__vm_bo must not already be in the gpuva, evict, or extobj
++ * lists prior to calling this method.
++ *
+  * A new &drm_gpuvm_bo is added to the GEMs gpuva list.
+  *
+  * Returns: a pointer to the found &drm_gpuvm_bo or @__vm_bo if no existing
+@@ -1873,14 +1895,19 @@ drm_gpuvm_bo_obtain_prealloc(struct drm_gpuvm_bo *__vm_bo)
+ 	struct drm_gem_object *obj = __vm_bo->obj;
+ 	struct drm_gpuvm_bo *vm_bo;
+ 
++	drm_WARN_ON(gpuvm->drm, !drm_gpuvm_immediate_mode(gpuvm));
++
++	mutex_lock(&obj->gpuva.lock);
+ 	vm_bo = drm_gpuvm_bo_find(gpuvm, obj);
+ 	if (vm_bo) {
+-		drm_gpuvm_bo_put(__vm_bo);
++		mutex_unlock(&obj->gpuva.lock);
++		kref_put(&__vm_bo->kref, drm_gpuvm_bo_destroy_not_in_lists_kref);
+ 		return vm_bo;
+ 	}
+ 
+ 	drm_gem_gpuva_assert_lock_held(gpuvm, obj);
+ 	list_add_tail(&__vm_bo->list.entry.gem, &obj->gpuva.list);
++	mutex_unlock(&obj->gpuva.lock);
+ 
+ 	return __vm_bo;
+ }
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index b888fff05efe2ba035d0b4f639e8134d258b54be..198d59f42578fb75da7e244734053c02d09dc129 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1244,17 +1244,7 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
+ 		goto err_cleanup;
+ 	}
+ 
+-	/* drm_gpuvm_bo_obtain_prealloc() will call drm_gpuvm_bo_put() on our
+-	 * pre-allocated BO if the <BO,VM> association exists. Given we
+-	 * only have one ref on preallocated_vm_bo, drm_gpuvm_bo_destroy() will
+-	 * be called immediately, and we have to hold the VM resv lock when
+-	 * calling this function.
+-	 */
+-	dma_resv_lock(panthor_vm_resv(vm), NULL);
+-	mutex_lock(&bo->base.base.gpuva.lock);
+ 	op_ctx->map.vm_bo = drm_gpuvm_bo_obtain_prealloc(preallocated_vm_bo);
+-	mutex_unlock(&bo->base.base.gpuva.lock);
+-	dma_resv_unlock(panthor_vm_resv(vm));
+ 
+ 	op_ctx->map.bo_offset = offset;
+ 
 
-Unless this board really shares GPIOs, it may be due to the
-false-positives that will be fixed by this patch[1]. If you enable
-CONFIG_DEBUG_GPIO and post the kernel log, I'll be able to tell for
-sure.
+-- 
+2.52.0.351.gbe84eed79e-goog
 
-Though thanks for bringing this to my attention as I now see there is
-indeed an issue when the proxied chip doesn't support .get_direction()
-as well as a duplicated check in GPIO core. I'll fix it too.
-
->  (2) GPIO_SHARED_PROXY is default m in the defconfig, but I need the
->      pins for the root filesystem medium, i.e. the SD card regulators.
->
-
-I'll take care of this is you confirm, the issue persists even with patch[1=
-].
-
-Thanks,
-Bartosz
-
-[1] https://lore.kernel.org/all/20260108-gpio-shared-false-positive-v1-1-5d=
-bf8d1b2f7d@oss.qualcomm.com/
 
