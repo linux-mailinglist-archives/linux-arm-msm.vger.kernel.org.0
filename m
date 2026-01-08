@@ -1,177 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-88142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431AED062D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 21:56:49 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94CB8D063B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 22:17:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1794A3010CE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 20:55:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 83A23300090E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 21:17:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC11933121F;
-	Thu,  8 Jan 2026 20:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9E4335557;
+	Thu,  8 Jan 2026 21:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SjSg9NeT"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JxU0u2rA";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="p+4ri8QJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56FF330D58;
-	Thu,  8 Jan 2026 20:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE3C335544
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 21:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767905740; cv=none; b=QbSr3HCC9+lgCUa0JRyxmUVaszSK57QlSlHZetDyleJfo4Yn+xveQO6fH3KeXt/9l9YJ4oZMQHJvfdGirOZ6j7guCiYyW/OFewW6yd0salFRdHDQR/5TiUKsGK0okZ4aIYHIIPll0M/yCiKAKsuVE2jwDoI0kBDB/XCH8FBQufU=
+	t=1767907031; cv=none; b=mhAMiGBkfzH1VWF3CIFVGRRhkZV9gneeZMAi9ecb0bPLs1BJiXoXzKRkXNCHvBOMfpq7Z/uShC6/vPOQnyO4+rvHlaNqM5LoeR7RV70Uxbkgahz/2k2nasn7va04UCEdg0UXUPcVt10Ay8QGOTvjYowoGKO8W//VI9ABJ72wVak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767905740; c=relaxed/simple;
-	bh=xBJe/1TFcmT6ykWBd9m6VDk/sy5CDIe6A5UhmE5fQMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aTmE/PVjCtmhNjdG6fyjOlh19PSd9lfdjxWmQC9b3P+r99O1315zh69YxsqaP/wLMhx2hu9MkJj9hD2A7fU3TQZk5l+sqk+UWRKwGw4LcXnvUk0eIsDlxPQXqmcsH7i0j64KOmkITPVY+wUYaD+WXkkiF8y9HEgbf4ms8SVeN3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SjSg9NeT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B290C116C6;
-	Thu,  8 Jan 2026 20:55:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767905740;
-	bh=xBJe/1TFcmT6ykWBd9m6VDk/sy5CDIe6A5UhmE5fQMc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SjSg9NeThhyh+++t7oDphRi9jrjfHMpyjFOTzaeh0gYoZ3izGVjS4O26bFUA1QUvm
-	 J3SqsMuOQCewM7IKUQ96hK2KMq/kcHx9beh18yud/0R4cTYRVZLISqCM0zEThG8jQ+
-	 h5AYr5uN46Rj5jEJLWP1pW79KbPjBYUs+2Un3MzTPCOu3AXqD7aNoNxS/PtrsiFlh/
-	 hahC8p89QMUHjsXVrAsAGZl/GL0U9LcdaKzZNuS74lwloUO1xDsSnYzTWALX39Z9GL
-	 rvyrOUOB/9IfhehMJlaoXTpriWA0L1IpI4LhNpjLMymvGJSP5UfbZz9Kzfuz+mPimt
-	 U7lpSI5WgMQxg==
-Date: Thu, 8 Jan 2026 21:55:27 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Koichiro Den <den@valinux.co.jp>
-Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
-	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
-	l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-	kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
-	mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
-	heiko@sntech.de, srikanth.thokala@intel.com,
-	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com,
-	geert+renesas@glider.be, magnus.damm@gmail.com,
-	christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
-	jonathanh@nvidia.com, hayashi.kunihiko@socionext.com,
-	mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org,
-	rongqianfeng@vivo.com, 18255117159@163.com,
-	shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
-	linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] PCI: dwc: ep: Support BAR subrange inbound
- mapping via Address Match Mode iATU
-Message-ID: <aWAZv3ZwdUmo4_wc@ryzen>
-References: <20260108172403.2629671-1-den@valinux.co.jp>
- <20260108172403.2629671-4-den@valinux.co.jp>
+	s=arc-20240116; t=1767907031; c=relaxed/simple;
+	bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kgx4PJhO2ax99QBuLd8iUzdxgbrF9WnwoXkwcJd9Oo8iHAIERry+7BGpVURXdPBZwIHw9hqmW7Vkri3mldjcZNkt6+qXY2q6YBadN6dxCV5PMUtsHAnLN14V97UQ3P4TgkiwEsRr2+IKc8tuJ5+z51r2pGeYRuPVRA89DHoy1o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JxU0u2rA; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=p+4ri8QJ; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1767907026;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
+	b=JxU0u2rAqLLgObICtO/LydX4/F68sVrdPi7tDQ8qIcYcf/4q4vTBeCQt8APznRlIc3irsA
+	mSc/8w1RSNM7WyKl/gEBKqBqeEZiGg3L+W8KZTE0V1EFK+kEMthHtMnwyKbSXzJ262L/Fp
+	8K4OjlHCkk3MEkwSd5785vNfEzVmoCs=
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-9Z1hV7JmPKq0btAgsxlDfw-1; Thu, 08 Jan 2026 16:17:05 -0500
+X-MC-Unique: 9Z1hV7JmPKq0btAgsxlDfw-1
+X-Mimecast-MFC-AGG-ID: 9Z1hV7JmPKq0btAgsxlDfw_1767907025
+Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-94120e0acbdso3870700241.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 13:17:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redhat.com; s=google; t=1767907025; x=1768511825; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
+        b=p+4ri8QJwFCJ26x1u00s5MsGP+cATPO+y4dg/CSbkLtgP1aFco1DKB91M7p0KftLC/
+         mGm27JaaOQ/rnaFqLgVWW7x8VjzYWnY7z2D+C5fk9lUi9vHufcCgvnGco7loOi3meeW1
+         dbYB+Ben0m/aMErLqW+NhK4m7EjWeUaKgVFZVKEVZHAI1cUzas3j/h6Li5rzWcAolraD
+         ES64kaYiuYl+aRXFGBI7oDqHQmXELo4+6n/1tLehB50KDpOEmvpsxu6XfLvzAVscaasi
+         FWyKV8fz81qfL2AdE26ljrHoXP3VoDl6aIIBCf1/Xk1TcGGAHa75RsQGJF8Tt1WSPM6G
+         +RSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767907025; x=1768511825;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
+        b=ijGOkeFVudJcn/BuiSDa8tO9duh7KwFgzhNbTM7lDsiSYjSlQR58b5jLKJ2wV8vRmV
+         rMFLWIbRYxmsX0MkzEJ4aOdODrkbPSF7emIuUPChGNQ2jg+ZEFyQaV78tXSBnELNn2ML
+         cZBG8l2FM4vWYhJa0v3DqsBz3jW/N7G+3VyXXvG+VYAvA814rZmvh447rkbq6bZnDUbV
+         9NC5FyLYhmv0CTtjpBUW/UAM7Aic+w5hA1AZbJRmgE/Xw+RLb6Bgtlpz+xX3dLonF5bW
+         e5QE4FLlQHfV3W3mPgJPR+V89TlPpGNU97N+LYQwE3/InAaHYVJ0ur1TkWCxXqAjxG5D
+         6rDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVkQhd4QHcLgibTbgQVSgkN/eMziNUnnyzCeSOy1uNi5HyIcU2Eh6B6p05UgUzQyvijdsH/9F04EVkLbdu2@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywd35rGFION6a45hZxb7jDX3M8ecLERSShD1h6MHwgehosJe9c8
+	4rCdDwQ96nSSWwNB3woB3nsBd3quc16I7eHUYEkrzsbuF2BljNGoSkHfQ7Lr/uDvvgM45LkBe4h
+	mr8ELkWYRNrWRHrAxXXV44i7MIlFsNhP+p9vfFM3rNtSPwI0Z09g1tWhoYdRsH7A8WrQ=
+X-Gm-Gg: AY/fxX63JxmF6WxbEmOD31N9vtB1/Yifd4kfs/xjMRwcWqg0RAtre7eCAORxtsLkxu2
+	xVF7Wmais0lNjZ1+58BK25Bi906pLXgNbSdSFGxZZrEXQ5pslIHTJbUSQwQwnneFeqQtMion0f6
+	zv2DTd6LN2y+t2GZtlyon8aPVO1PX8SRgd+BT00B7VOSMSy+rhXxcxbB4XP9Vt5KCd+JC0S5E3V
+	1/c19ro6Hw1caKufgYaVIxXLErShKVEE5kSHTu01F80twwlY4A9L+c/CR47jFTx8PRdUKiozcGW
+	gUtM80mgYyHeo1opzpaw36i4hjRTYFBXfPzXBvFFW8XcZznjRy/IY3eG+S32DMXhFDnp1aSgIM/
+	bIAKKDpR2h3kcL+U=
+X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988605137.21.1767907024801;
+        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFz/p7kGP9fvfk2vXLPq3R9VUjKVw1cdN6NrP5mq/P0PGpCjqA4/hKeGKMrVWaYIPrb1wIVZw==
+X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988572137.21.1767907024314;
+        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
+Received: from [10.30.226.224] ([2600:382:811f:d757:daa5:b867:12a3:9d12])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.16.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jan 2026 13:17:03 -0800 (PST)
+From: Brian Masney <bmasney@redhat.com>
+Subject: [PATCH 00/27] clk: remove deprecated API divider_round_rate() and
+ friends
+Date: Thu, 08 Jan 2026 16:16:18 -0500
+Message-Id: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260108172403.2629671-4-den@valinux.co.jp>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MwQqDMAyA4VeRnA0kHizsVcYO2kQNG3WkKkLpu
+ 6/s+B3+v0BWN83w6Aq4XpZtTw3cdxC3Ka2KJs0w0DASU8D4eaPYZaKOvp9J0KdDkeMizGGmMRC
+ 0+Ou62P0fP1+1/gDlVpEzaAAAAA==
+X-Change-ID: 20260107-clk-divider-round-rate-1cfd117b0670
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Brian Masney <bmasney@redhat.com>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev, 
+ Chen-Yu Tsai <wens@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, linux-arm-kernel@lists.infradead.org, 
+ linux-sunxi@lists.linux.dev, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ linux-rtc@vger.kernel.org, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Manivannan Sadhasivam <mani@kernel.org>, linux-actions@lists.infradead.org, 
+ Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org, 
+ Taichi Sugaya <sugaya.taichi@socionext.com>, 
+ Takao Orito <orito.takao@socionext.com>, Jacky Huang <ychuang3@nuvoton.com>, 
+ Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Orson Zhai <orsonzhai@gmail.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ Michal Simek <michal.simek@amd.com>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+ linux-phy@lists.infradead.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5523; i=bmasney@redhat.com;
+ s=20250903; h=from:subject:message-id;
+ bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5Lb+j2COyZDSrq1aGtHuW3Hnjb6jSZa7wqEZi1UKM
+ +/wfPfoKGVhEONikBVTZFmSa1QQkbrK9t4dTRaYOaxMIEMYuDgFYCLePxj+cE8JZ4ir1XC94hPf
+ wLfqhfvjO0u5RdiClDPF9/n9TrNyZGT4NKcq8ciUz4qK0XG3a+4381Zd+31jtWu5nMfx+TvuVsY
+ xAAA=
+X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
+ fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-Hello Koichiro,
+Here's a series that gets rid of the deprecated APIs
+divider_round_rate(), divider_round_rate_parent(), and
+divider_ro_round_rate_parent() since these functions are just wrappers
+for the determine_rate variant.
 
-On Fri, Jan 09, 2026 at 02:24:03AM +0900, Koichiro Den wrote:
+Note that when I converted some of these drivers from round_rate to
+determine_rate, this was mistakenly converted to the following in some
+cases:
 
-(snip)
+    req->rate = divider_round_rate(...)
 
-> +/* Address Match Mode inbound iATU mapping */
-> +static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
-> +				  const struct pci_epf_bar *epf_bar)
-> +{
-> +	const struct pci_epf_bar_submap *submap = epf_bar->submap;
-> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-> +	enum pci_barno bar = epf_bar->barno;
-> +	struct device *dev = pci->dev;
-> +	u64 pci_addr, parent_bus_addr;
-> +	struct dw_pcie_ib_map *new;
-> +	u64 size, off, base;
-> +	unsigned long flags;
-> +	int free_win, ret;
-> +	unsigned int i;
-> +
-> +	if (!epf_bar->num_submap || !submap || !epf_bar->size)
-> +		return -EINVAL;
-> +
-> +	ret = dw_pcie_ep_validate_submap(ep, submap, epf_bar->num_submap,
-> +					 epf_bar->size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	base = dw_pcie_ep_read_bar_assigned(ep, func_no, bar, epf_bar->flags);
-> +	if (!base) {
-> +		dev_err(dev,
-> +			"BAR%u not assigned, cannot set up sub-range mappings\n",
-> +			bar);
-> +		return -EINVAL;
-> +	}
+This is invalid in the case when an error occurs since it can set the
+rate to a negative value. So this series fixes those bugs and removes
+the deprecated APIs all in one go.
 
-Sorry for giving additional review comments.
+Three of the patches ended up being a more complicated migration, and I
+put them as the first three patches in this series (clk: sophgo:
+cv18xx-ip), (clk: sunxi-ng), and (rtc: ac100). The remaining patches I
+feel are all straight forward.
 
-But there is one thing that I might not be so obvious for someone just
-reading this source. How is this API supposed to be used in practice?
+Merge strategy
+==============
 
-Most DWC-based controllers are not hotplug capable.
+Only three of the patches are outside of drivers/clk (drm/msm, phy, and
+rtc). For simplicity, I think it would be easiest if Stephen takes this
+whole series through the clk tree. Subsystem maintainers please leave an
+Acked-by for Stephen. Thanks!
 
-That means that we must boot the EP, create the EPF symlink in configfs,
-and start link training by writing to configfs, before starting the host.
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+---
+Brian Masney (27):
+      clk: sophgo: cv18xx-ip: convert from divider_round_rate() to divider_determine_rate()
+      clk: sunxi-ng: convert from divider_round_rate_parent() to divider_determine_rate()
+      rtc: ac100: convert from divider_round_rate() to divider_determine_rate()
+      clk: actions: owl-composite: convert from owl_divider_helper_round_rate() to divider_determine_rate()
+      clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: bm1880: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: bm1880: convert from divider_round_rate() to divider_determine_rate()
+      clk: hisilicon: clkdivider-hi6220: convert from divider_round_rate() to divider_determine_rate()
+      clk: loongson1: convert from divider_round_rate() to divider_determine_rate()
+      clk: milbeaut: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: milbeaut: convert from divider_round_rate() to divider_determine_rate()
+      clk: nuvoton: ma35d1-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: nxp: lpc32xx: convert from divider_round_rate() to divider_determine_rate()
+      clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: sophgo: sg2042-clkgen: convert from divider_round_rate() to divider_determine_rate()
+      clk: sprd: div: convert from divider_round_rate() to divider_determine_rate()
+      clk: stm32: stm32-core: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: stm32: stm32-core: convert from divider_round_rate_parent() to divider_determine_rate()
+      clk: versaclock3: convert from divider_round_rate() to divider_determine_rate()
+      clk: x86: cgu: convert from divider_round_rate() to divider_determine_rate()
+      clk: zynqmp: divider: convert from divider_round_rate() to divider_determine_rate()
+      drm/msm/dsi_phy_14nm: convert from divider_round_rate() to divider_determine_rate()
+      phy: ti: phy-j721e-wiz: convert from divider_round_rate() to divider_determine_rate()
+      clk: divider: remove divider_ro_round_rate_parent()
+      clk: divider: remove divider_round_rate() and divider_round_rate_parent()
 
-dw_pcie_ep_ib_atu_addr() reads the PCI address that the host has assigned
-to the BAR, and returns an error if the host has not already assigned a
-PCI addres to the BAR.
+ drivers/clk/actions/owl-composite.c        |  11 +--
+ drivers/clk/actions/owl-divider.c          |  17 +---
+ drivers/clk/actions/owl-divider.h          |   5 -
+ drivers/clk/clk-bm1880.c                   |  13 +--
+ drivers/clk/clk-divider.c                  |  44 ---------
+ drivers/clk/clk-loongson1.c                |   5 +-
+ drivers/clk/clk-milbeaut.c                 |  15 +--
+ drivers/clk/clk-versaclock3.c              |   7 +-
+ drivers/clk/hisilicon/clkdivider-hi6220.c  |   6 +-
+ drivers/clk/nuvoton/clk-ma35d1-divider.c   |   7 +-
+ drivers/clk/nxp/clk-lpc32xx.c              |   6 +-
+ drivers/clk/qcom/clk-alpha-pll.c           |  21 ++--
+ drivers/clk/qcom/clk-regmap-divider.c      |  16 +--
+ drivers/clk/sophgo/clk-cv18xx-ip.c         | 154 ++++++++++++++++-------------
+ drivers/clk/sophgo/clk-sg2042-clkgen.c     |  15 +--
+ drivers/clk/sprd/div.c                     |   6 +-
+ drivers/clk/stm32/clk-stm32-core.c         |  42 +++-----
+ drivers/clk/sunxi-ng/ccu_div.c             |  25 +++--
+ drivers/clk/sunxi-ng/ccu_mp.c              |  26 ++---
+ drivers/clk/sunxi-ng/ccu_mult.c            |  16 +--
+ drivers/clk/sunxi-ng/ccu_mux.c             |  49 +++++----
+ drivers/clk/sunxi-ng/ccu_mux.h             |   8 +-
+ drivers/clk/sunxi-ng/ccu_nkm.c             |  25 ++---
+ drivers/clk/x86/clk-cgu.c                  |   6 +-
+ drivers/clk/zynqmp/divider.c               |   5 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c |   7 +-
+ drivers/phy/ti/phy-j721e-wiz.c             |   5 +-
+ drivers/rtc/rtc-ac100.c                    |  75 +++++++-------
+ include/linux/clk-provider.h               |  28 ------
+ 29 files changed, 257 insertions(+), 408 deletions(-)
+---
+base-commit: f8f97927abf7c12382dddc93a144fc9df7919b77
+change-id: 20260107-clk-divider-round-rate-1cfd117b0670
 
-Does that mean that the usage of this API will be something like:
+Best regards,
+-- 
+Brian Masney <bmasney@redhat.com>
 
-1) set_bar() ## using BAR match mode, since BAR match mode can write
-   the BAR mask to define a BAR size, so that the host can assign a
-   PCI address to the BAR.
-
-2) start() ## start link
-
-3) link up
-
-4) wait for some special command, perhaps NTB_EPF_COMMAND
-CMD_CONFIGURE_DOORBELL or NTB_EPF_COMMAND CMD_CONFIGURE_MW
-
-5) set_bar() ## using Address match mode. Because address match mode
-   requires that the host has assigned a PCI address to the BAR, we
-   can only change the mapping for a BAR after the host has assigned
-   PCI addresses for all bars.
-
-
-
-Perhaps you should add some text to:
-Documentation/PCI/endpoint/pci-endpoint.rst
-
-Because right now the documentation for pci_epc_set_bar() says:
-
-   The PCI endpoint function driver should use pci_epc_set_bar() to configure
-   the Base Address Register in order for the host to assign PCI addr space.
-   Register space of the function driver is usually configured
-   using this API.
-
-So it is obviously meant to be called *before* the host assigns a PCI
-address for the BAR. Now with submap ranges, it appears that it has to
-be called *after* the host assigned a PCI address for the BAR.
-
-So I can only assume that you will call set_bar() twice.
-Once with BAR match mode, and then a second time with address map mode.
-
-It might be obvious to you, but I think it makes sense to also have some
-kind of documentation for this feature.
-
-
-Kind regards,
-Niklas
 
