@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-88063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FC1FD047C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:43:30 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46911D03DB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:30:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 22536301F5C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:34:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1EAC53054B24
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E593382C0;
-	Thu,  8 Jan 2026 10:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA28428499;
+	Thu,  8 Jan 2026 10:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TG+tR8Ov"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FrXmuxDf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376844A5B04;
-	Thu,  8 Jan 2026 10:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15803AE6F9;
+	Thu,  8 Jan 2026 10:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767869802; cv=none; b=VvJrKsaOrPhQVXbWws+69nEDjd56DOJU24NDLRmnLr4LggO4jwBg9+ND5pSBrsBuXCJ/hJ59SKeAHHpvd3tCQuBbkgemH/FresMHY4eUyt7qGR+UKRU7/5UhUab3bqwMzIVzebPkTi8N/6R0gG68CKaFFfTDZP3bdD4Z+Zij/9s=
+	t=1767869824; cv=none; b=hnPDo+b4WgU2deFH7GtimWOB1MDuUVNiJt4l0SfCeMzoW1SnGVEInMgtTZ9XkvEBu1KphaO824GvmP0uHuQB3OZtZcUCpYUKeacSO2JjOJWWS3jehgVMASF/g2yKqjfrmPhzZVNlYv6d4IbaxQNB2prGxKMwEZ41Lfm17QteX7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767869802; c=relaxed/simple;
-	bh=QsLTBFLRSsqzKbhE6ZxuHj1l34g02g1XFbZdK2cy1fs=;
+	s=arc-20240116; t=1767869824; c=relaxed/simple;
+	bh=in8YVWOx7X3+N9u8C3YWLE2bz3o7s3AEf77KzqE5x8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHjcpFh8sMEj5UTO+2itRnUkR+Fb4CM7SAqpZzcdmoyk5t0/KUPgoCY4+G+/Wq9FA1ZUZr8cTxHrr+QzPxK48WMIVVMAa4pVtV9IDiKXaovqctUBcdrC7KJnZk9jpp//wR3iTuSUYabX/YkN7g83MxCJh69ciSDysbFQgUfm9W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TG+tR8Ov; arc=none smtp.client-ip=198.175.65.13
+	 MIME-Version; b=JMBcMmbkBoZSCQiGamUtkYH1qatN9nZNxLqKriu7Ow89tW6L9v2kdAtfS9QtBKnCcxnzpLaetxXUkl6qO8kgRWGFe1kS3c1E2ZG1T8Vo8vUClBUErvD8+k4X6z/jQrJFfxbMVt9J6VUNwi7T2MQFPDZevA8BAjdTG+NIGcupSCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FrXmuxDf; arc=none smtp.client-ip=198.175.65.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1767869796; x=1799405796;
+  t=1767869819; x=1799405819;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=QsLTBFLRSsqzKbhE6ZxuHj1l34g02g1XFbZdK2cy1fs=;
-  b=TG+tR8OveQx5FY7gyZOkRUyTTd0La/q32n0nZDJ9usXLghxqG0uUcVFk
-   OKj6g+Mke5HJqHcK7+S2DwhpKGRzEfjaPfg5Um9HUgdpKy2r2M+SDELdF
-   tjpKqjtmY2OIveHpDwJCXtBZptx6OgJc1IpH2gc//fQAtff3lEvXKJ7Yr
-   HBUIZevwNuQ0lxK9f+HCO7R2YeSJ+wc8YlXdCKof4NLUqEts/oLi+MV1F
-   TcWHMgYiaNR+PneFDa4fW43yADpdH5PjNAObf4Xu7L99aH3hNXgo8NDrU
-   SxmIHyatzHh3gVUbjvTuI6Mfsh2Io3Lnyl6MmcYyJCnRMEmhspwYPhPWO
-   A==;
-X-CSE-ConnectionGUID: KBgAy7jaQmGf8F6lNX5LXQ==
-X-CSE-MsgGUID: gdrltfU9TPeoRJislMx2gQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="80354531"
+  bh=in8YVWOx7X3+N9u8C3YWLE2bz3o7s3AEf77KzqE5x8M=;
+  b=FrXmuxDfvKRE/8LP7jVsjc3zJq1EHpA91lt3JboalEoCMr2ClbaGBRFw
+   oxYwy1VR/wIC9LMpRccyl0p3SoFsy0SNRi6l/Jb/jBT6j4CHUznOCiS3W
+   eBPH+fdqJ5ZcXHwPznbMCGKEKcgRKWniB5CX2utn4hcsbZYv8F6y87hI7
+   LJzkAPa2jlgHgnow1B/CM5khi1tiCjC+HEGXk4Dvp3ii1snUILLXSCA43
+   w7/04p04USCyMCOthhjjq/KEwEMXh7tZKHeEVczxwJ+dK2VsKf/YkeYfl
+   OSlaOURwDksuSKRD+ycAiCeMsADI+eLzaBKXgl0E9/VffQ71w+i3Hy5rE
+   Q==;
+X-CSE-ConnectionGUID: vZZqva5HQd2+2IrVhlnO5g==
+X-CSE-MsgGUID: p2PbW1vtRYiYp5s6/LSgvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="80354615"
 X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
-   d="scan'208";a="80354531"
+   d="scan'208";a="80354615"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 02:56:27 -0800
-X-CSE-ConnectionGUID: iy3iIMreQ6a/mDhF/dca9g==
-X-CSE-MsgGUID: wlX6BSnmRU22UNKliXDG6g==
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 02:56:33 -0800
+X-CSE-ConnectionGUID: fAZd+NvLR9yHxXM1xEdoug==
+X-CSE-MsgGUID: KPnd7k64TXKfbXL285H4kQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
-   d="scan'208";a="203615535"
+   d="scan'208";a="203615548"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa009.fm.intel.com with ESMTP; 08 Jan 2026 02:56:21 -0800
+  by fmviesa009.fm.intel.com with ESMTP; 08 Jan 2026 02:56:27 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 4FFB19E; Thu, 08 Jan 2026 11:56:20 +0100 (CET)
+	id 7632BA9; Thu, 08 Jan 2026 11:56:20 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
@@ -87,9 +87,9 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
 	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v5 04/13] dmaengine: bcm2835-dma: use sg_nents_for_dma() helper
-Date: Thu,  8 Jan 2026 11:50:15 +0100
-Message-ID: <20260108105619.3513561-5-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v5 12/13] dmaengine: sh: use sg_nents_for_dma() helper
+Date: Thu,  8 Jan 2026 11:50:23 +0100
+Message-ID: <20260108105619.3513561-13-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
 References: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
@@ -106,46 +106,28 @@ Instead of open coded variant let's use recently introduced helper.
 Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/dma/bcm2835-dma.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ drivers/dma/sh/shdma-base.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index 321748e2983e..3f638c3e81cd 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -260,23 +260,6 @@ static void bcm2835_dma_create_cb_set_length(
- 	control_block->info |= finalextrainfo;
- }
+diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
+index 1e4b4d6069c0..3ff2a8be8faa 100644
+--- a/drivers/dma/sh/shdma-base.c
++++ b/drivers/dma/sh/shdma-base.c
+@@ -577,12 +577,11 @@ static struct dma_async_tx_descriptor *shdma_prep_sg(struct shdma_chan *schan,
+ 	struct scatterlist *sg;
+ 	struct shdma_desc *first = NULL, *new = NULL /* compiler... */;
+ 	LIST_HEAD(tx_list);
+-	int chunks = 0;
++	int chunks;
+ 	unsigned long irq_flags;
+ 	int i;
  
--static inline size_t bcm2835_dma_count_frames_for_sg(
--	struct bcm2835_chan *c,
--	struct scatterlist *sgl,
--	unsigned int sg_len)
--{
--	size_t frames = 0;
--	struct scatterlist *sgent;
--	unsigned int i;
--	size_t plength = bcm2835_dma_max_frame_length(c);
--
--	for_each_sg(sgl, sgent, sg_len, i)
--		frames += bcm2835_dma_frames_for_length(
--			sg_dma_len(sgent), plength);
--
--	return frames;
--}
--
- /**
-  * bcm2835_dma_create_cb_chain - create a control block and fills data in
-  *
-@@ -672,7 +655,7 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_slave_sg(
- 	}
+-	for_each_sg(sgl, sg, sg_len, i)
+-		chunks += DIV_ROUND_UP(sg_dma_len(sg), schan->max_xfer_len);
++	chunks = sg_nents_for_dma(sgl, sg_len, schan->max_xfer_len);
  
- 	/* count frames in sg list */
--	frames = bcm2835_dma_count_frames_for_sg(c, sgl, sg_len);
-+	frames = sg_nents_for_dma(sgl, sg_len, bcm2835_dma_max_frame_length(c));
- 
- 	/* allocate the CB chain */
- 	d = bcm2835_dma_create_cb_chain(chan, direction, false,
+ 	/* Have to lock the whole loop to protect against concurrent release */
+ 	spin_lock_irqsave(&schan->chan_lock, irq_flags);
 -- 
 2.50.1
 
