@@ -1,154 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-88118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15094D046FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:37:12 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37B64D04A03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B95CB3122C68
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 16:16:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8E59630754A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 16:54:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CDD327510B;
-	Thu,  8 Jan 2026 16:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 975192F6904;
+	Thu,  8 Jan 2026 16:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4vqhKXAq"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="o6ybf19F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30980261595
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 16:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDF62DC792;
+	Thu,  8 Jan 2026 16:53:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767888970; cv=none; b=GqZJ3dHicdPlNzHnbtI6nkD4fq9RaszKeL1mWOnzh97ZDvTGBgtHSK+w4IOvQcz7a77UTEhGiRKPi6LFp0Y6AbpWB2l0z2MBmyOI9KlYT2K4l5n6lVTQ90eR/nvw078RT5CMnzjysVm0Pt2b9XWvuVL2BA+SsIx5zrewhd8SBqc=
+	t=1767891228; cv=none; b=HQnDexXtm5vBZY+HC/Ot2vxjFNEImcWuuT/aIThMnKXpMwGjzi6cqqnw2t25upHXSZ9drUpbOnWiEqAqEOSPM10zvFU1bIHl3ZArNvwDx0E/k0G2oS6joItCmbUD6mIwFXDiXaBR9z7Kyfn4IV38rjKiVwgPRHvDMk9MTe1ueLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767888970; c=relaxed/simple;
-	bh=TA+QLflUns7II5KQbvYtt2HJkyxBZXngDopxGt1IPPQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SZH5Z5POfERrPdO6wOZu7I/2dN4vg1LoMpfNWVniKK7lGHrDqvuLUc+6zpN3yfQid5Hj1Yle26EqbUrUFrPZbxqBb9lAWjm9nB2yNNqQiwUUKNMa+rgkg8JZneRp5Iyx9s8Fm0pfF5uQ1tlFQGJWs3U0oGWIvqXwKQ6ehHPH3HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4vqhKXAq; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-432d28870ddso432188f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 08:16:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1767888965; x=1768493765; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6vW3/P/N4+paGKM071bgG2imOi6n7IKDgUKqaIxzm8s=;
-        b=4vqhKXAq3EMrUj1uoQR4GzhsQY0GFFjWdxgwjToVHhfYoKVzSHtgCGPvOWBBQwSfQI
-         Yi9wPUDSi724Uy+uDLyN7BUPgWNtOahpIZvsHbocLsSNobI9sO8uhBFj+4RrLgrBC/57
-         s748nldU6vRMqqRn8Map/kjU8AVTl6whAuRs+2/YdM7Sk8E3edS0AOhy4cpGCcDOw4Ev
-         DMojL5cuNV6EEJFgtxgffMrTtGLJSQfZSLMn6xOzdWeIyPLjQ4fHMl1o3AzsTkH20edY
-         D9DS1hGPdeGrvcaaU/ZPnWBI9Cuw2T1SG6cxGpFRrTJ2ylYWXqWHUSszU1V3CrSeG89H
-         LpOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767888965; x=1768493765;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6vW3/P/N4+paGKM071bgG2imOi6n7IKDgUKqaIxzm8s=;
-        b=cZK6VYZ7UkbzJFZp0bdpbw2P4NtV1nAODokh8x7Sr3umCaJGdjsigr2alBh4HVEe2s
-         75EgCU8slO1aIKl2wILrbuQXU85HqYPZOCmhVt6O4mATDDTd6BVomMFtWv7G4CPQ32BD
-         pdce8xccil/CwHxYefX+DGezoiaXoanRjnkXJx3SfTxC2tzFRmpO0JFrOxTxB5DIWQo8
-         6GCEWJvlemO0J0LPjLki94PcvHOP6ZBmXB6DdCgEJD6S6DC/8RHBTisg8AtJLXePZiFb
-         niDsvrmNYHEoWy47bMv8UcdHoraFq+fcqJmLgO7bMfuooCUw86EVzPWU7bnbWRK1Dwek
-         Aokg==
-X-Forwarded-Encrypted: i=1; AJvYcCXS/hwfIGogNM57g0cewfBkKSAAlaRIKNkwo8igSiqXq95ykZtqk+UVniG/KnD3pe/ymJNjtgNwTDQxlkvq@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2ldCNFtJ1YSwxfqSUeSqwkYzGu5Jjysn97lDnkruQlpA+bNoW
-	4jjFEqDKzfb0XRd91RBZGCnbPAIBt8TDO1KPxipv0eOdqMha8h/Q1/yy9yoKzVfd1adhmbC2uEU
-	0Ipnj3IpwMk8LUwo1X3lzwl9iq+zRB1k5HaAbylMv
-X-Gm-Gg: AY/fxX7Il+luKsNyklDt6GUr8rkzQAbgUM86D3fc69/sPeiFoAqh5dEqYDuQct7AwKt
-	VCWou0NG3p4VZ1Nw0OJLksfZnds4U7tpptRgZ4CiCi9qqOJvaVStR7zpqxl4ud7QH2LwLDu/z6D
-	p7TaBpJ9SqBwkOOr9zjvq1JW+oJvf/KjmemsVlMg42GxXc3/nEkuF7IeVTZ9zzFMnRKtdH/wbf4
-	YSJJ2tJVklUHW3jbtHhjOLFness3XMSX5gddg8U9Qwp5pYofoBuTBGrwqrnf9+SU/Je+j/J5L1s
-	kvh5bnq1vjexzJxtjPPmXJZB0E7iHh4B4BPE5Ksx+KdaotGGXusWgm5hlw==
-X-Google-Smtp-Source: AGHT+IFlwj7HPJoXMHh8QpN1Ab7H/UDknjidGuhXb0xbkpRQOk6X4xFeRXquaMOfNkP2YrRvaqkzOLHouDmVZwg+94c=
-X-Received: by 2002:a05:6000:2311:b0:432:aa61:a06e with SMTP id
- ffacd0b85a97d-432c374fc59mr8831012f8f.32.1767888965176; Thu, 08 Jan 2026
- 08:16:05 -0800 (PST)
+	s=arc-20240116; t=1767891228; c=relaxed/simple;
+	bh=H6ZzK5qb8nWtFLSe4fdBJd3Sr6s7l07yqSi7M31fQTU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ewQnuSUfY7sWw/fd/aj+F93tCqDIhQfmm56/A4R2i97eCdPB491G0wFmQrLyCEXg+JTA240kTYDlroM+81sxRxUNgXDebTmVUCI/dvGHhhs4G3FQbuAj3DN7S6dYtsGkc4dZXhSxuifcd0mPcGtdUIU5lBy7WTDrDKaynmpCFks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=o6ybf19F; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=3siOpUNTPvOetSwU3kkXTXaIQvHOmBaMe0L2dosaTxU=; b=o6ybf19FQhA2/H0eXyYAWhtYCg
+	E8J7QNNibSepM+CpqXDcjTCEXSDmnR7+vAORpbZk4kTZVsegRNEgFkFKinfF9y0Z2M4cnpsdnuDzL
+	I2rpUSBEqhBNs9pXdH3OOo7nj6AT4CkgeTF8RlYKVLskcyCD3aEgYDT3wNANa9m+a3ws=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vdtGL-001zEW-Ds; Thu, 08 Jan 2026 17:53:29 +0100
+Date: Thu, 8 Jan 2026 17:53:29 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	thomas.petazzoni@bootlin.com, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?iso-8859-1?Q?K=F6ry?= Maincent <kory.maincent@bootlin.com>,
+	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	=?iso-8859-1?Q?Nicol=F2?= Veronese <nicveronese@gmail.com>,
+	Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
+	Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+	Tariq Toukan <tariqt@nvidia.com>
+Subject: Re: [PATCH net-next v22 02/14] net: ethtool: Introduce
+ ETHTOOL_LINK_MEDIUM_* values
+Message-ID: <b8da3ec2-0775-4d81-8867-4993325a1e6c@lunn.ch>
+References: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
+ <20260108080041.553250-3-maxime.chevallier@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
-In-Reply-To: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Thu, 8 Jan 2026 17:15:52 +0100
-X-Gm-Features: AQt7F2pLnnImtkMgl2KE50d4CB3AXYote1UE4JeFi6pzxph4V_uj8MRfBo1vVss
-Message-ID: <CAH5fLgg36qSD7jCarKwipxTSUz4W2uiDDmL_Thqv-+8jBe5DTw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] Rust GPUVM prerequisites
-To: Danilo Krummrich <dakr@kernel.org>, Daniel Almeida <daniel.almeida@collabora.com>
-Cc: Matthew Brost <matthew.brost@intel.com>, 
-	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, Steven Price <steven.price@arm.com>, 
-	Liviu Dudau <liviu.dudau@arm.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, Frank Binns <frank.binns@imgtec.com>, 
-	Matt Coster <matt.coster@imgtec.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Lyude Paul <lyude@redhat.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org, linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260108080041.553250-3-maxime.chevallier@bootlin.com>
 
-On Thu, Jan 8, 2026 at 5:07=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> wr=
-ote:
->
-> See v1 for the Rust code that uses these C changes.
->
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
-> Changes in v2:
-> - For this version, only the C prerequisites are included. Rust will be
->   sent as follow-up.
+On Thu, Jan 08, 2026 at 09:00:27AM +0100, Maxime Chevallier wrote:
+> In an effort to have a better representation of Ethernet ports,
+> introduce enumeration values representing the various ethernet Mediums.
+> 
+> This is part of the 802.3 naming convention, for example :
+> 
+> 1000 Base T 4
+>  |    |   | |
+>  |    |   | \_ pairs (4)
+>  |    |   \___ Medium (T == Twisted Copper Pairs)
+>  |    \_______ Baseband transmission
+>  \____________ Speed
+> 
+>  Other example :
+> 
+> 10000 Base K X 4
+>            | | \_ lanes (4)
+>            | \___ encoding (BaseX is 8b/10b while BaseR is 66b/64b)
+>            \_____ Medium (K is backplane ethernet)
+> 
+> In the case of representing a physical port, only the medium and number
+> of pairs should be relevant. One exception would be 1000BaseX, which is
+> currently also used as a medium in what appears to be any of 1000BaseSX,
+> 1000BaseCX, 1000BaseLX, 1000BaseEX, 1000BaseBX10 and some other.
+> 
+> This was reflected in the mediums associated with the 1000BaseX linkmode.
+> 
+> These mediums are set in the net/ethtool/common.c lookup table that
+> maintains a list of all linkmodes with their number of pairs, medium,
+> encoding, speed and duplex.
+> 
+> One notable exception to this is 100BaseT Ethernet. It emcompasses 100BaseTX,
+> which is a 2-pairs protocol but also 100BaseT4, that will also work on 4-pairs
+> cables. As we don't make a disctinction between these,  the lookup table
+> contains 2 sets of pair numbers, indicating the min number of pairs for a
+> protocol to work and the "nominal" number of pairs as well.
+> 
+> Another set of exceptions are linkmodes such 100000baseLR4_ER4, where
+> the same link mode seems to represent 100GBaseLR4 and 100GBaseER4. The
+> macro __DEFINE_LINK_MODE_PARAMS_MEDIUMS is here used to populate the
+> .mediums bitfield with all appropriate mediums.
+> 
+> Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+> Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-I forgot to fill out the changelog. Here it is:
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-Changes in v2:
-- For this version, only the C prerequisites are included. Rust will be
-  sent as follow-up.
-- Add comment to drm_gpuvm_bo_destroy_not_in_lists()
-- Add Fixes: tag.
-- Pick up Reviewed-by tags.
-
-> - Link to v1: https://lore.kernel.org/r/20251128-gpuvm-rust-v1-0-ebf66bf2=
-34e0@google.com
->
-> ---
-> Alice Ryhl (3):
->       drm/gpuvm: take GEM lock inside drm_gpuvm_bo_obtain_prealloc()
->       drm/gpuvm: drm_gpuvm_bo_obtain() requires lock and staged mode
->       drm/gpuvm: use const for drm_gpuva_op_* ptrs
->
->  drivers/gpu/drm/drm_gpuvm.c            | 91 ++++++++++++++++++++++++----=
-------
->  drivers/gpu/drm/imagination/pvr_vm.c   |  2 +-
->  drivers/gpu/drm/msm/msm_gem.h          |  2 +-
->  drivers/gpu/drm/msm/msm_gem_vma.c      |  2 +-
->  drivers/gpu/drm/nouveau/nouveau_uvmm.c |  2 +-
->  drivers/gpu/drm/panthor/panthor_mmu.c  | 10 ----
->  drivers/gpu/drm/xe/xe_vm.c             |  4 +-
->  include/drm/drm_gpuvm.h                | 12 ++---
->  8 files changed, 76 insertions(+), 49 deletions(-)
-> ---
-> base-commit: 44e4c88951fa9c73bfbde8269e443ea5343dd2af
-> change-id: 20251128-gpuvm-rust-b719cac27ad6
->
-> Best regards,
-> --
-> Alice Ryhl <aliceryhl@google.com>
->
+    Andrew
 
