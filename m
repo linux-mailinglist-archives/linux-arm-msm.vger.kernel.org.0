@@ -1,103 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-88149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07DA8D067FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 00:00:39 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8B0CD068C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 00:29:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C2728300D427
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 23:00:37 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6C5DA30082C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 23:29:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229FF2D6E68;
-	Thu,  8 Jan 2026 23:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291CB33344D;
+	Thu,  8 Jan 2026 23:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="W7HLm4CL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LaDAOUIY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F175E1E8836
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 23:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EAD26E70E;
+	Thu,  8 Jan 2026 23:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767913237; cv=none; b=OBsX5zYByTuKRG7xFjbuSk0kLZxc3URbEChvRfg0yp4FY1t042cXuUyDiZIfwiJZdEMHQ9/iruq8ezUu5Sgz6ylAPl1h22xKTCWrzl/ZriUEo8Xw6Hk0htYXVbe5jhohCBKLCto3N7RB6GXU+2MVFZfIBn49J+RDcjUV/QIq5K4=
+	t=1767914979; cv=none; b=nRco4H93NA2w1H4wLARKtzegjNl2EK87bJh2UMYPZFTTq12EwX0RXv7lZT0VcUAP9FGL+1nRiZqIQsz62RLTvrIMWNicggEPM7upvbS26YPHRjGs7ucX7BBktHluJsbKyU1uBReY/2DPbfX33OKEWUhzYpuZpdsKa06Cw/+d1Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767913237; c=relaxed/simple;
-	bh=Gmp7oxzoMMQ+4FOB0OmFFTH7yDV+Rd4MYUw4zlyLzq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rRz9swcFfNrWlYGty8puKSsw87LVEWjAeR/WmIVyor24UOaWcsJ2rU+puv0GOib+0TKcnxVCtJfZSK9fotbYbnPE9bYnah1/9WUrOhGNJszZVESKi9itsZdA8Z+3G0k7MvsCKQly1Uf2QGzWB5MaUrtF1d4JXunnlLKv0pv9Fj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=W7HLm4CL; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <702e4696-5ff6-4c72-bce4-1a9a8ee1ba18@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1767913222;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3Y93ff+hEOI+QHoGj9/iWZX4epwSGuXWyQ3WAZwL30k=;
-	b=W7HLm4CLof9hJBlf9kF+Ck/RzjHe1jNiMASMK39UJHeXZndB5FTA5SHTAXtUKm8ZZwjZcY
-	NkoZcf1HOarv5Nn2EWog/W2fzVzLbDrrhezpiO7+2SIPgLhhSKiPJqZ0YMnY1XEVX9gjCF
-	zscvZj3lfYU7Kj7ir0WhOivJQ/c5VhIuFMRLLKcmf3xF0UoTwQi+aNaA2sbv5ejKyB75MB
-	wXZ2rgUijijpYmbPGs4cHFhPWw0Hz/LuE5WiOnSCnbLfj1mN4e4d9zAnKKFTao24uO5ySB
-	uYtY841b4cR62R4Zf5xNP6YeyPdAcDbxdm2Ag8nTHcpt480Vo24YxnLs0vLGgA==
-Date: Thu, 8 Jan 2026 20:00:13 -0300
+	s=arc-20240116; t=1767914979; c=relaxed/simple;
+	bh=Rw3b/I81KHL7rDt7WZsRA6q5wG50TRlXUqsg2VrqzSg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=N5Q1FEM+VX6ABXOoLA7KaBV5n5dJzEXrqnymwWrAIg5Pib+GzgytI5s7sJJlDSZTO6aaPomyWvbS8rhORv7m+SIvvdUT3B8lt01hYS5SrR5icQq+3TcaNsjCLZdMowaIIrtQamuOrVVULgP7MgeYVwmhLqzRroyPOwo2+Npwu7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LaDAOUIY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BCEC116C6;
+	Thu,  8 Jan 2026 23:29:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767914978;
+	bh=Rw3b/I81KHL7rDt7WZsRA6q5wG50TRlXUqsg2VrqzSg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=LaDAOUIYfdcS1TELNDZjf6/2IqXXfGW9tJJF8AlT3amw0KHLz9m4RzhPpyFj0eUwO
+	 NkBhHLaa4ImtevJtSzL/7gXNCnJEsHk79Z3H1XX8ESpkJ59wXKL+/6RpIq2l15CV0N
+	 zCQSF+DO1Z38ppubYSyswD8prBuFDD+RBJW9PxrDck8LviJp+WGDOhzsjBOKKS1GY/
+	 UWleuMUSKLsIeCBFE4EexrdxldpVclpji9HV49gz9eb4QvdVZvkBRt33eEbZbnFk+Y
+	 aiGKhCCqHynXF3WvHn8yik682hKDChFuk+YnPkVGwQy9Jg+7feUnHXmCQgX9xOBMU1
+	 FwUSkYrQcnf4g==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 08 Jan 2026 16:29:25 -0700
+Subject: [PATCH] drm/msm/dp: Avoid division by zero in
+ msm_dp_ctrl_config_msa()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] clk: qcom: dispcc-sdm845: Enable parents for pixel
- clocks
-To: petr.hodina@protonmail.com, Konrad Dybcio
- <konrad.dybcio@oss.qualcomm.com>, Rob Clark <robin.clark@oss.qualcomm.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, David Heidelberg <david@ixit.cz>,
- Taniya Das <quic_tdas@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Message-Id: <20260108-drm-msm-dp_ctrl-avoid-zero-div-v1-1-6a8debcb3033@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXN0QrCMAxA0V8ZeTbQDifDXxGRNYkasetIZxHH/
+ n1VH8/LvQtkMZUMx2YBk6JZ01jhdw3QfRhvgsrV0Lr24LzrkS1izBF5utBsTxxKUsaPWELWgkE
+ 6pr2jQL6HGplMrvr+DU7nv/MrPITmbxXWdQMS7Q8DggAAAA==
+X-Change-ID: 20260108-drm-msm-dp_ctrl-avoid-zero-div-be5dc40cbc18
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, kernel test robot <lkp@intel.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2225; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Rw3b/I81KHL7rDt7WZsRA6q5wG50TRlXUqsg2VrqzSg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJkJtvckMppmf1ITXfHmyfb7Mzas2bhW59SuK76O7ketn
+ kTdWRa5t6OUhUGMi0FWTJGl+rHqcUPDOWcZb5yaBDOHlQlkCAMXpwBMZOYERobLr3oXTIlLNNns
+ qfGj32ri40sRd+SPHXM9f9HMNfvJkSYlhv8uosfs1tsuObR9s++ClsJ9u15fTJVmZdraah9R+mM
+ P91UGAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+An (admittedly problematic) optimization change in LLVM 20 [1] turns
+known division by zero into the equivalent of __builtin_unreachable(),
+which invokes undefined behavior if it is encountered in a control flow
+graph, destroying code generation. When compile testing for x86_64,
+objtool flags an instance of this optimization triggering in
+msm_dp_ctrl_config_msa(), inlined into msm_dp_ctrl_on_stream():
 
-On 1/7/26 8:44 AM, Petr Hodina via B4 Relay wrote:
-> From: Petr Hodina <petr.hodina@protonmail.com>
->
-> Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
-> clocks are enabled during clock operations, preventing potential
-> stability issues during display configuration.
->
-> Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
-> Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
-> ---
-> We are currently running the latest linux-next snapshots (next-202511*
-> and next-202512*) and have encountered random freezes and crashes on the
-> Pixel 3, as well as crash dumps on the OnePlus 6 and 6T.
->
-> This commit fixes the stability issue. I've checked other SDM dispcc
-> files and they also contain this configuration.
+  drivers/gpu/drm/msm/msm.o: warning: objtool: msm_dp_ctrl_on_stream(): unexpected end of section .text.msm_dp_ctrl_on_stream
 
-Hm, we don't have this flag set in dispcc-x1e80100.c either!
+The zero division happens if the else branch in the first if statement
+in msm_dp_ctrl_config_msa() is taken because pixel_div is initialized to
+zero and it is not possible for LLVM to eliminate the else branch since
+rate is still not known after inlining into msm_dp_ctrl_on_stream().
+Change pixel_div to one to make the division well defined in the
+presence of an unsupported rate, relying on the DRM_ERROR print to
+indicate the error to the user.
 
-The only random freeze we have on that platform seems related to PCIe 
-ASPM with NVMe drives, but during display configuration.. *extremely* 
-rarely, but the eDP display output can get stuck on a blue screen. Many 
-run with clk_ignore_unused for the early uefi framebuffer though.
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [1]
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601081959.9UVJEOfP-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-~val
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index cbcc7c2f0ffc..e4731c059ed8 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -2395,7 +2395,7 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
+ 			       bool is_ycbcr_420)
+ {
+ 	u32 pixel_m, pixel_n;
+-	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
++	u32 mvid, nvid, pixel_div = 1, dispcc_input_rate;
+ 	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
+ 	u32 const link_rate_hbr2 = 540000;
+ 	u32 const link_rate_hbr3 = 810000;
+
+---
+base-commit: 66691e272e40c91305f1704695e0cb340cd162ff
+change-id: 20260108-drm-msm-dp_ctrl-avoid-zero-div-be5dc40cbc18
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
 
