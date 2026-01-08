@@ -1,175 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-88039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1267DD0464E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:31:57 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FEE4D04171
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:57:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D43A634D514D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:22:07 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CB8B030158C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:52:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68B6A3AA1A0;
-	Thu,  8 Jan 2026 09:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DFAE42A577;
+	Thu,  8 Jan 2026 09:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZdQHdx4"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="oeHpLZqE";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="GnPa3SU+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A383806BE;
-	Thu,  8 Jan 2026 09:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8C2387357;
+	Thu,  8 Jan 2026 09:19:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767863093; cv=none; b=WVjdKWy+pVJuNWuGVa97e3V+T4l8JHiGPPdcyRaEXWONvVQDxurosnOpnDdOr8VKMK/A7kqPF+lguG/ZY0PMifpjVvzcAINqaezIu35OahQ0NZtxmzyhkxPXU1CoZRgNMOUZhq6yB38zzHWFYVtL0XeQftd7gsTtKsaAHY7F+1g=
+	t=1767864022; cv=none; b=K6ZHBNPJdMZ6M1K1PjOe06WYhqnZbJI2ASKp3cr5OiHPaoBYj5a8PVz52QVw8hMrYCvRrWJPDrR96fm78BmxktmA7XRqgiC2VhDgCvlfxWV4Oto2A5Vo+vLYiWzh98zQ7p+U5lDUkYfvT67nHQKc6osIxZhAwFn3FapX/JFs5Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767863093; c=relaxed/simple;
-	bh=43HsA+1OXyUWr3mVZANSq6uxii1VuqzSvvFempqNf50=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J6s7jUzYvMIQBPKG/A5WDtEf+3SBkCihiMbg+K7QrzwHYBS487O+u0MSoEHbGXcQgr0dkfVuXWq1mqMcg67jizK9dLR35+PV6upErAYqDN8l742N3cB31TmiTIQKyaF7OdMqiJ0b8GT308dYuC6my7my0JdfAUwNfs5WWPv5VME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZdQHdx4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E5AC16AAE;
-	Thu,  8 Jan 2026 09:04:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767863091;
-	bh=43HsA+1OXyUWr3mVZANSq6uxii1VuqzSvvFempqNf50=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tZdQHdx43glaOblk/H1NlkrIEfCgVhc9ixqj8kbFiMUqX7aVTE299Mp40oqArJUSZ
-	 kyhZWgNQN3uxMYQn2IfRo2RKMK4pDK8QiXf734qQV2+2HFDCZ5mrDC+c1YRJyU+v8t
-	 pZHbO3CIlPlOcKLnCA9bvFXZRNzkzIJTe9ODoa1q/fh97AN7MFPOlbVcSfmYO3s83h
-	 Li+f+GDArxZWQnZds67025iTikParUWNxhPZciqmO7+I9kAMNNkJzGCvYBUwKXL+Ca
-	 OljmmlIOv2MKdYTTR1KFTfF0PEcY0SulfOlvOmzk3AwUQDhvGADruz577Vc3A/DX8m
-	 FJD1T6e7PJOVQ==
-Date: Thu, 8 Jan 2026 10:04:48 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sa8775p-lpass-lpi: Add SA8775P
- LPASS pinctrl
-Message-ID: <20260108-archetypal-potoo-of-felicity-8ac479@quoll>
-References: <20260107192007.500995-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20260107192007.500995-3-mohammad.rafi.shaik@oss.qualcomm.com>
+	s=arc-20240116; t=1767864022; c=relaxed/simple;
+	bh=LJtMgR38bkWvUchTlzy/NoVrUe6+UjJfYA4juR3YW98=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=ahQ2CGQqbZNEGiGpbznkDarIRgNVbCcZoH8//dtXA1WTmsrtuph7I0G+kH4xTy5yBeLBxL6w1J8VdmkVUf72Eeua4f+mv93cf9In4EEy8zF/M2JShANv0PzQa6iiIgS3YVfgBGlGUQoUBYDqBaVjEATUNqDlziVE4cAjLDDDcnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=oeHpLZqE; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=GnPa3SU+; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1767863831; bh=z4ln/Zq/EvlaymR0blLFOBp
+	lOaJOGpOHDKqXZY4y8a4=; b=oeHpLZqEBNDpm7VXEpS3ews8h3auO46UyCzY13lWW+/xujy6j8
+	/vBBspN2cDXW91fwUGQ8lyGBSVD8DWm3o5711M4D5RZDXejq7ZrOR2BYWXWQizuZ515ogWBvPW4
+	0kSENW6cSdxtf/eam8hyR5OebJjZ2K8sJHXtwHQtwwkAmDAPrS8lnXNMpERZuAXLz1tY5BH45F3
+	Ygkfagw78+pGgwHrRtxzcom+buFppUaePa9/LIjUP6hEfUrPUxFeiaprIzNnBRir20b0V7orWPD
+	dSWJlFopcno1EAP+a83EzmB34gP4U4lD5pL2b1vML+ZsNf89vbga08zmvRd4c4ApqNw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1767863831; bh=z4ln/Zq/EvlaymR0blLFOBp
+	lOaJOGpOHDKqXZY4y8a4=; b=GnPa3SU+34/sBH74UPMPOLrHz2qYJEa8uyDGLLFSkFFbf9mXB2
+	krHxaMWFzqce+xCL6OaPUB7SJZ630hKKM8Dg==;
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260107192007.500995-3-mohammad.rafi.shaik@oss.qualcomm.com>
+Date: Thu, 08 Jan 2026 10:17:10 +0100
+From: barnabas.czeman@mainlining.org
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>, Jingoo
+ Han <jingoohan1@gmail.com>, Pavel Machek <pavel@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Kiran Gunda
+ <quic_kgunda@quicinc.com>, Helge Deller <deller@gmx.de>, Luca Weiss
+ <luca@lucaweiss.eu>, Konrad Dybcio <konradybcio@kernel.org>, Eugene Lepshy
+ <fekz115@gmail.com>, Gianluca Boiano <morf3089@gmail.com>, Alejandro Tafalla
+ <atafalla@dnyon.com>, dri-devel@lists.freedesktop.org,
+ linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Daniel Thompson <daniel.thompson@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH v2 1/7] dt-bindings: backlight: qcom-wled: Document ovp
+ values for PMI8994
+In-Reply-To: <45a2b510-c825-4191-975a-1389f4f18903@oss.qualcomm.com>
+References: <20260108-pmi8950-wled-v2-0-8687f23147d7@mainlining.org>
+ <20260108-pmi8950-wled-v2-1-8687f23147d7@mainlining.org>
+ <45a2b510-c825-4191-975a-1389f4f18903@oss.qualcomm.com>
+Message-ID: <c7bca43b1b912a6a100d83229d78abde@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 08, 2026 at 12:50:07AM +0530, Mohammad Rafi Shaik wrote:
-> Add pin control support for Low Power Audio SubSystem (LPASS)
-> of Qualcomm SA8775P SoC.
+On 2026-01-08 09:54, Konrad Dybcio wrote:
+> On 1/8/26 4:43 AM, Barnabás Czémán wrote:
+>> Document ovp values supported by wled found in PMI8994.
+>> 
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-> ---
->  drivers/pinctrl/qcom/Kconfig                  |  10 +
->  drivers/pinctrl/qcom/Makefile                 |   1 +
->  .../pinctrl/qcom/pinctrl-sa8775p-lpass-lpi.c  | 216 ++++++++++++++++++
->  3 files changed, 227 insertions(+)
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-sa8775p-lpass-lpi.c
+> I reviewed a version of this that said PMI8950, which is very much
+> not the same..
 > 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index c480e8b78503..bb1524243906 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -60,6 +60,16 @@ config PINCTRL_LPASS_LPI
->  	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->  	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
->  
-> +config PINCTRL_SA8775P_LPASS_LPI
-> +	tristate "Qualcomm Technologies Inc SA8775P LPASS LPI pin controller driver"
-> +	depends on ARM64 || COMPILE_TEST
-> +	depends on PINCTRL_LPASS_LPI
-> +	help
-> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-> +	  (Low Power Island) found on the Qualcomm Technologies Inc SA8775P
-> +	  platform.
-> +
->  config PINCTRL_SC7280_LPASS_LPI
->  	tristate "Qualcomm Technologies Inc SC7280 LPASS LPI pin controller driver"
->  	depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-> index 748b17a77b2c..b2a23a824846 100644
-> --- a/drivers/pinctrl/qcom/Makefile
-> +++ b/drivers/pinctrl/qcom/Makefile
-> @@ -39,6 +39,7 @@ obj-$(CONFIG_PINCTRL_QCOM_SSBI_PMIC) += pinctrl-ssbi-gpio.o
->  obj-$(CONFIG_PINCTRL_QCOM_SSBI_PMIC) += pinctrl-ssbi-mpp.o
->  obj-$(CONFIG_PINCTRL_QDU1000)	+= pinctrl-qdu1000.o
->  obj-$(CONFIG_PINCTRL_SA8775P)	+= pinctrl-sa8775p.o
-> +obj-$(CONFIG_PINCTRL_SA8775P_LPASS_LPI) += pinctrl-sa8775p-lpass-lpi.o
->  obj-$(CONFIG_PINCTRL_SAR2130P)	+= pinctrl-sar2130p.o
->  obj-$(CONFIG_PINCTRL_SC7180)	+= pinctrl-sc7180.o
->  obj-$(CONFIG_PINCTRL_SC7280)	+= pinctrl-sc7280.o
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sa8775p-lpass-lpi.c
-> new file mode 100644
-> index 000000000000..4579a079f7c6
-> --- /dev/null
-> +++ b/drivers/pinctrl/qcom/pinctrl-sa8775p-lpass-lpi.c
-> @@ -0,0 +1,216 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <linux/gpio/driver.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +
-> +#include "pinctrl-lpass-lpi.h"
-> +
-> +enum lpass_lpi_functions {
-> +	LPI_MUX_dmic1_clk,
-> +	LPI_MUX_dmic1_data,
-> +	LPI_MUX_dmic2_clk,
-> +	LPI_MUX_dmic2_data,
-> +	LPI_MUX_dmic3_clk,
-> +	LPI_MUX_dmic3_data,
-> +	LPI_MUX_dmic4_clk,
-> +	LPI_MUX_dmic4_data,
-> +	LPI_MUX_i2s1_clk,
-> +	LPI_MUX_i2s1_data,
-> +	LPI_MUX_i2s1_ws,
-> +	LPI_MUX_i2s2_clk,
-> +	LPI_MUX_i2s2_data,
-> +	LPI_MUX_i2s2_ws,
-> +	LPI_MUX_i2s3_clk,
-> +	LPI_MUX_i2s3_data,
-> +	LPI_MUX_i2s3_ws,
-> +	LPI_MUX_i2s4_clk,
-> +	LPI_MUX_i2s4_data,
-> +	LPI_MUX_i2s4_ws,
-> +	LPI_MUX_qua_mi2s_data,
-> +	LPI_MUX_qua_mi2s_sclk,
-> +	LPI_MUX_qua_mi2s_ws,
-> +	LPI_MUX_slimbus_clk,
-> +	LPI_MUX_slimbus_data,
-> +	LPI_MUX_swr_rx_clk,
-> +	LPI_MUX_swr_rx_data,
-> +	LPI_MUX_swr_tx_clk,
-> +	LPI_MUX_swr_tx_data,
-> +	LPI_MUX_wsa_swr_clk,
-> +	LPI_MUX_wsa_swr_data,
-> +	LPI_MUX_wsa2_swr_clk,
-> +	LPI_MUX_wsa2_swr_data,
-> +	LPI_MUX_ext_mclk1_a,
-> +	LPI_MUX_ext_mclk1_b,
-> +	LPI_MUX_ext_mclk1_c,
-> +	LPI_MUX_ext_mclk1_d,
-> +	LPI_MUX_ext_mclk1_e,
-> +	LPI_MUX_gpio,
-> +	LPI_MUX__,
-> +};
-
-Isn't this entire driver exactly the same as sm8450?
-
-Best regards,
-Krzysztof
-
+> Let me try and get some more docs to confirm or deny what you're
+> saying..
+I have sent it for the previous revision msm-4.4 contains the 
+documentation.
+https://lore.kernel.org/all/95f7c89fdf9b856f567a498cc56ecfa5@mainlining.org/T/#u
+> 
+> Konrad
+> 
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>>  .../bindings/leds/backlight/qcom-wled.yaml         | 22 
+>> ++++++++++++++++++++--
+>>  1 file changed, 20 insertions(+), 2 deletions(-)
+>> 
+>> diff --git 
+>> a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml 
+>> b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> index a8490781011d..19166186a1ff 100644
+>> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+>> @@ -98,8 +98,8 @@ properties:
+>>      description: |
+>>        Over-voltage protection limit. This property is for WLED4 only.
+>>      $ref: /schemas/types.yaml#/definitions/uint32
+>> -    enum: [ 18100, 19600, 29600, 31100 ]
+>> -    default: 29600
+>> +    minimum: 17800
+>> +    maximum: 31100
+>> 
+>>    qcom,num-strings:
+>>      description: |
+>> @@ -239,6 +239,24 @@ allOf:
+>>            minimum: 0
+>>            maximum: 4095
+>> 
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,pmi8994-wled
+>> +
+>> +    then:
+>> +      properties:
+>> +        qcom,ovp-millivolt:
+>> +          enum: [ 17800, 19400, 29500, 31000 ]
+>> +          default: 29500
+>> +
+>> +    else:
+>> +      properties:
+>> +        qcom,ovp-millivolt:
+>> +          enum: [ 18100, 19600, 29600, 31100 ]
+>> +          default: 29600
+>> +
+>>  required:
+>>    - compatible
+>>    - reg
+>> 
 
