@@ -1,240 +1,306 @@
-Return-Path: <linux-arm-msm+bounces-88125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91A4DD0546D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:59:16 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5025CD0504E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:34:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5F2F133AB8AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 17:06:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 97C8530E49CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 17:27:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBCD62882D7;
-	Thu,  8 Jan 2026 17:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 844A8326D63;
+	Thu,  8 Jan 2026 17:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P42JVFQS";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HCo3OcVI"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="HUmuBHkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021087.outbound.protection.outlook.com [40.107.74.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F5228C874
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 17:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767891965; cv=none; b=X01ahnpDSkezMVXEvYnN67gC8MVJpkOgWiuRrQOCVmGBg1SU3cw7uJUErtGa1uh1Ph/mYM2Zom3gEwxY+EWzVFbX5n2gPPsdzWRaM/gwb3Hfks19Cttcul+WW8Slv3L+2g374WGyE74EClKlGpREXEzOgw8wVuXgw8SUtiG0fcM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767891965; c=relaxed/simple;
-	bh=+FuAkoT/A+qRScIfZiUxudGNTAwE967gh5qamvKSiIw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SbwfCyH/KKcs4BpEri+/t6C5j+Eby4VnWl2PkK8zyC9aLRj+MChV6OsXoci38R37wfxeNb3MNSWCqKw34bnZQaD12sCMDQMu1AH1OaKQO7aUGxMU4y7FiW6av+xFsVrLJ6pz4MQyQrpRbn9liMwWHpSqryQN8M50XcfmNbrrh7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P42JVFQS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HCo3OcVI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 608FcOFX1422509
-	for <linux-arm-msm@vger.kernel.org>; Thu, 8 Jan 2026 17:06:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=UHmYggVFRTF
-	oOqFwOPvTr/lZ9J7uus66Rfo3FPa3PbE=; b=P42JVFQSv4XIkrF4g4/ZDKnqNKR
-	fQoIXUiTxydao7ba+RLb/ORuZmrdxcvKEDxyGtBJng+p3N8VejiF6B7S2pFXGKXG
-	NnkMPMjhjZGGaeKATJLjoWHPJK3bdrl+b6lBZMGF6am2oN3XCDX+vWMMomJaqKVz
-	Aqn3U1VCWVCqt//Y2/yEk+ij3pGOw8T/MZ8fM1syAoe3fdPlU1XtZypHcKPsWFbD
-	P75xn5FjVCyS4QA34/sDyN9R16sycJfl4GY7PTVlOLY+6DYb248iCG89SscTKyZg
-	WgF1mP7Aq/Qm0qS97aOj8I+Nm0MoU6rcwvAdWO/W5JsDIwt8LDqJkB3jdGw==
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com [209.85.221.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjfda8af6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 17:06:02 +0000 (GMT)
-Received: by mail-vk1-f200.google.com with SMTP id 71dfb90a1353d-55b16794625so2707678e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 09:06:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767891962; x=1768496762; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UHmYggVFRTFoOqFwOPvTr/lZ9J7uus66Rfo3FPa3PbE=;
-        b=HCo3OcVIIMS5DTyqpx3YqOFRx0F6BcLV82Nk8FICpGjmzLgFFPGZWgennJC/TwHErk
-         w/H97QSm18Cd8MoKAPm1pl7ojkP62W7RhWHwkLcsmqzPK60irTh/EuJoiTWapUkJO3nl
-         T2nJgQZ3c1YkTCG/NugK9KDmbHSzEysV3L719SiyXcRtsCNHA+uTWjhSnczCQLAf7Crc
-         HPPFoHXIzncYO2MdpJzRk3I6R9TRlarxCu01D3VUehekpMJlYqw1kFs1KGu2LTBGFIL3
-         frkPRCDHwqW2gNtfhaZiXS6apb/pniFN1jFFDzQsHG6wjUbVmXt1pZy7i7x0m+DJkEAO
-         NL4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767891962; x=1768496762;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=UHmYggVFRTFoOqFwOPvTr/lZ9J7uus66Rfo3FPa3PbE=;
-        b=cE+U5KTxFypby1pFC8cwk5M+H6Ulwibpx0Ql+2Mn4CLtzJjzFimXzukBJqu279mpAC
-         uGCOVfkc1On1ZK3S02rCOEu/zm2kWd3GYOnDRL47P7yLxGZHxfRE2pV7hjLSmCCNYG0K
-         Ok/HMPrV1c9JK2WhdJZh7s329bRTBQY2PLvUI4DZ0s1OktXSeyxSopY7q4lTIQ07dCYO
-         srsp3KLLvqW7NjJnzqdw1Bt4JmNsFK+L3oZ4i6QHUNFfIlx/Bkuoc+wSwGwxGquR5rpD
-         i8OtN76qyHcuxTJmmt2UKHJTMWA6QxOicNKqXWKmrnvCZCutuvMQOIGI+79JbT58Hw7J
-         9RQg==
-X-Forwarded-Encrypted: i=1; AJvYcCXASv247ARKR+dk7UJYcwz4kTH1lu3A7B4dDf4YVeM63Ww7JRM6Lu8jEo5TuiC6VlnWycS+PnWpoXvITHr+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxP5R/N+eMSHO3BTa6xAG7oBSZ5VHKf/fxvMJsReZA4mGfjOr0q
-	lf/uGftDeZQVohSzD+9PemFD/cX4SAaQtr0eV6FmNA69PKJJFF4Q0Pc9Ag6pYAfw3IYSvO4HIYD
-	amSkrxwLyFgp1gC8ojtrRFuAlgvpqgSk+CnC87KaSK7W4vEgwvGb2G9pNUwRs5VjNkGM6
-X-Gm-Gg: AY/fxX5GFnpFg6SKk3us7axc5/O98Hk6GSp08DZgMOokzrOpI0TcbwIwwTSZPb4rTBE
-	emtzd/xZoc5iVE+hAptKUvpxTOYYqCPZxi7q+v89ZX3f7sIhEG1UKTmw3va6VrxtadA4uevnM8P
-	K+JQH0cN+JOf2gvep62qDGyGX3GHpa1TZXPzPKPcInhxbHuIeXLmNAabepUlBMBY/lLB7mk2gsS
-	z2TeFv6fSDEhWOc+yZU3TNP1G2KqrzD8s4lvCBKXNH9MchuKbWrqOpOLypLTydhu2ChSHBV4cu9
-	SBMC/9+KHW0KIJKzGVm39O78zVnAnlcb0iFwX3kp0w9vq7DsEQz5a5kdjrpWn+wqD67JvWFEHn2
-	biM84hsRYwwC+Cu0H0Y89UhJPx1qD78CKa/8rLGGThyQMzwewhIDiIMW3ovHy4IjL0NPjB80W6r
-	xN
-X-Received: by 2002:a05:6122:9003:b0:55b:113f:7e08 with SMTP id 71dfb90a1353d-56347d53d43mr2220957e0c.2.1767891962306;
-        Thu, 08 Jan 2026 09:06:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGua9ejuzLdBptsa2pdgON74/BmwcpnFp+U6KFss0UUpjDN8ifed0yCtfxi6LkeGUqXbl3Ypg==
-X-Received: by 2002:a05:6122:9003:b0:55b:113f:7e08 with SMTP id 71dfb90a1353d-56347d53d43mr2220905e0c.2.1767891961816;
-        Thu, 08 Jan 2026 09:06:01 -0800 (PST)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:211d:6051:c853:ae97])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a2cffb3sm856373466b.31.2026.01.08.09.06.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 09:06:01 -0800 (PST)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        mchehab@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: [PATCH v4 3/3] arm64: dts: qcom: qrb2210-rb1: Add overlay for vision mezzanine
-Date: Thu,  8 Jan 2026 18:05:50 +0100
-Message-Id: <20260108170550.359968-4-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260108170550.359968-1-loic.poulain@oss.qualcomm.com>
-References: <20260108170550.359968-1-loic.poulain@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7305D32692C;
+	Thu,  8 Jan 2026 17:24:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.87
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767893051; cv=fail; b=Tx5KhpvzUpdWWct99MHGRdLYImvs49EiNzror5zETRZzmfn9WNXqmOC/pn1vZ25Ze/RMhn7finy7buru3Rvi+12aGaU5jVq5Bk3mvZJuKW0gTMPU1imao4ixDJ5v36age3zLpRjiA+RSkWUuMx9sh7ImRdJqzJ8KTQCHwi7j0Nw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767893051; c=relaxed/simple;
+	bh=Kmabl/CDwLaylVA8UWVO/8BpRBG+WViT6fAr1x4ZzbM=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=NMebqheoDsQo4s2Kx7LBh+AqcOXksEwSuLhYSeyxy10DgxKWTETfCO2lGfzCeb7g1fbKgqKpyAiKuylh2OgWEy0ukHaP7yvurxY4i1pvQDMeDe8jXOacAM50uEFBwDlQgpXnwxdD4PgSX2zJD8egyJrciNAYw1uYcboLH/FhWkw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=HUmuBHkb; arc=fail smtp.client-ip=40.107.74.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aH+Seh9bWW92bSaQO6bpCXgDwxjx/9XlIj9F90ARvJMyUF84LxONc+e9eB2lrNEr4sbP+0LeOfls6OG2L4tLX7deNZh6IZrA2yDruNiEwhWMybExDBCcUmdWFsoFyZQjNMlaQFlI6mPblDxnx51Uvbby0tZSm/2dwrE5Yb9+1AXHrZudVSO+Ga/ug0W6pgfOsRtyIzwIM8kM9w1hiCkfKUxPV/6UGeKHFkL6B+l0wzpbvCU2tEgEix3J5RNAsx8mhIio4aupNle50CbF5egytptfiQVCOHEXfGnn7cKCV45eHRgCz1sGuGuuMhSch6TxJXq/LQYi2cxWjIdfeFCC4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NEnGqyk6kWbwWBWQHmxCSy3uSyBj0wKlATqMBiyBvoo=;
+ b=HNhTDSokU5VRr52fJ62dQrHsrCaZs+BbaSfiWtx8g3T4Pb61aPD3T84d2+EhoE+zRVpOn7ZThSjVwo93/HwtZjshQHZL9scT2s8w3u2v4nHwEzftE6levwJXFN4phDo6ms2tsGtsI87IDh0FNTg0P3dy/U7fNCmCdeinbgAq+nmf38qXSO1GqbUi2XTrvCbaxsblFe+X0bOGEamAN55xsdBL/CP/v7DyGJpNly/ls00TbvD/PG8kWzoudFG5LrjwuCPqH/U8vlwbPfFszNn6PEMOEJRA1Tdj6yZs68sERhhxrlEtvQ6tA5gHrmUEbLKJRIU+CkaU2X33PvlhrzlrMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NEnGqyk6kWbwWBWQHmxCSy3uSyBj0wKlATqMBiyBvoo=;
+ b=HUmuBHkbSw9L9MgUsUCvFuOCkUWrhtpgh30k5zpH/dSr7u2VxdQ5GRI3Vj5TNirBpdvnejl1k4DTPccq6Ix4Gkulj2+mWKaKbQSjlItQJOVSwdxupO4vOfG15VqethTak41TFzxK71euI5qJqVpAAYDU5FqSlQtLJEu4FF6mOts=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TYRP286MB5284.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:11a::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.3; Thu, 8 Jan
+ 2026 17:24:06 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9499.002; Thu, 8 Jan 2026
+ 17:24:06 +0000
+From: Koichiro Den <den@valinux.co.jp>
+To: jingoohan1@gmail.com,
+	mani@kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	robh@kernel.org,
+	bhelgaas@google.com,
+	cassel@kernel.org
+Cc: vigneshr@ti.com,
+	s-vadapalli@ti.com,
+	hongxing.zhu@nxp.com,
+	l.stach@pengutronix.de,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	minghuan.Lian@nxp.com,
+	mingkai.hu@nxp.com,
+	roy.zang@nxp.com,
+	jesper.nilsson@axis.com,
+	heiko@sntech.de,
+	srikanth.thokala@intel.com,
+	marek.vasut+renesas@gmail.com,
+	yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be,
+	magnus.damm@gmail.com,
+	christian.bruel@foss.st.com,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	hayashi.kunihiko@socionext.com,
+	mhiramat@kernel.org,
+	kishon@kernel.org,
+	jirislaby@kernel.org,
+	rongqianfeng@vivo.com,
+	18255117159@163.com,
+	shawn.lin@rock-chips.com,
+	nicolas.frattaroli@collabora.com,
+	linux.amoon@gmail.com,
+	vidyas@nvidia.com,
+	Frank.Li@nxp.com,
+	linux-omap@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v5 0/3] PCI: endpoint: BAR subrange mapping support
+Date: Fri,  9 Jan 2026 02:24:00 +0900
+Message-ID: <20260108172403.2629671-1-den@valinux.co.jp>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TY4PR01CA0105.jpnprd01.prod.outlook.com
+ (2603:1096:405:378::19) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Ue1ciaSN c=1 sm=1 tr=0 ts=695fe3fa cx=c_pps
- a=wuOIiItHwq1biOnFUQQHKA==:117 a=xqWC_Br6kY4A:10 a=vUbySO9Y5rIA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=RMWakvN5gFyazINGlFsA:9 a=XD7yVLdPMpWraOa8Un9W:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 7xC8VMwT9PJP_3OPZKjGsiuXOBdv5tr1
-X-Proofpoint-GUID: 7xC8VMwT9PJP_3OPZKjGsiuXOBdv5tr1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDEyNiBTYWx0ZWRfX0qRwusf81QYP
- ZpiKniLB+S+tTcobLddjCCyyY3M2zGlGu4z8ecthS0xgm63lg7hwbxP5EYd/+HaB1zQhCHo2kbT
- K4Qmkz5bXKCb7+n1AOcq/cioWaDB4rmArvxVws47Mu7bOYyr0+KfTFGG42u/mog4zwbnX4hqO8r
- UW4X7V8LYRDMDZFLzgUbW8/XpcQvcA42nRAfEmG7ktXFMH40dH4efhpkT5Emv06+8gKFmoTDJKf
- WHcNC5Ne4YNfHLpNqYdp7zvscRBqo5+OK3Hcl3zA54G7rf9q+Wvm8+vmGxHwHMGNjCBn2vfvtVZ
- sxkQ14Vn7nno4hMO9oNh7wMSp56nDw4ro8RN9K8EHM4+V1NJt2dfPiQoAIN5XAVkuyAoNgTGhM0
- 9IiRFGprYIGHGW0/vbU9dv9Yo/9ixqlE/gyCEvhmKoPMdHEMD+OcF6M5TIMEmE34sRrY8wBKyKv
- qZjZfCVqKLS0UWWP+Cg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-08_03,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601080126
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYRP286MB5284:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93caf446-6a3c-4075-dc4d-08de4edaba11
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|10070799003|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?tSN36dROWGdRLv+n1OUKz7NB1wHKUXZjUWo2LLM7djRXrq1LT14J4bf2pRnQ?=
+ =?us-ascii?Q?kKIb6w2NiRQoIbnfDwBFMiN3ZenlJL9Bfk2v+DqxqRRnZs71iJ4NeSi+2PmI?=
+ =?us-ascii?Q?TfaihHMrLxsjyvfcAdRLZjnYj7sS58Sr7TX3YfdkyBIkxZJtElI3pwjXtHWf?=
+ =?us-ascii?Q?SS3WFG9oIxmkTWX7q2FZCfeSxFy13twbXU0E3wAdqDYQdeu3XcMgTBUNGU9b?=
+ =?us-ascii?Q?RCFaIzQD47boX6bFSYeuQnBmF0cEhhRG0297QP2CmYEy1MQLYU3mXpMWugsx?=
+ =?us-ascii?Q?YAVGnVEr0mwryunXKEdCpDCxQR3WgxoCuzDE+fhNKOEIY75iy2Yy73dmzlHk?=
+ =?us-ascii?Q?KIOOqV4iRT9yxyqFQuBrLlv5KtjzPPxzOAg7gHHhkfqa6K1lc4TaWAExsjOF?=
+ =?us-ascii?Q?cE4wEozYO/Dq/cvSVxJ56YExiSGhR7S/rDLCvhY+JPVEVnBHu6Hp0mRP3utJ?=
+ =?us-ascii?Q?WJALri+EX3PJ4usJExrn42YpzWTsUEVETzAR56vCZXU0DeGweooLCYIdXPYZ?=
+ =?us-ascii?Q?I5queMRgf1uEbZcg52XDnrgF9DH9lEavbjsOHu4pGg67+OY71StEFM9J+YT2?=
+ =?us-ascii?Q?ge6+aLYyqO/jw2ZqDfJ6me5Avli/uFZgw6DXFrbNjZ38PfkizBp09WPggdAQ?=
+ =?us-ascii?Q?5q7dFTAOVxSSqJlcqPzMQc1La+PW9sjARGRAOLvL6UcFJVkSlBKIipwSTIsU?=
+ =?us-ascii?Q?aOxNElgcF6mtYK4KuOL0WvvVCW2MAsn3n8F50G3iv9wGhroCMf+DnxzFMXWn?=
+ =?us-ascii?Q?6OFJtsvZe2nErW3uxvUqF/CT9pmhOSKY5m2gkLnXJ0463OyAUvstUuLSYBtF?=
+ =?us-ascii?Q?cxb2JsG0Zy3TF4G00fD6EcQ5ChU+IztSYiMAFL4Z9JGjKWZXNDGuMn2HX8P+?=
+ =?us-ascii?Q?UFf4fIFV2D3qKnoAbbPzFnQI+6R18LAXQjNvD7FezZviTqGdK4WgvmfTF1JC?=
+ =?us-ascii?Q?DZijq5rsBkS89u2rwC54H3VfvbSNb7KDC6SadTrkK8Kj8KlX8e9OBhthgYo/?=
+ =?us-ascii?Q?sFNb3I5O5NFPPPovnBnMF/VTGxdFQH7waLHhCqvvLPPRah8HdSLZ1c1nKZuL?=
+ =?us-ascii?Q?7cnXMR+xB1yzhSTwtEseKuaMQv4WBaWdaV0VQdCRJB2vjFLujUfYy5P9Y3zc?=
+ =?us-ascii?Q?IViuIvWS+dCGyJrSyiSEVSY10niGwZTThqiNj+cNOpAweaDS2cc/UV/LiNTl?=
+ =?us-ascii?Q?ftzrpynVHSvgCwUsTGFsd4kEIQ+zVzlJCBPBOhx9+V/uDe9NTaST/GOAYwcG?=
+ =?us-ascii?Q?n33iMBUfV6yUasSf0yy84azQIxWX7Aeh4unBG7O443ZhY/EGnj+IHFSybhtz?=
+ =?us-ascii?Q?xaJB8Smar8XdCKzc1u76IQ+Vs3/iv1IyOwPr+nktK+YG57XQRrKjdaNEL38s?=
+ =?us-ascii?Q?1KkBKUeviMF+j0wBLtNc6CngFpsrug5hwKuW4LPZtlcohlGEC3VrCTqSs8Ui?=
+ =?us-ascii?Q?zt8+fppNsfCW7XHUfRTtPTm+aodLdVbVferOeODZ7TWE61R1lmxUiw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(7416014)(376014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?lCV+TN8Ur+k8pvzRPQpmZ4Ryp1IKLi8ezdWdC+TXmh9VJ4tR+JNyphJw4jlN?=
+ =?us-ascii?Q?ifAyyVpj/buj6hLFvV99rO9U06hJqHYI4LF2kX460GwTyGWis0uNa0ySwQup?=
+ =?us-ascii?Q?cFWmjqVKeGKiOEEmZ4H1/Z8ghtl8Gq+dDBI8wQK4EUYu2G60RLNIA5g6QKqP?=
+ =?us-ascii?Q?19gQLLbRZhSBDuuxMhSq/qxmjf+I/VmBoU0OwW4YG0aMu2oHiW16RU1cUOzT?=
+ =?us-ascii?Q?0ZKxBsM4P9Xk0X0rRSjoccp9MnIPUk2JwHd5f6H520nMdEIGFHfHeIkznIFu?=
+ =?us-ascii?Q?NB/fidCUT7UqR/b2IZPEULX5X9EMM7vlUa8K0TPlunm4K2CY47qSLa9KYxcz?=
+ =?us-ascii?Q?ge+gJp4Hv+957sVO5ouhr/ahep3la9CgSTWn6g+bn3QIFnz1DROsixwwnRmA?=
+ =?us-ascii?Q?Xx3iEJQHFFz9l2wLx/J2QKt0Rt7cIHPjM48oLCT7Lb7l8EEbZIB3QWjsIggo?=
+ =?us-ascii?Q?Ksv9VpukxC/NGdpG6YznmT0KYeIoIW5ZkSFnB3txzOLEJImhZeptju1lcc8L?=
+ =?us-ascii?Q?5BlYdrPc1/sETOh2kosLykZFSCq2J0vuXRWS2FQXsDxyz5O790RGa+u+4UkX?=
+ =?us-ascii?Q?oBSfHjD0X1lHWe62IE8b3KNKBB2Ud2GaoPq3tA4ZqMQvRaJnFo0P06AHXcU4?=
+ =?us-ascii?Q?G9Ll+srr/uJDRXrbFR7xa1rLL26g/BznssZr/8L75g0k8VXSMQICqF078B06?=
+ =?us-ascii?Q?ueDd9NeU1GKUWK+29d8d5NGEp/GRDsFfhdqFSl7uJpDb1SZKPAEQCUIj6LMT?=
+ =?us-ascii?Q?184bmyTTUTjpCNRFcgFMp5ZWM9ZBOBJoqC9OjvyxX9j5SWlXg1jdakH/1FFA?=
+ =?us-ascii?Q?OuRBW/Ge+pvy3/K3TDyf46tRfwuew6kNe88c+uaOouFsa72WZ7zcetagyQ4i?=
+ =?us-ascii?Q?FCzV0Yz4bk8mFrpRNfePvMftFk6zhBBQy45bQa2rr+MPwqD+yqK1IeDClME/?=
+ =?us-ascii?Q?LM/s6tJu5xwzck0hAWQiK2aBWNbxoBTc339kS+Z/RUBFByQPeoL773UfvomW?=
+ =?us-ascii?Q?tl0ocqhRAGcIbd9tHcMDzzICXfphS0cv5TxrcChloPuhEDkksw+1178rZe4h?=
+ =?us-ascii?Q?M81Ini63KYFzuJBToo+HtqCjO87d7q1gBNXHaSFjuGEKNWNZPoyXmBXl46G+?=
+ =?us-ascii?Q?rgToIbpJgp1ZHqjc5iT9jQRFT/ZZXLFE2whtrxN0AllKbXcK8jSmmjR7xuGY?=
+ =?us-ascii?Q?zOF5i1UQDP/WftUTKuWYCY1fLfk7IOUCyEOl0NG4qlxTMfBC9LnR4JST2hXL?=
+ =?us-ascii?Q?Gqk7FJIK9rgjXoprN3JEkuLxC6xlSgobI0KsDLKsCm6fQVSXvLA5pB7gaY/A?=
+ =?us-ascii?Q?V2AgPwraVLRTfiS4ZFrGscSTOrf95fwebqhtTx3b3LGXnZVs9bQ1PEyctoWc?=
+ =?us-ascii?Q?E7p66aFoqaWqo52Ug2qupf1XRB2wNty0yozVmObo8ZKx54H9cxILaI+VZJmJ?=
+ =?us-ascii?Q?rncrwf2hOKl0jcEQCZAh4nWol6QzOKPkg1PHa2M2EOyJaxCiZZlJcgY+pv+/?=
+ =?us-ascii?Q?QwMzywumdzle+QzNJZiXprJrEmmSGX9lLXbca6ibRHJdZBPydT6AgL/WmqYj?=
+ =?us-ascii?Q?exKcs9H5mXASuaSnjx2FhruIHCykWsXLePM6tOF8zZhgKXBRQb8owc2IBSJf?=
+ =?us-ascii?Q?4aWPCYOm3Zke1JIiQw1WAm1OsBXUTYFo0YKVf7X8Rsk0hG8JVe06qHV6aCbM?=
+ =?us-ascii?Q?G0cWMuu8wFfEQrNG3+dp2joGY7mn+Vhsz9b9AAbeg+TFRHAm9QQrrjo7pzvf?=
+ =?us-ascii?Q?pAtOp3xNbTMNJF1W1A6SV4dw9R+a7CfgY8+nIzUS0MBq6lHG3vlB?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93caf446-6a3c-4075-dc4d-08de4edaba11
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2026 17:24:06.5299
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bP+BHahR+P6xYBpeAvVh0JOCdd9EA6buoKRyvZ1UN1V6l9hJCvwnDqlk/nFJHxAqyYMkub8bpWG+qrUB+/r10Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRP286MB5284
 
-This initial version includes support for OV9282 camera sensor.
+This series proposes support for mapping subranges within a PCIe endpoint
+BAR and enables controllers to program inbound address translation for
+those subranges.
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |  5 ++
- .../qcom/qrb2210-rb1-vision-mezzanine.dtso    | 66 +++++++++++++++++++
- 2 files changed, 71 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
+- Patch 1/3 introduces generic BAR subrange mapping support in the PCI
+  endpoint core.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0ccd6ec16dfb..a5d6f451f85c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -149,6 +149,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
-+
-+qrb2210-rb1-vision-mezzanine-dtbs	:= qrb2210-rb1.dtb qrb2210-rb1-vision-mezzanine.dtbo
-+
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1-vision-mezzanine.dtb
-+
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
- 
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-new file mode 100644
-index 000000000000..c314cd6dd484
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-@@ -0,0 +1,66 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+/dts-v1/;
-+/plugin/;
-+
-+#include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-+#include <dt-bindings/gpio/gpio.h>
-+
-+&pm8008 {
-+	status = "okay";
-+};
-+
-+&camss {
-+	status = "okay";
-+
-+	vdd-csiphy-1p2-supply = <&pm4125_l5>;
-+	vdd-csiphy-1p8-supply = <&pm4125_l13>;
-+
-+	ports {
-+		port@0 {
-+			csiphy0_ep: endpoint {
-+				data-lanes = <0 1>;
-+				remote-endpoint = <&ov9282_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci {
-+	status = "okay";
-+};
-+
-+&cci_i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* Vision Mezzanine DIP3-1 must be ON (Selects camera CAM0A&B) */
-+	camera@60 {
-+		compatible = "ovti,ov9282";
-+		reg = <0x60>;
-+
-+		/* Reset is active-low, but driver applies inverted reset logic */
-+		reset-gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&mclk3_default>;
-+		pinctrl-names = "default";
-+
-+		clocks = <&gcc GCC_CAMSS_MCLK3_CLK>;
-+		assigned-clocks = <&gcc GCC_CAMSS_MCLK3_CLK>;
-+		assigned-clock-rates = <24000000>;
-+
-+		avdd-supply = <&vreg_l3p>;
-+		dvdd-supply = <&vreg_l1p>;
-+		dovdd-supply = <&vreg_l7p>;
-+
-+		port {
-+			ov9282_ep: endpoint {
-+				link-frequencies = /bits/ 64 <400000000>;
-+				data-lanes = <1 2>;
-+				remote-endpoint = <&csiphy0_ep>;
-+                        };
-+                };
-+	};
-+};
+- Patch 2/3 changes dw_pcie_ep_ops.get_features() to return a mutable
+  struct pci_epc_features * and updates all DWC-based glue drivers
+  accordingly. This is preparatory work for Patch 3/3.
+
+- Patch 3/3 adds an implementation for the DesignWare PCIe endpoint
+  controller using Address Match Mode IB iATU. It also advertises
+  subrange_mapping support from the DWC EP midlayer.
+
+This series is originally a spin-off from a larger RFC series posted
+earlier:
+https://lore.kernel.org/all/20251217151609.3162665-4-den@valinux.co.jp/
+The first user will likely be Remote eDMA-backed NTB transport,
+demonstrated in that RFC series.
+
+Kernel base:
+  - repo: git://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git
+  - branch: controller/dwc
+  - commit: 68ac85fb42cf ("PCI: dwc: Use cfg0_base as iMSI-RX target address
+                           to support 32-bit MSI devices")
+
+Changelog:
+* v4->v5 changes:
+  - Added subrange_mapping to struct pci_epc_features and enforced a
+    strict capability check in pci_epc_set_bar() (reject use_submap when
+    unsupported).
+  - Changed DWC-based glue drivers to return a mutable features pointer
+    and set subrange_mapping centrally at the DWC midlayer.
+  - Split the series into 3 patches accordingly.
+
+* v3->v4 changes:
+  - Drop unused includes that should have been removed in v3
+
+* v2->v3 changes:
+  - Remove submap copying and sorting from dw_pcie_ep_ib_atu_addr(), and
+    require callers to pass a sorted submap. The related source code
+    comments are updated accordingly.
+  - Refine source code comments and commit messages, including normalizing
+    "Address Match Mode" wording.
+  - Add const qualifiers where applicable.
+
+* v1->v2 changes:
+  - Introduced stricter submap validation: no holes/overlaps and the
+    subranges must exactly cover the whole BAR. Added
+    dw_pcie_ep_validate_submap() to enforce alignment and full-coverage
+    constraints.
+  - Enforced one-shot (all-or-nothing) submap programming to avoid leaving
+    half-programmed BAR state:
+    * Dropped incremental/overwrite logic that is no longer needed with the
+      one-shot design.
+    * Added dw_pcie_ep_clear_ib_maps() and used it from multiple places to
+      tear down BAR match / address match inbound mappings without code
+      duplication.
+  - Updated kernel source code comments and commit messages, including a
+    small refinement made along the way.
+  - Changed num_submap type to unsigned int.
+
+v4: https://lore.kernel.org/all/20260108044148.2352800-1-den@valinux.co.jp/
+v3: https://lore.kernel.org/all/20260108024829.2255501-1-den@valinux.co.jp/
+v2: https://lore.kernel.org/all/20260107041358.1986701-1-den@valinux.co.jp/
+v1: https://lore.kernel.org/all/20260105080214.1254325-1-den@valinux.co.jp/
+
+
+Thank you for reviewing,
+
+
+Koichiro Den (3):
+  PCI: endpoint: Add BAR subrange mapping support
+  PCI: dwc: Allow glue drivers to return mutable EPC features
+  PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match
+    Mode iATU
+
+ drivers/pci/controller/dwc/pci-dra7xx.c       |   4 +-
+ drivers/pci/controller/dwc/pci-imx6.c         |  10 +-
+ drivers/pci/controller/dwc/pci-keystone.c     |   4 +-
+ .../pci/controller/dwc/pci-layerscape-ep.c    |   2 +-
+ drivers/pci/controller/dwc/pcie-artpec6.c     |   4 +-
+ .../pci/controller/dwc/pcie-designware-ep.c   | 242 +++++++++++++++++-
+ .../pci/controller/dwc/pcie-designware-plat.c |   4 +-
+ drivers/pci/controller/dwc/pcie-designware.h  |   4 +-
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |   8 +-
+ drivers/pci/controller/dwc/pcie-keembay.c     |   4 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   4 +-
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c   |   4 +-
+ drivers/pci/controller/dwc/pcie-stm32-ep.c    |   4 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   4 +-
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c |  58 +++--
+ drivers/pci/endpoint/pci-epc-core.c           |   3 +
+ include/linux/pci-epc.h                       |   3 +
+ include/linux/pci-epf.h                       |  31 +++
+ 18 files changed, 329 insertions(+), 68 deletions(-)
+
 -- 
-2.34.1
+2.51.0
 
 
