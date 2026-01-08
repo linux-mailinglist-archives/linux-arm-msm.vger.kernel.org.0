@@ -1,139 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-88080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04AFCD03CF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:25:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EF2BD03FF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:47:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9F89F302EAFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:24:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AE72B306961E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 113F94C041F;
-	Thu,  8 Jan 2026 12:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F214BDEAB;
+	Thu,  8 Jan 2026 12:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iy5+++A8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C3B4AD6B6
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 12:02:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD70C4BDE9A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 12:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767873739; cv=none; b=fZd5y3oZFepRFb1yLfXTxADymDci2uixGQm70OS6ixT2mME65amprr9ClM1l/KFkDcYTuur/P+XQeb3ZyPZgSa3XmmT0GZ6jF7uQpcgbCmikhqAE1tSCbl5odOzileK9lo160zxmwNIYxL/LG5l7i7b0+cYTo0l0qlESEnEtNsI=
+	t=1767874527; cv=none; b=txACAzLFKtNA+4uyqQL931ew9EgQle9FQ1PhrMaegrWEIU4SUrxwaWmlWKuCeW6ShdIYgOzf2seWwTMPZqy/j4KihJ0zttQUTcs+EkPXMf3NZ2fqTFOLyMlhJz1poNlqfPVhTkkZw87nW+1fcgVkIg06fupdTSosKZufP3nSByg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767873739; c=relaxed/simple;
-	bh=JEBv/LFavLWvuZ+RD6HpZxezctAK2EQR6JS+/TfDwrI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=PN2oEFbXhIKlnNNNnNJ4LdM0Z5y5nFYJ99+ZiUBytO23qIaSnyILxc71HFAMmFKHoxPDEtoCmW6hRav2MmkyCGF4EgAD3Bm0vG0Qq/rpoDq/4fSUiv50NLAtpZRtjyJn4qG6klAwbWDYiJz1oEhJNc+BhQtMZqlAGFwvedJ8z20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1vdoiQ-0003KQ-6e; Thu, 08 Jan 2026 13:02:10 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1vdoiP-009fc8-2U;
-	Thu, 08 Jan 2026 13:02:09 +0100
-Received: from pza by lupine with local (Exim 4.98.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1vdoiP-000000006UN-2wZK;
-	Thu, 08 Jan 2026 13:02:09 +0100
-Message-ID: <f203856efd3deedce56cc39dda13d563636c5f7e.camel@pengutronix.de>
-Subject: Re: [PATCH] reset: gpio: add the "compatible" property
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Bartosz
- Golaszewski	 <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski
- <brgl@bgdev.pl>
-Date: Thu, 08 Jan 2026 13:02:09 +0100
-In-Reply-To: <CAMRc=Mcp8b81XX0AcBEpPNZQxDcPtHXQrKatw7k+fN7u5tYuGw@mail.gmail.com>
-References: <20251121135739.66528-1-brgl@bgdev.pl>
-	 <cc1c6f0020b60e3a8e90ec1d55973e15c88ee884.camel@pengutronix.de>
-	 <CAMRc=Mcp8b81XX0AcBEpPNZQxDcPtHXQrKatw7k+fN7u5tYuGw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	s=arc-20240116; t=1767874527; c=relaxed/simple;
+	bh=oN3VJ81TR92t72IorUOGx+yYKZ6zgxZk9xFRV4q/Jvs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rPD8L17Ccf7qUycGM9mIQv8krT5wY+E4008AExuwIQKWUzhsXm7xT3APxpcZdnFeXwHCAwBwHcyGzCUKWH0SIijRuiBlJhbouIiRTNqHbYI40vQrA2fcac+OXCHSqYID/Ul5w/H/qsnBU+5mmXfDh9PXPCABqvJOV6kuGTyuvAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iy5+++A8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB7DC19424
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 12:15:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767874527;
+	bh=oN3VJ81TR92t72IorUOGx+yYKZ6zgxZk9xFRV4q/Jvs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=iy5+++A86Sd4Opbng5Cpq18bXVkT5o3GMVfzsGGk+tSkDWzJntj1FB6j6rsTmvDV7
+	 htk5tpeZs7QIUTy1l81V0iwHwd+ld3bzRnlSLulPMLJgS5+BHEXo2cQsyv09Gs87c1
+	 6U6WuD9E4fHh9FTyCDiwOvTsfJCfMABaKvIEh/hxlznf66fal6a5ELJKAz+QYDHowm
+	 RSYmfVWwSOTYlMrwmhNGfnhOg87uRQ2rCIdg4Z746axEcP2smmEWDVmqa/Kjm2JKzd
+	 cTRPrW2m084iD5VJcJnB63d5nGR5SkqGE+jzjgNUCjYJgR3S/74C1Exn+71ksFN4o/
+	 YNS2z15g0sydA==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-59b6f04cae6so1599346e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 04:15:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUxcYUITl1/LKyNygvkXzkI4+HVYaeoL5OjGIVMJEcVTBviDOEjGuXUfwmGchaW6XQnWEihtr3XVcgIrqav@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMUHo/rp65qbHI/89rWGxub0MNJyb67bTeNaoNQ0DX43HZ69eK
+	dEv4wnIK1pT59/A8M+bCRlzvymi3AR/S4Ai+xhKI9AVT41doAnsApwI2MeVDOTXE9bjyUj3+cvM
+	bj0PVKvK81SRNV1ET6s6vS45hEx7xciTbK771dYsrcg==
+X-Google-Smtp-Source: AGHT+IF/4koG/MN6sfNsURUrtRSXZrXyRHd0bqi6p5mzExxZBo2GY4yvcJpb3YE7lL2MK6UqIWbaGQBDGlnCB4B6bas=
+X-Received: by 2002:a05:6512:68f:b0:594:35c4:fed1 with SMTP id
+ 2adb3069b0e04-59b6ef03a2dmr1813240e87.13.1767874525775; Thu, 08 Jan 2026
+ 04:15:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+References: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com> <20260107-pci-m2-v5-5-8173d8a72641@oss.qualcomm.com>
+In-Reply-To: <20260107-pci-m2-v5-5-8173d8a72641@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 8 Jan 2026 13:15:12 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Md9TQiSX-gFa5q--JgaGyQ2ky4mOwjSpdxHhvHAj-X5Qw@mail.gmail.com>
+X-Gm-Features: AQt7F2puNlVWjbhiRoX8QQnOlbAAs4UdjLNY6ZTbm-vEXEFSeur6kT9w8kO5QSk
+Message-ID: <CAMRc=Md9TQiSX-gFa5q--JgaGyQ2ky4mOwjSpdxHhvHAj-X5Qw@mail.gmail.com>
+Subject: Re: [PATCH v5 5/5] power: sequencing: Add the Power Sequencing driver
+ for the PCIe M.2 connectors
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-pm@vger.kernel.org, 
+	linux-ide@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bartosz,
+On Wed, Jan 7, 2026 at 3:11=E2=80=AFPM Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> This driver is used to control the PCIe M.2 connectors of different
+> Mechanical Keys attached to the host machines and supporting different
+> interfaces like PCIe/SATA, USB/UART etc...
+>
+> Currently, this driver supports only the Mechanical Key M connectors with
+> PCIe interface. The driver also only supports driving the mandatory 3.3v
+> and optional 1.8v power supplies. The optional signals of the Key M
+> connectors are not currently supported.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
 
-On Mo, 2025-12-08 at 23:57 -0800, Bartosz Golaszewski wrote:
-> On Tue, 25 Nov 2025 11:43:01 +0100, Philipp Zabel <p.zabel@pengutronix.de=
-> said:
-> > On Fr, 2025-11-21 at 14:57 +0100, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >=20
-> > > In order to correctly handle the interaction between the reset-gpio
-> > > devices and shared GPIOs managed by GPIOLIB, we need to be able to
-> > > identify the former. Add the "compatible" property to allow us to use
-> > > the device_is_compatible() helper.
-> > >=20
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > ---
-> > > Philipp: this can go directly into your branch, I will fix the GPIO p=
-art
-> > > in the next cycle. For now it just parses the device name.
-> >=20
-> > Applied to reset/next, thanks!
-> >=20
-> > [1/1] reset: gpio: add the "compatible" property
-> >       https://git.pengutronix.de/cgit/pza/linux/commit/?id=3Da0d57f7504=
-b6
-> >=20
-> > regards
-> > Philipp
-> >=20
->=20
-> Hi Phillipp!
->=20
-> I realized this didn't make your v6.19-rc1 PR. Any chance you could make =
-it
-> into an immutable branch or maybe you could back it out from your branch =
-and
-> allow me to take it with your Ack? I have a WiP patch that fixes one rema=
-ining
-> issue in the interaction between reset-gpios and shared GPIOs. I want to =
-send
-> it for rc1 or rc2 but I would prefer to use device_is_compatible() in it.
+This looks good to me, though there are some nits I may fix when applying.
 
-Sorry for the delay, I didn't get to this before hibernating. I've now
-rebased the patch onto v6.19-rc1 now and made an immutable branch for
-you to fetch:
+I'll pick it up for v7.0 once the bindings are reviewed.
 
-The following changes since commit 8f0b4cce4481fb22653697cced8d0d04027cb1e8=
-:
+> +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
+> @@ -0,0 +1,169 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com=
+>
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_graph.h>
+> +#include <linux/of_platform.h>
 
-  Linux 6.19-rc1 (2025-12-14 16:05:07 +1200)
+It looks like this is a leftover from previous versions and you no
+longer need it?
 
-are available in the Git repository at:
+> +
+> +static void pwrseq_pcie_free_resources(void *data)
+> +{
+> +       struct pwrseq_pcie_m2_ctx *ctx =3D data;
+> +
+> +       regulator_bulk_free(ctx->num_vregs, ctx->regs);
+> +}
 
-  https://git.pengutronix.de/git/pza/linux.git reset/gpio-compatible
+I would call it pwrseq_pcie_m2_free_regulators() if you don't mind.
 
-for you to fetch changes up to b3d8508351af7f6366a0a18068c194b399ead2c3:
-
-  reset: gpio: add the "compatible" property (2026-01-08 12:25:20 +0100)
-
-----------------------------------------------------------------
-Bartosz Golaszewski (1):
-      reset: gpio: add the "compatible" property
-
- drivers/reset/core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-regards
-Philipp
+Bart
 
