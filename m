@@ -1,134 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-88074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46911D03DB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 16:30:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FDBAD045E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:28:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1EAC53054B24
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:26:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 544CE332C90A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:18:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA28428499;
-	Thu,  8 Jan 2026 10:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28DFD39E169;
+	Thu,  8 Jan 2026 11:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FrXmuxDf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ThLzjdMe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15803AE6F9;
-	Thu,  8 Jan 2026 10:56:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7893A1A5A;
+	Thu,  8 Jan 2026 11:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767869824; cv=none; b=hnPDo+b4WgU2deFH7GtimWOB1MDuUVNiJt4l0SfCeMzoW1SnGVEInMgtTZ9XkvEBu1KphaO824GvmP0uHuQB3OZtZcUCpYUKeacSO2JjOJWWS3jehgVMASF/g2yKqjfrmPhzZVNlYv6d4IbaxQNB2prGxKMwEZ41Lfm17QteX7k=
+	t=1767871698; cv=none; b=Qhm5XRJxs8ttatgo6FdjaJZ92uFrAcNffDCShVXOf4YTVyF7pUg2e2Il77y+sKMgId30fY4i7TETVGAaPpNw++Rde9W9UnQf/RN0PCXLpR9lWZddoxnook0GgQwZhdgmrYDtMsj1VR6UGCdp1GFWMa0CIj/wT9QL7pOTcZKW11U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767869824; c=relaxed/simple;
-	bh=in8YVWOx7X3+N9u8C3YWLE2bz3o7s3AEf77KzqE5x8M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMBcMmbkBoZSCQiGamUtkYH1qatN9nZNxLqKriu7Ow89tW6L9v2kdAtfS9QtBKnCcxnzpLaetxXUkl6qO8kgRWGFe1kS3c1E2ZG1T8Vo8vUClBUErvD8+k4X6z/jQrJFfxbMVt9J6VUNwi7T2MQFPDZevA8BAjdTG+NIGcupSCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FrXmuxDf; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1767869819; x=1799405819;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=in8YVWOx7X3+N9u8C3YWLE2bz3o7s3AEf77KzqE5x8M=;
-  b=FrXmuxDfvKRE/8LP7jVsjc3zJq1EHpA91lt3JboalEoCMr2ClbaGBRFw
-   oxYwy1VR/wIC9LMpRccyl0p3SoFsy0SNRi6l/Jb/jBT6j4CHUznOCiS3W
-   eBPH+fdqJ5ZcXHwPznbMCGKEKcgRKWniB5CX2utn4hcsbZYv8F6y87hI7
-   LJzkAPa2jlgHgnow1B/CM5khi1tiCjC+HEGXk4Dvp3ii1snUILLXSCA43
-   w7/04p04USCyMCOthhjjq/KEwEMXh7tZKHeEVczxwJ+dK2VsKf/YkeYfl
-   OSlaOURwDksuSKRD+ycAiCeMsADI+eLzaBKXgl0E9/VffQ71w+i3Hy5rE
-   Q==;
-X-CSE-ConnectionGUID: vZZqva5HQd2+2IrVhlnO5g==
-X-CSE-MsgGUID: p2PbW1vtRYiYp5s6/LSgvQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11664"; a="80354615"
-X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
-   d="scan'208";a="80354615"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jan 2026 02:56:33 -0800
-X-CSE-ConnectionGUID: fAZd+NvLR9yHxXM1xEdoug==
-X-CSE-MsgGUID: KPnd7k64TXKfbXL285H4kQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,210,1763452800"; 
-   d="scan'208";a="203615548"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa009.fm.intel.com with ESMTP; 08 Jan 2026 02:56:27 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 7632BA9; Thu, 08 Jan 2026 11:56:20 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Thomas Andreatta <thomasandreatta2000@gmail.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Brian Xu <brian.xu@amd.com>,
-	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH v5 12/13] dmaengine: sh: use sg_nents_for_dma() helper
-Date: Thu,  8 Jan 2026 11:50:23 +0100
-Message-ID: <20260108105619.3513561-13-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
-References: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1767871698; c=relaxed/simple;
+	bh=3Kjhp0b3kwImrDL2L6LwF5n2i36fqNua3dzRnbIjReU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WhlqB5604pFFggRHglCdPuKhj4TUrK5Q6u+IngZiblKyKjq7mgLkae7cdWZ3lxsne/uODK54Oy8a6CKgM8P7we11e8rIo0X5U7Tp4Flyb0bkg9j/6oYGRy/TskdIm0N4Attv6rqzqCQ4i4nqBJNP57fbKowwhG1Rbh/Dk9kAr2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ThLzjdMe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAC0C16AAE;
+	Thu,  8 Jan 2026 11:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767871697;
+	bh=3Kjhp0b3kwImrDL2L6LwF5n2i36fqNua3dzRnbIjReU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ThLzjdMelW930c+ei43cTLAinWpByX4H/unWusBtDJx67SVViBKH2HJp4NN6pfDNJ
+	 S0o7hNKCFpHN/OgGfD6igSGlJ+DPmag7+/e0kTpckOhnpH4/JEH0gfkDq+GHZ7SxYn
+	 sTyyqEFxobiUx11gdTDahJHp0S7VvuoNQkGG/Ur1aZa0Y+nB3xQm4Fkmv34B6GL8QO
+	 Nq7K/rJN9iNmi7PHXBbpiP7k8HzQKFH8gMdUHColDMn4ALEVUyYXDEC8klO5AsygFp
+	 YxojfWXoN1bQ6FS99fp0EAppdIAS45JOYnyHidAfSv8R/GxlvUu1OujF92bEY8vZHy
+	 1hh01tlZp1NfA==
+Date: Thu, 8 Jan 2026 11:28:10 +0000
+From: Daniel Thompson <danielt@kernel.org>
+To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
+Cc: Lee Jones <lee@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+	Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Kiran Gunda <quic_kgunda@quicinc.com>, Helge Deller <deller@gmx.de>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	Gianluca Boiano <morf3089@gmail.com>,
+	Alejandro Tafalla <atafalla@dnyon.com>,
+	dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/7] backlight: qcom-wled: Support ovp values for
+ PMI8994
+Message-ID: <aV-UyhP7wllSBpYj@aspen.lan>
+References: <20260108-pmi8950-wled-v2-0-8687f23147d7@mainlining.org>
+ <20260108-pmi8950-wled-v2-2-8687f23147d7@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260108-pmi8950-wled-v2-2-8687f23147d7@mainlining.org>
 
-Instead of open coded variant let's use recently introduced helper.
+On Thu, Jan 08, 2026 at 04:43:20AM +0100, Barnabás Czémán wrote:
+> WLED4 found in PMI8994 supports different ovp values.
+>
+> Fixes: 6fc632d3e3e0 ("video: backlight: qcom-wled: Add PMI8994 compatible")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  drivers/video/backlight/qcom-wled.c | 41 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 39 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index a63bb42c8f8b..5decbd39b789 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> @@ -1244,6 +1244,15 @@ static const struct wled_var_cfg wled4_ovp_cfg = {
+>  	.size = ARRAY_SIZE(wled4_ovp_values),
+>  };
+>
+> +static const u32 pmi8994_wled_ovp_values[] = {
+> +	31000, 29500, 19400, 17800,
+> +};
+> +
+> +static const struct wled_var_cfg pmi8994_wled_ovp_cfg = {
+> +	.values = pmi8994_wled_ovp_values,
+> +	.size = ARRAY_SIZE(pmi8994_wled_ovp_values),
+> +};
+> +
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/dma/sh/shdma-base.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Do these *have* to be named after one of the two PMICs that implement
+this OVP range.
 
-diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
-index 1e4b4d6069c0..3ff2a8be8faa 100644
---- a/drivers/dma/sh/shdma-base.c
-+++ b/drivers/dma/sh/shdma-base.c
-@@ -577,12 +577,11 @@ static struct dma_async_tx_descriptor *shdma_prep_sg(struct shdma_chan *schan,
- 	struct scatterlist *sg;
- 	struct shdma_desc *first = NULL, *new = NULL /* compiler... */;
- 	LIST_HEAD(tx_list);
--	int chunks = 0;
-+	int chunks;
- 	unsigned long irq_flags;
- 	int i;
- 
--	for_each_sg(sgl, sg, sg_len, i)
--		chunks += DIV_ROUND_UP(sg_dma_len(sg), schan->max_xfer_len);
-+	chunks = sg_nents_for_dma(sgl, sg_len, schan->max_xfer_len);
- 
- 	/* Have to lock the whole loop to protect against concurrent release */
- 	spin_lock_irqsave(&schan->chan_lock, irq_flags);
--- 
-2.50.1
+Would something like wled4_alternative_ovp_values[] (and the same
+throughout the patch) be more descriptive?
 
+
+Daniel.
 
