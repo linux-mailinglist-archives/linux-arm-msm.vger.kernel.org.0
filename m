@@ -1,181 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-88062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BAF8D02E68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 14:12:25 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0999D03046
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 14:28:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3B4D630719CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 13:06:15 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 042E931125F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 13:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4A134611D0;
-	Thu,  8 Jan 2026 10:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E5D447A0CB;
+	Thu,  8 Jan 2026 12:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fN5W2z+M"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RyHyeQAG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Kf9YArCC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F833B8BAB
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 10:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76B0470F38
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 12:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767869549; cv=none; b=WfXDJGlwRWW6OTWlpIQ5skN84I4ljrPxhNoa4ODxWJmvxp0tVJTGZnVWUNEguIN+1js6JKxqfw/c1EeHquwbB+n0mx7O521HHhBkz/vOQAr4O7yQtpf9BMdnFKvJlC3jrx+0OigxbSqyCEGVWGFyy45wvTbiBurRAX22yBsmvRU=
+	t=1767876217; cv=none; b=VpvvTSnhnDPpfVr44P/Tqx6ybELoUicz+Zxbbpn5O4aS9YLhxEjXC3DSCQrx8Oi87V4+Rd0dHRSMm5clZTCP+83eBpYrTUAOsC39eKOlmDZU9LpyKZ9KBCyNcnTOVI+Ay8EKjqAwAOGkQmVAEGa5e1reMKM0KN4Kz68lWDIGxu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767869549; c=relaxed/simple;
-	bh=l/gMBZqB4Wf2fZYV6YRO2Fn/DBbs1dic3QvJlRj3BYA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uvVwWRvNYaPGkKR/9xDiTROmPhlMQTPwf0PahmFzhfqm4jWLOKoe3Lat6lMkanAGjSxvfUSyc/ZEkd7kyZCGzllZIo5Ic/DChH4nTU3kbwXsimEkcf16uSagZ1j7RxAnPtRdArJPC70ptXe+4JAdRN8/93Yo6zWT16yQxxqYylc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fN5W2z+M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C019EC19425
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 10:52:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767869548;
-	bh=l/gMBZqB4Wf2fZYV6YRO2Fn/DBbs1dic3QvJlRj3BYA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=fN5W2z+ML1YP6mjzwzF6K+ufyHEDs6G4tewgi9/uiDZY4cmoYY8cN2XFJJWr4dyIk
-	 /2JfSKzvAn11DTUOoZEmfVcMIpC3gkWuhgzMULieirvqOPpZ96p5RJj4Mlfz5hfmoY
-	 lnOJJQxylxr4pGu+83el+SbuHXgZI6U2iAqtNbO7h+x7JGw7iSEJrJW6t/ZhKqZEfw
-	 fJlPYojRiBnMZQ7m6aSGJvYasPT7Hx2VieYlv1x7ozQ9CvM/FFTFqTB/vIEkiPAkbl
-	 JnHKmUyqav8UnkVngHFIZZo332tW05+1CGGI2ug+KLcrPzNucXwoXU/i4TninE1Z9q
-	 cy+BUAeLYJAIQ==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-59b672f8ec4so2879038e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 02:52:28 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVeTTD3uhMRZsGp7VSc+wjMEsyCYjsdRujEOVMJlH8xgF95MRdzKZ/JkYj7D036cexM18q2lk+/Rwuzy+0x@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVxwHNO0d6tiCc1p4SdtMWDnzxH+T9t4m9jqv0AuIBqblaSHu8
-	fydl7Mfw17FJzNOZC0m5sxbDnKnYHIIDrSPKTw87bigIl6+5TIue6Aou+TOazLPhhz9ABjvIqIp
-	fmadOUQnNco0CYuFLYZ25cDvsrJlkn3q2WVRhj7IQkA==
-X-Google-Smtp-Source: AGHT+IGjqdyuY3KRfM+LiSJS8ufKP/VvtPs728gsfeqE9U3Gtw7g5zOA8ofNsJSkehAL894rZs5Rech9o1zwYYHpJvc=
-X-Received: by 2002:ac2:47f2:0:b0:59b:715b:4fd8 with SMTP id
- 2adb3069b0e04-59b715b529amr1216531e87.13.1767869547364; Thu, 08 Jan 2026
- 02:52:27 -0800 (PST)
+	s=arc-20240116; t=1767876217; c=relaxed/simple;
+	bh=OYfTyE+Smwwrvmj0fPhLrTVVFvufpfpQNZPG9JwoPF8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pKf0WXoySd9VV5uAjKAGAIth5Lx+QCcc5gJkgyofGb6fymYuEuiEpZCEZMwM3kEksjebz0H8K9/+9clcuInxgZfm7LLNLn13W0VBYYGHbyTrffZJBDuI4XBTxda+2g7+C8U2FT0/EXg4oWn62e3pb8rU18tA18wg2/ifk1vqiM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RyHyeQAG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Kf9YArCC; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6088riKj4050027
+	for <linux-arm-msm@vger.kernel.org>; Thu, 8 Jan 2026 12:43:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NNzfH6+c22c9ufgQvnvleCWCuCBPPhgb+gUxhkM23qw=; b=RyHyeQAG5xuc2ozm
+	8Z24fmPNpcsqJK5Bu1jj7+5ujnlOAnN/nnNOy6W8oIpkbH6FW9g5qz9Ir6Ky2XAB
+	hEKKzUnV3w30xQ2VsCrtAsMctrPt8YQy4xz0W2LBKxSp8e0+Cwo4atZ2qqLUzEnc
+	7cQ7zWwwf2FoTMWPEEU1JYZ/7bwjz8xRegBh8cFwFSYdqyPbsUyWjd4jGsEjX7kV
+	7ONEhG/2t8Oo0FQrYhWHmqEVoznx6VdjRjZMcF7dhwpxoCQ4Yn43iTOKF9MObCit
+	asG8sOdusVS4rrUF37wgPwXuC0O4tIo0DiZ88qLWjYuW02j86p87HR1xKTiyMWcl
+	yslfNA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bj2n8j0re-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 12:43:35 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ee409f1880so7679331cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 04:43:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767876214; x=1768481014; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NNzfH6+c22c9ufgQvnvleCWCuCBPPhgb+gUxhkM23qw=;
+        b=Kf9YArCCmFMk11Hxbi4+nHK+3NjA+SWcEWGNHKjh/nbqnRWFzyw2nIRGRZqUk+7TCd
+         ggfXDk1pCQPXDCFjm7m2tr1KCpfiJY6xFg0IQ8VdEtmFXAn8rwotLH4g84MfyYEOqZ08
+         MvzJmpQHn4LXfo+uo/AX3ZrzNyt/tk2XUW0tzdQ6vSRPQY8D/uwERjUHIX2clRiIrsQV
+         RRLUuUQPr3NCqedsBIiDd2BzrgmDeivsmH6Ycy35IcKu+TS1VNZqSqNbnuAymNLepg9r
+         CX5F3Zzm9oaAIsWpKypOCQokFKRB5rzzRtHNrSl3NiHnDVTIUShQhOX9T1FrP1rtWS6k
+         PQcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767876214; x=1768481014;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NNzfH6+c22c9ufgQvnvleCWCuCBPPhgb+gUxhkM23qw=;
+        b=YY9BZ9R26WV3KPs2cy3fdBnCZn/sIYbaWsITavHt3lZlcY5j/kkvBvcw845m4A6tKd
+         h/jGnRNmquGJvxWf2MTLyRXme9MAsBbH2vH8EAonOt1hvmLyBVGw+J/MErgfxymFBWfo
+         itEGCtsuIE3XC66bzI/XJyJWsO3VQQc37yuqKfF7p1V1wfAWAUzKt1i0flOmKQLRky9m
+         7KOy1QDXsYEb7G7YfcW2tAjDgFu77aJ7C8sE9SwOJFecy+m5p8830Te3U9k7oROAC8Th
+         TOf1JPb5XHBYZYlmXLkGNHsqbcEZAxKG7AYsqzV4ESxb0Uxq8tqwOH5iNH48ocKctA2N
+         V5lA==
+X-Forwarded-Encrypted: i=1; AJvYcCWG6/jlwcgd6BOzCBYLTLlBjcdiuZ2ZVdoP5FdEjclaLd14xup7o7Ud+EA+DpvlxC75yZbs/gbUY1gy+Z1s@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqqgPeqzWoEJ53wyutd4fZrTi3hVxFKqfq33m0dIktZQrgT+yy
+	Ya9tYdp/q/Xh86KL3Ix44M9TmCLGE4BevoLH1a54KWZ93XdIwC1d1bK6kRr5H3u36zQOE8DQ7Qt
+	04kw1baOxLLgD45RZq91kDLLCapltvu+VsTndeeWgbPOQ90SSo3dpnHeeZPYTkdoz6y0/
+X-Gm-Gg: AY/fxX7CL3dOx91+G6ai1r7kHnPSjIWEbiuHIwfGouWtfNNUv5ZmJ246WIqLCO5BVj5
+	/wv4CzU9GSU1T5SRJW56tnB4tBVKWVb4GTQ/0aOAPA/f7jioUrwIHdJoc9/lM058Wmyr87JI92X
+	IkNMzTZ/ZK7fqSVIflDWg5Dvt57QDn1kacY/uFBKZRRO7wCR/TxZdk0o/eXMiWK3pTK6ICe1jvB
+	inUUY033ZcDEAtxtVXPgIhhCkLAWIEatA7P/pZjVH5pBQbayMvTANhjHih10fI8TmxdzVtgq1b7
+	fG06AjSlwKqOboiRLaZ1M7AQe/pGIQ5OzbPWHIGHHQpKbLfDH+YEZYyl0cQkZocA4IhjW66rOyK
+	+vWnNiAfFJLXNRvoJ6wK6B0qRECamRdE6AwZ7fJAxcU61IvpW8h2cxFh4mpFZk+TNq1Q=
+X-Received: by 2002:a05:622a:2cb:b0:4f1:b580:fba8 with SMTP id d75a77b69052e-4ffb48d3b42mr64410301cf.3.1767876214108;
+        Thu, 08 Jan 2026 04:43:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF3bP3jkzHKz3spcjo1FNDFbjTpMwdJwshY99+/AELG9VJvKEBUlECjvmhfGb1PCNgx47kPPA==
+X-Received: by 2002:a05:622a:2cb:b0:4f1:b580:fba8 with SMTP id d75a77b69052e-4ffb48d3b42mr64409991cf.3.1767876213589;
+        Thu, 08 Jan 2026 04:43:33 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507b9d51basm7484207a12.12.2026.01.08.04.43.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Jan 2026 04:43:33 -0800 (PST)
+Message-ID: <ba3f479d-1233-4e6a-8593-5c7fe5e79762@oss.qualcomm.com>
+Date: Thu, 8 Jan 2026 13:43:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <20251112-gpio-shared-v4-7-b51f97b1abd8@linaro.org> <66eaf003-c397-4920-b3b7-93ac8a5adfda@oss.qualcomm.com>
- <CAMRc=McXFTLjE=2-xsx4sodHgd83h822iEBHT7bxcNOQm6OJ3A@mail.gmail.com>
- <98d69fb9-d3bc-4439-88b4-60f3cdea3422@oss.qualcomm.com> <CAMRc=McmvaM9=K=0NLRcLLmo5ck=m8Fqekh7tBMz6quO9K4opQ@mail.gmail.com>
- <5151bdfe-7e83-4aa0-b9fc-28209d535e1e@oss.qualcomm.com>
-In-Reply-To: <5151bdfe-7e83-4aa0-b9fc-28209d535e1e@oss.qualcomm.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Thu, 8 Jan 2026 11:52:15 +0100
-X-Gmail-Original-Message-ID: <CAMRc=McNH5+hk+9h1eseUTqm_J2CZLviJ8oC_i_8mXm5nMo6_Q@mail.gmail.com>
-X-Gm-Features: AQt7F2rCIGfQHNZuZZNdIyWGD51XMxF3XQisHmrfPog50rXiS2PIMdJwP8hGXEc
-Message-ID: <CAMRc=McNH5+hk+9h1eseUTqm_J2CZLviJ8oC_i_8mXm5nMo6_Q@mail.gmail.com>
-Subject: Re: [PATCH v4 07/10] arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Will Deacon <will@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, Mark Brown <broonie@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: agatti: Address Gunyah memory
+ alignment needs
+To: Sumit Garg <sumit.garg@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
+        vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
+        robin.clark@oss.qualcomm.com, lumag@kernel.org,
+        linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>
+References: <20251229071258.456254-1-sumit.garg@kernel.org>
+ <20251229071258.456254-2-sumit.garg@kernel.org>
+ <ahbbg3pffedrjzvksgz2jv7lwajwlcxc6nsmmtunwc4346eawa@xayff4ozvdbn>
+ <aVtQHftDmENIAxrb@sumit-xelite>
+ <73bcf4c8-3d49-4b55-a771-0c5c1ef54380@oss.qualcomm.com>
+ <aV-L81f5NQg4leu8@sumit-xelite>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aV-L81f5NQg4leu8@sumit-xelite>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=d+j4CBjE c=1 sm=1 tr=0 ts=695fa677 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=8cjB7eQHtUe5wF3l764A:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: I2tAnAHehQkkxh16Vbi0cjLiHOY_lrqR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDA4OSBTYWx0ZWRfX9nvUWb4ZRWqa
+ gg0JSzHNsfOalXhwrZLCvYCOWUA1HG4Sp2aiX664RiJhGNuiCcFuBVjXoxikBHjkPlD73YT+yw2
+ cYoT3qsBzDjKdyelBwLLm3mJxqIL6aVr9vZWGHYb4E4upBhgMFpSHKzaIMeNC2P3NHzB3VrlwCp
+ 82uZM85RU4VYVngNOblpuiQEIcgHeg1/hwK7y+gVI6HbApgrvf0nyz9TpeFEtbQNG1uuSLLkbIc
+ dZMbDAeBiCZ8wxkCtxK7cjgP+pFBOYrrgJgC8SdwlyfpLxhWWXasOuk9a9NFgdhxQ2gfubOKl2r
+ EV5ikQ3kv+gEfdOCn62639g2ExrYdtbxrPP09AkWKM4u527kcEfYpS5OqjsESyzZuVRDZxeVzx2
+ VT712vwJrfl/Uzq2ODJDBOtBOXT3IigNUFZ1fy6xuxW2y7Kg+TMGeGV5zPVsCG9QL4hgAn1SLsi
+ 8R1no9HRyYNqmoi+ZlQ==
+X-Proofpoint-GUID: I2tAnAHehQkkxh16Vbi0cjLiHOY_lrqR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-08_02,2026-01-07_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601080089
 
-On Thu, Jan 8, 2026 at 10:44=E2=80=AFAM Pankaj Patil
-<pankaj.patil@oss.qualcomm.com> wrote:
->
-> On 1/8/2026 2:15 PM, Bartosz Golaszewski wrote:
-> > On Thu, Jan 8, 2026 at 7:49=E2=80=AFAM Pankaj Patil
-> > <pankaj.patil@oss.qualcomm.com> wrote:
-> >>
-> >> On 1/7/2026 6:08 PM, Bartosz Golaszewski wrote:
-> >>> On Wed, Jan 7, 2026 at 12:07=E2=80=AFPM Pankaj Patil
-> >>> <pankaj.patil@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 11/12/2025 7:25 PM, Bartosz Golaszewski wrote:
-> >>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>>>>
-> >>>>> Some qualcomm platforms use shared GPIOs. Enable support for them b=
-y
-> >>>>> selecting the Kconfig switch provided by GPIOLIB.
-> >>>>>
-> >>>>> Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> >>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>>>> ---
-> >>>>>  arch/arm64/Kconfig.platforms | 1 +
-> >>>>>  1 file changed, 1 insertion(+)
-> >>>>>
-> >>>>> diff --git a/arch/arm64/Kconfig.platforms b/arch/arm64/Kconfig.plat=
-forms
-> >>>>> index 13173795c43d4f28e2d47acc700f80a165d44671..3dbff0261f0add0516d=
-8cb3fd0f29e277af94f20 100644
-> >>>>> --- a/arch/arm64/Kconfig.platforms
-> >>>>> +++ b/arch/arm64/Kconfig.platforms
-> >>>>> @@ -316,6 +316,7 @@ config ARCH_QCOM
-> >>>>>       select GPIOLIB
-> >>>>>       select PINCTRL
-> >>>>>       select HAVE_PWRCTRL if PCI
-> >>>>> +     select HAVE_SHARED_GPIOS
-> >>>>>       help
-> >>>>>         This enables support for the ARMv8 based Qualcomm chipsets.
-> >>>>>
-> >>>>>
-> >>>> Enabling shared gpios is breaking hamoa and glymur boot on next-2026=
-0106
-> >>>> For hamoa - reg_fixed_voltage_probe which calls gpio api is breaking
-> >>>> Please find the log here - https://lava-oss.qualcomm.com/scheduler/j=
-ob/24722#L3514
-> >>>>
-> >>>> For Glymur - qcom_pcie_parse_perst calls the gpio api <4>[    2.9109=
-82] WARNING: drivers/gpio/gpiolib-shared.c:493 at gpio_shared_add_proxy_loo=
-kup+0x160/0x24c, CPU#1: kworker/u75:0/109 <4>[    2.911027] Call trace: <4>=
-[    2.911028]  gpio_shared_add_proxy_lookup+0x160/0x24c (P) <4>[    2.9110=
-30]  gpiod_find_and_request+0x1c0/0x504 <4>[    2.911032]  devm_fwnode_gpio=
-d_get_index+0x1c/0x6c <4>[    2.911034]  qcom_pcie_parse_perst+0x70/0x150 <=
-4>[    2.911037]  qcom_pcie_probe+0x414/0x804 <4>[    2.911039]  platform_p=
-robe+0x5c/0x98 <4>[    2.911042] qcom-eusb2-repeater c448000.spmi:pmic@9:ph=
-y@fd00: supply vdd18 not found, using dummy regulator <4>[    2.911043]  re=
-ally_probe+0xbc/0x298 <4>[    2.911045]  __driver_probe_device+0x78/0x12c <=
-4>[    2.911047]  driver_probe_device+0x3c/0x15c <4>[    2.911049]  __devic=
-e_attach_driver+0xb8/0x134 <4>[    2.911050]  bus_for_each_drv+0x84/0xe0 <4=
->[    2.911052]  __device_attach_async_helper+0xac/0xd0 <4>[    2.911053]  =
-async_run_entry_fn+0x34/0xe0
-> >>>> <4>[    2.911055]  process_one_work+0x14c/0x28c <4>[    2.911058]  w=
-orker_thread+0x188/0x304 <4>[    2.911059]  kthread+0x11c/0x128 <4>[    2.9=
-11060] qcom-eusb2-repeater c448000.spmi:pmic@9:phy@fd00: supply vdd3 not fo=
-und, using dummy regulator <4>[    2.911061]  ret_from_fork+0x10/0x20 <4>[ =
-   2.911063] ---[ end trace 0000000000000000 ]--- <3>[    2.911065] qcom-pc=
-ie 1b40000.pci: error -ENOENT: Failed to parse Root Port: -2 <3>[    2.9110=
-69] qcom-pcie 1b40000.pci: probe with driver qcom-pcie failed with error -2
-> >>>> Reverting this commit fixes the boot on both platforms
-> >>>>
-> >>>
-> >>> Hi!
-> >>>
-> >>> This is not really the offending commit, it's a recent one in the
-> >>> implementation. The issue should be fixed by the following series[1]
-> >>> that will be in the next next tag. Can you give it a try?
-> >>>
-> >>> Bart
-> >>>
-> >>> [1] https://lore.kernel.org/all/20260106-gpio-shared-fixes-v2-0-c7091=
-d2f7581@oss.qualcomm.com/
-> >>
-> >> With the linked patchset applied I still see the same issue
-> >>
-> >> Pankaj
-> >>
-> >
-> > Is the gpio-shared-proxy module available? If not, can you change the
-> > config to make it built-in like CONFIG_GPIO_SHARED_PROXY=3Dy?
-> >
-> > Bartosz
->
-> With CONFIG_GPIO_SHARED_PROXY=3Dy the issue remains the same
+On 1/8/26 11:50 AM, Sumit Garg wrote:
+> On Wed, Jan 07, 2026 at 12:29:02PM +0100, Konrad Dybcio wrote:
+>> On 1/5/26 6:46 AM, Sumit Garg wrote:
+>>> On Sat, Jan 03, 2026 at 09:49:04AM -0600, Bjorn Andersson wrote:
+>>>> On Mon, Dec 29, 2025 at 12:42:58PM +0530, Sumit Garg wrote:
+>>>>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
+>>>>>
+>>>>> Gunyah hypervisor requires it's memory start address to be 2MB aligned.
+>>>>> So the address map for Agatti is updated to incorporate that requirement.
+>>>>> This should be a backwards compatible DT change which should work with
+>>>>> legacy QHEE based firmware stack too.
+>>>>>
+>>>>
+>>>> How come this isn't conveyed to the operating system using the UEFI
+>>>> memory map?
+>>>>
+>>>
+>>> I agree that with EFI boot, the information is getting conveyed via EFI
+>>> memory map. But there will be non-EFI boot scenarios as well in case of
+>>> U-Boot. And moreover I suppose we need to keep the reserved memory
+>>> ranges in DT updated to reflect the actual memory map.
+>>
+>> Can U-Boot not do the same by altering /reserved-memory or /memory/reg?
+> 
+> I suppose you are referring to DT fixups here, we generally try to keep
+> them to a minimum required in U-Boot.
+> 
+> BTW, don't we want to keep reserved memory ranges updated in DT? Or we plan
+> to drop them altogether?
 
-Ok, I believe there must be an issue with environment differences
-because I'm not seeing this.
+Generally I believe they're only a necessary evil..
 
-Can you enable CONFIG_DEBUG_GPIO in config and post the entire kernel
-log to some pastebin? Can you also post the output of gpiodetect and
-gpioinfo?
+Since Gunyah-on-Agatti doesn't seem to have been released yet, it would
+seem like a sane idea to fix the issue in the firmware. If it was, well..
 
-Thanks
-Bartosz
+On UEFI-enabled targets, we can largely rely on the reservations coming
+from there, only adding some carveouts for e.g. PIL regions and SMEM (not
+because they're not resereved, but because we need a pointer to them)
+
+Konrad
 
