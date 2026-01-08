@@ -1,131 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-88148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 370B1D0657C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 22:37:08 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07DA8D067FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 00:00:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3CFDA302781F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 21:36:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C2728300D427
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 23:00:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67622329C56;
-	Thu,  8 Jan 2026 21:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229FF2D6E68;
+	Thu,  8 Jan 2026 23:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FW3yrVG3"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="W7HLm4CL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4872D6E68
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 21:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F175E1E8836
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 23:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767908209; cv=none; b=g3RUcfopD8lUeX915p7MtlrdAFw97X8z7d2ROstvxRQQxnNQrHuGn6oBB+8B9HOCTQzgk0tjmcZvaX5JJAbjQJTmGg6gXoP2qdnEmR9ZpRMVGyzpW6466k1eYkrntGLi0dauXW7fLqNGeN1Qq1OJiJZurAICPmU6lWCX+g68gmY=
+	t=1767913237; cv=none; b=OBsX5zYByTuKRG7xFjbuSk0kLZxc3URbEChvRfg0yp4FY1t042cXuUyDiZIfwiJZdEMHQ9/iruq8ezUu5Sgz6ylAPl1h22xKTCWrzl/ZriUEo8Xw6Hk0htYXVbe5jhohCBKLCto3N7RB6GXU+2MVFZfIBn49J+RDcjUV/QIq5K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767908209; c=relaxed/simple;
-	bh=TZRcR/La8sU9V7mWVhKV+xchY2Yai9plkmM90nGGXZg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tAvpUDYMQFDb1SFayDsVW+ZoY+m6P5Ns3pvpaOImnevrEwc5p0+VIvNJnAfNMw2oJCUF7eJccFQK32WfGy021jil26t+jbmQk2Ov/HrbASfyWGtRdVXTrZ5dY0/4GYFdAJ0NWIedFfJjwiWeUDf1Grp0dBisxxAMekNTqhP88cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FW3yrVG3; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-382fd8aaa6eso22447551fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 13:36:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767908206; x=1768513006; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cqbx+nBwTy8ehc/EWm5BAgZ35l9VwydtmAp8+5UCQfg=;
-        b=FW3yrVG3t0C/LYdp9XUu9gzxnniOAICHH+7zCxNIuEyPi9aCCFeAUWsoE4f8NYMzn7
-         A4/HhGVd8FvshjhAnQWStKbHvrYSMO0NnxenVKSvbVTNmUc2HnNSwW6uDgg0sKRh8ICO
-         lFkmVmfbCYHQC+M5VHD/k+g3v6ha0kzGSAbY/qkpDfzJHCulmikkpUjC4k+xz4JkWxN3
-         QDQlH2ZVbbBTYl/JIL9BqLSrRhIdy1/LMnU3hQ/EBASUNl03e2DRNLtwZNj6a8/1pzDx
-         ye/6VkHsaA8YB/hFcyc2BE0QxFvmfTsk4bGeXrz2/ZGLRGr9P/FEV8+KejMIWAibRH56
-         +wgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767908206; x=1768513006;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cqbx+nBwTy8ehc/EWm5BAgZ35l9VwydtmAp8+5UCQfg=;
-        b=TIRXT2wlTALspkZH7/A5W8V0D9ZzyA11aUnv35fnSzNMNyCosYyN9kLbs6l2d0gIl5
-         I8D/YwQXvPEB95rG30cdX4pzb0g84Wc5kgEESFz4f7/p+AN3sErGTHIZsaWQxuF1Sm2p
-         F+nSdUoBWbWCi8D9Nsg8yWCPOASo0hu3Rroxfz8QpvnpzhKhdLlvO2rKNZ3bbbsPIMLx
-         746ZT3+Ce8mqlfol/H447fpVXEUnHFV7CGa5dhWV9lHitO75cjlo1FB5aCw6WhU+/0il
-         8+L8i2LUkMphNZrzVkcqB0ouY6MYpLPqV313kgMxcwKZ+KvTGu6ZduOpLGF+Jrl6dXe7
-         /6HQ==
-X-Gm-Message-State: AOJu0YxwsMJKBNhVhZdXs10ZzwpO8S6uJ62HdPOj+ToaEK1AGpfYN/MD
-	X2ooly3C6cARlnN/MyFPepeEv9ryAy4fLoRUv8frcf8DdVnB9VOBk92QBiKI5T6TJL4Je/g=
-X-Gm-Gg: AY/fxX4RxOpHQSKFh39hUWr5E3VLnGzWsYjbUag6z0iB+yzP3lqfac9Bbinv+/uPhLI
-	yNS5OHMCghtCdkxoeokCYz+/Fw+Fc7x7F97Fc19FJLfAIrLW5Y0hqBj/TXjSevU3Fb8j5UtXhcQ
-	CUajYOj75oHBAZ08/P+ATdCdTJox6zlDE+UaInMwjQ8p41oo1ikOO/K9rJPsoZS+V25B3+tTs+7
-	MOXEPfoDK95jx55Ow/aA5wm0+S9oqySCZm0MMi92h5/tIFINZRDsjhivT5om3MdixjE2yR23VVv
-	sXjC2eERgC6JEQCELG/vzuA4aQjWWW+du+b1hIhiKjIBmBnDmuUADXyGDr0ce6d24JoMHRSZHK5
-	MWzrJwghfOlnO6MNrODukcv1+EhJWkfErXwG0XgMdBWBHlYVcjQFcgtmNT9mvo0US9+ggngfiyS
-	lJ1duNN/xSlDRb
-X-Google-Smtp-Source: AGHT+IFMaV8dzIQb/uzOgwkOhBBFvf5v6hGkMaSQ2siFokcp+laluHB0fDW4rArK+YdxprRFy/48uw==
-X-Received: by 2002:a2e:b8d0:0:b0:382:88f2:fe25 with SMTP id 38308e7fff4ca-382ff880808mr21325141fa.45.1767908205699;
-        Thu, 08 Jan 2026 13:36:45 -0800 (PST)
-Received: from DESKTOP-BKIPFGN ([45.43.86.16])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-383140e641dsm4140401fa.50.2026.01.08.13.36.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 13:36:45 -0800 (PST)
-From: Kery Qi <qikeyu2017@gmail.com>
-To: robin.clark@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org,
-	Kery Qi <qikeyu2017@gmail.com>
-Subject: [PATCH] drm/msm/dpu: vid: guard hw_pp before accessing merge_3d
-Date: Fri,  9 Jan 2026 05:36:34 +0800
-Message-ID: <20260108213634.1905-1-qikeyu2017@gmail.com>
-X-Mailer: git-send-email 2.50.1.windows.1
+	s=arc-20240116; t=1767913237; c=relaxed/simple;
+	bh=Gmp7oxzoMMQ+4FOB0OmFFTH7yDV+Rd4MYUw4zlyLzq4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rRz9swcFfNrWlYGty8puKSsw87LVEWjAeR/WmIVyor24UOaWcsJ2rU+puv0GOib+0TKcnxVCtJfZSK9fotbYbnPE9bYnah1/9WUrOhGNJszZVESKi9itsZdA8Z+3G0k7MvsCKQly1Uf2QGzWB5MaUrtF1d4JXunnlLKv0pv9Fj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=W7HLm4CL; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <702e4696-5ff6-4c72-bce4-1a9a8ee1ba18@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1767913222;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3Y93ff+hEOI+QHoGj9/iWZX4epwSGuXWyQ3WAZwL30k=;
+	b=W7HLm4CLof9hJBlf9kF+Ck/RzjHe1jNiMASMK39UJHeXZndB5FTA5SHTAXtUKm8ZZwjZcY
+	NkoZcf1HOarv5Nn2EWog/W2fzVzLbDrrhezpiO7+2SIPgLhhSKiPJqZ0YMnY1XEVX9gjCF
+	zscvZj3lfYU7Kj7ir0WhOivJQ/c5VhIuFMRLLKcmf3xF0UoTwQi+aNaA2sbv5ejKyB75MB
+	wXZ2rgUijijpYmbPGs4cHFhPWw0Hz/LuE5WiOnSCnbLfj1mN4e4d9zAnKKFTao24uO5ySB
+	uYtY841b4cR62R4Zf5xNP6YeyPdAcDbxdm2Ag8nTHcpt480Vo24YxnLs0vLGgA==
+Date: Thu, 8 Jan 2026 20:00:13 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] clk: qcom: dispcc-sdm845: Enable parents for pixel
+ clocks
+To: petr.hodina@protonmail.com, Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>, Rob Clark <robin.clark@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, David Heidelberg <david@ixit.cz>,
+ Taniya Das <quic_tdas@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <20260107-stability-discussion-v2-1-ef7717b435ff@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-dpu_encoder_phys_vid_setup_timing_engine() dereferences phys_enc->hw_pp
-when checking/using the merge_3d block.
 
-hw_pp is not guaranteed to be present for a video phys encoder until the
-virtual encoder atomic_mode_set path assigns it. If this function is
-reached on an error/unwind path (or after a partial setup) before hw_pp is
-assigned, the merge_3d checks can trigger a NULL pointer dereference and
-crash the kernel.
+On 1/7/26 8:44 AM, Petr Hodina via B4 Relay wrote:
+> From: Petr Hodina <petr.hodina@protonmail.com>
+>
+> Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
+> clocks are enabled during clock operations, preventing potential
+> stability issues during display configuration.
+>
+> Fixes: 81351776c9fb ("clk: qcom: Add display clock controller driver for SDM845")
+> Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+> ---
+> We are currently running the latest linux-next snapshots (next-202511*
+> and next-202512*) and have encountered random freezes and crashes on the
+> Pixel 3, as well as crash dumps on the OnePlus 6 and 6T.
+>
+> This commit fixes the stability issue. I've checked other SDM dispcc
+> files and they also contain this configuration.
 
-Guard merge_3d accesses with a hw_pp NULL check.
+Hm, we don't have this flag set in dispcc-x1e80100.c either!
 
-Fixes: f87f3b80abaf ("drm/msm/dpu: don't always program merge_3d block")
-Fixes: dfa35bac9930 ("drm/msm/dpu: use struct dpu_hw_merge_3d in dpu_hw_pingpong")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The only random freeze we have on that platform seems related to PCIe 
+ASPM with NVMe drives, but during display configuration.. *extremely* 
+rarely, but the eDP display output can get stuck on a blue screen. Many 
+run with clk_ignore_unused for the early uefi framebuffer though.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 0ba777bda253..5e5acbe9147f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -308,7 +308,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
- 	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
--	if (intf_cfg.mode_3d && phys_enc->hw_pp->merge_3d)
-+	if (intf_cfg.mode_3d && phys_enc->hw_pp && phys_enc->hw_pp->merge_3d)
- 		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
- 
- 	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
-@@ -322,7 +322,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
- 				phys_enc->hw_intf,
- 				phys_enc->hw_pp->idx);
- 
--	if (phys_enc->hw_pp->merge_3d)
-+	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d)
- 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d, intf_cfg.mode_3d);
- 
- 	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
--- 
-2.34.1
+~val
 
 
