@@ -1,204 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-87998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13E08D01690
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 08:36:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B9FD01ABC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 09:54:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ADAE5301DE09
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 07:36:22 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1AD0D3055016
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 08:43:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D366930AD15;
-	Thu,  8 Jan 2026 07:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4F6237E2F0;
+	Thu,  8 Jan 2026 08:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVwIoei6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S4UW5WSx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6911E286400
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 07:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872342D4B40;
+	Thu,  8 Jan 2026 08:17:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767857780; cv=none; b=fNDDpGOqrDQk7C9uwDwly4H4G8CkTnD7PUnosvDxZwc84xEh5Pu689LjAT8DeN/2wD0MNnpyluOoubnjvHCRWbsE44OtV0OfbsOMhyDq3LtUaqe63DGR99L1AhfqKad3EVi9IvLAcuNc5fz3DKHKiS/Zde5999imPj20etIlgWs=
+	t=1767860273; cv=none; b=cC3p82xb6Hv6Ubr+c+DAjQYyGCKDgJ+VoUnzkdCSavcrAZbQpLamZiHxCUwRdNe6fYuExqJVq5W14/H0LelTR2x+kSs+3zym+4btUXQLDiQzHY9zlQed/avvIxdp0A1QbH0vmjsTGeZveWEY5dyS9VumdgefS+xF/toJRI//B3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767857780; c=relaxed/simple;
-	bh=qRm6fe60g43t+3aop8VfXvEShhkPmEb+qMsIbWntVdM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Z6D3/k2jit5z5474hpZ1pb4ui/n18l6jRXPjccRArNtCm9N/qdl5adE1o7M42dPGUD76r2NfF8S3kEnRqiSyqwtJ1Bo3NY3EEEzkdug/wpDgvG21707B34MEtD9PpCMbU+y1tV3Dzoy45b2C9LibPWg/HKMx6s9mAZumHlPtRzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PVwIoei6; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-34c7d0c5ddaso892186a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jan 2026 23:36:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767857778; x=1768462578; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Raf6rMxyKbtpGA0a0neUDVB8KhO13Yy7WiRRs10GZEs=;
-        b=PVwIoei6TgIlW7E6gsqP5aV0tytGsyqA6znnyqUbrt8hY3BDJX88NiKLcxbFTQnxG0
-         nq27/8LXaKoXYO4TVZTd5R5dwsM7eS6bR3JzqRN60WfgEoF6hQUi7QF+ig+BYeOPRAhb
-         5XV0yTJzQZXkpggx90jWmB7yHFSeKBQpDowCJ0uu9/BTsliI09Z89GNsNRNJUXMb5a3A
-         T/XxZZB2LrMdIocjbHMBSuWZunfiz8h6WNGGr4z0iRV3VxaQ4qK7q5YpwwVfkOamtsgi
-         gRCxm3NHE9BmW18Qyrjndl/kGLzkKngCt1Id1nLS2yQfLQBg24/bu59TziQi6shIwBc5
-         yalA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767857778; x=1768462578;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Raf6rMxyKbtpGA0a0neUDVB8KhO13Yy7WiRRs10GZEs=;
-        b=FPF1EnvFEWura3ojtAAyZfhs2i3DcJZ/JlJiCHa/7wf5G54EDjmWb7+DFdEQvllq4u
-         KyKv3krYs+g1QaeR+0f90Kqs0lod9FMdyofJJ9hd27RslMg7z/OzaWYzFKPExhv0pqoA
-         lDtXjKEpGtERo9FvW0xHSjPrwSGWAbJRf7KJzSLI/3XtP+/Kf8vnaKpn3M3oZiaSurvB
-         FVg/Bs/qbdIGhez1eijmtSNQPu9w+5b61x1prAZwUipb/3fQd5cGW9WLbAXor4PjauXE
-         xIeFF+M5DDucTTAl8VqI7DEy3i7H+wLvAM2K4ddBFbhxdRx+2+qdxKQ8EI0xq/cHBlGr
-         PSlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6KcCdNzGatkdjsx9oL4Lpiy7Zsl10ZvCSC2z6B1whUK6IbI8ceNaTDTd8eLHgyFCt2T7I8zH892GFOwDt@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmYuQxEBemXU/RclYDBmcLxL7dNpBP0WdVzj4P1Tw15SxdxGaQ
-	IDCxq7dHbB65o+IsGwO4KRCreziK1MqcfJtg7ByZ/LWoVgYm+4pVuQJP
-X-Gm-Gg: AY/fxX7+Rcg3aGU5KUPnM5UYGVBJHdj1jilBHeu+NEVyGSJCDKboRtQUjnZEF3UT4YL
-	CDxqL8qWeLnL9VhPuksNxrMs3AKCsmlt8BysX/Cg7tz2DTINOts4b//24OqXP/up6MV4dLt25Cj
-	Ir/OGyk4hRz4R1seGN+4kuXaWD0bOd6dDM+E2ijbpSMKv8D8DCHte+S1kxD/6MggkALUUMC+K4q
-	8YquaAgc6uhsyML1pvU3d08WQ+g4Fm+iMzs+v6vYsdwFmx0ac3YwjChjfPlMfo6KRy9aDXriGV9
-	54iCHJYWVtr1tsvkO+6zqj0YR8iFHw0U/0ftxvuPXtoSApXcPghZcMuWJeSOywKb+9/7r4deIRV
-	Zw/lfE95tGuCFUXzhbBX2UYBzk1BTTeYVg8nPmkSfLC6CsdnkO5fUdzTBw6CZQkqLpllaeG6K8W
-	894O4ixh5qRXb7PtUwciI9IrZQZvTrFmtC
-X-Google-Smtp-Source: AGHT+IFwn+9pYeZHD6rKzeZEcx/p1yKt2xjGQQ57ur5fOKGbe8ThUndVkKFkwC5dqjKIev8DHMkOaw==
-X-Received: by 2002:a17:90a:e705:b0:340:6b6f:4bbf with SMTP id 98e67ed59e1d1-34f5f95a1damr8303062a91.18.1767857778424;
-        Wed, 07 Jan 2026 23:36:18 -0800 (PST)
-Received: from [172.16.20.12] ([136.226.245.1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f5fb64d7asm6861454a91.11.2026.01.07.23.36.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jan 2026 23:36:18 -0800 (PST)
-Message-ID: <c3492b90-bb48-4584-99fd-b1b6832d22ff@gmail.com>
-Date: Thu, 8 Jan 2026 13:06:44 +0530
+	s=arc-20240116; t=1767860273; c=relaxed/simple;
+	bh=1/gBImOJBnxvpdIanR4Ug777313epe/xx8uTuJUSptE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BR7wNS3cf3f8o+8v86EMnfpRuuELweItaGffshat/aCV0WRRJ3aKtIbGr9Afarq15M9PvJ8hpb785yf368rkT9qBApuYUNr/aIlwf8SpzZrQV+CTR/fDkecbRhmhPz6iLEImE33/WvSCx5YdI8l5pLEKcQPyxytkJpj9nx0vmwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S4UW5WSx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944C7C16AAE;
+	Thu,  8 Jan 2026 08:17:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767860272;
+	bh=1/gBImOJBnxvpdIanR4Ug777313epe/xx8uTuJUSptE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=S4UW5WSx4T1eAxC7ka226/gGeMfrYhBD67vvxglu/vckB5Nn4A5xmN/jzZgazyYsd
+	 /1bcLL+Ghbj8YJZ4jEcQIIrqcdL8TMLTVcEFCBP+OQnfT5O9YCAaniC/FWI5FN4ibf
+	 LUXHBqpnMbuH1Yxoo9XejgOoJNJnyAeSHwJ7bpActjkiwj6wfDdhL5CqYH/8o5oqag
+	 aV43dkpJMbUZyYABqtIuZucGadeqEBlkuTtRPd5uirs8BCK51W5bi1M3FIV2VC/gc3
+	 zGZ1jvzLTGAT5cxOiO4FYYGeq/JED+jbWpnGySYhnNFvN45SJqOSzgmveQCNw6jNUT
+	 wGv2hCdUeZF/g==
+Date: Thu, 8 Jan 2026 09:17:49 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v3 07/11] dt-bindings: clock: qcom: document the
+ Kaanapali GPU Clock Controller
+Message-ID: <20260108-eminent-rich-mink-6acaf7@quoll>
+References: <20260107-kaanapali-mmcc-v3-v3-0-8e10adc236a8@oss.qualcomm.com>
+ <20260107-kaanapali-mmcc-v3-v3-7-8e10adc236a8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 5/5] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-From: tessolveupstream@gmail.com
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251230130227.3503590-1-tessolveupstream@gmail.com>
- <20251230130227.3503590-6-tessolveupstream@gmail.com>
- <30ee8541-3ec2-49ac-8fe0-987cdc5b16e7@oss.qualcomm.com>
- <14613f89-6be0-4eb3-beb5-375ab008a313@gmail.com>
-Content-Language: en-US
-In-Reply-To: <14613f89-6be0-4eb3-beb5-375ab008a313@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260107-kaanapali-mmcc-v3-v3-7-8e10adc236a8@oss.qualcomm.com>
 
+On Wed, Jan 07, 2026 at 03:13:10PM +0530, Taniya Das wrote:
+> Qualcomm GX(graphics) is a clock controller which has PLLs, clocks and
+> Power domains (GDSC), but the requirement from the SW driver is to use
 
+Requirement of what? or of whom? DXCTL requires to use GDSC?
 
-On 04-01-2026 19:16, tessolveupstream@gmail.com wrote:
-> 
-> 
-> On 30-12-2025 20:21, Konrad Dybcio wrote:
->> On 12/30/25 2:02 PM, Sudarshan Shetty wrote:
->>> Add the device tree for the QCS615-based Talos EVK platform. The
->>> platform is composed of a System-on-Module following the SMARC
->>> standard, and a Carrier Board.
->>>
->>> The Carrier Board supports several display configurations, HDMI and
->>> LVDS. Both configurations use the same base hardware, with the display
->>> selection controlled by a DIP switch.
->>
->> [...]
->>
->>> +++ b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
->>> @@ -0,0 +1,126 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>> + */
->>> +/dts-v1/;
->>> +/plugin/;
->>> +
->>> +#include <dt-bindings/gpio/gpio.h>
->>> +
->>> +&{/} {
->>> +	backlight: backlight {
->>> +		compatible = "gpio-backlight";
->>> +		gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>,
->>> +			<&tlmm 115 GPIO_ACTIVE_HIGH>;
->>> +		default-on;
->>> +	};
->>> +
->>> +	hdmi_connector: hdmi-out {
->>> +		status = "disabled";
->>> +	};
->>
->> This should be a &label_reference
->>
-> 
-> Okay, will add it in the next patch.
+In any case your driver requirements should not really shape new
+bindings. I already said this last time.
 
-I noticed that in several existing .dtso files, the root node is
-commonly referenced as &{/}. In your comment, you suggested using &label_reference. Could you please clarify which specific label or 
-node you would like me to update here.
->> [...]
->>
->>> +	wifi_1p8v: regulator-wifi-1p8v {
->>> +		compatible = "regulator-fixed";
->>> +		regulator-name = "wifi_1p8v";
->>> +		regulator-min-microvolt = <1800000>;
->>> +		regulator-max-microvolt = <1800000>;
->>> +		gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>> +		enable-active-high;
->>> +		pinctrl-names = "default";
->>> +		pinctrl-0 = <&wifi_reg_en_pins_state>;
->>
->> property-n
->> property-names
->>
->> consistently, please
->>
+> the GDSC power domain from the clock controller to recover the GPU
+> firmware in case of any failure/hangs. The rest of the resources of the
+> clock controller are being used by the firmware of GPU. This module
+> exposes the GDSC power domains which helps the recovery of Graphics
+> subsystem.
 > 
-> I didn’t fully understand your comment.
-> Could you please elaborate a bit more so I can make the
-> necessary changes correctly. >> +		regulator-boot-on;
->>> +		regulator-always-on;
->>> +	};
->>> +
->>> +	wifi_3p85v: regulator-wifi-3p85v {
->>> +		compatible = "regulator-fixed";
->>> +		regulator-name = "wifi_3p85v";
->>> +		regulator-min-microvolt = <3850000>;
->>> +		regulator-max-microvolt = <3850000>;
->>> +		gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>> +		enable-active-high;
->>> +		pinctrl-names = "default";
->>> +		pinctrl-0 = <&wifi_reg_en_pins_state>;
->>
->> ditto
->>
->> [...]
->>
->>> +&tlmm {
->>> +	bt_en_state: bt-en-state {
->>> +		pins = "gpio85";
->>> +		function = "gpio";
->>> +		bias-pull-down;
->>> +		output-low;
->>
->> output-low/high should be unnecessary as these pins are governed
->> by the kernel driver
->>
+> Add bindings documentation for the Kaanapali Graphics Clock and Graphics
+> power domain Controller for Kaanapali SoC.
 > 
-> Okay,got it. Will make the necessary change in the next patch.
->> lg otherwise
->>
->> Konrad
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+>  .../bindings/clock/qcom,kaanapali-gxclkctl.yaml    | 63 ++++++++++++++++++++++
+>  .../bindings/clock/qcom,sm8450-gpucc.yaml          |  2 +
+>  include/dt-bindings/clock/qcom,kaanapali-gpucc.h   | 47 ++++++++++++++++
+>  .../dt-bindings/clock/qcom,kaanapali-gxclkctl.h    | 13 +++++
+>  4 files changed, 125 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,kaanapali-gxclkctl.yaml b/Documentation/devicetree/bindings/clock/qcom,kaanapali-gxclkctl.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..5490a975f3db7d253a17cc13a67f6c44e0d47ef3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,kaanapali-gxclkctl.yaml
+> @@ -0,0 +1,63 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,kaanapali-gxclkctl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Graphics power domain Controller on Kaanapali
+> +
+> +maintainers:
+> +  - Taniya Das <taniya.das@oss.qualcomm.com>
+> +
+> +description: |
+> +  Qualcomm GX(graphics) is a clock controller which has PLLs, clocks and
+> +  Power domains (GDSC). This module provides the power domains control
+> +  of gxclkctl on Qualcomm SoCs which helps the recovery of Graphics subsystem.
+> +
+> +  See also:
+> +    include/dt-bindings/clock/qcom,kaanapali-gxclkctl.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,kaanapali-gxclkctl
+> +
+> +  power-domains:
+> +    description:
+> +      Power domains required for the clock controller to operate
+> +    items:
+> +      - description: GFX power domain
+> +      - description: GMXC power domain
+> +      - description: GPUCC(CX) power domain
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - power-domains
+> +  - '#power-domain-cells'
+> +
+> +unevaluatedProperties: false
+
+additionalProperties instead.
+
+Best regards,
+Krzysztof
 
 
