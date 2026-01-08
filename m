@@ -1,96 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-88127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6FBBD05051
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:34:54 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29872D0511B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 18:38:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 4758F304F10A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 17:27:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8A7C530123D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 17:35:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BD9632A3F0;
-	Thu,  8 Jan 2026 17:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A80762D249A;
+	Thu,  8 Jan 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XKyAyKs/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOOgslj+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164EF3271F9;
-	Thu,  8 Jan 2026 17:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847452C11C9;
+	Thu,  8 Jan 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767893053; cv=none; b=C7LM34qUs1hBc78/qTMaLOPPvevjrols9g8rblZ9AFp2WX59Re6V7LUkehxY4cATWR/giCgExKJk7XO8TkE1q3QvkfQEFXNi2KSLbJCxboVACDcd2MOzme2Gknj59pAUFIHxV5BVPYI2pw9qFs+KSzk+spUjtbhN26Q1tNA4XS0=
+	t=1767893743; cv=none; b=GSJsCDfU48Y5p1kYmUjY1zXUKepp6GukAA/0MOu6Z0L/nTcJ2lTS2rLrO0jfpRHOUiFjwddTy8I5Ds6xpnJehGk9OLJZFyIkS+9Yacw7A7u9UkppFaEmDoPGkh+jnor/XEWnpLSfDe7NCq95HjBQ5F4a5Ko03bX3x/Q3NZtM304=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767893053; c=relaxed/simple;
-	bh=hq0TVgPrc0pom/V97hgluSg19lH8GAucG7MJGGWa3KI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
-	 References:In-Reply-To; b=cgNUJV6cEcSEonAIfK30fKLiZM2/4qP5PbLq7Z5P/6RZtatbd1NSK31TLb5gZL3KGUSBMHLJD/Nliv/nOs5bwCSwbyAHpdvPC9W45UfUOwcowQt/9pTr35yo1GVxBuXoB41u62x1xK/BhNqquHYe8AEcZiFvO/uY8stu5B+WlPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XKyAyKs/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA179C116C6;
-	Thu,  8 Jan 2026 17:24:05 +0000 (UTC)
+	s=arc-20240116; t=1767893743; c=relaxed/simple;
+	bh=6GNlxXmwfPo4kRo61SwrZaFZc1YRbQmVXEEiNyH4gAo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=upQXD6uE6fssGZJX+LROBvERLfaDNec5Dbj5l03YEPL1PAk7pCsba1g7WKpwJZZPwGjKYZDDCm0TricgVl7qSTR2QTTRaRKTuOTj0Hz4fnYcVZgjQBXdkBq9t4s6oAD4ZP5cYEw0PTgc+CrZxjMcMzKqGeF2JlJlFGYUhq7luR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOOgslj+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA17C116D0;
+	Thu,  8 Jan 2026 17:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767893052;
-	bh=hq0TVgPrc0pom/V97hgluSg19lH8GAucG7MJGGWa3KI=;
-	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
-	b=XKyAyKs/CwbFCuPL7zO2AjeTOhShG2a3lDcM2MJrb7R5/ZhZnwSoE4EiuNOoG4fT2
-	 un3qnNrPHUot6XOKHiudxgPiDSFf2cKH/uCP9lGfsjMMu83Qpa7Mn2fuH34c9NXQtm
-	 2PbE40s9olywJM5M5kNdzMaQu9qO2kcfCGkYfxT5hC2X5xcnf14EsoTiopz3mE333m
-	 a4bZM0MB/8sxuo36fNWu0R8BcVkdDX69B/r/v7Q+NdLA5Otpp5ts6Bdvlb4EKETINs
-	 2Lidp0s1+l07wnXzjH6Z3N7OT3XP39NYbpZMolhrVdwb/Sq1cUdE+AXnKpG/65s/O0
-	 jChUimgAy7L3A==
+	s=k20201202; t=1767893743;
+	bh=6GNlxXmwfPo4kRo61SwrZaFZc1YRbQmVXEEiNyH4gAo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=HOOgslj+UUSj9kSGKLSlN9LklCEjQDeujInSSk4QJpNxWK1U5R4yIagTTvEB2OKUW
+	 kb/0M7Eaeg+mL+XBGyqHyRn/ZsbfOlB8KqoWnIHLg+OiIjjsnRv6DG8JpZ7Npu6Jev
+	 pnXYS8KzNviYsdPa2oFyr7HTg53pmtdXDRh0E2Kd8sEsOdYG+YnZqhOXvvheL8QJQO
+	 CUWrX6aM+gt1quQ/mjtWeMI9j6ZrT1+RMk+we6oMufAQqvQaweuZmGja7CZA06BWY9
+	 9gwmC+k7Uki3FyOFEbWyBnIKC0gkLOC9PtW7e1B3akVALvxRsh0DTBeNtwdZyYaNMm
+	 nI5OYwuAGEybA==
+From: Lee Jones <lee@kernel.org>
+To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com, 
+ kamal.wadhwa@oss.qualcomm.com, jingyi.wang@oss.qualcomm.com, 
+ yijie.yang@oss.qualcomm.com
+In-Reply-To: <20251215-knp-pmic-mfd-v2-1-1e91138c6fc6@oss.qualcomm.com>
+References: <20251215-knp-pmic-mfd-v2-1-1e91138c6fc6@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v2] dt-bindings: mfd: qcom,spmi-pmic: Document
+ PMICs present on Kaanapali
+Message-Id: <176789374037.1117798.14242637055422802029.b4-ty@kernel.org>
+Date: Thu, 08 Jan 2026 17:35:40 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 08 Jan 2026 18:24:03 +0100
-Message-Id: <DFJDS4EY28HD.WZ344DONCS5L@kernel.org>
-To: "Alice Ryhl" <aliceryhl@google.com>
-From: "Danilo Krummrich" <dakr@kernel.org>
-Subject: Re: [PATCH v2 0/3] Rust GPUVM prerequisites
-Cc: "Daniel Almeida" <daniel.almeida@collabora.com>, "Matthew Brost"
- <matthew.brost@intel.com>, =?utf-8?q?Thomas_Hellstr=C3=B6m?=
- <thomas.hellstrom@linux.intel.com>, "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
- "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
- <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Boris Brezillon"
- <boris.brezillon@collabora.com>, "Steven Price" <steven.price@arm.com>,
- "Liviu Dudau" <liviu.dudau@arm.com>, "Miguel Ojeda" <ojeda@kernel.org>,
- "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
- <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Trevor
- Gross" <tmgross@umich.edu>, "Frank Binns" <frank.binns@imgtec.com>, "Matt
- Coster" <matt.coster@imgtec.com>, "Rob Clark"
- <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
- "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Sean Paul" <sean@poorly.run>,
- "Marijn Suijten" <marijn.suijten@somainline.org>, "Lyude Paul"
- <lyude@redhat.com>, "Rodrigo Vivi" <rodrigo.vivi@intel.com>, "Sumit Semwal"
- <sumit.semwal@linaro.org>, =?utf-8?q?Christian_K=C3=B6nig?=
- <christian.koenig@amd.com>, <dri-devel@lists.freedesktop.org>,
- <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
- <nouveau@lists.freedesktop.org>, <intel-xe@lists.freedesktop.org>,
- <linux-media@vger.kernel.org>
-References: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
-In-Reply-To: <20260108-gpuvm-rust-v2-0-dbd014005a0b@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-52d38
 
-On Thu Jan 8, 2026 at 5:07 PM CET, Alice Ryhl wrote:
-> Alice Ryhl (3):
->       drm/gpuvm: take GEM lock inside drm_gpuvm_bo_obtain_prealloc()
+On Mon, 15 Dec 2025 16:39:35 +0530, Jishnu Prakash wrote:
+> Document compatibles for the pmh0101, pmh0104, pmh0110 and pmk8850
+> SPMI PMICs.
+> 
+> 
 
-Applied to drm-misc-fixes, thanks!
+Applied, thanks!
 
->       drm/gpuvm: drm_gpuvm_bo_obtain() requires lock and staged mode
+[1/1] dt-bindings: mfd: qcom,spmi-pmic: Document PMICs present on Kaanapali
+      commit: 2a84a41a8c2d3cbc2460d2bc60569a35c4157e76
 
-   [ Slightly reword commit message to refer to commit 9ce4aef9a5b1
-     ("drm/gpuvm: take GEM lock inside drm_gpuvm_bo_obtain_prealloc()").
-     - Danilo ]
+--
+Lee Jones [李琼斯]
 
->       drm/gpuvm: use const for drm_gpuva_op_* ptrs
-
-Applied to drm-misc-next, thanks!
 
