@@ -1,201 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-88112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2356D0496E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:57:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12DB5D04995
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 08 Jan 2026 17:58:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 88E4B325232F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:50:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B17FC3145B4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 539DB5695;
-	Thu,  8 Jan 2026 15:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC0F2BB13;
+	Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SO9sew6O";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="R7HSXfMw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="usb4MmHJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9792BB13
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 15:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A112AD32
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767887401; cv=none; b=WKS2uO4L67QYeCvJa6qO36kTxcUQ7pSXxP7O9Z3JzCwvPPT9QBMqskG3mJpAfVFOr84SjQ5fU/BesX7OKojQHXGxS+xN43cGgpO8PxqSF76E+gEoNmqez+CbK/RhT/5bfhcwUX/glzhHm+rbindiixSDX157UuVfKf+vPEzs4Mc=
+	t=1767887419; cv=none; b=LEsE2D3wkCedvT6B5c77AuFLYulXA0nhXW/VWn2/gz8Zj/7SU2BS2iUgF2RDHlrM4lvFBFNt6h6qv6CB768LgN6Ck9L4mAfGgctF1YnRHNq74gNpRdXXwHC3umU1/eO6+cyZ7UTnMx4fvSNnFKqy2yPlDT99n8qSvcuCj4R+gPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767887401; c=relaxed/simple;
-	bh=wgtqtNbOQ3L4Ft9Ij4OSw61++5pf1V/FrZA8leMP5aU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UI6g++VreNExWME4QTSl+YSCgbYPJ7Zq0YXaEvEoLx6D4QdDzopE7T3tYr7WOWqU3DxGajSfL+yWDhfe+G0CTD97IieKX+PVRKSfqwkcQ48JLvGvVgMT0RJ8FVBHWxxuHnog91ROxq0VlqSCBz6XhKPSMTotoN8OcGv/CEwv3gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SO9sew6O; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=R7HSXfMw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 608AhvP83701055
-	for <linux-arm-msm@vger.kernel.org>; Thu, 8 Jan 2026 15:49:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=IGj3MkqcxtU
-	TDSrI4Rmkz74Y1sawdJtCFGQ8AyJsOnU=; b=SO9sew6Og8MhLbIG+QADVvNDIdo
-	LJxIAofT9zNhV78i4OW7Rfl8fC1ZDV2us4OmMOAEDSFc6fkNKbsb6OwBfG/j7Eyv
-	DHbhZrgIetn/b/9SL7VVF8x7/FymgXUTgk40TAL9ErYb5cXvduT60ySlTclrlgG8
-	6gOmZu4AnCJSdYPEb+cRtkIKv3GtqXHY4HAij4Q3WdSDH+11fExjq7JJr9zZxl+H
-	4xXIl/9+7ZV5DLWPVj4VDoMa4ypsAU/hheTOOH31aSPFll5Q7Yo6LoCzwO2Ctmn2
-	DtSbrDAC6N0p63bfbGPtot5EZihN17xjamfiphcnE2+ZxOfM010Sf9D85BA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjb39rw1f-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 15:49:58 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b234bae2a7so880583785a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 07:49:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767887398; x=1768492198; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IGj3MkqcxtUTDSrI4Rmkz74Y1sawdJtCFGQ8AyJsOnU=;
-        b=R7HSXfMwnmEd35s8SmS9Ul5hFEICIAZ6tux/8bupuYxmPYG691PI+jgLeg9unnfW6Y
-         HcQdmsBC8JhPOFKb6QgXOJsdZD/Uqpudw+cf42vAJRvuzTdkdjcVXN03SzI8VnTb+G7Q
-         x4duE76ZY7HI+DrHoBpT93d583nu8qN0JbQf8jfqxXfnYbBdl7GDplJEYTNU2MCR5VOk
-         pgpQwTr1c7JoyfgOwU2SSSkvXCTzPfbc3j57DYoQXFVyGy4lQAwwgecd3SujRIrRFVhd
-         LEXHwD7iCZahW632i59jOVnmtv3AX+88Oq56t8yoAFAlWTpJOvuhi7pk2JK/QPgxsMc5
-         bD6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767887398; x=1768492198;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IGj3MkqcxtUTDSrI4Rmkz74Y1sawdJtCFGQ8AyJsOnU=;
-        b=duiP+CywYn6aKtAKy2A42WpB1AuwnUA6zGBgIp1r3okwKBL4PJBbeJlfPIo1/qqEG6
-         udXUM+POhc1PTd4NpqYMRMsd1hdnwgvWJPtOd8oe4bRxbKUfjCFqjHPTxbNKn9k7beS2
-         8+H2Xcz/VXft7a0Y/7ck5HHMOKDGAljvAu18Kd0PW0PP1+QZ3tNpNQ9bMjKSHTU98XR/
-         aO2AY03AgtAvCde78RMwfTAPMOa87OPpHhw5InF+KyJl4E1PjYSrZKZBg/2bX6Gx5/Q+
-         zWtSw7WSLHjpWwGSKOZLRZOF7dhD0pOVoG7/hho6a6nQjJUsmMyJp4pfx7x3jQ/dRGMC
-         pvXA==
-X-Gm-Message-State: AOJu0YxblKTjt73rRP4sAVF/f/Xr5PenAurUI+B9C07uez6e2WbcfSFX
-	G6F+F0yL0FaoYmqCdESM69pZvPciLFecbCvvwcRHaWLHN/wR7W58ZEPhJOAn/CzBvEsKL3+1ocz
-	uA2SVb40LYf5Tl8cUcEciVm5I8ANjoqtJyAhe9JbuYi6HWDTJ3lQMXF4C4Y9/KBqB7HiR
-X-Gm-Gg: AY/fxX4KJPEmJG/t6r3JdgZLLN3fYBRQN+GUUo82ybsTbJBcUFspkg5slPC/I3+gOqI
-	5vyoyoGZHhOBUwsdCjW8vs4q3uSJjsjNDk3vbptJhGPdwHgmi3qMHxPiQafBnzmdxxz4iQ6/EK9
-	an9OJWbI/myE/RC1rtdCKPCu8rYIIHqaxCg7Fe/ZoVqfsFfw92rBkgrJaTL7h6fkD7lenHTt/EP
-	iTUfqsc/GlUq9T0St7wmUsn6L74FjWjsztVpmTHMQhf8rv/Urg5+JPtXTySXanVZa9Zr3N2FzVM
-	N/Vxq42NyQ3f0xWgDTJnKKi6gkIQzkG/c9HhNe0j9RzdHrkZ6tjts9iSdtenuxVewSy01ZanUOh
-	S6nL9aB5KS+miy34QTErmTESEQVhIrtyFCc1DFBLWhbjMUaKQmH9AnF4ntq0Q1LwYjHk7tNdUe8
-	3U
-X-Received: by 2002:a05:620a:2956:b0:891:bde8:56d7 with SMTP id af79cd13be357-8c3893ef6f4mr841581485a.50.1767887397746;
-        Thu, 08 Jan 2026 07:49:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGrnZlCZbSHuOUp0nEKepu+rDoc37rvgIvRoqlQRZ6aVrhcMpOrYO/3cR9UbLcfZc15+hHoA==
-X-Received: by 2002:a05:620a:2956:b0:891:bde8:56d7 with SMTP id af79cd13be357-8c3893ef6f4mr841577785a.50.1767887397307;
-        Thu, 08 Jan 2026 07:49:57 -0800 (PST)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:211d:6051:c853:ae97])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507be655aesm8078121a12.17.2026.01.08.07.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 07:49:56 -0800 (PST)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: vkoul@kernel.org, kishon@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        dmitry.baryshkov@oss.qualcomm.com, neil.armstrong@linaro.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH 4/4] phy: qcom: snps-femto-v2: Fix possible NULL-deref on early runtime suspend
-Date: Thu,  8 Jan 2026 16:49:44 +0100
-Message-Id: <20260108154944.211886-5-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260108154944.211886-1-loic.poulain@oss.qualcomm.com>
-References: <20260108154944.211886-1-loic.poulain@oss.qualcomm.com>
+	s=arc-20240116; t=1767887419; c=relaxed/simple;
+	bh=KGaO4EypoOGLhlEAtkWsb6d+AORWtthHeHFesJA4a2E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LxsX/1NniRwY4i9pxkXE5CdkW0OFUT2igxsp76D4ItDKS+yCKuHfdWyBcNIlK6M7BUQjFAvzR+C1Ln6VoDUHiu3iJdiOqf8DDfrvKeN9nKQLg3b5RBOLnSadxzwPrRjuJAhchj4laKFT7M/JCRxwKxFy9GO5F08bLBG6VPJKZe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=usb4MmHJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E89EC2BCB2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jan 2026 15:50:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767887419;
+	bh=KGaO4EypoOGLhlEAtkWsb6d+AORWtthHeHFesJA4a2E=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=usb4MmHJvMLPE8uELsbbUngRbBgpdUECKMmpwddwY189gnOVhVBEvsoZsN2ANAdRb
+	 t7YJmkUsI9dpY6rq3gm5zN+eWtCpnRWzMnswxbZt/3shCn1wvzBb6oYQm2AxSMd8L2
+	 aCjReJjs2BJSzqIfnDjwdIh0H+pIVeALv4Qb2w9gNm6PwbE6R8fAcA/k6cuBuzoyj2
+	 NhNfiv4Ogfl7hnnK2f4+nk9nB3DplTx6QoLshFLps02T775YICN3NhywEhdZfnZKkX
+	 vbjmlj1v8ZjzZvhG86NGzW0fQaG98pdSVWRSeYI9YPWE3FowX1Y01DeD7yYI2lNiZ5
+	 Cbw/z69BwcSyg==
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59b78886454so989935e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 07:50:19 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUJlANHhGlaL5Anwsm94RqBkMB/nzhfuwqP/j9JKtel6LxjGp7N8vx6UJ67ts1pBArlIY6dBAyDy5va5b4G@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqCgegEgHCYvXh+e9Ao8UqA2avb82v3a6n35LxfAvFVh08inNF
+	gseykJgN/KrxYas54cZjifmrp7fZDcw58cW1Obu20L6tmurXTkQ/j5ICC3fE3kvWpCk71jucVMP
+	1Dm3YGqUPYzBeZYHN8DBgbEALnke3H3CYGA3hiFs+lQ==
+X-Google-Smtp-Source: AGHT+IG2+2F01A/KIFuHK5i46mt9KUdYZatvNxavAnjoIfZZaIpd0eF4zkN5fLaXr4bY1KSJ4MsEy0n1PYP8LkHGkdo=
+X-Received: by 2002:a05:6512:6d0:b0:598:f031:dc2e with SMTP id
+ 2adb3069b0e04-59b6ef02957mr2037319e87.1.1767887416901; Thu, 08 Jan 2026
+ 07:50:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ZWz13_bhS9faGp1MBr96JbWw-dUEx1Jc
-X-Authority-Analysis: v=2.4 cv=X7Jf6WTe c=1 sm=1 tr=0 ts=695fd226 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=vUbySO9Y5rIA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=GnikDSHSz1V4xWV9RsQA:9 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA4MDExNSBTYWx0ZWRfX75q0Ia2Dx7R8
- eUddosOBcBCfJ/vt7+u6HDuQGYWFEcDL40ev7VFreQBdhTDKNe5gQBAaMqYUCDD21KU39o78NHu
- n583Su/Tlup4M6arlsAcPK4ugq+qU0LbxnVNCyUxdgO/Me7lIMNHocY+GE1WFmcTjnk8D3J3pGu
- Q8+t4nT9as7NXh5vIcrO1W/0BBRXwQtMkSqcjgnStHzciJfNuhJjSCeMRL2lP2G2/1hzkJALas4
- kdfRVGnWTYWduk8fy8ZS+X5slkMzdn10Lq9tyLk+a7DJYPDKyCsrZYiqRi29AM6Vk4qQgOUAJaH
- KhcNWmAlWFZFRRDrsqRUzZlnxCJWWyzLkPYV2AN2V1o+FDo1G+oPKo7ck2/wmgaoT03VyOHsW8h
- m2xCOQYESuy7Tk6OXiRG5Kyk7iDhie+Nbs1xpShVHHhTfp74AT/x6oU4Prk1qDZ4igO2PFwOJYj
- td2vp6UIzlV8lv+ljsQ==
-X-Proofpoint-ORIG-GUID: ZWz13_bhS9faGp1MBr96JbWw-dUEx1Jc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-08_03,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 bulkscore=0 suspectscore=0 phishscore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601080115
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org> <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org>
+In-Reply-To: <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 8 Jan 2026 16:50:04 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
+X-Gm-Features: AQt7F2obhuvUlvgUZPHF2Ox96e1T1TX-fbUl1bOPtAWt-u2PKGO9E-yuFxHItZY
+Message-ID: <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
+To: Michael Walle <mwalle@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Enabling runtime PM before attaching the hsphy instance as driver data
-can lead to a NULL pointer dereference in runtime PM callbacks that
-expect valid driver data. There is a small window where the suspend
-callback may run after PM runtime enabling and before runtime forbid.
+On Thu, Jan 8, 2026 at 3:46=E2=80=AFPM Michael Walle <mwalle@kernel.org> wr=
+ote:
+>
+> >
+> > The changes are implemented in a way that allows to seamlessly compile
+> > out any code related to sharing GPIOs for systems that don't need it.
+>
+> The problem here is that the aarch64 defconfig has ARCH_QCOM enabled
+> and thus it will get enabled for any platforms, right?
+>
 
-Attach the hsphy instance as driver data before enabling runtime PM to
-prevent NULL pointer dereference in runtime PM callbacks.
+On arm64 with defconfig, yes. I want to make it transparent for
+platforms that don't have shared GPIOs though. I'm aware of issues and
+am actively fixing all that are reported to me. Another set of fixes
+will be in tomorrow's linux-next.
 
-Reorder pm_runtime_enable() and pm_runtime_forbid() to prevent a
-short window where an unnecessary runtime suspend can occur.
+> I haven't grokked everything, but does GPIO_SHARED=3Dy makes any sense
+> without GPIO_SHARED_PROXY? It seems to me that the probing of shared
+> pins will be deferred indefinitely.
+>
 
-Use the devres-managed version to ensure PM runtime is symmetrically
-disabled during driver removal for proper cleanup.
+Do you have a use-case where there are shared GPIOs that are needed at
+boot time when there are no modules? I am aware of the issue where
+false-positive shared GPIOs are detected, I posted a fix for that too.
+Without logs, I can't really tell if that's the case for you though.
+:(
 
-Fixes: 0d75f508a9d5 ("phy: qcom-snps: Add runtime suspend and resume handlers")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+> > The practical use-case for this are the powerdown GPIOs shared by
+> > speakers on Qualcomm db845c platform, however I have also extensively
+> > tested it using gpio-virtuser on arm64 qemu with various DT
+> > configurations.
+> >
+> > I'm Cc'ing some people that may help with reviewing/be interested in
+> > this: OF maintainers (because the main target are OF systems initially)=
+,
+> > Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
+> > in audio or regulator drivers and one of the goals of this series is
+> > dropping the hand-crafted GPIO enable counting via struct
+> > regulator_enable_gpio in regulator core), Andy and Mika because I'd lik=
+e
+> > to also cover ACPI (even though I don't know about any ACPI platform th=
+at
+> > would need this at the moment, I think it makes sense to make the
+> > solution complete), Dmitry (same thing but for software nodes), Mani
+> > (because you have a somewhat related use-case for the PERST# signal and
+> > I'd like to hear your input on whether this is something you can use or
+> > maybe it needs a separate, implicit gpio-perst driver similar to what
+> > Krzysztof did for reset-gpios) and Greg (because I mentioned this to yo=
+u
+> > last week in person and I also use the auxiliary bus for the proxy
+> > devices).
+>
+> This broke my board (using the arm64 defconfig, works without
+> GPIO_SHARED of course). I'm seeing two issues here with my board
+> (arch/arm64/boot/dts/ti/k3-am67a-kontron-sa67*):
+>
+>  (1) It's GPIO controller (gpio-davinci) doesn't support
+>      .get_direction so I'm getting ENOTSUPP during probing of the
+>      (some?) shared GPIOs.
+>
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index eb0b0f61d98e..d1288a6c202e 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -599,13 +599,17 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret,
- 				     "failed to get regulator supplies\n");
- 
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
-+	dev_set_drvdata(dev, hsphy);
-+
- 	/*
--	 * Prevent runtime pm from being ON by default. Users can enable
--	 * it using power/control in sysfs.
-+	 * Enable runtime PM support, but forbid it by default.
-+	 * Users can allow it again via the power/control attribute in sysfs.
- 	 */
-+	pm_runtime_set_active(dev);
- 	pm_runtime_forbid(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
- 
- 	generic_phy = devm_phy_create(dev, NULL, &qcom_snps_hsphy_gen_ops);
- 	if (IS_ERR(generic_phy)) {
-@@ -615,15 +619,12 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 	}
- 	hsphy->phy = generic_phy;
- 
--	dev_set_drvdata(dev, hsphy);
- 	phy_set_drvdata(generic_phy, hsphy);
- 	qcom_snps_hsphy_read_override_param_seq(dev);
- 
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 	if (!IS_ERR(phy_provider))
- 		dev_dbg(dev, "Registered Qcom-SNPS HS phy\n");
--	else
--		pm_runtime_disable(dev);
- 
- 	return PTR_ERR_OR_ZERO(phy_provider);
- }
--- 
-2.34.1
+Unless this board really shares GPIOs, it may be due to the
+false-positives that will be fixed by this patch[1]. If you enable
+CONFIG_DEBUG_GPIO and post the kernel log, I'll be able to tell for
+sure.
 
+Though thanks for bringing this to my attention as I now see there is
+indeed an issue when the proxied chip doesn't support .get_direction()
+as well as a duplicated check in GPIO core. I'll fix it too.
+
+>  (2) GPIO_SHARED_PROXY is default m in the defconfig, but I need the
+>      pins for the root filesystem medium, i.e. the SD card regulators.
+>
+
+I'll take care of this is you confirm, the issue persists even with patch[1=
+].
+
+Thanks,
+Bartosz
+
+[1] https://lore.kernel.org/all/20260108-gpio-shared-false-positive-v1-1-5d=
+bf8d1b2f7d@oss.qualcomm.com/
 
