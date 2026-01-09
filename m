@@ -1,47 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-88167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F345D06F22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 04:15:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB8F8D06F3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 04:16:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DA2E0302C221
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 03:14:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BA8D63040672
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 03:14:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4016C322753;
-	Fri,  9 Jan 2026 03:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 180363033C6;
+	Fri,  9 Jan 2026 03:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FkVAwDUz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oOZvNXkl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8062EA482;
-	Fri,  9 Jan 2026 03:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C6A2DB786;
+	Fri,  9 Jan 2026 03:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767928463; cv=none; b=CYpexdpEFY36HpQnHevIr4orAAo4GJpMug++EvqQA3m5ZbEEqOOwClK+RsLqi0XHxcFLJfdnm7SROsmU/MO187ls3f2U4HdzTZKuTizeLiL+UVF+ew/22cSOB1BSJ4JEd3yI3RSbYUTbrVdmu9F+CpvkK/Ko65E7j+lzymW2eB0=
+	t=1767928476; cv=none; b=fyMWOO/c7OTPlxfzJqTOr7MuMWnvqtDJTr+h7fWj3q/TUgrV+rlg1Bx/C/yuOANDQf6J8MYvx5ZNmWCLSMZeb8mX89VNufdZO23sDsDSokbinFKg8p2Pl1qfTS7JVnDZRbQDRtWFTV/+cPnXiq2qU5FQfn8eZXUPlIyWSMouFOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767928463; c=relaxed/simple;
-	bh=JM6afzoYTowQzjljySmLl/5jLkOrxyGbdNB1qD5wmKA=;
+	s=arc-20240116; t=1767928476; c=relaxed/simple;
+	bh=046fMDZil6CqjswiED2Pd7BWMEYyqdRLuod2rz3ppM8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=nOHy9E/eFqcUt+qU3g9PcwqjWojkd3d+BY1bw3bVmRO8U/+8nyCbHmupPFSNs4hmboCtXkTzh9sjlzVwW3ms7Xn+00sTXYGoVZTbcC3eQoZO+TTTKkUygW6rZqLvNBU3gFFQQPL5KDfOomxePvV4q0ywucGWLuzC9t2CbuZzD7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FkVAwDUz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68ABC116D0;
-	Fri,  9 Jan 2026 03:14:16 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jFHT5o1CmY6CNC/k7VlyIAOF/VvGsOKyAL0VTIeRuUdlzj/2Mg3cEcBma8k+N+MTi5Bpre+kt5ZWoDKTHOdifxAJrpjAdqStaHO6W+uPXa2sz2j0NnaMt3L++/qxfBq9iH0tkkj1pcwVAbXTZX202ICMWh7rVzUROS5mADKtw48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oOZvNXkl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C07C19425;
+	Fri,  9 Jan 2026 03:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767928463;
-	bh=JM6afzoYTowQzjljySmLl/5jLkOrxyGbdNB1qD5wmKA=;
+	s=k20201202; t=1767928475;
+	bh=046fMDZil6CqjswiED2Pd7BWMEYyqdRLuod2rz3ppM8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=FkVAwDUzlepumCpf0yGB+QKEd1XGdp4cqikxVBM/9XQf6maNCI+Zw4uKgHsLFrybW
-	 bD5YI+l1/NByhBMsN1YHVd38p5wMB1CcQSFAm3HijvWc4uZfkede3lLhY/o7ln3TxL
-	 qzxdtuHS7+BPlhA2Ub8+0DXfmv+ZtMp8QeMKx/kH0Io3j6FX3N9tYwxCXABqsOh2xy
-	 1KcO1V43dpW9ChKYR8tFTnVzYv5bQUMbcy8fNGNF+1NIAtzzZZIlH+7+CJ5sk4Klcc
-	 MGr8CoKm+tEXRVVMOgQrNES304Y+PlVbJcrtB1KxAA4t/hauzpIM1Vh0US1duEBcT9
-	 2cIBzgSonruzw==
+	b=oOZvNXkl+Jwp8cQ6jKxV5vSfOvkFPacFcvoXa1GPOezSt0hz+y7ZKIO6131EaXSoW
+	 xtzdppifacLc3T25pt688j8NPeSa+kPXVeYES2eij7KySPbwCMTU6Zk7n7tCGTaA+t
+	 hloLXXrUZ+Yw1Kms1Dj+94ck6qlpVVhjBTMTqFx+LUyN6PQa5QidnTY7A86u1UUF/b
+	 sRHxt3ZyZRtsHBk0vipHPMOmgyt05URA8SlFlKhXSvuKPN9alPNcCJO7REs2UftyNP
+	 NuaRsYDDtY6Oo3zSmKtoKKJnv9KxSQUrASnwVdN8kQicOtft8XvUn7o6NUlMvxeFtg
+	 0lHJIi1vLfn3w==
 From: Vinod Koul <vkoul@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
- Stefan Wahren <wahrenst@gmx.net>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Bartosz Golaszewski <brgl@kernel.org>, 
  Thomas Andreatta <thomasandreatta2000@gmail.com>, 
  Caleb Sander Mateos <csander@purestorage.com>, dmaengine@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, 
@@ -49,8 +50,8 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>, 
  Stefan Roese <sr@denx.de>, Florian Fainelli <florian.fainelli@broadcom.com>, 
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
  Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
  Lars-Peter Clausen <lars@metafoo.de>, 
  Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
  Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, 
@@ -59,12 +60,12 @@ Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
  Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>, 
  Michal Simek <michal.simek@amd.com>, 
  Andrew Morton <akpm@linux-foundation.org>
-In-Reply-To: <20251124121202.424072-1-andriy.shevchenko@linux.intel.com>
-References: <20251124121202.424072-1-andriy.shevchenko@linux.intel.com>
-Subject: Re: [PATCH v4 0/13] dmaengine: introduce sg_nents_for_dma() and
+In-Reply-To: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
+References: <20260108105619.3513561-1-andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v5 00/13] dmaengine: introduce sg_nents_for_dma() and
  convert users
-Message-Id: <176792845632.658957.11812821464342552504.b4-ty@kernel.org>
-Date: Fri, 09 Jan 2026 08:44:16 +0530
+Message-Id: <176792846806.658957.819937931231724149.b4-ty@kernel.org>
+Date: Fri, 09 Jan 2026 08:44:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +77,7 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 24 Nov 2025 13:09:18 +0100, Andy Shevchenko wrote:
+On Thu, 08 Jan 2026 11:50:11 +0100, Andy Shevchenko wrote:
 > A handful of the DMAengine drivers use same routine to calculate the number of
 > SG entries needed for the given DMA transfer. Provide a common helper for them
 > and convert.
