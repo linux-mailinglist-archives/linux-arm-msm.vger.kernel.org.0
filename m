@@ -1,296 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-88319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28FDDD0BEBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 19:48:37 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81885D0C04C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 20:11:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 547D13008748
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 18:48:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1BA9130123CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 19:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA92F2DA763;
-	Fri,  9 Jan 2026 18:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36FEF2E7F3A;
+	Fri,  9 Jan 2026 19:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jDsM98wZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ot+P+qJk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B63221F26;
-	Fri,  9 Jan 2026 18:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054EC2E7631
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 19:11:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767984509; cv=none; b=DrTUbhXxpcX/g9YQ1vM5dDaw+ew0ZVbKwFDprrj/H0UsDzZWOz5RWOMn78+ppWeDl3yK+PrXRXqBE0xbVKTl9yDqaeboVnY1QEZFRniXX/7/7dhkxXEFDP0gOf9DWS9un1kLtCpnBXa+OvZ4LfY2iXKD+1dkLB/Z6nX9H29/TxY=
+	t=1767985894; cv=none; b=kpRFJwuSHtEQVpzaEu3lT2ygicm/LnXH7wsFsO65WFplyHznE9KRlu5OiMquKS8tEAxZ72fdh/aH28Ku2FIoh+7yU5iAkz4rSqy/FPELFs/wobrIHewUPy1TjVx6CY96NHhySp6V6ClqLn1M1BrFnt1PVf4dXCpbp9Yxv5uBsR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767984509; c=relaxed/simple;
-	bh=sjEraxbIIlL7ZIWr9ovnhAsvq0ZADuiIZHRzLeiOdWg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MivJm9QPr7YvmBX2eClIIra2nfib7suC13uXkaLqqM4jHhke6T5tRZpSbcuX4aqr6i5wR2Hyct63TLOLSKOy7Utg89H3GjRc6PBp4u0EUe/zWL2/hHHDx5PeZMJtLrUXD7h3yv4wFjJe9y/JRCfuzPkn1oDSPG8kO1wfNLT6PZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jDsM98wZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E9CC4CEF1;
-	Fri,  9 Jan 2026 18:48:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767984509;
-	bh=sjEraxbIIlL7ZIWr9ovnhAsvq0ZADuiIZHRzLeiOdWg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jDsM98wZl7cg+IvUEqnfsLcAECRty92dnrH+JCj9MJKQO2Y9MolncBQVRNtqWkga2
-	 Cy9DAprtxg/M0vMtadQr/K4HaYn20w3OK0n7TJL87WIYc5aFLRgkqgyQ0riYcM0PKB
-	 sZNtslPVLzG7eoGLxJhEXaVc1yCvEEhi4yMNVCtP+vEY5JeAbmsft6YwUYgaR4T1oK
-	 5AoK6Xs3uuTTvzp4yJRQPzzfjCPY3Hs91zX7zW+z+z3cbLhguojZgDIBLgyCCgTtbk
-	 5NVQE4tIycYAvdsKnYTRdwccYs16D3WCwz93lHvEyQ26vFKZArTY230+p5TVOROFDw
-	 AkC5rXh2lyqsA==
-Date: Fri, 9 Jan 2026 12:48:26 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Shazad Hussain <quic_shazhuss@quicinc.com>, 
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Melody Olvera <quic_molvera@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Taniya Das <taniya.das@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Abel Vesa <abelvesa@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, stable@vger.kernel.org
-Subject: Re: [PATCH 0/7] clk: qcom: gcc: Do not turn off PCIe GDSCs during
- gdsc_disable()
-Message-ID: <aycyodp7ay5ruceoafly5xs4aopfbp7itylnvlqz7d7pkttsrr@ra466kihripk>
-References: <20260102-pci_gdsc_fix-v1-0-b17ed3d175bc@oss.qualcomm.com>
- <a42f963f-a869-4789-a353-e574ba22eca8@oss.qualcomm.com>
- <edca97aa-429e-4a6b-95a0-2a6dfe510ef2@oss.qualcomm.com>
- <500313f1-51fd-450e-877e-e4626b7652bc@oss.qualcomm.com>
- <4d61e8b3-0d40-4b78-9f40-a68b05284a3d@oss.qualcomm.com>
- <e917e98a-4ff3-45b8-87a0-fe0d6823ac2e@oss.qualcomm.com>
- <2lpx7rsko24e45gexsv3jp4ntwwenag47vgproqljqeuk4j7iy@zgh6hrln4h4e>
- <aVuIsUR0pinI0Wp7@linaro.org>
- <jejrexm235dxondzjbk5ek46ilq2gbrrhoojfcghkcpclqvtks@yfsgrxueo5es>
- <aWE7wy4tyLsnEdXc@linaro.org>
+	s=arc-20240116; t=1767985894; c=relaxed/simple;
+	bh=capi1eQmEYYcpeLmvuBwQLEqV5FUgPLgSckxnyAvCmc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Da5bdRapTC9YpuBhrp15HFGyYBwx/zfjcyZ3EWbz4j2yi8zDeDO9mN+7Nv2s+LeqQl4sfV6VV10/Vh/jXQR3aUfBmv2V88F1exmSrNX4MlFiw7tCnqQzcjJE1/++bJOnIcYVHrC/iPW6VO/3KiFf+pLYkrZW3e8qji5XJbJ52a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ot+P+qJk; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2a08cb5e30eso8597265ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 11:11:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767985891; x=1768590691; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jGucWZxG4H0oACzMuTEPVrhVqGkXJT23twyUUE6h0GU=;
+        b=Ot+P+qJkdum0e34DsqVBc61PSl41WOeeRn6OxBNk0p2AWEowv27SmjdQ8KHZpBtNqe
+         TJ969dHuNHTaVnNNkCyOk2lM2IK5YHzUhsjYmbMjvB1sUqqXun1R8RdiK3oM4Gr6Uhtt
+         z/NsAgkZbHyAlobnv+g1K1b2MuBHlBaa8k1fknM5/EzD60g/E65WCDtcnqRnB8jGB8mm
+         XX/IhoI9IliDMRW97y36vlr/L3/2YYGvs07bLqZ9n8rOU7mloHpUAR+ONsI4UYTkrJE1
+         UXYU0WYQbKYZ+v2KuJ8Ci89uaBQn2I+YsmDjd9aZx1N5waEVLL3jH2upQHj4ynhOkczf
+         HBhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767985891; x=1768590691;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jGucWZxG4H0oACzMuTEPVrhVqGkXJT23twyUUE6h0GU=;
+        b=E6is6wDyxKFXTLuIIaid6h4++LyM6nN9oRWuukpX4L9eYadvtmYORJbLA7dpGdsz/R
+         Ro+jUMuPpWLbeFHcI1p7n3uBnMtughxP0SRgiPus8F2dEPmBMDlWUzAxj2dAq+ma4UQz
+         N0yD2+uFH9W4RFFqHENSmYENwuSLCTsgcERV1vI9+5MIsplcxGzWdDI8ssd0PsILMgr1
+         f9PDsDdgU3JSCpdoBMQvrEGUwP4itSnsg8ORfBDkTA5VXxIT9BFa4fJ7k5peZoAmRWq6
+         HtCqn0PGZ5dyGqxypEF/bj7EUzPiIKD5p3iZbZbqlesc4B6laaTmz4ALFONVMrnesJ/2
+         WM4g==
+X-Forwarded-Encrypted: i=1; AJvYcCUv8CwXwqh3IrVwyJl4EqIacEC2yuSNJc5cGQDgRwg5p3oLgmjIWVPR/rJUcLkSLplEQl8ngfUhUMMu5IqJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YydAxgiIywUxEeOAaC16UaEFWag8eFNSsClvmDv0e2sYF29PBfP
+	uenr4fHaD2vBj4m0I8FKnY/KF2w+Bk/hIjCKFjwzy+qHhXXPYmfxX4drEDCnTZ373y8d6RfaCh+
+	ynwOeRs/wd746giktQ9d6Q7gLcsXO0nI=
+X-Gm-Gg: AY/fxX7hIzhIGfOQLKoUmYbioMRiyoEqePRJl4i+1SLpR0S/FF8Syvyl3/buECAC1oI
+	vIfb9IECHdtr3fah5IdBczUUyTvqGMtxVBjoXMHSTn4yJ0WogpnLZxmgqyZyQZ7qtA27+Sa3YhL
+	43Cv9X/8gpRityOKm+iZiG1bfRYhU2zlCjp+Xel/W5b9iIs0Fl/paDkz8tNzE/WZFoXMBUVZyzw
+	yfQt758eHDaAUdpvt9aVEJsrdfL0I7ndCirzOttReSw2pN7H8VdQtAe7P8ayRpuSGQt1sY=
+X-Google-Smtp-Source: AGHT+IF7dTGSqJqWZzwnIHslSdlw6WekSrgn4f0+hOUkO918cHCqTxp+XTuZOMvQz9g2tVbmrdlQKCQmnYtBYPnHFfw=
+X-Received: by 2002:a17:90b:2e0c:b0:343:e480:49f1 with SMTP id
+ 98e67ed59e1d1-34f68c28ea4mr7819215a91.5.1767985890668; Fri, 09 Jan 2026
+ 11:11:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aWE7wy4tyLsnEdXc@linaro.org>
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+In-Reply-To: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Fri, 9 Jan 2026 14:11:19 -0500
+X-Gm-Features: AQt7F2qD5NQlHCyqdD_zHjmxV20bvOEGT_rKXFuqrKobJujnG-hNvI21StHEA5Q
+Message-ID: <CACu1E7EDmLPhUFyouD=W6n+U7=oo7+6PY0Gz9=3pVpT2Qu9Z6w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Retrieve information about DDR from SMEM
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 09, 2026 at 06:33:18PM +0100, Stephan Gerhold wrote:
-> On Fri, Jan 09, 2026 at 09:49:52AM -0600, Bjorn Andersson wrote:
-> > On Mon, Jan 05, 2026 at 10:47:29AM +0100, Stephan Gerhold wrote:
-> > > On Mon, Jan 05, 2026 at 10:44:39AM +0530, Manivannan Sadhasivam wrote:
-> > > > On Fri, Jan 02, 2026 at 02:57:56PM +0100, Konrad Dybcio wrote:
-> > > > > On 1/2/26 2:19 PM, Krishna Chaitanya Chundru wrote:
-> > > > > > On 1/2/2026 5:09 PM, Konrad Dybcio wrote:
-> > > > > >> On 1/2/26 12:36 PM, Krishna Chaitanya Chundru wrote:
-> > > > > >>> On 1/2/2026 5:04 PM, Konrad Dybcio wrote:
-> > > > > >>>> On 1/2/26 10:43 AM, Krishna Chaitanya Chundru wrote:
-> > > > > >>>>> With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-> > > > > >>>>> can happen during scenarios such as system suspend and breaks the resume
-> > > > > >>>>> of PCIe controllers from suspend.
-> > > > > >>>> Isn't turning the GDSCs off what we want though? At least during system
-> > > > > >>>> suspend?
-> > > > > >>> If we are keeping link in D3cold it makes sense, but currently we are not keeping in D3cold
-> > > > > >>> so we don't expect them to get off.
-> > > > > >> Since we seem to be tackling that in parallel, it seems to make sense
-> > > > > >> that adding a mechanism to let the PCIe driver select "on" vs "ret" vs
-> > > > > >> "off" could be useful for us
-> > > > > > At least I am not aware of such API where we can tell genpd not to turn off gdsc
-> > > > > > at runtime if we are keeping the device in D3cold state.
-> > > > > > But anyway the PCIe gdsc supports Retention, in that case adding this flag here makes
-> > > > > > more sense as it represents HW.
-> > > > > > sm8450,sm8650 also had similar problem which are fixed by mani[1].
-> > > > > 
-> > > > > Perhaps I should ask for a clarification - is retention superior to
-> > > > > powering the GDSC off? Does it have any power costs?
-> > > > > 
-> > > > 
-> > > > In terms of power saving it is not superior, but that's not the only factor we
-> > > > should consider here. If we keep GDSCs PWRSTS_OFF_ON, then the devices (PCIe)
-> > > > need to be be in D3Cold. Sure we can change that using the new genpd API
-> > > > dev_pm_genpd_rpm_always_on() dynamically, but I would prefer to avoid doing
-> > > > that.
-> > > > 
-> > > > In my POV, GDSCs default state should be retention, so that the GDSCs will stay
-> > > > ON if the rentention is not entered in hw and enter retention otherwise. This
-> > > > requires no extra modification in the genpd client drivers. One more benefit is,
-> > > > the hw can enter low power state even when the device is not in D3Cold state
-> > > > i.e., during s2idle (provided we unvote other resources).
-> > > > 
-> > > 
-> > > What about PCIe instances that are completely unused? The boot firmware
-> > > on X1E for example is notorious for powering on completely unused PCIe
-> > > links and powering them down in some half-baked off state (the &pcie3
-> > > instance, in particular). I'm not sure if the GDSC remains on, but if it
-> > > does then the unused PD cleanup would also only put them in retention
-> > > state. I can't think of a good reason to keep those on at all.
-> > > 
-> > 
-> > Conceptually I agree, but do we have any data indicating that there's
-> > practical benefit to this complication?
-> > 
-> 
-> No, I also suggested this only from the conceptual perspective. It would
-> be interesting to test this, but unfortunately I don't have a suitable
-> device for testing this anymore.
-> 
+On Thu, Jan 8, 2026 at 9:22=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.or=
+g> wrote:
+>
+> SMEM allows the OS to retrieve information about the DDR memory.
+> Among that information, is a semi-magic value called 'HBB', or Highest
+> Bank address Bit, which multimedia drivers (for hardware like Adreno
+> and MDSS) must retrieve in order to program the IP blocks correctly.
+>
+> This series introduces an API to retrieve that value, uses it in the
+> aforementioned programming sequences and exposes available DDR
+> frequencies in debugfs (to e.g. pass to aoss_qmp debugfs). More
+> information can be exposed in the future, as needed.
+>
+> Patch 3 should really be merged after 1&2
 
-I doubt that we're anywhere close to the power levels we need to measure
-this with any confidence today as well...
+No. The HBB value currently returned by the bootloader is *not* always
+the same as what we use currently, because some SoCs (like SM8250)
+with the same DT ship with multiple different DRAM configurations and
+we've been using a sub-optimal value the whole time. After all, that's
+the whole point of using the bootloader value. But patches 1&2 will
+only make the DPU use the bootloader value for HBB, not the GPU. So on
+one of the affected SoCs, it will introduce a mismatch. You can't
+change anything until the GPU side uses the new ubwc config as its
+source of truth.
 
-> > > The implementation of PWRSTS_RET_ON essentially makes the PD power_off()
-> > > callback a no-op. Everything in Linux (sysfs, debugfs, ...) will tell
-> > > you that the power domain has been shut down, but at the end it will
-> > > remain fully powered until you manage to reach a retention state for the
-> > > parent power domain. Due to other consumers, that will likely happen
-> > > only if you reach VDDmin or some equivalent SoC-wide low-power state,
-> > > something barely any (or none?) of the platforms supported upstream is
-> > > capable of today.
-> > > 
-> > 
-> > Yes, PWRSTS_RET_ON effectively means that Linux has "dropped its vote"
-> > on the GDSC and its parents. But with the caveat that we assume when
-> > going to ON again some state will have been retained.
-> > 
-> > > PWRSTS_RET_ON is actually pretty close to setting GENPD_FLAG_ALWAYS_ON,
-> > > the only advantage of PWRSTS_RET_ON I can think of is that unused GDSCs
-> > > remain off iff you are lucky enough that the boot firmware has not
-> > > already turned them on.
-> > > 
-> > 
-> > Doesn't GENPD_FLAG_ALWAYS_ON imply that the parent will also be always
-> > on?
-> > 
-> 
-> It probably does, but isn't that exactly what you want? If the parent
-> (or the GDSC itself) would actually *power off* (as in "pull the plug"),
-> then you would still lose registers even if the GDSC remains on. The
-> fact that PWRSTS_RET_ON works without keeping the parent on is probably
-> just because the hardware keeps the parent domain always-on?
-> 
+Connor
 
-No, that's not what we want.
-
-As part of entering and exiting CXPC, the system will switch the
-resources related to the GDSC between CX and some other rail (generally
-some form of MX). In other words, the hardware will "reparent" the
-resources under the hood. So we do want to leave the GDSC in a "active,
-but according to software inactive" state, and we need to let go of the
-votes on the parents.
-
-
-We typically list e.g. CX as the parent of the GDSC, giving us the two
-side effects: 1) an active GDSC casts an active vote on the CX, 2) a
-performance_state vote on the GDSC will trickle up to CX.
-
-In particular the latter allow us to describe devices with a single
-power-domain, and let them through that relationship cast votes on CX.
-See e.g. &usb_1_ss0 in hamoa.dtsi; the GDSC doesn't have a concept of
-performance states, but to sustain the given assigned-clock-rates we
-need to keep CX at NOM.
-
-> > > IMHO, for GDSCs that support OFF state in the hardware, PWRSTS_RET_ON is
-> > > a hack to workaround limitations in the consumer drivers. They should
-> > > either save/restore registers and handle the power collapse or they
-> > > should vote for the power domain to stay on. That way, sysfs/debugfs
-> > > will show the real votes held by Linux and you won't be mislead when
-> > > looking at those while trying to optimize power consumption.
-> > > 
-> > 
-> > No, it's not working around limitations in the consumer drivers.
-> > 
-> > It does work around a limitation in the API, in that the consumer
-> > drivers can't indicate in which cases they would be willing to restore
-> > and in which cases they would prefer retention. This is something the
-> > downstream solution has had, but we don't have a sensible and generic
-> > way to provide this.
-> 
-> I might be missing something obvious, but mapping this to the existing
-> pmdomain API feels pretty straightforward to me:
-> 
->  - Power on/power off means "pull the plug", i.e. if you vote for a
->    pmdomain to power off you should expect that registers get lost.
->    That's exactly what will typically happen if the hardware actually
->    removes power completely from the power domain.
-> 
-
-I think you should rather see it as a question of does the requester
-need the power to be on. In many/most cases you have some form of logic
-or reference counting between the consumer and the actual hardware
-switch.
-
-So a client doesn't vote for a resource to be turned off, it rather
-removes its vote for it to be on. The layers below will then aggregate
-votes, implement sleep timeouts etc, and might turn off the power.
-
->  - If you want to preserve registers (retention), you need to tell the
->    hardware to keep the pmdomain powered on at a minimum voltage
->    (= performance state). In fact, the PCIe GDSC already inherits
->    support for RPMH_REGULATOR_LEVEL_RETENTION from its parent domain.
->    (If RPMH_REGULATOR_LEVEL_RETENTION happens to be higher than the
->     rentention state we are talking about here you could also just vote
->     for 0 performance state...)
-> 
-
-This world view does makes sense, but instead of keeping CX as a
-"retention" level, the Qualcomm platform retain state through some other
-power rail, allowing CX to collapse fully - bringing with it all those
-parts that hasn't been built or configured to switch to retention power.
-
-> With this, the only additional feature you need from the pmdomain API is
-> to disable its sometimes inconvenient feature to automatically disable
-> all pmdomains during system suspend (independent of the votes made by
-> drivers). I believe this exists already in different forms. Back when
-> I needed something like this for cpufreq on MSM8909, Ulf suggested using
-> device_set_awake_path(), see commit d6048a19a710 ("cpufreq: qcom-nvmem:
-> Preserve PM domain votes in system suspend"). I'm not entirely up to
-> date what is the best way currently to do this, but letting a driver
-> preserve its votes across system suspend feels like a common enough
-> requirement that should be supported by the pmdomain API.
-> 
-
-In the downstream Qualcomm kernels you can find various mechanism for
-client drivers to dynamically change this behavior for both clocks and
-GDSCs. There has been "corner cases" through history where in certain
-use cases you want retention and in other don't.
-
-No such APIs exists in the PM or clock APIs.
-
-> > 
-> > Keeping GDSCs in retention is a huge gain when it comes to the time it
-> > takes to resume the system after being in low power. PCIe is a good
-> > example of this, where the GDSC certainly support entering OFF, at the
-> > cost of tearing link and all down.
-> > 
-> 
-> I don't doubt that. My point is that the PCIe driver should make that
-> decision and not the (semi-)generic power domain driver that does not
-> exactly know who (or if anyone) is going to consume its power domain.
-> Especially because this decision is encoded in SoC-specific data and we
-> had plenty of patches already changing PWRSTS_OFF_ON to PWRSTS_RET_ON
-> due to suspend issues initially unnoticed on some SoCs (or vice-versa to
-> save power).
-> 
-
-That idea that the responsibility for making such decisions would better
-lie with the client I agree with.
-
-But on the other hand, extending the APIs to allow such fine grained
-tweaks makes the system more integrated and complex. Conceptually I
-would prefer us moving towards the Linux power model, with individual
-devices having an abstract power state, rather than sprinkling tweaks
-throughout.
-
-
-Ultimately, I don't think this it's worth exposing such controls. We're
-orders of magnitude away from decent power consumption in sleep, and we
-still can't boot the system reliably without clk_ignore_unused. Once
-we're past that, I'd be happy to be proven wrong by some measurements.
-
-Regards,
-Bjorn
-
-> Thanks,
-> Stephan
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Changes in v3:
+> - Support v6 and v7 DDRInfo (v7 is used on e.g. Hamoa)
+> - Handle rare cases of DDRInfo v5 with additional trailing data
+> - Rebase/adjust to SSoT UBWC
+> - Expose hbb value in debugfs
+> - cosmetic changes
+> - Link to v2: https://lore.kernel.org/r/20250410-topic-smem_dramc-v2-0-de=
+ad15264714@oss.qualcomm.com
+>
+> Changes in v2:
+> - Avoid checking for < 0 on unsigned types
+> - Overwrite Adreno UBWC data to keep the data shared with userspace
+>   coherent with what's programmed into the hardware
+> - Call get_hbb() in msm_mdss_enable() instead of all UBWC setup
+>   branches separately
+> - Pick up Bjorn's rb on patch 1
+> - Link to v1: https://lore.kernel.org/r/20250409-topic-smem_dramc-v1-0-94=
+d505cd5593@oss.qualcomm.com
+>
+> ---
+> Konrad Dybcio (3):
+>       soc: qcom: smem: Expose DDR data from SMEM
+>       soc: qcom: ubwc: Get HBB from SMEM
+>       drm/msm/adreno: Trust the SSoT UBWC config
+>
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  11 +-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  82 +------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |   5 -
+>  drivers/soc/qcom/Makefile               |   3 +-
+>  drivers/soc/qcom/smem.c                 |  14 +-
+>  drivers/soc/qcom/smem.h                 |   9 +
+>  drivers/soc/qcom/smem_dramc.c           | 408 ++++++++++++++++++++++++++=
+++++++
+>  drivers/soc/qcom/ubwc_config.c          |  69 ++++--
+>  include/linux/soc/qcom/smem.h           |   4 +
+>  9 files changed, 485 insertions(+), 120 deletions(-)
+> ---
+> base-commit: fc4e91c639c0af93d63c3d5bc0ee45515dd7504a
+> change-id: 20250409-topic-smem_dramc-6467187ac865
+>
+> Best regards,
+> --
+> Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
 
