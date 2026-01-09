@@ -1,99 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-88285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6978DD0A702
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 14:34:47 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33AA6D0A723
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 14:37:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CD702301275D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 13:28:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A09D53062B1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 13:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1716535BDAF;
-	Fri,  9 Jan 2026 13:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D434835C1A1;
+	Fri,  9 Jan 2026 13:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jhYzqEDY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0JTTK0S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E805235B153
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 13:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB812E8B94;
+	Fri,  9 Jan 2026 13:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767965314; cv=none; b=CwlzlQjQKcIv9Fof4/bYE7MhOEJ+f63CZmKLh/AQxNCD6vGiEwTp9omYiU5KWy1ifx7z2l/uagwdyjRQjZ7dBEuydZ9/yrS+/TArjZbLBXvbfIKQR1Va5OWVEc39gDLFdQ9s2FfPyX7I9KadnnP5J4G7LKzWW5gAzrcxAhs6wYo=
+	t=1767965622; cv=none; b=tVd1iIDUWXB4OundeDz5VPCMULwLdx+u9dWWehP+esvXa/de38H1kw0LrK2ZVT54T9ofzI7TdqGZYc4IrEQoRQWrR41VSVPaNsCX8D83gYSVBKWbTQu6nxYmWjug643wILdYz00sG7bE0R2gW5CQhJ9BuAwU5xEnJmmhEl75YKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767965314; c=relaxed/simple;
-	bh=XCPKuTzmFT+XjAECCMFeFIIXfTK4iZ5AJMLWp+f6w4M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Aal9FapauWTjyPDWhjlTYZuL9PfbjJkjdYqkBjuNklfeAO6KX0j5bRQGNPh93ADHw4AY0dmZGFPDe/ygKfheex8IiFYwq8Wp8AWhp7WA3dwBhURUnEFw+pDxW9MIFlWKok4tJWYZHV2DqLIt4hlKBP7g+9oCOqJ3v6qyK+dHcFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jhYzqEDY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34C5C4CEF1
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 13:28:33 +0000 (UTC)
+	s=arc-20240116; t=1767965622; c=relaxed/simple;
+	bh=LQUyd3vGywKl1tt4v7FTaee6X195SbdF/LwGioPgO0Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jcz67LQKlx35V9IhyKkkN42bgFIhCkbYFO2UXpLFVMAmXSGPDSTCXn6i8icFb02t/CW3W5W2W9t9USESiEK247V3eQqJMCTu3hfQvJHfc2YZzylHBAUndeinXN2BscrMfCZ3phshtW6Zv6KODhVJKyMNpRRU3CBkicbbwflJJFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0JTTK0S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E4DC4CEF1;
+	Fri,  9 Jan 2026 13:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767965313;
-	bh=XCPKuTzmFT+XjAECCMFeFIIXfTK4iZ5AJMLWp+f6w4M=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=jhYzqEDY00gWjprFJyeEwZA3f/1P7hrbT5RfJdQi8ePIOIwZNwmUVpIYA8MIwKBl/
-	 g1156Fb3pI0BE/7Mm3UQcuDmN82/7Zyy3mpEd8CIZMms7A8nBWoy+XOWscyVVgBsk8
-	 5yWBpCVcSlLoM4WFueY9Wg87QRGO2kUxQ0Z96aANYmZvqvuVNTOh5kOy+EKoYazo7a
-	 5cHA+E7zvsZFuZqsnnLkHezjLstAxhB74BQmKG0KXQJhZXb8acvavx5D86Cat4ze13
-	 wK1B9U3JeMLL0hagSZlYIYlhSz3j2ppq2n9cN61BU2rMZejy0Nv/4O+NabX1iuILSu
-	 OWw61Ar+TQG8g==
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-790647da8cbso47731157b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 05:28:33 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUzsgfXrqgWPNPU0Thw1StC1YzGL2SWLDH8iI1fNahdLle5YJj2piFzsQAViL+XX3sT+Ai5w2JusdKl5LbF@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGhedVHblJmZi1pZFWz4s3b1xkZuWIXkApML8LORWMcqpqUXE6
-	mqqX20LgobppjxTYef1A3NGZ6AvnH11faFoj+uwOoL7qWh9wTtRy+870Wc709l8U6MYrlkamn35
-	hgT6iSG2TnnhoHI9iPntt5JnOgd9yixc=
-X-Google-Smtp-Source: AGHT+IGuHzPZpKBfVFzUwKfCmtMtelryj+AyVV3OWGw/GQqYNZ/cAUokVmYHIKQSLxWynktwZPBNkBrSrWQjsIeKiYo=
-X-Received: by 2002:a05:690e:383:b0:646:518b:b180 with SMTP id
- 956f58d0204a3-64716bd2f01mr5826709d50.51.1767965313064; Fri, 09 Jan 2026
- 05:28:33 -0800 (PST)
+	s=k20201202; t=1767965622;
+	bh=LQUyd3vGywKl1tt4v7FTaee6X195SbdF/LwGioPgO0Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q0JTTK0SuScg/iiVRITNJPgQhFo6wCicXuq1pTQJFV7I1QNAIOscrK/4nmMlMUjhv
+	 egOcy2OCsl9Y/M2qRjS4xH6T8+59mTV7cgy5gUporGVkhrmi5kVywyaz/vF+ez3oSx
+	 VmJRDxYVTEXJ5q9cnOQARgiEyc/kp0KWOfynaVrIKS94NZN4scnMO0uBRYQYhH0j0E
+	 QkO9qXdiSigxFXQVW79rdOsIWC/20vwe/uVE0FTofU99jIldVz7VMlwcJOmmPL8QjN
+	 EYfeE1cnHnuREL8qBFSW1zH0bqB0tJPQQ7HrkGiyQlXoR9eWeTgzBMrgENx917rHOZ
+	 1F0akGT210qAQ==
+Date: Fri, 9 Jan 2026 13:33:35 +0000
+From: Daniel Thompson <danielt@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: barnabas.czeman@mainlining.org, Lee Jones <lee@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Kiran Gunda <quic_kgunda@quicinc.com>, Helge Deller <deller@gmx.de>,
+	Luca Weiss <luca@lucaweiss.eu>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	Gianluca Boiano <morf3089@gmail.com>,
+	Alejandro Tafalla <atafalla@dnyon.com>,
+	dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] backlight: qcom-wled: Support ovp values for
+ PMI8994
+Message-ID: <aWEDr3O9T7bASnj9@aspen.lan>
+References: <20260108-pmi8950-wled-v2-0-8687f23147d7@mainlining.org>
+ <20260108-pmi8950-wled-v2-2-8687f23147d7@mainlining.org>
+ <aV-UyhP7wllSBpYj@aspen.lan>
+ <67acbe8ff2496e18a99165d794a7bae8@mainlining.org>
+ <0fe51f7f-9b77-4bff-ab1c-21c44a863a7a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260108100721.43777-2-krzysztof.kozlowski@oss.qualcomm.com>
-In-Reply-To: <20260108100721.43777-2-krzysztof.kozlowski@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Fri, 9 Jan 2026 14:28:21 +0100
-X-Gmail-Original-Message-ID: <CAD++jLnp3xxSYet_H2VbCCLpQ93oXXNd86+RBno=oC_NbhtRzg@mail.gmail.com>
-X-Gm-Features: AZwV_QhS1zB_x9JPN09oQL3AyD_5WXyXemZZmXFqF0iSW9BNaPbSwpa5v_8TNpY
-Message-ID: <CAD++jLnp3xxSYet_H2VbCCLpQ93oXXNd86+RBno=oC_NbhtRzg@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sm8350-lpass-lpi: Merge with SC7280 to fix
- I2S2 and SWR TX pins
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0fe51f7f-9b77-4bff-ab1c-21c44a863a7a@oss.qualcomm.com>
 
-On Thu, Jan 8, 2026 at 11:07=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@oss.qualcomm.com> wrote:
+On Fri, Jan 09, 2026 at 12:09:11PM +0100, Konrad Dybcio wrote:
+> On 1/9/26 7:36 AM, barnabas.czeman@mainlining.org wrote:
+> > On 2026-01-08 12:28, Daniel Thompson wrote:
+> >> On Thu, Jan 08, 2026 at 04:43:20AM +0100, Barnabás Czémán wrote:
+> >>> WLED4 found in PMI8994 supports different ovp values.
+> >>>
+> >>> Fixes: 6fc632d3e3e0 ("video: backlight: qcom-wled: Add PMI8994 compatible")
+> >>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> >>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> >>> ---
+> >>>  drivers/video/backlight/qcom-wled.c | 41 +++++++++++++++++++++++++++++++++++--
+> >>>  1 file changed, 39 insertions(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> >>> index a63bb42c8f8b..5decbd39b789 100644
+> >>> --- a/drivers/video/backlight/qcom-wled.c
+> >>> +++ b/drivers/video/backlight/qcom-wled.c
+> >>> @@ -1244,6 +1244,15 @@ static const struct wled_var_cfg wled4_ovp_cfg = {
+> >>>      .size = ARRAY_SIZE(wled4_ovp_values),
+> >>>  };
+> >>>
+> >>> +static const u32 pmi8994_wled_ovp_values[] = {
+> >>> +    31000, 29500, 19400, 17800,
+> >>> +};
+> >>> +
+> >>> +static const struct wled_var_cfg pmi8994_wled_ovp_cfg = {
+> >>> +    .values = pmi8994_wled_ovp_values,
+> >>> +    .size = ARRAY_SIZE(pmi8994_wled_ovp_values),
+> >>> +};
+> >>> +
+> >>
+> >> Do these *have* to be named after one of the two PMICs that implement
+> >> this OVP range.
+> >>
+> >> Would something like wled4_alternative_ovp_values[] (and the same
+> >> throughout the patch) be more descriptive?
+> > I don't know. I don't like the PMIC naming either but at least it
+> > descriptive about wich PMIC is needing these values.
 
-> Qualcomm SC7280 and SM8350 SoCs have slightly different LPASS audio
-> blocks (v9.4.5 and v9.2), however the LPASS LPI pin controllers are
-> exactly the same.  The driver for SM8350 has two issues, which can be
-> fixed by simply moving over to SC7280 driver which has them correct:
+It's the descriptive but wrong element I dislike (pmi8994_wled_ovp_cfg
+is used by pmi8550).
+
+I know these things crop up for "historical reasons" when is appears in
+the same patchset I have to question the naming.
+
+
+> > I think PMIC naming would be fine if compatibles what representing the
+> > same configurations would be deprecated and used as a fallback compatbile
+> > style.
+> > I mean we could kept the first added compatible for a configuration.
+> > Maybe they should be named diferently i don't know if WLEDs have subversion.
 >
-> 1. "i2s2_data_groups" listed twice GPIO12, but should have both GPIO12
->    and GPIO13,
+> Every PMIC peripheral is versioned.
 >
-> 2. "swr_tx_data_groups" contained GPIO5 for "swr_tx_data2" function, but
->    that function is also available on GPIO14, thus listing it twice is
->    not necessary.  OTOH, GPIO5 has also "swr_rx_data1", so selecting
->    swr_rx_data function should not block  the TX one.
+> WLED has separate versioning for the digital and analog parts:
 >
-> Fixes: be9f6d56381d ("pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS T=
-LMM")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> PMIC		ANA	DIG
+> ---------------------------
+> PMI8937		2.0	1.0 (also needs the quirk)
+> PMI8950		2.0	1.0
+> PMI8994		2.0	1.0
+> PMI8996		2.1	1.0
+> PMI8998		3.1	3.0
+> PM660L		4.1	4.0
+>
+> I don't know for sure if "PMIC4 with WLED ANA/DIG 3.x" a good
+> discriminant though..
 
-Patch applied for fixes!
+Peronally I'd prefer that to making them all use pmi8994 structures.
+It's a much better link back to the docs (at least for those with the
+power to read them ;-) ).
 
-Yours,
-Linus Walleij
+
+Daniel.
 
