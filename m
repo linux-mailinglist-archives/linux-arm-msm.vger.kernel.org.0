@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-88223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E80B7D07E02
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 09:40:34 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67CF4D07FC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 09:53:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0FF2E301D165
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 08:40:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A453930692AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 08:50:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D8B350A3C;
-	Fri,  9 Jan 2026 08:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9990350D5D;
+	Fri,  9 Jan 2026 08:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qUewn12+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="isE8jCWy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31671318ECC;
-	Fri,  9 Jan 2026 08:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696D8350D57;
+	Fri,  9 Jan 2026 08:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767948027; cv=none; b=Pqx+rTrRD1xeTGsA9DyjDIXh6nRio80Zb8jq3x9cIdw+SoC+6JjnYniTKERNYabj4zMmEpkLH9BtMn0AMK/wn52ABA2EJiaeUW8qPtYCcFiJ9JGFNDzJaV+0rFDtxXbOO0PbI7VU/dp7/uE2r1KsR6UqG0n6+1NIVbYskQqa/TQ=
+	t=1767948597; cv=none; b=ezfAoLssZbfr35fId2HDYXSkLuOc8PQz18mxnmEV2a0PSL2QA+uCEbPaCTE4w9sPLuaTm8MK7YZl94ZmhHOy7w+YMCxj+V7+/Z98P0a0yCrVX81YJ0zVMgLaQFMySF0TSQ4S33QThH4nNP/rJXRTY2pJZhto55DhDcBvpJZ112s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767948027; c=relaxed/simple;
-	bh=N89pRSUFySMqGXkKFHlaudBE+y8YxfQrU4YwoHlhP1g=;
+	s=arc-20240116; t=1767948597; c=relaxed/simple;
+	bh=sVC9B4d/+KK3+vbZEw6LoEo1PkrQiiNB25XuDOpH3QI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tix3Yydr82bNn/ugyeWKb3ELNoV8O4SeAYKhX8aEaDVCGrFMFNLkH1V13+vQdhi/qz2QqwrYGSjfE9yApCY0DaiZ7Y1tslUrrb49Q79AI/wcPIcfbp00jp6QQMyRy5SQzN4dFYMREKJMkMRnMNT12qqObDvJ69pyWeVzBAfIMcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qUewn12+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9070CC4CEF1;
-	Fri,  9 Jan 2026 08:40:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=EEaW4qy3t3lrwbDh1DvBwWITzki97Ik+1b+nhy4kBx/bMOQuWzb+lj7oyLKcVvsxMP96g+jifaPzy3g4/QxT0/39Y1sLJTDqzDgbSGqYZdt9ogcqGc3DxjPgWy7nb/jR9p3ZyMoFKXgzn4mj2eRpkUXVp1BPE5IvUptS6Y5rqMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=isE8jCWy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23180C4CEF1;
+	Fri,  9 Jan 2026 08:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767948027;
-	bh=N89pRSUFySMqGXkKFHlaudBE+y8YxfQrU4YwoHlhP1g=;
+	s=k20201202; t=1767948596;
+	bh=sVC9B4d/+KK3+vbZEw6LoEo1PkrQiiNB25XuDOpH3QI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qUewn12+G9iyBGTRd+S/CiysY/5+2J+GRZ0A0WwYcHTfjparRs4JJw//I7fmzCTeW
-	 46IEKIdo/KEZ8LwX1SbmwZWn57bMHRCF1yWlG9gsIqTbIAsj7dIm/BwODplbWCTwRa
-	 UnzM1G2RWCSzhhV/bwqRHo4UdYKBvZQShAI5XPtmWTl5lGMbWJrPU50ez9NoB1qPOz
-	 DWXA4CAejZwBM5PKiAGM3/kWeBMCw8hw/Z3b5PkDQEcw5U5HB3id/CMZebdl7Ll1tv
-	 nFVzDvPI66JFlyusLI0UT9GMSfUP9aMeE3KEQ9A7YTaernH9qmit5CdEmt8z+WCE0r
-	 WRc7gNl+3SAVQ==
-Date: Fri, 9 Jan 2026 09:40:24 +0100
+	b=isE8jCWyGsG+gn0GX3GOJk6x7mEGHfOFrEac9MPyqQqOVoTiZIukOS6g8ui0nIFPg
+	 MXomb3wWy5qBRUPFn/KXROc1xM6Bvj0pKzYeiscFERH5cbHV0zNOhJC5RDSmdp+9GN
+	 Pvg9KhiK0ZK7W7OqAmzmg4dV1XIZzCJInHrTmG3Uc/HDSxdmyPSts/06Y8RHKsMxm8
+	 D7d2GToeyCBJE6fr8foTHOhn6G6AzPbYNclEkzSberR/LNukNTgG4rEBm0bIz81enV
+	 MSqh9oIiC5LyiBBjsPdrmIooG79S2zIptSsaehk1UNz+K3T3FEYL4dCEh2jbhB9HN7
+	 hSSgOn1AA3NWQ==
+Date: Fri, 9 Jan 2026 09:49:54 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Cc: andersson@kernel.org, krzk+dt@kernel.org, mturquette@baylibre.com, 
-	linux-remoteproc@vger.kernel.org, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, konradybcio@kernel.org, 
-	sboyd@kernel.org, p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 4/9] dt-bindings: remoteproc: qcom: add IPQ9574 image
- loader
-Message-ID: <20260109-rational-vivacious-tuna-1bb4fa@quoll>
-References: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
- <20260109043352.3072933-5-mr.nuke.me@gmail.com>
+To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: mkl@pengutronix.de, mani@kernel.org, thomas.kopp@microchip.com, 
+	mailhol@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, linux-can@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	mukesh.savaliya@oss.qualcomm.com, anup.kulkarni@oss.qualcomm.com
+Subject: Re: [PATCH v1 1/2] dt-bindings: can: microchip,mcp251xfd: allow
+ gpio-hog child nodes
+Message-ID: <20260109-successful-vegan-baboon-1b9ea7@quoll>
+References: <20260108125200.2803112-1-viken.dadhaniya@oss.qualcomm.com>
+ <20260108125200.2803112-2-viken.dadhaniya@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,17 +60,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260109043352.3072933-5-mr.nuke.me@gmail.com>
+In-Reply-To: <20260108125200.2803112-2-viken.dadhaniya@oss.qualcomm.com>
 
-On Thu, Jan 08, 2026 at 10:33:39PM -0600, Alexandru Gagniuc wrote:
-> Document the IPQ9574 native (non-PAS) WCSS image loader. It is similar
-> to IPQ8074 WCSS, but requires several new clocks. These clocks must be
-> enabled by the host in non-PAS mode, and are not optional.
+On Thu, Jan 08, 2026 at 06:21:59PM +0530, Viken Dadhaniya wrote:
+> The MCP251XFD can expose two pins as GPIOs. The binding already declares
+> gpio-controller and #gpio-cells for the device. Whitelist GPIO hog child
+> nodes using patternProperties so boards can set default GPIO states at
+> boot via DT, consistent with other GPIO controllers
+> (e.g. microchip,mpfs-gpio).
 > 
-> This binding did not have an example, so add one which uses the
-> "qcom,ipq9574-wcss-pil" binding.
-> 
-> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/net/can/microchip,mcp251xfd.yaml    | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
