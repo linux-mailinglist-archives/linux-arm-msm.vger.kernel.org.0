@@ -1,203 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-88301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFDE1D0ADF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:24:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32716D0AE35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:27:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 772F23007C62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:21:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C4DCA310B0F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:22:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D878D2E5B27;
-	Fri,  9 Jan 2026 15:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1945435BDBF;
+	Fri,  9 Jan 2026 15:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="pLmOFvj4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h1vshY+C";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N+b4ReiU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CA41D5141;
-	Fri,  9 Jan 2026 15:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682462877FE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 15:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767972100; cv=none; b=IHd41JkICg4XNdulUkI3V/bnSWQiArRnEJ1joVWaI/HSgwvKYDIt8cSvcAH2bcm2/pz2/Md/nMZKjsbTUeRIFnnIkkO2xiTONj/7l/yeMdJNSAAV+zHfG6d8HYVsk+EXznLo2BF44oY808Znee0X9gzW3URQlerKWvFVbPPLpfE=
+	t=1767972166; cv=none; b=ImmCkRgCq8UcedY5Vzw0h8QA2eGZIFEt97NbxJZk6gHShoowyltrqRYOmOVzGW4hUwWvKXOdh+hUIred+TF/Q4LAH7ekckkcokaPpvNS8RA+SPZfjOyQss/OIALNZUNEDLw7Sq4yg4JVlVoVhrXmST3HLqzvMZ5RdHrx+dSAFpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767972100; c=relaxed/simple;
-	bh=1HD2uASmbhaMMGcoL/glMXY7M5i07XbjtXTfQdajags=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Hdt9twtoLw7kuJllwPXi2T9vTubuelNwkBifJZqWQDCgcNvuppTnl4QsUuduOkAa7jmUbBSY3j2cLuTMkmYQUJZNU4H+89uYC3YlWFwgQAhpCl/ynm4vbywxpNbODSzs2XEEQSQNIgqUlzJ+boyqiwdWfNNheHUrwdbtHM4qB+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=pLmOFvj4; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1767972097;
-	bh=1HD2uASmbhaMMGcoL/glMXY7M5i07XbjtXTfQdajags=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=pLmOFvj44qe5XO8yMEZaEjIDm1h9TgNz0s4keeg+1TfMw7JwSc9VB6tz2bnXaJJf1
-	 7awx1rXcbYy3GmomCCqk2Bz5WhneGYV+LnufGH68DZ1xs3whw/uUEYyDCpZR8HLoqB
-	 c35FnUuRgVaLhdeCPel4RRtt0HduiH9+7jQXWgAe2l5pgbSMeq5Ie1rN9wytEedpn2
-	 LXIP78UqfdCpYGHDbj1oKoYSGJMo9+8VNDABqFHchrKxqsu0kNNpyqe3hRe32ZhY/h
-	 P2AKsbNa9Ph/av6DGYry6bJ/eJpnFjuYg03TgAZpPw0wL0mdUrhhBGjsk0d+eV6szY
-	 bwCrsU3cOIq2w==
-Received: from [IPv6:2606:6d00:17:7b4b::c41] (unknown [IPv6:2606:6d00:17:7b4b::c41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nicolas)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3556517E13F9;
-	Fri,  9 Jan 2026 16:21:36 +0100 (CET)
-Message-ID: <6f94050e55358483cf99429c587f86ee8334b498.camel@collabora.com>
-Subject: Re: [PATCH v10 0/5] Enable support for AV1 stateful decoder
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To: Val Packett <val@packett.cool>, Deepa Guthyappa Madivalara	
- <deepa.madivalara@oss.qualcomm.com>, Bryan O'Donoghue <bod@kernel.org>, 
- Mauro Carvalho Chehab	 <mchehab@kernel.org>, Vikash Garodia
- <vikash.garodia@oss.qualcomm.com>,  Dikshita Agarwal
- <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Bryan O'Donoghue
- <bryan.odonoghue@linaro.org>,  Hans Verkuil <hverkuil+cisco@kernel.org>
-Date: Fri, 09 Jan 2026 10:21:33 -0500
-In-Reply-To: <bc0aa47d-81a9-480b-b156-b0cb23179515@packett.cool>
-References: <20251210-av1d_stateful_v3-v10-0-cf4379a3dcff@oss.qualcomm.com>
-	 <DjKkpb96k7gGFmmmqsmLvO6sKcd02WwZq67n9hY4c75sajI_hENGebzfUBW3Xs3WGJ_oXdeYkNcV-T7UkXO6Xw==@protonmail.internalid>
-	 <ae5531fa-a3a4-4fc5-8580-3a790bec4961@packett.cool>
-	 <de8fe895-79ae-4540-9879-64d6f8f9e239@kernel.org>
-	 <f86a904e-110e-448f-96e0-22bc6b3e4b38@packett.cool>
-	 <a8af1513-fda6-4809-80ae-bb07d2ed0db3@oss.qualcomm.com>
-	 <bc0aa47d-81a9-480b-b156-b0cb23179515@packett.cool>
-Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Organization: Collabora Canada
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-UUXliWYOFX6Sh2a1bQi4"
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+	s=arc-20240116; t=1767972166; c=relaxed/simple;
+	bh=o+et/fNt8Wz+GE9eL3g+M5s7u+FOMg1kGzNKpQmVSOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AKV+Jxmq9dJFWnvzfTCAHGBq0GGlDwh/Xhrx5F7qHgXBniNOViOhOthnusjmEBqNUFcqUEFLOgbtkw7uCoB0Ix6ucL193latgxBQ2Zxmg/h7yJNGzqvWx9jS7aQgiIJnZTWeEzygeZGSYh3/ZeNuXfJGf/t4ekM5hNvrlind2WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h1vshY+C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N+b4ReiU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 609CsRLG3019775
+	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 15:22:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=loy0TPHhWcKiYp5c2ufkllth
+	GFm2RkqaWI7+xw8R/rU=; b=h1vshY+CvQSI+rOUlkhgEwIKpwLR+icxlT7gduvW
+	0M8H/54/hB/r7wMC41zh4aO9fO+1eb/tMQ5OIANvTXxq7xhFe2whnduCmRZBTecP
+	RBKAhGadRt7GFOl2VCbIsoonq8VvDyXy+SrgLLJHe0v+CD2eudjDrCgRm0qlKSPh
+	4emMfcto8Fhfr/rCu3ZMHVy3IrA/bgAzheobDItn8phc1p2zr5vji1+TItQZOU/p
+	/ynGDEzhH6YdI1/iA92Yr4PgI8TcftzXv0t3+blWfMKnefpfRu5Gq/4A2d5ScKCT
+	1DC+Kc8G2EklaVyW0bNwvku+QddAi7Uny45Q3v1gSl50Fw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjjk3k5uf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 15:22:42 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8bb6a7fea4dso1011392185a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 07:22:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767972161; x=1768576961; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=loy0TPHhWcKiYp5c2ufkllthGFm2RkqaWI7+xw8R/rU=;
+        b=N+b4ReiUWc6D/OGAyEEalbNLjaGAPl8fUKmAwa1c/oH5NUziAc+SeewR5ubs4SBbHu
+         ILv+ApQpldGsuYT4Ui59iK+xJzdzmPqj6tx4Lne0XwTYIe0k6vwaRZ0trHUG4Awink2p
+         YbvK0VIT+3aTWMdlxfJtxpSHYnDUAWSODIGjEg1MT6hEAVvFMNxpXJ6AIyYKq9nOTJAY
+         NtFirBOZdKrPCx/XQRzycCFqgmtlyqh797txzMbe25wH9J0etkMCAOP9rUlDZQx2fWEz
+         Cq3GAucsHR7HsTxatmxOg81+9zywg2F4VNm5EPqd5xCZekupyg+KAmVG7AoZ7KVi8Q8u
+         AFbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767972161; x=1768576961;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=loy0TPHhWcKiYp5c2ufkllthGFm2RkqaWI7+xw8R/rU=;
+        b=NEv1iE+lMJakV/FVlSq44RX8s1jHxdcK3I9STJ+88Ep2FBaTBTHL5TQ5HjkJWc7U66
+         qqXzizQPAvkOv6zLpwpCSkaC+Pb+6fINTUZO4q8z3h+yLBJiewR1dieC1rWkyWoRKtkR
+         eMYXjCRdAz8LiI2qnBpvggMVJwkNPdg0iEf/AoCUtq8mAX63gK7B3P4ojV4EatEJ6VzW
+         iuErj19sihyBj4mAm5Z/Y6w9SGsA4DcwJmUqD65jxGbrY6Awm3PsZquey4SsyoV31rU0
+         +a73MXSULDZUDIsyX+r/x5yHhdYk8uMv/8M8rW8RYPNSEyk9WcsTttTZDZrzfvxtjFx+
+         MFdw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3eUaPseT9WedSz0GRL4tjhGGv0/QFNkhPA8MOykjLydSM5y2n4ErZTQgjE014LWTZ3k0dHPqhYtOPrAAO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfjWC9vOcLH7FhFJWBcmhoUZLKdTOHULjSjT8Rh8Kr/8FL+Jic
+	lA88M29QHkxtoPeoNOGlLeAH2lwfqlr+7c2il6o+rEHOvtHdZx2anTsldox+kKnzqpXZxbAKJEL
+	m3gynPNFcmjb6jMyiraaiCQu37mOaT/jUw/fCp4gCOQnZD9XG5XZTpQm8osxlQGq9GeZT
+X-Gm-Gg: AY/fxX4xm9rwSN20dIX5dDsb1hcpg4CEUOiljR42NpnrWhZyYYnjI3MbhY2FGoJqLqQ
+	2SaqXDT0E3advlatmJccMDMFi9W+b0T5picEmRFyZC9Ydia7OCHHFtUjyLLzmn3TPoLdLc0wIpJ
+	O2WTKFuOws4lxo0z7hZOflwN3rg/gYreC/Mh0/Hh7o9KjGVx0e54Ejm5atFB2dT6oNiYvury0Gm
+	p3ec6hs8dNHa5y62dgpu2W2vpIiM37zihKS6k77zTvUuIfMUjBxgjcwS8/vi7IuR97LYiaDJb4E
+	wSzwyy6utpQvMjOQaTNCcT4or1IJEFblONqVCLuIgTUhw9/8a8w2Y3qWJlP1s9V+gkFHgJs6V+h
+	wtR6joHQmFC6K1AYk1ds3GFp1p1iuk3y6DMYCW6zjpRsM8QnomH+JeDq2W/ZGyevXglEkpfClj+
+	rFTcC7ZqW3mgHIuWo3GvLiZJY=
+X-Received: by 2002:a05:620a:172c:b0:8b2:ef6c:802f with SMTP id af79cd13be357-8c3893f7e3bmr1563023185a.59.1767972161044;
+        Fri, 09 Jan 2026 07:22:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEW8cHslVnozbH0FQY7+gVXqiAda7H7WnZddF0wYfrOU+UFBSmBPwML6d/rabRKq5TRaZB9w==
+X-Received: by 2002:a05:620a:172c:b0:8b2:ef6c:802f with SMTP id af79cd13be357-8c3893f7e3bmr1563016785a.59.1767972160509;
+        Fri, 09 Jan 2026 07:22:40 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d0d86bsm2870638e87.23.2026.01.09.07.22.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jan 2026 07:22:39 -0800 (PST)
+Date: Fri, 9 Jan 2026 17:22:37 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: yuanjie yang <yuanjie.yang@oss.qualcomm.com>
+Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+        jesszhan0024@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
+        airlied@gmail.com, simona@ffwll.ch, krzysztof.kozlowski@linaro.org,
+        konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
+        aiqun.yu@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com
+Subject: Re: [PATCH 1/2] drm/msm/dpu: fix mismatch between power and frequency
+Message-ID: <kusxzlezvsuwcwwdtm7yqwnqea6gdeolkepxpx3estabaiqymo@edj7pgccli3y>
+References: <20260109083808.1047-1-yuanjie.yang@oss.qualcomm.com>
+ <20260109083808.1047-2-yuanjie.yang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260109083808.1047-2-yuanjie.yang@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: _6apMmhtP0rOrSOqdagA10JQej-u-4AQ
+X-Authority-Analysis: v=2.4 cv=EazFgfmC c=1 sm=1 tr=0 ts=69611d42 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=Ss2zht_kmVFDEoSxsDsA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: _6apMmhtP0rOrSOqdagA10JQej-u-4AQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDExNCBTYWx0ZWRfX3TI7uxfKPjK8
+ c9uLOy/0EJlj64h8AwJeUPLtTvrKtITENi70b0vmu8QPLr5OFMKSWaDXSW3A2YW/EC04XCw0mwA
+ 3DKrOO9fMfEOZlhLxOMOEltOU/lMVBv3m7WgQSJ0ekfrmaTdrh967/Uh0yKaqVkGjZV9Rzyscoo
+ 7gUB9M1iI8ta3oT8Hsy3e+/ij1DiyeBG0gJIAPrpOgs4YiUkBuRXvhH6m5/S3dtAwe4Dj9lTtuG
+ aDb4Hz2qf9eXTIkI494xtX4LtnuROTP3EMne83xlLXy6EJdJl/tz6mF8SKumOtWYdhYpMAJ30EK
+ 1MM1u1Zweg6Ra8ebT2n82J2QhlFWYxMySFE3HaKqE3gR/dOs2UXsZ/GR1FfwrCUB61khQkrf0E4
+ EMdJBiHszJlXw7PdI7hail93xG22YMczm3hRqWWY1CLy0P62TGDEshJnAp83y5wG0ptejGFqsbR
+ 8f4oGjeJIu+kMWqjISg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-09_04,2026-01-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090114
 
+On Fri, Jan 09, 2026 at 04:38:07PM +0800, yuanjie yang wrote:
+> From: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
+> 
+> During DPU runtime suspend, calling dev_pm_opp_set_rate(dev, 0) drops
+> the MMCX rail to MIN_SVS while the core clock frequency remains at its
+> original (highest) rate. When runtime resume re-enables the clock, this
+> may result in a mismatch between the rail voltage and the clock rate.
+> 
+> For example, in the DPU bind path, the sequence could be:
+>   cpu0: dev_sync_state -> rpmhpd_sync_state
+>   cpu1:                                     dpu_kms_hw_init
+> timeline 0 ------------------------------------------------> t
+> 
+> After rpmhpd_sync_state, the voltage performance is no longer guaranteed
+> to stay at the highest level. During dpu_kms_hw_init, calling
+> dev_pm_opp_set_rate(dev, 0) drops the voltage, causing the MMCX rail to
+> fall to MIN_SVS while the core clock is still at its maximum frequency.
 
---=-UUXliWYOFX6Sh2a1bQi4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Ah, I see. dev_pm_set_rate(0) transforms to  _disable_opp_table(), which
+doesn't do anything with clocks. I think we should have a call to
+clk_disable_unprepare() before that and clk_prepare_enable() in the
+resume path.
 
-Hi Val,
+> When the power is re-enabled, only the clock is enabled, leading to a
+> situation where the MMCX rail is at MIN_SVS but the core clock is at its
+> highest rate. In this state, the rail cannot sustain the clock rate,
+> which may cause instability or system crash.
+> 
+> Fix this by setting the corresponding OPP corner during both power-on
+> and power-off sequences to ensure proper alignment of rail voltage and
+> clock frequency.
+> 
+> Fixes: b0530eb11913 ("drm/msm/dpu: Use OPP API to set clk/perf state")
+> 
+> Signed-off-by: Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>
 
-Le jeudi 08 janvier 2026 =C3=A0 16:25 -0300, Val Packett a =C3=A9crit=C2=A0=
-:
->=20
-> On 1/2/26 3:59 PM, Deepa Guthyappa Madivalara wrote:
-> >=20
-> > On 1/2/2026 3:01 AM, Val Packett wrote:
-> > >=20
-> > > On 1/2/26 7:44 AM, Bryan O'Donoghue wrote:
-> > > > On 02/01/2026 10:43, Val Packett wrote:
-> > > > >=20
-> > > > > On 12/10/25 3:59 PM, Deepa Guthyappa Madivalara wrote:
-> > > > > > Hi all,
-> > > > > >=20
-> > > > > > This patch series adds initial support for the AV1 stateful dec=
-oder
-> > > > > > codecs in iris decoder. Also it adds support for AV1 stateful
-> > > > > > decoder
-> > > > > > in V4l2. The objective of this work is to extend the Iris decod=
-er's
-> > > > > > capabilities to handle AV1 format codec streams, including nece=
-ssary
-> > > > > > format handling and buffer management.
-> > > > >=20
-> > > > > This is awesome, thanks!
-> > > > >=20
-> > > > > I've tested it with rpi-ffmpeg as well, and it works great (only
-> > > > > required one interesting logic change..
-> > > > > https://github.com/jc-kynesim/rpi-ffmpeg/pull/108) \o/
->=20
->=20
-> BTW, the rpi-ffmpeg maintainer is asking,
->=20
-> > for that flag_last code to trigger we have to have received an empty=
-=20
-> > capture buffer, which is the legacy method of signalling EOS, so=20
-> > flag_last is a legitimate response. Is there something about AV1=20
-> > stateful that means it is legitimate to receive empty capture buffers=
-=20
-> > mid stream? (grain & no-grain buffers spring to mind with an empty=20
-> > frame if grain isn't enabled but that is pure speculation on my part=
-=20
-> > not supported by the documentation I've read). Now I'll grant that if=
-=20
-> > we get an EOS signalled this way we probably shouldn't attempt to=20
-> > dequeue an event, but the "correct" answer of simply signalling EOS=20
-> > back down the chain isn't what you want either?
->=20
-> (`flag_last` being an internal variable for an end-of-stream condition,=
-=20
-> so basically, I needed to make ffmpeg *not* interpret an empty capture=
-=20
-> buffer as an end-of-stream. I never saw those with H264/H265/VP9, but=20
-> with AV1 one arrives after the first frame)
+No empty lines between the tags. Also please cc stable.
 
-Just a shot in the dark here, but in the discussion about the definition of=
- the
-formats, we discussed about the lack of signalling of decode-only frames. B=
-ut
-for this codec, decode-only frames are wrapped with one display frame into =
-Time
-Units. So you should not hit that case if you submit TU. I'm wondering if t=
-his
-empty frame isn't an effect of passing OBU Frames one by one (rather then
-passing the complete TU). Can you confirm what is FFMPEG behaviour on this
-regard ?
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 16 ++++++++++++----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  3 +++
+>  2 files changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 0623f1dbed97..c31488335f2b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1306,9 +1306,14 @@ static int dpu_kms_init(struct drm_device *ddev)
+>  	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>  	struct dev_pm_opp *opp;
+>  	int ret = 0;
+> -	unsigned long max_freq = ULONG_MAX;
+> +	dpu_kms->max_freq = ULONG_MAX;
+> +	dpu_kms->min_freq = 0;
+>  
+> -	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
+> +	opp = dev_pm_opp_find_freq_floor(dev, &dpu_kms->max_freq);
+> +	if (!IS_ERR(opp))
+> +		dev_pm_opp_put(opp);
+> +
+> +	opp = dev_pm_opp_find_freq_ceil(dev, &dpu_kms->min_freq);
+>  	if (!IS_ERR(opp))
+>  		dev_pm_opp_put(opp);
+>  
+> @@ -1461,8 +1466,8 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+>  	struct msm_drm_private *priv = platform_get_drvdata(pdev);
+>  	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
+>  
+> -	/* Drop the performance state vote */
+> -	dev_pm_opp_set_rate(dev, 0);
+> +	/* adjust the performance state vote to low performance state */
+> +	dev_pm_opp_set_rate(dev, dpu_kms->min_freq);
 
-If that is correct, I think it raised back what we should do to signal deco=
-de
-only buffers. Due to the legacy EOS flow (which I guess ffmpeg have support=
-ed
-since day one), its not possible to just send an empty capture buffer. But =
-at
-the same time, not marking "done" any buffers makes userspace book keeping
-difficult.
+Here min_freq is the minumum working frequency, which will keep it
+ticking at a high frequency.  I think we are supposed to turn it off
+(well, switch to XO). Would it be enough to swap these two lines
+instead?
 
-Not best, but currently, the only way push an empty buffer is by sending th=
-at
-buffer with BUF_LAST flag (in which its pretty much the same as the old way=
-, but
-with an explicit flag) or empty buffer with an ERROR flag, which was always
-allowed. The second could confuse a bit the application into thinking there=
- was
-some corruption, but with a payload of 0, it clearly means the buffer is
-unusable for display, but allows for book keeping (using the timestamp cook=
-ie).
+>  	clk_bulk_disable_unprepare(dpu_kms->num_clocks, dpu_kms->clocks);
+>  
+>  	for (i = 0; i < dpu_kms->num_paths; i++)
+> @@ -1481,6 +1486,9 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+>  	struct drm_device *ddev;
+>  
+>  	ddev = dpu_kms->dev;
+> +	/* adjust the performance state vote to high performance state */
+> +	if (dpu_kms->max_freq != ULONG_MAX)
+> +		dev_pm_opp_set_rate(dev, dpu_kms->max_freq);
 
-hopefully any of that can help,
-Nicolas
+This one should not be necessary, we should be setting the performance
+point while comitting the DRM state.
 
---=-UUXliWYOFX6Sh2a1bQi4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+>  
+>  	rc = clk_bulk_prepare_enable(dpu_kms->num_clocks, dpu_kms->clocks);
+>  	if (rc) {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index 993cf512f8c5..8d2595d8a5f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -92,6 +92,9 @@ struct dpu_kms {
+>  	struct clk_bulk_data *clocks;
+>  	size_t num_clocks;
+>  
+> +	unsigned long max_freq;
+> +	unsigned long min_freq;
+> +
+>  	/* reference count bandwidth requests, so we know when we can
+>  	 * release bandwidth.  Each atomic update increments, and frame-
+>  	 * done event decrements.  Additionally, for video mode, the
+> -- 
+> 2.34.1
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaWEc/gAKCRDZQZRRKWBy
-9N0TAQCOkJbz1JJ5gFWvyqaWuldaIPwAaysgmljrjYk98iu8MAEA1GRGBWiNSa8R
-OxSSs/FsnWcU/dgXIGSK7jc7PP5pEgE=
-=sZLp
------END PGP SIGNATURE-----
-
---=-UUXliWYOFX6Sh2a1bQi4--
+-- 
+With best wishes
+Dmitry
 
