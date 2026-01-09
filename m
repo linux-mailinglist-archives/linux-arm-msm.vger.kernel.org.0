@@ -1,83 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-88172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00DF4D071EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 05:34:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63539D07219
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 05:34:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AB8F730084CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 04:33:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0CDBE3028F64
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 04:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 168C92550D5;
-	Fri,  9 Jan 2026 04:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905AE1C862D;
+	Fri,  9 Jan 2026 04:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/xKk4Wl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="akkoRoVL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825001C862D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 04:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C0D29D26C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 04:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767933239; cv=none; b=UfL6JiRrVX+0jVH/ozJeNnE0Khs09b6CL3rwt+EAh13HzZOvcgrSH4eV+yjsmvn8ryyfTgZHW0Gn5TyAV7Zm6vllFr9o6gv9B5mt1CIrECANV8qiIw8zlptKqdnwEO2w3RdsAoVNVZA8HchvUVboY8mHI2ywIiDVOifohIvRXv8=
+	t=1767933243; cv=none; b=lkoIq70mhZOe196AEgmAAbEQIzuQ8XpIhEYOjZgjEEliIZyJl06twDGpFWK5Pr9Mpitj3LwsR/X1verr0N9vWrUytnenN1kZ8if27yA1Zozo9Cc/Lehh4ybMI3kDeXWI9q48uLXmL1TozU8KvgdP6xz3gCwz8GeL6x9ShYFGQX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767933239; c=relaxed/simple;
-	bh=1C+PvdFiKKdhkbw8LlbPmf6zveh9bKxFcZV76Aq4dRo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=at0M7Adx0/knv5pfjmEDI7Nhap7C0lzaryjCZN4MVru5ChwhpVP1K+FAu0129rK0+eFwFx8Y+4neeEG+xfdjIhqJdXdWjWSskFnIDNbox3AFBrLd+iA+9ZNCVULcXBFCRQy8Coa2RkswvW3VjzyRSxxovS74ZrF/FueQsZMCaes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/xKk4Wl; arc=none smtp.client-ip=209.85.160.47
+	s=arc-20240116; t=1767933243; c=relaxed/simple;
+	bh=5f6p0MjIoVb94q6Yxdkk6cMxfowH7rGbCR5LyjqAQyc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CG3p0SP2B9MRfA9B+wsU9xLa78L6iY+oVI4YdD+yBt/BLQLQd+H0OjPeMuk9vXZSSyoTsD49l6c1nfIeGs4gsqA3IUptUaoC3VrY51hvlfgjuuDAsrHaJaN21RlnEoMxVD/KHMjlw0Sr+rgtepKOxD3soj4wH3CZJzEopvz6708=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=akkoRoVL; arc=none smtp.client-ip=209.85.167.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-3ec4d494383so2893360fac.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 20:33:57 -0800 (PST)
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-450b5338459so2434851b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 20:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767933236; x=1768538036; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ARMHINrSmnJl3ZJvnfRUQ7ECH+zDHlfb74bSrKikwAA=;
-        b=i/xKk4WlvKhA8+OzOg7PmKgVg1DGnQxOfmsyBgkcGFS7s/KL6WX+/FUw/HaPQQQWtI
-         xkS07T7dZtLhMPI6Cferpm/2CC/NKwEmHUiRhrDadB3bUEramtANr4PYSTLrVeS3NJsq
-         Y5y/npX7gAkhebxZJv9W751ukgJEfmucsNjFcmQXKbWb9EraQ3wghzXsyNFJXxXpbY1Z
-         gXPRP5SZ2RIo5cbpx0fxrB2L1jxmfuCa6sJ3luctUib9dOifUFq71QYLmx5xPiNDfwB0
-         VjWFvCpRDKXQ8aUOi1Ml18zSlZjX+uESmHGhht+ohujtAlKFrOr5wSbNny4CVSm04e6x
-         Xu9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767933236; x=1768538036;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1767933240; x=1768538040; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ARMHINrSmnJl3ZJvnfRUQ7ECH+zDHlfb74bSrKikwAA=;
-        b=AQGoFgZAorHcs328QVNONJDvZ6ASI9KMmPFNEUruG3MFsL7d/sFgT2X3dLQ1Maj3RJ
-         unNnDV9jUnrLMgwhoSscV/oFRXfqF297IDSF8Q9I/PIBSXSD6rKIXr5bTf1UcQ07CQCX
-         B+KkBtzCJ9/TZemaeLjQnlTfDAMbomfdOUoUzkgIYfqYrrUZo2Od+dPMJi6ndSQNA4Uw
-         Jfp382WzNLimRJt8zJnWNhcjBIRyCBTRD/25etMglopzUc2TrAYLpXgFy09ZJQDrTQvN
-         O9PR40ji26H6AjvvuXF04aq+FcjEuv0YEAU1tPm/pU6M7lrsfIvN8JQ6ob1f0xdqxx1b
-         7MFg==
-X-Forwarded-Encrypted: i=1; AJvYcCV1/gcZusMiwtsKt2OfJqBeq1QHkUravUOyktME21v6LcLSrJGrROXysHMQlX50AbEM9S3bWdDBN7az3AGf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/Oyw2+MvUfYd59In/Orl4hpUwd+OnUHY0xJ0wnTJkv14jQsrb
-	6UMNtGx21hFqKeijA/yJANl6TgXrWkmAzoauz8VLKvH/E0U6iaKL1cV7
-X-Gm-Gg: AY/fxX53TynkqnCe7Soz8YyCZZHl13o+TDg/nJ62r7QWkphOAZQs2e10e3cQxAPRW3A
-	i+L6Cci7qBWZkLgZjsjqgAEDiTqcdS5XItNsG61TQDi1Gf0BfXdPuryFeNYN1o6Bukv57FsQBOe
-	1vU+tJbDEe0gRd9GXkkMEC+YASpEn1u5GfYJwmG9FQU+kUAlzEpcNCoBoF5HK5Ic0EiAqbey4PO
-	pjDX43883+Tzd5fvUdgmV3G30LRUZgQOF9cO/hGkXCEDsRU+87Nn3EQcBmHxOTGc8QZa9ZvZbEO
-	KnuvQiLLa/sFgD5dY9ozTcWbA0GC1137Pb392KYlY8wt3OWJR2sy9Ybr5jg97JcVF55ul1mR3uW
-	fOsCO85WNGuZ31IHEJ+PaPH6Fcc3IopHcUuPKEQVPnP9T3F2SUVAml6Z7GpDRr6GrB2B3wvUveh
-	Ccqp5O31A9NuVeeFW38ByBJ0F3/Ph6pzqfeK55ldLlmiz6Rk5vXrlpguNXYN4oY3zuosbJxBK/e
-	9Mgn99IKBcGO1wfraG6pcpAwIgK
-X-Google-Smtp-Source: AGHT+IGTmSXT7Jbm3w9CjpQStDKE+n6cG7IGHjVUtrf2FQ6pDXUChT4pa+dFnj0OVpaHTZmCdeK8Xw==
-X-Received: by 2002:a05:6870:16ca:b0:3e7:e064:c264 with SMTP id 586e51a60fabf-3ffc0967c3amr4057156fac.12.1767933236458;
-        Thu, 08 Jan 2026 20:33:56 -0800 (PST)
+        bh=qRS9gGAPNZv0m+OPKpcvbvMDMuzC8rP8cL50+cIuJ0c=;
+        b=akkoRoVL2ooyD0aS66WYGUlwVjVpI6hifX+HiJliL3WQlvlk9qq5xMIPnRXMSXFdS5
+         pfKghQQGsescD1Sx/rzRp6ualLsuhK2Ma+stXU4S78hFHEsmYpRthZmJMCBnlXGCcvuj
+         Njxca8mYlMvmhjM/HymVZRyzyUoIm2Ab/CZhn1ENywLk5zzZMFsLNrfyqKwbrmIE0pae
+         7P1tmCl5OCq1DbTEjkjrn7XcwC5TnfEhhjSaQm0y34MCAxnP4juK5J8ZWqealSYSJIql
+         eIxJyd7wg7BEJoiLKS/X7ZbGdUg4RgpIuqdoHTpiC8f2E0C1nrvL1SLgioy3vPNlhfCb
+         +vmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767933240; x=1768538040;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qRS9gGAPNZv0m+OPKpcvbvMDMuzC8rP8cL50+cIuJ0c=;
+        b=nVf8hZF5QhdOJIndxMHQBT7qRWeSiXZX/Vs3KMgyYR7Je35qH30enS5VHWzoiB7QZK
+         VsOxBAkhiwTOVAoOuyeIjP0tg4rYXl1kilXioQvYeO4Jk/CBu6eXv/DIoNMKenAMKbAQ
+         2Y+Szw0dlzBiFZCS5crv1ActNSojnJz8Y7QmNgfg4d1hbXTFI0nJ9X4Zev638kf3imUZ
+         dBtMTq2ku6HkkMPzmGtUF9II1boH6nMcrgR7DE47KUodaQmIeald03pQv4y7gB+JVncN
+         qzdU2/nwjPoy9/Mg76VqGhrawZ+3Z/RjrywmJn39xxLdxjS2TAzR1GZzkSLwqVuIplq8
+         HCAg==
+X-Forwarded-Encrypted: i=1; AJvYcCXIuxXCioY2+cs5PAnSfLt4uFnRPM1yA9jpgh6k+XNnCd3r59RiBi7QMrijoLFitMiuu3dlRkXCumZt4FKn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWZaACK/laE4dSTFEWjlAa2hV3dGhOJnZtoCTNv96LisXNTcTs
+	z2m2FtO79v90xauLY43gJSnGynt8xD/DJIafmG+Q4UqVaJOCL/lUr7Xp
+X-Gm-Gg: AY/fxX5rxf4J21SfEfatn6R8FPLDbdXWeBLHskIG2Pualm1RRTdAlh6S2gWw1M7S+2I
+	5SaGCJTLGJMrr0GJZbev1EI/7spgU3ngTbO3K4QhirvyH6DIicoVD0iDt1KOmfR17VNMeT5EyIY
+	kOtWNAsmpo3If0ex6zLUDqdTnswA3+tko7VsgswhwcsB4P1tvPyB/8oNsk3/8ss7USP5P1bG/7s
+	uyXpu7jMKUT5YBAaAAWZqTd5V/aeUere1x8l0a5zR/theRYgOzBZ59h28oYp9J02ayZ2AbutyE9
+	aIsZZjEZBNi37SaLQqb5lSj77Ax6pYQkBttWDOy3TJGLsOro4fbPyMtG7K5gXccF2zp+21zazfK
+	znQoLgF5ho/bjWcAN+jqQOFteT5WXove09jPUfDELYk1Zo46RcjZkAgZpCfPB7dtMENWr61UN44
+	Bqf0A7TDAO8eg4I6QD31B11ttaxlbCaiLHHRPl1QywfXyQP6LsiVKKY/4rIazLV1RFGgr/YS86P
+	NoRJ7qTqeMuBVLxUBlmFD5EzK5E
+X-Google-Smtp-Source: AGHT+IH8qFTLvCobTc/CYdKIqn0h+JliChB6LnP/bfX/6ft/VEkThcEwU+4hDQ5PgxrGSgk2Rnoa/w==
+X-Received: by 2002:a05:6808:6a89:b0:44f:8b8b:5dcd with SMTP id 5614622812f47-45a6be987admr3631854b6e.50.1767933239894;
+        Thu, 08 Jan 2026 20:33:59 -0800 (PST)
 Received: from nukework.lan (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ffa515f4dasm6274421fac.21.2026.01.08.20.33.54
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ffa515f4dasm6274421fac.21.2026.01.08.20.33.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 20:33:55 -0800 (PST)
+        Thu, 08 Jan 2026 20:33:58 -0800 (PST)
 From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 To: andersson@kernel.org,
 	krzk+dt@kernel.org,
 	mturquette@baylibre.com,
-	linux-remoteproc@vger.kernel.org
-Cc: mathieu.poirier@linaro.org,
-	robh@kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+	Govind Singh <govinds@codeaurora.org>
+Cc: robh@kernel.org,
 	conor+dt@kernel.org,
 	konradybcio@kernel.org,
 	sboyd@kernel.org,
@@ -87,10 +91,12 @@ Cc: mathieu.poirier@linaro.org,
 	linux-kernel@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Subject: [PATCH v2 0/9] remoteproc: qcom_q6v5_wcss: add native ipq9574 support
-Date: Thu,  8 Jan 2026 22:33:35 -0600
-Message-ID: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
+Subject: [PATCH v2 1/9] remoteproc: qcom_q6v5_wcss: drop unused clocks from q6v5 struct
+Date: Thu,  8 Jan 2026 22:33:36 -0600
+Message-ID: <20260109043352.3072933-2-mr.nuke.me@gmail.com>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
+References: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,47 +105,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Support loading remoteproc firmware on IPQ9574 with the qcom_q6v5_wcss
-driver. This firmware is usually used to run ath11k firmware and enable
-wifi with chips such as QCN5024.
+Three of the clocks from struct q6v5_wcss are not populated, and are
+not used. Remove them.
 
-When submitting v1, I learned that the firmware can also be loaded by
-the trustzone firmware. Since TZ is not shipped with the kernel, it
-makes sense to have the option of a native init sequence, as not all
-devices come with the latest TZ firmware.
+Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
 
-Qualcomm tries to assure us that the TZ firmware will always do the
-right thing (TM), but I am not fully convinced, and believe there is
-justification for a native remoteproc loader. Besides, this series
-has improvements to the existing code.
-
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+---
 Changes since v1:
- - Improve bindings following review feedback
- - disable clocks on init failures in q6v7_wcss_reset()
- - review-suggetsed readability improvements of qcom_q6v5_wcss
+ - no changes. Moved patch to the start of series.
+---
+ drivers/remoteproc/qcom_q6v5_wcss.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Alexandru Gagniuc (9):
-  remoteproc: qcom_q6v5_wcss: drop unused clocks from q6v5 struct
-  dt-bindings: remoteproc: qcom,ipq8074-wcss-pil: convert to DT schema
-  dt-bindings: clock: gcc-ipq9574: add wcss remoteproc clocks
-  dt-bindings: remoteproc: qcom: add IPQ9574 image loader
-  arm64: dts: qcom: ipq9574: add wcss remoteproc nodes
-  clk: qcom: gcc-ipq9574: add wcss remoteproc clocks
-  remoteproc: qcom_q6v5_wcss: support IPQ9574
-  remoteproc: qcom_q6v5_wcss: support m3 firmware
-  remoteproc: qcom_q6v5_wcss: use bulk clk API for q6 clocks in QCS404
-
- .../remoteproc/qcom,ipq8074-wcss-pil.yaml     | 268 ++++++++++++
- .../bindings/remoteproc/qcom,q6v5.txt         | 102 -----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 101 +++++
- drivers/clk/qcom/gcc-ipq9574.c                | 378 +++++++++++++++++
- drivers/remoteproc/qcom_q6v5_wcss.c           | 398 ++++++++++++++----
- include/dt-bindings/clock/qcom,ipq9574-gcc.h  |  22 +
- 6 files changed, 1082 insertions(+), 187 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,ipq8074-wcss-pil.yaml
- delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
-
---
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index c27200159a88..07bba47eb084 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -123,10 +123,7 @@ struct q6v5_wcss {
+ 	struct clk *ahbs_cbcr;
+ 	struct clk *tcm_slave_cbcr;
+ 	struct clk *qdsp6ss_abhm_cbcr;
+-	struct clk *qdsp6ss_sleep_cbcr;
+ 	struct clk *qdsp6ss_axim_cbcr;
+-	struct clk *qdsp6ss_xo_cbcr;
+-	struct clk *qdsp6ss_core_gfmux;
+ 	struct clk *lcc_bcr_sleep;
+ 	struct regulator *cx_supply;
+ 	struct qcom_sysmon *sysmon;
+-- 
 2.45.1
 
 
