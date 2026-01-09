@@ -1,170 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-88320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81885D0C04C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 20:11:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8A69D0C167
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 20:37:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1BA9130123CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 19:11:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6DF4A3004199
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 19:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36FEF2E7F3A;
-	Fri,  9 Jan 2026 19:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 084242E7F07;
+	Fri,  9 Jan 2026 19:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ot+P+qJk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XOzLmYWl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054EC2E7631
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 19:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E142DF155;
+	Fri,  9 Jan 2026 19:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767985894; cv=none; b=kpRFJwuSHtEQVpzaEu3lT2ygicm/LnXH7wsFsO65WFplyHznE9KRlu5OiMquKS8tEAxZ72fdh/aH28Ku2FIoh+7yU5iAkz4rSqy/FPELFs/wobrIHewUPy1TjVx6CY96NHhySp6V6ClqLn1M1BrFnt1PVf4dXCpbp9Yxv5uBsR4=
+	t=1767987394; cv=none; b=eST1AlPT72kaxYrwGC21iVplqCbiyPfhS+U4E1yhdnaelEjkFkit/mTMM69a4wQ9Xi6CfjBjcL/rvwVlA+zgI6HCW2ky6AUPkXTOproPu0CSntDdT8cw1JZoSN495FhLLKtO32Y7EToH2xKt1qVKzwzW1fd805sLSTJXOtM8BZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767985894; c=relaxed/simple;
-	bh=capi1eQmEYYcpeLmvuBwQLEqV5FUgPLgSckxnyAvCmc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Da5bdRapTC9YpuBhrp15HFGyYBwx/zfjcyZ3EWbz4j2yi8zDeDO9mN+7Nv2s+LeqQl4sfV6VV10/Vh/jXQR3aUfBmv2V88F1exmSrNX4MlFiw7tCnqQzcjJE1/++bJOnIcYVHrC/iPW6VO/3KiFf+pLYkrZW3e8qji5XJbJ52a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ot+P+qJk; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2a08cb5e30eso8597265ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 11:11:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767985891; x=1768590691; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jGucWZxG4H0oACzMuTEPVrhVqGkXJT23twyUUE6h0GU=;
-        b=Ot+P+qJkdum0e34DsqVBc61PSl41WOeeRn6OxBNk0p2AWEowv27SmjdQ8KHZpBtNqe
-         TJ969dHuNHTaVnNNkCyOk2lM2IK5YHzUhsjYmbMjvB1sUqqXun1R8RdiK3oM4Gr6Uhtt
-         z/NsAgkZbHyAlobnv+g1K1b2MuBHlBaa8k1fknM5/EzD60g/E65WCDtcnqRnB8jGB8mm
-         XX/IhoI9IliDMRW97y36vlr/L3/2YYGvs07bLqZ9n8rOU7mloHpUAR+ONsI4UYTkrJE1
-         UXYU0WYQbKYZ+v2KuJ8Ci89uaBQn2I+YsmDjd9aZx1N5waEVLL3jH2upQHj4ynhOkczf
-         HBhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767985891; x=1768590691;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jGucWZxG4H0oACzMuTEPVrhVqGkXJT23twyUUE6h0GU=;
-        b=E6is6wDyxKFXTLuIIaid6h4++LyM6nN9oRWuukpX4L9eYadvtmYORJbLA7dpGdsz/R
-         Ro+jUMuPpWLbeFHcI1p7n3uBnMtughxP0SRgiPus8F2dEPmBMDlWUzAxj2dAq+ma4UQz
-         N0yD2+uFH9W4RFFqHENSmYENwuSLCTsgcERV1vI9+5MIsplcxGzWdDI8ssd0PsILMgr1
-         f9PDsDdgU3JSCpdoBMQvrEGUwP4itSnsg8ORfBDkTA5VXxIT9BFa4fJ7k5peZoAmRWq6
-         HtCqn0PGZ5dyGqxypEF/bj7EUzPiIKD5p3iZbZbqlesc4B6laaTmz4ALFONVMrnesJ/2
-         WM4g==
-X-Forwarded-Encrypted: i=1; AJvYcCUv8CwXwqh3IrVwyJl4EqIacEC2yuSNJc5cGQDgRwg5p3oLgmjIWVPR/rJUcLkSLplEQl8ngfUhUMMu5IqJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YydAxgiIywUxEeOAaC16UaEFWag8eFNSsClvmDv0e2sYF29PBfP
-	uenr4fHaD2vBj4m0I8FKnY/KF2w+Bk/hIjCKFjwzy+qHhXXPYmfxX4drEDCnTZ373y8d6RfaCh+
-	ynwOeRs/wd746giktQ9d6Q7gLcsXO0nI=
-X-Gm-Gg: AY/fxX7hIzhIGfOQLKoUmYbioMRiyoEqePRJl4i+1SLpR0S/FF8Syvyl3/buECAC1oI
-	vIfb9IECHdtr3fah5IdBczUUyTvqGMtxVBjoXMHSTn4yJ0WogpnLZxmgqyZyQZ7qtA27+Sa3YhL
-	43Cv9X/8gpRityOKm+iZiG1bfRYhU2zlCjp+Xel/W5b9iIs0Fl/paDkz8tNzE/WZFoXMBUVZyzw
-	yfQt758eHDaAUdpvt9aVEJsrdfL0I7ndCirzOttReSw2pN7H8VdQtAe7P8ayRpuSGQt1sY=
-X-Google-Smtp-Source: AGHT+IF7dTGSqJqWZzwnIHslSdlw6WekSrgn4f0+hOUkO918cHCqTxp+XTuZOMvQz9g2tVbmrdlQKCQmnYtBYPnHFfw=
-X-Received: by 2002:a17:90b:2e0c:b0:343:e480:49f1 with SMTP id
- 98e67ed59e1d1-34f68c28ea4mr7819215a91.5.1767985890668; Fri, 09 Jan 2026
- 11:11:30 -0800 (PST)
+	s=arc-20240116; t=1767987394; c=relaxed/simple;
+	bh=Zf52axkMH2Ks3rBM+zg/c/uu8OY/+0Hu+Efvmfj6M1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RSwcZHvflC4cwRLWfYjqTvDsVjCeFLSjjABT7Ht1DFicma0EY/hWjHfSbYPdk1mBtR/TqD6pTRntXIZHupjd8/c+q/YBi3vCXBfz3hhJqW8OXQQwU2IMdEWJa1rJL1bw3fhxiAx33te6JvNdSvNvmtlLu9iAz1m2zCvGg6Cui8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XOzLmYWl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A168C4CEF1;
+	Fri,  9 Jan 2026 19:36:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767987394;
+	bh=Zf52axkMH2Ks3rBM+zg/c/uu8OY/+0Hu+Efvmfj6M1U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XOzLmYWl6rfQItgL9PB2IJeCVnISd0HBa9pN+PFVgfPoFMNaOBr4xJOXdgUYE6pP/
+	 +cxz+r54Kq4G7G9VjOTe5kxFqDUU6At+fTfPXCHycmYWhtJQhY3yN0+MzOCUv25lpL
+	 u2+Ps58bGabk2DOGUFHTHi46eQUOU2sONYi77FXVXk3BgYieyBUCRoZ9MTP9QfiTBB
+	 Lkofp2mFc8PvZ5XmhBRZ9E6jVPAVwL4MniZua49ybYwvsK4Ch9cFAmTqkosYCvpBo2
+	 Ghx7voSD0Lb694f1FDIHpEma1ReckRQZrfXFAjnVnnfRBFAC2JOUkR3DNvp9Wxg50C
+	 ArkKAIJ4isziQ==
+Date: Fri, 9 Jan 2026 13:36:32 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 0/1] soc: qcom: rpmh-rsc: Register s2idle_ops to
+ indicate s2ram behavior in s2idle
+Message-ID: <75av4b6g4slterg5ctdxkevaxvjsymealok47x7tjwv5etqwmj@rotc7nfhhgi5>
+References: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
+ <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
+ <filahffwq5th2if7jm3ytpea3pqblracdcl7pkp3bg3wyqg3by@qdxvwzt7a2fd>
+ <l4v4gqv36nwdhvc2jgyvonnusakkd7kfrrecetlxsv74agemin@txdp7tzwnwpp>
+ <sge2mznbz3wufvyisq4xll33ocr7kxz5jvv2ufqjfxcgapp3pd@6pkauvuuv7jm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
-In-Reply-To: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Fri, 9 Jan 2026 14:11:19 -0500
-X-Gm-Features: AQt7F2qD5NQlHCyqdD_zHjmxV20bvOEGT_rKXFuqrKobJujnG-hNvI21StHEA5Q
-Message-ID: <CACu1E7EDmLPhUFyouD=W6n+U7=oo7+6PY0Gz9=3pVpT2Qu9Z6w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Retrieve information about DDR from SMEM
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sge2mznbz3wufvyisq4xll33ocr7kxz5jvv2ufqjfxcgapp3pd@6pkauvuuv7jm>
 
-On Thu, Jan 8, 2026 at 9:22=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.or=
-g> wrote:
->
-> SMEM allows the OS to retrieve information about the DDR memory.
-> Among that information, is a semi-magic value called 'HBB', or Highest
-> Bank address Bit, which multimedia drivers (for hardware like Adreno
-> and MDSS) must retrieve in order to program the IP blocks correctly.
->
-> This series introduces an API to retrieve that value, uses it in the
-> aforementioned programming sequences and exposes available DDR
-> frequencies in debugfs (to e.g. pass to aoss_qmp debugfs). More
-> information can be exposed in the future, as needed.
->
-> Patch 3 should really be merged after 1&2
+On Thu, Jan 08, 2026 at 10:55:16AM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Jan 06, 2026 at 11:21:59AM -0600, Bjorn Andersson wrote:
+> > On Mon, Jan 05, 2026 at 10:27:41PM +0530, Manivannan Sadhasivam wrote:
+> > > On Mon, Jan 05, 2026 at 08:04:54AM -0600, Bjorn Andersson wrote:
+> > > > On Thu, Jan 01, 2026 at 10:21:57PM +0530, Manivannan Sadhasivam wrote:
+> > > > > Hi,
+> > > > > 
+> > > > 
+> > > > Many thanks for looking into this problem, Mani.
+> > > > 
+> > > > > This is just an attempt to let the device drivers know of the quirky platform
+> > > > > behavior of mimicking s2ram in s2idle for older Qcom SoCs (pre-Hamoa and
+> > > > > non-chromebooks) using RPMh. This information is important for the device
+> > > > > drivers as they need to prepare for the possible power loss during system
+> > > > > suspend by shutting down or resetting the devices.
+> > > > > 
+> > > > 
+> > > > Is this really what happens? What _exactly_ is the purpose of
+> > > > pm_suspend_via_firmware() and pm_resume_via_firmware()?
+> > > > 
+> > > > The kernel-doc for pm_suspend_via_firmware() states "return true if
+> > > > platform firmware is going to be invoked at end of system suspend...in
+> > > > order to complete it".
+> > > > 
+> > > > To me this indicates that the purpose of this mechanism is to signal
+> > > > Linux that we're running on a target where platform firmware will cut
+> > > > power once we reach the bottom of the suspend chain, so the individual
+> > > > drivers has to save/restore state in order to prepare for this.
+> > > > 
+> > > 
+> > > Yes!
+> > > 
+> > 
+> > But that's not the case here. In fact, iirc even on Makena the PCIe
+> > controller is retained, it's just the link that can't be sustained
+> > without CX - but I might misremember.
+> > 
+> 
+> There is no MX retention for PCIe on Makena.
+> 
 
-No. The HBB value currently returned by the bootloader is *not* always
-the same as what we use currently, because some SoCs (like SM8250)
-with the same DT ship with multiple different DRAM configurations and
-we've been using a sub-optimal value the whole time. After all, that's
-the whole point of using the bootloader value. But patches 1&2 will
-only make the DPU use the bootloader value for HBB, not the GPU. So on
-one of the affected SoCs, it will introduce a mismatch. You can't
-change anything until the GPU side uses the new ubwc config as its
-source of truth.
+Okay, thanks for correcting my memory.
 
-Connor
+[..]
+> > > We tried to fix the issue in the NVMe driver so far, but all efforts ended up in
+> > > vain. NVMe maintainers preferred to rely on some PCI/PM APIs for this. Initially
+> > > I looked into creating one such API, but then figured out that I can just make
+> > > use of this global flag and not touch the NVMe driver at all.
+> > > 
+> > 
+> > At the same time acpi_storage_d3() tells me that this problem is already
+> > accepted by the community, we just don't have a way to signal the same
+> > in our system.
+> > 
+> 
+> There are many solutions initially accepted for x86/ACPI which are not getting
+> accepted now.
+> 
 
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
-> Changes in v3:
-> - Support v6 and v7 DDRInfo (v7 is used on e.g. Hamoa)
-> - Handle rare cases of DDRInfo v5 with additional trailing data
-> - Rebase/adjust to SSoT UBWC
-> - Expose hbb value in debugfs
-> - cosmetic changes
-> - Link to v2: https://lore.kernel.org/r/20250410-topic-smem_dramc-v2-0-de=
-ad15264714@oss.qualcomm.com
->
-> Changes in v2:
-> - Avoid checking for < 0 on unsigned types
-> - Overwrite Adreno UBWC data to keep the data shared with userspace
->   coherent with what's programmed into the hardware
-> - Call get_hbb() in msm_mdss_enable() instead of all UBWC setup
->   branches separately
-> - Pick up Bjorn's rb on patch 1
-> - Link to v1: https://lore.kernel.org/r/20250409-topic-smem_dramc-v1-0-94=
-d505cd5593@oss.qualcomm.com
->
-> ---
-> Konrad Dybcio (3):
->       soc: qcom: smem: Expose DDR data from SMEM
->       soc: qcom: ubwc: Get HBB from SMEM
->       drm/msm/adreno: Trust the SSoT UBWC config
->
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  11 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  82 +------
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h |   5 -
->  drivers/soc/qcom/Makefile               |   3 +-
->  drivers/soc/qcom/smem.c                 |  14 +-
->  drivers/soc/qcom/smem.h                 |   9 +
->  drivers/soc/qcom/smem_dramc.c           | 408 ++++++++++++++++++++++++++=
-++++++
->  drivers/soc/qcom/ubwc_config.c          |  69 ++++--
->  include/linux/soc/qcom/smem.h           |   4 +
->  9 files changed, 485 insertions(+), 120 deletions(-)
-> ---
-> base-commit: fc4e91c639c0af93d63c3d5bc0ee45515dd7504a
-> change-id: 20250409-topic-smem_dramc-6467187ac865
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->
+It's inspiring to see the whole x86 ecosystem moving beyond such issues.
+
+> > > This worked well for s2ram, so I resent a patch submitted by Konrad in 2024 [1].
+> > > But for s2idle and Makena, I thought I could reuse the same global flag and
+> > > achieve the same net result.
+> > > 
+> > 
+> > My problem remains that we're using the global "power to all IP-blocks
+> > will be lost"-flag to say "on Makena, the PCIe controller doesn't retain
+> > state in low power mode", to a single driver.
+> > 
+> 
+> I agree with your concern. If not global, we need to either fix it in PCI core
+> or in the NVMe driver. Unfortunately, for an one-off issue like this, making
+> change in both proves difficult. As you may know, our initial work was to get it
+> fixed in the NVMe driver, but that didn't fly.
+> 
+
+The fact that the PCIe controller is "broken" does not imply that the
+whole SoC is broken, and claiming so will come with side effects.
+
+[..]
+> > > > Do we force all "pre-Hamoa" targets into this same behavior? Or do we
+> > > > have a different flag for saying "at the end of suspend power will be
+> > > > lost" there?
+> > > > 
+> > > 
+> > > If you don't agree with the above reasoning, I can just limit its usage to
+> > > Makena and s2ram.
+> > > 
+> > 
+> > I don't think I have all the details, but if we're saying that Makena is
+> > broken and need special treatment in NVMe, it would be better to say
+> > just that, with a patch in check_vendor_combination_bug()
+> > 
+> > /* Qualcomm SC8280XP can not enter low-power with PCIe link active */
+> > if (of_machine_is_compatible("qcom,sc8280xp"))
+> > 	return NVME_QUIRK_SIMPLE_SUSPEND;
+> > 
+> 
+> I tried it in multiple attempts. Recent one is this:
+> https://lore.kernel.org/all/20250126050309.7243-1-manivannan.sadhasivam@linaro.org/
+> 
+> And here is the reply:
+> https://lore.kernel.org/all/20250210040446.GA2823@lst.de/
+
+I presume "core" doesn't necessarily imply "system-wide", but you know
+the PCIe stack better than me, so I'm not sure where in the "core" this
+would be better implemented.
+
+> 
+> > 
+> > Alternatively, make it possible to set StorageD3Enable in DeviceTree.
+> > This flag exists in ACPI for a reason, why wouldn't we see the same
+> > problems when describing the system using DeviceTree?
+> > 
+> 
+> This is not a ACPI spec defined object, but just a MSFT way of telling the OS
+> when to enter D3 (D3Hot or D3Cold) for storage devices. If we want to go with
+> the DT property, it has to be something like 'qcom,no-retention'. I don't think
+> a generic property makes sense here.
+> 
+
+Unless I'm reading the nvme driver incorrectly, I don't think the need
+for such property is vendor-specific. But conceptually it doesn't really
+belong in system description, given that the user might swap NVMe and
+introduce/remove the need for this quirk.
+
+> Even then, we would need a PCI API to translate that for client drivers. I can
+> look into this direction.
+> 
+
+I hope that we can agree that this is a property of the PCIe controller,
+for Makena. If we can't move the problem with NVMe on Makena out of the
+way of progress, how about we work our way around it (for now
+hopefully...)?
+
+Change qcom_pcie_suspend_noirq() to explicitly carry a vote for CX (e.g.
+using the bw-vote as today), describe the problem explictily in a
+comment, and then move forward with releasing the CX vote for all other
+targets.
+
+Regards,
+Bjorn
+
+> - Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
