@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-88317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1249FD0BC30
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 18:55:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 961B2D0BCC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 19:08:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D69093008894
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 17:50:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 31B5F300A359
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 18:08:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A91927FB12;
-	Fri,  9 Jan 2026 17:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01DA8366559;
+	Fri,  9 Jan 2026 18:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvoQCd7/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMv78pFu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282DB54763;
-	Fri,  9 Jan 2026 17:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D082654763;
+	Fri,  9 Jan 2026 18:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767981050; cv=none; b=L45/LU5keJ03/100Aegof9AJRu/MLMcJ1CGe9fVT/s+OrY9HOMqbrPL+jnQJxUida6r/5YzmJ9Kre4ntk8Cg3eMxjY3JtTXt7+zHqTxxy5ruoORHkQ252905Eiso40rTho5eiK7lzDYk9KiPIH4TXH4y4oMeVuPfLQpGuHUomFQ=
+	t=1767982091; cv=none; b=h6nbaUR7WC9Ac3bEv8uCDFVXvoxgEc4BOK3GHLYNO7+Y6TrYVwBkilrimATXsMBCKZaclShU4xbFFZ2UKpE3RDNCGtJ5Y/f6tSqEO3fgsBUG6YMO7gkmf18vgZepbBy8+EEimLhn4Tp6Dmnj01Z7IIPMje8PBAnJ1wZzpkE3PO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767981050; c=relaxed/simple;
-	bh=8PhSao9uMJFk+J0HXROjvaNSIa0Lee+U2jcKlvVBRKE=;
+	s=arc-20240116; t=1767982091; c=relaxed/simple;
+	bh=dLaDk4A28vd+9dAphpzqG8U7UomWQsL8BpomS9WzYX0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VonLsOEiLzdN1oFbY4UVc75nzFtqqjZDzhbXqfC7en7dVnFT6kJ7dvr92WRKfi7SH33GWhh9RxGqj77ZdE/0xERnD4gi3lORu+i6zkNj8HPJX84DqNYr88FqOxWh8YCJ1YqBh9GRjrqoJHAt7MZbj5fN9/ij0R+GrSRLPDhkQJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvoQCd7/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBBBC4CEF1;
-	Fri,  9 Jan 2026 17:50:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jdzQ2K+sHW897radQQH3yqa94hIkc8e4UUxFxThwqykRii9ID03xdadGGs/QZYL2X/jG2qgD8+2o6rjNkfFfEXLC8VO/Hsj/rhja0OVdSYhl9leZvnaTiOcMeixlSHviDrrE3GGU3uZq9y6w6Aqc1IPjK3b7vMMFYcypev+OE/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMv78pFu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37486C4CEF1;
+	Fri,  9 Jan 2026 18:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767981049;
-	bh=8PhSao9uMJFk+J0HXROjvaNSIa0Lee+U2jcKlvVBRKE=;
+	s=k20201202; t=1767982091;
+	bh=dLaDk4A28vd+9dAphpzqG8U7UomWQsL8BpomS9WzYX0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZvoQCd7/+Kz/IUkv1Uht6QGxxBYjZiChBkbaJK7rtKu2AsQ4WRe3WvtkJU2K7jQsm
-	 xPSk4BNt53pLK4MygnhqndH9UBv3C1xWACokq6K1wRXre9JQeeoBAglYK8Si5XlV72
-	 5fFiFFTzOkTFp78FL+VvdlDF9GD+kfdzP0vtOlrXt9HgmLBCJRDBCE6/pIQolv6D4l
-	 E8TOUua4r0e0Czw9RaHKNnaZBlUps9HzEBVD2FzcHqPj3p/MF4FdUwwVBkklb2ymWu
-	 /R8be/oqNhbd7P0209b9eaq5icvs/ZF1R/BwnHmju2hVzvm+JAtClqyZWJUKv6ryth
-	 tpniUEbJ8qBLg==
-Date: Fri, 9 Jan 2026 11:50:46 -0600
+	b=lMv78pFuYBmz9R+uDzhDLQxxyfzJVieJkUn/t2oDyJoZST0tPAna76FVyhiWYvyIa
+	 t1v9FTPBRtoTPV4Qo3FSdpvXY8uGF4l+cDwCy4A8kPZYDlwQwn85GlzcX5EekDo+GM
+	 KD5VswRk6Z4scBOUBrWsTitkKi3cqJOHLqhJQSTiXlrRlGoFl8ejFT7o9BWUOjTxya
+	 dwLXZlYd3N6cbnqYYUjAyw9pfl0UeADaVEuHOY7P8C0CT4KPnKWUumFBQhcNA3vlma
+	 pGVyPB91jDcmTroCS0Tmo9XvVuRRS8fuCBiAtz3WyQ36980GhGrCpMMpHvy3LgHu5K
+	 VN8mg3Gkkbp+g==
+Date: Fri, 9 Jan 2026 12:08:08 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>, 
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Kees Cook <kees@kernel.org>, 
 	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
 	Sean Paul <sean@poorly.run>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
 	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
@@ -50,13 +50,10 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
 	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
 	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 2/3] soc: qcom: ubwc: Get HBB from SMEM
-Message-ID: <cleh7dolqus3grexqfchtavvnj6wef6rlslgv3r7gesfuyxhs5@5b6z5gwtn36b>
+Subject: Re: [PATCH v3 1/3] soc: qcom: smem: Expose DDR data from SMEM
+Message-ID: <nsjzp77f7btdziurip3v6nu5utcwni253mrx6orkefz5mibb3s@cp7c6tv3joxk>
 References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
- <20260108-topic-smem_dramc-v3-2-6b64df58a017@oss.qualcomm.com>
- <you4xijwc5g4ngcnhxm4ecn7opexnsdfayvd5wiiqpl7734r7w@bdkpjqmlzxre>
- <b2pqfrs2ptaoxxeanzumxyibmydsoiqslcsg6yrm4hihynowj4@mzazqnrptnyf>
- <hunbpvbfkcxzbnwr676z6fncgdhfumjedx7jp5izojusg3rj7f@5te77lmqcdaa>
+ <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,98 +62,244 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <hunbpvbfkcxzbnwr676z6fncgdhfumjedx7jp5izojusg3rj7f@5te77lmqcdaa>
+In-Reply-To: <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
 
-On Fri, Jan 09, 2026 at 05:21:10AM +0200, Dmitry Baryshkov wrote:
-> On Thu, Jan 08, 2026 at 11:49:54AM -0600, Bjorn Andersson wrote:
-> > On Thu, Jan 08, 2026 at 04:45:49PM +0200, Dmitry Baryshkov wrote:
-> > > On Thu, Jan 08, 2026 at 03:21:51PM +0100, Konrad Dybcio wrote:
-> > > > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > > 
-> > > > To make sure the correct settings for a given DRAM configuration get
-> > > > applied, attempt to retrieve that data from SMEM (which happens to be
-> > > > what the BSP kernel does, albeit with through convoluted means of the
-> > > > bootloader altering the DT with this data).
-> > > > 
-> > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > > 
-> > > > ---
-> > > > I'm not sure about this approach - perhaps a global variable storing
-> > > > the selected config, which would then be non-const would be better?
-> > > 
-> > > I'd prefer if const data was const, split HBB to a separate API.
-> > > 
-> > 
-> > I agree, but I'd prefer to avoid a separate API for it.
-> > 
-> > Instead I'd like to either return the struct by value (after updating
-> > the hbb), but we then loose the ability to return errors, or by changing
-> > the signature to:
-> > 
-> > int qcom_ubwc_config_get_data(struct qcom_ubwc_cfg_data *data)
-> > 
-> > This costs us an additional 16 bytes in each client (as the pointer is
-> > replaced with the data), but I think it's a cleaner API.
-> 
-> What about:
-> 
-> const struct qcom_ubwc_cfg_data qcom_ubwc_config_get_data(u32 *hbb)
-> 
-> I really want to keep the data as const and, as important, use it as a
-> const pointer.
-> 
+On Thu, Jan 08, 2026 at 03:21:50PM +0100, Konrad Dybcio wrote:
+> diff --git a/drivers/soc/qcom/smem_dramc.c b/drivers/soc/qcom/smem_dramc.c
+[..]
+> +struct ddr_regions_v5 {
+> +	u32 ddr_region_num; /* We expect this to always be 4 or 6 */
+> +	u64 ddr_rank0_size;
+> +	u64 ddr_rank1_size;
+> +	u64 ddr_cs0_start_addr;
+> +	u64 ddr_cs1_start_addr;
+> +	u32 highest_bank_addr_bit;
 
-I guess the question is what are you actually trying to achive; my goal
-was to keep the base data constant, but I'm guessing that you also want
-to retain the "const" classifier in the client's context struct (e.g.
-the "mdss" member in struct dpu_kms)
+Aren't all these structs encoded in little endian? __leXX?
 
-If we're returning the data by value, there's no way for you to mark
-it as "const" in the calling code's context object (as by definition you
-shouldn't be able to change the value after initializing the object).
+> +	struct ddr_region_v5 ddr_region[] __counted_by(ddr_region_num);
 
-You also can't return the data by value and then track it by reference -
-as that value lives on the stack. This has the benefit of making the
-lifecycle of that object clear (it lives in each client) - but perhaps
-not a goal of ours... 
+Was going to joke about this one, but realized that there's a
+__counted_by_le()
 
-How come the ubwc config is const but the hbb isn't?
+> +};
+> +
+> +struct ddr_details_v5 {
+> +	u8 manufacturer_id;
+> +	u8 device_type;
+> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
+> +	struct ddr_freq_plan_v5 ddr_freq_tbl;
+> +	u8 num_channels;
+> +	u8 _padding;
+> +	struct ddr_regions_v5 ddr_regions;
+> +};
+> +
+> +/* V6 */
+> +struct ddr_misc_info_v6 {
+> +	u32 dsf_version;
+> +	u32 reserved[10];
+> +};
+> +
+> +/* V7 */
+> +struct ddr_details_v7 {
+> +	u8 manufacturer_id;
+> +	u8 device_type;
+> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
+> +	struct ddr_freq_plan_v5 ddr_freq_tbl;
+> +	u8 num_channels;
+> +	u8 sct_config;
+> +	struct ddr_regions_v5 ddr_regions;
+> +};
+> +
+> +/**
+> + * qcom_smem_dram_get_hbb(): Get the Highest bank address bit
+> + *
+> + * Context: Check qcom_smem_is_available() before calling this function.
+> + * Because __dram * is initialized by smem_dram_parse(), which is in turn
+> + * called from * qcom_smem_probe(), __dram will only be NULL if the data
+> + * couldn't have been found/interpreted correctly.
+> + *
+> + * Return: 0 on success, -ENODATA on failure.
 
+Seems more like "highest bank bit on success, -ENODATA on failure.
 
-If we want both the per-target data to remain const and data in the
-client's context to be carrying the const qualifier, the one solution I
-can see is:
+> + */
+> +int qcom_smem_dram_get_hbb(void)
+> +{
+> +	int hbb;
+> +
+> +	if (!__dram)
+> +		return -ENODATA;
+> +
+> +	hbb = __dram->hbb;
+> +	if (hbb == 0)
+> +		return -ENODATA;
+> +	else if (hbb < DDR_HBB_MIN || hbb > DDR_HBB_MAX)
+> +		return -EINVAL;
 
-const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
-{
-        const struct qcom_ubwc_cfg_data *data;
-        static struct qcom_ubwc_cfg_data cfg;
-        int hbb;
+Not really "Invalid argument", -ENODATA is probably better here as well.
 
-        ...
+> +
+> +	return hbb;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_dram_get_hbb);
+> +
+[..]
+> +/* The structure contains no version field, so we have to perform some guesswork.. */
+> +static int smem_dram_infer_struct_version(size_t size)
+> +{
+> +	/* Some early versions provided less bytes of less useful data */
+> +	if (size < sizeof(struct ddr_details_v3))
+> +		return -EINVAL;
+> +
+> +	if (size == sizeof(struct ddr_details_v3))
+> +		return INFO_V3;
+> +
+> +	if (size == sizeof(struct ddr_details_v3)
+> +		 + sizeof(struct ddr_freq_table))
 
-        data = of_machine_get_match_data(qcom_ubwc_configs);
-        ...
+Don't you find it weird to have the + after the wrap?
 
-        hbb = qcom_smem_dram_get_hbb();
-	...
+> +		return INFO_V3_WITH_14_FREQS;
+> +
+> +	if (size == sizeof(struct ddr_details_v4))
+> +		return INFO_V4;
+> +
+> +	if (size == sizeof(struct ddr_details_v5)
+> +		 + 4 * sizeof(struct ddr_region_v5))
+> +		return INFO_V5;
+> +
+> +	if (size == sizeof(struct ddr_details_v5)
+> +		 + 4 * sizeof(struct ddr_region_v5)
+> +		 + sizeof(struct ddr_xbl2quantum_smem_data)
+> +		 + sizeof(struct shub_freq_plan_entry))
+> +		return INFO_V5;
+> +
+> +	if (size == sizeof(struct ddr_details_v5)
+> +		 + 6 * sizeof(struct ddr_region_v5))
+> +		return INFO_V5_WITH_6_REGIONS;
+> +
+> +	if (size == sizeof(struct ddr_details_v5)
+> +		 + 6 * sizeof(struct ddr_region_v5)
+> +		 + sizeof(struct ddr_xbl2quantum_smem_data)
+> +		 + sizeof(struct shub_freq_plan_entry))
+> +		return INFO_V5_WITH_6_REGIONS;
+> +
+> +	if (size == sizeof(struct ddr_details_v5)
+> +		 + 6 * sizeof(struct ddr_region_v5)
+> +		 + sizeof(struct ddr_misc_info_v6)
+> +		 + sizeof(struct shub_freq_plan_entry))
+> +		return INFO_V6;
+> +
+> +	if (size == sizeof(struct ddr_details_v7)
+> +		 + 4 * sizeof(struct ddr_region_v5)
+> +		 + sizeof(struct ddr_misc_info_v6)
+> +		 + sizeof(struct shub_freq_plan_entry))
+> +		return INFO_V7;
+> +
+> +	if (size == sizeof(struct ddr_details_v7)
+> +		 + 6 * sizeof(struct ddr_region_v5)
+> +		 + sizeof(struct ddr_misc_info_v6)
+> +		 + sizeof(struct shub_freq_plan_entry))
+> +		return INFO_V7_WITH_6_REGIONS;
+> +
+> +	return INFO_UNKNOWN;
+> +}
+> +
+[..]
+> +
+> +struct dentry *smem_dram_parse(struct device *dev)
+> +{
+> +	struct dentry *debugfs_dir;
+> +	enum ddr_info_version ver;
+> +	struct smem_dram *dram;
+> +	size_t actual_size;
+> +	void *data = NULL;
+> +
+> +	/* No need to check qcom_smem_is_available(), this func is called by the SMEM driver */
+> +	data = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_DDR_INFO_ID, &actual_size);
+> +	if (IS_ERR_OR_NULL(data))
+> +		return ERR_PTR(-ENODATA);
+> +
+> +	ver = smem_dram_infer_struct_version(actual_size);
+> +	if (ver < 0) {
+> +		/* Some SoCs don't provide data that's useful for us */
+> +		return ERR_PTR(-ENODATA);
+> +	} else if (ver == INFO_UNKNOWN) {
+> +		/* In other cases, we may not have added support for a newer struct revision */
+> +		pr_err("Found an unknown type of DRAM info struct (size = %zu)\n", actual_size);
 
-        cfg = *data;
-        cfg.highest_bank_bit = hbb;
+Is there a reason why this isn't dev_err(dev, ...)?
 
-        return &cfg;
-}
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	dram = devm_kzalloc(dev, sizeof(*dram), GFP_KERNEL);
+> +	if (!dram)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	switch (ver) {
+> +	case INFO_V3:
+> +		smem_dram_parse_v3_data(dram, data, false);
+> +		break;
+> +	case INFO_V3_WITH_14_FREQS:
+> +		smem_dram_parse_v3_data(dram, data, true);
+> +		break;
+> +	case INFO_V4:
+> +		smem_dram_parse_v4_data(dram, data);
+> +		break;
+> +	case INFO_V5:
+> +	case INFO_V5_WITH_6_REGIONS:
+> +	case INFO_V6:
+> +		smem_dram_parse_v5_data(dram, data);
+> +		break;
+> +	case INFO_V7:
+> +	case INFO_V7_WITH_6_REGIONS:
+> +		smem_dram_parse_v7_data(dram, data);
+> +		break;
+> +	default:
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	/* Both the entry and its parent dir will be cleaned up by debugfs_remove_recursive */
+> +	debugfs_dir = debugfs_create_dir("qcom_smem", NULL);
+> +	debugfs_create_file("dram_frequencies", 0444, debugfs_dir, dram,
+> +			    &smem_dram_frequencies_fops);
+> +	debugfs_create_file("hbb", 0444, debugfs_dir, dram, &smem_hbb_fops);
+> +
+> +	/* If there was no failure so far, assign the global variable */
+> +	__dram = dram;
+> +
+> +	return debugfs_dir;
+> +}
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index f946e3beca21..223cd5090a2a 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -2,6 +2,8 @@
+>  #ifndef __QCOM_SMEM_H__
+>  #define __QCOM_SMEM_H__
+>  
+> +#include <linux/platform_device.h>
 
-But we'd need to deal with the race in cfg assignment...
+I'm not able to see why.
 
 Regards,
 Bjorn
 
-> > 
-> > Regards,
-> > Bjorn
+> +
+>  #define QCOM_SMEM_HOST_ANY -1
+>  
+>  bool qcom_smem_is_available(void);
+> @@ -17,4 +19,6 @@ int qcom_smem_get_feature_code(u32 *code);
+>  
+>  int qcom_smem_bust_hwspin_lock_by_host(unsigned int host);
+>  
+> +int qcom_smem_dram_get_hbb(void);
+> +
+>  #endif
 > 
 > -- 
-> With best wishes
-> Dmitry
+> 2.52.0
+> 
 
