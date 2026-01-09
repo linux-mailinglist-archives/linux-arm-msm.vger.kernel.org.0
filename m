@@ -1,175 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-88249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 245E7D08622
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 11:00:42 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 680A9D087CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 11:17:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 43F043007CA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 10:00:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B98EC308A7B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 10:08:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA3532FA3D;
-	Fri,  9 Jan 2026 10:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6225E33506B;
+	Fri,  9 Jan 2026 10:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Oit/oFDi";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LW3/uqs8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZCug0o07"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30803358CD
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 09:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9EB329390;
+	Fri,  9 Jan 2026 10:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767952801; cv=none; b=hXkRH7y0TOWys8+5D71k6bMjkg0qMTcTsbgHriEWCQiFjopAeuoJLBkqRjzNHuQuZ4/NS+eviggVsWbVomFH3TM212kNVxU+I14zoK5rxAJueiNdQtnRyp3bEeDdZnhCFdHbeoD9IOkrZcIg6/biZGEzW+2OdWN6dIfOkDNWQhI=
+	t=1767953279; cv=none; b=ft8359oT2yeF5zCM5RaYfuQM20NmxQ9jTfnulXeYSFzl7blM+0Zcn3ITnalWQoJysLvwi/2y8QPUttvPAgLjweLY7KYO8QPQjTteozHPTcdzwW3QrFLNmIwsCQ+iYcyufNiF4zNYgl/WCi6KAisvki8GOWSBC4jfl7OQ2Oz+SWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767952801; c=relaxed/simple;
-	bh=9ndVCcF+R/wlVVVNOBbXwDmF5QARj0mKv0iuVxxmNgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X+GaYoGx/ppcS6+1AQRy5LGjlPjzU/+fOR/rG6xLY8M8BWrfdv/k+OJIWLgSzHsPxVZqVfTpUWNb/vmnId3FTb+YgcKNS8b6SCZWjutJxfFtFJtttFY5zhC2nRj39rbnG8rieKCnbf4EHNBZREsWkYjb8Y7SzmjkTa9LsHHCvK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Oit/oFDi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LW3/uqs8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6098XjsK823314
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 09:59:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N2T21G5XUHap0r8N2FzWobWxQaP5Qp/eZH3++JzBooY=; b=Oit/oFDiqjZf8l32
-	oVlxBWu+iDFpAfxe15m8vzAzeg/zFucKc1WSoVOxteFFUDfCLT6syUkhT8gUTNR5
-	yyUFTRuA0b67eKLpXmEU+cWoTav6H4fgqWmIpaMhNifoSL/pxV4o40thqphiSM25
-	2eEdiaeMC7YN8XscerNDVinUjLzu0GUacgjPvUm+8Kp/WSfK7YlHLax4VlPEDoVC
-	Bbdo0Q+iBLi8HqK/Htrro4nroWC2lwlXj3ejOH5wC9FUS3TAaBS+j1M3D15kJOsF
-	yRd8NdAa5qAG7yCgDPzKWFxOzqin1KFzthRdhiZRhLHmiBKjEyzwgeG3Kf5CLV1N
-	Nkt8zg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjx94g9uq-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 09:59:58 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4f1e17aa706so17087331cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 01:59:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767952797; x=1768557597; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N2T21G5XUHap0r8N2FzWobWxQaP5Qp/eZH3++JzBooY=;
-        b=LW3/uqs8V9AjtxbRP/WSZCqdNsGAoV/aioj8YQjbxw+tNNB2uvZAAdN3ikhlywk8Jt
-         evstwEZa9glpAQ2zDydE1Cp5CjH0FOP8/tcl5alYTnZLu8NFkxR7ppz9mL9D5V9vf0sc
-         wtUsN+MtsqtPP/P0R+uYcSgj5T//eOcA6RoCTL40e4qZgLUETYpxVVEQJlhkd78V1QQ2
-         QH9ypSInyAJFA0R2VxQVtHZGtCFo+MvwpjMTdHN3FdyQvhdIr+nIe57WeNr9p4YAjpmu
-         6ujUCpNDnEUsd5FSIj7HZ8h+M4sGPW1HkpqxHMs5c3fyEpArdldy6gBmKI5ILq2lrSnp
-         yXHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767952797; x=1768557597;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N2T21G5XUHap0r8N2FzWobWxQaP5Qp/eZH3++JzBooY=;
-        b=JK1Y6WQ48sKJhaUj7e28R82BcXWFXa1Pi728AeiGwBfgwXkCi87CvdA2iungWk5DNG
-         mP6VecdGJyw72lsWDihpx7vP/bHVrsAY8OZS0+hcO0QJtbJMzIvcADpJVp7l0MBn5nOW
-         b3NpCXjqslDstLilBDHhDSVl04vwA4cf7hI0bqnPZjw+tGiGO1fHrq+YJume5lyqy2zP
-         J0z5MH8XHX/ZGeAXHwEwnzWqdMqFeWii1ilVYmOmF/wEedkhsLpal42sbyUKflvH92WL
-         xWsvclMOqUE5XSM7diXux23+NaqfJV47zE9g5SkkVIcPEuWv2IpR9Wx1QYIXCaNp//Rz
-         907w==
-X-Forwarded-Encrypted: i=1; AJvYcCX5AGpX9O4B6+Lbe5F3J9sh6cEOMLoALuCfh/wHT4vzgoaEFOnXiIOLRin+iWpSHb99Nj2fhGMhOt6eJInx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSMM6LLluUKCUmE3tqWTZK6a7H3smiy6rnGooCReOGl5X5ACzV
-	5ddUcn+1lfm/eSaZAa0bajDLGM2wnL1Sh39UlOsUgSja/LtZabs4ltJT+tUHBUAeAKZAd2udg+F
-	muTUNpA8+qs+k83hJ1ISiYgwIBEn7KLowolotnl9TQj7cw1TzAasNse9MseJoekW0Fmpz
-X-Gm-Gg: AY/fxX4/9xnOhttPUhkAGyhSwYN07tbuUL+uFQD8uL4EOsyX2H1SJ7lRCtpxjHYz6u8
-	KY28q7Cwy8KgAKY/JBJ475taECwQIOVyauuA7nxRfPMPIlR4oXwjER5CWc+IkXW81d02w/qb00d
-	BhVP/2PbSsPODaHlgwBpz7n4aoFJJQy6E8V6Nyd81jwwd3hiyhzWM4gOfPn1+U98Zb7F6Ed3/JS
-	bPy3d1flH3R/P7la+hleDGOae8R3x6UrqQPgSctYDfMXzbs/jxisKHcuLQBI4aZ9/xjv3x9yxT5
-	YKYP6OrfxllJVoyICE8ye71lkpXV7BaILfnK724Ul71rvTYD+aCjAQKYtIbN5noVUsqq1iB7ZZF
-	fHR3pR9MpDMCp4tWJxNh7B9uill8ZcEVlGdg6P2HwfyCipP44O9gJwmMOrTWIMHglelY=
-X-Received: by 2002:ac8:7c4b:0:b0:4ee:4482:e838 with SMTP id d75a77b69052e-4ffb47e2d4bmr99137181cf.1.1767952797169;
-        Fri, 09 Jan 2026 01:59:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGVSl3eAYxmMFK+CvBkVAsLJXo7tQpHD1mL8mA3FW+oxBzEDsLkyp6Ip1sJneT92BgPtX4x3Q==
-X-Received: by 2002:ac8:7c4b:0:b0:4ee:4482:e838 with SMTP id d75a77b69052e-4ffb47e2d4bmr99137021cf.1.1767952796760;
-        Fri, 09 Jan 2026 01:59:56 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a51183asm1080258466b.49.2026.01.09.01.59.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jan 2026 01:59:56 -0800 (PST)
-Message-ID: <ba7845ba-9f85-45f4-bfdf-cb1c6f6c2f7e@oss.qualcomm.com>
-Date: Fri, 9 Jan 2026 10:59:54 +0100
+	s=arc-20240116; t=1767953279; c=relaxed/simple;
+	bh=xZDFT6xCQrfp5temujsjrNIgKlzKzOPx2SZayOPArss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QPbERse8Eq+u1QvReTkNuA6hK0+lItNbY3r8KD8im9mTl40MfUkebe+CAqqw9rj+kAPiT91QjFuuR3q7HObYJJB6Fp/rxe6mD7pEKWHwlCZSR9sDizioCqvH7ITKAuO3qPHFAoJNxisEqVf+zLhp+tCD8dohhiuvyEtBoSXQc6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZCug0o07; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A3FC4CEF1;
+	Fri,  9 Jan 2026 10:07:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767953278;
+	bh=xZDFT6xCQrfp5temujsjrNIgKlzKzOPx2SZayOPArss=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZCug0o07zRJc7azyDc2VOX0WzPDeP1XOCBz5jQV2/prrV58cdklK8RkyDJd651mtz
+	 BQI7U0grLV4s9kxz+T3uOCo28sF3aPuAzWczllwv1DM1GWMKgy9/WubJtPzT+uiygK
+	 m3Qq+cv0xeHX9YhCGMVm18/ywk5EDdJ7mUoaZGZ39jEkapntUJa6m5HPMJiB9wAJsU
+	 ru/Ti1m8NQxSxP1QT43o7MMa0W8F7+j9WnqndO42YCav4NAFEWATYRi7ef5pTZjccb
+	 9u2AFR1oM3bpKj9Db+xptHZoJ164IuyPtf364s8UcXAGJNX1wJXIYgRT+Xqq7z6uAX
+	 OnIyaCw+l00tQ==
+Date: Fri, 9 Jan 2026 15:37:49 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
+	vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
+	robin.clark@oss.qualcomm.com, lumag@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: agatti: Address Gunyah memory
+ alignment needs
+Message-ID: <aWDTdYYVkFjfw4-C@sumit-xelite>
+References: <20251229071258.456254-1-sumit.garg@kernel.org>
+ <20251229071258.456254-2-sumit.garg@kernel.org>
+ <ahbbg3pffedrjzvksgz2jv7lwajwlcxc6nsmmtunwc4346eawa@xayff4ozvdbn>
+ <aVtQHftDmENIAxrb@sumit-xelite>
+ <73bcf4c8-3d49-4b55-a771-0c5c1ef54380@oss.qualcomm.com>
+ <aV-L81f5NQg4leu8@sumit-xelite>
+ <ba3f479d-1233-4e6a-8593-5c7fe5e79762@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/4] arm64: dts: qcom: qcs615-ride: Fix USB PHY label
- reference
-To: Sudarshan Shetty <tessolveupstream@gmail.com>, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260109095221.2847067-1-tessolveupstream@gmail.com>
- <20260109095221.2847067-4-tessolveupstream@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260109095221.2847067-4-tessolveupstream@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=RN2+3oi+ c=1 sm=1 tr=0 ts=6960d19e cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=ugNE4biRt3zQTriTjHEA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: 0poq1uMcRhgLT6ymEAtkQlSAdeI4nbzN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA3MSBTYWx0ZWRfX0OJf5zyY63+O
- LeQUWR5Wws+YkS48TaGIJtkZDODkoJFMDLiNm28XaNq0lpdHuSFEIxLDTLRDRroBN+r7apB+KB5
- j9Ku90nml9YTFZ4ebQzR2DxlO92asA4JGfPYIjofPfWV7rSRGGjO5yu8nVcml1ilS52YUuWd2b9
- WC28VOeFNzikwCHXZDFrLnFVoRtM28Ds2TmXsHuZyYzyg2e9ae6s8TfnXyP4SKIFUAXnlW1ghxy
- OqeWP2qgEc7Sd9ShOl8qEqhTUbM8eJUmwDgkAIxmvR5QAEbK49Zt8u7OuuZWJFTuYGGarOPqt+k
- gDQGmgC80UhJVdC6DzP4TwRXE00eDeZ3bsAyC7PwEEYtp+blKHha2d9m+zHsFzK1/i9P47MjK4E
- G5UHLTopnFzN71RmhxJQDdUBwZEbHh5yLbodiwm1TFAGbXHAOKjvvVRyUO/dlnA2tD/S74szFDo
- h90vLzRvK0hEjHR9a4w==
-X-Proofpoint-ORIG-GUID: 0poq1uMcRhgLT6ymEAtkQlSAdeI4nbzN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_03,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090071
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba3f479d-1233-4e6a-8593-5c7fe5e79762@oss.qualcomm.com>
 
-On 1/9/26 10:52 AM, Sudarshan Shetty wrote:
-> Update the USB high-speed PHY label from 'usb_1_hsphy' to
-> 'usb_hsphy_1' to maintain consistency with the naming
-> convention used in talos.dtsi, where the second PHY is
-> labeled 'usb_hsphy_2'.
+On Thu, Jan 08, 2026 at 01:43:30PM +0100, Konrad Dybcio wrote:
+> On 1/8/26 11:50 AM, Sumit Garg wrote:
+> > On Wed, Jan 07, 2026 at 12:29:02PM +0100, Konrad Dybcio wrote:
+> >> On 1/5/26 6:46 AM, Sumit Garg wrote:
+> >>> On Sat, Jan 03, 2026 at 09:49:04AM -0600, Bjorn Andersson wrote:
+> >>>> On Mon, Dec 29, 2025 at 12:42:58PM +0530, Sumit Garg wrote:
+> >>>>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> >>>>>
+> >>>>> Gunyah hypervisor requires it's memory start address to be 2MB aligned.
+> >>>>> So the address map for Agatti is updated to incorporate that requirement.
+> >>>>> This should be a backwards compatible DT change which should work with
+> >>>>> legacy QHEE based firmware stack too.
+> >>>>>
+> >>>>
+> >>>> How come this isn't conveyed to the operating system using the UEFI
+> >>>> memory map?
+> >>>>
+> >>>
+> >>> I agree that with EFI boot, the information is getting conveyed via EFI
+> >>> memory map. But there will be non-EFI boot scenarios as well in case of
+> >>> U-Boot. And moreover I suppose we need to keep the reserved memory
+> >>> ranges in DT updated to reflect the actual memory map.
+> >>
+> >> Can U-Boot not do the same by altering /reserved-memory or /memory/reg?
+> > 
+> > I suppose you are referring to DT fixups here, we generally try to keep
+> > them to a minimum required in U-Boot.
+> > 
+> > BTW, don't we want to keep reserved memory ranges updated in DT? Or we plan
+> > to drop them altogether?
 > 
-> No functional changes, only label renaming.
+> Generally I believe they're only a necessary evil..
 > 
-> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs615-ride.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Since Gunyah-on-Agatti doesn't seem to have been released yet, it would
+> seem like a sane idea to fix the issue in the firmware. If it was, well..
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> index be67eb173046..0ca6b50a6de1 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-> @@ -609,7 +609,7 @@ bluetooth {
->  	};
->  };
->  
-> -&usb_1_hsphy {
-> +&usb_hsphy_1 {
->  	vdd-supply = <&vreg_l5a>;
->  	vdda-pll-supply = <&vreg_l12a>;
->  	vdda-phy-dpdm-supply = <&vreg_l13a>;
+> On UEFI-enabled targets, we can largely rely on the reservations coming
+> from there, only adding some carveouts for e.g. PIL regions and SMEM (not
+> because they're not resereved, but because we need a pointer to them)
+>
 
-This must be squashed with patch 2, otherwise patch 2 is going to
-cause a build failure which must not happen at any point in the
-git history (to make bisecting possible)
+Fair enough, I don't see an immediate need for this from UEFI boot
+perspective. Let me drop this patch then.
 
-Konrad
+TBH, I am also not a fan of putting the memory regions configuration in
+DT which can change based on evolving requirments.
+
+-Sumit
 
