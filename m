@@ -1,115 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-88287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99278D0A759
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 14:41:44 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3BB7D0A8A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 15:04:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6C1113005BA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 13:36:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 07F903015E13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 14:03:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2604D35C1AC;
-	Fri,  9 Jan 2026 13:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C81C533C1A5;
+	Fri,  9 Jan 2026 14:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kKTRAGkn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="b2PbfJnb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OP7K5wzY";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DxoGpER6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABCB2248B3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 13:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5624F21C9EA
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 14:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767965785; cv=none; b=NQWnzAksK/56MKItiZx+K32J3viidJRrxz1j3A8fs+2J55IoY2LfiuFVGEv/bh0a9+nwdZs/lvrgeTTQamP8kPycFvtdjg3BqFh3B528qyz+Gl/aHQBF+zhz2dmqPFq+c8HwAjCOt84K7AkJ/d31A2NQb35yvsGNHDNAAy9gxoU=
+	t=1767967424; cv=none; b=fU6hpXc21GCsxBSLK8W9Suw6TjeLm3eV+vX4Q56meSsv/gCMxhbMrQ/kks00TKTokQ5WK93Yym9ZIEdu1lS2CZDsSDEr/vaGrDQUClxcn/WitqlT5iTczQkajHIs5xDSLjMfsNiIIrSp6BTGVvh+I+v+Yvc4eW/nmYRiB2AuBlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767965785; c=relaxed/simple;
-	bh=hA7mW817ub+UwNMaBzqG18tuRPDwvZ0Bf4ddOg+FZZk=;
+	s=arc-20240116; t=1767967424; c=relaxed/simple;
+	bh=RdtMykOjmEtDG9g2kE/0xnXGya/GK8cV0nOc7GKalLg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JqdjJabca8JoRpoS9ifZhAD2ESkOyXPCGzNgleX/5w6WIMbzOAfEID5+C6z5R3jMtHWUspG5oOBBqtFdHIXZq3xQXM4miRMrZzOw1dkVfnrYkVSrbSHWtApgjH+U4iCUUIyzUxAG1qNXrZSS/r94rjehHFZIhzqP8e4bNABpzuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kKTRAGkn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=b2PbfJnb; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=HM+zS82GiwmeflmholU/lBRyy1s4r4vmUyGOq7YWOfJpfaBgu+XrgWVHbV32n9X2nYCGy7b3NqZ9BUwVvFqx9LftqnGZibEzLWZH8ij7z6x3riDCdpwqSqHTKSzKb0iBC5mYGKrvSW/05eIpjQsLHQ0Zcj2cpnSFDUVwqjQJFMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OP7K5wzY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DxoGpER6; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6099N8F1472766
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 13:36:21 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6099S1ZN3325292
+	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 14:03:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=tFI5rqxjD8ECVsoRgmhbfh35
-	9hI+y+aqdH5nS72dQVw=; b=kKTRAGknM5Z86RKsrslx2EMzWkEQdYcMhy+z4PJJ
-	t2x4bOXstE0YdQQhCeNsFlyHWQHA5rz57LX+fTAcWUt7aCZVtR1pH2V54m3zhtSI
-	W96DfYMU2zLdIX/hCOcdzeFMlCe1P8VeBR437y3GC+//yICP1nvyCgBxRfr7x9Yj
-	WkILsAVEISXQhA5hFiIIdN7eyYyUNYSw//QpnPF4u9VEihGUqHqZMLzbq7KAhidp
-	yQjtVmMvj/PdGlsVmI303jC5LbHKVZAzFTxJOHcfmRtuCtQ7g17Cw+RgKwJXxQXd
-	+z6z55LDQ1rdWU4ip64VWmux5QFdWxs/aSW5BKqti9j4SQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjy0a0q2u-1
+	:references:subject:to; s=qcppdkim1; bh=GQs+SI3tCjQDH71MvlNczL4V
+	y/mRHLL8bORmki3/saY=; b=OP7K5wzYi6pRQjj/xiJ6j0JPK4OapKnfj/H+miEd
+	RgoNbXsUBJsDoIvX4uPBSrl7lU4l7rsnDQa/jYwWlY5LAUbe9yNn/x/lcucOPc4T
+	CYWZJo0sVX8FDQ2lessV3P9uUoZjkuphYkZimk2zPO5Wt1F+1KZ68KMsTzU9SO3k
+	Y5UJXL86UQIj571/qQ72weDV9LDBQqFwFONwPSJCebUwGw7/onuw9AXKYqsx0alN
+	p257LKp64ycY2BFwIXg5i1m4AhIcmYw7kqjvaOGjC/PeYSD4+Fw67AGCzmCMteTZ
+	v91N2XRnc+vEj8Qkfx/f1FxDEpl2egWmZUj11WFfeEr+xg==
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com [209.85.167.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjrd6j15p-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 13:36:21 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34c6cda4a92so5438394a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 05:36:21 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 14:03:42 +0000 (GMT)
+Received: by mail-oi1-f198.google.com with SMTP id 5614622812f47-45a5531f3f1so8319341b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 06:03:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767965781; x=1768570581; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1767967422; x=1768572222; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tFI5rqxjD8ECVsoRgmhbfh359hI+y+aqdH5nS72dQVw=;
-        b=b2PbfJnb6OkpwiHptDq/wVoBdBqQT4VqkSb0Izs0A2Uk8dTRq6qA7ki/8XObKJbx2g
-         MdtBC8xDcO70jOUy0IqqFRO0c4n4jcks5uLOzuR1AzGqhiTUcEcv+cT0UFzpokR02DEq
-         vbm/TLRaTCMKxqEKg0lrNvLEPItMOI3CE93B9y4kpyxkZ3btbJIGDtCG13GWxiTmR6rY
-         imtHdSlz7QzxCU7cX2Mf0kmxhgaIchtaOltLQzRj5mjzP8iEL7E4VJhdEeb+TB2/wFux
-         EU3tqzMuPBqgfOzvlc3snnhNd6cJJRVOuHd5Sa31mUiGT+ybJy5FPZbSMyal7nduwrUd
-         0dVw==
+        bh=GQs+SI3tCjQDH71MvlNczL4Vy/mRHLL8bORmki3/saY=;
+        b=DxoGpER6lHD82/3h9eR50Jmspi7zsgRzzBIzHcDlhlPRlCFkIluzQSOs9CvjukcZpT
+         TvXXjHAz09HnUtOjjbMQNINE50/OFu/4rAdCCaMdTHKrUYLzySb3vgh1TflGf9fwGlDN
+         rJYuyXbCvS41WhXL1vxiOSvve484XjaYKd4c1gTzw1NApDHC5Fo0tdjahA/km7DRimho
+         2sdJxJD1ib12D7NNbAEQpeaJ8f0eYL2Z5cJSAQUa9sPF1gT97VXWwz10OIkWs3Fs2lWB
+         LoSEoEgNEtE8ICOIgCHAtAP5sJqJZS3Z4Sf8d2K18PsXPKOdBjmHt68B9xY7YLaIFTPZ
+         f4Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767965781; x=1768570581;
+        d=1e100.net; s=20230601; t=1767967422; x=1768572222;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tFI5rqxjD8ECVsoRgmhbfh359hI+y+aqdH5nS72dQVw=;
-        b=GrRZQT2U0D/nYt9py2SNXeBZ93g9eZKCN1Q1xpfoLhoXNRzGkG/3Zt90GRsxP+mvnz
-         O8pT7jlQx6dWNpl9L9SAtSjF2wwUuwVF0PPmRqc/LPRCymZ9YLYK9W0+yhyXl8Fld+4S
-         jycqSUFYXapJba9QJk+PqHJEOA8fYqQJsliU3g/9QB6pAXezbj5VHnAfrAY5gTUa7aek
-         izl+PCstye2EuoWUek6GhLz5Vqe64SVVmG5m2E0iECR//tG6FdELFXhnJroYQ81gHGJP
-         M7MJE76ys37O9Al3afUKji70G/EfqXhGocJ0dfPTolYfpfnKVMJ7C5TXm3O9rzH9uXcb
-         LaeA==
-X-Forwarded-Encrypted: i=1; AJvYcCWUYqku5efvTyqsANalZe7fN4siwZm77G8wrP5Cb8GCGwlzd7ibCOcQbZzokOaeJCBuCLeRfxcGogP/2NNQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSvXJtFH9LjHX8Sxl2yY1jb6ASxCk9Dzh8V77KFALUd+GQb2om
-	EHAcA8HpgSmhPLQiodPvqKI6KcRWsza3GcOz3A7eE/FhPHtVdnGM9R+ju4XTxpaZQsR2IPClC2y
-	j9oYT7k479ADACeTKYTciDzoP5VMQU22bnHj3P/G5YasMQA1qLii6htP0uGoBjhZ3FrfI
-X-Gm-Gg: AY/fxX68fsB+SM/GnYqp39ZT3DV9wIWVCEI7dSi7xeftyfXxoLwx2Cz8L1CnwihOyRV
-	m/hYU7XVhc05qJGmPYcN2s+dD2avQo+n6YDCNyISTQEFwU1Krs2d2L/pgEDjGImzdGtynCC31Hw
-	j6AeK8UXA71XKsDaqkm8lnGL9onk/HCfVwFFYFy8/X3zNMkm6Wj0KBtlZDhjOYATL3jkqAAV0UX
-	tpA1J6HaEvEgBk2Ua38RDfU2Y304RNAHlxcuZA7gFGj6hzvu5vS/DVa2arsk3HFgrbqxaLr1Y4m
-	VQ0j5EbYH1o2UKopTeLdVjrUndjfY1icGj6crdXJ/eIKBHyBXtPLTL9PM2kmCIV99LixtMvvBu8
-	SAtrXQAVjSkw/bGLhhOiVFRaM0FLil3fahlOT
-X-Received: by 2002:a17:90b:5846:b0:34c:6d33:7d34 with SMTP id 98e67ed59e1d1-34f68c20417mr10587613a91.16.1767965780769;
-        Fri, 09 Jan 2026 05:36:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEJDknTE5Bozkb0FN396jmB8DNOX6wrkFzMoPqZ/bvK1YQN+b9N3PFhcDMCaoXQMId4ncQGFg==
-X-Received: by 2002:a17:90b:5846:b0:34c:6d33:7d34 with SMTP id 98e67ed59e1d1-34f68c20417mr10587567a91.16.1767965779984;
-        Fri, 09 Jan 2026 05:36:19 -0800 (PST)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34f5f84ef1dsm10845911a91.0.2026.01.09.05.36.15
+        bh=GQs+SI3tCjQDH71MvlNczL4Vy/mRHLL8bORmki3/saY=;
+        b=kkkIlnoF50Osl1f0k971sUct7Qa3IdrJv6Tbr/Z/JHhbjS0Dlc1KCEyvJlq/Hvp7xr
+         3xS+53DZfLIkvR3U3x7hPb+PSILNrrRQ8UnpEaEvjWospQRnwDfEEYfVlLTqSqn6kvJ3
+         ctb6nnobGPGYh2294GPOFD75LEifJEIP8/bsS3Tea8GoUHO5nyewGvlE7LwGpCpR10Jg
+         9ZAjxjXz403Sn6lSE90tAJwLhh0MUoFgtPqmzuOQyeIr5fayY1KcArIWSpd90X3RB9Vl
+         I1WB8yDYqCYkD/9QPmEJTubSUAhRoJQV23+2KaYh9Ce2u91NeKzMvvQB/G3fd5UJAKWY
+         QPMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUTsjVPLkLBZa0fdnEfuC8KGpo7TTLmazz5mgcX4CPHukOuiIO8IVrv09H3p+IXGan0ZYUh+r3KlY8B7Vj9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz78oMDsEwdHRFoRgWgGd/RRaOIkUlQwUgR8pcpGEEJF0ob9crc
+	tESLDl4QyfHMPrzBhw6WKHea53HThMZYvf8XNY4yQA8t+5FXK4h9MVVYvR+NvjI4CtIgAKAMXdh
+	umTfNBq8VuCl6cV2mv9qX2+uetxnQv6IUi8i0GT8uwbD74Lr5b59cH+t9ZbBPzs/gJBru
+X-Gm-Gg: AY/fxX4E8FHosdpmtaAcbxVML0YptS8Bd480YX6I5mBsRuPxrNAdpL12ZqyMaSYjT8j
+	fQaGkRCb7ngSlEIfhidT75eldkqmxapRpAj1GP9Hj56xZkOTjsbjhtv2vN2wrbbwweHrytjCAzo
+	rAFvm+bkm0wluAzV+q3udgkL8nywJjrvc8CE/NUHeoAZ4iCfYQQJ0m5vwGo8O0SHq+JTjxcIn2O
+	JQakVy+3D55YaCyFv28O4Tu0ABy7jIm5GdM5IDFXKHygMBBJ+fJkW8vJiGb6hisnJiPdAZP6ybp
+	QdgDglhhgO2rJKyJpZijRx565UQAVSmJiTLNW8EX48cEhDTjl8BmqXYQzY70KHhQoIIG6BKTnVS
+	dFDtl1Qkf7lEy9YlMwv6TEwuo0rwtmdyNHdTLsYGSDg6nJUkFifqh+zCTJbCnVrc6YIW39IC7xJ
+	YNZaGhAK0RjjPdwwUwaGNV72k=
+X-Received: by 2002:a05:6808:528e:b0:450:a9d0:b790 with SMTP id 5614622812f47-45a6beb59efmr5451135b6e.46.1767967421572;
+        Fri, 09 Jan 2026 06:03:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhed6/gC1XQdYPnbtJvfwFpetbHTMNUPdnIOYHCqjQqJOeAFrw62c6frHz86sCY1b039DemA==
+X-Received: by 2002:a05:6808:528e:b0:450:a9d0:b790 with SMTP id 5614622812f47-45a6beb59efmr5451093b6e.46.1767967420959;
+        Fri, 09 Jan 2026 06:03:40 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38302bd92fbsm14199561fa.3.2026.01.09.06.03.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 05:36:19 -0800 (PST)
-Date: Fri, 9 Jan 2026 19:06:12 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 1/3] soc: qcom: smem: Expose DDR data from SMEM
-Message-ID: <20260109133612.ommcoivkbhbisp6o@hu-mojha-hyd.qualcomm.com>
-References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
- <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
+        Fri, 09 Jan 2026 06:03:39 -0800 (PST)
+Date: Fri, 9 Jan 2026 16:03:37 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 1/5] phy: qcom: qmp-pcie: Skip PHY reset if already up
+Message-ID: <cvxvq7f2ku6aq5gbbqav42ckqk2raesbxq2bx46mxvapcza5v4@5zuyjdtn5us2>
+References: <20260109-link_retain-v1-0-7e6782230f4b@oss.qualcomm.com>
+ <20260109-link_retain-v1-1-7e6782230f4b@oss.qualcomm.com>
+ <nmle3y6nb4kjcwstzqxkqzaokeyjoegg6lxtmji57kxwh5snxa@p76v6dr7rgsg>
+ <53f0c45f-7f5c-4abd-af84-cbb82d509872@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -118,626 +117,130 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDEwMSBTYWx0ZWRfX+PbSvtJqB3GJ
- fE10XmGx9leoCi6mE3RBVBgAitipp7LC38p2s4sB+LoCKFvh+ngcxRRbdFdsQ6aNWTKhEdQ4xm2
- nAODfhAhHWAio1ojL9wL23zU3piLXrXROjyzVoDW8IV04KxNdFd5JB4wb4i84L5KRIXNGeEomPG
- 5iuMqtm9+Cro6kI3H21mg/Ct6GP3lMexJI1tsoYFYOz9RwFV6q6SbrcHS340tBKanRqjzjlMZLm
- LV0phyr/mZl5j3FxmtnBNLI/yRLfPb7BPRnu9aOGQuTgIebTVeD3cPfJtV4g4W6zwklVDWFSmnT
- ng2qP7Rs+yPfEfF+d7o10gy5b3Kx2/jDRA1eFfDM3uKYUDe+PwbfCMsQRZmqIS11BFBoBSUKApW
- AdP3Nf4vr7Pbj2A07sOVqqiUJ4q4Ig6mbN4S2rwH9oXjKxfF0smq+mOGNrsCAoEtz0K09X3OMJz
- gKDNM3aTzav6lvUpeZw==
-X-Proofpoint-ORIG-GUID: pYVDDRnhOCqBm8sBJSdHqmVm2hzV_L_5
-X-Proofpoint-GUID: pYVDDRnhOCqBm8sBJSdHqmVm2hzV_L_5
-X-Authority-Analysis: v=2.4 cv=QPFlhwLL c=1 sm=1 tr=0 ts=69610455 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=qP6zmmjdO5xXDVAk0ngA:9 a=CjuIK1q_8ugA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
- a=fsdK_YakeE02zTmptMdW:22
+In-Reply-To: <53f0c45f-7f5c-4abd-af84-cbb82d509872@linaro.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDEwNCBTYWx0ZWRfX9Sww8NUznPqk
+ FkXeEU1/xlHGB3RWE5HrHUtCyVlANBrPi9KD1pOVOwMOa0EK6hj5rcGjXjWRtUU12zS7xdqejw8
+ Xntl0rgBHj4Vtb5rI4B2Og8tyVVjQ44Y5fLI8reZPSMABIJIMrtK1d2Ah6LwUXBtyXavEtTuNrb
+ EwNo+9/1gC9Yvo1oAOOWJFWU9R7bdScZqundDlMzATRGhZA3H8I/hQesxDG5hKYi8hXwNNw4He5
+ Tu/1UaXoRP/a/DaHjSZ5VSWYSt/gxYFXsM/paVd8HQ/TQETzdMPPToOYt845mn6aGDfwfieJOU2
+ IICR5HxynonGr47Tx6wdoIeR8iC9irW2ACrT+9SO9qZakpuZ4170dmU2pahm6Ad5Bcuhw042V/u
+ nH7zpX8OQ3RH7pkC3/DkWoFRiEhgMB1JYa+Yt685MtiU8OnloKcH4jc2JVH4d5SScbYJ5fFw61n
+ EALEdmIcV+EkoMnvu5Q==
+X-Proofpoint-GUID: netUPzLF0Me37BF5l9s4u2z3nipfQe5r
+X-Proofpoint-ORIG-GUID: netUPzLF0Me37BF5l9s4u2z3nipfQe5r
+X-Authority-Analysis: v=2.4 cv=Xtf3+FF9 c=1 sm=1 tr=0 ts=69610abe cx=c_pps
+ a=4ztaESFFfuz8Af0l9swBwA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=lHV2lZlUvwFcl_mAknkA:9 a=CjuIK1q_8ugA:10
+ a=TPnrazJqx2CeVZ-ItzZ-:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-09_04,2026-01-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090101
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601090104
 
-On Thu, Jan 08, 2026 at 03:21:50PM +0100, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Fri, Jan 09, 2026 at 02:10:49PM +0100, Neil Armstrong wrote:
+> On 1/9/26 14:08, Dmitry Baryshkov wrote:
+> > On Fri, Jan 09, 2026 at 12:51:06PM +0530, Krishna Chaitanya Chundru wrote:
+> > > If the bootloader has already powered up the PCIe PHY, doing a full
+> > > reset and waiting for it to come up again slows down boot time.
+> > 
+> > How big is the delay caused by it?
+> > 
+> > > 
+> > > Add a check for PHY status and skip the reset steps when the PHY is
+> > > already active. In this case, only enable the required resources during
+> > > power-on. This works alongside the existing logic that skips the init
+> > > sequence.
+> > 
+> > Can we end up in a state where the bootloader has mis-setup the link? Or
+> > the link going bad because of any glitch during the bootup?
 > 
-> Most modern Qualcomm platforms (>= SM8150) expose information about the
-> DDR memory present on the system via SMEM.
+> Good question, can we add a module parameter to force a full reset of the PHY in case
+> the bootloader is buggy ?
+
+I'd suggest a simpler thing: if the reset was skipped, reset the PHY in
+case of an error and retry. That's also one of the reasons why I asked
+for skip_reset not to be the persistent value.
+
 > 
-> Details from this information is used in various scenarios, such as
-> multimedia drivers configuring the hardware based on the "Highest Bank
-> address Bit" (hbb), or the list of valid frequencies in validation
-> scenarios...
-> 
-> Add support for parsing v3-v7 version of the structs. Unforunately,
-> they are not versioned, so some elbow grease is necessary to determine
-> which one is present. See for reference:
-> 
-> ver 3: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/1d11897d2cfcc7b85f28ff74c445018dbbecac7a
-> ver 4: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/f6e9aa549260bbc0bdcb156c2b05f48dc5963203
-> ver 5: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/617d3297abe8b1b8dd3de3d1dd69c3961e6f343f
-> ver 5 with 6regions: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/d770e009f9bae58d56d926f7490bbfb45af8341f
-> ver 6: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/62659b557fdb1551b20fae8073d1d701dfa8a62e
-> ver 7: https://git.codelinaro.org/clo/la/abl/tianocore/edk2/-/commit/734d95599c5ebb1ca0d4e1639142e65c590532b7
-> 
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  drivers/soc/qcom/Makefile     |   3 +-
->  drivers/soc/qcom/smem.c       |  14 +-
->  drivers/soc/qcom/smem.h       |   9 +
->  drivers/soc/qcom/smem_dramc.c | 408 ++++++++++++++++++++++++++++++++++++++++++
->  include/linux/soc/qcom/smem.h |   4 +
->  5 files changed, 436 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index b7f1d2a57367..798643be3590 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -23,7 +23,8 @@ obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
->  qcom_rpmh-y			+= rpmh-rsc.o
->  qcom_rpmh-y			+= rpmh.o
->  obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
-> -obj-$(CONFIG_QCOM_SMEM) +=	smem.o
-> +qcom_smem-y			+= smem.o smem_dramc.o
-> +obj-$(CONFIG_QCOM_SMEM) +=	qcom_smem.o
->  obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
->  CFLAGS_smp2p.o := -I$(src)
->  obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
-> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> index 088b2bbee9e6..a53bf9ed8e92 100644
-> --- a/drivers/soc/qcom/smem.c
-> +++ b/drivers/soc/qcom/smem.c
-> @@ -4,6 +4,7 @@
->   * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
->   */
->  
-> +#include <linux/debugfs.h>
->  #include <linux/hwspinlock.h>
->  #include <linux/io.h>
->  #include <linux/module.h>
-> @@ -16,6 +17,8 @@
->  #include <linux/soc/qcom/smem.h>
->  #include <linux/soc/qcom/socinfo.h>
->  
-> +#include "smem.h"
-> +
->  /*
->   * The Qualcomm shared memory system is a allocate only heap structure that
->   * consists of one of more memory areas that can be accessed by the processors
-> @@ -284,6 +287,8 @@ struct qcom_smem {
->  	struct smem_partition global_partition;
->  	struct smem_partition partitions[SMEM_HOST_COUNT];
->  
-> +	struct dentry *debugfs_dir;
-> +
->  	unsigned num_regions;
->  	struct smem_region regions[] __counted_by(num_regions);
->  };
-> @@ -1236,17 +1241,24 @@ static int qcom_smem_probe(struct platform_device *pdev)
->  
->  	__smem = smem;
->  
-> +	smem->debugfs_dir = smem_dram_parse(smem->dev);
-
-Is it possible, even after calling qcom_smem_is_available() before calling 
-qcom_smem_dram_get_hbb() we are getting __dram as NULL.
-
-is it good to move __smem assignment to the end with barrier so all the
-changes before the assignment are seen when somebody checking qcom_smem_is_available()
-with a pair smp store/release pair.
-
-> +
->  	smem->socinfo = platform_device_register_data(&pdev->dev, "qcom-socinfo",
->  						      PLATFORM_DEVID_NONE, NULL,
->  						      0);
-> -	if (IS_ERR(smem->socinfo))
-> +	if (IS_ERR(smem->socinfo)) {
-> +		debugfs_remove_recursive(smem->debugfs_dir);
-> +
->  		dev_dbg(&pdev->dev, "failed to register socinfo device\n");
-> +	}
->  
->  	return 0;
->  }
->  
->  static void qcom_smem_remove(struct platform_device *pdev)
->  {
-> +	debugfs_remove_recursive(__smem->debugfs_dir);
-> +
->  	platform_device_unregister(__smem->socinfo);
->  
->  	__smem = NULL;
-> diff --git a/drivers/soc/qcom/smem.h b/drivers/soc/qcom/smem.h
-> new file mode 100644
-> index 000000000000..8bf3f606e1ae
-> --- /dev/null
-> +++ b/drivers/soc/qcom/smem.h
-> @@ -0,0 +1,9 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef __QCOM_SMEM_INTERNAL__
-> +#define __QCOM_SMEM_INTERNAL__
-> +
-> +#include <linux/device.h>
-> +
-> +struct dentry *smem_dram_parse(struct device *dev);
-> +
-> +#endif
-> diff --git a/drivers/soc/qcom/smem_dramc.c b/drivers/soc/qcom/smem_dramc.c
-> new file mode 100644
-> index 000000000000..017bb894a91b
-> --- /dev/null
-> +++ b/drivers/soc/qcom/smem_dramc.c
-> @@ -0,0 +1,408 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-
-Year less.. ??
-
-> + */
-> +
-> +#include <linux/debugfs.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/soc/qcom/smem.h>
-> +#include <linux/units.h>
-> +#include <linux/soc/qcom/smem.h>
-
-2nd time..
-
-> +
-> +#include "smem.h"
-> +
-> +#define SMEM_DDR_INFO_ID		603
-> +
-> +#define MAX_DDR_FREQ_NUM_V3		13
-> +#define MAX_DDR_FREQ_NUM_V5		14
-> +
-> +#define MAX_CHAN_NUM			8
-> +#define MAX_RANK_NUM			2
-> +
-> +#define DDR_HBB_MIN			13
-> +#define DDR_HBB_MAX			19
-> +
-> +#define MAX_SHUB_ENTRIES		8
-> +
-> +static struct smem_dram *__dram;
-> +
-> +enum ddr_info_version {
-> +	INFO_UNKNOWN,
-> +	INFO_V3,
-> +	INFO_V3_WITH_14_FREQS,
-> +	INFO_V4,
-> +	INFO_V5,
-> +	INFO_V5_WITH_6_REGIONS,
-> +	INFO_V6, /* INFO_V6 seems to only have shipped with 6 DDR regions, unlike V7 */
-> +	INFO_V7,
-> +	INFO_V7_WITH_6_REGIONS,
-> +};
-> +
-> +struct smem_dram {
-> +	unsigned long frequencies[MAX_DDR_FREQ_NUM_V5];
-> +	u32 num_frequencies;
-
-freq and num_freq_entries ? since you have used freq at various places..
-
-> +	u8 hbb;
-> +};
-> +
-> +enum ddr_type {
-> +	DDR_TYPE_NODDR = 0,
-> +	DDR_TYPE_LPDDR1 = 1,
-> +	DDR_TYPE_LPDDR2 = 2,
-> +	DDR_TYPE_PCDDR2 = 3,
-> +	DDR_TYPE_PCDDR3 = 4,
-> +	DDR_TYPE_LPDDR3 = 5,
-> +	DDR_TYPE_LPDDR4 = 6,
-> +	DDR_TYPE_LPDDR4X = 7,
-> +	DDR_TYPE_LPDDR5 = 8,
-> +	DDR_TYPE_LPDDR5X = 9,
-> +};
-> +
-> +/* The data structures below are NOT __packed on purpose! */
-> +
-> +/* Structs used across multiple versions */
-> +struct ddr_part_details {
-> +	__le16 revision_id1;
-> +	__le16 revision_id2;
-> +	__le16 width;
-> +	__le16 density;
-> +};
-> +
-> +struct ddr_freq_table {
-> +	u32 freq_khz;
-> +	u8 enabled;
-> +};
-> +
-> +/* V3 */
-> +struct ddr_freq_plan_v3 {
-> +	struct ddr_freq_table ddr_freq[MAX_DDR_FREQ_NUM_V3]; /* NOTE: some have 14 like v5 */
-> +	u8 num_ddr_freqs;
-> +	phys_addr_t clk_period_address;
-> +};
-> +
-> +struct ddr_details_v3 {
-> +	u8 manufacturer_id;
-> +	u8 device_type;
-> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
-> +	struct ddr_freq_plan_v3 ddr_freq_tbl;
-> +	u8 num_channels;
-> +};
-> +
-> +/* V4 */
-> +struct ddr_details_v4 {
-> +	u8 manufacturer_id;
-> +	u8 device_type;
-> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
-> +	struct ddr_freq_plan_v3 ddr_freq_tbl;
-> +	u8 num_channels;
-> +	u8 num_ranks[MAX_CHAN_NUM];
-> +	u8 highest_bank_addr_bit[MAX_CHAN_NUM][MAX_RANK_NUM];
-> +};
-> +
-> +/* V5 */
-> +struct shub_freq_table {
-> +	u8 enable;
-> +	u32 freq_khz;
-> +};
-> +
-> +struct shub_freq_plan_entry {
-> +	u8 num_shub_freqs;
-> +	struct shub_freq_table shub_freq[MAX_SHUB_ENTRIES];
-> +};
-> +
-> +struct ddr_xbl2quantum_smem_data {
-> +	phys_addr_t ssr_cookie_addr;
-> +	u32 reserved[10];
-> +};
-> +
-> +struct ddr_freq_plan_v5 {
-> +	struct ddr_freq_table ddr_freq[MAX_DDR_FREQ_NUM_V5];
-> +	u8 num_ddr_freqs;
-> +	phys_addr_t clk_period_address;
-> +	u32 max_nom_ddr_freq;
-> +};
-> +
-> +struct ddr_region_v5 {
-> +	u64 start_address;
-> +	u64 size;
-> +	u64 mem_controller_address;
-> +	u32 granule_size; /* MiB */
-> +	u8  ddr_rank;
-> +#define DDR_RANK_0	BIT(0)
-> +#define DDR_RANK_1	BIT(1)
-> +	u8  segments_start_index;
-> +	u64 segments_start_offset;
-> +};
-> +
-> +struct ddr_regions_v5 {
-> +	u32 ddr_region_num; /* We expect this to always be 4 or 6 */
-> +	u64 ddr_rank0_size;
-> +	u64 ddr_rank1_size;
-> +	u64 ddr_cs0_start_addr;
-> +	u64 ddr_cs1_start_addr;
-> +	u32 highest_bank_addr_bit;
-> +	struct ddr_region_v5 ddr_region[] __counted_by(ddr_region_num);
-> +};
-> +
-> +struct ddr_details_v5 {
-> +	u8 manufacturer_id;
-> +	u8 device_type;
-> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
-> +	struct ddr_freq_plan_v5 ddr_freq_tbl;
-> +	u8 num_channels;
-> +	u8 _padding;
-> +	struct ddr_regions_v5 ddr_regions;
-> +};
-> +
-> +/* V6 */
-> +struct ddr_misc_info_v6 {
-> +	u32 dsf_version;
-> +	u32 reserved[10];
-> +};
-> +
-> +/* V7 */
-> +struct ddr_details_v7 {
-> +	u8 manufacturer_id;
-> +	u8 device_type;
-> +	struct ddr_part_details ddr_params[MAX_CHAN_NUM];
-> +	struct ddr_freq_plan_v5 ddr_freq_tbl;
-> +	u8 num_channels;
-> +	u8 sct_config;
-> +	struct ddr_regions_v5 ddr_regions;
-> +};
-> +
-> +/**
-> + * qcom_smem_dram_get_hbb(): Get the Highest bank address bit
-> + *
-> + * Context: Check qcom_smem_is_available() before calling this function.
-> + * Because __dram * is initialized by smem_dram_parse(), which is in turn
-> + * called from * qcom_smem_probe(), __dram will only be NULL if the data
-> + * couldn't have been found/interpreted correctly.
-> + *
-> + * Return: 0 on success, -ENODATA on failure.
-> + */
-> +int qcom_smem_dram_get_hbb(void)
-> +{
-> +	int hbb;
-> +
-> +	if (!__dram)
-> +		return -ENODATA;
-> +
-> +	hbb = __dram->hbb;
-> +	if (hbb == 0)
-> +		return -ENODATA;
-
-Incase, you want to consider to save some lines..
-
-if (!__dram || !__dram->hbb)
-	return -ENODATA;
-
-
-> +	else if (hbb < DDR_HBB_MIN || hbb > DDR_HBB_MAX)
-> +		return -EINVAL;
-> +
-> +	return hbb;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_smem_dram_get_hbb);
-> +
-> +static void smem_dram_parse_v3_data(struct smem_dram *dram, void *data, bool additional_freq_entry)
-> +{
-> +	/* This may be 13 or 14 */
-> +	int num_freq_entries = MAX_DDR_FREQ_NUM_V3;
-> +	struct ddr_details_v3 *details = data;
-> +
-> +	if (additional_freq_entry)
-> +		num_freq_entries++;
-> +
-> +	for (int i = 0; i < num_freq_entries; i++) {
-> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
-> +
-> +		if (freq_entry->freq_khz && freq_entry->enabled)
-> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
-> +	}
-> +}
-> +
-> +static void smem_dram_parse_v4_data(struct smem_dram *dram, void *data)
-> +{
-> +	struct ddr_details_v4 *details = data;
-> +
-> +	/* Rank 0 channel 0 entry holds the correct value */
-> +	dram->hbb = details->highest_bank_addr_bit[0][0];
-> +
-> +	for (int i = 0; i < MAX_DDR_FREQ_NUM_V3; i++) {
-> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
-> +
-> +		if (freq_entry->freq_khz && freq_entry->enabled)
-> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
-> +	}
-> +}
-> +
-> +static void smem_dram_parse_v5_data(struct smem_dram *dram, void *data)
-> +{
-> +	struct ddr_details_v5 *details = data;
-> +	struct ddr_regions_v5 *region = &details->ddr_regions;
-> +
-> +	dram->hbb = region[0].highest_bank_addr_bit;
-> +
-> +	for (int i = 0; i < MAX_DDR_FREQ_NUM_V5; i++) {
-> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
-> +
-> +		if (freq_entry->freq_khz && freq_entry->enabled)
-> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
-> +	}
-> +}
-> +
-> +static void smem_dram_parse_v7_data(struct smem_dram *dram, void *data)
-> +{
-> +	struct ddr_details_v7 *details = data;
-> +	struct ddr_regions_v5 *region = &details->ddr_regions;
-> +
-> +	dram->hbb = region[0].highest_bank_addr_bit;
-> +
-> +	for (int i = 0; i < MAX_DDR_FREQ_NUM_V5; i++) {
-> +		struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
-> +
-> +		if (freq_entry->freq_khz && freq_entry->enabled)
-> +			dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
-> +	}
-> +}
-> +
-> +/* The structure contains no version field, so we have to perform some guesswork.. */
-> +static int smem_dram_infer_struct_version(size_t size)
-> +{
-> +	/* Some early versions provided less bytes of less useful data */
-> +	if (size < sizeof(struct ddr_details_v3))
-> +		return -EINVAL;
-> +
-> +	if (size == sizeof(struct ddr_details_v3))
-> +		return INFO_V3;
-> +
-> +	if (size == sizeof(struct ddr_details_v3)
-> +		 + sizeof(struct ddr_freq_table))
-> +		return INFO_V3_WITH_14_FREQS;
-> +
-> +	if (size == sizeof(struct ddr_details_v4))
-> +		return INFO_V4;
-> +
-> +	if (size == sizeof(struct ddr_details_v5)
-> +		 + 4 * sizeof(struct ddr_region_v5))
-> +		return INFO_V5;
-> +
-> +	if (size == sizeof(struct ddr_details_v5)
-> +		 + 4 * sizeof(struct ddr_region_v5)
-> +		 + sizeof(struct ddr_xbl2quantum_smem_data)
-> +		 + sizeof(struct shub_freq_plan_entry))
-> +		return INFO_V5;
-
-Why this does not have separate name ?
-
-> +
-> +	if (size == sizeof(struct ddr_details_v5)
-> +		 + 6 * sizeof(struct ddr_region_v5))
-> +		return INFO_V5_WITH_6_REGIONS;
-> +
-> +	if (size == sizeof(struct ddr_details_v5)
-> +		 + 6 * sizeof(struct ddr_region_v5)
-> +		 + sizeof(struct ddr_xbl2quantum_smem_data)
-> +		 + sizeof(struct shub_freq_plan_entry))
-> +		return INFO_V5_WITH_6_REGIONS;
-> +
-> +	if (size == sizeof(struct ddr_details_v5)
-> +		 + 6 * sizeof(struct ddr_region_v5)
-> +		 + sizeof(struct ddr_misc_info_v6)
-> +		 + sizeof(struct shub_freq_plan_entry))
-> +		return INFO_V6;
-> +
-> +	if (size == sizeof(struct ddr_details_v7)
-> +		 + 4 * sizeof(struct ddr_region_v5)
-> +		 + sizeof(struct ddr_misc_info_v6)
-> +		 + sizeof(struct shub_freq_plan_entry))
-> +		return INFO_V7;
-> +
-> +	if (size == sizeof(struct ddr_details_v7)
-> +		 + 6 * sizeof(struct ddr_region_v5)
-> +		 + sizeof(struct ddr_misc_info_v6)
-> +		 + sizeof(struct shub_freq_plan_entry))
-> +		return INFO_V7_WITH_6_REGIONS;
-> +
-> +	return INFO_UNKNOWN;
-> +}
-> +
-> +static int smem_dram_frequencies_show(struct seq_file *s, void *unused)
-> +{
-> +	struct smem_dram *dram = s->private;
-> +
-> +	for (int i = 0; i < dram->num_frequencies; i++)
-> +		seq_printf(s, "%lu\n", dram->frequencies[i]);
-> +
-> +	return 0;
-> +}
-> +DEFINE_SHOW_ATTRIBUTE(smem_dram_frequencies);
-> +
-> +static int smem_hbb_show(struct seq_file *s, void *unused)
-> +{
-> +	struct smem_dram *dram = s->private;
-> +
-> +	if (!dram->hbb)
-> +		return -EINVAL;
-> +
-> +	seq_printf(s, "%d\n", dram->hbb);
-> +
-> +	return 0;
-> +}
-> +DEFINE_SHOW_ATTRIBUTE(smem_hbb);
-> +
-> +struct dentry *smem_dram_parse(struct device *dev)
-> +{
-> +	struct dentry *debugfs_dir;
-> +	enum ddr_info_version ver;
-> +	struct smem_dram *dram;
-> +	size_t actual_size;
-> +	void *data = NULL;
-> +
-> +	/* No need to check qcom_smem_is_available(), this func is called by the SMEM driver */
-
-This comment seems redundant..
-
-> +	data = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_DDR_INFO_ID, &actual_size);
-> +	if (IS_ERR_OR_NULL(data))
-> +		return ERR_PTR(-ENODATA);
-> +
-> +	ver = smem_dram_infer_struct_version(actual_size);
-> +	if (ver < 0) {
-> +		/* Some SoCs don't provide data that's useful for us */
-> +		return ERR_PTR(-ENODATA);
-> +	} else if (ver == INFO_UNKNOWN) {
-> +		/* In other cases, we may not have added support for a newer struct revision */
-> +		pr_err("Found an unknown type of DRAM info struct (size = %zu)\n", actual_size);
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
-> +	dram = devm_kzalloc(dev, sizeof(*dram), GFP_KERNEL);
-> +	if (!dram)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	switch (ver) {
-> +	case INFO_V3:
-> +		smem_dram_parse_v3_data(dram, data, false);
-> +		break;
-> +	case INFO_V3_WITH_14_FREQS:
-> +		smem_dram_parse_v3_data(dram, data, true);
-> +		break;
-> +	case INFO_V4:
-> +		smem_dram_parse_v4_data(dram, data);
-> +		break;
-> +	case INFO_V5:
-> +	case INFO_V5_WITH_6_REGIONS:
-> +	case INFO_V6:
-> +		smem_dram_parse_v5_data(dram, data);
-> +		break;
-> +	case INFO_V7:
-> +	case INFO_V7_WITH_6_REGIONS:
-> +		smem_dram_parse_v7_data(dram, data);
-> +		break;
-> +	default:
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
-> +	/* Both the entry and its parent dir will be cleaned up by debugfs_remove_recursive */
-> +	debugfs_dir = debugfs_create_dir("qcom_smem", NULL);
-> +	debugfs_create_file("dram_frequencies", 0444, debugfs_dir, dram,
-> +			    &smem_dram_frequencies_fops);
-> +	debugfs_create_file("hbb", 0444, debugfs_dir, dram, &smem_hbb_fops);
-> +
-> +	/* If there was no failure so far, assign the global variable */
-
-nit: I agree that we should write comments, but sometimes it is too obvious.
-This is a simple assignment, not something complex like a barrier that requires
-detailed explanation.
-
-> +	__dram = dram;
-> +
-> +	return debugfs_dir;
-> +}
-> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
-> index f946e3beca21..223cd5090a2a 100644
-> --- a/include/linux/soc/qcom/smem.h
-> +++ b/include/linux/soc/qcom/smem.h
-> @@ -2,6 +2,8 @@
->  #ifndef __QCOM_SMEM_H__
->  #define __QCOM_SMEM_H__
->  
-> +#include <linux/platform_device.h>
-> +
-
-Why this ?
-
->  #define QCOM_SMEM_HOST_ANY -1
->  
->  bool qcom_smem_is_available(void);
-> @@ -17,4 +19,6 @@ int qcom_smem_get_feature_code(u32 *code);
->  
->  int qcom_smem_bust_hwspin_lock_by_host(unsigned int host);
->  
-> +int qcom_smem_dram_get_hbb(void);
-> +
->  #endif
-> 
-> -- 
-> 2.52.0
+> > 
+> > > 
+> > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > ---
+> > >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 28 ++++++++++++++++++----------
+> > >   1 file changed, 18 insertions(+), 10 deletions(-)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > > index 86b1b7e2da86a8675e3e48e90b782afb21cafd77..c93e613cf80b2612f0f225fa2125f78dbec1a33f 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > > @@ -3153,6 +3153,7 @@ struct qmp_pcie {
+> > >   	const struct qmp_phy_cfg *cfg;
+> > >   	bool tcsr_4ln_config;
+> > >   	bool skip_init;
+> > > +	bool skip_reset;
+> > >   	void __iomem *serdes;
+> > >   	void __iomem *pcs;
+> > > @@ -4537,6 +4538,9 @@ static int qmp_pcie_init(struct phy *phy)
+> > >   		qphy_checkbits(pcs, cfg->regs[QPHY_START_CTRL], SERDES_START | PCS_START) &&
+> > >   		qphy_checkbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], cfg->pwrdn_ctrl);
+> > > +	qmp->skip_reset = qmp->skip_init && !qphy_checkbits(pcs, cfg->regs[QPHY_PCS_STATUS],
+> > 
+> > It is definitely not a long-term state, there is no need to store it in
+> > qmp_pcie struct.
+> > 
+> > > +							    cfg->phy_status);
+> > > +
+> > >   	if (!qmp->skip_init && !cfg->tbls.serdes_num) {
+> > >   		dev_err(qmp->dev, "Init sequence not available\n");
+> > >   		return -ENODATA;
+> > > @@ -4560,13 +4564,15 @@ static int qmp_pcie_init(struct phy *phy)
+> > >   		}
+> > >   	}
+> > > -	ret = reset_control_assert(qmp->nocsr_reset);
+> > > -	if (ret) {
+> > > -		dev_err(qmp->dev, "no-csr reset assert failed\n");
+> > > -		goto err_assert_reset;
+> > > -	}
+> > > +	if (!qmp->skip_reset) {
+> > > +		ret = reset_control_assert(qmp->nocsr_reset);
+> > > +		if (ret) {
+> > > +			dev_err(qmp->dev, "no-csr reset assert failed\n");
+> > > +			goto err_assert_reset;
+> > > +		}
+> > > -	usleep_range(200, 300);
+> > > +		usleep_range(200, 300);
+> > > +	}
+> > >   	if (!qmp->skip_init) {
+> > >   		ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+> > > @@ -4641,10 +4647,12 @@ static int qmp_pcie_power_on(struct phy *phy)
+> > >   	if (ret)
+> > >   		return ret;
+> > > -	ret = reset_control_deassert(qmp->nocsr_reset);
+> > > -	if (ret) {
+> > > -		dev_err(qmp->dev, "no-csr reset deassert failed\n");
+> > > -		goto err_disable_pipe_clk;
+> > > +	if (!qmp->skip_reset) {
+> > > +		ret = reset_control_deassert(qmp->nocsr_reset);
+> > > +		if (ret) {
+> > > +			dev_err(qmp->dev, "no-csr reset deassert failed\n");
+> > > +			goto err_disable_pipe_clk;
+> > > +		}
+> > >   	}
+> > >   	if (qmp->skip_init)
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
 > 
 
 -- 
--Mukesh Ojha
+With best wishes
+Dmitry
 
