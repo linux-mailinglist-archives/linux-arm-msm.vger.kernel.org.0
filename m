@@ -1,162 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-88242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8A20D083A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 10:34:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17D45D0859E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 10:53:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 689273076317
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 09:29:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 072213055F41
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 09:52:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5F5318BBB;
-	Fri,  9 Jan 2026 09:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C2D30FC34;
+	Fri,  9 Jan 2026 09:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LkuXLcFV";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QUFun1Lj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agEpZM7Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B55A32A3D7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 09:29:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0478F24293C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 09:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767950992; cv=none; b=sWxXwFchj0b6wqK3+bw8P+deQmm8mJCBwx06w3Pz4lp7rFCXOOp54ErmQLlSCXN4rn5I6J5vnYKJcXB7XCDAobRPUrAbweU6hS/uxbAuRaZ1JgKY1jVE78vsvktDi5YmEwddYuC/FJ5cppnlHwREAhfw0mvijtUvljedLxPEFsg=
+	t=1767952355; cv=none; b=J7ixIBkk4xrvQ+245ymvI0zYx/IdPlz6gko2/MUGW5GhSmM8jS9n0eSptWDpUF2hCPCiAvObiCeHCNmoar6XQJMI9COoMi0SoWhpHETkeyMQnBTvO3faOC5zI4+cCJVH04oJ66ZUSsMiS2DKmbA4ymYIpN2hup8+qOOQiBuHT84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767950992; c=relaxed/simple;
-	bh=qLH3+LsoQDK36n1KPvfyio91r+N+YODHZlioin48h3Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P/Uv7CoDBozxh6y94PeRx3OyFpgXtvWy5ruvUfSdmY5/t2GuIdDtGHNbLzYa/NBVUZtYqoTFzOB8w/mnukBNyo943GqfKWafh4oV1ZEtGrmv+DSQe7C+VuL0G/L+YsMRm7qNgUpMDbJx+kkc6HHT5egFdXW2RcFF+dLfPW4870g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LkuXLcFV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QUFun1Lj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6095SKAK1701969
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 09:29:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=rRpTpzQR8ExrbdL/F8XL9JZf
-	0Q5dvO5YHpixCRZhmJ8=; b=LkuXLcFVJVGueu+PgdtFAUc8KLvOB4MDXyDRZDUt
-	fgbw56l0wty9ZvEFcoyYO0c9CEpgKtdvciLPFOny4keFVgkY/OtNfTo4rww8/cVz
-	xqeYdsprJGbxZfFB9bObGvjgP4R7evezj33MjETENm+Kg8zY8pllhOxpeds08pom
-	t18LZsgGR49y3d4S+6jlONqTb7xTNAOrq0Kg3kl5/Mb1lb/5UnglI/Krdm3J9fTL
-	iMkipS5bx7eLzqFi7XozK2vwmreK929gToAbIgJobfA1BnkJF8D8VarVdvw/PK2g
-	lETjgihfnOanC/azuvf3KAUi+H6swQy7G0ptnsrvu4ptIw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjfdaasp3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 09:29:50 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8b2de6600c0so1038010785a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 01:29:50 -0800 (PST)
+	s=arc-20240116; t=1767952355; c=relaxed/simple;
+	bh=RzyJyvo/x42cBiwj2oou9H3/2KqVVuJXxMtZVIK/lqg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=moD0TUcUpmKO1QGBvbgw7ld3Idwncwtr2uhShFlLrxNlxq9utJIVq//DH2cRQLEbs/v7RJtHUdWRbK6HikvaT8uj5vXPHeEe1nLgHSrVfLz/O3taQfYRgtHF4dHw8wmksoVo2D7j3uTjvGbC6aCxwJWdZ27MShP90NQWKGcNrYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agEpZM7Z; arc=none smtp.client-ip=209.85.214.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-29f1bc40b35so47618395ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 01:52:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767950990; x=1768555790; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rRpTpzQR8ExrbdL/F8XL9JZf0Q5dvO5YHpixCRZhmJ8=;
-        b=QUFun1LjneV9OPQR562UfpP5YAuphlaK0T3Mvj74YTSvYy9aaZazHluJuCfnuQTC2B
-         wUI4gj0uBxm0uy1HdXDt5enamHyqA1WVqRw9smxirp20ubB16pJWwMeO2S6oUn+5UNg7
-         QX3ZMdfFWy1Q7aIQMeEZzR0W2WLLGhP2N+wK5duQUfWTwZDPR2J/MkPhPgbuueiCDCiz
-         HCiVQJ+BJtY8U7NGR6CEm3iLmVCUGu+JVdcbKJ/4Fsj1xuSHrASw66Tel/Xt4i+hFrPr
-         QvvhYkKC8AMVXoJrTasRGu1Hry1ktYnAlErw72pOjv9CurHrBm+SqckmC9IBeNd1BPvj
-         c0cQ==
+        d=gmail.com; s=20230601; t=1767952353; x=1768557153; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5/BU4zRZ83RUczqUvA0ENYWG0qT5PQqCiT860KG9yx0=;
+        b=agEpZM7ZxYW0qgF7J6zv28eM+C0m0pzMrB+ZyxfFnITSQFCrHTpkJG0e+fz+6u0k65
+         HARtRqVvM4MAodcYxnE4x8ckajW1bVs89Y0o+yvNqnETILLQDjuec3t83056lfXi0U8W
+         HRJFURq6rtwDJjhPi3A8Lpjup2otFNmEwtiG0JTnOteMQ/bkrm9RNe9BXmyigy43NxgI
+         G+RV7NhW07q0RFr1f3pshskloXBIbKU0s+HtmLzQDe2KQ3xzEzv6wIcxgFcUZ6imUj4p
+         GMy/tcXUH+uznoPFH2bw9/+s0cilm3wjZbb1f7axaSD5tZskN2p2yV/D34uR6g0OPWtU
+         jVkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767950990; x=1768555790;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rRpTpzQR8ExrbdL/F8XL9JZf0Q5dvO5YHpixCRZhmJ8=;
-        b=Ew1si2iay+TlE3Hgl7DIKki8PlCH6awgBiMllFV6DZFTnB5MnDNB+jpzJThEokSx+O
-         25ElQwy8QQzjatYAuVMfqs43l6FewFfC8n9hCaWKGEfuGX/fD/kn98D0N7rHjQyUxS+E
-         rYlgYAzY4Ae9QXRedMTq4au+iMDsQ/vq94MFKtfphXNA4y8lERl+VWt5uKxX5qVtcBZl
-         NKGKeImRfedIPhAoPU56wvCWdREmNr3T6byHoqlJCMHoX1ZzeNrjurE+fGhDh7SBFAqK
-         ouL6G8G/0UvJ5jvw68+yNhnJpCJUcKyfR+GA2azhnrr/xQVHIdjwxiAlnnot4oDS+9fn
-         KA0A==
-X-Forwarded-Encrypted: i=1; AJvYcCV5Bw3sXPnN7IhZ3psslzARmk4HkZV6/Wq8j+gPJEFm4obtoyAPXoiyxgaPnyVw2hD9WbSsYiNhs4Et5jB6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyu13ER1W0hFgl32tCzmV+PyZoR8BONUFx34vXPBLhk2bqa7Py/
-	06qwLZxp1AybrYH+5S5iuu0wA333ysnvroiTKrp/JsYyJfpWX1oBrmU7sBPngic2iMKYzMd+ndZ
-	bWEAUk9BRuXnDkz1ksBqjUzLmWsIuqr9bHEbu6K2IXBhYlB+pqqEutyJsc/bBVSTV9o8o
-X-Gm-Gg: AY/fxX6NMkuAe5jT0E7qwcSHwwaFnwM1G8bN0QvAfeZcs3PmDLF6TzuGXJV+Pavtld1
-	0MGnjqmBso4kYMzkSuv72sVOxb0OFQKaqrcnKD+2QCtaLe+uXKCDsO2rC568yYk280JquOx7CkD
-	N6YJ7Q2KQJn9qrr/YI7HPwFOK9ktdgClkfCRQvh1QDUugKTjl4dkb7nQyqaDCvtpKFL8TmTuNKY
-	1VLO3NeH0mGXo5ZKSOSPORBUpzL7Cx6/TX9ocC1CqOlMJXivGH+S+kpNiYp5qFCj1lI+7WtOiBO
-	Ihua+690TssLwVcRgBHjKNUvETL1gGlxat8By6Hgv4NZHonCoQ4MgLRxMVh9jv0gqkdyNIrCyjv
-	hsoIXjvtm006emHUWC1mY
-X-Received: by 2002:a05:620a:4149:b0:8a1:21a6:e04f with SMTP id af79cd13be357-8c38939254amr1257045985a.28.1767950989817;
-        Fri, 09 Jan 2026 01:29:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXoLCG5LO6zefGjgD+xKyAVNrDH56nL2+22oLiyLggqcBqmC9ow0fJTq3cPgpQOVlQjcJAWA==
-X-Received: by 2002:a05:620a:4149:b0:8a1:21a6:e04f with SMTP id af79cd13be357-8c38939254amr1257042385a.28.1767950989227;
-        Fri, 09 Jan 2026 01:29:49 -0800 (PST)
-Received: from oss.qualcomm.com ([86.121.7.10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a4d029bsm1076667766b.41.2026.01.09.01.29.47
+        d=1e100.net; s=20230601; t=1767952353; x=1768557153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5/BU4zRZ83RUczqUvA0ENYWG0qT5PQqCiT860KG9yx0=;
+        b=dafqdCI3kBikY0hagWoH/iYOaLhqAuclsOJPXuIs9LVXoi3ZD+69bSvicFmRdia8Ln
+         GK0U87HmjQN1RLAASdN2PUGtOjbKwCgiLWpfdADPZv7thdnJQWPuPJKI7xS0HCDjcTZj
+         xFHBukvgap7UwWv/vRhcJ7AA4ETMX1RzA2Cer0HpvYsMb2yX1dFB9l0kYNiYx0vzDFSJ
+         qq2Fsx6SD4H0l7ZHfcJPUKUyzYH9W4iolCTr3/He7flNEw59Xf7e+JKzzbLeEAje93mL
+         ASuix3ae+BNnWi+TKTN0NxaSr4WHzxG7/OTQ4j4Zwet30t5dlJJugwkbIcDRRK2uqf0C
+         sNeA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJrBs4APHKzUzGfDy31fek0qyUkKHAj2SgIvgdLYCP99TVW7Rrs9gg6jXbwHQnv41/FOYIsmTqpx5Cwf34@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwdEODgflOj1erFIE67tBM5AHw2YR3XLvuXICwxlI1QsU8/IPT
+	ZnihWxgQVxBUBE78CxaZQz1YQHpwpVfkLo8zm3gJuy0UR5NlcHFX1sKB
+X-Gm-Gg: AY/fxX4+TAxDarnnTx+DeNvl6wIi2+iyA9U2aWsbhhAolyFchNIHWF4hJGurZKnP1Q7
+	MnHBYEgx8bcWChvIJ+OXvGrlK723bfoyXRJal82A9mUBWgWgdxod4yxaRKnRQKhbGXe/HyhsOzK
+	ueTsf3hgCC4G5zuDbOqoXXB6iW+4r68jqqVM9/f0+C8PugS4fEV3nS4ZOMZKoCcnHxDExij4IYk
+	UpDXEFQOGE0RMTf8DSo+FOAOEVJRav8R73qZfLoKTGMe1fELW6hKhV7dASDdQ9Ymfpk0fsOBLXC
+	XYpfdaiPpH6gYJuUbpcDH8VWczP3QKpj2Hj6vWLaZ64A27k0lBEnccCh39IzrBDqEptczsKYxe1
+	ZMaAurwRN7xseBdRnSmaItv1fVbDVqElpDtpHb43S7wK0wg1vi4uYeD90gdc1m++RziKfpzFd3B
+	cxokLm1JOkWq/bAAy+hT+mNSsKb3Yy4Y3EvWwQ
+X-Google-Smtp-Source: AGHT+IF+kms8nBtaQzDtlzzxdD/bWwTsAmCulVF7PrcBiCcNtSdGmmIperLGaJOoPzMjUCnyeTzlBw==
+X-Received: by 2002:a17:903:1a6b:b0:295:8da5:c634 with SMTP id d9443c01a7336-2a3ee41354amr78081505ad.9.1767952353246;
+        Fri, 09 Jan 2026 01:52:33 -0800 (PST)
+Received: from test-HP-Desktop-Pro-G3.. ([103.218.174.23])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cb2d79sm103081795ad.56.2026.01.09.01.52.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 01:29:48 -0800 (PST)
-Date: Fri, 9 Jan 2026 11:29:46 +0200
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: Brian Masney <bmasney@redhat.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>,
-        Simona Vetter <simona@ffwll.ch>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 24/27] drm/msm/dsi_phy_14nm: convert from
- divider_round_rate() to divider_determine_rate()
-Message-ID: <7t7ctq5vasottsmiuvo6zwqsnlcocc3c72fno7qlhgeqhmhxid@5tsjevpuobty>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
- <20260108-clk-divider-round-rate-v1-24-535a3ed73bf3@redhat.com>
+        Fri, 09 Jan 2026 01:52:32 -0800 (PST)
+From: Sudarshan Shetty <tessolveupstream@gmail.com>
+To: andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sudarshan Shetty <tessolveupstream@gmail.com>
+Subject: [PATCH v11 0/4] Add Qualcomm Technologies, Inc. Talos EVK SMARC support
+Date: Fri,  9 Jan 2026 15:22:16 +0530
+Message-Id: <20260109095221.2847067-1-tessolveupstream@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260108-clk-divider-round-rate-v1-24-535a3ed73bf3@redhat.com>
-X-Authority-Analysis: v=2.4 cv=Ue1ciaSN c=1 sm=1 tr=0 ts=6960ca8e cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=hZ5Vz02otkLiOpJ15TJmsQ==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8
- a=MmoDKESpECQAgM94Xi4A:9 a=CjuIK1q_8ugA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 31sWpY4h6BB5FPJn22TziE39cInPZJoB
-X-Proofpoint-GUID: 31sWpY4h6BB5FPJn22TziE39cInPZJoB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA2NSBTYWx0ZWRfX4wzCnvRrQDl7
- Kubmqa3VcD9v4woioNzRpVHXFEqxeQ1RhYp89F8ATnUr6t+Ol79WCxttL5pI6ZMNUN0P2zno9PR
- uPte6yAZvjb1OmnH+LYCE/lerY73+eBYnvHmWnRyAEjZGJYfjDb5rgpe8WBERLsNrC4r+0Uza6B
- UMV+I8H8E/4Jq2j9ofpQiv2+akfyGrkKV5/8AWRvnD6gttlJQ4riPkR+3b8MY52rhUdV74cxfQw
- b83yDIUY2q+z5qNbyXIpT/eBz0/YoaXh1/EGF9wR5kIzKc1AfzBhCrfqxhcElK8HHRvdh2khJTP
- auPWA+c2ZmsUZJOz4QGAqqWDMGkg40e6wsbFVkpoZDTMy2vFU6eU9XeTNr9SHQhfIp480XZnIUf
- EgwjG3lbw7/BIAavHE0mMz2qBJfqERZ3+H+4VAl8Bjni83RoCFxJTF+MSR5UOAy89hvEC98Izs1
- kc/aIAaZt5qW2eRILnQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_02,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601090065
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 
-On 26-01-08 16:16:42, Brian Masney wrote:
-> The divider_round_rate() function is now deprecated, so let's migrate
-> to divider_determine_rate() instead so that this deprecated API can be
-> removed.
-> 
-> Note that when the main function itself was migrated to use
-> determine_rate, this was mistakenly converted to:
-> 
->     req->rate = divider_round_rate(...)
-> 
-> This is invalid in the case when an error occurs since it can set the
-> rate to a negative value.
-> 
-> Fixes: cc41f29a6b04 ("drm/msm/dsi_phy_14nm: convert from round_rate() to determine_rate()")
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Hi all,
 
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+This patch series adds device tree binding and board support for the
+Qualcomm Technologies, Inc. Talos EVK SMARC platform based on the
+QCS615 SoC.
+
+The first patch introduces the DT binding entry for the Talos EVK
+SMARC board, and the second patch adds the corresponding DTS
+files for the platform.
+
+Note:
+USB(usb_1_dwc3) supports host-only mode based on the switch SW1 on
+the SoM, which is purely a hardware controlled as USB-ID and USB-VBUS
+is not connected the switching cannot be handled from SW.
+Hence from SW Host-only mode is supported on Linux boot up.
+
+Changes in v11:
+ - Fixed inconsistent USB PHY node naming in qcs615-ride.dts to
+   align with the expected naming convention. (suggested by
+   yuanjiey)
+ - Reordered properties in property-n and property-names for
+   consistency across DT files.
+ - Removed unnecessary output-low from the bt_en_state node.
+ - Used a &label_reference for hdmi_connector.
+ - Added pcieport0 device node, which is required for WLAN to
+   power on.
+ - No functional change in bindings file.
+
+Changes in v10:
+ - This series extends the gpio-backlight driver and its DT bindings
+   to support multiple control GPIOs. (suggested by Dmitry)
+ - Addressed DT node labeling feedback.
+ - Polished overall device tree structure and minor formattings.
+ - Corrected pinctrl configuration for the active-low PERST# pin.
+ - Includes a fix for inconsistent USB PHY node naming in
+   talos.dtsi. (suggested by Dmitry)
+ - Enabled WiFi and Bluetooth functionality.
+ - Updated commit message.
+ - No functional change in bindings file.
+
+Changes in v9:
+ - The updates in the following patch url is taken care in this
+   patch series.
+   https://lists.freedesktop.org/archives/dri-devel/2025-November/534473.html
+ - Ignore v8 patch
+
+Changes in v8:
+ - This patch series depends on the below url
+   https://lists.freedesktop.org/archives/dri-devel/2025-November/534473.html
+ - Moved the contents of `talos-evk-cb.dtsi` to `talos-evk.dtsi`
+   which will describe all the standard configuration of the EVK.
+ - Introduced 'talos-evk-lvds-auo,g133han01.dtso' which has overlay
+   to disable HDMI and adds the LVDS-related on top of the base
+   dts file. (suggested by Bjorn)
+ - Ethernet and Wi-Fi/BT are not (yet) supported.
+ - Updated commit message.
+ - No functional change in bindings file.
+
+Changes in v7:
+ - Added i2c clock frequency for i2c5 node.
+ - Moved adv7535 controller section to talos-evk.dts file.
+ - Reorder the usb nodes.
+ - GPI_DMA nodes added in the device tree files.
+ - No functional change in bindings file.
+
+Changes in v6:
+ - Clarified description of `talos-evk-cb.dtsi` to explain that it
+   defines common carrier board interfaces shared between HDMI and
+   LVDS variants, And It’s a single carrier board. HDMI and LVDS
+   share the same DSI interface, and only one can be active at a
+   time depending on a DIP switch.
+ - Added missing newlines before 'status' and between the last property
+   and subnode (suggested by Konrad).
+ - Updated commit messages for clarity.
+
+Changes in v5:
+ - Updated commit message. (suggested by Krzysztof)
+ - Introduced generic node name for can, dp, hdmi-bridge. (suggested by
+   Krzysztof)
+ - Introduced talos-evk-cb.dtsi, which has common carrier board
+   interfaces.
+ - No functional change in bindings file.
+
+Changes in v4:
+ - Updated product name to full form per Krzysztof’s feedback in
+   dt-binding comment.
+ - Hook up the ADV7535 DSI-to-HDMI bridge to base DTS file.
+ - Add DP connector node and MDSS DisplayPort controller.
+ - Added USB note in the cover letter for maintainers' awareness.
+
+Changes in v3:
+ - Addressed comments from Dmitry regarding USB1 `dr_mode` and
+   added a DTS comment.
+ - No functional change in bindings file.
+
+Changes in v2:
+ - Renamed compatible to "qcom,talos-evk" (suggested by Dmitry/Bjorn)
+ - Merged enum entry with existing `qcs615-ride` block (Krzysztof)
+ - Fixed subject and commit message to use imperative mood.
+
+Thanks,
+Anusha
+
+Sudarshan Shetty (4):
+  dt-bindings: arm: qcom: talos-evk: Add QCS615 Talos EVK SMARC platform
+  arm64: dts: qcom: talos: Fix inconsistent USB PHY node naming
+  arm64: dts: qcom: qcs615-ride: Fix USB PHY label reference
+  arm64: dts: qcom: talos-evk: Add support for QCS615 talos evk board
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts      |   2 +-
+ .../qcom/talos-evk-lvds-auo,g133han01.dtso    | 126 ++++
+ arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 616 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/talos-evk.dts        | 139 ++++
+ arch/arm64/boot/dts/qcom/talos.dtsi           |   4 +-
+ 7 files changed, 889 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
+
+-- 
+2.34.1
+
 
