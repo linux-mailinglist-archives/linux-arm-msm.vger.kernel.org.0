@@ -1,152 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-88294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61533D0ABFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 15:54:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2347AD0AC29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 15:57:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 14A923006A9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 14:51:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A645D3062916
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 14:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF31E309F01;
-	Fri,  9 Jan 2026 14:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A98E62D7DF3;
+	Fri,  9 Jan 2026 14:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mbGMHRlL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JtZzburk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EwQXO0sv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB11279DC3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 14:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32753225408
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 14:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767970269; cv=none; b=W+DJmXwvdUKD6O4orsDXflJZSqumfDAl//3V3RG8SKmhZ/lL77m/8RVXJPtEX0KjS5pH1HdnIA2qexw2fWaewwaIHyXgn9E0nhNk8lMPTmNknXIpnmCTeZ5qu4v793r2lNofCWHPdRE8c1St+iUIzQxLhJk5HmLz88TSNp6tWoc=
+	t=1767970492; cv=none; b=K/DcngM4H0BMMF7ZCzDWuP7ia4PAmktAJvu7mGNps4zuNCVLgVzJypzsHeQIrIF5HFqCjJpxalPvscbMjGa6oyFmHn1nmhInLdz1gPb4nJn6kblEKPTzqHZ+d4FZ2TuMS4IbMxCEEw7/2hUgsLG14+jJk7yeTZX3QY44RoxjmkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767970269; c=relaxed/simple;
-	bh=ffSIdQ2PNsRvxyqqOyb02+48iytTLOKjoT6hEyjMSVs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qPskgAED2tj0puBATIu5faNdJX7GLgxKIKe88G+uiWu7QY2xOiZDasooyaTErfw9kilHAsJfoxgXm5hwTYhP+vLBChwraexBdElCrz36YjfQjJ87KqJh0EJRVVBFct4F/Z64w0hqF4no5WzLX1r40mN5MM/cZ5+6uYadh95Lx/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mbGMHRlL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D6FC19423
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 14:51:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767970269;
-	bh=ffSIdQ2PNsRvxyqqOyb02+48iytTLOKjoT6hEyjMSVs=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=mbGMHRlLhqYS2ya4PyuJMIiYA0doc95NeLBSKbWu72RoIOpYxxZelGFa1RhLnEDMb
-	 DcOYX4T7pxbpP1KEJKt8yUk/ELRsg9xKd8WzbwxwKqkNt0Y9X+k9HQnhZ+Gcl5s0Y6
-	 uq4V5NEO6nSo0b7r7soNLkfc2P+N5Dnw7iwytQA9BUOYy3TFjxRXyZqnuOIy4tlfae
-	 cA3rsav9akK4sFTS5cv526uys25TkXRsk4E0JUHTnWhU/nbOmQQT+YKxmBdNWdikQS
-	 FjKKYgy24mrSYdfVfl8DTK/MC2V77OUiBnnO/w7JGwBogtzAVqHaSYXvCG22Ne4UNB
-	 peJVTULZiLheA==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59b73193dc8so3049036e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 06:51:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV7TGpT4sTIKz8qQQVSAr9eW+ITB+GEv9B9ueaQSAqVJtZtK43+XP3+808ymrGFmNturcDimgeGLVdVzXo9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZFpxe/isqD4cfIX5TxC08Pg0pDcj8k48gvoYVu61fz2Get2aB
-	mEejlaEGDFsjN0HOLv+Hr8TIGggj/3xeYsQl3qBaZtJpssPQF+nrlBWKswsILR2AT/Dd4GJUyHj
-	yni8VoCwWhwycFD4dURvx6fvOJuUxhEwlfzR5BSuJXA==
-X-Google-Smtp-Source: AGHT+IFWLhfvuow8qIMZYK/7g5CiMgRDievFLnj4NheWNLi/FbbvnO/XWEOCiomEy5A3LhBVoz3hWrlHQBZegWrkP4Q=
-X-Received: by 2002:a05:6512:39c5:b0:59b:7df0:112d with SMTP id
- 2adb3069b0e04-59b7df012d7mr1084680e87.44.1767970267847; Fri, 09 Jan 2026
- 06:51:07 -0800 (PST)
+	s=arc-20240116; t=1767970492; c=relaxed/simple;
+	bh=65HpubQvtgAVaKpRXIeI4MXqmukhMqeIic/gbTAZ+TA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rc8mtHtwjuv2JseUfH9jvcIWsa+6Zc7qrYYP/oQDPztB8B7D3JJBByupOM03uZJ1JpdOB7LpOpdMRvcHBmZkg8exysA14FwHB1v3H3cFUbnvmCm19gKmHKS+QGwJWtrbcXRT16kyto3QketmyR+n0p5/YCOfPHRYaWgB9ifgEvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JtZzburk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EwQXO0sv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 609ENgs43142604
+	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 14:54:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=DbXG0aasXPGUnGXDYTML4NN/
+	NB/Ii+CH8gVFuOhg7CY=; b=JtZzburk3BD4wZ/ArRr7Vp+iFrllvjWgKHFWk7Bl
+	r3DA1PWYCuLWtTbMGYBFIbFvoiAxMhDcf1HsZe+Q2LEoSbhsWKzW0o9aSK4lQMSH
+	k7MZmR+k6LPDL79JawYXvQSyiZYLu++ojjqgutOnV/QsnCSLjJJCbn7Nuf18cbAe
+	8IQWJWZvTw8RcCpUyd0V/xxt8D7fA/lHqv1puUCveDk3rhTMgSeefVzrCmAc457R
+	ths9qcISzoI/gCS/s5B/chzG1hr1Z+aZHYt2VkoBv6DYBQwXya188zsnth/VUbKM
+	3neFEkLIvHsSMXi4fhFBR2Kkv2tjv6CPWwIg+cyBySfm4g==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjj8j30hu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 14:54:50 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8bc4493d315so1027835785a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 06:54:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767970489; x=1768575289; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DbXG0aasXPGUnGXDYTML4NN/NB/Ii+CH8gVFuOhg7CY=;
+        b=EwQXO0sv0PJp2q18A95EhN6ljKwaa+ANe8yEjRMnt5S7jjtBW7btSl90rt7g35VijN
+         YZ3j9pSI/t/PSWmxvPgaCuN51F9zqcZa11bzguOZD1jbfk8PIRWQSEjxTOqA8ZjhnnPq
+         MdD1mrzobIvt1d21JYEIT5HRKp0YpRGtHXdLpFbAEiP+3ObFbnlyruYNrbsj8UXhXyHO
+         79A7gzVA2GE06OKfdI1JUxvclQOSwRoDTb46UFWhA3f9D+7fj/q8iDYs2gFIk0jTSrkA
+         3HRcrqXpMnwdtZs0Kl/PM0b+JfMDiJiNGVi4aq3NhyPrJysRTQwmgOfLdhOvD/l4EscP
+         0feA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767970489; x=1768575289;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DbXG0aasXPGUnGXDYTML4NN/NB/Ii+CH8gVFuOhg7CY=;
+        b=jegwpsOp9wPE3tSUBvh32sY6SseH9R7RvP8a3lkJTa479z9UHL70xZflFp26GlGKeV
+         MGr5jITcpGGtXvryJp6Cf5LILAdDk1Vb3vvpHCkZ771fsiwu3/iWbrfCLOpIFgq5rrkR
+         63B4C0YDYjp7Ebl0qWNrz7H0pu5bSdwceQ9q6MzMQBh6VX/9HMeelusHVue9aoB6IL6T
+         TSeqtLCez2A2nQAq8S6Aju6Y6S61XHw/dHcDSjPUKNRGx7ohlwYPQvy11LiLAuEngSi7
+         kbgt5sOJfbNLcwwHk0/JVxif9TV10BBWwu7GNRGKpHUJyvsh1hoHGnK/SRS1GRBQsCMT
+         rCVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVP4Cyjq+zcAtmIFeFwfJfRz9oCHWyHVg5upIE2lXFJfZRlwr+AQdM1jibn9nIBAjs05pK3zatBML2sM+FR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5k6lT8VwRgp7u2yq08Cf4Do+lqtiWeNKL5r9o7nZ53mYB46zL
+	aJqLJPl/XXTxNpDs/WPj2uODESQ8G03nu3ktam7w6B7HgCEzyMzRkpt/ucc1JBH3rYaHpAVFPDe
+	qjH7Z783g9QinObOH72X5lRGyTMlZ5tLtubCBQwn3+A7XJvsNu5nUizRmgKo59Q9SksyM
+X-Gm-Gg: AY/fxX7q/QP3dC6erfzv8o5BLfKIO5GKoF3lk4y0wwsTiGEQWlgnJHZQSjDcXkl+SMs
+	3PpD64Drfkg3kMF3jIOg0w9q2QU+4i/8OQiZaOfdPFzn6mnym92fNoyj5rAfKft2FtvoK/UbD4L
+	Tpn3DbpsrDrDOXDD6qaeJeqIP5nINpSPNThZuLKUaysaLninx+k2W27yAcMw1G6BYyY0Zp6BAEh
+	5rahrmR+8C2qEgI0DR6IeAg3vBqLwnCh57nBTIDURSxB7BwQZ/hkwogC5rRLV6TVz13z6o43IUC
+	VQtgwY1reKQHNZkp0cxgFl+odk2laHMr3jjGqnEvFk+9CyYCAN62rYwgxNR/vaRXwooaCtzwZzl
+	xD8WXi7QbpXeIx/Bw2WCf+gBHcYLCYmLaMY8iOrwnJZH9bbt3f/2S7v/jUop7dtJDJtQcQK4Myf
+	YQBWVk+tVMZdZOI5odl+rzwq4=
+X-Received: by 2002:a05:620a:4053:b0:8b2:9d6a:fb28 with SMTP id af79cd13be357-8c3894165b9mr1102758485a.82.1767970489380;
+        Fri, 09 Jan 2026 06:54:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF6JIVifjuxZ5bV+Yldq4m6ba2GmCDPmvlSe6V5Yo+jKfZB3inIPMHeSvgssKve17SchnYfYw==
+X-Received: by 2002:a05:620a:4053:b0:8b2:9d6a:fb28 with SMTP id af79cd13be357-8c3894165b9mr1102755285a.82.1767970488869;
+        Fri, 09 Jan 2026 06:54:48 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382fa2c6711sm17860281fa.42.2026.01.09.06.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jan 2026 06:54:48 -0800 (PST)
+Date: Fri, 9 Jan 2026 16:54:46 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Nickolay Goppen <setotau@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
+        Richard Acayan <mailingradian@gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm630: Add LPASS LPI TLMM
+Message-ID: <mmxdlkfhrrucqfjaq7wtuwp3u37ukgcejwzxpy6omqfd6osght@hyy5dsnku3oa>
+References: <20260109-qcom-sdm660-lpass-lpi-dts-v1-1-d3eb84f10a39@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org> <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
- <DFK4Y3EOXTFL.1M25VAPJAS2BU@kernel.org>
-In-Reply-To: <DFK4Y3EOXTFL.1M25VAPJAS2BU@kernel.org>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 9 Jan 2026 15:50:53 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MeG9fPaq8M8ACq7_9+ysmYX+aRRzZVgApv5YMGtjx72Mw@mail.gmail.com>
-X-Gm-Features: AQt7F2p7IS6vaLQ0dmPwJ8037-3GQtwV1AnCbiyFDt_1RcT0ou-6dHscMRpm2ns
-Message-ID: <CAMRc=MeG9fPaq8M8ACq7_9+ysmYX+aRRzZVgApv5YMGtjx72Mw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
-To: Michael Walle <mwalle@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260109-qcom-sdm660-lpass-lpi-dts-v1-1-d3eb84f10a39@mainlining.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDExMSBTYWx0ZWRfX55UfA0VYqYpy
+ Qyf/UHrxyS/zI+6J4JyfIE++2idNh6nS1lpI8BoatrO/ovptDha5KDYxaq+6MeoZ+kcW46KnsPO
+ M1P8GhlO3Dexp4/T4ckLBOqCs+LCPm38UBAk4t5sf4rzLVaEdT8SeL/ACGBILqhuCMWc6a2a1za
+ QiYmLbXjiH4ErtP68mlxTVLY07lxuBUHgmW/B6vkIlfiXSrexEntDGNxIZ9VCyvWpRr0hJQLWoO
+ 6co8RKgRTPALf/MxkcZiFFZovbpGvQ3OSxeaovj3yK8DZE0FqEizDctRVOWwiJpiGMlpZEu4v17
+ BtMfbKXBS1mVnK4vT0t2NrG0gKrxMMF3ybN8Rah+0rkJW6I7RH49tuVkMuJiHi4rBjQEOEfsYn6
+ 2rsSypitf4NDbsMoF5iPzTMNM+UmdGu6ObTazTuKrkxTiABO9puKXyAMPViPH+gaoMaHBNm9XD9
+ 7ocKjGInNymx7a3Kgmg==
+X-Authority-Analysis: v=2.4 cv=JIs2csKb c=1 sm=1 tr=0 ts=696116ba cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=pGLkceISAAAA:8 a=OuZLqq7tAAAA:8 a=EUspDBNiAAAA:8 a=lg0203pJCZQmgAnDPmMA:9
+ a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=AKGiAy9iJ-JzxKVHQNES:22
+X-Proofpoint-GUID: 5Oxi4yAJtQIzIvP5VRYCAwFqPHoVzrWP
+X-Proofpoint-ORIG-GUID: 5Oxi4yAJtQIzIvP5VRYCAwFqPHoVzrWP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-09_04,2026-01-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601090111
 
-On Fri, Jan 9, 2026 at 3:41=E2=80=AFPM Michael Walle <mwalle@kernel.org> wr=
-ote:
->
-> > I am aware of the issue where
-> > false-positive shared GPIOs are detected, I posted a fix for that too.
-> > Without logs, I can't really tell if that's the case for you though.
-> > :(
->
-> What I mean is, GPIO_SHARED is automatically selected by ARCH_QCOM (and
-> probably others in the future). But GPIO_SHARED_PROXY is
-> selectable by the user and it can be deselected. But you cannot
-> specifically deactivate GPIO_SHARED. So there is no way to go back
-> to the former hacky shared gpio handling; which might be intended :)
->
-> If so, shouldn't be GPIO_SHARED_PROXY be either y or m if GPIO_SHARED=3Dy=
- ?
-> I.e. don't allow it to be deselected.
->
+On Fri, Jan 09, 2026 at 05:03:59PM +0300, Nickolay Goppen wrote:
+> From: Richard Acayan <mailingradian@gmail.com>
+> 
+> The LPASS LPI TLMM pin controller controls pins for use by the analog
+> and digital codecs, such as the PDM bus, the digital microphone pins,
+> and the compander pins. Add it to support the codecs.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Co-developed-by: Nickolay Goppen <setotau@mainlining.org>
+> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+> ---
+> This is a patch introducing support SDM660 LPASS LPI driver support in
+> the dts
+> ---
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 73 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 73 insertions(+)
+> 
 
-Fair point. I'll send a patch.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-> >>
-> >> This broke my board (using the arm64 defconfig, works without
-> >> GPIO_SHARED of course). I'm seeing two issues here with my board
-> >> (arch/arm64/boot/dts/ti/k3-am67a-kontron-sa67*):
-> >>
-> >>  (1) It's GPIO controller (gpio-davinci) doesn't support
-> >>      .get_direction so I'm getting ENOTSUPP during probing of the
-> >>      (some?) shared GPIOs.
-> >>
-> >
-> > Unless this board really shares GPIOs, it may be due to the
-> > false-positives that will be fixed by this patch[1]. If you enable
->
-> Yeah this board shares an enable GPIO for two regulators
-> (regulator-5 and regulator-6,
-> arch/arm64/boot/dts/ti/k3-am67a-kontron-sa67-base.dts).
->
-> > CONFIG_DEBUG_GPIO and post the kernel log, I'll be able to tell for
-> > sure.
->
-> See end of this mail. I've applied the mentioned patch.
->
 
-Yes, I see there are indeed shared pins.
-
-> > Though thanks for bringing this to my attention as I now see there is
-> > indeed an issue when the proxied chip doesn't support .get_direction()
-> > as well as a duplicated check in GPIO core. I'll fix it too.
-> >
-> >>  (2) GPIO_SHARED_PROXY is default m in the defconfig, but I need the
-> >>      pins for the root filesystem medium, i.e. the SD card regulators.
-> >>
-> >
-> > I'll take care of this is you confirm, the issue persists even with pat=
-ch[1].
->
-> Not sure this is still valid. Because I've just learned that
-> apparently, the arm64 Image shall be made smaller and thus "need
-> a driver for rootfs" isn't a valid reason for =3Dy anymore.
->
-
-Is a switch to disable shared GPIO management entirely via Kconfig
-(depending on CONFIG_EXPERT) good enough for you?
-
-Bart
+-- 
+With best wishes
+Dmitry
 
