@@ -1,133 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-88184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CE65D074D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 07:03:20 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3B4ED0766B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 07:36:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1348D3055DF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 06:02:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EFEEB300B9DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 06:36:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97E6B21257A;
-	Fri,  9 Jan 2026 06:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B15762DAFA8;
+	Fri,  9 Jan 2026 06:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BHHBBaP0"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Z3k8rymC";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="WkmcQYPp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F19519309C;
-	Fri,  9 Jan 2026 06:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A8B28850E;
+	Fri,  9 Jan 2026 06:36:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767938542; cv=none; b=AC2lQPzKIWPRxvEQtY35drc9I+UhCHQTkhJpItUOu5H5znF6sB97f8orH2DghLqyXckNw+JPBD66ysLabdECsSm01wdDjEH+Ut3yxQOn45kL9g8Dv6L8CQ31Bo6G14aDfqza4AMxWL6D/Ul/mUtYWLbjRn49qmPKZxJ+Fsn1+7g=
+	t=1767940580; cv=none; b=hXuYaAXNP7mwfa43SQg9MiAnk1X3hxmdQZ9sjYEimkty6VTSdftQPi3nmjssf/wc5HAdaRjinb+FOe5f2W0roW8OnktGFNCo7ZRUAIVQ4OCdZHCflFCMFMcccj19IvgoM1gooE5TVwM3z3rCpb7zH3TQsPGDi56u2iNSKWxalrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767938542; c=relaxed/simple;
-	bh=2ZwanXb3K+wdRbDyhjpQDRTpzVByn8xFIpP+xmyQH/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m2jJpBjIuQJ88YS5LZzrjuTaRG0u0AYKYC2CcFdo37TCld/dqDEfYlTmxFQlHTL37YgO+yL3/dya3lPqHn4egcDMIYH7CM2l0HVkWZf5MGapoVQKy1733QR1GgSE5ikclvIx1xEvXxMlzsvjerwfPORVj4huoXPYv5udt6iitUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BHHBBaP0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308DFC4CEF1;
-	Fri,  9 Jan 2026 06:02:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767938542;
-	bh=2ZwanXb3K+wdRbDyhjpQDRTpzVByn8xFIpP+xmyQH/0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BHHBBaP0kYweSLXa2JXymudu2N5nQC3K5M6mXHNXKBn9jwMvH/rEQZpI23pKI7TqZ
-	 F6nfATSP3l9vB5yYH3FarXk/C/s15MeuSoBxA+bFq06c29BcHIUHxUcJQjSjaVP+hl
-	 YD5UJVmkmV/k4V6OUsqtKv9DXIRpWhAQ2VV2q7iz1nM7MDvqFZnEqAMRuKYKhTiyug
-	 yc1xhsKG12JC0W2nInZHMd+FgcxTxbKQWT7IXI15AtNcysla4hcJ1QV59JYaHGJZeZ
-	 u2x0HVwb2vBWcH1o8PnsiXcP8GvZVdvEWCxTw7Jntu2upnUNFqGGO6pnolwIu4UAjf
-	 MjosRLVcWhtvg==
-Date: Fri, 9 Jan 2026 11:32:12 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-pm@vger.kernel.org, linux-ide@vger.kernel.org
-Subject: Re: [PATCH v5 5/5] power: sequencing: Add the Power Sequencing
- driver for the PCIe M.2 connectors
-Message-ID: <xd5uvfqcx3vcbcqerji556ejstmgvtci4chfzxclkzhizqmqxa@xusf2skt6xhh>
-References: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
- <20260107-pci-m2-v5-5-8173d8a72641@oss.qualcomm.com>
- <CAMRc=Md9TQiSX-gFa5q--JgaGyQ2ky4mOwjSpdxHhvHAj-X5Qw@mail.gmail.com>
+	s=arc-20240116; t=1767940580; c=relaxed/simple;
+	bh=k6nAvvx5UVSbHO88lKNTmQGUQoFtGy7kceT8JUpw8Go=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=ILf0ejMAdZBXFViN8jr9PYB08weYBeED6OkhUqn99V4yAc1Jy0b9XyKIdnRlTViHXJGahu6vNqxxNuMpAVy4m0mrPCuSdaY2NfgOFmwgqnOAtojhWxeZt4gTxYnmwrzwxytD8kAJfzZTZuKIo5hfNiR/u/ZxFjs3UmIWIqRqqBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Z3k8rymC; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=WkmcQYPp; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1767940563; bh=KFBoG2fcIxheggmVM+AQApJ
+	yuE3iDl57EzYZzdHaxmg=; b=Z3k8rymCyRPCCIoyqZxbsyayVvG6CGqsrcdjyQLcc/LKkxIegQ
+	vPOzZnySkZG2C00gULRdqZb+Lajp/acC0LJkGFAZ4DgeJBloaNsOSvyT5t+ABWqJnJgqHjwckm5
+	P7LIszibYJqye37DKObXGq1Ih+0lv+0AZ8y0OYYB8dw0ZqrI6tVphU5bB1KOazs9c/KcUDiAr1O
+	DEjiR0PDR2hxgpPzYlL9ufH9LmvCXuqJuDREMPOhJ5RhxFLX45QhCwNAsRnEaSOF132tdVmS4VO
+	cE2RxtWUpIWFUZZURRfPCXFMKg9PtUJhpEO692b3YqMiK4ikZ5/6eO3Bm/AZmDKH67Q==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1767940563; bh=KFBoG2fcIxheggmVM+AQApJ
+	yuE3iDl57EzYZzdHaxmg=; b=WkmcQYPppQ+K2wEGm8QDA4IprDuJbg1u8P1XyGaIOvv7OO0LBh
+	TEfwfdosBtVkxS8JSsxAZ/SmM2HhGojcn4BA==;
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Date: Fri, 09 Jan 2026 07:36:03 +0100
+From: barnabas.czeman@mainlining.org
+To: Daniel Thompson <danielt@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, Pavel
+ Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>, Kiran Gunda <quic_kgunda@quicinc.com>,
+ Helge Deller <deller@gmx.de>, Luca Weiss <luca@lucaweiss.eu>, Konrad Dybcio
+ <konradybcio@kernel.org>, Eugene Lepshy <fekz115@gmail.com>, Gianluca Boiano
+ <morf3089@gmail.com>, Alejandro Tafalla <atafalla@dnyon.com>,
+ dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Daniel Thompson
+ <daniel.thompson@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-fbdev@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/7] backlight: qcom-wled: Support ovp values for
+ PMI8994
+In-Reply-To: <aV-UyhP7wllSBpYj@aspen.lan>
+References: <20260108-pmi8950-wled-v2-0-8687f23147d7@mainlining.org>
+ <20260108-pmi8950-wled-v2-2-8687f23147d7@mainlining.org>
+ <aV-UyhP7wllSBpYj@aspen.lan>
+Message-ID: <67acbe8ff2496e18a99165d794a7bae8@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Md9TQiSX-gFa5q--JgaGyQ2ky4mOwjSpdxHhvHAj-X5Qw@mail.gmail.com>
 
-On Thu, Jan 08, 2026 at 01:15:12PM +0100, Bartosz Golaszewski wrote:
-> On Wed, Jan 7, 2026 at 3:11 PM Manivannan Sadhasivam via B4 Relay
-> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
-> >
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> >
-> > This driver is used to control the PCIe M.2 connectors of different
-> > Mechanical Keys attached to the host machines and supporting different
-> > interfaces like PCIe/SATA, USB/UART etc...
-> >
-> > Currently, this driver supports only the Mechanical Key M connectors with
-> > PCIe interface. The driver also only supports driving the mandatory 3.3v
-> > and optional 1.8v power supplies. The optional signals of the Key M
-> > connectors are not currently supported.
-> >
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On 2026-01-08 12:28, Daniel Thompson wrote:
+> On Thu, Jan 08, 2026 at 04:43:20AM +0100, Barnabás Czémán wrote:
+>> WLED4 found in PMI8994 supports different ovp values.
+>> 
+>> Fixes: 6fc632d3e3e0 ("video: backlight: qcom-wled: Add PMI8994 
+>> compatible")
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>>  drivers/video/backlight/qcom-wled.c | 41 
+>> +++++++++++++++++++++++++++++++++++--
+>>  1 file changed, 39 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/video/backlight/qcom-wled.c 
+>> b/drivers/video/backlight/qcom-wled.c
+>> index a63bb42c8f8b..5decbd39b789 100644
+>> --- a/drivers/video/backlight/qcom-wled.c
+>> +++ b/drivers/video/backlight/qcom-wled.c
+>> @@ -1244,6 +1244,15 @@ static const struct wled_var_cfg wled4_ovp_cfg 
+>> = {
+>>  	.size = ARRAY_SIZE(wled4_ovp_values),
+>>  };
+>> 
+>> +static const u32 pmi8994_wled_ovp_values[] = {
+>> +	31000, 29500, 19400, 17800,
+>> +};
+>> +
+>> +static const struct wled_var_cfg pmi8994_wled_ovp_cfg = {
+>> +	.values = pmi8994_wled_ovp_values,
+>> +	.size = ARRAY_SIZE(pmi8994_wled_ovp_values),
+>> +};
+>> +
 > 
-> This looks good to me, though there are some nits I may fix when applying.
+> Do these *have* to be named after one of the two PMICs that implement
+> this OVP range.
 > 
-> I'll pick it up for v7.0 once the bindings are reviewed.
+> Would something like wled4_alternative_ovp_values[] (and the same
+> throughout the patch) be more descriptive?
+I don't know. I don't like the PMIC naming either but at least it
+descriptive about wich PMIC is needing these values.
+I think PMIC naming would be fine if compatibles what representing the
+same configurations would be deprecated and used as a fallback 
+compatbile
+style.
+I mean we could kept the first added compatible for a configuration.
+Maybe they should be named diferently i don't know if WLEDs have 
+subversion.
 > 
-
-Ok. I'm expecting patch 1 to go through ATA tree, patch 2 through DT, and
-patches 3,4 through PCI tree.
-
-> > +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-> > @@ -0,0 +1,169 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > + */
-> > +
-> > +#include <linux/device.h>
-> > +#include <linux/mod_devicetable.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of.h>
-> > +#include <linux/of_graph.h>
-> > +#include <linux/of_platform.h>
 > 
-> It looks like this is a leftover from previous versions and you no
-> longer need it?
-> 
-
-Yeah.
-
-> > +
-> > +static void pwrseq_pcie_free_resources(void *data)
-> > +{
-> > +       struct pwrseq_pcie_m2_ctx *ctx = data;
-> > +
-> > +       regulator_bulk_free(ctx->num_vregs, ctx->regs);
-> > +}
-> 
-> I would call it pwrseq_pcie_m2_free_regulators() if you don't mind.
-> 
-
-Sure. I indeed missed '_m2'.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> Daniel.
 
