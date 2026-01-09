@@ -1,112 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-88298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D77CD0ACF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:10:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D06E2D0AD6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:18:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 029933067666
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:08:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A18133058453
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:14:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A964337689;
-	Fri,  9 Jan 2026 15:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8264F289811;
+	Fri,  9 Jan 2026 15:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rHPNztUN"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="AbwCjr0q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7FB320A1F;
-	Fri,  9 Jan 2026 15:08:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C1C12D21B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 15:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767971292; cv=none; b=jNiclR8J4T467FA6BGxWtueNpyq15fiE+cmOfl3a3KLzZhElq5q+moKWoCTaCHko3V9fy/l+vnG5+GvUXgLffMO+w3aZ+SV0NifaFWJ8EP3wbU/tOmHzpHPQwN5UK9PJTUCp49ue1fdtlqdQUNWNLznEg6GCfqTXnglJKLzE7Nw=
+	t=1767971684; cv=none; b=srRjL7rTe4fL5xwwnq7770XMp0aWOQH/Vq06baYTMFRK3xyRkwOhKHhRe34kz5JDEpJa2MM1IN5oJUn2ZzUODbZ8spZcAwNBZ81qApclJAKQvaJHy/FOJmpQMC+f/n6iwHSIeVPB/A9U6j9PueFHj6zB/JmUUcx9LYnH1fMRa+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767971292; c=relaxed/simple;
-	bh=+yYivR6m7de4bVDJo8K4370S1d12YvRa0ve7K/19OdA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=WdMbhCBKSAAkw2sJaI4/DSJqCT8uXcgrtlc+z/n7y8RYOIPL613Ckt1Kq1MC1BSrhL5mvUH85ghMd3g4W63yQLooXo/D0BqTLmxE4VxVAcMApHBCokzktvVNupR/kH5FtfFSdIqAz0cZ7HGyjwFS8IjimkJZCWCKQo7jF8k7bL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rHPNztUN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2E2C4CEF1;
-	Fri,  9 Jan 2026 15:08:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767971291;
-	bh=+yYivR6m7de4bVDJo8K4370S1d12YvRa0ve7K/19OdA=;
-	h=Date:Subject:Cc:From:To:References:In-Reply-To:From;
-	b=rHPNztUNBvwrgM0+tRT43MKzu+mXAx8v7Lt9DNa4Z11mWqsBgqYXFdOwknanHxt8h
-	 xbQ+zcfZOdDV9rRQ/PFWBjxLzN0goMyVYNufIck5vIT+c2JDzBmkf+jNrUZ2SD3exR
-	 t9xSQpiEvKToocxG/iOHoTui6oawpqrQ2FYY8kpkBjz4HJSn1dQMZWg/uWo2Ynwjv/
-	 5eNuHBce79tUeJlVpeV6tda5gFVTIiuKnxXKjsvF1ZOBaC6p2tH6C0otpMhovgdKz8
-	 ez547ye1cbQArVuQK+dby5qd0afLjaykn72q5lBEZsWA6RionYN6Y2FOjEEfZBm7RR
-	 DvoH40ihTouFw==
+	s=arc-20240116; t=1767971684; c=relaxed/simple;
+	bh=3wJw3C/+hh4NQMeHHX68eyDgMfZwVmWs26kYc8+dwvw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MWl+oVxG9VdzxFwf6Y3Rt7JhqJbcrJh5wp40KFzj8kHDLiRsbtuuHG6eCBKVqiBpovjezE6c91NeCO4HX38mK7dUaxo3unICyksFi+245xbtZ9A1NyDJ+jPEgdLdGpL+YtRuCHiU3dUQNgxCVWk9WiwB3iypm/lMwBD2BMCIuWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=AbwCjr0q; arc=none smtp.client-ip=209.85.208.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-64b921d9e67so7338596a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 07:14:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1767971681; x=1768576481; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vzsN76gbuzfMHxHnC7MWTahrr4LZDPF4d6JCQ9x6L60=;
+        b=AbwCjr0qE8snxBIpfYofa4Vf5XzgmPfMfSiqqfplMSsbzVXkubaCKs1Gow1xFhdHn1
+         qZ2kdmySTLVzjssMKSOVEgTS5BcC+Q14DwgHgx6j+6xswuB+vTne5SnAEM8EjaWbh3wi
+         Q8j9TWv7p0wL+IHkHo0GuiVKyYCK/lQIsv7Zcp60zKOaAJajL6kMzlHar90CnZN8lAqy
+         MqlUrfNUFpA41Z01KLStfxvumdRQMND1FfpIOufv8QpdIq8ZAQNcJwLz8s3MaAu24AFR
+         Nwe2IcfqPQUENn0kP6WwXvcj0CZeh2AoOri9lNmIq7aY95Jshfw5jvE17Xb50ljhFGFI
+         aIcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767971681; x=1768576481;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vzsN76gbuzfMHxHnC7MWTahrr4LZDPF4d6JCQ9x6L60=;
+        b=JAXxL5j7U82mW6YB/G+5wxR2UiPgYaioNFlmrDk1BRxCgeZn4WEV6g4peELspvN7jJ
+         KalpqgqFGbvsOCD70xEhrGyeao9BOydWMYaudLb9gt3EXiFihYexrh+6hz/CAQIMkGVa
+         KlUGpZNPEj75Rezb74Sz7mAKtElp1vj9SsXoM3zTCJ8jKdMaJAOCJUDOD2AdhjNtsgZr
+         xT6yqc3pdokJFCUhgAUOPlfFHyAXdE3z8hJ2NIw5kLj+VNJChZjYpBZtgzlvkDLgS3rp
+         nIa+IEQWhHIPhRdUo4JfLdHydvJ6BuvmqB1YDaDz6ZS6jEIGNhXH7BbXS9KpzlTE8YEm
+         3IkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUYHJB1aT93q9c6u1sflnsFzw2irNJmPRyaRvhY8ksmo0wJrHihPigEPyrqkaEbpUkwpTGxYSFjOsLy9crm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfGTJdjUMEfsadk8YNSmVDWfpwwb9D4OS8rqFAJctmtPGQxI6k
+	Qzo8H3S6P3sXNzo3UP4DfTyatR/V77ukQccUspa05Fq8Uj0s1mWTREzUhUBG8+3xEEg=
+X-Gm-Gg: AY/fxX7NYpaQCgygEcDMzL5h+VdcsnGR9wNcf+xdfazvjQBfyTrBQhPkbQAFj0icubY
+	s3AhlNitOxBIIxrB+JvHVZUALPw+KeK3Gwieo4OmfLrrTYmUQ2144hgfYm989EeOlHQP4Zw2QsU
+	HqF6nV8IoDL+ZQqGR+oFEeCfAkJllR5c2Rr+NanRaitCYZPoUHGXpnCshmXojU92qUe6402uzRR
+	c3wv+9pgSbDDevKAKp3k/INiH8xmW5wbzxNSNW62CZktEeMlLZfMoGefRemjOAxyCSNl26sijSy
+	TIyNXT4nNv6t1CtqIMR/xomjxrgnMOM0mRb6BYx+XK8mIB8Lzik/BBOYRPsxG2Eg7treWaniI2p
+	tRWVv3+090nG9XS4wXIYAAf7ueljavlaIzGgcJehZwItQJYmzYy2hr4tdR1vhuesmaUfinnHzbH
+	YPYTY6UnzQuFmSZWkvxVwklmh9dr0rVs6K1WbvahfPIFoqgby+WRF1vF1P94rXX8qZNQCxM/q8Z
+	Bk=
+X-Google-Smtp-Source: AGHT+IEWXRBm5Yt+mRPm4TDFGhALAHUKOfO9MZDpvsMN2Ad6i/iMOL07Iv/Bnx4RypeMPrSqbNgVFQ==
+X-Received: by 2002:a05:6402:35c4:b0:64c:584c:556c with SMTP id 4fb4d7f45d1cf-65097e733c9mr9290437a12.30.1767971681192;
+        Fri, 09 Jan 2026 07:14:41 -0800 (PST)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507b9d4c89sm10100742a12.10.2026.01.09.07.14.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jan 2026 07:14:40 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 09 Jan 2026 16:14:34 +0100
+Subject: [PATCH] arm64: dts: qcom: kodiak: Add missing clock votes for
+ lpass_tlmm
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=409e69e9e42622a8efaea00c6722208abb1f34df3b9e30332a381e829f3b;
- micalg=pgp-sha384; protocol="application/pgp-signature"
-Date: Fri, 09 Jan 2026 16:08:07 +0100
-Message-Id: <DFK5IKWIJYLM.2CCXMRAXS0LYI@kernel.org>
-Subject: Re: [PATCH v4 00/10] gpio: improve support for shared GPIOs
-Cc: "Kees Cook" <kees@kernel.org>, "Mika Westerberg" <westeri@kernel.org>,
- "Dmitry Torokhov" <dmitry.torokhov@gmail.com>, "Andrew Morton"
- <akpm@linux-foundation.org>, "Linus Walleij" <linus.walleij@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Saravana Kannan" <saravanak@google.com>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Andy Shevchenko"
- <andy@kernel.org>, "Catalin Marinas" <catalin.marinas@arm.com>, "Will
- Deacon" <will@kernel.org>, "Srinivas Kandagatla" <srini@kernel.org>, "Liam
- Girdwood" <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>,
- "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- "Alexey Klimov" <alexey.klimov@linaro.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>,
- <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>
-From: "Michael Walle" <mwalle@kernel.org>
-To: "Bartosz Golaszewski" <brgl@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <DFJAFK3DTBOZ.3G2P3A5IH34GF@kernel.org>
- <CAMRc=MeQ_zr047PxFFGhfZ43TuHoKG-9VLLefxVyScpO5ZxjzQ@mail.gmail.com>
- <DFK4Y3EOXTFL.1M25VAPJAS2BU@kernel.org>
- <CAMRc=MeG9fPaq8M8ACq7_9+ysmYX+aRRzZVgApv5YMGtjx72Mw@mail.gmail.com>
-In-Reply-To: <CAMRc=MeG9fPaq8M8ACq7_9+ysmYX+aRRzZVgApv5YMGtjx72Mw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260109-kodiak-lpass-tlmm-clocks-v1-1-746112687772@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAFkbYWkC/y2NQQqDMBBFrxJm3YEoVqlXKS7SZGwHTWIzsQji3
+ Rtql+/Df28HocQk0KsdEn1YOIYC1UWBfZnwJGRXGGpdt7rSN5yiYzPhvBgRzLP3aOdoJ8HOmaa
+ 9ukaTGaHcl0Qjbz/1fTg50XsthXyO8DBCaKP3nHsVaMv4r3QwHMcX4nQeZpsAAAA=
+X-Change-ID: 20260109-kodiak-lpass-tlmm-clocks-7da465d40eaf
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Bhushan Shah <bhushan.shah@machinesoul.in>, 
+ Bharadwaj Raju <bharadwaj.raju@machinesoul.in>, 
+ Alexandre Ferrieux <alexandre.ferrieux@orange.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1767971680; l=2691;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=3wJw3C/+hh4NQMeHHX68eyDgMfZwVmWs26kYc8+dwvw=;
+ b=6gzuUyvGJu+bIp9v+03BDrHW7vD+Umn5JYZov1W5Sz3HUmUSaapFRseeqLaQVkty++r4o7Dtq
+ 8VBN5MFKJosB6zBg+vm9c+6TMN+cN08Gp5qVYhmKRuQL80QCz5Ymvix
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
---409e69e9e42622a8efaea00c6722208abb1f34df3b9e30332a381e829f3b
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Without the correct clock votes set, we may be hitting a synchronous
+external abort error when touching the lpi registers.
 
->> Not sure this is still valid. Because I've just learned that
->> apparently, the arm64 Image shall be made smaller and thus "need
->> a driver for rootfs" isn't a valid reason for =3Dy anymore.
->>
->
-> Is a switch to disable shared GPIO management entirely via Kconfig
-> (depending on CONFIG_EXPERT) good enough for you?
+  Internal error: synchronous external abort: 0000000096000010 [#1]  SMP
+  <...>
+  Call trace:
+   lpi_gpio_read.isra.0+0x2c/0x58 (P)
+   pinmux_enable_setting+0x218/0x300
+   pinctrl_commit_state+0xb0/0x280
+   pinctrl_select_state+0x28/0x48
+   pinctrl_bind_pins+0x1f4/0x2a0
+   really_probe+0x64/0x3a8
 
-I don't really need that (as I'd also need a PMIC driver, which
-probably won't be accepted either as =3Dy), maybe other do. Not sure,
-up to you.
+Add the clocks to fix that.
 
--michael
+Platforms with this SoC using AudioReach won't be impacted due to
+qcs6490-audioreach.dtsi already setting clocks & clock-names for
+q6prmcc. The sc7280-chrome-common.dtsi has also been adjusted to keep
+the behavior the same as they also do not use Elite with q6afecc.
 
---409e69e9e42622a8efaea00c6722208abb1f34df3b9e30332a381e829f3b
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+This issue is somewhat of a race condition, with some kernel configs it
+cannot (easily) be triggered, with others relatively reliably but it
+seems also to be somewhat related to cold boot.
 
------BEGIN PGP SIGNATURE-----
+Also I can't pinpoint a good Fixes tag, lpass_tlmm was introduced before
+q6afecc got added for this SoC, and that worked fine for those boards it
+seems. It's just needed on boards with Elite audio architecture.
+---
+ arch/arm64/boot/dts/qcom/kodiak.dtsi               | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-iKgEABMJADAWIQTIVZIcOo5wfU/AngkSJzzuPgIf+AUCaWEZ1xIcbXdhbGxlQGtl
-cm5lbC5vcmcACgkQEic87j4CH/jb6QF/cKSDNHxnvueWH5aVmuyPcce5VtwNVM28
-ulztUB/LQdv1McH02EzbRVwRhh0VAP+PAX9TgaecNELyf37cr7SC2SmZQ15ZqBwR
-xXpQ0WmkfDXKsuE5DRyyGgZF13/qGopvROE=
-=If2G
------END PGP SIGNATURE-----
+diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+index 076069f14495..f478c5e1d2d5 100644
+--- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
++++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+@@ -2994,6 +2994,11 @@ lpass_tlmm: pinctrl@33c0000 {
+ 			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
+ 			reg = <0 0x033c0000 0x0 0x20000>,
+ 				<0 0x03550000 0x0 0x10000>;
++
++			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++			clock-names = "core", "audio";
++
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
+ 			gpio-ranges = <&lpass_tlmm 0 0 15>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+index 84c6d662b54f..617a39d32488 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+@@ -67,6 +67,11 @@ &lpass_hm {
+ 	status = "okay";
+ };
+ 
++&lpass_tlmm {
++	/delete-property/ clocks;
++	/delete-property/ clock-names;
++};
++
+ &lpasscc {
+ 	status = "okay";
+ };
 
---409e69e9e42622a8efaea00c6722208abb1f34df3b9e30332a381e829f3b--
+---
+base-commit: ef1c7b875741bef0ff37ae8ab8a9aaf407dc141c
+change-id: 20260109-kodiak-lpass-tlmm-clocks-7da465d40eaf
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
