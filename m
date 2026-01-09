@@ -1,109 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-88316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 123B4D0BB34
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 18:36:10 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1249FD0BC30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 18:55:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id D56D23000B5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 17:33:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D69093008894
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 17:50:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA58366DB7;
-	Fri,  9 Jan 2026 17:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A91927FB12;
+	Fri,  9 Jan 2026 17:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YTC+HK2q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvoQCd7/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4CC366DAA
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 17:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282DB54763;
+	Fri,  9 Jan 2026 17:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767980007; cv=none; b=ZoFQM51uFV525mMSuz9HMOLa0OTJjw2+vp908nTiDDnoFLzYGy0PsyMaTF4TXS9LT8yx6elmkwDZl7ABwfK7dkopAVF64BFfm7oz9RqnVUU+vmGJ4mOejFqzF5ZlF6QYLd2BTAgs/dfBxLDZFGFf2phUxrjkQVcnTQYQCyVhT50=
+	t=1767981050; cv=none; b=L45/LU5keJ03/100Aegof9AJRu/MLMcJ1CGe9fVT/s+OrY9HOMqbrPL+jnQJxUida6r/5YzmJ9Kre4ntk8Cg3eMxjY3JtTXt7+zHqTxxy5ruoORHkQ252905Eiso40rTho5eiK7lzDYk9KiPIH4TXH4y4oMeVuPfLQpGuHUomFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767980007; c=relaxed/simple;
-	bh=nXLy5W5e94zuvp1Zg7999BBbtgC+DgyZfKtir+OJFX0=;
+	s=arc-20240116; t=1767981050; c=relaxed/simple;
+	bh=8PhSao9uMJFk+J0HXROjvaNSIa0Lee+U2jcKlvVBRKE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fShbg4pFptmFlw7CHOv3C+YMFD25C6TL0Sv9X2jJCiJM4EYultPK/vSsMD/r5w9BhlPc9sGWpLvWEN4v/WP3E08gzETU/1TsprYM8sqfuur10gODMR3qK9jfNMu7YLxxYP8F0MLgtvZ/l2ENsfkc+QCdE73yaDFqzmgj7i/EhZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YTC+HK2q; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b728a43e410so805509066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 09:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1767980004; x=1768584804; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=In4E7Lb9VW0WC7y33ycYwwKdwNkFxrAqJLLZ+VhvaCQ=;
-        b=YTC+HK2qoni8QCrnlExhfJ/4wqhUU2pGYSZ5Etk8PX2mJLAqfZorCn4ANUl2nuEluM
-         i1AsJ973khk0G3HQz6z900Oqe6QUhK35jZSisAh/cVoW6xXheNAiaFpYFiWCFK6dNsgI
-         yNSNbs9WXszU4281b9Rz5BjP2Q2N4002YfUmoc1wzeRE42gqnq31QHrYQNU6DyW2qZlg
-         iSuAABIhBOs4o543g0Bms4LzCabBmVXYK3HiMsVVET2ZQKMe39wC9YxBXRnoqML0wwci
-         SZL/2cwOssZAk2umtNQLN8x8YCZtCD7+L5Zljg7/WSd67ntLJt+sIsPolyN49+fAg67Z
-         iWew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767980004; x=1768584804;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=In4E7Lb9VW0WC7y33ycYwwKdwNkFxrAqJLLZ+VhvaCQ=;
-        b=tdk5J4EeEaKd0QQBVv5lkxcmrqTyBY5Wx2ZjfX3GEffwiDEbq05gKeK1ErOc66lELS
-         Z6J8dPRRS2ocWU9c6NlFeAc4BM08fR2S46Cae/m74AGV0QeDQpdLfwWkG3OpcHAVSl9x
-         ZLjUNmaoIFnNNZwhx6OyWbEOLycSAvgaenGVK9P/6tHyMW3bibMgg6mJNJRHAIZXCk5Q
-         eaUXGbZ43hE8NH1BL7yCO3SpM0buQDId/ATOuGD4suO60Vinh5/vZEzFkeaKg7g8RHRP
-         WKrYcCXZY8O/TCm6UHoKXKl6M83BSBW/HLOLTPWBOi61yIJeJWHprcA5GQyiMVU9f+nl
-         F0aw==
-X-Forwarded-Encrypted: i=1; AJvYcCUM5L/bGbpvdIl8HtdBakJl1vkzs3Q2YfHzsh0P5Ekm2jKrdYcTQ1wOzF72PvytA3pEMg7vxrrwwrdT90Vr@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5bNjkqWqS4hsIqTz5jM+QYemdKNTsAK6jhTo67OSvQ+FgQCLh
-	3ybd21iDe6a6WE/9ZSIqD2oLqPnM43lW3iH51dcajuaR0pvfqiFsRHBuPmoPgyuqOLk=
-X-Gm-Gg: AY/fxX7GnGIxQvLRdJVsT8MWVEX6ujHzuH3h2beG0xQXiB6F90+55F03ENeyIqGz8zj
-	2r9QANg7hKCaf1M5pWdpMhoDEyzDic/iSPliFoRx5JfWTSG21QWF/eXSBbdBc4ao/a31tUmhO6t
-	VOhGfOPtd0kERamzLE4L6v1aLYX7OBFE/owybd8zEVi75jWJ3kX5zAkl4q8p31tQ+/bMHr5M8c7
-	epbEi3KquYYs4fB4qlS9q1zpwcrMmu4bkejYr1vr1TVyz/qUKRq/WQcUBGJT5wz6l7g80jiMdBp
-	Scp5r0ZD+13Dlbsq48N9vyxwapAdPolmEUdG+ui+K0c16pRTEBWPoDXoPkTV4ZvnzQEHl7lJ3xi
-	RzCvFgrvJdPdSWGIrxuXK/bxmLsJqO7otJ2QbUDxzhBZheGL6hZKpuTHFkHSzXaTlf8wV33zGGL
-	a4plsijqrIulFFJW4f
-X-Google-Smtp-Source: AGHT+IFufH9pLYfFOpesr9W4L4nrLY4vxaniIrFRt9iWfYXL4Lhfdv08BIs6/KNDkF0ZULaE58CdVA==
-X-Received: by 2002:a17:907:cd0e:b0:b7a:1bde:a01a with SMTP id a640c23a62f3a-b8445411cffmr1126366466b.62.1767980003837;
-        Fri, 09 Jan 2026 09:33:23 -0800 (PST)
-Received: from linaro.org ([77.64.146.193])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a511085sm1162275466b.46.2026.01.09.09.33.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 09:33:23 -0800 (PST)
-Date: Fri, 9 Jan 2026 18:33:18 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Shazad Hussain <quic_shazhuss@quicinc.com>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Abel Vesa <abelvesa@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Rajendra Nayak <quic_rjendra@quicinc.com>, stable@vger.kernel.org
-Subject: Re: [PATCH 0/7] clk: qcom: gcc: Do not turn off PCIe GDSCs during
- gdsc_disable()
-Message-ID: <aWE7wy4tyLsnEdXc@linaro.org>
-References: <20260102-pci_gdsc_fix-v1-0-b17ed3d175bc@oss.qualcomm.com>
- <a42f963f-a869-4789-a353-e574ba22eca8@oss.qualcomm.com>
- <edca97aa-429e-4a6b-95a0-2a6dfe510ef2@oss.qualcomm.com>
- <500313f1-51fd-450e-877e-e4626b7652bc@oss.qualcomm.com>
- <4d61e8b3-0d40-4b78-9f40-a68b05284a3d@oss.qualcomm.com>
- <e917e98a-4ff3-45b8-87a0-fe0d6823ac2e@oss.qualcomm.com>
- <2lpx7rsko24e45gexsv3jp4ntwwenag47vgproqljqeuk4j7iy@zgh6hrln4h4e>
- <aVuIsUR0pinI0Wp7@linaro.org>
- <jejrexm235dxondzjbk5ek46ilq2gbrrhoojfcghkcpclqvtks@yfsgrxueo5es>
+	 Content-Type:Content-Disposition:In-Reply-To; b=VonLsOEiLzdN1oFbY4UVc75nzFtqqjZDzhbXqfC7en7dVnFT6kJ7dvr92WRKfi7SH33GWhh9RxGqj77ZdE/0xERnD4gi3lORu+i6zkNj8HPJX84DqNYr88FqOxWh8YCJ1YqBh9GRjrqoJHAt7MZbj5fN9/ij0R+GrSRLPDhkQJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvoQCd7/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBBBC4CEF1;
+	Fri,  9 Jan 2026 17:50:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767981049;
+	bh=8PhSao9uMJFk+J0HXROjvaNSIa0Lee+U2jcKlvVBRKE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZvoQCd7/+Kz/IUkv1Uht6QGxxBYjZiChBkbaJK7rtKu2AsQ4WRe3WvtkJU2K7jQsm
+	 xPSk4BNt53pLK4MygnhqndH9UBv3C1xWACokq6K1wRXre9JQeeoBAglYK8Si5XlV72
+	 5fFiFFTzOkTFp78FL+VvdlDF9GD+kfdzP0vtOlrXt9HgmLBCJRDBCE6/pIQolv6D4l
+	 E8TOUua4r0e0Czw9RaHKNnaZBlUps9HzEBVD2FzcHqPj3p/MF4FdUwwVBkklb2ymWu
+	 /R8be/oqNhbd7P0209b9eaq5icvs/ZF1R/BwnHmju2hVzvm+JAtClqyZWJUKv6ryth
+	 tpniUEbJ8qBLg==
+Date: Fri, 9 Jan 2026 11:50:46 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/3] soc: qcom: ubwc: Get HBB from SMEM
+Message-ID: <cleh7dolqus3grexqfchtavvnj6wef6rlslgv3r7gesfuyxhs5@5b6z5gwtn36b>
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+ <20260108-topic-smem_dramc-v3-2-6b64df58a017@oss.qualcomm.com>
+ <you4xijwc5g4ngcnhxm4ecn7opexnsdfayvd5wiiqpl7734r7w@bdkpjqmlzxre>
+ <b2pqfrs2ptaoxxeanzumxyibmydsoiqslcsg6yrm4hihynowj4@mzazqnrptnyf>
+ <hunbpvbfkcxzbnwr676z6fncgdhfumjedx7jp5izojusg3rj7f@5te77lmqcdaa>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -112,154 +65,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <jejrexm235dxondzjbk5ek46ilq2gbrrhoojfcghkcpclqvtks@yfsgrxueo5es>
+In-Reply-To: <hunbpvbfkcxzbnwr676z6fncgdhfumjedx7jp5izojusg3rj7f@5te77lmqcdaa>
 
-On Fri, Jan 09, 2026 at 09:49:52AM -0600, Bjorn Andersson wrote:
-> On Mon, Jan 05, 2026 at 10:47:29AM +0100, Stephan Gerhold wrote:
-> > On Mon, Jan 05, 2026 at 10:44:39AM +0530, Manivannan Sadhasivam wrote:
-> > > On Fri, Jan 02, 2026 at 02:57:56PM +0100, Konrad Dybcio wrote:
-> > > > On 1/2/26 2:19 PM, Krishna Chaitanya Chundru wrote:
-> > > > > On 1/2/2026 5:09 PM, Konrad Dybcio wrote:
-> > > > >> On 1/2/26 12:36 PM, Krishna Chaitanya Chundru wrote:
-> > > > >>> On 1/2/2026 5:04 PM, Konrad Dybcio wrote:
-> > > > >>>> On 1/2/26 10:43 AM, Krishna Chaitanya Chundru wrote:
-> > > > >>>>> With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-> > > > >>>>> can happen during scenarios such as system suspend and breaks the resume
-> > > > >>>>> of PCIe controllers from suspend.
-> > > > >>>> Isn't turning the GDSCs off what we want though? At least during system
-> > > > >>>> suspend?
-> > > > >>> If we are keeping link in D3cold it makes sense, but currently we are not keeping in D3cold
-> > > > >>> so we don't expect them to get off.
-> > > > >> Since we seem to be tackling that in parallel, it seems to make sense
-> > > > >> that adding a mechanism to let the PCIe driver select "on" vs "ret" vs
-> > > > >> "off" could be useful for us
-> > > > > At least I am not aware of such API where we can tell genpd not to turn off gdsc
-> > > > > at runtime if we are keeping the device in D3cold state.
-> > > > > But anyway the PCIe gdsc supports Retention, in that case adding this flag here makes
-> > > > > more sense as it represents HW.
-> > > > > sm8450,sm8650 also had similar problem which are fixed by mani[1].
+On Fri, Jan 09, 2026 at 05:21:10AM +0200, Dmitry Baryshkov wrote:
+> On Thu, Jan 08, 2026 at 11:49:54AM -0600, Bjorn Andersson wrote:
+> > On Thu, Jan 08, 2026 at 04:45:49PM +0200, Dmitry Baryshkov wrote:
+> > > On Thu, Jan 08, 2026 at 03:21:51PM +0100, Konrad Dybcio wrote:
+> > > > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > > > > 
-> > > > Perhaps I should ask for a clarification - is retention superior to
-> > > > powering the GDSC off? Does it have any power costs?
+> > > > To make sure the correct settings for a given DRAM configuration get
+> > > > applied, attempt to retrieve that data from SMEM (which happens to be
+> > > > what the BSP kernel does, albeit with through convoluted means of the
+> > > > bootloader altering the DT with this data).
 > > > > 
+> > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > 
+> > > > ---
+> > > > I'm not sure about this approach - perhaps a global variable storing
+> > > > the selected config, which would then be non-const would be better?
 > > > 
-> > > In terms of power saving it is not superior, but that's not the only factor we
-> > > should consider here. If we keep GDSCs PWRSTS_OFF_ON, then the devices (PCIe)
-> > > need to be be in D3Cold. Sure we can change that using the new genpd API
-> > > dev_pm_genpd_rpm_always_on() dynamically, but I would prefer to avoid doing
-> > > that.
-> > > 
-> > > In my POV, GDSCs default state should be retention, so that the GDSCs will stay
-> > > ON if the rentention is not entered in hw and enter retention otherwise. This
-> > > requires no extra modification in the genpd client drivers. One more benefit is,
-> > > the hw can enter low power state even when the device is not in D3Cold state
-> > > i.e., during s2idle (provided we unvote other resources).
+> > > I'd prefer if const data was const, split HBB to a separate API.
 > > > 
 > > 
-> > What about PCIe instances that are completely unused? The boot firmware
-> > on X1E for example is notorious for powering on completely unused PCIe
-> > links and powering them down in some half-baked off state (the &pcie3
-> > instance, in particular). I'm not sure if the GDSC remains on, but if it
-> > does then the unused PD cleanup would also only put them in retention
-> > state. I can't think of a good reason to keep those on at all.
+> > I agree, but I'd prefer to avoid a separate API for it.
 > > 
-> 
-> Conceptually I agree, but do we have any data indicating that there's
-> practical benefit to this complication?
-> 
-
-No, I also suggested this only from the conceptual perspective. It would
-be interesting to test this, but unfortunately I don't have a suitable
-device for testing this anymore.
-
-> > The implementation of PWRSTS_RET_ON essentially makes the PD power_off()
-> > callback a no-op. Everything in Linux (sysfs, debugfs, ...) will tell
-> > you that the power domain has been shut down, but at the end it will
-> > remain fully powered until you manage to reach a retention state for the
-> > parent power domain. Due to other consumers, that will likely happen
-> > only if you reach VDDmin or some equivalent SoC-wide low-power state,
-> > something barely any (or none?) of the platforms supported upstream is
-> > capable of today.
+> > Instead I'd like to either return the struct by value (after updating
+> > the hbb), but we then loose the ability to return errors, or by changing
+> > the signature to:
 > > 
-> 
-> Yes, PWRSTS_RET_ON effectively means that Linux has "dropped its vote"
-> on the GDSC and its parents. But with the caveat that we assume when
-> going to ON again some state will have been retained.
-> 
-> > PWRSTS_RET_ON is actually pretty close to setting GENPD_FLAG_ALWAYS_ON,
-> > the only advantage of PWRSTS_RET_ON I can think of is that unused GDSCs
-> > remain off iff you are lucky enough that the boot firmware has not
-> > already turned them on.
+> > int qcom_ubwc_config_get_data(struct qcom_ubwc_cfg_data *data)
 > > 
+> > This costs us an additional 16 bytes in each client (as the pointer is
+> > replaced with the data), but I think it's a cleaner API.
 > 
-> Doesn't GENPD_FLAG_ALWAYS_ON imply that the parent will also be always
-> on?
+> What about:
+> 
+> const struct qcom_ubwc_cfg_data qcom_ubwc_config_get_data(u32 *hbb)
+> 
+> I really want to keep the data as const and, as important, use it as a
+> const pointer.
 > 
 
-It probably does, but isn't that exactly what you want? If the parent
-(or the GDSC itself) would actually *power off* (as in "pull the plug"),
-then you would still lose registers even if the GDSC remains on. The
-fact that PWRSTS_RET_ON works without keeping the parent on is probably
-just because the hardware keeps the parent domain always-on?
+I guess the question is what are you actually trying to achive; my goal
+was to keep the base data constant, but I'm guessing that you also want
+to retain the "const" classifier in the client's context struct (e.g.
+the "mdss" member in struct dpu_kms)
 
-> > IMHO, for GDSCs that support OFF state in the hardware, PWRSTS_RET_ON is
-> > a hack to workaround limitations in the consumer drivers. They should
-> > either save/restore registers and handle the power collapse or they
-> > should vote for the power domain to stay on. That way, sysfs/debugfs
-> > will show the real votes held by Linux and you won't be mislead when
-> > looking at those while trying to optimize power consumption.
+If we're returning the data by value, there's no way for you to mark
+it as "const" in the calling code's context object (as by definition you
+shouldn't be able to change the value after initializing the object).
+
+You also can't return the data by value and then track it by reference -
+as that value lives on the stack. This has the benefit of making the
+lifecycle of that object clear (it lives in each client) - but perhaps
+not a goal of ours... 
+
+How come the ubwc config is const but the hbb isn't?
+
+
+If we want both the per-target data to remain const and data in the
+client's context to be carrying the const qualifier, the one solution I
+can see is:
+
+const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
+{
+        const struct qcom_ubwc_cfg_data *data;
+        static struct qcom_ubwc_cfg_data cfg;
+        int hbb;
+
+        ...
+
+        data = of_machine_get_match_data(qcom_ubwc_configs);
+        ...
+
+        hbb = qcom_smem_dram_get_hbb();
+	...
+
+        cfg = *data;
+        cfg.highest_bank_bit = hbb;
+
+        return &cfg;
+}
+
+But we'd need to deal with the race in cfg assignment...
+
+Regards,
+Bjorn
+
 > > 
+> > Regards,
+> > Bjorn
 > 
-> No, it's not working around limitations in the consumer drivers.
-> 
-> It does work around a limitation in the API, in that the consumer
-> drivers can't indicate in which cases they would be willing to restore
-> and in which cases they would prefer retention. This is something the
-> downstream solution has had, but we don't have a sensible and generic
-> way to provide this.
-
-I might be missing something obvious, but mapping this to the existing
-pmdomain API feels pretty straightforward to me:
-
- - Power on/power off means "pull the plug", i.e. if you vote for a
-   pmdomain to power off you should expect that registers get lost.
-   That's exactly what will typically happen if the hardware actually
-   removes power completely from the power domain.
-
- - If you want to preserve registers (retention), you need to tell the
-   hardware to keep the pmdomain powered on at a minimum voltage
-   (= performance state). In fact, the PCIe GDSC already inherits
-   support for RPMH_REGULATOR_LEVEL_RETENTION from its parent domain.
-   (If RPMH_REGULATOR_LEVEL_RETENTION happens to be higher than the
-    rentention state we are talking about here you could also just vote
-    for 0 performance state...)
-
-With this, the only additional feature you need from the pmdomain API is
-to disable its sometimes inconvenient feature to automatically disable
-all pmdomains during system suspend (independent of the votes made by
-drivers). I believe this exists already in different forms. Back when
-I needed something like this for cpufreq on MSM8909, Ulf suggested using
-device_set_awake_path(), see commit d6048a19a710 ("cpufreq: qcom-nvmem:
-Preserve PM domain votes in system suspend"). I'm not entirely up to
-date what is the best way currently to do this, but letting a driver
-preserve its votes across system suspend feels like a common enough
-requirement that should be supported by the pmdomain API.
-
-> 
-> Keeping GDSCs in retention is a huge gain when it comes to the time it
-> takes to resume the system after being in low power. PCIe is a good
-> example of this, where the GDSC certainly support entering OFF, at the
-> cost of tearing link and all down.
-> 
-
-I don't doubt that. My point is that the PCIe driver should make that
-decision and not the (semi-)generic power domain driver that does not
-exactly know who (or if anyone) is going to consume its power domain.
-Especially because this decision is encoded in SoC-specific data and we
-had plenty of patches already changing PWRSTS_OFF_ON to PWRSTS_RET_ON
-due to suspend issues initially unnoticed on some SoCs (or vice-versa to
-save power).
-
-Thanks,
-Stephan
+> -- 
+> With best wishes
+> Dmitry
 
