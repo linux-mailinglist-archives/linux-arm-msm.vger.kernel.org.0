@@ -1,257 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-88300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BF50D0ADD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:23:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFDE1D0ADF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 16:24:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 15F48302A97D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:20:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 772F23007C62
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 15:21:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DB9A35C18C;
-	Fri,  9 Jan 2026 15:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D878D2E5B27;
+	Fri,  9 Jan 2026 15:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KxPoJCGM";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="d2c6yrYb"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="pLmOFvj4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7071D5141
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 15:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CA41D5141;
+	Fri,  9 Jan 2026 15:21:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767972032; cv=none; b=BSQQ66UdVXWEbkBzUehkaJwvjfZAfZ38LIRFGN/Bh8rivIq7QeS006mADRY7YFza9bpWDeoh+lxQBfFU9FYsdCFArOTFOE/nOYdtkP9v0EZyVy5pTlvvfZFH9aH/OF2DYxp1f9SPCwakKylpKjiHJw4+11TJ0lp3m9IDsaRZoP4=
+	t=1767972100; cv=none; b=IHd41JkICg4XNdulUkI3V/bnSWQiArRnEJ1joVWaI/HSgwvKYDIt8cSvcAH2bcm2/pz2/Md/nMZKjsbTUeRIFnnIkkO2xiTONj/7l/yeMdJNSAAV+zHfG6d8HYVsk+EXznLo2BF44oY808Znee0X9gzW3URQlerKWvFVbPPLpfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767972032; c=relaxed/simple;
-	bh=7OoT8ZPcTVUu34J0z/Lza2gdt2rcWcp79sDbJOJ8v5Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p3cEAgAwQh4Duy+htMhviJpUvROJhiCDBVrT9fJJnm4HU/2T2ptmdzoZNC4ofMkIKn6DRjGwYUlzsfEUbN6QNsui22l2S3XQKa8KhJ+Jpp9A2QQ7mwwYQSssCMwiMEOQUg6f8VXCtcCqRMtKRPOW6ApdUrquvWsTn5TE0t5ZhLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KxPoJCGM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=d2c6yrYb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60982XcQ2184008
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 15:20:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	49tXLgJm9KB8UQ6tr2ES8NVrNO8u4KMgkHOdrGNgtn0=; b=KxPoJCGMd2q3ygLU
-	Hq8LIjz4xl5PNqjiQ5vpUjELOg4YFU0Galj1+LDodqf1jmHCZyBHtpXc0zsWDQHq
-	AOnk6oLA6TWcPSkliboJhzvpqJqSi+P8fIRapAv3PpEVjUkuBLYM2bq2JSm3t3LX
-	mixYHafZqiZQmE5Xbph8rV1OkitED2NJGLwjSRoGw3DRMCWs56awEQYiRrtCVKoq
-	3/HUzuiYfRnUL8DUErBdscKxUBEwLSOGvYYuYLW2zURUcBqQ2Z9lcqOAPGwt7tp7
-	vlPzObkiYa/JfA4PDQb8kYaUu3rObLeJRAylvPJDpxR+xVuPrdMTiE61ynlbtaY7
-	hINskA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjwtn99at-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 15:20:29 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8b2dbd36752so1079118585a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 07:20:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767972028; x=1768576828; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=49tXLgJm9KB8UQ6tr2ES8NVrNO8u4KMgkHOdrGNgtn0=;
-        b=d2c6yrYbl0TgKmD+juhL6xH2wpnMe4+yaRi2WULjsyLp6MzWt10GiuuF4625FLjAFM
-         6FWNjO58HuMukqILSlqoEEYchadF+rLO9t/u4luZYEY5NJnxSY2/9iqVib6yVcGfla6P
-         gTeeZLdWO42XoFpgbrdben0QoK09OIusbcPTliaiM+DjJu2QFURXKjvo6fJFN9J229/b
-         PCDpZIr2az1Hw5uvhAMXofl1fPYOhhptc4NzNJpH9mO5JQi4s4tH2A5C1S6p2Lom1rAQ
-         teHUxEAdNRy7ZbFdceMzO0FIS69ZXxupEj2F7Sa5u5wEd5JDEiktk/uGhE4Egp+Bo79z
-         sMxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767972028; x=1768576828;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=49tXLgJm9KB8UQ6tr2ES8NVrNO8u4KMgkHOdrGNgtn0=;
-        b=Tl1ggwGpmXdVLnA3nZzvaEyikaIacAVr8m4az1QJBshVrnQfErHqVKoLmKuxebk0+y
-         UtHv2v2X8wS0PvXm3LJo+KF6AZNwSPhmV2FfdBtgQpLelXE3mk3KoOr+pJ9oqKYAwki3
-         qon9hN7sy0BurG2CKJ2H5TeNYWLs+gLXxwkcIooVJ52aGw4xjXtpV9WLrq9vEkRHeJeX
-         Pu6VXYXXejOj8vcXmkZDx5G1QduVzwaJuuohzJIpJmEkvU44plEtjSUVPvjdtI+f7k/o
-         yofwy6EndiTEzXcvXolHOqbyKVcyhH5jgvxleZ/PMF0RUCwRkk6GHFSw2NWSq+f+7ENa
-         kFaw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWztFpd78JX67QdZeEhCWKTWJ0nI0QqwJsYQBKaOY7XU3ucEVqG64i5IFOvCfwgebB27/XkJ/ooA/rgko5@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWB8/SH+geiDlffvvFB2Brf94pE5gGq6r+urlcLHM7jSE9WjMy
-	n15MvcgHOFzPCgXPM+C6Olk4K3jHcsTvtJntzkJSAWsF5n04fhNQZ2VEuZQW8l31IyvEK3CWNLl
-	15jSP+4hClEwI9hwwQmtbdKMcmsfnbXFbhGB+jOh7JvIHVxo3jbiK3Xg1HdpLarUW9ovQ
-X-Gm-Gg: AY/fxX7iJge+JAWjJ+ckw9QS5j+8ggkuvu/QtdJxCizR9kMah8nea46d0cbT9mOObbt
-	xRUXbEk4bBRzVCFLGW456DzJdWOdw2v9IlzzF5O4GcFw6Gzn1Qc6OgmRRPpf/fuAQRVlgR7LK53
-	6leJ+K37J7atnprcVC96BDCpr7fUw2dyC+Mjmbremt2emeEwiWI0D4/vHCDi5L4Kd4Wm5UIXstt
-	eHgqJigC2Y0DGH3c7Wz0GCh6ZmU99K9vd4iftF0QTrKk5yIKtMzubuV4W+iKpaz72wiZ+lzRIy+
-	7NMcp+ziENH8uXyOVZzPVLLemL6sJl/xazrLxKA5VTmdiz8ep5qNZH8fSvGWbQIjghEXkxwN64G
-	2muUKKpCKURGv8W4xRL50IIq8Pz5eu0PxwIqalg==
-X-Received: by 2002:a05:620a:191b:b0:8b2:e8a0:f4e with SMTP id af79cd13be357-8c389411a4emr1096205085a.77.1767972028251;
-        Fri, 09 Jan 2026 07:20:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE4T7EpPkz3EWkla3fr6+RN+eZME331kblvXjFVWSsrchwbSfgu8tBxJVnkAZJ/PMc9qkoTFg==
-X-Received: by 2002:a05:620a:191b:b0:8b2:e8a0:f4e with SMTP id af79cd13be357-8c389411a4emr1096199885a.77.1767972027621;
-        Fri, 09 Jan 2026 07:20:27 -0800 (PST)
-Received: from [192.168.1.29] ([178.197.218.229])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f6ef885sm209365935e9.9.2026.01.09.07.20.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jan 2026 07:20:27 -0800 (PST)
-Message-ID: <955e5ed7-6469-4f17-9e8c-3ee06f5dc3bc@oss.qualcomm.com>
-Date: Fri, 9 Jan 2026 16:20:25 +0100
+	s=arc-20240116; t=1767972100; c=relaxed/simple;
+	bh=1HD2uASmbhaMMGcoL/glMXY7M5i07XbjtXTfQdajags=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Hdt9twtoLw7kuJllwPXi2T9vTubuelNwkBifJZqWQDCgcNvuppTnl4QsUuduOkAa7jmUbBSY3j2cLuTMkmYQUJZNU4H+89uYC3YlWFwgQAhpCl/ynm4vbywxpNbODSzs2XEEQSQNIgqUlzJ+boyqiwdWfNNheHUrwdbtHM4qB+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=pLmOFvj4; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1767972097;
+	bh=1HD2uASmbhaMMGcoL/glMXY7M5i07XbjtXTfQdajags=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=pLmOFvj44qe5XO8yMEZaEjIDm1h9TgNz0s4keeg+1TfMw7JwSc9VB6tz2bnXaJJf1
+	 7awx1rXcbYy3GmomCCqk2Bz5WhneGYV+LnufGH68DZ1xs3whw/uUEYyDCpZR8HLoqB
+	 c35FnUuRgVaLhdeCPel4RRtt0HduiH9+7jQXWgAe2l5pgbSMeq5Ie1rN9wytEedpn2
+	 LXIP78UqfdCpYGHDbj1oKoYSGJMo9+8VNDABqFHchrKxqsu0kNNpyqe3hRe32ZhY/h
+	 P2AKsbNa9Ph/av6DGYry6bJ/eJpnFjuYg03TgAZpPw0wL0mdUrhhBGjsk0d+eV6szY
+	 bwCrsU3cOIq2w==
+Received: from [IPv6:2606:6d00:17:7b4b::c41] (unknown [IPv6:2606:6d00:17:7b4b::c41])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nicolas)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3556517E13F9;
+	Fri,  9 Jan 2026 16:21:36 +0100 (CET)
+Message-ID: <6f94050e55358483cf99429c587f86ee8334b498.camel@collabora.com>
+Subject: Re: [PATCH v10 0/5] Enable support for AV1 stateful decoder
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+To: Val Packett <val@packett.cool>, Deepa Guthyappa Madivalara	
+ <deepa.madivalara@oss.qualcomm.com>, Bryan O'Donoghue <bod@kernel.org>, 
+ Mauro Carvalho Chehab	 <mchehab@kernel.org>, Vikash Garodia
+ <vikash.garodia@oss.qualcomm.com>,  Dikshita Agarwal
+ <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>,  Hans Verkuil <hverkuil+cisco@kernel.org>
+Date: Fri, 09 Jan 2026 10:21:33 -0500
+In-Reply-To: <bc0aa47d-81a9-480b-b156-b0cb23179515@packett.cool>
+References: <20251210-av1d_stateful_v3-v10-0-cf4379a3dcff@oss.qualcomm.com>
+	 <DjKkpb96k7gGFmmmqsmLvO6sKcd02WwZq67n9hY4c75sajI_hENGebzfUBW3Xs3WGJ_oXdeYkNcV-T7UkXO6Xw==@protonmail.internalid>
+	 <ae5531fa-a3a4-4fc5-8580-3a790bec4961@packett.cool>
+	 <de8fe895-79ae-4540-9879-64d6f8f9e239@kernel.org>
+	 <f86a904e-110e-448f-96e0-22bc6b3e4b38@packett.cool>
+	 <a8af1513-fda6-4809-80ae-bb07d2ed0db3@oss.qualcomm.com>
+	 <bc0aa47d-81a9-480b-b156-b0cb23179515@packett.cool>
+Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
+ cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
+ CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
+ abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
+ nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
+ AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
+ smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
+ AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
+ iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
+ ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
+ bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
+Organization: Collabora Canada
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-UUXliWYOFX6Sh2a1bQi4"
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] bus: stm32_firewall: Use scoped allocation to
- simplify cleanup
-To: Gatien CHEVALLIER <gatien.chevallier@foss.st.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-References: <20260105143657.383621-4-krzysztof.kozlowski@oss.qualcomm.com>
- <20260105143657.383621-6-krzysztof.kozlowski@oss.qualcomm.com>
- <fe8bdea9-4bd2-4200-8b7c-3c231dc6dcb2@foss.st.com>
- <ccebe9a6-34e7-4699-a4ff-1ee925f9c150@oss.qualcomm.com>
- <cd8fc344-37a0-4281-b3c0-29514b97f5f3@foss.st.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@oss.qualcomm.com; keydata=
- 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
- cwzYbmi/Et7T2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <cd8fc344-37a0-4281-b3c0-29514b97f5f3@foss.st.com>
-Content-Type: text/plain; charset=UTF-8
+
+
+--=-UUXliWYOFX6Sh2a1bQi4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Val,
+
+Le jeudi 08 janvier 2026 =C3=A0 16:25 -0300, Val Packett a =C3=A9crit=C2=A0=
+:
+>=20
+> On 1/2/26 3:59 PM, Deepa Guthyappa Madivalara wrote:
+> >=20
+> > On 1/2/2026 3:01 AM, Val Packett wrote:
+> > >=20
+> > > On 1/2/26 7:44 AM, Bryan O'Donoghue wrote:
+> > > > On 02/01/2026 10:43, Val Packett wrote:
+> > > > >=20
+> > > > > On 12/10/25 3:59 PM, Deepa Guthyappa Madivalara wrote:
+> > > > > > Hi all,
+> > > > > >=20
+> > > > > > This patch series adds initial support for the AV1 stateful dec=
+oder
+> > > > > > codecs in iris decoder. Also it adds support for AV1 stateful
+> > > > > > decoder
+> > > > > > in V4l2. The objective of this work is to extend the Iris decod=
+er's
+> > > > > > capabilities to handle AV1 format codec streams, including nece=
+ssary
+> > > > > > format handling and buffer management.
+> > > > >=20
+> > > > > This is awesome, thanks!
+> > > > >=20
+> > > > > I've tested it with rpi-ffmpeg as well, and it works great (only
+> > > > > required one interesting logic change..
+> > > > > https://github.com/jc-kynesim/rpi-ffmpeg/pull/108) \o/
+>=20
+>=20
+> BTW, the rpi-ffmpeg maintainer is asking,
+>=20
+> > for that flag_last code to trigger we have to have received an empty=
+=20
+> > capture buffer, which is the legacy method of signalling EOS, so=20
+> > flag_last is a legitimate response. Is there something about AV1=20
+> > stateful that means it is legitimate to receive empty capture buffers=
+=20
+> > mid stream? (grain & no-grain buffers spring to mind with an empty=20
+> > frame if grain isn't enabled but that is pure speculation on my part=
+=20
+> > not supported by the documentation I've read). Now I'll grant that if=
+=20
+> > we get an EOS signalled this way we probably shouldn't attempt to=20
+> > dequeue an event, but the "correct" answer of simply signalling EOS=20
+> > back down the chain isn't what you want either?
+>=20
+> (`flag_last` being an internal variable for an end-of-stream condition,=
+=20
+> so basically, I needed to make ffmpeg *not* interpret an empty capture=
+=20
+> buffer as an end-of-stream. I never saw those with H264/H265/VP9, but=20
+> with AV1 one arrives after the first frame)
+
+Just a shot in the dark here, but in the discussion about the definition of=
+ the
+formats, we discussed about the lack of signalling of decode-only frames. B=
+ut
+for this codec, decode-only frames are wrapped with one display frame into =
+Time
+Units. So you should not hit that case if you submit TU. I'm wondering if t=
+his
+empty frame isn't an effect of passing OBU Frames one by one (rather then
+passing the complete TU). Can you confirm what is FFMPEG behaviour on this
+regard ?
+
+If that is correct, I think it raised back what we should do to signal deco=
+de
+only buffers. Due to the legacy EOS flow (which I guess ffmpeg have support=
+ed
+since day one), its not possible to just send an empty capture buffer. But =
+at
+the same time, not marking "done" any buffers makes userspace book keeping
+difficult.
+
+Not best, but currently, the only way push an empty buffer is by sending th=
+at
+buffer with BUF_LAST flag (in which its pretty much the same as the old way=
+, but
+with an explicit flag) or empty buffer with an ERROR flag, which was always
+allowed. The second could confuse a bit the application into thinking there=
+ was
+some corruption, but with a payload of 0, it clearly means the buffer is
+unusable for display, but allows for book keeping (using the timestamp cook=
+ie).
+
+hopefully any of that can help,
+Nicolas
+
+--=-UUXliWYOFX6Sh2a1bQi4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: SB9IvFwRn2QXLq0KgztyZnHcdj5mdPev
-X-Proofpoint-ORIG-GUID: SB9IvFwRn2QXLq0KgztyZnHcdj5mdPev
-X-Authority-Analysis: v=2.4 cv=Uohu9uwB c=1 sm=1 tr=0 ts=69611cbd cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=i0EeH86SAAAA:8 a=EUspDBNiAAAA:8
- a=xCSfWrHGVKLGKJWD7hwA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDExNCBTYWx0ZWRfX4/Hx70kiLK3E
- HK5ii/e5x2PP+hW4BzQVQumvjqWrsG81SPot3pVo7ki+W93cO3IuumVRFSQCw4o5nFORbjnwsbV
- PUJsVAQJI1WG0eQirrL80gv+ZIG5HluivYgJYt7Ixox3M7meUKuaFLy1g8TidGxeSnFjeG6iESs
- e21z+vyPdXrWXG9WxAnRECemUY6MKMAQC04axmuMxPrapseFQQFzo3GAIymJz5PR7SFuTmgbG4p
- 4zR+XxsmnkhYoihJ9H87bItPE8pvPizTo7qCY0twGtzLP0uZASUYn/otE+kXVlU0XLHLaQ726/7
- gDHolPyfCV2VSxLNYatQbr3HJLSA90a4Pt9bNZP/zbg4In+drGl73KwN0E2F3fBnuRF2x8yBQ/h
- S1Zifvekj0XiiBSNsDbO/QyH0uIpancAtQ9J263PTC7I5ZbwzNCMjoMv9NbpO6HwreLVC2KuR6/
- 0+uapM6cV4YBAyHkguQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_04,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090114
 
-On 09/01/2026 13:34, Gatien CHEVALLIER wrote:
-> 
-> 
-> On 1/9/26 12:55, Krzysztof Kozlowski wrote:
->> On 09/01/2026 11:37, Gatien CHEVALLIER wrote:
->>> On 1/5/26 15:37, Krzysztof Kozlowski wrote:
->>>> Allocate the memory with scoped/cleanup.h to reduce error handling and
->>>> make the code a bit simpler.
->>>>
->>>> Suggested-by: Jonathan Cameron <jonathan.cameron@huawei.com>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->>>>
->>>> ---
->>>>
->>>> Changes in v2:
->>>> 1. New patch
->>>> ---
->>>>    drivers/bus/stm32_firewall.c | 10 +++-------
->>>>    1 file changed, 3 insertions(+), 7 deletions(-)
->>>>
->>>> diff --git a/drivers/bus/stm32_firewall.c b/drivers/bus/stm32_firewall.c
->>>> index fae881cea9a0..92414a4c7bb1 100644
->>>> --- a/drivers/bus/stm32_firewall.c
->>>> +++ b/drivers/bus/stm32_firewall.c
->>>> @@ -240,7 +240,6 @@ EXPORT_SYMBOL_GPL(stm32_firewall_controller_unregister);
->>>>    
->>>>    int stm32_firewall_populate_bus(struct stm32_firewall_controller *firewall_controller)
->>>>    {
->>>> -	struct stm32_firewall *firewalls;
->>>>    	struct device *parent;
->>>>    	unsigned int i;
->>>>    	int len;
->>>> @@ -257,15 +256,14 @@ int stm32_firewall_populate_bus(struct stm32_firewall_controller *firewall_contr
->>>>    		if (len <= 0)
->>>>    			return -EINVAL;
->>>>    
->>>> -		firewalls = kcalloc(len, sizeof(*firewalls), GFP_KERNEL);
->>>> +		struct stm32_firewall *firewalls __free(kfree) =
->>>> +			kcalloc(len, sizeof(*firewalls), GFP_KERNEL);
->>>
->>> Hello,
->>>
->>> I'd prefer to keep declarations separated.
->>
->> Separated how? This is the coding style of cleanup (which is quite
->> explicit around other styles)? Or you meant one line without wrapping?
->>
-> 
-> I found odd to declare and assign a variable mid-loop but I found
-> multiple occurrences of the same kind of cleanup.
-> 
-> You can drop my comment, I'm fine with how it is. Thanks for the
-> cleanup.
-> 
+-----BEGIN PGP SIGNATURE-----
 
-Sure, just to let you know - it is fair to reject cleanup.h entirely for
-code you maintain (like netdev did). I only disagree with sort of
-semi-cleanup.h without following its declaration and initialization
-rules, because it is more error-prone, leads to bugs and often does not
-make the code easier to read/simpler.
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaWEc/gAKCRDZQZRRKWBy
+9N0TAQCOkJbz1JJ5gFWvyqaWuldaIPwAaysgmljrjYk98iu8MAEA1GRGBWiNSa8R
+OxSSs/FsnWcU/dgXIGSK7jc7PP5pEgE=
+=sZLp
+-----END PGP SIGNATURE-----
 
-Best regards,
-Krzysztof
+--=-UUXliWYOFX6Sh2a1bQi4--
 
