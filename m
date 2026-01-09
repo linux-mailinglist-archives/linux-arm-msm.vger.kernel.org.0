@@ -1,103 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-88200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D495D07A29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 08:44:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 833AAD07A41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 08:46:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 32320301F9E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 07:43:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 56AF5308F152
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 07:43:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 327C32F6921;
-	Fri,  9 Jan 2026 07:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 337652FD66B;
+	Fri,  9 Jan 2026 07:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eVbTxaD2";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e3/fTVMS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CYaCs9mI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jcWBDZLE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF4C2F39DE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 07:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0702FC893
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 07:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767944589; cv=none; b=d9uf/tz26ppB2XkNNy4UBNzKmextrFXLaHNEpQkHJGnn3Xq5ZpySYiUaxyBn/Al7PF75HBI2EVEAE/dKo6ZvsTZXvgHgEdL31ddW7OkYmep9QfINJMaxDC4QjsXEOKJiph9WwCDaQHHDkJq08UD5oy4iJGoG3OML/BpOTLN8uxM=
+	t=1767944592; cv=none; b=MK8ZIF5u8UNbmadIO9bp1PSRFcSPA+K5ZtkJd8OLDCzXrJFs6lmEpZdy65d8lCloAoAjavaiSjZbyPewwDc9FnKsEDhjG9Qaj75I3qcC6uN64gIFzA2zQWVHFpUFLjA0IcKMZ0upjck+degx4wRCaiMe6GbimL3cP1VluNnW2Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767944589; c=relaxed/simple;
-	bh=PYS22VIwFP0s6+Vo8X1pkqgPgtluf+W9+be/fX023ao=;
+	s=arc-20240116; t=1767944592; c=relaxed/simple;
+	bh=aRmyC1rbJb3ivyJ7IFPZ7zWbBdyiu4TYmPBr8U9HwJE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IVnvnARsjwa4J9e4R6B0vBeppq1B8fC318XBKhJnpjo2wDmokIb+4TZNz5dxJSN+4Yu9JkI8n5PJXZ0L5CyLJBOobfuqmbdC0FWRUs2eek56Jm31xrErD8celyQl8GdrosGVO3dYRlPZcEiPGQziEEQRjpc80S2Z7+kP7GJz8iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eVbTxaD2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e3/fTVMS; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=M6shrUb2MXpgcCeN9wJWvdqfeWUd8uB071PVmIYdAuIXvpu9KafhbjDa/owM2gMw2vEKD+RdIi8uQM7v7L//2QcYjOSqF4usmxEWF+j1X3UdS1xIclkXaumP6/gKBamhQvEE8QRt3Tp+xbR0GNsaTxFel5GxrZlzIysRJ06kGsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CYaCs9mI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jcWBDZLE; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60974OMJ3017189
-	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 07:43:06 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 608MpEoZ3629109
+	for <linux-arm-msm@vger.kernel.org>; Fri, 9 Jan 2026 07:43:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CJ+6NY3RlmXBdxBX+tLnOKNxo2p9RX/rTmakOVflSqo=; b=eVbTxaD28AyJoVT5
-	YXrXES8inlHk4Nool6hKjAaGqz8YaQX8DeHps+CaZ6gja/6FEaTEYieWTeQ0+OeU
-	mLcm2+rXu1OsCIlJErAPUreMNpJBordZrBTOEA8Pc/mM+zTjCHb12zd1K/6d/yR1
-	GBw0CEdEqEHJfiNx6oYDFuMsI6ET/kcNpxW9No6YJ+DFIXqga+G2E5Xu95QlEuBS
-	hvxQH5e9s1JSnjPmJiAXJtVj38nnDnOKhg/aM2QuR1kHTd/OOT71vI6qYECfzF68
-	7pSQo5YkMc+mY5R2iOOJKcyXfJ7pvwYulLG559Fj4tIkw17Dr5JVi/w1tuoY0It7
-	mll6fg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjfejtf8p-1
+	7V538McHgW6Ox+rkQHRMSlJA0iMCmPeJqU27mizyjJw=; b=CYaCs9mISMgNd8cf
+	Go2E76pChJSqt9fH0aM8bszveyLCH2y9KQ6XnF4L2wIFCdQmMjXlK58j2mzvHZ8F
+	2t5f+7ESFFIeuGGRR4CS1SUqPuAFn9JVNsUkCS4352V1S8inTm5YjbCcNEgdoXcR
+	K2qGLJHGveSI6wxF+XjjY/oTFUSEaEzKFEHxJ6vcQC8b6pmxQPjRAvB67P9slMMU
+	SkQ5P9sNPMOCfNuL9qyKjwF7S6DWMjthjT4XI/jLYOQQ+mV6VQl6stDKxDTkmyys
+	17KLOAAtV2lr8jfIkmwYvLV0GmM0/AL2a44F6UFBS6kJCdyZeAqpC8xeO7cuyA9l
+	J0jeyw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bjj8j1sbk-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 07:43:06 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-29f8e6a5de4so44020815ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 23:43:06 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jan 2026 07:43:08 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-29f13989cd3so92616465ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jan 2026 23:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767944585; x=1768549385; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1767944588; x=1768549388; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CJ+6NY3RlmXBdxBX+tLnOKNxo2p9RX/rTmakOVflSqo=;
-        b=e3/fTVMSMd19Vpm9CuRcDehCSQCcM2yyUAQABo7e5kMM0o6lUkSLLrK0QrAThTl8mL
-         3i6LHA2PTx86foC34vQC8q2aYgmJbx23KBWHIOSPS4O2fQAX5hkjSO/s70hcF5lPNtnN
-         DTUl3Z+DCGk3CVBTAT+jKHYKc3/ogkCg5CdMtDENZAym86PCmz+V3n5sT9n7Uqtw2KbA
-         KBYlC3RZFtMMWTzKlZsHfAkIRFEZ+kHivQBAD/cqdUtdgQWuop3hVm0/5KxOSErAfTsx
-         USNjWKbY70EGRNm8zSPwtQKy/11XN54EgMa8YHSX85Palc/tvHO+X7suuaL01+TqVsyY
-         8iqA==
+        bh=7V538McHgW6Ox+rkQHRMSlJA0iMCmPeJqU27mizyjJw=;
+        b=jcWBDZLEcfb0LgmzthOyN+soj/uFHicx1DU8B90QB9OqUcx2WL/f1C5pCTzzhUdreZ
+         3gqQ6cnEtHJ/o9x2nIreoiDnQ03Ow6Y1VW1EUuvwyjyI/34GFzBZOzIjcyw5OJXXxJRS
+         oerxXhB9WBEUFrcqdOIwzlh6+IU7Xq6DUPBSe7bYxkGYoD7xeaHU7Pg6vEOAH67PQh4N
+         P3EBh3OOLPSLXh1ra7bD8DT7CV8RKNwjI4slEUd4RRgct+iGgCy7UKSpgpsIEg8V+Rnu
+         Bo1U0OLttUYrPnQucb4tezzlK7annEKbQSjXTNy/B0/6Vprk26/erp93tuh85ob87jtL
+         SNtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767944585; x=1768549385;
+        d=1e100.net; s=20230601; t=1767944588; x=1768549388;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=CJ+6NY3RlmXBdxBX+tLnOKNxo2p9RX/rTmakOVflSqo=;
-        b=G8JJx2HnqfB+gGTdcXZvFy/iLWbXMx87sualvp28sJSHtdo+UUfko4jyumbwyZby4h
-         Ig99gEwVXod/bOencSEiGz0gzIjTigXB9H6FFlobLP9wKyWklKpGgR9xB9boyvOqLVhP
-         AdnJzV9hp9IgGMSM4il8DZX17z+YPJgwq5YDAs5GZpTc9RNP9ttQAazDlMlmFouFzyje
-         gz6KvL2i5M1bWAiJEKgNQra6EkBUG/LHjuPd5uQ186aLbmMCjPBO5+m5bhdS8G9j/ggJ
-         X0LwSd1PfXlQ8/js8Yo467yyvneynAheGViOMM23vVZ2zrlSexV0zk0aZemHoCuvTX9e
-         MAsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWSx/XP78eDapro7+twwB9Lr2hZOWz2OvwHtwUL+9clkC7Xz8xbZCT/5acXYcsGOYKtePsnm52IzAs6tsLw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7pJq7Lew9GyAgXv81ui+tUJvgONsAQP4pAy6D+2r+iSCfB6wr
-	8N32ZwlieJaO97eu/76BsCkGXENIgcmnhqjCtPIHdXJWer4m/sJEfur96V5A3ZlgVdPTZFcQgBs
-	jQNxmKxGzknce3v1ygdl9R+nHfVnBYNhisUYnNRqzkqqsfpOWoRHoeQUfGpzFAEQr8n5NczhMSr
-	hw
-X-Gm-Gg: AY/fxX7Y8nL5Jj/gf/+4qlPEdEkx8j2VaP6iZgLbWs11X2Hq7jSFskN3zgp5/4Z4Rhw
-	oA3uP9MqDTN8yY0W6jqkpIhoe78cV2cNexRZ1GvohAurOSfRz8eUuxJ88DbqRWl64F1ov7A68I+
-	JkDsIw53BKGAm7b5YyUB94aQX3asIVVc+BbLiUJfgMRnOyXjyGp1g7na4BuDUBnsepbZ5Wpzpes
-	ca+R0H+DGy349aykvRmN+snixV8kSsCTvYViSVUtRkVPeNoOrfyfbb+961c/8RU/3snqFl56BMN
-	8/QjB2u5GQW7/Beb3VNRIEADyBzwHe0qnKrbw0b6WWuc3he4jqfrukJMfzAyXg1ZXSzNT7URQ3i
-	D6MzYYT0Z8/SKUpS53sAkDP5p6hiKhQZ/oyrzBQI3CXRiqa1hBuUFXR/4GJ68J7ls0X5BIstnvS
-	eowIxRPVpX
-X-Received: by 2002:a17:903:124e:b0:2a1:3cd8:d2dc with SMTP id d9443c01a7336-2a3ee4b74a9mr95306265ad.57.1767944584768;
-        Thu, 08 Jan 2026 23:43:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH68sxvQo8solxnM9LzIgq/rjUF9Q0s0Bwiqk+QtoISxH1TbxQ3cUbFrotg+m3ggMukytQGRQ==
-X-Received: by 2002:a17:903:124e:b0:2a1:3cd8:d2dc with SMTP id d9443c01a7336-2a3ee4b74a9mr95305925ad.57.1767944584233;
-        Thu, 08 Jan 2026 23:43:04 -0800 (PST)
+        bh=7V538McHgW6Ox+rkQHRMSlJA0iMCmPeJqU27mizyjJw=;
+        b=tOj0DA6iFhLXLDS4aZaLCCwIsN90OnSM+kzfStXQDlTFPyV9ZZMcvQUEbO4v8BMvgM
+         iKrt4gAu8YYPtA7Ym4nnxctcnQIKiveo+sMjyyfZpB/n8cCocJy4iAJVZsHoxJMInfjM
+         c94Ae8dAKTnBnBP2wtKrW/XGYLSZ5Al8qX4s2RN8fPQJ8JkDY1XgjIwlX1cl0axS0uau
+         j6YNVRrI1dttVh40Rr4DLLlR0cF7nYA7s6H575TgjbFRCcibqhvcE0Tgwt+6UcxCXaX2
+         /jrHHDQv4TwbrTUa8hcNHSC8xXCcEo5aYbmWo9NWXcDjngaeAB2wXCeirN8sOwuBqKmt
+         AT4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXtT5O8XYoGmoP9fV4PM/rft6SP+iZFONrE3DqKRTjlKJuYBo1ZL6q0h/Nsib5h7WEK2VmkBYf5g3AZaa78@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJqF1HuoPMm9Sev/hvzc17lvKz6GUglU3W3tELge7+vK6iUOdy
+	/4Vgld5jqmHP92uPbCU/FjVlUIbYOD1iEZZSeAyvYl3Fu1TW3b27Ye/u6ckVxnAjLg0vtkkskun
+	cjVmn3g1kOP+Q4927Brwa4PezC0YbMwL6VC02ZocD8xXq3iSqndk6Yeb1Hpv+v2gJaRM8
+X-Gm-Gg: AY/fxX56LlQU+9SnXOWrIjxzCMHQhPIaKYfgWLL3EYqMDaXjXdlQLXu3TI0cQIdG8mb
+	kTWY/J8XHOmgE+/lxzU2Mw2VrLdEChMkkwwPDwSRxC/nj+gDWdvg4G086j6q3JntCBCmvOtzVjR
+	ko8/RgYPexgbXq3UEWVX4W/GW1aTVjl9k34b7rpLPoqwDYHE/doGp0UKWDRjcv6pvKfKeQKs0nW
+	31K6tGFXBoF+pnRoouFrVeCiDldw4XfWo3GGZ39hmoAK9u/IuOdsAOzuumfcD0M3TH3eNIWQATO
+	/WN8WwXjph3jafIxmvcmdN4D/Vn+n32H0TEQ2/wy4L+hUu6Wng4MminvZqevb+02TR2RKP6lTgp
+	tZMTv442ZLNi3QmbOw0+eL1QjiGnw+ibLOHjInDofznEK+a74HQP5My62RpVnhs0o309EFgeYxK
+	VO+JW2QWzv
+X-Received: by 2002:a17:902:f64c:b0:299:e031:16d with SMTP id d9443c01a7336-2a3ee484c7amr97653725ad.33.1767944587998;
+        Thu, 08 Jan 2026 23:43:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHUA4MlT//uRZGo70UHxB6XnfEGbvccHswqpCVh7gnz2+rlhpaUi1q13wNykWcTXI9PVTajtg==
+X-Received: by 2002:a17:902:f64c:b0:299:e031:16d with SMTP id d9443c01a7336-2a3ee484c7amr97653545ad.33.1767944587555;
+        Thu, 08 Jan 2026 23:43:07 -0800 (PST)
 Received: from WANGAOW-LAB01.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd46a9sm98638195ad.93.2026.01.08.23.43.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd46a9sm98638195ad.93.2026.01.08.23.43.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 23:43:03 -0800 (PST)
+        Thu, 08 Jan 2026 23:43:07 -0800 (PST)
 From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Date: Fri, 09 Jan 2026 15:42:34 +0800
-Subject: [PATCH v3 5/6] media: qcom: iris: Optimize
- iris_hfi_gen1_packet_session_set_property
+Date: Fri, 09 Jan 2026 15:42:35 +0800
+Subject: [PATCH v3 6/6] media: qcom: iris: Simplify COMV size calculation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260109-batch2_iris_encoder_enhancements-v3-5-196855ef32ba@oss.qualcomm.com>
+Message-Id: <20260109-batch2_iris_encoder_enhancements-v3-6-196855ef32ba@oss.qualcomm.com>
 References: <20260109-batch2_iris_encoder_enhancements-v3-0-196855ef32ba@oss.qualcomm.com>
 In-Reply-To: <20260109-batch2_iris_encoder_enhancements-v3-0-196855ef32ba@oss.qualcomm.com>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
@@ -119,274 +117,71 @@ Cc: quic_qiweil@quicinc.com, Renjiang Han <renjiang.han@oss.qualcomm.com>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767944563; l=9365;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1767944563; l=1433;
  i=wangao.wang@oss.qualcomm.com; s=20251021; h=from:subject:message-id;
- bh=PYS22VIwFP0s6+Vo8X1pkqgPgtluf+W9+be/fX023ao=;
- b=ZqV+ZL3OD1oEcJJnNtwSctx2EpwNbyylzAqEVHqaTnzJmA28FqYxnTeVL0cQV4Ig/XIARmajP
- 66KICkTsstACOrikniyU85Ko9Sd3gNUNzHFx2/FLCjDx6GFR5ZCcHWU
+ bh=aRmyC1rbJb3ivyJ7IFPZ7zWbBdyiu4TYmPBr8U9HwJE=;
+ b=L3MT/3AEEYdndqC+mVdhAVnYhtOMBQTi6Ul81rPU1LzFOG9WNsoXsss0tm1tfOio0VHN07W9e
+ pqCJiQR3meGDqrkYYFP8EcAqQKaU/6FFePyiV03Sh3TzgvWKEnbSjmd
 X-Developer-Key: i=wangao.wang@oss.qualcomm.com; a=ed25519;
  pk=bUPgYblBUAsoPyGfssbNR7ZXUSGF8v1VF4FJzSO6/aA=
-X-Proofpoint-ORIG-GUID: UHO3PVLyspSGZZOMNmiA2TyHMIgUSv6N
-X-Proofpoint-GUID: UHO3PVLyspSGZZOMNmiA2TyHMIgUSv6N
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA1MyBTYWx0ZWRfX30NnSZe4bxlx
- D9jJsJQiJ9XBYf3mljl5txNS9dt/ryPLPuu/YGc95ac21hoT8lv86p+2jIg9t2+Jb/th68NnvlJ
- BULyKM4lLJa+YySokP07jSDPDpjY+TMiQ8imiGrLxU2K/l2BwVt/ovkPKGmUEjvkRu3NZrenTSn
- 7mnz0o1Cy3kyAh4SMadNOnKRvxUrh4AcxvjcfrSjZ2GOd1pC47xRAyHHsSuI7uGeKW6J+XBhmN5
- Ry2J8LdmvhYaLMSjajC785S/o9sDPL6frGhOiTqZ6uRE2vkQddkizyuG9JrosuN2DYVHifPKv9N
- CoHf8AAR21koJD5sozPpQcUeS3Bw+0ZD3HCGRpknOSAIMj1QBhhRY6u6o5lpKVLzBPxIO+uulnK
- KaD8/EnbGT8fgbUX5dDhQuB5nlXengbQfp1O0Qd++L2SPKIiW4BKaDHM5grO/ag0dHX7ZJhEzV2
- WpEBhqL094nL8FBMSAQ==
-X-Authority-Analysis: v=2.4 cv=ZfAQ98VA c=1 sm=1 tr=0 ts=6960b18a cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDA1MyBTYWx0ZWRfX+Z7F1oiTFDxj
+ fJbWqmW4uJjIaBD6/F5n5SqodmmqmGkTZlCY10sXi6w6GUf73dqbOu9gz6xYYHw3JDXs8414+47
+ c6D9rShMAgMCqTvs2CRTK+IpwE+KS3robFPKUfk24GSWW21VfauR6NER0GO0q7kizeOSOiH1jj5
+ PKZfTyeb/lmiPz9kNxzbqw64sO0gXRaY3mwQbDWFwqWc+ro3vjErOmjcyrktEP69NqUgYRfbqz6
+ 7mBQHlTvXMZmd9a4AchdL2EiKZmuUvWAPtl8Shm+PqVQu07IsLLxwdY+TH7uAOsUftvZ4U7+oq+
+ 5J3gRq2z+HuSqAHm1AjHAKrksTwvqXh+xmKW8UCLuy+I+3fBFF54sTzomX7p10Pb5JYTcIjoXuU
+ UYJtkMP8P7NcX5MRzFh4P8oBdGI2niVfG8hwuWlA5NgdPuhtbH9JVJWirlz5/E4K38EE7LkAyn7
+ dnKPhb4to0IT4ywUEZQ==
+X-Authority-Analysis: v=2.4 cv=JIs2csKb c=1 sm=1 tr=0 ts=6960b18c cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=7zm3FxsWSslHyZ29AF8A:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=ihyF2tqwNky6lgPlo9sA:9
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: gzcdSJtmgNWTwawkF9hs6sWcBlmVlNZg
+X-Proofpoint-ORIG-GUID: gzcdSJtmgNWTwawkF9hs6sWcBlmVlNZg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-09_02,2026-01-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- adultscore=0 suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090053
+ malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601090053
 
-Modify iris_hfi_gen1_packet_session_set_property to simplify size
-calculations and remove redundant code patterns.
-
-Previously, packet->shdr.hdr.size was incremented by sizeof(u32) in
-every switch case, resulting in repetitive and less maintainable
-logic.
+Unify AVC/HEVC handling by computing codec and lcu_size upfront.
 
 Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 ---
- .../platform/qcom/iris/iris_hfi_gen1_command.c     | 50 +++++++++++-----------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-index 5d7d7856b35f4175225256c2aed619527aa5f2e8..08c99f9455cd6cee3244d3ca1334d478e31e1a26 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -483,7 +483,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- {
- 	void *prop_data = &packet->data[1];
+diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+index c962042518fceb0f82a48956df01c8f3cd26df99..621d5c6b4940e146f117e6b206421127c7cf9656 100644
+--- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+@@ -739,16 +739,13 @@ static u32 iris_vpu_enc_comv_size(struct iris_inst *inst)
+ 	u32 height = iris_vpu_enc_get_bitstream_height(inst);
+ 	u32 width = iris_vpu_enc_get_bitstream_width(inst);
+ 	u32 num_recon = hfi_buffer_get_recon_count(inst);
+-	u32 lcu_size = 16;
++	u32 codec, lcu_size;
  
--	packet->shdr.hdr.size = sizeof(*packet);
-+	packet->shdr.hdr.size = sizeof(*packet) + sizeof(ptype);
- 	packet->shdr.hdr.pkt_type = HFI_CMD_SESSION_SET_PROPERTY;
- 	packet->shdr.session_id = inst->session_id;
- 	packet->num_properties = 1;
-@@ -496,14 +496,14 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		fsize->buffer_type = in->buffer_type;
- 		fsize->height = in->height;
- 		fsize->width = in->width;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*fsize);
-+		packet->shdr.hdr.size += sizeof(*fsize);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE: {
- 		struct hfi_videocores_usage_type *in = pdata, *cu = prop_data;
+-	if (inst->codec == V4L2_PIX_FMT_HEVC) {
+-		lcu_size = 32;
+-		return hfi_buffer_comv_enc(width, height, lcu_size,
+-					   num_recon + 1, HFI_CODEC_ENCODE_HEVC);
+-	}
++	codec = (inst->codec == V4L2_PIX_FMT_HEVC) ?
++		HFI_CODEC_ENCODE_HEVC : HFI_CODEC_ENCODE_AVC;
++	lcu_size = (inst->codec == V4L2_PIX_FMT_HEVC) ? 32 : 16;
  
- 		cu->video_core_enable_mask = in->video_core_enable_mask;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
-+		packet->shdr.hdr.size += sizeof(*cu);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT: {
-@@ -512,7 +512,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+-	return hfi_buffer_comv_enc(width, height, lcu_size,
+-				   num_recon + 1, HFI_CODEC_ENCODE_AVC);
++	return hfi_buffer_comv_enc(width, height, lcu_size, num_recon + 1, codec);
+ }
  
- 		hfi->buffer_type = in->buffer_type;
- 		hfi->format = in->format;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*hfi);
-+		packet->shdr.hdr.size += sizeof(*hfi);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO: {
-@@ -531,7 +531,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 			info->plane_format[1].buffer_alignment = 256;
- 		}
- 
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*info);
-+		packet->shdr.hdr.size += sizeof(*info);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL: {
-@@ -541,7 +541,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		count->type = in->type;
- 		count->count_actual = in->count_actual;
- 		count->count_min_host = in->count_min_host;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*count);
-+		packet->shdr.hdr.size += sizeof(*count);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM: {
-@@ -550,7 +550,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		multi->buffer_type = in->buffer_type;
- 		multi->enable = in->enable;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*multi);
-+		packet->shdr.hdr.size += sizeof(*multi);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL: {
-@@ -558,7 +558,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		sz->size = in->size;
- 		sz->type = in->type;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*sz);
-+		packet->shdr.hdr.size += sizeof(*sz);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_WORK_ROUTE: {
-@@ -566,7 +566,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		u32 *in = pdata;
- 
- 		wr->video_work_route = *in;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*wr);
-+		packet->shdr.hdr.size += sizeof(*wr);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_WORK_MODE: {
-@@ -574,7 +574,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		u32 *in = pdata;
- 
- 		wm->video_work_mode = *in;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*wm);
-+		packet->shdr.hdr.size += sizeof(*wm);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_PROFILE_LEVEL_CURRENT: {
-@@ -590,7 +590,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 			/* Level not supported, falling back to 1 */
- 			pl->level = 1;
- 
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*pl);
-+		packet->shdr.hdr.size += sizeof(*pl);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER: {
-@@ -598,7 +598,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		u32 *in = pdata;
- 
- 		en->enable = *in;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*en);
-+		packet->shdr.hdr.size += sizeof(*en);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE: {
-@@ -606,7 +606,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		brate->bitrate = in->bitrate;
- 		brate->layer_id = in->layer_id;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*brate);
-+		packet->shdr.hdr.size += sizeof(*brate);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
-@@ -625,7 +625,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		}
- 
- 		packet->data[1] = *in;
--		packet->shdr.hdr.size += sizeof(u32) * 2;
-+		packet->shdr.hdr.size += sizeof(u32);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_H264_ENTROPY_CONTROL: {
-@@ -635,7 +635,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		entropy->entropy_mode = *in;
- 		if (entropy->entropy_mode == HFI_H264_ENTROPY_CABAC)
- 			entropy->cabac_model = HFI_H264_CABAC_MODEL_0;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*entropy);
-+		packet->shdr.hdr.size += sizeof(*entropy);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_SESSION_QP_RANGE_V2: {
-@@ -660,7 +660,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 			((max_qp & 0xFF) << 16);
- 		range->min_qp.enable = 7;
- 		range->max_qp.enable = 7;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*range);
-+		packet->shdr.hdr.size += sizeof(*range);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_FRAME_RATE: {
-@@ -669,7 +669,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		frate->buffer_type = in->buffer_type;
- 		frate->framerate = in->framerate;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*frate);
-+		packet->shdr.hdr.size += sizeof(*frate);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
-@@ -681,7 +681,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		plane_actual_info->plane_format[0] = in->plane_format[0];
- 		if (in->num_planes > 1)
- 			plane_actual_info->plane_format[1] = in->plane_format[1];
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*plane_actual_info);
-+		packet->shdr.hdr.size += sizeof(*plane_actual_info);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH: {
-@@ -689,7 +689,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		intra_refresh->mode = in->mode;
- 		intra_refresh->mbs = in->mbs;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_refresh);
-+		packet->shdr.hdr.size += sizeof(*intra_refresh);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_LTRMODE: {
-@@ -698,7 +698,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		ltr_mode->mode = in->mode;
- 		ltr_mode->count = in->count;
- 		ltr_mode->trust_mode = in->trust_mode;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mode);
-+		packet->shdr.hdr.size += sizeof(*ltr_mode);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_USELTRFRAME: {
-@@ -707,14 +707,14 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		ltr_use->frames = in->frames;
- 		ltr_use->ref_ltr = in->ref_ltr;
- 		ltr_use->use_constrnt = in->use_constrnt;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_use);
-+		packet->shdr.hdr.size += sizeof(*ltr_use);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME: {
- 		struct hfi_ltr_mark *in = pdata, *ltr_mark = prop_data;
- 
- 		ltr_mark->mark_frame = in->mark_frame;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mark);
-+		packet->shdr.hdr.size += sizeof(*ltr_mark);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD: {
-@@ -722,21 +722,21 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 
- 		intra_period->pframes = in->pframes;
- 		intra_period->bframes = in->bframes;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_period);
-+		packet->shdr.hdr.size += sizeof(*intra_period);
- 		break;
- 	}
- 	case HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER: {
- 		u32 *in = pdata;
- 
- 		packet->data[1] = *in;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
-+		packet->shdr.hdr.size += sizeof(u32);
- 		break;
- 	}
- 	case HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER: {
- 		u32 *in = pdata;
- 
- 		packet->data[1] = *in;
--		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
-+		packet->shdr.hdr.size += sizeof(u32);
- 		break;
- 	}
- 	default:
+ static inline
 
 -- 
 2.43.0
