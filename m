@@ -1,169 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-88225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A7BD07FE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 09:54:42 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DF78D080B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 09 Jan 2026 10:02:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 73C7330390E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 08:53:07 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DD77F30089B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jan 2026 09:02:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30206352FAD;
-	Fri,  9 Jan 2026 08:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 642BF32827A;
+	Fri,  9 Jan 2026 09:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEnrO90e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD73C352C3B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jan 2026 08:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18A619D8AC;
+	Fri,  9 Jan 2026 09:02:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767948785; cv=none; b=lVpIHVESqt8A2rNrjjFGHi3cluCsoYXU/U8RCYUbrvyZJToYpqUjK9kgK47TaizE00cCtfMretQjD4KuOioZe3pb6wtygQpGIU5ozimrMJ2ahcM/gK99+s6XZuc4+pmESCPAzM64Y+ZLk4mcVNRxSU+/CQJYN67CLDfdjMHzff0=
+	t=1767949337; cv=none; b=QHsicN31C2f1C4mhzNkpLPiP/2bFDGjo1XJ5LiDkL7rVU4dMp3C8tKayW/f0jSMygSRy5YFZ0kXxLWOZrI5ZA+qW5duvXvFzx17OFNgB8LxsIvKvEzLG8jXdqZc5KISgYAMje8v8Ieby015dIaMPPjf89czSnBvYYHoifsIdOM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767948785; c=relaxed/simple;
-	bh=NcAAHBKuL1paDyvekQySUgExGDiJDCMW4nBD4aU5ftA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ctQ/Lpsq3cdskxPFyS05ts4vkCg0ZpW6WjA9JdhmmnWnugXPZi9GuPRYo+eKEdLQ5BdDhZjSYROO066IimuM+7kMB9ZAk7k+h+JOI42GSUzdfNIMo4GRW1Lz/ArzcoNz4NQhWTuijtD5NA4YoHrT7Ge6mTP3uyWj4MJo98f2vR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1ve8Ec-0000dg-1f; Fri, 09 Jan 2026 09:52:42 +0100
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1ve8Eb-009ogy-0l;
-	Fri, 09 Jan 2026 09:52:41 +0100
-Received: from pengutronix.de (unknown [IPv6:2a03:2260:2009::])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 482464C9645;
-	Fri, 09 Jan 2026 08:52:40 +0000 (UTC)
-Date: Fri, 9 Jan 2026 09:52:39 +0100
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Cc: mani@kernel.org, thomas.kopp@microchip.com, mailhol@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, linux-can@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, mukesh.savaliya@oss.qualcomm.com, 
-	anup.kulkarni@oss.qualcomm.com
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-Message-ID: <20260109-agile-bear-of-fascination-cc4680-mkl@pengutronix.de>
-References: <20260108125200.2803112-1-viken.dadhaniya@oss.qualcomm.com>
- <20260108125200.2803112-3-viken.dadhaniya@oss.qualcomm.com>
+	s=arc-20240116; t=1767949337; c=relaxed/simple;
+	bh=Xg6PsXa8GhzoKCwVHsdcHep1mSyOFfXyx28YBPInsTU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NF3e8P/wr4uyX1O7aTeOQR5Y+LkGAT4V7FoafkRsosHDKk4qr454eD9uD556zAt5nv69sqoA0htr47buZNbk0hItbg3S+cnxPOf+TjHkZCvk1jv34BaVPa5duX5Z+dzaf1bsROhvdxIHp+0FyG4QwrJzn68reNzlzy8L85UR8f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEnrO90e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D77EC4CEF1;
+	Fri,  9 Jan 2026 09:02:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767949336;
+	bh=Xg6PsXa8GhzoKCwVHsdcHep1mSyOFfXyx28YBPInsTU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UEnrO90e6vUGRJvbEotFLhyBspaOhiJhRju3ljNpPEDk8S8sKAI6JDkWzk3xfZmwe
+	 Nz80IvLF6uvjmM1CAo/hAOqm+YH5lDG7FtaZWnoRTBmBj+8Cq6Ben81yaTTp7juxNB
+	 0MB27QBsKdE6fC9o7ooRkGa5GaZ62H1BOVSxJVA2wgdEbjl3R4lLOMT0EK0GdfKJh/
+	 vjGb6Q/EFnIsLTbNTkomTlvxkdiQK+SmcCx+4labfuhkKjdmsw0Ndppvn2Peo9Yb4D
+	 0UuLNVzDfyGlkEjzU3TtR95OYS+NjPTQQKU2v9iFpGssxH4JAxx0Fc7InC1vMcAGFd
+	 G8eWfgvMaTqiQ==
+Message-ID: <375ea14c-b089-4ae4-9827-5c19139f69c4@kernel.org>
+Date: Fri, 9 Jan 2026 10:02:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="b6a6cfnpmaill5yd"
-Content-Disposition: inline
-In-Reply-To: <20260108125200.2803112-3-viken.dadhaniya@oss.qualcomm.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/5] power: sequencing: Add the Power Sequencing driver
+ for the PCIe M.2 connectors
+To: Manivannan Sadhasivam <mani@kernel.org>,
+ Bartosz Golaszewski <brgl@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+ Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Niklas Cassel <cassel@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ linux-pm@vger.kernel.org, linux-ide@vger.kernel.org
+References: <20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com>
+ <20260107-pci-m2-v5-5-8173d8a72641@oss.qualcomm.com>
+ <CAMRc=Md9TQiSX-gFa5q--JgaGyQ2ky4mOwjSpdxHhvHAj-X5Qw@mail.gmail.com>
+ <xd5uvfqcx3vcbcqerji556ejstmgvtci4chfzxclkzhizqmqxa@xusf2skt6xhh>
+Content-Language: en-US
+From: Damien Le Moal <dlemoal@kernel.org>
+Organization: Western Digital Research
+In-Reply-To: <xd5uvfqcx3vcbcqerji556ejstmgvtci4chfzxclkzhizqmqxa@xusf2skt6xhh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+On 1/9/26 07:02, Manivannan Sadhasivam wrote:
+> On Thu, Jan 08, 2026 at 01:15:12PM +0100, Bartosz Golaszewski wrote:
+>> On Wed, Jan 7, 2026 at 3:11 PM Manivannan Sadhasivam via B4 Relay
+>> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>>>
+>>> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>>>
+>>> This driver is used to control the PCIe M.2 connectors of different
+>>> Mechanical Keys attached to the host machines and supporting different
+>>> interfaces like PCIe/SATA, USB/UART etc...
+>>>
+>>> Currently, this driver supports only the Mechanical Key M connectors with
+>>> PCIe interface. The driver also only supports driving the mandatory 3.3v
+>>> and optional 1.8v power supplies. The optional signals of the Key M
+>>> connectors are not currently supported.
+>>>
+>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>>
+>> This looks good to me, though there are some nits I may fix when applying.
+>>
+>> I'll pick it up for v7.0 once the bindings are reviewed.
+>>
+> 
+> Ok. I'm expecting patch 1 to go through ATA tree, patch 2 through DT, and
+> patches 3,4 through PCI tree.
+
+Patch 1 seems to be completely unrelated to the power changes, so please send it
+to the ata list separately. It is otherwise very complicated and confusing for
+everyone to have patches from one series being applied through multiple trees.
 
 
---b6a6cfnpmaill5yd
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-MIME-Version: 1.0
-
-On 08.01.2026 18:22:00, Viken Dadhaniya wrote:
-> Enable the MCP2518FD CAN controller on the QCS6490 RB3 Gen2 platform.
-> The controller is connected via SPI3 and uses a 40=E2=80=AFMHz oscillator.
-> A GPIO hog for GPIO0 is included to configure the CAN transceiver in
-> Normal mode during boot.
->
-> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 30 ++++++++++++++++++++
->  1 file changed, 30 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/bo=
-ot/dts/qcom/qcs6490-rb3gen2.dts
-> index e3d2f01881ae..f2f2925e645a 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -44,6 +44,14 @@ chosen {
->  		stdout-path =3D "serial0:115200n8";
->  	};
->
-> +	clocks {
-> +		mcp2518fd_osc: can-clk {
-> +			compatible =3D "fixed-clock";
-> +			clock-frequency =3D <40000000>;
-> +			#clock-cells =3D <0>;
-
-Is the #clock-cells property needed?
-
-> +		};
-> +	};
-> +
->  	dp-connector {
->  		compatible =3D "dp-connector";
->  		label =3D "DP";
-> @@ -1151,6 +1159,28 @@ platform {
->  	};
->  };
->
-> +&spi3 {
-> +	status =3D "okay";
-> +
-> +	can@0 {
-> +		compatible =3D "microchip,mcp2518fd";
-> +		reg =3D <0>;
-> +		interrupts-extended =3D <&tlmm 7 IRQ_TYPE_LEVEL_LOW>;
-> +		clocks =3D <&mcp2518fd_osc>;
-> +		spi-max-frequency =3D <10000000>;
-> +		vdd-supply =3D <&vreg_l11c_2p8>;
-> +		gpio-controller;
-> +		#gpio-cells =3D <2>;
-> +
-> +		gpio0-hog {
-> +			gpio-hog;
-> +			gpios =3D <0 GPIO_ACTIVE_LOW>;
-> +			output-high;
-> +			line-name =3D "mcp251xfd-gpio0";
-
-If the CAN transceiver is connected to GPIO0, why not reflect that in
-the name of the line?
-
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---b6a6cfnpmaill5yd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmlgwdQACgkQDHRl3/mQ
-kZzYcgf/RcjpsR1zrNIK/qYyKyE2xYZkGYQ+2JAZqCedlbbvXt8s4UdXhDbslXMB
-5xXPrMAb9jwiBNCwQJXSitDhhZf0HqNCpzcVv2jwa5Xh0NK84hHxNoKJKpzB+G2L
-p45ocigeSLxzqHfxjM6miQKKApRqQqZf05UDe62o7FeNJXaO+MY8NKPw6m6L0z5z
-Ma7EALZDaX1BkQ76G1P7omtuyOWk24vDlQjMaoLVkmxy5sKEO3jOQ/mAyiH+zC99
-5R9pHd/ipWcXmTmr7Kyzskp2QTgaoF7cFjGs/PH6PlaqNeVliLnVeeiIP9F+KFiD
-KWCuk/ImkKA67JOs/sG/zj2m0oFEiw==
-=k+Pi
------END PGP SIGNATURE-----
-
---b6a6cfnpmaill5yd--
+-- 
+Damien Le Moal
+Western Digital Research
 
