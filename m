@@ -1,162 +1,304 @@
-Return-Path: <linux-arm-msm+bounces-88348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4390AD0D52D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 12:19:50 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD9E4D0D769
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 15:29:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F3263300EE5F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 11:19:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CC5D73010FF6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 14:29:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B33C27FB0E;
-	Sat, 10 Jan 2026 11:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3265E346A0E;
+	Sat, 10 Jan 2026 14:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kNm1ZBhX"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="X9DupauA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021098.outbound.protection.outlook.com [40.107.74.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2886233D6EA;
-	Sat, 10 Jan 2026 11:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768043986; cv=none; b=pTK6vuEss50K/NdMnVCSLlu9sXTtzkplmZMWvp5r9UGcpDIvgy436R53vCXBM+iscmbo1DMT5Yhi8+VVN49/glsDJLP2I5v8e0Zpb0SLryJEk/JjBlbv98R6P7tZ5ncRQ40wwgLge85fmxardToMWx3pxINBcvOk+blF2noI4fY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768043986; c=relaxed/simple;
-	bh=Fo+c18Xe2tfWUtdNEYdFNt+2/i05dN2dynXzKW1h+gk=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=VZrJfDZLvUmwCSPluwZivE/5QGsePVVi59hLwbZmek3/8o4dZGrIeR4rk8qpaNmgpFICkQBR/wAZYFRJ7b9wMNtvH9oZb38LvhHp2m2WZP4UqwxmDrLrLHa9b1DeBMT5NpfCz/U3dDqfy4lWXbJzvDgEvz7lxWzUOHNB3HaL+0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kNm1ZBhX; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1768043984; x=1799579984;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=Fo+c18Xe2tfWUtdNEYdFNt+2/i05dN2dynXzKW1h+gk=;
-  b=kNm1ZBhX7sn8i9y0jCS313l6sEMCAn7jdz8SYn+EGR0Bu1lGASFjyT2Z
-   lJ95CblNjvso/yC3YpYjrFWrarcESpeVjrcSyueMTNQlj1BettJIR4Tgt
-   KfgPYTPjQNSAUYaIHNVOq1n6uURANFedkdSzJsTeX8UPFvdnmlmlY8VkK
-   bF6sOtnnHHLt16nh6Tt6AkEMdrB6MbwzxxL0LlqVmZtafz/P0frlx2PU4
-   FXqRWx2NsVJ3rOcoyVBCDQoKNkD5Xot6hb/A6YTy2uHeymTcnbsG/HWPJ
-   oy1Rz2K3TKFeBKZubCF0ipQgTM3F+hM8CLP8/vChdsqlrl08SJfLngCPP
-   g==;
-X-CSE-ConnectionGUID: 1LD2SOpnQluw0LTjv23x2g==
-X-CSE-MsgGUID: +TjLMK6nS5GesC7dWBsCzg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11666"; a="69558905"
-X-IronPort-AV: E=Sophos;i="6.21,215,1763452800"; 
-   d="scan'208";a="69558905"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2026 03:19:42 -0800
-X-CSE-ConnectionGUID: SN3I9PJbST+nPQa1VKqNxw==
-X-CSE-MsgGUID: rbP7RPyoSeSgZrQrabMSJw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,215,1763452800"; 
-   d="scan'208";a="234890814"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.227])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2026 03:19:35 -0800
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Sat, 10 Jan 2026 13:19:31 +0200 (EET)
-To: =?ISO-8859-15?Q?J=E9r=F4me_de_Bretagne?= <jerome.debretagne@gmail.com>
-cc: Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-    Conor Dooley <conor+dt@kernel.org>, 
-    Johannes Berg <johannes@sipsolutions.net>, 
-    Lorenzo Bianconi <lorenzo@kernel.org>, 
-    Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
-    Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-wireless@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-    ath12k@lists.infradead.org, Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
-    Dale Whinham <daleyo@gmail.com>, 
-    Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v6 3/4] platform/surface: aggregator_registry: Add Surface
- Pro 11 (QCOM)
-In-Reply-To: <20251220-surface-sp11-for-next-v6-3-81f7451edb77@gmail.com>
-Message-ID: <17f18028-730f-9e9f-7df5-8b792fe6c9c5@linux.intel.com>
-References: <20251220-surface-sp11-for-next-v6-0-81f7451edb77@gmail.com> <20251220-surface-sp11-for-next-v6-3-81f7451edb77@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2985B3451A9;
+	Sat, 10 Jan 2026 14:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.98
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768055353; cv=fail; b=KypFSKVIGYR1ymsKZdF5mlVVe6zlRTGq7+aAn2Y1nWN9Yl0CngadFF3SOomLUf96BoKvH01478V1F9Aiq9p8fvRY5fxGzZArA/ewxEgb/1pr2KSPsXlzW/5bDMBt3qdXDaZi/odenx2VsnLzWArwC7xzLRgBjTaRsecFEGGbliA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768055353; c=relaxed/simple;
+	bh=kGPp3WxcyibAlyCo8wmq1dfstQpRmyz5kenNQdCQCVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=UxJID+kUtO6PxIj4BswlyllBhd3JM2eZlE+cxu//Cqr1Y5LZx5e0pOWv+sYbkpRtgItxVR0/wsrMndf8vs79LcPJgh0KozBptqNheDWuVbfds0Tsa5QRwk0TIUlRRVVvU5OkpS9yqswA6VdhKzjCAUJDr47sOmPyOwyATmZAj40=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=X9DupauA; arc=fail smtp.client-ip=40.107.74.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oGq9nH6kLKlOYIIkcxDv2vMgIet7YnbDtFfdwOQMCvQO0OqQuBv7J8rZtEkOl1yy+5pS/K/tZiyZYOrq3cA/nvyiVfpO6bRIliymL8U1lFPUYckK246AALaYVsxju8/UdMiJKjZhanrzgpLfmTl01DPDzbis1v5m5T9vwZ7ZrEIHZGDEl4MUWIXfJdbMX7D6wcA5cOdogMkPzIuFWlogAOOYrLpJhJx39Q/uhIh0G01PtmFhoMsiKSBCrovK4f0W4ipOx+K3IwkeNg7Gb2MncO6HAWGunDC7bVaehY9wVHK2t1j5uMbTO67kdd3DwzFB2O6ZuaGLo8AoSWVIhkcJSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oEewp1sVgCNjI+9i/2Pnki3CvghtK/9axvfuDDuPUAE=;
+ b=i01CjjJ7FeeNTxSDwWNfT0GMEvozax95UjMK3iXAhnYlezh8EhY9mV7h4WbW2818l9e6/PwXjbKB3ybkXyM1Mr1ZaIHZGqgBbGV539/cydkkhp4CrfrC2GYi7pfe/oV1S7PZko3OdNJAthEfz3x7t1yhSTxtRoiHGYJkHuCLckg7Ao7SH4K/puCjx+HCkHoOEbJJyCV3uiXJmL2/lBFmoirLKcHYcjatT3jzVxSk3JlrlxXluFljSVZam6h2AhwmMYHQ9lU8X5SIpvecDZKqYHvwo6o1EGObB+X1CBclY23RGyZdkdZA4NEiZpb/LkyAKN+NAlvgqqeG1wfHIEU90w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oEewp1sVgCNjI+9i/2Pnki3CvghtK/9axvfuDDuPUAE=;
+ b=X9DupauA2JK2Kc5C2oGgJ3HKbLFmr5mpORgtSul1pn0T99IitzCwrUrj0Os5M1446IVit2zgkRztlsUvw6X5aQHUuTpDY9p/yAG/2ht73xLncNDYwrpOwSap9RtU1VS/s7k2/ljIcG+laj2yR11Ascua6cgm2zbYFjH65ayogLI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by OS9P286MB4045.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:2cd::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.6; Sat, 10 Jan
+ 2026 14:29:08 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9499.005; Sat, 10 Jan 2026
+ 14:29:07 +0000
+Date: Sat, 10 Jan 2026 23:29:06 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com, vigneshr@ti.com, 
+	s-vadapalli@ti.com, hongxing.zhu@nxp.com, l.stach@pengutronix.de, 
+	shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, 
+	festevam@gmail.com, minghuan.Lian@nxp.com, mingkai.hu@nxp.com, roy.zang@nxp.com, 
+	jesper.nilsson@axis.com, heiko@sntech.de, srikanth.thokala@intel.com, 
+	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be, 
+	magnus.damm@gmail.com, christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com, 
+	alexandre.torgue@foss.st.com, thierry.reding@gmail.com, jonathanh@nvidia.com, 
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org, 
+	rongqianfeng@vivo.com, 18255117159@163.com, shawn.lin@rock-chips.com, 
+	nicolas.frattaroli@collabora.com, linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com, 
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] PCI: dwc: ep: Support BAR subrange inbound
+ mapping via Address Match Mode iATU
+Message-ID: <wvb42kyfcpyii3jql2gm75dd6hqpcd32yat2yb7cg7sl3raw4l@d4mfxk47l6md>
+References: <20260108172403.2629671-1-den@valinux.co.jp>
+ <20260108172403.2629671-4-den@valinux.co.jp>
+ <aWAZv3ZwdUmo4_wc@ryzen>
+ <nqpwi6ewen4kf7jqgon4ljerceqjeaule25dzb6ytas3wslqhp@ddkr3jum6eac>
+ <aWC8jGTtKIzVuG-X@ryzen>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aWC8jGTtKIzVuG-X@ryzen>
+X-ClientProxiedBy: TYCP301CA0066.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:7d::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-495146878-1768043971=:1002"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB4045:EE_
+X-MS-Office365-Filtering-Correlation-Id: 55fb5687-b86a-486a-afdc-08de50549d16
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|7416014|1800799024|10070799003;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?2NkuIC3mjPBRSePFjjCDRX+JcpckD7TwIJCnWOxENi9wl4kBBVrS94np0DqN?=
+ =?us-ascii?Q?WRdjspkbLc7/V+YHaMLN7miz9Nb5Y44N8xAIdtVmUk1hkExUhg1KSnExrTD/?=
+ =?us-ascii?Q?fQZBeR5W9GPJfV0RLVolz499Mfv9jHXeYRyMiMQW6dK28/54g2jId/c9UbNH?=
+ =?us-ascii?Q?0dfHz+noXPru9QpUyEsVnOGpUQs6NQshisZH3HCEJYeBvF1fEcJVXQdai716?=
+ =?us-ascii?Q?qKn25UYAsszAB0IRpzJC2dURoyibGYdAyMAceQ+YZVQm1RIsbCQoh1UxvWtt?=
+ =?us-ascii?Q?dUIOG5oQmc8hDRPAwiyVtzBNLVCDeBSLpZ6oVnGK5EczSSJgiSQrrZ/khPE0?=
+ =?us-ascii?Q?zHc/mIOY4GPZE3KWoUGWg9y9eG0to3bCF/mzyAXHO24eXViwTZfy6LMba3DP?=
+ =?us-ascii?Q?z/jaUHo/rhzFfQs+oDKWVd1ickKDM1gb5f+FkV0pvh+2Ruh1uX9HWDO1JahL?=
+ =?us-ascii?Q?ReklImDM4jaNRAvOunOE0ZZjRF73K9IfUj97nx+ZBCR8WPMJt8Nj/0x8FmZG?=
+ =?us-ascii?Q?p59FRKQTzKiHqig5rmUq63cxga+qYFFB8AYGrE9HxVZpM0nuAEzsJcjUS07O?=
+ =?us-ascii?Q?sFBLOcFF/GGtvpw8fu9YiQ2WdMAOmkwOU/h83ZjkPKkYAchCc094x/is7a8o?=
+ =?us-ascii?Q?q2lGp7KxdJZJHrvAguRQTTrY/gowBFsGMo2OjwSmqAheIIZjYN2rEqXh8nKe?=
+ =?us-ascii?Q?fC1OtYsdcaN38r7izYuDwNCfhpbCGJ8gM0EOrOuRTHS5LUf0hxVYoGMd7U7x?=
+ =?us-ascii?Q?QCzyHUQs2eGTcRlwSfHokRmQ5qneWtauqHn4/o7nrCpFWXuC8RvRqsSPxM1U?=
+ =?us-ascii?Q?R0cgAVFC5iVVGv6GhHod9S2RaQzSVRK5kl7vY4Lpa+hgPCZjiomeUjESAAxG?=
+ =?us-ascii?Q?x2P5TODi4cARcWnQinNerp12RwT0lKxtVTuIDZl3wFDk7Tjkx9NyqSNV4lnp?=
+ =?us-ascii?Q?wNStmRBZHx4fZapv+XQqFBIKTkRoMfYXIv+7zEw8HQV1VNzB0ltoyUBUC2JI?=
+ =?us-ascii?Q?WljYP+KqcHPmse1mrqFOO6BCG+XLm1WjIlQRxLNj9oz8eKXeTa3x0xTjCsaA?=
+ =?us-ascii?Q?NxUW3etp2g9W54QI6uO30b1MMpQVaeyEhh/nceATnCP6Uobp7XQIQTaQKCOm?=
+ =?us-ascii?Q?y3WQcOJf7u9HWhxNWa0eRJLgUdBMvRuLGhn24e7Md6TNDZT2riDP/RwM6IHo?=
+ =?us-ascii?Q?8lZRSdjie3S+voI/Mn0SIab+IyQ4z1xLu8U0SyFuPOoolTT6FDcEinm/D3XZ?=
+ =?us-ascii?Q?5GwjdZrN479gblDGbJTTEI8ueBiQfHITYHuE1QpFDCMSUXZQSAgb92nIQxUJ?=
+ =?us-ascii?Q?2GOIVpAywI59R61dkdYssJwNS/fp9xwo+x7XA8GggeayQCeXAqL2flbNVYGC?=
+ =?us-ascii?Q?JorIEl9JTcHAjQ44FlPixrSEEbc0qZmutS0Lnf7jZbaNdvpO4p0hCKuGmWHv?=
+ =?us-ascii?Q?j3G/4PE7hh7uJlZOx2AI3PJ+xIv4kYt6z9JbBQCSuZRRrkPqjfanuA=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(10070799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NGYGn+WIGyzR/n6p7j1yRq1qJ/dlDPtF9xNpO1eBfJRgdD6XbMg6H6UPZGU0?=
+ =?us-ascii?Q?iLaPzwK3ecSaYI2qWrcR4r+aErlWpC+XeAcIZhfKKI85jFQNFAhxECJPQQRB?=
+ =?us-ascii?Q?AseW0kM4rlsqPKF5heWsg6nhsUSaIlJiidwS4zxFT1JsKPJdd+cbmeOJ0HgM?=
+ =?us-ascii?Q?0w4/94NizQajpMc9QqTDZlBUq3G6KanpYyKmt/t6u0NBOQOqBcsN2ayRJXhh?=
+ =?us-ascii?Q?FnSOd7Gr7azBiFNj+s7/2xDFN5Ze/0wzfztxj9uYw4jyTpDneNwtvrm2j2fh?=
+ =?us-ascii?Q?m9ZWMwp0Gnq9fJxnZureC35CAtAnUeW5lNUWC//a9N+GbAIk8LP4zcCUA406?=
+ =?us-ascii?Q?dMuhMoJi5UM519e2pGQhfMecX63IWsBbdNCi67c62ve003s2lGbp2SCnz2+z?=
+ =?us-ascii?Q?09K0G2wqUKR1AJ1ySuRocn+8OZHIE7dAPVgnpUB3aslncrJ+trUfa8iXkDos?=
+ =?us-ascii?Q?fJwajtmRuKJocpfCi72oTZZMu4XYfqbyp+tvkK3z2kXpnJ2I4/8iwAqWLtg6?=
+ =?us-ascii?Q?n5f+GDzUV4D/32MHjwROT+X7+U79z5jN0mU1vsqof4cyCb5O5dpPBRxv5R8P?=
+ =?us-ascii?Q?rMckaZHBGacHFdAbsc3/ztGeaNV700CDYUh6icncx+UInBVGJI6B45CJ6tS/?=
+ =?us-ascii?Q?XRpZGyEf0yNOfPT235HlVjZlIa4EFe8jjsR6kE/UXanc5nYTtQdsMq39ywLJ?=
+ =?us-ascii?Q?Skl5F2NhHhCfEiIOsAXsQdanHI3NvKS5rQajL9qIQzFXv3JJ0IgODMqpdFKp?=
+ =?us-ascii?Q?icI3L16wHhKf9BBULyJJpbXzLz12r/XZRQIE2CeXULXKlcXjgrTWKnOxtbVI?=
+ =?us-ascii?Q?ElAb2bm2ST3VB5bQnZOp/4MGS9zr6iCvAIAHPzkYxBz02kQ7SKtULRFEzCMk?=
+ =?us-ascii?Q?ndbX9c+GtE+qE0HoNSTuY0em2B9w29kuQdY0xfLQzAX/ICaDKMLd7VlWvGx6?=
+ =?us-ascii?Q?yOf0gD+qDYA3VwXrMQuG7Ma7sPFi0BOHOfnJHWDoTeIJFtUVnASXwM5NRHAc?=
+ =?us-ascii?Q?n/VPJTmRGcd+NeV0axFBkH4uh7Gwz+qvy+iH3opRmLsJKZMCxF44QuJR0LIE?=
+ =?us-ascii?Q?IlZjjyVZw1i63qsBcmTpExB+V83BLQ/x9aaKT+QS4sKgXxDiKcuZLJAi1SiK?=
+ =?us-ascii?Q?oXUv9e81JmyzBzlzh0hB4QfK8u2EyKYtuJkG/b+DUKxPyjdDzzqeg3Z6datR?=
+ =?us-ascii?Q?LldZDFtLgEMSOFWIgEpKVO/uJ1SW8BfJA29cNp3MElfsWpk8t8dQ5UaKThxh?=
+ =?us-ascii?Q?p6uKpRRY2dWRUjjrhxCdVFwEDxOpM8dBfj3yvN6hnk1sm6Vk61Xrn9hAA3IA?=
+ =?us-ascii?Q?U+uW8l33mBrza0HnN3OslwRhOJIkcdb6tQANgYfqhrL9/21wS24pdEdo3L6s?=
+ =?us-ascii?Q?N2txVgY0E+Oc1HnT41DLj5Yt+tE/O32rejj8I/zj44ThydZTSbNZaU9NabAU?=
+ =?us-ascii?Q?/ON953msueYuNDt6YG/s5U1V5UqsvrHPCHHjkBcqbNcJta3sYytLVWvN0Wtb?=
+ =?us-ascii?Q?klld0HsI5d0cAQw8vsO7aoYEnfjtsqatOloZVa/poMymwbs1Z9om6b2cuBmV?=
+ =?us-ascii?Q?DjPgm2RHcvV0rFMYubpa6huEVZkf0oHWRN6PSaJg8opOa3ToYH/MF1jEd6WA?=
+ =?us-ascii?Q?WSo+n7FLvK2obNPOlOqo6L+yLMn6fH+89kTlfqv1vGAaG0wirMM0bpeEIhat?=
+ =?us-ascii?Q?I1B01r567YlK4JRCc80cvzFMa6G7y1CoZ0SZNismGTerniT/SyAyG2pYbgSz?=
+ =?us-ascii?Q?JcSa3qu35/pp6Kcfo5VEEuGLh0qAYErkgDgIiIFC6wcXVIvZKqdg?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 55fb5687-b86a-486a-afdc-08de50549d16
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2026 14:29:07.7389
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8tNl7bOkcfBH72j0ereURQzNiTX5SJvMWg28wHIpadj83wc+f9dexAhE6Dk6HtAzY28Biv2lra5QoHkDIr5EyA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4045
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jan 09, 2026 at 09:30:04AM +0100, Niklas Cassel wrote:
+> On Fri, Jan 09, 2026 at 04:29:14PM +0900, Koichiro Den wrote:
+> > > Does that mean that the usage of this API will be something like:
+> > > 
+> > > 1) set_bar() ## using BAR match mode, since BAR match mode can write
+> > >    the BAR mask to define a BAR size, so that the host can assign a
+> > >    PCI address to the BAR.
+> > 
+> > BAR sizing is done by dw_pcie_ep_set_bar_{programmable,resizable}() before
+> > iATU programming regardless of match mode. I keep BAR match mode here just
+> > because Address match mode requires a valid base address. That's why I
+> > added the `if (!base)` guard.
+> > 
+> > > 
+> > > 2) start() ## start link
+> > > 
+> > > 3) link up
+> > > 
+> > > 4) wait for some special command, perhaps NTB_EPF_COMMAND
+> > > CMD_CONFIGURE_DOORBELL or NTB_EPF_COMMAND CMD_CONFIGURE_MW
+> > > 
+> > > 5) set_bar() ## using Address match mode. Because address match mode
+> > >    requires that the host has assigned a PCI address to the BAR, we
+> > >    can only change the mapping for a BAR after the host has assigned
+> > >    PCI addresses for all bars.
+> > > 
+> > 
+> > The overall usage flow matches what I'm assuming.
+> 
+> Ok, perhaps document something that the submap feature requires that the
+> BAR already has been assigned an address (and that it thus has to call
+> set_bar() twice, without calling clear_bar() in-between.
+> 
+> This is a new feature, and since you provide a mapping for the whole BAR,
+> I think it is logical for people to incorrectly assume that you could use
+> this feature by just calling set_bar() once.
+> 
+> 
+> > > Perhaps you should add some text to:
+> > > Documentation/PCI/endpoint/pci-endpoint.rst
+> > > 
+> > > Because right now the documentation for pci_epc_set_bar() says:
+> > > 
+> > >    The PCI endpoint function driver should use pci_epc_set_bar() to configure
+> > >    the Base Address Register in order for the host to assign PCI addr space.
+> > >    Register space of the function driver is usually configured
+> > >    using this API.
+> > > 
+> > > So it is obviously meant to be called *before* the host assigns a PCI
+> > > address for the BAR. Now with submap ranges, it appears that it has to
+> > > be called *after* the host assigned a PCI address for the BAR.
+> > 
+> > I agree. As I understand it, the current text seems not to reflect mainline
+> > since commit 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar()
+> > update inbound map address"), but anyway I should add explicit
+> > documentation for this subrange mapping use case.
+> 
+> Sure, 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update
+> inbound map address") modified so that set_bar() can be called twice,
+> without calling clear_bar().
+> 
+> However, that patch was a mess because:
+> 1) It got merged via the NTB tree, even though the PCI maintainer wanted a
+>    different design:
+>    https://lore.kernel.org/linux-pci/20220818060230.GA12008@thinkpad/T/#m411b3e9f6625da9dde747f624ed6870bef3e8823
+> 2) It was buggy:
+>    https://github.com/torvalds/linux/commit/c2a57ee0f2f1ad8c970ff58b78a43e85abbdeb7f
+> 3) It lacked the proper conditional checks for the feature to work (and it
+>    lacked any comments in the source explaining why it was skipping steps):
+>    https://github.com/torvalds/linux/commit/3708acbd5f169ebafe1faa519cb28adc56295546
+> 4) It failed to update the documentation.
+> 5) It failed to add a new flag for this feature in epc_features.
+>    I seriously doubt that any non-DWC based EP controller supports changing
+>    the inbound address translations without first disabling the BAR.
+>    (It probably should have added a epc_features->dynamic_inbound_mapping bit.)
+> 
 
---8323328-495146878-1768043971=:1002
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Thanks for pointing me to the context, that really helps.
 
-On Sat, 20 Dec 2025, J=C3=A9r=C3=B4me de Bretagne via B4 Relay wrote:
+> 
+> So all in all 4284c88fff0e in not the best example :)
+> 
+> 
+> Your new feature (epc_features->subrange_mapping) in epc_features appears
+> to depend on epc_features->dynamic_inbound_mapping, so it is a shame that
+> we don't have a epc_features->dynamic_inbound_mapping bit, so that this new
+> feature could have depended on that bit.
+> 
+> 	if (epf_bar->use_submap &&
+> 	    !(epc_features->dynamic_inbound_mapping &&
+> 	      epc_features->subrange_mapping))
+> 		return -EINVAL;
+> 
+> 
+> I think adding some documentation is a good step.
+> 
+> Perhaps we should also introduce a epc_features->dynamic_inbound_mapping bit?
+> Since you are making DWC glue drivers return a mutable EPC features, we could
+> set this bit in the DWC driver after that commit. What do you think?
 
-> From: Dale Whinham <daleyo@gmail.com>
->=20
-> This enables support for the Qualcomm-based Surface Pro 11.
->=20
-> Signed-off-by: Dale Whinham <daleyo@gmail.com>
-> Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.com>
-> Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/platform/surface/surface_aggregator_registry.c | 18 ++++++++++++=
-++++++
->  1 file changed, 18 insertions(+)
->=20
-> diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/dri=
-vers/platform/surface/surface_aggregator_registry.c
-> index 78ac3a8fbb736384f7e50f1888a71297a892a7c3..0599d5adf02e61583cf3e1fc1=
-1000070f51f7be3 100644
-> --- a/drivers/platform/surface/surface_aggregator_registry.c
-> +++ b/drivers/platform/surface/surface_aggregator_registry.c
-> @@ -406,6 +406,22 @@ static const struct software_node *ssam_node_group_s=
-p9_5g[] =3D {
->  =09NULL,
->  };
-> =20
-> +/* Devices for Surface Pro 11 (ARM/QCOM) */
-> +static const struct software_node *ssam_node_group_sp11[] =3D {
-> +=09&ssam_node_root,
-> +=09&ssam_node_hub_kip,
-> +=09&ssam_node_bat_ac,
-> +=09&ssam_node_bat_main,
-> +=09&ssam_node_tmp_sensors,
-> +=09&ssam_node_hid_kip_keyboard,
-> +=09&ssam_node_hid_kip_penstash,
-> +=09&ssam_node_hid_kip_touchpad,
-> +=09&ssam_node_hid_kip_fwupd,
-> +=09&ssam_node_hid_sam_sensors,
-> +=09&ssam_node_kip_tablet_switch,
-> +=09NULL,
-> +};
-> +
->  /* -- SSAM platform/meta-hub driver. -----------------------------------=
------ */
-> =20
->  static const struct acpi_device_id ssam_platform_hub_acpi_match[] =3D {
-> @@ -482,6 +498,8 @@ MODULE_DEVICE_TABLE(acpi, ssam_platform_hub_acpi_matc=
-h);
->  static const struct of_device_id ssam_platform_hub_of_match[] __maybe_un=
-used =3D {
->  =09/* Surface Pro 9 5G (ARM/QCOM) */
->  =09{ .compatible =3D "microsoft,arcata", (void *)ssam_node_group_sp9_5g =
-},
-> +=09/* Surface Pro 11 (ARM/QCOM) */
-> +=09{ .compatible =3D "microsoft,denali", (void *)ssam_node_group_sp11 },
->  =09/* Surface Laptop 7 */
->  =09{ .compatible =3D "microsoft,romulus13", (void *)ssam_node_group_sl7 =
-},
->  =09{ .compatible =3D "microsoft,romulus15", (void *)ssam_node_group_sl7 =
-},
+As you pointed out, support for dynamic_inbound_mapping is needed
+independently of my series. Given that, it would make sense to handle it
+either before this series, or to fold it into the next iteration (=v6) of
+the series if that is preferred.
 
-Applied PATCH 3/4 to the review-ilpo-next branch.
+If you already have a patch for dynamic_inbound_mapping in mind, I'm happy
+to wait for it and help test it.
 
---=20
- i.
+> 
+> I realize that we would not be able to add any actual verification for the
+> epc_features->dynamic_inbound_mapping feature itself (in set_bar()), since
+> there is no way for set_bar() to know if a BAR has already been configured
+> (since struct pci_epc does not have an array of the currently configured BARs).
+> 
+> But at least it would allow an EPF driver (e.g. vNTB) to know if it can call
+> set_bar() twice or not, and can error out if the EPF driver is being used on
+> a EPC that doesn't support epc_features->dynamic_inbound_mapping.
 
---8323328-495146878-1768043971=:1002--
+That makes sense.
+
+Thanks again,
+Koichiro
+
+> 
+> 
+> Kind regards,
+> Niklas
 
