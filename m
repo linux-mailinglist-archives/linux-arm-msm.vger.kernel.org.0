@@ -1,99 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-88351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C40CD0DAC3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 20:11:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6237D0DADD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 20:11:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2F414301989D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 19:11:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 58B6330222EF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 19:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3652C15BB;
-	Sat, 10 Jan 2026 19:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D142C11DD;
+	Sat, 10 Jan 2026 19:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qCiyrFAU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CxbLz8p+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B217121E087;
-	Sat, 10 Jan 2026 19:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483462BEC5A;
+	Sat, 10 Jan 2026 19:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768072294; cv=none; b=QwT1XYNeJFXuLjbcgEmh3MztQsokWMgiH+PSrcauS5N+SAX1cb9nvYyac8MVMFUTW7vaNKOfgIPk+a140jci5d7V/mWfD1y8NXSm2PgoEbufz8gpPeK3/srQ991VgVCJ4MDlCrs0ANd8MeqSCSFSCOa53ewfx5kMVUq2lzP0PNI=
+	t=1768072296; cv=none; b=aZ/Q+K10bYZHFSzycgAUOBpOMq/GlZDVr+aSyrgP1/KMJ94iZRdKS0O7uyaxJdr7YFNBnbyfHGs0Zyzub2lCHZjk2igr0lYcQnButjC0uZXWhz+YM44eAvDuQTg64VNDdPyUI/hq8S+7EmcqdgakxxF8Vp8ci+VL/JMYupXuJ9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768072294; c=relaxed/simple;
-	bh=ifQtDtBDcokzLccqf8aQCht97s3eipcMMEmXbpDw6Aw=;
+	s=arc-20240116; t=1768072296; c=relaxed/simple;
+	bh=dUU57ymxvufvDgmbt5zDhcUmxnru5mFqX0o/mD8AXM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fA8vRN20KwBVAS1O9++wDTOR7UCFtDd0sNZAP9UFzr1t3q6eyWgJ9WsSAckSdEizj3PhNVvRad2I3NNHoX8wryLd2BxCv3vePVdSkxAdfvX1J4Qhd0icRCA9mccsUjnFVOckFMQcdqdYOdGtk8d7y86bWJrFSLqO4aHFVzdTDdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qCiyrFAU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EEFC4CEF1;
-	Sat, 10 Jan 2026 19:11:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=bItyD2PL6EvyJk66jmTNyqf9zvk9J/9FFfXrUsQ/8eM/rt/c8UCr8ZV5GhGcoS3e/zJU3EecHkjno0H33641/ltkJIxr8aQ1nYSiVPICNJBR9sSjUVx6smPuuaOq2ixSo3Rhlk/ZN0+dA5dFmTvQ04J0w/tsJ1QclZj8xwyNjbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CxbLz8p+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E56C116D0;
+	Sat, 10 Jan 2026 19:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768072294;
-	bh=ifQtDtBDcokzLccqf8aQCht97s3eipcMMEmXbpDw6Aw=;
+	s=k20201202; t=1768072295;
+	bh=dUU57ymxvufvDgmbt5zDhcUmxnru5mFqX0o/mD8AXM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCiyrFAU2xicKCibTXPIf3XhBQmk0g6ZWmSgHHXVP1B02QbrV77FWTZFOP1VjWDCw
-	 qjMrQb+XKb5f4XadhrY/24Ap8FT4i3zPkyp8Hq83pZ7Qd05yBLYY/SjBLAoBYN1J91
-	 tZcXYUR9WCowuaBnwQNH+5l+izoJ34YwXyJn9pNjN9mFqtBAcF6dVgtvosb5DN2PQH
-	 UkWDCIMetOEIB1XAkKVOYI7Wkyc0F3Lm5PBO/vh7rnB4GSTP0L4HqCSOjm7fLM7dry
-	 DJ/5zv35sUADTSmPEivxJvudoLJxOMiPSlaVLC0wreck+xhcPR7Tw1K+pdiPCNoYJW
-	 fAQibqBj2d1ug==
+	b=CxbLz8p+Ze0TB7+oai204mntkTVnaWATnJYva9qi+qwOLdALqoFrYKRCPUA2FIrQ+
+	 F72btm4wo4SQo6DmmuLQ/dqZCCoLX/WjaKuatOyeXKbqwDiC6kzbPa+q6HsGaI2SZZ
+	 8II48JPsW9H1hzOGbPE4de7MolqAu9owD/NqnLhnwwt1Qc9KotSGNUcCDOQ62UCYug
+	 DcLqAfwgJiHiIfoMjcD9zGs7nYQZOuKiGfjdA/CAPQDyHVfvXjoPddTxBk4Ayl9+ND
+	 LU/o5LvCcq/TVl3Bm9nI+LEmtTuAzwcyB7KXEVCvdS6Ud/g3ER+DCm3arjyFlEwFkZ
+	 DFHkYdxXIqQkg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney@redhat.com>
-Cc: linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	sophgo@lists.linux.dev,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+	Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+	Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	coresight@lists.linaro.org,
 	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	linux-rtc@vger.kernel.org,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-actions@lists.infradead.org,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	linux-mips@vger.kernel.org,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	linux-arm-msm@vger.kernel.org,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Michal Simek <michal.simek@amd.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Vinod Koul <vkoul@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-phy@lists.infradead.org
-Subject: Re: (subset) [PATCH 00/27] clk: remove deprecated API divider_round_rate() and friends
-Date: Sat, 10 Jan 2026 13:11:17 -0600
-Message-ID: <176807228457.3708332.10766520174431957453.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: (subset) [PATCH v4 0/2] Enable CTCU device for QCS8300
+Date: Sat, 10 Jan 2026 13:11:18 -0600
+Message-ID: <176807228444.3708332.17299201888079444801.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+In-Reply-To: <20251103-enable-ctcu-for-monaco-v4-0-92ff83201584@oss.qualcomm.com>
+References: <20251103-enable-ctcu-for-monaco-v4-0-92ff83201584@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,26 +74,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 08 Jan 2026 16:16:18 -0500, Brian Masney wrote:
-> Here's a series that gets rid of the deprecated APIs
-> divider_round_rate(), divider_round_rate_parent(), and
-> divider_ro_round_rate_parent() since these functions are just wrappers
-> for the determine_rate variant.
+On Mon, 03 Nov 2025 15:06:20 +0800, Jie Gan wrote:
+> Enable CTCU device for QCS8300 platform. Add a fallback mechnasim in binding to utilize
+> the compitable of the SA8775p platform becuase the CTCU for QCS8300 shares same
+> configurations as SA8775p platform.
 > 
-> Note that when I converted some of these drivers from round_rate to
-> determine_rate, this was mistakenly converted to the following in some
-> cases:
+> Changes in V4:
+> 1. dtsi file has been renamed from qcs8300.dtsi -> monaco.dtsi
+> Link to V3 - https://lore.kernel.org/all/20251013-enable-ctcu-for-qcs8300-v3-0-611e6e0d3085@oss.qualcomm.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[14/27] clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
-        commit: e1f08613e113f02a3ec18c9a7964de97f940acbf
-[15/27] clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
-        commit: 35a48f41b63f67c490f3a2a89b042536be67cf0f
-[16/27] clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
-        commit: b2f36d675e09299d9aee395c6f83d8a95d4c9441
+[2/2] arm64: dts: qcom: monaco: Add CTCU and ETR nodes
+      commit: 4f791e008807a1e7743cf6048822bab259b2ad0c
 
 Best regards,
 -- 
