@@ -1,290 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-88345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C00ED0D288
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 08:03:29 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2350D0D4ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 11:46:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0BE1130EDFFE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 06:57:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8BEDB302DCAC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 10:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AB8734D4F4;
-	Sat, 10 Jan 2026 06:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A5E318B96;
+	Sat, 10 Jan 2026 10:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lvAbBmRf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dGWMeufR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PHODIxQa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9660349AE6;
-	Sat, 10 Jan 2026 06:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F6E318B82
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 10:45:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768028226; cv=none; b=j0Vqvts3v1p7X2SY4uYWwGsAOgMb9/7g8vHrmRcDAhR6KFh+5fsSXUWxOTK3nnKbOOAMb8QMYEY0Pmm2vM/Rou/Vjun9RMnck18T8u/TmeBjyqYS/icoTvJXZ/Ykboq7ws0Tm0uovtmVdpzPcOAzojEs06tV5i8n5cUrMO8n5qI=
+	t=1768041962; cv=none; b=bHueXLznITSUqvtFdnWs9xyVdfT/7wPacikSucMBN9s9r33JXpXpKw2JzM2xPFEkAipR6hPsLtc/vxC1sukJYHfFhuuMPrC/35KPGwcvfvoMQiVsmJSe9U7B4noFHhI6tUgJHdxdupWO+r3TNz4Y6izjvUCjdm+AHhCLm3LkkEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768028226; c=relaxed/simple;
-	bh=M63xYuGhzTnw77y0XcBIHpc3qTNOnrlDzshVGfxXGIc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eo+uSyBwaKQFO/RlG7o0AJ3CmW7nYFjzBRj/ayNdWhXFesGWQ1hb57HvbZwNsQBR2z7MMQZpecd45VZjYMxxpwnBTFUy1hnjcaDw3eJilspVR1IAp2Gt7NYiJ1L66LdCu/bSaQ0J2xfLWf7ujq+CnIdANkVz1R0no1gLH61u/cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lvAbBmRf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 627C1C19423;
-	Sat, 10 Jan 2026 06:57:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768028226;
-	bh=M63xYuGhzTnw77y0XcBIHpc3qTNOnrlDzshVGfxXGIc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=lvAbBmRfc3NdDNO3EaF5NsjOgZEjNcZhWEmfNeQb0Px/Iml5xA7wczcQeXcllpCYj
-	 ZjwF3EZ31za3ZRi8exnQ1NsZvvrAKHXG+CNxG/5xWZMLt+gzZEQMbiEuGzJeKBh31k
-	 v4OiIfSs3zLl6clB+HJMnkcqnMUyD/8LlVGW/Y0W6LxPINwqbeyAUVcYXyb+vkvcC1
-	 0faiXwo4tR11s4P8+yGM11LOzyblcnB4RO2DaDShTlan0uGQ7EWfE2R+mESuBfxliF
-	 Bc93pr2DyDqu25bfdI5EJrS00wdU8v49SH+IxUpKNj3BcZ/CuSml+9PG5ofpxcY2xU
-	 k1P7ulPDXN64Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A17DD277CB;
-	Sat, 10 Jan 2026 06:57:06 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Sat, 10 Jan 2026 12:26:32 +0530
-Subject: [PATCH v3 14/14] power: sequencing: pcie-m2: Create serdev device
- for WCN7850 bluetooth
+	s=arc-20240116; t=1768041962; c=relaxed/simple;
+	bh=TCNHkGRPrNl4tMA9s5UCLLKzeAgKmFTcBT7iLjFJLos=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UcAZtdnCyxzcp5UJ/BoY+wjgugi+3pWtUGzBwa2FnROjIWed+ju2OCXSrTej5uyk3ULEbdhI53uuDIm3FWJo+SZY9TjPPDUwg0duCiMtXCdXN4Qhq1w9KBlZdBGdbwniuqjR30HLr+Gq7ykykfWmrnHmQVNhEibIjQBlEoS2614=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dGWMeufR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PHODIxQa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60A9llcr2905342
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 10:45:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=dYQJmxLtA6YlVQI11wziCwTn
+	+OgvteNvmNWULyo3Ies=; b=dGWMeufRm4yyPfvTyTzGV+kIfLckaUM9vLN7tZh3
+	wHVwDOZsxMK+Pxdh12nnInNl+Lt3SSmccoeMtZz7XSNm/1ss/z1qryPA6szdZeLe
+	1HOQeUrf3EKEIF76ukVtOg+U+dRpjX5h5TuLN9sMozZjG+KEZY051HcqJQXqeKs9
+	8n1hQM1240sGCO0SULZ86kTsNAl/CPv+JVJTJ0i7/tqxtuw6yjQmFKaReWG4jiOP
+	kCUyLyonVVVO6w0ogN46xVT/poR05brmY+jHrNNSioWuVMJThjplWaJ87Mf1Qj34
+	11R/E7I3U1oNsgIeKJOWEYczRb97ft3ZB2v2/hZgV5HxEA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bkmem025y-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 10:45:58 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c1cffa1f2dso1051568785a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 02:45:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768041958; x=1768646758; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dYQJmxLtA6YlVQI11wziCwTn+OgvteNvmNWULyo3Ies=;
+        b=PHODIxQacTvcokNZaDYckydttnj/TqzrRUjMjtBKKS1jDGpj/9dLTGlYtUn5IJACY8
+         reGSqAYQBO48Q2TBEwZBCujjH/KCMt45IbcQJxJS9ZpPGnKMzZKzbBL2U3KtqsSUmt9i
+         toQ+CQpBB0yMLGfEzSe49fvy9Zsn893TFddoRdAv6AAbZjWKInGOHR01G9MAcYCfjWYe
+         aqUpeBS1P0VtmjVhC3aXEy3YSWtZn/MrCMG/Bvi1N1Nv+136UDaCrBtlmUMsxffytgaL
+         KsJu5sIgOEi97kI44HidzJV7bX3lrKBp7kwqUSQRsfTsri0KbmRg3Tl3q6j/Q3q+GZOC
+         9RBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768041958; x=1768646758;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dYQJmxLtA6YlVQI11wziCwTn+OgvteNvmNWULyo3Ies=;
+        b=RU1kRA5x+/Kpty0jHCDvS16vMpu2JhGlvs7htGmZQ4/9EzA/U2y3k9t4VGKVNQARZf
+         nf8mAA8V/JLCfSkcY2OrZNUoezEoBaGSslksrNaYrCLZUkPFgSx1bkdH62t2KXPmVimm
+         EfrNpeKpnNox9n5XzUhBJZiH9Yl8ibZHnVocqWDxKOh3ZDP8IwsMET6Pec8fa51dhYmU
+         IWSuOqpkCitFo7pqMVwPlCwjv9pk5Xgp/c4ehlN/g+UjHAYGRJO030cbv7WbMZx460Pj
+         vrQip4eYahiLK54C+f0z+/IqcjlOAlJUUj0ul+Ch0GD3zziXOAYZwzzdfCOGT2xqysZg
+         o3gg==
+X-Forwarded-Encrypted: i=1; AJvYcCUUDjf4Lc8gh6kt0TcSjTcgjLM+9B01l1VtBnz/koxOa8yRPriea5fsH01xcEFNe4jmtcktHj/gK9RJVYuQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDSIgOvgHes79LusGykZOLXlDQE7C2rU3Woq0ecFZ3jBFqzUyO
+	m/CT/EkR4UN4phl9vEiQzaWLDxcVl9oeQjfTk9xS+j592WuEC5EBFFOXhCCwzzzYvQd4jcPhyLD
+	/n1ZKMeTtOIF3CDfpOBRebpXztuL6GzSc909BV9e3nlkbpPHGl44NeFxSmlgHo0uxffPV
+X-Gm-Gg: AY/fxX5fDi3AzflsWBmROcHiQpL3JmKm53BOl2bmB5AEO6lASAKQJTXf4W7cFkjNw8e
+	Dp5RLu9ZilnDKYuWx644veBSFVLdSahG512jbnzY2DH8G+wD+uv+CCHc8hVdhsr0hh0tcFTPJU4
+	xU7fbLZGSyEaAdK/GppqyJPHdf7DwDfXhs6NhJIv1YyU6R9GwJ/Z4LB6c3QOScSUyd4AzkZdmMb
+	WuRnk0nH+F9L2RMYHeeiZPdk3U/Wa7x16IMcFMOIaZZNslZj4zGULc3+rv/W40rsizLBi4GzE6/
+	wJKPuYvu1pm+8OsiaQvyUnMU0CKvvi8pbGR0JRw3YudG3XES2KEpGAoH4P2atMpTwGv6HUprgRd
+	VJLDE6n+jbW4VcBAXoSUiRa8q7/GWJUChlXApEO08huQkYortMVRInU9f4Q07sKBimtIk8pLBmY
+	xtdea9ZW7w/P5YMUKB0/kN3sA=
+X-Received: by 2002:a05:620a:44c6:b0:8b2:dd78:9288 with SMTP id af79cd13be357-8c37f4d6fc3mr2194442185a.13.1768041957789;
+        Sat, 10 Jan 2026 02:45:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQEsXHEtrN4Tbqm72kgYTDVw1nykFc9S+KxE6Bnu6jdH0gUp/tS6qLlXb4fD0qTZS54Q94mA==
+X-Received: by 2002:a05:620a:44c6:b0:8b2:dd78:9288 with SMTP id af79cd13be357-8c37f4d6fc3mr2194440185a.13.1768041957303;
+        Sat, 10 Jan 2026 02:45:57 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b6e821fbfsm2697924e87.35.2026.01.10.02.45.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Jan 2026 02:45:56 -0800 (PST)
+Date: Sat, 10 Jan 2026 12:45:54 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/3] soc: qcom: ubwc: Get HBB from SMEM
+Message-ID: <nhgxvv5bm3bevq4qkqnew6gaqlwiaicrs7yjckg26fgwnffqj5@u2phabfukljx>
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+ <20260108-topic-smem_dramc-v3-2-6b64df58a017@oss.qualcomm.com>
+ <you4xijwc5g4ngcnhxm4ecn7opexnsdfayvd5wiiqpl7734r7w@bdkpjqmlzxre>
+ <b2pqfrs2ptaoxxeanzumxyibmydsoiqslcsg6yrm4hihynowj4@mzazqnrptnyf>
+ <hunbpvbfkcxzbnwr676z6fncgdhfumjedx7jp5izojusg3rj7f@5te77lmqcdaa>
+ <cleh7dolqus3grexqfchtavvnj6wef6rlslgv3r7gesfuyxhs5@5b6z5gwtn36b>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260110-pci-m2-e-v3-14-4faee7d0d5ae@oss.qualcomm.com>
-References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
-In-Reply-To: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
-To: Rob Herring <robh@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
- Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Mark Pearson <mpearson-lenovo@squebb.ca>, 
- "Derek J. Clark" <derekjohn.clark@gmail.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Daniel Scally <djrscally@gmail.com>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-acpi@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5942;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=Vp7zYCRu5g++KTpycV6G46GxYVukXvcLdhL4fCvf0XY=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpYfg++CojcI/ArwvutjAh/aYmpyIOq9cl2wKAe
- 28Y/hBJCleJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaWH4PgAKCRBVnxHm/pHO
- 9Ql5B/9E1CdAqnK1mNQgswa7wqthDkSc9rCfk/sIks3lGXEgHCzNRoFIxTTAXs8x9BZ7uoUV6Pw
- gsJDjJxoTu1H+qIi7ZWQKMbPIPYZDgD2J+NrccRfcR9T05z8r9T/YESRPMeooyA3LwMoosxgLy0
- EcLU8B+j7nO5KAHKiGGeNt6kP9A2uFZiJlC7G0uZ8NI7n0v+HDXEZ5HY8QSQ5yPCoyI7+rP75ew
- EYlAWhJZzZMfe3fFbCOtEQenFlR+HJARr4s78hWj7XAsKbUTkN0iJNIXXdmAb5EGjsW6d2qArxV
- lterlf/QYVzMwuBnByh/jQ6HHZ8b3ko+MSYmJYmAlNdcDOZh
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cleh7dolqus3grexqfchtavvnj6wef6rlslgv3r7gesfuyxhs5@5b6z5gwtn36b>
+X-Proofpoint-GUID: r8_wzhorqtI44MGirVc05kj_w8E-zz4J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEwMDA5MCBTYWx0ZWRfXyMwUsAVs1ed9
+ N/+L8dgqmeZ6N20lvJVROjo0fMY7vYD8RFc+OxNBEOaw6RuE8kIIBbSe18zXMmKxRuuCZT+xtMb
+ nWMWI7H2AE6/L3adlZE1Ji66ysj0aRvHUe/+j65eBZ2o2gBSD9eFLYQ5WLaUXatf6Vj0xp7sura
+ gy9ccfGSEbW2vcVQsdUBSGiGa+8ddvgMLATPuDHMzg67QGEnmBB0/rwZI3ZGwhTFNyzNaY7ttlk
+ s5QVW7U+5sLRDi9xqEEIBq2jZ8uI6aq/b6h0OCz70pNt9rv/+qiPwPym+k82HBnwhq91Cg0nMMl
+ DzPYiobEr/mtLlQVaFrrmi8ZVLSN4bbFkeE6ElkmZkOiC75aV3jJ3sHOsxACidgxRjlX3+bWilV
+ wzwWKGImx2vNMkH2czMtKK2FFqpj/ds7tqREezK0E1l+qKSsoP/AwjMb+jkQd3egytTaSt+U8/U
+ mvfJ6PGbZnnWwkNxj8w==
+X-Authority-Analysis: v=2.4 cv=Z7zh3XRA c=1 sm=1 tr=0 ts=69622de6 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=KLUUaQERiW0IIiXZ-soA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: r8_wzhorqtI44MGirVc05kj_w8E-zz4J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-10_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601100090
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On Fri, Jan 09, 2026 at 11:50:46AM -0600, Bjorn Andersson wrote:
+> On Fri, Jan 09, 2026 at 05:21:10AM +0200, Dmitry Baryshkov wrote:
+> > On Thu, Jan 08, 2026 at 11:49:54AM -0600, Bjorn Andersson wrote:
+> > > On Thu, Jan 08, 2026 at 04:45:49PM +0200, Dmitry Baryshkov wrote:
+> > > > On Thu, Jan 08, 2026 at 03:21:51PM +0100, Konrad Dybcio wrote:
+> > > > > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > > 
+> > > > > To make sure the correct settings for a given DRAM configuration get
+> > > > > applied, attempt to retrieve that data from SMEM (which happens to be
+> > > > > what the BSP kernel does, albeit with through convoluted means of the
+> > > > > bootloader altering the DT with this data).
+> > > > > 
+> > > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > > > > 
+> > > > > ---
+> > > > > I'm not sure about this approach - perhaps a global variable storing
+> > > > > the selected config, which would then be non-const would be better?
+> > > > 
+> > > > I'd prefer if const data was const, split HBB to a separate API.
+> > > > 
+> > > 
+> > > I agree, but I'd prefer to avoid a separate API for it.
+> > > 
+> > > Instead I'd like to either return the struct by value (after updating
+> > > the hbb), but we then loose the ability to return errors, or by changing
+> > > the signature to:
+> > > 
+> > > int qcom_ubwc_config_get_data(struct qcom_ubwc_cfg_data *data)
+> > > 
+> > > This costs us an additional 16 bytes in each client (as the pointer is
+> > > replaced with the data), but I think it's a cleaner API.
+> > 
+> > What about:
+> > 
+> > const struct qcom_ubwc_cfg_data qcom_ubwc_config_get_data(u32 *hbb)
+> > 
+> > I really want to keep the data as const and, as important, use it as a
+> > const pointer.
+> > 
+> 
+> I guess the question is what are you actually trying to achive; my goal
+> was to keep the base data constant, but I'm guessing that you also want
+> to retain the "const" classifier in the client's context struct (e.g.
+> the "mdss" member in struct dpu_kms)
+> 
+> If we're returning the data by value, there's no way for you to mark
+> it as "const" in the calling code's context object (as by definition you
+> shouldn't be able to change the value after initializing the object).
 
-For supporting bluetooth over the non-discoverable UART interface of
-WCN7850, create the serdev device after enumerating the PCIe interface.
-This is mandatory since the device ID is only known after the PCIe
-enumeration and the ID is used for creating the serdev device.
+And I, of course, misssed one star:
 
-Since there is no OF or ACPI table for the created serdev, a software node
-is created with the 'compatible' property. This property will be used to
-match the existing OF device id in the bluetooth driver.
+const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(u32 *hbb)
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/power/sequencing/pwrseq-pcie-m2.c | 125 +++++++++++++++++++++++++++++-
- 1 file changed, 124 insertions(+), 1 deletion(-)
+This leaks the knowledge that HBB is slightly different kind of property
+than the rest of UBWC data.
 
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-index ad94090bbdb2..7c7bde563341 100644
---- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -17,6 +17,7 @@
- #include <linux/platform_device.h>
- #include <linux/pwrseq/provider.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/serdev.h>
- #include <linux/slab.h>
- 
- struct pwrseq_pcie_m2_pdata {
-@@ -26,11 +27,14 @@ struct pwrseq_pcie_m2_pdata {
- struct pwrseq_pcie_m2_ctx {
- 	struct pwrseq_device *pwrseq;
- 	struct device_node *of_node;
-+	struct fwnode_handle *fwnode;
-+	struct serdev_device *serdev;
- 	const struct pwrseq_pcie_m2_pdata *pdata;
- 	struct regulator_bulk_data *regs;
- 	size_t num_vregs;
- 	struct gpio_desc *w_disable1_gpio;
- 	struct gpio_desc *w_disable2_gpio;
-+	struct notifier_block nb;
- 	struct device *dev;
- 
- };
-@@ -179,9 +183,124 @@ static void pwrseq_pcie_free_resources(void *data)
- {
- 	struct pwrseq_pcie_m2_ctx *ctx = data;
- 
-+	fwnode_handle_put(ctx->fwnode);
-+	serdev_device_put(ctx->serdev);
-+	bus_unregister_notifier(&pci_bus_type, &ctx->nb);
- 	regulator_bulk_free(ctx->num_vregs, ctx->regs);
- }
- 
-+static const struct property_entry wcn7850_bt_props[] = {
-+	PROPERTY_ENTRY_STRING("compatible", "qcom,wcn7850-bt"),
-+};
-+
-+static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned long action,
-+			      void *data)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = container_of(nb, struct pwrseq_pcie_m2_ctx, nb);
-+	struct pci_dev *pdev = to_pci_dev(data);
-+	struct serdev_controller *serdev_ctrl;
-+	struct device *dev = ctx->dev;
-+	struct device_node *remote;
-+	int ret;
-+
-+	/*
-+	 * Check whether the PCI device is associated with this M.2 connector or
-+	 * not, by comparing the OF node of the PCI device parent and the Port 0
-+	 * (PCIe) remote node parent OF node.
-+	 */
-+	remote = of_graph_get_remote_node(dev_of_node(ctx->dev), 0, 0);
-+	if (!remote || (remote != pdev->dev.parent->of_node)) {
-+		of_node_put(remote);
-+		return NOTIFY_DONE;
-+	}
-+	of_node_put(remote);
-+
-+	switch (action) {
-+	case BUS_NOTIFY_ADD_DEVICE:
-+		/* Create serdev device for WCN7850 */
-+		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
-+			remote = of_graph_get_remote_node(dev_of_node(ctx->dev), 1, 1);
-+			if (!remote) {
-+				of_node_put(remote);
-+				return NOTIFY_DONE;
-+			}
-+
-+			serdev_ctrl = of_find_serdev_controller_by_node(remote);
-+			of_node_put(remote);
-+			if (!serdev_ctrl)
-+				return NOTIFY_DONE;
-+
-+			ctx->serdev = serdev_device_alloc(serdev_ctrl);
-+			if (!ctx->serdev)
-+				return NOTIFY_BAD;
-+
-+			ctx->fwnode = fwnode_create_software_node(wcn7850_bt_props, NULL);
-+			if (IS_ERR(ctx->fwnode))
-+				return notifier_from_errno(PTR_ERR(ctx->fwnode));
-+
-+			device_set_node(&ctx->serdev->dev, ctx->fwnode);
-+
-+			ret = serdev_device_add(ctx->serdev);
-+			if (ret) {
-+				dev_err(dev, "Failed to add serdev for WCN7850: %d\n", ret);
-+				fwnode_handle_put(ctx->fwnode);
-+				serdev_device_put(ctx->serdev);
-+				return notifier_from_errno(ret);
-+			}
-+		}
-+		break;
-+	case BUS_NOTIFY_REMOVED_DEVICE:
-+		/* Destroy serdev device for WCN7850 */
-+		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
-+			fwnode_handle_put(ctx->fwnode);
-+			serdev_device_put(ctx->serdev);
-+		}
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port, u8 endpoint,
-+					     const char *node)
-+{
-+	struct device_node *remote __free(device_node) =
-+			of_graph_get_remote_node(dev_of_node(dev), port, endpoint);
-+
-+	if (remote && of_node_name_eq(remote, node))
-+		return true;
-+
-+	return false;
-+}
-+
-+/*
-+ * If the connector exposes a non-discoverable bus like UART, the respective
-+ * protocol device needs to be created manually with the help of the notifier
-+ * of the discoverable bus like PCIe.
-+ */
-+static int pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *ctx, struct device *dev)
-+{
-+	int ret;
-+
-+	/*
-+	 * Register a PCI notifier for Key E connector that has PCIe as Port
-+	 * 0/Endpoint 0 interface and Serial as Port 1/Endpoint 1 interface.
-+	 */
-+	if (pwrseq_pcie_m2_check_remote_node(dev, 1, 1, "serial")) {
-+		if (pwrseq_pcie_m2_check_remote_node(dev, 0, 0, "pcie")) {
-+			ctx->dev = dev;
-+			ctx->nb.notifier_call = pwrseq_m2_pcie_notify;
-+			ret = bus_register_notifier(&pci_bus_type, &ctx->nb);
-+			if (ret) {
-+				dev_err_probe(dev, ret, "Failed to register notifier for serdev\n");
-+				return ret;
-+			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -236,7 +355,11 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
- 				     "Failed to register the power sequencer\n");
- 
--	return 0;
-+	/*
-+	 * Register a notifier for creating protocol devices for
-+	 * non-discoverable busses like UART.
-+	 */
-+	return pwrseq_pcie_m2_register_notifier(ctx, dev);
- }
- 
- static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
+> 
+> You also can't return the data by value and then track it by reference -
+> as that value lives on the stack. This has the benefit of making the
+> lifecycle of that object clear (it lives in each client) - but perhaps
+> not a goal of ours... 
+> 
+> How come the ubwc config is const but the hbb isn't?
+> 
+> 
+> If we want both the per-target data to remain const and data in the
+> client's context to be carrying the const qualifier, the one solution I
+> can see is:
+> 
+> const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
+> {
+>         const struct qcom_ubwc_cfg_data *data;
+>         static struct qcom_ubwc_cfg_data cfg;
+>         int hbb;
+> 
+>         ...
+> 
+>         data = of_machine_get_match_data(qcom_ubwc_configs);
+>         ...
+> 
+>         hbb = qcom_smem_dram_get_hbb();
+> 	...
+> 
+>         cfg = *data;
+>         cfg.highest_bank_bit = hbb;
+> 
+>         return &cfg;
+> }
+> 
+> But we'd need to deal with the race in cfg assignment...
+
+static struct qcom_ubwc_cfg_data *cfg;
+static DEFINE_MUTEX(cfg_mutex);
+const struct qcom_ubwc_cfg_data *qcom_ubwc_config_get_data(void)
+{
+        const struct qcom_ubwc_cfg_data *data;
+        int hbb;
+
+	guard(mutex)(&cfg_mutex);
+
+	if (cfg)
+		return cfg;
+
+        data = of_machine_get_match_data(qcom_ubwc_configs);
+	if (!data)
+		return ERR_PTR(-ENOMEM);
+
+        hbb = qcom_smem_dram_get_hbb();
+	if (hbb = -ENODATA)
+		hbb = 15; /* I think it was default */
+	else if (hbb < 0)
+		return ERR_PTR(hbb);
+
+        cfg = kmemdup(data, sizeof(*data), GFP_KERNEL);
+	if (!cfg)
+		return ERR_PTR(-ENOMEM);
+
+        cfg->highest_bank_bit = hbb;
+
+	return cfg;
+}
+
+This potentially leaks sizeof(*data) memory if the module gets removed.
+Granted that all users also use qcom_ubwc_config_get_data() symbol, it
+should be safe to kfree(cfg) on module removal.
 
 -- 
-2.48.1
-
-
+With best wishes
+Dmitry
 
