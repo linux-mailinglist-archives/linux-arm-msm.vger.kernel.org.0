@@ -1,176 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-88350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F748D0D900
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 17:14:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C40CD0DAC3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 20:11:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D353D300518C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 16:14:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2F414301989D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 19:11:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02E1347FD7;
-	Sat, 10 Jan 2026 16:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3652C15BB;
+	Sat, 10 Jan 2026 19:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HpjKeBdG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qCiyrFAU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F562346FD7
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 16:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B217121E087;
+	Sat, 10 Jan 2026 19:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768061640; cv=none; b=qUCwwVxlUGTLbcOb6dQuEOoncMnx5LksJR+UOdncAd6Pq7KzYeFlLjWJ21cto7s+cU7kPIFHkAtWGZ6SQ0J/oK+YRJ/v4o/GwnwzffTqDUwec6lQrS5iYvwYweokqGAGGSfNaj31UH63e4+sw0+PwrYy7SHJOkam1cauRDxHus8=
+	t=1768072294; cv=none; b=QwT1XYNeJFXuLjbcgEmh3MztQsokWMgiH+PSrcauS5N+SAX1cb9nvYyac8MVMFUTW7vaNKOfgIPk+a140jci5d7V/mWfD1y8NXSm2PgoEbufz8gpPeK3/srQ991VgVCJ4MDlCrs0ANd8MeqSCSFSCOa53ewfx5kMVUq2lzP0PNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768061640; c=relaxed/simple;
-	bh=CZZIXy+M3Hwd2R3IUz/gMxdE6SMi8+NpZ+MFX6odPrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=musWoFzzZoKC4BxiUBf5MTlvOiSoKgmvfWLlm1/9sRBLFu9Ghmo/K5CPAU60y2Q15T532VG0FGBOpQMDpFgYC4mvFCthacuGaijsQudifUnPbA6AqoNCc4R9y2f9LnzscS4zck5r9X536Hba8j6edmUgoOunoYDTwX3d+YFZ2XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HpjKeBdG; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6505d3b84bcso8132578a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jan 2026 08:13:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768061637; x=1768666437; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Za5zkOXc/pUTKApHzs7ZvT3Vilb+ymesEJJeGab5uBU=;
-        b=HpjKeBdG1Tzm60BS2k4E+4mTnOjtUQs2/CueCPGiWyXiJmSSabTBO0DvQhD7YGm4S6
-         yi5zkvKBoFnjOpyy3683AHEP8+odRx3EpTrXSQ1S4Jrm4uLbfBHxly25l7h7hV7bcFXd
-         0NmXlCodoh+eVzWUB8vVbuOc4miE9xWuUa1WeZOILX4BWNKLDt4qfPfa++INvNYFdMfd
-         +E9hNxg7awFj+5+4Uh9cBlsFQO8o75df5+KZ0QVyapa3yabm2SGKRZg6M3isjAhIymii
-         YDeUWGn30HxJm/1bUjyP5vAuWRUeMn1CCSRitnnPzGZn+lOXq84sw+3IJIjE1y05KJKa
-         iFAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768061637; x=1768666437;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Za5zkOXc/pUTKApHzs7ZvT3Vilb+ymesEJJeGab5uBU=;
-        b=LdmHd8Iz+6gE9dI8HjXQqHL3VnXOgmxDUC3KfW6el/bqJejAiMgsGM9GKmewF+yPPK
-         d4YwG0n7ioACv7C628MTVyWV8ibQc2J025Znw0OIyxd3Y5uBcNOpiy9rEqetF6btLDCr
-         FB8wZ1oU3+VKcJONefxCtdntMMZOhKVSCxGg0mPMwug2qO8Vz1gA8ArxMR2GpLvmLw24
-         LVoDI+k+beMFgtsEEGPlSayqyXsinc1kFHyZ62GsD8o0O9n67t1ykDItU9p7kWGWZCwj
-         a66s1uzDjGxGPY1dMQzVN2rqhY8jFWa4FsAqrqmK6Omra9/6Lw+zgiB2DRLumw7u+kDR
-         wJQw==
-X-Gm-Message-State: AOJu0YxCCUZDlYISSTUb0EADKf/yTNFaDL9MV56RzC+DFhBKgyfwXV3x
-	nBd5IoKo+MM9cZri07LaM0/4icz2wXLIvMpVgNjR9nKbr7h2kJfVOnhLN6u9lUECn8A=
-X-Gm-Gg: AY/fxX4fpfz1wlbhAk7yKdC/iJ6BpVM8o4My2Oay5xOWi1+SNGVK4zB7N1B8tUw2viX
-	5dsn36qutQQnXmO0oO+p963P5dwHwRp2qIdoN9dM0h6n9sV5xaMQpMi2T6HnacVcMxYnJxvTjNv
-	C+rVcKY/yqkmBO2gw3h2UbOkQD2U/eXRucUSHZ+GtZkzfH7f4eo3FI/bNs4KLDb8gL6yO5Gtvpy
-	WJ/CK2u/gc7RTBvXlae1Vwn0XoaQxgWdkACWipvjE+vTaWmvN2VwiDbJzRm5d5E/FjqY3wbOVsp
-	/7J9oa96p6NGtk2lhmTWiEItuQ6RQ0tTAUGa8b7Qgi1XoXgIPfyu+oiswx57k7pkWUdBUfJI2/a
-	TDd/vBUdQrI9fH5CxSt1T944UIiAXNVobor4pPs3HkXXUs3+epd0T8cXdYvqVJF4s34pT9+TfqU
-	y9mBuziNCOI1ifMYOywNBBTfks1n603h0ylhQKs43hUusfy77Fq1sTIx8L3A5uVRfz/VNxkWi8I
-	n+Q
-X-Google-Smtp-Source: AGHT+IEUIfkx8+lGVACl9YjDlxYymQluSPmgIIVsmxsUKIPlcHRtxRGZm5IY8ly5yIKe9vinZeykRg==
-X-Received: by 2002:a17:907:970c:b0:b80:1348:226e with SMTP id a640c23a62f3a-b844532ae89mr1390302166b.33.1768061637487;
-        Sat, 10 Jan 2026 08:13:57 -0800 (PST)
-Received: from ?IPV6:2001:9e8:17d0:db00:2109:890f:3eab:3c56? ([2001:9e8:17d0:db00:2109:890f:3eab:3c56])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8701e1d467sm79351266b.70.2026.01.10.08.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Jan 2026 08:13:56 -0800 (PST)
-Message-ID: <2a39719e-e73b-4558-95fa-d54f94c43220@linaro.org>
-Date: Sat, 10 Jan 2026 17:13:55 +0100
+	s=arc-20240116; t=1768072294; c=relaxed/simple;
+	bh=ifQtDtBDcokzLccqf8aQCht97s3eipcMMEmXbpDw6Aw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fA8vRN20KwBVAS1O9++wDTOR7UCFtDd0sNZAP9UFzr1t3q6eyWgJ9WsSAckSdEizj3PhNVvRad2I3NNHoX8wryLd2BxCv3vePVdSkxAdfvX1J4Qhd0icRCA9mccsUjnFVOckFMQcdqdYOdGtk8d7y86bWJrFSLqO4aHFVzdTDdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qCiyrFAU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EEFC4CEF1;
+	Sat, 10 Jan 2026 19:11:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768072294;
+	bh=ifQtDtBDcokzLccqf8aQCht97s3eipcMMEmXbpDw6Aw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qCiyrFAU2xicKCibTXPIf3XhBQmk0g6ZWmSgHHXVP1B02QbrV77FWTZFOP1VjWDCw
+	 qjMrQb+XKb5f4XadhrY/24Ap8FT4i3zPkyp8Hq83pZ7Qd05yBLYY/SjBLAoBYN1J91
+	 tZcXYUR9WCowuaBnwQNH+5l+izoJ34YwXyJn9pNjN9mFqtBAcF6dVgtvosb5DN2PQH
+	 UkWDCIMetOEIB1XAkKVOYI7Wkyc0F3Lm5PBO/vh7rnB4GSTP0L4HqCSOjm7fLM7dry
+	 DJ/5zv35sUADTSmPEivxJvudoLJxOMiPSlaVLC0wreck+xhcPR7Tw1K+pdiPCNoYJW
+	 fAQibqBj2d1ug==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney@redhat.com>
+Cc: linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	sophgo@lists.linux.dev,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-rtc@vger.kernel.org,
+	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-actions@lists.infradead.org,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	linux-mips@vger.kernel.org,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	linux-arm-msm@vger.kernel.org,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Michal Simek <michal.simek@amd.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-phy@lists.infradead.org
+Subject: Re: (subset) [PATCH 00/27] clk: remove deprecated API divider_round_rate() and friends
+Date: Sat, 10 Jan 2026 13:11:17 -0600
+Message-ID: <176807228457.3708332.10766520174431957453.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/8] Add RemoteProc cooling support
-To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, andersson@kernel.org,
- mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, rafael@kernel.org, daniel.lezcano@linaro.org,
- rui.zhang@intel.com, lukasz.luba@arm.com, konradybcio@kernel.org,
- amitk@kernel.org, mani@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20251223123227.1317244-1-gaurav.kohli@oss.qualcomm.com>
-Content-Language: en-US, en-GB
-From: Casey Connolly <casey.connolly@linaro.org>
-In-Reply-To: <20251223123227.1317244-1-gaurav.kohli@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 
+On Thu, 08 Jan 2026 16:16:18 -0500, Brian Masney wrote:
+> Here's a series that gets rid of the deprecated APIs
+> divider_round_rate(), divider_round_rate_parent(), and
+> divider_ro_round_rate_parent() since these functions are just wrappers
+> for the determine_rate variant.
+> 
+> Note that when I converted some of these drivers from round_rate to
+> determine_rate, this was mistakenly converted to the following in some
+> cases:
+> 
+> [...]
 
-On 12/23/25 13:32, Gaurav Kohli wrote:
-> This series introduces a generic remote proc cooling framework to control
-> thermal sensors located on remote subsystem like modem, dsp etc.
-> Communications with these subsystems occurs through various channels, for example,
-> QMI interface for Qualcomm.
->   
-> The Framework provides an abstraction layer between thermal subsytem and vendor
-> specific remote subsystem. Vendor drivers are expected to implement callback
-> and registration mechanisms with cooling framework to control cooling
-> devices.
-> 
-> This patchset also revives earlier discussions of QMI based TMD cooling
-> devices discussion posted on below series by Casey:
-> https://lore.kernel.org/linux-devicetree/20230905-caleb-qmi_cooling-v1-0-5aa39d4164a7@linaro.org/
-> 
-> That series introduced Qualcomm QMI-based TMD cooling devices which used
-> to mitigate thermal conditions across multiple remote subsystems. These
-> devices operate based on junction temperature sensors (TSENS) associated
-> with thermal zones for each subsystem and registering with remoteproc
-> cooling framework for cooling registration.
-> 
-> This patch series has a compilation/runtime dependency on another series [1].
-> 
-> [1] https://lore.kernel.org/linux-devicetree/20250822042316.1762153-1-quic_gkohli@quicinc.com/
-> 
-> Casey Connolly (2):
->    remoteproc: qcom: probe all child devices
->    thermal: qcom: add qmi-cooling driver
+Applied, thanks!
 
-I'm glad this series is getting revived. It would be good if you could 
-explain what changes you made to my patches somewhere.
+[14/27] clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
+        commit: e1f08613e113f02a3ec18c9a7964de97f940acbf
+[15/27] clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+        commit: 35a48f41b63f67c490f3a2a89b042536be67cf0f
+[16/27] clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
+        commit: b2f36d675e09299d9aee395c6f83d8a95d4c9441
 
-I also remember one of my patches adding the DT parts for SDM845, would 
-you be willing to pick that up for the next revision? I'd be happy to 
-provide my Tested-by.
-
-Kind regards,
-
-> 
-> Gaurav Kohli (6):
->    thermal: Add Remote Proc cooling driver
->    dt-bindings: thermal: Add qcom,qmi-cooling yaml bindings
->    arm64: dts: qcom: Enable cdsp qmi tmd devices for lemans
->    arm64: dts: qcom: Enable cdsp qmi tmd devices for talos
->    arm64: dts: qcom: Enable cdsp qmi tmd devices for kodiak
->    arm64: dts: qcom: Enable cdsp qmi tmd devices for monaco
-> 
->   .../bindings/remoteproc/qcom,pas-common.yaml  |   6 +
->   .../bindings/thermal/qcom,qmi-cooling.yaml    |  99 ++++
->   MAINTAINERS                                   |   8 +
->   arch/arm64/boot/dts/qcom/kodiak.dtsi          |  36 ++
->   arch/arm64/boot/dts/qcom/lemans.dtsi          | 138 ++++-
->   arch/arm64/boot/dts/qcom/monaco.dtsi          |  92 ++++
->   arch/arm64/boot/dts/qcom/talos.dtsi           |  23 +
->   drivers/remoteproc/qcom_q6v5.c                |   4 +
->   drivers/remoteproc/qcom_q6v5_mss.c            |   8 -
->   drivers/soc/qcom/Kconfig                      |  13 +
->   drivers/soc/qcom/Makefile                     |   1 +
->   drivers/soc/qcom/qmi-cooling.c                | 498 ++++++++++++++++++
->   drivers/soc/qcom/qmi-cooling.h                | 428 +++++++++++++++
->   drivers/thermal/Kconfig                       |  11 +
->   drivers/thermal/Makefile                      |   2 +
->   drivers/thermal/qcom/qmi-cooling.h            | 428 +++++++++++++++
->   drivers/thermal/remoteproc_cooling.c          | 154 ++++++
->   include/linux/remoteproc_cooling.h            |  52 ++
->   18 files changed, 1981 insertions(+), 20 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
->   create mode 100644 drivers/soc/qcom/qmi-cooling.c
->   create mode 100644 drivers/soc/qcom/qmi-cooling.h
->   create mode 100644 drivers/thermal/qcom/qmi-cooling.h
->   create mode 100644 drivers/thermal/remoteproc_cooling.c
->   create mode 100644 include/linux/remoteproc_cooling.h
-> 
-
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
