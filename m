@@ -1,62 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-88359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BE64D0DAFE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 20:12:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10250D0DB13
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 20:14:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B96F1301623D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 19:11:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C831030657BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jan 2026 19:11:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB1212D8DB0;
-	Sat, 10 Jan 2026 19:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22652C08BC;
+	Sat, 10 Jan 2026 19:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JE8GU/lE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J0+4vYn6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75022494FF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD907288C0A;
 	Sat, 10 Jan 2026 19:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768072304; cv=none; b=WSSaNIm8Pbfue01EiOAL5gZlH0gbIDS9w3CUMWJLtYdoTCCuibAA/MU1EShjqIaJh2RtNTmaTLMraZSEx0J1cxvhRfvL0JGf4xCxVkw1C3FmH4uurk/ocXnZeUTChj2ZEM9B5oS3qHRqpPTyncqFEPNlidwGxjJ1G3LdFHjzFW0=
+	t=1768072303; cv=none; b=SbpT/uR+7NvDqMwV4D9c7Ti1wLOLTEuKxP6gqQlpCM/J34xhqJ/bAi99wk951SrSJL5khuRnw95GDRA7KELArBKMOdIleVudC7CooSTtYV+uphVq2PlOOpnsiQQyweLWboWRXuXES0/NaGyvfroFDbtyreiDT/8svCKpfxoplSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768072304; c=relaxed/simple;
-	bh=SBC3y5NMBrGnJXeYirZbDnJ/ctoBoxQBYPKcOV/16Qc=;
+	s=arc-20240116; t=1768072303; c=relaxed/simple;
+	bh=HzcRCDnLhSCJn7V8EQcCj1qQZWRWit+OOXgtlzmfDqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r+vF0TGQOYNn4I9Hx3Wt22lkfJG5VvOjGiKJHxuf0pE802PfdMxhXQpLB46YfyB7eu5iaUITX56+emTJ08D6h34MX/sbZfFUxvouVp+87JvVYztWu8o2P+5gQvLjQOAYxaJ+cXENesVVI1eGN7xRZRGWV65Z4MpGfDKT17wvFIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JE8GU/lE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4F4C116D0;
-	Sat, 10 Jan 2026 19:11:40 +0000 (UTC)
+	 MIME-Version:Content-Type; b=iaCcZ4ET4VpFKJQ4bL1bl8N1vleidd00ojhOeKYCEPfvB1eyolT8Hwvf3kispFAwCxECvmAYPZU7dNSLyeegpGxwy0B5l62RK1f9pz+WFZc4MGtdV/mQAgcLyZtHV5hfgZLsvuNI3u5apuccdi2Nz+rmgdZ6yf0m3Ed9XgiT08E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J0+4vYn6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5C1C4CEF1;
+	Sat, 10 Jan 2026 19:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1768072301;
-	bh=SBC3y5NMBrGnJXeYirZbDnJ/ctoBoxQBYPKcOV/16Qc=;
+	bh=HzcRCDnLhSCJn7V8EQcCj1qQZWRWit+OOXgtlzmfDqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JE8GU/lEvFL5VV75HfsB9ItFGvdiTcPZXrhlWCl4G4bJaov6vtNEjw1iv5ZfOTTbb
-	 2osjaxFu7MO1T7gpKMSO9rylXirisAxpP6EeAGDl7cvtHf1MJdl4tTZTLW8AyQBofa
-	 BerQKmBH0x9JpenwoFh43ddm3+53ytpADKMWJNG0xA9jz70ux16fcda58eocHEQnhh
-	 KZXe/8wE23ZO6vy2UV3JWpyh9A2FM9sVE8litkt4Y01/IPwnmRSoqA6/318DY6//Kr
-	 iSKaTtTBxPNfZEQyKpkRPC4F//Pr910wn+i+MOezWjIlQbxFrLIZLshkQKTCbIitvh
-	 AHZbFuIBZ8ATQ==
+	b=J0+4vYn6V58GoIzXp+xSIwBntwcILufhZ/qd82A9Q/1cTfbNYoJ8GvPwTCbZrkWAo
+	 /Z8nl401u4wPpI7tTzTfXig2A6ZuUWSR7C7uUZIVKOHtQAVFdQ6eu3BIDpkTzXzEkl
+	 9HcMCeb1acYI1OCDsNX1gvRyXDWS/zw3zsn1w8wNInJSjkGFyFCPMiQrO8Qyml/xFB
+	 joJy/4z3BJ4t/zAkda+q12WFVMfapd/kj9wcKjX9IyFwnMnrrLWB/wjDcmH0CnzNFz
+	 YwX192avhuY6q897RjE1qV+f3gpLWAgvXcA/2LdksSnv1/wzozS8xG4t22H6gGVCJK
+	 cMdgvJSdIEgNQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Nickolay Goppen <setotau@mainlining.org>
+To: konradybcio@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com,
+	Haotian Zhang <vulab@iscas.ac.cn>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	linux@mainlining.org,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm630: Add LPASS LPI TLMM
-Date: Sat, 10 Jan 2026 13:11:24 -0600
-Message-ID: <176807228434.3708332.15241559768508077782.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] soc: qcom: cmd-db: Use devm_memremap() to fix memory leak in cmd_db_dev_probe
+Date: Sat, 10 Jan 2026 13:11:25 -0600
+Message-ID: <176807228427.3708332.11079450921904072732.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260109-qcom-sdm660-lpass-lpi-dts-v1-1-d3eb84f10a39@mainlining.org>
-References: <20260109-qcom-sdm660-lpass-lpi-dts-v1-1-d3eb84f10a39@mainlining.org>
+In-Reply-To: <20251216013933.773-1-vulab@iscas.ac.cn>
+References: <20251215074125.2089-1-vulab@iscas.ac.cn> <20251216013933.773-1-vulab@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,17 +61,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 09 Jan 2026 17:03:59 +0300, Nickolay Goppen wrote:
-> The LPASS LPI TLMM pin controller controls pins for use by the analog
-> and digital codecs, such as the PDM bus, the digital microphone pins,
-> and the compander pins. Add it to support the codecs.
+On Tue, 16 Dec 2025 09:39:32 +0800, Haotian Zhang wrote:
+> If cmd_db_magic_matches() fails after memremap() succeeds, the function
+> returns -EINVAL without unmapping the memory region, causing a
+> potential resource leak.
+> 
+> Switch to devm_memremap to automatically manage the map resource.
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sdm630: Add LPASS LPI TLMM
-      commit: 0e09a596ad2e23d62e2707d5d1a68eaa76787f1b
+[1/1] soc: qcom: cmd-db: Use devm_memremap() to fix memory leak in cmd_db_dev_probe
+      commit: 0da7824734d8d83e6a844dd0207f071cb0c50cf4
 
 Best regards,
 -- 
