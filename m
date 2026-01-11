@@ -1,218 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-88385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E97D8D0E6CC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 10:06:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 92552D0F565
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 16:49:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 03DD0300D159
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 09:06:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 56E7B301671E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 15:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B6D61DF755;
-	Sun, 11 Jan 2026 09:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7941E34B683;
+	Sun, 11 Jan 2026 15:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TFCg5HvQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OpzEf7y8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C2A1643B;
-	Sun, 11 Jan 2026 09:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20547303A15
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 15:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768122381; cv=none; b=j2eNGhFKzOIm5PIswyISEzNlqBnc8PZnQLutRH9ASE8ENfdXutUanETyYgVtUbrLORxBa/ttk7MkX2qL5fX5nC3FruSmQW5v1kMHJRG94DkWFL1kxyYzL4Z//r/DxZyeiT010qm3FlAWzsqb6SWxiHqhvuH92kNLsUjDzgHujyU=
+	t=1768146562; cv=none; b=Xrn8IAkPucfX06dtkChC2rIuOTs0i5c2jjCxrA2EovMDuLRSbuEJCokdqdBwe8d3J14gPkccNUxzAd4Dvfy4Y8vZJDoN+Vxdb2HoDRaEGCJBkEobRdmmFnIdVaa23ROA1PRoD8ng8/NEcX0ikbKoMUtJRyYRjHV1jLLS/Ydkh9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768122381; c=relaxed/simple;
-	bh=OY7NDRZGkvXH5t60Nmww0imKSgEi4lVaX7yZCdKXyCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R4XM2QN6LhGD+v/FTBsqPzjTJ+UElK8rCVCwB6uYmHfC7DsmhQfbdV6j3qNrPOAuv5KW4Z0KUII6gSzivYhs9aNw1AqqROuUQ9aomsULdoQL7ZqqN5Vs0NgY9zleAaRqOXIrWwJ1/9747xZyRctFZ1qhaEN5IYx91lfxrEXElFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D90BC4CEF7;
-	Sun, 11 Jan 2026 09:06:18 +0000 (UTC)
-Date: Sun, 11 Jan 2026 14:36:07 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] soc: qcom: rpmh-rsc: Register s2idle_ops to
- indicate s2ram behavior in s2idle
-Message-ID: <5iw2uj5d76cfl6jgvpio6qdqf3nvwicgmqdd7agsdbjghpowww@kxxkoeadfr3r>
-References: <20260101165158.7251-1-manivannan.sadhasivam@oss.qualcomm.com>
- <lieekisbc2xe7elfh7edruw5csyw3vpqcyf6dc3fghe3mdqpph@fu2ofnbr5gbt>
- <filahffwq5th2if7jm3ytpea3pqblracdcl7pkp3bg3wyqg3by@qdxvwzt7a2fd>
- <l4v4gqv36nwdhvc2jgyvonnusakkd7kfrrecetlxsv74agemin@txdp7tzwnwpp>
- <sge2mznbz3wufvyisq4xll33ocr7kxz5jvv2ufqjfxcgapp3pd@6pkauvuuv7jm>
- <75av4b6g4slterg5ctdxkevaxvjsymealok47x7tjwv5etqwmj@rotc7nfhhgi5>
+	s=arc-20240116; t=1768146562; c=relaxed/simple;
+	bh=WQuMSF7U4ERbrc6GLhExFtoMtX3nNjug69Zngdqi1E0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kEthI7sVKcXHyMAPnh79OOkj5PDu3rlhe+t3pm9Xz1StOubTEae0a4/GWqNGITMEE8I6V+KZdn5mgFMMt28tTYAmOckGyHAAlAifazDeYEDe4YC2ZwhnkYP1N4EvrYucDp2qugL7/uX2rASKmpLlBnANRrhUi61miE5pTf/XEAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TFCg5HvQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OpzEf7y8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60B9tXSa2875265
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 15:49:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=0R0ChqWp0pdt++SFdjljlF
+	xTEfPDQFb+wu6OerIv1HE=; b=TFCg5HvQ5EELcFnggjOsUwMmbqW08dcLfmID3u
+	UUsra3jj9Fwm3MU9YRFllNp+EpzSxAm46ASZqCO0jHCk7XOK9ChI4KpGJi6qKU5n
+	rYgme0qE1Qpw63yGTFcCPm02OvuYWYLXWfP3RB/dUg9W9jgxyfujSBEn7r6t2G09
+	WGhWzkzCmvK4xqD0bTw1ruf/mKlugzNKKZw08vaRKw/FRtC3Kz1oq2FZI9cdIVm8
+	1v1MlkdhjlY7LP8CiDx3wM+QBkWktV3xCHxDyjeK7PRnK+0HOWAkytI7mjDcrvre
+	Pe51S7G+l7mPnuh5LQrhN6GYe6684xtLeXj+ftU4xqvFJHLw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bm8kyrem1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 15:49:19 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b6a9c80038so610140785a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 07:49:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768146559; x=1768751359; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0R0ChqWp0pdt++SFdjljlFxTEfPDQFb+wu6OerIv1HE=;
+        b=OpzEf7y86bKHUZXTR2aAC9lbsPDfm6NhmbxZij1Urt0twGIk8SXKDm5Yltkm7NLKy5
+         jItQjEDpxhks5dTcvMSqGsp+wKrsLMZGb55Cb0RoaTvJFZ4FYXmWWtaJsAJAsW0UVSjZ
+         sPYNHdTIWu5jORFeiY2vFqucnTRDnD+4pCnUHbPD3lSNA9WThsVnpheN4s+3p1tPpKsH
+         IOvpnwYuM/+yONO0ev/JQt1OG73VwmSm/wL7nQDMpBvZfQEfOZvDwwKPKk5ndJUp6gEp
+         mCdjPLY9t3g4o/ROzQtarhRw9VnpDCvv7cMqcHNfEpwM+0HHjoZCXPxFuLsXMFKD/Eok
+         wpMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768146559; x=1768751359;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0R0ChqWp0pdt++SFdjljlFxTEfPDQFb+wu6OerIv1HE=;
+        b=wJULmuRjHn9AEfjjuHf66Sm7bwElWaX0WsPhE0kzT3Pin2jbxtuB5KrZG8eQhzAFoI
+         2l+7u6iOXmSVBOqTuEzbPPPxamalcPL52Ct4jcwyUDWfIGpEFBs1l+KmDsa0Axe7v2sy
+         MstzEVUP0vANG+UAFXYBHqY5AjOtRi7Tf15yRH/Z2LF1t5lbXJhvEddLutXN+OZKx8ue
+         N9UUB279pYEAQmWuGBjgR7c6KBXDMgJ44uUCv2xwntBc898akc5awExbXGD/3i9J/Bck
+         mEt6VPL1riJQdkGjwKwUedkoEsrR/wG7qCZLj9+J4XCfIZlCVKyW0jwcZ0zPQ/RAfqj8
+         uaVw==
+X-Forwarded-Encrypted: i=1; AJvYcCW6vh12w+uvF2W98vJhIN3mv5G6SRrC++ceySm/TjCKaD14GFN5/EaYnrUDjyEmuRSiGDsJ7/TeHyInUKaC@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvvNYy5sNpH6t23YPc7Xo8Sd2aeriaK+s2c2HZQqZ42NShmACL
+	sJometKsbFQBMvVAwZRbF373aIDJSb31ZkhuJAtwmPhz9j8PYgnfIHJoSqP5RwcPcsyG9Gbe6hB
+	owjD8RqW1BfeGa0IqoJqYsZwodYlIkr/bot8R5WNADvh1klA9GptUNlnYPrhra0bSlR5h
+X-Gm-Gg: AY/fxX733kEVsBjZoXfWo65xFNE+ecj6g5VCReJ7iyZLbcxomCirGaOJkV06JliZZEn
+	Mai5wSovs5Et1flcOqupPSK+CzAF4GXNtvFnf2Ij++UxyIKbfaq9PX7XSZy/N2gcgS8ChX5QPCg
+	VdexCF929lx4bBgHUqmz2P4N0jMaz9y9EM2t3vZqkMLMfqjhEvAERMVdFIYfa6WiDWVF+Fnxplg
+	gZeOl1hUer4EfcE17TzgNLTE3JsMBZ9e1LNRtvMHIRfQFI19OekaSAtLRqP2tIdHZCfTUZISgrc
+	UArxry2t1cXK9nIHjAwxiFgxz6hMHVQYR9vWE3bZyfgjhH/YAqlEZS5v2z1I2DpBrOgkfvhz6yZ
+	GqfI4fjjm1vV0X0OHIRMgPVXmv4BpbbJ3qw==
+X-Received: by 2002:a05:620a:7006:b0:85d:aabb:47d4 with SMTP id af79cd13be357-8c38935623bmr2123414685a.6.1768146559238;
+        Sun, 11 Jan 2026 07:49:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFmcuJJPsUlhOx8Dm+GFrgsYQgqIsQAQViClKcrn4ilAl4JhTawi8geKku4fzh9VLihRuPR9w==
+X-Received: by 2002:a05:620a:7006:b0:85d:aabb:47d4 with SMTP id af79cd13be357-8c38935623bmr2123411585a.6.1768146558762;
+        Sun, 11 Jan 2026 07:49:18 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.218.229])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a5180bdsm1637163166b.57.2026.01.11.07.49.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jan 2026 07:49:18 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH RESEND v3 00/11] Bluetooth: dt-bindings: qualcomm: Split
+ binding
+Date: Sun, 11 Jan 2026 16:48:57 +0100
+Message-Id: <20260111-dt-bindings-qcom-bluetooth-v3-0-95e286de1da1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <75av4b6g4slterg5ctdxkevaxvjsymealok47x7tjwv5etqwmj@rotc7nfhhgi5>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGnGY2kC/43NsWrDMBAG4FcJN1dGJ0e13ClDs3ZIx5JBkc72g
+ SM1kmNSgt+9wksLhdDl4L//+O4OmRJThpfNHRLNnDmGEuqnDbjBhp4E+5JBSaVRKiP8JE4cPIc
+ +i4uLZ3EarzTFOA2itd0WtdTPDh0U4DNRx7cV/4DD/n3/9grHsh84TzF9rT9nXNv/8DMKKbTa2
+ rYxVDtvdyMHm2IVU7+6s/pttQ8tVSzvTSNbLZEs/rHqH0th89Cqi+XIG2d0p0nhLuZcXa52LHf
+ nqgw4LsvyDbfOhMZrAQAA
+X-Change-ID: 20251028-dt-bindings-qcom-bluetooth-9af415056c1c
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Rocky Liao <quic_rjliao@quicinc.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Bartosz Golaszewski <brgl@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2890;
+ i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
+ bh=WQuMSF7U4ERbrc6GLhExFtoMtX3nNjug69Zngdqi1E0=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpY8ZyQj/wv6h2+dnu3cOKMAPDi3dGJqWx6EAFJ
+ ZEehTe7wqmJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaWPGcgAKCRDBN2bmhouD
+ 15QxD/4+QHPX9rOy8/UWPIldi+FUT5YDTeoKhxjcfG/WR208x2uQ8prInpIabloalLvPDJgULk4
+ aPflTrZ7YwNDBsqCE9XLFKQjcrQ19PHNFonrSQcfUWY7N2a7joUD9X+FW72uIjVoP+q7ahSFlHa
+ ZN9UAskNn9XsQYnFx/VtdokMJ/t9tAhO6HmyAbO5FyDDL7JX7zaRV+9vRdOWlAIRWpFpaEIOq1r
+ L7hDndVAFw9K2/5qdEdOcspL8KjBNP/xsp8JviiSLwe2o5r8KmtaQazPlMGxKZ0n57hMQQx2QXW
+ nk7iKEy1dgBVntudYz6LZ6EX8kDr4pehZTCA5UDg/d1L7Haqa8kSNviqHQow9OLUhkDArjX5KEd
+ hJwEQN3bsaOZYZjyU5O3rZbHPw2o7IX/wD9TtUeY+a4t7KdKLK9TZFKhzO2LEZyjxOPqkyeUgnF
+ XlGB9yzxsYIAhkzIp9ZpAPyHlsIdmJuphvLd3A9Z29fYCZmGUWtK/kYEpw4zXNZMW0Qyc/w5YRa
+ IAKVny90Krsjkri5fabWZPD8x0ki/kWwR8KPL3afTXANlfoiff0qLpX+T7izkHqtsxvGMqjYGh1
+ sML4eCpThM/bvQvdxTe1Ar2oLT/FhZ0NvE45pD4Oauz2zzG40S5Zy3OvJ9Osnh2W+DpWYY7ZUaM
+ h6Bgw6HZsOrXXyA==
+X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-Proofpoint-GUID: Cdq823Om9Gzomx6v0uXDty3ndRDD1IYB
+X-Authority-Analysis: v=2.4 cv=ZuDg6t7G c=1 sm=1 tr=0 ts=6963c67f cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=bC-a23v3AAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=P9jvEC7lATeLTnKe_mwA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=FO4_E8m0qiDe52t0p3_H:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: Cdq823Om9Gzomx6v0uXDty3ndRDD1IYB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTExMDE0NiBTYWx0ZWRfX/CI3pDsrRE60
+ nbq8cavgmdAlV1eEsZfUs9XwD3CjVOpinqNGA1ZV+PSGYxUjw/U0Et/lgMIxOvYim7S00CFkne0
+ XRJDUR7KhrOJjxPRwPdoZgGdmXH3EKdsXShxh57dDFE35YZa/7+uHR0Xz4dokwnB9Lcmxct2JEG
+ K/bz16nksnURnCFrl7Cye6+vb+CBUQoCCwTxn19Idt5+cZ3/hkp2xxXgi7DiIkpFbKUuWhTQ2G4
+ LuLlT+LQoY1Nwz6Hd1QuERlAKZHwLlFERh8ir2M7ygFBP+tc62jIowm9zy7jjzfck7QXnHl6EDn
+ Scq8oiKL23NLgM9CGgP/+Ohu4lMUOxMudJ3ZBDUsOxpA4lgdD/z0XRyUAOo4MK0mb19KQZDtSTD
+ BdoAtgMLDiiIPgwacfTeEy+JjRQsFa+dXuqJL0oUJLqNF+YfxnsYbkUu8jc4n9Odc5bXTYkzvk1
+ LfJTU3W9UAtCb88Gqag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-11_06,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601110146
 
-On Fri, Jan 09, 2026 at 01:36:32PM -0600, Bjorn Andersson wrote:
-> On Thu, Jan 08, 2026 at 10:55:16AM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Jan 06, 2026 at 11:21:59AM -0600, Bjorn Andersson wrote:
-> > > On Mon, Jan 05, 2026 at 10:27:41PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Mon, Jan 05, 2026 at 08:04:54AM -0600, Bjorn Andersson wrote:
-> > > > > On Thu, Jan 01, 2026 at 10:21:57PM +0530, Manivannan Sadhasivam wrote:
-> > > > > > Hi,
-> > > > > > 
-> > > > > 
-> > > > > Many thanks for looking into this problem, Mani.
-> > > > > 
-> > > > > > This is just an attempt to let the device drivers know of the quirky platform
-> > > > > > behavior of mimicking s2ram in s2idle for older Qcom SoCs (pre-Hamoa and
-> > > > > > non-chromebooks) using RPMh. This information is important for the device
-> > > > > > drivers as they need to prepare for the possible power loss during system
-> > > > > > suspend by shutting down or resetting the devices.
-> > > > > > 
-> > > > > 
-> > > > > Is this really what happens? What _exactly_ is the purpose of
-> > > > > pm_suspend_via_firmware() and pm_resume_via_firmware()?
-> > > > > 
-> > > > > The kernel-doc for pm_suspend_via_firmware() states "return true if
-> > > > > platform firmware is going to be invoked at end of system suspend...in
-> > > > > order to complete it".
-> > > > > 
-> > > > > To me this indicates that the purpose of this mechanism is to signal
-> > > > > Linux that we're running on a target where platform firmware will cut
-> > > > > power once we reach the bottom of the suspend chain, so the individual
-> > > > > drivers has to save/restore state in order to prepare for this.
-> > > > > 
-> > > > 
-> > > > Yes!
-> > > > 
-> > > 
-> > > But that's not the case here. In fact, iirc even on Makena the PCIe
-> > > controller is retained, it's just the link that can't be sustained
-> > > without CX - but I might misremember.
-> > > 
-> > 
-> > There is no MX retention for PCIe on Makena.
-> > 
-> 
-> Okay, thanks for correcting my memory.
-> 
-> [..]
-> > > > We tried to fix the issue in the NVMe driver so far, but all efforts ended up in
-> > > > vain. NVMe maintainers preferred to rely on some PCI/PM APIs for this. Initially
-> > > > I looked into creating one such API, but then figured out that I can just make
-> > > > use of this global flag and not touch the NVMe driver at all.
-> > > > 
-> > > 
-> > > At the same time acpi_storage_d3() tells me that this problem is already
-> > > accepted by the community, we just don't have a way to signal the same
-> > > in our system.
-> > > 
-> > 
-> > There are many solutions initially accepted for x86/ACPI which are not getting
-> > accepted now.
-> > 
-> 
-> It's inspiring to see the whole x86 ecosystem moving beyond such issues.
-> 
-> > > > This worked well for s2ram, so I resent a patch submitted by Konrad in 2024 [1].
-> > > > But for s2idle and Makena, I thought I could reuse the same global flag and
-> > > > achieve the same net result.
-> > > > 
-> > > 
-> > > My problem remains that we're using the global "power to all IP-blocks
-> > > will be lost"-flag to say "on Makena, the PCIe controller doesn't retain
-> > > state in low power mode", to a single driver.
-> > > 
-> > 
-> > I agree with your concern. If not global, we need to either fix it in PCI core
-> > or in the NVMe driver. Unfortunately, for an one-off issue like this, making
-> > change in both proves difficult. As you may know, our initial work was to get it
-> > fixed in the NVMe driver, but that didn't fly.
-> > 
-> 
-> The fact that the PCIe controller is "broken" does not imply that the
-> whole SoC is broken, and claiming so will come with side effects.
-> 
+Changes in v3:
+- Just rebase and add review tags.
+- Link to v2: https://patch.msgid.link/20251029-dt-bindings-qcom-bluetooth-v2-0-dd8709501ea1@linaro.org
 
-I don't "disagree" with you.
+Changes in v2:
+- Drop in few commits the properties (supplies) from
+  qualcomm-bluetooth.yaml which are not used by devices left there,
+  instead of removing them in final patch (qcom,wcn7850-bt).
+- Fix dt_binding_check error - missing gpio.h header in the example.
+- Drop maintainers update - split into separate patch.
+- Add also Bartosz as maintainer of two bindings because he was working
+  with these in the past.
+- Link to v1: https://patch.msgid.link/20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org
 
-> [..]
-> > > > > Do we force all "pre-Hamoa" targets into this same behavior? Or do we
-> > > > > have a different flag for saying "at the end of suspend power will be
-> > > > > lost" there?
-> > > > > 
-> > > > 
-> > > > If you don't agree with the above reasoning, I can just limit its usage to
-> > > > Makena and s2ram.
-> > > > 
-> > > 
-> > > I don't think I have all the details, but if we're saying that Makena is
-> > > broken and need special treatment in NVMe, it would be better to say
-> > > just that, with a patch in check_vendor_combination_bug()
-> > > 
-> > > /* Qualcomm SC8280XP can not enter low-power with PCIe link active */
-> > > if (of_machine_is_compatible("qcom,sc8280xp"))
-> > > 	return NVME_QUIRK_SIMPLE_SUSPEND;
-> > > 
-> > 
-> > I tried it in multiple attempts. Recent one is this:
-> > https://lore.kernel.org/all/20250126050309.7243-1-manivannan.sadhasivam@linaro.org/
-> > 
-> > And here is the reply:
-> > https://lore.kernel.org/all/20250210040446.GA2823@lst.de/
-> 
-> I presume "core" doesn't necessarily imply "system-wide", but you know
-> the PCIe stack better than me, so I'm not sure where in the "core" this
-> would be better implemented.
-> 
+One big Qualcomm Bluetooth schema is hardly manageable: it lists all
+possible properties (19 supplies).  Split bindings to separate bindings,
+so device schema will be easier to read/maintain and list only
+relevant properties.
 
-"Core" here is just the PCI stack. If the stack can detect that this platform
-Root Complex is broken, the it may possible indicate that to its client drivers.
+What's more it messes up old (pre-PMU) and new (post-PMU) description in
+one place adding to the total mess.
 
-> > 
-> > > 
-> > > Alternatively, make it possible to set StorageD3Enable in DeviceTree.
-> > > This flag exists in ACPI for a reason, why wouldn't we see the same
-> > > problems when describing the system using DeviceTree?
-> > > 
-> > 
-> > This is not a ACPI spec defined object, but just a MSFT way of telling the OS
-> > when to enter D3 (D3Hot or D3Cold) for storage devices. If we want to go with
-> > the DT property, it has to be something like 'qcom,no-retention'. I don't think
-> > a generic property makes sense here.
-> > 
-> 
-> Unless I'm reading the nvme driver incorrectly, I don't think the need
-> for such property is vendor-specific. But conceptually it doesn't really
-> belong in system description, given that the user might swap NVMe and
-> introduce/remove the need for this quirk.
-> 
+Best regards,
+Krzysztof
 
-Here, I meant "Qcom" as the vendor for the property, not NVMe vendor. Since this
-behavior of loosing context during s2idle is only specific to Qcom, that too
-only for a specific SoC, if we were going for a DT property, I will use Qcom
-specific property to mark the RC as broken in some way.
+---
+Krzysztof Kozlowski (11):
+      dt-bindings: bluetooth: qcom,qca2066-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,qca9377-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,qca6390-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn3950-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn3990-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn6750-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn6750-bt: Deprecate old supplies
+      dt-bindings: bluetooth: qcom,wcn6855-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn6855-bt: Deprecate old supplies
+      dt-bindings: bluetooth: qcom,wcn7850-bt: Split to separate schema
+      dt-bindings: bluetooth: qcom,wcn7850-bt: Deprecate old supplies
 
-> > Even then, we would need a PCI API to translate that for client drivers. I can
-> > look into this direction.
-> > 
-> 
-> I hope that we can agree that this is a property of the PCIe controller,
-> for Makena. If we can't move the problem with NVMe on Makena out of the
-> way of progress, how about we work our way around it (for now
-> hopefully...)?
-> 
-> Change qcom_pcie_suspend_noirq() to explicitly carry a vote for CX (e.g.
-> using the bw-vote as today), describe the problem explictily in a
-> comment, and then move forward with releasing the CX vote for all other
-> targets.
-> 
+ .../net/bluetooth/qcom,bluetooth-common.yaml       |  25 ++
+ .../bindings/net/bluetooth/qcom,qca2066-bt.yaml    |  49 ++++
+ .../bindings/net/bluetooth/qcom,qca6390-bt.yaml    |  64 +++++
+ .../bindings/net/bluetooth/qcom,qca9377-bt.yaml    |  58 +++++
+ .../bindings/net/bluetooth/qcom,wcn3950-bt.yaml    |  67 ++++++
+ .../bindings/net/bluetooth/qcom,wcn3990-bt.yaml    |  66 ++++++
+ .../bindings/net/bluetooth/qcom,wcn6750-bt.yaml    |  91 ++++++++
+ .../bindings/net/bluetooth/qcom,wcn6855-bt.yaml    |  99 ++++++++
+ .../bindings/net/bluetooth/qcom,wcn7850-bt.yaml    |  94 ++++++++
+ .../bindings/net/bluetooth/qualcomm-bluetooth.yaml | 259 ---------------------
+ MAINTAINERS                                        |   1 +
+ 11 files changed, 614 insertions(+), 259 deletions(-)
+---
+base-commit: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
+change-id: 20251028-dt-bindings-qcom-bluetooth-9af415056c1c
 
-Sure. That should work as a last resort.
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 
