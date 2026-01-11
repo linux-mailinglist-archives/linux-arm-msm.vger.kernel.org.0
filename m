@@ -1,184 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-88404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAB52D0FACC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 20:43:29 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6628ED0FAF0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 20:47:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 297B0301052F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 19:43:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1EACF30039C3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jan 2026 19:47:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55848352F88;
-	Sun, 11 Jan 2026 19:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10F6352C3F;
+	Sun, 11 Jan 2026 19:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b="zGZTG77h"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fX4iv/ah";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OC2hyAAg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961831EDA3C;
-	Sun, 11 Jan 2026 19:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.11.138.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572CD338F5E
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 19:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768160604; cv=none; b=NodAetYNj3wLMSY6/xPZ2Isd/h86XxHNWrJ8xHvppxu3/HVNaMHx5GbN/HjHYrmmgJ3I1RtNpxUpT1Ecnx8tcmq7Q7uFKM2Z8e2iHcCTU2qTp1MPCQCtIVFUV0nALehMJrRbJgADDKpNpVs2+150Yl/zYCa+78Bduohp61mzp/s=
+	t=1768160827; cv=none; b=Fg+WJaEu3wqowqNHqDWIIBwsxmNPkxicKnJJ9CVVx4X0bdpaLN35iyBqDj9Xv70kfhwfMhdUCKUAwm/dlC/N5YEhvubCPc8XDOz8KDSUCNBA4CkwjZMit0QtxvEAV+F8R8KfPdqzjdmKnHR143h48XQUJe9WyTrDCAAuTNOmFFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768160604; c=relaxed/simple;
-	bh=6ZO358wLWJv/7P+XiGaHMqEVTywze7565bGmQ4IzofM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m0bG3NSb3GHkqQVAh7bNoGGJW+QT/gMGgKOKDBiW1f0cadVd6q4Gtz3QaHerPNgU7GuL2rpRwsG1GwdOPGWEs/hXAfxkgfx8K4hBTp5Pup00laHE3v7Np+i1s4Yqc73Zp1XwEUQShlt+vYrwis9UG+BaJiCROQdCABRrKwMiJ+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de; spf=pass smtp.mailfrom=sntech.de; dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b=zGZTG77h; arc=none smtp.client-ip=185.11.138.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
-	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To;
-	bh=vyCElViucl+cLlUVhuVJcUJ20mw8TamaI7jWvsVoS30=; b=zGZTG77h1xr2PAvnP5M0ngyGAl
-	Es/dPUiyTwI/SyqG+ZIuZ3rOtVW/12j7XQr7d5aonB3wQsRXE8UHrw1tFxPg5ZpfiVZNO2T/cVHLv
-	geG9A3sxKpjugqC8rZYrqV6SEDZZUv5Mz/zmQPX6EGdmLZxgq9EMlRFHGWX2Mj+wXPYPwpJiZFl2h
-	QE7JGQYc7ldmySSxW/k/g2PQfDlA1r7cGsQGuGCqeUQsGaO0Atp/LPRP6U/zy/n24zT2DumDZuWLJ
-	5LcE+MEJKyZ6YgCn00XU73GORZqYWdgtEKhSu84RJQfG43W/cHzHlVz5lv2JLULcfv+EnfC0Ud7yw
-	4NKTtwbQ==;
-Received: from i53875aef.versanet.de ([83.135.90.239] helo=diego.localnet)
-	by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <heiko@sntech.de>)
-	id 1vf1K0-001rtK-85; Sun, 11 Jan 2026 20:41:56 +0100
-From: Heiko =?UTF-8?B?U3TDvGJuZXI=?= <heiko@sntech.de>
-To: Mark Brown <broonie@kernel.org>,
- Varshini Rajendran <varshini.rajendran@microchip.com>,
- Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>,
- Manikandan Muralidharan <manikandan.m@microchip.com>,
- David Lechner <dlechner@baylibre.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>,
- Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>,
- Charles Keepax <ckeepax@opensource.cirrus.com>,
- Bartosz Golaszewski <brgl@kernel.org>,
- =?UTF-8?B?QmVub8OudA==?= Monin <benoit.monin@bootlin.com>,
- Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>,
- Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Huacai Chen <chenhuacai@kernel.org>, Xianwei Zhao <xianwei.zhao@amlogic.com>,
- Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
- Sergio Perez Gonzalez <sperezglz@gmail.com>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>,
- Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>,
- Rosen Penev <rosenp@gmail.com>, Luis de Arquer <luis.dearquer@inertim.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
- Tudor Ambarus <tudor.ambarus@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Le Goffic <clement.legoffic@foss.st.com>,
- Alessandro Grassi <alessandro.grassi@mailbox.org>,
- Chen-Yu Tsai <wens@kernel.org>, Darshan R <rathod.darshan.0896@gmail.com>,
- Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
- patches@opensource.cirrus.com, imx@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, virtualization@lists.linux.dev,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>,
- Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>,
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@kaod.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Ryan Wanner <ryan.wanner@microchip.com>,
- Michael Hennerich <michael.hennerich@analog.com>,
- Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
- Kamal Dasu <kamal.dasu@broadcom.com>,
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- William Zhang <william.zhang@broadcom.com>,
- Kursad Oney <kursad.oney@broadcom.com>, Anand Gore <anand.gore@broadcom.com>,
- =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
- David Rhodes <david.rhodes@cirrus.com>,
- Richard Fitzgerald <rf@opensource.cirrus.com>,
- Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
- Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>,
- Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>,
- Yinbo Zhu <zhuyinbo@loongson.cn>, Neil Armstrong <neil.armstrong@linaro.org>,
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Conor Dooley <conor.dooley@microchip.com>,
- Daire McNamara <daire.mcnamara@microchip.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
- Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
- Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>,
- Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>,
- Haojian Zhuang <haojian.zhuang@gmail.com>,
- Robert Jarzmik <robert.jarzmik@free.fr>,
- Chris Packham <chris.packham@alliedtelesis.co.nz>,
- Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
- Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>,
- Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alain Volmat <alain.volmat@foss.st.com>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>,
- Masahisa Kojima <masahisa.kojima@linaro.org>,
- Jassi Brar <jaswinder.singh@linaro.org>,
- Laxman Dewangan <ldewangan@nvidia.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>,
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Masami Hiramatsu <mhiramat@kernel.org>,
- Jonathan =?UTF-8?B?TmV1c2Now6RmZXI=?= <j.neuschaefer@gmx.net>,
- Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: Re: [PATCH v1 2/4] spi: Drop duplicate of_node assignment
-Date: Sun, 11 Jan 2026 20:41:50 +0100
-Message-ID: <2911099.XrmoMso0CX@diego>
-In-Reply-To: <20260108203004.3538449-3-andriy.shevchenko@linux.intel.com>
-References:
- <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
- <20260108203004.3538449-3-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1768160827; c=relaxed/simple;
+	bh=LgiUmXYeM3SN3SzJ9b8ot7rT1uGH9BtlRADOOPheWOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QuGsYMWSCtHpnRtLLRT7gGG2jHAjYtPFEh+e4OnNKuc/4a2M6p9uaSvHs0uOkMtwYuFnbbS+F/p8LxwuDnsCWKZeLFUJIXbjHnmKdRmFWiqsJNtMjuDXFQoDGAiNdAHoN6em877dGTC3mUFoJpCz8FISeFHQcj5qlEQXehLvMQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fX4iv/ah; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OC2hyAAg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60BD06jH1974535
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 19:47:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=VWoq+K0orW96DlxbTKO5f8O+
+	BBk8ncmN5cuLKOlxAh0=; b=fX4iv/ah2irCuA1GzS5zNSReTHyBAFXNNBJ1E2aM
+	foqHoFgkim4tpHKuBSIIC3xRHqaQx+ZRJATO4Pslxg2WdgLtNh5Gm7wd3MJ0+dIQ
+	uaBk0RYQzrEXylL1hFdzs7VYjNVW1WFfE6suCqHatdiMU3dxV3Pm5JdGA0/N6ubM
+	WOphCjQzfEnbB0QP/g859YO6UPm1O1ehk6j1N45KLJu1v78PyHi4wOIwJQDdQ2wk
+	2WAkStk8NZVeQyz2K3DMkJDfeIecrKHNLjJ+MSVxBcDDrOGNhBzzokXSY8XX7to4
+	Tu9omNL4eTyeRX+GLDFN9G3MABOUSf4bkL5UgjOvucMM1Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bkf57anv9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 19:47:05 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8b51db8ebd9so1946658285a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 11:47:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768160824; x=1768765624; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VWoq+K0orW96DlxbTKO5f8O+BBk8ncmN5cuLKOlxAh0=;
+        b=OC2hyAAg2+SE3CFPJehRCE0CkEi11LC22f2ulymz85WFfOHfw1VVjboSKeAcNEpCKP
+         I0d9hwWik+zfOxaLb2t9wdR0HCwrc8FtmzJxCw2rwE+zYUpdjC0zErHUADmtj0OoFDNM
+         I4gm44UC3s81Wz7FAl1q1Bx1Srhy7fLNKdOKKj6GZ6ahLoe4S2jMqSUNvkEwQJVfq7Oh
+         abqwUPkm023sGG9GzRVvr2zcl4cBSSIlsByBpWSfslFvj1tQ8+QtLae4h2EdcJYOgceW
+         OhF6HKKt4gzYkWloLSJeInyqDuEaobuCBxP2MfmSCtmsAruaa7H8JpMLTwYq3bQ+bQa8
+         c52A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768160824; x=1768765624;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VWoq+K0orW96DlxbTKO5f8O+BBk8ncmN5cuLKOlxAh0=;
+        b=fpaiYshCqHKMdKBEyxZ9lANNB/hocBjLmXNDu7VoSWhDEoaX3j+XwDgf/AUDbbc5YB
+         sfUoZB4gBR0EghStOeSuOOMhW/MlSHiZP0fLGRx55QNNRi4boDbmNBNFiZgtlxGITVKU
+         oXZMVl4suCjYyi5tzzNOmS7/qZOU/z2iOA/QRf/JUwRbgOazabrXmnuIwW2D7prMFtOG
+         8HpGmgEnIi4eK6WX5TDTxG5pmsF1GFHUoJVMn8Dfoe6XAULjsnqB9uN5GpIYWjAHrTAZ
+         7kJxApkHXQ/NH4WoElghXw6Fp4kMAxac8+/+iNx34ZXczXzcbSVr281V+o8xQrUKevCQ
+         qi3A==
+X-Forwarded-Encrypted: i=1; AJvYcCVpIeCXhu5PPILTos4cNuGWMm1HykMhTmhrfWzPDnLnbXiiQ9cu2r2E+et1cJfozJx8PNBd7MwVJ1V6g7Ag@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwT8CDZ6iVoNdrVlbUNd8zesgYXvr1zfLQiCWvD7Cd/Pw3bZxm
+	wpUjXHm69S553Q0cN+g5ysnYkupod5CBjpotKX2SjiUPcGUWIRK+ptVdZ5wVZSTiV5603SoD/dD
+	DUFSbbZt6i0j9eQImja7iTrSOqpFGbrEUc9m5dSdMBYi8cd229+W6TAopOHyhf5OCkgBnCN5+O5
+	Rb
+X-Gm-Gg: AY/fxX6U1GqQ9mDZs+oM26iygJmj3BddrtDI2vwbKGW8/7tnkjvfhu+eTy9eH3gRPaf
+	6woLVB7DODFuYtXYN5IGu0VWAOnKxW7rq+ew9Go5+FEbu3/PAh2cESIryrKcpfoP247KMbAioqC
+	IxatHUmIlVIm5xQfFrjfHEz45Aieb0JGItBu6w9mll7Stu3xE9InZyonPdWSjkYC2bvtTtGUqQi
+	1q3n2Lmz/JWnl9dW05ZxQ3WNZLGVtdzC2RiueNrP86MIXkmXuPYZIv6CCeYnFlvvOwv5szdlpwM
+	iKJxQdnbyApIZyYtSZfvHSHiWoRnTOTWHrpGtd4re+0RuFkbksMlIVzKYk0zsAUVZWutGBjL1Zd
+	7Js8xk39I9Q+OUt8AxZE8DDmHVEFWkX8BbiZQyn9Of9dvH7FXQT0gui2rnx2rHvvB7fl8s8+8V2
+	8XjPH6q0gElK1DxJ3F4ebQvs8=
+X-Received: by 2002:a05:620a:29ce:b0:8b2:d791:3d25 with SMTP id af79cd13be357-8c389379d70mr2313318285a.18.1768160824368;
+        Sun, 11 Jan 2026 11:47:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHaSQrfT7R0upbUsE8Ls5NpEYGw1E2ZBrGO7Xau6nDy45sHOd/GEvMQLRUH+vOz30b4yVIQ7Q==
+X-Received: by 2002:a05:620a:29ce:b0:8b2:d791:3d25 with SMTP id af79cd13be357-8c389379d70mr2313316185a.18.1768160823873;
+        Sun, 11 Jan 2026 11:47:03 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b71b7eb22sm3234553e87.41.2026.01.11.11.47.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jan 2026 11:47:03 -0800 (PST)
+Date: Sun, 11 Jan 2026 21:47:01 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Val Packett <val@packett.cool>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: Add support for ECS LIVA QC710
+Message-ID: <qv2nlupgk3unmyj2uvegfrtdjrbnii2wuqg6xb2wzowpnqpccf@p7n66642cuvm>
+References: <20260111085726.634091-2-val@packett.cool>
+ <20260111085726.634091-6-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260111085726.634091-6-val@packett.cool>
+X-Authority-Analysis: v=2.4 cv=K/sv3iWI c=1 sm=1 tr=0 ts=6963fe39 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=7KhyCbUdoPYTC6S1WX4A:9 a=CjuIK1q_8ugA:10 a=dK5gKXOJidcA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTExMDE4MiBTYWx0ZWRfX0TJJPszywmYE
+ Ja5CsHVSmvc9/9wJk8kbxlA5HQpbg32EBDa2hI3u+DxGUPPA7NTfdtP6apQ9LkuyKPsuMD3v9xn
+ 6NPOuU2bYhjdJgg84k87zc7y1+XZ5nkoc7gqDZYKn5ETHmEDNVj7sJWCPvIuHeftm8BnGzIdrg0
+ +VRAz180gQ/gF69m/rZuG+F/w52qN07B57+trQ2JF7Ini7yivZBmGzrQcWJ7kg065biVvAaLt17
+ v1qK6wV0lfCIZh3s9ksu6N4zJVcsmnX/EpDCpoc2mFBPrIdyLN0Ns8LrAdHBS0WoaH6EpHz3vjj
+ 1YaSQE9k/5P99DeXiqsfnlsZ4EIf3OQcdDe1Hc5wWnuFIVuxhWcHWZmhJik5BCOorIVVrLNx0tD
+ dCWuNJNeURp+oeuvb+/0B3emcBpwfBoD0jXhthoN2Iadq5Wmmd987Vy1zOoQQGfYZ6fIv4ta2vZ
+ RWL4rEJCx082iqfex6g==
+X-Proofpoint-GUID: SXyla7-qUxj7EW2eTbZD0KaFVi_wsveH
+X-Proofpoint-ORIG-GUID: SXyla7-qUxj7EW2eTbZD0KaFVi_wsveH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-11_07,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601110182
 
-Am Donnerstag, 8. Januar 2026, 21:23:39 Mitteleurop=C3=A4ische Normalzeit s=
-chrieb Andy Shevchenko:
-> The SPI core provides the default of_node for the controller,
-> inherited from the actual (parent) device. No need to repeat it
-> in the driver.
->=20
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+On Sun, Jan 11, 2026 at 05:35:12AM -0300, Val Packett wrote:
+> Add a device tree for the ECS LIVA QC710 (Snapdragon 7c) mini PC/devkit.
+> 
+> Working:
+> - Wi-Fi (wcn3990 hw1.0)
+> - Bluetooth
+> - USB Type-A (USB3 and USB2)
+> - Ethernet (over USB2)
+> - HDMI Display
+> - eMMC
+> - SDHC (microSD slot)
+> 
+> Not included:
+> - HDMI Audio
+> - EC (IT8987)
+> 
+> Signed-off-by: Val Packett <val@packett.cool>
 > ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   2 +
+>  .../boot/dts/qcom/sc7180-ecs-liva-qc710.dts   | 625 ++++++++++++++++++
+>  2 files changed, 627 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts
+> 
+> +
+> +&wifi {
+> +	vdd-0.8-cx-mx-supply = <&vreg_l9a_0p6>;
+> +	vdd-1.8-xo-supply = <&vreg_l1c_1p8>;
+> +	vdd-1.3-rfa-supply = <&vreg_l2c_1p3>;
+> +	vdd-3.3-ch0-supply = <&vreg_l10c_3p3>;
+> +	vdd-3.3-ch1-supply = <&vreg_l11c_3p3>;
+> +
+> +	status = "okay";
 
->  drivers/spi/spi-rockchip-sfc.c       | 1 -
->  drivers/spi/spi-rockchip.c           | 1 -
+Almost missed it: please add the qcom,calibration-variant and, if the
+original bdwlan file works, submit it to ath10k ML ([1]).
 
-Acked-by: Heiko Stuebner <heiko@sntech.de>
+https://wireless.docs.kernel.org/en/latest/en/users/drivers/ath10k/boardfiles.html
 
-
-
+-- 
+With best wishes
+Dmitry
 
