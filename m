@@ -1,156 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-88580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8218DD12F0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:55:12 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC4E1D12F36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:56:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7F2B8302075A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:53:58 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8D63530022F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F4E135E558;
-	Mon, 12 Jan 2026 13:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AAE135BDA0;
+	Mon, 12 Jan 2026 13:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="dRoqTw0z"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="kgNgbCQO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D507D35CB94
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 13:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85D5274FC2;
+	Mon, 12 Jan 2026 13:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768226007; cv=none; b=knjsOf0d7HK0RrLyQfGoaNjB/nrAuLLYjt6/3BrZCCHkX28dQQst/hzZD+LygAQdduRyQl1MEKAbsU6BrUfJOZZ5GiGWhE3auir2pxIUrOWlNaXsthh8+76YWeCRuzanpr+8/1jHzPDjbLeWyFdbJjMP6d5IszEKpnM2TO0JIYg=
+	t=1768226104; cv=none; b=Ur/laPr67xdG6SywYWUNrPpU1SdkscZzfoihWZegLvmIrGGUucyu8futIC6O75r1kxj134X1YTPnEyiOT2ogydvwQlNUzDfjnf03hSK5jAlEy/s8HVcQBW3FgeL6bYtZr9aGzEI112gkJFyWQMKdxzpDAOjFylVgv0IfPY0y1g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768226007; c=relaxed/simple;
-	bh=OvJq0jh8QNECDzCdo07ofUb3WVtkm5nfjpkgnAeKfPk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FdoKOIBNMw4++/V2KX7gGhchs+EHARvSj0107TrOJUq79hOaMTRCnV+ppA5/Xn6Adzsmba8fJYVsxtvh8BRdvUpZzpRIGdt00/dBnButCxzwScwOuBncwLnrIVI7KXHEcCKE80cz0oGHHPhF4rHhuviSV4S7twJRoF0iMPPXvZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=dRoqTw0z; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6503b561daeso10198592a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 05:53:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1768226002; x=1768830802; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=USTvaULg0xk0mT5ybZ9XYBzZEDvEHEKzPaHv4h0K7kk=;
-        b=dRoqTw0ztLkVkgFFGVnBOflPk1qssX4ytvO04TY2+LnL5i7zJm08UiKadDtIH6vcoE
-         sMKGzvl5KKHpo5TOyTna0JUCLhj5LqXfe0MeIlI/atwtq+ZnABF4C1TMj19hBZYiCu+X
-         sJsH39yfudNFg8MuaI+4m3WRBbcERciXnM5cqYQ+Mg+DLBMYWZudg8BMUoInCEjC/D7R
-         wEc8bnIQ6r8/+TUT+xiSF6W8YOaZSpvwOK1k0StcnoeUS7113AWYbYKB1fIFH5dGZdt2
-         laD8nBzNO0imvZajzQNoRmX6L54W7ysbOkuizybii8ul1cNi65+URUT8FI6c4CSFolt+
-         gZqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768226002; x=1768830802;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=USTvaULg0xk0mT5ybZ9XYBzZEDvEHEKzPaHv4h0K7kk=;
-        b=CTKBCWfnOoirLUz55r1fsQVSz+eWZN0SYTvHWr/fw/bXaB2FwqjBpfvIjKtmBlBKxo
-         N+Yv2xI99o5Gn2X3M0bN7ImCR4r6G8IC8xjd0ruXdozn+nNYqhXqJtoG7VOBNEEqPWoW
-         4unVw+lEWLLMSIyn8LIZTGXmnW342caPRV8sU+rB7sNZgZ4/KcNVLVpohsMgR9TEs9Gv
-         pSo1lqCNMvXpZlBINhMX0Osqmbsgx97XikdLsAT3HZ4VmofDyXn4TaoHodJI+fvzkVAd
-         cqClPWAyaUm/inTcU52+ENGXVxW5Gta3R6WouJImEpwR5b5QGFYmv31IV68FVqRTFdra
-         xJ7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUfhRk3I+SBwvNgFztmPmjH+cdAWIKNZ1tiz6zpvzAi5YiUwphissh29Qyit4ohCODRHecN+C0IJLKoSEIQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBhbL/WLnxIsoMp4rtT7WHtaZW7mdyQmjg5zt4XZHh5PJODyfo
-	nnbedtuJY/iIZ309p9jDfXrkJJa1O6N9AKSLOhm0rsatsdsRMqSwEPcJgXJrbZOLwJU=
-X-Gm-Gg: AY/fxX5rehkPWKXznhbxgj85BuYSMpWxKsy6gcOSRK6oZltn+PLPcX61RyBaYedame3
-	eXtX9XH+lEOiik5ugpbm4sgm0QA4rupvyNOdb8K78njCOUEaBYG37TplohPL+K/kvWl7dgDACbv
-	JZaxOr2IWPAqzG9IoZgca9KoxPJllWquUwvuLSpdnYnv5bnVtIGVTEhatcNjkctvMEtsK2AOpEw
-	sn+PQi1lURrb/eVil0Tu7KhRcQd7xfdE3MrYKvOJMqD3ntyPon3OLL7tJI34R7b7vMIGBZtRubg
-	paC4xbGO1rz1icWK/9eA4Bnh8LnrDNez8HEeXvyaQ8s0pD5024Bwt+4jNqh+ZN+r7k05jgSnKXG
-	xujhccZeafT5HdEHps2iXTX+lsNYAEm2DFdS/3QN6l+RzqLUTwke1eWp8SgmakqKIMX4E1DsXzC
-	+fas91nNB0sH3CE1ZQtyvJ9gR6gCxk937keLjdXIHv8jT3Gtfq34WJZwC6iex+5NxO
-X-Google-Smtp-Source: AGHT+IERD9EpUubMa1qZHm1+gsFCHsZnNFyO5sx0pGx/fBWFcfFup5iRk+rNWU7XlYPQpnodXuWztw==
-X-Received: by 2002:a17:907:9558:b0:b86:f271:10bb with SMTP id a640c23a62f3a-b86f27111bamr560121466b.24.1768226001819;
-        Mon, 12 Jan 2026 05:53:21 -0800 (PST)
-Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8731f071e4sm25700466b.66.2026.01.12.05.53.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 05:53:21 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Mon, 12 Jan 2026 14:53:19 +0100
-Subject: [PATCH v2 6/6] arm64: dts: qcom: milos-fairphone-fp6: Enable UFS
+	s=arc-20240116; t=1768226104; c=relaxed/simple;
+	bh=upzgR2xmeRa7U3D4c4yVBMn/OAGVUS/BTHUTWOPwm4k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tUO/UsaZvGGH7InUYoW0HK0fg5PNWHNjt9Jofm+tljIw/PYMPIrXhCdFyNOA7JzlXdQVu1pcZylTgJBInUEKjCGzxDzcVaZv/VKQYUFhsY8g6MbLLRQtHpr+PeGSiwd603hXPkfMCcSkf/1EdvLtg+YX473WBFnmHG6coy5HbGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=kgNgbCQO; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=KcNdXwaHO43/aWmYkdmTrvgXq9snCOwCBSSp5/oIhoc=; b=kgNgbCQOQpcxZ/lVrAiQj4C4vu
+	YuAuThNoJKE1rGB2sQ0V+KcD41At13B/KCqU7SyakYddsVifUkzgIbx3P3ODIeF7OzhIWNvkduCQk
+	+KbVOi44ZIkmI3gQYtKR0mhMF4YOPb9FYqVFScnxbA9/FBnlGbYWwwudqEttD7PUJgGU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vfIN8-002U0Q-Vs; Mon, 12 Jan 2026 14:54:18 +0100
+Date: Mon, 12 Jan 2026 14:54:18 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
+	Fu Wei <wefu@redhat.com>,
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Shuang Liang <liangshuang@eswincomputing.com>,
+	Zhi Li <lizhi2@eswincomputing.com>,
+	Shangjuan Wei <weishangjuan@eswincomputing.com>,
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
+	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
+	Samin Guo <samin.guo@starfivetech.com>,
+	Christophe Roullier <christophe.roullier@foss.st.com>,
+	Swathi K S <swathi.ks@samsung.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-mips@vger.kernel.org, imx@lists.linux.dev,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH RESEND net-next v6 7/7] net: stmmac: qcom-ethqos: add
+ support for sa8255p
+Message-ID: <41b9a414-55a0-4602-9be5-54137a691d9f@lunn.ch>
+References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
+ <20260112-qcom-sa8255p-emac-v6-7-86a3d4b2ad83@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260112-milos-ufs-v2-6-d3ce4f61f030@fairphone.com>
-References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
-In-Reply-To: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>, 
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
- Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768225995; l=1099;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=OvJq0jh8QNECDzCdo07ofUb3WVtkm5nfjpkgnAeKfPk=;
- b=h/ju29PagtFfLFrekGbhm7LODk9tgPEQl/Ctp4NfxS8Qk+oz/YilSiZT3fMKpfbZpJ1DfRfuu
- TVU2gzKQrxxA4UPFmjkDU2pdcL4AWg42PCx6hrSqUY/YFTTkQ4ybOPp
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260112-qcom-sa8255p-emac-v6-7-86a3d4b2ad83@oss.qualcomm.com>
 
-Configure and enable the nodes for UFS, so that we can access the
-internal storage.
+On Mon, Jan 12, 2026 at 11:15:46AM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <brgl@kernel.org>
+> 
+> Extend the driver to support a new model - sa8255p. Unlike the
+> previously supported variants, this one's power management is done in
+> the firmware using SCMI. This is modeled in linux using power domains so
+> add support for them.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+>  static const struct of_device_id qcom_ethqos_match[] = {
+>  	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
+> +	{ .compatible = "qcom,sa8255p-ethqos", .data = &emac_sa8255p_data},
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-index 3a7f2f2b3a59..7629ceddde2a 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -819,6 +819,24 @@ &uart5 {
- 	status = "okay";
- };
- 
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 167 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l12b>;
-+	vcc-max-microamp = <800000>;
-+	vccq-supply = <&vreg_l5f>;
-+	vccq-max-microamp = <750000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l2b>;
-+	vdda-pll-supply = <&vreg_l4b>;
-+
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	dr_mode = "otg";
- 
+Is this device being probed via DT or ACPI?
 
--- 
-2.52.0
-
+	Andrew
 
