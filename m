@@ -1,160 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-88548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4AABD12385
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:17:53 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5F53D12348
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:15:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7077D30E56A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 11:13:49 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 0C77830034B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 11:15:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5F3A3559C3;
-	Mon, 12 Jan 2026 11:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F15793559FE;
+	Mon, 12 Jan 2026 11:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HSKVZQG5";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gTdb3/Km"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YOkrzxTX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE9F321422
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 11:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEF43559EC;
+	Mon, 12 Jan 2026 11:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768216428; cv=none; b=ZpwXxb5ZPLbXD9g99uiDbY8dB25rE3vWNTea9Anlg9xGDZ3E6lJhktiXrYSnEv7GeDvkHSi/vrOx2z6wcdCz6qptNoEFZ1i6778ayzFq3JiqQpXxpzZ5v8kizRMFH+18oImjKUqt3etiD6NNsECkGgjPMM+wcOubSL/7//MEwJI=
+	t=1768216524; cv=none; b=c8rMDLtPueqGW9wI9mGOKj4ZuksOlW9PfxXp1RubRj/bDeB0pRnYmx5IP8uuBDUv37CZsHmzZ7DJ+VotuH0PFDmR8hEOkwUlC8fL6EUd8OhQMy9VO33Gu2QXuM5eHOSVG5es+kMn0ATM8HHHmgIFlwGPe2cYbxyQST6dZ3v8/7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768216428; c=relaxed/simple;
-	bh=VrdWiTItojoB0UvUnL3By2wiL0NBycrQaHONOvrlhe8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rQXd6kJ4r58ejzwREkeTo6PwtT3lcqR0n3Dop/Yt0hvu73IGJr1YuOQ9ugl6f02X3kJwhTc3wUCxDHqB+dWkYIEuN2EwvnmyKcFzYVUTo+nbRic9rMS5ExwC2rzOVUKZGjQNg3OlLBbwIPKJid8j2tB6wxM9PrZx4HCBFgo+m6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HSKVZQG5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gTdb3/Km; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60CAEeZD1315903
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 11:13:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	N+NryKDtEvMjKNk6KisA7xnioR/cRPqT/YOulD8K8rU=; b=HSKVZQG53puEqoEn
-	JGqvRPwOWa1aJz5W2frHNE3vBEX+Yqnh8bqaZB0zIEifZiw5qJjADNab4//HSOaA
-	OpSVVzo7humGi2WNBXJ8nVQExI2aIT7SYnp0p702BgGfMJvEh2bgiy2DOYujRTFu
-	uEiKBvZAsGN3nMQgXXo7CdC+XQGXTVzVnVR+fK4MWoGmQAEmdA9BY526Pu8oY2do
-	YWjdu2JDfirmxXO8ti2UA07JRaWPUz4myQ2aG2iJzulO0/AR0KnJ09PWGLssG84w
-	odlw1JImhavhwnHSaQfuywamT4ZsGOEVhYnjEhMviNYVt0dm13s8api2Iyqi9JRp
-	gE7UXw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bmy1hg50w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 11:13:46 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ffc6560f05so13008771cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 03:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768216426; x=1768821226; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N+NryKDtEvMjKNk6KisA7xnioR/cRPqT/YOulD8K8rU=;
-        b=gTdb3/Kmo+Whvm/FXehAB9TmGGOHquYE73vaF7X4zumdzhTK3AKMINvS7aBBd0v2MW
-         M0GynYFjp3UhIaoNTnxkHwJdaxOk+9tKHkcmsM8bQBNYZEbFJIvkwMVQCuWnb+qlEZfy
-         au8C2JWXTMcBPK1a3xagvrKryJNxUvYyl2+/EzXThSXmf+GX62+A4wneTw7PMz9qbCKr
-         TsipM4QRpXNhmOAkjkEKyIgxg1Vtq5gapuJLY5GC6+kZlw8pM6Fo5WXJ0vgTpGQc219/
-         hvVeBdAvs/PNMBm+FYrWbVB3PZRL8+GN8V5h7lvTWA9FS4iPce9NxMkz175beAbZVoPB
-         UxwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768216426; x=1768821226;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N+NryKDtEvMjKNk6KisA7xnioR/cRPqT/YOulD8K8rU=;
-        b=dmUGvXBh0+MSsIdU+P6Y9Rz6qbJ+6hLnyrCdFrXJEqUBQAGFuQ1xGmMST3r60OrmTD
-         WG/q9a7KH9BtIa7jLaLi3WwkDPfxWtrzibzZBxhtGyPqMn+XCz4WnoSiDERjWlxlbr6q
-         VH/INQbct0W+zn04KhWAJwBy6URcf/OrWLMwJHW4sIqoE2XYLtYfRExojMep0/Ym6B3C
-         uyHnTLoWMGk/HjkclIAZ597bllq1GPM/rrCO2L0WOp50Oz9JbNfPgcEcOHnD0rsBcmpy
-         QJ9ViMzaNnCdgDJGzxFndih2aVrFIaRp+YaacMl0Pg5lIWziEZJ49x/6kS+imRDjUwMH
-         g+/w==
-X-Gm-Message-State: AOJu0Ywxms4/GS+dfupJfRQQNSLNBk9unNTnKlioKfnwhB0bU/SgdoD8
-	YdPqOz9NjvHvmiL2RYQpRHGfwoncvBNJ91y8Dp2jjDfonqStrloY0/ZswGkRaetN0Xj9CHTktqa
-	XlvCXBEiUJw2UNvsZgpPV36jH5G2el8E0BrLe6h+2kQPRYgsJx/AY8CR/Vqs4uH3MGHSS
-X-Gm-Gg: AY/fxX5ahutDPcqt8ObJZfZvsA+Znh+hXyjPE23FooIRQUHupLlSkWnkJgm9l9zQk04
-	BJeePdFmxtv3ZVgu4aKFjJFYNYZ47g7fDmeYYmajbjgvBmNaYHpERbK2tl+ma7DcfQQm0bzLIey
-	GL8ftVcH+Ix69pBxMGGxXht1nHdevY8NpQzGhReEO67NyF6Zk8uazoqsWj1KVhUAzoXNKBUM3/d
-	ub3tCqmbw9O8nbBI/ijyYkYzjeUBBKQZFm5wIme4pxj9LLq/a5zcnRlXb4HWE6Pd28HhPuhTbdz
-	KRuga0s64lzb6gFbYFiql96OHKSUoAYfz0oocBWMpQGlcjNV15hT8h92L3zJltWWtX3vU0SVU3Q
-	KB6nR4YaJ39uU2l57s9ZzjpEOHSKuH9gCxpK70I/xxADqbPrxlmWe7DsMQTBv9W6bOKQ=
-X-Received: by 2002:a05:622a:4cd:b0:4e8:a54d:cce8 with SMTP id d75a77b69052e-4ffb490511fmr185948551cf.4.1768216425952;
-        Mon, 12 Jan 2026 03:13:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEElM4ll08lOpzkHDuKu7CKsTHNXZ5gxeHC2/ZX1VO0z69vlMOAjoFpYdj8WO/qIPyj/UCVig==
-X-Received: by 2002:a05:622a:4cd:b0:4e8:a54d:cce8 with SMTP id d75a77b69052e-4ffb490511fmr185948381cf.4.1768216425579;
-        Mon, 12 Jan 2026 03:13:45 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507be658b3sm17106912a12.18.2026.01.12.03.13.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 03:13:45 -0800 (PST)
-Message-ID: <7c7a5332-8af0-424e-a26d-d87c524e30f9@oss.qualcomm.com>
-Date: Mon, 12 Jan 2026 12:13:44 +0100
+	s=arc-20240116; t=1768216524; c=relaxed/simple;
+	bh=zUSCP1wlBfzuXE8NqisF5E9uyqPXe+GBaVIHFJQsuQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jmvvzTjjddG82PALPYM4KCK16MtIuQ55s0P1qFHhQK/Q0L3sMe2uayMSo335YHg98M8Uofj1OyzrVJ6ihrjfpykrfkHdr9mrDA9ptecarGkxiiA+0dDsCKR7XjtdG4EWyVn4ii/LPGCr6sXZMCNOdjBli4Au8tAHuHVq/HQH18U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YOkrzxTX; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768216523; x=1799752523;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zUSCP1wlBfzuXE8NqisF5E9uyqPXe+GBaVIHFJQsuQc=;
+  b=YOkrzxTXzeOUMoQWA6cTprZC+zpGF4q2qS7RvU4ksZ0BaY7xo/OsgtpF
+   jSI74vpQZYGnBYathDznmX344Rg5BIOKRTYb1NA/LfWslfgoWqM51VTYJ
+   sR96ncLH5ygzLWfavGmV/x1RLIXuCMMZiZZSuGlBQZ9fIFgzGyeO/hxsH
+   wObdUl6QsMr6lB8smFJDt9fdRNOFLaqgv847xfXsE4SIDfmjvrEdfqeZa
+   nUTJkpzdPN7OD/fQQ0OnYs3uBf6KmvkDc+Csrvv4vBasNGlvaDx6mHdMc
+   xgsqBN/3bQZbQQWc/l9Iu8qoiHq9yVKvkgvyWCgTd4U9+bA5+18F7pwZJ
+   w==;
+X-CSE-ConnectionGUID: 6WVsrkR+TdCu6VvYTahNDQ==
+X-CSE-MsgGUID: AD7rNmHrQHiNetTiLDouwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11668"; a="80209602"
+X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
+   d="scan'208";a="80209602"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 03:15:22 -0800
+X-CSE-ConnectionGUID: kUR6ig1/RUKJYBcy/p3hfQ==
+X-CSE-MsgGUID: OAg+gLOMQVGuS3+zfM3y2A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
+   d="scan'208";a="203977233"
+Received: from dhhellew-desk2.ger.corp.intel.com (HELO localhost) ([10.245.245.37])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 03:15:16 -0800
+Date: Mon, 12 Jan 2026 13:15:13 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Daniel Scally <djrscally@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-acpi@vger.kernel.org, manivannan.sadhasivam@oss.qualcomm.com
+Subject: Re: [PATCH v3 04/14] software node: Add software_node_match_device()
+ API
+Message-ID: <aWTXwSaNEVZsNxip@smile.fi.intel.com>
+References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
+ <20260110-pci-m2-e-v3-4-4faee7d0d5ae@oss.qualcomm.com>
+ <aWSxcJTLzBFbMGad@smile.fi.intel.com>
+ <CAMRc=Md6+hhLMOmmDejKW+_jbWu3_XB4qNobyi27pezfXsVLFw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sm8450: use RCG2 ops for DPTX1 AUX
- clock source
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260112-dp-aux-clks-v1-0-456b0c11b069@oss.qualcomm.com>
- <20260112-dp-aux-clks-v1-2-456b0c11b069@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260112-dp-aux-clks-v1-2-456b0c11b069@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 7RgDyRFfHdw1HRV1wiwIRJc9bM1FZg-G
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4OSBTYWx0ZWRfX5XxMI8JRxb9h
- NSKdZBPr6UDRyjomxsMZiM+k4u9KJx2LOQ3HWmgr11ZHW5sqcY4akL2tbeXqEFAVonLK2ViJA7O
- WGaiDv34lWurfC9C8xmEoHZWml1IVKfX065AogMDNyg1hNOihPdUNzdc4s6mUr5CX7PE9wcSj5n
- xTgBqhg49IGlWxcFhkhllCS1s/E6cfGLqrKdvEacDPHFbgl2m7KrYmMwDnJQXQezhEJ6llFUBVR
- niAgDt3gN7GC/vB5G8mEkRTXTosXkUpdr3ZD3GH8bPxZ6SGhIIz5KinNxzFPsQAio3G2+rnrb13
- LCH1CI/T9GhVf7g22safuDxAT5K5K85p4w+ongmx3fWTbGlkFQKsyGcZyATjF5X+NnMhlKO6lkg
- +i46H9T7XloU7luQOA+igf80vBE32qKN0wDi6uFsLTpRI8qCaQSi3glP2E1JBdAHgAUmz7HrpM1
- tA34qfW7sjrYAI5kNCg==
-X-Proofpoint-ORIG-GUID: 7RgDyRFfHdw1HRV1wiwIRJc9bM1FZg-G
-X-Authority-Analysis: v=2.4 cv=EovfbCcA c=1 sm=1 tr=0 ts=6964d76a cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=UIqvOZ8aP2BlQGmZcB0A:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601120089
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=Md6+hhLMOmmDejKW+_jbWu3_XB4qNobyi27pezfXsVLFw@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On 1/12/26 3:12 AM, Dmitry Baryshkov wrote:
-> The clk_dp_ops are supposed to be used for DP-related clocks with a
-> proper MND divier. Use standard RCG2 ops for dptx1_aux_clk_src, the same
-> as all other DPTX AUX clocks in this driver.
+On Mon, Jan 12, 2026 at 06:03:34AM -0500, Bartosz Golaszewski wrote:
+> On Mon, 12 Jan 2026 09:31:44 +0100, Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> said:
+> > On Sat, Jan 10, 2026 at 12:26:22PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> >
+> >> Add software_node_match_device() API to match the swnode device with the
+> >> swnode driver. The matching is based on the compatible property in the
+> >> device and the driver's of_match_table.
+> >
+> > NAK. swnodes != real firmware nodes.
 > 
-> Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
+> While I'm not arguing that this is *the* solution, I think it warrants
+> a discussion on proper matching of devices that are only backed by a software
+> node - for instance a serdev device on the auxiliary bus. I understand what
+> software nodes were historically but perhaps it's time to extend their role as
+> a full-blown firmware node allowing matching with drivers.
+> 
+> Reusing existing OF IDs is just one way, we could potentially think about a
+> high-level fwnode-based device to driver matching?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+There is already proposed and agree way to do that via DT overlays.
+If one needs to describe the (PnP or hotpluggable) hardware, it's
+the way to go as the HW maybe much complex than the just one small UART
+appendix.
 
-Konrad
+As per auxdevice, this should not be enumerable by compatible. The auxdevice
+usually are created by other devices (from real ones) that _know_ the topology.
+I don't see why we need to open the can of worms with the software nodes
+to enumerate them as real ones.
+
+P.S. Collect others' opinions (esp. device property reviewers and maintainers)
+and we will see. But I do not see any even looking good justification for that.
+It might be that I didn't get fully the use case and the other means can not
+be used. But taking into account history of the rejection of the matching against
+OF compatible string in swnodes suggests that this will stay the way it's now.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
 
