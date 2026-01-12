@@ -1,271 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-88564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F9B8D128BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:27:59 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46727D128ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:33:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2D2073089391
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:26:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CC4D13019489
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:32:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3FF933EAF8;
-	Mon, 12 Jan 2026 12:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4C2B357A20;
+	Mon, 12 Jan 2026 12:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UIRHPp2F";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZWV8k0mq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyyueG7p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC5630EF94
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F78833D4F7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:32:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768220775; cv=none; b=HbyMYqylSO/VM/t9jd4OKk6RgvxrHjPn3z+GOZnSmXbGN4OkqrsOtE0RbqY3XfvqQNX9E0FRNwIepOF80GBC0d1avbHRSOInpgMtKtd3cIegrUa4CJYVnXcPkGftduukz0JjjGYjKc2BFddTN5CrHFh1eKQ3cSRGMNXuK9p7J28=
+	t=1768221178; cv=none; b=t3Huk8lzWkDEsRtSJafvvMrQZ2H5TRvLqp5fg8NzdJCUBmpQo2NP6195aJlrX05v41ESZsV0g2C4EHDQ2ynwMqr7fDmOB8oxSW0YHpVmTfKXvgWuvBkE1irzCCmBH31iJO7qMItX3Tw+JJzCPNtGBMRa8FayP6gTGLeIXQz8geo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768220775; c=relaxed/simple;
-	bh=FSt3SZR1HqIhBpnUzq5+/i0Ny3b9Ke04T8hZL+578M8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uKo0OLAyGLLvjdXl+SJt+eYQdJPXy/d3c6hdLQRxTmPCik35psiWafIZA7qpVJurJT+cHKqFyP2cOhqL0L748/Zf7R2f5e9DQ0aNo8Bn1cwwZXCZTWhzZ7nprAeDH/W2OiLnbAF1w4e57KyxioJNXZPIUZBi+frj8wunAYL5BB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UIRHPp2F; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZWV8k0mq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60C83BwR3072041
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:26:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	26GhuHqL5WaISYyaolPRIW613+nZwqLB/dWLGWGzMF0=; b=UIRHPp2FZ8jGlN3r
-	KYjQY3xtdPp7S0AxIU5nLNKgh2wIF+nDwQ0OfaRqnt04xOHtzXSBpmPP7j9vFlJM
-	lCQJJAuxIHomG3VIkba/xzic37SnLHwOks76avVRYKlO21tQwhjBI65pna7jsZiD
-	SqRL4B5rssdIvLRsaSpWJBaJWo1zE4BvOftYiherfapieQ0xt06xriFQPA2fY/np
-	kCMpkoeqZGICqpRS+MBQ1OEEKOB2UbAFHmMmCfjz29iPGRYKD7ioCAI/TimUq+r2
-	M8fo6xx/i/7D++3aeSsGeqq6mmcjD2vPhaiaYluTjaBNsxYag2I4P8YR8X2Kjb6p
-	NkbOIA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bkntumak6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:26:12 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4f1e17aa706so32919931cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 04:26:12 -0800 (PST)
+	s=arc-20240116; t=1768221178; c=relaxed/simple;
+	bh=iQ/5mW8VPT8qflkMmutH0Y7ld1+5x5cn1pnmYWwzzMU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=h7l8QntTwL3N4UTS6fMKh+XD6kWmq8WzzAaVDzSvDpOsOp9cEz0D2appFGLc1nICwC0weUU6v/ZNz8NMZr61e8LSmp3/e0Bs2sXkS7FQJN5+v8MhKc4SpGK16DzcM1Nvr3fgOO6oDaO47E7zNTfn7hN0Pf9i0F0ZAAOrqZQMGsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XyyueG7p; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-81e9d0cd082so2074230b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 04:32:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768220772; x=1768825572; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=26GhuHqL5WaISYyaolPRIW613+nZwqLB/dWLGWGzMF0=;
-        b=ZWV8k0mqfFbpSgKXUmbMWpAs/m1qbCpO8iweZBcroTGvqYOvRIvHRV9oNRMh0Yk40m
-         oV1wKW8BfGQE1xt8UXayofq7bxmjASn/4uehMNTosyd9cqSPNAsMD6uWjLMVZhZGnqS7
-         zRLXLpA+VibNzcYuQsEJG9ZgjM/x4/IxxLkrHsMcY3CzuHxZSNCv+6QbH2JXIeBgJEow
-         cRuNDEHo5Txtq4GAo2xZNhKv/7EMen5peKkueFzS6/orMMENge9CLNv9lpcyosBL5Vyv
-         W+zg8yIeECOLvJr+KdfxpTjgXs3p50PEv1EY4opeHGnE1oUrCoglHdYRZ9CIgahUK1gs
-         yi7Q==
+        d=gmail.com; s=20230601; t=1768221176; x=1768825976; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GmdD8KZWFllN0kxC+KJpu7oOwNYAIMDzyBObDdyGg+A=;
+        b=XyyueG7puxGPjMnX1LNXXJTYTdVtmukxn1czhBiJ0rR/gWh5wk6xkKyLUEc9B5tHmP
+         JpZHaCj3Xk7ww9p2q6+6iag/MSB7Mf+ZThBGngjDTrD3EDexTXhia8widfk7T8MDLLcX
+         hULhJooI09hYFsD8EMVZOhSpeuztTW4ArZaHG45m+BgLwd/kXER4y4Ls+GsJPYN8dko2
+         7Bz+QY0/R4Rc7pQpppmJOPh7dl1A2rBPzYAN33l0IWjNZ7XKroa0UuPWCCrKCJP+s1YI
+         9d7z8tlh8kBb+vzWmiLorYBRvWzHJ77tebBwAr4rDEPsYBN9GYQ+tN2rk4Vc0egnwUf1
+         XQ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768220772; x=1768825572;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=26GhuHqL5WaISYyaolPRIW613+nZwqLB/dWLGWGzMF0=;
-        b=ScQfyCwaBiRgX4NeiaM9aVdb/E/aPoVG1rTwT/w13hC0HKx9jjCxbzOesJs2gRbBCJ
-         FiNdeJI5Y5DLf1khy5kkIUOSjKoI3EzHXC5GPW3y6eA9w/xv9JtLfjNovRtZIjvLPDtw
-         Ej5OvvhfviED7aYknX+i+4d+OPgVBlToWgS8VHUzS4WgMIJSu2M6lGvrTmb4Br7kawkv
-         KpwpMpc1Sfu/Jp8sPX53jhSIGR3Em0salz7jjfQKY/UlRcDv1blgGLVrjiEJsLJ1ozog
-         KXGp8WVzGv+aVReN4BuVoK9tYhOMtJbGtGq8Y0LtAvRrZgLgFkvIxwm0uQfAaolnMzcc
-         FaUA==
-X-Forwarded-Encrypted: i=1; AJvYcCXiiDKWye10Mkad9eTtNL83Sxloanl1dTT23UdH6HcKl2EUnH4+XW6Wcc8dqa5lGHSC3scJVdr5GEFpULAY@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHdB7clZbYJMc7RCwkU7w5fQvxEwDK0yq3ROB4t+ZURxKScboq
-	iJvm0uajsoNPsYXG2JnRuW3G0VD5RJRxALpyCux5GQgn+eNt/H/G/IUCcwnymX9jYrRc+ilCJFp
-	1g8JcXjQllaDxagNHd2jtdc971tyJfBKVq6wL1Kj3jUMrRP3kZu2pbyCHfW8EoHPNiATY
-X-Gm-Gg: AY/fxX7f7iT9KAZo4DHx6DzEsD2Tmv5U0NECdF18rmxyztxOX6CYINd6yHE+FWjAsrG
-	AaGwP5M0yHz3ObyIq7txu3UOWO++W4vtDD8ByW5qGscwlBK+lhjT6E/yh1tbZrOdGlJ35s1r6Rw
-	rgSeKkCvcUO6XHIORw8QG7eWFT6TDRwQZ4Y2ag5yxyAXfD8GcnPwwkBTE47J4gqzxhtokUesClz
-	Ha3/9zgNJzmrpx1Z8ogBcqnQ6IcG93VIQbY457ffqDaSETqfaWUvM/SyNxGK4zfubjDNoM6SUB1
-	mQOiJNV9EcKwMcQuv84Nm3scM2HVws8ssDOz/dlmWiPirOxh3D9xiePED9WKpugNgcJTkafQtyf
-	0xGre0WOYaBBJGlP/q5RLFfEJCjDRWJ2WX/GMfLjlSDcQmfiE7Wf4Gsrk6zG/5fxEksA=
-X-Received: by 2002:a05:622a:1890:b0:4ec:f9c2:c1ec with SMTP id d75a77b69052e-4ffb4a2520dmr184757011cf.9.1768220771876;
-        Mon, 12 Jan 2026 04:26:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVF5i0+E+/q0NeLdSSghOCerU11AV8TzcaGAltkl7XpYXjZxHrXxVSsw1hVhk0pk9x355EwQ==
-X-Received: by 2002:a05:622a:1890:b0:4ec:f9c2:c1ec with SMTP id d75a77b69052e-4ffb4a2520dmr184756701cf.9.1768220771361;
-        Mon, 12 Jan 2026 04:26:11 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b870bcd342bsm445262466b.56.2026.01.12.04.26.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 04:26:10 -0800 (PST)
-Message-ID: <e8e575ec-7030-4bea-9a4b-1364d7a49759@oss.qualcomm.com>
-Date: Mon, 12 Jan 2026 13:26:08 +0100
+        d=1e100.net; s=20230601; t=1768221177; x=1768825977;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GmdD8KZWFllN0kxC+KJpu7oOwNYAIMDzyBObDdyGg+A=;
+        b=cs5FflqG+PJzQBxynJO7+DzLVTU7bA8WekbwgRREjMzw2GvjrcaCjtz0aarj6UtO1J
+         W6Lk5t51Abz9OMvWqrIgBZzjN5NSGT6VRj8Up/L7Vh400YE1I3nkFQNocFbNP+t51u6o
+         OfRwQ1JBXnH0vCz410/G6HAUjA0HNfIuEFhCjiuLwS8hiv7bnlDS4ZmCIWGi1EPnI/Hb
+         WqNi+QzZRpI/JtPt5bOKPx8QHc55FJpHpPmtvxE9x9mT4Mjb4HP7yauSPriJxyLOKpkA
+         VtzDTei7V1XAcaLZkmwvHJMMjCAhMq5SZdureTlLmrtqfuJ/c4olAFgFNCMKRMo1k3m1
+         QgWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWNcjT5CVpPZjdLFvEMTEiXOJ0R2z3D3XWAkTHKrTagrqB+VMdNA/z44HmQN+4XYgrE9dQTy8jOBgYUL+4D@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPu5xJgjsVRqSfZgNM/UNA7WtGhSa4pIZWPlBT6uihmGY3BcWj
+	A03Eo8+LbjfKJ74i0jfXGcF+N0Ye6hKx/qAptFbLulaAs4zBbmnJihHj
+X-Gm-Gg: AY/fxX7McsR6vCx4PlT6H9cJYSeRhOwmCZjydSbWuNBhvMI+mLZmHnZ/0x53SlK1dlZ
+	uP0WPB6F+e3TThPAyPWhcPxGXSC5OkPJnVKNfRWLGgRHEvDgG7/87ROG9wM8xeNjLltlIEzouZR
+	6qxUkBwd9IK16jjSRD0z/QCCgHaGzWMrG/fmS4eBXcl4AbbyC1Ycs6mRaBD4xWEYzoL1DB3xL+D
+	J1ON9COAsDYb8WtfjEqm06ZaInRqee9iFetMY3JJEgcU35wcoi2s2oP0n7KZCUrUOUyjz0g1y3y
+	0M+YP7BEpPdK2LRAp7wRCmSIAOjCqBRqH/sNC3cDdg4oY7WUg7tqj8lAxq0E51H5WOFplwSOkYr
+	simVdusIpMLYkJX+ivmL663277zE3CZ1PiDV6rcyPFU7gvXrmd00OV9Nietl20zp6WWkyURy28z
+	mmnLWxLw62sbsrONuMOZ3EvJY=
+X-Google-Smtp-Source: AGHT+IG6oEHPvEC/onlSfhniFExueTjVWKGz+6vfBL+I0KYIrm1outw4HFM2YSLadev+0+rrQXITRA==
+X-Received: by 2002:a05:6a00:4144:b0:81f:5037:a318 with SMTP id d2e1a72fcca58-81f5037a797mr2984858b3a.21.1768221176467;
+        Mon, 12 Jan 2026 04:32:56 -0800 (PST)
+Received: from localhost.localdomain ([111.202.170.108])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81f32ccb4aesm6987379b3a.9.2026.01.12.04.32.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 04:32:56 -0800 (PST)
+From: Xingjing Deng <micro6947@gmail.com>
+X-Google-Original-From: Xingjing Deng <xjdeng@buaa.edu.cn>
+To: srini@kernel.org,
+	amahesh@qti.qualcomm.com,
+	arnd@arndb.de,
+	gregkh@linuxfoundation.org
+Cc: dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Xingjing Deng <xjdeng@buaa.edu.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH v2] misc: fastrpc: possible double-free of cctx->remote_heap
+Date: Mon, 12 Jan 2026 20:32:49 +0800
+Message-Id: <20260112123249.3523369-1-xjdeng@buaa.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] pinctrl: qcom: glymur: Add Mahua TLMM support
-To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
- <20260102-pinctrl-qcom-mahua-tlmm-v1-2-0edd71af08b2@oss.qualcomm.com>
- <91d2e5f7-7d93-4909-9ed2-6b19abf0b448@oss.qualcomm.com>
- <dayj662qu7tb3l2fuq4sfdxunvkk2rt777vm7dfvdazbwiwpzn@mysrwdbdptqt>
- <adlhkus5gvum6fkd7bxjohwlsiumw7w6w4c36vzphjz7my2644@pmobztmgpdvx>
- <zaf4uoms75wc7yvmrmqs53couefqsv5oie2hbiwvhitqonbs4u@aq6bcvf4nq3o>
- <0d6f8f95-01be-4fa3-9fde-bc00cbb894f6@oss.qualcomm.com>
- <025a8ba9-3889-4a8d-84ab-4f3f839f6003@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <025a8ba9-3889-4a8d-84ab-4f3f839f6003@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDEwMCBTYWx0ZWRfX9zID9WW3UjSV
- xjhgptsQwFDYQeyLFQEE/33iQ94wTJw03r8x2TnuGlOdeEXdy1oSIx0VR+KIg0MesqnjBluZ2BK
- dgNL26FAvjY6ObvGVZ6nbDrOnFS/vqTcC9AYCPEige+joDl5T7InWgZCZbgTmo7Jqy5QgaPM9Xe
- sKt6T0MhIDfshM2KDcSMwlD19yfdWYpIU6MqyYabXvelBzSs8uJ1az0ox+ybB6bGZHIIex/D2MD
- o3sYpaE1Qa/UoW9UgvFDM4hOkIrWvvfoff2MDqZzXxM/Myoxa70S/xc9DuQPvi/Z/O7lKQ1y7Sm
- 5/NM0lq6TO4o65/MEJr2snJL+lFeUze+RcAfBRGhf4OXyppsszCs6hV5N4gc26dJAorQjEoDmSq
- 8QPWUPmhVGIQgvyEXpxC+N/9wAAvAYXbfa89fCMtCyPQgs4CTAUeacKwkEnYzGtvPHxmjvH+1P9
- ecwXqg1v1yZClPg+rag==
-X-Authority-Analysis: v=2.4 cv=R6AO2NRX c=1 sm=1 tr=0 ts=6964e865 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=cqb_nhPC8VgIOyrc0CIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: PzWUVyRmcku4Nq8OA6chYwvQ_re0a_CZ
-X-Proofpoint-GUID: PzWUVyRmcku4Nq8OA6chYwvQ_re0a_CZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601120100
 
-On 1/12/26 8:46 AM, Gopikrishna Garmidi wrote:
-> 
-> 
-> On 1/7/2026 4:00 PM, Konrad Dybcio wrote:
->> On 1/5/26 6:20 PM, Manivannan Sadhasivam wrote:
->>> On Mon, Jan 05, 2026 at 09:31:03AM -0600, Bjorn Andersson wrote:
->>>> On Mon, Jan 05, 2026 at 11:04:44AM +0530, Manivannan Sadhasivam wrote:
->>>>> On Fri, Jan 02, 2026 at 01:40:22PM +0100, Konrad Dybcio wrote:
->>>>>> On 1/2/26 12:07 PM, Gopikrishna Garmidi wrote:
->>>>>>> Introduce support for the Mahua TLMM (Top Level Mode Multiplexer)
->>>>>>> in the pinctrl-glymur driver. Mahua shares the same pin configuration
->>>>>>> as Glymur but requires a different PDC wake IRQ mapping.
->>>>>>>
->>>>>>> Changes include:
->>>>>>> - Add mahua_pdc_map[] with Mahua-specific GPIO to PDC IRQ mappings
->>>>>>> - Define mahua_tlmm msm_pinctrl_soc_data structure
->>>>>>> - Update device match table to include "qcom,mahua-tlmm" compatible
->>>>>>> - Modify probe function to use of_device_get_match_data() for dynamic
->>>>>>>    SoC-specific data selection
->>>>>>>
->>>>>>> Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
->>>>>>> ---
->>>>>>>   drivers/pinctrl/qcom/pinctrl-glymur.c | 43 ++++++++++++++++++++++++++++++++---
->>>>>>>   1 file changed, 40 insertions(+), 3 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
->>>>>>> index 335005084b6b..bf56a064d09c 100644
->>>>>>> --- a/drivers/pinctrl/qcom/pinctrl-glymur.c
->>>>>>> +++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
->>>>>>> @@ -1729,6 +1729,25 @@ static const struct msm_gpio_wakeirq_map glymur_pdc_map[] = {
->>>>>>>       { 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
->>>>>>>   };
->>>>>>>   +static const struct msm_gpio_wakeirq_map mahua_pdc_map[] = {
->>>>>>> +    { 0, 116 },   { 2, 114 },   { 3, 115 },      { 4, 175 },    { 5, 176 },
->>>>>>> +    { 7, 111 },   { 11, 129 },  { 13, 130 },  { 15, 112 },    { 19, 113 },
->>>>>>> +    { 23, 187 },  { 27, 188 },  { 28, 121 },  { 29, 122 },    { 30, 136 },
->>>>>>> +    { 31, 203 },  { 32, 189 },  { 34, 174 },  { 35, 190 },    { 36, 191 },
->>>>>>> +    { 39, 124 },  { 43, 192 },  { 47, 193 },  { 51, 123 },    { 53, 133 },
->>>>>>> +    { 55, 125 },  { 59, 131 },  { 64, 134 },  { 65, 150 },    { 66, 186 },
->>>>>>> +    { 67, 132 },  { 68, 195 },  { 71, 135 },  { 75, 196 },    { 79, 197 },
->>>>>>> +    { 83, 198 },  { 84, 181 },  { 85, 199 },  { 87, 200 },    { 91, 201 },
->>>>>>> +    { 92, 182 },  { 93, 183 },  { 94, 184 },  { 95, 185 },    { 98, 202 },
->>>>>>> +    { 105, 157 }, { 113, 128 }, { 121, 117 }, { 123, 118 }, { 125, 119 },
->>>>>>> +    { 129, 120 }, { 131, 126 }, { 132, 160 }, { 133, 194 }, { 134, 127 },
->>>>>>> +    { 141, 137 }, { 144, 138 }, { 145, 139 }, { 147, 140 }, { 148, 141 },
->>>>>>> +    { 150, 146 }, { 151, 147 }, { 153, 148 }, { 154, 144 }, { 155, 159 },
->>>>>>> +    { 156, 149 }, { 157, 151 }, { 163, 142 }, { 172, 143 }, { 181, 145 },
->>>>>>> +    { 193, 161 }, { 196, 152 }, { 203, 177 }, { 208, 178 }, { 215, 162 },
->>>>>>> +    { 217, 153 }, { 220, 154 }, { 221, 155 }, { 228, 179 }, { 230, 180 },
->>>>>>> +    { 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
->>>>>>
->>>>>> Over the "common" base, Glymur has GPIO143 (PCIE3a_RST) and Mahua has GPIO155
->>>>>> (PCIE3b_RST). Both SoCs GPIO maps seem to contain both, but Mahua has a _unused
->>>>>> suffix for the missing 143, which makes sense given the bus isn't bifurcated
->>>>>> there.
->>>>>>
->>>>>> The _RST (PERST#) pin is driven by the SoC so I don't think it's useful to
->>>>>> have it as a wakeup source, unless someone decides to connect something that's
->>>>>> not PCIe to it (+Mani)
->>>>>>
->>>>>
->>>>> PERST# by definition is an optional reset line, but on most of the *recent*
->>>>> designs, OEMs always connect it to PERST# line. So practically, I don't think it
->>>>> make sense to mark this GPIO as a wakeup source.
->>>>>
->>>>
->>>> This assumes that all the OEMs uses the particular PCI instance. If they
->>>> choose to route this GPIO to some other use case, they would have to
->>>> figure out that we omitted one entry in this table and patch it with
->>>> the appropriate data in order to have their GPIO wakeup capable.
->>>>
->>>> Wouldn't it be better to put the correct information in this table at
->>>> this time? If we have a concrete reason not to, I think we should
->>>> include something useful in the commit message to help the poor engineer
->>>> faced with this task...
->>>>
->>>
->>> There is no concrete reason actually. I just mentioned that in practical
->>> usecase, I never saw an OEM routing the PERST# signal to other wakeup capable
->>> functionality. But the possibility still exists, so I'm not completely against
->>> it.
->>
->> I'm curious whether we can just describe the union of these sets as a
->> common config, because as I've mentioned, IPCat says both of these platforms
->> seem to have these interrupts wired up
->>
->> Konrad
-> 
-> Hi Konrad Dybcio,
-> Thanks for the suggestion!
-> 
-> I tested using a single combined wake map (i.e., the union of both Mahua and Glymur sets) on actual Glymur and Mahua hardware, and both platforms work correctly without any errors.
-> 
-> Although both GPIOs are present in the wiring, only one of them is actually wake-capable on each platform.
-> 
-> Glymur:
-> - GPIO 143: Supports wakeup
-> - GPIO 155: Does not support wakeup
-> Mahua:
-> - GPIO 143: Does not support wakeup
-> - GPIO 155: Supports wakeup
-> 
-> The combined map works functionally, but includes entries that don't match hardware capabilities.
-> 
-> Could you please advise which approach I should follow for v3?
-> 1. Use a single combined map (union of both sets) with comments about wakeup capability difference, or
-> 2. Keep separate maps for each SoC
-> 
-> Happy to update v3 in whichever direction you prefer.
+fastrpc_init_create_static_process() may free cctx->remote_heap on the
+err_map path but does not clear the pointer. Later, fastrpc_rpmsg_remove()
+frees cctx->remote_heap again if it is non-NULL, which can lead to a
+double-free if the INIT_CREATE_STATIC ioctl hits the error path and the rpmsg
+device is subsequently removed/unbound.
+Clear cctx->remote_heap after freeing it in the error path to prevent the
+later cleanup from freeing it again.
 
-Glad to hear this idea works too
+Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+Cc: stable@vger.kernel.org # 6.2+
+Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
 
-Up to you, @Bjorn
+v2 changes:
+Add Fixes: and Cc: stable@vger.kernel.org.
+---
+ drivers/misc/fastrpc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Konrad
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index ee652ef01534..fb3b54e05928 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1370,6 +1370,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	}
+ err_map:
+ 	fastrpc_buf_free(fl->cctx->remote_heap);
++	fl->cctx->remote_heap = NULL;
+ err_name:
+ 	kfree(name);
+ err:
+-- 
+2.25.1
+
 
