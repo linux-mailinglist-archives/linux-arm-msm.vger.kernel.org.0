@@ -1,92 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-88603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7357ED141D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 17:42:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97B41D1423A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 17:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id CA9EE30089AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 16:42:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CCF963066F20
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 16:42:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CCFD366DBD;
-	Mon, 12 Jan 2026 16:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 675B0364049;
+	Mon, 12 Jan 2026 16:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EuMzKpcd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BBA2E265A;
-	Mon, 12 Jan 2026 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421163612CB;
+	Mon, 12 Jan 2026 16:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768236133; cv=none; b=H9q+y51QMndzKRQRIjuXSVTIaHdryxwVapwrF2mwa/flKIggkfYYRT50zVM15/piBOBmUABSdLKzFfhmlkQRmIENB49TOkZNdc2LpS8+4b5P2OT41LyJLqa1pGy+1zwU8ERUcwc/TpQL8QyfTBt+/rXnjFac5JhkYaDDH5/hVvc=
+	t=1768236130; cv=none; b=OFNQh9Qu5HUqlwmYXO1Rl+l7YIeC1HE3FGHcVcV568THDLwcKHcEPXQgoSK4+2sjTgx9XgwMlkwOyxxkF4Hl6Mmh/cB4usFiRIjdQi9CCaXHuYcuiGaPwI9xZXX45bUb/RzsFWLf8BGnuOs4C9fbohZpQW9LRL4EFnB20E3HLV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768236133; c=relaxed/simple;
-	bh=p+zhbcd+Ejgo7BjYXu0FBHtSgAxS8QssHtymENbdr3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ne4AcgnaFmV0yF/V9UOVJLaxtg4+1et3Fl6HUmv2y7/S30n+R07z6iDJLv9CMMG936TtPO6/IHY/8twHkGF3XG/B7WC7XIqWCHH8j6/Y3MX5PENm31Y5EIAaAMjdiF7Lpblt4U0emcg7k2tA/v24QB4YuL7WpWko9np0hzHjLn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63631C116D0;
-	Mon, 12 Jan 2026 16:42:01 +0000 (UTC)
-Date: Mon, 12 Jan 2026 22:11:57 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Mark Pearson <mpearson-lenovo@squebb.ca>, 
-	"Derek J. Clark" <derekjohn.clark@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Daniel Scally <djrscally@gmail.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-acpi@vger.kernel.org, Sui Jingfeng <sui.jingfeng@linux.dev>
-Subject: Re: [PATCH v3 03/14] software node: Implement device_get_match_data
- fwnode callback
-Message-ID: <6xnoqml2iwipcfm2byrswm7xmhehzbjbdgeets7qpyiez6le6z@vrtcqoaaqwgx>
-References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
- <20260110-pci-m2-e-v3-3-4faee7d0d5ae@oss.qualcomm.com>
- <aWSpFk9z0zpyKjr6@smile.fi.intel.com>
- <6l3rs5pv6xnrbygpvqrdxqoqtybjyefsltk5bl4336q56rfoza@ejo3sxuufghe>
- <20260112-miniature-quiet-gorilla-263fed@lemur>
+	s=arc-20240116; t=1768236130; c=relaxed/simple;
+	bh=G9B2hVlV2rFtoaRFNjq8bmhBptBly4XOE50jKCYkXiQ=;
+	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=HhLC0E04ituVc+8Qi34igMA1SXyTRvyHBPBumhoo+QuOHmN98fysy/qz0TD4jIQ5vL2Iew4pm24YlxTJ0F2s5X0QfyMBf6/5RB2JgA82BeN0d303s95HQJKtfabETpqJdU1cF9RR0ahXUzMqbmvOsOJFWZS9mKSERh/21N+9tXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EuMzKpcd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4021C16AAE;
+	Mon, 12 Jan 2026 16:42:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768236130;
+	bh=G9B2hVlV2rFtoaRFNjq8bmhBptBly4XOE50jKCYkXiQ=;
+	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
+	b=EuMzKpcd0fm9qsLM4hASm1Tpa/S4YN7GVGsxDV26HJOipbTUS36D5VnvdAGGKbvFT
+	 bj4S86C7HAxeYwO5vFsDSA9c/J4QikMIR824VqiCDdMvd2FBFNJ84sh78g2wozQ1vR
+	 9DUWcMAb+ktKuLqLrpNzPKQiMGW9vtfyFDCkdwTfSLR/CRFcrYd/Hqr1+9P8tyrQ1M
+	 SfjGwWngqEtVwSqAdMXI4MG7blDiaPuF9a2CYh3mREH5+Anhu/93KZpcLzRQ6D/+9R
+	 gnXz4HYWEY1UgrRJBKNAwkvPPGvGnFVH7V3a5Pr5u+TJhjLR+LDOYJynfvkG3d9z9P
+	 EDGhbCr01c2Mw==
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 12 Jan 2026 10:42:09 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260112-miniature-quiet-gorilla-263fed@lemur>
+Cc: andersson@kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org, 
+ conor+dt@kernel.org, linux-arm-msm@vger.kernel.org
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20260112151725.2308971-1-mukesh.ojha@oss.qualcomm.com>
+References: <20260112151725.2308971-1-mukesh.ojha@oss.qualcomm.com>
+Message-Id: <176823586306.507061.1753959146753763642.robh@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Enable download mode
+ register write
 
-On Mon, Jan 12, 2026 at 08:37:02AM -0500, Konstantin Ryabitsev wrote:
-> On Mon, Jan 12, 2026 at 01:49:54PM +0530, Manivannan Sadhasivam wrote:
-> > > I really do not want to see this patch without very good justification
-> > > (note, there were at least two attempts in the past to add this stuff
-> > >  and no-one was merged, have you studied those cases?).
-> > > 
-> > 
-> > Yes I did. I didn't put the above justification in the cover letter, as it was
-> > already overwhelmed with too much information regarding the connector node.
-> > Maybe I should've added it in the comments section of this patch. But I didn't
-> > know how to do that with b4.
+
+On Mon, 12 Jan 2026 20:47:25 +0530, Mukesh Ojha wrote:
+> Enable download mode setting for sm8750 which can help collect
+> ramdump for this SoC.
 > 
-> You can just amend the commit directly and put comments under "---". They
-> will be preserved when email is sent, but won't be applied when the maintainer
-> pulls the series.
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
 
-Ah, thanks for the info!
 
-- Mani
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: attempting to guess base-commit...
+ Base: tags/v6.19-rc1-51-g65ce09d2f164 (exact match)
+ Base: tags/v6.19-rc1-51-g65ce09d2f164 (use --merge-base to override)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20260112151725.2308971-1-mukesh.ojha@oss.qualcomm.com:
+
+arch/arm64/boot/dts/qcom/sm8750-mtp.dtb: syscon@1fc0000 (qcom,sm8750-tcsr): 'clocks' is a required property
+	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-tcsr.yaml
+arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: syscon@1fc0000 (qcom,sm8750-tcsr): 'clocks' is a required property
+	from schema $id: http://devicetree.org/schemas/clock/qcom,sm8550-tcsr.yaml
+
+
+
+
+
 
