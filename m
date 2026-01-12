@@ -1,116 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-88557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E65D6D12773
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:08:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9780D127C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:13:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D9A3A30386F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:08:35 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4D5C9300D83F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43092357703;
-	Mon, 12 Jan 2026 12:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3A633570BD;
+	Mon, 12 Jan 2026 12:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="km1upu8c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tihHO1Gn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C30356A1F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:08:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD7715665C;
+	Mon, 12 Jan 2026 12:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768219715; cv=none; b=tOqGES/kCNllJxC8TifI7v928Fh7AFRjrpmPwZbnUdykBljvXf8VwyUQCyHdI0Eeubi8it5vUs4fx1YqnehM5HjJaxRJ1ABmynqSlBFJBeKLLuOWh9N7TjaeEv+YB+dp6SokIfgKn2+9J+ghXQ1VOjV1DZV8hr095ndgVBzukVk=
+	t=1768220017; cv=none; b=cThccUWRBhG2mmqMwxYx+bndhRMxhiqVeBlwSV4XYDpssu5z2hMj6S7cEFQz9bG8VAdXIxV3HTb/+E0kPNHN5l1YKBrp9uLpiCuW8X8PzRsyaN+Qv6AzByhadXLLa0B/MeLBRWKYeFd05SQ/ayUzMB51vDizuVQLs5lGZOYSAic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768219715; c=relaxed/simple;
-	bh=oXDBiD54nDhDPSl9qGLWo6F/JzpP0JIj6oqpvLcbyyE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fso9BVOaXYXXB3M1k/XdJAECYsNjoSIkzlrbiYdogL3HksndV37nrIQ3rJHBXwAF2lP56pXtMV/N6rmFqa4rk63reo5/u2A3BE9yjRkFxav4IzRAqHTgTEa0KEaDO4sslsVm/gY1K45Kn9UHWMNJh/cjNWyIeuV69lFKOLf2vws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=km1upu8c; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4779cc419b2so59034905e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 04:08:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768219712; x=1768824512; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Frq2FNvpHlVXL9K9cW2q2Tna3UfQNHXR0J95x0vAQA8=;
-        b=km1upu8cUJgurKkfaL7BA84qGSIt3XlcBD3CR5T1fH0Ld2bFDQqB4MYqhjPlx4grea
-         rZFhvD/iVpWQSEIqTkE7PgNJEcPZaDJy0dcl0w/IvscUfsxNMsRMFjJori8pAIoDRPlI
-         8HBbtjhn0bjEKwRYX0C003TGZtElng+ga8L83uLPyG/s3LdQnovE4tRcuzX8MIDIx8+3
-         NsZ/IYISuZvFtsvSs2NVRJ12n3QmxWYvax/fqi3gIMXnx65PCJItdws7HfjJyWwXHTHo
-         rwMpNpuvKz0SD2K3heu7krkeKNE9ZwdrUtquzaSXW0I0LulADIGORPWCFDFlyuO0wHNd
-         zk4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768219712; x=1768824512;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Frq2FNvpHlVXL9K9cW2q2Tna3UfQNHXR0J95x0vAQA8=;
-        b=IPcUkiTj0hVtuhfF46Q8fZh8FeQiylPX47pJ8LyJHeQOrzVYFqcBo3i3zTNnYC0mli
-         qVNAazhxvljpKMDLeY1l8aI3Iv+X+UalKXQtTRNjskyvQmAyWPZ/3u1iOj4mRiENcyQS
-         DvSsFF3eYeluOq4EASBD6mLSAbHbZEoiaeN0BqtoN8kX041MknSURdIdzVE2TYvcE+xT
-         BDz8hVx/gJTTYG8RH62gmtgvLwgc0inbEAB0Su4XuHWL2q9C1Ussc2dfZ/q45IISfCda
-         0M+MSBzVBpgYnUYZ9000v6g/J8iql9DQ55fku995WoyAOTfixOVXQzXvLVC5ThBpSNbK
-         8BHg==
-X-Forwarded-Encrypted: i=1; AJvYcCUK7D63JzkdrOcDBQ2Hqw88K/AD/lQtlp/Hw4Ock8/E0vCrbIIbuCIzy1uQ0f2IzDneSlYMQ1/ziXpshWsD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJ1zflicoozF7yPiUFJzry7dorJt9PvfcJ56ra+AERnqnnFfed
-	HIEr+OjpOUn4OwtKTnvgdkQyoMCPOGvCXb3gfKrx5PtjnfP1cjHzEOFk/bpF35POl0M=
-X-Gm-Gg: AY/fxX4rY5PTEJ+s86df5douICh8lI6n33SS7IXbpLThrPgjbHV9S1vGdzh971Jk7v+
-	T1DiLubsQyEZOtbKPWciQ3yP9VvPf0fIsR4w3A9Z2NIjcOVw1toeg/TQeYid6rBpWTLYGA8pzpd
-	K/5LJwh6XYo1Xn3S779U6aXh99TSq5MP5W+qC99rglDeRu1VkveZlmhs/SzYdgKStER5zLOHTy/
-	oKEjRi/HkOzg2ys4a1+Yc+wZ1A//MAfW5gxifDsgy+ajaTdLa9y7reR4hxniwQeFA6CdeWw+ni4
-	pkYmD2J197E3G9mmSE/EagEADnpyngVLki2YUpCkeWoF0e//uDUS+tNxc2ASI84ifmyjshkLG2v
-	RYuUz82ATM5iEk+stD6+gHlvlS9QQoTmF9XfNsgsteiYLCpEGe2xu7CEDpgQMw8iSkp0h5S+h31
-	/z6Qi6wrLz2uF5qYHF0Ao4COwHwh8+kpeMA9iRAgpum7w6pa6jyetJ
-X-Google-Smtp-Source: AGHT+IFdAoVE3LMMfr3WXuJgeaok1n+ZKYXo9Iz2QvBceUMpdDB+n1lzEDB7SDTGntMbA+ArREk/bQ==
-X-Received: by 2002:a5d:64e7:0:b0:431:7a0:dbbe with SMTP id ffacd0b85a97d-432c374ffaamr21755981f8f.32.1768219712153;
-        Mon, 12 Jan 2026 04:08:32 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5df9afsm40635361f8f.24.2026.01.12.04.08.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 04:08:31 -0800 (PST)
-Message-ID: <8d51760e-c9ed-44a5-873b-d96824d173ad@linaro.org>
-Date: Mon, 12 Jan 2026 12:08:30 +0000
+	s=arc-20240116; t=1768220017; c=relaxed/simple;
+	bh=RuHDtGL00SnpZqV0qXNelW6J171aN3M0JIvYYprsUe4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=LonIgpT+Nz9t63rqtdpylQhCasqpJV23u/WobVBspf0pqbIe9IEfPG67t4h+D1ZfNZZTc7x8C8WLBzoImSX4LTWvo1ES6I+RvOqazW509hG2ixB0p1+OjOqYkguk2BZPYHz9pEvLIYrPgQImaA5NMZImL5NnLECfZPWZbKrcKk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tihHO1Gn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAF7C16AAE;
+	Mon, 12 Jan 2026 12:13:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768220017;
+	bh=RuHDtGL00SnpZqV0qXNelW6J171aN3M0JIvYYprsUe4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=tihHO1GnLWfY9wTo0UJsTeEZG5Im8Hy7bZW9ZSc1XOA+8ypp8wVtpSWnjwewMpslK
+	 tzDnQAFBnNSvNtEYN4SXoWEUPhsI/gQmZVTlodE1heW8SU5Y0Z6VdBo3Kj9TMAFC8R
+	 hk0mU9eJwRijZcYP5/jk1SphGXW8LEIykh/3uF9bFhv52VkeBCn+HRQYRYqoXFpnin
+	 a7KNXq23lNjbKjAJ0ZNbrWKh6lKk/iqOBGysDnDZKrNy9RWv5aOnBEgIFDAo38zfAv
+	 Rxe06/PPcx9WXvt0fWG7TKk7u8kO905YNM9xpft30CxeFAC1g4jRbxxQ/l3ph6mTGC
+	 xUQJHWg7xQ9uQ==
+Date: Mon, 12 Jan 2026 06:13:35 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl
+ devices with controller drivers
+Message-ID: <20260112121335.GA707347@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/5] media: qcom: camss: csiphy: Add support for
- v2.4.0 two-phase CSIPHY
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260112-kaanapali-camss-v11-0-81e4f59a5d08@oss.qualcomm.com>
- <20260112-kaanapali-camss-v11-3-81e4f59a5d08@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260112-kaanapali-camss-v11-3-81e4f59a5d08@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <smxp3g5pveepvub3j2p7kvftnaza5ptuehmlvanhdamt46ugrb@hszfopsdzkgz>
 
-On 12/01/2026 09:02, Hangxiang Ma wrote:
->   static const struct parent_dev_ops vfe_parent_dev_ops;
->   
-> +static const struct camss_subdev_resources csiphy_res_kaanapali[] = {
-> +	/* CSIPHY0 */
-> +	{
-> +		.regulators = { "vdd-csiphy0-0p8", "vdd-csiphy0-1p2" },
+On Mon, Jan 12, 2026 at 01:23:02PM +0530, Manivannan Sadhasivam wrote:
+> On Sun, Jan 11, 2026 at 09:31:32PM -0600, Bjorn Helgaas wrote:
+> > On Mon, Jan 05, 2026 at 07:25:40PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > Hi,
+> > > 
+> > > This series provides a major rework for the PCI power control (pwrctrl)
+> > > framework to enable the pwrctrl devices to be controlled by the PCI controller
+> > > drivers.
+> > 
+> > I pushed a pci/pwrctrl-v5 that incorporates some of the comments I
+> > sent.  If it's useful, you can use it as a basis for a v6; if not,
+> > no worries.
+> > 
+> 
+> Thanks for making the changes, they look good to me. Do you expect
+> me to send v6 or you intend to merge this pwrctrl-v5 branch to
+> pci/next?
 
-The convention in this file so far is to add new entries at the end.
+I'm not planning to merge pwrctrl-v5 yet.
 
-Since you need to v12 this, please do that too.
-
----
-bod
+Still hoping pci_pwrctrl_slot_power_on() could be factored out earlier
+to simplify "PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}'
+callbacks".  It wasn't quite obvious to me how to do that.
 
