@@ -1,224 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-88555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A3CCD12730
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:05:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CAA8D12760
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:07:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A656A30A564B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:04:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CFA213038068
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 12:07:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F983563EF;
-	Mon, 12 Jan 2026 12:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 693F03570D4;
+	Mon, 12 Jan 2026 12:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DDjZfSNy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rbZ4bA3Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D7935770A;
-	Mon, 12 Jan 2026 12:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC49352C33
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 12:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768219471; cv=none; b=OtyawGBfk/6y5GsMarBvC70GGYMgOjgynMf5JfWj1shfCkgFoow7CbRPTqPlwVtpfoOAuNzc3BY6sK9nXINdHyIUUJMKZQvlU/Bv2W9CR5JK+aJ5JSpzrN40U+5tdhPpq51Q4G9TnMCqQ3iK0Qr2PT9gzCCJ+Vx9NKgWyclWwR8=
+	t=1768219645; cv=none; b=BZBIciGCBuHmVFIT/30l1DJaICfMwCXYqheIuBDVKJcmM+ctNf54h2fIWaMM6UOF2cRNoAJGml+G71tWJvWKHEXEOFxHrm3pep+8am4YE4EuIEA2PJEF5praCTsGM5f1XXQcMGV350xEc4jc6qJyXYvRIJNIrpUXinP1lfhiaS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768219471; c=relaxed/simple;
-	bh=5BiEA3YT3OvxJlu4+BexDLoaIF8cPC1fj4FQDGyymNA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EJ5uEKtUbZgGrw52JQfiwWiI5ZrSU9H7e+2mc66gSerWspd1ZbNmPbJ0u5ORj8tKCrgRCSHLqdLh3EdFplOf4c0tfjgt8e02cN2DO2hdVIrRAkAMg34/PHHktAgLFUK3Lq8pjiZw+RVcQt5SX3M4tR3/ur2YZcgl+Qz1JBNXRHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DDjZfSNy; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1768219467; x=1799755467;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5BiEA3YT3OvxJlu4+BexDLoaIF8cPC1fj4FQDGyymNA=;
-  b=DDjZfSNyxTncEYNcrrpaxY4o5VtVjcXdYOXq/x8lftRhErNZCpQ/Kzft
-   qAQlLZibtjd7ee65KFFe57SPs8Wb1MC+9/h685Fz+G563QhlG075o2ubE
-   Ls+guReaAN78mfXonpc/yp/dwU/T46JOVmA0YQgajSUBML807N63sbm13
-   fh/gDDdBj+osRUna6Zw1b4+hssbUCMLbT/T/ME09AU0pqJDNAU9bzjax1
-   gFgiyNsj69/P50pwKUQrpqADF7AV6qM7YCuLQTbifg4SHX5S5l5Ogl3nt
-   9vrUXgsCTBjLYSRgBp4XoTWzszvj6Q4zwg/1DSlMZxyTvvrxPN+EtHmrA
-   Q==;
-X-CSE-ConnectionGUID: ciGn0PVuQNmJDVqQ6KhXbQ==
-X-CSE-MsgGUID: j7AyeWHIS/iybjCMfnBoJQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11669"; a="80597332"
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
-   d="scan'208";a="80597332"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 04:04:25 -0800
-X-CSE-ConnectionGUID: XAibRldxTZ6xSE7cKV3erw==
-X-CSE-MsgGUID: kqm52HRnSw29im3jfiPOTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
-   d="scan'208";a="208554124"
-Received: from dhhellew-desk2.ger.corp.intel.com (HELO localhost) ([10.245.245.37])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 04:03:57 -0800
-Date: Mon, 12 Jan 2026 14:03:54 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Charles Keepax <ckeepax@opensource.cirrus.com>
-Cc: Mark Brown <broonie@kernel.org>,
-	Varshini Rajendran <varshini.rajendran@microchip.com>,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	CL Wang <cl634@andestech.com>,
-	Manikandan Muralidharan <manikandan.m@microchip.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>,
-	Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	=?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
-	Shiji Yang <yangshiji66@outlook.com>,
-	James Clark <james.clark@linaro.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Carlos Song <carlos.song@nxp.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
-	Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Haibo Chen <haibo.chen@nxp.com>, Gabor Juhos <j4g8y7@gmail.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Luis de Arquer <luis.dearquer@inertim.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	=?iso-8859-1?Q?Cl=E9ment?= Le Goffic <clement.legoffic@foss.st.com>,
-	Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Darshan R <rathod.darshan.0896@gmail.com>,
-	Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>,
-	Haixu Cui <quic_haixcui@quicinc.com>,
-	Darshan Rathod <darshanrathod475@gmail.com>,
-	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	asahi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, patches@opensource.cirrus.com,
-	imx@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-mediatek@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>,
-	Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>,
-	=?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Ryan Wanner <ryan.wanner@microchip.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	Anand Gore <anand.gore@broadcom.com>,
-	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-	Jean-Marie Verdun <verdun@hpe.com>,
-	Nick Hawkins <nick.hawkins@hpe.com>,
-	Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Lixu Zhang <lixu.zhang@intel.com>, Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>, Han Xu <han.xu@nxp.com>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Li-hao Kuo <lhjeff911@gmail.com>,
-	Masahisa Kojima <masahisa.kojima@linaro.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	Michal Simek <michal.simek@amd.com>,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: Re: [PATCH v1 1/4] spi: Propagate default fwnode to the SPI
- controller device
-Message-ID: <aWTjKvbThxx9hSuL@smile.fi.intel.com>
-References: <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
- <20260108203004.3538449-2-andriy.shevchenko@linux.intel.com>
- <aWTgzqXrGMcdpFOr@opensource.cirrus.com>
+	s=arc-20240116; t=1768219645; c=relaxed/simple;
+	bh=bmEIvyVsr6DVsM5nUAfh2W2TpABYdDSi08tkrELKVNM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gl+uVO4tx7/CIGR+osJMgTTO6CKCN4PFNjlEBtG+wxxDTG70kcawa0J6cn+mTPHakVUENs8Vb7mXLNe+vcieXXKx8VQ3Sm+fPRssOUVgunbRjgs4ZOYwDIWHZYVqKNLbLvixYt6QiysHEpRlX49SueZdywjEXqnJnjREdVxreOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rbZ4bA3Q; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-47796a837c7so43640875e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 04:07:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1768219642; x=1768824442; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cyFmiTOwx9WydPZqcUGcsWNSpaGu3ePZ7mQ4/4dnfXw=;
+        b=rbZ4bA3Quywl2lJ4jnkrGU6zeJ/jZIlvpYC22sC5cvlExxfGTfZnWupLynd3ce0dWs
+         +Zx+DxzJiUt2kGMxm21U08EloLvh7o+RDhdJhDYzqKnO1vuWv/r/2U+FPuNQ+iB+dD+l
+         V8SoDHWPTiTYriIVKd7wn0cAIok1KI1Ge7uNsuxXbxUzKx4lTVzAKnOki615tBX3Q3vB
+         dQW2RWeyQsaJJZ9Fic8HMju3Q6WJh+QKGiAR+diBPh2w+3Pk1CnYKmKFg66JslKvE3NT
+         991IwReeC8pKGDroEzjVzpiK0LcnC6kpSHPA/eMVNK9OLg36aNa43SzjL5dfs6qVo/HK
+         2AKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768219642; x=1768824442;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cyFmiTOwx9WydPZqcUGcsWNSpaGu3ePZ7mQ4/4dnfXw=;
+        b=ZPcG9gnIv9QPBuGnutTcGavhHh2Mz8y6A1WOOnVu+fyBdOH3EimwXWbVPhnJYu0aGa
+         norrbH/3YIrwLezfnFzdbPla6szdabt9Mrod6MN3PAUYraTybyf6zyDip5mJ3gW5dkBg
+         EzCyKan5lT2GqSDD3zTLBPfOU7jbDyIvvXQx7Loii8PBXWI1nC0v0vjNXokPjppT2njd
+         3EjMeWrSiFWmr8YsiTZJ0TfConeHffCCys89fLZhqrTPnFgnPrGGfLVas6CLCZnBQj6u
+         kUEChnpsZC/0PXHoDKdjLhgl4Adk1Za0h4okvD4q+XT30FPuTugcx/D/7nRxoZIJfUmw
+         Mouw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDWiopZAYhqJqSnLPBky7S1Lxj1nnUAxqqMRfoVLqYyPoJqFvbgTYU5EmGnfDotN/snDX4Kx5s7daGpjaA@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx+XeMFPdJNyQx8uIdsWhLKJYvuJxWfm2pkavz7r13O7hZl1gK
+	SocZuuhGZw1gi6rY8+JYjUB7l18BRffqmESo3/MBBjDsPErAE/RJrdBBlTbn1lEqyu4=
+X-Gm-Gg: AY/fxX65Zsf9/Gr5+/M0UMuBN7l8JRw2zji7zWns/XwV+WPoV7rv1/nsvO4Jd7G7Z//
+	wuBQkG9UHV21kZSliEaP2ZnUD1FjwMVIhN8KCtYxbc8MZgQXwXRiOlKsZe4zvm0Xs5UOPF3LHpX
+	L1TfwwqT+5AZwgV9wJNJYt2w+2FFqkOMhQu14a4ldBkl2qVekogvcRQ37Pnyez6pDGpN0pgxIMp
+	sneL6Idb6/0kmByB5oVpgS0A4GQgIQvIazY//22snWLWsYHqm0qhkgHFporzSYdrgmoGSJKI4pm
+	/GEp55buicjwBMknVJc+N0d84i1lGhyzP1TkXeeBTyC2UlKa0oSKFLmENXRcKDyoBI5JqiA1TPc
+	ajWZl/j7Ji9PQVMZOsgaJJ70iSqEn5v/4MYXk4+UE3O6hD4V5rS8pejivGOg40Y+nonUy1zVnv/
+	EqYSHCyLcENzLryejj0JGl0i6A/LOY+tw398/1C4IrZcxf+7AP3KWK
+X-Google-Smtp-Source: AGHT+IGRc0EV50kscbKyU9XViNWiLVNiv77Je1cCMktwdnW0YTBJo1cj4/Vq0LD/5Xpo0+DbEm8dbg==
+X-Received: by 2002:a05:600c:3112:b0:477:7f4a:44b4 with SMTP id 5b1f17b1804b1-47d84b26d08mr189479945e9.1.1768219642142;
+        Mon, 12 Jan 2026 04:07:22 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f41f5e0sm344704455e9.8.2026.01.12.04.07.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jan 2026 04:07:21 -0800 (PST)
+Message-ID: <f574665b-48e9-4bb1-8c8c-95ff0f7449f7@linaro.org>
+Date: Mon, 12 Jan 2026 12:07:20 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aWTgzqXrGMcdpFOr@opensource.cirrus.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 3/5] media: qcom: camss: csiphy: Add support for
+ v2.4.0 two-phase CSIPHY
+To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260112-kaanapali-camss-v11-0-81e4f59a5d08@oss.qualcomm.com>
+ <20260112-kaanapali-camss-v11-3-81e4f59a5d08@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260112-kaanapali-camss-v11-3-81e4f59a5d08@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 12, 2026 at 11:53:50AM +0000, Charles Keepax wrote:
-> On Thu, Jan 08, 2026 at 09:23:38PM +0100, Andy Shevchenko wrote:
-> > Most of the SPI controller drivers share the parent's fwnode
-> > by explicit assignment. Propagate the default by SPI core,
-> > so they may drop that in the code. Only corner cases may require
-> > a special treatment and we simply (re)assign the controller's
-> > fwnode explicitly (as it's done right now, no changes required
-> > for that).
+On 12/01/2026 09:02, Hangxiang Ma wrote:
+> Add more detailed resource information for CSIPHY devices in the camss
+> driver along with the support for v2.4.0 in the 2 phase CSIPHY driver
+> that is responsible for the PHY lane register configuration, module
+> reset and interrupt handling.
 > 
-> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-> Tested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-
-Thank you very much! I'm now pretty much confident about the change.
-
--- 
-With Best Regards,
-Andy Shevchenko
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> ---
 
 
+> +static const struct camss_subdev_resources csiphy_res_kaanapali[] = {
+> +	/* CSIPHY0 */
+> +	{
+> +		.regulators = { "vdd-csiphy0-0p8", "vdd-csiphy0-1p2" },
+
+Please sync up with Wenmeng's patch:
+
+https://lore.kernel.org/linux-arm-msm/20251114082649.4240-1-wenmeng.liu@oss.qualcomm.com/
+
+---
+bod
 
