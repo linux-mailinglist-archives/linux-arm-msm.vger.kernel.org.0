@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-88626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7A9FD152D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 21:17:25 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BE33D1529D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 21:14:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3AF0930C9CCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:14:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D49A230074A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D713314B8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7604832ED27;
 	Mon, 12 Jan 2026 20:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="rDcfVu1J";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="y90d0oSr"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="lZIqtThX";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="8hfgdxjF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0480432B9A2;
-	Mon, 12 Jan 2026 20:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A531C33120A;
+	Mon, 12 Jan 2026 20:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768248868; cv=none; b=EXI1cCxI7nEbPcMZHPlWrYQDnght0A4nL+OO8dKZFCB1WVv3OKJCbkmZ5/3QBp08uk3LEuA+ZMgNUN+GULV6DoDHH7spaww0gdUQQmMnl/gTs7r1c+lPiWjJHV0ph7ywBN/0TnxRnCPGVwo53f/DfDs7d5n+7wdQkXU/W+qwjsI=
+	t=1768248868; cv=none; b=J/m8Ep++B5RNmj5y6lQORMhfDuyH430y5E0my7M7/0H2geAnt7TXEgzqRFHDtSZDLOT5oSUbqcMQKI3MRvNDfySBE4t8GB18jfW+hUETaLeQgrMk+kotLgVq7gKLPcIuw9Ii1oZEbSgqJBy58zPsPP5Wcj/BLudoIgktzE+h7vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768248868; c=relaxed/simple;
-	bh=TwZgVvSwBF34L7N4CUDqPCkerxFP8r6skyVin6mIX+4=;
+	bh=L0qxiwQA73ZiBf0W7LRfkmczBF6MCQDHTZlQLG+DdMU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T2Uu7l8JkJH9PKfiyAUJxTA8ibdWVlPUhGqkEFAPTTumlfqFN04oYDLdt9lxAoCoWJyG3tpX8lE/S1tehufgqczcKJjjHcqOd3+1kzVqS1OPMnoNTrhItvfMiYFdDLtZnqLw8W/+ff6xkhl+r9AfjQygWZqWc2TI1+KLtLw090w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=rDcfVu1J; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=y90d0oSr; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=MgSYWY/V4SNZ8FNFfJ8/GkNBn3GUAxdYXAJ2H8KoLD9zwwr3atscuxqS50nBnMe1e0z5NRK9JM1/uPVyniMHCU9Lwkrt/fkqufw83p2ANjZMwuZ6oXz0pfT76ukfXLfhVnH5NO3t4FVlLW1qW7N+snbfyus+IOLG8sUOfSN9Qx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=lZIqtThX; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=8hfgdxjF; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768248819; bh=aWCB54DX416yxveZ87Jmgu+
-	+Ed7uMzjxa/AlU7V5sUA=; b=rDcfVu1J/9RjPL5lk2M0e0LT7Sfq+Pt38gpSYwz3PrJ6TGwqgq
-	GSh5w7NX9Om8+lNOVtbyXNEEmaispxzRdo9sh/zOnJLFMkLLn9zlmodDeYy/sSj+OIg+PGzc5vD
-	J5KC80WLg0ZIMAhmAaixX4WEPGMTMdyf38zXQd9i7f0vwH6Qir4Va06MngO5rJAavR59sH36ToO
-	2Wt5fn5UA4GmI7RpqpXRmjqoonGG/mOU+ooqmbqeUVqMLcNt584zVuzWRuo0rrw7lowLiwg1lTd
-	UByWOWjKEcvrAc/5TwfcMLPDQcedn1b08f/VBDVVBM1FHFnpoCyV+jnbGxi3qqTSZtQ==;
+	h=To:Message-Id:Subject:Date:From; t=1768248821; bh=mgW7h96soV8sHZ3tOn5YBjo
+	9nLthCAd8VJNiqrLK58I=; b=lZIqtThXidAgjuJ9e6Id/36mQYt3uiFohjA7v5aRdJ3HO8PV2w
+	cRwit3t+wAL4Y5SGieShCm5lj0QD242BY9KiLwHgmhx8on8Vi2jeqPwSzTjR3OpQAvUUZdmDpwW
+	bYjn8rENJOzLtEZOjxATbMbcxOTIYp8k+tZaCHM30qZ/UFZwNuggvqPPoYEieDew+lBrMbqrtpC
+	vG2MdE8qdzoMrmX7WYtr/gIFkASNtc7x/4vIt/4wlLXbgzR2xHmevlOLKv7DlbHt/SLYfIhoiiC
+	WRnDZY97KGbkj/6Nph4JA18sDfvxFtWVqXOS/PKTjQQU6Elf9ELW7EG6zwyJL6FawWg==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768248819; bh=aWCB54DX416yxveZ87Jmgu+
-	+Ed7uMzjxa/AlU7V5sUA=; b=y90d0oSrbL79QyUyZMukTkY8KUfXr7BQ5BPhUDzqexCe53wxII
-	rSs6MssUkPItYllJIIsxirKrfYSBAUtEIwCw==;
+	h=To:Message-Id:Subject:Date:From; t=1768248821; bh=mgW7h96soV8sHZ3tOn5YBjo
+	9nLthCAd8VJNiqrLK58I=; b=8hfgdxjF1gZw+hL+f3177ODTOmepRNz9IgO2BFE59itNJCiTSf
+	j5gniCXFg5JZL7t91acLfx7Kg32OZH5xrnCQ==;
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Mon, 12 Jan 2026 21:13:25 +0100
-Subject: [PATCH 2/6] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct
- reserved memory ranges
+Date: Mon, 12 Jan 2026 21:13:26 +0100
+Subject: [PATCH 3/6] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260112-xiaomi-willow-v1-2-8e4476897638@mainlining.org>
+Message-Id: <20260112-xiaomi-willow-v1-3-8e4476897638@mainlining.org>
 References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
 In-Reply-To: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,97 +68,48 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux@mainlining.org, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768248812; l=2498;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768248812; l=1046;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=TwZgVvSwBF34L7N4CUDqPCkerxFP8r6skyVin6mIX+4=;
- b=FlDJo7CDU1poarKZl7Ula2dHFacvAqjyzOj4dHx2ex1m3gCrlPar3uLdfqsYyw/fAqKFWwG5e
- vE3OTTbLCVaCduaUNvs3hEA+LqrespcillJeHcM9fkS9S5UnXHuUr/2
+ bh=L0qxiwQA73ZiBf0W7LRfkmczBF6MCQDHTZlQLG+DdMU=;
+ b=msUBAn98RLimUdKFKBUcSorzVDJLA/0ESnUqJO5noQv/l0Bv5917dSdb5AfpcjbLZV3zKKXKw
+ 2PHKtlDCU1+CfUrNtTA481t2PxaN5x27SSZZMUpgRIGMHhBSchfuu3T
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-The device was crashing on high memory load because the reserved memory
-ranges was wrongly defined. Correct the ranges for avoid the crashes.
-Change the ramoops memory range to match with the values from the recovery
-to be able to get the results from the device.
+GPIO pin 102 is related to DisplayPort what is not supported
+by this device and it is also disabled at downstream,
+remove the unnecessary extcon-usb node.
 
 Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 44 ++++++++++++++++-------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index bf03226a6f85..4c548cb5f253 100644
+index 4c548cb5f253..666daf4a9fdd 100644
 --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -13,6 +13,12 @@
- #include "sm6125.dtsi"
- #include "pm6125.dtsi"
- 
-+/delete-node/ &adsp_pil_mem;
-+/delete-node/ &cont_splash_mem;
-+/delete-node/ &gpu_mem;
-+/delete-node/ &ipa_fw_mem;
-+/delete-node/ &ipa_gsi_mem;
-+
- / {
- 	model = "Xiaomi Redmi Note 8";
- 	compatible = "xiaomi,ginkgo", "qcom,sm6125";
-@@ -36,28 +42,42 @@ framebuffer0: framebuffer@5c000000 {
+@@ -80,11 +80,6 @@ ramoops@61600000 {
+ 		};
  	};
  
- 	reserved-memory {
--		debug_mem: debug@ffb00000 {
--			reg = <0x0 0xffb00000 0x0 0xc0000>;
-+		adsp_pil_mem: adsp_pil_mem@55300000 {
-+			reg = <0x0 0x55300000 0x0 0x2200000>;
- 			no-map;
- 		};
+-	extcon_usb: extcon-usb {
+-		compatible = "linux,extcon-usb-gpio";
+-		id-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
+-	};
+-
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
  
--		last_log_mem: lastlog@ffbc0000 {
--			reg = <0x0 0xffbc0000 0x0 0x80000>;
-+		ipa_fw_mem: ipa_fw_mem@57500000 {
-+			reg = <0x0 0x57500000 0x0 0x10000>;
- 			no-map;
- 		};
- 
--		pstore_mem: ramoops@ffc00000 {
--			compatible = "ramoops";
--			reg = <0x0 0xffc40000 0x0 0xc0000>;
--			record-size = <0x1000>;
--			console-size = <0x40000>;
--			pmsg-size = <0x20000>;
-+		ipa_gsi_mem: ipa_gsi_mem@57510000 {
-+			reg = <0x0 0x57510000 0x0 0x5000>;
-+			no-map;
- 		};
- 
--		cmdline_mem: memory@ffd00000 {
--			reg = <0x0 0xffd40000 0x0 0x1000>;
-+		gpu_mem: gpu_mem@57515000 {
-+			reg = <0x0 0x57515000 0x0 0x2000>;
- 			no-map;
- 		};
-+
-+		framebuffer@5c000000 {
-+			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
-+			no-map;
-+		};
-+
-+		/*
-+		 * Matching with recovery values
-+		 * to be able to get the results.
-+		 */
-+		ramoops@61600000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x61600000 0x0 0x400000>;
-+			record-size = <0x80000>;
-+			pmsg-size = <0x200000>;
-+			console-size = <0x100000>;
-+		};
- 	};
- 
- 	extcon_usb: extcon-usb {
+@@ -307,7 +302,3 @@ &tlmm {
+ &usb3 {
+ 	status = "okay";
+ };
+-
+-&usb3_dwc3 {
+-	extcon = <&extcon_usb>;
+-};
 
 -- 
 2.52.0
