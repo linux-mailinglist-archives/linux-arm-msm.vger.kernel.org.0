@@ -1,49 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-88618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE9E4D151A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:41:23 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD9A3D15255
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 21:01:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6E31530056C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 19:41:22 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5388B30051BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:01:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AF683019B2;
-	Mon, 12 Jan 2026 19:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5286310647;
+	Mon, 12 Jan 2026 20:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="fPS3IxPL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmRTtpW0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9BF632;
-	Mon, 12 Jan 2026 19:41:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DCD2E7BDC;
+	Mon, 12 Jan 2026 20:01:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768246880; cv=none; b=rzoKqMPa56MHKSNhEaNr9fepXKVJo9sIUNRYfCRbN4FL001VOqK5I1zJyRU/Kf46PKQ0Mmib5mvB/lOD5TH7teSiVa2KGn0hjBlt2P9ChlTYEwUeAEx76Jc/socIW6DGF5FfD0kWcrL+BWm1H5ejwx1ZH2HLcMQScEHg57CseWY=
+	t=1768248106; cv=none; b=duOR7oBu+EgP6ybMIaXfN2czHBuejYe82vUXjS3Iq64/oXT+TtMgkXYlozC2PuzGnhhwJngStL3C6EIbKupCJcG3zdJ18yx1l3LuT/BNjG42B6wKjZHifYAR2HPN5uScNTumIW6/ghKz4fiJd4Z+uci2xbtmRCph/ncpQbTFMkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768246880; c=relaxed/simple;
-	bh=CpmZu7O7cGMk+rfEE+A9vvZSvkEmnurzn8/ZKV9rpyE=;
+	s=arc-20240116; t=1768248106; c=relaxed/simple;
+	bh=iAzLbGMDXQfuE3s4KFa2lQ8l5bKVW/+TK+/FOv2Eho4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rug4/39yqDoHWfRZvanhP6/H/Hze/i6ZG6M0FrU7OoEKvw6yTTVbJ1ryP/tBa7rOOXAGWPnE+v1Y5k7bIq1UuFFwZUIjFvWWCQsdqkkJpZpmvwTacsYkXpSAzH8SPfxnNWabhLuI1UG9MJI3TB8zJ26wc+hMD9Nb98NMeU6NnqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=fPS3IxPL; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=NM5C7qyiUf+omAX954ZXByyVcNHloTHTbWgqrTe5zU0=; b=fPS3IxPLiVG1Fc8gVGqT/ADz1w
-	FQFS8zYmG0ipq0/xvjQNUdWUvx74jk2bYwzbU9eKoy0vFJljti303UcfaEKpid3yMNBDnRo8Dfm6Q
-	kBlRr/u5LG7SNOB3taEsupSqTF6bah741PQqRdJBmO1Omrmxh0X1XrDL1+3C5KWamKd0=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vfNme-002X2X-W6; Mon, 12 Jan 2026 20:41:00 +0100
-Date: Mon, 12 Jan 2026 20:41:00 +0100
-From: Andrew Lunn <andrew@lunn.ch>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ELjSNVRcvGgJrp6r0rp5xvx9DCiGF5qw9A1PSpCy/sXjGjvVWwnzhUwb94MbKxeje2ly73fA3iXXAtKIcIb5djAlW9NwF75tG6x8OaJZuBCYyRhdf4rAV09w1ne6e+52OIFrrxTiTpUQd3zaDdxhVprPeliEcEFR/DbdMEzN0Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmRTtpW0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D75C116D0;
+	Mon, 12 Jan 2026 20:01:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768248106;
+	bh=iAzLbGMDXQfuE3s4KFa2lQ8l5bKVW/+TK+/FOv2Eho4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cmRTtpW0cY4oNrQtvYdKlC26VlGGgiFUrlh1ys7lAGIXsBImtcv9fbxXcfAzv35w6
+	 GaCEUXCJJ9DajEsHvVfLZlvLZ1o8g6qhe8jqJP+I/v0W28Qb9X04J0DxlQpqYlF1rk
+	 rqauQh08FgmsrE9N/Oh9DsGa2zX+Yjq3nhAh4wzrFOzlAxNMN2z97cm3vvzlatqYDl
+	 rI0tZFsJuf7kCtx/pneTrvKh4BS4Plk3xYDOusK3NsxRQhiyXUjXXEm/FpNgVh0eSj
+	 bQVUcZUGC3N7QtGsIFi7QPeyQ9vHl8/wPphA6UsoUUdaq3V+JCwd7EA6oyM9cOfoMh
+	 pGUKXhKqAJiBQ==
+Date: Mon, 12 Jan 2026 20:01:40 +0000
+From: Simon Horman <horms@kernel.org>
 To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -56,10 +55,11 @@ Cc: Heiner Kallweit <hkallweit1@gmail.com>,
 	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
 	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 1/2] net: stmmac: qcom-ethqos: remove mac_base
-Message-ID: <fa4e6b2f-c038-475a-82de-ee5832078aae@lunn.ch>
+Subject: Re: [PATCH net-next 2/2] net: stmmac: qcom-ethqos: convert to
+ set_clk_tx_rate() method
+Message-ID: <aWVTJL_G__7IQTBn@horms.kernel.org>
 References: <aWU4gnjv7-mcgphM@shell.armlinux.org.uk>
- <E1vfMNw-00000002kJ9-2XDx@rmk-PC.armlinux.org.uk>
+ <E1vfMO1-00000002kJF-33UK@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,16 +68,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1vfMNw-00000002kJ9-2XDx@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1vfMO1-00000002kJF-33UK@rmk-PC.armlinux.org.uk>
 
-On Mon, Jan 12, 2026 at 06:11:24PM +0000, Russell King (Oracle) wrote:
-> Since the blamed commit, ethqos->mac_base is only written, never
-> read. Let's remove it.
+On Mon, Jan 12, 2026 at 06:11:29PM +0000, Russell King (Oracle) wrote:
+> Set the RGMII link clock using the set_clk_tx_rate() method rather than
+> coding it into the .fix_mac_speed() method. This simplifies ethqos's
+> ethqos_fix_mac_speed().
 > 
-> Fixes: 9b443e58a896 ("net: stmmac: qcom-ethqos: remove MAC_CTRL_REG modification")
 > Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> ---
+>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 869f924f3cde..d6df3ca757be 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -102,7 +102,6 @@ struct qcom_ethqos {
+>  	void __iomem *rgmii_base;
+>  	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
+>  
+> -	unsigned int link_clk_rate;
+>  	struct clk *link_clk;
+>  	struct phy *serdes_phy;
+>  	int serdes_speed;
+> @@ -174,19 +173,18 @@ static void rgmii_dump(void *priv)
+>  		rgmii_readl(ethqos, EMAC_SYSTEM_LOW_POWER_DEBUG));
+>  }
+>  
+> -static void
+> -ethqos_update_link_clk(struct qcom_ethqos *ethqos, int speed)
+> +static int ethqos_set_clk_tx_rate(void *bsp_priv, struct clk *clk_tx_i,
+> +				  phy_interface_t interface, int speed)
+>  {
+> +	struct qcom_ethqos *ethqos = bsp_priv;
+>  	long rate;
+>  
+> -	if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
+> -		return;
+> +	if (!phy_interface_mode_is_rgmii(interface))
+> +		return 0;
+>  
+>  	rate = rgmii_clock(speed);
+>  	if (rate > 0)
+> -		ethqos->link_clk_rate = rate * 2;
+> -
+> -	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+> +		clk_set_rate(ethqos->link_clk, rate * 2);
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Hi Russell,
 
-    Andrew
+An int needs to be returned here.
+
+>  }
+>  
+>  static void
+
+-- 
+pw-bot: cr
 
