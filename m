@@ -1,119 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-88454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A888D10DAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:25:32 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32009D10E0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:31:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 365FD301141F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 07:25:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 5D5FE30006FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 07:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41423233F4;
-	Mon, 12 Jan 2026 07:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55EB1314B72;
+	Mon, 12 Jan 2026 07:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W52GMF38";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="d51EVWGc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F9E30CD82;
-	Mon, 12 Jan 2026 07:25:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E186D32E154
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 07:31:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768202728; cv=none; b=jskadF4FN5mqmiGU/lP4sGQKwZkAnib8hUDJYjpQkmfViVwODdmAXlaoLnqfhUj/J4P4lCNCXFsrWIRudmVKKECG+upInk/J2Ml+FhiW3rMbBn0me6mb/OtqnimvhfUqP/C/m5uGAOfR+PspG4daMgbmp6d2ve1URkhdD2oS8y4=
+	t=1768203082; cv=none; b=Edl4njjtdfAl/1x8ZnxP9oYewZqU2YTpmx6eaNP7nmmj2ITdWoFh9o0CGkwY3LTy2VJ/Xe/Y6RuZWn5Ebp0bPa7JWgyNtmWhzSWbkw8goFSJd8/6GF0cxBxsk8faPNcLqmqT3USg4nAuJ6rZPmGV2W8ppCilFfhIbIhjTRDhmy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768202728; c=relaxed/simple;
-	bh=3uU/KFfJkQmxNruoEc44/HLlvg9x/AB+PZXxxr245us=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DNI0eKHssaMS4jQD7U8D/s+642OwRiqlXBX/IimsD1Kg1XNqUnKEzm2fzAMcyfPv8WYzJGJMWq6izdqK0yGDp0P8X8i8FspdNOdX4iz9Jbt6hx5HFTPFQzUkg4NJQnS+9OxJSgYKY1NvsBLfdwPtrH97cI0zWZnFl+dFTrHmNhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.169.211.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpip2t1768202707tc160a062
-X-QQ-Originating-IP: oKEITeMqQL1Z+DxJ12O8HBGdk/32is1aGKFweU36mns=
-Received: from [127.0.0.1] ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 12 Jan 2026 15:25:05 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 9765549277843554367
-Message-ID: <2E7090A0C462255A+6658f83c-4e5b-4f49-a90b-54eecd61fcbf@radxa.com>
-Date: Mon, 12 Jan 2026 15:25:05 +0800
+	s=arc-20240116; t=1768203082; c=relaxed/simple;
+	bh=DgXclX85FUVhSWlQH2iu8vOv/Zk2lpcrKMkbE1K8elI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OSlf26Vjgz/QUn+CZkUhSM63VQHq83iKpEFbpOUBtF8ued1QrmTyzq8jJxwGnTzattGHsKoI1jhO0WYfxnoXkBeQUKn0a9KxhYa5S2gzHhlCYxCI9uNjSgvGHCRL3249QzV7LQkhoPxj0abjyjO6bxUOoUQS+ZNMl1nYYHIsU6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W52GMF38; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=d51EVWGc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60BMZ1S71231266
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 07:31:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=aieeUG5t4cx92lVZlSq6w5Iq
+	SGyS46OAJyDHIiD8MkU=; b=W52GMF38UzDGl+qereawB+dsAPCnPnKyix4Fsbip
+	iuFIk34gxGeDyncv2Lh6ukHKwIUSBlTZV9V1AWO1M/X8mZBVnQTI7IiDKcRGyUde
+	P1KW9QoxCm/oqnZfbFuCXQHPv681dzrhgXIA3Dg2GTXV9GhYHVHVjwtba/vqZAw9
+	ZMi4Hs255Dm0bpmYFaR8nJsiAB9yADcHKu9PAelNt0Y/qEa8cepRP3soaPXfD+kD
+	YIbhxWwZjN0MJLVWPXYflwKu2drfuyCq+5lnePGzuLn4g4ZPlVsRuoGkvCuxx4Xr
+	O/MxgfuGgRYzVv2nrXWi2iisKtoGhaYVnwXD5jqlZl9i5w==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bkfxfuw5j-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 07:31:20 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c52d31fe88fso2452259a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jan 2026 23:31:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768203079; x=1768807879; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aieeUG5t4cx92lVZlSq6w5IqSGyS46OAJyDHIiD8MkU=;
+        b=d51EVWGcUQwh0f3fMA2UpXzOiPOLgRYwpRBDwKxINd+Qnai5742fW7dS299fvJ90wC
+         BBo00VCIDDfQ6OyUF8mytq1jZKkUHJUgUjmd/DS5lr958L5PS3tmCo+dagQx0T++Q0Nb
+         PvPK252Y7BPJdWCgimNcPodwiO2Ts/YbZ0mErgj1xJJSR9p8/Vv691i377PsZpjsZJ2n
+         HGh3nz3nDdDzv895J1nO23MEUuq1DlVurVtInV93aCxSnlF3OszwyIya5OlEyKKOCnas
+         VzEwMebf8/GAkQXLMTsb8Lun7XBHQmxmULoviCsY23TlOjvqmBryoYRZVsWhRoWAm32g
+         KvKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768203079; x=1768807879;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aieeUG5t4cx92lVZlSq6w5IqSGyS46OAJyDHIiD8MkU=;
+        b=QdnaxL+CI67NwZafNeeKAU2aiDi474ZY4Sh38SHJew/SxYC1qskoasHkCMHicV77Lx
+         vhsZS+GKhcmcljcsJlNVXBHIk9o8hoAUK2WL2KyqyHHZIuyqF1Xt655sdkCS+nDekzHo
+         B2LTkAZ2G2ZkHrKruvL8zletT8JCXMeRhGhMgPKa7lCw5QkHPW/j+lya/rsZIsyx0ag8
+         MTs/TfKCPJeMPYhyr6VoF/eBajIS/orNAgjytJPNQhBM37uNLpWQPypaZglWs+6KwhMh
+         Qg4aqp1M1Obe3rY1vSs6HOs8A1/7XfFifpg/7wwyApL9oOCKpZ4NYQP1xh5ClRgyhRPE
+         1Ncg==
+X-Forwarded-Encrypted: i=1; AJvYcCXXSASrG0B5Dl6GA7TxHENl7nPIVr6aCCQ/ss7ucjN68MSK+Gq/xQrjhy43gOH0foYytdddoNUk3FYybflP@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBC/sSvMemtIwVdwTnnG7NcR/mFWe1NUBq6U7HWMhSgWtQKrvF
+	yg8eaXd20SnJ2XwXSbTgam8xQb2gKLrHO7qQzIFLEllZozoXywrTSoij6yzRU8V4AhFDd/gJ9WY
+	G2HtPR2bDLXMr9AEMUmWKfbKFj09hCeV9oJi0UAHAVUBp2TH/uinA4gDenptDx5YmTLyZHBsGmC
+	VqLaLuhTdhuMQRrmTIW/F0BEyAmA03mkShPxFThIc+qEo=
+X-Gm-Gg: AY/fxX5VHzTXVzQfZE9olWNrOIFtFc5Mcn+G37KeuyQrnjW2LGKB26e9jR5DeXsjBtm
+	sW6gOAoaqVBxKb1No37Y7Zzi9LClstbf1eZiRdyC7YbpV0JjgWPTT4UW9R/P9HVOxKTubpuN5Q2
+	GQ6XBea++lxNE7l+9+kT6nKmLrUfD1WVVUL1Y5X6u7QFXKwRX7a10aNaNOGC5bBU7CugtZv/T+v
+	9S/3C9k
+X-Received: by 2002:a17:90b:57c4:b0:34c:a211:e52a with SMTP id 98e67ed59e1d1-34f68cae46emr15271750a91.27.1768203079382;
+        Sun, 11 Jan 2026 23:31:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVeH0yXzyL99iEdeKLneF+ImcqBHnePS2A59769rwS8dnkwplqXvC3R56OCpCd22vzD6s6AQmmtQNsHGCNhFA=
+X-Received: by 2002:a17:90b:57c4:b0:34c:a211:e52a with SMTP id
+ 98e67ed59e1d1-34f68cae46emr15271737a91.27.1768203078885; Sun, 11 Jan 2026
+ 23:31:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20260112-max-mixer-width-v3-0-f98063ea21f5@oss.qualcomm.com>
+ <20260112-max-mixer-width-v3-1-f98063ea21f5@oss.qualcomm.com> <2E7090A0C462255A+6658f83c-4e5b-4f49-a90b-54eecd61fcbf@radxa.com>
+In-Reply-To: <2E7090A0C462255A+6658f83c-4e5b-4f49-a90b-54eecd61fcbf@radxa.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Mon, 12 Jan 2026 09:31:07 +0200
+X-Gm-Features: AZwV_QiGdaYcA4jSvflgXX6CaLCQduNAeACnn8ngi5rlFmuoNNo_wOw555UhKO4
+Message-ID: <CAO9ioeXY=rzZkJi=Lz4-JDASSnE7DWBh59aPawrPSzrFFPCNbw@mail.gmail.com>
 Subject: Re: [PATCH v3 1/3] drm/msm/dpu: check mode against PINGPONG or DSC
  max width
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-References: <20260112-max-mixer-width-v3-0-f98063ea21f5@oss.qualcomm.com>
- <20260112-max-mixer-width-v3-1-f98063ea21f5@oss.qualcomm.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <20260112-max-mixer-width-v3-1-f98063ea21f5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: N8Jy6PtD39R8tJpCsFuJsmU0q3dplmfIxR7njP/vNFNElgs4MYs4nn51
-	tWqERqtZkkHDjf54gg/X4qu39JQCF+8n5sV85kQ5ODrY27uqQH6JL3bxUKWyAznXGDmOOLM
-	pj1tNV+S7W5PATqXVJIo6fCp1e1iIP38Wva8gGhNQ5XZIMvV8dd3h4WmqzveMA3+FP2hEtR
-	fZCD41nbkcEAlyEQo2KhfxZwQP+4lNuUfy1zewXyX0OWDHUhL9YF7FS8C4g8Djv0uiOvtM7
-	ho14i3FG+4iIIvg796lLm8ULzw2w6AxGYP3bJwq30NHDjtEWQwsIeXmyp/HVx7dCcO09MY3
-	kuZLCukk5PAYuUsRyzODBYB8UOSgoGimlZhJjIko+NCqU3x2Kq42HN8tX2iLAyOWPndYfLs
-	5XG5grk6HsV5fgpeyislQCcX7hcJDXm4iH7T4fted6DCIcNqDz9U0ZR1FXhJEhWel8E3y4G
-	Y/vmLKbh2hf/u+875vxTVkmjHBDUZYU8Tyl88vGDJjyAivLgnAqVIvm/PrenHY+8akv7uAa
-	zF1qYM4ZRXAqkY0X3ezBakv/XZKTMWIdv3r0Lx5Cb7yY+IpZ6N9i4sA2DqzFfEcNsCQfPBd
-	pkQdr2Cu20KEWUofJ7BQWUzvbUH9xA6mVE0F2wdG4DSoHdW0jPt0+4c+oXBNgr0EmCxIkUw
-	ofACiqZ1KaFt/IKahS6enMYCjrbM4IW5tk6rjRJ+Q5BwRI/WDejw95NMfcJFJdeKhIPHXnd
-	47WgmRn+fq5+DXReI95z80vIsvf7WQB98K+oL0yUWhemDKCsr/F/UBPLTxUwSSwxKhVg30Q
-	7MHqq2vkc06w9+eCPkjbWv+i7Mf+6LdvwBljzftCeievqHzumTf+wy0vBdQ2/c1nYSl8bGj
-	iMIC/xjSxMFtIBO0dL5+YmtJhIKWZlq+0pASQgXG6p8qOn8VJ5TiKSUDlPFlC/dRoSHH9NR
-	t/iDrHSqBkd2vWd/JFRUfXXt8iunhkCnI39dUODSe8D5PGbC4KS8QAPqjr4Dgs7sPTgDrm2
-	JF6VdlGfBh2yTQ6XvDCwKDQ83vr7nXCLGzplZ2Bg==
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+To: Xilin Wu <sophon@radxa.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-ORIG-GUID: ST9oNI2WwDBee4QZZxTudnNhNMsW2Yls
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA1NyBTYWx0ZWRfX/7U7JJeJGu1N
+ zWkWfkEbbzMthEOqF6nTrS2iPqDDs0/LOxaPtsm/tPY/Io6X8QmmfnzFUHVFX8NZFBsJK6b4W6o
+ TQUt/ZqMh2GJzUoMD9oF29TWFuuwj/ztagKxRSb5+4eDHJY1h0h4f0K3SEzTNQEGWGApYKJWoJV
+ QTf5CwivJAePQygk82n0ug7WBWhFlWeKfoA+7vWm8R3RxZg8ABmrIMJnQ1N4K9A2ATbgBdkT7Ue
+ qUx18ChQy71Sjn46fdyk5klZG/G97VTaPYnDea2vsABtaNBLGrtiCuT4+350yncVxvmjiYAnFUb
+ 9xxzfKUNHv4YGU/hjW6n/GwuRhi21CWc2aZDEQpIfbKi37f8wE6SW6ejpz5lcyLAXZES3B/gTpa
+ oMvDFVikMqRjCheexf/TeQGuzKhsfLaep7tcmeO/jb1TF3g7b1NpzkDeH9mbzGBDijImTgANDvS
+ +dsJYA84d1lyg3mKjtQ==
+X-Authority-Analysis: v=2.4 cv=c7WmgB9l c=1 sm=1 tr=0 ts=6964a348 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=ksxQWNrZAAAA:8
+ a=EUspDBNiAAAA:8 a=5DgrgJxoGKuf3rDOEbEA:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22 a=l7WU34MJF0Z5EO9KEJC3:22
+X-Proofpoint-GUID: ST9oNI2WwDBee4QZZxTudnNhNMsW2Yls
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-12_02,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ spamscore=0 impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601120057
 
-On 1/12/2026 11:11 AM, Dmitry Baryshkov wrote:
-> From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> 
-> LM block doesn't have a hardware buffer (unlike PINGPONG and DSC
-> encoders). As such, don't use ephemeral max_mixer_width and
-> MAX_HDISPLAY_SPLIT to validate requested modes. Instead use PP and DSC
-> buffer widths.
-> 
-> While on the DPU 8.x+ supports a max linewidth of 8960 for PINGPONG_0,
-> there is some additional logic that needs to be added to the resource
-> manager to specifically try and reserve PINGPONG_0 for modes that are
-> greater than 5k.
-> 
-> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> Tested-by: Xilin Wu <sophon@radxa.com> # qcs6490-radxa-dragon-q6a
-> [DB: reworked to drop catalog changes, updated commit message]
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On Mon, 12 Jan 2026 at 09:25, Xilin Wu <sophon@radxa.com> wrote:
+>
+> On 1/12/2026 11:11 AM, Dmitry Baryshkov wrote:
+> > From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> >
+> > LM block doesn't have a hardware buffer (unlike PINGPONG and DSC
+> > encoders). As such, don't use ephemeral max_mixer_width and
+> > MAX_HDISPLAY_SPLIT to validate requested modes. Instead use PP and DSC
+> > buffer widths.
+> >
+> > While on the DPU 8.x+ supports a max linewidth of 8960 for PINGPONG_0,
+> > there is some additional logic that needs to be added to the resource
+> > manager to specifically try and reserve PINGPONG_0 for modes that are
+> > greater than 5k.
+> >
+> > Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> > Tested-by: Xilin Wu <sophon@radxa.com> # qcs6490-radxa-dragon-q6a
+> > [DB: reworked to drop catalog changes, updated commit message]
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>
+> Sorry for the late reply, my colleagues are still testing the new series
+> on qcs6490.
+>
+> However, this completely breaks 4K 120Hz display on SC8280XP CRD, which
+> was previously functional (albeit with the clock check bypassed [1]).
+> The display now shows a solid blue screen. Kernel logs indicate that
+> only one layer mixer is being used, instead of the two that were used
+> previously.
 
-Sorry for the late reply, my colleagues are still testing the new series 
-on qcs6490.
+Interesting, thanks.
 
-However, this completely breaks 4K 120Hz display on SC8280XP CRD, which 
-was previously functional (albeit with the clock check bypassed [1]). 
-The display now shows a solid blue screen. Kernel logs indicate that 
-only one layer mixer is being used, instead of the two that were used 
-previously.
+>
+> [1]
+> https://lore.kernel.org/all/F4CDF36128041430+0d030e3b-054c-4910-a132-72273c541948@radxa.com/
+>
+> --
+> Best regards,
+> Xilin Wu <sophon@radxa.com>
 
-[1] 
-https://lore.kernel.org/all/F4CDF36128041430+0d030e3b-054c-4910-a132-72273c541948@radxa.com/
+
 
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+With best wishes
+Dmitry
 
