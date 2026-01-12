@@ -1,70 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-88479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0973D112D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:22:06 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 757DBD1129D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:20:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2865530038C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:20:12 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 88653300FD5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:20:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55C133987E;
-	Mon, 12 Jan 2026 08:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 375FC34029C;
+	Mon, 12 Jan 2026 08:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5CuCvyh"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1SSQl16"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B861A1B81A1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115DF33F8CF;
 	Mon, 12 Jan 2026 08:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768206009; cv=none; b=W0ocR5O2/L0lTQsYAC0Afew06CW8fRl1aPpvWJphM15JQXOsZ7eBvgCcA6NalaCGZHAK7i8My4T4TMFaCZtNqXl3KmilgFELNT22aaqLAFN3jVwIE/d8/MukkPksHEMd09LNkBgCj6jK7Tia/t+pK8pM1kh245DTMNvuwBrjsSI=
+	t=1768206010; cv=none; b=JNNQYmIYg98mXNCXd0kD3VajdT+JMyDPqf57IfMsNnFwWsSpLr5X8KxGHFqg9wsDESQDLU3sC+rfhmMWiohjl7kP/c8dVrAY8emLUbK2y9LII8E8nD+gZDiJW3nKjfozZ9E+JPvweiELtbFI/2tdgmv4QXQw2l5lsOpTg99q9lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768206009; c=relaxed/simple;
-	bh=ObX+40NwErgZLVy8CTMLW715TtcaqkDgsLRG8Rr9aJA=;
+	s=arc-20240116; t=1768206010; c=relaxed/simple;
+	bh=OJIX75obaMOz/Rw970G0TtUx5AEZXgro07NB88e8eTc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AZiWTnVq2WPvOORnXotkNHzcQuUJjbnk5jAcF8+YaAZtafaffBOwHcMMjig6XuRGzOLRqoA3sBiKMD+OZTjkhsueCC+z3fdNFK6zm9EuhBv7I9UzBjcm1ziD2Dcdkclff1xq5qI+vJRs3RPlSyoGTJ9gOrdhOAhGzOHod5+jpTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5CuCvyh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3FC116D0;
-	Mon, 12 Jan 2026 08:19:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768206009;
-	bh=ObX+40NwErgZLVy8CTMLW715TtcaqkDgsLRG8Rr9aJA=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=r9oyjLZ6z/MJ1JXj67NyL2NLqIuNmaA9t+1V5XBgpHhdZC5lhPlqbpJTTSJVl6+4rKVebnRLcQTHB2zMelfsQnCk+uIyTMca7Qc1m0RvYcr5qakbjpSBQA1l3nov2t948pW9E2gUjN1/m2qKxyhx1bkScHj/6lFHCxjpt9bl+0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1SSQl16; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688E0C4AF0F;
+	Mon, 12 Jan 2026 08:20:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1768206009;
+	bh=OJIX75obaMOz/Rw970G0TtUx5AEZXgro07NB88e8eTc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F5CuCvyhm2riEqGGgzes8RZtIEOU75MGImNDFuozGz2Jz+F9dTzS6vcg4adqbEq+D
-	 Y0uG7NkQ21KMaqfUq/O/1CtMAjnIq2FXP2BBG9svamx10MWrLpOCdL0M4lQnG8uoVv
-	 HbTXahN4reNjYfBZ+ypD7Hlo+AcK9Z8w8ZumZZ2M3AQcBRK8btY5aLdRK4Ef9HcyYz
-	 8DMfamTVtgpnY7KmQs+odq13vph91FQIlRd2faJxFw/IY3ZEBn+GRQvREvv0puBp4R
-	 1GE2AmwyQkkCT2UEryiQ2PwetHQLQrqU4Mzn8EO0L+0N83mwtebBFJrjqoHfK0yKgc
-	 9viWCGiBFSXcw==
-Date: Mon, 12 Jan 2026 13:49:54 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, Rob Herring <robh@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Daniel Scally <djrscally@gmail.com>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
-	Sui Jingfeng <sui.jingfeng@linux.dev>
-Subject: Re: [PATCH v3 03/14] software node: Implement device_get_match_data
- fwnode callback
-Message-ID: <6l3rs5pv6xnrbygpvqrdxqoqtybjyefsltk5bl4336q56rfoza@ejo3sxuufghe>
-References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
- <20260110-pci-m2-e-v3-3-4faee7d0d5ae@oss.qualcomm.com>
- <aWSpFk9z0zpyKjr6@smile.fi.intel.com>
+	b=Q1SSQl16ggvR8LImiJHhEXcNxEIbgYeaISUse2VIeH9oncmpdDZW/N+TDTi7IsahG
+	 +pFPG6BVfSiVZVg2PsFDkBYtvXzxjnHMNK4Hyvgpc7uAQx49K/bbA5BXuYJ3J36WOT
+	 bPbFfX2MovL9rNkitUm7srVuEXKmUEGOLhVupSAg=
+Date: Mon, 12 Jan 2026 09:20:07 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Xingjing Deng <micro6947@gmail.com>
+Cc: stable@vger.kernel.org, srini@kernel.org, amahesh@gti.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [BUG] misc: fastrpc: possible double-free of cctx->remote_heap
+Message-ID: <2026011208-anger-jurist-a101@gregkh>
+References: <CAK+ZN9rJypDknnR0b5UVme6x9ABx_hCVtveTyJQT-x0ROpU1vw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,77 +53,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aWSpFk9z0zpyKjr6@smile.fi.intel.com>
+In-Reply-To: <CAK+ZN9rJypDknnR0b5UVme6x9ABx_hCVtveTyJQT-x0ROpU1vw@mail.gmail.com>
 
-+ Dmitry Torokhov (who was against this patch previously)
-
-On Mon, Jan 12, 2026 at 09:56:06AM +0200, Andy Shevchenko wrote:
-> On Sat, Jan 10, 2026 at 12:26:21PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+On Mon, Jan 12, 2026 at 04:15:01PM +0800, Xingjing Deng wrote:
+> While reviewing drivers/misc/fastrpc.c, I noticed a potential lifetime
+> issue around struct fastrpc_buf *remote_heap;
+> In fastrpc_init_create_static_process(), the error path err_map: frees
+> fl->cctx->remote_heap but does not clear the pointer(set to NULL).
+> Later, in fastrpc_rpmsg_remove(), the code frees cctx->remote_heap
+> again if it is non-NULL.
 > 
-> > Because the software node backend of the fwnode API framework lacks an
-> > implementation for the .device_get_match_data function callback.
+> Call paths (as I understand them)
 > 
-> Maybe this is done on purpose. Have you thought about this aspect?
+> 1) First free (ioctl error path):
 > 
-
-IMO, software nodes were introduced to add sub-properties to the existing
-firmware nodes, but it has usecase/potential to go beyond that. More below.
-
-> > This makes it difficult to use(and/or test) a few drivers that originates
-> > from DT world on the non-DT platform.
+> fastrpc_fops.unlocked_ioctl → fastrpc_device_ioctl()
+> FASTRPC_IOCTL_INIT_CREATE_STATIC → fastrpc_init_create_static_process()
+> err_map: → fastrpc_buf_free(fl->cctx->remote_heap) (pointer not cleared)
 > 
-> How difficult? DSA implementation went to the way of taking DT overlay
-> approach. Why that one can't be applied here?
+> 2) Second free (rpmsg remove path):
 > 
-
-Sometimes you do not have any DT node at all. For example, in this series, the
-M.2 pwrseq driver creates the serdev software device for the M.2 BT card to
-match it with the existing OF based BT driver (for non-M2 device). From the
-driver's point of view, a BT device attached to the M.2 slot and over custom
-connectors are both the same. Only difference is that, in the case of custom
-connectors, the bluetooth DT node will have the BT device described and in the
-case of M.2, the device won't get described, but just the connector [1]. But for
-the driver to identify the device (since it cannot enumerate it), either it has
-to rely on DT/ACPI or some other means.
-
-In the previous version of this series [2], I used the serdev ID based on the
-product name for creating the serdev device and added a new id_table for serdev
-driver to match with the device [3]. This almost duplicated the existing OF
-match logic. Then Bartosz suggested to use swnode approach [4], to get rid of
-the custom serdev ID based matching. When I prototyped, it mostly worked well,
-except that swnode needed to have its own .device_get_match_data(), match() and
-uevent/modalias functions. And if the swnode reused the existing DT compatible
-string, it can work with the existing BT driver without modifications. And this
-approach can also be extended to devices instantiated from the board specific
-drivers.
-
-[1] https://lore.kernel.org/all/20260110-pci-m2-e-v3-10-4faee7d0d5ae@oss.qualcomm.com/
-[2] https://lore.kernel.org/all/20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com/
-[3] https://lore.kernel.org/all/20251125-pci-m2-e-v2-2-32826de07cc5@oss.qualcomm.com/
-[4] https://lore.kernel.org/all/CAMRc=Mc-WebsQZ3jt2xirioNMticiWj9PJ3fsPTXGCeJ1iTLRg@mail.gmail.com/
-
-> > Implement the .device_get_match_data fwnode callback, which helps to keep
-> > the three backends of the fwnode API aligned as much as possible. This is
-> > also a fundamental step to make a few drivers OF-independent truely
-> > possible.
-> > 
-> > Device drivers or platform setup codes are expected to provide a software
-> > node string property, named as "compatible". At this moment, the value of
-> > this string property is being used to match against the compatible entries
-> > in the of_device_id table. It can be extended in the future though.
-> 
-> I really do not want to see this patch without very good justification
-> (note, there were at least two attempts in the past to add this stuff
->  and no-one was merged, have you studied those cases?).
+> rpmsg driver .remove → fastrpc_rpmsg_remove()
+> if (cctx->remote_heap) fastrpc_buf_free(cctx->remote_heap);
 > 
 
-Yes I did. I didn't put the above justification in the cover letter, as it was
-already overwhelmed with too much information regarding the connector node.
-Maybe I should've added it in the comments section of this patch. But I didn't
-know how to do that with b4.
+Hi,
 
-- Mani
+Please note, stable@vger is not the email address to be asking about
+this, it is only for stable kernel release stuff.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Andn do you have a potential patch to resolve this issue?  That's the
+simplest way to get it fixed up and to show what you are discussing.
+
+thanks,
+
+greg k-h
 
