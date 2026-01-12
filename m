@@ -1,179 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-88590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 555D6D13D1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 16:53:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CFA20D13FAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 17:28:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4AC49301C3BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 15:43:52 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 536E73006E3C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 16:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 154173612F2;
-	Mon, 12 Jan 2026 15:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1540366573;
+	Mon, 12 Jan 2026 16:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QXsIKePI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQufjzlZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D1936166A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 15:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D25365A09;
+	Mon, 12 Jan 2026 16:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768232631; cv=none; b=Zu8N+IrXU7256DjWZUPpQnZ75PttFM1RqyQngsvXiR+c8lsKAz1kye4gPEsQ7IniUHVRrfOldglTfndn0a+7IR66ruIA5HV4ZvqDQhpW3857k7xqLDx5dAoULCPbZ2VQrutC9HIdGfRHi3I6nXUROCqgE2KY+zbADEeY+jLSBU4=
+	t=1768235313; cv=none; b=sOfW6MpPJgjzD766lBjmWZGfyTDXy3KoIOqaQaCRfJd0gRK1tpCqBl3TKwWW6GwLWR0Xko4BE6EX2gwJx8lPFIO693ghpuByjdTUKNgkAO+fqeewkCmulbCxx/p/qsxntSFk82d8IGJTzQJ/gRH0eoneDYySCmTtG/vFfh6F/OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768232631; c=relaxed/simple;
-	bh=bDOKb4bt6pQUBoxgz/5fJcKrJ6eRISq2KUdu/jMV3n0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=COSW0pze+f+eFdhTFvQHc71L5Hf4UH9iwett+zoZ8xo71NCjVTCGyyKB5AqCdiLs9nhuxrjMrPBcs9q+CjwgnWTxoX23HCItHhndOecL+rVyP/38xQ76+4WNtm2H51bkdbdZoLT2sKY9Nbz/oRxM4eQlHKIS9nGb1rCVP8Vsmb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QXsIKePI; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-432d256c2e6so3209357f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 07:43:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768232627; x=1768837427; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CfITgAVylD2bxVCFRISaE2whe/NjaF4IpuobYf1dsMQ=;
-        b=QXsIKePIN89K1ES1G3MQqDelrmG0Vh6AYWLKFbLnvHPGPCDOIM80XaHh047YtptK7b
-         CV2MUU/ITMmVWnB4VmxUmsqqhBbR57pUaxogaewiqsycalOB16smaygLU2+uvR2zFBfG
-         rlYXIXIRL3SwkTW62Sc9xevA9S5hboZl4AIxulj2BOC/Aa4wmCLbSoD4EEUi0pA/gSIv
-         YNcCJIloh4ibr0Ipf+DA9jgqYhv1OiIqb65QHXAdQtC0wiSDtMnrhvGhZ2OMP9kX+lAI
-         +6vu27A3PMefrQZBW1qQBGpDALlcG0+MWaA03kwayfFPRlDKGrFajKGcNo5/R/os13YH
-         KrnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768232627; x=1768837427;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CfITgAVylD2bxVCFRISaE2whe/NjaF4IpuobYf1dsMQ=;
-        b=L5XId6dEdRZ8lRhrcro3CMOTrCQIGQ7VlVen92MZw2Pb5RbYl9VV7HjY4qCcpfRomo
-         EVMpsH8ycRq+T76PUsJxzJPodxe7Zo+vEbBDHBckU4TblPt19XYYfHTr7rrv3T0/KSg/
-         j6k9TPCkuZdNVLDioi5cNUQt6+Nql0AMyev1+MuXNyyOsnf0u/b1EnbslEHvlLBpHe/V
-         THKQWGWH1y3erbhl1y+0SUe80bD0FuC+rJoqkHr8bTr15IutmeBpxt6ux+ZY2ZX3eBLn
-         5chVNX0YQO5qfQPSYL49rCl6KanQYAWypqH03dDLMxYtLF6ftGX2CIa0bUJA5DrXJxPA
-         vRWw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5CKf51nZBVU7wPHwhO8MLJilEUYWJEpmETXchW+Ol5ir2AQMiOQr5MdPowWtKRbfxV2mO7T4Uj5sEXeU+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcRTgMgPs70Tzpbny+bfxTRaXFFXhWAK1QhZ2seuGwe+N4HiG6
-	1hc+FhUOi6IzeltLh+sBwxSUuYo3BQr9qI25m8sH4CYNB6TNiAGFnIJysg6/2pJTV3k=
-X-Gm-Gg: AY/fxX5BkRueaUbkchHpWB/aB9JHitw0O+WWj1xfh4f5p4w6mlyUKGk85OnjehSNkq5
-	XXdicuovFEuLCcQjBXOkHVrur4jT4HbEoqlcEHStTFkhx5VSZmVWluGQuC2hUjsIOtk9wd+8o+a
-	qnOsd/7rrngThb6nmeg0wd7DGmgd3dSowG0Hzx48GnNw6DzJDzrp6gDpdmS0cCVaUoTL1/27UwP
-	v6HDagwJkXh9SYdN+LOaxweL1lZH9e5QXRmrp7LQhb76Dd60zlSJDSOwLbgsdOkUf6q3L8ye+pB
-	A1YOF/6a//3InFLVwOST498gJzzuVHoqEUU7xn0lDQpydBER7+htDMHNFPXPHgCuQF2Kx1BT4c6
-	5fA0r+rQEEDG9zE6hD/r7EpSRlchYn/v+lUJeNxzv52RlPYMnhibiT+7HyAwuW3CIjHXRl1bQrX
-	mS6OAvpH3xaIDLDmcp51qp5f9NrfWTcLuxbZHbOKXd080hdiEdCbbk
-X-Google-Smtp-Source: AGHT+IHkTHCS0yDczJqxEufBpsoO4n9Qx7B7U8QsQlmoG/9TL0Rz3x550kM7xKtoXN1SA4fkUD3sXA==
-X-Received: by 2002:a05:6000:24c1:b0:431:266:d14d with SMTP id ffacd0b85a97d-432c379f21dmr22844140f8f.47.1768232626951;
-        Mon, 12 Jan 2026 07:43:46 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5df96asm38525693f8f.28.2026.01.12.07.43.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 07:43:46 -0800 (PST)
-Message-ID: <250743e3-66d8-4a39-a487-947ae1c831b8@linaro.org>
-Date: Mon, 12 Jan 2026 15:43:45 +0000
+	s=arc-20240116; t=1768235313; c=relaxed/simple;
+	bh=9S9KztO8/ZYkPDYvEOYZP3UT7oEj1fzgnUHdhGGOUPY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PKvviIxhvV1LKMth2aYpAn6kasMxz9OqhwjMOHrrNk7it+8Qi1YCz4lZ4gUxWoPxzlvv5ynyoSeXU309ACluBA1LNlbR4KA/7oS5CMFSauHczP3cZWzH2Vu+thAq0naaeJjDI+fkkz5JB17EdrdNp3xasn2gwD/8aEZKp1mDFkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQufjzlZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DFBCBC116D0;
+	Mon, 12 Jan 2026 16:28:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768235313;
+	bh=9S9KztO8/ZYkPDYvEOYZP3UT7oEj1fzgnUHdhGGOUPY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=cQufjzlZ2QA792AyEfJV6UOyuuAG93SMg3NeKSMHWjtWf2QwDp33o7XHbSjfsC0cH
+	 RBRZ4mvvd7KdCRg6lQIlIX/gskUjlbfX+jtVWu8yOE2p8Mi24pKRZrtBkjNq5M+BBv
+	 Nwjilu5z9QnRgHQ2NphMFy+JDouQ7xerqzmkWbkjLC0Y6lPAGxgWVIKPO9FcR4cYe9
+	 g0Fy97SdQSxGon0gr7tqlr5XiivnEXHrSw7KeuoGM5I4Tc/rIWardPEt9axmp3vUpr
+	 5QjYjT7SISj73wTym5M25hv2bcABQ7q4CF2dRYMzohY0OF0HqrYFNrVPrEEG3iWIf8
+	 SZFNQbdja0PEA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3A1CC9EC7A;
+	Mon, 12 Jan 2026 16:28:32 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v4 0/9] Add support for handling PCIe M.2 Key E connectors
+ in devicetree
+Date: Mon, 12 Jan 2026 21:55:59 +0530
+Message-Id: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/3] media: qcom: camss: tpg: Add TPG support for
- multiple targets
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20251226-camss_tpg-v7-0-ccb536734805@oss.qualcomm.com>
- <20251226-camss_tpg-v7-3-ccb536734805@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251226-camss_tpg-v7-3-ccb536734805@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJcgZWkC/3WQ3WrDMAxGXyX4eg624p8kV32PsQvXVlbD0rR2a
+ lpK331KyiBs3Y3gEz5Hlu4sY4qYWV/dWcISc5yOFNRbxfzBHT+Rx0CZgQAtpQR+8pGPwJF3ynT
+ a+S4YbRk9PyUc4nVVvX9QPsQ8T+m2motcui8kRXLBO6tkE8x+aEHtppzr88V9+WkcaypscRXY8
+ KA3PBDfQAsmoLDe63/45oc3Qkqx4Rvi1eAQbRBBO3zBP57LJTxf6Dzzc0M2Ys5uPU9f/f7XavU
+ aWqHAoVP2r5Wce5eRL40491UxtWx58pLmPb4BaKXlIpYBAAA=
+X-Change-ID: 20251112-pci-m2-e-94695ac9d657
+To: Rob Herring <robh@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+ Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Mark Pearson <mpearson-lenovo@squebb.ca>, 
+ "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+ linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-acpi@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7020;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=9S9KztO8/ZYkPDYvEOYZP3UT7oEj1fzgnUHdhGGOUPY=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpZSEtGGfSh/B1nXp79dZ8tN42YNlOmlhU2XEVl
+ IfM9hdzOWaJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaWUhLQAKCRBVnxHm/pHO
+ 9eATB/9I4PeXTjoeXCEcZ8gzOFHC+k+q1MX2Q0KbtUm5/UeLw3/wtmHj8kFe+mC3UfGbn6hud5V
+ Ehx1diBiHlWBykDmTFJQTEkFhMdu/1Xq1h7j1osWieFndkoob+y4ThvytUW1Q1ua5awlGWooixA
+ 0yIABdgB/RikR5nLcyUZqUOvD9SuGQRn7Cihks4FXyC32sTULnvNoOvBhhMLLMwTN6ab7YWxe8u
+ k9Rzjl533ObbpeGrV14Hlvdv9d+uONSWQDHHeIVrMpMwtDVseM+fCxGwxSyP8NRsp9GvbSDF6Gq
+ dHFOzGmcl0AOu8aOTi43GLennHP5oa4w2XPj+dl6A2Pwvd2u
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
-On 26/12/2025 09:19, Wenmeng Liu wrote:
-> Add support for TPG found on LeMans, Monaco, Hamoa.
-> 
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile         |   1 +
->   drivers/media/platform/qcom/camss/camss-csid-680.c |  16 ++
->   .../media/platform/qcom/camss/camss-csid-gen3.c    |  16 ++
->   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 257 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.c          | 128 ++++++++++
->   5 files changed, 418 insertions(+)
-This is causing a regression on Hamoa.
+Hi,
 
-Did you check the camera itself still streams ? For me, camera streaming 
-breaks when this patch is applied.
+This series is the continuation of the series [1] that added the initial support
+for the PCIe M.2 connectors. This series extends it by adding support for Key E
+connectors. These connectors are used to connect the Wireless Connectivity
+devices such as WiFi, BT, NFC and GNSS devices to the host machine over
+interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support for
+connectors that expose PCIe interface for WiFi and UART interface for BT. Other
+interfaces are left for future improvements.
 
-Please look into this.
+Serdev device support for BT
+============================
 
-➞  git bisect good 
-  
-                 [git:60c1b50b1f2f5] ✖
-9d1d90cca34ca66617ade951d42c94d5f086717f is the first bad commit
-commit 9d1d90cca34ca66617ade951d42c94d5f086717f
-Author: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-Date:   Fri Dec 26 17:19:12 2025 +0800
+Adding support for the PCIe interface was mostly straightforward and a lot
+similar to the previous Key M connector. But adding UART interface has proved to
+be tricky. This is mostly because of the fact UART is a non-discoverable bus,
+unlike PCIe which is discoverable. So this series relied on the PCI notifier to
+create the serdev device for UART/BT. This means the PCIe interface will be
+brought up first and after the PCIe device enumeration, the serdev device will
+be created by the pwrseq driver. This logic is necessary since the connector
+driver and DT node don't describe the device, but just the connector. So to make
+the connector interface Plug and Play, the connector driver uses the PCIe device
+ID to identify the card and creates the serdev device. This logic could be
+extended in the future to support more M.2 cards. Even if the M.2 card uses SDIO
+interface for connecting WLAN, a SDIO notifier could be added to create the
+serdev device.
 
-     media: qcom: camss: tpg: Add TPG support for multiple targets
+Open questions
+==============
 
-     Add support for TPG found on LeMans, Monaco, Hamoa.
+Though this series adds the relevant functionality for handling the M.2 Key M
+connectors, there are still a few open questions exists on the design. 
 
-     Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-     Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+1. Created a dynamic 'bluetooth' node with the compatible property matching the
+WCN7850 device and attached it to the serdev device. This allowed reusing the
+existing OF based BT driver without much modifications.
 
-  drivers/media/platform/qcom/camss/Makefile          |   1 +
-  drivers/media/platform/qcom/camss/camss-csid-680.c  |  16 ++++++++
-  drivers/media/platform/qcom/camss/camss-csid-gen3.c |  16 ++++++++
-  drivers/media/platform/qcom/camss/camss-tpg-gen1.c  | 257 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  drivers/media/platform/qcom/camss/camss.c           | 128 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  5 files changed, 418 insertions(+)
-  create mode 100644 drivers/media/platform/qcom/camss/camss-tpg-gen1.c
+2. PCIe client drivers of some M.2 WLAN cards like the Qcom QCA6390, rely on
+the PCIe device DT node to extract properties such as
+'qcom,calibration-variant', 'firmware-name', etc... For those drivers, should we
+add the PCIe DT node in the Root Port in conjunction with the Port node as
+below?
 
-➞  git bisect log 
-  
-                 [git:60c1b50b1f2f5] ✖
-git bisect start
-# status: waiting for both good and bad commits
-# bad: [2ae8c3645005e9115f39e8aa61dea9ea48cc356e] media: qcom: camss: 
-add support for SM6150 camss
+pcie@0 {
+	wifi@0 {
+		compatible = "pci17cb,1103";
+		...
+		qcom,calibration-variant = "LE_X13S";
+	};
 
-git bisect bad 2ae8c3645005e9115f39e8aa61dea9ea48cc356e
-# status: waiting for good commit(s), bad commit known
-# good: [f89c11002f67740aaed818137d513d6c3dbc348a] dt-bindings: media: 
-qcom,x1e80100-camss: Add missing regs, clocks, iommus
+	port {
+		pcie4_port0_ep: endpoint {
+			remote-endpoint = <&m2_e_pcie_ep>;
+		};
+	};
+};
 
-git bisect good f89c11002f67740aaed818137d513d6c3dbc348a
-# good: [18f74c5866cb470123eb0b39cf3248a09fab3ef9] media: qcom: camss: 
-Add common TPG support
+This will also require marking the PMU supplies optional in the relevant ath
+bindings for M.2 cards.
 
-git bisect good 18f74c5866cb470123eb0b39cf3248a09fab3ef9
-# bad: [9aaf62e09bb1bb17c186addc49984343623df50e] media: qcom: camss: 
-csid-340: Fix unused variables
+3. Some M.2 cards require specific power up sequence like delays between
+regulator/GPIO and such. For instance, the WCN7850 card supported in this series
+requires 50ms delay between powering up an interface and driving it. I've just
+hardcoded the delay in the driver, but it is a pure hack. Since the pwrseq
+driver doesn't know anything about the device it is dealing with before powering
+it ON, how should it handle the device specific power requirements? Should we
+hardcode the device specific property in the connector node? But then, it will
+no longer become a generic M.2 connector and sort of defeats the purpose of the
+connector binding.
 
-git bisect bad 9aaf62e09bb1bb17c186addc49984343623df50e
-# bad: [9d1d90cca34ca66617ade951d42c94d5f086717f] media: qcom: camss: 
-tpg: Add TPG support for multiple targets
+I hope to address these questions with the help of the relevant subsystem
+maintainers and the community. 
 
-git bisect bad 9d1d90cca34ca66617ade951d42c94d5f086717f
-# good: [60c1b50b1f2f5466c07aeb4148df25227b5f6d55] media: qcom: camss: 
-Add link support for TPG
+Testing
+=======
 
-git bisect good 60c1b50b1f2f5466c07aeb4148df25227b5f6d55
-# first bad commit: [9d1d90cca34ca66617ade951d42c94d5f086717f] media: 
-qcom: camss: tpg: Add TPG support for multiple targets
+This series, together with the devicetree changes [2] was tested on the
+Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the WCN7850 WLAN/BT
+1620 LGA card connected over PCIe and UART.
+
+Dependency
+==========
+
+This series is dependent on the M.2 Key M series [1] on top of v6.19-rc1.
+
+[1] https://lore.kernel.org/linux-pci/20260107-pci-m2-v5-0-8173d8a72641@oss.qualcomm.com
+[2] https://github.com/Mani-Sadhasivam/linux/commit/753033861360171f2af1fdd56e8985ff916e1ac2
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
+Changes in v4:
+- Switched to dynamic OF node for serdev instead of swnode and dropped all
+  swnode related patches
+- Link to v3: https://lore.kernel.org/r/20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com
+
+Changes in v3:
+- Switched to swnode for the serdev device and dropped the custom
+  serdev_device_id related patches
+- Added new swnode APIs to match the swnode with existing of_device_id
+- Incorporated comments in the bindings patch
+- Dropped the UIM interface from binding since it is not clear how it should get
+  wired
+- Incorporated comments in the pwrseq driver patch
+- Splitted the pwrseq patch into two
+- Added the 1620 LGA compatible with Key E fallback based on Stephan's finding
+- Link to v2: https://lore.kernel.org/r/20251125-pci-m2-e-v2-0-32826de07cc5@oss.qualcomm.com
+
+Changes in v2:
+- Used '-' for GPIO names in the binding and removed led*-gpios properties
+- Described the endpoint nodes for port@0 and port@1 nodes
+- Added the OF graph port to the serial binding
+- Fixed the hci_qca driver to return err if devm_pwrseq_get() fails
+- Incorporated various review comments in pwrseq driver
+- Collected Ack
+- Link to v1: https://lore.kernel.org/r/20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com
 
 ---
-bod
+Manivannan Sadhasivam (9):
+      serdev: Convert to_serdev_*() helpers to macros and use container_of_const()
+      serdev: Add an API to find the serdev controller associated with the devicetree node
+      serdev: Do not return -ENODEV from of_serdev_register_devices() if external connector is used
+      dt-bindings: serial: Document the graph port
+      dt-bindings: connector: Add PCIe M.2 Mechanical Key E connector
+      dt-bindings: connector: m2: Add M.2 1620 LGA soldered down connector
+      Bluetooth: hci_qca: Add M.2 Bluetooth device support using pwrseq
+      power: sequencing: pcie-m2: Add support for PCIe M.2 Key E connectors
+      power: sequencing: pcie-m2: Create serdev device for WCN7850 bluetooth
+
+ .../bindings/connector/pcie-m2-e-connector.yaml    | 161 ++++++++++++
+ .../devicetree/bindings/serial/serial.yaml         |   3 +
+ MAINTAINERS                                        |   1 +
+ drivers/bluetooth/hci_qca.c                        |   9 +
+ drivers/power/sequencing/Kconfig                   |   1 +
+ drivers/power/sequencing/pwrseq-pcie-m2.c          | 278 ++++++++++++++++++++-
+ drivers/tty/serdev/core.c                          |  25 +-
+ include/linux/serdev.h                             |  24 +-
+ 8 files changed, 482 insertions(+), 20 deletions(-)
+---
+base-commit: cb6649f6217c0331b885cf787f1d175963e2a1d2
+change-id: 20251112-pci-m2-e-94695ac9d657
+prerequisite-message-id: 20251125-pci-m2-v3-0-c528042aea47@oss.qualcomm.com
+prerequisite-patch-id: 58778d8eb97ab86008cd48fb5d28ed6cc0bbbc1b
+prerequisite-patch-id: 2dd7d793a67f59ef6e6b5137e69436896198b965
+prerequisite-patch-id: 8ccaa5fdd95e64e69cd942f93c26e89b827d0453
+prerequisite-patch-id: 3d3e1bb7959ab1e140c5024acdd8655e7a7e99ef
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
+
 
