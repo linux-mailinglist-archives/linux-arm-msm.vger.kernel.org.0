@@ -1,193 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-88532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1482DD120D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 11:53:59 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FA65D1214E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 11:57:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2A46C300D93D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 10:53:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2E5F73077441
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 10:54:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B1B234E76A;
-	Mon, 12 Jan 2026 10:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC1C34F49F;
+	Mon, 12 Jan 2026 10:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lLXx+aT1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ER9uDpKU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C90534E776
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 10:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00EC34F461
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 10:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768215234; cv=none; b=Qs5foW2K0LpS+RY3bTu3KIfoXZ268xiSznCJVWZKjGUzr8VisPwG+5yfaaWZE10AQjXALKVxMOFfpsvdZlMufRIYw293Ysf5Q59iRPF2matZnTtGBD+SBM8VMkGOB6Ur4lDsAmQfszcL1vZVZrugtWuXBoy9D52H6PiPZr/q5jw=
+	t=1768215259; cv=none; b=WuifOyPHbJrsqcAiEsSz54yMiOOUB+ix0vcS4XB0bW6zYn7bgERqT3aj2PsAjlSA2JLaS0gfSis+lxlZJZQ5krO6sL8iqgFoGCwaGioZq/m+gDqNo1U9F0pGNyy+0SsR8C629fcqd04lUhg56CxbRhhSwg3ZIoNA5PNzKoQ+Qm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768215234; c=relaxed/simple;
-	bh=sAHFH1frPEbW4Tsm+MC0aaCUfB+E4Z13yEHNemnd7vA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YIOSSMH3AuDLl212JeVy3CY369i1V3ChSD22IeiGgUomY5Kg2nGnoealNGkQAfyfhVjPBALrjCv+8Gad54IeVRHmUc+QRjdEHQQ8ekWWvlNjAKjlaXEfZx+3ERa7CEKc6eLYpx0HYiBgOfucUpdxD9XSDKQ2oSF1u51AsdLREW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lLXx+aT1; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-42fbc305882so3300970f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 02:53:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768215229; x=1768820029; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tKHpGelNrHeyewNQEr1a50NI52JXiox3dXfR2mRoZpk=;
-        b=lLXx+aT1LM/X8hXwoLCuY6SnvehUbAGcWJieLz6cbWsN0h+X97mvonel6fGfmZE4go
-         Q0VN+t00l6TEfXhOgJR3SAiDqf4kBVGxUNhlWbi70LmK3uJNCVqJr9Y3K5Fop/TUnfgC
-         S50x9SZmDrPFclt6Uk4AzodHkvyP3sPwZblDpTdG1/NNxvno3jbYhher97+xGLXDufsr
-         rgS33h4yNJdvBSHZHb+SnzMEIqepV4M9syRFc3R4HHCEHBbE1qMlI/nSt/kNRjoNwQXL
-         TwGF+Oo0D0qCSYxKz1QXhrSSshTUB8C7psHmaRoMqSqtousAoZk02zmeddbvkIMdaSqC
-         eaUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768215229; x=1768820029;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tKHpGelNrHeyewNQEr1a50NI52JXiox3dXfR2mRoZpk=;
-        b=MDQob3XjENFr3HvxhFe9q/ZD2lbLWeuIZQoQ/pFigBJnswsldmSy+n8M53KfvkKsE2
-         I4kaChHRY7nYCAFhKYTd2yXmuG4WNfhiE2lJa+Yk9G8udJVm9nXK7ua0jXtrZc4/Nagl
-         QqIFs0XBPwlnJojGG59a6efl7xc+jhtrTbiyfp+q7Re5ov6uBLb2/nJpPqv6F3hmoY1U
-         9j4AAbezWMmY3o83/Fy/2oc70GSxK6+AqbxOFQPhmlQsZRPuO4/iRwoWnRQaWEMrR7IL
-         7EDMdIBvNgeIGdcm9VvrFEgYiy8kBBbDoL9KEPZFudDwhEfLNX9dZU6xDuuWv/nhBUXl
-         0XJg==
-X-Forwarded-Encrypted: i=1; AJvYcCX+Ti6sd4XLykcYQFde7KismsLbXpp87RsRvJxGKOtBoiryj6bl6AxOeUdppjjqt/qpd79qqYacFpcMj4od@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKJPqPjTo5Y03hfmKc2q6Fhv1Z3Kc0Gm14kIHlCCkyZdO7q7HR
-	uhOc1E3endxCxU1/IqnN062AZAwQGXDtbpFqvwVBGLdj3T7+zTGwy97LWxyW+QyJ7Ak=
-X-Gm-Gg: AY/fxX5LCrqKliaplff9N8pRNCwgy4BtfUqXNEB/IkUi2ZjHjgbK6tGW7eZMil/vljX
-	rp11wEleKbBOwCIY4wTO0fRiRK+EWa2btmEEj3pqmxQzUPXn6f3MpKyw+UmXmbB9UT2HGnxh96q
-	HNj7IO5iVncOxl4HXsQvshh3KUMGhqpqn6IU2kDPTNopKyOOiEwBW8+teg7+rD/6yW9GXQtoXPv
-	MPzySkGmX6iVAjaFS1JpaSIs+KRwxQnKTtBkOySdlwPxG1jVWtiQoNU9ey1b8lmGNBXmbrzJ0CI
-	uF26pqfUxPwyfBfPRybfyzb/WJFgfg0Fe+TCHnp9Xw8LAH127IN22Xs0/X9GgnLljuxP+w4yid3
-	CkpJTybuwwPIfOnt95ina5NF+KlOQqmicgMP1YyOKC0egSgbsZucb9OowGlxre/L+OVGr4pWTD6
-	9AVu9lSrIeA/BbXoT+/fbSnidkKLHk6QVpLQKMjJDj2bsS5cVBqbv5
-X-Google-Smtp-Source: AGHT+IFGRdazPlXnjk1IjCltW0erFj1I3/O/pzsQ0N3ouxwIEI8Uga6lJP1zjpKUInJyP4eIL/HEFg==
-X-Received: by 2002:a05:6000:1a8b:b0:432:84f9:95f4 with SMTP id ffacd0b85a97d-432c374f4a7mr21083778f8f.31.1768215229185;
-        Mon, 12 Jan 2026 02:53:49 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432dfa6dc4esm16185568f8f.23.2026.01.12.02.53.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 02:53:48 -0800 (PST)
-Message-ID: <0236bf83-228d-4d6e-8740-b9589d096f6a@linaro.org>
-Date: Mon, 12 Jan 2026 10:53:47 +0000
+	s=arc-20240116; t=1768215259; c=relaxed/simple;
+	bh=JN8Tx9lcEFa1feWSSo2+DawtEa+D5nz6pKkmTYdd80o=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s+shJoNoQLVcAPImX3Ll2+E1jurimdIrjfUXYSF8IWSIa5jumK+XB6MNgako7V+AYEhD/tMcifaNlW/f5T6kRQJvpJokdSaYduSIQ9nl5Penps5iD5JJ/tmxn+iWF0C/64u/1vFjiAPrt8b+T2AGYW96FcEK/Bk+5LM6K6nmm74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ER9uDpKU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A55C4AF09
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 10:54:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768215259;
+	bh=JN8Tx9lcEFa1feWSSo2+DawtEa+D5nz6pKkmTYdd80o=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=ER9uDpKU0gKhm7Mmd4Cxsn7MpqOQ7vgt/ZcySJ+A9bsTzXxToNbycaa4e7QBta8wD
+	 T8NSpwycbQYwIUTgh19uyJzFyLVV6QQKvVGN6qt0KMPkIdc7nYA5/U/QaOUJfI/kHy
+	 4Sd8Rvl0QCaU2Atg20NBcAm9QKTOwrxoxTsSOFizYh1bMtgu6MnsGhGFxsls0+Oizc
+	 Xfu6WwhJvA9CBk8mYony8E2iuqdfKr+rPvb+ZNEc0SiWYI7T1hZhsiyqoKBkOzwwuA
+	 E1rPydvvuBL8GGQHD+ufLKpzTd1tbTNHHZ6tGNWh5Zxq05oWl3ZtIWyApP4xskyR6/
+	 fc8kgRKSlTMpg==
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59b834e3d64so2934341e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 02:54:19 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUMQDkMg82kilHjXyYmqBYGfDopXTRBpWpp5GQv7aCTa8UNPxqLW9539/3U6uMfwWH6CtjYEn0Jm0DXK+RD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrfQ+uHRxSrbSRjadgxlnBihsm2SabY4wDxZNTIF8MK6oTYFok
+	uvtUPQ3lnnJf+f7mlsYyaC3BxVOqCTXArWc0fweuoagSvQ2z77MGbC9mUiFAuqYGLNnkNn1VCKf
+	m5TD/AwRSU/USLG1DSJcstB0wVCBFXSyucv5OCcENsQ==
+X-Google-Smtp-Source: AGHT+IFOFA8kXD2/ntFFnMuqlDdI+7/+mE0Jg2kNrYOPk8LLfb+NDy962k4fw01JMa4nCZndlay6ttujw6BSDeEvZxc=
+X-Received: by 2002:a05:651c:210d:b0:383:4b8:435c with SMTP id
+ 38308e7fff4ca-38304b844c3mr52338991fa.9.1768215257586; Mon, 12 Jan 2026
+ 02:54:17 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 Jan 2026 02:54:16 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 Jan 2026 02:54:16 -0800
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <aWSq_7_5kkQIv9Hc@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: camss: csiphy: Make CSIPHY status macro
- cross-platform
-To: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260112-camss-extended-csiphy-macro-v2-1-ee7342f2aaf5@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260112-camss-extended-csiphy-macro-v2-1-ee7342f2aaf5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com> <aWSq_7_5kkQIv9Hc@smile.fi.intel.com>
+Date: Mon, 12 Jan 2026 02:54:16 -0800
+X-Gmail-Original-Message-ID: <CAMRc=MfoUi-qvZnOcM5pgvmVhPMEK+gvs5m2APrqLXc2J7x1AQ@mail.gmail.com>
+X-Gm-Features: AZwV_Qgkgd0gbVuBhbU6fLauSpqstnPMp3OpP37gMnJcwjV2eQkZ3qyjBa1-dnE
+Message-ID: <CAMRc=MfoUi-qvZnOcM5pgvmVhPMEK+gvs5m2APrqLXc2J7x1AQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/14] Add support for handling PCIe M.2 Key E
+ connectors in devicetree
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Daniel Scally <djrscally@gmail.com>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Sakari Ailus <sakari.ailus@linux.intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Sui Jingfeng <sui.jingfeng@linux.dev>, 
+	manivannan.sadhasivam@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 12/01/2026 08:11, Hangxiang Ma wrote:
-> The current value of '0xb0' that represents the offset to the status
-> registers within the common registers of the CSIPHY has been changed on
-> the newer SOCs and it requires generalizing the macro using a new
-> variable 'common_status_offset'. This variable is initialized in the
-> csiphy_init() function.
-> 
-> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> ---
-> This change introduces common_status_offset to replace the hardcoded
-> offset in CSIPHY_3PH_CMN_CSI_COMMON_STATUSn.
-> ---
-> Changes in v2:
-> - Rebase this series due to conflict - bod
-> - Link to v1: https://lore.kernel.org/r/20251023-make-csiphy-status-macro-cross-platform-v1-1-5746446dfdc6@oss.qualcomm.com
-> ---
->   .../media/platform/qcom/camss/camss-csiphy-3ph-1-0.c  | 19 +++++++++++++------
->   drivers/media/platform/qcom/camss/camss-csiphy.h      |  1 +
->   2 files changed, 14 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index 619abbf60781..d70d4f611798 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -46,7 +46,8 @@
->   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE	BIT(7)
->   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B	BIT(0)
->   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
-> -#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, n)	((offset) + 0xb0 + 0x4 * (n))
-> +#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, common_status_offset, n) \
-> +	((offset) + (common_status_offset) + 0x4 * (n))
->   
->   #define CSIPHY_DEFAULT_PARAMS		0
->   #define CSIPHY_LANE_ENABLE		1
-> @@ -810,13 +811,17 @@ static void csiphy_hw_version_read(struct csiphy_device *csiphy,
->   	       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, 6));
->   
->   	hw_version = readl_relaxed(csiphy->base +
-> -				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 12));
-> +		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
-> +						  regs->common_status_offset, 12));
->   	hw_version |= readl_relaxed(csiphy->base +
-> -				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 13)) << 8;
-> +		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
-> +						  regs->common_status_offset, 13)) << 8;
->   	hw_version |= readl_relaxed(csiphy->base +
-> -				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 14)) << 16;
-> +		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
-> +						  regs->common_status_offset, 14)) << 16;
->   	hw_version |= readl_relaxed(csiphy->base +
-> -				   CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, 15)) << 24;
-> +		CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
-> +						  regs->common_status_offset, 15)) << 24;
->   
->   	dev_dbg(dev, "CSIPHY 3PH HW Version = 0x%08x\n", hw_version);
->   }
-> @@ -845,7 +850,8 @@ static irqreturn_t csiphy_isr(int irq, void *dev)
->   	for (i = 0; i < 11; i++) {
->   		int c = i + 22;
->   		u8 val = readl_relaxed(csiphy->base +
-> -				       CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset, i));
-> +			CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(regs->offset,
-> +							  regs->common_status_offset, i));
->   
->   		writel_relaxed(val, csiphy->base +
->   			       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, c));
-> @@ -1086,6 +1092,7 @@ static int csiphy_init(struct csiphy_device *csiphy)
->   
->   	csiphy->regs = regs;
->   	regs->offset = 0x800;
-> +	regs->common_status_offset = 0xb0;
->   
->   	switch (csiphy->camss->res->version) {
->   	case CAMSS_845:
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> index 895f80003c44..2d5054819df7 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> @@ -90,6 +90,7 @@ struct csiphy_device_regs {
->   	const struct csiphy_lane_regs *lane_regs;
->   	int lane_array_size;
->   	u32 offset;
-> +	u32 common_status_offset;
->   };
->   
->   struct csiphy_device {
-> 
-> ---
-> base-commit: 31d167f54de93f14fa8e4bc6cbc4adaf7019fd94
-> change-id: 20260111-camss-extended-csiphy-macro-486b9f3b950f
-> 
-> Best regards,
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On Mon, 12 Jan 2026 09:04:15 +0100, Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> said:
+> On Sat, Jan 10, 2026 at 12:26:18PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+>>
+
+[snip]
+
+>> Though this series adds the relevant functionality for handling the M.2 Key M
+>> connectors, there are still a few open questions exists on the design.
+>>
+>> 1. I've used the DT compatible for the serdev swnode to match the existing OF
+>> device_id of the bluetooth driver. This avoids implementing custom serdev id
+>> matching as implemented till v2.
+>
+> Yeah, swnodes are not designed to replace the real DT or other firmware
+> interface. The idea of swnodes is to have them providing quirks if needed (i.e.
+> fixing up the broken or missed FW device properties). This should not have been
+> done this way. Please, consider another approach, e.g. DT-overlay.
+>
+
+This may have been true historically but software nodes were introduced before
+the auxiliary bus. With platform devices, the question has a clear response:
+DT or ACPI first, then possibly additional software node. But with auxiliary
+devices, where does the entirety of device properties come from if we - for
+whatever reason - don't want to propagate any "real" firmware node?
+
+This is not even about this particular series, rather it's a wider architecture
+question.
+
+Bartosz
 
