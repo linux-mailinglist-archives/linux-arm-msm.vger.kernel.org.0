@@ -1,137 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-88582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC4E1D12F36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:56:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26CCED1305D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 15:11:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8D63530022F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:55:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 15EA73009977
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:11:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AAE135BDA0;
-	Mon, 12 Jan 2026 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C3C35C19A;
+	Mon, 12 Jan 2026 14:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="kgNgbCQO"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CakAumhF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85D5274FC2;
-	Mon, 12 Jan 2026 13:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F413327E054;
+	Mon, 12 Jan 2026 14:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768226104; cv=none; b=Ur/laPr67xdG6SywYWUNrPpU1SdkscZzfoihWZegLvmIrGGUucyu8futIC6O75r1kxj134X1YTPnEyiOT2ogydvwQlNUzDfjnf03hSK5jAlEy/s8HVcQBW3FgeL6bYtZr9aGzEI112gkJFyWQMKdxzpDAOjFylVgv0IfPY0y1g0=
+	t=1768227101; cv=none; b=MuF0OMYQnTgpXI4mMQezNVvbiNopYL08xpUoiSEZeGRKgBHGOjcG4DCzhwlmf564vVkSgF+uaePZdnHsi2BZRsWM/Oci6JzxtaJx1QNVCqKhRy3rvVelLVRR+p0vI7WBczaSK+JaYB8FpjZZlmxV7CuJuOksKl/ARM78hOJmJfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768226104; c=relaxed/simple;
-	bh=upzgR2xmeRa7U3D4c4yVBMn/OAGVUS/BTHUTWOPwm4k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tUO/UsaZvGGH7InUYoW0HK0fg5PNWHNjt9Jofm+tljIw/PYMPIrXhCdFyNOA7JzlXdQVu1pcZylTgJBInUEKjCGzxDzcVaZv/VKQYUFhsY8g6MbLLRQtHpr+PeGSiwd603hXPkfMCcSkf/1EdvLtg+YX473WBFnmHG6coy5HbGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=kgNgbCQO; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=KcNdXwaHO43/aWmYkdmTrvgXq9snCOwCBSSp5/oIhoc=; b=kgNgbCQOQpcxZ/lVrAiQj4C4vu
-	YuAuThNoJKE1rGB2sQ0V+KcD41At13B/KCqU7SyakYddsVifUkzgIbx3P3ODIeF7OzhIWNvkduCQk
-	+KbVOi44ZIkmI3gQYtKR0mhMF4YOPb9FYqVFScnxbA9/FBnlGbYWwwudqEttD7PUJgGU=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vfIN8-002U0Q-Vs; Mon, 12 Jan 2026 14:54:18 +0100
-Date: Mon, 12 Jan 2026 14:54:18 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-	Fu Wei <wefu@redhat.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Shuang Liang <liangshuang@eswincomputing.com>,
-	Zhi Li <lizhi2@eswincomputing.com>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-	Samin Guo <samin.guo@starfivetech.com>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH RESEND net-next v6 7/7] net: stmmac: qcom-ethqos: add
- support for sa8255p
-Message-ID: <41b9a414-55a0-4602-9be5-54137a691d9f@lunn.ch>
-References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
- <20260112-qcom-sa8255p-emac-v6-7-86a3d4b2ad83@oss.qualcomm.com>
+	s=arc-20240116; t=1768227101; c=relaxed/simple;
+	bh=bgJaNUM5VIgE3jmg2aRlC1+4Tim4pBQlk9u6DJ16NrA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lldfFWVv5mMhtqAgDVHr2qJ/OuLOewpFGXDSMWS4qJm3KOsbScMeCQkJsBmkpIm+3hp1STz8Z4lE5LqAhRbpqasI2fxLwxXIyOextQP2QW14kIBAFTw9RCHHahcLr3GeWYM+BJ/RfhAz0Ls/hwe07bluxknEHR3uByZPS+gxuEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CakAumhF; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 9C2B7C2086A;
+	Mon, 12 Jan 2026 14:11:10 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 0D1FB6074A;
+	Mon, 12 Jan 2026 14:11:37 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 736BF103C8C61;
+	Mon, 12 Jan 2026 15:10:37 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1768227090; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=S8c2ARP9HcnV+reUeOF4Vcg2quHBkPmCAqYrhfyr6c0=;
+	b=CakAumhFpasu+3ZI3BaB812kdRiuu+v1Tg/Sp3TTEi8pdVKDZEtVO84AoLEgEc1xrnFluT
+	i+SAwVNTU/VK298rD4GgfOlbL1x1IRBq+LMtmjrslvr8iNw/wqHBq7SowNZ+1bxrqAdaPR
+	ziVMPo032s+fSJqG9mpYJmDIazpKyi53yb/qGj1zj4VwwbAj77lJfzPnCy7GfnRvSCaoiG
+	VLNhV0T9IC//MbbHQG1tnGAF03XNmqvN+K3xG6/Renyw+hJ5Ia+fO3n6d7mTvuZI7e4oUm
+	CIup66ln9btW8iWglHRpKXcMS5I6EydGAat63GN0yLYYuyDF497mBLdXxOQ06g==
+From: =?UTF-8?B?QmVub8OudA==?= Monin <benoit.monin@bootlin.com>
+To: Mark Brown <broonie@kernel.org>,
+ Varshini Rajendran <varshini.rajendran@microchip.com>,
+ Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>,
+ Manikandan Muralidharan <manikandan.m@microchip.com>,
+ David Lechner <dlechner@baylibre.com>,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>,
+ Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>,
+ Charles Keepax <ckeepax@opensource.cirrus.com>,
+ Bartosz Golaszewski <brgl@kernel.org>, Shiji Yang <yangshiji66@outlook.com>,
+ James Clark <james.clark@linaro.org>, Jonathan Marek <jonathan@marek.ca>,
+ Carlos Song <carlos.song@nxp.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Xianwei Zhao <xianwei.zhao@amlogic.com>,
+ Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
+ Sergio Perez Gonzalez <sperezglz@gmail.com>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>,
+ Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>,
+ Rosen Penev <rosenp@gmail.com>, Luis de Arquer <luis.dearquer@inertim.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+ Tudor Ambarus <tudor.ambarus@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ =?UTF-8?B?Q2zDqW1lbnQ=?= Le Goffic <clement.legoffic@foss.st.com>,
+ Alessandro Grassi <alessandro.grassi@mailbox.org>,
+ Chen-Yu Tsai <wens@kernel.org>, Darshan R <rathod.darshan.0896@gmail.com>,
+ Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
+ patches@opensource.cirrus.com, imx@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
+ linux-tegra@vger.kernel.org, virtualization@lists.linux.dev,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>,
+ Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@kaod.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Ryan Wanner <ryan.wanner@microchip.com>,
+ Michael Hennerich <michael.hennerich@analog.com>,
+ Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
+ Kamal Dasu <kamal.dasu@broadcom.com>,
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+ William Zhang <william.zhang@broadcom.com>,
+ Kursad Oney <kursad.oney@broadcom.com>, Anand Gore <anand.gore@broadcom.com>,
+ =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+ David Rhodes <david.rhodes@cirrus.com>,
+ Richard Fitzgerald <rf@opensource.cirrus.com>,
+ Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+ Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>,
+ Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>,
+ Yinbo Zhu <zhuyinbo@loongson.cn>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Conor Dooley <conor.dooley@microchip.com>,
+ Daire McNamara <daire.mcnamara@microchip.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>,
+ Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>,
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Chris Packham <chris.packham@alliedtelesis.co.nz>,
+ Heiko Stuebner <heiko@sntech.de>,
+ Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>,
+ Orson Zhai <orsonzhai@gmail.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Chunyan Zhang <zhang.lyra@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Alain Volmat <alain.volmat@foss.st.com>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>,
+ Masahisa Kojima <masahisa.kojima@linaro.org>,
+ Jassi Brar <jaswinder.singh@linaro.org>,
+ Laxman Dewangan <ldewangan@nvidia.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Sowjanya Komatineni <skomatineni@nvidia.com>,
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+ Masami Hiramatsu <mhiramat@kernel.org>,
+ Jonathan =?UTF-8?B?TmV1c2Now6RmZXI=?= <j.neuschaefer@gmx.net>,
+ Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: Re: [PATCH v1 4/4] spi: Drop duplicate device_set_node() call
+Date: Mon, 12 Jan 2026 15:10:36 +0100
+Message-ID: <2776743.vuYhMxLoTh@benoit.monin>
+In-Reply-To: <20260108203004.3538449-5-andriy.shevchenko@linux.intel.com>
+References:
+ <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
+ <20260108203004.3538449-5-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260112-qcom-sa8255p-emac-v6-7-86a3d4b2ad83@oss.qualcomm.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Jan 12, 2026 at 11:15:46AM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <brgl@kernel.org>
-> 
-> Extend the driver to support a new model - sa8255p. Unlike the
-> previously supported variants, this one's power management is done in
-> the firmware using SCMI. This is modeled in linux using power domains so
-> add support for them.
+On Thursday, 8 January 2026 at 21:23:41 CET, Andy Shevchenko wrote:
+> The SPI core provides the default fwnode for the controller,
+> assigned by device_set_node(). No need to repeat it in the driver.
+>=20
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
->  static const struct of_device_id qcom_ethqos_match[] = {
->  	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
-> +	{ .compatible = "qcom,sa8255p-ethqos", .data = &emac_sa8255p_data},
+>  drivers/spi/spi-dw-core.c           | 2 --
+>=20
+Works fine on Mobileye EyeQ6Lplus SoC in both host and target mode.
 
-Is this device being probed via DT or ACPI?
+Tested-by: Beno=C3=AEt Monin <benoit.monin@bootlin.com> # dw mobileye
 
-	Andrew
+Thanks,
+=2D-=20
+Beno=C3=AEt Monin, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
+
+
 
