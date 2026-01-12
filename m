@@ -1,153 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-88574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FDFCD12E3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:48:07 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79332D12EC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:54:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B31EE3028F7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:46:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4B5A73004EF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:53:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE69F35B143;
-	Mon, 12 Jan 2026 13:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18ADD35C182;
+	Mon, 12 Jan 2026 13:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="H9qsQLhC"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HCdB2ELF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573AF3596F3;
-	Mon, 12 Jan 2026 13:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD7535B143
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 13:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768225560; cv=none; b=ZtGBU0xeJusE+N5guf8xKAG77DBAm15+Nk0h1Iyk/8HQWi161qCyogYI15k0c4TGLX54C8rZMWckTqUprU9Z5XDP9dGinPA8T5jJhKIsEabwEZ7pBOIHYZBZg9mOkqE/wD+lyY+nw1FB9nVTJRud93Uou2wnJR0cCyJ82OfiqZw=
+	t=1768226001; cv=none; b=jzIgB73ex/4tVmTHl+0ZOqsRurDiQeQRuObs6WZMr0bt25RfvEXRiaPTLXOb31TQxcTLcjRKIoZi/mqMRXkv1i6WOZGGZBT5IV1ZEnlmdfU4fDdsvcbf836nw0kS21jvBfpM9ayQyOd3cERC6ly5lbGQq4M8W2FX+7DFEEXYlbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768225560; c=relaxed/simple;
-	bh=ah1qKcR1BrTLa1kkSHfCqWTXgGUssRj1TSqjOgbltrs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JwBCRisTMd+uC4pPEvMEUXqAhRmEa0T1lyUi0m6/JfOnNj45CR/plD7diBLSL8khM+V/IKR0znebyIW9fb2jZ2+bI6IwoG0QEB/pKdKx+EVD+l4npVjtW75uXDSTCFN+3+bl13Pd+J3Jn2Arn4BiII9a/dpy4Y6WHm3eSP94Hak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=H9qsQLhC; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=avW/KaDunIxQhrdj8bFjXOe630cKt3gLzoDikVOnoMk=; b=H9qsQLhCSyxngrQPIlGbslrcbE
-	2OOrhEs03G96dXGfTdBYTBgsUVSjvZbmqGOIaBWluGAQ14HdZTeQcYL+qDS+q3aXeRcZPLLohTFOn
-	2GrJmbWew8Uyv2bkFMHdbaO2fstI/zVW/oWoAj3+NtNf4lnG3VwRCbbZdWsNNCaCuRnI=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vfIDx-002Trp-OL; Mon, 12 Jan 2026 14:44:49 +0100
-Date: Mon, 12 Jan 2026 14:44:49 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-	Fu Wei <wefu@redhat.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Shuang Liang <liangshuang@eswincomputing.com>,
-	Zhi Li <lizhi2@eswincomputing.com>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-	Samin Guo <samin.guo@starfivetech.com>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
- generic device properties
-Message-ID: <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch>
-References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
- <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
+	s=arc-20240116; t=1768226001; c=relaxed/simple;
+	bh=869qKXPKp/5HVz58yGdlPkNK/AkfXAZ4HLSxUNKXhtM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Pk4PLqM7OFLZjMSX9LwRyelITDchWxofB98UJR1zQSYOgWeNeY6S2UuvyoKQXraMPpH3N5kYdhdSsPolXYMURyC0QfVC50eEYWIUY3PBmcHtpMIUdsh3za2jfB2/3F1wOvJfNlFOhpuetGAyx2mwBsVUVvdBQDJuE81k8XY5b3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=HCdB2ELF; arc=none smtp.client-ip=209.85.208.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-6505cbe47d8so10232319a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 05:53:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1768225997; x=1768830797; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gaVryPH+6C0Tqtqwm/Yuk9yK3m+Wj3s5OH+GPIlElSk=;
+        b=HCdB2ELFcSZpD3xwA99hzBqSSgY/rleO2LCMi4XMPK8VNq/68RYfqSFFTkY3DgLGQp
+         +Tx2i56mn+rVZyaDw8A1/kQM94aB0XWKPOP2yTi3eRDou9/ePQglfDQwdvTVAzUy11nz
+         iPLz31s7GN8eDXTfbYNWGmiopGQBQmPii+IU4Ft0dVAz/XJ56EHPpVcZPhIkoburCzRJ
+         rEUIMKErFoUdSiOAAHN9ZdO1ICmJCIvRUTQxxECEwtFi7PNbxzJA9wUtD2owZtQhTMLD
+         H/gn8c64tZWD4QyVaJ+AmoJjew6eJDJ5I3eOq2n3gNNIrQqemsoYSI5TOs53wV+3Svf9
+         5THw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768225997; x=1768830797;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gaVryPH+6C0Tqtqwm/Yuk9yK3m+Wj3s5OH+GPIlElSk=;
+        b=iJQGzd4tIZMGjVFL7KV3eQ7gWIBRl+zmLBtIqqPUZ+ElEVM9egJJpQySjFPItbV4yS
+         G9vkNFZG2SR3NiAoGnCFiKfMv69yj66rENFw0NvsQCSUc9Mo1p1ZPJxRd9t5TOgFOR23
+         qdLo1ik2r056cYaCfbey5t3l9UT363HHwenjj2hPhExNWpA30f+bobeedONw02krIMt/
+         mNpuyLVKKw374Jkee+SCOLfGATJ+kBsLJlZP5cxgoW509mc0QUiCFkCVa1bhVXBUWNha
+         1XJUR7VJ0CLlHTYRIwdveBfzSjU0RDxR6O98iZUasLjthHGRyDjbUpDQRvzlL30RDZlx
+         f3kA==
+X-Forwarded-Encrypted: i=1; AJvYcCXuAYlwa1M4piH19AzBVe21X+kKlaZzZ/zRGV0SFyoYdR+IL+qSrvZw4vAjjjlG1RpVj3Wk8B8n3zNClsmV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yywl+Krs8yVtFtbEnljKx3tSZU9Mfd7JrzcPiV32WlF+yhwTQJM
+	I027QmxCmmPRINu96DI6gyoNnKglkObYZpeiZXqz079cDsWvWirC8U2VTT3LW6vtgzP/lmhndMo
+	Nfz8Q6RYwKg==
+X-Gm-Gg: AY/fxX5ID6BxwMOwhdHWMAxsQN1dBte7Ic8w7c0QAGfPDoVhJG2Ulv1EEhMaMgtf3wp
+	tUNZsieMda3XZD8Ksh2Mhh3pHH+OwnEzAi7OWpq4EsTiwNHKReJ9Z+1bPZAPEbjkPJlUyU/LFAR
+	UgdGznkuuiiIOmr5YY720fOD7gzRDIGA6o9DSkuy9IqFP7dsjfqTGNdFoP88rKIAEgwUuiIb2Mp
+	PE8zqs1L6P91UzUz0QDpqwufVM6CJd021LdKm0fTVZXuQrDEdXpgSqYoz+tSrSrzjO0wm/k7uEW
+	Pyvy4Yi/SLnA5SGw6BH+Lwih1dTMHf6APRYLKmEJXmQhAEKS1ujC9essHi+14M3f8jPOvdXal74
+	DvD+QRBeu2XZrlZ8KCTZRMHo9fFlDi6p97nu04aYdon6JL8Fv/wTUvlT3yVQ90X0Uh30bR+aZ+x
+	qrAJWHp3ElXDev6uusqXyjj5duC2KUfZ2tt+pmKSuZ0+dDvuNJ7YsIgtXon5Lw2YGP
+X-Google-Smtp-Source: AGHT+IHzxEgz2KsBSO+arQBHVhJujP60zEh8vnZJ9xXT+N10U47A31S2v+8UfRza4bfmALX8ySwXSw==
+X-Received: by 2002:a17:906:fe0a:b0:b83:3773:dd96 with SMTP id a640c23a62f3a-b8445030d72mr1887365266b.3.1768225996535;
+        Mon, 12 Jan 2026 05:53:16 -0800 (PST)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8731f071e4sm25700466b.66.2026.01.12.05.53.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 05:53:16 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/6] Enable UFS support on Milos
+Date: Mon, 12 Jan 2026 14:53:13 +0100
+Message-Id: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/02OQQ6CMBBFr0JmbU1pDFVW3sOwaMtUJpEW20Iwh
+ LtbQROXb+b/N7NAxEAYoS4WCDhRJO8yiEMBplPujozazCC4qHjJK9bTw0c22siktrqV8mSUNJD
+ zQ0BL8+a6NTsHfI5ZmfYhaBWRGd/3lOrC4ZzYVyvhU+goJh9e2y9TuTV++7+zU8k4qy5nobTgL
+ VfmahWFofMOj9kNzbqub5GInBHXAAAA
+X-Change-ID: 20260106-milos-ufs-7bfbd774ca7c
+To: Herbert Xu <herbert@gondor.apana.org.au>, 
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+ Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Abel Vesa <abel.vesa@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768225995; l=1410;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=869qKXPKp/5HVz58yGdlPkNK/AkfXAZ4HLSxUNKXhtM=;
+ b=ya0h1GWx9MbkL8J1GPpxKxKEPorYhGvXMWiaky/iNsRq8ZRWCVWK6G2OODVWZ8CbyrFGEcgyH
+ tvHqCQKfapfACq0UkxcYG5jly+DRCv9gxdUuVrllWQA3147ZU6tLlAT
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <brgl@kernel.org>
-> 
-> In order to drop the dependency on CONFIG_OF, convert all device property
-> getters from OF-specific to generic device properties and stop pulling
-> in any linux/of.h symbols.
+Add inline-crypto-engine and UFS bindings & driver parts, then add them
+to milos dtsi and enable the UFS storage on Fairphone (Gen. 6).
 
-Is the intention to read these properties from ACPI tables?
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v2:
+- Add missing dma-coherent in milos.dtsi (Neil)
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com
 
-If so, it would be nice to document these properties in
-Documentation/firmware-guide/acpi/dsd.
+---
+Luca Weiss (6):
+      dt-bindings: crypto: qcom,inline-crypto-engine: document the Milos ICE
+      scsi: ufs: qcom,sc7180-ufshc: dt-bindings: Document the Milos UFS Controller
+      dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document the Milos QMP UFS PHY
+      phy: qcom-qmp-ufs: Add Milos support
+      arm64: dts: qcom: milos: Add UFS nodes
+      arm64: dts: qcom: milos-fairphone-fp6: Enable UFS
 
-> -	if (of_property_read_bool(np, "snps,tso"))
-> +	if (device_property_present(dev, "snps,tso"))
->  		plat_dat->flags |= STMMAC_FLAG_TSO_EN;
+ .../bindings/crypto/qcom,inline-crypto-engine.yaml |   1 +
+ .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    |   2 +
+ .../devicetree/bindings/ufs/qcom,sc7180-ufshc.yaml |   2 +
+ arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts   |  18 +++
+ arch/arm64/boot/dts/qcom/milos.dtsi                | 129 ++++++++++++++++++++-
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            |  96 +++++++++++++++
+ 6 files changed, 245 insertions(+), 3 deletions(-)
+---
+base-commit: ef1c7b875741bef0ff37ae8ab8a9aaf407dc141c
+change-id: 20260106-milos-ufs-7bfbd774ca7c
 
-Do you actually need this in the ACPI binding? Is there a reason not
-to just hard code it enabled? You don't need to worry about backwards
-compatibility here, because this is the first ACPI device.
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-> -	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-> +	if (device_is_compatible(dev, "qcom,qcs404-ethqos"))
->  		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
-
-What is your target hardware? Will qcom,qcs404-ethqos every use ACPI?
-
-Maybe this should actually stay as of_device_is_compatible, to make it
-clear this is an device tree only device? There is no need to mess up
-the ACPI binding with things which will never actually use ACPI.
-
-   Andrew
 
