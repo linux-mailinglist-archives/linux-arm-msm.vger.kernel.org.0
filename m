@@ -1,68 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-88572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B884D12DA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:37:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B77CD12E1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 14:46:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4B0413018D5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:37:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D5BA43011EDE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 13:44:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3992D35970A;
-	Mon, 12 Jan 2026 13:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F01C35971B;
+	Mon, 12 Jan 2026 13:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYy0IXRw"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="e0JTEjnJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-10629.protonmail.ch (mail-10629.protonmail.ch [79.135.106.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057F92DBF78;
-	Mon, 12 Jan 2026 13:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72F2330339
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 13:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768225024; cv=none; b=QaDdO4i3s/eM26SCuwlDlK683Qu7HXgF20O8aPtPOPyr4Rx9KqcbVr7cRiEQUc43cahFqjuLTG399lvFFQr+o6zxpKZ6IjN3ev02ytckBeT1QvgjvqgljhI3Vw/zSh/Efx2+LLciNxT2oUVdkd9iWzem5tjB1O+P2Jvurb32bbM=
+	t=1768225496; cv=none; b=b3qPECqmXeSZJcG1LeCXinJJ0smcmFNlq6/YmL3cGU+uBuoLamdZ6KkK8W57UaQfATic4hFrVRv2o6hBVFIqBVF/h+gn3xMcEvEN63DSM7A/zVyOAi3bd4GArruX3K1Qs79v+kJOMUVlBJz+VI1QVCwfSPlRek8uHocWNE4WHck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768225024; c=relaxed/simple;
-	bh=bzYUe9Krw1KHbB/obzxKLRvZYPhkA90KZUSBQi3hf2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lW1sus33ynA3Ie+o7qBBo9rUVvZufwZIr7tblnVFD81LTDZ89JZQEKsxGS6suTQCuzKn9I9smlM+jRmr2AXfcGXGXfolDQPIb5zwn2EWsqabniyhOsAT1GLfaBnSSVOkItXbn5KAUjUapdgp0QJo49hjB2ERyLEkO/HAdYJiK28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYy0IXRw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6079BC16AAE;
-	Mon, 12 Jan 2026 13:37:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768225023;
-	bh=bzYUe9Krw1KHbB/obzxKLRvZYPhkA90KZUSBQi3hf2s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GYy0IXRwxYRa6+Eb+mt0hD4IbxIA8k971nzVORZJz0zmrD/N8l/oqWJpUakCf6wyk
-	 4cDPflH+DuT8pXO12YmlZzAw/osbsYT5dykv2XNR3OTbA6ujOqz4XfvvS39ltm0Gz8
-	 LXG+ptmkdPUMV/1tppmmnwZXLEAlxkNvWXT1rWf8=
-Date: Mon, 12 Jan 2026 08:37:02 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, manivannan.sadhasivam@oss.qualcomm.com, 
-	Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Mark Pearson <mpearson-lenovo@squebb.ca>, 
-	"Derek J. Clark" <derekjohn.clark@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Daniel Scally <djrscally@gmail.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-acpi@vger.kernel.org, Sui Jingfeng <sui.jingfeng@linux.dev>
-Subject: Re: [PATCH v3 03/14] software node: Implement device_get_match_data
- fwnode callback
-Message-ID: <20260112-miniature-quiet-gorilla-263fed@lemur>
-References: <20260110-pci-m2-e-v3-0-4faee7d0d5ae@oss.qualcomm.com>
- <20260110-pci-m2-e-v3-3-4faee7d0d5ae@oss.qualcomm.com>
- <aWSpFk9z0zpyKjr6@smile.fi.intel.com>
- <6l3rs5pv6xnrbygpvqrdxqoqtybjyefsltk5bl4336q56rfoza@ejo3sxuufghe>
+	s=arc-20240116; t=1768225496; c=relaxed/simple;
+	bh=jyOlQPaEAbxKJQPNNE2x1fQ6zeWwS8Egul3icukJIFA=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=rgU128WEydJbXPRsYER2FlPyqZSxecF5sTdUalVmF0QG4enk75fA3rTgQj0x+N/KUKtq+SVzrn8ob095SAhl/QH22GALEScNlqpdwUd0Y7yWvvhfmk/xpFZMsYEmoh5TtmsQTR57QArycGIucap+i6SRJy1mCSiYNB23OlRAWSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=e0JTEjnJ; arc=none smtp.client-ip=79.135.106.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1768225486; x=1768484686;
+	bh=jyOlQPaEAbxKJQPNNE2x1fQ6zeWwS8Egul3icukJIFA=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=e0JTEjnJjvcXY8YjYFrJFkAz59n4OnO5/6vlN05GjWbWR1UYIoyiEQZoCC1unLD6g
+	 B2aZpyav+R7WbcV86W82XD6nedqkHyo18jgZE+pwBEQs4oxUyXVVjvLwOcxVtBfqsu
+	 oP5rkfsJX1oZRwyZzyELfxJNm/rp2gLeupLpnBVM6RWF4twoGlnwc8Hu6kw5nE6xGh
+	 CkqFgDGit6FciocnFgTEn6GG/+QMUJxvq4szX6ILq2TjaSBMMHNrDRtYTq5/uq8Wsy
+	 eRtj6qrUR4SyWYXrDO9hHfH8anTZVljzMFBZL63lf2un9eSu6ApnnT/8xry+yB2CDM
+	 rIgVGxQf4G9+g==
+Date: Mon, 12 Jan 2026 13:44:42 +0000
+To: "ath11k@lists.infradead.org" <ath11k@lists.infradead.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: Alexander Koskovich <AKoskovich@pm.me>
+Cc: Luca Weiss <luca.weiss@fairphone.com>
+Subject: Re: ath11k WiFi bringup on Milos SoC
+Message-ID: <GaAXo-kja7_AolEgL2WpSAHlmV31nfKF1eSZT3MxICsKqQ4tBZFfzLhNB3-DmTHsTH_e-bwVR69U2Mo0OBbu96NDZYSAPXFDkZBOEUz0S-o=@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 09b0fbf707bf035f27c0fe50a26945130519c9d0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,23 +54,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6l3rs5pv6xnrbygpvqrdxqoqtybjyefsltk5bl4336q56rfoza@ejo3sxuufghe>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 12, 2026 at 01:49:54PM +0530, Manivannan Sadhasivam wrote:
-> > I really do not want to see this patch without very good justification
-> > (note, there were at least two attempts in the past to add this stuff
-> >  and no-one was merged, have you studied those cases?).
-> > 
-> 
-> Yes I did. I didn't put the above justification in the cover letter, as it was
-> already overwhelmed with too much information regarding the connector node.
-> Maybe I should've added it in the comments section of this patch. But I didn't
-> know how to do that with b4.
+In-Reply-To: <DBF7OWAWQ94M.FSCP4DPF8ZJY@fairphone.com>
 
-You can just amend the commit directly and put comments under "---". They
-will be preserved when email is sent, but won't be applied when the maintainer
-pulls the series.
+Running into the same firmware assert on another Milos device w/WCN6755 tha=
+t is running WPSS version WLAN.MSL.3.0.1-00156-QCAMSLSWPLZ-1.122511.2.12736=
+3.2.
 
--K
+Would anyone from QCOM be able to provide more context on what situations f=
+irmware would assert whal_wmac_transition_to_fw_control, or is it a catch a=
+ll?
+
+Thanks,
+Alex
 
