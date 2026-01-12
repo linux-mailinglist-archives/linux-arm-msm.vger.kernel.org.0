@@ -1,745 +1,362 @@
-Return-Path: <linux-arm-msm+bounces-88623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A28FD152C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 21:15:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C6A1DD1545C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 21:38:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A932A309FA43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:14:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EFC8630088BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 20:35:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F70E3314B8;
-	Mon, 12 Jan 2026 20:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28D1C3491F9;
+	Mon, 12 Jan 2026 20:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="NSqZzX5X";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="w4Nfev5s"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QCguevzN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A493A330D24;
-	Mon, 12 Jan 2026 20:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3760C33C511;
+	Mon, 12 Jan 2026 20:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768248853; cv=none; b=qkkwSog3gt668niwgKV1e6Quz36iBCq99PEZYXvCU7SK3IGRRatWophRfl30Rv+mhT85ldl13uNJjxquEmeCk9Vud2HbGHXvhNPdzaq5hsGdDA8VxK5xJpAdhifZT8xuKqDOLXvRXym1Shx9d7YJgYhcHC7/ULsUlpPy+N84z4k=
+	t=1768250152; cv=none; b=fnuDB3mxhEKuvAvNevfoNVverwp+/HpWh8nO+X9b7Wv8aNbXofc6C+esd+HZhp8haa58nLSh4xiQHGJmGntgk8nl3ak+dmJkcyrEtoPMSK/bD5ogsCg9HA716Ej1SiLYkxhlZpPwPgkJfs9cYk60pugvF9JLIZ0VespfLWRBVkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768248853; c=relaxed/simple;
-	bh=m+w2FRlNfnx5w9723fwig1uaUl56n3qZPrHekKdKhfM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iVj+IN5bd8d8No1JzvbupBLbY5l/oHX12eG4BZGT9+bG8g1EhcJyXqHKYT8M53HjYAHPcUqN6STCOkuridVgl7NFBX0XxHNLqwoacq4tI1Tkk4oMFFldTMxArp+1T7Tr9XlfPu2iRCrqQyAJw9IFi4dIub0nncgTAr2IzykPFVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=NSqZzX5X; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=w4Nfev5s; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768248828; bh=y1F2fre0bBg33fVZwBRygqO
-	0Pfj4SyZKsih56ctQQag=; b=NSqZzX5XBOrz+BnteAcMFqB70e2Jg2pFSiSYH5NjbcTdgEGTLu
-	wEJX28r/SpGrDsTH2zFvFTx8C4jyVirCTzuOrL0AMtHu4XDsmGWryX2wsC6UZouXTYEZhT0NuQI
-	8FmHB/NLf1bNWuE5zk/2ZnwM2+yz4TsL8lWpmVyszCwiTwpDUKO6RnXyxC9r7RB3+TZqtJHeQAY
-	RCijfsVqoPN7lU5KccTVnEKLl8uHZ6XXBCNZTPc0LH8rJxeag7Rlq5ko6hcoWyG3R4dQfe6rg5+
-	5WIZJFWbT85WVMklse3YC2QTdVSWX88JnjZ3tJ+2EYXfrnEMTXWSg3qDoLP6YUHsFyg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768248828; bh=y1F2fre0bBg33fVZwBRygqO
-	0Pfj4SyZKsih56ctQQag=; b=w4Nfev5sCmHxyz+MarCylkQaB72eogZD3oLo8/oH7mZuiQt0+U
-	n0lIoXpslWFFUfXA9zV2xnJHTVUi+PJX5yDg==;
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Mon, 12 Jan 2026 21:13:29 +0100
-Subject: [PATCH 6/6] arm64: dts: qcom: Add Redmi Note 8T
+	s=arc-20240116; t=1768250152; c=relaxed/simple;
+	bh=REqCyoJrIpewtMdGURz7oYk9zmr7BJajQXuF1TakMwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KGc4j6Ht0H3iJH3Jj1/gVdllG4YvbjanFjk3yjLAT4xmapgCqZ95wMu+UudZBEGiyV0BUAdmgiA20hklKj4a4vVh7y58Wo9KAJc6pHSI2x+TDS5eR/q8MXYg8jax200Znmb2VaRFQ5YOO/+Xmtq3jqlqIvXm+hr0nOpjDnv9U2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QCguevzN; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768250150; x=1799786150;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=REqCyoJrIpewtMdGURz7oYk9zmr7BJajQXuF1TakMwI=;
+  b=QCguevzNgwfX1JAE49nWByuGOxIM8sxLJ4WqKj2vGkzgURnNGX7qjSlH
+   vBOddmWfj7QO/sQh3HV/IKa0nKA078K+jaGji+FxSpQ4J3yFOotQIbxRK
+   SUwdX7xByKHfkMsYQ3OPgf0pEUWJdQ03oS/7qlMOl0i+cmLI7sgJUcY00
+   A2o4W/Psa5jqwDaMc1f9B0lITHt7/PPCMQ8cWt/3u81+/vCgs5orlFIKz
+   5xhguICZ+yjZBUBSzYmj66TT+ZnFIZ5NghP/qcAb8GW0KRrYBRbygslRQ
+   EXg4r2/nB7n0UGycseTGRWYpgywNY7IFTcWsgHOeTu97nG2v+JGTWCin7
+   g==;
+X-CSE-ConnectionGUID: d4Z7sdjYT9SE3fbNYjaQXA==
+X-CSE-MsgGUID: L+lqyCOKSxmCMABSasr3cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11669"; a="80173655"
+X-IronPort-AV: E=Sophos;i="6.21,221,1763452800"; 
+   d="scan'208";a="80173655"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 12:35:49 -0800
+X-CSE-ConnectionGUID: qrF+XUj5Smmcrdyy5Dee6Q==
+X-CSE-MsgGUID: pPBsBLFtQSOQR4pxhpa//Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,221,1763452800"; 
+   d="scan'208";a="208707588"
+Received: from black.igk.intel.com ([10.91.253.5])
+  by orviesa004.jf.intel.com with ESMTP; 12 Jan 2026 12:35:38 -0800
+Received: by black.igk.intel.com (Postfix, from userid 1003)
+	id 6841594; Mon, 12 Jan 2026 21:35:37 +0100 (CET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Mark Brown <broonie@kernel.org>,
+	Varshini Rajendran <varshini.rajendran@microchip.com>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Sunny Luo <sunny.luo@amlogic.com>,
+	Janne Grunau <j@jannau.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+	CL Wang <cl634@andestech.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	William Zhang <william.zhang@broadcom.com>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Manikandan Muralidharan <manikandan.m@microchip.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Hang Zhou <929513338@qq.com>,
+	Jun Guo <jun.guo@cixtech.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	James Clark <james.clark@linaro.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Carlos Song <carlos.song@nxp.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
+	Sergio Perez Gonzalez <sperezglz@gmail.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Luis de Arquer <luis.dearquer@inertim.com>,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Longbin Li <looong.bin@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
+	Alessandro Grassi <alessandro.grassi@mailbox.org>,
+	Darshan R <rathod.darshan.0896@gmail.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Vishwaroop A <va@nvidia.com>,
+	Haixu Cui <quic_haixcui@quicinc.com>,
+	Darshan Rathod <darshanrathod475@gmail.com>,
+	linux-spi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-amlogic@lists.infradead.org,
+	asahi@lists.linux.dev,
+	linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	imx@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	virtualization@lists.linux.dev
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Ray Liu <ray.liu@airoha.com>,
+	Sven Peter <sven@kernel.org>,
+	Neal Gompa <neal@gompa.dev>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Ryan Wanner <ryan.wanner@microchip.com>,
+	Michael Hennerich <michael.hennerich@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Kursad Oney <kursad.oney@broadcom.com>,
+	Anand Gore <anand.gore@broadcom.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jean-Marie Verdun <verdun@hpe.com>,
+	Nick Hawkins <nick.hawkins@hpe.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Lixu Zhang <lixu.zhang@intel.com>,
+	Yinbo Zhu <zhuyinbo@loongson.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Han Xu <han.xu@nxp.com>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Li-hao Kuo <lhjeff911@gmail.com>,
+	Masahisa Kojima <masahisa.kojima@linaro.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Michal Simek <michal.simek@amd.com>,
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v2 0/4] spi: Make SPI core to take care of fwnode assignment
+Date: Mon, 12 Jan 2026 21:21:22 +0100
+Message-ID: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260112-xiaomi-willow-v1-6-8e4476897638@mainlining.org>
-References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
-In-Reply-To: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>, 
- Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
- Biswapriyo Nath <nathbappai@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- linux@mainlining.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768248812; l=15256;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=m+w2FRlNfnx5w9723fwig1uaUl56n3qZPrHekKdKhfM=;
- b=hptgD10k9n9+xfCuPnX+9Gclo7k4IeJp6ZxHnfan4huku1risjGdCZhXjX23Y1q4vPI/t2Lvz
- nTsGHThTjgrBDOeX6TUGLE1J5IEMrrpkcZWOPqg7ImSAPz4qcaYuiOx
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-Redmi Note 8T (willow) is very similar to Redmi Note 8 (ginkgo)
-the only difference is willow have NFC.
-Make a common base from ginkgo devicetree for both device.
+It seems all of the SPI drivers want to propagate fwnode (or of_node)
+of the physical device to the SPI device. Make sure we don't duplicate
+it over and over in each new driver (+2 in this cycle) by making core
+to take care of that. Note, similar is done already by IIO and
+I²C subsystems.
 
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 302 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 296 +-------------------
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  13 +
- 4 files changed, 318 insertions(+), 294 deletions(-)
+There is one noticeable and quite specific case that is taken care in
+the first patch and now we have a confirmation from Cirrus that everything
+is okay.  The rest is just a mechanical conversion after checking that
+the parent device is assigned to the same that provides the respective
+fwnode.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0ccd6ec16dfb..b28ad0e57276 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -281,6 +281,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM) += sm6125-xiaomi-ginkgo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-willow.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-curtana.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-new file mode 100644
-index 000000000000..efe292215f7d
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-@@ -0,0 +1,302 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Gabriel Gonzales <semfault@disroot.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include "sm6125.dtsi"
-+#include "pm6125.dtsi"
-+
-+/delete-node/ &adsp_pil_mem;
-+/delete-node/ &cont_splash_mem;
-+/delete-node/ &gpu_mem;
-+/delete-node/ &ipa_fw_mem;
-+/delete-node/ &ipa_gsi_mem;
-+
-+/ {
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_SM6125 0x10000>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x5c000000 0 (2340 * 1080 * 4)>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	reserved-memory {
-+		adsp_pil_mem: adsp_pil_mem@55300000 {
-+			reg = <0x0 0x55300000 0x0 0x2200000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: ipa_fw_mem@57500000 {
-+			reg = <0x0 0x57500000 0x0 0x10000>;
-+			no-map;
-+		};
-+
-+		ipa_gsi_mem: ipa_gsi_mem@57510000 {
-+			reg = <0x0 0x57510000 0x0 0x5000>;
-+			no-map;
-+		};
-+
-+		gpu_mem: gpu_mem@57515000 {
-+			reg = <0x0 0x57515000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		framebuffer@5c000000 {
-+			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
-+			no-map;
-+		};
-+
-+		/*
-+		 * Matching with recovery values
-+		 * to be able to get the results.
-+		 */
-+		ramoops@61600000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x61600000 0x0 0x400000>;
-+			record-size = <0x80000>;
-+			pmsg-size = <0x200000>;
-+			console-size = <0x100000>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&vol_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&pm6125_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+};
-+
-+&pm6125_gpios {
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&hsusb_phy1 {
-+	vdd-supply = <&vreg_l7a>;
-+	vdda-pll-supply = <&vreg_l10a>;
-+	vdda-phy-dpdm-supply = <&vreg_l15a>;
-+	status = "okay";
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		vreg_s6a: s6 {
-+			regulator-min-microvolt = <936000>;
-+			regulator-max-microvolt = <1422000>;
-+		};
-+
-+		vreg_l1a: l1 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1256000>;
-+		};
-+
-+		vreg_l2a: l2 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1056000>;
-+		};
-+
-+		vreg_l3a: l3 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1064000>;
-+		};
-+
-+		vreg_l4a: l4 {
-+			regulator-min-microvolt = <872000>;
-+			regulator-max-microvolt = <976000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l5a: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l6a: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		vreg_l7a: l7 {
-+			regulator-min-microvolt = <872000>;
-+			regulator-max-microvolt = <976000>;
-+		};
-+
-+		vreg_l8a: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		vreg_l9a: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1896000>;
-+		};
-+
-+		vreg_l10a: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1896000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l11a: l11 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1952000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l12a: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1996000>;
-+		};
-+
-+		vreg_l13a: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1832000>;
-+		};
-+
-+		vreg_l14a: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l15a: l15 {
-+			regulator-min-microvolt = <3104000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		vreg_l16a: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l17a: l17 {
-+			regulator-min-microvolt = <1248000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		vreg_l18a: l18 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1264000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l19a: l19 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2952000>;
-+		};
-+
-+		vreg_l20a: l20 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2952000>;
-+		};
-+
-+		vreg_l21a: l21 {
-+			regulator-min-microvolt = <2600000>;
-+			regulator-max-microvolt = <2856000>;
-+		};
-+
-+		vreg_l22a: l22 {
-+			regulator-min-microvolt = <2944000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l23a: l23 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+		};
-+
-+		vreg_l24a: l24 {
-+			regulator-min-microvolt = <2944000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+	};
-+};
-+
-+&sdc2_off_state {
-+	sd-cd-pins {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
-+&sdc2_on_state {
-+	sd-cd-pins {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&vreg_l24a>;
-+	vqmmc-supply = <&vreg_l11a>;
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+	vmmc-supply = <&vreg_l22a>;
-+	vqmmc-supply = <&vreg_l5a>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <30 4>;
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index 163ecdc7fd6c..70be19357d11 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -1,304 +1,12 @@
- // SPDX-License-Identifier: BSD-3-Clause
- /*
-- * Copyright (c) 2025, Gabriel Gonzales <semfault@disroot.org>
-+ * Copyright (c) 2026, Barnabas Czeman
-  */
--
- /dts-v1/;
- 
--#include <dt-bindings/arm/qcom,ids.h>
--#include <dt-bindings/gpio/gpio.h>
--#include <dt-bindings/input/input.h>
--#include <dt-bindings/input/gpio-keys.h>
--#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
--#include "sm6125.dtsi"
--#include "pm6125.dtsi"
--
--/delete-node/ &adsp_pil_mem;
--/delete-node/ &cont_splash_mem;
--/delete-node/ &gpu_mem;
--/delete-node/ &ipa_fw_mem;
--/delete-node/ &ipa_gsi_mem;
-+#include "sm6125-xiaomi-ginkgo-common.dtsi"
- 
- / {
- 	model = "Xiaomi Redmi Note 8";
- 	compatible = "xiaomi,ginkgo", "qcom,sm6125";
--	chassis-type = "handset";
--
--	qcom,msm-id = <QCOM_ID_SM6125 0x10000>;
--
--	chosen {
--		#address-cells = <2>;
--		#size-cells = <2>;
--		ranges;
--
--		framebuffer0: framebuffer@5c000000 {
--			compatible = "simple-framebuffer";
--			reg = <0 0x5c000000 0 (2340 * 1080 * 4)>;
--			width = <1080>;
--			height = <2340>;
--			stride = <(1080 * 4)>;
--			format = "a8r8g8b8";
--		};
--	};
--
--	reserved-memory {
--		adsp_pil_mem: adsp_pil_mem@55300000 {
--			reg = <0x0 0x55300000 0x0 0x2200000>;
--			no-map;
--		};
--
--		ipa_fw_mem: ipa_fw_mem@57500000 {
--			reg = <0x0 0x57500000 0x0 0x10000>;
--			no-map;
--		};
--
--		ipa_gsi_mem: ipa_gsi_mem@57510000 {
--			reg = <0x0 0x57510000 0x0 0x5000>;
--			no-map;
--		};
--
--		gpu_mem: gpu_mem@57515000 {
--			reg = <0x0 0x57515000 0x0 0x2000>;
--			no-map;
--		};
--
--		framebuffer@5c000000 {
--			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
--			no-map;
--		};
--
--		/*
--		 * Matching with recovery values
--		 * to be able to get the results.
--		 */
--		ramoops@61600000 {
--			compatible = "ramoops";
--			reg = <0x0 0x61600000 0x0 0x400000>;
--			record-size = <0x80000>;
--			pmsg-size = <0x200000>;
--			console-size = <0x100000>;
--		};
--	};
--
--	gpio-keys {
--		compatible = "gpio-keys";
--
--		pinctrl-0 = <&vol_up_n>;
--		pinctrl-names = "default";
--
--		key-volume-up {
--			label = "Volume Up";
--			gpios = <&pm6125_gpios 6 GPIO_ACTIVE_LOW>;
--			linux,code = <KEY_VOLUMEUP>;
--			debounce-interval = <15>;
--			linux,can-disable;
--			wakeup-source;
--		};
--	};
--};
--
--&pm6125_gpios {
--	vol_up_n: vol-up-n-state {
--		pins = "gpio6";
--		function = "normal";
--		power-source = <1>;
--		bias-pull-up;
--		input-enable;
--	};
--};
--
--&hsusb_phy1 {
--	vdd-supply = <&vreg_l7a>;
--	vdda-pll-supply = <&vreg_l10a>;
--	vdda-phy-dpdm-supply = <&vreg_l15a>;
--	status = "okay";
--};
--
--&pon_pwrkey {
--	status = "okay";
--};
--
--&pon_resin {
--	linux,code = <KEY_VOLUMEDOWN>;
--	status = "okay";
--};
--
--&rpm_requests {
--	regulators-0 {
--		compatible = "qcom,rpm-pm6125-regulators";
--
--		vreg_s6a: s6 {
--			regulator-min-microvolt = <936000>;
--			regulator-max-microvolt = <1422000>;
--		};
--
--		vreg_l1a: l1 {
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1256000>;
--		};
--
--		vreg_l2a: l2 {
--			regulator-min-microvolt = <1000000>;
--			regulator-max-microvolt = <1056000>;
--		};
--
--		vreg_l3a: l3 {
--			regulator-min-microvolt = <1000000>;
--			regulator-max-microvolt = <1064000>;
--		};
--
--		vreg_l4a: l4 {
--			regulator-min-microvolt = <872000>;
--			regulator-max-microvolt = <976000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l5a: l5 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l6a: l6 {
--			regulator-min-microvolt = <576000>;
--			regulator-max-microvolt = <656000>;
--		};
--
--		vreg_l7a: l7 {
--			regulator-min-microvolt = <872000>;
--			regulator-max-microvolt = <976000>;
--		};
--
--		vreg_l8a: l8 {
--			regulator-min-microvolt = <400000>;
--			regulator-max-microvolt = <728000>;
--		};
--
--		vreg_l9a: l9 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1896000>;
--		};
--
--		vreg_l10a: l10 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1896000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l11a: l11 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1952000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l12a: l12 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1996000>;
--		};
--
--		vreg_l13a: l13 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1832000>;
--		};
--
--		vreg_l14a: l14 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1904000>;
--		};
--
--		vreg_l15a: l15 {
--			regulator-min-microvolt = <3104000>;
--			regulator-max-microvolt = <3232000>;
--		};
--
--		vreg_l16a: l16 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1904000>;
--		};
--
--		vreg_l17a: l17 {
--			regulator-min-microvolt = <1248000>;
--			regulator-max-microvolt = <1304000>;
--		};
--
--		vreg_l18a: l18 {
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1264000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l19a: l19 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2952000>;
--		};
--
--		vreg_l20a: l20 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2952000>;
--		};
--
--		vreg_l21a: l21 {
--			regulator-min-microvolt = <2600000>;
--			regulator-max-microvolt = <2856000>;
--		};
--
--		vreg_l22a: l22 {
--			regulator-min-microvolt = <2944000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l23a: l23 {
--			regulator-min-microvolt = <3000000>;
--			regulator-max-microvolt = <3400000>;
--		};
--
--		vreg_l24a: l24 {
--			regulator-min-microvolt = <2944000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--	};
--};
--
--&sdc2_off_state {
--	sd-cd-pins {
--		pins = "gpio98";
--		function = "gpio";
--		drive-strength = <2>;
--		bias-disable;
--	};
--};
--
--&sdc2_on_state {
--	sd-cd-pins {
--		pins = "gpio98";
--		function = "gpio";
--		drive-strength = <2>;
--		bias-pull-up;
--	};
--};
--
--&sdhc_1 {
--	vmmc-supply = <&vreg_l24a>;
--	vqmmc-supply = <&vreg_l11a>;
--	status = "okay";
--};
--
--&sdhc_2 {
--	cd-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
--	vmmc-supply = <&vreg_l22a>;
--	vqmmc-supply = <&vreg_l5a>;
--	no-sdio;
--	no-mmc;
--	status = "okay";
--};
--
--&tlmm {
--	gpio-reserved-ranges = <0 4>, <30 4>;
--};
--
--&usb3 {
--	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-new file mode 100644
-index 000000000000..9e3aeb5a9e74
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-@@ -0,0 +1,13 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026, Barnabas Czeman
-+ */
-+/dts-v1/;
-+
-+#include "sm6125-xiaomi-ginkgo-common.dtsi"
-+
-+/ {
-+	model = "Xiaomi Redmi Note 8T";
-+	compatible = "xiaomi,willow", "qcom,sm6125";
-+
-+};
+Changelog v2:
+- collected tags
+- fixed W=1 warning (unused variable) in spi-dln2.c (LKP)
+
+v1: 20260108203004.3538449-1-andriy.shevchenko@linux.intel.com
+
+Andy Shevchenko (4):
+  spi: Propagate default fwnode to the SPI controller device
+  spi: Drop duplicate of_node assignment
+  spi: Drop duplicate fwnode assignment
+  spi: Drop duplicate device_set_node() call
+
+ drivers/spi/atmel-quadspi.c          | 1 -
+ drivers/spi/spi-airoha-snfi.c        | 1 -
+ drivers/spi/spi-altera-platform.c    | 2 --
+ drivers/spi/spi-amlogic-spifc-a1.c   | 1 -
+ drivers/spi/spi-amlogic-spisg.c      | 1 -
+ drivers/spi/spi-apple.c              | 1 -
+ drivers/spi/spi-ar934x.c             | 1 -
+ drivers/spi/spi-armada-3700.c        | 4 +---
+ drivers/spi/spi-aspeed-smc.c         | 1 -
+ drivers/spi/spi-atcspi200.c          | 1 -
+ drivers/spi/spi-ath79.c              | 1 -
+ drivers/spi/spi-atmel.c              | 1 -
+ drivers/spi/spi-axi-spi-engine.c     | 1 -
+ drivers/spi/spi-bcm-qspi.c           | 1 -
+ drivers/spi/spi-bcm2835.c            | 1 -
+ drivers/spi/spi-bcm2835aux.c         | 1 -
+ drivers/spi/spi-bcm63xx-hsspi.c      | 1 -
+ drivers/spi/spi-bcm63xx.c            | 1 -
+ drivers/spi/spi-bcmbca-hsspi.c       | 1 -
+ drivers/spi/spi-cadence-quadspi.c    | 1 -
+ drivers/spi/spi-cadence-xspi.c       | 1 -
+ drivers/spi/spi-cadence.c            | 1 -
+ drivers/spi/spi-cavium-octeon.c      | 1 -
+ drivers/spi/spi-cavium-thunderx.c    | 1 -
+ drivers/spi/spi-clps711x.c           | 1 -
+ drivers/spi/spi-cs42l43.c            | 8 ++++++++
+ drivers/spi/spi-davinci.c            | 1 -
+ drivers/spi/spi-dln2.c               | 3 ---
+ drivers/spi/spi-dw-core.c            | 2 --
+ drivers/spi/spi-ep93xx.c             | 1 -
+ drivers/spi/spi-falcon.c             | 1 -
+ drivers/spi/spi-fsl-dspi.c           | 1 -
+ drivers/spi/spi-fsl-espi.c           | 1 -
+ drivers/spi/spi-fsl-lib.c            | 1 -
+ drivers/spi/spi-fsl-lpspi.c          | 1 -
+ drivers/spi/spi-geni-qcom.c          | 1 -
+ drivers/spi/spi-gpio.c               | 1 -
+ drivers/spi/spi-gxp.c                | 1 -
+ drivers/spi/spi-hisi-kunpeng.c       | 1 -
+ drivers/spi/spi-img-spfi.c           | 1 -
+ drivers/spi/spi-imx.c                | 1 -
+ drivers/spi/spi-ingenic.c            | 1 -
+ drivers/spi/spi-lantiq-ssc.c         | 1 -
+ drivers/spi/spi-ljca.c               | 1 -
+ drivers/spi/spi-loongson-core.c      | 1 -
+ drivers/spi/spi-lp8841-rtc.c         | 1 -
+ drivers/spi/spi-meson-spicc.c        | 1 -
+ drivers/spi/spi-meson-spifc.c        | 1 -
+ drivers/spi/spi-microchip-core-spi.c | 1 -
+ drivers/spi/spi-mpc512x-psc.c        | 2 --
+ drivers/spi/spi-mpc52xx-psc.c        | 2 --
+ drivers/spi/spi-mpc52xx.c            | 1 -
+ drivers/spi/spi-mpfs.c               | 1 -
+ drivers/spi/spi-mt65xx.c             | 1 -
+ drivers/spi/spi-mt7621.c             | 1 -
+ drivers/spi/spi-mtk-nor.c            | 1 -
+ drivers/spi/spi-mtk-snfi.c           | 1 -
+ drivers/spi/spi-mux.c                | 1 -
+ drivers/spi/spi-mxic.c               | 1 -
+ drivers/spi/spi-npcm-fiu.c           | 1 -
+ drivers/spi/spi-npcm-pspi.c          | 1 -
+ drivers/spi/spi-nxp-fspi.c           | 2 --
+ drivers/spi/spi-nxp-xspi.c           | 1 -
+ drivers/spi/spi-oc-tiny.c            | 1 -
+ drivers/spi/spi-orion.c              | 1 -
+ drivers/spi/spi-pl022.c              | 1 -
+ drivers/spi/spi-pxa2xx.c             | 2 --
+ drivers/spi/spi-qcom-qspi.c          | 1 -
+ drivers/spi/spi-qpic-snand.c         | 1 -
+ drivers/spi/spi-qup.c                | 1 -
+ drivers/spi/spi-rb4xx.c              | 1 -
+ drivers/spi/spi-realtek-rtl-snand.c  | 1 -
+ drivers/spi/spi-realtek-rtl.c        | 1 -
+ drivers/spi/spi-rockchip-sfc.c       | 1 -
+ drivers/spi/spi-rockchip.c           | 1 -
+ drivers/spi/spi-rspi.c               | 1 -
+ drivers/spi/spi-rzv2h-rspi.c         | 2 --
+ drivers/spi/spi-rzv2m-csi.c          | 2 --
+ drivers/spi/spi-s3c64xx.c            | 1 -
+ drivers/spi/spi-sc18is602.c          | 2 --
+ drivers/spi/spi-sg2044-nor.c         | 1 -
+ drivers/spi/spi-sh-hspi.c            | 1 -
+ drivers/spi/spi-sh-msiof.c           | 1 -
+ drivers/spi/spi-sifive.c             | 1 -
+ drivers/spi/spi-slave-mt27xx.c       | 1 -
+ drivers/spi/spi-sn-f-ospi.c          | 1 -
+ drivers/spi/spi-sprd-adi.c           | 1 -
+ drivers/spi/spi-sprd.c               | 1 -
+ drivers/spi/spi-stm32-ospi.c         | 1 -
+ drivers/spi/spi-stm32-qspi.c         | 1 -
+ drivers/spi/spi-stm32.c              | 1 -
+ drivers/spi/spi-sun4i.c              | 1 -
+ drivers/spi/spi-sun6i.c              | 1 -
+ drivers/spi/spi-sunplus-sp7021.c     | 1 -
+ drivers/spi/spi-synquacer.c          | 3 ---
+ drivers/spi/spi-tegra114.c           | 1 -
+ drivers/spi/spi-tegra20-sflash.c     | 1 -
+ drivers/spi/spi-tegra20-slink.c      | 1 -
+ drivers/spi/spi-tegra210-quad.c      | 1 -
+ drivers/spi/spi-ti-qspi.c            | 1 -
+ drivers/spi/spi-uniphier.c           | 1 -
+ drivers/spi/spi-virtio.c             | 2 --
+ drivers/spi/spi-wpcm-fiu.c           | 1 -
+ drivers/spi/spi-xcomm.c              | 1 -
+ drivers/spi/spi-xilinx.c             | 1 -
+ drivers/spi/spi-xlp.c                | 1 -
+ drivers/spi/spi-xtensa-xtfpga.c      | 1 -
+ drivers/spi/spi.c                    | 3 +++
+ 108 files changed, 12 insertions(+), 122 deletions(-)
 
 -- 
-2.52.0
+2.50.1
 
 
