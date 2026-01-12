@@ -1,108 +1,491 @@
-Return-Path: <linux-arm-msm+bounces-88476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB588D11270
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:17:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19543D11258
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:17:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5F56E305A8DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:15:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 256183063F87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE79C33D518;
-	Mon, 12 Jan 2026 08:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2/UuxZ7"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE9723242B8;
+	Mon, 12 Jan 2026 08:17:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706F133C1A2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 08:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D30314D3A;
+	Mon, 12 Jan 2026 08:17:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768205712; cv=none; b=sFrysYYrXkj32D8ipr+HoqtE+J1sWYbYXPEQDMwmabAUBDV8dMTCszRHh2kkdNVHXF1yOWctrYvZFqbVucMGeXjj4NP70dZOkPkAGXa88PnBAlAZs1bHRFSA1HWhEMECtTm4BBhc5v5jwrUjzgZKo+5t9Zz0CBtyCoLT02VowcI=
+	t=1768205835; cv=none; b=qCy2vII9pj6VmFypfp+dhBC0rlgWfjg1XxvlsyHqdB2hSdarSGKdjXwUGWHT6VZie/JnfNpiiZaCBY/YxjTsPILgyA0NOnU4q3TYO7eWLJODDv6iFCgszPns0wtSzReq8MOgrV09G3ib4JYE/vbYUEEF0MLz/P+hkrW4dA9WyJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768205712; c=relaxed/simple;
-	bh=5iyGrD6t4jKVWo1soh2XCJ43j2Qzm08eL5ZkM2bIbFI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EQ4fuODIL5mKfthsCGDLZS3hrKEunzZE5DzOnrfq9w3qD3Fmv7t7ju6X0XhwXLG5jk0xc+0i/cRafHRdw6XKG+3zrMnOUqohF0aP5fPTy1mnSZMBkTUPJnQF4jUJ7bEzB8hKM+hkLyt5eRAq45nf6dTEiPfqSN3DgMTjVf56Tx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2/UuxZ7; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-34c1d84781bso3433954a91.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 00:15:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768205711; x=1768810511; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5iyGrD6t4jKVWo1soh2XCJ43j2Qzm08eL5ZkM2bIbFI=;
-        b=H2/UuxZ7KuYZJWTND/PR6/gWyoqJa9ysZ/WtSno6++P3QA/RtqTUfxDVUbo+1Ymi1R
-         E8wu8pOwtbtMS9EIHNZ2P7SlOxxftUTZDWlKToIg6PDXlaG8v+6ruYwA1d0vpv2jrUOq
-         PP+pUlMyE/C65vOckKSD5Cl/mMtlOwbIppzIKU91T74bNRGVlpkdB4hWyhmxeHw5gyLl
-         EuVVxzpzsW7pjPWhzjQG8CyS3qap+qt7Ic1zmJswbuGaWvCn9KVjEQSd1/VPRe3KKQ2j
-         tIeKY5tzXeeGNK7q0TLpSqxwdVqc5A+y0S0vKMDXneirke9T9QKTzYMHtlGl/pG0KjxU
-         y2LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768205711; x=1768810511;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5iyGrD6t4jKVWo1soh2XCJ43j2Qzm08eL5ZkM2bIbFI=;
-        b=hA7C7qFX8IWsgZEJd5BvnkDlm+vsAbKxW996nt+QohEG9A4J1D6wFqfPeGJkwKK9U5
-         dIr7b1Asxhk7k4MLx9bE6EQ6EAOq654DdNiMSnayMB4Wg2woi9VC/wRgXadpbMVvNRIo
-         a0s69zT7s+vK3OfFbhQtrwLQ0sDFK8xdme3xn73aZBckipF5+M0rd7bse/quExSH1Tys
-         lMERlB2N04m3QxtFcQDKfauHBXfbu1rMHau4fq1QlTT2e6HHDQ5bnqgRhaHDNf1vab2P
-         kj4f2JaA2+bwf9GP2Iij2LYVoY3q+SWRC/BIfmGy/nltueFC/qz5CBRDfmuu67ELabuO
-         ZG9A==
-X-Forwarded-Encrypted: i=1; AJvYcCWyzjH/AJMb0IlWHsZl+2sZEveTBwU1SiUslmCfs2lUYLw7VGLTVVEs/KxumwuNoxo1uMadI0Q/XoVLD/F0@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBsQA8IFm5IaRI+Bn8s/tgDttDyOy9PuV2nOGeKWcKDNand6I1
-	572qth1XkqnLBZ8Y2yBseSDApP1UCfWpDWqwhnXlW7FLKkaRbHq82yPmt9mVkj3Vz9O5v2neCip
-	QHhr1GEKO02VokKIhc/BZPwRkENKhq58=
-X-Gm-Gg: AY/fxX6QtWblD95ZV7LeCD34/jOftqgfLUp4DtQGPWWfo7rLa5HVjKemdCwqc1zKIF6
-	Snw6WG/yeqddiIEHVdNhyXbKtIwJNtmNh4YKr6Vsg8Vd1SKkTIQoDrfs/EbpqOifi8S8njR99Go
-	bq7ReDrCJKL/MKZK13l0ZFYbT+iWV7ITS/zF2M9yltnvXjD6i2ExR7gEbRQiV8uYyKZ3Ticv4RN
-	H+bKE5aIBiuWJGKOrMDRtoqpA9gOUT83ghbC67y1MiHU1+g9l2S+W42mXA1/0lbRhoir4SpRsKA
-	Z5+XiAw=
-X-Google-Smtp-Source: AGHT+IEO6LjtBiiTakABt83pr8vBjMWsli6acZVk0wkTf7Od07uEXvjAYcspCT/ZRXWJY1wLF7d5BoH0Kph9pg0c/zw=
-X-Received: by 2002:a17:90b:2741:b0:341:88c9:aefb with SMTP id
- 98e67ed59e1d1-34f68c0241cmr13310625a91.5.1768205710536; Mon, 12 Jan 2026
- 00:15:10 -0800 (PST)
+	s=arc-20240116; t=1768205835; c=relaxed/simple;
+	bh=aF4oInFaCLIVL1URM6GIUN36aRzajLBmJ1ECRhO/LIk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ck/iobRStTjO85GH3JiQkyoLgXyVj5uJPv3F2zc2987VUHYBaXzb3mLx0kfulHKtapFAnfQGVkvZINaGrO3ks7acCoCAK9pNH+u/MlHLEnZohbpLpPPax2Bo/1fR3CmEDZg0WVtw83NTYIhg0m78tCyWfAERUoe+Kz8n5uBSuxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpsz6t1768205812t38f57e53
+X-QQ-Originating-IP: JenX008UtBUgmVb+GIfITQaaGDhQIQLlw7MDTXfP+iQ=
+Received: from [127.0.0.1] ( [116.234.96.45])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 12 Jan 2026 16:16:50 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4988554758296933567
+Message-ID: <76B3416F7865BD83+6448d6be-8c58-494b-9287-da0f550dffb5@radxa.com>
+Date: Mon, 12 Jan 2026 16:16:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Reply-To: micro6947@gmail.com
-From: Xingjing Deng <micro6947@gmail.com>
-Date: Mon, 12 Jan 2026 16:15:01 +0800
-X-Gm-Features: AZwV_Qg4Brt-nf3YdMPJ1efWhynaAQd8e05kQhY2LdIZ369g5-5ixvAbos9jnQA
-Message-ID: <CAK+ZN9rJypDknnR0b5UVme6x9ABx_hCVtveTyJQT-x0ROpU1vw@mail.gmail.com>
-Subject: [BUG] misc: fastrpc: possible double-free of cctx->remote_heap
-To: stable@vger.kernel.org
-Cc: srini@kernel.org, amahesh@gti.qualcomm.com, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] drm/msm/dpu: check mode against PINGPONG or DSC
+ max width
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+References: <20260112-max-mixer-width-v3-0-f98063ea21f5@oss.qualcomm.com>
+ <20260112-max-mixer-width-v3-1-f98063ea21f5@oss.qualcomm.com>
+ <2E7090A0C462255A+6658f83c-4e5b-4f49-a90b-54eecd61fcbf@radxa.com>
+ <lknvr4qwhsnkuaujuilapcpiykqu7n2bzo7dwimmz5gpfklr57@wod3hszretls>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <lknvr4qwhsnkuaujuilapcpiykqu7n2bzo7dwimmz5gpfklr57@wod3hszretls>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: N17Koc4oSm0prnLqITR3Ds35tLc8wCRuHBYWGSduj3Dw3fcsEHz28vF4
+	s1dF7t78DjLEyY3tiBQFO3Fj0jJgWgd4AHOIYKCplKwnE99l7+1fD7c34BL1liDbkNKca96
+	sQWf6nyM7X+m8DC5tU5OK2QzLXyFJBCMdrDHbQ0G4xqkUNPPpZK19mPEOygefTucDxV/1gW
+	jVnCwZKuSQRADIs+qyuVQ8q63DJnZXiZIQC2WkOiAJKtKOxVKO0esiewAqdM6ECcJ3Lgwng
+	nAhFdns83urgD1/WBy4c37DEpDMqOZ3YI5KpRPdEGuOeKi85oYB3blAHvXc6CT3X1ntG7zu
+	SyoDfjiysHpjzbM5CoXnzgqfHd+q6wZWYvAG1xfMAahgR4WUUYniNIEyE+9vP9c+c1vV3yF
+	vGaBU3bZ7uYG7Xch9aPukToaGyEN9LoHRR4kCnvUxNgyRi86O6gafnu1wFKXtwhkRGmuYfq
+	Ade/viM6dgoR1OYRo3NhnrxBI78jKovs2aPbyw4ADPOpHvUGEPbgKLB8GD13cWlXcQKn3Mc
+	G6nfWmqPv9EcWsgmH+e5mjLFzUB0D7rDTCOT8wWZ26zTaI3z4XRe+7hhyXr/ytZJJawcMlJ
+	3OOEIyn2wNq5mh2L68nH5/U3zdRy6Lb33jhTDhjnXfsHRWwJKIy6d1qp9RjJhyfY1dtyr8w
+	MaWEF5ZMWULc/xvgaVytp206dIjaASgcScmQ+tkP9M1qZwF9A9yCaP9DYPbyvixUyswRGUL
+	/QY/vphL8bF+Gl8KP7++LhL82s6b3zb30OYE3ZqVjLpVkq8wnJVR0SDqdO1iE1A06A2OM1p
+	ELzlVzFfEvfTU0dzNNp89tV9Wyp4hCho+X27cFh8bZ+iBI8fhUogrDNek6LFqt4M5nCjQqV
+	F47gc7taM4iXXFDBvQmrPFOxTXn6cS4FifRDM9lzTqluVsYL7n3PBY+kddxSTTUXLMF4oED
+	DDq6xgUF/bqAEXjRX4Gu2jIl2CdpEh/s1j24gxH9GbA1ZD2/PhCbBbY0ci2h9hA4kzByXuT
+	hmhgbGy2i5G4VbfrsU9CkNMHVirCIadRAk7uqzy/oQsuf9mFJp1TCMH0grppt+eG9x2wRpD
+	oJpKavrHA0k4oQrorBtyVA=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-While reviewing drivers/misc/fastrpc.c, I noticed a potential lifetime
-issue around struct fastrpc_buf *remote_heap;
-In fastrpc_init_create_static_process(), the error path err_map: frees
-fl->cctx->remote_heap but does not clear the pointer(set to NULL).
-Later, in fastrpc_rpmsg_remove(), the code frees cctx->remote_heap
-again if it is non-NULL.
+On 1/12/2026 3:48 PM, Dmitry Baryshkov wrote:
+> On Mon, Jan 12, 2026 at 03:25:05PM +0800, Xilin Wu wrote:
+>> On 1/12/2026 11:11 AM, Dmitry Baryshkov wrote:
+>>> From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>>>
+>>> LM block doesn't have a hardware buffer (unlike PINGPONG and DSC
+>>> encoders). As such, don't use ephemeral max_mixer_width and
+>>> MAX_HDISPLAY_SPLIT to validate requested modes. Instead use PP and DSC
+>>> buffer widths.
+>>>
+>>> While on the DPU 8.x+ supports a max linewidth of 8960 for PINGPONG_0,
+>>> there is some additional logic that needs to be added to the resource
+>>> manager to specifically try and reserve PINGPONG_0 for modes that are
+>>> greater than 5k.
+>>>
+>>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+>>> Tested-by: Xilin Wu <sophon@radxa.com> # qcs6490-radxa-dragon-q6a
+>>> [DB: reworked to drop catalog changes, updated commit message]
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>
+>> Sorry for the late reply, my colleagues are still testing the new series on
+>> qcs6490.
+>>
+>> However, this completely breaks 4K 120Hz display on SC8280XP CRD, which was
+>> previously functional (albeit with the clock check bypassed [1]). The
+>> display now shows a solid blue screen. Kernel logs indicate that only one
+>> layer mixer is being used, instead of the two that were used previously.
+> 
+> Could you please post debugfs/dri/0/state and debugfs/dri/0/debug/core_perf/*?
+> 
 
-Call paths (as I understand them)
+Sure, this is when the display is working:
 
-1) First free (ioctl error path):
+$ cat /sys/kernel/debug/dri/ae01000.display-controller/state
+plane[36]: plane-0
+         crtc=crtc-0
+         fb=89
+                 allocated by = kwin_wayland
+                 refcount=2
+                 format=AR30 little-endian (0x30335241)
+                 modifier=0x500000000000001
+                 size=3840x2160
+                 layers:
+                         size[0]=3840x2160
+                         pitch[0]=15360
+                         offset[0]=0
+                         obj[0]:
+                                 name=0
+                                 refcount=5
+                                 start=00105bee
+                                 size=33554432
+                                 imported=no
+         crtc-pos=3840x2160+0+0
+         src-pos=3840.000000x2160.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=1
+         sspp[0]=sspp_8
+         multirect_mode[0]=parallel
+         multirect_index[0]=rect_0
+         src[0]=1920x2160+0+0
+         dst[0]=1920x2160+0+0
+         sspp[1]=sspp_8
+         multirect_mode[1]=parallel
+         multirect_index[1]=rect_1
+         src[1]=1920x2160+1920+0
+         dst[1]=1920x2160+1920+0
+plane[42]: plane-1
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[48]: plane-2
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[54]: plane-3
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[60]: plane-4
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[66]: plane-5
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[72]: plane-6
+         crtc=crtc-0
+         fb=93
+                 allocated by = kwin_wayland
+                 refcount=2
+                 format=AB24 little-endian (0x34324241)
+                 modifier=0x500000000000001
+                 size=512x512
+                 layers:
+                         size[0]=512x512
+                         pitch[0]=2048
+                         offset[0]=0
+                         obj[0]:
+                                 name=0
+                                 refcount=5
+                                 start=0010f8ca
+                                 size=1310720
+                                 imported=no
+         crtc-pos=512x512+1913+1073
+         src-pos=512.000000x512.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=1
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=2
+         sspp[0]=sspp_9
+         multirect_mode[0]=none
+         multirect_index[0]=solo
+         src[0]=512x512+0+0
+         dst[0]=512x512+1913+1073
+plane[78]: plane-7
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+crtc[84]: crtc-0
+         enable=1
+         active=1
+         self_refresh_active=0
+         planes_changed=1
+         mode_changed=0
+         active_changed=0
+         connectors_changed=0
+         color_mgmt_changed=0
+         plane_mask=41
+         connector_mask=1
+         encoder_mask=1
+         mode: "3840x2160": 120 1188000 3840 4016 4104 4400 2160 2168 
+2178 2250 0x40 0x5
+         lm[0]=0
+         ctl[0]=0
+         lm[1]=1
+         ctl[1]=0
+connector[34]: DP-1
+         crtc=crtc-0
+         self_refresh_aware=0
+         interlace_allowed=0
+         ycbcr_420_allowed=1
+         max_requested_bpc=0
+         colorspace=Default
+resource mapping:
+         pingpong=84 84 # # # # - - - - - - -
+         mixer=84 84 # # # # - -
+         ctl=84 # # # # #
+         dspp=# # # #
+         dsc=# # # # # # - -
+         cdm=#
+         sspp=# # # # - - - - 84 84 # # - - - -
+         cwb=- - - -
 
-fastrpc_fops.unlocked_ioctl =E2=86=92 fastrpc_device_ioctl()
-FASTRPC_IOCTL_INIT_CREATE_STATIC =E2=86=92 fastrpc_init_create_static_proce=
-ss()
-err_map: =E2=86=92 fastrpc_buf_free(fl->cctx->remote_heap) (pointer not cle=
-ared)
 
-2) Second free (rpmsg remove path):
+And this is when this series is applied:
 
-rpmsg driver .remove =E2=86=92 fastrpc_rpmsg_remove()
-if (cctx->remote_heap) fastrpc_buf_free(cctx->remote_heap);
+$ cat /sys/kernel/debug/dri/ae01000.display-controller/state
+plane[36]: plane-0
+         crtc=crtc-0
+         fb=89
+                 allocated by = kwin_wayland
+                 refcount=2
+                 format=AR30 little-endian (0x30335241)
+                 modifier=0x500000000000001
+                 size=3840x2160
+                 layers:
+                         size[0]=3840x2160
+                         pitch[0]=15360
+                         offset[0]=0
+                         obj[0]:
+                                 name=0
+                                 refcount=5
+                                 start=00105bee
+                                 size=33554432
+                                 imported=no
+         crtc-pos=3840x2160+0+0
+         src-pos=3840.000000x2160.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=1
+         sspp[0]=sspp_8
+         multirect_mode[0]=parallel
+         multirect_index[0]=rect_0
+         src[0]=1920x2160+0+0
+         dst[0]=1920x2160+0+0
+         sspp[1]=sspp_8
+         multirect_mode[1]=parallel
+         multirect_index[1]=rect_1
+         src[1]=1920x2160+1920+0
+         dst[1]=1920x2160+1920+0
+plane[42]: plane-1
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[48]: plane-2
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[54]: plane-3
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[60]: plane-4
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[66]: plane-5
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+plane[72]: plane-6
+         crtc=crtc-0
+         fb=92
+                 allocated by = kwin_wayland
+                 refcount=2
+                 format=AR24 little-endian (0x34325241)
+                 modifier=0x500000000000001
+                 size=512x512
+                 layers:
+                         size[0]=512x512
+                         pitch[0]=2048
+                         offset[0]=0
+                         obj[0]:
+                                 name=0
+                                 refcount=5
+                                 start=0011cf86
+                                 size=1310720
+                                 imported=no
+         crtc-pos=512x512+3833+2107
+         src-pos=512.000000x512.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=1
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=2
+         sspp[0]=sspp_9
+         multirect_mode[0]=none
+         multirect_index[0]=solo
+         src[0]=7x53+0+0
+         dst[0]=7x53+3833+2107
+plane[78]: plane-7
+         crtc=(null)
+         fb=0
+         crtc-pos=0x0+0+0
+         src-pos=0.000000x0.000000+0.000000+0.000000
+         rotation=1
+         normalized-zpos=0
+         color-encoding=ITU-R BT.601 YCbCr
+         color-range=YCbCr limited range
+         color_mgmt_changed=0
+         stage=0
+crtc[84]: crtc-0
+         enable=1
+         active=1
+         self_refresh_active=0
+         planes_changed=1
+         mode_changed=0
+         active_changed=0
+         connectors_changed=0
+         color_mgmt_changed=0
+         plane_mask=41
+         connector_mask=1
+         encoder_mask=1
+         mode: "3840x2160": 120 1188000 3840 4016 4104 4400 2160 2168 
+2178 2250 0x40 0x5
+         lm[0]=0
+         ctl[0]=0
+connector[34]: DP-1
+         crtc=crtc-0
+         self_refresh_aware=0
+         interlace_allowed=0
+         ycbcr_420_allowed=1
+         max_requested_bpc=0
+         colorspace=Default
+resource mapping:
+         pingpong=84 # # # # # - - - - - - -
+         mixer=84 # # # # # - -
+         ctl=84 # # # # #
+         dspp=# # # #
+         dsc=# # # # # # - -
+         cdm=#
+         sspp=# # # # - - - - 84 84 # # - - - -
+         cwb=- - - -
+
+
+The values from core_perf are exactly the same:
+
+$ cat /sys/kernel/debug/dri/ae01000.display-controller/debug/core_perf/*
+600000000
+0
+0
+0
+0
+13600000
+18200000
+600000000
+2500000
+800000
+0
+mode 0
+
+
+>>
+>> [1] https://lore.kernel.org/all/F4CDF36128041430+0d030e3b-054c-4910-a132-72273c541948@radxa.com/
+>>
+>> -- 
+>> Best regards,
+>> Xilin Wu <sophon@radxa.com>
+> 
+
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
