@@ -1,304 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-88487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5BD5D114CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:45:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDBBBD114E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 09:46:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0086E30581BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:45:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3EFE8300ACF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 08:45:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 397E1343D75;
-	Mon, 12 Jan 2026 08:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="IVDV/ohy"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EE8A31B83B;
+	Mon, 12 Jan 2026 08:45:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D83343D78
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 08:45:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EFE343D90;
+	Mon, 12 Jan 2026 08:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768207507; cv=none; b=nfnAbPktjjzIO8SG/Wc7oyk5iQiVETDXSfUdJyPn10lvlJEt2v9QvnH/lwPnpzcyyXs0ybrKrApxAeZIZj5yS2nf4Xq+/cC8rzjuLm/gAFnN0LpFkEFo5BtV5tzhMb9ukD+4wzInmY+xobwgC1V9FoI5Sk9hYQK+yzV4B1fl9dE=
+	t=1768207545; cv=none; b=LXRuqhXby8m3ewP+Wj/Lj09XN2aVXELtkU2w0OdyN5x4LBkhAl3xAme5iSwiJJUKrpjbtLG5DrXIa71ZmZXi7TcwtYaKVRgIL1T/z3iUgjYRjAgWINoc1NbI6qdui2bXF76GLg1b3BDH4X/FSUgUgUw2cDX5WAizJqRjcUQfPPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768207507; c=relaxed/simple;
-	bh=zG33qFZy8JznR/XKQTux3df5oiRWiq1GjUuErjUR0fA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Ic55ku4uI5ivBoensxw9yUJuUU6hJNoN6ZQWbIEa8Liajz+PqG+0N152rFTUuy510j05mYdwpF6vJah7OmoaJI1UNLBnAdkpJNaPAKFpAYks++kszjmqwVg2t5Nkr/W5PEb/U4rjZHkAI2Vk1uIeVa5VngN+CI0hnME+H1PNobg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=IVDV/ohy; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b870cbd1e52so141813066b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 00:45:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1768207502; x=1768812302; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zG33qFZy8JznR/XKQTux3df5oiRWiq1GjUuErjUR0fA=;
-        b=IVDV/ohytU0ay9yHJck6OOYUe8a5wpddekOQJo+U5YWT2V7t/wB/w1wM+T359sNeAS
-         /erSG0qpj9K6RgDKVMgo+wIkKDGzISr5/G5/A1XAIS0n5zVJNFSkEhdMlSm5jwr0G23T
-         Z/3ndWqyQF3fF6xiTHEUIF9zY3+b8hCEWF2Z7FUzH4GE7XXao6fOeF5bfbW8f4rb2oNr
-         9hfFfRB44rZHT7HPM9Kh+dbt6P2gRJh3Vta9wqwutcA+LKnkqhGClFiP0oK5Vo/st/WC
-         S0qaDsP4HZja8WEof5/2gfZz3eR6KLMF+kNBsJts+8HlHPEA0rg+4ZiXwHqFbfu0hZCC
-         S2UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768207502; x=1768812302;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zG33qFZy8JznR/XKQTux3df5oiRWiq1GjUuErjUR0fA=;
-        b=gnt782lPpYECJVdTCyei9xrg7+wBR03Qw4noZRBk6UT5qKj5+WbuQiiVMO+Q+xC+7W
-         tfqwSaxCgTlkeCkcFI2qvZnUvH/wYXE2Wc8gAHWJ63j7qyvGjGz5V5ft4VdXSuVCJ6OC
-         BPhUlmcbQ5QTV19OSvr2FOICM+J9vf/WdqzcaTu+iiqTtgH+ax86XMrwv+V70T1d50Hl
-         3T81+Kvc71kAIUx07NdVv8/rwpsmt2lNZn71HzvYUz/+WlMK5wDbApcwZ9imZcnfGxqi
-         uSPgS3O1Sxy0RJdPrQ7jDjaJlsvXjX0G/ZIOOp+HXCEK5GoVVIeRtfQ2skYq5nspi2qZ
-         Il5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUgJKktdCn0KV3cdHQpop/3Li2sHWIEd3/XmmhkLyeEPKldjwYAzLhd2HHHWjw3IGH9nbjlPKnlvkIKkgPZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyha9dN2OIYUeOFPpoNxLVLvOTav8FhCrJ0AiUuh139Sdn3R1tc
-	DglgPU3WZ+JD6dZua/zCuvsL/eDgqS5mqNIiqDUle0Ig7KhMDdUe1IfoCHNTcDU4vms=
-X-Gm-Gg: AY/fxX6JELBQGKT7jemGS4HJH6jPgB5A7EuIchUE2AJ5rZgdAyj80sYCkcP3V1brzAj
-	NI8T5BWTlU/PkY1P3eW/4Kuih9yJAM8t+h9Xwch5GX/sWdwXpKgtZ8Bb2mZbyCGc2zeFCZrOSAA
-	zt3FJvePC3giiS55vvN0x80MQALVkDHgjaIbVbX9NJDzZE2sGWypGsKqxfk/ulGFBJ1pJZJuWQB
-	sxgyR8EO3KCQ/jE5zok9UOyqoSJSCvQ1WvjjJ5nDMsvJFwCUxJ8Px6MWWRCGOPz2VFFx3AGf2Tf
-	2PJyr9393JW/FDfQlEvgEakE9Mf2LNYaO4YnXaLVFLtPc20H7vlSmRozV/m4rmDNyctR92u2Rd6
-	tXwvJOsXyQBobfmk082bY+Zt0fjAP8K4OYPlfWvQfJgmfxvGXaqnPtCDbvaZqfY9LLj5UZFKei4
-	gCAKTj8vQbGSYSqq3ly8JdeYtKNhyYFac2T1fCSPzuaCvO4mOTYsXzgC3e
-X-Google-Smtp-Source: AGHT+IGkp8lDjqeILjtMZ5LR+GI7r23/qVs+xlIeG79Zdksfi1ggdUWAo2X+W6SgmX5SlFgujBUWTQ==
-X-Received: by 2002:a17:907:1c25:b0:b7b:e754:b5ba with SMTP id a640c23a62f3a-b8445033422mr1833442366b.56.1768207502041;
-        Mon, 12 Jan 2026 00:45:02 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a5187afsm1834263166b.58.2026.01.12.00.45.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jan 2026 00:45:01 -0800 (PST)
+	s=arc-20240116; t=1768207545; c=relaxed/simple;
+	bh=0RWWtKqbT8y/0oCPzc3x++/INVU07EJinbt5K8tLSnA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=la+/wrlbv0mZlecQy7qKGzYc7m9w7zOWO62Hxxz4VYunxJh3f1SatbqLH9N2ONAOmNFiI4foveH2ge+Uv3xC7GhHyA/P6bmv08rtwCT6aZ5A9i4KT4dDRFuXOvypJy4TeCmuWhhYW+4RaeoTmTK6ff1aAuAf5Ieos3bSFkbtcfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz4t1768207503t46538021
+X-QQ-Originating-IP: No/iic3a9D/6g3qukB23n+O3HzQ9Cq5/4EDsCy+J4VY=
+Received: from [127.0.0.1] ( [116.234.96.45])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 12 Jan 2026 16:45:01 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9623093880798620638
+Message-ID: <5B7B8ACBA1105D89+a1ddf0aa-8eb9-4704-a512-f1e545cd8d39@radxa.com>
+Date: Mon, 12 Jan 2026 16:45:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 12 Jan 2026 09:45:01 +0100
-Message-Id: <DFMH8W40TCJ0.XCTHNRJFJE4T@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-scsi@vger.kernel.org>, <linux-phy@lists.infradead.org>
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: milos: Add UFS nodes
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Neil Armstrong" <neil.armstrong@linaro.org>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Herbert Xu" <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>, "Alim
- Akhtar" <alim.akhtar@samsung.com>, "Avri Altman" <avri.altman@wdc.com>,
- "Bart Van Assche" <bvanassche@acm.org>, "Vinod Koul" <vkoul@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com>
- <20260107-milos-ufs-v1-5-6982ab20d0ac@fairphone.com>
- <2486dc4b-71f3-4cd9-8139-b397407d7e4d@linaro.org>
- <543d9e55-c858-40f9-8785-c9f636850120@linaro.org>
-In-Reply-To: <543d9e55-c858-40f9-8785-c9f636850120@linaro.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/msm/dpu: Filter modes based on adjusted mode clock
+To: Val Packett <val@packett.cool>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250506-filter-modes-v2-1-c20a0b7aa241@oss.qualcomm.com>
+ <F4CDF36128041430+0d030e3b-054c-4910-a132-72273c541948@radxa.com>
+ <caf44ce9-48ec-45b4-b633-3a49b7705b1e@packett.cool>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <caf44ce9-48ec-45b4-b633-3a49b7705b1e@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: N4ZILu3POr3OXF1PuzZFi/STzd/ukakWMM0s/7fIqBXEYEc7Rv5uuuMZ
+	9qZo+Yg5FzVdV8Hb+RsRGffrgnIMvhPhT+NyqYqxPDOLeHE0B+VtYCtEbod/GAua+GlohmM
+	7VWwq7sP2AjKsfRJ/0tHb6I7YrFTuJ9FwpOBz4cDZHa/tNnvqvu8p/+i+ktaQtcI/ktDpyU
+	EzrZcMWzu1+dElJ+U0bTXqgyPf69tUWV33o88EbJF1tV15prnbXBhLYQqAWpVda4JsTPN3/
+	8EMICTL/cN0ud+qDOluiVJjqDpO2ExRks4O9cGaGYbjbaXJsZPbaOd+ULrhRadwTGWatN4j
+	pY63v1r/zVywvfSn12ZzMWkrgkEg9eah6tkx7RMf8zWimXxsJ+JUe1jOkDkOWf1jco7gaHU
+	yd2yP/BJm6Lq3eJgwmY3czNHrFNXm0Rr0K+sB3PSxYY9xCihQoV5r+a2XiC31XRbrccA/Ws
+	fc9t4e6JY67ut69hg+bQQFecdaH1EEo9FrzY7TWWW4Nqiv+kEVYXvbFqUfianbOztQeTk8G
+	9f+wilblrmw36nWfLb3uPubYUx3AVpVmtTRPGirSMKgUA052XimWM5CWil4Vs7n423g59yI
+	ktrFUOrOp5MhrVxSL6g1qHtHFoX3g3TSENDfctgA7C+t8d6FjXOXjUmjDeOZXz3ZXbfM1s+
+	dLniZCuHhOWwEt5Ae/MfR299QFFAPqJWbFTdvuo/wI1/Pr5LoMpv9g7/f9d1odXFtSD2CXB
+	ZA7S9p7PhqKy/+CMTTelq9I3hIQOdMTRbrS5XLhR0Kx2cpT12VxHmUKg84Y5XMx+B6URqF6
+	bFH3lyjVjyIIfwOJQCOlSl00p9bgllYIQnTmzIf2wySmnf17E9ZvUGZQwnVdmHA/6kw7WMW
+	e//dHyd9TO5Wek6+q6686qk4SVbrVy0ppcn44fbyxgiBVIDsWchE8CVkN85FDwPHT8Nxl1n
+	Q5JgBHr4iWB8KPEfHjIPi1tl0wFgELP6RjPLRtFGHvGM+sJrCOzRAKK+UmArJUSm4dXVMcE
+	11Vgxo0WQSQR8kXu5PpZY4cmrBwiY=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-Hi Neil,
-
-On Mon Jan 12, 2026 at 9:26 AM CET, Neil Armstrong wrote:
-> On 1/7/26 14:53, Neil Armstrong wrote:
->> Hi,
->>=20
->> On 1/7/26 09:05, Luca Weiss wrote:
->>> Add the nodes for the UFS PHY and UFS host controller, along with the
->>> ICE used for UFS.
+On 1/12/2026 3:54 PM, Val Packett wrote:
+> 
+> On 1/12/26 3:31 AM, Xilin Wu wrote:
+>> On 5/7/2025 9:38 AM, Jessica Zhang wrote:
+>>> Filter out modes that have a clock rate greater than the max core clock
+>>> rate when adjusted for the perf clock factor
 >>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> This is especially important for chipsets such as QCS615 that have lower
+>>> limits for the MDP max core clock.
+>>>
+>>> Since the core CRTC clock is at least the mode clock (adjusted for the
+>>> perf clock factor) [1], the modes supported by the driver should be less
+>>> than the max core clock rate.
+>>>
+>>> [1] https://elixir.bootlin.com/linux/v6.12.4/source/drivers/gpu/drm/ 
+>>> msm/disp/dpu1/dpu_core_perf.c#L83
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 >>> ---
->>> =C2=A0 arch/arm64/boot/dts/qcom/milos.dtsi | 127 ++++++++++++++++++++++=
-+++++++++++++-
->>> =C2=A0 1 file changed, 124 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/=
-qcom/milos.dtsi
->>> index e1a51d43943f..0f69deabb60c 100644
->>> --- a/arch/arm64/boot/dts/qcom/milos.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/milos.dtsi
->>> @@ -797,9 +797,9 @@ gcc: clock-controller@100000 {
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&sleep_clk>,
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>, /* pcie_0_pipe_clk */
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>, /* pcie_1_pipe_clk */
->>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>, /* ufs_phy_rx_symbol_0_clk */
->>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>, /* ufs_phy_rx_symbol_1_clk */
->>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>, /* ufs_phy_tx_symbol_0_clk */
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&ufs_mem_phy 0>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&ufs_mem_phy 1>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&ufs_mem_phy 2>,
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0>; /* usb3_phy_wrapper_gcc_usb30_=
-pipe_clk */
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 #clock-cells =3D <1>;
->>> @@ -1151,6 +1151,127 @@ aggre2_noc: interconnect@1700000 {
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 qcom,bcm-voters =3D <&apps_bcm_voter>;
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ufs_mem_phy: phy@1d80000 {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 com=
-patible =3D "qcom,milos-qmp-ufs-phy";
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg=
- =3D <0x0 0x01d80000 0x0 0x2000>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
-cks =3D <&rpmhcc RPMH_CXO_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&tcsr TCSR_UFS_CLKREF_EN>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
-ck-names =3D "ref",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "ref_aux",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "qref";
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-ets =3D <&ufs_mem_hc 0>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-et-names =3D "ufsphy";
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pow=
-er-domains =3D <&gcc UFS_MEM_PHY_GDSC>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #cl=
-ock-cells =3D <1>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #ph=
-y-cells =3D <0>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sta=
-tus =3D "disabled";
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ufs_mem_hc: ufshc@1d84000 {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 com=
-patible =3D "qcom,milos-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg=
- =3D <0x0 0x01d84000 0x0 0x3000>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int=
-errupts =3D <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH 0>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
-cks =3D <&gcc GCC_UFS_PHY_AXI_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_AHB_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&tcsr TCSR_UFS_PAD_CLKREF_EN>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
-ck-names =3D "core_clk",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "bus_aggr_clk",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "iface_clk",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "core_clk_unipro"=
-,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "ref_clk",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "tx_lane0_sync_cl=
-k",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "rx_lane0_sync_cl=
-k",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "rx_lane1_sync_cl=
-k";
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-ets =3D <&gcc GCC_UFS_PHY_BCR>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-et-names =3D "rst";
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int=
-erconnects =3D <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &mc_virt SLAVE_EBI1 QCO=
-M_ICC_TAG_ALWAYS>,
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <&gem_noc MASTER_APPSS_PROC Q=
-COM_ICC_TAG_ACTIVE_ONLY
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &cnoc_cfg SLAVE_UFS_MEM=
-_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int=
-erconnect-names =3D "ufs-ddr",
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- "cpu-ufs";
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pow=
-er-domains =3D <&gcc UFS_PHY_GDSC>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 req=
-uired-opps =3D <&rpmhpd_opp_nom>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ope=
-rating-points-v2 =3D <&ufs_opp_table>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 iom=
-mus =3D <&apps_smmu 0x60 0>;
->>=20
->> dma-coherent ?
+>>
+>> Hi. This patch effectively filters out the 3840x2160@120Hz mode on 
+>> SC8280XP CRD. The calculated adjusted_mode_clk is 623700, which 
+>> slightly exceeds the supported max core clock of 600000.
+>>
+>> However, 4K 120Hz works flawlessly with the limit removed on this 
+>> platform. I even tried connecting two 4K 120Hz displays, and they can 
+>> work properly simultaneously. Is it possible to bring back support for 
+>> this mode, or adjust the limits? 
+> 
+> hm, interestingly on X1E80100 we didn't hit *that* limit, 
+> the adjusted_mode_clk (576318) was only above what disp_cc_mdss_mdp_clk 
+> was set to (575000), and reducing the clk_inefficiency_factor from 105 
+> to 104 was enough to lower it.
+> 
+> https://gitlab.freedesktop.org/drm/msm/-/issues/38#note_3216051
+> 
+> I guess it's also sink dependent, like if the mode for some monitors has 
+> much more front/back porch etc.? What's the entire modeline that 
+> resulted in 623700?
+> 
+> ~val
+> 
+> 
 
+The modeline here is "3840x2160": 120 1188000 3840 4016 4104 4400 2160 
+2168 2178 2250 0x40 0x5
 
-Given that downstream volcano.dtsi has dma-coherent in the ufshc@1d84000
-node, looks like this is missing in my patch.
+1188000 / 2 = 594000
+594000 * 1.05 = 623700
 
->>=20
->> and no MCQ support ?
-
-Not sure, I could only find one reference to MCQ on createpoint for
-milos, but given there's no mcq_sqd/mcq_vs reg defined downstream, and I
-couldn't find anything for the same register values in the .FLAT file, I
-don't think Milos has MCQ? Feel free to prove me wrong though.
-
->
-> So, people just ignore my comment ?
->
-> Milos is based on SM8550, so it should have dma-coherent, for the MCQ
-> I hope they used the fixed added to the SM8650 UFS controller for MCQ.
-
-Not sure what this should mean regarding MCQ...
-
-Regards
-Luca
-
->
-> Neil
->
->>=20
->> <snip>
->>=20
->> Thanks,
->> Neil
-
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
