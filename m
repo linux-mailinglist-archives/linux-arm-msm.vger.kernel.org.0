@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-88692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 763A5D173AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:15:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15A88D17404
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:21:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E1E0330046CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:14:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7E31730084F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:19:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9905D3793B0;
-	Tue, 13 Jan 2026 08:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7DA536E47B;
+	Tue, 13 Jan 2026 08:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utoE0g34"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ujK7UetR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F1034D909;
-	Tue, 13 Jan 2026 08:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E6E314A89;
+	Tue, 13 Jan 2026 08:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768292048; cv=none; b=bBrwmPvF8OkWzpeA/PdGDPPL5e1GCi6FlwSnskQHWlZhp0tREiIZOi6COfaz5PRSY6RBAUIMsctiHwx0TIwVzdon/2CnsjK1UPcuu18Nv49OIvXPJ0QCT5UERgNQbK4aHKn1M1gAcQK3mZd1HoBd4KtaPboktFIf8DgfyOi8T0w=
+	t=1768292381; cv=none; b=YHJHXYFDIaoRmGoQfhXSdGKKPDdxaEJ3B1Q9FOGr0UvbeS21a3lZ9M54R2JDks2fT4Sd3l2W8pfmK/X7NvCbGW6T2R79f51CJnL+YW7jlLB6UdaeDaxvnEB7iZH3BNaML8JwjVFRoOWL02yMgHtfgZxQR9QZmyXdl4CXx031//U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768292048; c=relaxed/simple;
-	bh=A7mGP5zBcxtKo6Ya32gDahYikc66GApTgdae0kYiY3k=;
+	s=arc-20240116; t=1768292381; c=relaxed/simple;
+	bh=NmOzlycXV1NJ+Yt40W7uLtaKbz4k2N2YbsIG9hykDm4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=prDEv2FjoAS9Jruj+y2I7qzUoBz8t+RTBPgtoMxuGz5fE+r00eMy8qhgvdCizXPnsdT+b5mccuVOq4DLwv4HSda2vlmyH984XCa1q8a5Of1bse5DB7KbQwqh9zxYNYKCyp3O9QMMgXe+AR/1awemWvIH2B24aie+ZsA2q6D0ZFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utoE0g34; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9302CC116C6;
-	Tue, 13 Jan 2026 08:14:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jTKdHa7U8QbDQrhN6OqkeFDrW98/RT4KMnK1aQrDMF3erWV3UC5lTBw4TptEGCzI9pqZin2c3g51Thz+YRBUuJnraQrnbpN5h8EyrYxCldHXDPgyiohz1hlPojefj4FuxluhiJ6ZvambLj14ZQXCSZ1Ndo9xVUPbycv+ySBgtr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ujK7UetR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196E9C116C6;
+	Tue, 13 Jan 2026 08:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768292048;
-	bh=A7mGP5zBcxtKo6Ya32gDahYikc66GApTgdae0kYiY3k=;
+	s=k20201202; t=1768292381;
+	bh=NmOzlycXV1NJ+Yt40W7uLtaKbz4k2N2YbsIG9hykDm4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=utoE0g34qABZkA2cE1BzQXdN2qB9cXqwaiQwd9A5LtXzg6l9tmr6OwXlqjVgbAr5j
-	 8pKsCi6wDl26YYH/zCZg1am4OxTHneGuNEofYR+ET2J9Vmh9vzIKQWyVlt43TOi8LF
-	 LDsZP5BrnGKXmVsglUx3VJpqedUv1XW16JNLMxd9JPoo3zwynvbqKeSvx0VgXW9V46
-	 0aDkKv5V/vSWtLlMPXzLctCdrqlkL1wG/1t+0Pk1smRx+xThF5MtFEZkoMbB9bVVc6
-	 FwMvC+Ppwt6LwnCM7l4RvKaIg8GyuhlGexewGUZcJyECrWgFv9Q+h9PnyOqHkBP6XL
-	 ifwMgp6Sx9wSQ==
-Date: Tue, 13 Jan 2026 13:44:00 +0530
+	b=ujK7UetR1DPY8grndXzYSPzhtZZUeAcN4wYs6t5iw7Byot/hc9BQ64ZqVJtUTLBkp
+	 O9pSRjfiK7hm5tUysy8rSEDF3A/W3zHbl3jaMr+zGzYD4QB8XuogLjxwDhDz//V7fl
+	 NLWJaKVtp6Nm6+Zz7iKHKN+7xoIfVQAwV6P7u6VpheP8tmk/hT8gMUJIJdKSruq4m5
+	 zRehrloBsHWHGA1nobYmY6y63996vR5XbTvGLSmY9iRp/PvqfrNRlusSGO7Dg9dUB1
+	 1tYUsCLVDmZW8i8oNq7Q1od6UnDgz0JSpxVk83Uq44eQl98DugPR91CV4hMblHad0O
+	 cA8AU965R4j3Q==
+Date: Tue, 13 Jan 2026 13:49:33 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
 Cc: Jonathan Corbet <corbet@lwn.net>, Arnd Bergmann <arnd@arndb.de>, 
@@ -47,10 +47,11 @@ Cc: Jonathan Corbet <corbet@lwn.net>, Arnd Bergmann <arnd@arndb.de>,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
 	Upal Kumar Saha <upal.saha@oss.qualcomm.com>, Himanshu Shukla <quic_himashuk@quicinc.com>, 
 	Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
-Subject: Re: [PATCH 07/11] bus: mhi: host: core: Add overflow disable flag
-Message-ID: <vzmacvzafgrtxupg6cmm2bi5kxuzyeoeod56qzp5ftlnh4txlj@xni5cok2lj3j>
+Subject: Re: [PATCH 08/11] bus: mhi: MHI CB support for Channel error
+ notification
+Message-ID: <3a32ffif2mo3dycw7h4fzvrdwbmbtboxhtpl2wjru425lxqvzr@fnfehgdd5ycf>
 References: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
- <20251211-siva_mhi_dp2-v1-7-d2895c4ec73a@oss.qualcomm.com>
+ <20251211-siva_mhi_dp2-v1-8-d2895c4ec73a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,105 +61,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251211-siva_mhi_dp2-v1-7-d2895c4ec73a@oss.qualcomm.com>
+In-Reply-To: <20251211-siva_mhi_dp2-v1-8-d2895c4ec73a@oss.qualcomm.com>
 
-On Thu, Dec 11, 2025 at 01:37:39PM +0530, Sivareddy Surasani wrote:
+On Thu, Dec 11, 2025 at 01:37:40PM +0530, Sivareddy Surasani wrote:
 > From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 > 
-> When the client transfers a large packet, the host may set
-> overflow events if the packet size exceeds the transfer ring
-> element size. Add a flag to disable overflow events.
+> If a device reports an error on any channel, it sends a
+> CH_ERROR_EVENT over the control event ring. Update the host to
+> parse the entire channel list, check the channel context ring
+> for CH_STATE_ERROR, and notify the client. This enables the
+> client driver to take appropriate action as needed.
 > 
-> Scenario: A device sends a packet of 5000 bytes. The host has
-> buffers of 2048 bytes, so the packet is split across three
-> buffers. The host expects one event for the entire packet, but
-> three events are generated: two marked as overflow and the
-> third as end of packet. The client driver wants only one
-> callback for the EOT event, not for overflow events. This
-> change prevents host channels from generating overflow events.
-> 
-> Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 
-Great, you just broke bisectability. This patch should come before 06/11 which
-uses this flag.
+What scenarios could lead to the device sending this channel error event?
+
+> Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+> Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
+> ---
+>  drivers/bus/mhi/common.h    |  1 +
+>  drivers/bus/mhi/host/main.c | 24 ++++++++++++++++++++++++
+>  include/linux/mhi.h         |  2 ++
+>  3 files changed, 27 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
+> index 31ff4d2e6eba..3b3ecbc6169f 100644
+> --- a/drivers/bus/mhi/common.h
+> +++ b/drivers/bus/mhi/common.h
+> @@ -230,6 +230,7 @@ enum mhi_pkt_type {
+>  	MHI_PKT_TYPE_TX_EVENT = 0x22,
+>  	MHI_PKT_TYPE_RSC_TX_EVENT = 0x28,
+>  	MHI_PKT_TYPE_EE_EVENT = 0x40,
+> +	MHI_PKT_TYPE_CH_ERROR_EVENT = 0x41,
+>  	MHI_PKT_TYPE_TSYNC_EVENT = 0x48,
+>  	MHI_PKT_TYPE_BW_REQ_EVENT = 0x50,
+>  	MHI_PKT_TYPE_STALE_EVENT, /* internal event */
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 53bb93da4017..9772fb13400c 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -798,6 +798,27 @@ static int parse_rsc_event(struct mhi_controller *mhi_cntrl,
+>  	return 0;
+>  }
+>  
+> +static void mhi_process_channel_error(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct mhi_chan *mhi_chan;
+> +	struct mhi_chan_ctxt *chan_ctxt;
+> +	struct mhi_device *mhi_dev;
+> +	int i;
+> +
+> +	mhi_chan = mhi_cntrl->mhi_chan;
+> +	for (i = 0; i < mhi_cntrl->max_chan; i++, mhi_chan++) {
+> +		chan_ctxt = &mhi_cntrl->mhi_ctxt->chan_ctxt[mhi_chan->chan];
+> +
+> +		if ((chan_ctxt->chcfg & CHAN_CTX_CHSTATE_MASK) == MHI_CH_STATE_ERROR) {
+> +			dev_err(&mhi_cntrl->mhi_dev->dev,
+
+You should use the channel mhi_dev.
+
+> +				"ch_id:%d is moved to error state by device", mhi_chan->chan);
+
+"Channel entered error state"
 
 - Mani
 
-> Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
-> ---
->  drivers/bus/mhi/common.h        | 3 ++-
->  drivers/bus/mhi/host/init.c     | 3 +++
->  drivers/bus/mhi/host/internal.h | 1 +
->  include/linux/mhi.h             | 2 ++
->  4 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> index 58f27c6ba63e..31ff4d2e6eba 100644
-> --- a/drivers/bus/mhi/common.h
-> +++ b/drivers/bus/mhi/common.h
-> @@ -282,7 +282,8 @@ struct mhi_event_ctxt {
->  #define CHAN_CTX_CHSTATE_MASK		GENMASK(7, 0)
->  #define CHAN_CTX_BRSTMODE_MASK		GENMASK(9, 8)
->  #define CHAN_CTX_POLLCFG_MASK		GENMASK(15, 10)
-> -#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 16)
-> +#define CHAN_CTX_OVF_DISABLE_MASK	GENMASK(17, 16)
-> +#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 18)
->  struct mhi_chan_ctxt {
->  	__le32 chcfg;
->  	__le32 chtype;
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 4c092490c9fd..50f96f2c823f 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -340,6 +340,8 @@ static int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
->  		tmp |= FIELD_PREP(CHAN_CTX_BRSTMODE_MASK, mhi_chan->db_cfg.brstmode);
->  		tmp &= ~CHAN_CTX_POLLCFG_MASK;
->  		tmp |= FIELD_PREP(CHAN_CTX_POLLCFG_MASK, mhi_chan->db_cfg.pollcfg);
-> +		tmp &= ~CHAN_CTX_OVF_DISABLE_MASK;
-> +		tmp |= FIELD_PREP(CHAN_CTX_OVF_DISABLE_MASK, mhi_chan->db_cfg.ovf_dis);
->  		chan_ctxt->chcfg = cpu_to_le32(tmp);
+> +				mhi_dev = mhi_chan->mhi_dev;
+> +			if (mhi_dev)
+> +				mhi_notify(mhi_dev, MHI_CB_CHANNEL_ERROR);
+> +		}
+> +	}
+> +}
+> +
+>  static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
+>  				       struct mhi_ring_element *tre)
+>  {
+> @@ -961,6 +982,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
 >  
->  		chan_ctxt->chtype = cpu_to_le32(mhi_chan->type);
-> @@ -870,6 +872,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+>  			break;
+>  		}
+> +		case MHI_PKT_TYPE_CH_ERROR_EVENT:
+> +			mhi_process_channel_error(mhi_cntrl);
+> +			break;
+>  		case MHI_PKT_TYPE_TX_EVENT:
+>  			chan = MHI_TRE_GET_EV_CHID(local_rp);
 >  
->  		mhi_chan->ee_mask = ch_cfg->ee_mask;
->  		mhi_chan->db_cfg.pollcfg = ch_cfg->pollcfg;
-> +		mhi_chan->db_cfg.ovf_dis = ch_cfg->ovf_disable;
->  		mhi_chan->lpm_notify = ch_cfg->lpm_notify;
->  		mhi_chan->offload_ch = ch_cfg->offload_channel;
->  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 97bf6a70b9fa..db00ede0aa48 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -189,6 +189,7 @@ struct db_cfg {
->  	bool reset_req;
->  	bool db_mode;
->  	u32 pollcfg;
-> +	bool ovf_dis;
->  	enum mhi_db_brst_mode brstmode;
->  	dma_addr_t db_val;
->  	void (*process_db)(struct mhi_controller *mhi_cntrl,
 > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 299216b5e4de..926a20835467 100644
+> index 926a20835467..66fd83bed306 100644
 > --- a/include/linux/mhi.h
 > +++ b/include/linux/mhi.h
-> @@ -215,6 +215,7 @@ enum mhi_db_brst_mode {
->   * @ee_mask: Execution Environment mask for this channel
->   * @pollcfg: Polling configuration for burst mode.  0 is default.  milliseconds
->  	     for UL channels, multiple of 8 ring elements for DL channels
-> + * @ovf_disbale: Overflow disable flag
->   * @doorbell: Doorbell mode
->   * @lpm_notify: The channel master requires low power mode notifications
->   * @offload_channel: The client manages the channel completely
-> @@ -232,6 +233,7 @@ struct mhi_channel_config {
->  	enum mhi_ch_type type;
->  	u32 ee_mask;
->  	u32 pollcfg;
-> +	bool ovf_disable;
->  	enum mhi_db_brst_mode doorbell;
->  	bool lpm_notify;
->  	bool offload_channel;
+> @@ -34,6 +34,7 @@ struct mhi_buf_info;
+>   * @MHI_CB_SYS_ERROR: MHI device entered error state (may recover)
+>   * @MHI_CB_FATAL_ERROR: MHI device entered fatal error state
+>   * @MHI_CB_BW_REQ: Received a bandwidth switch request from device
+> + * @MHI_CB_CHANNEL_ERROR: MHI channel entered error state from device
+>   */
+>  enum mhi_callback {
+>  	MHI_CB_IDLE,
+> @@ -45,6 +46,7 @@ enum mhi_callback {
+>  	MHI_CB_SYS_ERROR,
+>  	MHI_CB_FATAL_ERROR,
+>  	MHI_CB_BW_REQ,
+> +	MHI_CB_CHANNEL_ERROR,
+>  };
+>  
+>  /**
 > 
 > -- 
 > 2.34.1
