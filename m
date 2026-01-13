@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-88876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C381FD1B37B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 21:33:43 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A620BD1B381
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 21:33:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 447873005316
+	by sin.lore.kernel.org (Postfix) with ESMTP id EEB933008E0E
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 20:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2D2730EF7F;
-	Tue, 13 Jan 2026 20:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31AB92C21EF;
+	Tue, 13 Jan 2026 20:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kcxkRxgk";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DGMv+6F6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MUNZ7PwV";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Yoye1ESc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1E826F289
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 20:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B56E2BCF6C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 20:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768336421; cv=none; b=ApEiQuvbPz80K2nelO0pl7tIEjSeGhA2YFyfYx/QguACM122gygu92NjDujWz2QVX/csDIgxtZLjtg9mQ1cfXd8t6rZ6DbZSgWSbmo+RXnO9a/hT9JBislJ9D9c4+dqhD0LRFMdeDz358VrkxCBBblnQj0GRUJfx499p8avxxns=
+	t=1768336422; cv=none; b=axiey+E4S1RP36AiaezXyMzdMpXPxQusC8fk/Qj/IGTlvKDjtLfE/u8PijeB9vjxjmc7Ov44Y+gk2TdnZV3QwQAIrizlWgTR8KhK07X8exhlRbIMguexPMUO9ootG/mSHX2nP0r5dnC3MGGt+GeTj3g3f7KfXmJWpEL+E69Xj1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768336421; c=relaxed/simple;
-	bh=0Td/LNDR2RTKrvU2VfyPG8mO1E8oATgnsMCmASdMIb8=;
+	s=arc-20240116; t=1768336422; c=relaxed/simple;
+	bh=rLg1XZm7+TLU/MssBuCqd65nuhBQ9YaSkzsjTYz4VIE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AKOYveCqab4uxPu7jNshxy6nfTaDS1Ji8InJdoBTeSWroZIx6qNVogB2FVdO5f8RnukN9gmxVRzq20USX1lvS3MmoLn7CXIacfhd/PjU3p1ZUkUw4FkxDxFFVG1fzCiTL51MHx+F/w5l82/XIrnUMoE1a6N9lKnzj/7ZRJmhZCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kcxkRxgk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DGMv+6F6; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=Z42fq9ilHjxixrEhiil9xpmrXRW3srP9CXdkpJb4TQUyfmk87Hs56dm1Yz5VLw78xIpalcU9DYFKzlLyonzwOX89Zd0qJdpZahqx71Q70xiD9xiZA/GGlLxBrtwjGDlr4gC2HxAHIyWjhmecI+q49bbDm1uiH2D028lAII0TtQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MUNZ7PwV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Yoye1ESc; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DEjKD14080708
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DIENCI390055
 	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 20:33:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8Oks4Lx3iH0CoTRTkj5T3bSc++Pq4Nk/yi1DSprS+Tk=; b=kcxkRxgk5no0fX7V
-	BQpesOXUEhI8Qu/6NVzDeV4bmERmjwUdjrZcVHXU83QWHKKARI0/BXhlrLCZUYTH
-	amesiugM0cqMkQuvTlOMnhVyAxGYx/ded0E09gPFX/NLUJljpluxNBcbXx6+86ks
-	Fc2HIstqoGnwo7YFTOhFx62G7fQtiQQNr30CH7V1uHp1NxRG+mRWqu06/iXAr5qJ
-	nIqgFRsaHxVQcq0lBIHAEpMsYLZ6Co/p5iWrc7KMes7D9zlv07hfQNP+Ll354C+P
-	pJdkBEqn2xamJPNGj+0HLHk/hxs2vIHjhuX9D8ekw3Y0riS6989kdPnqmtIBKSDi
-	nE/YDw==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnr3e96hq-1
+	0moqou0Ld4EaZmHxxSS0TZm2GMndw0nUqSIpM/AN1jg=; b=MUNZ7PwVpbrothYH
+	BUkjqNgYRmexrFjjH4+DAPX5KMElW8+sJYkYNGkK3VUiJr7eQJsvDDVi8nquCS6V
+	GAZ4KQn4l7i/z6r0ZgaQxndlC5RHHYaK/NQ35wciKDMGy1PgbXpCOFgYeN78/R68
+	SgbT9YuPID4ew+FW+lGA9Bgc1ByItWe+clVrTBKp/dvv4dPFNd84Q5WQBQWuxcoh
+	c0kSEtdfLEs5csDBKZzdHdaGWh1sQI0/qXl7lcoGNQsgvlMfkLcf9PBCeVcjj6bQ
+	sKfeJXZaZR9WMHpsxY71bsk86iCwdZJMBCuIPAtpd0INhG3p6Qoi9pfz+Xaxelxl
+	wKoFjA==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnu58re03-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
 	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 20:33:39 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-11f3c7096baso926048c88.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 12:33:38 -0800 (PST)
+Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-121adbc6219so1195758c88.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 12:33:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768336418; x=1768941218; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1768336419; x=1768941219; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8Oks4Lx3iH0CoTRTkj5T3bSc++Pq4Nk/yi1DSprS+Tk=;
-        b=DGMv+6F6ZLzYlTSZ8HbYtYmGkgbgw6up1VCWn69LcfzH9yoe0P1EC4GlYcegrrT6uw
-         M8zU1Nqi1QJaoSe5DtTqMYTDB/J9gd/AKn0jwT+GuU+eF9bdXkyKEfjQzkP3LhPsYeza
-         by/AZ0OMysYfHbDTL0cOY1XaAmHRnj/0npAUcFmIsv6TCpPx3G6Zg853XLIuHx0PuCLq
-         fVzimtKiIuy63Ce0lYc3qx17QRjYwcl0myw3xamh9/XZSIhxNzKFkr8b/NUvILOnOxSC
-         b0uwVJ+efBuhgOT3SyDu6Em5O/Ph1OVB7DC8v7RvnWb+j2No53hszkgpgqnyI3ZGxilf
-         UAtw==
+        bh=0moqou0Ld4EaZmHxxSS0TZm2GMndw0nUqSIpM/AN1jg=;
+        b=Yoye1ESc61PHcEhxRBRawSUYy0tKFN+V7sPOst7e/xNjcxaa6Lca0dtPGgP4RncjkU
+         Q29rQjDTyoq6HoeAgt+9xYw5zVDyAsJXLP+oisU+lJlRUcjfrhoLyI2idVdEAQkMVXXi
+         ZQcMMIKZCO+LTvXN3Tt7VJgN1u0iki0mIMn8BpXTqJ6kjUm4OHzZNoVlxQwsyZEmdi/B
+         tuEusYyPpQZj8Q00a/2RXjSSwVVl51djmk1Shs8tGtTQP4LAyl+EshQuZTH6LhG2lF8y
+         pDGmMEgKVCGdOM/03ZmUe+828/PUo7bugNSN/3krdfwD4XUUTB2llSKasxfMBtycV3Mz
+         X9Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768336418; x=1768941218;
+        d=1e100.net; s=20230601; t=1768336419; x=1768941219;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8Oks4Lx3iH0CoTRTkj5T3bSc++Pq4Nk/yi1DSprS+Tk=;
-        b=SZdo5LX8bS75iGsrpZJHaSc2u/XvQ0VzBtgjwE/5L5Q58Fh+L42D4EGwBDN0+bTV9A
-         7I0+FqaG7EQFC4qFwSJ5nrQWa3u3eLjWhNUY6B/1d5pFeEmHdQRQ4M+VTE93Md3USeWB
-         O7GgWhLXm6GohxbLrJmuTElz+IqlO8tXDxAvsA1Tbg9f4nKeyqAOIKLuIX4BF800h1eR
-         LsIy3ErW3YU81eTQCJpjI/IGG7xZPeo1mVs69lcGtAffM8g7p2AgVu55Fw+97WnVUkRu
-         /wNpY31kBEV5sHkxDGJJztLYl+/n7n8P/P8PGEAyS8vnWuN1i1cwBHJeN/RYRDPMS2is
-         LXzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWPJeBE1CdPeRFEPECEdc8D3vFWF570ln3O6WYAIkrzFwnSPqSjRApOAAj3csU5Iz3noweeU+1ykETZTjKg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxngyDEEE/Bn53C+XxncZnJPWzjZCZ9PSJoY5Uxpt3ldOmwHPKl
-	gpbCQbp3wTV6mLejPWu14VZH2yHFYgsIwffAIDsDF9yJ0u5BoZDwkwEHCIV7azn9+IFrIqfNvKa
-	+xxjuVniZBXiiaioctr37YQQ9wzLpG1dK0LvHhR9xbk7iFg3MOZDM7FBYFE9FjG8x/FM3J0hjS7
-	rn
-X-Gm-Gg: AY/fxX6mAJOlhCdGIjWmyHbUtvEqTbZEUUM0en5WHZ1XJ4lNtkMXCU3pGjqL36gBRn1
-	adXEe2RMox62dTXYHjTDW34YU+fW8mL5/rX0zN2K0plf5mM0K4UGXRpPUWmlsz04ddcPftu0hYd
-	LEIORatOfepPKGqGnCdAmIyrk+a49TxYZEbGA8/rCDpgHMpF4inLjU9AoI/Y3N3h42SJPX3HNL2
-	tWKt+Mmj96cIrZl5dv3wKmceHLddSqKjMTNxXLZJwqIaJSAKyuUJTZYub2iGkhhCATy4b9f83Mw
-	W4QvoPgjojFbSKSI+yjHaXKNhPjan+rcN8DvOegUQOuvZu2Q91BXZ21wZx4/WzoRJY1vk0HsuHR
-	dFi5v+nxdOe12U94sTV6LdJPso9Zb9AwT58RuCuwIJkVnqBSkH8Jyls7mEHMSkMSrTDGlcw==
-X-Received: by 2002:a05:7300:a28b:b0:2b0:4e90:7755 with SMTP id 5a478bee46e88-2b4873215abmr121779eec.8.1768336417941;
-        Tue, 13 Jan 2026 12:33:37 -0800 (PST)
-X-Received: by 2002:a05:7300:a28b:b0:2b0:4e90:7755 with SMTP id 5a478bee46e88-2b4873215abmr121757eec.8.1768336417361;
+        bh=0moqou0Ld4EaZmHxxSS0TZm2GMndw0nUqSIpM/AN1jg=;
+        b=FDt6jVHud2xFyzmtvLDW2JXlIBEorzMsK242Yt2eRX+mftVEdBPsY96/DjcPbRlT07
+         HyQ1c+arolTE0dqHDAgZjB86WEgE+Oa9TMBHveDI3y6SEDKp3LtT7b6oZSvS33SdKCy3
+         D5mmaje7pkRrYxbzqaefwSaZdhJor2D4Ahav/hYJnG2PQlaBfXitM8JSxXTJEitmig21
+         9QCfycOXWjENXjVaa0g1lFOSGj30+UrV2TU8ElMpQ2OmRqtNYyDgO6r3Dpc52rnUMldv
+         SScvijMCqOcCuOXTcmg0PVKrTgsDylhbPInyvDT3nget52ZlSF9Dav9Pz1NzOdnc9fqu
+         12XQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXIsyOA/YitmOPj5miupYOZ4GfDwDsd1MpeUpUNpdX8sx4DWtDSZeiiQ6GMU4EHmPeDpVrY7WKC314zt/P8@vger.kernel.org
+X-Gm-Message-State: AOJu0YxltA9Y8V+kHKyuneUB6wRgsh0i499bY5cQEQzssUZ7LGQaJTmp
+	o5f9Ae73S5kzdLk6QiFn1plHah3Qfq+u3QtKlGNz9Enj0zXhdeikWp5c3HZymKzjUWvh/ZquZTW
+	qcx4Pq0byvA5e7L+38ecDKgy0JjY+CVzxLNOPjv4xtRHnRadaYK4+vPkIPUEzyr5Q5riN9wQH9P
+	kn
+X-Gm-Gg: AY/fxX6lkek9w6bagu04WL4UNuUCSOQvMxnn+F3I2cIjNStC0dp3vJx+bg736bk2qMl
+	Y9pG8U9y56JS00313K3PPhNga5gqr3Bqw1Drcyh5IXDdsvMISL/tCH13IjcfQ1ghxTGQ4tAzoTH
+	lZgLXg2vzhP5XmIXWseULAJ6bZID7AVe9lhKfTc60gAAp6yFFZYwPhxkMJDtMbzw1OvBUQ7W8tC
+	JUWIAM2PHw665vob55EGXhNudmLzo72FJ9bE2uml+/nGocuQcOGb1TgvLcA574BGCH5wsrfjroj
+	nVPmhD538Dr9yfqqvJ6RUmJMjwnsn+5BdxLKKpu+NEwKfpnY/OiH4tH2Yq6B7AOsiiwGj+/YPd0
+	QWfoZ3epEHfkcI+8PpIbfDvKeak32C6DekuJMVm3m00msUOE3rKJ7mSXIOjfq+ynFoWzqcQ==
+X-Received: by 2002:a05:7300:7304:b0:2ae:593b:2163 with SMTP id 5a478bee46e88-2b4870bf0dfmr137002eec.4.1768336418562;
+        Tue, 13 Jan 2026 12:33:38 -0800 (PST)
+X-Received: by 2002:a05:7300:7304:b0:2ae:593b:2163 with SMTP id 5a478bee46e88-2b4870bf0dfmr136981eec.4.1768336417978;
         Tue, 13 Jan 2026 12:33:37 -0800 (PST)
 Received: from gu-dmadival-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b170673bc0sm19157897eec.5.2026.01.13.12.33.36
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b170673bc0sm19157897eec.5.2026.01.13.12.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 13 Jan 2026 12:33:37 -0800 (PST)
 From: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
-Date: Tue, 13 Jan 2026 12:33:32 -0800
-Subject: [RFC PATCH 1/3] media: uapi: Introduce new control for video
- encoder ROI
+Date: Tue, 13 Jan 2026 12:33:33 -0800
+Subject: [RFC PATCH 2/3] media: v4l2-core: Add support for video encoder
+ ROI control
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,7 +104,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260113-iris_enc_roi-v1-1-6c86eba38587@oss.qualcomm.com>
+Message-Id: <20260113-iris_enc_roi-v1-2-6c86eba38587@oss.qualcomm.com>
 References: <20260113-iris_enc_roi-v1-0-6c86eba38587@oss.qualcomm.com>
 In-Reply-To: <20260113-iris_enc_roi-v1-0-6c86eba38587@oss.qualcomm.com>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>,
@@ -116,140 +116,115 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768336416; l=4374;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768336416; l=3289;
  i=deepa.madivalara@oss.qualcomm.com; s=20250814; h=from:subject:message-id;
- bh=0Td/LNDR2RTKrvU2VfyPG8mO1E8oATgnsMCmASdMIb8=;
- b=ENymqkOPbznuQvfaGVxFX6x4RlaPuM9sEHqQEXbTypnU1CQw9+JJ0uzJc9e1WCBifYMbZdrGB
- SNh9dPwxZfQD5GJnf3+CNKnJg9YWnOrDgoXJ/8iIO7a5dp+eEWmeYyy
+ bh=rLg1XZm7+TLU/MssBuCqd65nuhBQ9YaSkzsjTYz4VIE=;
+ b=Sr4x6zEVPNeL1g0JOIj59gzmqbw6vnuMmJ9+MXMlvRMlCL+/GQlO831nKbUiYLTQ8442IVe49
+ GbDXccNz63uD4pLH9V7tRAkfFKZ6xOquTS+Vy84+KLN4DuqsGldZ4nU
 X-Developer-Key: i=deepa.madivalara@oss.qualcomm.com; a=ed25519;
  pk=MOEXgyokievn+bgpHdS6Ixh/KQYyS90z2mqIbQ822FQ=
-X-Authority-Analysis: v=2.4 cv=TPFIilla c=1 sm=1 tr=0 ts=6966ac23 cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE2OCBTYWx0ZWRfXwqsyCUxE+sO6
+ qv1P/rBaHbRqxfCEeGmAGM90h3yp4qiRgSS0V/dDyULcQQKeT8ErCVkrkownyxebSUZVWteiX5b
+ bQYYJq/bCyfhq2dFbntpU3bw6nYxtJjn8mD17mPKqftQCr7/C1U9k7q7u3WxFzGFd7Hr6Ka3arh
+ eL5XqKrXHuQDQykvXYIQUdjlbzB1ASuzJiammB+nnSFSBqNZjv0tZGrNtLDLmQyQ6D6uHgwHPd+
+ We7na9g0q6Ztkel2fMqrihAxsfsT5al8x3HR6U2XYTHbh0I8+YFk2rP/kSKdPeFRC7YlT0vnJaR
+ Ap3RTjgMqkM98s9C7X4PsNNUy+JMgS3d1kbNU/61JI0VPpukJGLc7PAxtCr02AxfB0NeHIHiBhs
+ 7Zjf3ZYDWF975QaBLVYyTniK7p3NknjfwZmFj/RdeN6Qx4sQjsAjnAr3nrco1Fsc0wm4OdpkG7B
+ pBttyBfSSHofOFdwh4g==
+X-Authority-Analysis: v=2.4 cv=BZnVE7t2 c=1 sm=1 tr=0 ts=6966ac23 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=1tTGy1hlu4sAMEPmmk4A:9
- a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE2OCBTYWx0ZWRfXwJMzykW60I9X
- R3oOG93LZpSveCQ5SLPl8KVjmPOSCzdA8IVdi0hzrlgW9vFkpyk/b4V9dp7SW3Tr5oViJASDlOW
- LwtOB7LayBPuMw37l7x8ZHV0RJ9PMdIs187ABmwh/o6bnle1iDZlAR7nX2dvrN6BPRpdhUYtePE
- U/SVsVOiDZbm2SJhf60rFQ22A/dT0tFWQ25vt8VgqxwEatjyG1r328dpbGvC/fF4uKW7kXb+baI
- mgw+W2JOV+oZZ5yMEU6zj4fJT3/mf19WqNU4iraYFodvBUOryUzQ7pUfAKtvvUtrJ9xmnlDBqnd
- oyF9p6zUaNCq9dT6vgRp+GOAiOUArNOdvR804MaqSwg7AbEmaWma7+QQm/pDvQs0mbMbbfzQYQJ
- rYvzE5deMgOcgPEOfu8yJAH/eIU3oGhne6yFcZX/EP9hytlAC/mEeVT/Bl1mt3Vk8+YmCw6uXpK
- s7A93F+TEFaAdoIHQ+Q==
-X-Proofpoint-GUID: jrzOSygh7i3N42YGTPcq_oUNDd2Qpdn9
-X-Proofpoint-ORIG-GUID: jrzOSygh7i3N42YGTPcq_oUNDd2Qpdn9
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=rF52-kdUTgVHl7Ch54gA:9
+ a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: UtOR9AVXLjn-NILWLFwi09uT1lMzhVgG
+X-Proofpoint-GUID: UtOR9AVXLjn-NILWLFwi09uT1lMzhVgG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ adultscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601130168
 
-Add compound control, V4L2_CID_MPEG_VIDEO_ENC_ROI, for
-video encoder Region of Interest to allow applications to specify
-different quality levels for specific regions in video frames. Define
-struct v4l2_ctrl_enc_roi_params to hold up to 10 rectangular ROI,
-regions and their corresponding delta_qp value (v4l2_roi_param)
-that adjust quantization relative to the frame's base value.
-
-This enables use cases like prioritizing quality for faces in video
-conferencing or important objects in surveillance footage while reducing
-bitrate for less critical areas.
+Implement V4L2_CTRL_TYPE_ENC_ROI_PARAMS control type with validation
+ensuring the number of ROI regions stays within acceptable limits.
 
 Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
 ---
- .../userspace-api/media/v4l/ext-ctrls-codec.rst         |  7 +++++++
- include/media/v4l2-ctrls.h                              |  1 +
- include/uapi/linux/v4l2-controls.h                      |  1 +
- include/uapi/linux/videodev2.h                          | 17 +++++++++++++++++
- 4 files changed, 26 insertions(+)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c | 14 +++++++++++++-
+ drivers/media/v4l2-core/v4l2-ctrls-defs.c |  5 +++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-index c8890cb5e00ac05649e6c344c2a6b938b2ec1b24..0eecb46bb356c01411dfc313b92376593bcd86f6 100644
---- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-+++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-@@ -1668,6 +1668,13 @@ enum v4l2_mpeg_video_h264_hierarchical_coding_type -
-     Codecs need to always use the specified range, rather then a HW custom range.
-     Applicable to encoders
- 
-+``V4L2_CID_MPEG_VIDEO_ENC_ROI (struct)``
-+    Defines the control id to configure specific delta QP for one or more
-+    rectangular regions of interest. The struct v4l2_ctrl_enc_roi_params
-+    is defined to hold up to 10 v4l2_rect regions and their corresponding
-+    delta_qp with a range of -31 to 30.
-+    Applicable to encoders
-+
- .. raw:: latex
- 
-     \normalsize
-diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
-index 31fc1bee3797bfe532931889188c8f7a9dedad39..c44fad7f51db45a437dd3287aa16830585ac42f3 100644
---- a/include/media/v4l2-ctrls.h
-+++ b/include/media/v4l2-ctrls.h
-@@ -91,6 +91,7 @@ union v4l2_ctrl_ptr {
- 	struct v4l2_ctrl_av1_frame *p_av1_frame;
- 	struct v4l2_ctrl_av1_film_grain *p_av1_film_grain;
- 	struct v4l2_rect *p_rect;
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+index 209bc05883bb15bc8614970e7b42595aad6dd18f..5695c96b4f2065c5d548a25ebcfd3619e7b6f4d0 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -442,6 +442,9 @@ void v4l2_ctrl_type_op_log(const struct v4l2_ctrl *ctrl)
+ 	case V4L2_CTRL_TYPE_AV1_FILM_GRAIN:
+ 		pr_cont("AV1_FILM_GRAIN");
+ 		break;
++	case V4L2_CTRL_TYPE_ENC_ROI_PARAMS:
++		pr_cont("ENCODER_ROI");
++		break;
+ 	case V4L2_CTRL_TYPE_RECT:
+ 		pr_cont("(%d,%d)/%ux%u",
+ 			ptr.p_rect->left, ptr.p_rect->top,
+@@ -967,6 +970,7 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+ 	struct v4l2_ctrl_hevc_decode_params *p_hevc_decode_params;
+ 	struct v4l2_area *area;
+ 	struct v4l2_rect *rect;
 +	struct v4l2_ctrl_enc_roi_params *p_enc_roi_params;
- 	void *p;
- 	const void *p_const;
- };
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index f84ed133a6c9b2ddc1aedbd582ddf78cb71f34e5..5f2621365593ee19a7792fb25ea29acf6a7860f1 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -918,6 +918,7 @@ enum v4l2_mpeg_video_av1_level {
- };
+ 	void *p = ptr.p + idx * ctrl->elem_size;
+ 	unsigned int i;
  
- #define V4L2_CID_MPEG_VIDEO_AVERAGE_QP  (V4L2_CID_CODEC_BASE + 657)
-+#define V4L2_CID_MPEG_VIDEO_ENC_ROI  (V4L2_CID_CODEC_BASE + 658)
+@@ -1329,7 +1333,12 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+ 		if (!rect->width || !rect->height)
+ 			return -EINVAL;
+ 		break;
+-
++	case V4L2_CTRL_TYPE_ENC_ROI_PARAMS:
++		p_enc_roi_params = p;
++		if (p_enc_roi_params->num_roi_regions > 10 ||
++		    p_enc_roi_params->num_roi_regions < 0)
++			return -EINVAL;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -2042,6 +2051,9 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+ 	case V4L2_CTRL_TYPE_RECT:
+ 		elem_size = sizeof(struct v4l2_rect);
+ 		break;
++	case V4L2_CTRL_TYPE_ENC_ROI_PARAMS:
++		elem_size = sizeof(struct v4l2_ctrl_enc_roi_params);
++		break;
+ 	default:
+ 		if (type < V4L2_CTRL_COMPOUND_TYPES)
+ 			elem_size = sizeof(s32);
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+index ad41f65374e2396f30f9798235401705af366622..7d36e387d6e9b0e5ee556ea1e48c1b4f0abd084b 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+@@ -973,6 +973,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+ 	case V4L2_CID_MPEG_VIDEO_AVERAGE_QP:			return "Average QP Value";
+ 	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
+ 	case V4L2_CID_FWHT_P_FRAME_QP:				return "FWHT P-Frame QP Value";
++	case V4L2_CID_MPEG_VIDEO_ENC_ROI:			return "Video Encoder ROI params ";
  
- /*  MPEG-class control IDs specific to the CX2341x driver as defined by V4L2 */
- #define V4L2_CID_CODEC_CX2341X_BASE				(V4L2_CTRL_CLASS_CODEC | 0x1000)
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index add08188f06890182a5c399a223c1ab0a546cae1..18a5ae34842721c2647a7a76365e4d299d2b8a44 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -1909,6 +1909,7 @@ struct v4l2_ext_control {
- 		struct v4l2_ctrl_av1_film_grain __user *p_av1_film_grain;
- 		struct v4l2_ctrl_hdr10_cll_info __user *p_hdr10_cll_info;
- 		struct v4l2_ctrl_hdr10_mastering_display __user *p_hdr10_mastering_display;
-+		struct v4l2_ctrl_enc_roi_params __user *p_enc_roi_params;
- 		void __user *ptr;
- 	} __attribute__ ((packed));
- } __attribute__ ((packed));
-@@ -1990,6 +1991,8 @@ enum v4l2_ctrl_type {
- 	V4L2_CTRL_TYPE_AV1_TILE_GROUP_ENTRY = 0x281,
- 	V4L2_CTRL_TYPE_AV1_FRAME	    = 0x282,
- 	V4L2_CTRL_TYPE_AV1_FILM_GRAIN	    = 0x283,
-+
-+	V4L2_CTRL_TYPE_ENC_ROI_PARAMS	    = 0x284,
- };
- 
- /*  Used in the VIDIOC_QUERYCTRL ioctl for querying controls */
-@@ -2540,6 +2543,20 @@ struct v4l2_streamparm {
- 	} parm;
- };
- 
-+/* Roi format
-+ */
-+#define VIDEO_MAX_ROI_REGIONS         10
-+
-+struct v4l2_roi_param {
-+	struct v4l2_rect roi_rect;
-+	__s32 delta_qp;
-+};
-+
-+struct v4l2_ctrl_enc_roi_params {
-+	__u32 num_roi_regions;
-+	struct v4l2_roi_param roi_params[VIDEO_MAX_ROI_REGIONS];
-+};
-+
- /*
-  *	E V E N T S
-  */
+ 	/* VPX controls */
+ 	case V4L2_CID_MPEG_VIDEO_VPX_NUM_PARTITIONS:		return "VPX Number of Partitions";
+@@ -1607,6 +1608,10 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+ 	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+ 		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_ENC_ROI:
++		*type = V4L2_CTRL_TYPE_ENC_ROI_PARAMS;
++		*flags |= V4L2_CTRL_FLAG_HAS_PAYLOAD;
++		break;
+ 	default:
+ 		*type = V4L2_CTRL_TYPE_INTEGER;
+ 		break;
 
 -- 
 2.34.1
