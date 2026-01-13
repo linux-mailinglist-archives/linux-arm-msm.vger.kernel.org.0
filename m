@@ -1,131 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-88636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B2F5D15D77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 00:41:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9105FD161A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 02:01:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5A0BA301399D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jan 2026 23:41:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 27B4E301D0D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 01:01:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1B8529E11A;
-	Mon, 12 Jan 2026 23:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 534D3155C82;
+	Tue, 13 Jan 2026 01:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="fdI2I9tI";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="I+Y4m0iF"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b="c8Jp2vox"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from sm24.hosting.reg.ru (sm24.hosting.reg.ru [31.31.198.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565D6281370;
-	Mon, 12 Jan 2026 23:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6011F3FED;
+	Tue, 13 Jan 2026 01:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=31.31.198.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768261311; cv=none; b=lqORj9WQakY9w/FlmjwY4dR92w8lsLbPzdHKefUWBJmn1VZSJSCNbDJAe+T5m3qf9LJ6k2OA3c6F2R0Qn4uWsKGpW1RatvLwuI4oeJd2F4K7KGEqWP6zjBhCziPb1LXg1DlW4+ZYhnYkScOaxqb9YfA9m5QwJYSmOG7eR7PHHLY=
+	t=1768266071; cv=none; b=uDwIZqUahQrH3fcP7YZHTf7P7HyFs74absFUrO+agaEWv4ZqU5nIi6aDJJpDWElcza2Xt6YcFlGlkQt0xYSDomdReOuGUgJ0IXByGtM5rqFLtPfueGpj88nXGijgOInD1qGjmCX6PjrPfj6CmW1HnapMk0ebhZ4TJKcrNsiwmKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768261311; c=relaxed/simple;
-	bh=C7V36cbdJb6YyuUIQW0plhOS7G7q1PT3/t9UweoHhB4=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=cifCjGhKyax3tS8iK2w3Hzva7T1DYb+cBKO6gByIW4ZLG2l6Z/biT8k37UG2Ri6fg/vy0Zqig99vQFpo6bpCyqqtnwq1GUigdRLTTyZHmXEap9Lc/DXsd5zSYOBTd7PTsAbZos0SfYo4Mu7eIkIaJdrUWPgNnr7lm05Bzxz1eg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=fdI2I9tI; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=I+Y4m0iF; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1768261303; bh=0qFiEwVtepNFetO+E3vs4kB
-	U5wg/CWl5/+fGowIxbNA=; b=fdI2I9tIHQeO4DkdHxT4b7+6fMyK94LyJCric2MAYA6bZ5dFnU
-	H4mUhMQ/Ir53FaBuCXpTZYfKUJ/rom4W/4vIuG+xAptE66ag/gjgoErzdhTyulj7VQoBiceWdmH
-	ZYasperKPzw71FyQbG911Z9uLsnTLL+51gTni1tNBkSI7YDzaDt+AheOIgflQNQJoJUJ73nQd5d
-	4ybm1H5KuVUW8BK1bis+i2L9n72DTwVbx5rKXVp4dNNUaaTDrkURLvV/0pK3B+IyyQDO0rbPb71
-	sjTZrQtY+S1bB1UwSyfUa0zWoVFjsRzMVV2Bk2poJiV0hYDfJga75qsCdaWZE522lhQ==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1768261303; bh=0qFiEwVtepNFetO+E3vs4kB
-	U5wg/CWl5/+fGowIxbNA=; b=I+Y4m0iFpti7NDz3nhEMHCkHnbmNUJWJI0DDTtAW7nIEA4AAu/
-	uCwF+YI7tb9AX2T79nswQmGuS4yRmGuGcPBg==;
+	s=arc-20240116; t=1768266071; c=relaxed/simple;
+	bh=RH3oOWZCji97bZognVGdIF5XqidXF15tY79CGO4hD1w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bcIWJDly6vlfyUed/JdU2vgbxOD94hHVP+1y+RnzMTMLwiDqPZgknMQspjvB8QhtGRu2hWsqan4lRb4Kca8hQCb1Hr3jwSE0OgpZshtH5fVZ/j1LL31X5qvoqixgogzHc8CLzVUD2/eFW8A7z+zUg6PfwenQrMlXavjplJbg0Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru; spf=none smtp.mailfrom=minlexx.ru; dkim=pass (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b=c8Jp2vox; arc=none smtp.client-ip=31.31.198.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=minlexx.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=minlexx.ru;
+	s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:
+	Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=jbAjuPYFTEJXorrBffuqKG8SxqsXfWlW/5ThtQy0OjU=; b=c8Jp2voxcCcoThA6CZVxvrdWc7
+	sN+AnnK++shNpcJVnXi0ZXkvUCtHDJ8V65niXBPA630wqApzcogQByyTmuIjnz0PpUXUPPmDWuRhQ
+	tYG3fu/tGk+RdqKrneebKzJOGDLvdKsL/CIrixgC+2Eai5XVPwHQV0nmbXMk7XL/9N2s=;
+Received: 
+	by sm24.hosting.reg.ru with esmtpsa (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(envelope-from <alexeymin@minlexx.ru>)
+	id 1vfRrm-0000000FwLc-27Lj;
+	Tue, 13 Jan 2026 03:02:34 +0300
+Message-ID: <bb889140-5ddb-485a-bb50-739f68297838@minlexx.ru>
+Date: Tue, 13 Jan 2026 03:02:33 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 13 Jan 2026 00:41:43 +0100
-From: barnabas.czeman@mainlining.org
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales
- <semfault@disroot.org>, Kees Cook <kees@kernel.org>, Tony Luck
- <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
- Biswapriyo Nath <nathbappai@gmail.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: Add Redmi Note 8T
-In-Reply-To: <3d2qboek2kzsnsjmn7rqi6xkfotfchc7vdmyeprivu27l3rw2b@i5lbwsvxfwdb>
-References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
- <20260112-xiaomi-willow-v1-6-8e4476897638@mainlining.org>
- <3d2qboek2kzsnsjmn7rqi6xkfotfchc7vdmyeprivu27l3rw2b@i5lbwsvxfwdb>
-Message-ID: <aa8d5d6f9301d94b56af4580210ffc88@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] drm/msm: drop DPU 3.x support from the MDP5 driver
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Alexey Minnekhanov <alexeymin@postmarketos.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20251228-mdp5-drop-dpu3-v4-0-7497c3d39179@oss.qualcomm.com>
+Content-Language: en-US
+From: Alexey Minnekhanov <alexeymin@minlexx.ru>
+In-Reply-To: <20251228-mdp5-drop-dpu3-v4-0-7497c3d39179@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2026-01-12 23:15, Dmitry Baryshkov wrote:
-> On Mon, Jan 12, 2026 at 09:13:29PM +0100, Barnabás Czémán wrote:
->> Redmi Note 8T (willow) is very similar to Redmi Note 8 (ginkgo)
->> the only difference is willow have NFC.
->> Make a common base from ginkgo devicetree for both device.
->> 
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->>  .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 302 
->> +++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 296 
->> +-------------------
->>  arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  13 +
->>  4 files changed, 318 insertions(+), 294 deletions(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts 
->> b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> index 163ecdc7fd6c..70be19357d11 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> @@ -1,304 +1,12 @@
->>  // SPDX-License-Identifier: BSD-3-Clause
->>  /*
->> - * Copyright (c) 2025, Gabriel Gonzales <semfault@disroot.org>
->> + * Copyright (c) 2026, Barnabas Czeman
+On 12/28/25 7:02 AM, Dmitry Baryshkov wrote:
+> Fix commands pannels support on DPU 3.x platforms and drop support for
+> those platforms (MSM8998, SDM660 / SDM636, SDM630) from the MDP5 driver.
 > 
-> Hmm?
-Original file was renamed to sm6125-xiaomi-ginkgo-common.dtsi this is a 
-new file just the file name is same.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> Changes in v4:
+> - Inverted logic in dpu_encoder_phys_cmd_wait_for_commit_done(), check
+>    for the feature rather than the lack of it.
+> - Link to v3: https://lore.kernel.org/r/20251224-mdp5-drop-dpu3-v3-0-fd7bb8546c30@oss.qualcomm.com
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts 
->> b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
->> new file mode 100644
->> index 000000000000..9e3aeb5a9e74
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
->> @@ -0,0 +1,13 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2026, Barnabas Czeman
->> + */
->> +/dts-v1/;
->> +
->> +#include "sm6125-xiaomi-ginkgo-common.dtsi"
->> +
->> +/ {
->> +	model = "Xiaomi Redmi Note 8T";
->> +	compatible = "xiaomi,willow", "qcom,sm6125";
->> +
->> +};
+> Changes in v3:
+> - Fixed commit message (Marijn)
+> - Reordered CTL_START checks to be more logical (Marijn)
+> - Link to v2: https://lore.kernel.org/r/20251218-mdp5-drop-dpu3-v2-0-11299f1999d2@oss.qualcomm.com
 > 
-> Please consider adding the comment regarding NFC.
+> Changes in v2:
+> - Fixed CTL_START interrupt handling on DPU 3.x
+> - Link to v1: https://lore.kernel.org/r/20251211-mdp5-drop-dpu3-v1-1-0a0186d92757@oss.qualcomm.com
 > 
->> 
->> --
->> 2.52.0
->> 
+> ---
+> Dmitry Baryshkov (3):
+>        drm/msm/dpu: drop intr_start from DPU 3.x catalog files
+>        drm/msm/dpu: fix CMD panels on DPU 1.x - 3.x
+>        drm/msm/mdp5: drop support for MSM8998, SDM630 and SDM660
+> 
+>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   5 -
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h |   5 -
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h |   5 -
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |   7 +-
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           | 314 ---------------------
+>   drivers/gpu/drm/msm/msm_drv.c                      |  16 +-
+>   6 files changed, 17 insertions(+), 335 deletions(-)
+> ---
+> base-commit: 4ba14a6add891fe9b2564e3049b7447de3256399
+> change-id: 20250926-mdp5-drop-dpu3-38bc04d44103
+> 
+> Best regards,
+
+Thanks!
+
+This fixes DPU with command mode panel on Sony Xperia XA2
+(sdm630-sony-nile-pioneer) and still works on video mode panels on
+whole bunch of sdm660/636-xiaomi phones and tablet. The whole series
+
+Tested-by: Alexey Minnekhanov <alexeymin@minlexx.ru>
+
+---
+Regards,
+Alexey Minnekhanov
 
