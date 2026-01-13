@@ -1,144 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-88885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0487DD1B899
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 23:06:48 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 457F9D1B93F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 23:21:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DFA9E300765B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 22:06:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0EC9C3039AF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 22:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9795C318EFC;
-	Tue, 13 Jan 2026 22:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66D26352C41;
+	Tue, 13 Jan 2026 22:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="kIY8zUy9"
+	dkim=pass (2048-bit key) header.d=szczurek.yt header.i=szczurek@szczurek.yt header.b="brXBe4/i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from sender-of-o53.zoho.eu (sender-of-o53.zoho.eu [136.143.169.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA6326ED37;
-	Tue, 13 Jan 2026 22:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768342001; cv=none; b=Yju2tlKoAgEIjpMkrK7wx9J2N7IHhj/uOaraFGZgwEmimY9aQMj1UuXNxf4+su5WMW5SRZwroD1tCh7vStge9hBMhiOxDwQsiz+j32zVGTGgWP/CzjvP0adCjlLe+kdqFe779rKf5AwbKYikLrWQm3WiwThUU8eyKgCG028s5UI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768342001; c=relaxed/simple;
-	bh=LsQ80Nt6Qk+bvf75Ia6NSgSazOOzop19Sk4/CGy3YPk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBGh41ry7BZWQImFUuQa74CNNBF/4OjFTJIWWC7HV08SCBafMvnfmqAlRvw/60/9Ac/+/nJeAokSSZUolN6Ql8arZaKO2e7mZPBp8scRGx1D6ZtdKRoiYgI2TaaOOvwZIZlweWKqLzIN22AR/g7nZOzNg74LWEMEU7P2otBpEuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=kIY8zUy9; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=oBM2ZoOF22ddiLW29uUZvDBCanemUcQlDXTvmAcjlq4=; b=kI
-	Y8zUy97+/X5jNowUufRNGBEkL5lckHnRZAeGH2ky7o8DY2gnk+V1zKaO95hqWEgDAg40w523H3J+c
-	+cBn8rp7OJQD/Z+CBIQkEsT1pZZgZ0TM2oaYWUL7T5O8Q6hif/olvCQyS1uUtoDXmW//efHVd6A5l
-	wb+967zbnQezKGU=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vfmWA-002hQ8-MR; Tue, 13 Jan 2026 23:05:38 +0100
-Date: Tue, 13 Jan 2026 23:05:38 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-	Fu Wei <wefu@redhat.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Shuang Liang <liangshuang@eswincomputing.com>,
-	Zhi Li <lizhi2@eswincomputing.com>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-	Samin Guo <samin.guo@starfivetech.com>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Swathi K S <swathi.ks@samsung.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
- generic device properties
-Message-ID: <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
-References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
- <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
- <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch>
- <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BBE35F8B3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 22:21:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768342901; cv=pass; b=gnt/THcMyAs5hFmbtxFDnwxwbmOb2i8/dXHDNKhTRkc5KAmNtFBFaWcDCOJD6rAo4Eo6sW0/YOXJzSEvBnZ8/UEWzkQhTfjlii6Pws+INZsImMRD5f8EUPRV9D4dm0FgUMPAQd7y9L+XfTOAcPxljF7asH1viOI+vqMPriNXVmg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768342901; c=relaxed/simple;
+	bh=nI27uuCm0XzivezOpxbJIHywUyoGwWkR45ngMp9q1Bg=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=UDqUNnomZ1JhUBOBRjuguKItGFT/uPfTz7NCtfW143GcW3rizB0BENo/VS0rXzqQ/2trnp8b4ugNpamCSmCPwx+z2pw1DY7ErPm9nUT6Af/j7GpWpDyHkPP3zIUU4lCj4tkrKXZ+93JQ0JShx0eHqnosq9notbstFzT8eLVP95c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=szczurek.yt; spf=pass smtp.mailfrom=szczurek.yt; dkim=pass (2048-bit key) header.d=szczurek.yt header.i=szczurek@szczurek.yt header.b=brXBe4/i; arc=pass smtp.client-ip=136.143.169.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=szczurek.yt
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szczurek.yt
+ARC-Seal: i=1; a=rsa-sha256; t=1768342863; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=JcJpcQpuBm5TZ+WW9ULjuWb0buKfzHTXWxSgIN3gdTaMtJKFD55DI4YVBSxEk52xVKyGxixJ3tFOqwpAbbaFcsIIsrkw17+MbN3+Y8tnqbEy1N5Rbinhco1jVeRh7EXuPp9cMMQmUXNkKJNO+yoreLrwATaJ4OQNufunywLGKQk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1768342863; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6t0XRyLt6y4Y7XbjooZD3bqn9xJkWxhySXVzC3fK/0E=; 
+	b=aHZsqlrgU1vx3kl6DbL6lM0trKwthPmrxQCzSE6qicfBzpGYHBZEiaMXenH2KQuPfrqPEj6aHyX3i+n+JeYkDNQXcZmmjzevoDbMr9QqhG7U/ok8CprhnDXQFCQTyXUnIUeZTGbcsK14V7LL1XK6zxLIWykrVBr8QXGf9BY6m0U=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=szczurek.yt;
+	spf=pass  smtp.mailfrom=szczurek@szczurek.yt;
+	dmarc=pass header.from=<szczurek@szczurek.yt>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768342863;
+	s=zoho; d=szczurek.yt; i=szczurek@szczurek.yt;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=6t0XRyLt6y4Y7XbjooZD3bqn9xJkWxhySXVzC3fK/0E=;
+	b=brXBe4/iRB2SrWoAX7REoZZob5gc4foBfGwluVQ8fyk0XijzZdoDBe0QVqrMzINU
+	cTeOkw1/vu1m1tGw8FYWjPhJS/oAed991/Pj5INQ43EJhBAibmrRHcSGaQRI8iTLP3K
+	0U+9ylqk9rLTfancw7awdEDjTThQFgCY6xICUbATO62N3UwOM6JdqngFkH0DTV6m2GK
+	CyhhQ+9AZdy4q2t2iFMZeGrloqxJn9OiwT1ZdE5R8QN1pql9SuAyjSYrFWC3w8UtTCL
+	vsTCmuUAf75fiwEQXSx2vtSFK3F9tRtd3/j0M227lgMp87YNqMe0lTQw6fhLcqqd5xN
+	N3h1H4FzQg==
+Received: from mail.zoho.eu by mx.zoho.eu
+	with SMTP id 1768342862318952.1865680945543; Tue, 13 Jan 2026 23:21:02 +0100 (CET)
+Date: Tue, 13 Jan 2026 23:21:02 +0100
+From: Szczurek <szczurek@szczurek.yt>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "yedaya.ka" <yedaya.ka@gmail.com>,
+	"Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
+	"Rob Herring" <robh@kernel.org>,
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+	"Conor Dooley" <conor+dt@kernel.org>,
+	"Bjorn Andersson" <andersson@kernel.org>,
+	"Konrad Dybcio" <konradybcio@kernel.org>,
+	"linux-input" <linux-input@vger.kernel.org>,
+	"devicetree" <devicetree@vger.kernel.org>,
+	"linux-kernel" <linux-kernel@vger.kernel.org>,
+	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>
+Message-ID: <19bb972b9d3.12a7d3da3105717.8521466650832407846@szczurek.yt>
+In-Reply-To: <o4eu2db3y3wrxaxtxcbxupdc2tzemqvb4fupwfkjfjqmy5qudd@v4umeav2oib2>
+References: <20260113-touchscreen-patches-v1-0-a10957f32dd8@gmail.com>
+ <20260113-touchscreen-patches-v1-2-a10957f32dd8@gmail.com> <o4eu2db3y3wrxaxtxcbxupdc2tzemqvb4fupwfkjfjqmy5qudd@v4umeav2oib2>
+Subject: Re: [PATCH 2/3] drivers: input: touchscreen: edt-ft5x06: Add
+ FocalTech FT3518
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On Tue, Jan 13, 2026 at 01:36:53PM +0100, Bartosz Golaszewski wrote:
-> On Mon, Jan 12, 2026 at 2:45 PM Andrew Lunn <andrew@lunn.ch> wrote:
-> >
-> > On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <brgl@kernel.org>
-> > >
-> > > In order to drop the dependency on CONFIG_OF, convert all device property
-> > > getters from OF-specific to generic device properties and stop pulling
-> > > in any linux/of.h symbols.
-> >
-> > Is the intention to read these properties from ACPI tables?
-> >
-> 
-> No. Other than a couple property getters which can use the fwnode
-> abstraction, there's nothing here that requires the OF dependence.
+On Tue, Jan 13, 2026 at 20:28:27 +0100 Dmitry Baryshkov <dmitry.baryshkov@o=
+ss.qualcomm.com> wrote:
 
-So what is the need for not using OF? Why do you want this patch?
+>On Tue, Jan 13, 2026 at 09:12:36PM +0200, Yedaya Katsman via B4 Relay wrot=
+e:=20
+> From: Yedaya Katsman <yedaya.ka@gmail.com>=20
+>=20
+> The driver also works with FT3518, which supports up to 10 touch points.=
+=20
+>  Add compatible data for it.=20
+>=20
+> Co-developed-by: SzczurekYT <szczurek@szczurek.yt>=20
+> Signed-off-by: SzczurekYT <szczurek@szczurek.yt>=20
+=20
+>This doesn't look like a name.
 
-    Andrew
+Hello
+Yes, it isn't a real name.
+Yedaya Katsman is upstreaming those patches by me, under my permission,
+and I forgot to tell him my name, so he took it from gitlab, which is just =
+a nickname.
+All of "SzczurekYT <szczurek@szczurek.yt>" should be replaced with "Kamil G=
+o=C5=82da <kamil.golda@protonmail.com>",
+this is my name and the e-mail I would like this to be under.
+Excuse me for the chaos.
+=20
+> Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>=20
+> ---=20
+>  drivers/input/touchscreen/edt-ft5x06.c | 6 ++++++=20
+>  1 file changed, 6 insertions(+)=20
+>=20
+=20
+>--=20
+>With best wishes=20
+>Dmitry
+
+Regards
+Kamil Go=C5=82da
+
+
 
