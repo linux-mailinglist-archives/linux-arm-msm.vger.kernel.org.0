@@ -1,128 +1,324 @@
-Return-Path: <linux-arm-msm+bounces-88648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61757D1645C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 03:26:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC23CD164F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 03:38:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 07D84301D58E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 02:26:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 16E94303D15D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 02:37:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94FEE2C21C2;
-	Tue, 13 Jan 2026 02:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67C8927FD68;
+	Tue, 13 Jan 2026 02:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YOwmzTWF"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="WN6qDeE6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020081.outbound.protection.outlook.com [52.101.228.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39A72853F7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 02:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768271192; cv=none; b=k9CF9p5aU/OjOvWbtMTdkpGnWOEh77N/s6PKqE71IECJFpaLbh9plqVe61/z+PaZPDiRuU5AFuLY/T5mb1b44YpN8o7uobm7tvCi71HtLPbvrEurw+qckZNC4ImSumaSUrZlfYMQ7l4Hy/LXfyOfOYkNwdFMHlvGUCloBNDmn+M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768271192; c=relaxed/simple;
-	bh=fryX6UynJ5IFJ74anXaeAvTTH2dF+8rnd5xH2b5jc5g=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uFzmXsX4unl1dIhFdjj1k2Xh6HWRINHjy9fxGg+ondBtztRMl+YftK0kKaJD86Jq9RVo4RRZpSIRwVP8tlPmDiVJbZUsnPXfwNfIfEGyn0AybUZYxAbALWDlyi04uhtU9mzBs4dEdK/Bq4s8JdsJKF8eN4XJoXOc7N4Zlma82WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YOwmzTWF; arc=none smtp.client-ip=209.85.210.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-81f416c0473so1849703b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jan 2026 18:26:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768271190; x=1768875990; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iW1zjR2bH63sUC9kWdfqTHJPDTn4Q4NXCWxZ8Jhpl0M=;
-        b=YOwmzTWFhnmhqQE90gcpHabudO/iWtMeQFPts/H4FkbqBv3H1GRwXqJt5yZJ9zYCeD
-         Ic6DeJT0X1VI2n2P0DFh2fKzaqwr8kEDqwOVBo1uNIRqVDAgw+BQI7gy+sHnb4cXXK4x
-         eMqCrP+NkxKXc6YtY8ivWE4LbZJprSBmTuH+HIyMF5cEVvk/s7C6KG/FVn4L1Nq8PHwR
-         ctxZU0rAHBYvWznRxLSJvPwGCeHtfQG0nHgRqk21EywiGkVM9L9/5WdmfEg10gCT3H+q
-         sUz180XqcHZuhdSMbLjDPrwHkWELDcmLoNw5/DK6qDYnLrq6Tio28bJoYhuPsJNw7HFt
-         N5QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768271190; x=1768875990;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iW1zjR2bH63sUC9kWdfqTHJPDTn4Q4NXCWxZ8Jhpl0M=;
-        b=VCcd2ank6fBNKFmvo+A5K26MhJLGFkrGW5Bn+fuF1k4VgoXy0QQftVPMWsnk1fda9Z
-         qoJIVOtaX8v2zKCsqtDfTtMwjCkxmkcnJ7zdfei2tKGkP5IU/ND7Q4UZa4fKYP1d+qg2
-         66PGHq//eZcSO3fjZCK1SvTj/fzogNi1e+lM5Urmmj7ZXDEsCWsWYJjorod8dusNcbyf
-         ycANCPCLyPlhuQqRPEB7ef7TeDFCFBtFa94YRhpQAr0c/NNIFDDtan+gw81jCiBiD50y
-         X15ehQ5LsUpNhp96zEM9HdmzJefrF5ZBe32g7gVgmXonfJ3kJL6TlqG4h93/B6yJ+Qbi
-         m4NQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXdXXFLPSZw4hJ9Ny/B+dBftl8rB0OvG0E1ptuedYj7uskIg7yG8bZ6OaQzzBlbNoZyqqzOCy2kVzBVGANM@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJGaOJ5o1Ho8CZc+KUXxScD3G/QELpVwZ8Alm3l3cPjcDSXneU
-	lizvN8P8ADZ9qV+TJ17Z98TOwCcM9+Op3URvl7sQPkX1GoFTvWUVBQ50
-X-Gm-Gg: AY/fxX46HSyB/P+kNCC7046jt79t7juqmfu/UJfdPtKLTEeoeLx+hIvoebikeTpp8/J
-	NqaRiDJjMRP1lU5enevkr2ENTB3TLYVIceMBHtr9iOufyuB0xSsZ8gJdiOW31CPt5CBVx4mC4FQ
-	r0F/1fTFLeJoxfY6lJyyV8gpTOUcPbGnp1DaZ7Eg7W404JBW8wtUDr66mzLiElulIRcs3E0XO6O
-	CGWmKOOcAdiHiXD+y3O4rGqJFV7Z/d6fqIBx8+lA4c8s+htJrapjldaDP52Qj8b9CigrqwkV04+
-	57W5n4R3UQfjh6CoL04LVLIUDp+dBjV0B4DO0krRZMKtvOZhbqxakY3P39zS3XExVfgcd8W7geR
-	8CdTmUMdsJ/aD2ASXC52EcHZaN+ksssd+nCRJY0t7EgGaglbTwsnYUwyXoYg6/APKyiQH9m3hJ2
-	v4/muaEunMucXe3bpDPZvax1I=
-X-Google-Smtp-Source: AGHT+IF5FvYiWFIbb5ECATEVt0CMutY2gIZKibKQM75WoVY6vMqwsXyRdBCG36b7Ofr9nw/C7ccN3A==
-X-Received: by 2002:a05:6a00:90a6:b0:7ee:f5f6:68f6 with SMTP id d2e1a72fcca58-81b7f6ec194mr17648003b3a.38.1768271190060;
-        Mon, 12 Jan 2026 18:26:30 -0800 (PST)
-Received: from localhost.localdomain ([111.202.170.108])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81c4905ca83sm13965064b3a.38.2026.01.12.18.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 18:26:29 -0800 (PST)
-From: Xingjing Deng <micro6947@gmail.com>
-X-Google-Original-From: Xingjing Deng <xjdeng@buaa.edu.cn>
-To: srini@kernel.org,
-	amahesh@qti.qualcomm.com,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org
-Cc: dri-devel@lists.freedesktop.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE842DC32E;
+	Tue, 13 Jan 2026 02:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768271850; cv=fail; b=caQ1RJAqqcK2RORoMk4ov0g3UwAmFLpDJ6amXKd7mdYn/ANK2e9eWkbzmojvVuSZ3hBvVc3GxAW1HXq/7cAHwWIYZyquxnDM1x0ZV/2qRaRIypHxO7ldgRNLsturtk3+zfP82e9nzmk0Btw/5MspLBAQLzr4DoJdDJPDLsKS0t0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768271850; c=relaxed/simple;
+	bh=87PGKDJYMnuzF1O3hq0nnFMVxwjwp7OvMjyGhWjiYAI=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=D4ecVrnOWEnKiKrEYmvTx//PKdVHZTw9qnMbaQ9sMkmyNte5WDybPxOeFEPMnRg8UWLBYOPbW7Z1bKIuEUiUjIunSjEZc0xctI0KZHksHuYBJUBjIJtIWNWZ21N3NPHzcV2sRNA9QAeHnWcZH7FTWM69YFvC3r/312He1GHTr1I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=WN6qDeE6; arc=fail smtp.client-ip=52.101.228.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Z/43iQL2xZi7gaf3EQ5yE23kT4NE9yojCjZix1LKEHhQofKRGxyrSiypC0InFS+pKh+Mr0ZnjMlfqZvCLdTMJutGso4AjbiAJ3U9yaMcCb9P+8e6exRlpFnF3kBIgt4VbiPtc1xdgu1AQd+WD+hdF6gBNYLRcnfq2MKZg3Kguoax9GLGmvWbBbKLWUqeMEhwg1UCtrhEh5kqW8BQQuKwnXCW7Jka6glLkdQ/gUNgZNRu8sucsgcZ/AO4Oo+VPQ0nWQrrm8s5LG7NcwFZbMhT12E2/yurppixn5eepUEDb+AAnDw/ESVUH1fEkwNFICOXGE7TiSCsE0JYSzpUBczhjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FHdCwclZ92YvSuAnIfg0L9liBqe0Nkcq+I87Oq+wAj4=;
+ b=rfKy2KwUcvlMdbmnJbN/3NPQNczt83XRt52ta5dLrtALjODzTFOPShqOF1Z0o/GfiBMXokeog8LBl9j2VSw0kyiRI8Zc33admO/9od4QIUjoSLlck+iLGDadf8zRohZS5wtGqHWLoThrCQAw9UlrpL333Xj8CxQED6W/dOCNNI3AqDHtQJ/p8BLn/wXdR4AMU+oxw6B8MYcabQUXsOzRh2ovykobUe/YP8yw1GlHhP/jFOQ6XdpkJWq+KSaYiLEU3DYVkkrX4pdTKfVdxrimW9Mve8HYBP9ZQDBnR+GujNwGXHWEWc7qg9b/UEoAhNH0JQ0BatYg7aUfRSzUsMEL3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FHdCwclZ92YvSuAnIfg0L9liBqe0Nkcq+I87Oq+wAj4=;
+ b=WN6qDeE6tNSVQXmREzfQcQIyV5ssFVsB5ydoMpkwqUuoHcjIxm2Alz8riNyttzvdEzq1Kgqc5qnCZR3XTrJwvJWJcavy4jcL6aPensH4laJhaxLXKAfVzs8yJsVV6OkyFM2o8hGsvvg1/DXbvbszCGgHkyNSAuudN9Z5cLbZhGQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY7P286MB6708.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:323::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Tue, 13 Jan
+ 2026 02:37:18 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9499.005; Tue, 13 Jan 2026
+ 02:37:18 +0000
+From: Koichiro Den <den@valinux.co.jp>
+To: jingoohan1@gmail.com,
+	mani@kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	robh@kernel.org,
+	bhelgaas@google.com,
+	cassel@kernel.org
+Cc: vigneshr@ti.com,
+	s-vadapalli@ti.com,
+	hongxing.zhu@nxp.com,
+	l.stach@pengutronix.de,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	minghuan.Lian@nxp.com,
+	mingkai.hu@nxp.com,
+	roy.zang@nxp.com,
+	jesper.nilsson@axis.com,
+	heiko@sntech.de,
+	srikanth.thokala@intel.com,
+	marek.vasut+renesas@gmail.com,
+	yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be,
+	magnus.damm@gmail.com,
+	christian.bruel@foss.st.com,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	hayashi.kunihiko@socionext.com,
+	mhiramat@kernel.org,
+	kishon@kernel.org,
+	jirislaby@kernel.org,
+	rongqianfeng@vivo.com,
+	18255117159@163.com,
+	shawn.lin@rock-chips.com,
+	nicolas.frattaroli@collabora.com,
+	linux.amoon@gmail.com,
+	vidyas@nvidia.com,
+	Frank.Li@nxp.com,
+	linux-omap@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com,
+	linux-rockchip@lists.infradead.org,
 	linux-arm-msm@vger.kernel.org,
-	Xingjing Deng <xjdeng@buaa.edu.cn>
-Subject: [PATCH] misc: fastrpc: check qcom_scm_assign_mem() return in rpmsg_probe
-Date: Tue, 13 Jan 2026 10:25:50 +0800
-Message-Id: <20260113022550.4029635-1-xjdeng@buaa.edu.cn>
-X-Mailer: git-send-email 2.25.1
+	linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v6 0/5] PCI: endpoint: BAR subrange mapping support
+Date: Tue, 13 Jan 2026 11:37:10 +0900
+Message-ID: <20260113023715.3463724-1-den@valinux.co.jp>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCPR01CA0091.jpnprd01.prod.outlook.com
+ (2603:1096:405:3::31) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY7P286MB6708:EE_
+X-MS-Office365-Filtering-Correlation-Id: e9d4b94e-93a2-405d-d287-08de524cab9f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|10070799003|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?1jdG7yVk5dcZm8OMSZpzew7EhVtAHhHvF/QOM4LPCEQGykHM145ybMenZdAJ?=
+ =?us-ascii?Q?cCUoJ5kKM17BqbN2YkW/AdgNchlG4OSz3OUrgafxF3saUt6IjKfECmyh5AaN?=
+ =?us-ascii?Q?H4f1YFf0zMK5tnW57Lc95PJDcWyqYIRyVb+xDTs2pEQ2V3S+TKszVI7PnZEG?=
+ =?us-ascii?Q?v1wcgNSBW6CrVfctHedHNsI8xBYn8f9b25rjg+ON9gJHCHhjFOJCwUZ5qstx?=
+ =?us-ascii?Q?HecjzdgVkC5dQdRvQQ4FcFrPpziRVPYmqiOYLsTa9dw0BVHNjvDy6jxfF7dq?=
+ =?us-ascii?Q?QUYBC7Z39DlyxN3Ppxix0MfcyJOlRFOrekWTG4+D8r0gBn9Za+uI5Q8bw+vQ?=
+ =?us-ascii?Q?1ZItgaH6jynJTtblnGPO/+CC8Og/y+zQhQ6AnBx5x5xIdzTQvE4QzCGYZvjG?=
+ =?us-ascii?Q?vU58NICJlMaZVXFcjIoKGpPxC6Wab6Z8r7xvjrfNKybaUG6KSZqW3+oCLwxY?=
+ =?us-ascii?Q?WS1pcy93K8ICwr+EGa5cWFmlStuyO9ybdxO2sAAUKsTgGMrLj4OyjVYJeyyF?=
+ =?us-ascii?Q?Gw03diGenao+drDvciqCNXq6235BmYfpyhZMc8pVndJL9TF1wYFlz7M+u0wT?=
+ =?us-ascii?Q?jj7/jUy1v1eo4we4Minem8rZ6VH7qzVEUmutmOjNKCZRnryM+tN36pSTzKNr?=
+ =?us-ascii?Q?jALMIoGDzr7+NiwB4oG9wGjRq/86qOkgrSYtsbRG9e2VuP9FKHgEORq9zOmX?=
+ =?us-ascii?Q?2R0djZ3XsjcUaeWWRvSNvEsfqvjaB9ij6DOvi/GCBYBI9DGVP3zxaQ0Qfv7c?=
+ =?us-ascii?Q?mKULWOOmSKP4sK3Lc9lOWrx8ghp/YKRl6zUXppoBmCR1PbHh9fyg2yarcZ2Y?=
+ =?us-ascii?Q?QkGgG/2E6jFobR3Rs+VimcltDTu/Ax/PvN7fBaPzBX12aaiSC44mJ3gbQoxP?=
+ =?us-ascii?Q?6R7FpJ1CfLaRd2E3B7zuIe5WlbNjoUiA8NnPEZds+wUQu7yFY8UYZF5BXf55?=
+ =?us-ascii?Q?aiOECbxRm3K9DcqQqMNDTano/TNzobMLkIMNCFFQp0Z+MA3+UYGEbXZrAqO5?=
+ =?us-ascii?Q?ZpM02jxTfWs7EVkqDm6FE+Xi5b4iyFEX5KQYyKgmhG4/BVKRRBXtOeQ8xVsk?=
+ =?us-ascii?Q?ku7d++Me9se7q3Rn2bEFHqshLXMpXkiwtjJZU2qxg5ZJuJO0FRSNiKQs2fIN?=
+ =?us-ascii?Q?6oJYB2kNcdfndWx3fSdZDec1/iiwWaJeWayhWTa8X7xRDO6FCRIqZklMixhr?=
+ =?us-ascii?Q?05F0dDJUdzM++9jNIbywX0+GSSfi2aBaIZ62JOctA0wFlb7vL0YBMSF84Mom?=
+ =?us-ascii?Q?3c6xZktppWaMAaJTk6x8lAQguMKr4nH/u1vu6MxkJsdoInL7vxjyHKJo6MPO?=
+ =?us-ascii?Q?TCmDxsoYXiouv3fOsd9s/k9btDf+oqU8uAF2KF64lkTAWqDLUybr8qH6fEWd?=
+ =?us-ascii?Q?PO/Z+3gkRJFBi9P3bNsfzn/9ijCZmhiMkFS96+uVIrPGu8yGkEBtsdEUc8d0?=
+ =?us-ascii?Q?KDJlO+QnfErdEvxhCsKb/J1gk+qqcKgE?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(7416014)(376014)(366016);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Nsb1BISxhA7fAGB9+whGbD8bDOlziyrm/Xw1MV7B8fAq0tgbECUU4IQGEEKy?=
+ =?us-ascii?Q?IYXecI65oKRlYZ9bIDPHoE39V2KdQFhsXnDlNvpHmbpETalbS9KB7SOdDsIx?=
+ =?us-ascii?Q?9NFrbfX+esvOKugKkfg3rp0aHsFoUsAtIuFJYBMOrbpN+si+6vppaXFdRg5o?=
+ =?us-ascii?Q?IpH/NyIC18uZNB2hEFNeUKKcVsN57VjCwmjTLCMdTDxvx9/GhHxh1M3poCPF?=
+ =?us-ascii?Q?Iu3eFgOi7Ol+Gq9oezHnP1Y0Xu7GPKi9pPop4gGGzAtrYGkg62ZEWVY2TjA8?=
+ =?us-ascii?Q?ISFkIpx4URwYB+PzwUIEE+xVFO4+8Zh+MbQdR3VZkqK9t+VzhcV1yrfDroeO?=
+ =?us-ascii?Q?UEzPQde5l4Bo+rCHQLS4IyFM7AaKyPmVinxsr/pz3RM/v6dgZyls98fqA8+W?=
+ =?us-ascii?Q?EdyB1I3N0xDb7wZ3m6ipbFsOUDmEEF1UyaxVil37cNa+ouYvErdT72G9kTZg?=
+ =?us-ascii?Q?U+fcNF0/5+8Kk3x/WpJNKvDM/JEBgfDx4v84uUfm8nCcvSue7MruzsNQYlMc?=
+ =?us-ascii?Q?1n50lFnJFy1TfKN3EvRKrmONbLxsB0cAu/A6LEbsheq4aLWc9G+tX2hO7kDs?=
+ =?us-ascii?Q?/PFTsBoti9Z88fIVjpycarnG/W8aSGndvXxAsNzgwTdcc88UZ1Iz6Z4Rcm8R?=
+ =?us-ascii?Q?w6cMSDGAjPMRBcQwt6f0/yWlldZBAJFAH19EDxQEUdr2docqHi776WQn54bY?=
+ =?us-ascii?Q?DNijbLbvKalFJBSbq8a2PaRJiHa+L/L7kITEjBoIh3gMkG2r739kT8AnNP49?=
+ =?us-ascii?Q?zoQJvgsSwevR1pnvkY4ICrUCrqq1jhRfqJGPAr7gJVkVPZXvBfsw/xjhl+tY?=
+ =?us-ascii?Q?d4RcqnAeM5QoOef1N7leTT8spOLL53fIWbqeuTM7tgmRTyn0myLowt6OQKkh?=
+ =?us-ascii?Q?LgGnmmJkn3ChAwID90PM01taUjvHHtemxcNjB0BrQU3R3d/FUu2B0LfZzc+b?=
+ =?us-ascii?Q?teD17KXDXyZec48OBZo1wxKvrzJJwidQNyrI7DB5ntDfh6mgfCEDpITyXQ3U?=
+ =?us-ascii?Q?q9cuOfjTG8qJBlCbXVUqcHq4Rk6sPolM3a6Nh0afAG68KMNmNCoJCbmqR0zP?=
+ =?us-ascii?Q?e3tJ8IiKELaTaYpezB31qyi6FYyFctvcwfyTt/GCQ9Vw/ur1w4wNj9i99cbs?=
+ =?us-ascii?Q?ndNAjIbu8BlDLYEE/rXrcXwR+k7ptLn/qUvxGFAUfU9A1HchlEDJr1L25eq2?=
+ =?us-ascii?Q?2jG69GfMghj2jKn01OskmZ0WZGOOOcE9e8Wv93ru1f1E/2CavJwHNuX71R5i?=
+ =?us-ascii?Q?1BtxHaosr/C8V48V9/nXmxmwncMlByLx7u1ZMrbsGkZxNO3zPne/iCm1awmc?=
+ =?us-ascii?Q?R86nd94+oyEBxeeYAVf3W4cz/ecJXvYyOFqgJEOVKsy2K2LarWZvM+vyvubJ?=
+ =?us-ascii?Q?H9xprd0VNoQZ7myZEsvpbqOiHTcDZh7kMZuIci4IZh8ufIp/j9pJ1PbpO4oT?=
+ =?us-ascii?Q?CFbJHxXRNv1Clsn7O5shjz+VezGbilRDC6ICjrMeUXgoAO2CN7jN2vJ5CLjk?=
+ =?us-ascii?Q?JPkj8dU4EwsUmLKgS8oItsU1kmxdpGEaZBmhqEIbXpGVCSH2rUIVCoNEZzSt?=
+ =?us-ascii?Q?+HNYLUnI2+s39vppVt3Z0Yk5sfDQuLvMT7P2kg2zwxPVqpLtvIVRq8JkKby6?=
+ =?us-ascii?Q?gvTTngELWqA6t4mUIoc8lyRyRJC8rHHhD886yyFlYRiTvKmqgNySKj118t/0?=
+ =?us-ascii?Q?5VXDZP6CM4aZT4uLwX9NaUVbZ5mAQrXUtORXVholjZwtEWOhWEvJKMfjyCvv?=
+ =?us-ascii?Q?Z3+EEUV+PFwVCawueX4rnUS7tRnFvze3UOdL/0LsDgKrc9gx8OFP?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9d4b94e-93a2-405d-d287-08de524cab9f
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2026 02:37:18.4302
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UlO8ROWIkamA+f58Zjye8Cal7dLGsrL1jKlt3Jgjw6KuX9iSjjbHSmCu1jSCw7z/hkufYIIO48kE4F7WN/kq4w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY7P286MB6708
 
-In the SDSP probe path, qcom_scm_assign_mem() is used to assign the
-reserved memory to the configured VMIDs, but its return value was not
-checked.
+This series proposes support for mapping subranges within a PCIe endpoint
+BAR and enables controllers to program inbound address translation for
+those subranges.
 
-Fail the probe if the SCM call fails to avoid continuing with an
-unexpected/incorrect memory permission configuration
+- Patch 1/5 introduces generic BAR subrange mapping support in the PCI
+  endpoint core.
 
-Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
----
- drivers/misc/fastrpc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+- Patch 2/5 changes dw_pcie_ep_ops.get_features() to return a mutable
+  struct pci_epc_features * and updates all DWC-based glue drivers
+  accordingly. This is preparatory work for subsequent patches.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index fb3b54e05928..cbb12db110b3 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2338,8 +2338,13 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		if (!err) {
- 			src_perms = BIT(QCOM_SCM_VMID_HLOS);
- 
--			qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
-+			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
- 				    data->vmperms, data->vmcount);
-+			if (err) {
-+				dev_err(rdev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-+					res.start, resource_size(&res), err);
-+				goto err_free_data;
-+			}
- 		}
- 
- 	}
+- Patch 3/5 introduces dynamic_inbound_mapping feature bit. This can be
+  used as a safeguard to check whether a BAR can really be reconfigured
+  without clearing/resetting it.
+
+- Patch 4/5 adds an implementation for the DesignWare PCIe endpoint
+  controller using Address Match Mode IB iATU. It also advertises
+  subrange_mapping support from the DWC EP midlayer.
+
+- Patch 5/5 updates a documentation for pci_epc_set_bar().
+
+This series is originally a spin-off from a larger RFC series posted
+earlier:
+https://lore.kernel.org/all/20251217151609.3162665-4-den@valinux.co.jp/
+The first user will likely be Remote eDMA-backed NTB transport,
+demonstrated in that RFC series.
+
+Kernel base:
+  - repo: git://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git
+  - branch: controller/dwc
+  - commit: 68ac85fb42cf ("PCI: dwc: Use cfg0_base as iMSI-RX target address
+                           to support 32-bit MSI devices")
+
+Changelog:
+* v5->v6 changes:
+  - Added a new feature bit dynamic_inbound_mapping and set it centrally
+    in dw_pcie_ep_get_features() for all DWC-based glue drivers.
+  - Updated documentation for pci_epc_set_bar().
+  - Dropped a needless and harmful dw_pcie_ep_clear_bar() call on the error
+    path.
+  - Fixed "Bar Match Mode" to "BAR Match Mode" in a source code comment.
+
+* v4->v5 changes:
+  - Added subrange_mapping to struct pci_epc_features and enforced a
+    strict capability check in pci_epc_set_bar() (reject use_submap when
+    unsupported).
+  - Changed DWC-based glue drivers to return a mutable features pointer
+    and set subrange_mapping centrally at the DWC midlayer.
+  - Split the series into 3 patches accordingly.
+
+* v3->v4 changes:
+  - Drop unused includes that should have been removed in v3
+
+* v2->v3 changes:
+  - Remove submap copying and sorting from dw_pcie_ep_ib_atu_addr(), and
+    require callers to pass a sorted submap. The related source code
+    comments are updated accordingly.
+  - Refine source code comments and commit messages, including normalizing
+    "Address Match Mode" wording.
+  - Add const qualifiers where applicable.
+
+* v1->v2 changes:
+  - Introduced stricter submap validation: no holes/overlaps and the
+    subranges must exactly cover the whole BAR. Added
+    dw_pcie_ep_validate_submap() to enforce alignment and full-coverage
+    constraints.
+  - Enforced one-shot (all-or-nothing) submap programming to avoid leaving
+    half-programmed BAR state:
+    * Dropped incremental/overwrite logic that is no longer needed with the
+      one-shot design.
+    * Added dw_pcie_ep_clear_ib_maps() and used it from multiple places to
+      tear down BAR match / address match inbound mappings without code
+      duplication.
+  - Updated kernel source code comments and commit messages, including a
+    small refinement made along the way.
+  - Changed num_submap type to unsigned int.
+
+v5: https://lore.kernel.org/all/20260108172403.2629671-1-den@valinux.co.jp/
+v4: https://lore.kernel.org/all/20260108044148.2352800-1-den@valinux.co.jp/
+v3: https://lore.kernel.org/all/20260108024829.2255501-1-den@valinux.co.jp/
+v2: https://lore.kernel.org/all/20260107041358.1986701-1-den@valinux.co.jp/
+v1: https://lore.kernel.org/all/20260105080214.1254325-1-den@valinux.co.jp/
+
+
+Thank you for reviewing,
+
+
+Koichiro Den (5):
+  PCI: endpoint: Add BAR subrange mapping support
+  PCI: dwc: Allow glue drivers to return mutable EPC features
+  PCI: endpoint: Add dynamic_inbound_mapping EPC feature
+  PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match
+    Mode iATU
+  Documentation: PCI: endpoint: Clarify pci_epc_set_bar() usage
+
+ Documentation/PCI/endpoint/pci-endpoint.rst   |  22 ++
+ drivers/pci/controller/dwc/pci-dra7xx.c       |   4 +-
+ drivers/pci/controller/dwc/pci-imx6.c         |  10 +-
+ drivers/pci/controller/dwc/pci-keystone.c     |   4 +-
+ .../pci/controller/dwc/pci-layerscape-ep.c    |   2 +-
+ drivers/pci/controller/dwc/pcie-artpec6.c     |   4 +-
+ .../pci/controller/dwc/pcie-designware-ep.c   | 240 +++++++++++++++++-
+ .../pci/controller/dwc/pcie-designware-plat.c |   4 +-
+ drivers/pci/controller/dwc/pcie-designware.h  |   4 +-
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |   8 +-
+ drivers/pci/controller/dwc/pcie-keembay.c     |   4 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   4 +-
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c   |   4 +-
+ drivers/pci/controller/dwc/pcie-stm32-ep.c    |   4 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   4 +-
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c |  58 +++--
+ drivers/pci/endpoint/pci-epc-core.c           |   3 +
+ include/linux/pci-epc.h                       |   8 +
+ include/linux/pci-epf.h                       |  31 +++
+ 19 files changed, 355 insertions(+), 67 deletions(-)
+
 -- 
-2.25.1
+2.51.0
 
 
