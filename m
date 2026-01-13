@@ -1,101 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-88729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDE6AD17A66
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 10:34:28 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F7CED17C1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 10:48:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 15C2130802AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:27:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9AF26302CA95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:27:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71C9338BF87;
-	Tue, 13 Jan 2026 09:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 852D238E111;
+	Tue, 13 Jan 2026 09:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSWGcMNG"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Wba3eUdH";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="obGdS+b0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB6F38B7D4;
-	Tue, 13 Jan 2026 09:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B9B3815EA;
+	Tue, 13 Jan 2026 09:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768296270; cv=none; b=oVqgswDteLfJ0TWqAFNNSVa4GYlIwiJAOZbPgaus0k477cVNkAS9bsNes62v9YXAchfbWGtjO1rD0221UiPZCqskrAS+UEbzfJpKG4vd3AmZwounGzF0pln6WOTl9Ypvod+UJ/4k+Q1bKgDIDTeJ2v5rYiNsTqwQ+jUzvXmGvL8=
+	t=1768296313; cv=none; b=NoGXZBt8qnAxhDQBZ0vrA/XxS0pghIijq5AZvS0y6cHZPkZgMLmThbg0kM9fO4WCRRH+CfRo0nudsXmLC5c49pBjKMidrjbSgbeUSIDdCpcNbfgBIDPPcHnJwCyKJxD+jHsFmblu+R7Z3TOMxtE1rMqT++0mrEjmsl3zE2FtYmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768296270; c=relaxed/simple;
-	bh=D+89R93nA4hL5DdQWuRh7a4c9W2Lwb0hyXg1tNKw0GU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JsjsiE8CiwCl55MUfrhPrdxSh1rOLw22dE+XDt+Ia58VA5coOaCKtcmiGdocH7LZZboBA825iWsSStlFg/R4bg9QFT01JPcp3zaMtR9yX4d8a/BoEiV0JNJwsxkaC4OKYCpApOE6I2h2QLe9/Zj2PLEGnPNtvb6MFDDoecMbBiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSWGcMNG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379FEC116C6;
-	Tue, 13 Jan 2026 09:24:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768296270;
-	bh=D+89R93nA4hL5DdQWuRh7a4c9W2Lwb0hyXg1tNKw0GU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KSWGcMNGrtxSYxlxttwK32/xvDhk65H3nWkiSUD+Cm+J6ao1jHnegLyCrQZjeQw+Y
-	 hvaEI4S2QifRq3PzzXwRr4QCanByHVzrPH7T5FoLGMi++qaTHqSk3QI4iQchXZLngi
-	 VMWWT4nxoEwoZIAHAjrficz7EH/JZm0MCagK/QGPd0+EnC/Ku0tkKFpcT0AO9P4wV+
-	 yqt1NnT4hBRQB7NxobjTp3Oo+CKFbkCSHZqYKBxPUHPE0cqQvpEsXKXvQpLYfUWhiX
-	 kB4yTcBPCccwyznyws+ipZkbRCjG8lsvnUqT2FWfP6U4WtEzDjmBc8vHkG1r2WqxIx
-	 XZWiWZ/zhhkXw==
-Received: from johan by xi.lan with local (Exim 4.98.2)
-	(envelope-from <johan@kernel.org>)
-	id 1vfadS-000000005RZ-3NCz;
-	Tue, 13 Jan 2026 10:24:22 +0100
-Date: Tue, 13 Jan 2026 10:24:22 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mfd: qcom-pm8xxx: fix OF populate on driver rebind
-Message-ID: <aWYPRryYNYcl8IjI@hovoldconsulting.com>
-References: <20251219110947.24101-1-johan@kernel.org>
- <20260109152738.GK1118061@google.com>
+	s=arc-20240116; t=1768296313; c=relaxed/simple;
+	bh=AzXKgKkGT5WxYHVWoxvNel+hfZJBjYGlu46iUuROqbo=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=XsNGWIot2oAUlV8mm4a0c24BC7sdu530RpyCszXGidoms31oXbOS8YwMATimOBEq4Yzemv7CrlbI+v6WQIPtoWaJFeR2ycMnxbPKH/S3Goo640oMHGOoDux/AiTkB2kGWjVnrip903t4bEmDm88NjqqkgKEc7dZhMHvY0kdqpXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Wba3eUdH; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=obGdS+b0; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1768296300; bh=0pngC0SckCVUXla1waluvTC
+	IVJX4K1IOTa/kAtQEAcQ=; b=Wba3eUdHRvAR+rZRfy48fjzNdbplUXMIo04wULwRfr5wRhp8Do
+	VZJZF7HwPYf1KXP0j93FXXmTd5sLk2DdZjMmEFD4ak+TnHvc9mED/wXJUKDgQqZZ8iKdcimbGv/
+	vbNDRBHiLPUMXCD5tgrkZtLuSXBuPhmm8RBkROLb4m24cPnMA65SVo50DCAfUn63Z2GAAJFOMPu
+	xCer8rRrhfvw+8rbzHNt7p6oiRx2ysfHLe7v/UBWHv4kjKpBKyU3lCRAbT+nqElR+wIKNbgsqX8
+	BLUewhaFy0zLEmXGBFEInanfESxHM13+kxc36/TYVcqdxB6sTH7SmvMIyHLimrEDEQQ==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1768296300; bh=0pngC0SckCVUXla1waluvTC
+	IVJX4K1IOTa/kAtQEAcQ=; b=obGdS+b0g386uxkwoH3w9d4xBktOdZnTxzBZB2IjuewUcspc1l
+	Fwu0D2mRBLmlVsmCrE5fVSKVpm9Fq36GcoBQ==;
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260109152738.GK1118061@google.com>
+Date: Tue, 13 Jan 2026 10:25:00 +0100
+From: barnabas.czeman@mainlining.org
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales
+ <semfault@disroot.org>, Kees Cook <kees@kernel.org>, Tony Luck
+ <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+ Biswapriyo Nath <nathbappai@gmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved
+ gpio ranges
+In-Reply-To: <9662c03b-a012-4b3c-8061-62f71a3f44a6@oss.qualcomm.com>
+References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
+ <20260112-xiaomi-willow-v1-4-8e4476897638@mainlining.org>
+ <11ee77c1-2ea6-4c7c-b955-22f10d879ad7@oss.qualcomm.com>
+ <dd4ad11c57d00e9d9f532f40f408b637@mainlining.org>
+ <9662c03b-a012-4b3c-8061-62f71a3f44a6@oss.qualcomm.com>
+Message-ID: <43741f0228b0e0d6b2991417852f890a@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 09, 2026 at 03:27:38PM +0000, Lee Jones wrote:
-> On Fri, 19 Dec 2025, Johan Hovold wrote:
+On 2026-01-13 10:12, Konrad Dybcio wrote:
+> On 1/13/26 10:08 AM, barnabas.czeman@mainlining.org wrote:
+>> On 2026-01-13 10:01, Konrad Dybcio wrote:
+>>> On 1/12/26 9:13 PM, Barnabás Czémán wrote:
+>>>> The device was crashing on boot because the reserved gpio ranges
+>>>> was wrongly defined. Correct the ranges for avoid pinctrl crashing.
+>>>> 
+>>>> Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for 
+>>>> xiaomi-ginkgo")
+>>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>>>> ---
+>>> 
+>>> That's odd.. were you able to confirm that these values are alright 
+>>> for
+>>> both the Note 8 and the 8T?
+>> Yes, it was tested on both devices. The original devicetree was never 
+>> boot.
 > 
-> > Since commit c6e126de43e7 ("of: Keep track of populated platform
-> > devices") child devices will not be created by of_platform_populate()
-> > if the devices had previously been deregistered individually so that the
-> > OF_POPULATED flag is still set in the corresponding OF nodes.
-> > 
-> > Switch to using of_platform_depopulate() instead of open coding so that
-> > the child devices are created if the driver is rebound.
-> > 
-> > Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
-> > Cc: stable@vger.kernel.org	# 3.16
-> > Signed-off-by: Johan Hovold <johan@kernel.org>
-
-> > -static int pm8xxx_remove_child(struct device *dev, void *unused)
-> > -{
-> > -	platform_device_unregister(to_platform_device(dev));
-> > -	return 0;
-> > -}
-> > -
-> >  static void pm8xxx_remove(struct platform_device *pdev)
-> >  {
-> >  	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
-> >  
-> > -	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
-> > +	of_platform_depopulate(&pdev->dev);
-> >  	irq_domain_remove(chip->irqdomain);
+> Fun..
 > 
-> Have you explored devm_of_platform_populate()?
-
-Yeah, but mixing devres and explicit release risks introducing bugs. And
-here we want to make sure the children are deregistered before freeing
-the irqdomain.
-
-Johan
+>>> 
+>>>>  arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 2 +-
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>> 
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts 
+>>>> b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+>>>> index 666daf4a9fdd..163ecdc7fd6c 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+>>>> @@ -296,7 +296,7 @@ &sdhc_2 {
+>>>>  };
+>>>> 
+>>>>  &tlmm {
+>>>> -    gpio-reserved-ranges = <22 2>, <28 6>;
+>>>> +    gpio-reserved-ranges = <0 4>, <30 4>;
+>>> 
+>>> Any chance you know/could deduce what they're connected to and 
+>>> describe
+>>> it, like in x1-crd.dtsi?
+>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/willow-p-oss/drivers/pinctrl/qcom/pinctrl-msm.c#L605
+>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/ginkgo-p-oss/drivers/pinctrl/qcom/pinctrl-msm.c#L610
+> 
+> GPIO0-3 sounds like QUP0 and GPIO30-33 sounds like QUP6
+> 
+> My guess would be one goes to a fingerprint scanner and one goes to
+> NFC eSE (or N/C for the device without NFC)
+> 
+> Could you scan the downstream devicetree for signals of that?
+NFC is using gpio83, gpio84, gpio85 and gpio95.
+> 
+> Konrad
 
