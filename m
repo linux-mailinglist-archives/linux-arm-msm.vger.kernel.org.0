@@ -1,159 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-88691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id B067DD17367
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:11:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 763A5D173AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:15:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5EB9F3008796
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:11:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E1E0330046CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:14:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8479E3793A0;
-	Tue, 13 Jan 2026 08:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9905D3793B0;
+	Tue, 13 Jan 2026 08:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLFG8wjL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utoE0g34"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C57E30FC03
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F1034D909;
+	Tue, 13 Jan 2026 08:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768291861; cv=none; b=tEn57gHv3SuC1TfkQsa7yOuCcWOVykC9xwVRUbf4zUuvEkZM6MJgE+PhKyT4pIahvc3uBBliNm2vB+T8vnRVjtYCOENHmd9Jcs48QrBbaGAS6gYD7qzfaWrLp5hTCaoKZ5qW9nuLILkBn+1nyUbzcvBzLtA7zG44NPeswejxp+g=
+	t=1768292048; cv=none; b=bBrwmPvF8OkWzpeA/PdGDPPL5e1GCi6FlwSnskQHWlZhp0tREiIZOi6COfaz5PRSY6RBAUIMsctiHwx0TIwVzdon/2CnsjK1UPcuu18Nv49OIvXPJ0QCT5UERgNQbK4aHKn1M1gAcQK3mZd1HoBd4KtaPboktFIf8DgfyOi8T0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768291861; c=relaxed/simple;
-	bh=awFrvdugpRSWBPPFDwN9LrXRF+GIj550SIcZ6bTMTWU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=m3n7WTESlxrIbtvG208zAW52d9bOQmUYT77XgYvLBezlmJUp2svGNsIpimDNlt2CxFsm44dl9WK/8YfLmd210JG3q69QJ1kAu229f0qyrhT2AXxFXfD7Xeh9jwqygZ93UBcKUNipg34XO3HsyV4wEn552d1L+WpSF+rnffOVjr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLFG8wjL; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-4775895d69cso35812965e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 00:10:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768291858; x=1768896658; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bwW+ygfqdK5UYdKdlacSQmA5THvQFOrd2NY1OQuLwqQ=;
-        b=tLFG8wjL2YlzdoFl2tKoBy7Yo7dmp1RGnGvbAjeyGDpDnLxen4nD/571v+ERd7zZU6
-         AvGnS9BwCkFtCt3QNar4kP45SBZgD/bBj5eW/Dj9DsAzjpm3uRcmuqm7S3V7XeZ+SbnI
-         7EWjZpUbk9T301xs/t6AlO53Q/k9LAqkrGLls6a0WgSZHYhBsd2tJuC/QV1uznsDb6uE
-         D+jvXGs1CaHzOTcOKYrKui3zD5OnmbgemKh2rxWEm2UyHT6TBGoVPPwmfZEc430nTN2m
-         fyzrgQ9RL3PJ7gAl3rWtb2/h7xbT7t8AG70y/4WGlEOiDsnwwbnKkzCHkzkgdiW5kQSH
-         gzMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768291858; x=1768896658;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bwW+ygfqdK5UYdKdlacSQmA5THvQFOrd2NY1OQuLwqQ=;
-        b=iR9Mofq2oNwqdxtxhqhAv8YrORc3RCNaEfrmaeJTdNRMOxrptrtfRBvYZG18Cs4tV6
-         pVslPIHwqyy+Ht+nFWoSogHkJ0Bj3k/YeIbF6Ni7HD4hWdMEUqcsy7rlLJZqeHdHt/Ng
-         kJ/lEWqXDKgXAH+HDdHO7aCGxAXXefl4PkvPInYsCII1uWHJnIa0Wh0SUW87D8Na7WGS
-         1NuC8O0498HCEgIfqZ4UGi3kHPjHVYzUgOI2reRbpRv6dCn5knCWjKflnRTUR/w0YdmG
-         /MlYI7/gD+w+xnSnko4Dzh7vXBprs+nx8fuHrx1I7gJbsvkfI9dCJX4RjBgY3LukjAVu
-         xnJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVLeBg9m5Sk68LA9zJz2ADZzkH0SOmeO6mqRZLkwzBA7SskPlDm+S8nmDjHpUHXUs4ZavfDyKcZ6Xma3deJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzg6Yb1zMbT1SsFwmjaq3jW663iMHQpgr2t7Utd8gCQmr7aJoIO
-	R2ac9yvhFzKQ2Xm3uYGem30WSyq7or0fInh96aDe8pud9TKDD4t7YsX5qfUfSRUvbag=
-X-Gm-Gg: AY/fxX7Ce/Acpu1vfd1twxKdouW9xRp8hnBU+V4OInw+31am4m89HCY2/pPQeyAIubY
-	SEIAATirJX9jmGcmr6JxUF+vXQS9gV6i5BZqaHxk7xBQEXGQWHvyFIEfL7res+uOnHmL/fI1Yc8
-	tCDnoPChZgDEmVJ6POHeR0eQQpwyRkVwXY2y8PDLJVeQAa7Fhytg9d9wN3sWq4TNqXo/Kgkouef
-	er7sKMeY4pQNoTv2U6fRL42TnpQvZeE+9u174Jm8wNUHJbWGrzGFRodi6k5UxGjsnWgVhWVeEon
-	L+gmf0oQAwaVSKgbq7lMwnSjKpBQn+Ne+rDW1P3QjdBaNmZcrTqp82f1DdSzbUuWXy5a97B7bDD
-	KtaxJjNfeEh/8nLb0pxeldeWk+Co0hg2whA02Vh1PV1zKQalArXvMNV2/yreY7rV2lFoGZfpoqx
-	KhkZRZFL2AwkfjAHu4YmidhduBrfTm3CwERh5rY/g=
-X-Google-Smtp-Source: AGHT+IHVubdkYVXRdCYANXMR0ISA+TInCn3bu5ON04/WkSf5bxAVISHMRL30pKlB6Nx3R6Ym8XxdTQ==
-X-Received: by 2002:a05:600c:3484:b0:479:2a0b:180d with SMTP id 5b1f17b1804b1-47d84b20fd7mr244456025e9.11.1768291858442;
-        Tue, 13 Jan 2026 00:10:58 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:3d9:2080::fa42:7768? ([2a01:e0a:3d9:2080::fa42:7768])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47edc05b267sm16025705e9.15.2026.01.13.00.10.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jan 2026 00:10:57 -0800 (PST)
-Message-ID: <2d07b633-becc-4b79-adfa-932ae2847671@linaro.org>
-Date: Tue, 13 Jan 2026 09:10:57 +0100
+	s=arc-20240116; t=1768292048; c=relaxed/simple;
+	bh=A7mGP5zBcxtKo6Ya32gDahYikc66GApTgdae0kYiY3k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=prDEv2FjoAS9Jruj+y2I7qzUoBz8t+RTBPgtoMxuGz5fE+r00eMy8qhgvdCizXPnsdT+b5mccuVOq4DLwv4HSda2vlmyH984XCa1q8a5Of1bse5DB7KbQwqh9zxYNYKCyp3O9QMMgXe+AR/1awemWvIH2B24aie+ZsA2q6D0ZFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utoE0g34; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9302CC116C6;
+	Tue, 13 Jan 2026 08:14:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768292048;
+	bh=A7mGP5zBcxtKo6Ya32gDahYikc66GApTgdae0kYiY3k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=utoE0g34qABZkA2cE1BzQXdN2qB9cXqwaiQwd9A5LtXzg6l9tmr6OwXlqjVgbAr5j
+	 8pKsCi6wDl26YYH/zCZg1am4OxTHneGuNEofYR+ET2J9Vmh9vzIKQWyVlt43TOi8LF
+	 LDsZP5BrnGKXmVsglUx3VJpqedUv1XW16JNLMxd9JPoo3zwynvbqKeSvx0VgXW9V46
+	 0aDkKv5V/vSWtLlMPXzLctCdrqlkL1wG/1t+0Pk1smRx+xThF5MtFEZkoMbB9bVVc6
+	 FwMvC+Ppwt6LwnCM7l4RvKaIg8GyuhlGexewGUZcJyECrWgFv9Q+h9PnyOqHkBP6XL
+	 ifwMgp6Sx9wSQ==
+Date: Tue, 13 Jan 2026 13:44:00 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, Arnd Bergmann <arnd@arndb.de>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Upal Kumar Saha <upal.saha@oss.qualcomm.com>, Himanshu Shukla <quic_himashuk@quicinc.com>, 
+	Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+Subject: Re: [PATCH 07/11] bus: mhi: host: core: Add overflow disable flag
+Message-ID: <vzmacvzafgrtxupg6cmm2bi5kxuzyeoeod56qzp5ftlnh4txlj@xni5cok2lj3j>
+References: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
+ <20251211-siva_mhi_dp2-v1-7-d2895c4ec73a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2] phy: qcom: edp: Fix NULL pointer dereference for phy
- v6 (x1e80100)
-To: Val Packett <val@packett.cool>, Vinod Koul <vkoul@kernel.org>,
- Abel Vesa <abelvesa@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Abel Vesa <abel.vesa@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260111083317.604754-1-val@packett.cool>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260111083317.604754-1-val@packett.cool>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251211-siva_mhi_dp2-v1-7-d2895c4ec73a@oss.qualcomm.com>
 
-On 1/11/26 09:25, Val Packett wrote:
-> For Glymur SoC support, the com_clk_fwd_cfg callback was added, and a
-> stub implementation was added for the v4 of the hardware. However it
-> was omitted for the v6, causing a NULL pointer dereference oops on
-> Hamoa/Purwa (X1E/X1P) SoC devices. Fix by adding the appropriate stub.
+On Thu, Dec 11, 2025 at 01:37:39PM +0530, Sivareddy Surasani wrote:
+> From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
 > 
-> Fixes: add66a6673bc ("phy: qcom: edp: Add Glymur platform support")
-> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> Signed-off-by: Val Packett <val@packett.cool>
+> When the client transfers a large packet, the host may set
+> overflow events if the packet size exceeds the transfer ring
+> element size. Add a flag to disable overflow events.
+> 
+> Scenario: A device sends a packet of 5000 bytes. The host has
+> buffers of 2048 bytes, so the packet is split across three
+> buffers. The host expects one event for the entire packet, but
+> three events are generated: two marked as overflow and the
+> third as end of packet. The client driver wants only one
+> callback for the EOT event, not for overflow events. This
+> change prevents host channels from generating overflow events.
+> 
+> Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+
+Great, you just broke bisectability. This patch should come before 06/11 which
+uses this flag.
+
+- Mani
+
+> Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
 > ---
-> v2: pull R-b, reuse v4 function as suggested by Konrad
-> v1: https://lore.kernel.org/all/20260109045214.5983-1-val@packett.cool/
+>  drivers/bus/mhi/common.h        | 3 ++-
+>  drivers/bus/mhi/host/init.c     | 3 +++
+>  drivers/bus/mhi/host/internal.h | 1 +
+>  include/linux/mhi.h             | 2 ++
+>  4 files changed, 8 insertions(+), 1 deletion(-)
 > 
->   drivers/phy/qualcomm/phy-qcom-edp.c | 1 +
->   1 file changed, 1 insertion(+)
+> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
+> index 58f27c6ba63e..31ff4d2e6eba 100644
+> --- a/drivers/bus/mhi/common.h
+> +++ b/drivers/bus/mhi/common.h
+> @@ -282,7 +282,8 @@ struct mhi_event_ctxt {
+>  #define CHAN_CTX_CHSTATE_MASK		GENMASK(7, 0)
+>  #define CHAN_CTX_BRSTMODE_MASK		GENMASK(9, 8)
+>  #define CHAN_CTX_POLLCFG_MASK		GENMASK(15, 10)
+> -#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 16)
+> +#define CHAN_CTX_OVF_DISABLE_MASK	GENMASK(17, 16)
+> +#define CHAN_CTX_RESERVED_MASK		GENMASK(31, 18)
+>  struct mhi_chan_ctxt {
+>  	__le32 chcfg;
+>  	__le32 chtype;
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 4c092490c9fd..50f96f2c823f 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -340,6 +340,8 @@ static int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  		tmp |= FIELD_PREP(CHAN_CTX_BRSTMODE_MASK, mhi_chan->db_cfg.brstmode);
+>  		tmp &= ~CHAN_CTX_POLLCFG_MASK;
+>  		tmp |= FIELD_PREP(CHAN_CTX_POLLCFG_MASK, mhi_chan->db_cfg.pollcfg);
+> +		tmp &= ~CHAN_CTX_OVF_DISABLE_MASK;
+> +		tmp |= FIELD_PREP(CHAN_CTX_OVF_DISABLE_MASK, mhi_chan->db_cfg.ovf_dis);
+>  		chan_ctxt->chcfg = cpu_to_le32(tmp);
+>  
+>  		chan_ctxt->chtype = cpu_to_le32(mhi_chan->type);
+> @@ -870,6 +872,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
+>  
+>  		mhi_chan->ee_mask = ch_cfg->ee_mask;
+>  		mhi_chan->db_cfg.pollcfg = ch_cfg->pollcfg;
+> +		mhi_chan->db_cfg.ovf_dis = ch_cfg->ovf_disable;
+>  		mhi_chan->lpm_notify = ch_cfg->lpm_notify;
+>  		mhi_chan->offload_ch = ch_cfg->offload_channel;
+>  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 97bf6a70b9fa..db00ede0aa48 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -189,6 +189,7 @@ struct db_cfg {
+>  	bool reset_req;
+>  	bool db_mode;
+>  	u32 pollcfg;
+> +	bool ovf_dis;
+>  	enum mhi_db_brst_mode brstmode;
+>  	dma_addr_t db_val;
+>  	void (*process_db)(struct mhi_controller *mhi_cntrl,
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 299216b5e4de..926a20835467 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -215,6 +215,7 @@ enum mhi_db_brst_mode {
+>   * @ee_mask: Execution Environment mask for this channel
+>   * @pollcfg: Polling configuration for burst mode.  0 is default.  milliseconds
+>  	     for UL channels, multiple of 8 ring elements for DL channels
+> + * @ovf_disbale: Overflow disable flag
+>   * @doorbell: Doorbell mode
+>   * @lpm_notify: The channel master requires low power mode notifications
+>   * @offload_channel: The client manages the channel completely
+> @@ -232,6 +233,7 @@ struct mhi_channel_config {
+>  	enum mhi_ch_type type;
+>  	u32 ee_mask;
+>  	u32 pollcfg;
+> +	bool ovf_disable;
+>  	enum mhi_db_brst_mode doorbell;
+>  	bool lpm_notify;
+>  	bool offload_channel;
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> index 13feab99feec..7372de05a0b8 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> @@ -758,6 +758,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
->   	.com_power_on		= qcom_edp_phy_power_on_v6,
->   	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v6,
->   	.com_bias_en_clkbuflr	= qcom_edp_com_bias_en_clkbuflr_v6,
-> +	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v4,
->   	.com_configure_pll	= qcom_edp_com_configure_pll_v6,
->   	.com_configure_ssc	= qcom_edp_com_configure_ssc_v6,
->   };
+> -- 
+> 2.34.1
+> 
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-
-Thanks,
-Neil
+-- 
+மணிவண்ணன் சதாசிவம்
 
