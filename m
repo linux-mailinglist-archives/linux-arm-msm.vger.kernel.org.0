@@ -1,282 +1,394 @@
-Return-Path: <linux-arm-msm+bounces-88685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45CDBD172CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:03:35 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69E9AD172BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:03:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8E8A1305CB0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:02:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E3DA73013D5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 996CC36D4E7;
-	Tue, 13 Jan 2026 08:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02B7A36D515;
+	Tue, 13 Jan 2026 08:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BW0kqUjQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VrfGh8ae";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HOjy34U3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD9636BCD2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DD535502A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768291364; cv=none; b=n6qHeqBFke7p63xMK+H1BBna7k/wmXqJ6oyYzQhjrOum/Q8Qb3eqI0IZiHD71YrIjTB4RlywxvHfNF7PRWKnTLq9g2H+i/tfvtzclytvznL5gp45VXnftbBbo0GAfwy3CmtMqqjjfPvukmMaKG3VImr5ajO5Enr6nxwfDb5Fl2g=
+	t=1768291381; cv=none; b=rD5FUdTUxovkfVuZ10ukCBVVRQa66fN9Er5kYoa3CQS4Fm9ahKZVz50bcOILC/ykbn7XxiD+0jKtZJY+jaGrnvM7pSgXyqcMCf4D2WKgZIrBGXnHn1ygWIdlLJ3Vt8dPKTmTrbOIK0ii5WIBMgLkeK5teLReTb6KPIMiYE1ZDuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768291364; c=relaxed/simple;
-	bh=CfGLLHtAMP5se33ly666hJEy8681yRbGQLMykeBbx1k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aTr2Oo5UsamTYTn5v8EtYyi1UTnB494XCWxjj/CplHS+O6pNT1Yrz2PnTDY6+pf7u9xQrKTGZogpolN82UEtijb16xisVcDtC2c5rG9ZjZrOEYE1kE2arOLpp0leSZ9kRhtD/r0PsWRJqluOEEh2QTHSmW2ksnZH9Jut5xl54zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BW0kqUjQ; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47ed987d51aso3586375e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 00:02:36 -0800 (PST)
+	s=arc-20240116; t=1768291381; c=relaxed/simple;
+	bh=nkBL5kRLdo/zoDrr0XI7fSJ1DukrlAYjv88wfR7CXfY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CZyvrZZYU3Ww1xG0zpPYWulXJtmteARnqLz459QUUfs0IEvBKCkR0gj4Zh1uWaCe2+AK+plsRImWyvFiFcjCCv4mFAO1COvyHS/k4g51G/WcIpwI7VqmqpjK1a9XPlB7C6WI/diE4Us6bvkuqnID8OhkFJSOTWIMlTCYWZwLWzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VrfGh8ae; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HOjy34U3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60D5aqUb3636924
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:02:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	m6N9oyam4luPWb3/lWFVBCNIH3UwuJUcQqBFJqUvP+c=; b=VrfGh8aefgQ4i/R5
+	2SdeaYdk9NCKB6biEt/FPsVLgbCGSTXpZeAyGx+FLgPwKoz9vCU/j09fjZ+agOjS
+	HnAzHEq1gjwR+R2XOifMzFjbchYV4QHga1bAMK+z9fdY4pnbArOnXLoiYUUumJRx
+	yiMb49UstLZfQGiIxf9lo+5u3Ih8ZqkSdF6dT+380H87o5TrtDkukNU79gXkeoG6
+	r8DO7dtCPj3K55FVVSYlIS/YX8HFrRKcO7h2rB6lwmBbSCMoll/Iz5l1VDdBIhX1
+	ONwGySP0qlJb4LfesHLom6Pg44NHpIYJNz5+VHyWfT7DrJux2y8pLD7SO1SG7jVu
+	rSe7Eg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bng2c0dxc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:02:54 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-890805821c0so257371836d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 00:02:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768291353; x=1768896153; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g6A7r611q476j/8oCIaN8K7+Q8yqCShfdSd5Arz3Gpc=;
-        b=BW0kqUjQPz7P/T47Y9g3A3OwkseZzCGJKk3QD2GbuTLwrFM5yj09E2CUTcsa7mUijz
-         YlXMjyvrXvMQiYawHLxi8KIq22k7l0xmDXyhp06GI3QUjmqmWftacYZI1R1iddaAPAGi
-         HsWMKJGWm1Y44zAycuTjyndNXkeguznUxLwVPyhx2o/N4RHA625ObBA+pSBu44wdmA+y
-         luccyS/6WAEnLYfflRYuME2HpkD3BTJ3Pc/K7ST+wYayjlcSNn6JNZVhhSrEGRWXf1KB
-         s96fIaPzf7RSw6HzjmtafWwfEMwJvwXqEhpy3q4DD1gBBP4ERRPeYc+YNFEw6yZp8c+C
-         bZ5A==
+        d=oss.qualcomm.com; s=google; t=1768291373; x=1768896173; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m6N9oyam4luPWb3/lWFVBCNIH3UwuJUcQqBFJqUvP+c=;
+        b=HOjy34U3BwI9apMRQJHmljKby2SM0nVk6MAzVOWiMC7jrmx+RNk2HWUOUiQLd9w3TE
+         Pv0X+aUyYLf4z/NViWCK0gjj9ZgDuDlNPD0UroB2q9V31QtSlWEhLneGScME/TcW7b7s
+         r+ZcygCAyrAmD2xekJl5TPjn8Jp70k373nzHhWTaGzPtznzMejfd897oUttz24uw024p
+         1KQSB4Pnq7/YnII28PuleQ+d2PZq2WKRwPyO+w5fbDJ/otGyqMZYcqVWKpUMaw4EfZoy
+         5pm//W2B8LyyGOgiC0jTWNJ/ADskAFlpJjSR250rWMlYS5gkGm9VhOHsPScQ4T2g8i6x
+         TInA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768291353; x=1768896153;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g6A7r611q476j/8oCIaN8K7+Q8yqCShfdSd5Arz3Gpc=;
-        b=epgJlqWRBwoVwdGEuPt6ilveIYaZSau78uUz45RIicjQEN4PoWlbttDM31kIA0DwD9
-         p6FQZc9Ya5ICGg5GwmRI3fGt1MI6IbjDq0P7tez/5mw1gd5+qzs0Y/gsXe4XAqkKDN4Z
-         jeKI5xwJIK8xtSPI0c7/rGY7kvQLLlaSo0e6A1r6f4PsJ1ntwL5zLxQ4F7U0qd+39/7A
-         XmibL9YCB2HMisPjqmoNd2xeh4igjYYvhARpI3HACQGCG++iYsoglriArdWgn/60eo12
-         Br3W09WQ/kxbVh9e1dajVTuZPKZ7HYySkBc2DWw8aVxjfSrpu27x7peMZwYYbD/uMDwO
-         TmMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9HYAakp8rH3oMtcjS6+F69i5yf37wSqOPzu/vJHOtiY0zp60al4Z2c5c9gL4oMMyvYK6iyNnfnRTkt++I@vger.kernel.org
-X-Gm-Message-State: AOJu0YxzYEsy53fJbb9onXEVPSyuy52u1PkXn2ZxeuJK5zk4SXGApvMm
-	DZ48u3ixVdhDqKw9VlIKptUhh63OmD1p8uQXlkQcTycFYCIXHIvszZH2pi8HoW25yWE=
-X-Gm-Gg: AY/fxX589EGO7fceIpW0Oao2icy906V+vINm2lJOEa8Et7eDG4Ryo5L14f1w83m+JHC
-	C3YHKwIWBN1YuzdNu7Rx2AuF/GgTqo46AFiKumUTu484EFWQOvOksbGdavFlvq9PIGZa8FaUiEi
-	KGblDmM85sdYrdtiKiRN8CYvmUzm2vtqEg9nRHOT1Yf/geXwLVgDzG7xuGRH98TMvn+ed0cIo0N
-	kPv/Rc8JF0ZSeVdwCu7yQzQkPMYFKaOZXgdVTkWjkl4Ou94GIPughzEOcjhzbiG5s3cZzVYrbq3
-	Qb1BbLCNejdSQJ9NrgOJ593MqobTy48a2NCyxVYPIuY5N5k5k5NQnJD3RqcKeXE9xfLZ6l5nH9J
-	Ra2MLXI5YbvlQ56sm8y3PtIhKnbK1qPL9x+QP8lwDGhvyf2wAiMNTn05+jCuFVou7RiP6hvnPAQ
-	aRLMnvnoHIpYr83bExV2L+vWq5s0Gwmg6NbJp5AHg=
-X-Google-Smtp-Source: AGHT+IHrnnPCXrF0NOJBoPGixzBrnHBCDRj20M4yCZwqxFE51GxNlKuyIibw+hyJVZQowMJPsFEW1w==
-X-Received: by 2002:a05:600c:4fc6:b0:477:5ad9:6df1 with SMTP id 5b1f17b1804b1-47d84b0aaa3mr221663015e9.3.1768291352911;
-        Tue, 13 Jan 2026 00:02:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:3d9:2080::fa42:7768? ([2a01:e0a:3d9:2080::fa42:7768])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47ecf6a5466sm109514045e9.11.2026.01.13.00.02.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jan 2026 00:02:31 -0800 (PST)
-Message-ID: <186438aa-a39e-4c85-9187-cd47d6abd2e7@linaro.org>
-Date: Tue, 13 Jan 2026 09:02:30 +0100
+        d=1e100.net; s=20230601; t=1768291373; x=1768896173;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=m6N9oyam4luPWb3/lWFVBCNIH3UwuJUcQqBFJqUvP+c=;
+        b=gkZVdpoTy8Nx60/A7v95A3z4pDB5lFxV6rJt+fIEjUIjRg6T9S057XKZDVo7AW4Lem
+         LRZPu3vJ+P0AVucSOLkPoNvbRI3I0HwqXsQ8KwTW9RGO0EYbn56aFIukDF8SzPcvpeEN
+         /dU2pEDjpdxhjN2lLH95vB03eaeD8+W7SPvagk4i73XDqAOmxHtNPjUnabxw724PfK7T
+         8wOMtcQQ41yEbs+8NxnXkXDl2KXlpI7RtkPf/RxuSwWnLMIHKn5xY+3tuGMIkLdGPvhy
+         SX9qDApiXFI9D45Ih9ravlMcv4QoeMzgTsZEJMJ50AX5DciMt1L4NjB0vRB+lPU1pQ1U
+         vwcg==
+X-Forwarded-Encrypted: i=1; AJvYcCWlylDhJ6eCd2XO8ZAshRSiRKimZ6Vae5YWw9j7Jjc1uo5wDn05J5GY8WKo5GC67LLZDAYa+uMARtjtNpR9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHwdVN2XeTY24UuJMteAYicG+eI7Gg8n0z9T8OcEUqbCQkk5VH
+	MCnX1IWs45W+DdUnyePR2lpLUSQmXWqw1sIUhYIbhExaAPRBataBplfhxcv8wM34vI1NyjSkzw5
+	5dfgWNJ1Y+WFzxkogJiaVEQeFcyiJtTdfRWtWhhQzw+M/u5xIlskDRrGC3yqJ18KDEYCfuyFIUM
+	LT38iCS69VUIj672i4LYWXnvAY1SobqITdLFlVCY0MHQ8=
+X-Gm-Gg: AY/fxX4N8FB7hAEqfPA/6pn99lF3IYM76aTKz5v87ePUmyP1FVWYLpkmuOuvo05RCCZ
+	nCM7f6wzhWVwxu1DnnIqs4Xnaf4S7Q57GR0bD32Gs0z2akBIPysuilyOzO3W9TV8DaH7+kFaRdF
+	LbYBPPjNbbsFe3jguqoTXHCvXlNRu+L1+1E9txqnj/0hNFqSVb9UP6VxT7FDyOldIORX3u
+X-Received: by 2002:a05:6214:5687:b0:889:7c5b:8134 with SMTP id 6a1803df08f44-890841c88a5mr285816596d6.27.1768291373219;
+        Tue, 13 Jan 2026 00:02:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDGIu4Dg8ZP94iBqh5DZqcZsX/AaRxPqITFb3eUEMO4jPYXNM8IMx4+5g371Bpd6RPfrrlIlEo1qQF/lxG1aA=
+X-Received: by 2002:a05:6214:5687:b0:889:7c5b:8134 with SMTP id
+ 6a1803df08f44-890841c88a5mr285816066d6.27.1768291372777; Tue, 13 Jan 2026
+ 00:02:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 4/6] phy: qcom-qmp-ufs: Add Milos support
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org,
- Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
- <20260112-milos-ufs-v2-4-d3ce4f61f030@fairphone.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260112-milos-ufs-v2-4-d3ce4f61f030@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251220063537.3639535-1-swati.agarwal@oss.qualcomm.com>
+ <20251220063537.3639535-5-swati.agarwal@oss.qualcomm.com> <qy4bp2hz3ivwydsk4sblxpgthz5hw4rn7r3ezaim5wf5fgm4sg@meispnp6wthj>
+In-Reply-To: <qy4bp2hz3ivwydsk4sblxpgthz5hw4rn7r3ezaim5wf5fgm4sg@meispnp6wthj>
+From: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+Date: Tue, 13 Jan 2026 13:32:41 +0530
+X-Gm-Features: AZwV_QjkEC6ruPO6nTmB-CDI4g8kcjrgHKlljma_9lovnFDRP5LmTtxd5MA_ynw
+Message-ID: <CAHz4bYvVfQke_aUx_mVO2QkCc5yr_1Cn35N6hPi1if=X7iM3+g@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: lemans-evk: Enable secondary USB
+ controller in host mode
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        =?UTF-8?B?SiAuIE5ldXNjaMOkZmVy?= <j.ne@posteo.net>,
+        Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+        Mike Looijmans <mike.looijmans@topic.nl>,
+        Catalin Popescu <catalin.popescu@leica-geosystems.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Pin-yen Lin <treapking@chromium.org>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDA2NiBTYWx0ZWRfX4evBqNJynZFc
+ i/bWqv1K9Tp5enNiQFvEHrrQFQnsL36eCAYq1tvPSxLu0zgYMTwbUsia+R6Y7XSdgILVjxOY7Ic
+ nDtBGuzBVVLd9tFPRKkQmP4gR3eJnH8/KT37A2iZx3DY8tI6qmujloLA+XmhsOjmQsveXxK1ury
+ w/DCdOj8ml25trDiJ/90L2x7fsH9ClLUsmXAfiyJicJxR56NvlW4kwge8PXEKek4eGjrAKf337w
+ WNLkcygvD9s4T7UPVN8lXZwT1V+2zMi8CFz90GUFLlZ41tQFWnOGU/b4/HIryrDdZaGxQv4uTOX
+ nDirnTg9GwMXJhSO/NTMwEFL+9PGCByaIQ8Fe3ar3+0Mt5rcrE11zL/ELe8GloDa+wcAumKG2bU
+ 3GZW28gmbzxoiyYxvLcofu3AfAa5mYEjcH0+6AJVywAvbzz+IWRkkfLmAW78c3y7XPgQDn3+dSn
+ b8mNG6dDVSM1MA1mTCQ==
+X-Authority-Analysis: v=2.4 cv=C5TkCAP+ c=1 sm=1 tr=0 ts=6965fc2e cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=03JeH7_DdWppPfD7oeIA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: eyABtfYJGVWfqP9VZ7-CXtX2Bdq-3Cfo
+X-Proofpoint-ORIG-GUID: eyABtfYJGVWfqP9VZ7-CXtX2Bdq-3Cfo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_01,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 suspectscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601130066
 
-On 1/12/26 14:53, Luca Weiss wrote:
-> Add the init sequence tables and config for the UFS QMP phy found in the
-> Milos SoC.
-> 
-> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 96 +++++++++++++++++++++++++++++++++
->   1 file changed, 96 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index 8a280433a42b..df138a5442eb 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -84,6 +84,68 @@ static const unsigned int ufsphy_v6_regs_layout[QPHY_LAYOUT_SIZE] = {
->   	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_UFS_POWER_DOWN_CONTROL,
->   };
->   
-> +static const struct qmp_phy_init_tbl milos_ufsphy_serdes[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IETRIM, 0x0a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IPTRIM, 0x17),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x0c),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x98),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x32),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x0f),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl milos_ufsphy_tx[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0xcc),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl milos_ufsphy_rx[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x3e),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xce),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1, 0xce),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B2, 0x18),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3, 0x1a),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B4, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6, 0x60),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B3, 0x9e),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B6, 0x60),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B3, 0x9e),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B4, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B5, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B8, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_PI_CTRL1, 0x94),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl milos_ufsphy_pcs[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x0b),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
-> +};
-> +
->   static const struct qmp_phy_init_tbl msm8996_ufsphy_serdes[] = {
->   	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
->   	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
-> @@ -1165,6 +1227,11 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
->   }
->   
->   /* Regulator bulk data with load values for specific configurations */
-> +static const struct regulator_bulk_data milos_ufsphy_vreg_l[] = {
-> +	{ .supply = "vdda-phy", .init_load_uA = 140120 },
-> +	{ .supply = "vdda-pll", .init_load_uA = 18340 },
-> +};
-> +
->   static const struct regulator_bulk_data msm8996_ufsphy_vreg_l[] = {
->   	{ .supply = "vdda-phy", .init_load_uA = 51400 },
->   	{ .supply = "vdda-pll", .init_load_uA = 14600 },
-> @@ -1258,6 +1325,32 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
->   	.rx2		= 0x1a00,
->   };
->   
-> +static const struct qmp_phy_cfg milos_ufsphy_cfg = {
-> +	.lanes			= 2,
-> +
-> +	.offsets		= &qmp_ufs_offsets_v6,
-> +	.max_supported_gear	= UFS_HS_G4,
-> +
-> +	.tbls = {
-> +		.serdes		= milos_ufsphy_serdes,
-> +		.serdes_num	= ARRAY_SIZE(milos_ufsphy_serdes),
-> +		.tx		= milos_ufsphy_tx,
-> +		.tx_num		= ARRAY_SIZE(milos_ufsphy_tx),
-> +		.rx		= milos_ufsphy_rx,
-> +		.rx_num		= ARRAY_SIZE(milos_ufsphy_rx),
-> +		.pcs		= milos_ufsphy_pcs,
-> +		.pcs_num	= ARRAY_SIZE(milos_ufsphy_pcs),
-> +	},
-> +	.tbls_hs_b = {
-> +		.serdes		= sm8550_ufsphy_hs_b_serdes,
-> +		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
-> +	},
-> +
-> +	.vreg_list		= milos_ufsphy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(milos_ufsphy_vreg_l),
-> +	.regs			= ufsphy_v6_regs_layout,
-> +};
-> +
->   static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
->   	.lanes			= 1,
->   
-> @@ -2166,6 +2259,9 @@ static int qmp_ufs_probe(struct platform_device *pdev)
->   
->   static const struct of_device_id qmp_ufs_of_match_table[] = {
->   	{
-> +		.compatible = "qcom,milos-qmp-ufs-phy",
-> +		.data = &milos_ufsphy_cfg,
-> +	}, {
->   		.compatible = "qcom,msm8996-qmp-ufs-phy",
->   		.data = &msm8996_ufsphy_cfg,
->   	}, {
-> 
+On Sat, Dec 20, 2025 at 9:47=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sat, Dec 20, 2025 at 12:05:37PM +0530, Swati Agarwal wrote:
+> > Enable secondary USB controller in host mode on lemans EVK Platform.
+> >
+> > For secondary USB Typec port, there is a genesys USB HUB GL3590 having =
+4
+> > ports sitting in between SOC and HD3SS3220 Type-C port controller and S=
+S
+> > lines run from the SoC through the hub to the Port controller. Mark the
+> > second USB controller as host only capable.
+> >
+> > Add HD3SS3220 Type-C port controller along with Type-c connector for
+> > controlling vbus supply.
+> >
+> > Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/lemans-evk.dts | 158 ++++++++++++++++++++++++
+> >  1 file changed, 158 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/=
+dts/qcom/lemans-evk.dts
+> > index 70d85b6ba772..d72639479d75 100644
+> > --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > @@ -67,6 +67,47 @@ usb0_con_ss_ep: endpoint {
+> >               };
+> >       };
+> >
+> > +     connector-1 {
+> > +             compatible =3D "usb-c-connector";
+> > +             label =3D "USB1-Type-C";
+> > +             data-role =3D "host";
+> > +             power-role =3D "dual";
+> > +             try-power-role =3D "source";
+> > +
+> > +             vbus-supply =3D <&vbus_supply_regulator_1>;
+> > +
+> > +             ports {
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +
+> > +                     port@0 {
+> > +                             reg =3D <0>;
+> > +
+> > +                             usb1_con_ss_ep: endpoint {
+> > +                                     remote-endpoint =3D <&hd3ss3220_1=
+_in_ep>;
+> > +                             };
+> > +                     };
+> > +
+> > +                     port@1 {
+> > +                             reg =3D <1>;
+> > +
+> > +                             usb1_hs_in: endpoint {
+> > +                                     remote-endpoint =3D <&usb_hub_2_1=
+>;
+> > +                             };
+> > +
+> > +                     };
+> > +
+> > +                     port@2 {
+> > +                             reg =3D <2>;
+> > +
+> > +                             usb1_ss_in: endpoint {
+> > +                                     remote-endpoint =3D <&usb_hub_3_1=
+>;
+> > +                             };
+> > +
+> > +                     };
+> > +             };
+> > +     };
+> > +
+> >       edp0-connector {
+> >               compatible =3D "dp-connector";
+> >               label =3D "EDP0";
+> > @@ -140,6 +181,16 @@ vbus_supply_regulator_0: regulator-vbus-supply-0 {
+> >               enable-active-high;
+> >       };
+> >
+> > +     vbus_supply_regulator_1: regulator-vbus-supply-1 {
+> > +             compatible =3D "regulator-fixed";
+> > +             regulator-name =3D "vbus_supply_1";
+> > +             gpio =3D <&expander1 3 GPIO_ACTIVE_HIGH>;
+> > +             regulator-min-microvolt =3D <5000000>;
+> > +             regulator-max-microvolt =3D <5000000>;
+> > +             regulator-boot-on;
+> > +             enable-active-high;
+> > +     };
+> > +
+> >       vmmc_sdc: regulator-vmmc-sdc {
+> >               compatible =3D "regulator-fixed";
+> >
+> > @@ -527,6 +578,33 @@ hd3ss3220_0_out_ep: endpoint {
+> >                       };
+> >               };
+> >       };
+> > +
+> > +     usb-typec@47 {
+> > +             compatible =3D "ti,hd3ss3220";
+> > +             reg =3D <0x47>;
+> > +
+> > +             interrupts-extended =3D <&pmm8654au_2_gpios 6 IRQ_TYPE_ED=
+GE_FALLING>;
+> > +
+> > +             id-gpios =3D <&tlmm 51 GPIO_ACTIVE_HIGH>;
+> > +
+> > +             pinctrl-0 =3D <&usb1_id>, <&usb1_intr>;
+> > +             pinctrl-names =3D "default";
+> > +
+> > +             ports {
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +
+> > +                     port@0 {
+> > +                             reg =3D <0>;
+> > +
+> > +                             hd3ss3220_1_in_ep: endpoint {
+> > +                                     remote-endpoint =3D <&usb1_con_ss=
+_ep>;
+> > +                             };
+> > +                     };
+> > +
+> > +             };
+> > +     };
+> > +
+> >  };
+> >
+> >  &i2c18 {
+> > @@ -690,6 +768,14 @@ usb0_intr_state: usb0-intr-state {
+> >               bias-pull-up;
+> >               power-source =3D <0>;
+> >       };
+> > +
+> > +     usb1_intr: usb1-intr-state {
+> > +             pins =3D "gpio6";
+> > +             function =3D "normal";
+> > +             input-enable;
+> > +             bias-pull-up;
+> > +             power-source =3D <0>;
+> > +     };
+> >  };
+> >
+> >  &qup_i2c19_default {
+> > @@ -849,6 +935,12 @@ usb_id: usb-id-state {
+> >               function =3D "gpio";
+> >               bias-pull-up;
+> >       };
+> > +
+> > +     usb1_id: usb1-id-state {
+> > +             pins =3D "gpio51";
+> > +             function =3D "gpio";
+> > +             bias-pull-up;
+> > +     };
+> >  };
+> >
+> >  &uart10 {
+> > @@ -903,6 +995,72 @@ &usb_0_qmpphy {
+> >       status =3D "okay";
+> >  };
+> >
+> > +&usb_1 {
+> > +     dr_mode =3D "host";
+> > +
+> > +     #address-cells =3D <1>;
+> > +     #size-cells =3D <0>;
+> > +
+> > +     status =3D "okay";
+> > +
+> > +     usb_hub_2_x: hub@1 {
+> > +             compatible =3D "usb5e3,610";
+> > +             reg =3D <1>;
+> > +             peer-hub =3D <&usb_hub_3_x>;
+> > +             #address-cells =3D <1>;
+> > +             #size-cells =3D <0>;
+> > +
+> > +             ports {
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +
+> > +                     port@1 {
+> > +                             reg =3D <1>;
+> > +
+> > +                             usb_hub_2_1: endpoint {
+> > +                                     remote-endpoint =3D <&usb1_hs_in>=
+;
+> > +                             };
+>
+> Are all other ports disconnected? If so, why do we need a hub?
+Hi Dmitry,
+I didn't understand your query, can you give more context to it?
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-
-Thanks,
-Neil
+Regards,
+Swati
+>
+> > +                     };
+> > +
+> > +             };
+> > +     };
+> > +
+> > +     usb_hub_3_x: hub@2 {
+> > +             compatible =3D "usb5e3,625";
+> > +             reg =3D <2>;
+> > +             peer-hub =3D <&usb_hub_2_x>;
+> > +
+> > +             ports {
+> > +                     #address-cells =3D <1>;
+> > +                     #size-cells =3D <0>;
+> > +
+> > +                     port@1 {
+> > +                             reg =3D <1>;
+> > +
+> > +                             usb_hub_3_1: endpoint {
+> > +                                     remote-endpoint =3D <&usb1_ss_in>=
+;
+> > +                             };
+> > +                     };
+> > +
+> > +             };
+> > +     };
+> > +};
+> > +
+> > +&usb_1_hsphy {
+> > +     vdda-pll-supply =3D <&vreg_l7a>;
+> > +     vdda18-supply =3D <&vreg_l6c>;
+> > +     vdda33-supply =3D <&vreg_l9a>;
+> > +
+> > +     status =3D "okay";
+> > +};
+> > +
+> > +&usb_1_qmpphy {
+> > +     vdda-phy-supply =3D <&vreg_l1c>;
+> > +     vdda-pll-supply =3D <&vreg_l7a>;
+> > +
+> > +     status =3D "okay";
+> > +};
+> > +
+> >  &xo_board_clk {
+> >       clock-frequency =3D <38400000>;
+> >  };
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
