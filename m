@@ -1,204 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-88806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E32AD19B51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 16:04:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFFC7D19B8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 16:07:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2DFE73039FA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 15:01:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EB57C30DED51
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 14:59:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC43392C3F;
-	Tue, 13 Jan 2026 15:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2912D73B1;
+	Tue, 13 Jan 2026 14:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKEaOIP3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PHWsIAxy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B8C2EA490;
-	Tue, 13 Jan 2026 15:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2734328CF77
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 14:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768316436; cv=none; b=HU43oe/ZwXsAmVV3e6NZD8zwKdADFfk8dk5gd4Lmebi/I8QwVbUNF1ERYLIViHmUFn0xvjJ8npS19Bp5ATQzMThlZGpZgGGx67Cwkzz0PB+aEGV0juy04+SikFslhlL//WzgiLXbnWWL4J1xIXQ4rbD7K0xjJzWSMZgZj5Zahso=
+	t=1768316389; cv=none; b=sxNDwSySuE9VTLTSChxddW5XuuHQUgph4Ye39t0Tl7DX8rjZFgGtRf8pk1K3vvN0eD6m5OoSoub0+oNihvez3V+HnpyJrWHIFF8fRiVyHDIGa03MnGaVFCol1voWzMduSTICMYZaQt/mJLsKYiiuSKfBJZfQGyUOBaXU3rnA3mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768316436; c=relaxed/simple;
-	bh=7IND1r7o6Wp7j2XEHAl4lxHLxu4x+EFEDnLYqL51V0s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qpUxhyjyZOwTng9O/RmFGypRQy05uzSDPvgFp/i31KtQRf8CKezkFKu9S2crIS5buP2bRSkqwC6nsh4p6kfOwuBYhOwxDHn9BJLdfIOAkK2V1j9QPT33bsPslWs3hGLjZ6qocR+AfoO9jEPAuujMCOzptFXzK8cljeXANgh7d2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKEaOIP3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5FBC116C6;
-	Tue, 13 Jan 2026 15:00:34 +0000 (UTC)
+	s=arc-20240116; t=1768316389; c=relaxed/simple;
+	bh=tQadruJtxmTbpXQwTK9LfM1gAaIAvYJ7hwO3+2qDwKQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XWTNVun19le0eeS2R3EZW0ljR95w30Ha8/v1kPYfb1thOQtypuT1q8rOoTkJyub3jALXj4ORbPDtVudwbrxN/qOb968h7LrbCjN7eLd226iOhMGRY3J8NxDvm6SlDb/xDqkbq/ZZIadNhaoql/L9XLhYJkrWQLiZfF2sV4d/4EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PHWsIAxy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB00EC16AAE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 14:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768316435;
-	bh=7IND1r7o6Wp7j2XEHAl4lxHLxu4x+EFEDnLYqL51V0s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BKEaOIP3NDy4TyyIXvNQy44XdcQ1Zofi/kLqNXszvG/ebMF/ypEIMu74C8u47DadY
-	 j1+KSEmvQi0W8IVyrgJpPX/5KvwEWTzJMprDI6e/A9lAs4PZJponcNBWSZtBj1Bs4x
-	 5+CutMZNmj5ZG5QbwVm0T2bTiN9EAbtq65T/ceEVy+HYkgkQquDjTSekSS9Prx/wVd
-	 dWSrtYrRewLv/p04TgDPEU2jAMrBKLInOC3HNok+OOmxqaXnLNN9CO9LYhQpFBq3xl
-	 z220S1ujX7ccB95Wi2vNye3KGltWKd2yh2vm6L71Xl8nk3J5+J0IbSencHSAxmV76z
-	 KO8VTh+WG/UQA==
-Date: Tue, 13 Jan 2026 09:00:32 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>, Pankaj Patil <pankaj.patil@oss.qualcomm.com>, 
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: glymur: Add Mahua TLMM support
-Message-ID: <27acg4iq6mtmf6tkm4w2pl7qv23iudonjdm2h2tmy2sc6owjiv@oosa6d2a3pzh>
-References: <20260102-pinctrl-qcom-mahua-tlmm-v1-0-0edd71af08b2@oss.qualcomm.com>
- <20260102-pinctrl-qcom-mahua-tlmm-v1-2-0edd71af08b2@oss.qualcomm.com>
- <91d2e5f7-7d93-4909-9ed2-6b19abf0b448@oss.qualcomm.com>
- <dayj662qu7tb3l2fuq4sfdxunvkk2rt777vm7dfvdazbwiwpzn@mysrwdbdptqt>
- <adlhkus5gvum6fkd7bxjohwlsiumw7w6w4c36vzphjz7my2644@pmobztmgpdvx>
- <zaf4uoms75wc7yvmrmqs53couefqsv5oie2hbiwvhitqonbs4u@aq6bcvf4nq3o>
- <0d6f8f95-01be-4fa3-9fde-bc00cbb894f6@oss.qualcomm.com>
- <025a8ba9-3889-4a8d-84ab-4f3f839f6003@oss.qualcomm.com>
+	s=k20201202; t=1768316388;
+	bh=tQadruJtxmTbpXQwTK9LfM1gAaIAvYJ7hwO3+2qDwKQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=PHWsIAxyxOfbmJicN6UnT/sD3VAMyEEV7GbJNBx9MoC9DvfLdwHPgmoOvngifkAg1
+	 FpfQv3GlCsCq4GbGfGiF7G0h46YlV1aId46JMX6qHmYE/mTP4ATNGZhYgQFTXkx48X
+	 4SGTeuWYh35KmKxEu6QGSyPAPnGEOkVhNOZFf002PgRKK/c5JKlnjjBkY5mRCna81M
+	 /SiyO1/PD9HHfzsJW/DtSpjinrHUZewwnu9pvhQC2dOB2fOiWXvTVWsG58/cgcZCTj
+	 ZNqMC8k0v4Ii2+VvtYXK9SSzpVdz7RRVDFcG3KxHPx4YqrYx8VtUsFqAU4dPdCfLwp
+	 8ywGTH6s4hKIQ==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b685d2b79so7368830e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 06:59:48 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWawECKKcnSXcBeoXfYHRjKswYUjYs6blGR5EaqFuUEDf4DsST9d6rb+XETkaxqhwVgo9D1vL4ETiIy2IjV@vger.kernel.org
+X-Gm-Message-State: AOJu0YymC5/kJF5Do0zzQdyQVmvANHH62QS9MFJdIV5/4D3QkTrn54Lg
+	XYrUkLr7Kq1/by8GV0k0mDY46MvbG2/67gu5DUa7nYrTwUOlPZ/RJdiwV+cV3MwNL6LPSz3ICqF
+	kYhCFD5HLc5Wpsse8OoOKcKU4dfKCNGSnMWLwIErXdw==
+X-Google-Smtp-Source: AGHT+IHoAkGe0e3qdUlYSk0a+ywNjp7vVj+8KXkbYwW12DVf5qs2c3LuhktveDflBx3nm/JLFmrM67710bfXAlbaMrs=
+X-Received: by 2002:a05:6512:1593:b0:59b:7311:b261 with SMTP id
+ 2adb3069b0e04-59b7311b469mr7215517e87.3.1768316387451; Tue, 13 Jan 2026
+ 06:59:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <025a8ba9-3889-4a8d-84ab-4f3f839f6003@oss.qualcomm.com>
+References: <20251227-next-15nov_expose_sysfs-v22-0-2d153438ba19@oss.qualcomm.com>
+ <20251227-next-15nov_expose_sysfs-v22-2-2d153438ba19@oss.qualcomm.com>
+ <CAMRc=MewoxcijL_OYi=LwWMJmYCSsYFQ2j+koOF5b2_w8VyGsg@mail.gmail.com> <ee0c4a7b-e3d1-1816-d5b3-e53ec3cf2e8f@oss.qualcomm.com>
+In-Reply-To: <ee0c4a7b-e3d1-1816-d5b3-e53ec3cf2e8f@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Tue, 13 Jan 2026 15:59:34 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MedMkQTGYzSFeiCovKTb_3Mpy8sOa66usQxtu+yi46-2g@mail.gmail.com>
+X-Gm-Features: AZwV_QhXj_Fm3OeEdkdOlVokkUjWWgob1WLfiq5N2joWXWmXf-Q3ErgwLdMcQlo
+Message-ID: <CAMRc=MedMkQTGYzSFeiCovKTb_3Mpy8sOa66usQxtu+yi46-2g@mail.gmail.com>
+Subject: Re: [PATCH v22 2/2] power: reset: reboot-mode: Expose sysfs for
+ registered reboot_modes
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Sebastian Reichel <sre@kernel.org>, 
+	Bartosz Golaszewski <bgolasze@quicinc.com>, Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 12, 2026 at 01:16:37PM +0530, Gopikrishna Garmidi wrote:
-> 
-> 
-> On 1/7/2026 4:00 PM, Konrad Dybcio wrote:
-> > On 1/5/26 6:20 PM, Manivannan Sadhasivam wrote:
-> > > On Mon, Jan 05, 2026 at 09:31:03AM -0600, Bjorn Andersson wrote:
-> > > > On Mon, Jan 05, 2026 at 11:04:44AM +0530, Manivannan Sadhasivam wrote:
-> > > > > On Fri, Jan 02, 2026 at 01:40:22PM +0100, Konrad Dybcio wrote:
-> > > > > > On 1/2/26 12:07 PM, Gopikrishna Garmidi wrote:
-> > > > > > > Introduce support for the Mahua TLMM (Top Level Mode Multiplexer)
-> > > > > > > in the pinctrl-glymur driver. Mahua shares the same pin configuration
-> > > > > > > as Glymur but requires a different PDC wake IRQ mapping.
-> > > > > > > 
-> > > > > > > Changes include:
-> > > > > > > - Add mahua_pdc_map[] with Mahua-specific GPIO to PDC IRQ mappings
-> > > > > > > - Define mahua_tlmm msm_pinctrl_soc_data structure
-> > > > > > > - Update device match table to include "qcom,mahua-tlmm" compatible
-> > > > > > > - Modify probe function to use of_device_get_match_data() for dynamic
-> > > > > > >    SoC-specific data selection
-> > > > > > > 
-> > > > > > > Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-> > > > > > > ---
-> > > > > > >   drivers/pinctrl/qcom/pinctrl-glymur.c | 43 ++++++++++++++++++++++++++++++++---
-> > > > > > >   1 file changed, 40 insertions(+), 3 deletions(-)
-> > > > > > > 
-> > > > > > > diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
-> > > > > > > index 335005084b6b..bf56a064d09c 100644
-> > > > > > > --- a/drivers/pinctrl/qcom/pinctrl-glymur.c
-> > > > > > > +++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
-> > > > > > > @@ -1729,6 +1729,25 @@ static const struct msm_gpio_wakeirq_map glymur_pdc_map[] = {
-> > > > > > >   	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
-> > > > > > >   };
-> > > > > > > +static const struct msm_gpio_wakeirq_map mahua_pdc_map[] = {
-> > > > > > > +	{ 0, 116 },   { 2, 114 },   { 3, 115 },	  { 4, 175 },	{ 5, 176 },
-> > > > > > > +	{ 7, 111 },   { 11, 129 },  { 13, 130 },  { 15, 112 },	{ 19, 113 },
-> > > > > > > +	{ 23, 187 },  { 27, 188 },  { 28, 121 },  { 29, 122 },	{ 30, 136 },
-> > > > > > > +	{ 31, 203 },  { 32, 189 },  { 34, 174 },  { 35, 190 },	{ 36, 191 },
-> > > > > > > +	{ 39, 124 },  { 43, 192 },  { 47, 193 },  { 51, 123 },	{ 53, 133 },
-> > > > > > > +	{ 55, 125 },  { 59, 131 },  { 64, 134 },  { 65, 150 },	{ 66, 186 },
-> > > > > > > +	{ 67, 132 },  { 68, 195 },  { 71, 135 },  { 75, 196 },	{ 79, 197 },
-> > > > > > > +	{ 83, 198 },  { 84, 181 },  { 85, 199 },  { 87, 200 },	{ 91, 201 },
-> > > > > > > +	{ 92, 182 },  { 93, 183 },  { 94, 184 },  { 95, 185 },	{ 98, 202 },
-> > > > > > > +	{ 105, 157 }, { 113, 128 }, { 121, 117 }, { 123, 118 }, { 125, 119 },
-> > > > > > > +	{ 129, 120 }, { 131, 126 }, { 132, 160 }, { 133, 194 }, { 134, 127 },
-> > > > > > > +	{ 141, 137 }, { 144, 138 }, { 145, 139 }, { 147, 140 }, { 148, 141 },
-> > > > > > > +	{ 150, 146 }, { 151, 147 }, { 153, 148 }, { 154, 144 }, { 155, 159 },
-> > > > > > > +	{ 156, 149 }, { 157, 151 }, { 163, 142 }, { 172, 143 }, { 181, 145 },
-> > > > > > > +	{ 193, 161 }, { 196, 152 }, { 203, 177 }, { 208, 178 }, { 215, 162 },
-> > > > > > > +	{ 217, 153 }, { 220, 154 }, { 221, 155 }, { 228, 179 }, { 230, 180 },
-> > > > > > > +	{ 232, 206 }, { 234, 172 }, { 235, 173 }, { 242, 158 }, { 244, 156 },
-> > > > > > 
-> > > > > > Over the "common" base, Glymur has GPIO143 (PCIE3a_RST) and Mahua has GPIO155
-> > > > > > (PCIE3b_RST). Both SoCs GPIO maps seem to contain both, but Mahua has a _unused
-> > > > > > suffix for the missing 143, which makes sense given the bus isn't bifurcated
-> > > > > > there.
-> > > > > > 
-> > > > > > The _RST (PERST#) pin is driven by the SoC so I don't think it's useful to
-> > > > > > have it as a wakeup source, unless someone decides to connect something that's
-> > > > > > not PCIe to it (+Mani)
-> > > > > > 
-> > > > > 
-> > > > > PERST# by definition is an optional reset line, but on most of the *recent*
-> > > > > designs, OEMs always connect it to PERST# line. So practically, I don't think it
-> > > > > make sense to mark this GPIO as a wakeup source.
-> > > > > 
-> > > > 
-> > > > This assumes that all the OEMs uses the particular PCI instance. If they
-> > > > choose to route this GPIO to some other use case, they would have to
-> > > > figure out that we omitted one entry in this table and patch it with
-> > > > the appropriate data in order to have their GPIO wakeup capable.
-> > > > 
-> > > > Wouldn't it be better to put the correct information in this table at
-> > > > this time? If we have a concrete reason not to, I think we should
-> > > > include something useful in the commit message to help the poor engineer
-> > > > faced with this task...
-> > > > 
-> > > 
-> > > There is no concrete reason actually. I just mentioned that in practical
-> > > usecase, I never saw an OEM routing the PERST# signal to other wakeup capable
-> > > functionality. But the possibility still exists, so I'm not completely against
-> > > it.
-> > 
-> > I'm curious whether we can just describe the union of these sets as a
-> > common config, because as I've mentioned, IPCat says both of these platforms
-> > seem to have these interrupts wired up
-> > 
-> > Konrad
-> 
-> Hi Konrad Dybcio,
-> Thanks for the suggestion!
-> 
-> I tested using a single combined wake map (i.e., the union of both Mahua and
-> Glymur sets) on actual Glymur and Mahua hardware, and both platforms work
-> correctly without any errors.
-> 
-> Although both GPIOs are present in the wiring, only one of them is actually
-> wake-capable on each platform.
-> 
-> Glymur:
-> - GPIO 143: Supports wakeup
-> - GPIO 155: Does not support wakeup
-> Mahua:
-> - GPIO 143: Does not support wakeup
-> - GPIO 155: Supports wakeup
-> 
-> The combined map works functionally, but includes entries that don't match
-> hardware capabilities.
-> 
-> Could you please advise which approach I should follow for v3?
-> 1. Use a single combined map (union of both sets) with comments about wakeup
-> capability difference, or
-> 2. Keep separate maps for each SoC
-> 
+On Mon, Jan 5, 2026 at 6:45=E2=80=AFPM Shivendra Pratap
+<shivendra.pratap@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 1/2/2026 6:55 PM, Bartosz Golaszewski wrote:
+> > On Fri, 26 Dec 2025 19:56:34 +0100, Shivendra Pratap
+> > <shivendra.pratap@oss.qualcomm.com> said:
+> >> Currently, there is no standardized mechanism for userspace to discove=
+r
+> >> which reboot-modes are supported on a given platform. This limitation
+> >> forces tools and scripts to rely on hardcoded assumptions about the
+> >> supported reboot-modes.
+>
 
-For the GPIOs with an entry in the pdc_map we delegate the interrupt
-handling to the PDC.
+Sorry for the delayed response.
 
-So with the union, I believe that when you on a Glymur device request
-GPIO 155, you will start getting interrupts from GPIO 143, and on Mahua
-the other way around.
+> [SNIP..]
+>
+> >>
+> >> +struct sysfs_data {
+> >
+> > Let's make this more descriptive? struct reboot_mode_sysfs_data?
+>
+> Ack. thanks.
+>
+> >
+> >> +    const char *mode;
+> >> +    struct list_head list;
+> >> +};
+> >> +
+>
+> [SNIP..]
+>
+> >> +
+> >> +    reboot->reboot_mode_device =3D device_create(&reboot_mode_class, =
+NULL, 0,
+> >> +                                               (void *)head, reboot->=
+dev->driver->name);
+> >
+> > No, why pass the list? You should create an instance of struct sysfs_da=
+ta per
+> > device_create(). If it needs to contain a list, then let it contain a l=
+ist but
+> > don't allocate the list_head, that's really unusual.
+> >
+>
+> ok. Will create struct reboot_mode_sysfs_data with a list head and
+> allocate it as data.
+>
+> >> +
+>
+> [SNIP..]
+>
+> >>
+> >> +static inline void reboot_mode_unregister_device(struct reboot_mode_d=
+river *reboot)
+> >> +{
+> >> +    struct sysfs_data *sysfs_info;
+> >> +    struct sysfs_data *next;
+> >> +    struct list_head *head;
+> >> +
+> >> +    head =3D dev_get_drvdata(reboot->reboot_mode_device);
+> >> +    device_unregister(reboot->reboot_mode_device);
+> >> +    reboot->reboot_mode_device =3D NULL;
+> >> +
+> >> +    if (head) {
+> >> +            list_for_each_entry_safe(sysfs_info, next, head, list) {
+> >> +                    list_del(&sysfs_info->list);
+> >> +                    kfree_const(sysfs_info->mode);
+> >> +                    kfree(sysfs_info);
+> >> +            }
+> >
+> > This loop is duplicated, can you please factor it out into a dedicated
+> > function?
+>
+> The loop frees the sysfs data. You mean i should directly call
+> reboot_mode_unregister_device in error path of reboot_mode_create_device
+> as not to duplicate the loop?
+>
 
-Perhaps I'm missing something, but I think we make the two GPIOs
-unusable by this "optimization".
+I was thinking about wrapping it in a dedicated function and calling
+it here and in the error path in reboot_mode_create_device().
 
-Regards,
-Bjorn
+> >
+>
+> [SNIP..]
+>
+> >> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> >> index 4a2abb38d1d612ec0fdf05eb18c98b210f631b7f..b56783c32068096325f924=
+45b9530d1856c4826c 100644
+> >> --- a/include/linux/reboot-mode.h
+> >> +++ b/include/linux/reboot-mode.h
+> >> @@ -5,6 +5,7 @@
+> >>  struct reboot_mode_driver {
+> >>      struct device *dev;
+> >>      struct list_head head;
+> >> +    struct device *reboot_mode_device;
+> >
+> > Why can't this be part of struct (reboot_mode_)sysfs_data?
+> >
+>
+> If reboot_mode_device is kept in sysfs_data, we need a reference to free
+> it. Should I maintain reference for it in "reboot struct" and store
+> sysfs_data pointer, so that it can be used to call device_unregister()?
+>
+> Eg:
+> struct reboot
+> {
+> ..
+> ..
+>   void *priv;
+> };
+>
+> struct reboot_mode_sysfs_data {
+>     struct device *reboot_mode_device;
+>     struct list_head head;
+> };
+>
 
-> Happy to update v3 in whichever direction you prefer.
-> 
-> Best regards,
-> Gopikrishna Garmidi
-> 
+You can use class_find_device(). Store the address of the associated
+reboot_mode_driver in the private structure and compare by it in the
+match callback.
+
+Bart
 
