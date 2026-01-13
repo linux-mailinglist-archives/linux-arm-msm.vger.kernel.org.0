@@ -1,498 +1,282 @@
-Return-Path: <linux-arm-msm+bounces-88684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 360A5D17310
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:06:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45CDBD172CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 09:03:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 09BB830635DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:02:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8E8A1305CB0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 08:02:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C5136BCCA;
-	Tue, 13 Jan 2026 08:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 996CC36D4E7;
+	Tue, 13 Jan 2026 08:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEa05CHZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BW0kqUjQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719403563E5;
-	Tue, 13 Jan 2026 08:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD9636BCD2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 08:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768291340; cv=none; b=Yi8n4lxFsuLmlE8dU8yPyQUKkw1V8Y9RsvStvpQheiVu3Oo7QGvRVK2Bj0nCI8j5mPbMV7v99ONRmlnclUcVSDnS02oI9MTk3hvcLL5/TPQ+gC5Jw763KriaBR8yIB8DhTM2EgLMnFx/WgikkvFnjmdU4yjlDMCb8+bu/nxfcII=
+	t=1768291364; cv=none; b=n6qHeqBFke7p63xMK+H1BBna7k/wmXqJ6oyYzQhjrOum/Q8Qb3eqI0IZiHD71YrIjTB4RlywxvHfNF7PRWKnTLq9g2H+i/tfvtzclytvznL5gp45VXnftbBbo0GAfwy3CmtMqqjjfPvukmMaKG3VImr5ajO5Enr6nxwfDb5Fl2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768291340; c=relaxed/simple;
-	bh=WCE/q8cLVyF9uCFZ+vJ0tY0bSr0X4itkTuVuf2ALeFI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zqej5/DJsp+8A2y1Pu9EAM+PHWalDQWqM39MjvJ0heoS9AVYJb/70cEjFTxvJTxCqk5KV5PMWyvg0DjvAuzD7BoOMtFs0ytWSdLP0ptBzby7LkJZOrRORinWu6WevIa2rtaGIts/aKQWxCbbdTOTSTXvOS435gnxROZ8zKap9Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEa05CHZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B586CC116C6;
-	Tue, 13 Jan 2026 08:02:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768291339;
-	bh=WCE/q8cLVyF9uCFZ+vJ0tY0bSr0X4itkTuVuf2ALeFI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aEa05CHZselxesyHuJ1FAGHxAcWybYOFFJ/6Skn5BnyOHvoCk4n/tJXLWBsY5z9LI
-	 v+/sghqNfRMcaPqMGv8wVfe4sGH59tDHmY0nQXs1NC+cMxBjrMc2sghMAiq9OxeFYY
-	 +o7cTi7D3TTmSLRR+D29BAoUeKTIVLRqCmXFETvvm9J1Fnv4dmbSUG6qbIpMt7biVm
-	 bvoPM/XpLhC8CksWxH02sKWxkv/3LQ7xAJaB6QjvVtRHI6RZHKtfDQbTu4Ym6vPeIj
-	 P3E4ED1u5Dc8rSyfYIC5u6EnWr1ELi+HItHzaJA/uCtK4eZA8Xhx9sgSITCi3jMxkK
-	 qSXMD1OxUBn2w==
-Date: Tue, 13 Jan 2026 13:32:09 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Arnd Bergmann <arnd@arndb.de>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
-	Upal Kumar Saha <upal.saha@oss.qualcomm.com>, Himanshu Shukla <quic_himashuk@quicinc.com>, 
-	Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
-Subject: Re: [PATCH 03/11] bus: mhi: host: Add support for queuing multiple
- DMA buffers
-Message-ID: <g3bz2wcmdvrv626mltjjf3czribogpsz5ttuhv24ioege4q7fl@pgmspcgoyso6>
-References: <20251211-siva_mhi_dp2-v1-0-d2895c4ec73a@oss.qualcomm.com>
- <20251211-siva_mhi_dp2-v1-3-d2895c4ec73a@oss.qualcomm.com>
+	s=arc-20240116; t=1768291364; c=relaxed/simple;
+	bh=CfGLLHtAMP5se33ly666hJEy8681yRbGQLMykeBbx1k=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aTr2Oo5UsamTYTn5v8EtYyi1UTnB494XCWxjj/CplHS+O6pNT1Yrz2PnTDY6+pf7u9xQrKTGZogpolN82UEtijb16xisVcDtC2c5rG9ZjZrOEYE1kE2arOLpp0leSZ9kRhtD/r0PsWRJqluOEEh2QTHSmW2ksnZH9Jut5xl54zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BW0kqUjQ; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47ed987d51aso3586375e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 00:02:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1768291353; x=1768896153; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g6A7r611q476j/8oCIaN8K7+Q8yqCShfdSd5Arz3Gpc=;
+        b=BW0kqUjQPz7P/T47Y9g3A3OwkseZzCGJKk3QD2GbuTLwrFM5yj09E2CUTcsa7mUijz
+         YlXMjyvrXvMQiYawHLxi8KIq22k7l0xmDXyhp06GI3QUjmqmWftacYZI1R1iddaAPAGi
+         HsWMKJGWm1Y44zAycuTjyndNXkeguznUxLwVPyhx2o/N4RHA625ObBA+pSBu44wdmA+y
+         luccyS/6WAEnLYfflRYuME2HpkD3BTJ3Pc/K7ST+wYayjlcSNn6JNZVhhSrEGRWXf1KB
+         s96fIaPzf7RSw6HzjmtafWwfEMwJvwXqEhpy3q4DD1gBBP4ERRPeYc+YNFEw6yZp8c+C
+         bZ5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768291353; x=1768896153;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g6A7r611q476j/8oCIaN8K7+Q8yqCShfdSd5Arz3Gpc=;
+        b=epgJlqWRBwoVwdGEuPt6ilveIYaZSau78uUz45RIicjQEN4PoWlbttDM31kIA0DwD9
+         p6FQZc9Ya5ICGg5GwmRI3fGt1MI6IbjDq0P7tez/5mw1gd5+qzs0Y/gsXe4XAqkKDN4Z
+         jeKI5xwJIK8xtSPI0c7/rGY7kvQLLlaSo0e6A1r6f4PsJ1ntwL5zLxQ4F7U0qd+39/7A
+         XmibL9YCB2HMisPjqmoNd2xeh4igjYYvhARpI3HACQGCG++iYsoglriArdWgn/60eo12
+         Br3W09WQ/kxbVh9e1dajVTuZPKZ7HYySkBc2DWw8aVxjfSrpu27x7peMZwYYbD/uMDwO
+         TmMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX9HYAakp8rH3oMtcjS6+F69i5yf37wSqOPzu/vJHOtiY0zp60al4Z2c5c9gL4oMMyvYK6iyNnfnRTkt++I@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzYEsy53fJbb9onXEVPSyuy52u1PkXn2ZxeuJK5zk4SXGApvMm
+	DZ48u3ixVdhDqKw9VlIKptUhh63OmD1p8uQXlkQcTycFYCIXHIvszZH2pi8HoW25yWE=
+X-Gm-Gg: AY/fxX589EGO7fceIpW0Oao2icy906V+vINm2lJOEa8Et7eDG4Ryo5L14f1w83m+JHC
+	C3YHKwIWBN1YuzdNu7Rx2AuF/GgTqo46AFiKumUTu484EFWQOvOksbGdavFlvq9PIGZa8FaUiEi
+	KGblDmM85sdYrdtiKiRN8CYvmUzm2vtqEg9nRHOT1Yf/geXwLVgDzG7xuGRH98TMvn+ed0cIo0N
+	kPv/Rc8JF0ZSeVdwCu7yQzQkPMYFKaOZXgdVTkWjkl4Ou94GIPughzEOcjhzbiG5s3cZzVYrbq3
+	Qb1BbLCNejdSQJ9NrgOJ593MqobTy48a2NCyxVYPIuY5N5k5k5NQnJD3RqcKeXE9xfLZ6l5nH9J
+	Ra2MLXI5YbvlQ56sm8y3PtIhKnbK1qPL9x+QP8lwDGhvyf2wAiMNTn05+jCuFVou7RiP6hvnPAQ
+	aRLMnvnoHIpYr83bExV2L+vWq5s0Gwmg6NbJp5AHg=
+X-Google-Smtp-Source: AGHT+IHrnnPCXrF0NOJBoPGixzBrnHBCDRj20M4yCZwqxFE51GxNlKuyIibw+hyJVZQowMJPsFEW1w==
+X-Received: by 2002:a05:600c:4fc6:b0:477:5ad9:6df1 with SMTP id 5b1f17b1804b1-47d84b0aaa3mr221663015e9.3.1768291352911;
+        Tue, 13 Jan 2026 00:02:32 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080::fa42:7768? ([2a01:e0a:3d9:2080::fa42:7768])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47ecf6a5466sm109514045e9.11.2026.01.13.00.02.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jan 2026 00:02:31 -0800 (PST)
+Message-ID: <186438aa-a39e-4c85-9187-cd47d6abd2e7@linaro.org>
+Date: Tue, 13 Jan 2026 09:02:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251211-siva_mhi_dp2-v1-3-d2895c4ec73a@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 4/6] phy: qcom-qmp-ufs: Add Milos support
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org,
+ Abel Vesa <abel.vesa@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+ <20260112-milos-ufs-v2-4-d3ce4f61f030@fairphone.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260112-milos-ufs-v2-4-d3ce4f61f030@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 11, 2025 at 01:37:35PM +0530, Sivareddy Surasani wrote:
-> From: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
+On 1/12/26 14:53, Luca Weiss wrote:
+> Add the init sequence tables and config for the UFS QMP phy found in the
+> Milos SoC.
 > 
-> Optimize MHI clients by allowing them to queue multiple DMA buffers for a
-> given transfer without ringing the channel doorbell for every queue. This
-> avoids unnecessary link access. Introduce the exported API mhi_queue_n_dma
-> to pass an array of MHI buffers and MHI flags.
-> 
-
-Why do you need a new API? Why can't the client work with existing
-mhi_queue_buf() API? I don't quite understand the need for a 'DMA' API since the
-existing mhi_queue_buf() API allows the client to either DMA map the buffer
-beforehand or it can do it internally.
-
-> Currently, the BEI flag is set for all TREs based on the interrupt
-> moderation timer value.
-
-> MHI clients are not allowed to block event
-> interrupts at runtime.
-
-This is not true as per the spec. Host is allowed to set BEI flag for any TRE
-during runtime, but the Linux MHI stack allows only to configure the BEI flag
-statically during controller driver probe based on intmod value.
-
-> If interrupt moderation is disabled for an event
-> ring, the client is allowed to poll on events posted on the event ring by
-> blocking the MSI.
-
-'...blocking the interrupt for the completion event'. Here MSI is not
-appropriate as it is *one of the* interrupt mechanism.
-
-> If interrupt moderation is enabled, the BEI flag passed
-> in the queue API is overridden to maintain the current implementation tied
-> to the interrupt moderation timer value.
-> 
-> For scatter-gather transfers, MHI clients should set the MHI_SG transfer
-> flag. This flag allows skipping the issuance of transfer callbacks per TRE
-> and only issuing a single callback when the last TRE is processed.
-> 
-
-Spec defines that scatter gather transfers are identified using the 'chain' bit.
-So I don't see a need for a separate flag.
-
-Until the above points are clarified, I'm not inclined to look into the code.
-
-- Mani
-
-> Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
-> Signed-off-by: Sivareddy Surasani <sivareddy.surasani@oss.qualcomm.com>
+> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/bus/mhi/host/internal.h |   8 ++
->  drivers/bus/mhi/host/main.c     | 203 +++++++++++++++++++++++++++++++++++-----
->  include/linux/mhi.h             |  26 +++++
->  3 files changed, 213 insertions(+), 24 deletions(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 96 +++++++++++++++++++++++++++++++++
+>   1 file changed, 96 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 7937bb1f742c..97bf6a70b9fa 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -236,6 +236,7 @@ struct mhi_buf_info {
->  	enum dma_data_direction dir;
->  	bool used; /* Indicates whether the buffer is used or not */
->  	bool pre_mapped; /* Already pre-mapped by client */
-> +	bool sg_enabled; /* perform sg and return single completion call back */
->  };
->  
->  struct mhi_event {
-> @@ -414,6 +415,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev);
->  
->  int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  		struct mhi_buf_info *info, enum mhi_flags flags);
-> +int mhi_gen_n_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		  struct mhi_buf *bufs, enum mhi_flags flags[],
-> +		  unsigned int num);
-> +int __mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		  struct mhi_buf_info *info, enum mhi_flags flags,
-> +		  struct mhi_ring *buf_ring,  struct mhi_ring *tre_ring);
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 8a280433a42b..df138a5442eb 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -84,6 +84,68 @@ static const unsigned int ufsphy_v6_regs_layout[QPHY_LAYOUT_SIZE] = {
+>   	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_UFS_POWER_DOWN_CONTROL,
+>   };
+>   
+> +static const struct qmp_phy_init_tbl milos_ufsphy_serdes[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IETRIM, 0x0a),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IPTRIM, 0x17),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x0e),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x82),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x14),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0xff),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x0c),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x98),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x14),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x32),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x0f),
+> +};
 > +
->  int mhi_map_single_no_bb(struct mhi_controller *mhi_cntrl,
->  			 struct mhi_buf_info *buf_info);
->  int mhi_map_single_use_bb(struct mhi_controller *mhi_cntrl,
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 861551274319..7beb848ca5c1 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -605,7 +605,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  		struct mhi_ring_element *local_rp, *ev_tre;
->  		void *dev_rp, *next_rp;
->  		struct mhi_buf_info *buf_info;
-> -		u16 xfer_len;
-> +		u16 xfer_len, total_tre_len = 0;
-> +		bool send_cb = false;
->  
->  		if (!is_valid_ring_ptr(tre_ring, ptr)) {
->  			dev_err(&mhi_cntrl->mhi_dev->dev,
-> @@ -635,10 +636,14 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  		while (local_rp != dev_rp) {
->  			buf_info = buf_ring->rp;
->  			/* If it's the last TRE, get length from the event */
-> -			if (local_rp == ev_tre)
-> +			if (local_rp == ev_tre) {
->  				xfer_len = MHI_TRE_GET_EV_LEN(event);
-> -			else
-> +				send_cb = true;
-> +			} else {
->  				xfer_len = buf_info->len;
-> +			}
+> +static const struct qmp_phy_init_tbl milos_ufsphy_tx[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX, 0x0e),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0xcc),
+> +};
 > +
-> +			total_tre_len += xfer_len;
->  
->  			/* Unmap if it's not pre-mapped by client */
->  			if (likely(!buf_info->pre_mapped))
-> @@ -655,13 +660,28 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  
->  			read_unlock_bh(&mhi_chan->lock);
->  
+> +static const struct qmp_phy_init_tbl milos_ufsphy_rx[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x3e),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_RX_EQU_ADAPTOR_CNTRL4, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xce),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1, 0xce),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B2, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3, 0x1a),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B4, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6, 0x60),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B3, 0x9e),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B6, 0x60),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B3, 0x9e),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B4, 0x0e),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B5, 0x36),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B8, 0x02),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_PI_CTRL1, 0x94),
+> +};
 > +
->  			/* notify client */
-> -			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-> +			if (buf_info->sg_enabled) {
-> +				if (send_cb) {
-> +					result.bytes_xferd = total_tre_len;
-> +					mhi_chan->xfer_cb(mhi_chan->mhi_dev,
-> +							  &result);
-> +				}
-> +			} else {
-> +				mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-> +			}
->  
->  			if (mhi_chan->dir == DMA_TO_DEVICE) {
->  				atomic_dec(&mhi_cntrl->pending_pkts);
-> -				/* Release the reference got from mhi_queue() */
-> -				mhi_cntrl->runtime_put(mhi_cntrl);
-> +				/*
-> +				 * In case of scatter gather send_cb is set to true only
-> +				 * for the last TRE, runtime_put should be called for
-> +				 * last TRE instead of every buffer i.e, when send_cb
-> +				 * is true else runtime_put count will not be balanced
-> +				 */
-> +				if (!buf_info->sg_enabled || send_cb)
-> +					mhi_cntrl->runtime_put(mhi_cntrl);
->  			}
->  
->  			/*
-> @@ -1192,25 +1212,14 @@ int mhi_queue_skb(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_skb);
->  
-> -int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> -			struct mhi_buf_info *info, enum mhi_flags flags)
-> +int __mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		  struct mhi_buf_info *info, enum mhi_flags flags,
-> +		  struct mhi_ring *buf_ring,  struct mhi_ring *tre_ring)
->  {
-> -	struct mhi_ring *buf_ring, *tre_ring;
->  	struct mhi_ring_element *mhi_tre;
->  	struct mhi_buf_info *buf_info;
->  	int eot, eob, chain, bei;
-> -	int ret = 0;
-> -
-> -	/* Protect accesses for reading and incrementing WP */
-> -	write_lock_bh(&mhi_chan->lock);
-> -
-> -	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> -		ret = -ENODEV;
-> -		goto out;
-> -	}
-> -
-> -	buf_ring = &mhi_chan->buf_ring;
-> -	tre_ring = &mhi_chan->tre_ring;
-> +	int ret;
->  
->  	buf_info = buf_ring->wp;
->  	WARN_ON(buf_info->used);
-> @@ -1227,24 +1236,55 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  	if (!info->pre_mapped) {
->  		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
->  		if (ret)
-> -			goto out;
-> +			return ret;
->  	}
->  
-> +	trace_mhi_gen_tre(mhi_cntrl, mhi_chan, mhi_tre);
+> +static const struct qmp_phy_init_tbl milos_ufsphy_pcs[] = {
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x0b),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x68),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
+> +};
 > +
->  	eob = !!(flags & MHI_EOB);
->  	eot = !!(flags & MHI_EOT);
->  	chain = !!(flags & MHI_CHAIN);
-> -	bei = !!(mhi_chan->intmod);
+>   static const struct qmp_phy_init_tbl msm8996_ufsphy_serdes[] = {
+>   	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
+>   	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
+> @@ -1165,6 +1227,11 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
+>   }
+>   
+>   /* Regulator bulk data with load values for specific configurations */
+> +static const struct regulator_bulk_data milos_ufsphy_vreg_l[] = {
+> +	{ .supply = "vdda-phy", .init_load_uA = 140120 },
+> +	{ .supply = "vdda-pll", .init_load_uA = 18340 },
+> +};
 > +
-> +	buf_info->sg_enabled = !!(flags & MHI_SG);
+>   static const struct regulator_bulk_data msm8996_ufsphy_vreg_l[] = {
+>   	{ .supply = "vdda-phy", .init_load_uA = 51400 },
+>   	{ .supply = "vdda-pll", .init_load_uA = 14600 },
+> @@ -1258,6 +1325,32 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
+>   	.rx2		= 0x1a00,
+>   };
+>   
+> +static const struct qmp_phy_cfg milos_ufsphy_cfg = {
+> +	.lanes			= 2,
 > +
-> +	/* honor bei flag if interrupt moderation is disabled */
-> +	bei = !!(mhi_chan->intmod ?
-> +				mhi_chan->intmod : flags & MHI_BEI);
->  
->  	mhi_tre = tre_ring->wp;
->  	mhi_tre->ptr = MHI_TRE_DATA_PTR(buf_info->p_addr);
->  	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
->  	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
->  
-> -	trace_mhi_gen_tre(mhi_cntrl, mhi_chan, mhi_tre);
-> +	if (mhi_chan->dir == DMA_TO_DEVICE)
-> +		atomic_inc(&mhi_cntrl->pending_pkts);
+> +	.offsets		= &qmp_ufs_offsets_v6,
+> +	.max_supported_gear	= UFS_HS_G4,
 > +
->  	/* increment WP */
->  	mhi_add_ring_element(mhi_cntrl, tre_ring);
->  	mhi_add_ring_element(mhi_cntrl, buf_ring);
->  
-> +	return 0;
-> +}
+> +	.tbls = {
+> +		.serdes		= milos_ufsphy_serdes,
+> +		.serdes_num	= ARRAY_SIZE(milos_ufsphy_serdes),
+> +		.tx		= milos_ufsphy_tx,
+> +		.tx_num		= ARRAY_SIZE(milos_ufsphy_tx),
+> +		.rx		= milos_ufsphy_rx,
+> +		.rx_num		= ARRAY_SIZE(milos_ufsphy_rx),
+> +		.pcs		= milos_ufsphy_pcs,
+> +		.pcs_num	= ARRAY_SIZE(milos_ufsphy_pcs),
+> +	},
+> +	.tbls_hs_b = {
+> +		.serdes		= sm8550_ufsphy_hs_b_serdes,
+> +		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
+> +	},
 > +
-> +int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +			struct mhi_buf_info *info, enum mhi_flags flags)
-> +{
-> +	struct mhi_ring *buf_ring, *tre_ring;
-> +	int ret = 0;
+> +	.vreg_list		= milos_ufsphy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(milos_ufsphy_vreg_l),
+> +	.regs			= ufsphy_v6_regs_layout,
+> +};
 > +
-> +	/* Protect accesses for reading and incrementing WP */
-> +	write_lock_bh(&mhi_chan->lock);
-> +
-> +	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
-> +	buf_ring = &mhi_chan->buf_ring;
-> +	tre_ring = &mhi_chan->tre_ring;
-> +
-> +	ret = __mhi_gen_tre(mhi_cntrl, mhi_chan, info, flags, buf_ring, tre_ring);
-> +
->  out:
->  	write_unlock_bh(&mhi_chan->lock);
->  
-> @@ -1264,6 +1304,121 @@ int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  }
->  EXPORT_SYMBOL_GPL(mhi_queue_buf);
->  
-> +int mhi_gen_n_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		  struct mhi_buf *bufs, enum mhi_flags flags[],
-> +		  unsigned int num)
-> +{
-> +	struct mhi_ring *buf_ring, *tre_ring;
-> +	void *cur_buf_ring_wp, *cur_tre_ring_wp;
-> +	int i = 0, j, ret;
-> +	struct mhi_buf_info buf_info = {0};
-> +	struct mhi_buf_info *info;
-> +
-> +	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
-> +	buf_ring = &mhi_chan->buf_ring;
-> +	tre_ring = &mhi_chan->tre_ring;
-> +
-> +	cur_buf_ring_wp = buf_ring->wp;
-> +	cur_tre_ring_wp = tre_ring->wp;
-> +
-> +	while (num-- > 0) {
-> +		buf_info.wp = tre_ring->wp;
-> +		buf_info.p_addr = bufs[i].dma_addr;
-> +		buf_info.cb_buf = bufs[i].buf;
-> +		buf_info.len = bufs[i].len;
-> +		buf_info.pre_mapped = bufs[i].streaming_dma;
-> +
-> +		ret = __mhi_gen_tre(mhi_cntrl, mhi_chan, &buf_info, flags[i], buf_ring, tre_ring);
-> +		if (ret)
-> +			goto error;
-> +
-> +		i++;
-> +
-> +		/**
-> +		 * When multiple packets are queued in single queue_n_dma call
-> +		 * runtime_get should be called for each packet to balance
-> +		 * runtime_put and runtime_get count,
-> +		 * because once we get MSI's from the device,
-> +		 * we call runtime_put for each packet in parse_xfer_event
-> +		 */
-> +		if (!buf_info.sg_enabled)
-> +			mhi_cntrl->runtime_get(mhi_cntrl);
-> +	}
-> +
-> +	/**
-> +	 * If it is a scatter gather transfer, runtime_get
-> +	 * should be called only once as we call runtime_put
-> +	 * only for last TRE in the parse_xfer_event
-> +	 */
-> +	if (buf_info.wp && buf_info.sg_enabled)
-> +		mhi_cntrl->runtime_get(mhi_cntrl);
-> +
-> +	return 0;
-> +error:
-> +	buf_ring->wp = cur_buf_ring_wp;
-> +	tre_ring->wp = cur_buf_ring_wp;
-> +
-> +	for (j = i - 1; j >= 0; j--) {
-> +		atomic_dec(&mhi_cntrl->pending_pkts);
-> +		info = cur_buf_ring_wp;
-> +		if (!bufs[i].dma_addr)
-> +			mhi_cntrl->unmap_single(mhi_cntrl, info);
-> +
-> +		cur_buf_ring_wp += buf_ring->el_size;
-> +		if (cur_buf_ring_wp >= buf_ring->base + buf_ring->len)
-> +			cur_buf_ring_wp = buf_ring->base;
-> +	}
-> +
-> +out:
-> +	return ret;
-> +
-> +}
-> +
-> +int mhi_queue_n_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> +		    struct mhi_buf *bufs, enum mhi_flags mflags[],
-> +		    unsigned int num)
-> +{
-> +	unsigned long flags;
-> +	int ret;
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct mhi_chan *mhi_chan = (dir == DMA_TO_DEVICE) ? mhi_dev->ul_chan :
-> +							     mhi_dev->dl_chan;
-> +
-> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
-> +		return -EIO;
-> +
-> +	write_lock_irqsave(&mhi_chan->lock, flags);
-> +
-> +	if (get_nr_avail_ring_elements(mhi_cntrl, &mhi_chan->tre_ring) < num) {
-> +		ret = -EAGAIN;
-> +		goto error;
-> +	}
-> +
-> +	ret = mhi_gen_n_tre(mhi_dev->mhi_cntrl, mhi_chan, bufs, mflags,
-> +			    num);
-> +	if (ret)
-> +		goto error;
-> +
-> +	/* Assert dev_wake (to exit/prevent M1/M2)*/
-> +	mhi_cntrl->wake_toggle(mhi_cntrl);
-> +
-> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
-> +		mhi_ring_chan_db(mhi_cntrl, mhi_chan);
-> +
-> +	if (dir == DMA_FROM_DEVICE)
-> +		mhi_cntrl->runtime_put(mhi_cntrl);
-> +
-> +error:
-> +	write_unlock_irqrestore(&mhi_chan->lock, flags);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_queue_n_dma);
-> +
->  bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir)
->  {
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index dd372b0123a6..360770ddef70 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -52,11 +52,15 @@ enum mhi_callback {
->   * @MHI_EOB: End of buffer for bulk transfer
->   * @MHI_EOT: End of transfer
->   * @MHI_CHAIN: Linked transfer
-> + * @MHI_BEI: Block event interrupt
-> + * @MHI_SG: scatter-gather enabled, single xfer call back to client
->   */
->  enum mhi_flags {
->  	MHI_EOB = BIT(0),
->  	MHI_EOT = BIT(1),
->  	MHI_CHAIN = BIT(2),
-> +	MHI_BEI = BIT(3),
-> +	MHI_SG = BIT(4),
->  };
->  
->  /**
-> @@ -497,6 +501,7 @@ struct mhi_result {
->   *        ECA - Event context array data
->   *        CCA - Channel context array data
->   * @dma_addr: IOMMU address of the buffer
-> + * @streaming_dma: Set this flag by client for pre allocated streaming dma address
->   * @len: # of bytes
->   */
->  struct mhi_buf {
-> @@ -504,6 +509,7 @@ struct mhi_buf {
->  	const char *name;
->  	dma_addr_t dma_addr;
->  	size_t len;
-> +	bool streaming_dma;
->  };
->  
->  /**
-> @@ -770,6 +776,13 @@ int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
->   */
->  void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
->  
-> +/**
-> + * mhi_poll - Poll for any available data in DL direction
-> + * @mhi_dev: Device associated with the channels
-> + * @budget: # of events to process
-> + */
-> +int mhi_poll(struct mhi_device *mhi_dev, u32 budget);
-> +
->  /**
->   * mhi_queue_buf - Send or receive raw buffers from client device over MHI
->   *                 channel
-> @@ -782,6 +795,19 @@ void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev);
->  int mhi_queue_buf(struct mhi_device *mhi_dev, enum dma_data_direction dir,
->  		  void *buf, size_t len, enum mhi_flags mflags);
->  
-> +/**
-> + * mhi_queue_n_dma - Send or receive n DMA mapped buffers from client device
-> + *                 over MHI channel
-> + * @mhi_dev: Device associated with the channels
-> + * @dir: DMA direction for the channel
-> + * @mhi_buf[]: Array of mhi_buf for holding the DMA mapped data and len
-> + * @mflags[]: Array of MHI transfer flags used for the transfer
-> + * @num: Number of transfers
-> + */
-> +int mhi_queue_n_dma(struct mhi_device *mhi_dev, enum dma_data_direction dir,
-> +		  struct mhi_buf *bufs, enum mhi_flags mflags[],
-> +		  unsigned int num);
-> +
->  /**
->   * mhi_queue_skb - Send or receive SKBs from client device over MHI channel
->   * @mhi_dev: Device associated with the channels
-> 
-> -- 
-> 2.34.1
+>   static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
+>   	.lanes			= 1,
+>   
+> @@ -2166,6 +2259,9 @@ static int qmp_ufs_probe(struct platform_device *pdev)
+>   
+>   static const struct of_device_id qmp_ufs_of_match_table[] = {
+>   	{
+> +		.compatible = "qcom,milos-qmp-ufs-phy",
+> +		.data = &milos_ufsphy_cfg,
+> +	}, {
+>   		.compatible = "qcom,msm8996-qmp-ufs-phy",
+>   		.data = &msm8996_ufsphy_cfg,
+>   	}, {
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Thanks,
+Neil
 
