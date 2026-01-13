@@ -1,82 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-88818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 479CDD1A050
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 16:50:52 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C34E1D1A0C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 16:59:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5DB64304E5E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 15:49:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C49063026B1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 15:58:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EAF22773F0;
-	Tue, 13 Jan 2026 15:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A32792D7393;
+	Tue, 13 Jan 2026 15:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODQ4NksF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K71Cqt9b";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OByXrC+P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7E51CAA79;
-	Tue, 13 Jan 2026 15:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CD8308F28
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 15:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768319356; cv=none; b=cGLKUQ1zoDU5BQx/Dg1GTJ80NTgfyi3GbUNquz9v4rX4gR+1CiAiXAvLC7TfErEcxJS+MylkmJZoEmtne/Cx2sFOxNc+KC+KQjUq8CdTpFtlIsaLFMUUlsTwSI3RPDTXD+pG6RKMs3igOzG1JTJXIzr2bzYJe7iPitCb2KHc4+o=
+	t=1768319913; cv=none; b=CVkVg+qAiLYYmkBY9/Qa9+3ispEbQKTe8Xn8XyDkfzu0s4N5nTz+Pii10d8XxMeYeS2mwh/zJx8WXLwJ+y4yiyH9LmtLUP03vq+NLXwssoyOuCjzrIT9O5IGbxnHzi1W7haBTPRYELQhIkGeSWAJcBX2HMy3xKzPeja3uqE8ep0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768319356; c=relaxed/simple;
-	bh=DL6DumQuAKzxPXqlFPaLc/uXsPbWMPmwgxQv1tCvmW0=;
-	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=p+R0cKUlHkaBlJ8jB1J51hkvlfp0wx0MKfDnT4CXHqw1m5As+klbVHV0qdreNdi3WvNQqQz6bfZf8VidAXlzGQvI7OwEnyrd9T9Q6C+vlZnZFenuvuogz/dLjPwO87RotQ2rwbMraLfG0ixP3vs9NA1oWnVokgAytqi4AuvQ89Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODQ4NksF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C9CC116C6;
-	Tue, 13 Jan 2026 15:49:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768319355;
-	bh=DL6DumQuAKzxPXqlFPaLc/uXsPbWMPmwgxQv1tCvmW0=;
-	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
-	b=ODQ4NksF3kuHZBXFrgVhO5YpFUJpkPm/Y/ykp4ja265B9koe5WMdyqy+E05tAAZ9I
-	 72miO/eTCw+4ieuqPduuyfRQ8fH/f6RevBvbLVDbhX3MAjoniVXn0FCesEe72DJAo/
-	 3fUqPSxrvHxlr8Ffqk32DIEOkuVdNOF7MNY4plwxnA6wIsnNx2GgqyaQ07DkdZ93q7
-	 GTpJaGN1F+uPxz31M4z56R8tgVXqeREpMudytTEwp6Md/UwHOHqmomDvhT5PuYPXDz
-	 9m8ijAKcWHtnoYyPTs3TsO9dFvZ2fSwcgxvzJ73hCoeYb0U/pZlaBzOKf7T7MA1Nnn
-	 94EzzfkDfKcjQ==
-Message-ID: <a3405fd8966a11655e39685e751832bf@kernel.org>
-Date: Tue, 13 Jan 2026 15:49:13 +0000
-From: "Maxime Ripard" <mripard@kernel.org>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v4 03/10] drm/sun4i: hdmi_enc: implement clear_infoframe
- stub
-In-Reply-To: <20260107-limit-infoframes-2-v4-3-213d0d3bd490@oss.qualcomm.com>
-References: <20260107-limit-infoframes-2-v4-3-213d0d3bd490@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, "Abhinav
- Kumar" <abhinav.kumar@linux.dev>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Andy
- Yan" <andy.yan@rock-chips.com>, "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>, "Chen-Yu
- Tsai" <wens@kernel.org>, "Chun-Kuang Hu" <chunkuang.hu@kernel.org>, "Dave
- Stevenson" <dave.stevenson@raspberrypi.com>, "David Airlie" <airlied@gmail.com>, "Dmitry
- Baryshkov" <lumag@kernel.org>, =?utf-8?b?SGVpa28gU3TDvGJuZXI=?= <heiko@sntech.de>, "Jernej
- Skrabec" <jernej.skrabec@gmail.com>, "Jessica Zhang" <jesszhan0024@gmail.com>, "Jonas
- Karlman" <jonas@kwiboo.se>, "Laurent Pinchart" <Laurent.pinchart@ideasonboard.com>, "Liu
- Ying" <victor.liu@nxp.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn
- Suijten" <marijn.suijten@somainline.org>, "Matthias Brugger" <matthias.bgg@gmail.com>, "Maxime
- Ripard" <mripard@kernel.org>, =?utf-8?b?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, "Philipp Zabel" <p.zabel@pengutronix.de>, "Raspberry
- Pi Kernel Maintenance" <kernel-list@raspberrypi.com>, "Rob Clark" <robin.clark@oss.qualcomm.com>, "Robert
- Foss" <rfoss@kernel.org>, "Samuel Holland" <samuel@sholland.org>, "Sandy
- Huang" <hjc@rock-chips.com>, "Sean Paul" <sean@poorly.run>, "Simona Vetter" <simona@ffwll.ch>, "Thomas
- Zimmermann" <tzimmermann@suse.de>
-Content-Transfer-Encoding: 7bit
+	s=arc-20240116; t=1768319913; c=relaxed/simple;
+	bh=ZvSMBuV+dRhDzKRtELRaYXIdxCJ1uwiBrY4sMZmaInk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fhly/rLvkgQ5nSbIXRgF3UY/M+ChxK5HL3ttDpJ8ATjXjQCdf3HsHog91dp0KnVfjyYbuuMayUVefyR6V/l3DoyrL18xDeuskX3GuEud+OAqDp47lk+bIq7ZRvmxPTSWMyvwcIIrxjLrEl+OcLHfP+Zil4ixlCowaGmvWgjclC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K71Cqt9b; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OByXrC+P; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DFGZom4153520
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 15:58:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=xIUohOSEadvIpJ/WOpqMNMkz
+	cciSx3DWJXtqCnl3QmM=; b=K71Cqt9bnCe6lgWVNi6QvclVAeHrL0tAOqYjnhys
+	tVjQiTfR5N/0b5J7II9ITTJRRuoQ0di5n4sYU+LuvQHUXVG0p6rfXHaFviDxL8Cn
+	qbBpE20ZimxgPpYspunD8zHSXZj387MSG5NOCfqm6tRU9X81feeQTdEU9lnw5xFr
+	5aUZJoIHviRBNfyJvEeoGJpjOi5/VPlnOqWyluxRbpxO4vEvI73N2oZqA+RstK2x
+	8v/Op957BPuiuWi2RQSlqnHk7Hx6NKcL8jp22yDWPIzy/COJ6FK7zgTfvveJNEJU
+	M7Esc9IJwhHKpimfja2M+D4uy16TZxS/PeoEX60cKTXOWw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnr3e899y-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 15:58:30 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-29f13989cd3so178893665ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 07:58:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768319910; x=1768924710; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xIUohOSEadvIpJ/WOpqMNMkzcciSx3DWJXtqCnl3QmM=;
+        b=OByXrC+P+HgmCNGVBpbbLVZV+BQo0NFs662IviIn8PdwRm1XVsxTrtilOYkka/b1el
+         wB4H8Vl4q3TymwnFXQ9K0bLrCHmvzkJAwUGlbv1q6el2vsffNs4cSwkb61C8XWx8y/DN
+         EcYOZhZs9xjSG1W9uyOKjIRvhYHzic5+JNA12Ag+7Czdsik0UgEG0WpNk8+xNAlcbFIP
+         wCFrlnMi8EMCJo5+UnXwFlMBz3X1pCCSTZLlSfvwKNQ98fzhhTAbpCR724dNTjHXhbXN
+         su8ORiqR1L/EGE7hgqcDAY0jakAoUfWPfg0fdNjnU4pzwDER7p54LV4yAIK2pqVdKQAc
+         maLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768319910; x=1768924710;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xIUohOSEadvIpJ/WOpqMNMkzcciSx3DWJXtqCnl3QmM=;
+        b=F9Ga1amdCOtbpkJNLEDE7raU54JmQ8NNkWLqt4Y8gv3WDgPc7FiFew6O2bJkc2d4pR
+         3a70eWJijmp+f30rrQDdVH7KuOkCrNCwgEeD1CDAIzRqUpUJbMxTWGhqhvsT7eVvTdyI
+         WgH1XHYzdlC4uOCj+fmzBsauBIfpF0Ny6pziqQOgn5RgkMnBrcVuNWk1V9tS2TEDy0FP
+         OfA8T5ofd1TagvjPndZBysYoHjpItqxLMyXbrstcQFUXYsvlt3HD2guwV72MmowHynge
+         aMnjfZsWV9TlgmjYUbKHGB/dRoGasKwh1GdCsxZO2k60qFrHoTdEjQXfCtB8UIW6wV+h
+         JElg==
+X-Forwarded-Encrypted: i=1; AJvYcCXB4fb7BLwwXAlHpVU8b5OK+uQvdQluQwEHueV2YY8CHOyBGvVfyJ+3lP721NsNLcyNsHCbEXpwwy2RjVv6@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2vTBH7/4cjN2fGP0pXE7pZDkhbeZHYrm306C6tMlwwMjM7UpE
+	ZNumsJtDkp3mtGezG2BHFlqxDleLFPqgG9U85tWwePVTZov283lP9G3xAPG1GYlbfiaxam9NiW+
+	8vx9auEynh0ZMVsP23dcUO9iC0w5JULZm4+MD68/py9NDz0k0/+GaAHAUbZujtTElMTU5
+X-Gm-Gg: AY/fxX4bJXW1McPholP+ujMHat0VNu5qAmuVlcw0WQtAbIFRp7ae7T2wq8rb4D+bs3Y
+	5oYylsKSMhmpfGlc19cVALfDRYGvsnS8M26ali2glvQD6KTH1OrYfLRfx5Dy/4+leeXtiXHhpo2
+	zPGIFtknvdZCtzIOBKlpcdH8WRFaYuSf8JrbGkFAHBaso89qh45BAGtZv+dgS8VF8wh6XoHhcI8
+	nueC/3EBbaYldM8j5hrv3YqK+cq1GdUFxcmVxF9jKzXzsnZgfg5nxqk7AmIDr1Dbp1BrE1zTgur
+	4rRWQ+MqQIwbr7w2OEiWjqcrxIyQDgX4xL5CyWtmZRosYeBIOJF7vpraX27RNFKfqx9xnM4QA8q
+	W3WCqHkrmeGrUanf9LswANpGk2ttnhUS/xFtO
+X-Received: by 2002:a17:903:2f92:b0:2a0:8be7:e3db with SMTP id d9443c01a7336-2a3ee42890dmr201479705ad.15.1768319909618;
+        Tue, 13 Jan 2026 07:58:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQZddbYx59WFgJ213od7FxJXsg/ppc6HXu9KmcADLaCc2D2xMt3lSu3DkV6boUq1l1ym3MwQ==
+X-Received: by 2002:a17:903:2f92:b0:2a0:8be7:e3db with SMTP id d9443c01a7336-2a3ee42890dmr201479445ad.15.1768319908995;
+        Tue, 13 Jan 2026 07:58:28 -0800 (PST)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd4bcdsm202738295ad.101.2026.01.13.07.58.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jan 2026 07:58:28 -0800 (PST)
+Date: Tue, 13 Jan 2026 21:28:21 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Alexander Koskovich <AKoskovich@pm.me>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        hrishabh.rajput@oss.qualcomm.com,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
+Message-ID: <20260113155821.7iesxxuf74ncr7ue@hu-mojha-hyd.qualcomm.com>
+References: <b105810a-63a8-4d81-9ad8-b0788e2e1431@pm.me>
+ <e469548a-8d74-4d3b-9617-2b06f36013e2@oss.qualcomm.com>
+ <ABmlNqg6uJXJLkDZo3uaZLdrTCFIjRXOJ68Hrx1MnHHYMnPJ9_g7GW0HGRhZBKv4--_PANfXgTV7h-n7HFC51zKNW6JkmEhpB6_EhFQ27Rw=@pm.me>
+ <ee448445-8a6e-40ea-9464-1c2ae52b84cd@oss.qualcomm.com>
+ <pquvJnlBgedyrF5RUTrHBUoqCIR7sQMWjwvcpm-5MuqAOxcbLg7i4H2RkuI27usOGZO000h3c90TM_kr6c5UFfViPCzGXX5MNWKFHugevXE=@pm.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pquvJnlBgedyrF5RUTrHBUoqCIR7sQMWjwvcpm-5MuqAOxcbLg7i4H2RkuI27usOGZO000h3c90TM_kr6c5UFfViPCzGXX5MNWKFHugevXE=@pm.me>
+X-Authority-Analysis: v=2.4 cv=TPFIilla c=1 sm=1 tr=0 ts=69666ba6 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=k3Xfc6bkAAAA:8 a=EUspDBNiAAAA:8
+ a=Jw3FZ3kOnBb64phZBNUA:9 a=CjuIK1q_8ugA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=vs4QOAmQMkZ3NkxV1SYa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDEzMiBTYWx0ZWRfXxE/yqlVwESLr
+ RVFiYOgoGj8oVom3fpoSXVT5Bps9VZ++JQqk0wVHX9hYWifCSA92g5VA2AgATUY4E7jSUhg7i99
+ MUcL8qlMknKLWuuxBfShd9JAXnaiuNrwGA+iWiCP6Fq56MWXyDlHoipmoD1ajV7FTAtqay0Go3O
+ vhg1113qeJwBIBPzjCwZUaSpbY8JOgNdPVRS/1zNZ/tRDCclUe6By/p2Va8MjTDQ78++HvFmgtv
+ SUDtvK6Tz3Kx1/ns7kSNmHDZfBwlsG8+LxTD7jAvyf4PJxcNlqRDzVery9DFrR1Hc+NWylNhBGD
+ gYZPru2sDRc4ZjFNg/XxAnbQSLYkwj9YW1SfCzcCjZRMfdsS0W5XhLxBJezPiS/OYLOIa1yZR+a
+ 0KxZEvAxHdDLZAFvRy8SIn6h0jPCHUuaJNRmVm1Ihb6rHbX/BkPVlwWj0NDPa3HpbsVnG2Fc2NA
+ T2bqt0inz1/KYjsNQcg==
+X-Proofpoint-GUID: jrwuZB-3-TY00U9OcdT9riB76tZsgEns
+X-Proofpoint-ORIG-GUID: jrwuZB-3-TY00U9OcdT9riB76tZsgEns
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601130132
 
-On Wed, 7 Jan 2026 20:15:00 +0200, Dmitry Baryshkov wrote:
-> In preparation to making clear_infoframes callbacks required, add a stub
-> to the sun4i driver.
+On Tue, Jan 13, 2026 at 03:07:20PM +0000, Alexander Koskovich wrote:
+> On Tuesday, January 13th, 2026 at 9:50 AM, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > What I had in mind is that with the sources you can track down where
+> > the issue comes from with a fair degree of confidence.. if that's a
+> > Fairphone-specific issue, maybe you could prettyplease ask these folks
+> > for a BL update somewhere down the line
+> > 
+> > If you still come to a conclusion that the hyp is wrong, we can accept
+> > that workaround..
+> 
+> To clarify the device I'm seeing the issue on is the Nothing Phone 3a which is another milos device.
+> 
+> Not sure if this affects the FP6 as well but issue was also seen on an 8550 platform, so seems to have the potential to affect anything 8550+ at least:
+> https://gitlab.incom.co/cm-ayn/android_kernel_ayn_kernel/-/commit/7ae6565108654991aaac9b73a2221509511e59d3
+> 
+> It's not that I think hyp is wrong, what I'm guessing is it's a bug in bootloader exposed by a change in hyp dtb (since it doesn't affect blair on same abl tag). If that's the case is it still acceptable to workaround?
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
+Are you trying to modify hyp dtb here ? how ?
 
-Thanks!
-Maxime
+blair is very old SoC and may not be running with Gunyah at all.
+
+> 
+> For the majority of devices on the market you can't really update bootloader, it's signed by the OEM and sending a support ticket about it probably won't go anywhere since it doesn't affect downstream (since it has the label).
+> 
+> Thanks,
+> Alex
+
+-- 
+-Mukesh Ojha
 
