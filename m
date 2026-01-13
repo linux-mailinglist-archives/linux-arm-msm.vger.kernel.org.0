@@ -1,169 +1,344 @@
-Return-Path: <linux-arm-msm+bounces-88767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F260BD187AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 12:27:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 191BFD187D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 12:30:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7CB68300EDA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 11:25:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 24877301C0B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jan 2026 11:29:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F62F38BDA4;
-	Tue, 13 Jan 2026 11:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B0F038B999;
+	Tue, 13 Jan 2026 11:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zu9OWRU5";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iGh4p/rF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MXNhj1XU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Dbhf3D4z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319C538B7C5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60F32BE7D6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768303522; cv=none; b=eeBY0DWOdB01sAQOTSYqkeWq6MxGzpZCdTJXOvApyJ4G5l6KXwQAc8XGitUPamRKbVapFCObJ9iMegAHOkoJAaWs0a3HHScaWNHEOo0ixTMjcrWZoWuqKZMTDIcXHfqGqBRWVs3AET51OxAsUf2fk+tume+ExcvoqrSUumOQ1Gk=
+	t=1768303755; cv=none; b=TIznqQDBl07ADpWV97f2V4EfRDX+O9GOCxmXqqRoPYB91pnil7o/lTLEoy/w8RCDQJVllpMeLHemVI5DtKeLGuJb060c/1d1bfS1Mtiaqipcs9pCRFCkX/jYHR4o4dqcUtf6Z9h02R7fcpIRQv29r/j/lr/ow67RWHOF36bc0s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768303522; c=relaxed/simple;
-	bh=t86HNZbxi/Od4G0LzLdE2D7b55P6uxh2O1I7RX6Ozlk=;
+	s=arc-20240116; t=1768303755; c=relaxed/simple;
+	bh=eGZZgccgcpR/JaeVYh+J2xthh+WiSwa0v3WELSPPNM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fyYtfF0l1gYLo7KhjExsrKgELKJHFJMcvb1NiojNzC72Wo7SJoBf5MDuUxKTAvwLYmzkGIK6pcRZ+FXUAIn3AVE9y2krUML/McnoJE+a74zqwLYHmebzka+0TJcBR4qHjv+Je2WaGWxTKzHpdjd4jl4w+PI+GAEePrHZ6S6BhJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zu9OWRU5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iGh4p/rF; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=RRgvL2PPlojOmWe2Z0gP/DEKiUNbal4cv7c4Epsrw/IXIVGjJ+fpLpM0OqEIoApPlo4Auf93RUHNXK8PiR21fY8fsacVd+0WZP3iAnlITm88vPneW9AC1HwKa9CenVTYIEz9t3n8qnAmVkhuxATPYLPa5zbikdGITPO15el8vcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MXNhj1XU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dbhf3D4z; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60D5nMrn3734990
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:25:20 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DA5psV3799018
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:29:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/Kf3Ro/8NFkbGB+tKehpxW0a
-	watgAh1Ax7t4rv6CRBg=; b=Zu9OWRU5PSQtmzMrQzVrVzXDJFWSuu8l10zRlg3C
-	CEyq3kdbKqTp6IKHeuOj6mbRAIT8eKS0NP7zAmj7xOd63hlph9rYPPZibk8RyB8W
-	UzLdwrNXDK/56Xu9NwT4jAMc2mMtdFSO82Y+ZVeEW52H60pNUxiwvqWXPEkHyziD
-	sj8JK97zr7L2cz+aieywmN6EGKBdkmpv1UTarjzzWKX7Px2hwJ8cVme/owKjp5LZ
-	FC1Yt91bWerAmEMdzc3glLPYOCK7NYzw4l8BgGJBCDqyKLUbxQfoLdS2IUM3gJzq
-	JBk5QPlQPm/+C246gl1+QAdOdMMqtN31l3W8sFi9jx88vA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bng8790xv-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vF9l+fb4e/cYG5xTYkEhk0Sjq46FyphuySf0LqafbSY=; b=MXNhj1XUd9fkFqWQ
+	wIcJ20ezuy58f3C/yZJuMhAnTbAV7/aNefHmX0mW1wQjyE//szBQGXrseEkZuyOB
+	m1MIYN+LGKrFLfXZV6CA62Sem6fViVRfOIcFY82JaWDA22QuLXvk32x4tPNn8YCB
+	mlgzbeskuj61oEaFyI5ezY8dTgsCY4TWz01nCflWKdIDCXUxcevkL1sc5VxrJP/I
+	9P1NDkzpaW/jxAn5kDxEVsIGwvs4+K1f5yJ+mXBSdNbS8b+4+9gU803B9LBcOJ3m
+	qfRzYGTV3d+kwmsDR3XIaDM1S8F8zTxP2EhlCFmyUceDafzrvPKMRlq9YRgS2HWA
+	i2PzCw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnm0dr8hd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:25:19 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8c38129a433so1980640385a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 03:25:19 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 11:29:12 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c5297cfe68so47766685a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 03:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768303519; x=1768908319; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Kf3Ro/8NFkbGB+tKehpxW0awatgAh1Ax7t4rv6CRBg=;
-        b=iGh4p/rFqygpymiXAEm7/ZUzBDlT4dA5W0nDiR3BqqQknpH5qIXxRfhJybAZoDFnRD
-         P+wCZ4kN6baxfu9vAe9sDmKAfyyb34uYjxHymlQjuF+Tym0iy3jDXK3VA7kdSSbpjR47
-         36lGUZL9MSPLJpQXR13LPVcDU/UPS3Acq96FAUt2en+pbqUJrUUMaZz9mO882usZBexe
-         HhLV+7P0fUn+vzzuM9gzjr9AkpmGVpTzgYo0DlGd8OrEMy073KRv+hvCTCfdZ50T8Kn+
-         5cpuFie/6gphi+L7Jn6woWEZIKT5gAC4Jmkfkxazj0EkPa7oEoz9WxR3FArkVJjUhwPq
-         Lihw==
+        d=oss.qualcomm.com; s=google; t=1768303752; x=1768908552; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vF9l+fb4e/cYG5xTYkEhk0Sjq46FyphuySf0LqafbSY=;
+        b=Dbhf3D4z1VaQSg1IgDkfZVsz4Y6RRZOPktLMJ4/maeEBLmztslIRBHpll3m4AEt7Vc
+         PrdXIoiLDsmh28hOnab+R7TisH2VIQZpIcoc+utXEqCtYyL1lyk5Q/2qlVhhkHBEnu2P
+         Y43uHArwcBELHv3ImExuvrV+3CGV6q3hjFNwsqhYkn1fqd/zfCfoX2GIey/wV2H0EdZv
+         dKmj3KXVoxtd7Tuil8o91TXKldJkJSkYhDFBV8CaclV+GirnvBtSBtgFa7S746hNFWbM
+         tVJ7rEpoavNWK/nWiI+nZM2Ss2FUA4kd3nQjBM5DYCYTQ9Rm1qQuNp2mhQaY/uJG+H7h
+         Pi5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768303519; x=1768908319;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/Kf3Ro/8NFkbGB+tKehpxW0awatgAh1Ax7t4rv6CRBg=;
-        b=EE7zoPqA9TjQx6uMNcu37zIqm1y9eUMySIUnl0AldYgVHc9RJouytEiKMOCgAkDI8/
-         eeEMXjchOGdsEcIEi8endAqsefSqDYDiyTqMU8BxeOuZ+7rUsLgy/inECMkOlcKS71rk
-         XBRGPAY3ccyah47iE3YRraBtF7T/SwuxwZnHFrRXpd+hqLpcTjFbYCrrJ5pmF24QjNek
-         ozDtOuUwBKW5clPi4CupY1By+qG0kAHtAl5U7ALS5dWQKLhHUngJD/t+MozdGmGuQLsA
-         KcSqpKhSRCrp+ngRrK8YF0Un4tp7VUJKFT3vf4o60ui/0AXmLYUQJz8h/myXE70Yr3J0
-         yEVg==
-X-Forwarded-Encrypted: i=1; AJvYcCUvqRE3Fm9ykGULUL3KAfc+8UBsMTdpo3oEXBe9g5A1DJP4fx5qp3zGIcgeOJUzG9QZR5la3xFtSo47Jxss@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD3DC2vFjF/55692fg0bL0OgTmgjvkNOx8rmxcKw6cGSJ6+jIs
-	d9BkSVGIR5o0/qQmKwkwPKNdb+0PpmSdW9KNZ8fFRgSyVcY8fSowgHbAh/Mi8+//R0waFrbh1aa
-	GKQg8heiY7WjF4o5Jfewge6vijTQ9hUZtFrop00g9MaFnM4b2/BY50QT+ChEplHeBJ370
-X-Gm-Gg: AY/fxX6C08tFhOKRtq9KTnZsefPQVZ0uAsLLGlMCf+lSPlGn0jmK4WhBhGmWU8l+U/N
-	cMfWlMtxCAPuQobO6WKHqDzTFi99kVxlsRjVLaAHpKbzn0nVzni7NVFMFl+d508MPKPrcN6+3mQ
-	2CRV5Ik+jGt8e5b356eDEaOPAxj5VpDq0DZXHhXgmhzmnsgk1c/sW1onjabPIdEfeuODvunLkKB
-	84uz4G4oOs4ZrVYmB/Ti1g4fZ+f0AvXx5nTLMbWfBvlR8w2svO0C1RFD3LfjWBOQ5ygXtIWqxeT
-	6u09V0L7s0adbzQU2w15oq+PUxzoKSHaw71N1FkBYqoXkQBtnfoPYzqbCuPeHSQLM2h1FN9Uarh
-	YvEZcy8rHw/VVlJXOl4hC8GXDDRyb5fIv5vjPlpYO1Nl7P956DcECoANo0j3OzNVx21UQ9owf9W
-	IzqlRYvP17zJ0xEDSHRim0rKA=
-X-Received: by 2002:a05:620a:d83:b0:8b2:1dfd:f6a2 with SMTP id af79cd13be357-8c3893a5939mr2915865985a.40.1768303519359;
-        Tue, 13 Jan 2026 03:25:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1hsn2ilnwEbd6t9Ep084bkY6hAk+Z97Tp/O+7NvrOBFZdHTyDztXEXIZbBkcRuTwh5lAbNg==
-X-Received: by 2002:a05:620a:d83:b0:8b2:1dfd:f6a2 with SMTP id af79cd13be357-8c3893a5939mr2915862385a.40.1768303518852;
-        Tue, 13 Jan 2026 03:25:18 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768303752; x=1768908552;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vF9l+fb4e/cYG5xTYkEhk0Sjq46FyphuySf0LqafbSY=;
+        b=uZSeFuSgnoEzEIkr7YELN6ac/RBwn7KZ6xY4HF8xOliIE/MNtDTtpzxRote5TgHQG1
+         pwts/pah9Ks1CxGhi+aY21WPgp+GSprdO7+RJZNqaUKeFKL5sgIAX2GdQ+kFLPjPJSfs
+         FA9QB9lXbFP4doue/3lJ7TGlnGhoEBd1N12RGfjx6Uymp7CaIFpn4P4bcfthp/nvMctc
+         7R6+dVIxdDgoB6f+FbccKYzKcw6QQ2AyQ3d1QFze4BgkgM/xq50HplllN7J2r005vKCw
+         Vxu9CeMi+Ojqt4tuHwT+RIbIux9PyaAsG0cvpkDH7LDSiphHwuHcH+a6EtzX/g3Kukay
+         Pn/g==
+X-Forwarded-Encrypted: i=1; AJvYcCUZ3mOynqWHGX/QAwk8G+g3XkGmRpCVA0hTXiXkBcmE/d6De2LSQsynghocIPEFdU4Xqk8POGGvUqlnBWFa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoyFzyTNiG0ZzYMy9e7wK8FZVejSPC6hW0AZ+gTqxaLAWXxcon
+	xDk0ErJm33u9tdbdzzS5G/GA7RgwdolKP1smT9o19lV9oUQ9Pwc9OR6iKsnuf6U3dbfuAIZivL8
+	JwodkNA80ToCCJ9KoaIDtDUVEBobuifi/yrAOsiOHsJNgmBTgfvyJP7jkuOgfOaExdH2X
+X-Gm-Gg: AY/fxX5AdEbll6ohnvhFLWENTqqYF/wd9NcLKt9zdZibbx8mB+gGzsCv3IHPFCHZsqT
+	r/fFAYMCNGr4jY8c8vCRjLMyCex3jeca28v6v+wdhgbitQnh6y9YblErUPEJU3F0VIJUnl3xGLO
+	hrFpJWMVFca5tZNX43RNaYAW+JcxVgX+WADgRnaZ/Uj7D6O9oMyJZx12qC9m3LDJ6wwD3eHuWlH
+	RFm7ez4jTds+fybByIaJhJZHEjyUejUROZKs/dS4GvU9I02VX2W/YUioiHFsQQOuUq8LsBMMHeJ
+	PNz9EKQrHluOHxsIpzJ/r5jNpREpkFX5fxj9IbhNjugQnd3nDVdPa6vUfnaycqY68H6Sa4BGExw
+	8DX8Au0YvZvRa93OSkAuEyvv6WajdzaGEmuWq6kYhC1IuBHhvqKMyCXF/8O1Q/SfKheZnsI2Qk9
+	phezSHR/UwIsSICTR3P7oPNwo=
+X-Received: by 2002:a05:620a:414f:b0:8b2:f2c5:e7fc with SMTP id af79cd13be357-8c3893757femr2856796985a.7.1768303752102;
+        Tue, 13 Jan 2026 03:29:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGpjrF4n+gdyf96X8il7mrinkoUjfQiSc/k+X+vdYSmWzaD8NIKkyhZkIC4RqiENTrPc+Q/8g==
+X-Received: by 2002:a05:620a:414f:b0:8b2:f2c5:e7fc with SMTP id af79cd13be357-8c3893757femr2856793885a.7.1768303751609;
+        Tue, 13 Jan 2026 03:29:11 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b65d5db54sm5670677e87.64.2026.01.13.03.25.17
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b6c634631sm5129949e87.13.2026.01.13.03.29.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 03:25:18 -0800 (PST)
-Date: Tue, 13 Jan 2026 13:25:16 +0200
+        Tue, 13 Jan 2026 03:29:10 -0800 (PST)
+Date: Tue, 13 Jan 2026 13:29:08 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        trilok.soni@oss.qualcomm.com
-Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
-Message-ID: <7ruiccdm7q5fg2pixmszr3fqvclvymdlkv4x4xbavkaeczrxgc@5l6usxqfi5fe>
-References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
+To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        J =?utf-8?Q?=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>,
+        Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+        Mike Looijmans <mike.looijmans@topic.nl>,
+        Catalin Popescu <catalin.popescu@leica-geosystems.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Pin-yen Lin <treapking@chromium.org>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: lemans-evk: Enable secondary
+ USB controller in host mode
+Message-ID: <ftqb2uxp6yk73djyo3psehhqq5wamimtissgfehhziwbkprl4c@phftum3m3sdy>
+References: <20251220063537.3639535-1-swati.agarwal@oss.qualcomm.com>
+ <20251220063537.3639535-5-swati.agarwal@oss.qualcomm.com>
+ <qy4bp2hz3ivwydsk4sblxpgthz5hw4rn7r3ezaim5wf5fgm4sg@meispnp6wthj>
+ <CAHz4bYvVfQke_aUx_mVO2QkCc5yr_1Cn35N6hPi1if=X7iM3+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDA5NyBTYWx0ZWRfX3bYXQBZspHxJ
- W2K+SSIx4xJwDJfo3WGZAs65TsqPxqJGdpMtNn0bX80sgI5NlWKyjUDqK6gEE7UGtk6fXyZCDhu
- XCNfVwDSMpKt3zuKl8JlH2vPqzXrWRof9fXdfp2RkHBNUDFUJpBdeuF1QqWoiqLUeefa0Eqhifr
- QNlVm3/AlEqUtq0qHcNEH5eAgn8rXGrhW19LPqak5dz1/uJiRWhLvN++qeFDikCFTB/WSCL7YrE
- ARvxfYPkk2N4L2QfF5NWT4oRPacUkOHWsJznA31HS81TRbMpOv606Blfv0ElR0UCcu2wB7YjbGe
- 4z/G9NRFfUYXi2ewc7TYO8mmatrhhncJqqYoEKFp/ckKyRCCuQLCKD+3OilXkte6JDAh0mMx5EV
- iN+1GIAqn4jrJ9NW0Ztxq2Rm2W4tJP5I1cXWrEgEGUAOPchS7QwwX8G63vzJ8qa51Qc0RVm1jsv
- 4ZncyRaJoZr7GlikX2w==
-X-Proofpoint-ORIG-GUID: nprdv6urxoXwRoFVRmZ595Qx7pGzxtK8
-X-Authority-Analysis: v=2.4 cv=IOEPywvG c=1 sm=1 tr=0 ts=69662b9f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHz4bYvVfQke_aUx_mVO2QkCc5yr_1Cn35N6hPi1if=X7iM3+g@mail.gmail.com>
+X-Authority-Analysis: v=2.4 cv=BYXVE7t2 c=1 sm=1 tr=0 ts=69662c88 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=c_hA60C45wluNUwf66sA:9 a=CjuIK1q_8ugA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: nprdv6urxoXwRoFVRmZ595Qx7pGzxtK8
+ a=EUspDBNiAAAA:8 a=o7B0pVO_YLVwEXfCrecA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: 6cfdUzT61PChihIgeKKlAlYLP2Ms9hAF
+X-Proofpoint-GUID: 6cfdUzT61PChihIgeKKlAlYLP2Ms9hAF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDA5NyBTYWx0ZWRfXwTKvipYajEdm
+ r1sYzqKBoVqN0eq2ryswFeeZET5bWxx+DdKsuRjtuhSuln2jDiKLs+QCZWAJJMQ8LAzQZZlgyuC
+ Ii1HKzgvq4qKjuS+6U89yDLGHKo4lDzDYKql+d0casrbFo8uzsfLQBUujXW+0sbzUDx5z/lMEzm
+ RsbZ2KuFiGzhRLTtCAJropJ+AvdXrAqKXfuXYN11tzUUdM+Y6MyAQG5kQcOPDYqI7AxvnqLXAEP
+ FggFTzdqo1oPYjxbxV45pYgCirV+1CPHtALk7grJ0bYsUZsfETnVRNqVholcwmks0BENDjdiNHp
+ IlZwA9e05oaTL9tCPoYJ0HENMYySPsItCq1/AHOHFK3sFogApaH5OpGBE9Ny1UqImBu9iDF5J+a
+ Gz7LbhiQzQpJAT4xfPlw5E7Lntz/LVeLxjKJaw8O1hH6zm9HYuOLPR/f3DeYQ2GUzt8dE0k7mUn
+ ELOAW1bJVBRhWjotXOg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-13_02,2026-01-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601130097
+ adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 impostorscore=0
+ spamscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601130097
 
-On Mon, Jan 12, 2026 at 10:24:06PM -0800, Satya Durga Srinivasu Prabhala wrote:
-> The ARM SMCCC SoC ID driver is currently enabled by default and publishes
-> SMCCC-provided SoC identification into /sys/bus/soc/devices/socX/*.
-> 
-> On platforms where a vendor SoC driver already exposes widely-consumed
-> attributes (e.g. Qualcomm socinfo [1]), enabling the SMCCC driver changes
-> the format of /sys/devices/soc0/soc_id (e.g. "jep106:XXYY:ZZZZ" instead
-> of a vendor logical ID like "519") and breaks existing userspace consumers.
-> 
-> Flip the default of CONFIG_ARM_SMCCC_SOC_ID from y to n. Platforms that
-> prefer SMCCC over a vendor driver can explicitly enable it.
+On Tue, Jan 13, 2026 at 01:32:41PM +0530, Swati Agarwal wrote:
+> On Sat, Dec 20, 2025 at 9:47 PM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > On Sat, Dec 20, 2025 at 12:05:37PM +0530, Swati Agarwal wrote:
+> > > Enable secondary USB controller in host mode on lemans EVK Platform.
+> > >
+> > > For secondary USB Typec port, there is a genesys USB HUB GL3590 having 4
+> > > ports sitting in between SOC and HD3SS3220 Type-C port controller and SS
+> > > lines run from the SoC through the hub to the Port controller. Mark the
+> > > second USB controller as host only capable.
+> > >
+> > > Add HD3SS3220 Type-C port controller along with Type-c connector for
+> > > controlling vbus supply.
+> > >
+> > > Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/lemans-evk.dts | 158 ++++++++++++++++++++++++
+> > >  1 file changed, 158 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > > index 70d85b6ba772..d72639479d75 100644
+> > > --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > > @@ -67,6 +67,47 @@ usb0_con_ss_ep: endpoint {
+> > >               };
+> > >       };
+> > >
+> > > +     connector-1 {
+> > > +             compatible = "usb-c-connector";
+> > > +             label = "USB1-Type-C";
+> > > +             data-role = "host";
+> > > +             power-role = "dual";
+> > > +             try-power-role = "source";
+> > > +
+> > > +             vbus-supply = <&vbus_supply_regulator_1>;
+> > > +
+> > > +             ports {
+> > > +                     #address-cells = <1>;
+> > > +                     #size-cells = <0>;
+> > > +
+> > > +                     port@0 {
+> > > +                             reg = <0>;
+> > > +
+> > > +                             usb1_con_ss_ep: endpoint {
+> > > +                                     remote-endpoint = <&hd3ss3220_1_in_ep>;
+> > > +                             };
+> > > +                     };
+> > > +
+> > > +                     port@1 {
+> > > +                             reg = <1>;
+> > > +
+> > > +                             usb1_hs_in: endpoint {
+> > > +                                     remote-endpoint = <&usb_hub_2_1>;
+> > > +                             };
+> > > +
+> > > +                     };
+> > > +
+> > > +                     port@2 {
+> > > +                             reg = <2>;
+> > > +
+> > > +                             usb1_ss_in: endpoint {
+> > > +                                     remote-endpoint = <&usb_hub_3_1>;
+> > > +                             };
+> > > +
+> > > +                     };
+> > > +             };
+> > > +     };
+> > > +
+> > >       edp0-connector {
+> > >               compatible = "dp-connector";
+> > >               label = "EDP0";
+> > > @@ -140,6 +181,16 @@ vbus_supply_regulator_0: regulator-vbus-supply-0 {
+> > >               enable-active-high;
+> > >       };
+> > >
+> > > +     vbus_supply_regulator_1: regulator-vbus-supply-1 {
+> > > +             compatible = "regulator-fixed";
+> > > +             regulator-name = "vbus_supply_1";
+> > > +             gpio = <&expander1 3 GPIO_ACTIVE_HIGH>;
+> > > +             regulator-min-microvolt = <5000000>;
+> > > +             regulator-max-microvolt = <5000000>;
+> > > +             regulator-boot-on;
+> > > +             enable-active-high;
+> > > +     };
+> > > +
+> > >       vmmc_sdc: regulator-vmmc-sdc {
+> > >               compatible = "regulator-fixed";
+> > >
+> > > @@ -527,6 +578,33 @@ hd3ss3220_0_out_ep: endpoint {
+> > >                       };
+> > >               };
+> > >       };
+> > > +
+> > > +     usb-typec@47 {
+> > > +             compatible = "ti,hd3ss3220";
+> > > +             reg = <0x47>;
+> > > +
+> > > +             interrupts-extended = <&pmm8654au_2_gpios 6 IRQ_TYPE_EDGE_FALLING>;
+> > > +
+> > > +             id-gpios = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+> > > +
+> > > +             pinctrl-0 = <&usb1_id>, <&usb1_intr>;
+> > > +             pinctrl-names = "default";
+> > > +
+> > > +             ports {
+> > > +                     #address-cells = <1>;
+> > > +                     #size-cells = <0>;
+> > > +
+> > > +                     port@0 {
+> > > +                             reg = <0>;
+> > > +
+> > > +                             hd3ss3220_1_in_ep: endpoint {
+> > > +                                     remote-endpoint = <&usb1_con_ss_ep>;
+> > > +                             };
+> > > +                     };
+> > > +
+> > > +             };
+> > > +     };
+> > > +
+> > >  };
+> > >
+> > >  &i2c18 {
+> > > @@ -690,6 +768,14 @@ usb0_intr_state: usb0-intr-state {
+> > >               bias-pull-up;
+> > >               power-source = <0>;
+> > >       };
+> > > +
+> > > +     usb1_intr: usb1-intr-state {
+> > > +             pins = "gpio6";
+> > > +             function = "normal";
+> > > +             input-enable;
+> > > +             bias-pull-up;
+> > > +             power-source = <0>;
+> > > +     };
+> > >  };
+> > >
+> > >  &qup_i2c19_default {
+> > > @@ -849,6 +935,12 @@ usb_id: usb-id-state {
+> > >               function = "gpio";
+> > >               bias-pull-up;
+> > >       };
+> > > +
+> > > +     usb1_id: usb1-id-state {
+> > > +             pins = "gpio51";
+> > > +             function = "gpio";
+> > > +             bias-pull-up;
+> > > +     };
+> > >  };
+> > >
+> > >  &uart10 {
+> > > @@ -903,6 +995,72 @@ &usb_0_qmpphy {
+> > >       status = "okay";
+> > >  };
+> > >
+> > > +&usb_1 {
+> > > +     dr_mode = "host";
+> > > +
+> > > +     #address-cells = <1>;
+> > > +     #size-cells = <0>;
+> > > +
+> > > +     status = "okay";
+> > > +
+> > > +     usb_hub_2_x: hub@1 {
+> > > +             compatible = "usb5e3,610";
+> > > +             reg = <1>;
+> > > +             peer-hub = <&usb_hub_3_x>;
+> > > +             #address-cells = <1>;
+> > > +             #size-cells = <0>;
+> > > +
+> > > +             ports {
+> > > +                     #address-cells = <1>;
+> > > +                     #size-cells = <0>;
+> > > +
+> > > +                     port@1 {
+> > > +                             reg = <1>;
+> > > +
+> > > +                             usb_hub_2_1: endpoint {
+> > > +                                     remote-endpoint = <&usb1_hs_in>;
+> > > +                             };
+> >
+> > Are all other ports disconnected? If so, why do we need a hub?
+> Hi Dmitry,
+> I didn't understand your query, can you give more context to it?
 
-NAK, the userspace should not depend on the exact kernel configuration.
-Consider working with distribution kernels, which would enable this
-driver anyway.
+You have described one port of the hub. How are other ports routed? Are
+they connected to outer ports? To some other devices? Unconnected?
 
-> 
-> This avoids unexpected format changes and keeps the generic SoC sysfs
-> stable on systems that rely on vendor-specific identification.
-> 
-> [1]
-> Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/soc/qcom/socinfo.c
-> 
-> Signed-off-by: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>
-> ---
->  drivers/firmware/smccc/Kconfig | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
 
 -- 
 With best wishes
