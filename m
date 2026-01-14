@@ -1,170 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-88888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4056ED1BC46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 01:00:56 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42D86D1BC85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 01:12:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 36A2B3013EB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 00:00:45 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E9E493007677
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 00:12:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E0221D585;
-	Wed, 14 Jan 2026 00:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E992E401;
+	Wed, 14 Jan 2026 00:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uc+7oYGl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eRuoKDzP";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="STjCilUB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AD41F4180;
-	Wed, 14 Jan 2026 00:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27D3944F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 00:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768348844; cv=none; b=fZJb8U/sqkq1n/w1c6YUkURmgro/Ah8wVTr8P+KYtrZYk75OiaLU+lBZ/p67OP54gXddpNUMnmGkzHiiTJCCWxEAcprVzDXUFBS0kCL6s6f7uNoxxuXQ7la738hAwX8TXTPzCdsvFctJ/4zsx6A2Y4ZXklJjT7nvZlwkRgqOGMI=
+	t=1768349535; cv=none; b=OAUG4KGbLHhRFtaDiwSpKGZj5I6/TXOZOFjcF26xp/1uVud6J3vHnea1YxBHNHJVQrc37pkbyNGdYKGpR0POxJDFDb54ovj4nS71vZVSdN1qGc846fyx2ST7tX/+BTpHRnbAcb2e767S6wXCz23cEHYVYM4Gm7MAgCnEmLoC6x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768348844; c=relaxed/simple;
-	bh=bXLpO8c9ZBsExdS2sHYGwKNmU+WKPGSgvNzVCoVhZYw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=H8VTr2nsjIMTmHaG/65np7VdoYbJyWe33xDJLosG8aKRhyuOT0VsPOpi0V3se3yOlo1IbbvMBdGozmUn8IvNuDyhV/NyeagO571fv8/cgR/iEiu5c3QlMBDvUOSinhNnK/dl2B8J4CtyNJ6AbV51rT/3n8CHl+UrhC+8RVCP7qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uc+7oYGl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49891C116C6;
-	Wed, 14 Jan 2026 00:00:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768348843;
-	bh=bXLpO8c9ZBsExdS2sHYGwKNmU+WKPGSgvNzVCoVhZYw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=uc+7oYGl75Lz8ht0DyVesshS8Yxx8aV8Q5h8oU6t3D0pXEnrrYsOoDnIfNxYZWEAK
-	 sKLjVwY+F26AjkDiYsPs48ilC/mpxdZyeu771qPN7rWgSJcQ1bVuFnzq3XgNarTihr
-	 ZFZJQQqvrJqqVsZHSZxnWhVRAbMdOS3qo9R5/+gdHfVIoZxWnLLJ5HlPe1TaK4o2D/
-	 JCzZyekCygyNVTctCkGUqRkXalu1iLiV5xRi/6MwoOMJd+36uBH5LQv21/gOHG2efc
-	 vfyzx0VI86PRsewPyNn8IvmFshLL1Z2boB4YULGLO/DkLa46lkYZN0OpXq2dtODf0z
-	 zqjvzP5w9bIRA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 13 Jan 2026 17:00:31 -0700
-Subject: [PATCH v2] drm/msm/dp: Avoid division by zero in
- msm_dp_ctrl_config_msa()
+	s=arc-20240116; t=1768349535; c=relaxed/simple;
+	bh=ZtRwXZlwQdStKHUmmOm1JOx4aH+a+l4Je/3DIbLIfsk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZyCM6nRv87RCSy5v0knQ7FhXHF4S5/RMSWDcEuPyOZe1YCHL06vt+xzZN6/Mt4HFgC9Ta8muo8QAkPwIxF7exu8VxARhZBrEmRK86ocRK2PQbc8R0ii0LwSIdt1WEYHxZ4NYeQVKcQAh2RDURUAjKTjl8+iJX4puXUraeThozVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eRuoKDzP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=STjCilUB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DNHZfe1424695
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 00:12:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=1nUlqdzcFzT6ITBXvbXgQQfm
+	gOOsh7SnefCWs8uawLw=; b=eRuoKDzPab72vL4f5o6sRLQzcZJmKKbjf63STLmk
+	I/d09R+chSIj8wuK9XvlUxSMS3QhTnemyhFm16KYQ1peeWzn6hlkjxW3yIfIzyHG
+	0CAbRC+fknX+nS/bsGdqs5ueG4ZEyvaVdQy3KX3rw/hW7tvhmThdvIxwfQoLYhyU
+	9DNxbZ0lp9uh24GEmdfmKDBsFkWOuslOY7MWour/P527cwYhQ3Vfuubu1agsYxRI
+	vNtp7sRzhsmVE2wUz5resoAKv0eCLauxKEFSvjqDUb4sE5wAuuqt+2mjcIjRJO/+
+	CbKRPS+aiyYWkU7pCzp8kArdplH+xvol0ZzGc0B2kXYyIA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bntet14sf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 00:12:13 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c52fd47227so53340185a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 16:12:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768349532; x=1768954332; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1nUlqdzcFzT6ITBXvbXgQQfmgOOsh7SnefCWs8uawLw=;
+        b=STjCilUBd0OhaCagO/5OQqHOQolycMeV6zBn4EMPqcADOleW7z2Z2FYORQhyUoiadL
+         g3nZVY8+Cp81aQeATfIHJb0zfmAJOSS8ruWT+gIW12rLycUvbdm+sjsZrFN1eDVPP/pA
+         f1ZPqE4Yj2pJI8PKTDbTD8+sRN3T3OzhHDhXoHE9Ki/P/S9LCZzK6kN+CPKAqiIfT/8k
+         Zu7rYk5JkWEYDsPevPan7UBjANU8PGN5fsmSaGN0WQdygMO/NhSyrLljOULUKQsC4Cyl
+         r66uehDqp09iHJeDgOBJidqDJ1tzk619pBT8RA61672LcLsl1dhE+p44xcYH5G0swXl1
+         ilQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768349532; x=1768954332;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1nUlqdzcFzT6ITBXvbXgQQfmgOOsh7SnefCWs8uawLw=;
+        b=Arph1vmioOFHnGLfXf/6X6ADlT/yCrqFvvVVJBTK53sLhPbW8L/PA82549miuuOU3I
+         QmEt03dYz4lkdSqdOm49E5EwM2Qs5oXsoR9wXn9IHMLkRt8zPb8i7KiJBi0vv3UhL00X
+         63OTbJQWQa2IpQOSgv/MMGBhMEnpXUMR1NrremIOPmaH14d/8Wcy5UiCanzmLzoE5Utx
+         tCXvltQHVll0f42aor623PIwu7gtUm4nBy3BVHLl/18CiJm1z1wVHaWTf+73CD+fTfQU
+         n1UmmfF12l2WHpxxVav2yoQHg0KLRpTH52JJrTDdjkyqWgFQf64b+Qi6KzHQGXT6W/W5
+         Jgdg==
+X-Forwarded-Encrypted: i=1; AJvYcCX8ZKLJUbSS5BBdtuwJwFg4NRR/hsPdZJw0pqxr5Q/1mRtuHobIWUcrRakT5dK/wRYGluG4/OQSSnerd1zL@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMQc9TdiOHFoxRcuKw2tqkIrxSemMCfqb+GgRBgFySF7uqWNG5
+	gNf5RI6l4gWHLIj716OHDbaBCVdPEdmvbKDkpII9cFvMcTPGg9FdeEno1JcNOyULaARpVzcAYXu
+	ratqjvIe+5NCBKnTL17tOXsPLbvYZvhf3SoI9JzPlnpVjTglP1xyfXmem7Za9HvsBjTff
+X-Gm-Gg: AY/fxX5RwE/fJfyvEzO7ESEKjwh77FYJ5GoOVb8iPZR5YAaaDNoFBUrPri3Glojr/03
+	2MPO7SddqpyxxS1ctRTGeOnccIXh8XpIDuHKgu4Rob+lFaEmXGoqY+VmuhTnvEBtlPsJVOsbtQ9
+	G/WAGODIeDdOXK36AuW5NE8aB/k7xS2SfIdNNpKm+Ru5Ev7qS6yV5etodzetm99flDIRqVQCusX
+	pZjSqbl0OE4V30bNWLnETEa0iC+NGnTAttlUn5yXwuUr0vrIi3pBrPGWhieSk46AC1e9/XuzUXL
+	eTw545qUsDYuXYPz4w9c6kg+kAFG2/9fqe8q/IDoRGFRou1sCCC5BTwWtSRIATELmc4k3bAXFxs
+	PsVsA4TYM2P5DQB8tkodGnW+NNZuemNGt+ViECArR4HWKO6+T2djCDjVnCQAlYC5K9FGKF63MKp
+	EINlsOLX4FdQF/USSZAdWdlE4=
+X-Received: by 2002:a05:620a:4492:b0:8be:6592:f7ff with SMTP id af79cd13be357-8c52fb1c9d2mr140593685a.25.1768349532094;
+        Tue, 13 Jan 2026 16:12:12 -0800 (PST)
+X-Received: by 2002:a05:620a:4492:b0:8be:6592:f7ff with SMTP id af79cd13be357-8c52fb1c9d2mr140589685a.25.1768349531523;
+        Tue, 13 Jan 2026 16:12:11 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59ba102087esm157980e87.35.2026.01.13.16.12.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jan 2026 16:12:10 -0800 (PST)
+Date: Wed, 14 Jan 2026 02:12:07 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: add apq8096sg-db820c, AP8096SG
+ variant of DB820c
+Message-ID: <gwlwlqxo7xbsws2lpmb3pppevthtuxfy4m77hdpyvx2m23vbr4@6jujptqhdump>
+References: <20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com>
+ <20251111-db820c-pro-v1-2-6eece16c5c23@oss.qualcomm.com>
+ <02a9d6eb-e480-431b-bd4c-a35cee170516@oss.qualcomm.com>
+ <wf4h2lwyvgswtv4bgdfidj4vpvykwhu2gri4crvvtd644hf6nr@cnpqi5bmpvm5>
+ <f4fbc949-415b-489e-b333-4c846d3ce8c7@oss.qualcomm.com>
+ <CAO9ioeWpOArPm3M5hjR5PMbu4rkV1HHxQOZjOe5LwTKK7xMWJg@mail.gmail.com>
+ <d5fc8900-e720-4f5c-b456-67c4ae03f711@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260113-drm-msm-dp_ctrl-avoid-zero-div-v2-1-f1aa67bf6e8e@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42OQQ6CMBBFr0Jm7ZgWlBBX3sMQQ9sRRoGSKTYq4
- e4CXsDlS17++xMEEqYAp2QCociBfb9AukvANlVfE7JbGFKV5kqrAp102IUO3XC1o7RYRc8OPyQ
- eHUc0dHT2oKyxuoBlZBC68WsLXMofh6e5kx3X1dVoOIxe3tuDqFfv71jUqDGvCkfGmkxl2flB0
- lO791JDOc/zF71BhHzfAAAA
-X-Change-ID: 20260108-drm-msm-dp_ctrl-avoid-zero-div-be5dc40cbc18
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3616; i=nathan@kernel.org;
- h=from:subject:message-id; bh=bXLpO8c9ZBsExdS2sHYGwKNmU+WKPGSgvNzVCoVhZYw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJlpd1aoxTJt9GOdJFio/Oh2+SfpdJ6yrfuVjVbubGvh0
- dnYotjfUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACZi2cvIcKvp5KZbV//qR/CL
- Hz0W67YnpkImbJ//Xhklhe+K32MF5jMyzCy40il6SIfjYPjSRomXN1ISjsyPvPzoYOPOdStPzrq
- vxQsA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d5fc8900-e720-4f5c-b456-67c4ae03f711@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: L_Gci6LDWfnC59wdfS9r5joVRYVsRJEB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEzMDE5NiBTYWx0ZWRfX+3/2cipAfbW2
+ eMAjKqxZfAdgJHAtg2nIYPB6bHSGtJOXf4gK/WRhhcmSV/Kha9A1ESPNCXi1BKtKICsyRYT6Auq
+ +KA3Y5sZVP5tyzCqqtm0rXH10ge9MZLShI88HT2+Y/W/bhnkNXc/TC23rTM0FHXi4yiAS883l9B
+ mzirZvzfaAv8lQan8Js3x4LioQchh8WoQQ0+khxSPEnVnnsAdssY0m+GRTVtYpStVQxxLQ8SJ7J
+ xvVSbxyRJW2Z4G3kMoI6NDfl+g+eM7TEyHqQQXT+RZ+jyw0AcbXPFv4ikiW2E6uv70/g+ilqaNJ
+ 5fbo3q7jcPB5KSI9riDWIgQ9xDwpM+HlRBggvON0W24qrOzQPlj1dIsy4kl0ua16qEUKlazDq4T
+ wGqThtwiaSIPnJN2N+STwLnWQA6iwh5lZ/4ePh49qUmKlJ0u3UEAm553gu0ynESCgXOQyJq6Mpe
+ 5Xk3g81ibB5ycUI+qgw==
+X-Authority-Analysis: v=2.4 cv=TMlIilla c=1 sm=1 tr=0 ts=6966df5d cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=rN-2TZfAbqyzQVdIAIsA:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: L_Gci6LDWfnC59wdfS9r5joVRYVsRJEB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-13_04,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601130196
 
-An (admittedly problematic) optimization change in LLVM 20 [1] turns
-known division by zero into the equivalent of __builtin_unreachable(),
-which invokes undefined behavior if it is encountered in a control flow
-graph, destroying code generation. When compile testing for x86_64,
-objtool flags an instance of this optimization triggering in
-msm_dp_ctrl_config_msa(), inlined into msm_dp_ctrl_on_stream():
+On Mon, Nov 17, 2025 at 12:54:22PM +0100, Konrad Dybcio wrote:
+> On 11/15/25 1:09 AM, Dmitry Baryshkov wrote:
+> > On Fri, 14 Nov 2025 at 23:31, Konrad Dybcio
+> > <konrad.dybcio@oss.qualcomm.com> wrote:
+> >>
+> >> On 11/13/25 9:32 PM, Dmitry Baryshkov wrote:
+> >>> On Wed, Nov 12, 2025 at 10:44:49AM +0100, Konrad Dybcio wrote:
+> >>>> On 11/11/25 5:02 PM, Dmitry Baryshkov wrote:
+> >>>>> There has been a (rare) varint of Dragonboard 820c, utilizing Pro
+> >>>>> version of the SoC, with the major difference being CPU and GPU clock
+> >>>>> tables. Add a DT file representing this version of the board.
+> >>>>
+> >>>> So is the conclusion that both flavors were used?
+> >>>
+> >>> Yes. I have had a production unit with a non-SG flavour. Bjorn's lab
+> >>> has a standard one too. All units in Collabora lab are Pro ones.
+> >>
+> >> Pro doesn't necessarily have to == SG, this seems to be sort of
+> > 
+> > My understanding was that APQ8096SG is modem-less MSM8996Pro.
+> > 
+> >> a "MSM8996Pro" and "QCM8996Pro" situation.
+> > 
+> >> I'm hoping that speedbin
+> >> fuse values don't have different meanings for mobilePro and SG
+> > 
+> > At least downstream doesn't have separate bins for APQ versions.
+> 
+> arch/arm64/boot/dts/qcom/msm8996pro.dtsi:       qcom,msm-id = <305 0x10000>;
+> arch/arm64/boot/dts/qcom/msm8996pro-v1.1.dtsi:  qcom,msm-id = <305 0x10001>;
+> 
+> this is interesting, perhaps Pro==SG then
 
-  drivers/gpu/drm/msm/msm.o: warning: objtool: msm_dp_ctrl_on_stream(): unexpected end of section .text.msm_dp_ctrl_on_stream
+Yes. At least it matches what is written in the LK sources (or in
+MSM8996 Device Revision Guide).
 
-The zero division happens if the else branch in the first if statement
-in msm_dp_ctrl_config_msa() is taken because pixel_div is initialized to
-zero and it is not possible for LLVM to eliminate the else branch since
-rate is still not known after inlining into msm_dp_ctrl_on_stream().
+The JTAG ID matches APQ8096SG, the bootloader identifies it as 8996 Pro.
 
-Transform the if statements into a switch statement with a default case
-with the existing error print and an early return to avoid the invalid
-division. Add a comment to note this helps the compiler, even though the
-case is known to be unreachable. With this, pixel_dev's default zero
-initialization can be dropped, as it is dead with this change.
+Any remaining issues?
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [1]
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202601081959.9UVJEOfP-lkp@intel.com/
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v2:
-- Transform existing if statement structure into a switch case with a
-  default case that early returns, avoiding the invalid division
-  (Konrad, Dmitry). Add a commment about the reachability of the default
-  case.
-- Drop the default zero initialization of pixel_div, as it is no longer
-  used due to the new switch statement.
-- Link to v1: https://patch.msgid.link/20260108-drm-msm-dp_ctrl-avoid-zero-div-v1-1-6a8debcb3033@kernel.org
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+> 
+> I also found evidence that there exist allOf
+> 
+> (MSM/APQ)(Pro/not)(Auto/not)
+> 
+> in the form of:
+> 
+> msm-id | sku
+> 246 mobile
+> 291 apq
+> 305 msm-pro
+> 310 msm-auto
+> 311 apq-auto
+> 312 apq-pro
+> 315 msm-pro-auto
+> 316 apq-pro-auto
+> 
+> and apparently upstream dt-bindings also defines 302/MSM8996L(ite?)
+> 
+> Konrad
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index cbcc7c2f0ffc..94411870a5e0 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -2395,20 +2395,32 @@ static void msm_dp_ctrl_config_msa(struct msm_dp_ctrl_private *ctrl,
- 			       bool is_ycbcr_420)
- {
- 	u32 pixel_m, pixel_n;
--	u32 mvid, nvid, pixel_div = 0, dispcc_input_rate;
-+	u32 mvid, nvid, pixel_div, dispcc_input_rate;
- 	u32 const nvid_fixed = DP_LINK_CONSTANT_N_VALUE;
- 	u32 const link_rate_hbr2 = 540000;
- 	u32 const link_rate_hbr3 = 810000;
- 	unsigned long den, num;
- 
--	if (rate == link_rate_hbr3)
-+	switch (rate) {
-+	case link_rate_hbr3:
- 		pixel_div = 6;
--	else if (rate == 162000 || rate == 270000)
--		pixel_div = 2;
--	else if (rate == link_rate_hbr2)
-+		break;
-+	case link_rate_hbr2:
- 		pixel_div = 4;
--	else
-+		break;
-+	case 162000:
-+	case 270000:
-+		pixel_div = 2;
-+		break;
-+	default:
-+		/*
-+		 * This cannot be reached but the compiler is not able to know
-+		 * that statically so return early to avoid a possibly invalid
-+		 * division.
-+		 */
- 		DRM_ERROR("Invalid pixel mux divider\n");
-+		return;
-+	}
- 
- 	dispcc_input_rate = (rate * 10) / pixel_div;
- 
-
----
-base-commit: 66691e272e40c91305f1704695e0cb340cd162ff
-change-id: 20260108-drm-msm-dp_ctrl-avoid-zero-div-be5dc40cbc18
-
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
-
+With best wishes
+Dmitry
 
