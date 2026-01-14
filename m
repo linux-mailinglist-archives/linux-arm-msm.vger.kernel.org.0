@@ -1,243 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-88894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FA9ED1C20F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 03:27:28 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F819D1C313
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 04:04:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3AAE3300CF2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 02:27:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E1401302E312
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 03:04:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 371102FE056;
-	Wed, 14 Jan 2026 02:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA513324B20;
+	Wed, 14 Jan 2026 03:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RFnrYt0C";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YkymwJdx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWD5rE6+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA212F49EB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 02:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94464324B3B;
+	Wed, 14 Jan 2026 03:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768357645; cv=none; b=t98rxxIZ1JwZ1+v4KJt4movntFHiHgUzXsJ2EW8OHmwq9TiK3D3RTCxgvdqZnY7zoRTgkPTrbuHnpHyo/XuPsEq8/SB+nEDpB/tVDzSY9/lMskArNoCjfWuySdm4eSnJ6/UN1agqaqMzIncScUQNyMtjeBSLyJFSqo88MZwuSCQ=
+	t=1768359849; cv=none; b=HzZrgOYu6hoI3OZavYs8iKvzpKC1NaMWXaqOgdgqpwIeR6aZ3OIvn7MrS+U43RkZ18dJ8z01YPYRECbu1op+0UIXIS4b4tX7GyULH67FquM8Pty3jlebvNZQYn2lK4x/Gq06oLgdJiJYJ21X8+mozqUVWyfNOfZ8ka+qd0T7A/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768357645; c=relaxed/simple;
-	bh=IqlI6OS/lcK0dRsPQa5RrUkPWstqb3VM96Oa5URN0Cw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OaROaA3z89bWSXtGaMTtm5W79AlwqHONV9/cjzb9dGBp1LmXfUdm+Phy5QN9hg2Tr3yidiarhGv5XH6V+gdxeG03YYhS2Amkr3pWQ8PdoUAJlsi34/TLbTL04Xtx9bDQcFHY1PK3GYC7HrodLdxAiNnmEsRRAh7u7iiTFB8h0rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RFnrYt0C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YkymwJdx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DNHX6D1717282
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 02:27:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	o4ZVfVEYSEr+JHs+UR1ckv011KTtyQOrx1adpUvgxQc=; b=RFnrYt0CKYCGcIoj
-	A9UkmWdYm3Oq9U2hDg6guTFP2w9MKiFvSTG+7zBoKOtv995oUwxb3JT/Ug2fTA9y
-	vnBJ9Vq5Xr4Qxyv6B0khJEQ/ZJQvN27d2/1gK7jsHSnCF7ZCQ5KjnPoiFXV2SqP8
-	qjT1vID6v/Svh+0GV0QHZiNAaXvRFgglfatHwhWlNUWVkJhC/8bKnDaxecO6febd
-	7YwZtRAf3ZnVqgQwZPNIsQPCIXV0mKv44Jh93zOII72tATiCPBipeYTE3psRwZPM
-	/clLarNH5FqysPYY77hhhxYGQU1N6eB/jq2gc/r4F9IYFFmP2PphSynrmePdsDtz
-	mureYA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bnw7v8uf6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 02:27:23 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34e70e2e363so9423011a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 18:27:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768357642; x=1768962442; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o4ZVfVEYSEr+JHs+UR1ckv011KTtyQOrx1adpUvgxQc=;
-        b=YkymwJdxyRuFYiOrWMV+lrJ2MJ8Abn7N9aGCOqrhKRkfztnwMlwKbBR9/pidaymXDd
-         JGFH1Tn8eTNuOdEBUlf7nCMc0RoKlFBZaIZYDOZs5Tb9pX3/vdkHSHrk9hcc0Au0l6bi
-         laHWYOpbvFOh0Z7p0yfCC8dAK61F0gFDIalm7ietQ5uCQ8tzXvvCnQM24lrvyb3WWMPz
-         gwM5T8+pZlct9WxP50103ytegyeZl21vktSAEVOJjzXnwNNOjq0TTH0qaAfJG7rza2OZ
-         IetIeJZ/Ww20x5/U41YeDdWt6w1ZFtEdlzELJlDcTHC52RUerVj4S/hbKG+hk1yfmv+a
-         nQOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768357642; x=1768962442;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o4ZVfVEYSEr+JHs+UR1ckv011KTtyQOrx1adpUvgxQc=;
-        b=hoosq7NwAIvKVpFyTh4+YxSleZ1ZXji5YmCW32NVCYIACJgaTJ5KWyfnwUdZTy7X+E
-         6o0twzQSayLeaf2utBfG4Tn7KsoT8yBHuMJXc0vt24t7wy4Hmu0lmg8plBq13VOst+UW
-         GnhAwBQmoqKQzZfIeCBw06rWQyOO2uxFD631lwvxwejzo8I0ArpcDtFqE3WrvcnRBYSC
-         YqlN4n6QnJkH8pNRcfEEjo3jB16SFSgvJz3YNBcJlW3TDyrhfXlJpolAZC6dkxZpcvem
-         yhOKc1AeT69xvCNsGED9QDZ4ZYOEtln8KpUozs+x6yKFURXt09tFqjI/vXXOx95UjVVy
-         x/lg==
-X-Forwarded-Encrypted: i=1; AJvYcCUYmRPEygXT9gh3LopA89x5TvMeU/dgmCVTYnlcN8n7qmjT+7LYusdhVRdh8Tx5AHKX95CqjxqK4NNX44RG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjHuezUqzVYLe0Fdx1G+aEXTWJmJ5cI66ww1SsLo5gBaZRaIGP
-	ZzyHkmOnYktX7dvVFkk6dkcPTuLftvV0bECyVB81oiu0arci4noS6eYl5E1gDvR5uHHpZMfr79h
-	x7DauaFXqChZ863aQXPtdR/FfxIFqSBoXmNd2oYPh0GkL59UJ82dpPvBDe2bVz3sclkuQ
-X-Gm-Gg: AY/fxX77873TPCR7/ukQ9pxl2uzmFKCczc05lewZpRWO+3rgrRXOmmanvYCJ5LdTv26
-	f0PbzEHyMLVuP8KVvtUCx6DGbAq3QJerNVH8p0eB2NtwQ01tk3tzNcorBxzDuQl0dTC9vKZvirZ
-	O2WDAn88rKA4zZV/S5bXOsMUg//6qqZ2bMSeJwdaUZJqB7YZied0CDZaawhk7vP/EMNftUNYOAz
-	PpBM8cySkBLl85BQFnChnMHISEEWTaugZailTFVF4bX5goThzUVB8or6QDTG5L8Ip1gFRaNQiuR
-	k53WN8GJ8rHnoQp2T0ag6yotknZ42fERlDuP+N7z+gJk5yb5CC7Zl3+j1lhuMpYr20nsVO3WViC
-	1bPdRK3cpGVCM1DOmtpJrKmkRf+B5K5R/9YaxdQU0JR4iN6X98a+L5TYWbGpr8tG1Qjsw4Munsg
-	99Ug==
-X-Received: by 2002:a05:6a20:3ca8:b0:366:14ac:e210 with SMTP id adf61e73a8af0-38bed23cfefmr1147664637.78.1768357642268;
-        Tue, 13 Jan 2026 18:27:22 -0800 (PST)
-X-Received: by 2002:a05:6a20:3ca8:b0:366:14ac:e210 with SMTP id adf61e73a8af0-38bed23cfefmr1147628637.78.1768357641728;
-        Tue, 13 Jan 2026 18:27:21 -0800 (PST)
-Received: from [10.133.33.65] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cbf28faf8sm21942789a12.7.2026.01.13.18.27.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jan 2026 18:27:21 -0800 (PST)
-Message-ID: <3906614d-d9df-485c-963b-603e2311bc2c@oss.qualcomm.com>
-Date: Wed, 14 Jan 2026 10:27:16 +0800
+	s=arc-20240116; t=1768359849; c=relaxed/simple;
+	bh=jJVWTKrbZnnrbSSyMrERZV7TPbUDbyAnpakRYlfbiWE=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=eTfjIm622Kw1Wle3O9IGCNpjBNKLVJIyLGrWLofuO0Grx2xO0zEeFFftPS4hwoHBEPsZ0CmEKIGqCM9lh5wfdF4ODcbzG6wa4YHKjrkkaPrNQAVhT0lBF7s/n4pp6DWNRYVVX6sm/PMqFQR5w+7HbNv81xncMtFP1/HH5OUbXjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWD5rE6+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A330C19423;
+	Wed, 14 Jan 2026 03:04:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768359849;
+	bh=jJVWTKrbZnnrbSSyMrERZV7TPbUDbyAnpakRYlfbiWE=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=NWD5rE6+pXNTWgwxgdJh+3zWszpwjjMyTMfd6sG/wGgRdujF8GeSf5UXNMsTgpvYt
+	 6WSrJOuOn+CTYXmfUd30Gmg/v+iQtOJmyX8WIiRnwp+7RnMng2qENI321/tAQqfmAc
+	 rKoyogVmV83ymAyX0x5hpHNQtaPw7O1CNKsSpR1QHgVCjZTBSTUux6sC4xB7YSUQUT
+	 fWwcJNVt2a6wHwqYr+nKeaqeooq9/0KBYVcgWl0gYkklRvxFEEYZcGclIChI2sRGsG
+	 jZ1AutkgWo9HFWL04xFyHRtOF0Qw4W3hEJPNhecunfECJUmmV/+LQ577tXSf/G/W9D
+	 ISJJpL1YLMpeQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B649F3808200;
+	Wed, 14 Jan 2026 03:00:43 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base PURWA-IOT-EVK board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260113-purwa-v3-0-16eefacbdce9@oss.qualcomm.com>
- <20260113102822.590677-4-yijie.yang@oss.qualcomm.com>
- <2qa3kn6gw4f5qlncq6iwgxattfbbztu42gpcbekqfghcrdg3l5@z7zsx44xch7a>
-Content-Language: en-US
-From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-In-Reply-To: <2qa3kn6gw4f5qlncq6iwgxattfbbztu42gpcbekqfghcrdg3l5@z7zsx44xch7a>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDAxNiBTYWx0ZWRfX2dMR55jsyxnj
- lAoSe37rRNDbNZcHqEfu//3wXeeU9/25sRrl4c3jWe+wXCUGqNdW175MPWUMpsB9MTw9LoCoA3u
- aBt3UvZb5V15uKFDPrqigUVvKzwgeoXTa8AYurO7Loa30FXqT3yMVhxa5+bg21l6Wel9RYW2hX3
- YPRaFpmqy4w7QqVcmPbnf3iThujv7u6IEabIjqentHaxfzpVrqBJsHehC0QMIh5ZspArAKISZsO
- aiUWZunM5zZ0M/iGzNqjK1ogHucYS3ExSV4um8YkeZCoRD6JH8mrMDMYpT+NW3X4BwLWwV4lAWN
- sCIaxPKgkmU5wPJOAGAk/aIewByXsJv2Ve/EV+V4+XkLBblxI6iQvOYFF3B71lJnYCDZ83kHM9k
- B9iiFw+WaYnmGA1OhJ3SFJvlw19/Hn9nTz6QlY7J5ZsXkRWPFBGCtOUFxyYS8cYYpevARrH5vg1
- bJWhNZ89qBjUccWyyFg==
-X-Authority-Analysis: v=2.4 cv=PJ0COPqC c=1 sm=1 tr=0 ts=6966ff0b cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=XouMtsvGk61V0B9W5bUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: 8lyjoSA5lS3RNeTXFrp7RsdA6LRdHdro
-X-Proofpoint-ORIG-GUID: 8lyjoSA5lS3RNeTXFrp7RsdA6LRdHdro
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_01,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601140016
+Subject: Re: [PATCH net-next v22 00/14]  net: phy: Introduce PHY ports
+ representation
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <176835964227.2565069.4308063830365885517.git-patchwork-notify@kernel.org>
+Date: Wed, 14 Jan 2026 03:00:42 +0000
+References: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
+In-Reply-To: <20260108080041.553250-1-maxime.chevallier@bootlin.com>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: davem@davemloft.net, netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com, andrew@lunn.ch,
+ kuba@kernel.org, edumazet@google.com, pabeni@redhat.com,
+ linux@armlinux.org.uk, linux-arm-kernel@lists.infradead.org,
+ christophe.leroy@csgroup.eu, herve.codina@bootlin.com, f.fainelli@gmail.com,
+ hkallweit1@gmail.com, vladimir.oltean@nxp.com, kory.maincent@bootlin.com,
+ kabel@kernel.org, o.rempel@pengutronix.de, nicveronese@gmail.com,
+ horms@kernel.org, mwojtas@chromium.org, atenart@kernel.org,
+ devicetree@vger.kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
+ robh@kernel.org, romain.gantois@bootlin.com, daniel@makrotopia.org,
+ dimitri.fedrau@liebherr.com, tariqt@nvidia.com
 
+Hello:
 
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-On 1/13/2026 6:52 PM, Dmitry Baryshkov wrote:
-> On Tue, Jan 13, 2026 at 06:28:16PM +0800, YijieYang wrote:
->> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
->>
->> The PURWA-IOT-EVK is an evaluation platform for IoT products, composed of
->> the Purwa IoT SoM and a carrier board. Together, they form a complete
->> embedded system capable of booting to UART.
->>
->> PURWA-IOT-EVK uses the PS8833 as a retimer for USB0, unlike HAMOA-IOT-EVK.
->> Meanwhile, USB0 bypasses the SBU selector FSUSB42. As a result, the glink
->> topology differs from that of HAMOA-IOT-EVK.
+On Thu,  8 Jan 2026 09:00:25 +0100 you wrote:
+> Hi everyone,
 > 
-> What is "glink topology"?
-
-What I’m referring to here is that the graph composed of glink nodes and 
-their peers.
-
+> This is v22 of the phy_port work. Main items from this versions are :
 > 
->>
->> Make the following peripherals on the carrier board enabled:
->> - UART
->> - On-board regulators
->> - USB Type-C mux
->> - Pinctrl
->> - Embedded USB (EUSB) repeaters
->> - NVMe
->> - pmic-glink
->> - USB DisplayPorts
->> - Bluetooth
->> - WLAN
->> - Audio
->> - PCIe ports for PCIe3 through PCIe6a
->>
->> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>   .../{hamoa-iot-evk.dts => purwa-iot-evk.dts}  | 102 +++++++++++-------
->>   2 files changed, 65 insertions(+), 38 deletions(-)
->>   copy arch/arm64/boot/dts/qcom/{hamoa-iot-evk.dts => purwa-iot-evk.dts} (95%)
->>
->> @@ -1102,9 +1140,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
->>   		pins = "gpio10";
->>   		function = "normal";
->>   	};
->> -};
->>   
->> -&pmc8380_3_gpios {
+>  - Rebase on net-next :)
+>  - Removed a "contains" keyword in the binding
+>  - Added a comment for phy_port SFP implementation
 > 
-> This needs to be fixed in hamoa-iot-evk.dtsi.
+> [...]
 
-Will do.
+Here is the summary with links:
+  - [net-next,v22,01/14] dt-bindings: net: Introduce the ethernet-connector description
+    https://git.kernel.org/netdev/net-next/c/fb7a8d0786e4
+  - [net-next,v22,02/14] net: ethtool: Introduce ETHTOOL_LINK_MEDIUM_* values
+    https://git.kernel.org/netdev/net-next/c/3f25ff740950
+  - [net-next,v22,03/14] net: phy: Introduce PHY ports representation
+    https://git.kernel.org/netdev/net-next/c/589e934d2735
+  - [net-next,v22,04/14] net: phy: dp83822: Add support for phy_port representation
+    https://git.kernel.org/netdev/net-next/c/333c29a27f96
+  - [net-next,v22,05/14] dt-bindings: net: dp83822: Deprecate ti,fiber-mode
+    https://git.kernel.org/netdev/net-next/c/ffb8587363a3
+  - [net-next,v22,06/14] net: phy: Create a phy_port for PHY-driven SFPs
+    https://git.kernel.org/netdev/net-next/c/07f3ca9e092c
+  - [net-next,v22,07/14] net: phy: Introduce generic SFP handling for PHY drivers
+    https://git.kernel.org/netdev/net-next/c/d7c6082f7e77
+  - [net-next,v22,08/14] net: phy: marvell-88x2222: Support SFP through phy_port interface
+    https://git.kernel.org/netdev/net-next/c/ea317f077a38
+  - [net-next,v22,09/14] net: phy: marvell: Support SFP through phy_port interface
+    https://git.kernel.org/netdev/net-next/c/1384e1383829
+  - [net-next,v22,10/14] net: phy: marvell10g: Support SFP through phy_port
+    https://git.kernel.org/netdev/net-next/c/35d1a5464b47
+  - [net-next,v22,11/14] net: phy: at803x: Support SFP through phy_port interface
+    https://git.kernel.org/netdev/net-next/c/4e26a284b9be
+  - [net-next,v22,12/14] net: phy: qca807x: Support SFP through phy_port interface
+    https://git.kernel.org/netdev/net-next/c/154bc3b66c31
+  - [net-next,v22,13/14] net: phy: Only rely on phy_port for PHY-driven SFP
+    https://git.kernel.org/netdev/net-next/c/bad869b5e41a
+  - [net-next,v22,14/14] Documentation: networking: Document the phy_port infrastructure
+    https://git.kernel.org/netdev/net-next/c/62518b5b3d8e
 
-> 
->>   	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
->>   		pins = "gpio8";
->>   		function = "normal";
->> @@ -1171,16 +1207,6 @@ &smb2360_2_eusb2_repeater {
->>   	vdd3-supply = <&vreg_l8b_3p0>;
->>   };
->>   
->> -&spi11 {
->> -	status = "okay";
->> -
->> -	tpm@0 {
->> -		compatible = "st,st33htpm-spi", "tcg,tpm_tis-spi";
-> 
-> No TPM on the board?
-
-It has not been verified yet since this patch set was sent out; I will 
-add it.
-
-> 
->> -		reg = <0>;
->> -		spi-max-frequency = <20000000>;
->> -	};
->> -};
->> -
->>   &swr0 {
->>   	status = "okay";
->>   
->> @@ -1470,7 +1496,7 @@ &usb_1_ss0_hsphy {
->>   };
->>   
->>   &usb_1_ss0_qmpphy_out {
->> -	remote-endpoint = <&pmic_glink_ss0_ss_in>;
->> +	remote-endpoint = <&retimer_ss0_ss_in>;
->>   };
->>   
->>   &usb_1_ss1_dwc3_hs {
->> -- 
->> 2.34.1
->>
-> 
-
+You are awesome, thank you!
 -- 
-Best Regards,
-Yijie
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
