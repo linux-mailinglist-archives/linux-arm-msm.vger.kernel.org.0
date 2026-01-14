@@ -1,115 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-89067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED992D21375
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 21:48:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3843FD2141D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 22:02:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C79E0301AE25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 20:48:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 267D6300A345
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 21:01:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D82C356A1A;
-	Wed, 14 Jan 2026 20:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HkgeI6x8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 993B1311977;
+	Wed, 14 Jan 2026 21:01:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD99F2DEA90
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 20:48:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E106E2D6E70;
+	Wed, 14 Jan 2026 21:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768423730; cv=none; b=FDyhBB4WVtFCA0JnbWa4RAIz6LK/dKI7LVzrTMOcVUG8Sc22zAVCuDN1GPQXmY3ZyY+lO7/FHf6CzSfwcz8C8P2y0AvSY7F+b6zK26U6rjS5s9+MmQ7nsQ/ODjT8QXtrSvZZDtX3hT0gaAHFYq3m4/E+yGlNU3/ESkTBw5NF/rI=
+	t=1768424468; cv=none; b=IMcZnQUgEDFs0WFXbD2eS9zjLT4DWnge4nDDaGusTIGfogXwpeH/7AHl6WmsOccA1ek2icKvf4hJlrqO22UT9Z+mme3Bkc3s+5Ts5F06QKxQfq8lrEW/G60jyWq4XMwWs97+ULQQqUzSdRFzYTlbrgSAV544HBlXgUfyNCE1jDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768423730; c=relaxed/simple;
-	bh=8QxqO3FSD5L1Vmub+oryPemAGs1Qef51fqxuqIV6Ei8=;
+	s=arc-20240116; t=1768424468; c=relaxed/simple;
+	bh=WfFPw4TYyqlafML7l/PRZf1MtVjcn3JYWEk+AiuMKp4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bb6mtrK2/nuz9YbmLkkjEmCI4w3BSQuj58WAZsNcHMQ5L7Y+cz+sZP4gJHWXZDqyM3P66Ekh1Hf/aY9IOSdzUORiQyE2JNSK9eCEIxKjI/Fdvd8e9Rsy7ALLo03fCtv47/Zdk5ykTynUOe8yzOog9FnZKGfJBVjrMrw57yUA1/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HkgeI6x8; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b8712506a3eso2985666b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 12:48:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768423727; x=1769028527; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=it8YUnHSXKXXQABJkL2UVvwmRP+gSrkDN7MsvYyaZ9k=;
-        b=HkgeI6x8JApyEaDjNhQ3sd86gY0G9OYvP5k3LL1uuwJmqPQ/TyhW61RyQ9UYPa6N0d
-         LSOtrj2RXe9k/0Znk+B6N/s5HM1ai5pQI3BP9FTw2WjAYA/zYHKuEWq2sDrLvRnTzP50
-         z+3M3gNDsoNQCOcjqkXnMfYDm7hlykRa3fFQp8VDsGAk2SVnsraMzjB80BSnzRuMhK7i
-         rMWEhPdQ0uCPa+zsvjZyFyFOgkQ9tM/Gg6osE8baYvMGvZPqEQhcPQPWcPF9zKQGB/H8
-         NAtAmu0O2vYOy1TdPU2fcscVVhbjnlINXj0KghSlD8dZVoUrI2UhKs7mKfpPeyej3dKL
-         XS9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768423727; x=1769028527;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=it8YUnHSXKXXQABJkL2UVvwmRP+gSrkDN7MsvYyaZ9k=;
-        b=fksOj/rw+w/QkcBzL3Ew/xSviYPNkL1k6Iiw6dUbR+DNJgPFllHy3YoowHBdCNSAxr
-         v3z6rKgrqEVIcMntVJRftRA8wRudbewHR880NLUjMi+aFWqwGRisE8MJQfApYdQe6kmc
-         Aqpv83DG3oeEks40AZfRb86lajdTT3im0BlLYnSz2TKzfM7njXRq/PVTS5dbcDkKFXbg
-         Wjk+i0QzxVHYZljpUkuPmVyBAmmRYFiQlavtrcJ+JdF29sFjht7G/rF5aed2JP+cGHIm
-         C+MtAKCACq4PBchQ5wpNoVamB89bPSkRmwecJB5ClT7mbiiKKhiBw5cTpcYQ/kouCAQC
-         frLA==
-X-Forwarded-Encrypted: i=1; AJvYcCVxr94RYYebBJ6jhXBQ54FHFFQXth2BOYhXrG8Mw21V0owtiAinhQ+YbCCJHjDmTW5y2sS/52QHFcgA/UVJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4Pa8M5zt09PzDyE0krbZJ13fIty7i7txw01DOicfQYLe3I9x/
-	v9DRHrFEoRDj7314zlsh+N70nQ545VilP3AVsixiUkBTmf9tCJA++y/6
-X-Gm-Gg: AY/fxX5bBnMmL4TYB3DKVAVmCjUPDeszWZllASB/bRbLw3LzWKUiJ1CwkF9dkcZKGdB
-	0/qRy4wVGd+gAXdE5DTfWWTDpOWFtDDWKb8RR+juBZ33Ep/nsnJEV2gwpZwVMdoBwm47lFEFZFZ
-	vn5rgKVch5E7qij8Zn3um41MGPE1kmfNfIcYDjCkNSJu0kMr++CbHuh1CdvAHJorvfM3VboOM+q
-	janVwIloHBjziB4j7wkfy6M+pIYnHYG2pnFwlX4MNexkz/K8fc4S9jeYC3/B+OONVUjxeiKeRUI
-	ufgPwfhrcEvPuhop6CCaCmGDD9ZuMNaAIwzbrVAhFR8CAu0UzatbDAFxvg6Umsyko08/Pyprv7l
-	FV4IeqihQqwPs1+hUejcwaV05C6w+FLkgsRH+CGoyM/7ibRS063hkrJTb0yUpNrE703OnA0XTxw
-	AVbCs=
-X-Received: by 2002:a17:907:d1f:b0:b87:2780:1b33 with SMTP id a640c23a62f3a-b876114f9b7mr180435166b.3.1768423726590;
-        Wed, 14 Jan 2026 12:48:46 -0800 (PST)
-Received: from skbuf ([2a02:2f04:d703:5400:9b39:8144:8a26:667e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b870b0dba4esm1111374666b.17.2026.01.14.12.48.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 12:48:45 -0800 (PST)
-Date: Wed, 14 Jan 2026 22:48:43 +0200
-From: Vladimir Oltean <olteanv@gmail.com>
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 01/14] net: stmmac: qcom-ethqos: remove mac_base
-Message-ID: <20260114204843.e4pyfb64n5jn3wop@skbuf>
-References: <aWfWDsCoBc3YRKKo@shell.armlinux.org.uk>
- <E1vg4vi-00000003SFh-0Abn@rmk-PC.armlinux.org.uk>
+	 Content-Type:Content-Disposition:In-Reply-To; b=uqFNq6MiqAHJ7EyS040RXSZJP2+/dhIuubbe0tr9hQSKjWHsqHtX6TdyPmVtJHmfr5Rk2441/16GjZHnRzA+gXmo1XVA84YpxpjTFd5lSjREsnfY8+W0R5sKxt82yCppFXKye+wbxrUS0QYZQvrGUqLIH8NmzkS+k6JZ2GcdMRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 08F741515;
+	Wed, 14 Jan 2026 13:00:59 -0800 (PST)
+Received: from bogus (unknown [10.57.49.158])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE4E53F59E;
+	Wed, 14 Jan 2026 13:01:03 -0800 (PST)
+Date: Wed, 14 Jan 2026 21:01:00 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	trilok.soni@oss.qualcomm.com
+Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
+Message-ID: <aWgEDAlglnGrzdR4@bogus>
+References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
+ <aWY6kx8Bwa_2azIl@bogus>
+ <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <E1vg4vi-00000003SFh-0Abn@rmk-PC.armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
 
-On Wed, Jan 14, 2026 at 05:45:14PM +0000, Russell King (Oracle) wrote:
-> Since the blamed commit, ethqos->mac_base is only written, never
-> read. Let's remove it.
+On Wed, Jan 14, 2026 at 08:50:23AM -0800, Satya Durga Srinivasu Prabhala wrote:
+> Hello Sudeep,
 > 
-> Fixes: 9b443e58a896 ("net: stmmac: qcom-ethqos: remove MAC_CTRL_REG modification")
-> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-> ---
+> On 1/13/2026 4:29 AM, Sudeep Holla wrote:
+> > On Mon, Jan 12, 2026 at 10:24:06PM -0800, Satya Durga Srinivasu Prabhala wrote:
+> > > The ARM SMCCC SoC ID driver is currently enabled by default and publishes
+> > > SMCCC-provided SoC identification into /sys/bus/soc/devices/socX/*.
+> > > 
+> > > On platforms where a vendor SoC driver already exposes widely-consumed
+> > > attributes (e.g. Qualcomm socinfo [1]), enabling the SMCCC driver changes
+> > > the format of /sys/devices/soc0/soc_id (e.g. "jep106:XXYY:ZZZZ" instead
+> > > of a vendor logical ID like "519") and breaks existing userspace consumers.
+> > > 
+> > Instead of relying on a vendor-specific SoC driver, we should consider
+> > disabling it and using the OS-agnostic SoC information interface provided by
+> > the firmware.
+> Would like to add some history here. Vendor interface existed [1] even
+> before
+> SMCCC SMC ID was introduced [2]. And there are several user space entities
+> which
+> uses the soc0 interface already.
 
-I think we reserve the use of Fixes: tags for user-visible issues, not
-cleanup of dangling variables. You can move the sha1sum and its commit
-title in the main commit message body and delete that tag.
+True, but that's not the main point.
+
+> > The presence of this interface strongly suggests that the
+> > firmware is designed to support multiple operating systems or software stacks
+> > that already depend on it.
+> That is correct. We started seeing the issue with user space when our
+> firmware
+> started implementing support for SMCCC SOC ID recently for non-Linux based
+> product.
+> As the firmware remain same across OSes, user space is broken on Linux.
+
+What exactly do you mean by "firmware started implementing support for SMCCC
+SOC ID recently for non-Linux based product" ? Does that really mean that
+you can change the firmware for Linux based products ? I don't think so and
+hence we are in this discussion.
+
+1. Either it exists in which case deal with it by disabling vendor driver
+   and/or fixing the userspace.
+
+or
+
+2. It doesn't exist which is not a problem.
+
+
+> > Aligning the Linux kernel with this
+> > firmware-defined, OS-agnostic mechanism would reduce vendor-specific
+> > dependencies and improve portability. Any gaps can be addressed by enhancing
+> > userspace to correctly parse and consume this information.
+> Agree. Updating entire use space would need time and we are looking to see
+> if vendor specific interface can be given priority over the standard
+> interface.
+
+That statement simply doesn't make sense at all. Your product took all the
+effort to implement standards and then you don't want to use it at all.
+As per your claims it is not even broken(in terms of data from the sysfs
+files), so I don't know what to say here, sorry ?
+
+> >   Given these
+> > advantages, why would this approach not be the better long-term solution?
+> As mentioned above, existing user space will be broken and fixing existing
+> user space is going to take time. As the feature itself is "optional" from SMCCC
+> specification, if we can't disable by default, we should at-least have a way
+> to disable the feature by other means.
+>
+
+The data given to the userspace from the kernel is not broken. The userspace
+tool seem to have made a wrong assumption and can't expect the kernel to
+magically fix the issue here.
+
+E.g. We didn't disable HMP(a.k.a big little platforms) as the assumptions
+made by several userspace tools(e.g. lscpu IIRC) was wrong at the time.
+
+-- 
+Regards,
+Sudeep
 
