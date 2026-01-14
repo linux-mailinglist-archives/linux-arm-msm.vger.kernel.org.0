@@ -1,285 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-89033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49B3AD201DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:14:33 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB043D20208
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:16:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 556C5300E178
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:14:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8C25E3062E12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:14:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD1083A1A2B;
-	Wed, 14 Jan 2026 16:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C2383A1D12;
+	Wed, 14 Jan 2026 16:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="RSoEmvBI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bKQ511Jr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E21346AC2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 16:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CE939E6DB;
+	Wed, 14 Jan 2026 16:14:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768407247; cv=none; b=ryVUCrR7a+dvpb51Z3AXqCKYHMF49xqmEeOZsRtGgIZXvkZdRH/zlokknIn/cTqwThoxcearaolb03raAbxKr5pQI943Q0QKQzr+b5+ophJt12ItDiFxbOjWvvRS/mkXg34LO/wPGzkP9eGc+L8yteVgfWK+BSpSXE0gECOFUfA=
+	t=1768407290; cv=none; b=VF4iR9EXqBs4+vGtWLkQp+ZdXmV61fKrbHQto4bM5NSC+KZzBwqLXm/mMT1O6Y/tOwJne4mbq+pS3R+Czse2JKHkTQSsZanx8iA5I0lXTIeNr6UPRrVL9rSYWqdtnaPXE8QK7r3KpztWmmV90ZGVz7I5czL4LrF82d0/O4FB0oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768407247; c=relaxed/simple;
-	bh=iJ0Aganr8KuPuLSs0mhZBFYNZP7jxgYftfZB3bUJhnM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=rtMmtq1xvTYDUoqph/HiNPvuhztm+k5bapTBlJDvRmPayLDKejBwMF3E+gyorUCgguEgF9kIWvjwwxdb87xYYEHTQLCalLp5io5el1EDE/fI9xGsrnP1QYx5WSbbU0cilz6LG2IemYdx0Ui4RHPFoOA+9haEshUxoJkjdZg9eqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=RSoEmvBI; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-50150bc7731so4670611cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 08:14:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1768407245; x=1769012045; darn=vger.kernel.org;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=e5+clJajQNm6silgVV5Zi3EM4F+meGHkoI3LcAyLzCA=;
-        b=RSoEmvBIzl/pkpxkG1v8AKeoNFCXMWknnZA07Dr1zN2MPatcmjmKoQCXtCuWpT5c3O
-         zHbe+aiDda8WP+DbrtpXThiZreg3DZpAQkyWE0IqIpMONJeQN3CNbxvvjaO6lPMlaznf
-         g/goa6fAGUtrQRhhokpBDjRrijfceB5BfcnV4AZDaEVCnk3gu9W3Ba6MwSXUp6sjihwe
-         6CPq6g+kxgIs9Fj6jHfwYF+OOtjQ6oXqZF+o2XxETNk14WGe86AeNacYaLh0Iqofn5K7
-         nodBeVcHvhc9HJ0XmZShkJGpONZKhLqQui1qwLaqwppZaNOiQBbOlUqTbFD/UsNJbbz7
-         SwvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768407245; x=1769012045;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e5+clJajQNm6silgVV5Zi3EM4F+meGHkoI3LcAyLzCA=;
-        b=RuA0QHyi3hgohlzKF3RiXtBNR1v6qj0VuhWK5jG93dm96e+2MmByvxeEKqliSLnn/g
-         w7zaPSY878NhX4DEti33NTaENaho0R2eXjqmWR7jfepzfI6WZ5mJeblWxcLzm2rfRglx
-         WsVoItxUsM3nqCRprjZL3tx7/KJ3BITE4+vzqD6Kz54t4baiupKH78ysCA11MVD7g0Rs
-         tt2C3ZGNv1cNLqP9zV2Cf/ET1CJlXftZN6fx7qp0g1WcEpQwFX5Qp69VxY8tgdileUoZ
-         mI+K1LvgoTgAwjTu90lO5MXtdY1x4oWmX7IvVYJr5/nJD7VZ+CtbxD5YFMZXl5kU2l/3
-         0LBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWUSLD0Rfo7ykqV9QCDfUlrc99rzpq2cqz6EmlEG+bfHnSCm69fUBjCGe4vpLoTg7AiColpF/RaDXhrG5Gw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtseJ0TDeRzJxkUeFqOcJe2HwPGf+3NeakRgdCqDy63Ff6aKVG
-	OqaAMifVZgBeZMkZFFypYT328gn1v9nvOxKtEPzL1QC2pmJdDdaCgeTj+3bWmZdCMo4=
-X-Gm-Gg: AY/fxX7XKpjwRDeRVFeQ+pDqrnJb0waHgRVu2exWgZ2uhDKwhVDoHq/qpR99Nd7wBI+
-	yFNSOuzzznS4ZfLDqlGGNaptsFHAx5nbBzcxso1Zi2hOvmztrSlKJf2AoDcyZEaG9dbHj8uil8H
-	kmxEC9My0eZ8fm+8omUubWXgxGQ13uYkVVPzUeaI6OHUKu7e4tB6n2yLhoZl/D0NBT4tQgJzQsb
-	PZG2A0oKzHC+/1p4cXO1X6zpa0kTAcEoCf+yq3inIhnxDjV9sdQOFmdm3fp2g9f5K9qLYu70Oy+
-	Ef90Kyyy0yl6tBhzZZIEriD9OGcVizDXlI7fQj30FGGlgcwPmCTvE5oXznvXxCtDamJXjTOHyEH
-	NOuHO3q8rzxlfFznWNgp5x4yXyyvVoTy0XuL4EidoqKjuDPICI4jQDjqqlTDzYUYZaVsXLmDu0L
-	RyCB+UMXQeCN/qikZi
-X-Received: by 2002:a05:622a:4203:b0:4ee:1db1:a605 with SMTP id d75a77b69052e-501481f8beemr45956951cf.20.1768407244604;
-        Wed, 14 Jan 2026 08:14:04 -0800 (PST)
-Received: from ?IPv6:2606:6d00:17:7b4b::5ac? ([2606:6d00:17:7b4b::5ac])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50148dd7454sm15536331cf.6.2026.01.14.08.14.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 08:14:03 -0800 (PST)
-Message-ID: <08ff44d8907c72b7599fa4599477d78bcecb440a.camel@ndufresne.ca>
-Subject: Re: [RFC PATCH 1/3] media: uapi: Introduce new control for video
- encoder ROI
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
- <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
- <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
- <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Date: Wed, 14 Jan 2026 11:14:02 -0500
-In-Reply-To: <20260113-iris_enc_roi-v1-1-6c86eba38587@oss.qualcomm.com>
-References: <20260113-iris_enc_roi-v1-0-6c86eba38587@oss.qualcomm.com>
-	 <20260113-iris_enc_roi-v1-1-6c86eba38587@oss.qualcomm.com>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-6Rnm5V13JnzOOMbNyzHt"
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+	s=arc-20240116; t=1768407290; c=relaxed/simple;
+	bh=GhwmK4FZnhVlKOisYnJ/xfW9wiiV6ZkLJ6q2UyKhx9U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AosAfNUy5JvNTXgs+z8F4vFxGLAR87+HJn9ZsE/1wrcMH3wlGv8eDeV/XeJZu+zw6uDv+YzVSVPatSVMSt6LV2GW4Slf2l/TnvTz8A/VllU7QjXAgBUWFNeGDymUS6qSRTPT64u0+gTQUpdrs/yozCXuRl3DVyW7J50DRyBH0QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bKQ511Jr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838E6C16AAE;
+	Wed, 14 Jan 2026 16:14:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768407289;
+	bh=GhwmK4FZnhVlKOisYnJ/xfW9wiiV6ZkLJ6q2UyKhx9U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bKQ511Jr8hxW3LfytH59Yr+E9WefLkWV+CausWBDOm+LAo+t7tHRoHnvv4LJQATsb
+	 2T5ZlbgRQkIpS+ejYatUCVVwpZ6QumKRr5w2l58DRwsiyQkkYeGiiPjHH+QYt87SFQ
+	 ssxy6VxI1xrxQDFIPxtTDLrVp71ENOiY+Z2e1NhfhOstOVPH2sLvQlIZz9fg2VqmQQ
+	 LiIS8OxNJzYNab8i8slpo2vQz6KLhlnqCteaSz6+7xHDriSw0trxyxvY2esu8X1vTp
+	 v8IKkdFlsQbzXpWbe+VtYWBC/6VDjEzW25hRiIAZN2uzEA/HtQ3kHM/Ue9U4qJ3zLa
+	 uB3kQNRl7/iVQ==
+Date: Wed, 14 Jan 2026 21:44:32 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org
+Subject: Re: [PATCH v4 5/9] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key E connector
+Message-ID: <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
+References: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
+ <20260112-pci-m2-e-v4-5-eff84d2c6d26@oss.qualcomm.com>
+ <20260113171424.GA3925312-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260113171424.GA3925312-robh@kernel.org>
 
+On Tue, Jan 13, 2026 at 11:14:24AM -0600, Rob Herring wrote:
+> On Mon, Jan 12, 2026 at 09:56:04PM +0530, Manivannan Sadhasivam wrote:
+> > Add the devicetree binding for PCIe M.2 Mechanical Key E connector defined
+> > in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
+> > provides interfaces like PCIe or SDIO to attach the WiFi devices to the
+> > host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
+> > devices. Spec also provides an optional interface to connect the UIM card,
+> > but that is not covered in this binding.
+> > 
+> > The connector provides a primary power supply of 3.3v, along with an
+> > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
+> > 1.8v sideband signaling.
+> > 
+> > The connector also supplies optional signals in the form of GPIOs for fine
+> > grained power management.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++++++++++++++++++++
+> >  MAINTAINERS                                        |   1 +
+> >  2 files changed, 155 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
+> > new file mode 100644
+> > index 000000000000..b65b39ddfd19
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
+> > @@ -0,0 +1,154 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/connector/pcie-m2-e-connector.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: PCIe M.2 Mechanical Key E Connector
+> > +
+> > +maintainers:
+> > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > +
+> > +description:
+> > +  A PCIe M.2 E connector node represents a physical PCIe M.2 Mechanical Key E
+> > +  connector. Mechanical Key E connectors are used to connect Wireless
+> > +  Connectivity devices including combinations of Wi-Fi, BT, NFC to the host
+> > +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and I2C.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: pcie-m2-e-connector
+> > +
+> > +  vpcie3v3-supply:
+> > +    description: A phandle to the regulator for 3.3v supply.
+> > +
+> > +  vpcie1v8-supply:
+> > +    description: A phandle to the regulator for VIO 1.8v supply.
+> 
+> I don't see any 1.8V supply on the connector. There are 1.8V IOs and you 
+> may need something in DT to ensure those are powered. However, there's 
+> no guarantee that it's a single supply.
+> 
 
---=-6Rnm5V13JnzOOMbNyzHt
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+1.8v VIO supply is an optional supply and is only required if the platform
+supports 1.8v for sideband signals such as PERST#, WAKE#... I can include it in
+the example for completeness.
 
-Hi,
+> > +
+> > +  ports:
+> > +    $ref: /schemas/graph.yaml#/properties/ports
+> > +    description: OF graph bindings modeling the interfaces exposed on the
+> > +      connector. Since a single connector can have multiple interfaces, every
+> > +      interface has an assigned OF graph port number as described below.
+> > +
+> > +    properties:
+> > +      port@0:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description: Connector interfaces for Wi-Fi
+> > +
+> > +        properties:
+> > +          endpoint@0:
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: PCIe interface
+> > +
+> > +          endpoint@1:
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: SDIO interface
+> 
+> I think I already said this, but multiple endpoints are generally for 
+> something that's muxed. Looking at the connector pinout, PCIe and SDIO 
+> are not muxed. So these 2 should be 2 port nodes.
+> 
 
-Le mardi 13 janvier 2026 =C3=A0 12:33 -0800, Deepa Guthyappa Madivalara a =
-=C3=A9crit=C2=A0:
-> Add compound control, V4L2_CID_MPEG_VIDEO_ENC_ROI, for
-> video encoder Region of Interest to allow applications to specify
-> different quality levels for specific regions in video frames. Define
-> struct v4l2_ctrl_enc_roi_params to hold up to 10 rectangular ROI,
-> regions and their corresponding delta_qp value (v4l2_roi_param)
-> that adjust quantization relative to the frame's base value.
->=20
-> This enables use cases like prioritizing quality for faces in video
-> conferencing or important objects in surveillance footage while reducing
-> bitrate for less critical areas.
->=20
-> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.=
-com>
-> ---
-> =C2=A0.../userspace-api/media/v4l/ext-ctrls-codec.rst=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 +++++++
-> =C2=A0include/media/v4l2-ctrls.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
-> =C2=A0include/uapi/linux/v4l2-controls.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
-> =C2=A0include/uapi/linux/videodev2.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 17 +++++++++++++++++
-> =C2=A04 files changed, 26 insertions(+)
->=20
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/=
-Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index c8890cb5e00ac05649e6c344c2a6b938b2ec1b24..0eecb46bb356c01411dfc313b=
-92376593bcd86f6 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -1668,6 +1668,13 @@ enum v4l2_mpeg_video_h264_hierarchical_coding_type=
- -
-> =C2=A0=C2=A0=C2=A0=C2=A0 Codecs need to always use the specified range, r=
-ather then a HW custom range.
-> =C2=A0=C2=A0=C2=A0=C2=A0 Applicable to encoders
-> =C2=A0
-> +``V4L2_CID_MPEG_VIDEO_ENC_ROI (struct)``
-> +=C2=A0=C2=A0=C2=A0 Defines the control id to configure specific delta QP=
- for one or more
-> +=C2=A0=C2=A0=C2=A0 rectangular regions of interest. The struct v4l2_ctrl=
-_enc_roi_params
-> +=C2=A0=C2=A0=C2=A0 is defined to hold up to 10 v4l2_rect regions and the=
-ir corresponding
-> +=C2=A0=C2=A0=C2=A0 delta_qp with a range of -31 to 30.
-> +=C2=A0=C2=A0=C2=A0 Applicable to encoders
+Sorry, I didn't know that you were asking for 2 port nodes. Will switch to it.
 
-Any justification for this range ? Also, I believe I've seen hardware suppo=
-rt
-both delta and absolute values. Since it meant to be generic, some research=
- is
-needed. If we delibaritly ignore absolute, perhaps the CID should be named
-accordingly ? Something like V4L2_CID_MPEG_VIDEO_ENC__DELTAQP_ROI ?
+> > +
+> > +        anyOf:
+> > +          - required:
+> > +              - endpoint@0
+> > +          - required:
+> > +              - endpoint@1
+> > +
+> > +      port@1:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description: Connector interfaces for BT
+> > +
+> > +        properties:
+> > +          endpoint@0:
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: USB 2.0 interface
+> > +
+> > +          endpoint@1:
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: UART interface
+> 
+> And UART and USB are not muxed either.
+> 
 
-> +
-> =C2=A0.. raw:: latex
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 \normalsize
-> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
-> index 31fc1bee3797bfe532931889188c8f7a9dedad39..c44fad7f51db45a437dd3287a=
-a16830585ac42f3 100644
-> --- a/include/media/v4l2-ctrls.h
-> +++ b/include/media/v4l2-ctrls.h
-> @@ -91,6 +91,7 @@ union v4l2_ctrl_ptr {
-> =C2=A0	struct v4l2_ctrl_av1_frame *p_av1_frame;
-> =C2=A0	struct v4l2_ctrl_av1_film_grain *p_av1_film_grain;
-> =C2=A0	struct v4l2_rect *p_rect;
-> +	struct v4l2_ctrl_enc_roi_params *p_enc_roi_params;
-> =C2=A0	void *p;
-> =C2=A0	const void *p_const;
-> =C2=A0};
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2=
--controls.h
-> index f84ed133a6c9b2ddc1aedbd582ddf78cb71f34e5..5f2621365593ee19a7792fb25=
-ea29acf6a7860f1 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -918,6 +918,7 @@ enum v4l2_mpeg_video_av1_level {
-> =C2=A0};
-> =C2=A0
-> =C2=A0#define V4L2_CID_MPEG_VIDEO_AVERAGE_QP=C2=A0 (V4L2_CID_CODEC_BASE +=
- 657)
-> +#define V4L2_CID_MPEG_VIDEO_ENC_ROI=C2=A0 (V4L2_CID_CODEC_BASE + 658)
-> =C2=A0
-> =C2=A0/*=C2=A0 MPEG-class control IDs specific to the CX2341x driver as d=
-efined by V4L2 */
-> =C2=A0#define V4L2_CID_CODEC_CX2341X_BASE				(V4L2_CTRL_CLASS_CODEC | 0x1=
-000)
-> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev=
-2.h
-> index add08188f06890182a5c399a223c1ab0a546cae1..18a5ae34842721c2647a7a763=
-65e4d299d2b8a44 100644
-> --- a/include/uapi/linux/videodev2.h
-> +++ b/include/uapi/linux/videodev2.h
-> @@ -1909,6 +1909,7 @@ struct v4l2_ext_control {
-> =C2=A0		struct v4l2_ctrl_av1_film_grain __user *p_av1_film_grain;
-> =C2=A0		struct v4l2_ctrl_hdr10_cll_info __user *p_hdr10_cll_info;
-> =C2=A0		struct v4l2_ctrl_hdr10_mastering_display __user *p_hdr10_masterin=
-g_display;
-> +		struct v4l2_ctrl_enc_roi_params __user *p_enc_roi_params;
-> =C2=A0		void __user *ptr;
-> =C2=A0	} __attribute__ ((packed));
-> =C2=A0} __attribute__ ((packed));
-> @@ -1990,6 +1991,8 @@ enum v4l2_ctrl_type {
-> =C2=A0	V4L2_CTRL_TYPE_AV1_TILE_GROUP_ENTRY =3D 0x281,
-> =C2=A0	V4L2_CTRL_TYPE_AV1_FRAME	=C2=A0=C2=A0=C2=A0 =3D 0x282,
-> =C2=A0	V4L2_CTRL_TYPE_AV1_FILM_GRAIN	=C2=A0=C2=A0=C2=A0 =3D 0x283,
-> +
-> +	V4L2_CTRL_TYPE_ENC_ROI_PARAMS	=C2=A0=C2=A0=C2=A0 =3D 0x284,
-> =C2=A0};
-> =C2=A0
-> =C2=A0/*=C2=A0 Used in the VIDIOC_QUERYCTRL ioctl for querying controls *=
-/
-> @@ -2540,6 +2543,20 @@ struct v4l2_streamparm {
-> =C2=A0	} parm;
-> =C2=A0};
-> =C2=A0
-> +/* Roi format
-> + */
-> +#define VIDEO_MAX_ROI_REGIONS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 10
+Ack.
 
-Let's not hardcode hardware spececific constraints in the API. We have dyna=
-mic
-arrays now in compount controls, and you can define the maximum dimension a=
-nd
-all.
+> 
+> > +
+> > +        anyOf:
+> > +          - required:
+> > +              - endpoint@0
+> > +          - required:
+> > +              - endpoint@1
+> > +
+> > +      port@2:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description: PCM/I2S interface
+> > +
+> > +      i2c-parent:
+> > +        $ref: /schemas/types.yaml#/definitions/phandle
+> > +        description: I2C interface
+> 
+> Move out of 'ports'.
+> 
 
+Ack.
 
-> +
-> +struct v4l2_roi_param {
-> +	struct v4l2_rect roi_rect;
-> +	__s32 delta_qp;
-> +};
-> +
-> +struct v4l2_ctrl_enc_roi_params {
-> +	__u32 num_roi_regions;
+> > +
+> > +    oneOf:
+> > +      - required:
+> > +          - port@0
+> > +
+> > +  clocks:
+> > +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the host system to
+> > +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3.1.12.1 for
+> > +      more details.
+> > +    maxItems: 1
+> > +
+> > +  w-disable1-gpios:
+> > +    description: GPIO input to W_DISABLE1# signal. This signal is used by the
+> > +      system to disable WiFi radio in the M.2 card. Refer, PCI Express M.2
+> > +      Specification r4.0, sec 3.1.12.3 for more details.
+> > +    maxItems: 1
+> > +
+> > +  w-disable2-gpios:
+> > +    description: GPIO input to W_DISABLE2# signal. This signal is used by the
+> > +      system to disable WiFi radio in the M.2 card. Refer, PCI Express M.2
+> > +      Specification r4.0, sec 3.1.12.3 for more details.
+> > +    maxItems: 1
+> > +
+> > +  viocfg-gpios:
+> > +    description: GPIO output to IO voltage configuration (VIO_CFG) signal. This
+> > +      signal is used by the M.2 card to indicate to the host system that the
+> > +      card supports an independent IO voltage domain for the sideband signals.
+> > +      Refer, PCI Express M.2 Specification r4.0, sec 3.1.15.1 for more details.
+> > +    maxItems: 1
+> 
+> What about SDIO and UART WAKE, SDIO RESET, and vendor defined signals?
+> 
 
-With the dynamic arrays, this will not be needed.
+Not sure about vendor defined signals as they can be either GPIO or interface
+signals. How should them be defined?
 
-cheers,
-Nicolas
+- Mani
 
-> +	struct v4l2_roi_param roi_params[VIDEO_MAX_ROI_REGIONS];
-> +};
-> +
-> =C2=A0/*
-> =C2=A0 *	E V E N T S
-> =C2=A0 */
-
---=-6Rnm5V13JnzOOMbNyzHt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaWfAygAKCRDZQZRRKWBy
-9DzvAP9nsdCtF+aeXH1MtJKut66iQShnnlyAUMVBmFMBNIkVywD/TcE6RkJCj22m
-E2ePASDSKHx3PUQkirNtWgG8ZR5SFgo=
-=lVyf
------END PGP SIGNATURE-----
-
---=-6Rnm5V13JnzOOMbNyzHt--
+-- 
+மணிவண்ணன் சதாசிவம்
 
