@@ -1,128 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-88943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53050D1D5D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:07:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D992D1D5CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:07:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8FC56304435F
+	by tor.lore.kernel.org (Postfix) with ESMTP id C2F0B30A9087
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6B6B38170A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE2FF381719;
 	Wed, 14 Jan 2026 09:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ipsp5rRR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SuNa2oNa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403C137F8AE;
-	Wed, 14 Jan 2026 09:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C30C3803D2;
+	Wed, 14 Jan 2026 09:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768381209; cv=none; b=cf0acyeh+GjTGLKgcBWWK6GJHuFXcZhduSdiiMI6RrdKtVdEWm6krfHHBblEZ+Xi2nrgXqkyHtzfPL4RD4Cb9kVTd7+eb1str56Lpi2pdDEpSZU8tQibH/2TSVsTNtHvm033l79Xzzkzfl1L5gQ+CiqL/Rav6Xs7oKuVHW8en38=
+	t=1768381209; cv=none; b=T/vWiS+QWpueSVFX4KOhXq7k6zhp027YfDhPVHLr42dqeasnYF1mmysqTD6fdogmzDWUwwJU0nKxS1REde7/u1VKDbCpZNkWFiQ+UxB7vfV6N74Q8YaEmn6jVEVfzXbFH8VEEoeQZd13XvTOgEQikLUWYGuUTLEJxpAc3YVL/f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768381209; c=relaxed/simple;
-	bh=34jVjerwqYxOEQcuaSsWoBv5CsPOOzGoscXW0zoe/5M=;
+	bh=cMA2KZasj9r0FQVnNn9r02j58aCYrjJl3jl/KgqA7M0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c4hv4nA69wk3dtnvMn/GsDSaQW71W/sDDWN/Xo4YF5OnqEpfr0YHgmQqxlLHkH7/3VIs7dsSV1f3uy9UIB9zbOxw+cq/Ej8CwI0hQq7WIKgjbcyt0EtF6Fjy/CYOdCHe4V4moJVJ838bqL3lTu6oMhWe5sRA4xUV6bU4PB33w4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ipsp5rRR; arc=none smtp.client-ip=192.198.163.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1768381205; x=1799917205;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=34jVjerwqYxOEQcuaSsWoBv5CsPOOzGoscXW0zoe/5M=;
-  b=Ipsp5rRR24BVLxOcWuNHS2DSXGJY6pVJZ9jt+v53lMnDVwfSyzGOvyH0
-   7++nJxT+uLoIOcaXmTuv5a4FDIrn6cu4H4s+s4F2VJ3IX0cMqYoEooMhH
-   QPaGSwsxQmA35HuzHMsnBRYOg1HsLIOu603zrBHtXPGZ4aYZaeDd2It3h
-   4FWcpKhXNbHMksHDVoU40fvPhsaivpfnHUoZKlYb/QSXLhpYsBlU7U3us
-   ouspzOJUemkcllEU+ULuzL5rJILb6X9j+p1BIR2Bzco18Ej//hiUd3o7n
-   C7Mcc0ObTZJJdIHHoIyUXHua9XNtGZYbGGre4t+u6ofnMp7jFnE7EAnQ7
-   w==;
-X-CSE-ConnectionGUID: ytV/iaIkR923y+DNY+NWRQ==
-X-CSE-MsgGUID: L5QjEpDfRy6xoQyIE5D/iA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11670"; a="57231526"
-X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
-   d="scan'208";a="57231526"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 01:00:01 -0800
-X-CSE-ConnectionGUID: MR0yAgE+ROqJn82tw1i+XQ==
-X-CSE-MsgGUID: NYAbW1r9RHeVJwJIuq4/aw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
-   d="scan'208";a="204636173"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.83])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 00:59:54 -0800
-Date: Wed, 14 Jan 2026 10:59:51 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
-	andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
-	srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org,
-	sre@kernel.org, sboyd@kernel.org, krzk@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
-	melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
-	ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org,
-	luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com,
-	mitltlatltl@gmail.com, krishna.kurapati@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org, kernel@collabora.com,
-	Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH v7 07/10] phy: qualcomm: eusb2-repeater: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <aWdbB4vJ6Z8k0g4s@smile.fi.intel.com>
-References: <20260114083957.9945-1-angelogioacchino.delregno@collabora.com>
- <20260114083957.9945-8-angelogioacchino.delregno@collabora.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=OTTNDuNM97RLVnATsnYgjEB9eW+KFu6ybNQ6XvWgBQ2+PV51MMWr1UkNN5jydqzjMohja/VXWFOTdE4CKfuU7PF+lfJOPg/atmXqibfu1D5X/8m2QmbWxfo44dDbjh6OQy3SoB5HPJEb2fhRL5waji0gFNWb6NAb6aYFKh8XtI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SuNa2oNa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945EBC4CEF7;
+	Wed, 14 Jan 2026 09:00:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768381209;
+	bh=cMA2KZasj9r0FQVnNn9r02j58aCYrjJl3jl/KgqA7M0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SuNa2oNauyr+ScYJaHb2S1v4DJxGFZTR0WEmaD6W7Sz7wSs6lXrRCytqj3CZJjm0M
+	 1Gyo8KJ9JRwfIWNptp1FxJ4L9KYoOvl7QuDHmXKbU+xjiJd7IcXZyoalteTcy+fEvJ
+	 g/5nUYP3zcVO69OKsGsADDrAjgUJvcdMMKvcInPk9J++2TOAnX/12oDHjRlo6EDYkm
+	 /5+6REsrX5NBlpt7uCUefSV8Qmh4oqBJVbhJfh3U5yhifjzlqrLc+ffcay1bDdkm/o
+	 Rg60ayJvZvG+dogQUPk6p7sVsN7sDLnlDIVepvxGj6yKz/bsRocXrM2oJWi9Izbvtu
+	 0dPFLjdTOTHbw==
+Date: Wed, 14 Jan 2026 10:00:06 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org, dmitry.baryshkov@oss.qualcomm.com, 
+	andersson@kernel.org, bjorn.andersson@oss.qualcomm.com, 
+	prasad.sodagudi@oss.qualcomm.com, mukesh.savaliya@oss.qualcomm.com, quic_vtanuku@quicinc.com, 
+	aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com
+Subject: Re: [PATCH v1 0/4] Enable SPI on SA8255p Qualcomm platforms
+Message-ID: <20260114-truthful-just-boobook-16494b@quoll>
+References: <20260112190134.1526646-1-praveen.talari@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260114083957.9945-8-angelogioacchino.delregno@collabora.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20260112190134.1526646-1-praveen.talari@oss.qualcomm.com>
 
-On Wed, Jan 14, 2026 at 09:39:54AM +0100, AngeloGioacchino Del Regno wrote:
-> Some Qualcomm PMICs integrate an USB Repeater device, used to
-> convert between eUSB2 and USB 2.0 signaling levels, reachable
-> in a specific address range over SPMI.
+On Tue, Jan 13, 2026 at 12:31:30AM +0530, Praveen Talari wrote:
+> The Qualcomm automotive SA8255p SoC relies on firmware to configure
+> platform resources, including clocks, interconnects and TLMM.
+> The driver requests resources operations over SCMI using power
+> and performance protocols.
 > 
-> Instead of using the parent SPMI device (the main PMIC) as a kind
-> of syscon in this driver, register a new SPMI sub-device for EUSB2
-> and initialize its own regmap with this sub-device's specific base
-> address, retrieved from the devicetree.
+> The SCMI power protocol enables or disables resources like clocks,
+> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
+> such as resume/suspend, to control power states(on/off).
 > 
-> This allows to stop manually adding the register base address to
-> every R/W call in this driver, as this can be, and is now, handled
-> by the regmap API instead.
+> The SCMI performance protocol manages SPI frequency, with each
+> frequency rate represented by a performance level. The driver uses
+> geni_se_set_perf_opp() API to request the desired frequency rate.
+> 
+> As part of geni_se_set_perf_opp(), the OPP for the requested frequency
+> is obtained using dev_pm_opp_find_freq_floor() and the performance
+> level is set using dev_pm_opp_set_opp().
+> 
+> Dependencies:
+> This series depends on Enable I2C on SA8255p Qualcomm platforms
+> https://lore.kernel.org/all/20260112104722.591521-1-praveen.talari@oss.qualcomm.com/
 
-Same comments and actually one more.
+It should not because it means it cannot be easily applied by
+maintainers.
 
-...
+Why can't you decouple the dependencies?
 
-> +	struct regmap_config eusb2_regmap_config = {
-> +		.reg_bits = 16,
-> +		.val_bits = 8,
-> +		.max_register = 0x100,
-> +		.fast_io = true,
-> +	};
-
-This is third time of the same. Make it part of SPMI core and export to
-the users. Or are they semantically different like different slices?
-In that case you can export it under generic name like
-
-	spmi_default_slice_regmap_config
-
--- 
-With Best Regards,
-Andy Shevchenko
-
+Best regards,
+Krzysztof
 
 
