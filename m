@@ -1,134 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-88942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 383E7D1D588
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:04:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1461D1D5E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:08:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 36F683063190
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:00:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EFA6530402FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 08:56:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 943BB3803D6;
-	Wed, 14 Jan 2026 08:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 910C037E312;
+	Wed, 14 Jan 2026 08:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="lAqkVuls"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WysZdHt5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673DB37FF70;
-	Wed, 14 Jan 2026 08:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9BF35EDA3;
+	Wed, 14 Jan 2026 08:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768381191; cv=none; b=UzagTAhicCddprblMTltVqHTsDEHX4lLNp8TSXuwdm6ocRisufLtz2SHsrWedpbL0aSXQF3wpa4QdDopPU4O8oQRaAbNs1Ms7/HXv0LUzZFPbXrehGc1qZ08k6DHBiuD2fdJuxnl7HZbOFILVEIKu48mSPTxxDayYYUzDTFhH3I=
+	t=1768380980; cv=none; b=KDLvVqakciOwESGnxlC/+N5aufjgEu71bHNHEBsxCkvVBzN6GLzk/PD32DtuQmuYWksg+nKLPCaaDwP4ocVxF6lKB3c1qkkdfVl9jLL8xsRs4Lh0ihE6iK0fwdkkjFJYCU2Q+DTRh0u5rC4/dqUPV7GeWMal4ooB9WXC47OwvwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768381191; c=relaxed/simple;
-	bh=8hZT4zra/v0163hZ69ozogA/KUazMXg9TgoP6Ded9M0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AqkgqwKcYTzVsddu2xwalhr5zfElYJvx57ejLaxGaHPhSUgdZiX6GyRl73xhAlJ4msibqAhZjMfBf63VY4AshY/gYlG3wG3UkhmauoJLUY6pHDPEgxCDcOxKrZMdyiRR9MTntczxCEvyj/RQk51jv7I9peu96w0m2Rs+k7Kpfao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=lAqkVuls; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1768381182;
-	bh=8hZT4zra/v0163hZ69ozogA/KUazMXg9TgoP6Ded9M0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lAqkVuls+rU3h7w+XRLmkzVTJ4PfIEHQ0cf+BP8u8Es599RGdgXhjRS7YT4NGD5HG
-	 d3y6Egd9MHe67Zhc+Q3f0kz1O3t3l9cEtaLhOfH0W7RYW6LPJKhbe25tWGafnNHnbP
-	 4D6Z3JFAR3Vp47EY19uZPhg/Q9StxkLlxto3SYzY63hIMiBowuh0Aav6HkIsDrGyVS
-	 i73E2OJ3pY04eXmWY/k1uJ6GkdMEzyQ6+TH9xbuKbvy3d3VV79MUAl0HNTZhWlCVA1
-	 ow0fqwv2EhQhC+3h24NX7na8zcdyR+v/FQKQ6Dol8u0kKQ20UvaiuKeSDHp919MD96
-	 qCYJNOOackq6Q==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 79CFF17E1416;
-	Wed, 14 Jan 2026 09:59:41 +0100 (CET)
-Message-ID: <8bf79979-0946-4ed9-b8d4-c442a6e54833@collabora.com>
-Date: Wed, 14 Jan 2026 09:59:40 +0100
+	s=arc-20240116; t=1768380980; c=relaxed/simple;
+	bh=za4xTPWPWUHIXHkvsKZBi5B8uKsVvVpFvxtO49NYT50=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uEAi2MIyxtxKrvXy/h5qvswvcLWJd+LxDa5e8O1LHxi766JHaO9Pe+J/576TiRUakd+BXM5UO/i/Q68mmvekJ5CNP3OblIp7WLQ1HvblR7Gj6O5lhCBqaEfJqj8dXtOsac+2JTQ6/Tempom4PJtFqpoxyId0nLU4ZuFEGO4eo1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WysZdHt5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A930C4CEF7;
+	Wed, 14 Jan 2026 08:56:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768380979;
+	bh=za4xTPWPWUHIXHkvsKZBi5B8uKsVvVpFvxtO49NYT50=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WysZdHt5vhuNsDQwGfAAf6lFLKcLvjYpEiZibWBXcfRmpKxMy/MISzgPiklw6n2a9
+	 EYN8iCMUsYFuVSIeALm4nsQ9lpl8hQR1irii0HCVFuHgg69M9QiLozEqoVkjF4Y+AU
+	 aldxqkX3makv0a84TIohE7NRzOnPq2/IUrnYApitZ2KhtqQ7rXvjIcAvzpsUJ1vFiI
+	 Uwtf7rRYDsAaTdOmTZB2CJ4fkQ8BWhH3EXvwOce1m//83ngrge59uS7uV0h/FzOsmw
+	 GG320eEWEiRG2Q3GFRRFSs2mjLU+h3lT1eyNReOCD3AFLadRDyxvzKuiSZZPOFBRGH
+	 8mWqZ7CXWENwQ==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1vfwfk-000000006r2-25Dm;
+	Wed, 14 Jan 2026 09:56:12 +0100
+Date: Wed, 14 Jan 2026 09:56:12 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/a6xx: fix bogus hwcg register updates
+Message-ID: <aWdaLF_A5fghNZhN@hovoldconsulting.com>
+References: <20251221164552.19990-1-johan@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 05/10] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
- andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
- srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org,
- sre@kernel.org, sboyd@kernel.org, krzk@kernel.org,
- dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
- melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
- ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org, luca.weiss@fairphone.com,
- konrad.dybcio@oss.qualcomm.com, mitltlatltl@gmail.com,
- krishna.kurapati@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com
-References: <20260114083957.9945-1-angelogioacchino.delregno@collabora.com>
- <20260114083957.9945-6-angelogioacchino.delregno@collabora.com>
- <aWdaWY2tWUMllOHH@smile.fi.intel.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <aWdaWY2tWUMllOHH@smile.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251221164552.19990-1-johan@kernel.org>
 
-Il 14/01/26 09:56, Andy Shevchenko ha scritto:
-> On Wed, Jan 14, 2026 at 09:39:52AM +0100, AngeloGioacchino Del Regno wrote:
->> Some Qualcomm PMICs integrate a SDAM device, internally located in
->> a specific address range reachable through SPMI communication.
->>
->> Instead of using the parent SPMI device (the main PMIC) as a kind
->> of syscon in this driver, register a new SPMI sub-device for SDAM
->> and initialize its own regmap with this sub-device's specific base
->> address, retrieved from the devicetree.
->>
->> This allows to stop manually adding the register base address to
->> every R/W call in this driver, as this can be, and is now, handled
->> by the regmap API instead.
+On Sun, Dec 21, 2025 at 05:45:52PM +0100, Johan Hovold wrote:
+> The hw clock gating register sequence consists of register value pairs
+> that are written to the GPU during initialisation.
 > 
-> ...
+> The a690 hwcg sequence has two GMU registers in it that used to amount
+> to random writes in the GPU mapping, but since commit 188db3d7fe66
+> ("drm/msm/a6xx: Rebase GMU register offsets") they trigger a fault as
+> the updated offsets now lie outside the mapping. This in turn breaks
+> boot of machines like the Lenovo ThinkPad X13s.
 > 
->> +	struct regmap_config sdam_regmap_config = {
->> +		.reg_bits = 16,
->> +		.val_bits = 8,
+> Note that the updates of these GMU registers is already taken care of
+> properly since commit 40c297eb245b ("drm/msm/a6xx: Set GMU CGC
+> properties on a6xx too"), but for some reason these two entries were
+> left in the table.
 > 
->> +		.max_register = 0x100,
-> 
-> Are you sure? This might be a bad naming, but here max == the last accessible.
-> I bet it has to be 0xff (but since the address is 16-bit it might be actually
-> 257 registers, but sounds very weird).
-> 
+> Fixes: 5e7665b5e484 ("drm/msm/adreno: Add Adreno A690 support")
+> Cc: stable@vger.kernel.org	# 6.5
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konradybcio@kernel.org>
+> Signed-off-by: Johan Hovold <johan@kernel.org>
+> ---
 
-Yes, I'm sure.
+This one does not seem to have been applied yet despite fixing a
+critical regression in 6.19-rc1. I guess I could have highlighted that
+further by also including:
 
->> +		.fast_io = true,
->> +	};
-> 
-> ...
-> 
->> +	rc = of_property_read_u32(dev->of_node, "reg", &sdam_regmap_config.reg_base);
-> 
-> Why not device_property_read_u32(dev, ...) ?
-> 
-> ...
-> 
->> +	sdam->regmap = devm_regmap_init_spmi_ext(&sub_sdev->sdev, &sdam_regmap_config);
->> +	if (IS_ERR(sdam->regmap))
->> +		return dev_err_probe(&pdev->dev, PTR_ERR(sdam->regmap),
-> 
-> You have "dev".
-> 
->> +				     "Failed to get regmap handle\n");
-> 
+Fixes: 188db3d7fe66 ("drm/msm/a6xx: Rebase GMU register offsets")
 
-For the other comments: Done in v8.
+I realise some delays are expected around Christmas, but can you please
+try to get this fix to Linus now that everyone should be back again?
 
-Cheers,
-Angelo
+Johan
 
