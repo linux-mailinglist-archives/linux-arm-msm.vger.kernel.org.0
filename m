@@ -1,134 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-89025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61237D1FD3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:37:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58B64D1FFCB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:56:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 68661300163F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:37:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 63CBA305BD0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:51:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EAC739E6DC;
-	Wed, 14 Jan 2026 15:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 790833A0EB4;
+	Wed, 14 Jan 2026 15:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lUf5Vz0/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oV99po6T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AF339E6C2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1779C39E6F3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768405067; cv=none; b=i4lvV4mcu3A87qgOLpEauDcmmfhi8ZA88KDZ/XNyjXc+/HLi6dwGiU1GF53ep2gJlVZzZBqp6XsXgxmf/JqXnI7K4Mxv7jWeA/q8C3XBAWjuwbZXUvYTxDCYv3/laWMD5cBh7184CiCeNDaFX6M8lnm4bKxd+UOkZfZltQKWlok=
+	t=1768405885; cv=none; b=nLze6SUprCgZ5Sm9YiY0yM53CXMRyxyYJ11Ex46sIQbK6OVWncUXK4gwr3ZiN/0r9+V+1FEzPAPUjd6AYl/wE/XCvvaT9CW5U7xsjjfa4Fg0jru1HiPdpiHwRc15Pjv48Gdi3YDBWbIOe3JKvVosAOHXmdChGe9IZwCr7ygB1Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768405067; c=relaxed/simple;
-	bh=Jdf2xSexkgbS7ZSYx+UBSEVANbQSyennQNDL47prCVY=;
+	s=arc-20240116; t=1768405885; c=relaxed/simple;
+	bh=o+OEjagxl3Dsp9tfzVfdkpH30i7BI82gz0LPNnSdpig=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ESfylLcjJNY9Y9VfcspyulY3u0Hwh4niDsDyn/3iTeh0YbajmS22ksOw6qd8HGKOPOzsFDR1dONj0dXVFYdb0k4WAHhjlD3hpp6vlsvfIiqKBMF23iXeEbMdBvkwWHKZy4alOPRrD64nyRR7p1Hi5SA63IWaCKFEx8kksH6fiKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lUf5Vz0/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0729C19422
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:37:46 +0000 (UTC)
+	 To:Cc:Content-Type; b=sX4pi2GExtyD/vdLJTHdc2dgqfeJNsRQr05TX4Vx/6POAdnI0Uv7JtYJ+PBSIuulaITxMauU84qo0AwJ19uWJ+e+fMyL+qeKZ8Jbq6EKtxt4IwyhRDZoAlaEN17ZD5tS+qkmKaDy50BD40HytSbuPKRIqHg60bHYSSrTVCkOJJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oV99po6T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E9DC2BC87
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768405066;
-	bh=Jdf2xSexkgbS7ZSYx+UBSEVANbQSyennQNDL47prCVY=;
+	s=k20201202; t=1768405884;
+	bh=o+OEjagxl3Dsp9tfzVfdkpH30i7BI82gz0LPNnSdpig=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=lUf5Vz0/Ofg5fWusBzXuGU/j1Fc99aFLBoFEng8bt2KCxM9Y73KzVFzIYqbiXBV1B
-	 D5GjOX4bDbP5iJVjP1Y6d2va1H7rCfYDzQFVGWRC9HAx/lnToVUoua5fL8vsHKRzxg
-	 qE1tkZ95fl5dwWSifffcU0+UveCW9M+vBF7buL59IaMMmwo24A0S5QOrwAJEhkkpFG
-	 JMJzfNg2qg0Bikbv5vk4p0Y1o6Nx+AnRsjcfzllHJsF/U5ekwG1g39uxjOacCXvOru
-	 0R3sYFDqGFz8qzMN75yPo45MLzLYlCpBFYMkMrDr87e5OsvtFHJisd2pOqomZVVAay
-	 rCHhiA4aFdA7g==
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-59b77f2e43aso1275486e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 07:37:46 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXx0hfknhs4lKvQHkPwjW+va4wD/fWN4Ghuz1sTV4fywuNuFqQdUpmHvK3AJYfb+HxZh2ltLGnagfVZd31t@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkMeJvSyij2jFqSU8bkTqJ/FQEZ8V+WKNzXvApWQz5+y/DhvaK
-	Gd4lUEoGG9Tkf2gkYgIfUGCv6qTz0eGTUBnaxCfgqG117p25eA6b4Q/3hlzqxzQkBCATbg6IVwE
-	IWEOJTELP7TjoqC5XewWc73u3PHlQzuyQ328S4BuEWg==
-X-Received: by 2002:a05:6512:138f:b0:59b:67cf:ac0c with SMTP id
- 2adb3069b0e04-59ba0ed7cdbmr1016163e87.17.1768405065358; Wed, 14 Jan 2026
- 07:37:45 -0800 (PST)
+	b=oV99po6TWGN66FZNu68+tXjcgzzqBQtGJvf2c8saHanKFdPhspHdN1GZhrIuKHsjA
+	 SSaK553cE8RqTE9v+zDUd5FQKz+/3T4i9cqDqTRHzBm3/BfwNeUg+rXwCFPNMv3lfP
+	 VpSxIlY+dw1Fw7wsW+/9LYbD+RutrbCzTA8Mylhfhov3GmNi+rucwYfFT/X3vZWGiA
+	 WILUNvyzJnrTxcvlnKleNtMnCmVjlMG583qwqABoqIIkKBYV1e3BEvsmgTI2szUAqe
+	 uW6qTnrSALTVmaXdGHVC8vuISvQJ799TukaeaRMWgtsFbsmto7ZcgaMc4ENjXC9NuD
+	 DG6xpGwrOmAuw==
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-59b7b27ebf2so5696312e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 07:51:24 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXWAVfwEIMLbKLyVA34ZrbFcLQ9eT8kLADB53S8ZHxKv1X+SBNuyrDib8fBsvKY+IOTnxJVft6j8nvD+PdW@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLju1q5j2eXaeD+xPMNYmW8IB+9mZJHvEG6LwkFIAPqc3l+x31
+	AYTF1xHyR/us+A+N3wH/Zs1ASwXAMpuLLofxP37F8wmOw2Y/hvGGftUj+sKIVr65fZE7wkySuUy
+	ZAgBKcNU2cCXVafR6+54OwSeiMmy8q42ByA+N21ALSQ==
+X-Received: by 2002:a05:6512:2316:b0:59b:8472:48ca with SMTP id
+ 2adb3069b0e04-59ba0f63088mr1131918e87.12.1768405882412; Wed, 14 Jan 2026
+ 07:51:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aUFX14nz8cQj8EIb@vaman> <CAMRc=MetbSuaU9VpK7CTio4kt-1pkwEFecARv7ROWDH_yq63OQ@mail.gmail.com>
- <aUF2gj_0svpygHmD@vaman> <CAMRc=McO-Fbb=O3VjFk5C14CD6oVA4UmLroN4_ddCVxtfxr03A@mail.gmail.com>
- <aUpyrIvu_kG7DtQm@vaman> <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
- <aVZh3hb32r1oVcwG@vaman> <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
- <aVf5WUe9cAXZHxPJ@vaman> <CAMRc=Mdaucen4=QACDAGMuwTR1L5224S0erfC0fA7yzVzMha_Q@mail.gmail.com>
- <aWBndOfbtweRr0uS@vaman> <CAMRc=McPz+W4GOCbNMx-tpSav3+wuUrLT2CF5FhoV5U29oiK6A@mail.gmail.com>
-In-Reply-To: <CAMRc=McPz+W4GOCbNMx-tpSav3+wuUrLT2CF5FhoV5U29oiK6A@mail.gmail.com>
+References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
+ <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
+ <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch> <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+ <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
+In-Reply-To: <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
 From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Wed, 14 Jan 2026 16:37:33 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MejA90TRue6F2JjQXHYo0AmFxc-gKkwNX0EKzP5scB14Q@mail.gmail.com>
-X-Gm-Features: AZwV_Qg8bQsca4MwFyM00i6xD1tJYX8VuM1MGFpBUJPmAwH8VbH65HlWxQe3eOk
-Message-ID: <CAMRc=MejA90TRue6F2JjQXHYo0AmFxc-gKkwNX0EKzP5scB14Q@mail.gmail.com>
-Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
- BAM locking
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Udit Tiwari <quic_utiwari@quicinc.com>, Daniel Perez-Zoghbi <dperezzo@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Wed, 14 Jan 2026 16:51:10 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Md-z9+RdVPB9kKeVwWWJni7se7HfbhwGmvQ9Wd3CwJqeQ@mail.gmail.com>
+X-Gm-Features: AZwV_QiTx85beob9IcsRkXcH-FzLKf11MkfoXrcsCiRgQ4kLBhgc1kcRpkaBWZY
+Message-ID: <CAMRc=Md-z9+RdVPB9kKeVwWWJni7se7HfbhwGmvQ9Wd3CwJqeQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
+ generic device properties
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
+	Romain Gantois <romain.gantois@bootlin.com>, 
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
+	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
+	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+	Samin Guo <samin.guo@starfivetech.com>, 
+	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 9, 2026 at 3:15=E2=80=AFPM Bartosz Golaszewski <brgl@kernel.org=
-> wrote:
+On Tue, Jan 13, 2026 at 11:06=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wrote=
+:
 >
-> On Fri, Jan 9, 2026 at 3:27=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrot=
-e:
-> >
+> On Tue, Jan 13, 2026 at 01:36:53PM +0100, Bartosz Golaszewski wrote:
+> > On Mon, Jan 12, 2026 at 2:45=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wr=
+ote:
 > > >
-> > > We need an API because we send a locking descriptor, then a regular
-> > > descriptor (or descriptors) for the actual transaction(s) and then an
-> > > unlocking descriptor. It's a thing the user of the DMA engine needs t=
-o
-> > > decide on, not the DMA engine itself.
+> > > On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
+> > > > From: Bartosz Golaszewski <brgl@kernel.org>
+> > > >
+> > > > In order to drop the dependency on CONFIG_OF, convert all device pr=
+operty
+> > > > getters from OF-specific to generic device properties and stop pull=
+ing
+> > > > in any linux/of.h symbols.
+> > >
+> > > Is the intention to read these properties from ACPI tables?
+> > >
 > >
-> > I think downstream sends lock descriptor always. What is the harm in
-> > doing that every time if we go down that path?
+> > No. Other than a couple property getters which can use the fwnode
+> > abstraction, there's nothing here that requires the OF dependence.
 >
-> No, in downstream it too depends on the user setting the right bits.
-> Currently the only user of the BAM locking downstream is the NAND
-> driver. I don't think the code where the crypto driver uses it is
-> public yet.
->
-> And yes, there is harm - it slightly impacts performance. For QCE it
-> doesn't really matter as any users wanting to offload skcipher or SHA
-> are better off using the Arm Crypto Extensions anyway as they are
-> faster by an order of magnitude (!). It's also the default upstream,
-> where the priorities are set such that the ARM CEs are preferred over
-> the QCE. QCE however, is able to coordinate with the TrustZone and
-> will be used to support the DRM use-cases.
->
-> I prefer to avoid impacting any other users of BAM DMA.
->
-> > Reg Dmitry question above, this is dma hw capability, how will client
-> > know if it has to lock on older rev of hardware or not...?
-> >
-> > > Also: only the crypto engine needs it for now, not all the other user=
-s
-> > > of the BAM engine.
-> >
->
-> Trying to set the lock/unlock bits will make
-> dmaengine_desc_attach_metadata() fail if HW does not support it.
->
-> > But they might eventually right?
-> >
->
-> Yes, and they will already have the interface to do it - in the form
-> of descriptor metadata.
+> So what is the need for not using OF? Why do you want this patch?
 >
 
-Hi! Have I answered all your questions? Can we proceed with this?
+We've had a higher-level abstraction for OF nodes for years now. Since
+I'm already touching the driver, it makes sense to switch to using it,
+as OF-centric APIs are not recommended in new code even if it's an
+OF-only driver.
 
 Bartosz
 
