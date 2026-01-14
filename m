@@ -1,57 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-89015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA959D1F4C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:06:14 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAA0CD1F456
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B7865308F599
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 14:01:41 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 967133010578
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 14:01:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4BB92C032C;
-	Wed, 14 Jan 2026 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 758FD2BEC2E;
+	Wed, 14 Jan 2026 14:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izGnrmi1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QTbhI3eY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295D272813;
-	Wed, 14 Jan 2026 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C802BE647;
+	Wed, 14 Jan 2026 14:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768399296; cv=none; b=Y+pcJ+Qw0A9n/3Zl3ov3D/BGf3xhw3M5hpT9JszsOmoyy6KTJYBd299zxzWd8KurF5tV/1REoLMKOnq9mVhNvhpH2KrmWjs7SpWUbHzU4PZTb30glNCk0I0l7ujmTgYiw9HPOsMpZLEU7mJwmN9U07VtE2qKrBH+uHb/xaOvCTw=
+	t=1768399303; cv=none; b=NGFCOoLbki0YC9CmVRudHm5QZWrzPNo1JXGuQyEWOn6qg3UQq77dOCZv4BrPBuqkmplo8Q/S4CKUH40AOcAoN8iJSwTqKMITz54EIBYGMnycT0SuVWz56CVJnOpi/kudTt145r8ad5BCLGzUHaBzP9Igrw94k98oGMO6i7Y4eTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768399296; c=relaxed/simple;
-	bh=qsyHjUwkY0nxEJlAVVtGXwHiPYNJv+cAJVY64U8He2g=;
+	s=arc-20240116; t=1768399303; c=relaxed/simple;
+	bh=enCvrz8y/9rxsUlw1ssbCZBDFIf1yBnbNn8Z6/4K4hA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=lC2kW++MBLLwW6whgLtviw8VZ7Kv+VaHCN5csmAxiJrAzCWvfLaeyLT4I+319CU8LpV8MmWBblALa33Yf0xZzI742wuFkIDcVga1hvQpN1hPX718ACj3w45B84imN4HDEq26GFgSCpXOb6W20V3RB3BYF1hs0wHmp+jGxB0wxmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izGnrmi1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228A6C4CEF7;
-	Wed, 14 Jan 2026 14:01:33 +0000 (UTC)
+	 MIME-Version:Content-Type; b=dA0VEJPgE6OGtPdvRNSPKZtG9u6Qtkr39ArtkXvtqAPBGZQ+h+t68HUAAwyIiojzGjS97tJtvQPlzKei1TC6XR2C9O09WHdbfevh4Ol5Totuu54hYqvtkK1KjTOpyPy8xPnN7QeBmBr3jXNQkitu6vLlvc8uKKx5/H00gonqxSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QTbhI3eY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AFEC4CEF7;
+	Wed, 14 Jan 2026 14:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768399296;
-	bh=qsyHjUwkY0nxEJlAVVtGXwHiPYNJv+cAJVY64U8He2g=;
+	s=k20201202; t=1768399302;
+	bh=enCvrz8y/9rxsUlw1ssbCZBDFIf1yBnbNn8Z6/4K4hA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=izGnrmi1Xi5mqc1+k/VAn5XqxpLTOyJDwEaLYBGIIOB2C+bkJMzWnVPCbJI4981V4
-	 aI1HM40PDlHhvNF4gcZ6hkjxHD3eYDXhneyQM3S7Lx5jQgzO2Ix2Gftt7gZr4eL8cw
-	 8m2Li0IOFBCU4sRGDPLoDtI6+EDAfVUNzwbjuclOuoo0BRRDhc8/eGJJBrPvG3ZWS9
-	 LtAEAxrsQeOxWSqtAMCm7RCj9PpGXm68uFTmko53L+BhBRghuBxby4TFfd+Wfch5EA
-	 PlQ5FOHzYNtrtLDwDh7FJpVPloM67GjYnJGrG5hYv7OGojEVpxr2xLLVO+TEzDTkjS
-	 V7AprclsA5buA==
+	b=QTbhI3eYuVO9pJXj0FPP9M9Z53GRE4eX9s7MgRSPPMH6LfCa2vPcyrbsf/sJtwCID
+	 BT+gk+12FZyqsoZvMHQHzLHsyrc6Ut2vZOuB2VuMcZFd1rBiAsk9ZIfjahQDGXeh9x
+	 1A8Jrm4lptla50UGAqWVu4gCqX+yO+cGkKAc4k9Py6hN5Qq11GWn1O2/wvLY8XLFwB
+	 2+0MWgPfMi/U/NxKOMSPpoKczXetlS4IcWSv6DqKhVIeL40k8aH9JPcBohB7RjApXJ
+	 Wx1jW3LAPcfdcH4OMkzVsVqjW/KnDuUkbSeP+5rLeHXe9qQ2oM1TSmWSRcIqxojxHf
+	 i4QxvH0jplnTQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Abel Vesa <abelvesa@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Val Packett <val@packett.cool>
-Cc: Abel Vesa <abel.vesa@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260111083317.604754-1-val@packett.cool>
-References: <20260111083317.604754-1-val@packett.cool>
-Subject: Re: [PATCH v2] phy: qcom: edp: Fix NULL pointer dereference for
- phy v6 (x1e80100)
-Message-Id: <176839929376.937923.9426049740721011950.b4-ty@kernel.org>
-Date: Wed, 14 Jan 2026 19:31:33 +0530
+To: Herbert Xu <herbert@gondor.apana.org.au>, 
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+ Bart Van Assche <bvanassche@acm.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Abel Vesa <abel.vesa@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+In-Reply-To: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+Subject: Re: (subset) [PATCH v2 0/6] Enable UFS support on Milos
+Message-Id: <176839929655.937923.9686904791516121188.b4-ty@kernel.org>
+Date: Wed, 14 Jan 2026 19:31:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,18 +73,18 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Sun, 11 Jan 2026 05:25:59 -0300, Val Packett wrote:
-> For Glymur SoC support, the com_clk_fwd_cfg callback was added, and a
-> stub implementation was added for the v4 of the hardware. However it
-> was omitted for the v6, causing a NULL pointer dereference oops on
-> Hamoa/Purwa (X1E/X1P) SoC devices. Fix by adding the appropriate stub.
+On Mon, 12 Jan 2026 14:53:13 +0100, Luca Weiss wrote:
+> Add inline-crypto-engine and UFS bindings & driver parts, then add them
+> to milos dtsi and enable the UFS storage on Fairphone (Gen. 6).
 > 
 > 
 
 Applied, thanks!
 
-[1/1] phy: qcom: edp: Fix NULL pointer dereference for phy v6 (x1e80100)
-      commit: 70812056fbfb9348788e35b7641ff959b711840e
+[3/6] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: document the Milos QMP UFS PHY
+      commit: ed0a26aa453b6ec7faec32ddb4fb3d4360e1676c
+[4/6] phy: qcom-qmp-ufs: Add Milos support
+      commit: 3554ded4f02aa8e95af66911aa666b2cd192022d
 
 Best regards,
 -- 
