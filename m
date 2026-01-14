@@ -1,184 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-88995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BAF2D1DD8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:09:21 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F374D1DEB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:16:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id EE4023004627
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:07:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 705D930CEC8D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:10:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6525E389474;
-	Wed, 14 Jan 2026 10:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8632438BF7F;
+	Wed, 14 Jan 2026 10:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H9DsiHHl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNTrzFA5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1600C38A72C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 10:07:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B24F38B99C;
+	Wed, 14 Jan 2026 10:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768385263; cv=none; b=MUVN/Oed8Gk0Wg46FIllbrYdFskwuGx8tnNipNHdl1Uy0gj4Rt4zRAmrDKekSWE4e5m6+pc6T6NPrx9EiZZArVvu23+J2PIWGD7/QEzG9yhP1zcyHKXp+K4PYy/kgS1IFSIKy/x715Md01XQ7rpoKLhZnlKEBYujpdbeYGrW1Ik=
+	t=1768385338; cv=none; b=eiC7bBW8likCwOYXVO5o8EpXSW2DrBa3RHJ+imC/4S95X+5+Dhasl948NM5jkhiGM+4EOf/ZHcuM/7PhxQNn1XbTwhkbVTche0ZDPe1LCT0Xr4kX7LC6+F117f3ARIHrhTZMF2DC0yUnSssPH0+3YQ0JtRKPHJ+FCOXTgDaio2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768385263; c=relaxed/simple;
-	bh=aqHYCoOIh2zY40JLbyZ6FfpCHfXNb5CknOmVdBYwquw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hlPgCyMB4Mo+ZgryJMJr4udNb1LjjTdd69nBcW33IyCxRxXvWo9gEBn28e2ioMPziXaA3p6qfkwMmIvrMmle/YNaXN3bfaQWvpUPHb9eNAZ9ZdtqndthImrrGxErvwQRN8hwoWDPUD3AgDuxZTwMV65OW7BpEhvQhtO9X+6Z6KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H9DsiHHl; arc=none smtp.client-ip=209.85.221.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-42fed090e5fso4862865f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 02:07:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768385258; x=1768990058; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n8mW+tYY/3O9GKx5C5cOgVc4F9fjWRFBqMrxS64uloQ=;
-        b=H9DsiHHlhF4GL2p9dBZbln5Avj0w/7rwZ9gGeA3BK/R/gAv4GGUCX+Sw+Z08r7hg9w
-         jBlwb/Uha/af66u6pnuKQIcilUwY5ony+RCTzlJQwQ8b2frbBfvBEAtgKvWddA+ELGIR
-         IjOpoFzR19rIqvR+s+LKhXlAxnq1bF2xl96yMRURXTlsmR/mRArTDB4qV1BYVkToohRQ
-         76pRkYLaly8KMYf+7sVIOjYMVSPE+wx5bX38vk8UgYSFEIvxYG2fZKabLA5f+Eghd8B9
-         zQZpcEuY0kt90RdzZMjATI4k8xBZzkokiKXuR+FoYbpH4sm4AEyIiYCNht/y87p76BcY
-         YTDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768385258; x=1768990058;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n8mW+tYY/3O9GKx5C5cOgVc4F9fjWRFBqMrxS64uloQ=;
-        b=aztN7htpCOaUYkI2+GmkhScMW+U3Wzq60c572akhiEAsSmKMLGyFxtX01p0ewCINiE
-         xvmEv0wf6VQ+Z1pofoARAXII25lsqjqaXs3Krta2++4jEq5bWO3tpIBcXUmkK7Sfqqbk
-         K+hXRHkZlDcr0s9ZERpNrPNaGkXarZNYCymBtC8gWGmogbWpiuUeTM2c2uiRHm109DKz
-         3SeHw9GWGv25OvpjF6HCw/6tw3LtdkXASCKhNofNf/UeB8FgXD9mTBfXKq+eKwUCu7to
-         SsYDjkh4Bja9eqtBgJLqhG1lZ9XtN5tnIY7QWoQXWTnMTrBdijqtYg8yAICjxtDql61Z
-         I8aw==
-X-Gm-Message-State: AOJu0YwqQMO97UUob/uW+RIawB4NOhd+e0+CUXBZDyNJyxxwE3Mb85OX
-	2DBKARBmhC8JzofMBJTxS8PHaJI8e1xjA1oieAixWc9btuyGfLwLVEkwPJvk/kiT1VA=
-X-Gm-Gg: AY/fxX7P7ulFob2q+8tTmfD68uf2IHD9cVMVf1pSdmafaHWSUF0FDjSq187TYTtL2Rk
-	3rCMbDvtDzS52Q/kpN8rwey40260uvSPQUVSCTxUKsx4H8FMFug3wifMljpwsBWbiD5Fx/w+F1+
-	SBYVe40bQo1mIwcvuQ5WDfdrZz5akg+DEPgB69sOIrrmLuvWKu3zbhBuPpjBDQTctiqrWXKR4Cz
-	xE8ZOe8QjBElkeUJoILhlObQmxZ//GPwBfXj9dAwkMm1IXnCIujf2sVGlCATI46xSRvFMujajRY
-	9GcjiRK0erSWx002ZstqGAP0n2KRhtVNrx1Bme1G4Feetyo7TGO8LeJop1n2YwH9coHFQYUureZ
-	ysCWyLOQcXFUhCwIhGa3E8rptuXLdbddhO52OfRtYY4oAhl/OV6ffn110SDZBpCghwUo4hBjjrt
-	8aRELr70UuyKHdg9oSQXUu7/ayfHeDQfrkzihBMx3XW4FY4zYjWPvu3RWDt9NUonQ=
-X-Received: by 2002:a05:6000:2893:b0:430:fd84:3171 with SMTP id ffacd0b85a97d-4342c500119mr2192528f8f.22.1768385258402;
-        Wed, 14 Jan 2026 02:07:38 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:3d9:2080:b357:7e03:65d5:1450? ([2a01:e0a:3d9:2080:b357:7e03:65d5:1450])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ff1e9sm51179179f8f.41.2026.01.14.02.07.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jan 2026 02:07:38 -0800 (PST)
-Message-ID: <95becfde-ba4b-4024-9b90-e64e77551f0a@linaro.org>
-Date: Wed, 14 Jan 2026 11:07:37 +0100
+	s=arc-20240116; t=1768385338; c=relaxed/simple;
+	bh=B8uw2XRpfRfyUglpmkl1Ya7toisPuPn6DrBBErbtgZQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=k0vtu/gIcBfrao49WXi03G67WyGrOGCa8fFq7P8GeSIbfj77dhC2VOY+XH0N2absddzAj1gl9aLAPv8jY6zEHPynzpZUNLN8act3KcrbVQsyP5DJeLCFTqa+RrESsPg7FGJuLFxHnzb9W524o7Al5tkU9TMm8SL/nP0shV8mr8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNTrzFA5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EEF80C19421;
+	Wed, 14 Jan 2026 10:08:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768385338;
+	bh=B8uw2XRpfRfyUglpmkl1Ya7toisPuPn6DrBBErbtgZQ=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=BNTrzFA51xhjj1oY+b5F6GD2I6Wp4R2D0qFwYbaA4LX1F15V4u5IUuGE0PxESM2Ui
+	 S5SY9NHRLXVlPrAwO2jehIMajRzkbcKv9x2qJE43PQwGwcXjuim+4tWDN1HitFkLr5
+	 u8m6nUeKyfWSFpJkSaQ0hzQV0NeAcrI7CvsRwmbW3fXqcgM4e4txjkRQHeECcgM8I0
+	 ckqTEhgDv/0V57jkHfVi5C/zFImjePC3hjABVebsowkbe5THIVe4ixWnm05yOVQSD+
+	 dgXh4Zez3tXAUEWZBhltngStsKXFtRkPPg1c8Og0Fb9m4qxnGJBVUOomeT3kKKwi9+
+	 0mkbmHEr2VDHw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF207D31A38;
+	Wed, 14 Jan 2026 10:08:57 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Date: Wed, 14 Jan 2026 11:08:45 +0100
+Subject: [PATCH v3] arm64: dts: qcom: sdm845: Introduce camera master clock
+ pinctrl
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC RFT] interconnect: qcom: implement get_bw with
- rpmh_read
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-References: <20251106-topic-sm8x50-icc-read-rpmh-v1-1-d03a2e5ca5f7@linaro.org>
- <8eb528dd-71fc-408e-a97c-d484198e4f81@kernel.org>
- <1be287ac-fce9-4f27-aa88-b1f786e968cd@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <1be287ac-fce9-4f27-aa88-b1f786e968cd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260114-sdm845-mclk-v3-1-c9351deaf4f2@ixit.cz>
+X-B4-Tracking: v=1; b=H4sIACxrZ2kC/23MQQ7CIBCF4as0rMUwU5DiynsYFxXQTrStgYZUm
+ 95d2o2auHwv+f6JRR/IR7YvJhZ8okh9l0e5KZht6u7qObm8GQpUgFDy6NpKKt7a+40LCResjUJ
+ fAsviEfyFxrV2POXdUBz68FzjCZb3fycBFxyMPlsjtZN2d6CRhq19saWS8FvqX4lZaoGVRScMS
+ PWR8zy/AbBSpOzeAAAA
+X-Change-ID: 20251213-sdm845-mclk-041f2a952e31
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3175; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=VjhjaqM3XS+2n8GQ/x6ApyiqxtWTj+IRWhXyXFadzb0=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpZ2s4qUlnsUVwtA6W65uL1mnojYILhVNWEt82U
+ g/yf/DzcLGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaWdrOAAKCRBgAj/E00kg
+ cs7+D/9ML+U8eqXXOOZTcHPNgeiBo/mhZ0Z3jrLg/n2w6HWaR6tRiVitKZRAg+utC4b6Y02ad1U
+ DXACGzZP6l1BIypVgyNPSxSMLMLoRycoDSF7O15SsqDnTroiv4KgYJGol1DsANCobEn9bKKGvBm
+ 0ch5BK5JN5k5hcQzMWkYggLs2Lm0dWrEd24V/EQGm6zbnsM5pq6bhp9bzzwk0rviyTX8I13AEpe
+ XuzV8JoVN/wSMOnyu1uvfG578OT9zQTpApIPRQl4sj+EVFYiyhH4YHc9RF7/FwM3WxWdCU/J0kS
+ A7MkMM9RO2KSduFDSB65Q9DVu0mXuz7kFf46S6sPzLfGCDwJCN1yfA1BqqxjqyGUwo0eXheAogw
+ ePh78bIqgRBB9xblTehQYoYg9JYTADE1sqg+VzrRbX/BLSGiblS2QzyO1X+LTB5OGzNKaj29kOC
+ bGDUY3fz0/C+JskQ0A3y3k2Vpo+EtFEi6GqvxIyhlEPA6PyU7DpIYUALzFPVxTVy/MACvFcS77b
+ hADQVAB5xl4W95+QrU9yZTmMm1V6oTKq+6bdUSYZ2rJikN/FkxBapu2qutVEfxFZmJDbEyarQLZ
+ thyraLsVcjGW5binxvRxcixhfeHhsx1kq8UYS4z7E6MvxlqV6D8LBxPyMt8yzaS3gbqM5i+Xf5D
+ 4X1ATcbIHiWqd3Q==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 1/14/26 11:01, Konrad Dybcio wrote:
-> On 1/13/26 6:53 PM, Georgi Djakov wrote:
->> On 11/6/25 6:46 PM, Neil Armstrong wrote:
->>> Since we can actually read back the APPS rpmh interconnect
->>> BCM votes we can actually implement the get_bw() callback
->>> and provide a coherent average and peak bandwidth at probe time.
->>>
->>> The benefits of that are:
->>> - keep disabled BCMs disabled
->>> - avoid voting unused BCMs to INT_MAX
->>>
->>> If the interconnects are correctly described for a platform,
->>> all the required BCMs would be voted to the maximum bandwidth
->>> until sync_state is reached.
->>>
->>> Since we only get the BCM vote, we need to redistribute
->>> the vote values to the associated nodes. The initial BCM
->>> votes are read back at probe time in order to be ready when
->>> the get_bw() is called when a node is added.
->>>
->>
->> FWIW, I was able to finally test this on sdm845. Some nodes are indeed
->> showing reasonable bandwidth values instead of the default INT_MAX.
-> 
-> As I learnt here
-> 
-> https://lore.kernel.org/linux-arm-msm/1e7594dc-dca6-42e7-b478-b063e3325aff@oss.qualcomm.com/
-> 
-> rpmh_read() will only retrieve the currently active values, so as-is,
-> this hunk:
-> 
-> +	/* For boot-up, fill the AMC vote in all buckets */
-> +	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
-> +		bcm->vote_x[i] = x;
-> +		bcm->vote_y[i] = y;
-> +	}
-> 
-> is lying about the state of wake/sleep buckets
-> 
-> this is ""fine"" today, as I don't see any "if (old_bw == new_bw)" checks
-> across the framework, but debugfs is going to report incorrect values and
-> if anyone decides to add the aforementioned check, it may introduce issues
-> where the values aren't commited to the hardware (because Linux is going
-> to believe they're already set)
+From: David Heidelberg <david@ixit.cz>
 
-This is only for the pre-sync-state phase, where we don't need the wake/sleep
-values but the interconnect rpmh implementation needs them, and anyway they will
-be replaced by proper values in sync_state
+Put clock pins configuration for camera master clock into the dtsi.
 
-So this is an informed & assumed choice I did here. It's a small optimization
-to avoid turning on _all_ interconnects at INT_MAX, and keep boot votes
-up to sync_state.
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Inspired by Richard's patch set for SDM670, I noticed that SDM845
+follows the same pattern. This change prepares for enabling
+additional cameras.
 
-Neil
+These pinctrl settings have been verified against the downstream
+SDM845 kernel.
 
-> 
-> Konrad
+Since most of these are not yet used in mainline, testing was done
+on sdm845-next using OnePlus 6 cameras with downstream drivers.
+
+Thank you
+David
+---
+Changes in v3:
+- Dropped 2nd patch
+  ("arm64: dts: qcom: sdm845-db845c: Use pad fn instead of defining own")
+  as there is no documentation or people who can answer questions for
+  now, so we can move forward with the main camera work.
+- Link to v2: https://lore.kernel.org/r/20251217-sdm845-mclk-v2-0-7028c2d09145@ixit.cz
+
+Changes in v2:
+- Added mclk3. (Vladimir)
+- Reword commit messages.
+- Corrected commit msg name. (Konrad)
+- Link to v1: https://lore.kernel.org/r/20251213-sdm845-mclk-v1-0-197bc947d4c6@ixit.cz
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 56 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index bf2f9c04adba7..c0f21a745fb0c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2805,6 +2805,62 @@ tlmm: pinctrl@3400000 {
+ 			gpio-ranges = <&tlmm 0 0 151>;
+ 			wakeup-parent = <&pdc_intc>;
+ 
++			cam_mclk0_default: cam-mclk0-default-state {
++				pins = "gpio13";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk0_sleep: cam-mclk0-sleep-state {
++				pins = "gpio13";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cam_mclk1_default: cam-mclk1-default-state {
++				pins = "gpio14";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk1_sleep: cam-mclk1-sleep-state {
++				pins = "gpio14";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cam_mclk2_default: cam-mclk2-default-state {
++				pins = "gpio15";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk2_sleep: cam-mclk2-sleep-state {
++				pins = "gpio15";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
++			cam_mclk3_default: cam-mclk3-default-state {
++				pins = "gpio16";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk3_sleep: cam-mclk3-sleep-state {
++				pins = "gpio16";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++
+ 			cci0_default: cci0-default-state {
+ 				/* SDA, SCL */
+ 				pins = "gpio17", "gpio18";
+
+---
+base-commit: 0f853ca2a798ead9d24d39cad99b0966815c582a
+change-id: 20251213-sdm845-mclk-041f2a952e31
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
