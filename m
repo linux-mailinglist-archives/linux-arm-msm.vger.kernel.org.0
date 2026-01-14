@@ -1,52 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-88998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93B75D1DF8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:20:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 087CAD1DF9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:20:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 459D43054C2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:15:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8EDB2304EF6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:19:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90DBD325483;
-	Wed, 14 Jan 2026 10:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 693D93876CF;
+	Wed, 14 Jan 2026 10:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Ipkxpsp4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eiksRxOS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="harLuZYe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF432347DD;
-	Wed, 14 Jan 2026 10:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045B438A73F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 10:19:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768385731; cv=none; b=L17mbFL1lvNTTu9eHMPOSxugksPgjvZxuLcBr0flTeO2MZa/IYX+ljZ/sxHxzgWANwuK7BxpOQStLkcM4XRCkl0/IMj2o8mOyXwmi44+qpNOvvl4Qkj65e1mjGUSwBJMwaCeVZ6juDroRVE9pgftcKbzUb/WBh/egClwVaYH8tY=
+	t=1768385995; cv=none; b=PclnsnCOybNJIu3H8s5bey+PtUt741M2GqbR4S/cKwQe6qXTPYFzgEmKP7P/UvuLx7Njffzcl5ILTFU2KXzaShEZEmQZkt9lTvvVIenyRtWSdqNKg9dKIMBtmG8zzlSmgRXsPBdCj8kDBFJONplS6B+FXMmxcmguHkFNDsUNY7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768385731; c=relaxed/simple;
-	bh=BSlpfIrK5dRI6lkCxT0jZZqToalipGqymJE051q+zds=;
+	s=arc-20240116; t=1768385995; c=relaxed/simple;
+	bh=dmkX72+Xk8VqOBF7d/15vyTFIpcvj0gtwsE/mjCIme4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=idX37TAHQsZ+o4uzDEhuTOKEwAI6kH7RqgnYE773sVsiijE1dJZm2JFJAQTXf7aWGU2Ip5FcICOXm2xRL4QE4XG6r3R6ahjlN06X5JTUdCkgJU34ZeQaiL/27OJpzpE13J8qrtVBOLW16Z0rWuXfhek41YgydE49SYcKKebqWQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Ipkxpsp4; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.88.125.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 99FF95340113;
-	Wed, 14 Jan 2026 11:15:13 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768385713;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=IiQVuVyJ2TE0ifLICuSzvGyHRIfP+uV5vL19S8pfuH0=;
-	b=Ipkxpsp4skDmER8ZTTM7sV3oyMRg10OByBe/rOqktVbeDdd8IuFBQ8v5p0D85tXZlb1RKO
-	bCwCz4d7pIgOBHoUrsy45po+nWBGzmAXKNd+UtQB8OAzbI+9tAXI/3GN9iUqLrHFm275vx
-	llUcvrlw+6i9UZk/mUM9v1JvRg+3n5c=
-Message-ID: <723357fc-a785-45d6-8d49-4c00dd4f340c@ixit.cz>
-Date: Wed, 14 Jan 2026 11:15:13 +0100
+	 In-Reply-To:Content-Type; b=Nc45eM0aMuN/zHjOzK9L71z/w29Gz0swhDIhcqNcrN3zmxz1Weovfw8jIDpQM0r6jLsQ9aURD8v/MzzqmLPI6GcwlGpsdX4RlazCWwfoqt97B8e2dPSZNGTlUPeYrLY9ZVOvAbUews78wAnWIP5XQoHPiSLMhQ9pnndIcHaVzkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eiksRxOS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=harLuZYe; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60E9I9YO2552834
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 10:19:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WeYiMieQGRV55JsqetPUkF7GL2y5h1/hERPAKX2wqj4=; b=eiksRxOSfz5qUs2C
+	TYqUSl9T9XZqGVo0z7s4ATHfkSs/EMGMbrjOgJFxW9P+PH5I0yt61MsIXOlX8XBh
+	lMXxPWxcV6tJOCXY/R3oD2Fdv75bDVefiUwoR2nIL09wt0MARpeNTfYd43aLyXSf
+	xkCfVI235KTDcls22inzhgfMRV+ctVT0pO/+SsMkigzqAuvBu0iXWAWDqBJcwoy/
+	CdjiSSC/rTlzxzCvO156d2GuyP9eIOiEDNjnq0l+jERjGsovwvmGZpG3avbGPClt
+	vOZPt2tkNYdEGJpb1btPSaaM6p346wxnLOC+vh35Vvh0LtSobh6n4ko6P3qLHoVZ
+	dQSJww==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bp8d30883-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 10:19:48 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ede0bd2154so26386821cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 02:19:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768385988; x=1768990788; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WeYiMieQGRV55JsqetPUkF7GL2y5h1/hERPAKX2wqj4=;
+        b=harLuZYeIMAtIagW2EDk5XXC/49Ta25NfdDuG7UXn6153X3V9YFwMel93p3AOwQVxB
+         ZnWZKlJPbCb/n88oXDMgo8rGtDaJhEjzLhq8L7eGYUwVtskEOCZJuYlUHunzEyV3kgRO
+         EW/P1fTFgbkla8E58OA2ya9HVTqQrwYjxWXhy8OXyARgspjSk3QPQNT4z8oKxC2hifvw
+         q8KnHIlEYUj6xYmzwBvqO/MLNxtCthBnt94WVuiASkaelJx3CgqlERmEMvnogjaapeRp
+         Pwi0LJ7k2oD20sel/ywQhuTpj9DpKWanojxvo7XKmlB9R03qU74fB6yt4hAVKLpTBMVZ
+         /NGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768385988; x=1768990788;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WeYiMieQGRV55JsqetPUkF7GL2y5h1/hERPAKX2wqj4=;
+        b=iVdA7I5dwIOVCnR8/Zh7zuE5vkWJ4vmwILg+sJE/9ZWh7P2c8MWekoMlcBLuydXX7E
+         cGYtWNGZ/gL1WT/LgiFB/xvn3/DDFewRCBC1JaXLF+e0dL9wu46DY1b45Bn5+TANB3pl
+         a6EjCrIG1I1MUBUQwZmBG9B3lV0j7+Upt5VFbu6mSjpJShFwGgFhNwKGpCgaAXn8mWzR
+         xitR0feUWSB1hybB7nADMAuP+6b7Q8JnFqyJm/K8wuzFnQJMyyJXja/cnmfZDATcsCCF
+         M8scuhpYnluUGRHr1AHSQWn1W5kr/kEeSQwtXIgqAhUxEmoSwRnexRK8hZXXDCVSUz1m
+         zJyw==
+X-Forwarded-Encrypted: i=1; AJvYcCXtOZq2Fp9/Q/0C1CLkayQRsnACmVzTzhpXHTiZFBsVugMDKIliPQL4Rqz/xrXPx4MGRue3Eaka3CEvNCy9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxgwwc3a3p+qGP07WZi+wHL/ZvmN2hAbQl+ZdCZh6rSEGdJa4w+
+	O864XRXnarx+Te6Oh1GwUjNeWsTB6OpttCSPPgulFEGQvkUhcI5h5GzTc2B0xRJtRA+gC1g+cZi
+	9h4znd0TVrIUDp9rMBcHkZDMz2H6EEsdqOLeYfCpT3ZxpkSUc42YLgMLa6bi5XHIIbVsu
+X-Gm-Gg: AY/fxX77UP9o137sVIj7H5R/J7AnnAN8nqjSqpTiaKWThr9Sa1IHE1jb/kpw8kIfRXU
+	rk/aOBWtX+WixchmXSyaYl1+3ptcjhbQWucR6ht65vebwQYprJH1es29WQKEFwckPXtQD3f58q4
+	6lmZveY9mVqIWl+t1O6kSdamE1pVgsS5oWVwA3baiKDRfcEugF51cfN+Kem6w+KArriVPG3GRsL
+	jd75k+nkeHeG3LkcndVdES5Aa2EtFmhHFJZbyl1QW+0pheK752jAz+0ZgqlzVRUFxSc6O+eLq3G
+	a/DE+VFuILSqZgu+zftT5lGqz1hkA6c2cBJuD/Q5Gv3WUJyEKvP5rpFzw47VDfWIx4UfQi5HPWn
+	Z8zXu0QnU2bwsjnD4JlpyZ9itUN0o6ec2O3HKVzZ5s6j+/h9iZOsHyQHQrTOVnzfIoug=
+X-Received: by 2002:ac8:7d01:0:b0:4f1:d267:dd2b with SMTP id d75a77b69052e-501481d69bdmr22376881cf.1.1768385988247;
+        Wed, 14 Jan 2026 02:19:48 -0800 (PST)
+X-Received: by 2002:ac8:7d01:0:b0:4f1:d267:dd2b with SMTP id d75a77b69052e-501481d69bdmr22376681cf.1.1768385987873;
+        Wed, 14 Jan 2026 02:19:47 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b842a563f0esm2519984666b.60.2026.01.14.02.19.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jan 2026 02:19:47 -0800 (PST)
+Message-ID: <444b2e30-5675-4a17-89dc-ca24ca3910d9@oss.qualcomm.com>
+Date: Wed, 14 Jan 2026 11:19:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,177 +101,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct
- reserved memory ranges
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>,
- Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
- Biswapriyo Nath <nathbappai@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- linux@mainlining.org
-References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
- <20260112-xiaomi-willow-v1-2-8e4476897638@mainlining.org>
+Subject: Re: [PATCH v12 2/3] arm64: dts: qcom: talos/qcs615-ride: Fix
+ inconsistent USB PHY node naming
+To: Sudarshan Shetty <tessolveupstream@gmail.com>, andersson@kernel.org,
+        konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260114100043.1310164-1-tessolveupstream@gmail.com>
+ <20260114100043.1310164-3-tessolveupstream@gmail.com>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20260112-xiaomi-willow-v1-2-8e4476897638@mainlining.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260114100043.1310164-3-tessolveupstream@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: lKcKPU9x2X9Jou5cuMWxa85TXRVUQpZZ
+X-Authority-Analysis: v=2.4 cv=fbWgCkQF c=1 sm=1 tr=0 ts=69676dc4 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=mKMLXjToGYiuz-cdMPkA:9 a=QEXdDO2ut3YA:10
+ a=QYH75iMubAgA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: lKcKPU9x2X9Jou5cuMWxa85TXRVUQpZZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDA4NCBTYWx0ZWRfX9ZFQGNGubHgR
+ 903GZO7fyJzGR6AlreBaZ1783VG2q+vSeg4P23Rbr4gGO7C2eByQ8BqNpDq+rd1rW4/1EGbHzwF
+ plAbWQNI+B5WTSQHSMj3XoyehBRPdAxz3DokYxfZGJB6HG0pBH4jCyHgYi2eKSVtQx8CLcWWPvg
+ W7Ko+IYOoFLL5PQlTiZXA61RiGjLuLTWWvrE+QCQeFxwKGpsu/ynOeij7mAblUxYNtR0W8uPu9n
+ Yc+Af3Qy6vLIctO5ue78350cRFOki2LKKD1na6ADr5c3dnTWX7tMwTYYkioEIIa1plj1ljzXcqB
+ lNi2HWh540ExQc+a63bj2TkO57fpAGt7R8EnM4tekCZZO76uilHkqzsZIX42cxb5Srw4FeEUXS+
+ 3qYNgcG5T92CFmYUqgLinmIcYtHIL7nVqfVmEFptYP3L0TaCwRH6NmP06rrCkVF0O/OPVVP+nHk
+ kBgC3rCxZq/PpTIaIDw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-14_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601140084
 
-On 12/01/2026 21:13, BarnabÃ¡s CzÃ©mÃ¡n wrote:
-> The device was crashing on high memory load because the reserved memory
-> ranges was wrongly defined. Correct the ranges for avoid the crashes.
-> Change the ramoops memory range to match with the values from the recovery
-> to be able to get the results from the device.
-> 
-> Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 44 ++++++++++++++++-------
->   1 file changed, 32 insertions(+), 12 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-> index bf03226a6f85..4c548cb5f253 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-> @@ -13,6 +13,12 @@
->   #include "sm6125.dtsi"
->   #include "pm6125.dtsi"
->   
-> +/delete-node/ &adsp_pil_mem;
-> +/delete-node/ &cont_splash_mem;
-> +/delete-node/ &gpu_mem;
-> +/delete-node/ &ipa_fw_mem;
-> +/delete-node/ &ipa_gsi_mem;
-> +
->   / {
->   	model = "Xiaomi Redmi Note 8";
->   	compatible = "xiaomi,ginkgo", "qcom,sm6125";
-> @@ -36,28 +42,42 @@ framebuffer0: framebuffer@5c000000 {
->   	};
->   
->   	reserved-memory {
-> -		debug_mem: debug@ffb00000 {
-> -			reg = <0x0 0xffb00000 0x0 0xc0000>;
-> +		adsp_pil_mem: adsp_pil_mem@55300000 {
-> +			reg = <0x0 0x55300000 0x0 0x2200000>;
->   			no-map;
->   		};
->   
-> -		last_log_mem: lastlog@ffbc0000 {
-> -			reg = <0x0 0xffbc0000 0x0 0x80000>;
-> +		ipa_fw_mem: ipa_fw_mem@57500000 {
-> +			reg = <0x0 0x57500000 0x0 0x10000>;
->   			no-map;
->   		};
->   
-> -		pstore_mem: ramoops@ffc00000 {
-> -			compatible = "ramoops";
-> -			reg = <0x0 0xffc40000 0x0 0xc0000>;
-> -			record-size = <0x1000>;
-> -			console-size = <0x40000>;
-> -			pmsg-size = <0x20000>;
-> +		ipa_gsi_mem: ipa_gsi_mem@57510000 {
-> +			reg = <0x0 0x57510000 0x0 0x5000>;
-> +			no-map;
->   		};
->   
-> -		cmdline_mem: memory@ffd00000 {
-> -			reg = <0x0 0xffd40000 0x0 0x1000>;
-> +		gpu_mem: gpu_mem@57515000 {
-> +			reg = <0x0 0x57515000 0x0 0x2000>;
->   			no-map;
->   		};
-> +
-> +		framebuffer@5c000000 {
-> +			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
-> +			no-map;
-> +		};
+On 1/14/26 11:00 AM, Sudarshan Shetty wrote:
+> The USB PHY nodes has inconsistent labels as 'usb_1_hspy'
+> and 'usb_hsphy_2' across talos.dtsi and qcs615-ride.dts.
+> This patch renames them to follow a consistent naming
+> scheme.
 
-Hello!
+Sorry for only noticing this now, but usb_hsphy_x is wrong..
 
-I suggest one more nice to have improvement:
+*every* other dtsi uses usb_x_hsphy, please flip it around
 
-you could label framebuffer cont_splash_mem since you already touching 
-the node and testing the series.
+$ rg 'usb_1_hsphy' arch -l | wc -l
+93
 
-Then in additional commit, you can replace manually defined `reg` in 
-chosen > framebuffer node with
+$ rg 'usb_hsphy_1' arch -l |  wc -l
+0
 
-memory-region = <&cont_splash_mem>;
-
-For example you can look at sdm845-oneplus-common.dtsi
-
-Tell me what u think
-
-David
-
-> +
-> +		/*
-> +		 * Matching with recovery values
-> +		 * to be able to get the results.
-> +		 */
-> +		ramoops@61600000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0x61600000 0x0 0x400000>;
-> +			record-size = <0x80000>;
-> +			pmsg-size = <0x200000>;
-> +			console-size = <0x100000>;
-> +		};
->   	};
->   
->   	extcon_usb: extcon-usb {
-> 
-
--- 
-David Heidelberg
-
+Konrad
 
