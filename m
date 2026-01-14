@@ -1,343 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-88967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A81DD1D917
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:34:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FC7ED1D941
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:35:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 40F6630B717D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:28:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 008D0305BC3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:29:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88ABC38A9A3;
-	Wed, 14 Jan 2026 09:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 984A538BDD0;
+	Wed, 14 Jan 2026 09:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="EjzoeJ8c"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="j5toNNkh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ds+p2+0o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCC038A298;
-	Wed, 14 Jan 2026 09:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9488389478
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 09:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768382883; cv=none; b=KIJw7L9ZP6LEQnNzPmxkfv9GMgDPOuF0N5vXwzAzM7SJBoPINKkVu99nlNNvijg0eTvSq3s4UfsoG20K32WO3FKObYfi2bxJoID5FtaZEBoSEyEGGJQdEa5Dwvvwb29wRc/g36vE+zfJzmAp6whCDsHMKOTf5zkLWv2FTK7WT6c=
+	t=1768382911; cv=none; b=HxzAiNiczS9dpb1iSNJMZfqkIcRkobyFYRh132Ky94pdJXRIlUrE1B+oqk+r/P/74/vMVSOB131I4Bcm+T4o3tt/4knAr6yDxQPAjyLMGRNzUm5FJqOJcU2oC00mDcOOqYg1KwQNzIPZcS1OFUDTynYeKAt/2bT9CQ/la3w+g/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768382883; c=relaxed/simple;
-	bh=5ddrCvPfLkSQsikhTAlB1Jp/3gf1cFDIQVGIgUpCzXo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CwNkEVdNDESLqY0B8f7zxn4sfLG4Fc+yYeZi9yJCR7oiZWCtKx+odSii+KfHbZTzB5UBSafGw9DIzTBBn+zJmekA0V2BAyecmbVNZt9TjtGgh2x/ax9yp6twXR36stZEwXYwcY+pmORZolj3vFTKWD+l7MkCBQe1gYWYZVs5V/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=EjzoeJ8c; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1768382880;
-	bh=5ddrCvPfLkSQsikhTAlB1Jp/3gf1cFDIQVGIgUpCzXo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjzoeJ8c4fX42W/RpMcY/uhueaTEVdm1LcEUgE6I0O1Cb8m5dhVMgMgQlfTXd01K3
-	 Rm285DAe+f73SSsdP/5Vw21dgaofIZYPtcePnrbjGojdxvoMCIejyUX6TJxKtMzTTZ
-	 amki+V0puHNOuULvoWsvdUtgGWIzU+w2G2Q6kO0DwWPJmRoPcSYaRT9Mg6ilCrlblc
-	 Ux4ezzfcd0rQ6OaX95DNu566fvz3uyeEagW4Hm42iwwqWKb+vLOW7C9B+N8yNMSP7x
-	 LoijKyfRPynj9LI6YBTkUthuNafno+lA7zQjt1oimQEqOaetENti+Sj7+l3qVKiGQG
-	 5YxKxfk6LN+GQ==
-Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2CBFF17E1523;
-	Wed, 14 Jan 2026 10:27:59 +0100 (CET)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: jic23@kernel.org
-Cc: dlechner@baylibre.com,
-	nuno.sa@analog.com,
-	andy@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org,
-	vkoul@kernel.org,
-	neil.armstrong@linaro.org,
-	sre@kernel.org,
-	sboyd@kernel.org,
-	angelogioacchino.delregno@collabora.com,
-	krzk@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	quic_wcheng@quicinc.com,
-	melody.olvera@oss.qualcomm.com,
-	quic_nsekar@quicinc.com,
-	ivo.ivanov.ivanov1@gmail.com,
-	abelvesa@kernel.org,
-	luca.weiss@fairphone.com,
-	konrad.dybcio@oss.qualcomm.com,
-	mitltlatltl@gmail.com,
-	krishna.kurapati@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	kernel@collabora.com,
-	Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v8 10/10] iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
-Date: Wed, 14 Jan 2026 10:27:42 +0100
-Message-ID: <20260114092742.13231-11-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260114092742.13231-1-angelogioacchino.delregno@collabora.com>
-References: <20260114092742.13231-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1768382911; c=relaxed/simple;
+	bh=r+fMS30EtzARniU5cs46o68pVaXBqknYn5kfwYqE36w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=epg5iQemwI6pH/PQemBK4gzYSDIYuenAttYOfNJwakAx84It5IS8XZYCMJ3nF8LhWirexLvZkMiOzuzoRW17GfaXpdJ6hBu6xwMov4dui0ar9fylw1RbUAwQMrZPbbvD4RtcM8OkA83uwCdrTyvho6QARkkp0Pmpeb2oTgmx+QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j5toNNkh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ds+p2+0o; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60E9I8pv2552705
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 09:28:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jkjywSEnTo62yijFNv9Vz8+BMDykhmcTR+WiIydKgag=; b=j5toNNkhfpRdd64c
+	fbvsbv+QJ6aSIffHYjzucd/HRS7HBfFL0p4yybdH8Kt+rrVHXXCDr15ISl6t2A74
+	0e4zzq88k6BE1teg8ZtHH8oXU9i75gX9ptdSdhgKV6F1ZtujYD2HDFwWzm4WLXit
+	+Kh/EZhljVgzRpvq08Laqy4L7nfK47H/zFgHPsbiH+JTq4p3WHiKAgE2RousdtTS
+	AtMFxLYeF+QPcni0XJvYMlLWfjmgU3AGCqiw3iisCHQBfo4IXbXxiHZmpTCygv41
+	9VDQHMADrnWroNPEi6EWctxjHlGmQttZSPl6bKacidwWQhm//w4SaHj5cqcuwXEB
+	A2GITQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bp8d3013m-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 09:28:26 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c536c9d2f7so244085a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 01:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768382906; x=1768987706; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jkjywSEnTo62yijFNv9Vz8+BMDykhmcTR+WiIydKgag=;
+        b=Ds+p2+0oi1ND6xxbZS7plQr/LGS/D6LQwi4CpK5+PZJF+ROxUB5imD6fucC/R7Ygr5
+         KXEoBdp3d56iCmE8T2LlrZ5Lb4x91/UMFXPomj5WBdFqlNfkUhGXupuXF8/SX2fh3Itz
+         BZ139GNv0a/qek/r4gqeH1TujCVtYJfCAf3QGVWzNG5Y7Lh3YsWrqiZjHLH3JX7C1P5G
+         vYptmBUgUu/n4fptvbAyVcxQCznziBJucW+4amAtebkpKQZq+sr8h1aJu9LQkKg843tw
+         WDl1JfbJ4JaXIJCiD+KbxX7w8e3i3ZJzTs4BMC3pn6X6NSz5lI6byZNQOGgNhidEQGLc
+         0UDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768382906; x=1768987706;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jkjywSEnTo62yijFNv9Vz8+BMDykhmcTR+WiIydKgag=;
+        b=iYfPU5ExOBFbSK3p1QKtEI9u3PeP/IOqggdcdK3sddpWcYglFnXhjYXPDvDvGwFQWb
+         vTgWaTLcIZkZyZzgEHrZY1I7Mi0VXYOTfCCeWmGtDnxSNOhan73SdjTL4J4BlIlWUYby
+         RaGc+M1CWtH+613NcjvVrJdR9zG0K+fr0wOTS1kdu7QV+N4gp/0NziMPScepCYF+88rA
+         tcpLQE6HNPU0+/r1PGNYkury881rkpbneE4mBHY4hoUZNlR7MrLArFxIU3oR8Tleniop
+         12twUhfW1lBlGNqyZQNBzc9vL0kGVjnbHKvvHNoex4Q4v1hBnDbdrHySbBBQOxUviDwT
+         A3lg==
+X-Forwarded-Encrypted: i=1; AJvYcCVcu/q5LAb7ZXHgJlP7wkyJOF3iiJ3GwTjAN9FtYFPTGCrkXcQxJOa+NPbjEF7aijEV1L7oOl7WVhBur33X@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMyxTmRJnpxYpgez5Zb+63Z9nN4wt011qre7fHoKutqDnPz/XI
+	J3FAJH9zY4cRfcnyokrF8b4giRDn/7gqt4/2X/Utl5nvcYOdn5tuMzrhM6xQgScgTt059BbNY94
+	aHKUMGUOPYXAzH9IK0ChVI4vQlhv0xnjB2SFwLNkAEftQXqIZfFSYSSurtS7Q0WoiHI67
+X-Gm-Gg: AY/fxX6BWZ8f8DkeQAerrGFbu0BEizm8+1gB2yhqDm3E0r7WmHKP7CBsgdZnI0HGV46
+	8owCHqi4wdP+hB5yPqg5PwtYVg+/Mkl1vCDhmY/MdNf5vJ5vjWGB4XFz+QH6t1X+FpPwxqgcoZC
+	PPZ/GN+zpUafRaU/UgZ0NRTjSJEV2nBEEUyY5wEdJI2K6fLZFYmwFDuHuuSdCiCuezP4kbZHWtV
+	Dc74ggS6UVP243tP4oOVQGtBePu1ru71bkD9lrVVyWx5PCH644uR+yhUQ6e1bANQIaUnFT3NIZ4
+	+4OTWdsH0eB3vhai0ZGzcalh704DghQMNb+5XGPcmXGq6cax6cSQAzhT2NIS19xAKKOm/65MmRE
+	7CM1ugT+ffU4EcSMZsQWxFqtex4QlITcqxGnsisHr3FivOHJHAK942r9Vv9Z7TJ7eL3I=
+X-Received: by 2002:a05:620a:4707:b0:8b2:df32:b900 with SMTP id af79cd13be357-8c52fb284d5mr228997685a.4.1768382905855;
+        Wed, 14 Jan 2026 01:28:25 -0800 (PST)
+X-Received: by 2002:a05:620a:4707:b0:8b2:df32:b900 with SMTP id af79cd13be357-8c52fb284d5mr228996385a.4.1768382905439;
+        Wed, 14 Jan 2026 01:28:25 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b876b6865desm87727666b.12.2026.01.14.01.28.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jan 2026 01:28:24 -0800 (PST)
+Message-ID: <67bc5301-8649-4aa9-bdd7-7f3b57d7da76@oss.qualcomm.com>
+Date: Wed, 14 Jan 2026 10:28:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: add apq8096sg-db820c, AP8096SG
+ variant of DB820c
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20251111-db820c-pro-v1-0-6eece16c5c23@oss.qualcomm.com>
+ <20251111-db820c-pro-v1-2-6eece16c5c23@oss.qualcomm.com>
+ <02a9d6eb-e480-431b-bd4c-a35cee170516@oss.qualcomm.com>
+ <wf4h2lwyvgswtv4bgdfidj4vpvykwhu2gri4crvvtd644hf6nr@cnpqi5bmpvm5>
+ <f4fbc949-415b-489e-b333-4c846d3ce8c7@oss.qualcomm.com>
+ <CAO9ioeWpOArPm3M5hjR5PMbu4rkV1HHxQOZjOe5LwTKK7xMWJg@mail.gmail.com>
+ <d5fc8900-e720-4f5c-b456-67c4ae03f711@oss.qualcomm.com>
+ <gwlwlqxo7xbsws2lpmb3pppevthtuxfy4m77hdpyvx2m23vbr4@6jujptqhdump>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <gwlwlqxo7xbsws2lpmb3pppevthtuxfy4m77hdpyvx2m23vbr4@6jujptqhdump>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: UK6DLcGjV-hhY0W903pFXD-e6tsqD-3w
+X-Authority-Analysis: v=2.4 cv=fbWgCkQF c=1 sm=1 tr=0 ts=696761ba cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=jziRN_jVPNxdJwAr87wA:9
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: UK6DLcGjV-hhY0W903pFXD-e6tsqD-3w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDA3NSBTYWx0ZWRfX0v5Kn2OkSH92
+ efPoBNt5Wo58O4Q0Pq72iCwNeexUpzCMC8e8e97jLzHK+SIh3QgLipZbACu6p5Af+o6OgtiKfnW
+ MWQKKm9Wg07rLcRxBu3tO1xUi0DGE4bBHYfVCBqMp5hjanDqQuL33ptXA+COxgtSFNgqVY14r/O
+ kKQeiWcGkJheK//EXcEip26U57uw2KREnUWF7nElJZcSSkHOsR5+nvZPo6Kx+YX3B61qEEyqPBN
+ TCOt6Y6SZkAjwa5EZ9mXzVcjawkTzpL2l0GSE3kjVbHlFb5EjPfGLNMn5DLfMrDm/1KDHQJijN7
+ NEw6HTZ/DjXZ8fogYk1tTlBA91My2anD3H0ssaXirQRjkq+E1VdFg3dR0esYm3eCeILG3NFKJM8
+ 6Kvi6roy/MXyv8S5xVZUyalK4KbwTXQ+Xkz2js/m1xqaLpDCHJF9gr1qRYkFjUfvB8394DJJPBg
+ C2X221CwASo+4qRTFTQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-14_02,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601140075
 
-This driver doesn't need to add any register base address to any
-regmap call anymore since it was migrated to register as a SPMI
-subdevice with its own regmap reg_base, which makes the regmap
-API to automatically add such base address internally.
+On 1/14/26 1:12 AM, Dmitry Baryshkov wrote:
+> On Mon, Nov 17, 2025 at 12:54:22PM +0100, Konrad Dybcio wrote:
+>> On 11/15/25 1:09 AM, Dmitry Baryshkov wrote:
+>>> On Fri, 14 Nov 2025 at 23:31, Konrad Dybcio
+>>> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>>>
+>>>> On 11/13/25 9:32 PM, Dmitry Baryshkov wrote:
+>>>>> On Wed, Nov 12, 2025 at 10:44:49AM +0100, Konrad Dybcio wrote:
+>>>>>> On 11/11/25 5:02 PM, Dmitry Baryshkov wrote:
+>>>>>>> There has been a (rare) varint of Dragonboard 820c, utilizing Pro
+>>>>>>> version of the SoC, with the major difference being CPU and GPU clock
+>>>>>>> tables. Add a DT file representing this version of the board.
+>>>>>>
+>>>>>> So is the conclusion that both flavors were used?
+>>>>>
+>>>>> Yes. I have had a production unit with a non-SG flavour. Bjorn's lab
+>>>>> has a standard one too. All units in Collabora lab are Pro ones.
+>>>>
+>>>> Pro doesn't necessarily have to == SG, this seems to be sort of
+>>>
+>>> My understanding was that APQ8096SG is modem-less MSM8996Pro.
+>>>
+>>>> a "MSM8996Pro" and "QCM8996Pro" situation.
+>>>
+>>>> I'm hoping that speedbin
+>>>> fuse values don't have different meanings for mobilePro and SG
+>>>
+>>> At least downstream doesn't have separate bins for APQ versions.
+>>
+>> arch/arm64/boot/dts/qcom/msm8996pro.dtsi:       qcom,msm-id = <305 0x10000>;
+>> arch/arm64/boot/dts/qcom/msm8996pro-v1.1.dtsi:  qcom,msm-id = <305 0x10001>;
+>>
+>> this is interesting, perhaps Pro==SG then
+> 
+> Yes. At least it matches what is written in the LK sources (or in
+> MSM8996 Device Revision Guide).
+> 
+> The JTAG ID matches APQ8096SG, the bootloader identifies it as 8996 Pro.
+> 
+> Any remaining issues?
 
-Since the iadc_{read,write,read_result}() functions now only do
-call regmap_{read,write,bulk_read}() and nothing else, simplify
-the driver by removing them and by calling regmap APIs directly.
+No, I think we're good
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/iio/adc/qcom-spmi-iadc.c | 83 ++++++++++++--------------------
- 1 file changed, 30 insertions(+), 53 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 55a09c0e2d5c..503f90b2a5ba 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -113,77 +113,59 @@ struct iadc_chip {
- 	struct completion complete;
- };
- 
--static int iadc_read(struct iadc_chip *iadc, u16 offset, u8 *data)
--{
--	unsigned int val;
--	int ret;
--
--	ret = regmap_read(iadc->regmap, offset, &val);
--	if (ret < 0)
--		return ret;
--
--	*data = val;
--	return 0;
--}
--
--static int iadc_write(struct iadc_chip *iadc, u16 offset, u8 data)
--{
--	return regmap_write(iadc->regmap, offset, data);
--}
--
- static int iadc_reset(struct iadc_chip *iadc)
- {
--	u8 data;
-+	u32 data;
- 	int ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_read(iadc, IADC_PERH_RESET_CTL3, &data);
-+	ret = regmap_read(iadc->regmap, IADC_PERH_RESET_CTL3, &data);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
- 	data |= IADC_FOLLOW_WARM_RB;
- 
--	return iadc_write(iadc, IADC_PERH_RESET_CTL3, data);
-+	return regmap_write(iadc->regmap, IADC_PERH_RESET_CTL3, data);
- }
- 
- static int iadc_set_state(struct iadc_chip *iadc, bool state)
- {
--	return iadc_write(iadc, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
-+	return regmap_write(iadc->regmap, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
- }
- 
- static void iadc_status_show(struct iadc_chip *iadc)
- {
--	u8 mode, sta1, chan, dig, en, req;
-+	u32 mode, sta1, chan, dig, en, req;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_MODE_CTL, &mode);
-+	ret = regmap_read(iadc->regmap, IADC_MODE_CTL, &mode);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_DIG_PARAM, &dig);
-+	ret = regmap_read(iadc->regmap, IADC_DIG_PARAM, &dig);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CH_SEL_CTL, &chan);
-+	ret = regmap_read(iadc->regmap, IADC_CH_SEL_CTL, &chan);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CONV_REQ, &req);
-+	ret = regmap_read(iadc->regmap, IADC_CONV_REQ, &req);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+	ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_EN_CTL1, &en);
-+	ret = regmap_read(iadc->regmap, IADC_EN_CTL1, &en);
- 	if (ret < 0)
- 		return;
- 
-@@ -199,34 +181,34 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 
- 	/* Mode selection */
- 	mode = (IADC_OP_MODE_NORMAL << IADC_OP_MODE_SHIFT) | IADC_TRIM_EN;
--	ret = iadc_write(iadc, IADC_MODE_CTL, mode);
-+	ret = regmap_write(iadc->regmap, IADC_MODE_CTL, mode);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Channel selection */
--	ret = iadc_write(iadc, IADC_CH_SEL_CTL, channel);
-+	ret = regmap_write(iadc->regmap, IADC_CH_SEL_CTL, channel);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Digital parameter setup */
- 	decim = IADC_DEF_DECIMATION << IADC_DIG_DEC_RATIO_SEL_SHIFT;
--	ret = iadc_write(iadc, IADC_DIG_PARAM, decim);
-+	ret = regmap_write(iadc->regmap, IADC_DIG_PARAM, decim);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* HW settle time delay */
--	ret = iadc_write(iadc, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
-+	ret = regmap_write(iadc->regmap, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
-+	ret = regmap_write(iadc->regmap, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (IADC_DEF_AVG_SAMPLES)
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
- 	else
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, 0);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, 0);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -239,19 +221,19 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 		return ret;
- 
- 	/* Request conversion */
--	return iadc_write(iadc, IADC_CONV_REQ, IADC_CONV_REQ_SET);
-+	return regmap_write(iadc->regmap, IADC_CONV_REQ, IADC_CONV_REQ_SET);
- }
- 
- static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- {
- 	unsigned int count, retry;
-+	u32 sta1;
- 	int ret;
--	u8 sta1;
- 
- 	retry = interval_us / IADC_CONV_TIME_MIN_US;
- 
- 	for (count = 0; count < retry; count++) {
--		ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+		ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -267,11 +249,6 @@ static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- 	return -ETIMEDOUT;
- }
- 
--static int iadc_read_result(struct iadc_chip *iadc, u16 *data)
--{
--	return regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
--}
--
- static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- {
- 	unsigned int wait;
-@@ -296,7 +273,7 @@ static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- 	}
- 
- 	if (!ret)
--		ret = iadc_read_result(iadc, data);
-+		ret = regmap_bulk_read(iadc->regmap, IADC_DATA, data, sizeof(*data));
- exit:
- 	iadc_set_state(iadc, false);
- 	if (ret < 0)
-@@ -392,10 +369,10 @@ static int iadc_update_offset(struct iadc_chip *iadc)
- 
- static int iadc_version_check(struct iadc_chip *iadc)
- {
--	u8 val;
-+	u32 val;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_PERPH_TYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_TYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -404,7 +381,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_PERPH_SUBTYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_SUBTYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -413,7 +390,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_REVISION2, &val);
-+	ret = regmap_read(iadc->regmap, IADC_REVISION2, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -428,7 +405,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- {
- 	int ret, sign, int_sense;
--	u8 deviation;
-+	u32 deviation;
- 
- 	ret = of_property_read_u32(node, "qcom,external-resistor-micro-ohms",
- 				   &iadc->rsense[IADC_EXT_RSENSE]);
-@@ -440,7 +417,7 @@ static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_NOMINAL_RSENSE, &deviation);
-+	ret = regmap_read(iadc->regmap, IADC_NOMINAL_RSENSE, &deviation);
- 	if (ret < 0)
- 		return ret;
- 
--- 
-2.52.0
+Konrad
 
 
