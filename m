@@ -1,81 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-88956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 196E1D1D80F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:27:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDBB6D1D88A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:31:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4D6EF301B814
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:22:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E9A20300A353
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:26:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846D230F54C;
-	Wed, 14 Jan 2026 09:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409F73815FF;
+	Wed, 14 Jan 2026 09:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OgL+fOXV"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="jcbOyowt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A762D8377;
-	Wed, 14 Jan 2026 09:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3921218AAD;
+	Wed, 14 Jan 2026 09:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768382578; cv=none; b=gq9w3DPNxSN7/NJZxYhdCqFYa8i4rzHOCetZnlNCg6wDFLz9bBZHqqO9Yxpa4XL4bBG+ard4MlgJMsADIA0GpBokAOXp2UYNAWKvD3w5HdGAGj1N0BQNF/NFo/aD6/kidUd2LNwhpZo6CLHudizknMwp/zZ9d7J+K0s+awO+scY=
+	t=1768382807; cv=none; b=R4oIu2mQCwRwB1tOBhIQR4rX3ua4AL3X+aH0XR9/pV0Q44XtVZp9bWh4dmj0osRDfgJgPEa1AMm7lHWq8p4mgKw5JAIHPgnVmqZQz+DStYgtML7QdX/WRhBDxUDhmHfye6vKtU3PDyNOI6hPk+T64hrBKfQ1kRDgtKf8U1NcdkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768382578; c=relaxed/simple;
-	bh=Yo8uRrjOQtUu3sP57XmGHMPngzKoh4iDTFvKQ8mfj9M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LHZ8uaEi9St8dUZO0q2htVCf+6Uyb4xupdkDRWgk8nfUjhiZ4qPNXuF/vfJP1lASPO36f+I7cLXJQHRpYme0u75JDfRcsfFKSTzzXzRfGgOSxCAkb+DhmZew/++qvVjv3La7UhUEBYx6i4e4VvVLNPjkneJ2AjU1ej/9VBjC+uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OgL+fOXV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2CBC4CEF7;
-	Wed, 14 Jan 2026 09:22:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768382578;
-	bh=Yo8uRrjOQtUu3sP57XmGHMPngzKoh4iDTFvKQ8mfj9M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OgL+fOXVH7H0C3YZjiZ0hk6pA018WwsQtcvpcguzIR+dWsUUo5h2zrtM4nuSC+k7K
-	 VvlLMjjBjiiRrv0IoVPUoUc7VUoGIpLPC/h2/tL+7N/IuWUfECXkMHTjJQMxorFplG
-	 8ethPnZZw7zCA2OUy0KL6w8kf17gIO8+sobc8E2arntkDDHSFhUPosEIA/L+KJq5dh
-	 YKxc+fchokpesZ5S2vAA5say6EV5EBTc/RKDN8ExddImtl2NyTdgHCK/rbs1j9sGe9
-	 xHj+wybsJfyPR/fP2BD+9tBUrrT7qXPhvQdEufsF9xioev+w5k7xuxbBwBE0r2dSbw
-	 hbKGObrNxkuNQ==
-Date: Wed, 14 Jan 2026 10:22:55 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yedaya Katsman <yedaya.ka@gmail.com>
-Cc: SzczurekYT <szczurek@szczurek.yt>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-input@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: input: touchscreen: edt-ft5x06: Add
- FocalTech FT3518
-Message-ID: <20260114-cherubic-malachite-gecko-ecbfa3@quoll>
-References: <20260113-touchscreen-patches-v1-0-a10957f32dd8@gmail.com>
- <20260113-touchscreen-patches-v1-1-a10957f32dd8@gmail.com>
+	s=arc-20240116; t=1768382807; c=relaxed/simple;
+	bh=7KqqY0DcTQx2Y9pyI1O7EpopUM96HNm4UmxlbgqHu4U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=So1ybRhVd+OtTn20ui8HdlrjjDqKBOjXG6hv4Pe6JOEEbldEQPcttFJO5uKQbZKLce0JRtuJrRJtrouyb3nf5Lqr1gQevmogvn+fY65XdYVJkZYz4RSI9nM1do/9DgX41tZfZoIPV8sMXbqY3iouYW2zcGIzT4beeXkwzBUH2Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=jcbOyowt; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1768382804;
+	bh=7KqqY0DcTQx2Y9pyI1O7EpopUM96HNm4UmxlbgqHu4U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jcbOyowt+fl649l9QQhwf3ZG+vjJgky2cuVsOexGOWmqwzSd3QikSmwPf6ZZwouQZ
+	 mGfcFK5dIie5qMs8E3SOEnt4Mi5tZY272eZf5fAKQMMlYFKpKfyXAARfITzxFnY7TV
+	 I76qHBgnKR3uxPUKB/kZy2GvPOkTREXYa5Uny9YQJEIwH5osSRWx2cBBj6HnaeHnau
+	 JcH5VuDYiTK293jRyF3G2F31mdrA4y3xcZ259rv6oTlopJpyq73lV0++qpoHYBit8q
+	 p9GoJqmaCE+zHsZyjrEUGlhnc3Dw/FwsxGsPYVIMsn8+gx/aSmm5pUcYbdCqx0LBfa
+	 zYc2GYOuM/qQw==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 2B31F17E1406;
+	Wed, 14 Jan 2026 10:26:43 +0100 (CET)
+Message-ID: <8f5c79e0-5f7e-4fe4-b9d7-60375e779892@collabora.com>
+Date: Wed, 14 Jan 2026 10:26:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260113-touchscreen-patches-v1-1-a10957f32dd8@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 07/10] phy: qualcomm: eusb2-repeater: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
+ andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org,
+ sre@kernel.org, sboyd@kernel.org, krzk@kernel.org,
+ dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
+ melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
+ ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org, luca.weiss@fairphone.com,
+ konrad.dybcio@oss.qualcomm.com, mitltlatltl@gmail.com,
+ krishna.kurapati@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+ kernel@collabora.com, Abel Vesa <abel.vesa@linaro.org>
+References: <20260114083957.9945-1-angelogioacchino.delregno@collabora.com>
+ <20260114083957.9945-8-angelogioacchino.delregno@collabora.com>
+ <aWdbB4vJ6Z8k0g4s@smile.fi.intel.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <aWdbB4vJ6Z8k0g4s@smile.fi.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 13, 2026 at 09:12:35PM +0200, Yedaya Katsman wrote:
-> Document FocalTech FT3518 support by adding the compatible.
+Il 14/01/26 09:59, Andy Shevchenko ha scritto:
+> On Wed, Jan 14, 2026 at 09:39:54AM +0100, AngeloGioacchino Del Regno wrote:
+>> Some Qualcomm PMICs integrate an USB Repeater device, used to
+>> convert between eUSB2 and USB 2.0 signaling levels, reachable
+>> in a specific address range over SPMI.
+>>
+>> Instead of using the parent SPMI device (the main PMIC) as a kind
+>> of syscon in this driver, register a new SPMI sub-device for EUSB2
+>> and initialize its own regmap with this sub-device's specific base
+>> address, retrieved from the devicetree.
+>>
+>> This allows to stop manually adding the register base address to
+>> every R/W call in this driver, as this can be, and is now, handled
+>> by the regmap API instead.
 > 
-> Co-developed-by: SzczurekYT <szczurek@szczurek.yt>
-> Signed-off-by: SzczurekYT <szczurek@szczurek.yt>
+> Same comments and actually one more.
+> 
+> ...
+> 
+>> +	struct regmap_config eusb2_regmap_config = {
+>> +		.reg_bits = 16,
+>> +		.val_bits = 8,
+>> +		.max_register = 0x100,
+>> +		.fast_io = true,
+>> +	};
+> 
+> This is third time of the same. Make it part of SPMI core and export to
+> the users. Or are they semantically different like different slices?
+> In that case you can export it under generic name like
+> 
+> 	spmi_default_slice_regmap_config
+> 
 
-You need to use real names or real known identity.
+There are more complicated devices around that I didn't port to the new
+spmi subdevices, and I really don't want to make a default for now.
 
-See submitting patches.
+At least some of those need different params (including some MediaTek ones
+that are not upstream yet).
 
-> Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
+Can we please let this in and *then* see how much can be commonized after
+the majority of more complicated drivers are migrated in the future?
 
-Best regards,
-Krzysztof
-
+Regards,
+Angelo
 
