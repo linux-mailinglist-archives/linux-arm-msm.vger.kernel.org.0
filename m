@@ -1,171 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-89005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3974D1E2A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:43:31 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52A34D1E6E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 12:35:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D20C4307677B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:39:18 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6AE9C300AAF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 11:34:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EDEC38BDAF;
-	Wed, 14 Jan 2026 10:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD336396B87;
+	Wed, 14 Jan 2026 11:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1cx4AN6"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="FbIj0Ne7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC041E98E6;
-	Wed, 14 Jan 2026 10:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712F1395DB0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 11:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768387157; cv=none; b=ZfrAqyoTKAl4qMr2klRkiEvtX1g9Z9sHwu0/6O7mWrygM+CKLTYQGpl+x1aSEySEISD9/azt4tdxS9rLq0XUTKKLIB8iB7IuTKGtxTjMMxUUZmqe58rlbQFByJkYa2PvzXZi/YcsW9ZraY9Dqx1ZVvImxY7fAV62unCvB4x4gXY=
+	t=1768390479; cv=none; b=mEb2qIv1K7rky4V4jNT5F4epVUqRlj+8Qa/S62DiNgIp82XYw27oHzmtQLT3mmjP3M03Y84CZAkr1+hCmtfNmAvMsa5Jp23jfKV4LVT0Xo0RxDLtIdLlhWScbHPOisWKpcGDZjiY5LRaUp0ILuTadmblO69ZEs3XL8Jvk9exYmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768387157; c=relaxed/simple;
-	bh=GXOUS5IVA/W+B1bIiXQJ9wm/cqS9Cfmo4/ZzvR1iFTY=;
+	s=arc-20240116; t=1768390479; c=relaxed/simple;
+	bh=lr2jaXKLTYSemiRd4WCZWM7A71D5r7zK+ViV8cSzJ+U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QvSRYZNGFYqYGC2wZO/++RWfwJHURaJtApLjqiZ+3brltGZO9LhaqrHleAMnZaZ/jqYgh27ZNVMKPjvfJMY8nwPK2UzU3KCjtacymGytdPSO2eTnPu6vRXRjmfYHn8O1Zwx3dSx29zQ4pI4OW/gbyULNYq1Ctv0JkKC7TnRn1gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1cx4AN6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CFAC4CEF7;
-	Wed, 14 Jan 2026 10:39:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768387157;
-	bh=GXOUS5IVA/W+B1bIiXQJ9wm/cqS9Cfmo4/ZzvR1iFTY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c1cx4AN6qnW//qfPtg+YU+kBK0Fwi1qx7TD4KI7OcyvNk84LcaOGokwsZbcc85njb
-	 qNE/fDPQvFv/hrK3hmEx5+u9dS2ysExw/sZMu59+B6tkrQgcsiR0HoyBLL0SqDaJNl
-	 lZiiHfClvv5U5qlwltVlii620fXgPEmppvSDIBUFS8QaAvEzvcf7lbCi351zOc3W8f
-	 OSyJms1RzaBtduqCcc4R6U9FLBKh2qAsW/1bGu/5Vq+EF+x+/uK/2ZYuVFmug/pbtL
-	 IQE5Pt8WGKFCXfH5aCcnYzBH4PHJ3+KmYKvQ4C17LfDVYZ564TGrXzWP3iZN+7Q5zE
-	 l1TuhhZkNiuDQ==
-Date: Wed, 14 Jan 2026 11:39:03 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Koichiro Den <den@valinux.co.jp>
-Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
-	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
-	l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-	kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
-	mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
-	heiko@sntech.de, srikanth.thokala@intel.com,
-	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com,
-	geert+renesas@glider.be, magnus.damm@gmail.com,
-	christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
-	jonathanh@nvidia.com, hayashi.kunihiko@socionext.com,
-	mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org,
-	rongqianfeng@vivo.com, 18255117159@163.com,
-	shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
-	linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v7 5/6] PCI: dwc: ep: Support BAR subrange inbound
- mapping via Address Match Mode iATU
-Message-ID: <aWdyR4Xkh2_ZgOf8@fedora>
-References: <20260113162719.3710268-1-den@valinux.co.jp>
- <20260113162719.3710268-6-den@valinux.co.jp>
- <5kexuvze2a4m6bd3yhv2cd7yrzo4r6ubbbouktdsurv7n22v7o@7s3pgf6ftgur>
+	 Content-Type:Content-Disposition:In-Reply-To; b=oUbzEHP/nhiHT+XAHyRSfP6WwkY9gZRcjsCX2KK5+9l/7zd3W1ckcONI2HmPOOTR90zE5/uMVIWNceFIlzYUCCf1+IeRGQ/7MDgzS+QwPoZaSbvra8ezYObk5LRnC7kJb0eQaUyk8x76r8lM6Wda8v//xsHn5dUueinV6AOlKcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=FbIj0Ne7; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=lr2j
+	aXKLTYSemiRd4WCZWM7A71D5r7zK+ViV8cSzJ+U=; b=FbIj0Ne7HcdUaAEP0iAU
+	A55rGJ0oyna5P19mF+Qqxxdtkv9Cgi3ikY/VAziIha2Ymf37Sh7GcN6qaW4QeEEo
+	sBd+8Q/J4ZH0/a8KKWXi52G6yRrBYbtJHOc1MKWYeouC1RokrNbBn26LBMwcnNgu
+	8T93ffuZswv71EcU6CqAiK3f2JCJOYkgcxnkvqxbylojhjxtVsYe3sxNiK670Caz
+	EFvOqfSrAgjRTV+nnMfGbAdKt7v7gg/v17ziuAIKwmm1lI2cmH/CktRAautTnLuL
+	iGUMHmLaorf+k2EQ1TVUaIc7xjC+XNtiOXCvHeyQm9tY2O4ji9uDHLMak36lcI8j
+	2w==
+Received: (qmail 2108427 invoked from network); 14 Jan 2026 12:34:35 +0100
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 14 Jan 2026 12:34:35 +0100
+X-UD-Smtp-Session: l3s3148p1@WxbafVdI0IsujnsM
+Date: Wed, 14 Jan 2026 12:34:30 +0100
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH] i2c: qcom-geni: make sure I2C hub controllers can't use
+ SE DMA
+Message-ID: <aWd_RtYqGyUkjQao@ninjato>
+References: <20251029-topic-sm8x50-geni-i2c-hub-no-dma-v1-1-5e264258a5bd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RMEH12Dl56iOtTld"
+Content-Disposition: inline
+In-Reply-To: <20251029-topic-sm8x50-geni-i2c-hub-no-dma-v1-1-5e264258a5bd@linaro.org>
+
+
+--RMEH12Dl56iOtTld
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5kexuvze2a4m6bd3yhv2cd7yrzo4r6ubbbouktdsurv7n22v7o@7s3pgf6ftgur>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 14, 2026 at 12:54:37PM +0900, Koichiro Den wrote:
-> I realized that I missed one case in v7.
-> 
-> I think dw_pcie_ep_clear_ib_maps() should also be called from
-> dw_pcie_ep_ib_atu_bar() to tear down any existing inbound mappings for the
-> same BAR before re-programming it in BAR Match Mode.
-> 
-> This matters when updating inbound mappings for a BAR without resetting the
-> BAR in between. There are four possible transition patterns, and pattern #4
-> below was overlooked:
-> 
->   1. BAR Match Mode -> BAR Match Mode
->      As the current implementation does, the mapping is simply updated
->      (with the same atu index)
-> 
->   2. BAR Match Mode -> Address Match Mode
->      This patch series already ensures the old BAR Match mapping is
->      torn down before reprogramming.
-> 
->   3. Address Match Mode -> Address Match Mode
->      Likewise, existing Address Match mappings are cleared first.
-> 
->   4. Address Match Mode  -> BAR Match Mode
->      This case was not handled. The change below adds the missing
->      teardown so that stale Address Match mappings do not remain active.
-> 
->      --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
->      +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
->      @@ -148,9 +148,12 @@ static int dw_pcie_ep_ib_atu_bar(struct dw_pcie_ep *ep, u8 func_no, int type,
->              u32 free_win;
->              struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
->      
->      -       if (!ep->bar_to_atu[bar])
->      +       if (!ep->bar_to_atu[bar]) {
->      +               /* Tear down existing mappings before (re)programming. */
->      +               dw_pcie_ep_clear_ib_maps(ep, bar);
->      +
->                      free_win = find_first_zero_bit(ep->ib_window_map,
->                                                    pci->num_ib_windows);
->      -       else
->      +       } else
->                      free_win = ep->bar_to_atu[bar] - 1;
+On Wed, Oct 29, 2025 at 07:07:42PM +0100, Neil Armstrong wrote:
+> The I2C Hub controller is a simpler GENI I2C variant that doesn't
+> support DMA at all, add a no_dma flag to make sure it nevers selects
+> the SE DMA mode with mappable 32bytes long transfers.
+>=20
+> Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub vari=
+ant")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>>
 
-If one of the branches has braces, both branches should have braces:
-https://www.kernel.org/doc/html/latest/process/coding-style.html#placing-braces-and-spaces
+Applied to for-current, thanks!
 
 
-> 
-> Unless there are objections, I'll include this fix in v8.
+--RMEH12Dl56iOtTld
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Isn't it easier/cleaner if we call dw_pcie_ep_clear_ib_maps() in
-dw_pcie_ep_set_bar(), rather than calling it in both dw_pcie_ep_ib_atu_addr()
-and dw_pcie_ep_ib_atu_bar() ?
+-----BEGIN PGP SIGNATURE-----
 
-dw_pcie_ep_set_bar() knows the condition if we are dynamically reprogramming
-a BAR or not, and all the four cases are when dynamically reprogramming a BAR.
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmlnf0YACgkQFA3kzBSg
+Kbb1YxAAmYs6M2P+MSlXvKQkXgfmS6UTFY09WDBcqX0ouXMPYG9zzTeTHlzkfvpK
+Unobt+53hHGH1nMTnsIHOroZvR7EPWJt+myTKU9CFzS6wc3w5Su0JqaOMr1lYcT1
+VaD8+QFvs6z2wJeng9NNZNDiF2LX4LaFF8zPG+i/0KdxS3QKm9YFtiL1zSPzMa7h
+S8tg9AyR2lDDcxJwXThfEFj8QF74/iQw+nBJ5R/kfl4OWqDtYsv28y/t2ITpCWEM
+09NKIOvyLhD/720LhLTuS7pjjHMJWynq99lYhsWOdhnD0ZZdVipiHAOxoowEZIzl
+523xsVuFcLGzZLFqV2yDQU65txj6z1n/S8ycjkEiS+6pLXFvQ/Vozz1MOXz+7+1n
+1AjbBFerjy8NxXHThvNYeneqx0sg9AwY79xLYa1EYTKYowlF2s8V028rCV3eIiuz
+odsft7r7rqWs2I795ZeDL0EN/L0wtIJIxu6dVbJmzkExRbW5wdzyk/D8lvH6sCbt
+aXcEl/DZpUyU4YCJluHyx5m/9jR7DjngfGfeYIwARk9+uqOjrjF+JFDIXguqaV4K
+UUankoMGnmHJGvJNy45ttbB3QZZY4bgwcvk9WXlByMA8JlQ3aLEb7yi6T+PnCsUJ
+JYqolaQBTWfCJyW/RNcRXtCDWFL4GBv2Ori4Y8rbqFTCO9B6Y+M=
+=3JmV
+-----END PGP SIGNATURE-----
 
-I.e. instead of adding additional code to dw_pcie_ep_ib_atu_bar(), we do
-something like:
-
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index b2ea2c2c986f..63ae5471fe13 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -318,9 +318,6 @@ static int dw_pcie_ep_ib_atu_addr(struct dw_pcie_ep *ep, u8 func_no, int type,
-                return -EINVAL;
-        }
- 
--       /* Tear down any existing mappings before (re)programming. */
--       dw_pcie_ep_clear_ib_maps(ep, bar);
--
-        for (i = 0; i < epf_bar->num_submap; i++) {
-                off = submap[i].offset;
-                size = submap[i].size;
-@@ -571,6 +568,9 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-                    ep->epf_bar[bar]->flags != flags)
-                        return -EINVAL;
- 
-+               if (ep->epf_bar[bar]->num_submap || epf_bar->num_submap)
-+                       dw_pcie_ep_clear_ib_maps(ep, bar);
-+
-                /*
-                 * When dynamically changing a BAR, skip writing the BAR reg, as
-                 * that would clear the BAR's PCI address assigned by the host.
-
-
-
+--RMEH12Dl56iOtTld--
 
