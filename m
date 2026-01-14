@@ -1,249 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-88897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B38B4D1C37E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 04:14:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6846AD1C3D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 04:22:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B3A84302759B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 03:14:35 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D9D6F30090E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 03:22:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 373E6322B8E;
-	Wed, 14 Jan 2026 03:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB97E2E5427;
+	Wed, 14 Jan 2026 03:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Bg+ZARYm";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SdZcMZpi"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="P6hzG3xq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020126.outbound.protection.outlook.com [52.101.228.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55342D6E53
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 03:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768360473; cv=none; b=osV+pPUhByxURbwkdNm77JQqwQQhb1kdUHgRgwkKMkg9kTiUXrps0nJj/lTexVV5vU91oKffcuGYlr6QW7pLkGeCgwoR4TXppmvXujCUn9iLRbGpb8hMK40X0yE/0WBIZEtxkoi2CZEShF+BmNP8svxfm9bYyzF3M5H3PgSDyGI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768360473; c=relaxed/simple;
-	bh=tmstHXmbtQtNzUFEOMIDB+DFApVjPcnTHPv9ac2Zz5k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qtihBhYTtfED7mE1TWxAymHYJ2nAPkQ0xxBhCqqKRg0SAN2jNaO8bG3tqw7TqmeHjBegMURNHj86+lGy6JmfbDMJDr2O5XmvbPIY6XD+mBCvcGmc+WLBiAVw60kYp8nq29NuNCOPfQPMj9gGwctNB+ezt94dA2OJ8k3BAS2f+Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Bg+ZARYm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SdZcMZpi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60DNHe5W2203886
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 03:14:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WA0Duyy7oOsOZpF1Hhf6vvf/KMhyZASXJgxYvMzuc1E=; b=Bg+ZARYmUDXdksuW
-	QgXjKlDRCCXtl33HQIfjIOynDS1owYIqMZeXFC3VzDX1R8LE8xCbTdasnKpBfypj
-	DAgtMD6YNxK2aP2Faah489ct0duBepJl9f+0eTkwH5Qh3gczr7T9+OMNNAPdmiN1
-	sohc0yVixiJOobE5AqolBjcG2xKJPIJC1NxC6iB9ZEYpcvRGcREkWjk+iUrwLCT4
-	COTgG2jyW4p9AiEVqG16ck5JMDKbuD+CzmTLlilrrk62wf0L8QdMOPfglE45SzwJ
-	3mNQUTfIiBcp/g5fxTIMK7+ZKgOr0uCYmR+nzxXZgLKRYGBbuKyxjCOPfbGcLl+N
-	ZIbDtg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bns8v1tmv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 03:14:30 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8c52fd47227so80531785a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jan 2026 19:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768360470; x=1768965270; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WA0Duyy7oOsOZpF1Hhf6vvf/KMhyZASXJgxYvMzuc1E=;
-        b=SdZcMZpia4Ir/VgwiTI1f6KpvPqOyPzPaNS5Ll24Fd0ed3G3sDuJyLa5m3w2Ietd8O
-         0yG0psh7hRab3ld70xmjLVbgljCMn/Qv92JuH4l+R7CvYLU0+Zx4OxT18tlyM0lmQTyT
-         poGDC7fj1w+As5GFncdSESwm6A7cIRFZAwbdE13jLwNYUO2WxUGdJFIt6xKTpms3PJiW
-         DxQfvh/92zpPlUmLkUzm+zWbiEQ+k+Wu5XGFVJ6KxphmOFdNSwix3nIXfGrO2j9Kgxxr
-         mp+moYgjPDd35PQMCxmIoCGSLIszDyF962sLbR0LmrhdcXUyQelv67nUYIVXD66k6+9d
-         bDrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768360470; x=1768965270;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WA0Duyy7oOsOZpF1Hhf6vvf/KMhyZASXJgxYvMzuc1E=;
-        b=lKghOscoUjzLMkJVLK1iEgk1NWVtSCn4eObs8MSM1iIQnIARnKkrn3Nz2mXKO6Zwxk
-         tfJnEQd9fSjwus6du70jNatJ9sdr4RPxjdnOCECpqN75Fk3lKuNiD4QuubEl2A2PyUTx
-         keU76PuD2T+7eO25xK+NfFEM3y+T8XENBjQRAzWQze9uUd1eLNesVZsM2k1+VGaGa2dJ
-         4fEQ6SG3sLYtVP9+rMAfk+LyME5voLKjKotJtv2iZ5zJlSAEehe9fzXj74IlC/ELTZ+q
-         zS1WjWyD1MdS9Y3nHqMxCipW/ELI1/cepuc6yvlB8J3a0oyjPGb4vcA5vBO+p3d+MIl4
-         8o+A==
-X-Forwarded-Encrypted: i=1; AJvYcCUw5toWMjuV8RtZGgQaU/ZY+Cg/odcIRWF9vDOgwfVnsWwwY/7tAZEbExA13CZZupHruSuklEOulstbCGnt@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVgwgi9SyJGFY2qvoaCWVOYZIhL2qwHLr2TNw8O1ZgteS7qf5L
-	bAS5q5mYoEzFg9R7lzuKl0ZIaR7XgdGuq3XUpoXrV3mJWMUJ0P9gft0a37hbi+0SMltPAIAHYPc
-	c9A7zE89eRbonxoO/iXBFSyKDPyDij8SO3ArKzGwUwZ0l47JaW8TxaigSR+LbByvcEWw4
-X-Gm-Gg: AY/fxX5Rs0v04NfyKshfI75VyfyNPui2X9d6sODiY56QCJ8IFyiepABR83w527HTsNZ
-	Obpn0HucZo0hYrEdwi5tyUyCidclcJjEefSW2Wp9TRTLQ0vPTv9FQEN71LeQo6yAmvUIhNF3rSo
-	KM0DitLMCNc2K5T5gXRlSV6NeDd68mF1CMrnSb/fagdrRQEOp3BaYw5NSXNVhz7XZ41Ef1gsYZd
-	RVRY75aTk+/rD77LXodKACWXRHY0uPpFPm6NKwWFuIucdq7H8LKYVMhlfRNQ9Q6E6STZZR8DQBV
-	n4AU6oYbwpMsMTgt0TJXcGzfyjnqMc6eWsRh3NMb7r0ngrB9S5sOLZGHh0epvAcAsMWUjxu1XpM
-	4g64Fd2q3COcA2J3yYEhyps7G3K1pXV3Grn4WgEo02GTBypeYc33T7noZnIdtT+LisPc5hZ0QK5
-	zEgit7blFlbz09wZD/NFDp4CU=
-X-Received: by 2002:a05:620a:31a5:b0:8c5:2e2a:68f5 with SMTP id af79cd13be357-8c52fb1dbc0mr197468285a.35.1768360469810;
-        Tue, 13 Jan 2026 19:14:29 -0800 (PST)
-X-Received: by 2002:a05:620a:31a5:b0:8c5:2e2a:68f5 with SMTP id af79cd13be357-8c52fb1dbc0mr197466285a.35.1768360469263;
-        Tue, 13 Jan 2026 19:14:29 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59ba1041152sm265207e87.51.2026.01.13.19.14.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 19:14:27 -0800 (PST)
-Date: Wed, 14 Jan 2026 05:14:24 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yijie Yang <yijie.yang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: Add base PURWA-IOT-EVK board
-Message-ID: <bcikdrswcqyibzvtygavuev4c5g3lphdmvl5l3xtxlihshaxpl@miwpuwyfacqv>
-References: <20260113-purwa-v3-0-16eefacbdce9@oss.qualcomm.com>
- <20260113102822.590677-4-yijie.yang@oss.qualcomm.com>
- <2qa3kn6gw4f5qlncq6iwgxattfbbztu42gpcbekqfghcrdg3l5@z7zsx44xch7a>
- <3906614d-d9df-485c-963b-603e2311bc2c@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5FE2417D1;
+	Wed, 14 Jan 2026 03:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.126
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768360947; cv=fail; b=eGuP/CJtVu51zD3f6yzMcIwTtPg9J9B1cdW0zu/h5aV0yH8j0QDc5ziMNQYqB/xZrob4Hv+bqDG1fco7zoSoZ46+HOzv1on8pSvvhkW9yBUF3zqP5yRklwDkSaciyJVrSclwYA0I5o8dAVAeEAlIjODXHVPZt2apIU/xVzwQmL4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768360947; c=relaxed/simple;
+	bh=WVSkzG0GFsjsm8FgHChJ8SS1P44Oulmy4/vO7mPCwJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lloCPj7AXMOONZX/HrWMr0X1k21hraWVq+7zWNbgsQUtqKaSguC/CWovhOVWQQRrqOJIg+iWI+z/gG53S5+i7BPOybouJhpND9dBKUEau4l+iFU86PgO7xp5knO+k/Y8vVreMGdIW9Pce/VHUMZmH1GlWYXYS0eePs3d/IrbYs8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=P6hzG3xq; arc=fail smtp.client-ip=52.101.228.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t57giZHydnMihAeT5XCkks72lPxVL4lmCY+8b+T1VJspzPzs+/N1NUuczJhNp1e85h4mF6qwGW+6ZWn24jYiEwbl3Ye5R+kJJkwut74zFE3izzHs6ZNFCp9Dvi7cPcx87IxpmQXvNYGGWN18P+qB4m8UfE03WUt+UIXIydXtlTHzXgJ+wdO/SIv8xgzfOjhCb38U8o24tuCUIoZiv3QiYESILzT9LyeeTGHI8SOXH8uHWXJJeWt9j/wFekGWk2YapZW+krYAWP/99TkXH6SSjSr1KT0xqeJyVAV6k4fdnXfV8JUTKAM/vrmJpR3+GcpeibhdwaHgkJnz/ABca6LboA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VB+aFAGzSbNvprFB+XFfY2EsPBphfen1AxpWMsSBPuE=;
+ b=LkG9c4HgKVyNErEYJvRZiAIP/zlOl59khtI1JJxRQKJfs/coHjlHO/5FK2snxq07BIAq/sxsRbq/9KyZmJEXi99L+XeUgVqbrrH0VPIoHNESzxGdGlCNU0zh+AsZPS7jZuqasAEK4yvyH/XEE9uXnOQaVDHxLm4uAvgwHHmk7SDMYgRKeKPLXSv4CLAp9YZUktc7xihvMcD2+8lK0COG6z067xC1b5gyX7URpv4xUtbJ3DQmrwsaDQ8vuNKEu8I4XViL2UukSAgT1D3iOdSlCzURZhYII40WOW0JqpX77h/gV3+zYaieu/RObiktZVkVUEuxZ27BoOvUkkf6cAIyqg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VB+aFAGzSbNvprFB+XFfY2EsPBphfen1AxpWMsSBPuE=;
+ b=P6hzG3xqvQk3fjSWql3vgtO3r5NyQAgJLBYozCYn/OlOTtmSilEyM8O7znIAIGSJgv3WpaizJkc5R098nSuo10oFh5FseAXHKz0HWw50E5NG4KF5UTxrVAwGOawXoJ7714/d28Hut/08gv3YOBEJroIUDkRCe1aWLr04d98bnZI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by OS7P286MB7440.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:440::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Wed, 14 Jan
+ 2026 03:22:23 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9520.005; Wed, 14 Jan 2026
+ 03:22:22 +0000
+Date: Wed, 14 Jan 2026 12:22:21 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Frank Li <Frank.li@nxp.com>
+Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com, cassel@kernel.org, 
+	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com, l.stach@pengutronix.de, 
+	shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, 
+	festevam@gmail.com, minghuan.Lian@nxp.com, mingkai.hu@nxp.com, roy.zang@nxp.com, 
+	jesper.nilsson@axis.com, heiko@sntech.de, srikanth.thokala@intel.com, 
+	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be, 
+	magnus.damm@gmail.com, christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com, 
+	alexandre.torgue@foss.st.com, thierry.reding@gmail.com, jonathanh@nvidia.com, 
+	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org, 
+	rongqianfeng@vivo.com, 18255117159@163.com, shawn.lin@rock-chips.com, 
+	nicolas.frattaroli@collabora.com, linux.amoon@gmail.com, vidyas@nvidia.com, 
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v7 2/6] PCI: endpoint: Add BAR subrange mapping support
+Message-ID: <ngvqrju3bi6sugynhksxsci6rmgqevzpoijjflp2373c6uxlum@vyepxqghbzvn>
+References: <20260113162719.3710268-1-den@valinux.co.jp>
+ <20260113162719.3710268-3-den@valinux.co.jp>
+ <aWaqablKcUnHx/mp@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aWaqablKcUnHx/mp@lizhi-Precision-Tower-5810>
+X-ClientProxiedBy: TY4P301CA0011.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:26f::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3906614d-d9df-485c-963b-603e2311bc2c@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=aY5sXBot c=1 sm=1 tr=0 ts=69670a16 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=vOeAKl8klYon9pFA0QwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: Ru-Vmi2Edx7uiiXc187PEqWhRm6T8JJY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDAyMSBTYWx0ZWRfXwWHbV4HKjpsS
- i6Ec+CArXPJp6FNqxqZLI9KSPFxD8UnTrVg0ox5fgHcB5jr2KI4DDeDDkHkEInMtzH+n5zcpwK0
- 7tO/SXQ0/HV5d3TiwmXG9zjmt3z8SpbNF1CTnw7jxsZq7UUe5EYtu/C9fKubcTnu+gYQXsg+Z6z
- LBcMA+HoM5x3KifpPz3FV/NbF4FCo6t/L1SV2otiv4vvjq0aN5cz/nC0VkQBLJK6/FADShWAPQ3
- 3r1iaYD5q5X2gazpEKlVNYHJNtpVfLbS16ysuhDv6HdELO19p9rmH7o2AH59S4z1Zmv77p6EOrR
- q8XgYnljAnRoRSCuWuZbGyxMdqBKw04nHyR2qvtEz1oLi+pG1eOMJPEfz+h7hLnMth8WUMY42kr
- nXujFJRrcvgM+BbAAFr/U7BSEa8fj0DoY6X5r4tYzNq4T/2+V+UgvH+K2vAug+qNAqPkGLO0oIk
- aLkgNetnFW8RgeKijiQ==
-X-Proofpoint-GUID: Ru-Vmi2Edx7uiiXc187PEqWhRm6T8JJY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_01,2026-01-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601140021
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS7P286MB7440:EE_
+X-MS-Office365-Filtering-Correlation-Id: b96cff37-fbde-426c-f5af-08de531c21b5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|366016|376014|10070799003|1800799024|27256017;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?WDaopE1OWHcv4hT0vfRXos+ghH5stGSx6Ow+MCchyYqROgSw6elpU7FPZLha?=
+ =?us-ascii?Q?feueBw2hGekGHHRITh2CEXR6lXRBfhRGfaJjl9GSJE72TSXagUW6y7IbVQYu?=
+ =?us-ascii?Q?mmxAEs17fFGg8EInlg4OVgoHfD373/W0HzX7lpsqclNOWxAvo7VUxxcVvL7f?=
+ =?us-ascii?Q?YgLFVYrHecnbr/6qWNl5jNvzrCVPrANjocYmrrAsdTDpDRUvHllCEFYAcQrn?=
+ =?us-ascii?Q?g7Ps3Fo9cEqdyuMmXaQYRlbGp4rOsA7S5AohpLSDJQD0yQy00eU19k6oyNyk?=
+ =?us-ascii?Q?ltBlx1i86Wz+IQg8JdAP1S7wvDYmmED+GfIT3mxpACDgjzRI0NfEXpkplFMk?=
+ =?us-ascii?Q?vOTnwRGA+so5tymdnr/xgUwSv1/ltlmZovfYKNJHiGKD89OlBXDp8y3TOwbx?=
+ =?us-ascii?Q?nKKbxM88izG27ythWsiTPV8m+P/f0awp7qWaSZ6YBJmNqfJYuN/4Q8SyE6QK?=
+ =?us-ascii?Q?k2pGu+KOgztKA7fFjgdUKUYVcy/eeQN64opdqanPDKM0zfTJ2r+bOMoEjxTg?=
+ =?us-ascii?Q?xq5U0jCXyYVxG9ZM+FJaXD9hZEFyc+CRkPDVCjx5+iMQgDsGseE12wm0s4aQ?=
+ =?us-ascii?Q?kIz79zBIBK0bhLS2tOncW/3raXHvywcSTK7aiyMp+E5fGCiNK15rHXKEQWK3?=
+ =?us-ascii?Q?BA5KfSvyzXeyFbv0E4/xDLLe3wl4kAlS0Pdd1eduEdcffpr/2utdKvjQoYn4?=
+ =?us-ascii?Q?HkC0RsKSq14DEcD61lUVE3UfZnJ/+0PtL5OCrKslw5cIxjmDNJHUmIKcEbKC?=
+ =?us-ascii?Q?KdnSonulkMzqIfPW5nJLtd/QTyeIXOL5va3WpOxk/SYeL/SYhC8hLvMyiKua?=
+ =?us-ascii?Q?L9YMNKETMw+kX2t0S2cfPQ6UX28oQ762KsX6q5dKjTb+6NegI19xcdRbHHNa?=
+ =?us-ascii?Q?nlfAD7zVWLNmSqJ1aHEcNmG+xKKRF/oiAzvr6PygbVgulkdjDXOQ2rHoROny?=
+ =?us-ascii?Q?/onSvOhZLw/BcZMeDgdoQSgurXMQVqM29y2DV0x8npQYc1bx/JJp7E4nH8sh?=
+ =?us-ascii?Q?qMjyB3t3PoVbI3LCtbaQ5Obnsl8xb3+r7wvqop1z7f/bExg0OJMp0JZ3TDYj?=
+ =?us-ascii?Q?8eEWQ4YBYlTd79vRXHIM6Cdpbca/NA3lwhAk9j2YNOzfBkh78lLwtiEP++Zu?=
+ =?us-ascii?Q?vMsDAJLaZPCE77wqbUJQOWf+3spwxEm5fhSg8+ZVwDCF951PlcPaQFhPhbwB?=
+ =?us-ascii?Q?Yb4i2o5WWEnIZZj6P3iLg3StmBlDvAwj9+GQSkbKrgQGlnKJlXggHGK4DDJL?=
+ =?us-ascii?Q?JhmgQf7YAQEpWW+XYPgUDPR8bT7Fzr/HXkQcFSNy71ZBHPUHoBINak6LEObn?=
+ =?us-ascii?Q?IKKM9IRw0nCkeHITCLlXc2aw/cl/xZiQ7ecZzWc2Y26eeWpLgv5Tn+SDVDKE?=
+ =?us-ascii?Q?KiCilg1nObLh96TMWYHMs+gVweyb6lcMgvZdTGYy0UmSmvDveOIe4G8xQrLP?=
+ =?us-ascii?Q?HzoWh6aUeFYW5YbtzRHcIjZPdqZ3BJgqxmv39MhyBv4KKKjpi4BuUd0sNuB9?=
+ =?us-ascii?Q?wJTK6Z/yaCas0ZmPdP9UareeLUbxif+kvG+0?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(10070799003)(1800799024)(27256017);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Mv3FXsCv+pxDwcURpqjEz4MHhlD/xlGT5I1oAAM79T7vehn92Qy8UKhZVBcx?=
+ =?us-ascii?Q?kIwfIlHTbaz1LSLITNPHSvn3NqT4gRTGIs/8D1Wc1f9LinrF5wFy538s9RMe?=
+ =?us-ascii?Q?2pVw+JjbfQvV8IvQAbaFyf6rQrQeRLPAlH5s9TUgY/pzXu1NT2U3CGSqfEb6?=
+ =?us-ascii?Q?aXOKpR/WuXXbMDRDirQ20ccVtifnI9ift+vGVGmyxqrvsaP3mIOaxyGPS4XG?=
+ =?us-ascii?Q?x26Amm2oei2fC8MSZp/CISty6SdGZALLw675PMcBUBbKfOQh1/fCXWzuqJ8g?=
+ =?us-ascii?Q?zmt8A4b9h2hdQsRusMy8NnQQC19xSHFnpJwmw+D6F3y5cY1XXXojSFWgUNJd?=
+ =?us-ascii?Q?iB8YaUk8Dxt2rzG41ABPUX3C2coip5fyrTJyn4CsZNFMbcbuany66hMqFk1f?=
+ =?us-ascii?Q?KszZX1Sy13qJFSA8U4jGGbgNw7y0MGI2p+9sUQpSV/PvVyvbI7Zo+OL7HmFv?=
+ =?us-ascii?Q?1qVyUKXuNSGRB3F01Ik0QIqH8qmfUg9uV6qw+xPbMojGAOS16zXCP7lkthMn?=
+ =?us-ascii?Q?grE/DiyKGiVTOd0vrD5Sya0+1u0KKasiZm3DdInh/b+uDu8gyp0jHqznoDOb?=
+ =?us-ascii?Q?ash9AyC8oticQBXP2Ky8oaveWDsXWCijE5lk8BivPbwKcTjnlw8FoDvGr2Vl?=
+ =?us-ascii?Q?pBsNYRFXYNruT1CtZI79T8GuezeACNz3OQDfx0qZ0FujhhKH6XmiExf9f9Zi?=
+ =?us-ascii?Q?ItORSXuomiZNkDBuGd+9d/ufCXVzAiIOwIwMoXNk2E6UB/qAqB4j6Difb5eb?=
+ =?us-ascii?Q?4yCylC/NRmeU0EdhX2x53vXM0majfuC4MrgdW7Bg/QcoCGkN7XvdGGC+xDtY?=
+ =?us-ascii?Q?7Df3YW0xuT1Xp9TMYUVM3uhFK63rNl+mskuUveYqoH5dVZmwi7hKYvlSdjkT?=
+ =?us-ascii?Q?JS82F+CLBGq/3iHsrxDG9egATdOlc+kvyEC8I8UW13XVyvi4I4kU8XB/8Jjy?=
+ =?us-ascii?Q?+fe2SJBcBNjGS69C//zLJL3NrfJBgzQVYEcF6EZ3GrZSuEXhnWJ7LmsGblgx?=
+ =?us-ascii?Q?okLw1KxE12BbokVDRJyxyKR39c3MGn1U3ZCyXzKb2xV7l1g5SKG4U8v5fUfw?=
+ =?us-ascii?Q?leLNg3ryrKHktgk+9/1Btqvva5h0nCMEv5B9T2k8qqt6aoT4LWdiP/dk5ZA/?=
+ =?us-ascii?Q?IKUCLUJahLPCdnDwcNwhWOd5fuNwPHUz2ixe+NGDDTJZ/vW7TynvsJzVAFgM?=
+ =?us-ascii?Q?Vt7Js7DOxAHvAWabi0RBt8+F2OeLa69UJxjPCaOBSjrikhzdpy4B4DXp3i2I?=
+ =?us-ascii?Q?YcbNEw8zXVQrGO8Dftbuj1CR2etZGgk5IxXZZ7xq72o/VekW9lsdn3TRhkjE?=
+ =?us-ascii?Q?d3NtD3GtmWHTWwt+Lh9J6Rfk9u+teO76WfouPH8tlBygWUFAml/FmVxEI0ys?=
+ =?us-ascii?Q?Gxld1zF9DXKar0ia4z9zoxRE74bfBdlTi9HGV9NOPeP1llAwDsM2LywkiFQV?=
+ =?us-ascii?Q?IYDqcJMKERWc6nUPUm9sivu0cvCmY/uDJVXlu7wXASQ9tcDL/XCnkIDr6Jbb?=
+ =?us-ascii?Q?OACsERLwr+QIEtIXypAbEq/wrEfIJovQ55ufVlFImJh/I5aKvekdy0y9PqCe?=
+ =?us-ascii?Q?+Z1CjkvVltbEfTpUxeQSRmWXFRWl5kxuNmdkYF7LSCTc61SjWEaHAlB2nIew?=
+ =?us-ascii?Q?Ua4ZJTw+lCFfz4OgqFUCK6lenFZ/FQfllHxuAcLk7fPxSF73NhNodrmCtV8a?=
+ =?us-ascii?Q?+uNO+tYXLwIYjL9cwrh8IZcr+wJXMW0kH7z8hmcrpp9h8fi0mPVAOVs9dwiJ?=
+ =?us-ascii?Q?jadb3TraH9gjIL+oz2SySSDByT6Q7iNLkqMTaTkMBrSUhjuiEfAX?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: b96cff37-fbde-426c-f5af-08de531c21b5
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jan 2026 03:22:22.4457
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: veVdJGMSEv791K3EftXbiFSfuYyh6I+Uk5MkA/Sjv+bsvhU/evx8ndVxGH7heWMb/xswUORgDd5HeadJMD5vgg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS7P286MB7440
 
-On Wed, Jan 14, 2026 at 10:27:16AM +0800, Yijie Yang wrote:
+On Tue, Jan 13, 2026 at 03:26:17PM -0500, Frank Li wrote:
+> On Wed, Jan 14, 2026 at 01:27:15AM +0900, Koichiro Den wrote:
+> > Extend the PCI endpoint core to support mapping subranges within a BAR.
+> > Introduce a new 'submap' field and a 'use_submap' flag in struct
+> > pci_epf_bar so an endpoint function driver can request inbound mappings
+> > that fully cover the BAR.
+> >
+> > Add a subrange_mapping feature bit to struct pci_epc_features so EPC
+> > drivers can explicitly advertise support. Make pci_epc_set_bar() reject
+> > use_submap requests (-EINVAL) when the EPC does not advertise
+> > subrange_mapping, to avoid silently accepting a configuration that the
+> > controller cannot implement.
+> >
+> > The submap array describes the complete BAR layout (no overlaps and no
+> > gaps are allowed to avoid exposing untranslated address ranges). This
+> > provides the generic infrastructure needed to map multiple logical
+> > regions into a single BAR at different offsets, without assuming a
+> > controller-specific inbound address translation mechanism. Also, the
+> > array must be sorted in ascending order by offset.
+> >
+> > Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> > Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> > ---
+> ...
+> >
+> >  #define to_pci_epf_driver(drv) container_of_const((drv), struct pci_epf_driver, driver)
+> >
+> > +/**
+> > + * struct pci_epf_bar_submap - BAR subrange for inbound mapping
+> > + * @phys_addr: target physical/DMA address for this subrange
+> > + * @size: the size of the subrange to be mapped
+> > + * @offset: byte offset within the BAR base
+> > + *
+> > + * When pci_epf_bar.use_submap is set, pci_epf_bar.submap describes the
+> > + * complete BAR layout. This allows an EPC driver to program multiple
+> > + * inbound translation windows for a single BAR when supported by the
+> > + * controller.
+> > + *
+> > + * Note that the subranges:
+> > + * - must be non-overlapping
+> > + * - must exactly cover the BAR (i.e. no holes)
+> > + * - must be sorted (in ascending order by offset)
+> > + */
+> > +struct pci_epf_bar_submap {
+> > +	dma_addr_t	phys_addr;
+> > +	size_t		size;
+> > +	size_t		offset;
+> > +};
 > 
-> 
-> On 1/13/2026 6:52 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jan 13, 2026 at 06:28:16PM +0800, YijieYang wrote:
-> > > From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> > > 
-> > > The PURWA-IOT-EVK is an evaluation platform for IoT products, composed of
-> > > the Purwa IoT SoM and a carrier board. Together, they form a complete
-> > > embedded system capable of booting to UART.
-> > > 
-> > > PURWA-IOT-EVK uses the PS8833 as a retimer for USB0, unlike HAMOA-IOT-EVK.
-> > > Meanwhile, USB0 bypasses the SBU selector FSUSB42. As a result, the glink
-> > > topology differs from that of HAMOA-IOT-EVK.
-> > 
-> > What is "glink topology"?
-> 
-> What I’m referring to here is that the graph composed of glink nodes and
-> their peers.
+> I suppose offset is sum of previous all submap's size? If yes, needn't
+> offset.
 
-Then:
+Thanks for pointing this out.
 
-As a result, implement corresponding changes to OF graph connections
-between USB-C connectors and USB host controllers.
+Yes, I agree that @offset has become redundant now that the "no holes"
+constraint is enforced for submaps. It should indeed have been dropped
+earlier (in v2).
 
-Or just drop this phrase completely.
+> 
+> > +
+> >  /**
+> >   * struct pci_epf_bar - represents the BAR of EPF device
+> >   * @phys_addr: physical address that should be mapped to the BAR
+> > @@ -119,6 +141,10 @@ struct pci_epf_driver {
+> >   *            requirement
+> >   * @barno: BAR number
+> >   * @flags: flags that are set for the BAR
+> > + * @use_submap: set true to request subrange mappings within this BAR
+> > + * @num_submap: number of entries in @submap
+> > + * @submap: array of subrange descriptors allocated by the caller. See
+> > + *          struct pci_epf_bar_submap for the restrictions in detail.
+> >   */
+> >  struct pci_epf_bar {
+> >  	dma_addr_t	phys_addr;
+> > @@ -127,6 +153,11 @@ struct pci_epf_bar {
+> >  	size_t		mem_size;
+> >  	enum pci_barno	barno;
+> >  	int		flags;
+> > +
+> > +	/* Optional sub-range mapping */
+> > +	bool		use_submap;
+> > +	unsigned int	num_submap;
+> 
+> can we use num_submap != 0 as use_submap?
+
+Yes. For the same reason, @use_submap has also become redundant.
+Calling pci_epc_set_bar() with use_submap == true && num_submap == 0 has
+been invalid since v2, so @use_submap no longer adds useful information.
+This can likewise be dropped. I'll respin.
+
+Thanks for the review,
+Koichiro
 
 > 
-> > 
-> > > 
-> > > Make the following peripherals on the carrier board enabled:
-> > > - UART
-> > > - On-board regulators
-> > > - USB Type-C mux
-> > > - Pinctrl
-> > > - Embedded USB (EUSB) repeaters
-> > > - NVMe
-> > > - pmic-glink
-> > > - USB DisplayPorts
-> > > - Bluetooth
-> > > - WLAN
-> > > - Audio
-> > > - PCIe ports for PCIe3 through PCIe6a
-> > > 
-> > > Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> > >   .../{hamoa-iot-evk.dts => purwa-iot-evk.dts}  | 102 +++++++++++-------
-> > >   2 files changed, 65 insertions(+), 38 deletions(-)
-> > >   copy arch/arm64/boot/dts/qcom/{hamoa-iot-evk.dts => purwa-iot-evk.dts} (95%)
-> > > 
-> > > @@ -1102,9 +1140,7 @@ edp_bl_reg_en: edp-bl-reg-en-state {
-> > >   		pins = "gpio10";
-> > >   		function = "normal";
-> > >   	};
-> > > -};
-> > > -&pmc8380_3_gpios {
-> > 
-> > This needs to be fixed in hamoa-iot-evk.dtsi.
-> 
-> Will do.
-> 
-> > 
-> > >   	pm_sde7_aux_3p3_en: pcie-aux-3p3-default-state {
-> > >   		pins = "gpio8";
-> > >   		function = "normal";
-> > > @@ -1171,16 +1207,6 @@ &smb2360_2_eusb2_repeater {
-> > >   	vdd3-supply = <&vreg_l8b_3p0>;
-> > >   };
-> > > -&spi11 {
-> > > -	status = "okay";
-> > > -
-> > > -	tpm@0 {
-> > > -		compatible = "st,st33htpm-spi", "tcg,tpm_tis-spi";
-> > 
-> > No TPM on the board?
-> 
-> It has not been verified yet since this patch set was sent out; I will add
-> it.
-> 
-> > 
-> > > -		reg = <0>;
-> > > -		spi-max-frequency = <20000000>;
-> > > -	};
-> > > -};
-> > > -
-> > >   &swr0 {
-> > >   	status = "okay";
-> > > @@ -1470,7 +1496,7 @@ &usb_1_ss0_hsphy {
-> > >   };
-> > >   &usb_1_ss0_qmpphy_out {
-> > > -	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-> > > +	remote-endpoint = <&retimer_ss0_ss_in>;
-> > >   };
-> > >   &usb_1_ss1_dwc3_hs {
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
-> 
-> -- 
-> Best Regards,
-> Yijie
-> 
-
--- 
-With best wishes
-Dmitry
+> Frank
+> > +	struct pci_epf_bar_submap	*submap;
+> >  };
+> >
+> >  /**
+> > --
+> > 2.51.0
+> >
 
