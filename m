@@ -1,62 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-89035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954C6D20276
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:19:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D79BFD203CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:37:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3B5FE306EEEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:17:09 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CF1C1300912D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:37:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE7B6399015;
-	Wed, 14 Jan 2026 16:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 719DD3A0B39;
+	Wed, 14 Jan 2026 16:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqUtIFp8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VObgL1A3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8AD2BCF7F;
-	Wed, 14 Jan 2026 16:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7CD2701DA;
+	Wed, 14 Jan 2026 16:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768407428; cv=none; b=NtjPESheh8ouIkhQj4BV9kRkdaghiz/631Hi/VtjQ2LJn9kHJaw4pFizyLL85MsHdMWc8NQq+NJB7P3yqxjz0MJ4WV2iBG2OSNRP9Y5x72FxeiWJ5yciUAD26zlja2JnVrT2vK1IOE/p7IoqwQqdfbSr3dRt/h/uy6pLaACVx+Q=
+	t=1768408627; cv=none; b=bXur48JfHQJU7Zn5cA3/UdPnV+8//OZo2MIp5PhCqCejk42/vOAKxlp2QbWJEEDR4adBD9Iwz81ZvzC+iM/zn1HTRwRTFliJMGAXajMZIYfXiAseY+2rUYkyNfJ8b+H1fqnUk+pJpngmyFwhbsBXf9A0yX4PIWX9jTf8bSJ3wH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768407428; c=relaxed/simple;
-	bh=nTjWyUkkJkRHMQPexGyys9WNEHTYEZhRyiyG7Ihh+3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=mBK+FbSa0TDQkK73uStI/objZXJFSzEeG4Qre+FOkSc2W2MGb/PGAwz0HggiR225TO2WvdmHVhSUao2pqyf3aX7UBlwl2dD2SoHDbdERWIUSH6rrgWfXLlCT3B7eejoueNqCfUDmPIfQPaal3ulM4dUax/n5N7q/rZVjlLw3lmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqUtIFp8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAFAC4CEF7;
-	Wed, 14 Jan 2026 16:17:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768407428;
-	bh=nTjWyUkkJkRHMQPexGyys9WNEHTYEZhRyiyG7Ihh+3M=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=nqUtIFp8qu2JEMYWPT97gnK4I0Qk7nS2Hy5NBTwxhyKYMqHa8EYyMuPxrVRL9IYP5
-	 wGe1Sv7czpLvvNdsOj9kEiiQ1u6rBHv016tlDCKD+pXx9Fenp31tUHnLDV0jkwpWOp
-	 x6OqzwhkE54cQb1+a3st8FF33nyMyxP82LqSJeeFstfoV3dgbUghN799/t8YnPZ+/o
-	 PGfDHk7KIINlSg+nJ4DFvi2pfN834XCUdE2OLHIU1PKMYFTnjaK92NZ1DAPNwxu3G+
-	 rb9mWTk/txHoMV45tfbGMSDjg82XND0skAwWidHA0KXEUlswAz701j9hZU7HBOBbbv
-	 AMxserl0t+Scw==
-Date: Wed, 14 Jan 2026 10:17:06 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Chen-Yu Tsai <wenst@chromium.org>
-Subject: Re: [PATCH v4 2/8] PCI/pwrctrl: Add 'struct
- pci_pwrctrl::power_{on/off}' callbacks
-Message-ID: <20260114161706.GA809548@bhelgaas>
+	s=arc-20240116; t=1768408627; c=relaxed/simple;
+	bh=E8RIcN9R+L5K9uirA6NlzA+r2qmPrPFCBl8xyWyV8yY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qo9mwxh3FZ0z2HiFJ/LBJFUUeiG6c8YviyQO8trtzurdEgiIBQZ1LkKbCfTdSI4GriMrvRfskpkYlx6dHapOr2hRWaIcpvdi6yyI0y/tY8zjZAolmvJY36BMKLQTZbGVsfu9zzS/HJiFNw5Y0Byuu5kKTjHBG++z1C4AOS1t7yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VObgL1A3; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768408626; x=1799944626;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=E8RIcN9R+L5K9uirA6NlzA+r2qmPrPFCBl8xyWyV8yY=;
+  b=VObgL1A3/mVnxixgO00z27BGHpqPL7vekDprwQnsi880TFys4XgM7sWP
+   eAQSiCLLeWCmaIa3OfOFEMN+tJcLYCwbg9ffcaBcXJOE99lw4LV7RkiZQ
+   6kx4wEWu6VPAJHiqZ/dq9eJ9jAVKpVa3XRVcz5GFWnGwGw1aZAaQ/1LrD
+   EImkU+5ImnXaeTSrYAhRD+DsPQK78hby7g2XAci0oevr2H9IXrM0GfoRW
+   9SHrzjDS0hjgD8hYqAFnyjIRfPJxOhgv3Uh1fErzFLqJiS/nncD8v/mV5
+   +806/ZRXcB4XPVFLFRJ1EEC2ADUJQuwFdEAKmKfsIe4bvw1H9wR/ICf19
+   Q==;
+X-CSE-ConnectionGUID: E0aGOjDZTxiBu0/FeYzv5w==
+X-CSE-MsgGUID: ZNjH2srcQPmQZc57LnC1gQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="92381916"
+X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
+   d="scan'208";a="92381916"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 08:37:05 -0800
+X-CSE-ConnectionGUID: CKbvLsaSQMiv2EPNqWL0Xw==
+X-CSE-MsgGUID: mBjtWAiQTpqONdYkXrUgVw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
+   d="scan'208";a="209193588"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by fmviesa005.fm.intel.com with ESMTP; 14 Jan 2026 08:37:00 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vg3re-00000000Gei-1aER;
+	Wed, 14 Jan 2026 16:36:58 +0000
+Date: Thu, 15 Jan 2026 00:36:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 1/3] soc: qcom: smem: Expose DDR data from SMEM
+Message-ID: <202601150105.Pod3agMP-lkp@intel.com>
+References: <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,99 +87,224 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260112032711.GA694710@bhelgaas>
+In-Reply-To: <20260108-topic-smem_dramc-v3-1-6b64df58a017@oss.qualcomm.com>
 
-On Sun, Jan 11, 2026 at 09:27:11PM -0600, Bjorn Helgaas wrote:
-> On Mon, Jan 05, 2026 at 07:25:42PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > 
-> > To allow the pwrctrl core to control the power on/off sequences of the
-> > pwrctrl drivers, add the 'struct pci_pwrctrl::power_{on/off}' callbacks and
-> > populate them in the respective pwrctrl drivers.
-> > 
-> > The pwrctrl drivers still power on the resources on their own now. So there
-> > is no functional change.
-> > 
-> > Co-developed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
-> >  drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c | 27 ++++++++++++++---
-> >  drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c | 22 ++++++++++----
-> >  drivers/pci/pwrctrl/slot.c               | 50 +++++++++++++++++++++++---------
-> >  include/linux/pci-pwrctrl.h              |  4 +++
-> >  4 files changed, 79 insertions(+), 24 deletions(-)
+Hi Konrad,
 
-> > +++ b/drivers/pci/pwrctrl/slot.c
-> > @@ -17,13 +17,38 @@ struct pci_pwrctrl_slot_data {
-> >  	struct pci_pwrctrl ctx;
-> >  	struct regulator_bulk_data *supplies;
-> >  	int num_supplies;
-> > +	struct clk *clk;
-> >  };
-> >  
-> > -static void devm_pci_pwrctrl_slot_power_off(void *data)
-> > +static int pci_pwrctrl_slot_power_on(struct pci_pwrctrl *ctx)
-> >  {
-> > -	struct pci_pwrctrl_slot_data *slot = data;
-> > +	struct pci_pwrctrl_slot_data *slot = container_of(ctx, struct pci_pwrctrl_slot_data, ctx);
-> > +	int ret;
-> > +
-> > +	ret = regulator_bulk_enable(slot->num_supplies, slot->supplies);
-> > +	if (ret < 0) {
-> > +		dev_err(slot->ctx.dev, "Failed to enable slot regulators\n");
-> > +		return ret;
-> > +	}
-> > +
-> > +	return clk_prepare_enable(slot->clk);
-> 
-> It would be nice if we could add a preparatory patch to factor out
-> pci_pwrctrl_slot_power_on() before this one.  Then the slot.c patch
-> would look more like the pwrseq and tc9563 ones.
+kernel test robot noticed the following build warnings:
 
-tc9563 implements power control functions:
+[auto build test WARNING on fc4e91c639c0af93d63c3d5bc0ee45515dd7504a]
 
-  tc9563_pwrctrl_bring_up(struct tc9563_pwrctrl_ctx *ctx)
-  tc9563_pwrctrl_power_off(struct pci_pwrctrl_tc9563 *tc9563)
+url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/soc-qcom-smem-Expose-DDR-data-from-SMEM/20260108-222445
+base:   fc4e91c639c0af93d63c3d5bc0ee45515dd7504a
+patch link:    https://lore.kernel.org/r/20260108-topic-smem_dramc-v3-1-6b64df58a017%40oss.qualcomm.com
+patch subject: [PATCH v3 1/3] soc: qcom: smem: Expose DDR data from SMEM
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20260115/202601150105.Pod3agMP-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260115/202601150105.Pod3agMP-lkp@intel.com/reproduce)
 
-and this patch updates these to make the signature generic so they can
-be used as callbacks:
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202601150105.Pod3agMP-lkp@intel.com/
 
-  tc9563_pwrctrl_power_on(struct pci_pwrctrl *pwrctrl)
-  tc9563_pwrctrl_power_off(struct pci_pwrctrl *pwrctrl)
+All warnings (new ones prefixed by >>):
 
-This part of the patch is super straightforward -- make the signature
-generic and extract the per-driver struct using the generic pointer.
+   In function 'smem_dram_parse_v3_data',
+       inlined from 'smem_dram_parse' at drivers/soc/qcom/smem_dramc.c:380:3:
+>> drivers/soc/qcom/smem_dramc.c:216:31: warning: iteration 13 invokes undefined behavior [-Waggressive-loop-optimizations]
+     216 |                 if (freq_entry->freq_khz && freq_entry->enabled)
+         |                     ~~~~~~~~~~^~~~~~~~~~
+   drivers/soc/qcom/smem_dramc.c:213:27: note: within this loop
+     213 |         for (int i = 0; i < num_freq_entries; i++) {
+         |                         ~~^~~~~~~~~~~~~~~~~~
+--
+>> Warning: drivers/soc/qcom/smem.c:293 struct member 'debugfs_dir' not described in 'qcom_smem'
+>> Warning: drivers/soc/qcom/smem.c:293 struct member 'debugfs_dir' not described in 'qcom_smem'
 
-I was thinking that if a preparatory patch factored out the slot power
-on/off, e.g.:
 
-  pci_pwrctrl_slot_power_on(struct pci_pwrctrl_slot_data *slot)
+vim +216 drivers/soc/qcom/smem_dramc.c
 
-Then the slot.c part of this patch wouldn't move any code around, so
-the structure would be identical to the tc9563 part.
+   203	
+   204	static void smem_dram_parse_v3_data(struct smem_dram *dram, void *data, bool additional_freq_entry)
+   205	{
+   206		/* This may be 13 or 14 */
+   207		int num_freq_entries = MAX_DDR_FREQ_NUM_V3;
+   208		struct ddr_details_v3 *details = data;
+   209	
+   210		if (additional_freq_entry)
+   211			num_freq_entries++;
+   212	
+   213		for (int i = 0; i < num_freq_entries; i++) {
+   214			struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+   215	
+ > 216			if (freq_entry->freq_khz && freq_entry->enabled)
+   217				dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+   218		}
+   219	}
+   220	
+   221	static void smem_dram_parse_v4_data(struct smem_dram *dram, void *data)
+   222	{
+   223		struct ddr_details_v4 *details = data;
+   224	
+   225		/* Rank 0 channel 0 entry holds the correct value */
+   226		dram->hbb = details->highest_bank_addr_bit[0][0];
+   227	
+   228		for (int i = 0; i < MAX_DDR_FREQ_NUM_V3; i++) {
+   229			struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+   230	
+   231			if (freq_entry->freq_khz && freq_entry->enabled)
+   232				dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+   233		}
+   234	}
+   235	
+   236	static void smem_dram_parse_v5_data(struct smem_dram *dram, void *data)
+   237	{
+   238		struct ddr_details_v5 *details = data;
+   239		struct ddr_regions_v5 *region = &details->ddr_regions;
+   240	
+   241		dram->hbb = region[0].highest_bank_addr_bit;
+   242	
+   243		for (int i = 0; i < MAX_DDR_FREQ_NUM_V5; i++) {
+   244			struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+   245	
+   246			if (freq_entry->freq_khz && freq_entry->enabled)
+   247				dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+   248		}
+   249	}
+   250	
+   251	static void smem_dram_parse_v7_data(struct smem_dram *dram, void *data)
+   252	{
+   253		struct ddr_details_v7 *details = data;
+   254		struct ddr_regions_v5 *region = &details->ddr_regions;
+   255	
+   256		dram->hbb = region[0].highest_bank_addr_bit;
+   257	
+   258		for (int i = 0; i < MAX_DDR_FREQ_NUM_V5; i++) {
+   259			struct ddr_freq_table *freq_entry = &details->ddr_freq_tbl.ddr_freq[i];
+   260	
+   261			if (freq_entry->freq_khz && freq_entry->enabled)
+   262				dram->frequencies[dram->num_frequencies++] = 1000 * freq_entry->freq_khz;
+   263		}
+   264	}
+   265	
+   266	/* The structure contains no version field, so we have to perform some guesswork.. */
+   267	static int smem_dram_infer_struct_version(size_t size)
+   268	{
+   269		/* Some early versions provided less bytes of less useful data */
+   270		if (size < sizeof(struct ddr_details_v3))
+   271			return -EINVAL;
+   272	
+   273		if (size == sizeof(struct ddr_details_v3))
+   274			return INFO_V3;
+   275	
+   276		if (size == sizeof(struct ddr_details_v3)
+   277			 + sizeof(struct ddr_freq_table))
+   278			return INFO_V3_WITH_14_FREQS;
+   279	
+   280		if (size == sizeof(struct ddr_details_v4))
+   281			return INFO_V4;
+   282	
+   283		if (size == sizeof(struct ddr_details_v5)
+   284			 + 4 * sizeof(struct ddr_region_v5))
+   285			return INFO_V5;
+   286	
+   287		if (size == sizeof(struct ddr_details_v5)
+   288			 + 4 * sizeof(struct ddr_region_v5)
+   289			 + sizeof(struct ddr_xbl2quantum_smem_data)
+   290			 + sizeof(struct shub_freq_plan_entry))
+   291			return INFO_V5;
+   292	
+   293		if (size == sizeof(struct ddr_details_v5)
+   294			 + 6 * sizeof(struct ddr_region_v5))
+   295			return INFO_V5_WITH_6_REGIONS;
+   296	
+   297		if (size == sizeof(struct ddr_details_v5)
+   298			 + 6 * sizeof(struct ddr_region_v5)
+   299			 + sizeof(struct ddr_xbl2quantum_smem_data)
+   300			 + sizeof(struct shub_freq_plan_entry))
+   301			return INFO_V5_WITH_6_REGIONS;
+   302	
+   303		if (size == sizeof(struct ddr_details_v5)
+   304			 + 6 * sizeof(struct ddr_region_v5)
+   305			 + sizeof(struct ddr_misc_info_v6)
+   306			 + sizeof(struct shub_freq_plan_entry))
+   307			return INFO_V6;
+   308	
+   309		if (size == sizeof(struct ddr_details_v7)
+   310			 + 4 * sizeof(struct ddr_region_v5)
+   311			 + sizeof(struct ddr_misc_info_v6)
+   312			 + sizeof(struct shub_freq_plan_entry))
+   313			return INFO_V7;
+   314	
+   315		if (size == sizeof(struct ddr_details_v7)
+   316			 + 6 * sizeof(struct ddr_region_v5)
+   317			 + sizeof(struct ddr_misc_info_v6)
+   318			 + sizeof(struct shub_freq_plan_entry))
+   319			return INFO_V7_WITH_6_REGIONS;
+   320	
+   321		return INFO_UNKNOWN;
+   322	}
+   323	
+   324	static int smem_dram_frequencies_show(struct seq_file *s, void *unused)
+   325	{
+   326		struct smem_dram *dram = s->private;
+   327	
+   328		for (int i = 0; i < dram->num_frequencies; i++)
+   329			seq_printf(s, "%lu\n", dram->frequencies[i]);
+   330	
+   331		return 0;
+   332	}
+   333	DEFINE_SHOW_ATTRIBUTE(smem_dram_frequencies);
+   334	
+   335	static int smem_hbb_show(struct seq_file *s, void *unused)
+   336	{
+   337		struct smem_dram *dram = s->private;
+   338	
+   339		if (!dram->hbb)
+   340			return -EINVAL;
+   341	
+   342		seq_printf(s, "%d\n", dram->hbb);
+   343	
+   344		return 0;
+   345	}
+   346	DEFINE_SHOW_ATTRIBUTE(smem_hbb);
+   347	
+   348	struct dentry *smem_dram_parse(struct device *dev)
+   349	{
+   350		struct dentry *debugfs_dir;
+   351		enum ddr_info_version ver;
+   352		struct smem_dram *dram;
+   353		size_t actual_size;
+   354		void *data = NULL;
+   355	
+   356		/* No need to check qcom_smem_is_available(), this func is called by the SMEM driver */
+   357		data = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_DDR_INFO_ID, &actual_size);
+   358		if (IS_ERR_OR_NULL(data))
+   359			return ERR_PTR(-ENODATA);
+   360	
+   361		ver = smem_dram_infer_struct_version(actual_size);
+   362		if (ver < 0) {
+   363			/* Some SoCs don't provide data that's useful for us */
+   364			return ERR_PTR(-ENODATA);
+   365		} else if (ver == INFO_UNKNOWN) {
+   366			/* In other cases, we may not have added support for a newer struct revision */
+   367			pr_err("Found an unknown type of DRAM info struct (size = %zu)\n", actual_size);
+   368			return ERR_PTR(-EINVAL);
+   369		}
+   370	
+   371		dram = devm_kzalloc(dev, sizeof(*dram), GFP_KERNEL);
+   372		if (!dram)
+   373			return ERR_PTR(-ENOMEM);
+   374	
+   375		switch (ver) {
+   376		case INFO_V3:
+   377			smem_dram_parse_v3_data(dram, data, false);
+   378			break;
+   379		case INFO_V3_WITH_14_FREQS:
+ > 380			smem_dram_parse_v3_data(dram, data, true);
 
-pwrseq doesn't currently have the power-on/off functions factored out
-either because they're so trivial, but I might even consider factoring
-those out first, e.g.:
-
-  pci_pwrctrl_pwrseq_power_on(struct pci_pwrctrl_pwrseq *pwrseq)
-
-If we did that, this patch would be strictly conversion from
-driver-specific pointer to "struct pci_pwrctrl *pwrctrl" followed by
-"<driver-specific pointer = container_of(...)", so all three driver
-changes would be identical and trivial to describe and review:
-
-  - pci_pwrctrl_pwrseq_power_on(struct pci_pwrctrl_pwrseq *pwrseq)
-  + pci_pwrctrl_pwrseq_power_on(struct pci_pwrctrl *pwrctrl)
-  +   struct pci_pwrctrl_pwrseq *pwrseq = container_of(...);
-
-  - tc9563_pwrctrl_bring_up(struct pci_pwrctrl_tc9563 *tc9563)
-  + tc9563_pwrctrl_power_on(struct pci_pwrctrl *pwrctrl)
-  +   struct pci_pwrctrl_tc9563 *tc9563 = container_of(...);
-
-  - pci_pwrctrl_slot_power_on(struct pci_pwrctrl_slot *slot)
-  + pci_pwrctrl_slot_power_on(struct pci_pwrctrl *pwrctrl)
-  +   struct pci_pwrctrl_slot *slot = container_of(...);
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
