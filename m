@@ -1,141 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-89026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58B64D1FFCB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 16:56:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 21B4BD200DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:05:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 63CBA305BD0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:51:30 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2DAF9309455C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 15:58:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 790833A0EB4;
-	Wed, 14 Jan 2026 15:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D08233A1CEC;
+	Wed, 14 Jan 2026 15:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oV99po6T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ur3U5zKd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1779C39E6F3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B853A1A4B;
+	Wed, 14 Jan 2026 15:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768405885; cv=none; b=nLze6SUprCgZ5Sm9YiY0yM53CXMRyxyYJ11Ex46sIQbK6OVWncUXK4gwr3ZiN/0r9+V+1FEzPAPUjd6AYl/wE/XCvvaT9CW5U7xsjjfa4Fg0jru1HiPdpiHwRc15Pjv48Gdi3YDBWbIOe3JKvVosAOHXmdChGe9IZwCr7ygB1Jk=
+	t=1768406296; cv=none; b=EqlJmTv+Tkqg16iFoV0gqkISplzL8K4ZkiskmBCcvty4QMGhpzSbUDq00er9apFKoAI2riDGb7jJY5JO53WoQ8wrUaMh/hAqXNfrN9UM0ifEe/nx6BFZPvaZGvOzT+1JW8sdpUsiW/w+6t/EQnwAkw2kxsY+oJEQlPzBNY+yw3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768405885; c=relaxed/simple;
-	bh=o+OEjagxl3Dsp9tfzVfdkpH30i7BI82gz0LPNnSdpig=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sX4pi2GExtyD/vdLJTHdc2dgqfeJNsRQr05TX4Vx/6POAdnI0Uv7JtYJ+PBSIuulaITxMauU84qo0AwJ19uWJ+e+fMyL+qeKZ8Jbq6EKtxt4IwyhRDZoAlaEN17ZD5tS+qkmKaDy50BD40HytSbuPKRIqHg60bHYSSrTVCkOJJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oV99po6T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E9DC2BC87
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 15:51:24 +0000 (UTC)
+	s=arc-20240116; t=1768406296; c=relaxed/simple;
+	bh=QanyVSWBKe+JzUOUmqB7BTbGxRlV2DYOfGGSfkoxW/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y8oCQGimH9+dticGNnuulnDtrRP7XGP8ZhwPfuLWo3eoIbpwjrTNl7RGtCrDdDN46GxAGUyfWEV+CngHZp6zy+GX3LFWzW6P33TGHDTz6mXdFD3x9Gw4mpceDy0mT/NaXoiAgciva44KUTfl28UXz1qqWF3JS0FMRqSI2oD7a74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ur3U5zKd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E54C2BC86;
+	Wed, 14 Jan 2026 15:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768405884;
-	bh=o+OEjagxl3Dsp9tfzVfdkpH30i7BI82gz0LPNnSdpig=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=oV99po6TWGN66FZNu68+tXjcgzzqBQtGJvf2c8saHanKFdPhspHdN1GZhrIuKHsjA
-	 SSaK553cE8RqTE9v+zDUd5FQKz+/3T4i9cqDqTRHzBm3/BfwNeUg+rXwCFPNMv3lfP
-	 VpSxIlY+dw1Fw7wsW+/9LYbD+RutrbCzTA8Mylhfhov3GmNi+rucwYfFT/X3vZWGiA
-	 WILUNvyzJnrTxcvlnKleNtMnCmVjlMG583qwqABoqIIkKBYV1e3BEvsmgTI2szUAqe
-	 uW6qTnrSALTVmaXdGHVC8vuISvQJ799TukaeaRMWgtsFbsmto7ZcgaMc4ENjXC9NuD
-	 DG6xpGwrOmAuw==
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-59b7b27ebf2so5696312e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 07:51:24 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXWAVfwEIMLbKLyVA34ZrbFcLQ9eT8kLADB53S8ZHxKv1X+SBNuyrDib8fBsvKY+IOTnxJVft6j8nvD+PdW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLju1q5j2eXaeD+xPMNYmW8IB+9mZJHvEG6LwkFIAPqc3l+x31
-	AYTF1xHyR/us+A+N3wH/Zs1ASwXAMpuLLofxP37F8wmOw2Y/hvGGftUj+sKIVr65fZE7wkySuUy
-	ZAgBKcNU2cCXVafR6+54OwSeiMmy8q42ByA+N21ALSQ==
-X-Received: by 2002:a05:6512:2316:b0:59b:8472:48ca with SMTP id
- 2adb3069b0e04-59ba0f63088mr1131918e87.12.1768405882412; Wed, 14 Jan 2026
- 07:51:22 -0800 (PST)
+	s=k20201202; t=1768406296;
+	bh=QanyVSWBKe+JzUOUmqB7BTbGxRlV2DYOfGGSfkoxW/s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ur3U5zKd022GEGRb35k3dsX/tO52q0f3pgneM/wQUcB9PpHxHRTRQtfjlAQ3+qFlE
+	 ItIDvKE6ABHe/VW87R1pES/MnSr7CcPkuNs/FW7k7bqF8lNba8t5TB2khwQUMhdnRg
+	 WurWq/sGkak85C5s65HIalRX21bpmTR0attY8YyeiS8Yl2xLYHQ0KY93/3RxRt16fo
+	 WAlH4LQv8i8+uda+N6kp9oHJXHwxhKIF1QmUInreUXKEhJW97shC8W40dlEif/XBPD
+	 ZsqwZGarT1b+8buck8v7R/kyzSwQlfYl9fpgTgz0+MSVdZ1rd96IAyU9M0LriKip2F
+	 FYVUTKvMXBHsw==
+Date: Wed, 14 Jan 2026 21:27:58 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org
+Subject: Re: [PATCH v4 2/9] serdev: Add an API to find the serdev controller
+ associated with the devicetree node
+Message-ID: <ulj3qaurlauut76oyatdtkbo22jqsll43kzu272y2j32753ac6@gwmolgrilxeh>
+References: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
+ <20260112-pci-m2-e-v4-2-eff84d2c6d26@oss.qualcomm.com>
+ <CAMRc=McDvQoqfH0Gy-wzbcEGvNCZACSACCcviwpCc4YNSpKYrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
- <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
- <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch> <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
- <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
-In-Reply-To: <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Wed, 14 Jan 2026 16:51:10 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Md-z9+RdVPB9kKeVwWWJni7se7HfbhwGmvQ9Wd3CwJqeQ@mail.gmail.com>
-X-Gm-Features: AZwV_QiTx85beob9IcsRkXcH-FzLKf11MkfoXrcsCiRgQ4kLBhgc1kcRpkaBWZY
-Message-ID: <CAMRc=Md-z9+RdVPB9kKeVwWWJni7se7HfbhwGmvQ9Wd3CwJqeQ@mail.gmail.com>
-Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
- generic device properties
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
-	Romain Gantois <romain.gantois@bootlin.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
-	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
-	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
-	Samin Guo <samin.guo@starfivetech.com>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=McDvQoqfH0Gy-wzbcEGvNCZACSACCcviwpCc4YNSpKYrw@mail.gmail.com>
 
-On Tue, Jan 13, 2026 at 11:06=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wrote=
-:
->
-> On Tue, Jan 13, 2026 at 01:36:53PM +0100, Bartosz Golaszewski wrote:
-> > On Mon, Jan 12, 2026 at 2:45=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wr=
-ote:
-> > >
-> > > On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
-> > > > From: Bartosz Golaszewski <brgl@kernel.org>
-> > > >
-> > > > In order to drop the dependency on CONFIG_OF, convert all device pr=
-operty
-> > > > getters from OF-specific to generic device properties and stop pull=
-ing
-> > > > in any linux/of.h symbols.
-> > >
-> > > Is the intention to read these properties from ACPI tables?
-> > >
+On Tue, Jan 13, 2026 at 08:54:55AM -0500, Bartosz Golaszewski wrote:
+> On Mon, 12 Jan 2026 17:26:01 +0100, Manivannan Sadhasivam via B4 Relay
+> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > >
-> > No. Other than a couple property getters which can use the fwnode
-> > abstraction, there's nothing here that requires the OF dependence.
->
-> So what is the need for not using OF? Why do you want this patch?
->
+> > Add of_find_serdev_controller_by_node() API to find the serdev controller
+> > device associated with the devicetree node.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/tty/serdev/core.c | 16 ++++++++++++++++
+> >  include/linux/serdev.h    |  9 +++++++++
+> >  2 files changed, 25 insertions(+)
+> >
+> > diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+> > index b33e708cb245..25382c2d63e6 100644
+> > --- a/drivers/tty/serdev/core.c
+> > +++ b/drivers/tty/serdev/core.c
+> > @@ -504,6 +504,22 @@ struct serdev_controller *serdev_controller_alloc(struct device *host,
+> >  }
+> >  EXPORT_SYMBOL_GPL(serdev_controller_alloc);
+> >
+> > +/**
+> > + * of_find_serdev_controller_by_node() - Find the serdev controller associated
+> > + *					 with the devicetree node
+> > + * @node:	Devicetree node
+> > + *
+> > + * Return: Pointer to the serdev controller associated with the node. NULL if
+> > + * the controller is not found.
+> > + */
+> 
+> Please also say that the caller is responsible for calling
+> serdev_controller_put() on the returned object.
+> 
 
-We've had a higher-level abstraction for OF nodes for years now. Since
-I'm already touching the driver, it makes sense to switch to using it,
-as OF-centric APIs are not recommended in new code even if it's an
-OF-only driver.
+Ack.
 
-Bartosz
+- Mani
+
+> Bart
+> 
+> > +struct serdev_controller *of_find_serdev_controller_by_node(struct device_node *node)
+> > +{
+> > +	struct device *dev = bus_find_device_by_of_node(&serdev_bus_type, node);
+> > +
+> > +	return (dev && dev->type == &serdev_ctrl_type) ? to_serdev_controller(dev) : NULL;
+> > +}
+> > +EXPORT_SYMBOL_GPL(of_find_serdev_controller_by_node);
+> > +
+> >  static int of_serdev_register_devices(struct serdev_controller *ctrl)
+> >  {
+> >  	struct device_node *node;
+> > diff --git a/include/linux/serdev.h b/include/linux/serdev.h
+> > index ecde0ad3e248..db9bfaba0662 100644
+> > --- a/include/linux/serdev.h
+> > +++ b/include/linux/serdev.h
+> > @@ -333,4 +333,13 @@ static inline bool serdev_acpi_get_uart_resource(struct acpi_resource *ares,
+> >  }
+> >  #endif /* CONFIG_ACPI */
+> >
+> > +#ifdef CONFIG_OF
+> > +struct serdev_controller *of_find_serdev_controller_by_node(struct device_node *node);
+> > +#else
+> > +struct serdev_controller *of_find_serdev_controller_by_node(struct device_node *node)
+> > +{
+> > +	return NULL;
+> > +}
+> > +#endif /* CONFIG_OF */
+> > +
+> >  #endif /*_LINUX_SERDEV_H */
+> >
+> > --
+> > 2.48.1
+> >
+> >
+> >
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
