@@ -1,129 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-88949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-88950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AD07D1D6F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:15:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1576D1D724
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 10:16:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5CCB5308276B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:04:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5BFD930BF30B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 09:06:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5A3A37BE98;
-	Wed, 14 Jan 2026 09:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786BA387361;
+	Wed, 14 Jan 2026 09:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="X/u2b6SJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WA6usuek"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565D0199D8;
-	Wed, 14 Jan 2026 09:04:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CACD30E82B;
+	Wed, 14 Jan 2026 09:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768381441; cv=none; b=amgUZBhAzkGw6hv6aiI5UaOqPjYh9yWl7a2XIIvF9Uo+JT+a0PXayH1D3LiHmmhFQuiyJYKM/fGWZqnQFR8m6u0BR8NzziUXAyDtZ22kvYgsoXUJ3TogHGeKBYdqTh49p2zvpJehppKT6aQOrnSzy7dxlEyRF02WywC17H/dWSA=
+	t=1768381564; cv=none; b=G3FRtpc4HrJnOv7G+yTfst8Ju43VvHy2sNZW42XWltFzWLMh1ctPTTd6VLdKBzmSeOuUO1LBmhhztEjphduQFTBgTUsRoDEc2ltH6wFgqy6qMt3rq7BBp8p8+gYoNNsIid61/kFpld9TP3vtMRkf8SNNda9UCN7gm0EzUa7xJik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768381441; c=relaxed/simple;
-	bh=Bmm0bfKxZ+xyalDgjLpooMd2+oroWes+csIA7YD0GgI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YK39lVc7KJE2Mhmxq9yAp7E7Ythb3lmzI9TFLUpNQ2jQaIOL+HFeQUvcvN1mnV/crOLFEftNKzfQ2eX6ESoOOEV4qLNTRUIxrhho2W9wf+DZXbjiNb7ewgbjbm3txRuGR3R4pAcvHmbXNM3qNEx7GtoRdSzsURfRYNglao8+8q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=X/u2b6SJ; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1768381438;
-	bh=Bmm0bfKxZ+xyalDgjLpooMd2+oroWes+csIA7YD0GgI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=X/u2b6SJCtcwt9Bho1PZTO40juQP1tyyx1u38RDQ7fr6ngfDMuar6iImWPTI/oN6j
-	 xzTvyj/yGiMtvpRMUcQLHQvyMdud06q2FEBWS6ij055CR/AA1YFcAZ7qTgw6SHD5eh
-	 R2DbDxDytSJK6rKK/FSI8O+EFI392WyPQ7/28wHwbbDSDccYA5xYu1TcBoYRqhMD8N
-	 N8HYGLbav2Kx+1mVIWh+Ra0T0CMqpAuSYGMP9kcJotJn0imGx0pTmJFkSPcthwuCNd
-	 KNkjBohB4PL2HgZNpQ0SqAWj4QNvRNEgeRHU8/0jFgDN3+HL2HNAmMlfDN4V80ae8z
-	 1bADCDusEVD0w==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 86CFF17E13C3;
-	Wed, 14 Jan 2026 10:03:57 +0100 (CET)
-Message-ID: <401c5e7b-ff33-44e8-98a5-8cc6af4f2a87@collabora.com>
-Date: Wed, 14 Jan 2026 10:03:57 +0100
+	s=arc-20240116; t=1768381564; c=relaxed/simple;
+	bh=z8JMD/67eqjZ9kzPMFeujRha7sVyRHasdTbZAjbLZ7k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t4i78nAS1N6fB0pXqJL2h4oZd9QJke3awtqGPxXieVlgZMILB9dtoIXM8TD35lAEQqUcVW09AcclWG1iyOpjyBmyxVcAAYXs9voAd0HCCUqV+TLfleEThRaxjgkBkG6zt9L+fYaVqmELcHTnwZmqNz6DRU9klliqD1hwIeGskyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WA6usuek; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768381562; x=1799917562;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=z8JMD/67eqjZ9kzPMFeujRha7sVyRHasdTbZAjbLZ7k=;
+  b=WA6usuekNcVf+M95KUV0pBSAgFxkbAq1bdoYqi8+Auw2Fx6vLeZvaQSq
+   ohjjGuweKWQE7C6Wh7wlw3kt3cxhj+7vi66p90kFhtgdPq7gjIKHasp0L
+   MlhqAYPXbgsCAgsO/U0pGf3IdKQE3axKEiFqye99YObLPdM/xvnQjoj++
+   kkVrj+RcA7BvGiz06/OxBRFSx6R92hWhQigY1AUTCAL/NInyS9khbEP7g
+   125mwwgfVVm8yjExB7+rbt2Ium3lUZgkesO0SR6enjmwEnBa379arnSqg
+   4jz7rQuJ6hDsA7dD5bGQrNq3KE9Ea9iwruqj5U0W6KDO8/0/8fjsDtwS3
+   g==;
+X-CSE-ConnectionGUID: yp+yI/KyQg+5vHQYziEIBA==
+X-CSE-MsgGUID: HMzCftw/SJSOtLaebODYHg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11670"; a="69728881"
+X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
+   d="scan'208";a="69728881"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 01:06:01 -0800
+X-CSE-ConnectionGUID: pRSBKz3ySZGVDB6pBJwWiQ==
+X-CSE-MsgGUID: pHSYxn8WS/KQJ7fkbYseMA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,225,1763452800"; 
+   d="scan'208";a="209674205"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.83])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 01:05:55 -0800
+Date: Wed, 14 Jan 2026 11:05:51 +0200
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
+	andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+	srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org,
+	sre@kernel.org, sboyd@kernel.org, krzk@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
+	melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
+	ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org,
+	luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com,
+	mitltlatltl@gmail.com, krishna.kurapati@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org, kernel@collabora.com,
+	Jonathan Cameron <jonathan.cameron@huawei.com>
+Subject: Re: [PATCH v7 09/10] iio: adc: qcom-spmi-iadc: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <aWdcb9bTLJqhZ4Bf@smile.fi.intel.com>
+References: <20260114083957.9945-1-angelogioacchino.delregno@collabora.com>
+ <20260114083957.9945-10-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 05/10] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com,
- andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
- srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org,
- sre@kernel.org, sboyd@kernel.org, krzk@kernel.org,
- dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
- melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
- ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org, luca.weiss@fairphone.com,
- konrad.dybcio@oss.qualcomm.com, mitltlatltl@gmail.com,
- krishna.kurapati@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com
-References: <20260114083957.9945-1-angelogioacchino.delregno@collabora.com>
- <20260114083957.9945-6-angelogioacchino.delregno@collabora.com>
- <aWdaWY2tWUMllOHH@smile.fi.intel.com>
- <8bf79979-0946-4ed9-b8d4-c442a6e54833@collabora.com>
- <aWdbPze-f_2_5EbL@smile.fi.intel.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <aWdbPze-f_2_5EbL@smile.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260114083957.9945-10-angelogioacchino.delregno@collabora.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Il 14/01/26 10:00, Andy Shevchenko ha scritto:
-> On Wed, Jan 14, 2026 at 09:59:40AM +0100, AngeloGioacchino Del Regno wrote:
->> Il 14/01/26 09:56, Andy Shevchenko ha scritto:
->>> On Wed, Jan 14, 2026 at 09:39:52AM +0100, AngeloGioacchino Del Regno wrote:
->>>> Some Qualcomm PMICs integrate a SDAM device, internally located in
->>>> a specific address range reachable through SPMI communication.
->>>>
->>>> Instead of using the parent SPMI device (the main PMIC) as a kind
->>>> of syscon in this driver, register a new SPMI sub-device for SDAM
->>>> and initialize its own regmap with this sub-device's specific base
->>>> address, retrieved from the devicetree.
->>>>
->>>> This allows to stop manually adding the register base address to
->>>> every R/W call in this driver, as this can be, and is now, handled
->>>> by the regmap API instead.
+On Wed, Jan 14, 2026 at 09:39:56AM +0100, AngeloGioacchino Del Regno wrote:
+> Some Qualcomm PMICs integrate an Current ADC device, reachable
+> in a specific address range over SPMI.
 > 
-> ...
+> Instead of using the parent SPMI device (the main PMIC) as a kind
+> of syscon in this driver, register a new SPMI sub-device and
+> initialize its own regmap with this sub-device's specific base
+> address, retrieved from the devicetree.
 > 
->>>> +	struct regmap_config sdam_regmap_config = {
->>>> +		.reg_bits = 16,
->>>> +		.val_bits = 8,
->>>
->>>> +		.max_register = 0x100,
->>>
->>> Are you sure? This might be a bad naming, but here max == the last accessible.
->>> I bet it has to be 0xff (but since the address is 16-bit it might be actually
->>> 257 registers, but sounds very weird).
->>
->> Yes, I'm sure.
-> 
-> So, what is resided on address 0x100 ?
-> 
+> This allows to stop manually adding the register base address to
+> every R/W call in this driver, as this can be, and is now, handled
+> by the regmap API instead.
 
-I don't remember, this is research from around 5 months ago, when I've sent
-the v1 of this.
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 
-If you really want though, I can incorrectly set max_register to 0xff.
+I see these tags, but just again pointing out that max_register in regmap !=
+MAX! It's MAX - 1, i.e. the last *accessible* register. So, I find personally
+weird the configurations which has 257 registers instead of 256.
 
-Cheers,
-Angelo
+This can be easily checked when dumping register contents via debugfs.
 
->>>> +		.fast_io = true,
->>>> +	};
-> 
-> 
+Plus the same comments applies here as I gave previously.
+
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
 
