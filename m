@@ -1,219 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-89050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6D1FD209EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 18:47:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F26ED209D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 18:46:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C9A2B3065DC1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:46:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 84C0F3052220
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:45:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8DC3328625;
-	Wed, 14 Jan 2026 17:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8B7326932;
+	Wed, 14 Jan 2026 17:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Ls/DvdJO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3f4RUtw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB30322A1D;
-	Wed, 14 Jan 2026 17:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A667324B31
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 17:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768412758; cv=none; b=koqWxhDo0b3xEE52ZZ1SwXYwQ7r51cnia7m2b5iLmT9SOsyUY5JqO/1RI6er0BS7oCvN0C0NjL7Ddh6cVsfVIW4NWwq5rK+btD9IUZ3WP0Ri8xgAN7LMz1JdvUL8mYrFAfQjFd/P2F2JTt5JtOt6tuqaNnLzEzT12+4qVZw0MOg=
+	t=1768412757; cv=none; b=L+CCN0w2hxS0BcN1GZbFpXNYcS2sLqCIrY2dBVW2tYlI348H/pmpC2vuBx5gmPw/3rSgpTDbtateVPxRB2G/QnyPxOvWxBhgE9qlYsRyBRtnOGQQa+usx6WA8h3GVz3HnFOvCvqI/D2swsacPP1Z171A6NuIETsWpDxfgh4eziQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768412758; c=relaxed/simple;
-	bh=dvMV4003XIwPch/kAAX1D1dC4Cj2SAtD8y62MzqhhVQ=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=NnszybFB/+ktohqesFl/zBUluoKs5dW2wpYblwtbfBYwPoLqixUKhBkHZ5lXEtpIVOKH2MGIHVZUV3YulCy7fs0CZEXA6MFpcIVZ2wyfQfqZOnhDQdKP0fxu5Rhk0p4izQa3iDqP0Bocsk/EfkPSjC0/y8QgU4uIalcsCp0vKuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Ls/DvdJO; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=MarsTdgtHs8teQdoPboCZ01yZL+brlqUeB6u3oqnnnU=; b=Ls/DvdJONU9WbjF10boC8I5ZeB
-	R1FQjCz8+2ErEKzTNfBc7arrA4/TPxNTZiuekkgCTwuunC/70eXZdAkkXn3iQ/kRN+GnXwZy3USRx
-	k9SUB/SFJ1tQs/fzJ+JcQ/G+7+oYSNignwvv13F8SjWyALLbTz0PB+NsKfjHGmMIjsJLeuquk1LfQ
-	1JEITX6ZZ5bb3lMgvEf8ihaVeZcP/2FEpFPIdWyJQVO/IYmY6vhNVepIeiZylCpPxAmCmrTj5DdFO
-	kTYnq/oTmG3qpxzFRy9YFJrvfgNbg4OMkI7gAkCztLLvc6GiEP3sZJABh/QzXfJLBOcLxBQDGgXl5
-	BBQ46DFQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:42456 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vg4wA-000000000UU-1kVu;
-	Wed, 14 Jan 2026 17:45:42 +0000
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vg4w7-00000003SGB-2foG;
-	Wed, 14 Jan 2026 17:45:39 +0000
-In-Reply-To: <aWfWDsCoBc3YRKKo@shell.armlinux.org.uk>
-References: <aWfWDsCoBc3YRKKo@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 06/14] net: stmmac: qcom-ethqos: convert to dwmac
- generic SerDes support
+	s=arc-20240116; t=1768412757; c=relaxed/simple;
+	bh=VLyvNJXlQ7uY8tpXWo5FC7Z644s2L6LFH6yjNoy6qEE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Anr/JDteuM2SQ+mfQqdeamOglx8zI2BxXL9vn5sc2UHLk2p43WNF0PXorOY8ZgSb11HI/2DUmuaNjtc0s2faiuVa+bDMBcBwUWtiU9HQUMdbRI2VV6ZmBRIORfZlDddsLksczEkxwPcDS1Wc4aDPqsC0eGcZniN5oigqYqo8Xtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3f4RUtw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3343DC2BCB3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 17:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768412757;
+	bh=VLyvNJXlQ7uY8tpXWo5FC7Z644s2L6LFH6yjNoy6qEE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=L3f4RUtwn3UXoZPZmKpVuAv7wS20RfV9nBeLqZmGUIuaNo8FvXrtH44hdthYVevDH
+	 QSVQZx/Ui5iVSgXFYt4fQV/OR2h5BgZM0KQs8bOzjqskmkZBBtcPZdAQe8kvMzlQV7
+	 0D8fQ5rfmBXgU6sADeLNFwDWj4BiYHWgcJBj3/HVC2LCKSPDslf04gYsc7F7fomOS6
+	 XAeELhC98vWgbpqPJYZUyYa6bAtBZ8ms96XRGp9rnARwthStUCk/pgZyhS8Dvx7NH+
+	 4ef2okqQF+r1LwZp/eSJ0JojapcPG691nvMn06RUn32l9vbyAkm7o3fyZIw/LWsY3F
+	 XlpOzBa2RmVkQ==
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-653780e9eb3so23729a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 09:45:57 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVlhtG7mIlM+JvHj79IJLclxy7YTo67NPIs7SFfiODnC0ar9PqWNT+Jifxj6EwC1vnctTmFT8lSJymNUdjl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/ojde6324m2q73dnz4bMI/FMQdS7Qr5n7R8K3k4+8H2MmIL3/
+	OB1Ue2/2Au7upLF+M4YB4EseFgUtYYnR70pVVIonaEeAnLomr/ewv9Dv3GervjGawStzfUwz1CN
+	AHqfzLrp6MB7V0tTYO3iR+BXCohJ5Gg==
+X-Received: by 2002:a17:907:6d14:b0:b7d:1d1b:217a with SMTP id
+ a640c23a62f3a-b87611110eamr270292166b.34.1768412755531; Wed, 14 Jan 2026
+ 09:45:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vg4w7-00000003SGB-2foG@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Wed, 14 Jan 2026 17:45:39 +0000
+References: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
+ <20260112-pci-m2-e-v4-5-eff84d2c6d26@oss.qualcomm.com> <20260113171424.GA3925312-robh@kernel.org>
+ <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
+In-Reply-To: <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 14 Jan 2026 11:45:42 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJxBNm0y6T7vji6MXgsO65iDJ-tdUEo0cOxkw7EuMKpkg@mail.gmail.com>
+X-Gm-Features: AZwV_Qjd8RRdZiuji8UWlnEg_b-A7CkYgcetFKx6gFJZkZR9Wa6Q2Mjzt04XOZQ
+Message-ID: <CAL_JsqJxBNm0y6T7vji6MXgsO65iDJ-tdUEo0cOxkw7EuMKpkg@mail.gmail.com>
+Subject: Re: [PATCH v4 5/9] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key E connector
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Convert qcom-ethqos to use the dwmac core's generic SerDes support,
-which will handle SerDes initialisation, powering, and mode setting.
+On Wed, Jan 14, 2026 at 10:14=E2=80=AFAM Manivannan Sadhasivam <mani@kernel=
+.org> wrote:
+>
+> On Tue, Jan 13, 2026 at 11:14:24AM -0600, Rob Herring wrote:
+> > On Mon, Jan 12, 2026 at 09:56:04PM +0530, Manivannan Sadhasivam wrote:
+> > > Add the devicetree binding for PCIe M.2 Mechanical Key E connector de=
+fined
+> > > in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
+> > > provides interfaces like PCIe or SDIO to attach the WiFi devices to t=
+he
+> > > host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
+> > > devices. Spec also provides an optional interface to connect the UIM =
+card,
+> > > but that is not covered in this binding.
+> > >
+> > > The connector provides a primary power supply of 3.3v, along with an
+> > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operati=
+ng at
+> > > 1.8v sideband signaling.
+> > >
+> > > The connector also supplies optional signals in the form of GPIOs for=
+ fine
+> > > grained power management.
+> > >
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualc=
+omm.com>
+> > > ---
+> > >  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++++++++++=
+++++++++++
+> > >  MAINTAINERS                                        |   1 +
+> > >  2 files changed, 155 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-e-co=
+nnector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-e-connec=
+tor.yaml
+> > > new file mode 100644
+> > > index 000000000000..b65b39ddfd19
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector=
+.yaml
+> > > @@ -0,0 +1,154 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/connector/pcie-m2-e-connector.yam=
+l#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: PCIe M.2 Mechanical Key E Connector
+> > > +
+> > > +maintainers:
+> > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > +
+> > > +description:
+> > > +  A PCIe M.2 E connector node represents a physical PCIe M.2 Mechani=
+cal Key E
+> > > +  connector. Mechanical Key E connectors are used to connect Wireles=
+s
+> > > +  Connectivity devices including combinations of Wi-Fi, BT, NFC to t=
+he host
+> > > +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and I2C.
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    const: pcie-m2-e-connector
+> > > +
+> > > +  vpcie3v3-supply:
+> > > +    description: A phandle to the regulator for 3.3v supply.
+> > > +
+> > > +  vpcie1v8-supply:
+> > > +    description: A phandle to the regulator for VIO 1.8v supply.
+> >
+> > I don't see any 1.8V supply on the connector. There are 1.8V IOs and yo=
+u
+> > may need something in DT to ensure those are powered. However, there's
+> > no guarantee that it's a single supply.
+> >
+>
+> 1.8v VIO supply is an optional supply and is only required if the platfor=
+m
+> supports 1.8v for sideband signals such as PERST#, WAKE#... I can include=
+ it in
+> the example for completeness.
 
-Note that generic support requires the SerDes to support phy_validate()
-in order to probe which PHY interface modes are supported, and
-phy_set_mode_ext() to configure the appropriate PHY interface mode
-(and thus the speed.)
+My point is that PERST# and WAKE# supplies could be 2 different 1.8V
+supplies and those supply the I/O pads of the GPIO pins (and possibly
+external pull-ups) that drive them. The 1.8V supply doesn't supply
+1.8V to the slot, so making it a slot/connector property is wrong.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 50 ++-----------------
- 1 file changed, 3 insertions(+), 47 deletions(-)
+This isn't exactly a new issue. It could be an issue on any binding
+with GPIOs. Perhaps this needs to be handled within GPIO or pinctrl.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 80ea69fc8ee5..a0b893d3fbd4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -103,8 +103,6 @@ struct qcom_ethqos {
- 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
- 
- 	struct clk *link_clk;
--	struct phy *serdes_phy;
--	int serdes_speed;
- 	phy_interface_t phy_mode;
- 
- 	const struct ethqos_emac_por *por;
-@@ -584,14 +582,6 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos, int speed)
- 	return 0;
- }
- 
--static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
--{
--	if (ethqos->serdes_speed != speed) {
--		phy_set_speed(ethqos->serdes_phy, speed);
--		ethqos->serdes_speed = speed;
--	}
--}
--
- static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
- {
- 	stmmac_pcs_ctrl_ane(priv, enable, 0);
-@@ -609,17 +599,14 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos, int speed)
- 	case SPEED_2500:
- 		rgmii_setmask(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
- 			      RGMII_IO_MACRO_CONFIG2);
--		ethqos_set_serdes_speed(ethqos, SPEED_2500);
- 		ethqos_pcs_set_inband(priv, false);
- 		break;
- 	case SPEED_1000:
- 		rgmii_setmask(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
- 			      RGMII_IO_MACRO_CONFIG2);
--		ethqos_set_serdes_speed(ethqos, SPEED_1000);
- 		ethqos_pcs_set_inband(priv, true);
- 		break;
- 	case SPEED_100:
--		ethqos_set_serdes_speed(ethqos, SPEED_1000);
- 		ethqos_pcs_set_inband(priv, true);
- 		break;
- 	case SPEED_10:
-@@ -627,7 +614,6 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos, int speed)
- 			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR,
- 					 SGMII_10M_RX_CLK_DVDR),
- 			      RGMII_IO_MACRO_CONFIG);
--		ethqos_set_serdes_speed(ethqos, SPEED_1000);
- 		ethqos_pcs_set_inband(priv, true);
- 		break;
- 	}
-@@ -648,30 +634,6 @@ static void ethqos_fix_mac_speed(void *priv, int speed, unsigned int mode)
- 	ethqos_configure(ethqos, speed);
- }
- 
--static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
--{
--	struct qcom_ethqos *ethqos = priv;
--	int ret;
--
--	ret = phy_init(ethqos->serdes_phy);
--	if (ret)
--		return ret;
--
--	ret = phy_power_on(ethqos->serdes_phy);
--	if (ret)
--		return ret;
--
--	return phy_set_speed(ethqos->serdes_phy, ethqos->serdes_speed);
--}
--
--static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
--{
--	struct qcom_ethqos *ethqos = priv;
--
--	phy_power_off(ethqos->serdes_phy);
--	phy_exit(ethqos->serdes_phy);
--}
--
- static int ethqos_clks_config(void *priv, bool enabled)
- {
- 	struct qcom_ethqos *ethqos = priv;
-@@ -790,12 +752,11 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ethqos->serdes_phy = devm_phy_optional_get(dev, "serdes");
--	if (IS_ERR(ethqos->serdes_phy))
--		return dev_err_probe(dev, PTR_ERR(ethqos->serdes_phy),
-+	plat_dat->serdes = devm_phy_optional_get(dev, "serdes");
-+	if (IS_ERR(plat_dat->serdes))
-+		return dev_err_probe(dev, PTR_ERR(plat_dat->serdes),
- 				     "Failed to get serdes phy\n");
- 
--	ethqos->serdes_speed = SPEED_1000;
- 	ethqos_set_clk_tx_rate(ethqos, NULL, plat_dat->phy_interface,
- 			       SPEED_1000);
- 	ethqos_set_func_clk_en(ethqos);
-@@ -816,11 +777,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (data->dma_addr_width)
- 		plat_dat->host_dma_width = data->dma_addr_width;
- 
--	if (ethqos->serdes_phy) {
--		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
--		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
--	}
--
- 	/* Enable TSO on queue0 and enable TBS on rest of the queues */
- 	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
- 		plat_dat->tx_queues_cfg[i].tbs_en = 1;
--- 
-2.47.3
+> > > +
+> > > +    oneOf:
+> > > +      - required:
+> > > +          - port@0
+> > > +
+> > > +  clocks:
+> > > +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the ho=
+st system to
+> > > +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3=
+.1.12.1 for
+> > > +      more details.
+> > > +    maxItems: 1
+> > > +
+> > > +  w-disable1-gpios:
+> > > +    description: GPIO input to W_DISABLE1# signal. This signal is us=
+ed by the
+> > > +      system to disable WiFi radio in the M.2 card. Refer, PCI Expre=
+ss M.2
+> > > +      Specification r4.0, sec 3.1.12.3 for more details.
+> > > +    maxItems: 1
+> > > +
+> > > +  w-disable2-gpios:
+> > > +    description: GPIO input to W_DISABLE2# signal. This signal is us=
+ed by the
+> > > +      system to disable WiFi radio in the M.2 card. Refer, PCI Expre=
+ss M.2
+> > > +      Specification r4.0, sec 3.1.12.3 for more details.
+> > > +    maxItems: 1
+> > > +
+> > > +  viocfg-gpios:
+> > > +    description: GPIO output to IO voltage configuration (VIO_CFG) s=
+ignal. This
+> > > +      signal is used by the M.2 card to indicate to the host system =
+that the
+> > > +      card supports an independent IO voltage domain for the sideban=
+d signals.
+> > > +      Refer, PCI Express M.2 Specification r4.0, sec 3.1.15.1 for mo=
+re details.
+> > > +    maxItems: 1
+> >
+> > What about SDIO and UART WAKE, SDIO RESET, and vendor defined signals?
+> >
+>
+> Not sure about vendor defined signals as they can be either GPIO or inter=
+face
+> signals. How should them be defined?
 
+That kind of breaks any notion of this being a generic slot/connector.
+How's the host supposed to know how to connect them? What if a card
+required them to be driven a certain way before you can discover the
+card? If they can be GPIOs and can be hooked up to the host system
+GPIOs, then you should define GPIOs for them. If they aren't GPIOs on
+a host, then you omit them.
+
+Rob
 
