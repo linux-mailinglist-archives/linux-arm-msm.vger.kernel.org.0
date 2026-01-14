@@ -1,32 +1,32 @@
-Return-Path: <linux-arm-msm+bounces-89052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9A35D209CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 18:46:23 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA549D20A0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 18:48:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 364263002D34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:46:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 40A393044B8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jan 2026 17:46:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E48032860B;
-	Wed, 14 Jan 2026 17:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEAC232863E;
+	Wed, 14 Jan 2026 17:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="onaLIZHP"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="xAEvDUhR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191672FE044;
-	Wed, 14 Jan 2026 17:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B8632570A;
+	Wed, 14 Jan 2026 17:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768412779; cv=none; b=GNexa4fuYTcVLsYp80Uia4pqfubsP7mfe9biCqfz+GHeE4Iyxe25qrjqAw5Ain+VTBNIN+1+Udc6mdKQKIGZMjKvNX2oY5RSTzSQ0xu8vcMIuV9eEzc15sKOvMv1CfJW5W93qvDPWs/nm2to4j5NYxPx0MqIWkBNga43R/02g2g=
+	t=1768412784; cv=none; b=c422QJydGr0/M6jE+o1sAafb6Cuduf7mdOu+5nRyv74M4lX/GO8+wtq5pPiJuPG14K1TYVxxI2KA/eOj3HFqOff6mdw2aa4CdizuI5qohzOxbzjvOinWaJ7F3h+Vu7X5UGTT2MeLePi0hQGF+GdjXuQZYL2wDo4Lx1gI+kEumDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768412779; c=relaxed/simple;
-	bh=Mkl0P4UVCtewya7IlQvFxF2rpNhPVtWfFlJKQphdGEw=;
+	s=arc-20240116; t=1768412784; c=relaxed/simple;
+	bh=Ig891wSW/20SxJRmGTOkZIF8ROQ8/DDTXWbWP2ySlCg=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=B5zSU5uUZ3a8dISCUNwTJ3zXP7cNsmF6PdRWUAiXLIvthTNXiQONoCggCkotDwghkQfWCOoZIomnyqBvJ0SytpFZKeHSyVLTnKzcuaQ1C7uVF9oUuyMsBuTUSyEp9QUzzWUxcqGx7ZS4Gr1KOTs+SWe0lMN1ShG2SdVQyA0RM2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=onaLIZHP; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=MnByfK8p+DmaGOAhr+MIZijNshnv+INUjXCncLWXaT2xYw80uya1c86+oS1ERCfGFR77NgXjwfxWtstBiugJZqD9sntsv1pyjGH1SHHQ4QX5+ALAR74Xa6SvHj0UJqs/ibD1Gtnev7i8CkW7ImBtubH63hAcVHnIuVfoq9qorlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=xAEvDUhR; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -35,22 +35,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=tDh4p51oLv7FOb/arX7mMuMExGy4+nCEFyLLly8x3eE=; b=onaLIZHP8Si2JXl7kNOsY/eU5g
-	KiwxSyPi0fwQTo192AuTA2gzctuDRYFWMk7qNtAgShYpa10/nRG6sYwAIWNPFjfIPk0uxHSvoZBCF
-	fkY0ecHoMvhdiztZxIdmsBd7v9gq/CfCE2GYiCSUGT14ec4VimrlOTh63vw44W8T7ypgmhtqWtl+r
-	ulJSBeA8tQxnxb5NWsuPdp6ZcGwNS0X/OUmwiMMLGYgzY2EH3bhmP4iUZPXUsWBPGCeL64/mziVGY
-	Pg99l8WPHXkUaxIghmwAcO+E81r3O+zD2fOp4KYOj20sxyhGpSf9wI+/0Dtlx0JTGH+Yh3OAputH7
-	TQjTBrag==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:35818 helo=rmk-PC.armlinux.org.uk)
+	bh=2h/tSYyo8iu5oqYURY/nNiWSh/Bd6u+p5RGNHyXJOyE=; b=xAEvDUhRd+Anb0dQa+ELuClTQD
+	lL0d/P8Afx70fCx5tSucw47PCSSBKCBM4B7vSCpGXeYybC9vXc3toKFNrk6CSHUFzkVvwMZnafvBP
+	80Mherll5eudfpMlFCglaiFKNXn2iLvx1fuHN5ZM2VVND6fUhD6pum0v1yxOZTUyOjLOBSW7Q92HD
+	6C1jfxIoYV1Ce3hxXf+6Ky8nnFFze3p2sw+4riXp91FGgvYLs0fFypsZMLOYfjhtmF9EgemmNUEZe
+	AptgvPLv6IIbddpFb5tCwYR0sABxj+Ez11Z4BouAFwFRAfytiSnIHHuxxGZb5HcLwO6VxWX9lMBfQ
+	rTwIhXag==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:35822 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vg4wL-000000000V2-02IK;
-	Wed, 14 Jan 2026 17:45:53 +0000
+	id 1vg4wP-000000000VJ-2Rym;
+	Wed, 14 Jan 2026 17:45:58 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vg4wH-00000003SGO-3kVz;
-	Wed, 14 Jan 2026 17:45:49 +0000
+	id 1vg4wN-00000003SGU-02i7;
+	Wed, 14 Jan 2026 17:45:55 +0000
 In-Reply-To: <aWfWDsCoBc3YRKKo@shell.armlinux.org.uk>
 References: <aWfWDsCoBc3YRKKo@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -72,8 +72,8 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 08/14] net: stmmac: handle integrated PCS
- phy_intf_sel separately
+Subject: [PATCH net-next 09/14] net: stmmac: add BASE-X support to integrated
+ PCS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,101 +83,173 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vg4wH-00000003SGO-3kVz@rmk-PC.armlinux.org.uk>
+Message-Id: <E1vg4wN-00000003SGU-02i7@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Wed, 14 Jan 2026 17:45:49 +0000
+Date: Wed, 14 Jan 2026 17:45:55 +0000
 
-The dwmac core has no support for SGMII without using its integrated
-PCS. Thus, PHY_INTF_SEL_SGMII is only supported when this block is
-present, and it makes no sense for stmmac_get_phy_intf_sel() to decode
-this.
+The integrated PCS supports 802.3z (BASE-X) modes when the Synopsys
+IP is coupled with an appropriate SerDes to provide the electrical
+interface. The PCS presents a TBI interface to the SerDes for this.
+Thus, the BASE-X related registers are only present when TBI mode is
+supported.
 
-None of the platform glue users that use stmmac_get_phy_intf_sel()
-directly accept PHY_INTF_SEL_SGMII as a valid mode.
+dwmac-qcom-ethqos added support for using 2.5G with the integrated PCS
+by calling dwmac_ctrl_ane() directly.
 
-Check whether a PCS will be used by the driver for the interface mode,
-and if it is the integrated PCS, query the integrated PCS for the
-phy_intf_sel_i value to use.
+Add support for 1000BASE-X mode to the integrated PCS support if the
+PCS supports TBI, and 2500BASE-X if we have a SerDes that supports
+this mode.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 15 ++++++++++++---
- drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c  |  9 +++++++++
- drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h  |  2 ++
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_pcs.c  | 95 ++++++++++++++++++-
+ 1 file changed, 92 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 6c515f9efbe7..5254d9d19ffe 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3135,8 +3135,6 @@ int stmmac_get_phy_intf_sel(phy_interface_t interface)
- 		phy_intf_sel = PHY_INTF_SEL_GMII_MII;
- 	else if (phy_interface_mode_is_rgmii(interface))
- 		phy_intf_sel = PHY_INTF_SEL_RGMII;
--	else if (interface == PHY_INTERFACE_MODE_SGMII)
--		phy_intf_sel = PHY_INTF_SEL_SGMII;
- 	else if (interface == PHY_INTERFACE_MODE_RMII)
- 		phy_intf_sel = PHY_INTF_SEL_RMII;
- 	else if (interface == PHY_INTERFACE_MODE_REVMII)
-@@ -3150,13 +3148,24 @@ static int stmmac_prereset_configure(struct stmmac_priv *priv)
- {
- 	struct plat_stmmacenet_data *plat_dat = priv->plat;
- 	phy_interface_t interface;
-+	struct phylink_pcs *pcs;
- 	int phy_intf_sel, ret;
- 
- 	if (!plat_dat->set_phy_intf_sel)
- 		return 0;
- 
- 	interface = plat_dat->phy_interface;
--	phy_intf_sel = stmmac_get_phy_intf_sel(interface);
-+
-+	/* Check whether this mode uses a PCS */
-+	pcs = stmmac_mac_select_pcs(&priv->phylink_config, interface);
-+	if (priv->integrated_pcs && pcs == &priv->integrated_pcs->pcs) {
-+		/* Request the phy_intf_sel from the integrated PCS */
-+		phy_intf_sel = stmmac_integrated_pcs_get_phy_intf_sel(priv,
-+								    interface);
-+	} else {
-+		phy_intf_sel = stmmac_get_phy_intf_sel(interface);
-+	}
-+
- 	if (phy_intf_sel < 0) {
- 		netdev_err(priv->dev,
- 			   "failed to get phy_intf_sel for %s: %pe\n",
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-index 718e5360fca3..cf7337e9ed3e 100644
+index cf7337e9ed3e..edcf36083806 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-@@ -106,6 +106,15 @@ void stmmac_integrated_pcs_irq(struct stmmac_priv *priv, u32 status,
- 	}
- }
+@@ -17,6 +17,50 @@
+ #define GMAC_ANE_LPA	0x0c	/* ANE link partener ability */
+ #define GMAC_TBI	0x14	/* TBI extend status */
  
-+int stmmac_integrated_pcs_get_phy_intf_sel(struct stmmac_priv *priv,
-+					   phy_interface_t interface)
++static enum ethtool_link_mode_bit_indices dwmac_hd_mode_bits[] = {
++	ETHTOOL_LINK_MODE_10baseT_Half_BIT,
++	ETHTOOL_LINK_MODE_100baseT_Half_BIT,
++	ETHTOOL_LINK_MODE_1000baseT_Half_BIT,
++	ETHTOOL_LINK_MODE_100baseFX_Half_BIT,
++	ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
++	ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
++};
++
++static int dwmac_integrated_pcs_validate(struct phylink_pcs *pcs,
++					 unsigned long *supported,
++					 const struct phylink_link_state *state)
 +{
-+	if (interface == PHY_INTERFACE_MODE_SGMII)
-+		return PHY_INTF_SEL_SGMII;
++	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
++	size_t i;
++	u32 val;
++
++	if (phy_interface_mode_is_8023z(state->interface)) {
++		/* ESTATUS_1000_XFULL is always set, so full duplex is
++		 * supported. ESTATUS_1000_XHALF depends on core configuration.
++		 */
++		val = readl(spcs->base + GMAC_TBI);
++		if (~val & ESTATUS_1000_XHALF)
++			for (i = 0; i < ARRAY_SIZE(dwmac_hd_mode_bits); i++)
++				linkmode_clear_bit(dwmac_hd_mode_bits[i],
++						   supported);
++
++		return 0;
++	} else if (state->interface == PHY_INTERFACE_MODE_SGMII) {
++		return 0;
++	}
 +
 +	return -EINVAL;
 +}
 +
- int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset,
- 			       u32 int_mask)
++static unsigned int dwmac_integrated_pcs_inband_caps(struct phylink_pcs *pcs,
++						     phy_interface_t interface)
++{
++	if (phy_interface_mode_is_8023z(interface))
++		return LINK_INBAND_ENABLE | LINK_INBAND_DISABLE;
++
++	return 0;
++}
++
+ static int dwmac_integrated_pcs_enable(struct phylink_pcs *pcs)
  {
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-index 887c4ff302aa..845bcad9d0f7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-@@ -43,6 +43,8 @@ phylink_pcs_to_stmmac_pcs(struct phylink_pcs *pcs)
+ 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
+@@ -52,7 +96,23 @@ static void dwmac_integrated_pcs_get_state(struct phylink_pcs *pcs,
+ 					   unsigned int neg_mode,
+ 					   struct phylink_link_state *state)
+ {
+-	state->link = false;
++	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
++	u32 status, lpa;
++
++	status = readl(spcs->base + GMAC_AN_STATUS);
++
++	if (phy_interface_mode_is_8023z(state->interface)) {
++		/* For 802.3z modes, the PCS block supports the advertisement
++		 * and link partner advertisement registers using standard
++		 * 802.3 format. The status register also has the link status
++		 * and AN complete bits in the same bit location.
++		 */
++		lpa = readl(spcs->base + GMAC_ANE_LPA);
++
++		phylink_mii_c22_pcs_decode_state(state, neg_mode, status, lpa);
++	} else {
++		state->link = false;
++	}
+ }
  
- void stmmac_integrated_pcs_irq(struct stmmac_priv *priv, u32 status,
- 			       struct stmmac_extra_stats *x);
-+int stmmac_integrated_pcs_get_phy_intf_sel(struct stmmac_priv *priv,
-+					   phy_interface_t interface);
- int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset,
- 			       u32 int_mask);
+ static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
+@@ -62,6 +122,8 @@ static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
+ 				       bool permit_pause_to_mac)
+ {
+ 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
++	bool changed = false, ane = true;
++	u32 adv;
+ 	int ret;
  
+ 	if (spcs->interface != interface) {
+@@ -72,12 +134,25 @@ static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
+ 		spcs->interface = interface;
+ 	}
+ 
+-	dwmac_ctrl_ane(spcs->base, 0, 1, spcs->priv->hw->reverse_sgmii_enable);
++	if (phy_interface_mode_is_8023z(interface)) {
++		adv = phylink_mii_c22_pcs_encode_advertisement(interface,
++							       advertising);
++		if (readl(spcs->base + GMAC_ANE_ADV) != adv)
++			changed = true;
++		writel(adv, spcs->base + GMAC_ANE_ADV);
+ 
+-	return 0;
++		ane = neg_mode == PHYLINK_PCS_NEG_INBAND_ENABLED;
++	}
++
++	dwmac_ctrl_ane(spcs->base, 0, ane,
++		       spcs->priv->hw->reverse_sgmii_enable);
++
++	return changed;
+ }
+ 
+ static const struct phylink_pcs_ops dwmac_integrated_pcs_ops = {
++	.pcs_validate = dwmac_integrated_pcs_validate,
++	.pcs_inband_caps = dwmac_integrated_pcs_inband_caps,
+ 	.pcs_enable = dwmac_integrated_pcs_enable,
+ 	.pcs_disable = dwmac_integrated_pcs_disable,
+ 	.pcs_get_state = dwmac_integrated_pcs_get_state,
+@@ -112,6 +187,9 @@ int stmmac_integrated_pcs_get_phy_intf_sel(struct stmmac_priv *priv,
+ 	if (interface == PHY_INTERFACE_MODE_SGMII)
+ 		return PHY_INTF_SEL_SGMII;
+ 
++	if (phy_interface_mode_is_8023z(interface))
++		return PHY_INTF_SEL_TBI;
++
+ 	return -EINVAL;
+ }
+ 
+@@ -140,6 +218,17 @@ int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset,
+ 
+ 	__set_bit(PHY_INTERFACE_MODE_SGMII, spcs->pcs.supported_interfaces);
+ 
++	if (readl(spcs->base + GMAC_AN_STATUS) & BMSR_ESTATEN) {
++		__set_bit(PHY_INTERFACE_MODE_1000BASEX,
++			  spcs->pcs.supported_interfaces);
++
++		/* Only allow 2500Base-X if the SerDes has support. */
++		ret = dwmac_serdes_validate(priv, PHY_INTERFACE_MODE_2500BASEX);
++		if (ret == 0)
++			__set_bit(PHY_INTERFACE_MODE_2500BASEX,
++				  spcs->pcs.supported_interfaces);
++	}
++
+ 	priv->integrated_pcs = spcs;
+ 
+ 	return 0;
 -- 
 2.47.3
 
