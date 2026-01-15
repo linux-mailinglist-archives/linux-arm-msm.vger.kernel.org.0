@@ -1,158 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-89100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E42A3D226DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 06:28:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 311BFD227AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:00:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1CA4F300B37A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 05:28:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5EF813027DA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 06:00:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 472B52D879A;
-	Thu, 15 Jan 2026 05:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F9D12848B2;
+	Thu, 15 Jan 2026 06:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2fDgReC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IbWQyiY8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9094C2D59E8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 05:27:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D142D7DEC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768454880; cv=none; b=jU91XdrBQA3oXrTUqWT+hdiXswIEvnCiRkWQ5IhCytuTJXkFqR7+3jnF3E1IgE7+bkyTWZva3DcAe+V6ov2K3bnNcgK4nPBCPje/pOP/xbLFrDL0uOp0fLwMFQwdWLaeiBg8GzEfb86HFR+NQcGc96zo0l3skdiM32yna5aJDlI=
+	t=1768456818; cv=none; b=tpGkCPoDxSwzO01mhD493rBDQlwFnXLxxpjCyRjEBprAw6ALl5DuL8q4CEniI+xO4H3Uzt7NhNC95tiBfbdNxdJIx7r83fWo/piRCRkusVLHsmOJQEpj6DWoHkj+cDssfqw1DYJzQoYkjiHUdlkKFEC3viAWzB5tzkaTm/l83RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768454880; c=relaxed/simple;
-	bh=oQqaoD9CWxihva9z43UC4l+nSw+HBzDnr6z/ms6gO2w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JxT2TCLBo42PL+HvzExZrOPFjV3S2PdaYvg9RmtwExUkHpcKX1jU2LohNUSnnVcPb2CWcZ2oB+k8coD3vkC3KsMiuXxDoj/IFQ/u5ewWHDij006WiJVLcNeAkiQ2pM6+7APlJjy6+X5XXCZcSX8agxGIPSGIt7ewVdugLqBKuvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2fDgReC; arc=none smtp.client-ip=209.85.167.181
+	s=arc-20240116; t=1768456818; c=relaxed/simple;
+	bh=M2emRNPsd5dLS6UEkhkUcbjO9H7QF2ZNB8ZeyoJWdhM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VM5+iRVhizQ3OKTROdxb7bibk85ztWi8vQhv67LGlWRd2JG6ZwF7OoAHCCTsiBHOyMx8cM3+EulBdyEaoqqRvQNjGhC32p6hDVzxKLjimCjfe54JQzzqFeq13d9sEz0Z43CZz3yZCI15h8QLzRq10z+N13aSgD2MkLibe6c5Eyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IbWQyiY8; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-45c7c841904so345421b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 21:27:58 -0800 (PST)
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc09b3d3afeso235114a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 22:00:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768454877; x=1769059677; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7Hja+osRR3fdOtBUZSkMF+9cn4r00td+5ctV4DGDt1o=;
-        b=T2fDgReCIOabBORtFQ5rg9UknhjuKcCscoLJjwYd70GsczUK9izNhVlA+mHXsQ4cOf
-         7Cm2W0eY0m7dBynv0MygZUFKcs5dncGSSTLVkD8/Ui/I7+fHf1EzW8zZfJc+R38Dsexr
-         FFPQVEo5oX3bWrv/JjHBgFK4iPQwSp7hxj9+6gd0TXcMVrDToOxlSlXF/1vi8eEWNNYW
-         890m55QXNTV4fWfhQIBGFDzq+C9tOJACFaZNjmQtgeE4s7lTUSQxmOz5mC8Na+i5sOsG
-         9+OuihdGM0NdFj3XJgpgyONtFfHeWGmWChoM3yspBjU42hLAqLfUmvHZgFQiQ6hc8sJs
-         aGbA==
+        d=gmail.com; s=20230601; t=1768456816; x=1769061616; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dDgez86Z8vlifJV/rVDagwU1IW0RLqLFSFiUpTN6tUg=;
+        b=IbWQyiY8Yjg8zvPebTf8SXW/92XlwmYeJhCsY4Z0XnnOr9rDqOGrLGqIdgdImrM6AO
+         CWV5CDDSLRilTWMRovnEUp+bx9KYxZHC3WxlAUI8ivFMXmpo/WSPhiD3YRCJjeSw7C1L
+         mzTdFYvBphA4J6C14Vq6eyS/CGsw5AXmBQ1enr8a5QBrdFsQgGQ8wCYLS0CnENkkbKrr
+         scC7TSxkJc/q2SXjU0S1eW+Ua/mNaeBlzqJfCInDB3jupc/8Q0DwGOp3XRUHNZ7S+roh
+         hqlaoZ7tkIxkY3G5tsp1gnlU0ejL4AKOdfaHPqfcLWJV6sFFSp111l+J6mK62+koHbPA
+         0KWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768454877; x=1769059677;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7Hja+osRR3fdOtBUZSkMF+9cn4r00td+5ctV4DGDt1o=;
-        b=mw3DGegc0YDIFj+TII2BuKSSlwfNwkLIh1mRSUhdn7uIAkU+1d84tHyz4BGAZozkhl
-         kmQSzwekRBwGnuwAc2Vs9EEcsCUnTrA9PeJMmS1epedyw6Kxze8eDTxf9PSAZR3/dYv8
-         jmUc4sWBJXhPRI0iNm4UFhHwIzVBW//2pxXMG0t9ibjvho86ZAGDu4AGIX2eCGKm+Wug
-         AMp5wEwiVp6WDTFZ1ULJ1O9fjrPQDDoJ08uKpMfSgc8h5b51m5qS6OInSQ0TfR7IVZtz
-         48T1hDNgQYllmwbhRxkwLQivGXhuNfWRBue3Nzg7v2Eu61MTUZMqEdJUj7pHF+375uod
-         ZlMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXEBsRmx07DRABxogU6caGR+ckdofbTva29Fw1ByDUIQ52nZlfYki45ghgbnifqftymymxF7Zh7gLVSGmmc@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGIr1lgdCEPL1UiJ48HNH9LOOHeZkzG/4vW/n4MzLmEQrn97av
-	z+G2B8Xf3V0fFH8E10jUzjlKSN7cEkkO0n0Ir04LcRBjm1KHiBxGwdaPuhx/+A==
-X-Gm-Gg: AY/fxX7uwG1J6/0kJgX7Y+1QwS4j27gYaTYsQFiYqGfag+R6x0YANzg3LCtQ0WwZE7N
-	/Ry+/ye29uOHQOGYCm8avBFvSa5IkvChmJX60XEs4AZgCq2G+EYjZCsrx6lV5TO/ii9I4JPNK0W
-	xuB2b2zJdkRggq/19qPcxxUMgyx/28zi0nZ3PEu811rb8bF2lFRE1ppVXsjQNcRoSOSZ7Xx4fXN
-	3DfYKIuAIUqi9m+PRU6ab1Eq9ULkBh4q6J0lF0oZK8t8yk17K5srIO/WoOaRIPF9fBjOAw1iKzx
-	8x6MZ7CHIijxBPRIjzbSgPMty8SnHwa9Hx0JIt6EIs1lXSp7AL23dJhWCCGC2ZXxl/xc6ke4bfZ
-	Oj0SJVagpexu4+U1BNYr/uAib3clgyaHYCWMg4ultY57lWWUEEsyZ99o5ifQ7ANmaB1BdzATntb
-	tpkfvWRq5ordnmPLz9O4FOe1+ffZ9QPm2z1jDwzkTAxiMfTMLj93vL6ydkoLBfy/9hjVlzHTNfU
-	29pvwYXLpM340DPgFY+R9nfAFf5x3k=
-X-Received: by 2002:a05:6808:a585:20b0:45c:71ff:1f69 with SMTP id 5614622812f47-45c71ff212fmr2335636b6e.50.1768454877438;
-        Wed, 14 Jan 2026 21:27:57 -0800 (PST)
-Received: from nukework.gtech (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cfd68b13fesm803256a34.3.2026.01.14.21.27.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 21:27:55 -0800 (PST)
-From: "Alex G." <mr.nuke.me@gmail.com>
-To: andersson@kernel.org, krzk+dt@kernel.org, mturquette@baylibre.com,
- linux-remoteproc@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: mathieu.poirier@linaro.org, robh@kernel.org, conor+dt@kernel.org,
- konradybcio@kernel.org, sboyd@kernel.org, p.zabel@pengutronix.de,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject:
- Re: [PATCH v2 0/9] remoteproc: qcom_q6v5_wcss: add native ipq9574 support
-Date: Wed, 14 Jan 2026 23:27:53 -0600
-Message-ID: <27098742.6Emhk5qWAg@nukework.gtech>
-In-Reply-To: <577d547e-6311-49b3-9c74-84797b281447@oss.qualcomm.com>
-References:
- <20260109043352.3072933-1-mr.nuke.me@gmail.com>
- <4814455.tdWV9SEqCh@nukework.gtech>
- <577d547e-6311-49b3-9c74-84797b281447@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1768456816; x=1769061616;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dDgez86Z8vlifJV/rVDagwU1IW0RLqLFSFiUpTN6tUg=;
+        b=DC6YolbF79JKjAefUy4v9b+wtljDswoTzE42uTbLqOArpiE2uZytwt4GLLUJlLtsn5
+         y5aHSTCNbDs+f8QYQ1QyTvTkRqMLuuT6IL1qxa11BKO5Xn11VGZ+uh1q6NQmcPlMceRw
+         M24tNVYnMy/Nynkt1KNC/OFh4XWGBPbhElVN3iIyzXZ8plXbe1xrI/Qczk7u8KiVCnfe
+         YgkDbpMaNE79xnonHBBobGVQ1jNzEBJDFThJXA66MrpUAu9egDu1ZuwNz02xk1JQgLKV
+         8kOGl5pO7DCLE927uIRsA2TyY2q+tCUlvSOJatEbl4wpKJu1l3UFek9A4/EuTDkKR3s2
+         UFyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMMVw1aL3iLHCIU60DJ4+PKdNay0ZG43MbNTbgJ5HO9xS/GrhAyQr0sTAiXcLkbf9d5RrYkmEqwwZwzTrr@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxf7zEXtVW0sjytwKRzWIIvgfUsxTco5ksH9ooI32DFkGDOFAox
+	xdJF3TnQsNdiQrAFtvA/Wysd0lrsiSuKZpPbsZxIUeyOa2mZTgtbsJOX
+X-Gm-Gg: AY/fxX5WSGcDVHG2zNtS3cAVGOl+VliNjA7kzH3tMUwUeIQFjC51aeU2icuuo0Kx8fG
+	bEymwcyofpYeZ8yA9zY48y5K09jd4v4nJhSSPPVO+usYPmutd5WzUGFmMz+5yon1lOyd6Rw/wAL
+	PvnvRKXQTh2qZJF3HhOi7ZSVShzLPjfdNSAy9NbsXI+Zh3NNz17z3kAWx5+WcTUuRUfRp5Rey+E
+	zt1ovgPbQiyjTBtIjwZtod6zo2KkZBvvhc2o8k9McoNXPWZFuJM64Z+C+7ZUpy4YiClNeEbRJZ+
+	98pNXPD7Yx4FFFhblGC8ijyfxbTSbZiaISqyH6r1qOJSbwLNhBYMiY6wDKuC4kpbjpTmJyrvojF
+	6ofdzUqCIfGOx1+WUI+x2Wy1regd/prAOcjRz2MplIKZYsiS2Jd0QwGXP+wlDqhGmT9UovtdYGd
+	km7GrQs+awMTZUiPAzcj12bBmxhMaUyeSvsA==
+X-Received: by 2002:a05:6a21:32a8:b0:35f:10a7:df67 with SMTP id adf61e73a8af0-38bed0d6fbcmr5294061637.17.1768456815900;
+        Wed, 14 Jan 2026 22:00:15 -0800 (PST)
+Received: from [172.16.20.12] ([136.226.253.21])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cbfd27953sm23744006a12.11.2026.01.14.22.00.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jan 2026 22:00:15 -0800 (PST)
+Message-ID: <fce9ee85-bd84-4e5f-a2ef-81095b071895@gmail.com>
+Date: Thu, 15 Jan 2026 11:30:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 2/3] arm64: dts: qcom: talos/qcs615-ride: Fix
+ inconsistent USB PHY node naming
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260114100043.1310164-1-tessolveupstream@gmail.com>
+ <20260114100043.1310164-3-tessolveupstream@gmail.com>
+ <444b2e30-5675-4a17-89dc-ca24ca3910d9@oss.qualcomm.com>
+Content-Language: en-US
+From: tessolveupstream@gmail.com
+In-Reply-To: <444b2e30-5675-4a17-89dc-ca24ca3910d9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wednesday, January 14, 2026 4:26:36 AM CST Konrad Dybcio wrote:
-> On 1/14/26 4:54 AM, Alex G. wrote:
-> > On Tuesday, January 13, 2026 8:28:11 AM CST Konrad Dybcio wrote:
-> >> On 1/9/26 5:33 AM, Alexandru Gagniuc wrote:
-> >>> Support loading remoteproc firmware on IPQ9574 with the qcom_q6v5_wcss
-> >>> driver. This firmware is usually used to run ath11k firmware and enable
-> >>> wifi with chips such as QCN5024.
-> >>> 
-> >>> When submitting v1, I learned that the firmware can also be loaded by
-> >>> the trustzone firmware. Since TZ is not shipped with the kernel, it
-> >>> makes sense to have the option of a native init sequence, as not all
-> >>> devices come with the latest TZ firmware.
-> >>> 
-> >>> Qualcomm tries to assure us that the TZ firmware will always do the
-> >>> right thing (TM), but I am not fully convinced
-> >> 
-> >> Why else do you think it's there in the firmware? :(
-> > 
-> > A more relevant question is, why do some contributors sincerely believe
-> > that the TZ initialization of Q6 firmware is not a good idea for their
-> > use case?
-> > 
-> > To answer your question, I think the TZ initialization is an afterthought
-> > of the SoC design. I think it was only after ther the design stage that
-> > it was brought up that a remoteproc on AHB has out-of-band access to
-> > system memory, which poses security concerns to some customers. I think
-> > authentication was implemented in TZ to address that. I also think that
-> > in order to prevent clock glitching from bypassing such verification,
-> > they had to move the initialization sequence in TZ as well.
+
+
+On 14-01-2026 15:49, Konrad Dybcio wrote:
+> On 1/14/26 11:00 AM, Sudarshan Shetty wrote:
+>> The USB PHY nodes has inconsistent labels as 'usb_1_hspy'
+>> and 'usb_hsphy_2' across talos.dtsi and qcs615-ride.dts.
+>> This patch renames them to follow a consistent naming
+>> scheme.
 > 
-> I wouldn't exactly call it an afterthought.. Image authentication (as in,
-> verifying the signature of the ELF) has always been part of TZ, because
-> doing so in a user-modifiable context would be absolutely nonsensical
+> Sorry for only noticing this now, but usb_hsphy_x is wrong..
 > 
-> qcom_scm_pas_auth_and_reset() which configures and powers up the rproc
-> has been there for a really long time too (at least since the 2012 SoCs
-> like MSM8974) and I would guesstimate it's been there for a reason - not
-> all clocks can or should be accessible from the OS (from a SW standpoint
-> it would be convenient to have a separate SECURE_CC block where all the
-> clocks we shouldn't care about are moved, but the HW design makes more
-> sense as-is, for the most part), plus there is additional access control
-> hardware on the platform that must be configured from a secure context
-> (by design) which I assume could be part of this sequence, based on
-> the specifics of a given SoC
+> *every* other dtsi uses usb_x_hsphy, please flip it around
+> 
+> $ rg 'usb_1_hsphy' arch -l | wc -l
+> 93
+> 
+> $ rg 'usb_hsphy_1' arch -l |  wc -l
+> 0
+> 
 
-What was the original use case for the Q6 remoteproc? I see today's use case 
-is as a conduit for ath11k firmware to control PCIe devices. Was that always 
-the case? I imagine a more modern design would treat the remoteproc as 
-untrusted by putting it under a bridge or IOMMU with more strict memory access 
-control, so that firmware couldn't access OS memory.
+I've updated the patch to use usb_x_hsphy naming  
+convention to match the rest of the devicetree files
+as below:
 
+diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+index 0ca6b50a6de1..a5f763cf1a55 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+@@ -609,7 +609,7 @@ bluetooth {
+        };
+ };
 
+-&usb_hsphy_1 {
++&usb_1_hsphy {
+        vdd-supply = <&vreg_l5a>;
+        vdda-pll-supply = <&vreg_l12a>;
+        vdda-phy-dpdm-supply = <&vreg_l13a>;
+@@ -632,7 +632,7 @@ &usb_1_dwc3 {
+        dr_mode = "peripheral";
+ };
+
+-&usb_hsphy_2 {
++&usb_2_hsphy {
+        vdd-supply = <&vreg_l5a>;
+        vdda-pll-supply = <&vreg_l12a>;
+        vdda-phy-dpdm-supply = <&vreg_l13a>;
+diff --git a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+index 95ed335bcb08..a236f8a65937 100644
+--- a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+@@ -556,7 +556,7 @@ &usb_1_dwc3 {
+        dr_mode = "host";
+ };
+
+-&usb_hsphy_1 {
++&usb_1_hsphy {
+        vdd-supply = <&vreg_l5a>;
+        vdda-pll-supply = <&vreg_l12a>;
+        vdda-phy-dpdm-supply = <&vreg_l13a>;
+@@ -572,7 +572,7 @@ &usb_2_dwc3 {
+        dr_mode = "host";
+ };
+
+-&usb_hsphy_2 {
++&usb_2_hsphy {
+        vdd-supply = <&vreg_l5a>;
+        vdda-pll-supply = <&vreg_l12a>;
+        vdda-phy-dpdm-supply = <&vreg_l13a>;
+diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+index c7dc507a50b5..cb32bfe732fb 100644
+--- a/arch/arm64/boot/dts/qcom/talos.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+@@ -4304,7 +4304,7 @@ osm_l3: interconnect@18321000 {
+                        #interconnect-cells = <1>;
+                };
+
+-               usb_hsphy_1: phy@88e2000 {
++               usb_1_hsphy: phy@88e2000 {
+                        compatible = "qcom,qcs615-qusb2-phy";
+                        reg = <0x0 0x88e2000 0x0 0x180>;
+
+@@ -4319,7 +4319,7 @@ usb_hsphy_1: phy@88e2000 {
+                        status = "disabled";
+                };
+
+-               usb_hsphy_2: phy@88e3000 {
++               usb_2_hsphy: phy@88e3000 {
+                        compatible = "qcom,qcs615-qusb2-phy";
+                        reg = <0x0 0x088e3000 0x0 0x180>;
+
+@@ -4412,7 +4412,7 @@ usb_1_dwc3: usb@a600000 {
+                                iommus = <&apps_smmu 0x140 0x0>;
+                                interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+
+-                               phys = <&usb_hsphy_1>, <&usb_qmpphy>;
++                               phys = <&usb_1_hsphy>, <&usb_qmpphy>;
+                                phy-names = "usb2-phy", "usb3-phy";
+
+                                snps,dis-u1-entry-quirk;
+@@ -4476,7 +4476,7 @@ usb_2_dwc3: usb@a800000 {
+                                iommus = <&apps_smmu 0xe0 0x0>;
+                                interrupts = <GIC_SPI 664 IRQ_TYPE_LEVEL_HIGH>;
+
+-                               phys = <&usb_hsphy_2>;
++                               phys = <&usb_2_hsphy>;
+                                phy-names = "usb2-phy";
+
+                                snps,dis_u2_susphy_quirk;
+(END)
+                };
+
+-               usb_hsphy_1: phy@88e2000 {
++               usb_1_hsphy: phy@88e2000 {
+                        compatible = "qcom,qcs615-qusb2-phy";
+                        reg = <0x0 0x88e2000 0x0 0x180>;
+
+@@ -4319,7 +4319,7 @@ usb_hsphy_1: phy@88e2000 {
+                        status = "disabled";
+                };
+
+-               usb_hsphy_2: phy@88e3000 {
++               usb_2_hsphy: phy@88e3000 {
+                        compatible = "qcom,qcs615-qusb2-phy";
+                        reg = <0x0 0x088e3000 0x0 0x180>;
+
+@@ -4412,7 +4412,7 @@ usb_1_dwc3: usb@a600000 {
+                                iommus = <&apps_smmu 0x140 0x0>;
+                                interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+
+-                               phys = <&usb_hsphy_1>, <&usb_qmpphy>;
++                               phys = <&usb_1_hsphy>, <&usb_qmpphy>;
+                                phy-names = "usb2-phy", "usb3-phy";
+
+                                snps,dis-u1-entry-quirk;
+@@ -4476,7 +4476,7 @@ usb_2_dwc3: usb@a800000 {
+                                iommus = <&apps_smmu 0xe0 0x0>;
+                                interrupts = <GIC_SPI 664 IRQ_TYPE_LEVEL_HIGH>;
+
+-                               phys = <&usb_hsphy_2>;
++                               phys = <&usb_2_hsphy>;
+                                phy-names = "usb2-phy";
+
+                                snps,dis_u2_susphy_quirk;
+
+Could you please confirm if this change aligns with your 
+expectation.
 > Konrad
-
-
-
 
 
