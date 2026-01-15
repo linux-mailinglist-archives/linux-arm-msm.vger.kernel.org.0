@@ -1,92 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-89215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFC9FD24D07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 14:51:29 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25986D24DF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 15:07:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EE35130038F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 13:51:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 21C66301395B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 14:02:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54B7639C64A;
-	Thu, 15 Jan 2026 13:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A19EB3A1A36;
+	Thu, 15 Jan 2026 14:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="g6mmNhCj"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="Rmh/KQzc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC65C21C17D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 13:51:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C33A0E85
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 14:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768485088; cv=none; b=KVV80D+3lbKPVwJNovTPFICZHTMQ3wbTkaL41bsBvPFFNeAGEO1hPdyNqfOXbpQnnqsOVRzwFhfc3uY4ldLJ1Pp4qqGtRkWIwoasxfqWkDkb+sUNgKGRKOb0cGaByHLZFreZ9+uVGVCyb3UpIb3TZ1IgdP1yumnX+d6ooPoSqkc=
+	t=1768485734; cv=none; b=QQmNEJa+iPUEUPPvP/IjOB3fSHbR6LCEQIzbyW8q92LZL1s2+yGUJh7y8gY7gw8YNmbZDajqHWAsMy3H6FIGoOoMj/9MotyC1VqsmcPKaiJZoZaC0lbqKlXNcB1w4ggfs2MoNXAaxkotXLbpQcSd6Ghqkis7p42VBJUNKhVouKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768485088; c=relaxed/simple;
-	bh=vDR+DX+ICj5VJSbWgztBSkQDT5kITuGwruv9WcWoYe8=;
+	s=arc-20240116; t=1768485734; c=relaxed/simple;
+	bh=mkebdjfvUNSZgRJJe+5p7S/ViqNXWJxR/XbMtIkcIGo=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=c5uJdfCk13C8AnxQM80T4X+8MkuuYCW7wwEZONtZTBEsoM2bnA6ZVejxTCL6NBa0BmhOVXDzsLVHlcV0SfDZDANbxUkVvVLITGoBFO3xkWkPCWUWUjkX/0N2leaOVED5SsZEooDbYD/hGYW0bEjucaeLHPWjkiM4R8PGbvp2fmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=g6mmNhCj; arc=none smtp.client-ip=209.85.219.42
+	 Content-Type:MIME-Version; b=KJteAIeiWL15slou6ryxITtxnPTWrYDfoc6zOUPDVvJYiMN26+2iGYuf+XpHe2hS0VBEpRerGI7MZR7fnIEiwh8zrUvGTpQc805nkdsU+tXTam2sN7NJetgCCAuV2a2DI+PvrpXj2+1ar0+FwAx4D+/qXEIOde5wzAtkdGcIkXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=Rmh/KQzc; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-88a3b9ddd40so5133336d6.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 05:51:26 -0800 (PST)
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-88a32bf0248so6875476d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:02:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1768485086; x=1769089886; darn=vger.kernel.org;
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1768485732; x=1769090532; darn=vger.kernel.org;
         h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
          :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vDR+DX+ICj5VJSbWgztBSkQDT5kITuGwruv9WcWoYe8=;
-        b=g6mmNhCjtZiOgb6OwwvO1sytwE6ZCmUnUKW02VSlvwlRyWPimzdFwS1rDUd38Vnoyi
-         0uC9w8ZTRDEetIXeD5ZGjDNyhqktrY5YK/1vcoksHBtu/ML+ZgA9UClhkKeMcc+bxH88
-         8y1DCOEl/QBZwjbSKKWAYTuzSUZZI21Z5BRiTFKdThrAUajEZ7SxXGsMzdScb3iyzDa2
-         PIOj0UiNZLGpDLnqTyqSStXNYkvr294Z2mHmF7N+F4Gjvw2y1FYE1DFfmrqaBNtL4kZf
-         vtaFXvHcDHvCaYxkvKNtHzlMP8W9xD4NcC2eoTkkxaLIr5LjdMApxpNiyeJbEDDn8SJW
-         cVGw==
+        bh=mkebdjfvUNSZgRJJe+5p7S/ViqNXWJxR/XbMtIkcIGo=;
+        b=Rmh/KQzc/jAcQm6x2s9qgYfO0mTKVryr9duyHWRNPRQCGzkadBm6znthc1URe1y4/1
+         eMkc2+zbe+K3RYhcLdlPpe/SoxN2KD2wryIQ7LLss5/8NosfdJXKtHJIvzl+kfEJx+xN
+         DCdM1f0FrpnHxu0K2N4EIisMSB3f4NQuPPpfaffPznAopa7qx7T9Agk+6NZFnLqr/gHr
+         nKy9/taKzlnFrn66UWCn2JT5vQGb3NVMAA3qNRhEXfgS8dh9h6ahLJsuCCCno+GNBOPH
+         T3aqhVjbdTd0d1vaXoQaoPGSv67mT9gKrnpsdVIOAL/k5f60zm1EKvTk8hqux6KgLkn0
+         pp5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768485086; x=1769089886;
+        d=1e100.net; s=20230601; t=1768485732; x=1769090532;
         h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
          :from:subject:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vDR+DX+ICj5VJSbWgztBSkQDT5kITuGwruv9WcWoYe8=;
-        b=qCu+VJHylg2j9dRGJgeqEHWi8fE0cY549JWPWSKveO2yHMT19/2gltSNFJGG6LAD2+
-         JtgI7/sGKyKyCbXy8oX2gQ3sKhmomH3BGd6ioY1o/fOIe4XNESm1KpwhJuuIBwBVKkmg
-         PtvYGOgiunrCAbjU6h3tw+DOWcUc/R2o3nGxwwiF1ZU6XSwrVkgMaIPgQbj/xI4m9Qt1
-         dPeU5sODB3dCbdDGwFc1f7iVUgzxK/29IqvS4L3SgnWVBsVaiw1il1wYvvFI35H2Llws
-         /r6nq33QP8cv9Lk3gq8FM/VJkGz1ACNB0/bAl4nhdDSKcwaeB37v+noeRDHKC1Jj+h5L
-         jQQA==
-X-Forwarded-Encrypted: i=1; AJvYcCUoYhx58u0nDyN4LxbU3WIsFsLGnEsqtwo0UcsYNIHqroD8wbJYe87uu2Uh0o5iRp5lcLvaTSFjodMrZg4M@vger.kernel.org
-X-Gm-Message-State: AOJu0YzINwqrWE58yqpFJ2XIWWzn79ztXwZ0pwFePqjoburIfOkX5JBj
-	cUVryv5SzzBRKo+8to8hGADeHSAb4L0Nt6V4KTB76n0wyyRNGyfA8IHx2BtGsBObRZo=
-X-Gm-Gg: AY/fxX6AEeA/Mwf3BEBOfOpek7tEFNRO6ZILIsyBaxhZCdwkCd1+7Rsj6oE09uUygN0
-	+ooQsVhnx9FZQJcvHJDVzDMQx/diUma02CQfaZ223guOo0WSkDVKIsPZR5hWcWN+6LlqXey+Fcq
-	AHz1p3vGjLPewsoO6G73DYEKh4EfB/BNNsOs1gcfks0AMlyU08qjnuoPICf6lAYEa3AdiJjCoV+
-	E932/vHRLTNn4YGMPudZglyQ9Tx1zu/NblHKwP4RHZXTCywKyj7coTXg7q1o6UW0cRSSAnlvuTm
-	JrEKApJGq4HOyMkm4262e8l6smMwGCmriHvzdP2Ez24VEawb+CmyItRDiL0UQlD8KKqlmBD3tPN
-	rHI7wUWpOQMRC/daRcCXyZlimTl9Ffws1sjVqHLZxF3m+CUDk7wuiJHeUzy646SDXxWm2AhxdTp
-	mS/9UwCBu8QgNABuNVN18WBPHbWQA=
-X-Received: by 2002:a05:6214:19c9:b0:880:5edf:d135 with SMTP id 6a1803df08f44-892743ecb4bmr90791336d6.53.1768485085820;
-        Thu, 15 Jan 2026 05:51:25 -0800 (PST)
+        bh=mkebdjfvUNSZgRJJe+5p7S/ViqNXWJxR/XbMtIkcIGo=;
+        b=ch2Ql/+DDNZPJB2y/i5qpZF1ZOt5SYdile+Rdw1knKU3n/vokqZTOx5IjhhhWvy67E
+         /hMYnPum/e8xXFtFyOht/9IBBl/yatvDjLJIynXviYB8l4k3sTTJG1JaiYxjhHf6RST1
+         sztsxw11CMp6aMQWbAiUqVhSk8L8dDfPv/AfPue+1SKm57UlkubBQm320TY0g3GVzfeC
+         W4gVrui72pVEz+AExi9TuU/oq4lGNjUbe7xSFFLfl7WNB8y5mFHWVqpKb1UKSrEL2QoU
+         JZh3ciEspfnukiDzdGpgK/322flaANTQSaznW9yAn3On3RWUmiCOA7d8Y3vGsoBN/XRg
+         amEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV54z+9KljXctowutzpHrllErgz7UHp25tZCQRAaMD0rGV8tuBP0C5YhjUNb7A3zyUItNrrIDcbLnoKR4QU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4Ohw447PllgpbSV3Lvci59j9FqsWFWgM4jkrhdq0ZSpS0qfK4
+	XPd49mZ9EbGaRiEIV5mVBZu1NjXK7F59z3X//OhnCO/5FqHWRPVCblOvNQEFr8LpmI4=
+X-Gm-Gg: AY/fxX4yqCikVuTxultZDd79UGxLEBmrHuyVPdf3axx5dAhhlZmN1UKG6aHz8rERaso
+	YRjxaijd9YyuYmkYQ7IPoSO9ycZiH1eTMksuZQTjTtsLFpnWWHLE770ie5QRyVwxGBFzZ+zGueI
+	FRCyB+zpBPF3QfJ/t8khztJpcwhuLHsrKLHfY/8W54yIewy3ZMoFzox0a2g+TcncHtXnoIZRTOe
+	YwBqGUNTcOP1A9IQ8l4bZvTDmFU65Ap5HdwS4p4tk9w1qX4wkJINrL4D9FMcenMfOfVa7utzDf+
+	di+pBQJIGN0HQ1WJTwBvVhZIfxDNr0Ies2HWIrwPyQnwfEEtMWWx3X+TPXbhUvuU6yyFJm7vPkl
+	QBNFkasHNp7S7D3UjjSzwz8Ay6q+d4UbHA2w9c6Wq1O+Da2Yll/vWawcf4rtv/L9qB2vM9LEiHo
+	yL1WCJx902cj2BEXs9
+X-Received: by 2002:a05:6214:10c2:b0:785:aa57:b5bb with SMTP id 6a1803df08f44-892743cfe92mr64172606d6.43.1768485731419;
+        Thu, 15 Jan 2026 06:02:11 -0800 (PST)
 Received: from ?IPv6:2606:6d00:17:7b4b::5ac? ([2606:6d00:17:7b4b::5ac])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770e2aa5sm203968666d6.19.2026.01.15.05.51.24
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c530a9f5aasm395158685a.21.2026.01.15.06.02.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 05:51:25 -0800 (PST)
-Message-ID: <d06dfe735a246cf23d670f87d95deec7bf5265a0.camel@ndufresne.ca>
-Subject: Re: [RFC PATCH 1/3] media: uapi: Introduce new control for video
- encoder ROI
+        Thu, 15 Jan 2026 06:02:10 -0800 (PST)
+Message-ID: <50137983757d754609d8164dbdfc429b32e3d6b5.camel@ndufresne.ca>
+Subject: Re: [PATCH v2 0/3] Add support for QC08C format in iris driver
 From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
- <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
- <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
- <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Date: Thu, 15 Jan 2026 08:51:23 -0500
-In-Reply-To: <763b6cdd-514c-4aff-b7db-8c0a17fdb645@oss.qualcomm.com>
-References: <20260113-iris_enc_roi-v1-0-6c86eba38587@oss.qualcomm.com>
-	 <20260113-iris_enc_roi-v1-1-6c86eba38587@oss.qualcomm.com>
-	 <08ff44d8907c72b7599fa4599477d78bcecb440a.camel@ndufresne.ca>
-	 <763b6cdd-514c-4aff-b7db-8c0a17fdb645@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Dikshita Agarwal
+	 <dikshita.agarwal@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Abhinav Kumar	
+ <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, 	linux-kernel@vger.kernel.org
+Date: Thu, 15 Jan 2026 09:02:07 -0500
+In-Reply-To: <s2qjimx4tq2jdnir7b5dljf4onsbcmvb5prxcvc22q76l5cgnz@wrgcqdrl26sb>
+References: 
+	<20251008-video-iris-ubwc-enable-v2-0-478ba2d96427@oss.qualcomm.com>
+	 <s2qjimx4tq2jdnir7b5dljf4onsbcmvb5prxcvc22q76l5cgnz@wrgcqdrl26sb>
 Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
  keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
  /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
@@ -101,7 +98,7 @@ Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
  ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
  bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-4EfGdaMvYDV/uoQuviha"
+	protocol="application/pgp-signature"; boundary="=-SuVcRe6JDVhxJkp0/xej"
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -111,79 +108,110 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 
 
---=-4EfGdaMvYDV/uoQuviha
+--=-SuVcRe6JDVhxJkp0/xej
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-Le mercredi 14 janvier 2026 =C3=A0 16:20 -0800, Deepa Guthyappa Madivalara =
-a =C3=A9crit=C2=A0:
-> > > +``V4L2_CID_MPEG_VIDEO_ENC_ROI (struct)``
-> > > +=C2=A0=C2=A0=C2=A0 Defines the control id to configure specific delt=
-a QP for one or more
-> > > +=C2=A0=C2=A0=C2=A0 rectangular regions of interest. The struct v4l2_=
-ctrl_enc_roi_params
-> > > +=C2=A0=C2=A0=C2=A0 is defined to hold up to 10 v4l2_rect regions and=
- their corresponding
-> > > +=C2=A0=C2=A0=C2=A0 delta_qp with a range of -31 to 30.
-> > > +=C2=A0=C2=A0=C2=A0 Applicable to encoders
-> > Any justification for this range ? Also, I believe I've seen hardware s=
-upport
-> > both delta and absolute values. Since it meant to be generic, some rese=
-arch is
-> > needed. If we delibaritly ignore absolute, perhaps the CID should be na=
-med
-> > accordingly ? Something like V4L2_CID_MPEG_VIDEO_ENC__DELTAQP_ROI ?
+Le jeudi 15 janvier 2026 =C3=A0 10:08 +0200, Dmitry Baryshkov a =C3=A9crit=
+=C2=A0:
+> On Wed, Oct 08, 2025 at 03:22:24PM +0530, Dikshita Agarwal wrote:
+> > Add support for the QC08C color format in both the encoder and decoder=
+=20
+> > paths of the iris driver. The changes include:
+> >=20
+> > - Adding QC08C format handling in the driver for both encoding and=20
+> > decoding.
+> > - Updating format enumeration to properly return supported formats.
+> > - Ensuring the correct HFI format is set for firmware communication.
+> > -Making all related changes required for seamless integration of QC08C=
+=20
+> > support.
+> >=20
+> > The changes have been validated using v4l2-ctl, compliance, and GStream=
+er
+> > (GST) tests.
+> > Both GST and v4l2-ctl tests were performed using the NV12 format, as=
+=20
+> > these clients do not support the QCOM-specific QC08C format, and all=
+=20
+> > tests passed successfully.
+> >=20
+> > During v4l2-ctl testing, a regression was observed when using the NV12=
+=20
+> > color format after adding QC08C support. A fix for this regression has=
+=20
+> > also been posted [1].
+> >=20
+> > [1]:
+> > https://lore.kernel.org/linux-media/20250918103235.4066441-1-dikshita.a=
+garwal@oss.qualcomm.com/T/#u
+> > =C2=A0
+> >=20
+> > Changes in v2:
+> > - Added separate patch to add support for HFI_PROP_OPB_ENABLE (Bryan)
+> > - Updated commit text to indicate QC08C is NV12 with UBWC compression
+> > (Bryan, Dmitry)
+> > - Renamed IRIS_FMT_UBWC to IRIS_FMT_QC08C (Dmitry)
+> > - Link to v1:
+> > https://lore.kernel.org/r/20250919-video-iris-ubwc-enable-v1-0-000d11ed=
+afd8@oss.qualcomm.com
+> >=20
+> > Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> > ---
+> > Dikshita Agarwal (3):
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: iris: Add support for HFI_PROP_OP=
+B_ENABLE to control split mode
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: iris: Add support for QC08C forma=
+t for decoder
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: iris: Add support for QC08C forma=
+t for encoder
+> >=20
 >=20
-> As per Android ROI API - MediaCodec API QP from the app is an offset QP,
-> meaning userspace will received offset Qp and it converts it to deltaQp
-> before passing onto the driver in Android HAL. I have used the same idea.
-> Delta MbQP =3D frame QP + Offset Qp. This is clamped to -31 to 30 current=
-ly
-> and set to driver as delta QP, hence I have it as -31 to 30.
+> Looking at the series again... What is the definition of V4L formats?
+> Are they expected to be self-compatible? Transferable between machines?
+> In DRM world we made a mistake, making use of a single non-parametrized
+> UBWC modifier, and then later we had to introduce OOB values to
+> represent different params of UBWC compressed images.
 >=20
-> Absolute values are mostly for frame QP, I would say. All the=20
-> information out there for ROI
-> kind of implies to deltaQP, but we could be more precise as well.
-> Let me know if it is a must to change to CID.
+> So, I wanted to ask, is single "UBWC-compressed NV12" enough for V4L2 or
+> should we have different format values (at least for different swizzle
+> and macrotile modes)?
 
-That's exactly what I want to avoid, hardcoding Android HAL into V4L2 witho=
-ut
-having our own rational and documentation. Also, Android HAL is a much olde=
-r API
-then D3D and Vulkan, and its not as well defined.The second is hardcoding r=
-ange
-for one specific implementation. Since this is codec agnostic, and hardware
-agnostic control, I would prefer is defined in a way that it requires no sc=
-aling
-by the driver. IIRC, some codec have QP values from 0 to 63, so why don't w=
-e
-allo from -63 to 63 ? The alternative is to let the driver expose its range=
-, but
-its a little tricky, you will have to specify when this information is avai=
-lable
-in the Stateful Video Encoder spec.
+Our expectation is that the decoder will produce the same format regardless=
+ the
+resolution. And that format should be shareable, so that same format coming=
+ from
+two drivers means the same thing without out of band data, except that
+resolution and strides are needed oob anyway and can obviously be used as a=
+n
+acceptable workaround the issue you describe. It should also have a single
+translation to DRM fourcc + modifier, and hopefully the other way around is
+possible too, otherwise its a bit broken and unusable.
 
-As for the rest, you haven't considered extensibility in your proposal, wha=
-t if
-a non Qualcomm hardware do have features like aboslute QP ? (Hantro/VSI doe=
-s
-btw). How do we add that in a clean way ?
+So bottom line, since V4L2 does not have modifiers, you have to treat one V=
+4L2
+format as a pair of DRM fourcc + modifier. Decoders typically only support =
+a
+subset, or hardware engineers can generally pick a handful of performant
+configurations that works for all cases (its all 2D with similarly sized
+macroblocks). Since these formats are only usable when consumed by GPU or
+display controllers, its important that all party uses the same convention =
+for
+the limited information available.
 
 Nicolas
 
---=-4EfGdaMvYDV/uoQuviha
+--=-SuVcRe6JDVhxJkp0/xej
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaWjw2wAKCRDZQZRRKWBy
-9D1SAP92tas3kEN9sDLF5yOfgNqtSCxbbQfo0nV1bDsItRBDGAD/cYxdAq6tgbL8
-UU2md8W1C/BDvJH5koiRccSeGHuK9wQ=
-=4KtW
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaWjzYAAKCRDZQZRRKWBy
+9NHdAQC5zVxUrA0j3qXnoLE4o2clAaoEaw5nwUgVFbmIokPgOgEA00HZmP6ttFY1
+awXTgDpAWi4QX7nSzx2DLiass5x7rAE=
+=MTpT
 -----END PGP SIGNATURE-----
 
---=-4EfGdaMvYDV/uoQuviha--
+--=-SuVcRe6JDVhxJkp0/xej--
 
