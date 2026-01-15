@@ -1,94 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-89245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F848D266BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 18:30:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE299D26B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 18:46:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3BA18304268C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 17:23:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 85A373048716
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 17:37:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E144D3BF2F7;
-	Thu, 15 Jan 2026 17:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 756573BFE3B;
+	Thu, 15 Jan 2026 17:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="yl7Qh0pY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NVP+2yrR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73922F619D;
-	Thu, 15 Jan 2026 17:23:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B79427A462;
+	Thu, 15 Jan 2026 17:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497814; cv=none; b=JWKA/kYYQ+MPV8/jijUJyDt98hC7PsCtzceW1KncW4U22/NhQIgSqYFSAw6CfZihpzbmAfIeHWiWsn6QQ/5zaOMtqFebojOZ0Junim52BWRJ0aTAc3vbFD5zLljvMle2g5jSWs4J4d0OwOk8r2PJDxHwH3QV/4rsX0AaMFGEYWY=
+	t=1768498649; cv=none; b=GLsEJehFz/AfOcB3XP2M6UDsoo5HLQmbt6hR57QzjEwGuzeybZvbaNW6ljroqJBHqlfXcayJvA6bQLTHNpFPK8SBH2NL1iPMZSkgIuiboh1I1fdbs6rg43NDX99M6/RhuzvBY5Ww9B4orKqdchJOLzYmJ/IBR3GQtDPi2X7QcBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497814; c=relaxed/simple;
-	bh=UodKu5Nxhf/UktRjhZh/tGid3xqAy82yRTwBh2y3GKE=;
+	s=arc-20240116; t=1768498649; c=relaxed/simple;
+	bh=lENH+BbL89v1sioGWhjfNOfFQN1i3RM4np9biV2JDn8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H9APF/g6cTS1wDpi5qZxDOg20FvGN+a7vTIsxhBq07D4a3doiWCGsOtoocOwdVHm4ADv2XRLf55dNMo2Dnin/1rYByeNRpUmyH/c9F+FquQ1MaB4jTrDXjSFjz9mMHXVHUk00VvXsuNAaO5YTl9o6bf12AQZMCL3L2HeH+12Tp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=yl7Qh0pY; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=sQ7vP21dlzkkieemZjIahhU81dRaLsybz6UG5FalGMc=; b=yl7Qh0pYjwozEKS828gvwa0CFX
-	ty7BCEZdeh+j9tUx/oR6XUGAw+Jayo7ZAY9j9MH8ypO0txEZ3jwhtRIbfG8GhIhZeVSB+7BOLul/W
-	29OmA6cEFLKSHaqX2kbsACyBJARoYyXL8k7+UGkrXx1Gh9oKOlavAgrCZLLGEBHRojoY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vgR3y-002xkP-Ib; Thu, 15 Jan 2026 18:23:14 +0100
-Date: Thu, 15 Jan 2026 18:23:14 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vinitha Vijayan <vinithamvijayan723@gmail.com>
-Cc: netdev@vger.kernel.org, kuba@kernel.org, davem@davemloft.net,
-	pabeni@redhat.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] net: phy: qcom: replace CDT poll magic numbers with
- named constants
-Message-ID: <6504f3dc-4e95-4f10-b46c-4583ceb74a4a@lunn.ch>
-References: <20260115165718.36809-1-vinithamvijayan723@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qy0BeFFPBWUtgBQr/oM3Sa8XqXaJOp89tdfOL0bWJYbXNdmSr3ABbAg+1j4V9igDldA4dlWIcxALdXqEg06bKgQr6syZMq5zazak4/gz3yYWkGrGPxhIP96M/2CxYPCcYBez/iZ4ctGNsRp6a2gwhEs2fFluJyAtKGQ1RpbyjNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NVP+2yrR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC06C116D0;
+	Thu, 15 Jan 2026 17:37:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768498649;
+	bh=lENH+BbL89v1sioGWhjfNOfFQN1i3RM4np9biV2JDn8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NVP+2yrRwM+4sci7INnjMuKYVOcM0Ftbo4IgTRzEAc6Opxu6kzQY6Gh9ahHMgpMbW
+	 K2bH0Fo3ufATO5PsaquOD6nQ0ZbDr/UhRJ0b1S5fILJnKFUYASyrk/YyKwjYfsOUYa
+	 jUEA4UClUsiuo8B54A0CE/yAusfYATAFZ/zYyRrpcQOnySpAR1BsYlyQE9UBuZCs/S
+	 ctnLljH5lrfAkrtooNql/TxOJe5DCufnEokgWo9eKe7EBRvf6YxOC5ZMaxDdKFs3gg
+	 W9rShNcqhNtdTy9rtcc4artHTAShVnaghr5vxDqjJ/M5txHN2fBQjM6JOZJPDYUlyd
+	 DuxnfG3U+QvJg==
+Date: Thu, 15 Jan 2026 11:37:28 -0600
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: =?iso-8859-1?B?QmFybmFi4XMgQ3rpbeFu?= <barnabas.czeman@mainlining.org>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	phone-devel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+	Kees Cook <kees@kernel.org>, devicetree@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Biswapriyo Nath <nathbappai@gmail.com>,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+	linux@mainlining.org, ~postmarketos/upstreaming@lists.sr.ht,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Tony Luck <tony.luck@intel.com>,
+	Gabriel Gonzales <semfault@disroot.org>
+Subject: Re: [PATCH 5/6] dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
+Message-ID: <176849864771.930572.3499774593785972153.robh@kernel.org>
+References: <20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org>
+ <20260112-xiaomi-willow-v1-5-8e4476897638@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260115165718.36809-1-vinithamvijayan723@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260112-xiaomi-willow-v1-5-8e4476897638@mainlining.org>
 
-On Thu, Jan 15, 2026 at 10:27:18PM +0530, Vinitha Vijayan wrote:
-> Replace hard-coded poll interval and timeout values in
-> at803x_cdt_wait_for_completion() with named macros.
+
+On Mon, 12 Jan 2026 21:13:28 +0100, Barnabás Czémán wrote:
+> Document the Xiaomi Redmi Note 8 (willow).
 > 
-> This improves readability
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-  	ret = phy_read_poll_timeout(phydev, AT803X_CDT, val,
-  				    !(val & cdt_en),
- 				    30000, 100000, true);
-
-	ret = phy_read_poll_timeout(phydev, AT803X_CDT, val,
-				    !(val & cdt_en),
-				    AT803X_CDT_POLL_INTERVAL_US,
-				    AT803X_CDT_TIMEOUT_US,
-				    true);
-
-Is it really more readable?
-
-The point about magic values is that you cannot easily see what they
-mean. With BIT(4) is hard know that that means. But all the
-read_poll_timeout() functions are very similar. If you know one, you
-know them all.  I know the poll interval is 30,000us and timeout
-happens after 100,000us. Using macros just means i need to go find the
-definition of the macro to know the timers used in this polling
-method.
-
-    Andrew
-
----
-pw-bot: cr
-
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 
