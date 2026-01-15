@@ -1,71 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-89219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3BE8D24ECF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 15:25:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3416D24EE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 15:26:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0F47B30299E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 14:24:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 107423014DA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 14:25:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EDE43A1E6B;
-	Thu, 15 Jan 2026 14:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 656F43A1E84;
+	Thu, 15 Jan 2026 14:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kBa1ZYUh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WSEIw7uV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5853A1CF9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 14:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C3F3A1E77
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 14:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768487087; cv=none; b=tuCROC2uDin6yFQ8Erp5+Q6wOYq4llOrnQpCT1ozdJ385oBLjbahLniyHpNNSndZD/Qls0vCEXCrIqoG00HUcuY1KZ1iWV/hDd6iUMp6DpxSH3UfP/Wkqd8X3SDBv3vEYOID2eGzyaspkrs3uwpQJxJrV4r7zehoKR+awPPbJ9Q=
+	t=1768487117; cv=none; b=f64CVfG8NgHjIHG+GSdYKSUcRucPuoDXeHsxUgrr56lU9ZlQe6I42xXZiqqWHeNcIeWJYvvspLYQ+YOi24fk7LCwD5Y92DBxRj0waOQGGagoOaY9/xh/gQRZk7kGX9mUUOiRn7BvkocL88TFtAEgFLV82di+P3asFdNi6j6RdV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768487087; c=relaxed/simple;
-	bh=prm75bBUvkddetwvbxbhROV7Sxy4F8UH6DE17vgNlvU=;
+	s=arc-20240116; t=1768487117; c=relaxed/simple;
+	bh=wjL2E9ZDu/VaNlHENbb+X0oEOZiKgPzvILTznItKO+4=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O6yjJZXiBeCIXGp+KeEnKwekv08trrlttt45jZETWeLwmzoQoIbSdtVNgPVb+hcrMmvT5oKyjbvZC1xaEpQ27Py2V5XgkS92Vv2nwrdUxyRsbXNTFoPPjcL8q+f28H4kise3zXRXlxY+6kWGnIkmK/Ai/fU4GRHbfdXYu0Dl1LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kBa1ZYUh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26F2C2BCB1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 14:24:46 +0000 (UTC)
+	 To:Cc:Content-Type; b=rXfPDAxji7wg1QVDtXxgo0U15j6n0k0s5e9wHjD4AAKSiIZqkRKyjGCdSNcj5iGd7Q11kS33ocMMm7SgvRbKUXU8oaFPd78sdp6RTOivTIgLwYx9WSDlkYSRvmjQELSIjevsEOfYFcdUwEITdN+kkBjbDTKNnzXqY82+1NRo/CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WSEIw7uV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EEDC2BCB9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 14:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768487086;
-	bh=prm75bBUvkddetwvbxbhROV7Sxy4F8UH6DE17vgNlvU=;
+	s=k20201202; t=1768487116;
+	bh=wjL2E9ZDu/VaNlHENbb+X0oEOZiKgPzvILTznItKO+4=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=kBa1ZYUhsrdET57XNhhNJ39aLeU+zgI4NWtAjyWHQBaFYL4/+jQm5h64GEiemBQO2
-	 Ma5TxbuZM3Hufel24TUFPM9ClkDUZoOdc7VUh/+tfbDR5nsskTBDoluBX7BHk+DARu
-	 ym4/CXMKL/FVpGXVzhyDcCR/zoVjGj+lBzYqzG1wv8Swv44UReCQSaooV9vKV4EO6w
-	 jlErYxGAtQ+DyHmuzj99lVkW4PsZkxj+3KYCAZCs61x7XZ1xwAcb7iw4G+wjDcKhLG
-	 HwyKbCW2ipCqshfjY3Okm5yXaNulxPd1hw5wNnPTYheBCwIIKZVcVGppEqbDDdL0ZG
-	 m9hi3OrQpTrPg==
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-383022729d5so6739031fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:24:46 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXx/XfZMd3B/8pJD2jrwfgNEO3Y7qXsmE/8Sh9WgDzogMn+17Qt8veq8VqcIFDhqmtrC+s4MEUi6m8ZSw6a@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzx9wF1vH9kZ/kMK8QYMrkpQGZhCvHYpmxBBYueqqhka6n7/fcE
-	qCUcQK7y+Fs12pn/+nmrEIC+38xmZ52e1ShsmusXc7DjsNfqTGqWchHsoFxK7kyNdlyM3ymWu2r
-	jOB5AFZF1rYmAQO9U3/QElEgaB6WBZQidvmdz/uXPBw==
-X-Received: by 2002:a05:651c:1443:b0:383:210a:7b35 with SMTP id
- 38308e7fff4ca-3836078fd46mr23412681fa.36.1768487085519; Thu, 15 Jan 2026
- 06:24:45 -0800 (PST)
+	b=WSEIw7uV9E7WitI9guqao3LJMhkly5cpVOIglVhURPIfgIvp/Tmg3cos6t+o1dN/1
+	 6JsiKPAd9GRsGz7r49b5w2mMbcv4tLlIQanHZRqtIuTqD/f0r5NRIqcUVrGmx7pUXW
+	 Qsabn9SijjRIBB6GJMtzCpKQaXEQ28dbpsfvTB6Pnw1b92EGIBlXWduBwUThux4h5/
+	 YI+4IsNwQlA7i33ZVUu5lehwwb9yaUupGVabEGYP1PlK5YFdbhwRsUMPF79QEJpxqv
+	 PeUGVxgubXM1xr+RB/WVKY6+HpIZjuldRO12Zr7RIkmX14P3AvTgo+weUEB7gMu53b
+	 GBWZmqpiZNScw==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-383122fbc9bso7389561fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:25:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXVq5FhkG9KSwdYrFeooqfox1AwcJxtl+C5bp4AjNKs3fRR5KQuJeocQECagcvBlTYxbXd2oNQhhnXyIGdX@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9bprl56r4ulc1eQ7ssMtp8wGQyniISQj9p1Enbpb8oCYblQAh
+	S+uAd3nXQCsGtQy8QI6glM6vjj1WqkZPyziehqUrIqB1RIf+xqpaCfVVS09LLtzbatK8bLagXBS
+	jnlNE3Ms43ZUf6ar281ddqicv5/ukW5csZAIu9Hx8OQ==
+X-Received: by 2002:a05:651c:210d:b0:37b:b8c0:b5e1 with SMTP id
+ 38308e7fff4ca-38362f93d72mr22039841fa.27.1768487115470; Thu, 15 Jan 2026
+ 06:25:15 -0800 (PST)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 09:24:44 -0500
+ HTTPREST; Thu, 15 Jan 2026 09:25:13 -0500
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Jan 2026 09:24:44 -0500
+ HTTPREST; Thu, 15 Jan 2026 09:25:13 -0500
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260115-pci-pwrctrl-rework-v5-4-9d26da3ce903@oss.qualcomm.com>
+In-Reply-To: <20260115-pci-pwrctrl-rework-v5-5-9d26da3ce903@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260115-pci-pwrctrl-rework-v5-0-9d26da3ce903@oss.qualcomm.com> <20260115-pci-pwrctrl-rework-v5-4-9d26da3ce903@oss.qualcomm.com>
-Date: Thu, 15 Jan 2026 09:24:44 -0500
-X-Gmail-Original-Message-ID: <CAMRc=MeGNVVsdnynfaZ2xzmnH5BY7J+h6uN_NcsGEkZ_M72Siw@mail.gmail.com>
-X-Gm-Features: AZwV_QhSqlo3D9V-01cFy2a2sAfzR08YDxZWC5KIr-GWSr6tSsU2qnVGsfYVy8Q
-Message-ID: <CAMRc=MeGNVVsdnynfaZ2xzmnH5BY7J+h6uN_NcsGEkZ_M72Siw@mail.gmail.com>
-Subject: Re: [PATCH v5 04/15] PCI/pwrctrl: tc9563: Clean up whitespace
+References: <20260115-pci-pwrctrl-rework-v5-0-9d26da3ce903@oss.qualcomm.com> <20260115-pci-pwrctrl-rework-v5-5-9d26da3ce903@oss.qualcomm.com>
+Date: Thu, 15 Jan 2026 09:25:13 -0500
+X-Gmail-Original-Message-ID: <CAMRc=MeqFB+sv51DAjtGO4vZNmLcLA6g+B3QF0nJGV-TfBWJ8g@mail.gmail.com>
+X-Gm-Features: AZwV_QgtCt88AEqYS5vg7YS507XqeedfZWClMUThWZD62wT7I1xzqxO2u7aWGHY
+Message-ID: <CAMRc=MeqFB+sv51DAjtGO4vZNmLcLA6g+B3QF0nJGV-TfBWJ8g@mail.gmail.com>
+Subject: Re: [PATCH v5 05/15] PCI/pwrctrl: tc9563: Add local variables to
+ reduce repetition
 To: manivannan.sadhasivam@oss.qualcomm.com
 Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
 	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
@@ -81,12 +82,12 @@ Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualco
 	Jingoo Han <jingoohan1@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 15 Jan 2026 08:28:56 +0100, Manivannan Sadhasivam via B4 Relay
+On Thu, 15 Jan 2026 08:28:57 +0100, Manivannan Sadhasivam via B4 Relay
 <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
 > From: Bjorn Helgaas <bhelgaas@google.com>
 >
-> Most of pci-pwrctrl-tc9563.c fits in 80 columns.  Wrap lines that are
-> gratuitously longer.  Whitespace changes only.
+> Add local struct device * and struct device_node * variables to reduce
+> repetitive pointer chasing.  No functional changes intended.
 >
 > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
