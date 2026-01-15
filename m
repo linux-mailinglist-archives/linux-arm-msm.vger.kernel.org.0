@@ -1,249 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-89101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 311BFD227AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:00:31 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 267CCD2296D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:43:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5EF813027DA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 06:00:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 23C3C301996A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 06:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F9D12848B2;
-	Thu, 15 Jan 2026 06:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C91C2DC798;
+	Thu, 15 Jan 2026 06:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IbWQyiY8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dYEweG3V";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WqYmvxiQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D142D7DEC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A613E2DAFA5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768456818; cv=none; b=tpGkCPoDxSwzO01mhD493rBDQlwFnXLxxpjCyRjEBprAw6ALl5DuL8q4CEniI+xO4H3Uzt7NhNC95tiBfbdNxdJIx7r83fWo/piRCRkusVLHsmOJQEpj6DWoHkj+cDssfqw1DYJzQoYkjiHUdlkKFEC3viAWzB5tzkaTm/l83RQ=
+	t=1768459388; cv=none; b=jOGvoRz53gqH5y1HvcjlCpAb/046G4FeK0bkcsu/aUPrK7vTG5HFJlp6ctM3/2EditleXRZL1AzgCaztG+Qy4jHAciYb3bo+vvvSfgHHL/cDKhMixy1Mf2iQ3zKzDToJyoL8qQOSOHD929ZORWpxtDd7Q4cFt7ojFUOwMYJBQys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768456818; c=relaxed/simple;
-	bh=M2emRNPsd5dLS6UEkhkUcbjO9H7QF2ZNB8ZeyoJWdhM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VM5+iRVhizQ3OKTROdxb7bibk85ztWi8vQhv67LGlWRd2JG6ZwF7OoAHCCTsiBHOyMx8cM3+EulBdyEaoqqRvQNjGhC32p6hDVzxKLjimCjfe54JQzzqFeq13d9sEz0Z43CZz3yZCI15h8QLzRq10z+N13aSgD2MkLibe6c5Eyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IbWQyiY8; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc09b3d3afeso235114a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 22:00:16 -0800 (PST)
+	s=arc-20240116; t=1768459388; c=relaxed/simple;
+	bh=+aFW6EH9TJ0AOZQTB+GWz9NqX5sXiGDNwhsnV/Xf3jk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=i5rurxWmpQZ1PnxU/qhpCeM5NCzFjrWtg9Qv/y74DCb+N4iwWk4T+/k0NkvSbMmHkJ6bgm8sMM9IZ2sl6veGtdCPsQ+SG13HQ7oHqVZOyyIGxE8m61Xv+ZwPgmy0W17snEMmXrcykAv3SQouCYD+Dta9SqfIS5Iwn+jD9kI24FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dYEweG3V; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WqYmvxiQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60F6fpdK1170788
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:43:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MrtIlupneZwT0y08AelsrV
+	YE3mbEdWwQW/NPCjWwFkA=; b=dYEweG3Vb5ShsFhmAVh+82W5UK1TFT+bJumgfk
+	7LKi7VW/viA1xHXgOH9z9iJq1HICK1cl4UU9mjJUoyom2YtGVkzHcmfR12ncomSW
+	w5GcoJisy5tOZ7+URr5UPzWZAbupXzYJ9iE/bcpQudUFkYHWPGCghajsvZ5EJONZ
+	ole8GYnftHZ2zxpNpbRcyMsxteBKjldJP+L2X9lqDyg3BDL6xWo1f00oMeiwd2BJ
+	m2mOf3tOKPqp4C4RmDv/13KcEo7mp18Mt1YIL46URYMC9BxZyrJuz8MGGmkg1lTL
+	JAs/wB4RKWeFCjeP7tZQCIqi4R70jdRbHbimYD6/kurTb//A==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bpg849v8e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 06:43:05 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2ae32686ed0so4693005eec.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 22:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768456816; x=1769061616; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dDgez86Z8vlifJV/rVDagwU1IW0RLqLFSFiUpTN6tUg=;
-        b=IbWQyiY8Yjg8zvPebTf8SXW/92XlwmYeJhCsY4Z0XnnOr9rDqOGrLGqIdgdImrM6AO
-         CWV5CDDSLRilTWMRovnEUp+bx9KYxZHC3WxlAUI8ivFMXmpo/WSPhiD3YRCJjeSw7C1L
-         mzTdFYvBphA4J6C14Vq6eyS/CGsw5AXmBQ1enr8a5QBrdFsQgGQ8wCYLS0CnENkkbKrr
-         scC7TSxkJc/q2SXjU0S1eW+Ua/mNaeBlzqJfCInDB3jupc/8Q0DwGOp3XRUHNZ7S+roh
-         hqlaoZ7tkIxkY3G5tsp1gnlU0ejL4AKOdfaHPqfcLWJV6sFFSp111l+J6mK62+koHbPA
-         0KWA==
+        d=oss.qualcomm.com; s=google; t=1768459385; x=1769064185; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MrtIlupneZwT0y08AelsrVYE3mbEdWwQW/NPCjWwFkA=;
+        b=WqYmvxiQH6Wy1u946iYl2nkdWrAMnqvgT4MCzabQWmQf3PZQyBlw8utlleBHtrA3J4
+         CLtdA77wzbcXs9kUFnxFlgPCU7B5uofllGpJMnWmTgHl7pHnqnKoFGQ2ZHTjYH4K7Hvv
+         T4qdfWr2cinXXqt4QU5mH5rl80iFIYijA1LJTyLu/06/ZSoXTzw8ltXZyQiA8NnwIcCH
+         Aw3EWxBtuv7aeCEFvdSPYuqfOaiCTIeatBzl1FFoc4kl3pdvFozidmCCXy2nc+0PXXkn
+         NzEgFMM1lqWKs4tih5KcMzPwsyIkgdobwN1I9BZWSlzp6ew9SvfkRTycoGa/APjo7WJN
+         kusA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768456816; x=1769061616;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dDgez86Z8vlifJV/rVDagwU1IW0RLqLFSFiUpTN6tUg=;
-        b=DC6YolbF79JKjAefUy4v9b+wtljDswoTzE42uTbLqOArpiE2uZytwt4GLLUJlLtsn5
-         y5aHSTCNbDs+f8QYQ1QyTvTkRqMLuuT6IL1qxa11BKO5Xn11VGZ+uh1q6NQmcPlMceRw
-         M24tNVYnMy/Nynkt1KNC/OFh4XWGBPbhElVN3iIyzXZ8plXbe1xrI/Qczk7u8KiVCnfe
-         YgkDbpMaNE79xnonHBBobGVQ1jNzEBJDFThJXA66MrpUAu9egDu1ZuwNz02xk1JQgLKV
-         8kOGl5pO7DCLE927uIRsA2TyY2q+tCUlvSOJatEbl4wpKJu1l3UFek9A4/EuTDkKR3s2
-         UFyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMMVw1aL3iLHCIU60DJ4+PKdNay0ZG43MbNTbgJ5HO9xS/GrhAyQr0sTAiXcLkbf9d5RrYkmEqwwZwzTrr@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxf7zEXtVW0sjytwKRzWIIvgfUsxTco5ksH9ooI32DFkGDOFAox
-	xdJF3TnQsNdiQrAFtvA/Wysd0lrsiSuKZpPbsZxIUeyOa2mZTgtbsJOX
-X-Gm-Gg: AY/fxX5WSGcDVHG2zNtS3cAVGOl+VliNjA7kzH3tMUwUeIQFjC51aeU2icuuo0Kx8fG
-	bEymwcyofpYeZ8yA9zY48y5K09jd4v4nJhSSPPVO+usYPmutd5WzUGFmMz+5yon1lOyd6Rw/wAL
-	PvnvRKXQTh2qZJF3HhOi7ZSVShzLPjfdNSAy9NbsXI+Zh3NNz17z3kAWx5+WcTUuRUfRp5Rey+E
-	zt1ovgPbQiyjTBtIjwZtod6zo2KkZBvvhc2o8k9McoNXPWZFuJM64Z+C+7ZUpy4YiClNeEbRJZ+
-	98pNXPD7Yx4FFFhblGC8ijyfxbTSbZiaISqyH6r1qOJSbwLNhBYMiY6wDKuC4kpbjpTmJyrvojF
-	6ofdzUqCIfGOx1+WUI+x2Wy1regd/prAOcjRz2MplIKZYsiS2Jd0QwGXP+wlDqhGmT9UovtdYGd
-	km7GrQs+awMTZUiPAzcj12bBmxhMaUyeSvsA==
-X-Received: by 2002:a05:6a21:32a8:b0:35f:10a7:df67 with SMTP id adf61e73a8af0-38bed0d6fbcmr5294061637.17.1768456815900;
-        Wed, 14 Jan 2026 22:00:15 -0800 (PST)
-Received: from [172.16.20.12] ([136.226.253.21])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cbfd27953sm23744006a12.11.2026.01.14.22.00.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jan 2026 22:00:15 -0800 (PST)
-Message-ID: <fce9ee85-bd84-4e5f-a2ef-81095b071895@gmail.com>
-Date: Thu, 15 Jan 2026 11:30:40 +0530
+        d=1e100.net; s=20230601; t=1768459385; x=1769064185;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MrtIlupneZwT0y08AelsrVYE3mbEdWwQW/NPCjWwFkA=;
+        b=Pph2X2OdZw+N7O2rxAm4J786piJLey4JMvIMqEurIZbrteHWcgzWvqI4eWJIveZ0x/
+         gJBeyEuoS4mhyhVGcJ7PPHzb2tiqo56lr3Oav3Tygv54aiFx80bcBKQISHuFR/uGip8o
+         xpRc1auGGXEdRprpIuLq60oIjPE8WF5HriZV5o09GhSQqbDj67aBGCJOQ/l0ftIpEA4I
+         d8q5ZJrIShd46mrV/5Gb+yt44dctBTFJRIoa/0pOi1jIOKtYHznlWKPnN7OR9EBE9bJj
+         Q9euX5Xhc63tIfslZQTD+olaBbgVFiYmKpYFQAVKK4j2/hsPNXKIdDwuPqpH02ew9IpJ
+         fP7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVFOqVnz48RUr93udUFbiZUJ4fvt3Xe7/f5VXjjuHXAtmreRBzuRpNkqIUuGhRqGNqu8aboNyC19wyGFZ+i@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzZsZjzAid9j9TaFUqybjKWzawkoWbyq2YuWWBwW9GMy0ZN/31
+	X+NskueJJu6Qe6sVXvzNFEQ041pqY6o4+8X7KAtpACR6VuI7H86hYCuElhW0HzaEbIem0edadx+
+	SYU5Ak3IAZGWo3zDyb58iUEctIpZvzojtqZiuw2TsOXnrwYiK92GRi8hzyYpUP4MnuYPl
+X-Gm-Gg: AY/fxX78t+/Ef3PoTXz4B9arCNemfG2nIEkdAJ3xciNTACYpJRkOppYojWrdjqpIURb
+	8zwx5+A63gjOYjcdNMHlRrDS82QFLPDK5CTs4Rde8uYZcRH3zLCjSM8wpe+L2zcy24w5dKW77Lr
+	+wFrEh4YWwEO7HNf5oze5f71bwK6B4g06HWh/5Uvv8HxbPbZCrc6s+5xhjNGkbd63CHPFfeu7Pm
+	NI9ZBaPntkM1+xZJ/YXQKGqxQIkV0y8bxVC3JKlcwrFkTMJLBrJO56C23/E2L/Ez8iYEUnZkz0I
+	OeQLPc3CcbY4ygNkHiNyaRiKSGQtGdWHXAHBo2To1ab115x2mkaINcMeXMUxRSFc3nx14E7V7ux
+	2I+nyTElyIbetmAyeTM7O7M4gedgvsEFjkDuiVZa8AxkvoA5EaODnzV+6ObJS
+X-Received: by 2002:a05:7301:6589:b0:2b0:3d03:37d4 with SMTP id 5a478bee46e88-2b486b7592bmr6935084eec.3.1768459385146;
+        Wed, 14 Jan 2026 22:43:05 -0800 (PST)
+X-Received: by 2002:a05:7301:6589:b0:2b0:3d03:37d4 with SMTP id 5a478bee46e88-2b486b7592bmr6935051eec.3.1768459384593;
+        Wed, 14 Jan 2026 22:43:04 -0800 (PST)
+Received: from hu-jingyw-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b1775fe27dsm18986471eec.29.2026.01.14.22.43.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jan 2026 22:43:04 -0800 (PST)
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Subject: [PATCH v4 0/2] Add ADSP and CDSP support for Kaanapali SoC
+Date: Wed, 14 Jan 2026 22:42:54 -0800
+Message-Id: <20260114-knp-remoteproc-v4-0-fcf0b04d01af@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 2/3] arm64: dts: qcom: talos/qcs615-ride: Fix
- inconsistent USB PHY node naming
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260114100043.1310164-1-tessolveupstream@gmail.com>
- <20260114100043.1310164-3-tessolveupstream@gmail.com>
- <444b2e30-5675-4a17-89dc-ca24ca3910d9@oss.qualcomm.com>
-Content-Language: en-US
-From: tessolveupstream@gmail.com
-In-Reply-To: <444b2e30-5675-4a17-89dc-ca24ca3910d9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG6MaGkC/22OywrCMBBFf0WyNiUPUxpX/oe4mKRTG7RNTWpQS
+ v/dtC4E6Wbgwr3nzEQiBoeRHHcTCZhcdL7P4bDfEdtCf0Xq6pyJYEJxISS99QMN2PkRh+AtbUo
+ DkhkAVtYkj4aAjXutwPMlZwMRqQnQ23bBcMH1UmtdHH14r9rEl/LXwIT+NyRBGS1txbWWRgmEk
+ 4+xeDzhbn3XFfmQRZTkj7LxZ5KZogzTVaWsUqA2KPM8fwDDlJwMEAEAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-3d134
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768459382; l=2092;
+ i=jingyi.wang@oss.qualcomm.com; s=20250911; h=from:subject:message-id;
+ bh=+aFW6EH9TJ0AOZQTB+GWz9NqX5sXiGDNwhsnV/Xf3jk=;
+ b=rfZlxL+eGHQOPkyW984bYJlowSGdXedygxgCnbFIxoXxjQfH+MuD/fHxey50XhXASw3OW4dpc
+ 7lGvovuJhgyBs149Vhgt5ANe1tnZcsXlqkYvUfjoJlrKW5VE9/MiScK
+X-Developer-Key: i=jingyi.wang@oss.qualcomm.com; a=ed25519;
+ pk=PSoHZ6KbUss3IW8FPRVMHMK0Jkkr/jV347mBYJO3iLo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDA0MiBTYWx0ZWRfXxXBTqIMk5U6g
+ fDveoY9QxtlplHYsCRo+5Vkv6CcpdEG49NxURnP6zw8mdAUlX3ScDyyvMZ0LepozmooG3eIcdjs
+ NtGtGHger1fE/RMyOs/0wSOfbhMg8kzZnJKwhahAYXm1ei3FWqWbjWF7OcNCG/H5oZZz3W5giEd
+ QxuCokvOvuA3/tq+tVtboDuWNq7GTcA+OO84nwVMb+V3VEhPW7tfrlsNxXOms7B2giqDeiOQ7Ed
+ Lzwr47FWbO8kJ/1Uk0kbZHmGRKku1Eqpwh93gTa8IngmOwWsTxHDiWmEvyynoHru2CGXpAkycw8
+ 4iqCiYB9EoQKJdZQ6JjrH9lXsh74eOFOvSvw/7a3ognOPQAsxhFWJu65RVYAbTTh6oO+book8lG
+ zVpvjFAOkO+3uTu1mVzH44ajhjqZFUKqKkUqSpf0vJ9YyaidbphSNop771j6+U84rGDiUxa7cQR
+ rtakcQv8kHTBrceJhLA==
+X-Authority-Analysis: v=2.4 cv=IO8PywvG c=1 sm=1 tr=0 ts=69688c79 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=wiK5Jlmr689xq3VXDD8A:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: fNV-XJeK54CMwPaqaQk1JG50umg5IPM2
+X-Proofpoint-ORIG-GUID: fNV-XJeK54CMwPaqaQk1JG50umg5IPM2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-15_02,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601150042
 
+Add initial support for remoteprocs including ADSP and CDSP on Qualcomm
+Kaanapali platform which are compatible with ealier Platforms with minor
+difference.
 
+Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+---
+Changes in v4:
+- separate adsp/cdsp and soccp, pick adsp/cdsp in this series to unblock other feature
+- fix node order
+- add reviewed-by tag
+- Link to v3: https://lore.kernel.org/r/20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com
 
-On 14-01-2026 15:49, Konrad Dybcio wrote:
-> On 1/14/26 11:00 AM, Sudarshan Shetty wrote:
->> The USB PHY nodes has inconsistent labels as 'usb_1_hspy'
->> and 'usb_hsphy_2' across talos.dtsi and qcs615-ride.dts.
->> This patch renames them to follow a consistent naming
->> scheme.
-> 
-> Sorry for only noticing this now, but usb_hsphy_x is wrong..
-> 
-> *every* other dtsi uses usb_x_hsphy, please flip it around
-> 
-> $ rg 'usb_1_hsphy' arch -l | wc -l
-> 93
-> 
-> $ rg 'usb_hsphy_1' arch -l |  wc -l
-> 0
-> 
+Changes in v3:
+- Drop Glymur ADSP/CDSP binding 
+- Extend the "interrupts" and "interrupt-names" properties in the pas-common
+- add missing IPCC_MPROC_SOCCP definition
+- fix complie err caused by qcom_q6v5_wcss.c
+- code clean up for late attach feature
+- call rproc_report_crash() instead of set RPROC_CRASHED state
+- fix q6v5.running and q6v5.handover_issued state handling
+- if wait_for_completion_timeout return 0, set RPROC_OFFLINE for PAS loader
+- Only ping the subsystem if ready_state is set
+- Link to v2: https://lore.kernel.org/r/20251029-knp-remoteproc-v2-0-6c81993b52ea@oss.qualcomm.com
 
-I've updated the patch to use usb_x_hsphy naming  
-convention to match the rest of the devicetree files
-as below:
+Changes in v2:
+- Drop MPSS change
+- pick Glymur changes from https://lore.kernel.org/linux-arm-msm/20250924183726.509202-1-sibi.sankar@oss.qualcomm.com
+- Drop redundant adsp bindings - Dmitry
+- Clarify Kaanapali CDSP compatible in commit msg - Krzysztof
+- include pas-common.yaml in soccp yaml and extend the common part - Krzysztof
+- Clear early_boot flag in the adsp stop callback - Dmitry
+- Use .mbn in soccp driver node - Konrad
+- Link to v1: https://lore.kernel.org/r/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 0ca6b50a6de1..a5f763cf1a55 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -609,7 +609,7 @@ bluetooth {
-        };
- };
+---
+Jingyi Wang (2):
+      dt-bindings: remoteproc: qcom,sm8550-pas: Add Kaanapali ADSP
+      dt-bindings: remoteproc: qcom,sm8550-pas: Add Kaanapali CDSP
 
--&usb_hsphy_1 {
-+&usb_1_hsphy {
-        vdd-supply = <&vreg_l5a>;
-        vdda-pll-supply = <&vreg_l12a>;
-        vdda-phy-dpdm-supply = <&vreg_l13a>;
-@@ -632,7 +632,7 @@ &usb_1_dwc3 {
-        dr_mode = "peripheral";
- };
+ .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml        | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+---
+base-commit: cc3aa43b44bdb43dfbac0fcb51c56594a11338a8
+change-id: 20251223-knp-remoteproc-f6ba30baa06d
 
--&usb_hsphy_2 {
-+&usb_2_hsphy {
-        vdd-supply = <&vreg_l5a>;
-        vdda-pll-supply = <&vreg_l12a>;
-        vdda-phy-dpdm-supply = <&vreg_l13a>;
-diff --git a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-index 95ed335bcb08..a236f8a65937 100644
---- a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-+++ b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-@@ -556,7 +556,7 @@ &usb_1_dwc3 {
-        dr_mode = "host";
- };
-
--&usb_hsphy_1 {
-+&usb_1_hsphy {
-        vdd-supply = <&vreg_l5a>;
-        vdda-pll-supply = <&vreg_l12a>;
-        vdda-phy-dpdm-supply = <&vreg_l13a>;
-@@ -572,7 +572,7 @@ &usb_2_dwc3 {
-        dr_mode = "host";
- };
-
--&usb_hsphy_2 {
-+&usb_2_hsphy {
-        vdd-supply = <&vreg_l5a>;
-        vdda-pll-supply = <&vreg_l12a>;
-        vdda-phy-dpdm-supply = <&vreg_l13a>;
-diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
-index c7dc507a50b5..cb32bfe732fb 100644
---- a/arch/arm64/boot/dts/qcom/talos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/talos.dtsi
-@@ -4304,7 +4304,7 @@ osm_l3: interconnect@18321000 {
-                        #interconnect-cells = <1>;
-                };
-
--               usb_hsphy_1: phy@88e2000 {
-+               usb_1_hsphy: phy@88e2000 {
-                        compatible = "qcom,qcs615-qusb2-phy";
-                        reg = <0x0 0x88e2000 0x0 0x180>;
-
-@@ -4319,7 +4319,7 @@ usb_hsphy_1: phy@88e2000 {
-                        status = "disabled";
-                };
-
--               usb_hsphy_2: phy@88e3000 {
-+               usb_2_hsphy: phy@88e3000 {
-                        compatible = "qcom,qcs615-qusb2-phy";
-                        reg = <0x0 0x088e3000 0x0 0x180>;
-
-@@ -4412,7 +4412,7 @@ usb_1_dwc3: usb@a600000 {
-                                iommus = <&apps_smmu 0x140 0x0>;
-                                interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-
--                               phys = <&usb_hsphy_1>, <&usb_qmpphy>;
-+                               phys = <&usb_1_hsphy>, <&usb_qmpphy>;
-                                phy-names = "usb2-phy", "usb3-phy";
-
-                                snps,dis-u1-entry-quirk;
-@@ -4476,7 +4476,7 @@ usb_2_dwc3: usb@a800000 {
-                                iommus = <&apps_smmu 0xe0 0x0>;
-                                interrupts = <GIC_SPI 664 IRQ_TYPE_LEVEL_HIGH>;
-
--                               phys = <&usb_hsphy_2>;
-+                               phys = <&usb_2_hsphy>;
-                                phy-names = "usb2-phy";
-
-                                snps,dis_u2_susphy_quirk;
-(END)
-                };
-
--               usb_hsphy_1: phy@88e2000 {
-+               usb_1_hsphy: phy@88e2000 {
-                        compatible = "qcom,qcs615-qusb2-phy";
-                        reg = <0x0 0x88e2000 0x0 0x180>;
-
-@@ -4319,7 +4319,7 @@ usb_hsphy_1: phy@88e2000 {
-                        status = "disabled";
-                };
-
--               usb_hsphy_2: phy@88e3000 {
-+               usb_2_hsphy: phy@88e3000 {
-                        compatible = "qcom,qcs615-qusb2-phy";
-                        reg = <0x0 0x088e3000 0x0 0x180>;
-
-@@ -4412,7 +4412,7 @@ usb_1_dwc3: usb@a600000 {
-                                iommus = <&apps_smmu 0x140 0x0>;
-                                interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-
--                               phys = <&usb_hsphy_1>, <&usb_qmpphy>;
-+                               phys = <&usb_1_hsphy>, <&usb_qmpphy>;
-                                phy-names = "usb2-phy", "usb3-phy";
-
-                                snps,dis-u1-entry-quirk;
-@@ -4476,7 +4476,7 @@ usb_2_dwc3: usb@a800000 {
-                                iommus = <&apps_smmu 0xe0 0x0>;
-                                interrupts = <GIC_SPI 664 IRQ_TYPE_LEVEL_HIGH>;
-
--                               phys = <&usb_hsphy_2>;
-+                               phys = <&usb_2_hsphy>;
-                                phy-names = "usb2-phy";
-
-                                snps,dis_u2_susphy_quirk;
-
-Could you please confirm if this change aligns with your 
-expectation.
-> Konrad
+Best regards,
+-- 
+Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
 
