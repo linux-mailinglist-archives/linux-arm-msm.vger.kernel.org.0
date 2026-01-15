@@ -1,228 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-89151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BD86D22F5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 08:55:39 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AE02D23023
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 09:08:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 672B830115F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:51:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D7EBF3049FDB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 08:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC712328625;
-	Thu, 15 Jan 2026 07:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 081BC32E137;
+	Thu, 15 Jan 2026 08:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IK1Unwrt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V40aoCI+";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Yr/mRmkl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70FC327797;
-	Thu, 15 Jan 2026 07:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC2832E134
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 08:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768463507; cv=none; b=TSGIFbVnM6i3a/HWD1YFGo11hfFeyYWdQtwa7aVnb0ZK34YcXelBSAEkKYaEfqJVaz2hLAJMWLb5tHpepz/dCU76jZeyDPhKa2CUJSc8lFHIvUGlB5orW6UB0+LW6FEGqoZ79nxBo/kqt7z5l2yU3nurDsjLrdaacIJU8CdonOk=
+	t=1768464498; cv=none; b=lvaj0hmZJNgfjmE4qa3tQesB6Y8Oq/Sh+mk8ZQN5+hqPlCVfoV2ow220J+Ou+JX4dZ7EHbGbtzc77lIMU8fRprNQXq1NjMGX0fREWgJm0JETXOiBazOegO2BUW8pxxaAz3Pci7jSp3XmIJVZBP/cGk5Lr9KFbEgzqSUfdSn67vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768463507; c=relaxed/simple;
-	bh=QJknIWev9hn5uMIZrP3LvyLoAxltyr3UodNAV8Q/8Pw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BpeXM2ByKG7CEY0yf3S6FG3BqodO3WUi/ENdBAdW+YQdTY9VZmVqMxYzkOaiF3iK4rqmfnUYNDZ7uhgWKkK4wLnajKvskNIUW17bXV8ySbHh5MtBf3zvn560ri+GXbCnXtQAkYVSJfQPSt5Oz2pDZSXGmL+ScJyGZ/qVOEtCva4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IK1Unwrt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22B2C116D0;
-	Thu, 15 Jan 2026 07:51:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768463507;
-	bh=QJknIWev9hn5uMIZrP3LvyLoAxltyr3UodNAV8Q/8Pw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IK1Unwrtld06zEh/pXUGKqsFzAcnijFQLITYgDRnAnj5wAAXEcidzd5+M9PX/pvOn
-	 5+kx9nIzR0hJAdIbK0uGTQSelu5O/jk6GkQYvfFmXPKUyldYScVcz7pIYv6NbKknHK
-	 lDYNO9TLTlGDkvAHWu5QUq7E7JT8aK/GSJ+BhEAaIIWGqTN8Jw8iWyQ/bHcWKn+3pp
-	 Z57+lBS1X7DBGw/cgAK4DcaiK1tRu3EGuxqXYYjdA+lCIDduEFMxun3BRd0JOngAwQ
-	 VuezMS8NSoyh148a4GdZdOsSZoaTuu6wxqvjOISkBa+DH13nd0so7ewIRCoG+g1VFe
-	 VuQFnwiNqMvAg==
-Message-ID: <5a4e4b31-ca1b-4aae-b175-ee4ed692ea48@kernel.org>
-Date: Thu, 15 Jan 2026 08:51:42 +0100
+	s=arc-20240116; t=1768464498; c=relaxed/simple;
+	bh=8nx1G6fzmnPE7anK0AcvZ03pFQSbqG823Osvd1oFCRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GAhvAwuT6JN3/jhQJ+vqheeoDswDSlD1/p+G3iWpHtA7zcXQlP+XdFaUUIgoYAZu/6vgewr5u/yPmXXN3/xNvyPUaP2KncnwyvO6xMLNOJwjaWRDD/K1XFeyokDaQMq6MRL59yiO53o8nh9Fwh32nLIgAESbpBq4Ne0cKXTLUs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V40aoCI+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Yr/mRmkl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60F6g0G81055228
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 08:08:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=KJKUj6azlC7SlDOaxCEBUbjv
+	lpTDwtgV7Ulfhgt11H4=; b=V40aoCI+hFNgA8ZMOjEtzNCA/d3JhmEOiduJorsH
+	ENRSAJ01iEVNJRxiVw9sazgpd3/1P2Ncfj7ZKENxY6JCDBi6guy6LZV9XIfPbEAZ
+	zaOH6usE1g6ugPuEp1jx4tg24kaDsEAMynvfqlGDOqcrBjxUo8xfkUH4VpTiD3Ik
+	jd5/PrpPdiDq41JchEy5Owl87K4puYLzWrgDyQgm/eAqDNpj+8bi0+zGHx4+MXGA
+	4qRWYRLn6X4a9Kl66w82+WeZeUMyGKS+lypJJI4oiTxhxHLwZjcyJb3gLr7GcKOB
+	CIY63KIRWBOd0wQMTlxCPOHWfTzeR19ihQFzwMv6ap7rrw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bp8d33v7x-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 08:08:16 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8c52bb3ac7bso106680285a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 00:08:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768464495; x=1769069295; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KJKUj6azlC7SlDOaxCEBUbjvlpTDwtgV7Ulfhgt11H4=;
+        b=Yr/mRmkl06KGNTnATA9oVu4e5YC0/wXDUF/3j2ABPdGVtqh/4wcWJNYPDB5h5kr6ur
+         XYj3jrOirTajUJKbG5mY3rMutPapgn7fCySe4vbmvMvNz4CYnWNYvnvl6zfFjhZ/Mwj2
+         kos3m+CNTVN/2rFEAckO9ZrIvka2cZsqg3mA7S6nXjKqZF6IC87eNQ1S8XHX2vQmhf0B
+         +VEa4qB0+HsKrNWtj+5naDUc5HGEOr9JT43hHWaPZXF9B60ExAM38PaKEbvuNDcMDmso
+         NkZ+UJPlhBTKy9/dE0935BRY9qHOz6tJsjSWaCiCaOnJtBDSuV7qlKoZiLgZwXiYtUz/
+         nXIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768464495; x=1769069295;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KJKUj6azlC7SlDOaxCEBUbjvlpTDwtgV7Ulfhgt11H4=;
+        b=GVmsiMKivwBpgGYbREGswLIukKuJFv7VZ0Y8HXzaTggYfG7/NZ59pMVZWAvJIUFXPx
+         gj7ZzBaanAfOud+70mfjVPzXB4fechLMu4CNZMgwhdQk7rhU4bEygoLBi+2fKa2F71ND
+         ITJOR1rHQUEUFOc7i1hpXhTsOuEoVi/d0WaFFvJxP5nBm3e+lRR34Z7G02U5T+3IKDWh
+         jUgpBwGN6XcUU5batWMVfW23g42VOFroDKqht8BwxPxsGtCGhxYYmm2iSV09Nxq7cnF3
+         IC3/Kz4jk9Uk8KulplX6S9vl2K2tU59xZCTxcDYtF6qe1uXOo4j8V9k6bWaeHlTFhVto
+         HL2w==
+X-Forwarded-Encrypted: i=1; AJvYcCU76l3HC62csqwSEEeQ2RYFhEGzgKe81bZiApTRA2v3iTUDNGonxS6hOP/SAB0UZCJ5UYZVGbvW6yX0ZTil@vger.kernel.org
+X-Gm-Message-State: AOJu0YxaCvkDAXqKeDJ9krs+ZWG8HM5xh7vHhzCQcRm/Er5c7AmyGnxY
+	h4sCTzDhz1RpTOrIE+k8SyauQ077qaZEBiIoGXbrXPX4pLBdBrCsOmirN23+DnJY7ygnGqESQr1
+	J8yQb8Y4Bbi3PML6qFCZIa44ixnL7Vozh2CF/1tm2S6sdP5mQPYPGkib3ltinJdwGDqtQyvqroR
+	hT
+X-Gm-Gg: AY/fxX7hd4vyAetzx2Ka8sMRpyBHdfkOTfIkuhASeNrZ45rPXnY4xv4RRUK6VOh5QPb
+	mHNP8Wy7JR88BAOtvEuaRef2zWGBfCkx3sYcLMKwbin9DlNWZ8o5w7kLRIT7FI0xnHgXKly4uj/
+	h2VPFlw36/vUD9l1weOnBMZM9TF1sZjl8IAw9d2IMcC7UqNhH/E031H82Amh3NulnJv35uiRKQT
+	FaGA1gH2K3mlYhi1Z0+cVzhNJkA5sDlCBItYJ0SC5r6ORJe6zXHeDBZt9B4/N4N4y0TGQFtAF88
+	UJheOGnz0LZibCm6SDP29JlleCdrJ9dwzJLw5anexJtWaL1OvODbORYowJIPsrPNxPHiOggPvpa
+	E951dUFEWkuYGgxPpk+4fReeM4AN5QnwvMPvWhfzHh8j7m6+1jGEP2ptkxOHwJnm/DPY+/q0wFs
+	CqJE6DaDiZ6LCqzmbqVJUXN7A=
+X-Received: by 2002:a05:620a:40c7:b0:85c:bb2:ad8c with SMTP id af79cd13be357-8c52fbe8018mr763794685a.74.1768464495305;
+        Thu, 15 Jan 2026 00:08:15 -0800 (PST)
+X-Received: by 2002:a05:620a:40c7:b0:85c:bb2:ad8c with SMTP id af79cd13be357-8c52fbe8018mr763792585a.74.1768464494799;
+        Thu, 15 Jan 2026 00:08:14 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59ba1045bb2sm1438574e87.76.2026.01.15.00.08.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jan 2026 00:08:12 -0800 (PST)
+Date: Thu, 15 Jan 2026 10:08:10 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Add support for QC08C format in iris driver
+Message-ID: <s2qjimx4tq2jdnir7b5dljf4onsbcmvb5prxcvc22q76l5cgnz@wrgcqdrl26sb>
+References: <20251008-video-iris-ubwc-enable-v2-0-478ba2d96427@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: Introduce Glymur base dtsi
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
- Maulik Shah <maulik.shah@oss.qualcomm.com>,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>,
- Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
- Qiang Yu <qiang.yu@oss.qualcomm.com>,
- Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
- Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
- Abel Vesa <abelvesa@kernel.org>
-References: <20260112-upstream_v3_glymur_introduction-v4-0-8a0366210e02@oss.qualcomm.com>
- <20260112-upstream_v3_glymur_introduction-v4-3-8a0366210e02@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260112-upstream_v3_glymur_introduction-v4-3-8a0366210e02@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251008-video-iris-ubwc-enable-v2-0-478ba2d96427@oss.qualcomm.com>
+X-Proofpoint-GUID: j0sGZUuTKrYzcn9BrAxQ7msyXjwRhWFM
+X-Authority-Analysis: v=2.4 cv=fbWgCkQF c=1 sm=1 tr=0 ts=6968a070 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=7CdEaSrd-WWRwSzuxfYA:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: j0sGZUuTKrYzcn9BrAxQ7msyXjwRhWFM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDA1NCBTYWx0ZWRfX7HgVoWHAtCKc
+ wzD0pUTvcTiL66AYpbX/JTay6rNSXwQjxcNuxu+70iNKCOvGqPGSUbbpNOfCpxErJ+rhiTfNJcu
+ sX7wYoKQXGHRr+DF9kKlPoxhjl3tbzPKQLpG6apwk8D11NufYg41Y4THg0qfOzcRWj/co8Gm0/r
+ 0WuGE8pLj8pe5Alnwt+q+Z4wb70E3aP0MkeYP01Jgz+yHcWtyDXLlQWkPYQXzLrYafHDRqugvQC
+ P1VfLW2jzxMwBLgyCnJV5bKzPRNxC5jQ3c7LyIRKuG58pP0gfo06KkhAZ23TVlcustgqfPzcr5q
+ kq1xhiUcafoEPPD5D1N+RgMotnXBsa4R3ZPxHbYBx2hCe4TQjdMo3Jy5YX6S5Yu8H6hTvrMM1Mb
+ G5tdJHZXQ+JaIpOum/qakeJOipiXMWo8492zD9yG6xqErVqCfsAqIgfxADMqXKNBwNi88QS838n
+ ZGVNqhMFb3T23QinCHQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-15_02,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601150054
 
-On 12/01/2026 13:22, Pankaj Patil wrote:
-> Introduce the base device tree support for Glymur – Qualcomm's
-> next-generation compute SoC. The new glymur.dtsi describes the core SoC
-> components, including:
+On Wed, Oct 08, 2025 at 03:22:24PM +0530, Dikshita Agarwal wrote:
+> Add support for the QC08C color format in both the encoder and decoder 
+> paths of the iris driver. The changes include:
 > 
-> - CPUs and CPU topology
-> - Interrupt controller and TLMM
-> - GCC,DISPCC and RPMHCC clock controllers
-> - Reserved memory and interconnects
-> - APPS and PCIe SMMU and firmware SCM
-> - Watchdog, RPMHPD, APPS RSC and SRAM
-> - PSCI and PMU nodes
-> - QUPv3 serial engines
-> - CPU power domains and idle states, plus SCMI/ SRAM pieces for CPU DVFS
-> - PDP0 mailbox, IPCC and AOSS
-> - Display clock controller
-> - SPMI PMIC arbiter with SPMI0/1/2 buses
-> - SMP2P nodes
-> - TSENS and thermal zones (8 instances, 92 sensors)
+> - Adding QC08C format handling in the driver for both encoding and 
+> decoding.
+> - Updating format enumeration to properly return supported formats.
+> - Ensuring the correct HFI format is set for firmware communication.
+> -Making all related changes required for seamless integration of QC08C 
+> support.
 > 
-> Add dtsi files for PMH0101, PMK8850, PMCX0102, SMB2370, PMH0104,
-> PMH0110 along with temp-alarm and GPIO nodes needed on Glymur
+> The changes have been validated using v4l2-ctl, compliance, and GStreamer (GST) tests.
+> Both GST and v4l2-ctl tests were performed using the NV12 format, as 
+> these clients do not support the QCOM-specific QC08C format, and all 
+> tests passed successfully.
 > 
-> Enabled PCIe controllers and associated PHY to support boot to
-> shell with nvme storage,
-> List of PCIe instances enabled:
+> During v4l2-ctl testing, a regression was observed when using the NV12 
+> color format after adding QC08C support. A fix for this regression has 
+> also been posted [1].
 > 
-> - PCIe3b
-> - PCIe4
-> - PCIe5
-> - PCIe6
+> [1]: https://lore.kernel.org/linux-media/20250918103235.4066441-1-dikshita.agarwal@oss.qualcomm.com/T/#u 
 > 
-> Co-developed-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-> Co-developed-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Co-developed-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Co-developed-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-> Co-developed-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> Changes in v2:
+> - Added separate patch to add support for HFI_PROP_OPB_ENABLE (Bryan)
+> - Updated commit text to indicate QC08C is NV12 with UBWC compression (Bryan, Dmitry)
+> - Renamed IRIS_FMT_UBWC to IRIS_FMT_QC08C (Dmitry)
+> - Link to v1: https://lore.kernel.org/r/20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/glymur.dtsi         | 5919 ++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/pmcx0102.dtsi       |  107 +
->  arch/arm64/boot/dts/qcom/pmh0101.dtsi        |   45 +
->  arch/arm64/boot/dts/qcom/pmh0104-glymur.dtsi |   83 +
->  arch/arm64/boot/dts/qcom/pmh0110-glymur.dtsi |   83 +
->  arch/arm64/boot/dts/qcom/pmk8850.dtsi        |   70 +
->  arch/arm64/boot/dts/qcom/smb2370.dtsi        |   45 +
->  7 files changed, 6352 insertions(+)
+> Dikshita Agarwal (3):
+>       media: iris: Add support for HFI_PROP_OPB_ENABLE to control split mode
+>       media: iris: Add support for QC08C format for decoder
+>       media: iris: Add support for QC08C format for encoder
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> new file mode 100644
-> index 000000000000..91e577bd152f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> @@ -0,0 +1,5919 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <dt-bindings/clock/qcom,glymur-dispcc.h>
-> +#include <dt-bindings/clock/qcom,glymur-gcc.h>
-> +#include <dt-bindings/clock/qcom,glymur-tcsr.h>
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/dma/qcom-gpi.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/interconnect/qcom,icc.h>
-> +#include <dt-bindings/interconnect/qcom,glymur-rpmh.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/mailbox/qcom-ipcc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
-> +#include <dt-bindings/power/qcom,rpmhpd.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +#include "glymur-ipcc.h"
-> +
-> +/ {
-> +	interrupt-parent = <&intc>;
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		cpu0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "qcom,oryon";
 
-Just to remind, this is not the correct compatible which we already
-pointed out in the past. I am going to mark it as deprecated, so please
-do not use it in the new code.
+Looking at the series again... What is the definition of V4L formats?
+Are they expected to be self-compatible? Transferable between machines?
+In DRM world we made a mistake, making use of a single non-parametrized
+UBWC modifier, and then later we had to introduce OOB values to
+represent different params of UBWC compressed images.
 
-Best regards,
-Krzysztof
+So, I wanted to ask, is single "UBWC-compressed NV12" enough for V4L2 or
+should we have different format values (at least for different swizzle
+and macrotile modes)?
+
+-- 
+With best wishes
+Dmitry
 
