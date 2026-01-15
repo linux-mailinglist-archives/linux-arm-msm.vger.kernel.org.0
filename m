@@ -1,65 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-89096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4C27D2238E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 04:00:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55433D223A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 04:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5C4A23024246
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 03:00:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 91992302BA79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 03:00:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6220328A3EF;
-	Thu, 15 Jan 2026 03:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9BC25EFBC;
+	Thu, 15 Jan 2026 03:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LoxfoRC3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="csbwfIg0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0532882D6;
-	Thu, 15 Jan 2026 03:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB827146D53;
+	Thu, 15 Jan 2026 03:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768446014; cv=none; b=pxG1H+usinTjn2bOZpCPYFN85oPp6VHGJxou01/OAvctMI1GuIwaMLL3cCc73ahZwgigBOD0K+/6aH9J1iE8d9uPf13fTgXI4Q56y2hopCaRsB6WhhwICgoYb76xpot9cc7/XXoov2aQe/frSM671X52P0DqhK3API0mIHazvsU=
+	t=1768446035; cv=none; b=FVtL7BPAawsXTJTDk42/S4JcMp5jYe2rKBg4/3m6y7AKiePWxxbq19OKw+K5UkMTF/a56pIwBkn3dBo56oqsOgIPtlfYPA1r5CjYalA3bpiK02HWCJqLOSYIRKepwSgSXZpcvyqeq1qnm4V+N9qmGCIRsxMX+xhdwOqwseyO77Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768446014; c=relaxed/simple;
-	bh=J42LSCXNo43KBacwqraKvUzVYW6gsPAF9kFFhN8iRxY=;
+	s=arc-20240116; t=1768446035; c=relaxed/simple;
+	bh=+GhhQh/xv9b8mB4AbqjJbyQyD0w76D1PrH5aFdc1RTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DzzZ4hN3B0/eAXn2qGfu6Tnc4hAbTO6W39RA+4D3FXGrJC9Iaxo3p1aICdKLwzV9MnBrOLbCfh4qhqvw5jvrklFpV9wXbH9XyuuCQdbqLnWqwFPg7/piWT5d2+fNyUx11IIM6dqI0tNwDVjpqpsYnwGL5EM7YiSjUs02KwMfhDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LoxfoRC3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6513C4CEF7;
-	Thu, 15 Jan 2026 03:00:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=s2O4w9UJUHlgv8sVtsUCbz9Hi2/BJjWEnP3Qn/WeEzxH6q+O8APXDdzch1G23xe3Tl+fBZQppXJ4Dw0MWfNWMdDoCZ4Qfcnew7pwZWF1QTHApv6BZemcUDbnMm435qxGquLnmMMVWEY9AtQVIYY7QSsOSD2EYMRWGXOfB+VaGaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=csbwfIg0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0BFC4CEF7;
+	Thu, 15 Jan 2026 03:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768446011;
-	bh=J42LSCXNo43KBacwqraKvUzVYW6gsPAF9kFFhN8iRxY=;
+	s=k20201202; t=1768446035;
+	bh=+GhhQh/xv9b8mB4AbqjJbyQyD0w76D1PrH5aFdc1RTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoxfoRC3H/hN+Lzm6qbOyUGJX8IrBq30J92L5cWVVciUyE78nQXghAZLEKWPnNobO
-	 Ox0W/ksdWaAj2nuWBQzR8EJB4TRtjEl/6Us/ab6TI5bsb7XaMgH/IpfO3SfOlW8x7Q
-	 vp8LEKjI978/p+TWaf0495Tbmq9Q/2BGtmdquT+0DQzxwGpGlno0eB2HwkrC8UZGEk
-	 hy22Y4pIkxRLp9GOUPgoKlffdx8/pL9vgEB12XXkOG2QyKhB1OVVuDC0NsCpJbgaSq
-	 ycQK2a4rWYIBsquojPVOFfO58MyVHdVuf+bRH4Cju0GUm9GyinbOjEbaXlb/c2U0Tr
-	 Y9fEoL6AAiWNw==
+	b=csbwfIg0y2K63uqi/6Lo7542Ohyld0LZxahUWtIhSRKkC0Z1q3I9UvI4ZcDqjxqu8
+	 1A9MkvycSfb5tMR2mD/MAQbF/a5PH86yWx9g7/4RsqWwra0E46HJwImVH9G4HIztXN
+	 uy+i0D5Q5RIwfYSsDpU2NVqMRqpn4HSOmn70fmZJba2x7mgzyIGXeY9dyLNKJh0dts
+	 Tqhxh9dyYgwcBgYH4Nt7LPjBFB87aUjMM8hNNw5cLvjyLvd/hV5FNqkdiTxNCxF/ww
+	 OacHQ05Ir+cpnj5y5s8O1gQhakRHjv0SnFIizCF/z2twPGhdQPhWSO4k5MhVDCtpLU
+	 UKDr4xXu21RQA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-Cc: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Mike Tipton <mike.tipton@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/3] Enable QoS configuration on SA8775P
-Date: Wed, 14 Jan 2026 21:00:03 -0600
-Message-ID: <176844599489.144315.9204321098309778105.b4-ty@kernel.org>
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/11] media: iris: migrate to using global UBWC config
+Date: Wed, 14 Jan 2026 21:00:28 -0600
+Message-ID: <176844602411.144544.5791366481076327049.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251001073344.6599-1-odelu.kukatla@oss.qualcomm.com>
-References: <20251001073344.6599-1-odelu.kukatla@oss.qualcomm.com>
+In-Reply-To: <20260110-iris-ubwc-v1-0-dd70494dcd7b@oss.qualcomm.com>
+References: <20260110-iris-ubwc-v1-0-dd70494dcd7b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,24 +77,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 01 Oct 2025 13:03:41 +0530, Odelu Kukatla wrote:
-> This series enables QoS configuration for QNOC type device which
-> can be found on SA8775P platform. It enables QoS configuration
-> for master ports with predefined priority and urgency forwarding.
-> This helps in prioritizing the traffic originating from different
-> interconnect masters at NOC (Network On Chip).
-> The system may function normally without this feature. However,
-> enabling QoS helps optimize latency and bandwidth across subsystems
-> like CPU, GPU, and multimedia engines, which becomes important in
-> high-throughput scenarios. This is a feature aimed at performance
-> enhancement to improve system performance under concurrent workloads.
+On Sat, 10 Jan 2026 21:37:52 +0200, Dmitry Baryshkov wrote:
+> Having UBWC configuration in the driver is error prone. For example, the
+> driver specifies fixed values for HBB, while the actual value might
+> depend on the DDR type. Stop defining UBWC data in the iris driver and
+> use the global UBWC configuration registry.
+> 
+> Merge strategy: either merge SoC bits directly through the media tree
+> (with Bjorn's ack) or merge to the media tree through the immutable tag.
+> The drm patches will follow depending on the way the SoC patches are
+> merged.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: sa8775p: Add reg and clocks for QoS configuration
-      commit: e7fc2fee4212714485d0efb12cdd9fbb51dde078
+[01/11] soc: qcom: ubwc: add missing include
+        commit: ccef4b2703ff5b0de0b1bda30a0de3026d52eb19
 
 Best regards,
 -- 
