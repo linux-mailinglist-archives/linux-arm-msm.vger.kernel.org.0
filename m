@@ -1,97 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-89141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D73C0D22D92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 08:32:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F01CAD22D83
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 08:30:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1C5FD30A43A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:30:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 36A72307E9A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 07:29:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97662331209;
-	Thu, 15 Jan 2026 07:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C036932D0C9;
+	Thu, 15 Jan 2026 07:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ApFqPLMn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BfTI6N0W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dIHSac7F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0052832FA22
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 07:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A36032B9A6;
+	Thu, 15 Jan 2026 07:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768462155; cv=none; b=ecXSYD0KfhspMlAkCMvbnvvqb79vIBsMc/r/fPMl2zdz85v+V4MS8Gpyro73Z/KNjDfEt4lchujDb5+qi6smtX0n5rHuthNQNjVnIKsFZ1qzVdUirgnwj33oBwv9KpkJ4k1IuC4ZNFKsx94laQtTHD6A8YCC2ICylFThDYy8OZM=
+	t=1768462152; cv=none; b=Wz5i8n2kknHGGbK41dvToO50hHgJflzj+yk7YkwlnZ6vnD3l+JTXXszECaISnLCzkqaVICDKokm1/dDKqRQDMgOCgoN6q0R0Q6M1O9KKDb5OT28+xqb4ZHJe4ehqO48fq3IXXjwXjfx4oAVPz02nfOBvMTCDmv4BEqN+B2SUAb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768462155; c=relaxed/simple;
-	bh=m86ld7IhIkQDXjy3Y5weZUVJI4ZHVj+c8sLf5mumz7s=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=BOEGdUy5+rRP2kBoy74aK8K4Vk1nwL08Cv7GCd6auFwpxgQPa4EyRbfiALtJwL1DZqlBUvxYQYuw4ehlMQUaqh1mjqvFml3RQfWCDwIPbS/EWB+wuTwjEqeb87Ld9D55356xBhH17vJAesI3eg/aViJXO2rSEskbgpGpeWbP1EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ApFqPLMn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BfTI6N0W; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60F6fgbe606221
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 07:29:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=h72bZwdSi+QRO6gwAB/PZa
-	NU8NpDQH/mFKJvFIHBoMk=; b=ApFqPLMn4dBPDTyNTmXb9QMxAItLkKkUzkW2yL
-	kmM2waxBqeFB5qLZ6Kw2JPDus/IdLKlMTR8m1ycmgr09/Q+tDLt2RHGfPvdPpTw7
-	1+JzOp2ZBH2wEn62oLDwiC0I2B1jKQ4MgYwAZu9VBF86zeDMibW2FdUnRyMvggaj
-	4lZbMks/DX+GmzHzKhts4eyR4L//CelWddgSut5TscvYUJGn0cMsyx8puh8pTmma
-	zlOBOMFogkDTS/kpUgH1nlOPbBuX7Cj84tPefpYIFfz7dO9xyz/e0CKjTmwjf+6Q
-	mJvZJ26xt5kpkxZG/2qjSanLS2Xv90TXha9hBJaENL98JxpA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bptna06s4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 07:29:12 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c52fd4cca2so160765485a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jan 2026 23:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768462152; x=1769066952; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=h72bZwdSi+QRO6gwAB/PZaNU8NpDQH/mFKJvFIHBoMk=;
-        b=BfTI6N0WWhG2T841W0/o/MeoqSYGkBV9ziJFEsBiXO28d6b9NFIeFatLHEjI9+A4uX
-         7X8FW68gyhuM6QCeE4F7jaJ3pU3X4Uy5n8k6cKjQiV3TDj5aKDOAesjfajDDEZnOX047
-         EQQoW2meQADGGgTlUcWBrR8IlWnyHLqCfjv6cHpdU7BvY0VobRbXboRwCbwkukyHqi8b
-         eU3/KnC2KIcAZF7cMTt1DDT4AfmarE0/cy5R4ZAVVxlDadp2gjI0ie9nNRPqxi6sDFeq
-         2DNCAsSPNx8rBXjxUh+s0rr1Wktu0OyFPA1YlbKCSUEpBw20CsoaKWihj3SQLvkJi4f1
-         MTtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768462152; x=1769066952;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h72bZwdSi+QRO6gwAB/PZaNU8NpDQH/mFKJvFIHBoMk=;
-        b=kPCKfBijejX7Y3Uwmm42BeJB5qrbR23f7XqP3wp/z5lxWDIMhdLoecpRDF4/wt13z5
-         /HltJI/gWPZIf7reQAYGzufjFy8LfaOY+rQBIUxKPqdgQHRsp56N2v+u5ESATvnbyfO8
-         AZGU9S6Gb/5okp+Dz7XaHtO20vVI3pnFk57q0Iylkv/ksrJn53w5rbn9q6d14lmKKSGB
-         psv0Se0h4Shk//5zV6ntEmKmXyLqgJsGEVVnSIlZck6A0/oXZBzVAFViB3R4Gf7GlpAG
-         p5bkbjPoyAn8WuC03lLVWuSTb5HxpxoWE2b6sKfg1PQPIuA5Y6MV+FERVQyyq8KOkLFE
-         UCmQ==
-X-Gm-Message-State: AOJu0Yx73C3ZSt3HkY3U8ovRtTdLOfRUdVfLY0O2Dvf7AcGxkY+Nr5Rk
-	CxLXSAsmurxFdTF9/KxeX7tm7vzj9OLWgiUdzR69UxDfba7aaqhlexl28sjYsR5VUC6Fm3fDHIl
-	Sdzra18G9+rjii17w9m1UcqmQG2P1omqTUklCpl7xaQur7patfTqSB1ehvWryRe3IZl4b
-X-Gm-Gg: AY/fxX7gcWL5iUedtIoPVzdINkCZGAsaH3BhfIlRPiFw3Rp9mpzqNBLhUPxWs6CeSg2
-	0H0XkRka62VI4zzY84fkBtG/U6xQgGeeNxQStiWOxo5TMUZT/pjlOcwzTP3fcs1HGG5KVwItM+a
-	mxoLuDkuAk2AWvsSOJdJ8wPVNjGWb93LTaxhi/7jCPh3L1ME05orQh8njAiZKBkAhQwkAkC/aMI
-	loLua8BZ1GHIRWt4GvF53DmAP8XkoaWIBnVD4fvLN8RvcxWZJTAh58GLdhxFc+K64WzyLAQ2/GK
-	iVYJfxV0Wd/K5mjm7IiThIxw+/Ep0OTXXJUViPlR8aM2OgjyVqLu+eWwdjmrNbX3Ahq+ochtRug
-	zljtoHeA4VlJJur+GK9YtiCc0LvzodR2KrKByRUF29kxtj6nXVGbuksRXnZLZAXrX/b2PgqxIjQ
-	zMWuJ91CM+WJSxX3J7PY8dj3k=
-X-Received: by 2002:a05:620a:2808:b0:8b2:6bdf:3d15 with SMTP id af79cd13be357-8c52fb236dcmr733253385a.8.1768462152301;
-        Wed, 14 Jan 2026 23:29:12 -0800 (PST)
-X-Received: by 2002:a05:620a:2808:b0:8b2:6bdf:3d15 with SMTP id af79cd13be357-8c52fb236dcmr733251685a.8.1768462151808;
-        Wed, 14 Jan 2026 23:29:11 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382eb7b1a4dsm58078801fa.17.2026.01.14.23.29.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 23:29:09 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH v3 0/8] drm/msm/dp: Drop the HPD state machine
-Date: Thu, 15 Jan 2026 09:29:05 +0200
-Message-Id: <20260115-hpd-refactor-v3-0-08e2f3bcd2e0@oss.qualcomm.com>
+	s=arc-20240116; t=1768462152; c=relaxed/simple;
+	bh=7mSdsYASfyGSrjZYSh8rCdb7w3bx4AprJ7qdCc5vQl0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=jbBXcsqYs9tLzvoSqSkMI4/ksQ49TaWtNy5TAVbjWHUagokRhmr6hnhVUriGuYBd/pVw215kgoVQQSSdiDptUXp+z+8Akkh/yn2zw9aa5/zt9NLUQuNU8+ZtVnXwpBSljxMIO1RvpYG+riyhVDStSDb+r5A4/VoHDgaYzRUpDhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dIHSac7F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 10E3CC4AF10;
+	Thu, 15 Jan 2026 07:29:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768462152;
+	bh=7mSdsYASfyGSrjZYSh8rCdb7w3bx4AprJ7qdCc5vQl0=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=dIHSac7F8YYaysQ/NtTzveLSEMSXHryWYZleq7Xs0r1hoOW43w+HgzVSJnkdNh/kA
+	 z9yPklqdTzncX1hkGrTLD965Dbn3lyDqY1apvFkuv7zx3TQ0AJVADum2uN7lQP1fGi
+	 nObsaNXS3vL+wRpDEadRA4j7OHg9kCioLIrjRlt88CSB+TbDum080eVFpq0RHznskX
+	 U1LSqTwdk1vRO523jxQKuC8CuwIYibEnkfTbkt+EKrOWMS3PmpbCk+BmV0SjNvq9At
+	 +URyGH7XQWNailu6wrs2xG9G28Wfn63HbFfDGqM+JffJf9fjZLETP5Sgut3FWVxIFh
+	 SUQcdt62bv+3w==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0900BD3CCB3;
+	Thu, 15 Jan 2026 07:29:12 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Date: Thu, 15 Jan 2026 12:59:05 +0530
+Subject: [PATCH v5 13/15] PCI: qcom: Drop the assert_perst() callbacks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,124 +53,148 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEGXaGkC/23MwQ7CIAwG4FdZOMsCBWTx5HsYD4x1jsS5CUo0y
- 97dbh6MxkuTv3/7TSxhDJjYrphYxBxSGC4U1KZgvnOXE/LQUGYgwAgDindjwyO2zt+GyK1GMLU
- xWxCO0ctITXis3OFIuQuJzp6rnuWyfUNWym8oSy64Ur52vgLVKr0fUiqvd3f2Q9+XNNjiZfgYl
- ah+DCDDtholWi2dU3+MeZ5fq8r3g/MAAAA=
-X-Change-ID: 20250523-hpd-refactor-74e25b55620a
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Message-Id: <20260115-pci-pwrctrl-rework-v5-13-9d26da3ce903@oss.qualcomm.com>
+References: <20260115-pci-pwrctrl-rework-v5-0-9d26da3ce903@oss.qualcomm.com>
+In-Reply-To: <20260115-pci-pwrctrl-rework-v5-0-9d26da3ce903@oss.qualcomm.com>
+To: Manivannan Sadhasivam <mani@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Bartosz Golaszewski <brgl@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
+ Brian Norris <briannorris@chromium.org>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2608;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=m86ld7IhIkQDXjy3Y5weZUVJI4ZHVj+c8sLf5mumz7s=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpaJdCjtkDFa+i+6psenegKh3OkYiHeRBG1uY8b
- PGr671WMd2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaWiXQgAKCRCLPIo+Aiko
- 1VQLB/95pAha7y+54mAYSqmZqac8WgGav2PRQ47+7Zke6AgWGNysjTJVTTjqoBnn66z8mDHpyJ8
- Y+iPRFFzDJKxHcn3zEeU10ufB+ompE3/bJwIs0i6V30hoQUaR+BfJMkHWGdPwlinMfQZkMkinwA
- efV1tdiHaXjpT1iPPPTfwPZloBosQtNMYEogflSKtLPS/x8LZqdEKpVrhRiExI+OQb8R8+4B3pO
- HTPsIeIsMUU2OtGYHdSG0k9L8JNAO0mKHnCFGYgrZzIGNotfwSQzTL3LAAUMEhV7NLzwy1gR/qb
- 3UQugs9NDQ45L6Q7U7EzqccbSuxoMzLK3ocCuhyOVRqyn6fB
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: xyyGbiKxOUzpGNrOey0pXXd6EehVpmBu
-X-Proofpoint-ORIG-GUID: xyyGbiKxOUzpGNrOey0pXXd6EehVpmBu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDA0OSBTYWx0ZWRfX1/TQS0KCLWdz
- tP/Tt1Mg5y0F26tf3Re+RhZbR0WMNkk7d/gZ4xC+/12hie9/vGTlobscSEVJzF2RYJmo2pED+4X
- Mp6I/u0Mk6rnTaEqhaSG+ENE0wOzkVElewMROG6kIxYfJSGiV7W3iKUVRrCoFS+mUljt+OqMfci
- ag7WrWGO2yDC4Om1yoiOC+I1d95Ue6qaNTDQ/RD2YPvlQdr/E/MPWwHRxyBeK6NFuzK7o7VEAT0
- CbYiK5xio0Ne3X8EuBvqH9XRRfDv/d1dpEvDpEc5YysKGGzP27TKkTYyVJXUsoJVCcaJ+pzP7Ww
- nCaebbGfu/68miOZ1DKJViITAHZoF7QTXgHuBoY151RmbnsR7ie04MNPD2G2uevBfjpHYLRM9Kh
- kNbokD964wv/2snsXVf5LFfPRljqgdrysK1D4eDofIaimqJd1qNrJco9xA7xT2KMGPnU8Jc5LWM
- inzDsZdZ2EeTmr9NzJw==
-X-Authority-Analysis: v=2.4 cv=fsHRpV4f c=1 sm=1 tr=0 ts=69689748 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Q-giyGzHwlFVuBBPpRIA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-15_02,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1015 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601150049
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3855;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=rogITdc7MmLCnkojcc5SXxBSLFA/7R+miSdzsbgMDBg=;
+ b=owGbwMvMwMUYOl/w2b+J574ynlZLYsjMmO7U0sh5eVt9u4V3lN6U9SzJSm9sVjZOF6rhyLYRS
+ vbjiEvuZDRmYWDkYpAVU2RJX+qs1ehx+saSCPXpMINYmUCmMHBxCsBEOi05GBbaOF1YKvlfxeHA
+ 4bCV9mlu76QvFyX9OyTamcX9+RvLiltXN1S84K9J7J8nEfHBIieSPfz5nRZhnu91TawlOWoyVhO
+ 6OHLun3xy1e2BfW4Pq3qccbDby/z9hrXbf7y9lm4V8veb0UsfqxR/0cwbq57muO6L3pet1DiJR3
+ 5NkM0+sWkary6GfH1WxLBjxnub/O33XcLj14haK5Ss2sIr32+6Z9adKPPjU/n7+JZeKHi5Utkje
+ tnWHymbFbi8lINVfOUPHVRbt8Rs3+JA03ccZ6O1ZXas5/HTvSsRvsE8SjV06f3YVXzHbZ2VuY/P
+ 6G/dcoQtXlufxfpPSmxtW0LsGbNtygsT7my6euT6G8UsAA==
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
-Currently, all HPD interrupt handling must go through the HPD state
-machine.
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-This has caused many issues where the DRM framework assumes that DP is
-in one state while the state machine is stuck in another state.
+Previously, the pcie-qcom driver probed first, deasserted PERST#, enabled
+link training and scanned the bus. By the time the pwrctrl driver probe got
+called, link training was already enabled by the controller driver.
 
-As discussed here [1], this series:
+Thus the pwrctrl drivers had to call the .assert_perst() callback, to
+assert PERST#, power on the needed resources, and then call the
+.assert_perst() callback to deassert PERST#.
 
-- Removes the state machine
-- Moves link training to atomic_enable()
-- Changes the detect() behavior to return true if a display is physically
-  plugged in (as opposed to if the DP link is ready).
-- Remove event queue and move internal HPD handling to hpd_notify()
+Now since all pwrctrl drivers and this controller driver have been
+converted to the new pwrctrl design where the pwrctrl drivers will first
+power on the devices before this driver deasserts PERST# and scan the bus.
+So there is no longer a need for .assert_perst() callback in this driver
+and in DWC core driver. Hence, drop them.
 
-I'm not completely satisfied with the PM runtime handling, I might want
-to review it at the next iterations or with the another series.
-
-Note: eDP is mostly untested.
-
-[1] https://patchwork.freedesktop.org/patch/656312/?series=142010&rev=2#comment_1201738
-
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
-Changes in v3:
-- Take over the series (thanks, Jessica, for the previous work!)
-- Major rework of the series, squashed the set of patches touching the
-  HPD states and handling, it is easier to do it this way rather than
-  pulling the strings one by one.
-- Link to v2: https://lore.kernel.org/r/20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com
+ drivers/pci/controller/dwc/pcie-designware-host.c |  9 ---------
+ drivers/pci/controller/dwc/pcie-designware.h      |  9 ---------
+ drivers/pci/controller/dwc/pcie-qcom.c            | 13 -------------
+ 3 files changed, 31 deletions(-)
 
-Changes in v2:
-- Dropped event queue (Dmitry)
-- Moved internal HPD handling to use hpd_notify() (Dmitry)
-- Reworked bridge detect() to read DPCP and sink count (Dmitry)
-- Moved setting of link_trained to plug/unplugged handling
-- Dropped msm_dp::connected (Dmitry)
-- Squashed all hpd state related patches (Dmitry)
-- Link to v1: https://lore.kernel.org/r/20250711-hpd-refactor-v1-0-33cbac823f34@oss.qualcomm.com
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 372207c33a85..4862a3a059c7 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -857,19 +857,10 @@ static void __iomem *dw_pcie_ecam_conf_map_bus(struct pci_bus *bus, unsigned int
+ 	return pci->dbi_base + where;
+ }
+ 
+-static int dw_pcie_op_assert_perst(struct pci_bus *bus, bool assert)
+-{
+-	struct dw_pcie_rp *pp = bus->sysdata;
+-	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+-
+-	return dw_pcie_assert_perst(pci, assert);
+-}
+-
+ static struct pci_ops dw_pcie_ops = {
+ 	.map_bus = dw_pcie_own_conf_map_bus,
+ 	.read = pci_generic_config_read,
+ 	.write = pci_generic_config_write,
+-	.assert_perst = dw_pcie_op_assert_perst,
+ };
+ 
+ static struct pci_ops dw_pcie_ecam_ops = {
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 31685951a080..da32bb5f936c 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -493,7 +493,6 @@ struct dw_pcie_ops {
+ 	enum dw_pcie_ltssm (*get_ltssm)(struct dw_pcie *pcie);
+ 	int	(*start_link)(struct dw_pcie *pcie);
+ 	void	(*stop_link)(struct dw_pcie *pcie);
+-	int	(*assert_perst)(struct dw_pcie *pcie, bool assert);
+ };
+ 
+ struct debugfs_info {
+@@ -798,14 +797,6 @@ static inline void dw_pcie_stop_link(struct dw_pcie *pci)
+ 		pci->ops->stop_link(pci);
+ }
+ 
+-static inline int dw_pcie_assert_perst(struct dw_pcie *pci, bool assert)
+-{
+-	if (pci->ops && pci->ops->assert_perst)
+-		return pci->ops->assert_perst(pci, assert);
+-
+-	return 0;
+-}
+-
+ static inline enum dw_pcie_ltssm dw_pcie_get_ltssm(struct dw_pcie *pci)
+ {
+ 	u32 val;
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 20b7593b8397..2a47f71d936a 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -642,18 +642,6 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
+ 	return 0;
+ }
+ 
+-static int qcom_pcie_assert_perst(struct dw_pcie *pci, bool assert)
+-{
+-	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+-
+-	if (assert)
+-		qcom_ep_reset_assert(pcie);
+-	else
+-		qcom_ep_reset_deassert(pcie);
+-
+-	return 0;
+-}
+-
+ static void qcom_pcie_2_3_2_ltssm_enable(struct qcom_pcie *pcie)
+ {
+ 	u32 val;
+@@ -1514,7 +1502,6 @@ static const struct qcom_pcie_cfg cfg_fw_managed = {
+ static const struct dw_pcie_ops dw_pcie_ops = {
+ 	.link_up = qcom_pcie_link_up,
+ 	.start_link = qcom_pcie_start_link,
+-	.assert_perst = qcom_pcie_assert_perst,
+ };
+ 
+ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
 
----
-Dmitry Baryshkov (1):
-      drm/msm/dp: drop event data
-
-Jessica Zhang (7):
-      drm/msm/dp: fix HPD state status bit shift value
-      drm/msm/dp: Fix the ISR_* enum values
-      drm/msm/dp: Read DPCD and sink count in bridge detect()
-      drm/msm/dp: Move link training to atomic_enable()
-      drm/msm/dp: Drop EV_USER_NOTIFICATION
-      drm/msm/dp: rework HPD handling
-      drm/msm/dp: Add sink_count and link_ready to debug logs
-
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  22 --
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |   1 -
- drivers/gpu/drm/msm/dp/dp_display.c | 673 +++++++++++-------------------------
- drivers/gpu/drm/msm/dp/dp_display.h |   2 +-
- drivers/gpu/drm/msm/dp/dp_drm.c     |  22 +-
- drivers/gpu/drm/msm/dp/dp_drm.h     |   2 +
- drivers/gpu/drm/msm/dp/dp_reg.h     |   4 +-
- 7 files changed, 208 insertions(+), 518 deletions(-)
----
-base-commit: b775e489bec70895b7ef6b66927886bbac79598f
-change-id: 20250523-hpd-refactor-74e25b55620a
-
-Best regards,
 -- 
-With best wishes
-Dmitry
+2.48.1
+
 
 
