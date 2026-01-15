@@ -1,248 +1,333 @@
-Return-Path: <linux-arm-msm+bounces-89195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0512D23AC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 10:45:41 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61486D23C83
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 11:02:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 625193010CC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 09:45:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A1F7130A9EB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 09:57:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECFDD35EDC0;
-	Thu, 15 Jan 2026 09:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEFAB32D7DD;
+	Thu, 15 Jan 2026 09:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="APsWpn5K";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cUmhjpWY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ABMwVSUX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CBE334695
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 09:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC62236E0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 09:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768470339; cv=none; b=SFHxJ7IACvSLcH21ncnzAFMJSObflqqOXESkSJ67K8yFBvj2CcAR1hGzCiuLU2rWD00qf42dilN4RMGwAMn2mwdyTnfe4PrItSz9LZKqnqZPwsD9vxd1Ur1B608E4mKE59gT+dkvLAZ6WlUddUGbEOgsV6M8JUSEl7Pups5Rs8A=
+	t=1768471037; cv=none; b=U1Xwr9HyUtelHBpOwcsDGtsWnCstrLfHTKfYN0NXR2G0DUK9uOMBs1pznwAAgvF5rCf4WJHQoOrSCZ44Vwq680CFXybBaEpwUYmJL0g8Ke2z4ENKsGv/JjX4d0GJQ2NEC2TQoVmn3j6UzN5gNGx/T/G7ZohF1zceEya4E3XARv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768470339; c=relaxed/simple;
-	bh=NNwg+xVgWFibLqX1CMqOAEh3V1cjfXBawsIFa7JY0gw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qu3UJZkXscKjnAMkliPaM9GMWxsstXRpcXoeydFq3EAn8pEdmvsb2PGjLE1Q7IAIC6WRw4nSGzTbRdLPAh1GrYxUidra/zQJHMT9ut/0YZ4eFwGqJJ++RoYketvxhPNZ+GeJuADoUo6aPi1PZPicWhwGioebgxc29MS4u8lMQ9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=APsWpn5K; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cUmhjpWY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60F6fht91581837
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 09:45:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2h/2kt/WX4WfJjNW2oUQf4AhU9i6t5OwxqtRmcL1h1c=; b=APsWpn5K5w2c+AwP
-	53BIRNqiyWcv5uVfY1RRy1ZkoLH75+Pdtf5CpqzsUysbMgDtffYjjQKB83W5159+
-	2oBrO10mcNCArMvKQITaBaoFXwkVAOQ8BK5kyB3qEDaUCPXEEl0XPE+PlTODvJqo
-	/Myhe/sOSYKCwkVmRE9UZowka85qXdZPk40gmoma6Wy9UYlwkIK0gLTyeLc3shJt
-	TWIhzot+1+XkLT/XjkfArLBnIA0li+H+2HyqGaqkp0AG/fq1501h8ToTP/yvLW4p
-	m/i1RYTsvxIWISfpHBtw4FTWj+kgHCtWmQOgkUy/fOTcPO5FSBkMhoGh3Z2OBNDC
-	Vj4UzQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bpj1pt1qs-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 09:45:37 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c6a2ef071dso50501685a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 01:45:37 -0800 (PST)
+	s=arc-20240116; t=1768471037; c=relaxed/simple;
+	bh=MYfkO9jxSLhAEZl+UuVOSjBjJK4lxj5AabPDLabVrhY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O4GeAivjzkAzyByeYQ0ZbZ7IMJo8yyuy8uJ0v9wTHg/DVgeZDYtQaG+qcR5kMjyAFBDR4DU5dRSsc0x8iTJM3Lhmto7666tewAePI88c4CqdadGDLZJVot0idkrMk+ecQJXLxrMnLHqwovt79lMFjq1JAhkEo/vugZF6Dx8rV+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ABMwVSUX; arc=none smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6466d8fd383so632790d50.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 01:57:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768470337; x=1769075137; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2h/2kt/WX4WfJjNW2oUQf4AhU9i6t5OwxqtRmcL1h1c=;
-        b=cUmhjpWYcqG5Ir48rDd2mS9MosR7FAZcbFbTdSuh6JBIBneVCY2mEDlScfR7LVPW8o
-         VEsR+59pPVMZxhMLKgxaZE5Cld7SEqDtX7WEocoQB3rucdm3oZ1nmKKe4t2JRvcsotQ/
-         AFUpY7w4VRjcOoj6piK8qbcx5dJjfzsyeWdmgWOpr4m5i9V+/vWcx9+4kQ1ZnjQ9NRS3
-         GuNHvaxsuB5u9E9I0e7Ym9hsfWPMIvsRF1j+yoptySWtdks33/zH40as2cZqvR1PAr5w
-         dBoZnj/Vk3MinSta5EvBk0Z3sGNF2XWOmd7yi3RrLpB1RL55f8zM9LzaWIsYUXkYKN8/
-         mxsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768470337; x=1769075137;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1768471032; x=1769075832; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2h/2kt/WX4WfJjNW2oUQf4AhU9i6t5OwxqtRmcL1h1c=;
-        b=Pr7mabwbwapu+4s2jF4KOfwjb3twGre7sFB/aUoOUHAQqymEn5dFBrcVQt3gY56GYo
-         cp5iAYGR1FBDTiexpwDou1NeX6KuCQNZlCggwDEY0Pxzj54XDGkI2uF/Rn+GokYhxZyb
-         D8DhZiv06Bhht6xrsf2byDEM/evmxiU5/Wn5kGxyDj/YdbSuZVzPKOyaAt5JcJVfg19y
-         um1z/72IiqWf0mhZ9WzgG5jZQObjhDxnnVe+5Gpz585F2mc8Hwp2ZM5SwbVIbAVAkqPx
-         Iji6gi/2SuYHfrXYK3Y+zZpJVLFK4VMg04pW2MgbYdU5SJVmNYEqyQ3p6+enTpUTAThf
-         vqIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVqA2I0vepCOh87qfOi8Iclhm7fF28/Nt1Sl9FCob/HLn52zIchdkblO36zw7hLc+TwdfV3mJ8k7zhwqneY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPbtdftNWVHV2hOgCsNmxD4Cvp+t9henf5iOqWaQ/qpovE6cE/
-	z1EUgg4ehtEuLuqsuIG974qRXeZkkT54j9n4u5fvrtBydhenxCLz/mgfGWyxNseOS9+h7SgEKUr
-	rMSlnOPpg8XGuto/vsflLSRKnoEvOD0ojzPlH/XGB6d1/tlkIdhhcQFfjBxFenL33Z4h5
-X-Gm-Gg: AY/fxX6HytmLIkAz6sSEPRQewB9fjrVkde/xivFeGgrvK0FqHpSJEAhvpLppbxYjQ6a
-	E3IIwU/2138oNweAef0NnnsJWheI8rBNVJHdMZLZreAhnmtFdyzTRM22o6AuCeno4uRaH2iwxjB
-	LRFZTjgplf4JdN3KYyr3Na+mXegOoEM7vSdNSi0zlZVQjpaoFFgFqKtyubtSDMcJCSgfmVVE2/O
-	ODcv3SKNwH79YMd06KU6/H01cflL4mPosE6PkI8NZYn9e9dQt7sJ/wpuAWHNMI1BvCOHENGrC3W
-	lf50ZIyG9CjfGL53781dwMbKL7RR3RNc4u7z1c0EpiaAbiX0/gcmumbaep5SzyjT738GuFHhb7j
-	ISPM5QSIJ3Xli6lUYbuwWNHMbox0SlAOFMSbZVA==
-X-Received: by 2002:a05:620a:3993:b0:8c5:3495:87df with SMTP id af79cd13be357-8c534958a61mr364528785a.38.1768470336897;
-        Thu, 15 Jan 2026 01:45:36 -0800 (PST)
-X-Received: by 2002:a05:620a:3993:b0:8c5:3495:87df with SMTP id af79cd13be357-8c534958a61mr364525885a.38.1768470336483;
-        Thu, 15 Jan 2026 01:45:36 -0800 (PST)
-Received: from [192.168.1.29] ([178.197.218.229])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-434af653596sm4965767f8f.14.2026.01.15.01.45.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jan 2026 01:45:35 -0800 (PST)
-Message-ID: <7d297b3c-555e-40aa-b7a3-921a16c11a7f@oss.qualcomm.com>
-Date: Thu, 15 Jan 2026 10:45:34 +0100
+        bh=+ZQ01fdUTk2fmkDZbOMCCfMvQv0D+Gvt+c54zKAvLrA=;
+        b=ABMwVSUXZllxpKkMSgTFsC2mjwIkZoAlcc6oK/gfKEvNtdZtf+ERmjqH3xhclOVBCr
+         59ZDCWbmnngn0j+/vztte63nnCBZgXLiNHCOJctLD5Ac45Cx7ZWZRTJm1NepiIhvBs+u
+         Co6EDRuQJzt2t1qF7TNCBSV4HxfOk+xkVZ4mQ29Gb7JuV5nL1Jxp47TbN6WTS1Sq1azB
+         3pJguFjHjh5jrTF2zxJfKeg5tRnX3FdaVAjajm+5CndXd8c1L6tgdFD4gp68BmSU9cE2
+         W1/luDdCGMaTvhYf+m1HwJ1D0FJoPIuNF3weNAc2izB3Xq1F/JOQEDaFYWE9E86M1Evr
+         1M6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768471032; x=1769075832;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+ZQ01fdUTk2fmkDZbOMCCfMvQv0D+Gvt+c54zKAvLrA=;
+        b=qa/twNJcE5P6KkRgEuOgVOkOdqihccu9Fkme6YHLZUDA8iOpz7fh09+fhJANl1StKU
+         bLm5SmyEYKlnOsurVStXY8LH6syTmnORcdSysvpH+lwytkcHsnDXtLEJM4GATZzpyI5H
+         v957KL7kkJvi3TA4/Z8yxVc6epmJLqWXzMtfShPmcmmNW9lXVEbddlpm1874h+7TUlHn
+         wKBLcPYIE6y6Ixuj8oJkumxALSuRGFWHSCs5579BMsG+sZZh3nHGjv24jxhd14tmUurB
+         /qi/D/lEv6priHtFMQH7MsUb3b/0DI5HRQF2/wiWAlk8hFdXyedrc5hN+nQoXUTQUQV7
+         gxSA==
+X-Forwarded-Encrypted: i=1; AJvYcCV8XB2IxdFanlPzsnxevJlZH0uOvkCYfkAZUmylYoTluMt8nVKPzdxc6F4oi7BzoWgzGwmcyP7h6qgNwtTa@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYJauhgIMiebQoRAQbEztF354j+cPQbwUD9I/wNtLnSQ2fN86O
+	VTxYRtwL3yrI5p2W/c8/5S2aZnjsEkqj2//lqp7uWQJVMJRXInDqfazGJUElByR1/X7bjzKQcfE
+	vYIaS4Tdp7s7g3UbtKTV+gg3fcDZUzVfn6uLTia5iWA==
+X-Gm-Gg: AY/fxX7Z2L8i/yDOCjJ0S+jjCsaTlBeDSoZ2/3MHJKEHpPPVkXCvVrXZmfbEREwYarT
+	8nbzHCl8ETt9uY2SZtU73kbkKbfnKbJURg2OhdfsT7ig52SopSFdO1gKZ5AQK5KUk+U4uCAOB2N
+	uQGfCsqEFpCCNlq+6zsBnLfuCsoV5A2j/Y8S2JWoPnI9YXQy0D/iz98onGxOeIq67AzuSMc9l8Q
+	+Va2Yryv/+Ja46GVzvDQZ2T3GaW+saDsFNrMHWxKDhkmZCwNHbAKhO4t80M5XvlNMDuq6wFz7zu
+	9vT+dN/CDtcUEQ==
+X-Received: by 2002:a05:690e:1347:b0:645:68e5:11e0 with SMTP id
+ 956f58d0204a3-64901aac8femr4092547d50.17.1768471032031; Thu, 15 Jan 2026
+ 01:57:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: arm: cpus: Deprecate Qualcomm generic
- compatibles
+References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
+ <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-9-ff6232e3472f@linaro.org>
+ <CABymUCNY9uo0Cm0KgM9yChuxJ22=Y-4JjHj7cEh5ByX8Nr3y-w@mail.gmail.com>
+ <nvd4eksgcmeqlfwp4jc27fpuzi6otdhzcefdbmj7a2xgv2bqwr@r6rytxs7ibj3>
+ <CABymUCP2yAQptCGCBX0X75iRSkKkfctiEaxUH7_eOpspR55_Kg@mail.gmail.com> <uh75cutkn4opgjbwebpqvhq4xfzep3jnsblaevpgs3gchg264k@gzgydmui2653>
+In-Reply-To: <uh75cutkn4opgjbwebpqvhq4xfzep3jnsblaevpgs3gchg264k@gzgydmui2653>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Thu, 15 Jan 2026 17:57:01 +0800
+X-Gm-Features: AZwV_Qid3ja3M6W6SXReUsE8sDOy9w9iUzK8QhY5bPYw03bdOSvzpKMh6Ko5g5E
+Message-ID: <CABymUCPkfYHhtxEqN7KgBPHEvYh=NRotutJ=eiLm=ZUB85t-Qw@mail.gmail.com>
+Subject: Re: [PATCH v16 09/10] drm/msm/dpu: support plane splitting in
+ quad-pipe case
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Lorenzo Pieralisi
- <lpieralisi@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-References: <20260115083503.43796-2-krzysztof.kozlowski@oss.qualcomm.com>
- <7kifzh3xkwkfa4ij3xtcowttaquw6ua2wkecpnhtyczbbhy2tb@agrqsbs6cjku>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@oss.qualcomm.com; keydata=
- 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
- cwzYbmi/Et7T2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <7kifzh3xkwkfa4ij3xtcowttaquw6ua2wkecpnhtyczbbhy2tb@agrqsbs6cjku>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDA2OSBTYWx0ZWRfX9VxmvD8Z2G8V
- JiQNZT1RbM9Ag+rJpRe/TqQv3VJB1zB8jf1faCjvHg/buuZD+llrC3wHdA6nUg/E0IgVmqkfYov
- 2d4M5e80KfWayj2GTRFXnWihuD64J0dvwL/WvXGQ7D52bA6m68LIW43+0mh66g/3fdomSTJv0kb
- yX7/Pab/2oZlw0a1vRop7qdttsKVWZiD2O6LTb+AI57OKA9KpKHSJ7TLcB3RbsHFoI9DYClEo43
- QI7+BIienNvD0/8k94g5j7g3M4ang/48p/8aKb7QpL987V1/JCZtehxYKyhnU09nkYqgtbgxwKu
- Gb0kqg6m7PTZKTCdYKysr/wokonS1o/QVbFeXPvzw7Qmc5/MqYc/qWqdzoIBf7Zvojlr3l9J1Li
- jESlpe8nDbvpEQmO3UTLLqWE0TcGvenmPJ8i7VExHJU3JEhYep+yjfKfMHdGZtOffT9M0Htbsze
- WQ1JRS8PSqYFJPHy8UQ==
-X-Authority-Analysis: v=2.4 cv=J+KnLQnS c=1 sm=1 tr=0 ts=6968b741 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=Oc3PitZC72w1CAQaH7wA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: Z5KKwkcgnF3-4Dc424g_kLiZR93OtNXX
-X-Proofpoint-ORIG-GUID: Z5KKwkcgnF3-4Dc424g_kLiZR93OtNXX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-15_03,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601150069
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 15/01/2026 10:36, Dmitry Baryshkov wrote:
-> On Thu, Jan 15, 2026 at 09:35:04AM +0100, Krzysztof Kozlowski wrote:
->> Move four compatibles for Qualcomm Krait, Kryo, Oryon and Scorpion
->> custom CPU cores out of the enum into separate one with deprecated: true
->> annotation, because these are too generic names.
->>
->> These are names of the families and there are significant differences
->> within individual processors, e.g. Kryo6xx can based on architectures
->> from Cortex-X2, A710, A510 to A78 and probably more.
->>
->> Just like other vendor processors are differentiated, also Qualcomm CPUs
->> should come with specific compatibles.
->>
->> Cc: Bjorn Andersson <andersson@kernel.org>
->> Cc: Konrad Dybcio <konradybcio@kernel.org>
->> Cc: linux-arm-msm@vger.kernel.org
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->> ---
->>  .../devicetree/bindings/arm/cpus.yaml         | 290 +++++++++---------
->>  1 file changed, 147 insertions(+), 143 deletions(-)
->>
->> +      - enum:
->> +          - qcom,krait
->> +          - qcom,kryo
->> +          - qcom,oryon
->> +          - qcom,scorpion
->> +        # Too generic, do not use in new code
->> +        deprecated: true
-> 
-> I wouldn't even question Kryo and Oryon, it's obvious (or at least I
-> have an idea) what should be used for those cores. Except that "Kryo"
-> was an external name for MSM8996 cores. But for Krait and Scorpion I
-> really have doubts and questions.
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=B9=B4=
+1=E6=9C=8815=E6=97=A5=E5=91=A8=E5=9B=9B 17:39=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Jan 15, 2026 at 05:34:28PM +0800, Jun Nie wrote:
+> > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=
+=B9=B41=E6=9C=8815=E6=97=A5=E5=91=A8=E5=9B=9B 00:12=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > >
+> > > On Wed, Jan 14, 2026 at 10:48:17PM +0800, Jun Nie wrote:
+> > > > Jun Nie <jun.nie@linaro.org> =E4=BA=8E2025=E5=B9=B49=E6=9C=8818=E6=
+=97=A5=E5=91=A8=E5=9B=9B 21:30=E5=86=99=E9=81=93=EF=BC=9A
+> > > > >
+> > > > > The content of every half of screen is sent out via one interface=
+ in
+> > > > > dual-DSI case. The content for every interface is blended by a LM
+> > > > > pair in quad-pipe case, thus a LM pair should not blend any conte=
+nt
+> > > > > that cross the half of screen in this case. Clip plane into pipes=
+ per
+> > > > > left and right half screen ROI if topology is quad pipe case.
+> > > > >
+> > > > > The clipped rectangle on every half of screen is futher handled b=
+y two
+> > > > > pipes if its width exceeds a limit for a single pipe.
+> > > > >
+> > > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> > > > > ---
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  11 +++
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |   2 +
+> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 137 ++++++++++++++++=
++++++---------
+> > > > >  3 files changed, 110 insertions(+), 40 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/g=
+pu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > index d825eb8e40ae8bd456ede6269951339e3053d0d3..e925d93b38feac059=
+4d735fdc2c5b9fd5ae83e6a 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > @@ -1604,6 +1604,17 @@ int dpu_crtc_vblank(struct drm_crtc *crtc,=
+ bool en)
+> > > > >         return 0;
+> > > > >  }
+> > > > >
+> > > > > +/**
+> > > > > + * dpu_crtc_get_num_lm - Get mixer number in this CRTC pipeline
+> > > > > + * @state: Pointer to drm crtc state object
+> > > > > + */
+> > > > > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *st=
+ate)
+> > > > > +{
+> > > > > +       struct dpu_crtc_state *cstate =3D to_dpu_crtc_state(state=
+);
+> > > > > +
+> > > > > +       return cstate->num_mixers;
+> > > > > +}
+> > > > > +
+> > > > >  #ifdef CONFIG_DEBUG_FS
+> > > > >  static int _dpu_debugfs_status_show(struct seq_file *s, void *da=
+ta)
+> > > > >  {
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/g=
+pu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > > > index 94392b9b924546f96e738ae20920cf9afd568e6b..6eaba5696e8e6bd12=
+46a9895c4c8714ca6589b10 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> > > > > @@ -267,4 +267,6 @@ static inline enum dpu_crtc_client_type dpu_c=
+rtc_get_client_type(
+> > > > >
+> > > > >  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
+> > > > >
+> > > > > +unsigned int dpu_crtc_get_num_lm(const struct drm_crtc_state *st=
+ate);
+> > > > > +
+> > > > >  #endif /* _DPU_CRTC_H_ */
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/=
+gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > > index 5ae58352cbee1251a0140879f04fc7c304cae674..89a5feb6308bcac53=
+7562c3dc4e61c16c92e460c 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > > @@ -824,8 +824,12 @@ static int dpu_plane_atomic_check_nosspp(str=
+uct drm_plane *plane,
+> > > > >         struct dpu_plane_state *pstate =3D to_dpu_plane_state(new=
+_plane_state);
+> > > > >         struct dpu_sw_pipe_cfg *pipe_cfg;
+> > > > >         struct dpu_sw_pipe_cfg *r_pipe_cfg;
+> > > > > +       struct dpu_sw_pipe_cfg init_pipe_cfg;
+> > > > >         struct drm_rect fb_rect =3D { 0 };
+> > > > > +       const struct drm_display_mode *mode =3D &crtc_state->adju=
+sted_mode;
+> > > > >         uint32_t max_linewidth;
+> > > > > +       u32 num_lm;
+> > > > > +       int stage_id, num_stages;
+> > > > >
+> > > > >         min_scale =3D FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> > > > >         max_scale =3D MAX_DOWNSCALE_RATIO << 16;
+> > > > > @@ -848,13 +852,10 @@ static int dpu_plane_atomic_check_nosspp(st=
+ruct drm_plane *plane,
+> > > > >                 return -EINVAL;
+> > > > >         }
+> > > > >
+> > > > > -       /* move the assignment here, to ease handling to another =
+pairs later */
+> > > > > -       pipe_cfg =3D &pstate->pipe_cfg[0];
+> > > > > -       r_pipe_cfg =3D &pstate->pipe_cfg[1];
+> > > > > -       /* state->src is 16.16, src_rect is not */
+> > > > > -       drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state-=
+>src);
+> > > > > +       num_lm =3D dpu_crtc_get_num_lm(crtc_state);
+> > > > >
+> > > > > -       pipe_cfg->dst_rect =3D new_plane_state->dst;
+> > > > > +       /* state->src is 16.16, src_rect is not */
+> > > > > +       drm_rect_fp_to_int(&init_pipe_cfg.src_rect, &new_plane_st=
+ate->src);
+> > > > >
+> > > > >         fb_rect.x2 =3D new_plane_state->fb->width;
+> > > > >         fb_rect.y2 =3D new_plane_state->fb->height;
+> > > > > @@ -879,35 +880,94 @@ static int dpu_plane_atomic_check_nosspp(st=
+ruct drm_plane *plane,
+> > > > >
+> > > > >         max_linewidth =3D pdpu->catalog->caps->max_linewidth;
+> > > > >
+> > > > > -       drm_rect_rotate(&pipe_cfg->src_rect,
+> > > > > +       drm_rect_rotate(&init_pipe_cfg.src_rect,
+> > > > >                         new_plane_state->fb->width, new_plane_sta=
+te->fb->height,
+> > > > >                         new_plane_state->rotation);
+> > > > >
+> > > > > -       if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth)=
+ ||
+> > > > > -            _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe=
+_cfg) > max_mdp_clk_rate) {
+> > > > > -               if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max=
+_linewidth) {
+> > > > > -                       DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_=
+RECT_FMT " line:%u\n",
+> > > > > -                                       DRM_RECT_ARG(&pipe_cfg->s=
+rc_rect), max_linewidth);
+> > > > > -                       return -E2BIG;
+> > > > > +       /*
+> > > > > +        * We have 1 mixer pair cfg for 1:1:1 and 2:2:1 topology,=
+ 2 mixer pair
+> > > > > +        * configs for left and right half screen in case of 4:4:=
+2 topology.
+> > > > > +        * But we may have 2 rect to split wide plane that exceed=
+s limit with 1
+> > > > > +        * config for 2:2:1. So need to handle both wide plane sp=
+litting, and
+> > > > > +        * two halves of screen splitting for quad-pipe case. Che=
+ck dest
+> > > > > +        * rectangle left/right clipping first, then check wide r=
+ectangle
+> > > > > +        * splitting in every half next.
+> > > > > +        */
+> > > > > +       num_stages =3D (num_lm + 1) / 2;
+> > > >
+> > > > Hi Dmitry,
+> > > > Because the plane is checked before crtc is checked in the drm fram=
+ework. While
+> > > > the topology is decided in crtc check. Thus num_lm is 0 when this f=
+unction is
+> > > > called for the first time. As a result, the below iteration is not =
+run
+> > > > at all and leads
+> > > >  to iommu warning.
+> > >
+> > > How does it lead to IOMMU warnings?
+> >
+> > Because the pipe is not configured with width/height etc when the itera=
+tion is
+> > skipped. I have not found the root cause so far. But per the null IOMMU=
+ iova
+> > value, suppose it is due to DMA buffer not being prepared when DMA is s=
+tarted.
+>
+> I'd think, that corresponding SRC regs are either garbage or zero program=
+med.
 
-Look for "Snapdragon CPU ID" doc in internal Confluence. There are also
-few more docs listing all these. Quickly looking I could not find the
-actual differences in capabilities (it might need comparing each CPU),
-but processes, internal codenames, tech differ between Kraits.
+You are right in that. Sorry for my words is not accurate. I mean the
+DMA buffer is not
+feed to DMA engine correctly.
+>
+> >
+> > >
+> > > > Do you suggest to change drm framework with adding extra crtc check=
+ before
+> > > > plane check, or you prefer the below line here?
+> > > >
+> > > > num_stages =3D max(1, (num_lm + 1) / 2);
+> > >
+> > > DRM framework provides enough hooks to be able to influence the order=
+ or
+> > > operations without changing the framework. But, I'd like to point out
+> > > that for the virtual plane case we already perform plane operations
+> > > from dpu_crtc_atomic_check(). You can employ the same approach.
+> >
+> > Thanks for the suggestion! I see dpu_assign_plane_resources() is called
+> > from crtc side, which avoids the plane splitting before topology decisi=
+on.
+> > To use this method, it looks like we are enabling the virtual plane by =
+default.
+> > Because the virtual plane differs from the traditional method only with=
+ the
+> > plane splitting and resource preparation. Can we just enable the virtua=
+l
+> > plane by default in this situation?
+>
+> In which situation? It is a global switch. And we need to be able to
+> work with it turned off, until corresponding code is dropped.
 
-Whether these differences are big enough (e.g. different instruction
-set?)... I am open for suggestions.
+I mean the situation that the plane SSPP allocation and related resource
+preparation shall be deferred until crtc calling the plane API. In this way=
+,
+the traditional plane management is almost identical with the virtual
+plane method. Or could you point out what shall differ for the two methods
+after we deferred the preparation? Thanks!
 
-> 
-> For Scorpio I'd have a vague idea of having qcom,scorpion and
-> qcom,scorpion-mp (or -uni and -mp if you dislike the bare scorpion).
-> 
-> For Krait...  I really don't know. Your proposals?
-> 
-
-krait-codename :) (not sure if it is public)
-or krait-modelname
-or krait-midr-value (the one for dual/quad part, so MIDR[9:8]).
-
-But honestly I could defer naming to future contributions. I propose
-only to have argument in stopping using these names all over.
-
-
-Best regards,
-Krzysztof
+Jun
+>
+> >
+> > Jun
+> >
+> > >
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+>
+> --
+> With best wishes
+> Dmitry
 
