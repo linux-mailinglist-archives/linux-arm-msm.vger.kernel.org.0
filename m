@@ -1,58 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-89236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9733D25791
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 16:47:33 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E046D257B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 16:49:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 90C48301C949
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 15:42:58 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A8C0530090F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 15:49:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 394F236D4F5;
-	Thu, 15 Jan 2026 15:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ECBE3AEF35;
+	Thu, 15 Jan 2026 15:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lxMLZ+sM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mt20a8ba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A542D7DF8;
-	Thu, 15 Jan 2026 15:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A5D374197;
+	Thu, 15 Jan 2026 15:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768491778; cv=none; b=f1HzSlR6moLYvmLjY5KgG/odS0G+eEf+9IdlumQfxyyGVMHa/cxKhGDYfKK9EDCSTT9/UTTKBogoyiu+3EI9ieJqVPE4RwILrFkxVPwFrrPhGaxSXfCkx3dt5LkIoDVcK3g/2KxTEuTR39fy/NkEYV58ULvz7lTGb2iDQRUo7UE=
+	t=1768492157; cv=none; b=sFPvUocDduOYjIUBmgfB0sv6MHrQfjUtRtN+FNnvOfRhS/yieBTqYy7yNjU2hkFkvvD5RgURudSc4CM5mSJiEYwpFQphtFZNCWmfq9rfmwuArvu5MR6tLGkB+A8NHOZuLWUtObYA/C+1OQNcJn8VeeyzIHJoxLT87aeneJ5BLa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768491778; c=relaxed/simple;
-	bh=Vvu0/TPmWVy6yatxjIes5gxfTU9U/IRZqj1fb8T9FCs=;
+	s=arc-20240116; t=1768492157; c=relaxed/simple;
+	bh=c6otoexpBFc0bdrxPkcgwQlewejnD1J1LdNjPxMDb2U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=unwU+PuKkcj4VG8+aGvGdGLVZe+ssnqMAXw1Hw6B6t/ckdl4WANHFPFI0k76j7Bql5yrJhuwgF8f2sFg+AgjFzEWHb/36drCZ7BBk51u0zaEz2fgrCo2jwlJ2ht4zZj1VI0HX121MT8reQ6OLWmRCxgDSS1s481k2CqWAmz4Rmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lxMLZ+sM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD181C116D0;
-	Thu, 15 Jan 2026 15:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768491777;
-	bh=Vvu0/TPmWVy6yatxjIes5gxfTU9U/IRZqj1fb8T9FCs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lxMLZ+sMFx9z01Wj67Yk/ayjOT+zk9ITI70cCjFSNr8XYvNNWuYN0tYmPfaOHQGD1
-	 qyfEfkQ+MzFOqTHr0s0u69COb4lujVHOzdXSSJxTBWi+PlkoohpaKAdgxvMr9KG112
-	 Z4Rif6zXRfy0PPVFJuTaqAnRbNxaZ+NRxPViZXfWwPz2uo1vEmN+50qS1m+6g0hitG
-	 xI7w2YBz8ZutpXjm/l8/J59EMhl2c7YDSGQUWXiZftbBbS+w2rM9Jn4i8UuKn66m8J
-	 lMsDoaQpUJGGQ0GmhVsDs3tctWeCxEMxj3en/rdgSTLbKWQ1vNaB6cdNkjOqlD/mNe
-	 owzYmF4QF1a7g==
-Date: Thu, 15 Jan 2026 09:42:54 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Subject: Re: [PATCH v3 5/8] drm/msm/dp: Drop EV_USER_NOTIFICATION
-Message-ID: <ztriduhwhimeztfdgijai2qeii2giaosb6qizhj4skxg6k5uq4@bi6vomgv3whj>
-References: <20260115-hpd-refactor-v3-0-08e2f3bcd2e0@oss.qualcomm.com>
- <20260115-hpd-refactor-v3-5-08e2f3bcd2e0@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=WY/Q18blJSfeJFPifiOe2TRnlIyKr1vhVfSnxukDqafDMV0YPJFJZzJrt64Y4uxvHNfE/TDaukIGgFJLLLD2c1XbK1XSHvo/upbLzViurp6LS3hRRVnJjHIjJEU2VF/aZ0SoAJIltcVjUYasMB7KOvesSt3joohecFuEjwhsY6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mt20a8ba; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768492156; x=1800028156;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=c6otoexpBFc0bdrxPkcgwQlewejnD1J1LdNjPxMDb2U=;
+  b=mt20a8baNtBzxLccpowomsfkZKkkaN6ld3N8JvCsh7znEZLKPXfwhqw1
+   JxLGb2qtdBrb5W/qVIGP2Vj+454EPg6Mocy5iE3jhW/l0g+nDWMwhYUoV
+   4k/RMrTEPTSuSO8/nPtmvsjBXAprqU5lpSq+vAFp+dhpdfS9QOOdghZL0
+   xadkDMgvEPvjMoWJlCsb+f1xNs2PMtYAq0xPrFB54oTOZkux9BdcEP0qB
+   gGTgmKJCQs/LgRL2dwgeyQlxyR6JG9uoiq7/thXQBAwYt3Qqt6Wo8P1P5
+   PqVIvwA4CQXOWjhP5uHd6VDUTAM2uBkGJ+TGSRlccq1m5Oxca7IhZaHYP
+   A==;
+X-CSE-ConnectionGUID: ohgIBwcNSgqUhN2tjC9skw==
+X-CSE-MsgGUID: HjE8w+SyQsa04b9x5Ou5cA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11672"; a="80912492"
+X-IronPort-AV: E=Sophos;i="6.21,228,1763452800"; 
+   d="scan'208";a="80912492"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2026 07:49:15 -0800
+X-CSE-ConnectionGUID: VHu8/1ikSNKM5qY1JBuPHg==
+X-CSE-MsgGUID: GaUmVaxQRdK7Zxb+Lk8gpg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,228,1763452800"; 
+   d="scan'208";a="204190513"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by orviesa010.jf.intel.com with ESMTP; 15 Jan 2026 07:49:12 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vgPav-00000000I9Y-2rox;
+	Thu, 15 Jan 2026 15:49:09 +0000
+Date: Thu, 15 Jan 2026 23:48:54 +0800
+From: kernel test robot <lkp@intel.com>
+To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Subject: Re: [PATCH v8 3/3] media: qcom: camss: tpg: Add TPG support for
+ multiple targets
+Message-ID: <202601152315.fC7ckH9z-lkp@intel.com>
+References: <20260113-camss_tpg-v8-3-fa2cb186a018@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,147 +82,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260115-hpd-refactor-v3-5-08e2f3bcd2e0@oss.qualcomm.com>
+In-Reply-To: <20260113-camss_tpg-v8-3-fa2cb186a018@oss.qualcomm.com>
 
-On Thu, Jan 15, 2026 at 09:29:10AM +0200, Dmitry Baryshkov wrote:
-> From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> 
-> Currently, we queue an event for signalling HPD connect/disconnect. This
-> can mean a delay in plug/unplug handling and notifying DRM core when a
-> hotplug happens.
-> 
-> Drop EV_USER_NOTIFICATION and signal the IRQ event as part of hotplug
-> handling.
-> 
-> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 28 ++++++++--------------------
->  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->  drivers/gpu/drm/msm/dp/dp_drm.c     |  2 ++
->  3 files changed, 11 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 3184066adb15..e0b424ac861a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -58,7 +58,6 @@ enum {
->  	EV_HPD_PLUG_INT,
->  	EV_IRQ_HPD_INT,
->  	EV_HPD_UNPLUG_INT,
-> -	EV_USER_NOTIFICATION,
->  };
->  
->  #define EVENT_TIMEOUT	(HZ/10)	/* 100ms */
-> @@ -343,17 +342,6 @@ static const struct component_ops msm_dp_display_comp_ops = {
->  	.unbind = msm_dp_display_unbind,
->  };
->  
-> -static void msm_dp_display_send_hpd_event(struct msm_dp *msm_dp_display)
-> -{
-> -	struct msm_dp_display_private *dp;
-> -	struct drm_connector *connector;
-> -
-> -	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
-> -
-> -	connector = dp->msm_dp_display.connector;
-> -	drm_helper_hpd_irq_event(connector->dev);
-> -}
-> -
->  static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *dp,
->  					    bool hpd)
->  {
-> @@ -377,7 +365,11 @@ static int msm_dp_display_send_hpd_notification(struct msm_dp_display_private *d
->  
->  	drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
->  			dp->msm_dp_display.connector_type, hpd);
-> -	msm_dp_display_send_hpd_event(&dp->msm_dp_display);
-> +
-> +	drm_bridge_hpd_notify(dp->msm_dp_display.bridge,
-> +			      hpd ?
-> +			      connector_status_connected :
-> +			      connector_status_disconnected);
+Hi Wenmeng,
 
-Last time we tried this, we where out of sync with the link_ready in
-detect. So, I'm still wondering about that if (!link_ready) return
-disconnected; in the detect function.
+kernel test robot noticed the following build errors:
 
-With a reliable detect method, this looks good though.
+[auto build test ERROR on f417b7ffcbef7d76b0d8860518f50dae0e7e5eda]
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+url:    https://github.com/intel-lab-lkp/linux/commits/Wenmeng-Liu/media-qcom-camss-Add-common-TPG-support/20260113-171032
+base:   f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
+patch link:    https://lore.kernel.org/r/20260113-camss_tpg-v8-3-fa2cb186a018%40oss.qualcomm.com
+patch subject: [PATCH v8 3/3] media: qcom: camss: tpg: Add TPG support for multiple targets
+config: parisc-randconfig-002-20260115 (https://download.01.org/0day-ci/archive/20260115/202601152315.fC7ckH9z-lkp@intel.com/config)
+compiler: hppa-linux-gcc (GCC) 12.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260115/202601152315.fC7ckH9z-lkp@intel.com/reproduce)
 
-Regards,
-Bjorn
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202601152315.fC7ckH9z-lkp@intel.com/
 
->  
->  	return 0;
->  }
-> @@ -437,7 +429,7 @@ static int msm_dp_display_process_hpd_high(struct msm_dp_display_private *dp)
->  
->  	msm_dp_link_reset_phy_params_vx_px(dp->link);
->  
-> -	msm_dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
-> +	msm_dp_display_send_hpd_notification(dp, true);
->  
->  end:
->  	return rc;
-> @@ -506,7 +498,7 @@ static int msm_dp_display_notify_disconnect(struct device *dev)
->  {
->  	struct msm_dp_display_private *dp = dev_get_dp_display_private(dev);
->  
-> -	msm_dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-> +	msm_dp_display_send_hpd_notification(dp, false);
->  
->  	return 0;
->  }
-> @@ -527,7 +519,7 @@ static int msm_dp_display_handle_port_status_changed(struct msm_dp_display_priva
->  		drm_dbg_dp(dp->drm_dev, "sink count is zero, nothing to do\n");
->  		if (dp->hpd_state != ST_DISCONNECTED) {
->  			dp->hpd_state = ST_DISCONNECT_PENDING;
-> -			msm_dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
-> +			msm_dp_display_send_hpd_notification(dp, false);
->  		}
->  	} else {
->  		if (dp->hpd_state == ST_DISCONNECTED) {
-> @@ -1121,10 +1113,6 @@ static int hpd_event_thread(void *data)
->  		case EV_IRQ_HPD_INT:
->  			msm_dp_irq_hpd_handle(msm_dp_priv, todo->data);
->  			break;
-> -		case EV_USER_NOTIFICATION:
-> -			msm_dp_display_send_hpd_notification(msm_dp_priv,
-> -						todo->data);
-> -			break;
->  		default:
->  			break;
->  		}
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index cc6e2cab36e9..60094061c102 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -16,6 +16,7 @@ struct msm_dp {
->  	struct platform_device *pdev;
->  	struct drm_connector *connector;
->  	struct drm_bridge *next_bridge;
-> +	struct drm_bridge *bridge;
->  	bool link_ready;
->  	bool audio_enabled;
->  	bool power_on;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index e4622c85fb66..f935093c4df4 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -340,6 +340,8 @@ int msm_dp_bridge_init(struct msm_dp *msm_dp_display, struct drm_device *dev,
->  		}
->  	}
->  
-> +	msm_dp_display->bridge = bridge;
-> +
->  	return 0;
->  }
->  
-> 
-> -- 
-> 2.47.3
-> 
-> 
+All errors (new ones prefixed by >>):
+
+   drivers/media/platform/qcom/camss/camss-csid-680.c: In function '__csid_configure_rx':
+>> drivers/media/platform/qcom/camss/camss-csid-680.c:202:32: error: implicit declaration of function 'FIELD_PREP' [-Werror=implicit-function-declaration]
+     202 |                         val |= FIELD_PREP(CSI2_RX_CFG0_TPG_NUM_SEL, phy->csiphy_id + 1);
+         |                                ^~~~~~~~~~
+   cc1: some warnings being treated as errors
+--
+   drivers/media/platform/qcom/camss/camss-csid-gen3.c: In function '__csid_configure_rx':
+>> drivers/media/platform/qcom/camss/camss-csid-gen3.c:126:32: error: implicit declaration of function 'FIELD_PREP' [-Werror=implicit-function-declaration]
+     126 |                         val |= FIELD_PREP(CSI2_RX_CFG0_TPG_NUM_SEL, phy->csiphy_id + 1);
+         |                                ^~~~~~~~~~
+   cc1: some warnings being treated as errors
+
+
+vim +/FIELD_PREP +202 drivers/media/platform/qcom/camss/camss-csid-680.c
+
+   185	
+   186	static void __csid_configure_rx(struct csid_device *csid,
+   187					struct csid_phy_config *phy, int vc)
+   188	{
+   189		u32 val;
+   190		struct camss *camss;
+   191		struct tpg_device *tpg;
+   192	
+   193		camss = csid->camss;
+   194		val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
+   195		val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
+   196		val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
+   197	
+   198		if (camss->tpg) {
+   199			tpg = &camss->tpg[phy->csiphy_id];
+   200	
+   201			if (csid->tpg_linked && tpg->testgen.mode > 0) {
+ > 202				val |= FIELD_PREP(CSI2_RX_CFG0_TPG_NUM_SEL, phy->csiphy_id + 1);
+   203				val |= CSI2_RX_CFG0_TPG_NUM_EN;
+   204			}
+   205		}
+   206	
+   207		writel(val, csid->base + CSID_CSI2_RX_CFG0);
+   208	
+   209		val = CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN;
+   210		if (vc > 3)
+   211			val |= CSI2_RX_CFG1_VC_MODE;
+   212		writel(val, csid->base + CSID_CSI2_RX_CFG1);
+   213	}
+   214	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
