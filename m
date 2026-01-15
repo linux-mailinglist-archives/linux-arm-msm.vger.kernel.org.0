@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-89289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1219BD2933D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 00:12:41 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83ABBD29574
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 00:51:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3160A3014755
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 23:12:33 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id BC8F23014EA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jan 2026 23:51:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4BE432FA0D;
-	Thu, 15 Jan 2026 23:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1278C326954;
+	Thu, 15 Jan 2026 23:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TbrH8Ljd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HPOsb2ep"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fAkGSITd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jt6lEK5R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181BD2DA75A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730F6330D47
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768518746; cv=none; b=HEPrWVpbL4hpQODhZauETzyYjIceNOxvNJjKl8MZ1IM4njx6bQWLXsjN6KouD5/qp5aFuhHHQpvHipmEL9ciWmh3G5XKBd+sFhTXG+32LZW3Rd64ErHh3qcJTzZimj1gBH3//pt1pmZXjb5JlLvwiznQYJZ7XlS7hFsTGRIgLAg=
+	t=1768521098; cv=none; b=Adxmz/oOyugS9OHRtjg3hC0RntfAXZI+FyFvSPmZK+6NXUlEijM9Fg8PR2SNHo2gmHv5tzrpTDGAPflWhBYrsm8GrKsEp3cyTynzyzrW3dPEeJnAw5ixPULo5fOswbSK6b8iSkYBkckCwyYnGrIBsL5/chF3Om2FFuvCd6Piwsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768518746; c=relaxed/simple;
-	bh=+vYCoxBlHCmIb9+N8+clsz4ZqJCKn++evp7F1k1dWwk=;
+	s=arc-20240116; t=1768521098; c=relaxed/simple;
+	bh=e7/TJ9q1jpwuoEZ2KE/Ulg650o2nZRoguAmJzxv8Ekc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h3zlBAWAhRrfmFM0E90iBqEPfVX2vvICUh5fBN4S1AgrqjsCU/kasv8MeqfV4dYv9L82bAP32ohho9wF++g8mwAKcDp8Li6Nd3MRamkHfnjvdqIXpmQCSi1NtO5HTx6+JQTCWQN4EHbATiXEIEFoczSjPfuFnJXIF1HAtvUeGNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TbrH8Ljd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HPOsb2ep; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Iy4WvmIpiphv+KiayuCui0gwMwfkWkjIps64Jhsd7P/i3hXRW6GQW7Ae+zAEh0pfaiK4UlmMae2A6CvgOJT73trj5k7BPnIj5DyV4tYRU5vsTZwyb6oj2eZKazOn8T+Pde6Z3u3g/4hKZ0Ra3lN44YqPs0nbhsUqSNxWtWxNvTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fAkGSITd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jt6lEK5R; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60FMfkLv3074970
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:12:23 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60FMhvbK2819988
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:51:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cvaa1/tuwQc8fuxNHVmVUCj7wH35/l4L0WpGJwMFaIs=; b=TbrH8LjdaYzw0BDP
-	zBbrhF2vk9OHDMhRmgjMH97zr937MTa1+gKzwgIdPHILykOje2irunIABizwcvtp
-	5kZiV4+YfjaUrewFjX5y/SVy6IyiTIKzmZaa09i1LKptaQLVTO15Rk1K2vTP3Cd+
-	YzCwAdXM6rW1gwSKEmch7TmfiA6Q3pGY4enuAJlm3gj58Y0qjSdy2OIl2x6XCnmY
-	SkGSTi+72sVkBW5fvWbRVjAlWijccbPjq21BMPx5EQyvYJj7JnMW0DYdjVuzDur3
-	/Em8/WEmwDq9Lj2x/GdIUOZ4PB2tZugDAdxRpaGZQhCvKzN7RPYsktkjyXul4gzs
-	TFx9EQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq98jr246-1
+	wtQxe+AZQJSs++TYSSTE4wMUFQyVbkymd/GwI60xIz8=; b=fAkGSITdOLVDSZgw
+	uInoMR/a8vKztMCydd1E1+Z4IXXnkaYXJz3XbhKMDlw/sguh1SFICxOHk+bpvQtt
+	gXQ2KH/zro4A1A84uc6/hid70Uxlzi3yKf+j5XlPEcdq+7G96l8Z8pwUi9uTg0IR
+	i84J20OQSCoPzQZpA00SiFY8AK89vc4UVRQ9+A6yynrUFUCMCPcQHiOEFkpQxf9g
+	oVrvavsRGWVTVGtj5oAID5pjdS7KzNtMTptP0vpG33G3Ty5qmYGjcZ+V3erLgPon
+	2rIxRlru+8oL+40HAcSdtVaUqcufNd9m1PT50iVGGhPZPW1wMeI2aNW+1sCTnWsY
+	mzAFgA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq99ag4ak-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:12:23 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-2ac34c4b41fso1976693eec.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 15:12:22 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:51:36 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2ac363a9465so1765502eec.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 15:51:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768518742; x=1769123542; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=oss.qualcomm.com; s=google; t=1768521095; x=1769125895; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cvaa1/tuwQc8fuxNHVmVUCj7wH35/l4L0WpGJwMFaIs=;
-        b=HPOsb2epS1NzQWw/DQym7HtHS+OY2bFR6SZZYp8/uXNFObtM4kiIqwWQG5UFyikJ+U
-         x/h3x+GpUf+fUtEaZm8s34B1IK4Y3t2zglTkkl4KqFRqkWPBf8/dY9U61BWR2t5AlCET
-         V1MM4SbtknVfFAt0J8j8xLzn8FcSqfkmryO4MkdLiKIQhuVL6yOoT950sK/3ujLOcJ7J
-         th1epjyrAK67cXzeA3xoyqxv/HuxgiZzu1kTsmeV0dAO9l8pxdBYv5FzDUdgu7fzUBNj
-         VxsqqIefu1LIEEicv3V0Zv3eJMs+LoAJrMZSppYmicW54ov7l77jEHtxkWTJ5sAlYbkh
-         fWJg==
+        bh=wtQxe+AZQJSs++TYSSTE4wMUFQyVbkymd/GwI60xIz8=;
+        b=jt6lEK5Rc7POmEYnLIFFUNUHw77eJhrWsiXiastTE7BqF7S5jy6oZGxolaxsLD9gPG
+         Wh8enFqfnfjaiEx/ldmtfoOkasm7iiDfvexKGRYosTBEpZ8ZQU0XAbtgtg8CLY/iQuWr
+         KgP3GQG2JJ8T4q91FBXXQIA5aavMBC/bozQV9kJDZmki095W327MWmqen8mfYvpvPtR1
+         u+NBBu7IrzSpkS335NiLoWBb4bEuaTLFeG74Z9nwQv7skS+pjH20U8wWnoZ6wexhaDEu
+         MFRSqKMyTkh5GJyoWbAMTlNMHFetevWPagHoQ36dqbO9ooaG0AhRhq7blOwfbjzxhFaR
+         lc0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768518742; x=1769123542;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20230601; t=1768521095; x=1769125895;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cvaa1/tuwQc8fuxNHVmVUCj7wH35/l4L0WpGJwMFaIs=;
-        b=FSD+opbZYTOcUuUIoRIt3SOq7tUW/kKLfGACgEnM8DHGatP1rqgMovJMVCGxcF0Xor
-         C6bRaLseCkeKlZVfdQpM2HFiYZS5SomyiSMEVlN+ybTcLV1mqNc3Fko+6pijBKSLoadJ
-         wrFeVhuf7q3F+lUdi20HoUBjuQphTiwTupCyWSEHfLJ3X8+eRiIIcruvFZGBfWxDY7Kw
-         9YvPcGXKAriisYj99PRjefLApM4J2zMy3mJNNi7lYOUN9dQYDBapZBXVIt+z7lIjALQn
-         1B6KuVCiNtkQAna52OUjaj2t697WgC0SLIfDblPmNaD2n9aDVu+onbKM1b+DpaEzDkgU
-         yKNQ==
-X-Gm-Message-State: AOJu0YzbLm7m+HtneMIll66yFTfArFSr4kX9sBtUvHDB0SDaQHUE8sWu
-	pNDHGyFs6z6lqwovT7G5uE7zlsaXOHFiIP513tpU9U5tw+1E/dWZ92Q1BBeXKLs9Q4ng/UPODyL
-	+CBfozMZy0uHU0N8S8ZD9gfeXxnmGtDdtCO9QqyyhVjhCpRnyrFrM1s5sfDHZJYuNCbF/
-X-Gm-Gg: AY/fxX5XcQ3Prf9xf2BgJJOdOA+5ZVN4jKFpm60/DEWrgLZd7F5IZVr4orQOJzH2eZ7
-	xpOiRkotf6SL2h0EHsIqL0Lw4YGc7xnoflXWFuE9lfTIwpfszUSNtA7INLsMfSgNf85j9ikE31n
-	m/2hSHKjT7e1HLpXEPw/7Yn+N5evEgQTpKInJnh9FKXStQ5v6PMxt1Sg3Fj4sXcOCdLlA5QCnUq
-	hGz9RRyq5ckw4UNXTwvVfrXGkU3WQivfHzCYGeZWj1vEB5oY+VK0vrMuya2tPD6DZpw8lRAOeCL
-	QlfmKjFQ9NzYkyu6U9TP8Xs9nw9F2cqbCIJrZIi1MI2FOeFoMAYjNwcRzyjZ8zWBQTFrJv1SQ3H
-	Q9/h169PYfWMAjTCG3FYPhYErvBqN+nXq8dLIDmPubDJoRvy13X2dYt9EHMlfW9mAJQJmGwYC70
-	h1
-X-Received: by 2002:a05:7022:6708:b0:11b:9386:a38f with SMTP id a92af1059eb24-1233d10f432mr4751908c88.22.1768518742047;
-        Thu, 15 Jan 2026 15:12:22 -0800 (PST)
-X-Received: by 2002:a05:7022:6708:b0:11b:9386:a38f with SMTP id a92af1059eb24-1233d10f432mr4751870c88.22.1768518741492;
-        Thu, 15 Jan 2026 15:12:21 -0800 (PST)
-Received: from [192.168.1.3] (c-24-130-122-79.hsd1.ca.comcast.net. [24.130.122.79])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b351e38bsm691860eec.14.2026.01.15.15.12.20
+        bh=wtQxe+AZQJSs++TYSSTE4wMUFQyVbkymd/GwI60xIz8=;
+        b=vCIYTpHikDMqS5JjfxAK2Co5PS8KTcvOXHC2wI9/EU80eKIk6C+hBceMImTqMLTCat
+         TgzXTzrhabMlu6d+CUAFOA/z3SPCFQAi53SNAmccWNRwIO35D1mLw0T3Atqr6C5nckRU
+         1tinhqptpYVCer7j64fBJSdeKLStYOXP6gTIfyIStanJChxvXdkjKQhqY1ZeAF+l1SiL
+         S2K8i5zCgihvu1aZhSrN1NeSP9GNbea8o8bnH46Wpf7gIM7cdue42Efjra86S128Stry
+         WaBIlCImu8/tkZzeVbhYKFPfo6SsMqnGYarHgU+KEYbfB2dZf9TQiT3eCSXFmsRpJY6Q
+         m4mA==
+X-Forwarded-Encrypted: i=1; AJvYcCX6pFW+R228RNpKACyZyeydrDpiYXfe3E6uZlE+CsSgYYqTi4rwoOi9AkjP+tK6S8QyUMBrLclu1Fz4+aKH@vger.kernel.org
+X-Gm-Message-State: AOJu0YwoFsRGluuY3taQXEO6r6Q+y8ZZud1Qmowcj467EJk093mh7wrk
+	BkFOHgFMfn3K7qw28+bxlNHK14ydIJovRL1KWU9rNmXHXRzni9/hPezjtZ8MPEk89oLYlBRdY/k
+	vobyFXAna+EaIRwe1J/OnIeMXlG8ysYiOZ+q9BCQI+Qb/2sWFey8vbbcwo4zysluqoiD6
+X-Gm-Gg: AY/fxX5pK9euBd5bbmEWKhoj7fl+RIXt5WnCZNBxG1AdfMzGbAlWHb6pT/vrXToh79U
+	mvyaraXVLnJptu4/BuT4oePCHK7QdX3NckiY+chOaOyoLHnpWddBefvAtzQn4341V8hrwuONrTE
+	o5/Ppq6yVResWgOofnE8bCcP7RCimf4HhIot/OzwlMfotaKUOHRS+JHok1xi06RhPuraVvASKp3
+	cRXQlHPjehFGQ+2luQLVU1NEtnQPyqdkl23arNFNDUC+Th9CFOKL27BWfOkwlcsAExhlOzbf649
+	Z9MB1F80bviT+xKRO02TBsLPQuEYDwiPDe7OKQ9/WQWoV9RBBjvdB3zad+Gr5c9wZ+UFyukTXGy
+	UFT7wjVPL1st2HLDgY6j3Px7AtZ/+ktvGl35raNoojrZ2KvHKo6VBQOLecx1j
+X-Received: by 2002:a05:7300:ec0c:b0:2ae:5a13:9e3a with SMTP id 5a478bee46e88-2b6b412acafmr1004555eec.40.1768521095117;
+        Thu, 15 Jan 2026 15:51:35 -0800 (PST)
+X-Received: by 2002:a05:7300:ec0c:b0:2ae:5a13:9e3a with SMTP id 5a478bee46e88-2b6b412acafmr1004533eec.40.1768521094447;
+        Thu, 15 Jan 2026 15:51:34 -0800 (PST)
+Received: from [10.73.212.179] (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b351e38bsm747551eec.14.2026.01.15.15.51.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jan 2026 15:12:21 -0800 (PST)
-Message-ID: <6db7a42e-7f12-499b-b36e-687ec93b2e62@oss.qualcomm.com>
-Date: Thu, 15 Jan 2026 15:12:19 -0800
+        Thu, 15 Jan 2026 15:51:34 -0800 (PST)
+Message-ID: <dc26dc7e-a0c1-44db-b719-1d8f34c2470b@oss.qualcomm.com>
+Date: Thu, 15 Jan 2026 15:51:33 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,116 +101,166 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/14] wifi: ath10k: snoc: support powering on the
- device via pwrseq
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-pm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-References: <20260106-wcn3990-pwrctl-v2-0-0386204328be@oss.qualcomm.com>
- <20260106-wcn3990-pwrctl-v2-4-0386204328be@oss.qualcomm.com>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>, Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
+References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
+ <aWY6kx8Bwa_2azIl@bogus>
+ <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
+ <aWgEDAlglnGrzdR4@bogus>
+ <4fab824f-8067-49d7-8e6c-dedd67a8454d@oss.qualcomm.com>
+ <ebm6tn3swrzqqzp5qnd7zkasqxo4nqcz2gt3w7j6sxqx2ryyn4@pwrkiumm442t>
 Content-Language: en-US
-In-Reply-To: <20260106-wcn3990-pwrctl-v2-4-0386204328be@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=asW/yCZV c=1 sm=1 tr=0 ts=69697457 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=Tg7Z00WN3eLgNEO9NLUKUQ==:17
+From: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>
+In-Reply-To: <ebm6tn3swrzqqzp5qnd7zkasqxo4nqcz2gt3w7j6sxqx2ryyn4@pwrkiumm442t>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: U9LDF9WrywoNbh3B0PkG3cNmrHGVxj8J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDE4OSBTYWx0ZWRfX4hksRHmVY3tI
+ n18MXshztkRYQwhDbCThMoH7kUiIW/grf5tfrA+p6a7kSpDNXKyJxljjihCGRZZu9azyhbp7Cqk
+ h5X3Rs96Bc4z7yLFsiHFzPF+U3vxPagjiW79Mv22P5cFnQUXOOay36mcNeLUs+ZzdM22GWS2CUC
+ GM59bg8jayxYY0sRtISuM7xMIQILBgO/PVSGvwOMKAQZZKYGkwPcCu4bAkyYAwzaNPNR83BGvNo
+ NJsJv5WMpsd5nqigUs5jIFGyT0WrUCCihV+yLnqDZBax+LhVp283v+QVYltplvhdLcicoPTqu/5
+ duCIYKhB3YMMZtzwYhd+8kzv07/e1TXmK5+FrRHKzlvVML2jSelCpCZjCsgr0e9ZIwsfeJxxbMP
+ +KFpSCIk3nHhMQFnoPwk8h2fJKaDh+v0OsqOFxYN6MVnOu9cRSp9O10OV0kkZV1tW16IjputwIZ
+ PTad9bikekjjmazqMug==
+X-Proofpoint-GUID: U9LDF9WrywoNbh3B0PkG3cNmrHGVxj8J
+X-Authority-Analysis: v=2.4 cv=f5ZFxeyM c=1 sm=1 tr=0 ts=69697d88 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=eymIdBAbIQs2YkQ4F90A:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-ORIG-GUID: JmzZ_OLLf0AQx5jKVC2Eb1-TnhUrCoiP
-X-Proofpoint-GUID: JmzZ_OLLf0AQx5jKVC2Eb1-TnhUrCoiP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDE4MyBTYWx0ZWRfX1EMHqTg0QFCS
- 3+Gs2/DSv+RYp9c5wyK+p0Ck8/YuQdyHnIx4OHAUnQTEpvkzMIY3OkX4CZ9ZjwZGRt0D19EUbke
- FnFCAzM51QazquYpskYP22jRqZJcNI2fhbSMzeJDvIYX5ilhFxFeX6Vl4oFbvHD45OLfL3rD/SA
- f1OZqFvlox9DTA8rf8XYphyZBTxU1KK1440AatGncS8mT5IeCMeFEUeEEiTpUsY+cNr47HdfPyH
- i2EPeMfXsfeZJOdLubObKCvDEiJDkOzaEhD6xL/3kEi7dbtVGngfmf4GPzaE1Hteeas0H52Jd80
- Y+z5UpCjo+5o8izE3+u4NGgcbfXydG/IxBsdFaDNxkxd2ukj6DtH3fFTmalH4httAi1PSwFV7ZE
- AbZPcJBajO63UPd4aZ/OCQQPAG8cVixRccF47tp8aw2BVw9c+AJ6iD3lkSGvqvfoVBeUvuiJgmI
- 8l80CBPAmVXmnGrWQQg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=Oh2cFVv5AAAA:8 a=ZFde01yRvqAbkRv1oOAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=7KeoIwV6GZqOttXkcoxL:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-15_07,2026-01-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- adultscore=0 malwarescore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601150183
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601150189
 
-On 1/5/2026 5:01 PM, Dmitry Baryshkov wrote:
-> @@ -1023,9 +1024,15 @@ static int ath10k_hw_power_on(struct ath10k *ar)
->  
->  	ath10k_dbg(ar, ATH10K_DBG_SNOC, "soc power on\n");
->  
-> +	if (ar_snoc->pwrseq) {
-> +		ret = pwrseq_power_on(ar_snoc->pwrseq);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
->  	ret = regulator_bulk_enable(ar_snoc->num_vregs, ar_snoc->vregs);
->  	if (ret)
-> -		return ret;
-> +		goto pwrseq_off;
->  
->  	ret = clk_bulk_prepare_enable(ar_snoc->num_clks, ar_snoc->clks);
->  	if (ret)
-> @@ -1035,18 +1042,28 @@ static int ath10k_hw_power_on(struct ath10k *ar)
->  
->  vreg_off:
->  	regulator_bulk_disable(ar_snoc->num_vregs, ar_snoc->vregs);
-> +pwrseq_off:
-> +	pwrseq_power_off(ar_snoc->pwrseq);
+Hello Dmitry,
 
-in this function you conditionally call pwrseq_power_on()
-but on error you unconditionally call pwrseq_power_off()
+On 1/15/2026 12:18 PM, Dmitry Baryshkov wrote:
 
-in the below function you conditionally call pwrseq_power_off()
+> On Thu, Jan 15, 2026 at 10:42:51AM -0800, Satya Durga Srinivasu Prabhala wrote:
+>> Hello Sudeep,
+>>
+>> Thanks for the feedback.
+>>
+>> On 1/14/2026 1:01 PM, Sudeep Holla wrote:
+>>> On Wed, Jan 14, 2026 at 08:50:23AM -0800, Satya Durga Srinivasu Prabhala wrote:
+>>>> Hello Sudeep,
+>>>>
+>>>> On 1/13/2026 4:29 AM, Sudeep Holla wrote:
+>>>>> On Mon, Jan 12, 2026 at 10:24:06PM -0800, Satya Durga Srinivasu Prabhala wrote:
+>>>>>> The ARM SMCCC SoC ID driver is currently enabled by default and publishes
+>>>>>> SMCCC-provided SoC identification into /sys/bus/soc/devices/socX/*.
+>>>>>>
+>>>>>> On platforms where a vendor SoC driver already exposes widely-consumed
+>>>>>> attributes (e.g. Qualcomm socinfo [1]), enabling the SMCCC driver changes
+>>>>>> the format of /sys/devices/soc0/soc_id (e.g. "jep106:XXYY:ZZZZ" instead
+>>>>>> of a vendor logical ID like "519") and breaks existing userspace consumers.
+>>>>>>
+>>>>> Instead of relying on a vendor-specific SoC driver, we should consider
+>>>>> disabling it and using the OS-agnostic SoC information interface provided by
+>>>>> the firmware.
+>>>> Would like to add some history here. Vendor interface existed [1] even
+>>>> before
+>>>> SMCCC SMC ID was introduced [2]. And there are several user space entities
+>>>> which
+>>>> uses the soc0 interface already.
+>>> True, but that's not the main point.
+>> That is one of the point which needs to be considered in my honest opinion.
+>> Vendor driver existed from long time (v3.10 Kernels) in Android
+>> https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-dr/drivers/soc/qcom/socinfo.c
+>> and lot of user space entities in Android depends on soc0 which is not just
+>> limited
+>> Qualcomm user space, but also, 3rd party ones.
+>>
+>>>>> The presence of this interface strongly suggests that the
+>>>>> firmware is designed to support multiple operating systems or software stacks
+>>>>> that already depend on it.
+>>>> That is correct. We started seeing the issue with user space when our
+>>>> firmware
+>>>> started implementing support for SMCCC SOC ID recently for non-Linux based
+>>>> product.
+>>>> As the firmware remain same across OSes, user space is broken on Linux.
+>>> What exactly do you mean by "firmware started implementing support for SMCCC
+>>> SOC ID recently for non-Linux based product" ? Does that really mean that
+>>> you can change the firmware for Linux based products ? I don't think so and
+>>> hence we are in this discussion.
+>>>
+>>> 1. Either it exists in which case deal with it by disabling vendor driver
+>>>      and/or fixing the userspace.
+>>>
+>>> or
+>>>
+>>> 2. It doesn't exist which is not a problem.
+>> Allow me to add some more details, so far, our firmware hasn't been
+>> supporting
+>> SMCCC SMC ID.  Due a requirement on non-Linux based product, firmware
+>> started
+>> to support the feature and same firmware is used even on Linux Android
+>> (android16-6.12)
+>> based product.
+>>
+>> I would say, firmware started supporting the feature on our newer product
+>> instead
+>> of firmware being updated on any older products.
+> These are two different cases. But as you explicitly state that it is
+> only for a new products, then you can fix the userspace to check all
+> SoC devices. Broken userspace was never _shipped_ on those.
 
-so there is inconsistency.
+Though it's a new product with updated firmware which supports the SMCCC 
+SOC ID,
+Kernel & user space remain same (Android16 based) and shared with other 
+SoCs.
 
-note that both pwrseq_power_on() and pwrseq_power_off() handle a NULL
-pwrseq_desc so is there any reason to not just call both both functions
-unconditionally everywhere?
+>> Now, as the user space remain same and is relying on soc0 interface already,
+> Why does it have to be the same for new devices?
 
-> +
->  	return ret;
->  }
->  
->  static int ath10k_hw_power_off(struct ath10k *ar)
->  {
->  	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-> +	int ret_seq = 0;
-> +	int ret_vreg;
->  
->  	ath10k_dbg(ar, ATH10K_DBG_SNOC, "soc power off\n");
->  
->  	clk_bulk_disable_unprepare(ar_snoc->num_clks, ar_snoc->clks);
->  
-> -	return regulator_bulk_disable(ar_snoc->num_vregs, ar_snoc->vregs);
-> +	ret_vreg = regulator_bulk_disable(ar_snoc->num_vregs, ar_snoc->vregs);
-> +
-> +	if (ar_snoc->pwrseq)
-> +		ret_seq = pwrseq_power_off(ar_snoc->pwrseq);
-> +
-> +	return ret_vreg ? : ret_seq;
->  }
->  
->  static void ath10k_snoc_wlan_disable(struct ath10k *ar)
+It's a software stack composition where Kernel & User space is shared 
+and expected
+to have no changes (shared with other SoCs / Products as well).
+
+>> user space is broken as SMCCC SOC ID enabled by default which gets compiled
+>> into Kernel and takes precedence over vendor driver which is a vendor module
+>> in case of Android.
+>>
+>>> The userspace
+>>> tool seem to have made a wrong assumption and can't expect the kernel to
+>>> magically fix the issue here.
+>>>
+>>> E.g. We didn't disable HMP(a.k.a big little platforms) as the assumptions
+>>> made by several userspace tools(e.g. lscpu IIRC) was wrong at the time.
+>> Sorry, at risk of repeating the same thing again, the user space was using
+>> soc0 interface on Linux Android products for a long time base on vendor
+>> implementation. While I agree that, user space had some assumptions based
+>> on vendor implementation, if not disabling the SMCCC SOC ID by default, we
+>> should at-least have a way to disable it (via cmdline) based on vendor
+>> requirements.
+> How will that command line parameter be set and passed to the kernel?
+
+Either from Device Tree or Bootloader.
+
+>
+> A better approach would be to fix the issue where is is broken:
+> - Add a switch to the firmware, letting it ignore SMCCC SOC_ID calls
+>    (like it was beforehand)
+>
+> OR
+>
+> - Fix the userspace
+>
+> The kernel was never broken, it is not a kernel change that introduced
+> the regression. Why are you trying to change the kernel? If it ain't
+> broken, don't fix it.
+
+Sure, if we can't do anything in Kernel, we will explore these options.
+
 
