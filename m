@@ -1,214 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-89351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59B7CD2E8DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 10:12:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1795CD2EA59
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 10:20:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DFF2B3064C1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:12:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 089823025528
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:20:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1D3431D74C;
-	Fri, 16 Jan 2026 09:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8A1734C808;
+	Fri, 16 Jan 2026 09:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pi8JlhvX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwW+mmyc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2008D31A808
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8563334BA24
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768554733; cv=none; b=J1j710ZOcZ0MlwOjqzNVyc3OF8zjTeBsO1NeOaGtYDxsUBDxS06Et84Q+PBU7k8wlnFAi7/exeDz8831D/id7B14RU7HVPY5yZomhUEm648RTnp92AFvos4x9PSA/Oy0FpJP5sqS/4dj0gOpjPS+j5J+IGTzIbs/5cOjP0tA2XE=
+	t=1768555235; cv=none; b=C9PouT5LOMJrJtp4UlsAghSdewbM6Jb/3CfnYkMtNJoChbQUw9Sh6CLHSdYeS7iILSU5qQqzZM8jv+5u7itEqfGq8QMobWZfRY1IACnMWTmhzRH2YjmZ7mGBSTrqfkNxnP44yYq29P1O3ByRu7wOi/mqB+hIXnt4poejWDkyaA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768554733; c=relaxed/simple;
-	bh=/HeROcY+wue/RnfDCzGh5TkygmGivHiZHG7v8KNDXNQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PDGAFwm5CGL3XFaemDih5zGPTZQIQPy7ATLUxJQ7MXiT2FbRUYTEZQmGNmK5svfxhTqZadmOy53W0t3a9B/PS1G5W1cMKZ3Gz25tMuIil4yXugXmF+6Y2Rk4AdGhFI4XYIlz8KaqSItCia2P03ihLwbUY+LiJrCqb04JP2Ob3HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pi8JlhvX; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-38316b89455so2576661fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 01:12:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768554729; x=1769159529; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pqAbJs5DEIYF5QCBGJfgcurtZvGAMM7ELYVo8ENiu9M=;
-        b=pi8JlhvXn++3rJEQ8Wv+3wopz/ouDG0V6LlCBdNEckYz7gLn9hS4zOS8yFN4JVTuj6
-         eUgVu2KVJlxZnSzR1uD6lqWeK/wEaVuWDmndR/TxKCBm3gBH8soWuXOFCsxpVKgYkChl
-         C87Vmhym4AvFaMuTl4VvwU5NZdS2rqiEFvMLu9QLy/Hd7lSLu+k+DifphE13QGO4pXMT
-         hT2wgq7+snBL3wFBYhoYhLF5Gd9x3v+/aSKD7VtkDI+uCMG/Ovi36zSTCmvrEQZFslzN
-         nOIqU6sxfdpeFhC/OFi15iANK6tfQir0yJkV8T8oevHvKGLwTZOASigK+1rtO1j/o5pn
-         skww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768554729; x=1769159529;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pqAbJs5DEIYF5QCBGJfgcurtZvGAMM7ELYVo8ENiu9M=;
-        b=QC6j4nlTRulHw2qr26Gz41F3nmKYGtBSDdtNVOod1hQ50igQA8h9d2x9wPh5F4IHhg
-         STtuBvkSrPos4YsKcbGqXNbpjdI3D1VG0gMQ7hEzN8fNEyPh81NCiKeilHLcxao0fT8b
-         bBz9JHEe8TG5joyR6QvD0vhjPzadPfrqylU+WDC4errmZ9rE43qtiCSViX0hfVRtaZRL
-         e5Bqpi4CH1djcjn1S4McV0v/KMMZZv33b3HKxvbVQa1RW3YCPlBZaeQyOhH9AapCXJqr
-         XKu387JjIQzSugpLP9PfHyZLwPb+1kN8ECRdfFiqv/zGc32J1/G4YDvr5t9cxY9M2K+a
-         0H9A==
-X-Forwarded-Encrypted: i=1; AJvYcCV76oew0xrDx1MBwxCyfRDUvKo2GrTiWtsKEUEOxjKRe760gaKDEMYG2r22teBrwRU2v6KOCZ1AfkTMbtHG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrsM8El6okURjq+q/PpS8DvA5PQfDKcrAEjiuHo37zJt2LmP1m
-	VF98Bh0Y+kmw2Kcv0/aFuh1i9sVJZoiJ6mBwUZja5wZ0Tmn7QEiBA70h8ji13pGhTN8=
-X-Gm-Gg: AY/fxX4xOtjgClZms3GHKNhvTDYQL6dOwMgjVVaPZD/NR1vvmHzS8EhKja3klAOtMMS
-	64HSsoympoVDG/UsryN1m+NoLGcFbv8V8Exm8Sbuv/Q9e/nL+yCiy4/O/H8x5fzoaO0FPhI/qyk
-	NDcx5eCo76wmRzQaXjWah0nlFbcGf5UpBBADqakVEcBO7uN1VN9CnChsDU8OXgq89FV6jtwZPwS
-	amKbkFAfdqNmm9sckQC3fzxDTs/Gn+8EP7vU5A23ob4oKsGKGCAFxVph15b/G2wM44BIAQoHFOZ
-	3QAWgPki1Yq1iN1xt+70Hk/fBRtSPPhc9ppDuPHbFXZHl3ZhQXsmjX7w90K+6dRDnw5HcF6xoH5
-	lCoREbXn0Zfe9LtFs6w1duk3fjS4Bksn6zJRZk3EI8jsjzX2EYmjAhcQ9v9wIILAXRU6bswpuWz
-	DL942msnDPDw5hgV8aRBl4Tx/OLHCSp2o8pYGgH+hlqOHkVTKCWLq3RPxo1CDgPcAmMA==
-X-Received: by 2002:a05:651c:991:b0:380:a1c:7039 with SMTP id 38308e7fff4ca-38383fe5fbemr4683611fa.0.1768554729185;
-        Fri, 16 Jan 2026 01:12:09 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38384d8e0e5sm5608701fa.17.2026.01.16.01.12.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jan 2026 01:12:08 -0800 (PST)
-Message-ID: <3b16ffa2-1580-426c-aa9c-f377d913d49c@linaro.org>
-Date: Fri, 16 Jan 2026 11:12:07 +0200
+	s=arc-20240116; t=1768555235; c=relaxed/simple;
+	bh=ykRh+caslnsL7rs3PRC0EI48axBYUPyRgjOFudUhuYM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A7hSr2Cd5oLUBufB5ylJ1DZQwl70dU89i2R7GVsaUqX+TeTPpivva89gJwc/xbO3xB5KRh6rH19/znNOCLYY1wD+FEbkpWspv7/DKtOv+YCEWKybRd/JarDawUEt+9QiTqiy+etbsZsYeemBg5FIC3mkLo8F38nGeowza3h/Ud8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwW+mmyc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F67C19424
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:20:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768555235;
+	bh=ykRh+caslnsL7rs3PRC0EI48axBYUPyRgjOFudUhuYM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=pwW+mmycTpxJZI9IEqLurTYErdQ4YW6yt0VzoNAH6d6bFEJSGsltF8G8qrai/CC5r
+	 0Q9kSssclk25DUgTSyUvM+PSVHdw9aFNTd2hrMpUw3f2gnbtdOXUamB4Bb0PbL9DH9
+	 YVYzxJytEkYdHKyIvvxYPrFkJMHA+ejyCM8JkkrG0QXGZbaRuBJ46XqbDXa9oqH4cI
+	 D5wzdJCjXgkkxHlWMsofNYdoHkXcu9DK9tk4k/tg1j1mGHthcLoCpufRgTCgvDvF9p
+	 Wv+3/EKfbvq2ILdAt8KxBuaB2CQGW1Ualu2PJOChld7ZhxxdPZ5JlpuuLH24jlxiab
+	 I8i0lFM1fktrw==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b77f2e43aso3607530e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 01:20:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV+FhjB6g6ZxEBid9DECb//Etq2ZfGCSmbohi7k5f449xoh6AlihdwwrYu5WrBr1VtCCwpgABkc2m6Bp0Qy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxI89xo/87IKuLyCGXs9ixNJII8HvAhjC7dkSHI+GC3A31wh9L8
+	TeIDg+2KiqychO80gLd9+BYZw8G3fn73lwFOsRcefif1BXQhokOihhLtaDvFY/+z+1BjYn1fSx7
+	bGpv7Az4kmestYOLCaouKLonU2tr+QO668xULIf9WYw==
+X-Received: by 2002:a05:6512:2c91:b0:59b:9ac4:2afe with SMTP id
+ 2adb3069b0e04-59ba718ebacmr1882399e87.12.1768555233917; Fri, 16 Jan 2026
+ 01:20:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: talos-evk-camera: Add DT overlay
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org
-References: <20260115-sm6150_evk-v3-0-81526dd15543@oss.qualcomm.com>
- <20260115-sm6150_evk-v3-5-81526dd15543@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20260115-sm6150_evk-v3-5-81526dd15543@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251107033924.3707495-1-quic_shuaz@quicinc.com>
+ <CAMRc=Mce4KU_zWzbmM=gNzHi4XOGQWdA_MTPBRt15GfnSX5Crg@mail.gmail.com> <212ec89d-0acd-4759-a793-3f25a5fbe778@oss.qualcomm.com>
+In-Reply-To: <212ec89d-0acd-4759-a793-3f25a5fbe778@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 16 Jan 2026 10:20:21 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MdoUvcMrMga6nNYt8d-o8P-r3M_xY_JHznP3ffmZv8vkQ@mail.gmail.com>
+X-Gm-Features: AZwV_QimTjzwHL8e3FnSCZ-a4okZnUriTz72sgP41cuJac4rqIKVV5VOYmjNOT8
+Message-ID: <CAMRc=MdoUvcMrMga6nNYt8d-o8P-r3M_xY_JHznP3ffmZv8vkQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Fix SSR unable to wake up bug
+To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Cc: Shuai Zhang <quic_shuaz@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/15/26 12:12, Wenmeng Liu wrote:
-> Enable IMX577 via CCI on Taloss EVK Core Kit.
-> 
-> The Talos EVK board does not include a camera sensor
-> by default, this DTSO has enabled the Arducam 12.3MP
-> IMX577 Mini Camera Module on the CSI-1 interface.
-> 
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile                  |  3 ++
->   .../boot/dts/qcom/talos-evk-camera-imx577.dtso     | 63 ++++++++++++++++++++++
->   2 files changed, 66 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 00652614e73582fa9bd5fbeff4836b9496721d2d..be9aeff2cd1555bc436e1b8eb78d8e1c9b84f9c4 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -339,8 +339,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-mtp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
-> +dtbo-$(CONFIG_ARCH_QCOM)	+= talos-evk-camera-imx577.dtbo
+On Fri, Jan 16, 2026 at 9:37=E2=80=AFAM Shuai Zhang
+<shuai.zhang@oss.qualcomm.com> wrote:
+>
+> Hi Bartosz
+>
+> On 11/7/2025 11:37 PM, Bartosz Golaszewski wrote:
+> > On Fri, 7 Nov 2025 04:39:22 +0100, Shuai Zhang <quic_shuaz@quicinc.com>=
+ said:
+> >> This patch series fixes delayed hw_error handling during SSR.
+> >>
+> >> Patch 1 adds a wakeup to ensure hw_error is processed promptly after c=
+oredump collection.
+> >> Patch 2 corrects the timeout unit from jiffies to ms.
+> >>
+> >> Changes v3:
+> >> - patch2 add Fixes tag
+> >> - Link to v2
+> >>    https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@qui=
+cinc.com/
+> >>
+> >> Changes v2:
+> >> - Split timeout conversion into a separate patch.
+> >> - Clarified commit messages and added test case description.
+> >> - Link to v1
+> >>    https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@qui=
+cinc.com/
+> >>
+> >> Shuai Zhang (2):
+> >>    Bluetooth: qca: Fix delayed hw_error handling due to missing wakeup
+> >>      during SSR
+> >>    Bluetooth: hci_qca: Convert timeout from jiffies to ms
+> >>
+> >>   drivers/bluetooth/hci_qca.c | 6 +++---
+> >>   1 file changed, 3 insertions(+), 3 deletions(-)
+> >>
+> >> --
+> > Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+>   Just a gentle ping. This patch series has been Acked but I haven=E2=80=
+=99t
+> seen it picked up by linux-next.
+>
+> Do you need anything else from me?
 
-Please remind me, what does dtbo-y Makefile target serve for?
+I don't pick up bluetooth patches, Luiz or Marcel do.
 
-> +talos-evk-camera-imx577-dtbs	:= talos-evk.dtb talos-evk-camera-imx577.dtbo
->   talos-evk-lvds-auo,g133han01-dtbs	:= \
->   	talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
-> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-camera-imx577.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtb
->   x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
->   dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-camera-imx577.dtso b/arch/arm64/boot/dts/qcom/talos-evk-camera-imx577.dtso
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..53006a861878f9112673b9a0ad954bed7a5fdca5
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/talos-evk-camera-imx577.dtso
-> @@ -0,0 +1,63 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +/dts-v1/;
-> +/plugin/;
-> +
-> +#include <dt-bindings/clock/qcom,qcs615-camcc.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +
-> +&camss {
-> +	vdd-csiphy-1p2-supply = <&vreg_l11a>;
-> +	vdd-csiphy-1p8-supply = <&vreg_l12a>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		port@1 {
-> +			reg = <1>;
-> +
-> +			csiphy1_ep: endpoint {
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx577_ep1>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&cci {
-> +	status = "okay";
-> +};
-> +
-> +&cci_i2c1 {
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	camera@1a {
-> +		compatible = "sony,imx577";
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
-> +		pinctrl-0 = <&cam2_default>;
-> +		pinctrl-names = "default";
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		avdd-supply = <&vreg_s4a>;
-> +
-> +		port {
-> +			imx577_ep1: endpoint {
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <1 2 3 4>;
-> +				remote-endpoint = <&csiphy1_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> 
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
--- 
-Best wishes,
-Vladimir
+Thanks,
+Bartosz
 
