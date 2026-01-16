@@ -1,548 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-89337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2576D2D902
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 08:57:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27B6AD2DB7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:09:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 444D13008E00
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 07:57:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DD1DA3068DE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 08:08:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F7F32C11E5;
-	Fri, 16 Jan 2026 07:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61BF82D6E66;
+	Fri, 16 Jan 2026 08:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DVgrRwM1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dljdT4GR"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="UeZ0I/xs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-m1973172.qiye.163.com (mail-m1973172.qiye.163.com [220.197.31.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DEA254B18
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 07:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A1926ED25;
+	Fri, 16 Jan 2026 08:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768550225; cv=none; b=P6O4LygpFvuLUlVzQfWLvo/k82cR9nx865cOYPaY7oVFueum8BdTZzy/2Et+FerJrtJO3G04aNuS4EIKL+AuVmI4H+nkYZ0cKxJtf5WQmUQY/h46Oc7xCOsT90EflXUUYKC+qU7Rkq193OWs8hW2gvtS0B3HT4pFXfiipfEUoxk=
+	t=1768550884; cv=none; b=I5xqwzCKdR8fMumefEqaE9m18nn/+qaT0O0Y8TJECh2OpZ1c71Cbzn4ulV0QEnNN7i+oQKWvwRqD2ylq+CqfHqrRp6W95tOPOD9k76awIX3imrSGVL1Kf+ie/d3dhg9PjipEvO7Y74nbhow1tyVTu3YsJlFzg2+HQlXXc4cAA8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768550225; c=relaxed/simple;
-	bh=QYjOiB2qTIccPAcI5WCiBteFnSuy27FBPPZ3dJ1cK6M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WvsBbP/+348bJOcF+iU8CplsO0dXCTnWbO/KlWUJsLnOZZknYscvQ0O3lfMjEwZNaCeAokAjpFgDALdzPZGjETSwMOCGBXqr4y/5ta2DqHpLDh1ixgLqKIC7M2kwTVMrkjQgwMpe3w4gS/dQqMpxcLQr/OigJLH/CF/SyPDm52A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DVgrRwM1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dljdT4GR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60G7pjE33759048
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 07:57:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IKZPxasrpx3XmiuLkLHihcyRbciy0hG4GnVIT0h1kh4=; b=DVgrRwM1FHwvDGbi
-	GvGCuy3RwsaX7RkeKKQ85xT1JHHu8FCppXLFe5wCP6iiK827TiC1KaXRwgoRm97T
-	xHFXohv45TLukRh7yeIwcd6eBfmf8nixO3urYElJ9tPbH4zzWGVbX1qbMPGXFgKJ
-	EFzw3QrcpOGq1U/dBdumOd4YwOa4yJUY28vmr6+XxT2p6j3zUiQ7Q+auhxRekiCG
-	svwRuL5oXtNs6mmKOkwKEGja40CaQLBkDJoJ8tBukiJ2fiDh49rVHZLsg35ffXCS
-	xx7aNfa3/fxIAX8c2PjP/Mz3/YGW5sao08vR9ZXbLklk66d+EN8V29J3e+qADBTt
-	FafDeA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq96ssb5c-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 07:57:02 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8bbe16e0a34so468929985a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 23:57:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768550222; x=1769155022; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IKZPxasrpx3XmiuLkLHihcyRbciy0hG4GnVIT0h1kh4=;
-        b=dljdT4GRd1Qb41xFsMuiN+r5AH89s8iV6Ls2OqGTS1jJQ+BqfkRKKx0MR85GN+TSds
-         OG+8DaSrDxKUl/lrzvmQJM3EruyNka/kWB98qQ1ilO3BqtzUiarcKfgaBJAmVx+9rD5U
-         WSVLbNwaWF4s/9W3QtsKXsaoETETvxsmBRjtS+ymxk7sfmcM/bHChc5hb4cWqApSMTyJ
-         GXWIYwFA71JJLob2dKIcm2eiTIyWzDnhUummmm9OoFAiEs/R8SFGhCovuKfLizBhIQoQ
-         NDmcUvapH0pNYwkoaOHUd3lnwRAuh51MbacnYUFsGlm6dTmjNQ0GVFz4+HLDg8PVD2Hc
-         Bu9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768550222; x=1769155022;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IKZPxasrpx3XmiuLkLHihcyRbciy0hG4GnVIT0h1kh4=;
-        b=YninYUkoMj5Ja8Rsc/eV+L75hHokFdTbNIia4UdSWYdOx6AivM6u6msZqtvFIl7RFD
-         C+vPEW0e512BKxIAKosCBW2MZy7EQ7HRDYrvu2bxUtpyNVPB5ZXFuSc9baPqq1v6ut+o
-         akHzHFYYQASrkb7Sg/obvrJf/3Lzz6l3UAT9MjFxihVbFLZOKekJAeJe1HF8r/bUBzJ+
-         /1rAp4UKuCjMcLoZMVpJJN6hAcb/h8LKAaqJbPytThUeB0RJ/laU688DToiEDSFLLb5A
-         jRNPzVpTvxatI+MwWDShaxrVufbzaijjVDcS2ZDoTAUM4Rk4NOw8zMVrO2rOl5J8DXy3
-         m9wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXTdK2BhWp9O/qjX44N5IpqHQhsynE3THWLYb+7gHP6Akay0Axfw/TOoonPq0eRvix0C2xFCzbRZnk1Ual5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx67jftZfyF/RS1Bu3IR7Wu025Vz4qxGf0PoaHoREgYj4Kvg+jn
-	5ing7NFPraI9UgOOQOwEMA7Z8jUVjfFSjv+jCF8ZVJaPCdEcc9rIiVV+9kAt5nrgYtmEMjKc1/p
-	OQkleZVRI14Z0HOqWaoLcAI1V3M0tD3YZcMNVHyhCJ1FEGUnVMJ91lZ1LJxlXshygaWnO
-X-Gm-Gg: AY/fxX7x5YIIhF1lydSsSmRjEJVi2NR+XAPOqjneSIfO6f/hgeC6XT1dkjYVgbI+vBH
-	KlS2miWhCQpxp8GOhDTqWQJzs13Nx6vhiK47YPCd5AXktfvApbQCfHTu9hD9n2Jh0MIZKGthHAp
-	KceU2ZbsPDYCc09bsVVBJAZTortutsmU8eccpeuHf5GFn8tWtY/SMrIY4nbWNLuPnBp/yXOLwnz
-	//7luIR0lsW/ebnpm657zyi5Fg/ynYsTlgdNjL0Ws8l/MGDTKwch7p7tCk801x7arkr+2e4nVI4
-	lW3a69TC0SYUoq30qGXTFpV02AM1WCRnblf/BVSwNDAu4ofPYrlPkJ+mcBw7cvbe6WD3HSbXpyy
-	B1WwT24VdMrlqmgQctv6Mii7o1supgWJPyjHihPgQUmZDa4UVm53TTa6ii98chfDozKNdKic/ZO
-	6LwMvnih6+GvbafsqjjQYZpNk=
-X-Received: by 2002:a05:620a:4081:b0:8b2:3484:8e22 with SMTP id af79cd13be357-8c57e68a4c5mr668693485a.0.1768550221669;
-        Thu, 15 Jan 2026 23:57:01 -0800 (PST)
-X-Received: by 2002:a05:620a:4081:b0:8b2:3484:8e22 with SMTP id af79cd13be357-8c57e68a4c5mr668692085a.0.1768550221222;
-        Thu, 15 Jan 2026 23:57:01 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf39c12fsm521393e87.83.2026.01.15.23.57.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 23:57:00 -0800 (PST)
-Date: Fri, 16 Jan 2026 09:56:58 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: tessolveupstream@gmail.com
-Cc: Qian Zhang <qian.zhang@oss.qualcomm.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v11 4/4] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-Message-ID: <ei3zvx47jubvgrz25pemfeu6zt5be6dduqpllp5qyhbhqblvnp@c2tqv7hyicii>
-References: <20260109095221.2847067-1-tessolveupstream@gmail.com>
- <20260109095221.2847067-5-tessolveupstream@gmail.com>
- <3a4e0513-5b2d-4890-a4df-5306a694cf50@oss.qualcomm.com>
- <530e2a7b-52e4-4119-ad54-8ff9e1d4fec0@gmail.com>
+	s=arc-20240116; t=1768550884; c=relaxed/simple;
+	bh=BaXXVsD7u+x+dzmJhW14VDMTfapIp68F3I3eFaVeZcI=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=dEJOBCpMC2Aa/oyI5NCiUXHiFtfEbnDg5KgoN6Vw3LWfAA+Dcfe+/q+boQqHYFo9Qec6GuniSbOYZmdH0N0E4fgKq0UO1pyRPNE7SZCNuNFkjswT5YpKZyZPOS5Dz8WsanxrZ/HmcdJFWEEN7JdtvXm4Io6ccUl9uE89gkU+dpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=UeZ0I/xs; arc=none smtp.client-ip=220.197.31.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 30e4d5a1a;
+	Fri, 16 Jan 2026 16:02:39 +0800 (GMT+08:00)
+Message-ID: <5925fd05-75fb-4e10-a022-bff5471bc317@rock-chips.com>
+Date: Fri, 16 Jan 2026 16:02:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Chen-Yu Tsai <wens@kernel.org>, Brian Norris <briannorris@chromium.org>,
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Chen-Yu Tsai <wenst@chromium.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl
+ devices with controller drivers
+To: manivannan.sadhasivam@oss.qualcomm.com,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>
+References: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <530e2a7b-52e4-4119-ad54-8ff9e1d4fec0@gmail.com>
-X-Authority-Analysis: v=2.4 cv=OYaVzxTY c=1 sm=1 tr=0 ts=6969ef4e cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=7UAkoh5n_bSw09qp7oEA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 55i76l40ZDKfb636rueI7uCKKFgUzwaN
-X-Proofpoint-GUID: 55i76l40ZDKfb636rueI7uCKKFgUzwaN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA1OSBTYWx0ZWRfX6AmryDoOWveE
- +WvlNGkJKH3/RgIDz68BJbip3nkGXi6gACeQEm6ETvXNdy+lWf3RzSIJTc1CauKKN7vICK56nKo
- kpEuQxK0zP5FilKLWddW5v+6oSjaNZSKb56TXCqMbwbPRNksbjP/uxgpy/1DPv1EeShan5UpcdY
- npQjYH4etlANPhmVqVKRF3qxkXmicarbn2R5zgBo+q+CUgIhZ/LYb+CXijOUa9XDvDUZhqMmMJf
- N73hfq835QK3YlFNxbgzrmL0jseVwpO5B1rb1hkTojT7R7mkEdh93WhKlQSK1sYBw6Utg3/Hy7D
- eLilKi3fmK/wzbJO6NTNXNGbQPR5ouiRU2O1uE/5vPSyCzCeBaxtQT1+ss965ed+9llMk/9TOmZ
- zNjtA7zOnYtPNWDhzbXHXcjAhvH+V2yTf8PQyZ6GopMIdQCO3URXYqWz0KhgbJg41q0a+Fyl364
- qxGlmfs+hhNlNpwEfuQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-16_02,2026-01-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160059
+X-HM-Tid: 0a9bc5d3efd809cckunm4edc62de6fcbcc
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGh5CHVZJTx1MSRoaSUMeGkxWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
+	hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=UeZ0I/xsZN32drWV/dQz/hBJ6+WpFQrka1718RvSBCvUTdPy6e3j1JsiKGO+y10efoBM+GM7SwwdpvJGDiNxQDLgM0UFIotZpbL1NfqgPRCrs3YpWO6wXdRk/ADPl4U1b+wHurk48TuXa7PFXYHsCY+RxwPKFR7P0tJDEX0RGUA=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=Ud8+iwGQrgybsIEyL8sn0UomujULSN26bTMhyz4V/UU=;
+	h=date:mime-version:subject:message-id:from;
 
-On Fri, Jan 16, 2026 at 12:28:22PM +0530, tessolveupstream@gmail.com wrote:
-> 
-> 
-> On 15-01-2026 18:47, Qian Zhang wrote:
-> > 
-> > 
-> > On 1/9/2026 5:52 PM, Sudarshan Shetty wrote:
-> >> Add the device tree for the QCS615-based Talos EVK platform. The
-> >> platform is composed of a System-on-Module following the SMARC
-> >> standard, and a Carrier Board.
-> >>
-> >> The Carrier Board supports several display configurations, HDMI and
-> >> LVDS. Both configurations use the same base hardware, with the display
-> >> selection controlled by a DIP switch.
-> >>
-> >> Use a DTBO file, talos-evk-lvds-auo,g133han01.dtso, which defines an
-> >> overlay that disables HDMI and adds LVDS. The DTs file talos-evk
-> >> can describe the HDMI display configurations.
-> >>
-> >> The initial device tree includes support for:
-> >> - CPU and memory
-> >> - UART
-> >> - GPIOs
-> >> - Regulators
-> >> - PMIC
-> >> - Early console
-> >> - AT24MAC602 EEPROM
-> >> - MCP2515 SPI to CAN
-> >> - ADV7535 DSI-to-HDMI bridge
-> >> - DisplayPort interface
-> >> - SN65DSI84ZXHR DSI-to-LVDS bridge
-> >> - Wi-Fi/BT
-> >>
-> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/Makefile             |   4 +
-> >>   .../qcom/talos-evk-lvds-auo,g133han01.dtso    | 126 ++++
-> >>   arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 616 ++++++++++++++++++
-> >>   arch/arm64/boot/dts/qcom/talos-evk.dts        | 139 ++++
-> >>   4 files changed, 885 insertions(+)
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> >> index 76cf0115a00a..289b651ef0c5 100644
-> >> --- a/arch/arm64/boot/dts/qcom/Makefile
-> >> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> >> @@ -324,6 +324,10 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8650-mtp.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)    += sm8650-qrd.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-mtp.dtb
-> >>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-qrd.dtb
-> >> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk.dtb
-> >> +talos-evk-lvds-auo,g133han01-dtbs    := \
-> >> +    talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
-> >> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk-lvds-auo,g133han01.dtb
-> >>   x1e001de-devkit-el2-dtbs    := x1e001de-devkit.dtb x1-el2.dtbo
-> >>   dtb-$(CONFIG_ARCH_QCOM)    += x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
-> >>   x1e78100-lenovo-thinkpad-t14s-el2-dtbs    := x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
-> >> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
-> >> new file mode 100644
-> >> index 000000000000..ad058cf4cd93
-> >> --- /dev/null
-> >> +++ b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
-> >> @@ -0,0 +1,126 @@
-> >> +// SPDX-License-Identifier: BSD-3-Clause
-> >> +/*
-> >> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> >> + */
-> >> +/dts-v1/;
-> >> +/plugin/;
-> >> +
-> >> +#include <dt-bindings/gpio/gpio.h>
-> >> +
-> >> +&{/} {
-> >> +    backlight: backlight {
-> >> +        compatible = "gpio-backlight";
-> >> +        gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>,
-> >> +            <&tlmm 115 GPIO_ACTIVE_HIGH>;
-> >> +        default-on;
-> >> +    };
-> >> +
-> >> +    panel-lvds {
-> >> +        compatible = "auo,g133han01";
-> >> +
-> >> +        ports {
-> >> +            #address-cells = <1>;
-> >> +            #size-cells = <0>;
-> >> +
-> >> +            /* LVDS A (Odd pixels) */
-> >> +            port@0 {
-> >> +                reg = <0>;
-> >> +                dual-lvds-odd-pixels;
-> >> +
-> >> +                lvds_panel_out_a: endpoint {
-> >> +                    remote-endpoint = <&sn65dsi84_out_a>;
-> >> +                };
-> >> +            };
-> >> +
-> >> +            /* LVDS B (Even pixels) */
-> >> +            port@1 {
-> >> +                reg = <1>;
-> >> +                dual-lvds-even-pixels;
-> >> +
-> >> +                lvds_panel_out_b: endpoint {
-> >> +                    remote-endpoint = <&sn65dsi84_out_b>;
-> >> +                };
-> >> +            };
-> >> +        };
-> >> +    };
-> >> +};
-> >> +
-> >> +&hdmi_connector {
-> >> +    status = "disabled";
-> >> +};
-> >> +
-> >> +&i2c1 {
-> >> +    clock-frequency = <400000>;
-> >> +
-> >> +    status = "okay";
-> >> +
-> >> +    hdmi_bridge: bridge@3d {
-> >> +        status = "disabled";
-> >> +    };
-> >> +
-> >> +    lvds_bridge: bridge@2c {
-> >> +        compatible = "ti,sn65dsi84";
-> >> +        reg = <0x2c>;
-> >> +        enable-gpios = <&tlmm 42 GPIO_ACTIVE_HIGH>;
-> >> +        ti,dsi-lanes = <4>;
-> >> +        ti,lvds-format = "jeida-24";
-> >> +        ti,lvds-bpp = <24>;
-> >> +
-> >> +        ports {
-> >> +            #address-cells = <1>;
-> >> +            #size-cells = <0>;
-> >> +
-> >> +            port@0 {
-> >> +                reg = <0>;
-> >> +
-> >> +                sn65dsi84_in: endpoint {
-> >> +                    data-lanes = <1 2 3 4>;
-> >> +                    remote-endpoint = <&mdss_dsi0_out>;
-> >> +                };
-> >> +            };
-> >> +
-> >> +            port@2 {
-> >> +                reg = <2>;
-> >> +
-> >> +                sn65dsi84_out_a: endpoint {
-> >> +                    data-lanes = <1 2 3 4>;
-> >> +                    remote-endpoint = <&lvds_panel_out_a>;
-> >> +                };
-> >> +            };
-> >> +
-> >> +            port@3 {
-> >> +                reg = <3>;
-> >> +
-> >> +                sn65dsi84_out_b: endpoint {
-> >> +                    data-lanes = <1 2 3 4>;
-> >> +                    remote-endpoint = <&lvds_panel_out_b>;
-> >> +                };
-> >> +            };
-> >> +        };
-> >> +    };
-> >> +};
-> >> +
-> >> +&mdss_dsi0 {
-> >> +    vdda-supply = <&vreg_l11a>;
-> >> +
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&mdss_dsi0_out {
-> >> +    remote-endpoint = <&sn65dsi84_in>;
-> >> +    data-lanes = <0 1 2 3>;
-> >> +};
-> >> +
-> >> +&tlmm {
-> >> +    lcd_bklt_en: lcd-bklt-en-state {
-> >> +        pins = "gpio115";
-> >> +        function = "gpio";
-> >> +        bias-disable;
-> >> +    };
-> >> +
-> >> +    lcd_bklt_pwm: lcd-bklt-pwm-state {
-> >> +        pins = "gpio59";
-> >> +        function = "gpio";
-> >> +        bias-disable;
-> >> +    };
-> >> +};
-> >> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-> >> new file mode 100644
-> >> index 000000000000..95ed335bcb08
-> >> --- /dev/null
-> >> +++ b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
-> >> @@ -0,0 +1,616 @@
-> >> +// SPDX-License-Identifier: BSD-3-Clause
-> >> +/*
-> >> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> >> + */
-> >> +/dts-v1/;
-> >> +
-> >> +#include <dt-bindings/gpio/gpio.h>
-> >> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >> +#include "talos.dtsi"
-> >> +#include "pm8150.dtsi"
-> >> +/ {
-> >> +    aliases {
-> >> +        mmc0 = &sdhc_1;
-> >> +        serial0 = &uart0;
-> >> +        serial1 = &uart7;
-> >> +    };
-> >> +
-> >> +    chosen {
-> >> +        stdout-path = "serial0:115200n8";
-> >> +    };
-> >> +
-> >> +    clocks {
-> >> +        can_osc: can-oscillator {
-> >> +            compatible = "fixed-clock";
-> >> +            clock-frequency = <20000000>;
-> >> +            #clock-cells = <0>;
-> >> +        };
-> >> +
-> >> +        sleep_clk: sleep-clk {
-> >> +            compatible = "fixed-clock";
-> >> +            clock-frequency = <32764>;
-> >> +            #clock-cells = <0>;
-> >> +        };
-> >> +
-> >> +        xo_board_clk: xo-board-clk {
-> >> +            compatible = "fixed-clock";
-> >> +            clock-frequency = <38400000>;
-> >> +            #clock-cells = <0>;
-> >> +        };
-> >> +    };
-> >> +
-> >> +    regulator-usb2-vbus {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "USB2_VBUS";
-> >> +        gpio = <&pm8150_gpios 10 GPIO_ACTIVE_HIGH>;
-> >> +        pinctrl-0 = <&usb2_en>;
-> >> +        pinctrl-names = "default";
-> >> +        enable-active-high;
-> >> +        regulator-always-on;
-> >> +    };
-> >> +
-> >> +    vreg_conn_1p8: regulator-conn-1p8 {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "vreg_conn_1p8";
-> >> +        startup-delay-us = <4000>;
-> >> +        enable-active-high;
-> >> +        gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
-> >> +    };
-> >> +
-> >> +    vreg_conn_pa: regulator-conn-pa {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "vreg_conn_pa";
-> >> +        startup-delay-us = <4000>;
-> >> +        enable-active-high;
-> >> +        gpio = <&pm8150_gpios 6 GPIO_ACTIVE_HIGH>;
-> >> +    };
-> >> +
-> >> +    vreg_v3p3_can: regulator-v3p3-can {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "vreg-v3p3-can";
-> >> +        regulator-min-microvolt = <3300000>;
-> >> +        regulator-max-microvolt = <3300000>;
-> >> +        regulator-boot-on;
-> >> +        regulator-always-on;
-> >> +    };
-> >> +
-> >> +    vreg_v5p0_can: regulator-v5p0-can {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "vreg-v5p0-can";
-> >> +        regulator-min-microvolt = <5000000>;
-> >> +        regulator-max-microvolt = <5000000>;
-> >> +        regulator-boot-on;
-> >> +        regulator-always-on;
-> >> +    };
-> >> +
-> >> +    wcn6855-pmu {
-> >> +        compatible = "qcom,wcn6855-pmu";
-> >> +
-> >> +        pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-> >> +        pinctrl-names = "default";
-> >> +
-> >> +        bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-> >> +        wlan-enable-gpios = <&tlmm 84 GPIO_ACTIVE_HIGH>;
-> >> +
-> >> +        vddio-supply = <&vreg_conn_pa>;
-> >> +        vddaon-supply = <&vreg_s5a>;
-> >> +        vddpmu-supply = <&vreg_conn_1p8>;
-> >> +        vddpmumx-supply = <&vreg_conn_1p8>;
-> >> +        vddpmucx-supply = <&vreg_conn_pa>;
-> >> +        vddrfa0p95-supply = <&vreg_s5a>;
-> >> +        vddrfa1p3-supply = <&vreg_s6a>;
-> >> +        vddrfa1p9-supply = <&vreg_l15a>;
-> >> +        vddpcie1p3-supply = <&vreg_s6a>;
-> >> +        vddpcie1p9-supply = <&vreg_l15a>;
-> >> +
-> >> +        regulators {
-> >> +            vreg_pmu_rfa_cmn: ldo0 {
-> >> +                regulator-name = "vreg_pmu_rfa_cmn";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_aon_0p59: ldo1 {
-> >> +                regulator-name = "vreg_pmu_aon_0p59";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_wlcx_0p8: ldo2 {
-> >> +                regulator-name = "vreg_pmu_wlcx_0p8";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_wlmx_0p85: ldo3 {
-> >> +                regulator-name = "vreg_pmu_wlmx_0p85";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_btcmx_0p85: ldo4 {
-> >> +                regulator-name = "vreg_pmu_btcmx_0p85";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_rfa_0p8: ldo5 {
-> >> +                regulator-name = "vreg_pmu_rfa_0p8";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_rfa_1p2: ldo6 {
-> >> +                regulator-name = "vreg_pmu_rfa_1p2";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_rfa_1p7: ldo7 {
-> >> +                regulator-name = "vreg_pmu_rfa_1p7";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_pcie_0p9: ldo8 {
-> >> +                regulator-name = "vreg_pmu_pcie_0p9";
-> >> +            };
-> >> +
-> >> +            vreg_pmu_pcie_1p8: ldo9 {
-> >> +                regulator-name = "vreg_pmu_pcie_1p8";
-> >> +            };
-> >> +        };
-> >> +    };
-> >> +
-> >> +    wifi_1p8v: regulator-wifi-1p8v {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "wifi_1p8v";
-> >> +        regulator-min-microvolt = <1800000>;
-> >> +        regulator-max-microvolt = <1800000>;
-> >> +        gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
-> > Please check this pin number
-> >> +        enable-active-high;
-> >> +        pinctrl-0 = <&wifi_reg_en_pins_state>;
-> >> +        pinctrl-names = "default";
-> >> +        regulator-boot-on;
-> >> +        regulator-always-on;
-> >> +    };
-> >> +
-> >> +    wifi_3p85v: regulator-wifi-3p85v {
-> >> +        compatible = "regulator-fixed";
-> >> +        regulator-name = "wifi_3p85v";
-> >> +        regulator-min-microvolt = <3850000>;
-> >> +        regulator-max-microvolt = <3850000>;
-> >> +        gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
-> > Please check this pin number
-> >> +        enable-active-high;
-> >> +        pinctrl-0 = <&wifi_reg_en_pins_state>;
-> >> +        pinctrl-names = "default";
-> >> +        regulator-boot-on;
-> >> +        regulator-always-on;
-> >> +    };
-> >> +};
-> > 
-> > Are these two node necessary?
-> >
-> 
-> On this board, GPIO91 is wired as a common enable for both WiFi 
-> power rails: WiFi 1.8V and WiFi 3.85V.
-> I currently modeled them as two regulator-fixed nodes because these 
-> are two distinct rails.
-> Would you prefer modelling a single regulator node that controls the 
-> shared GPIO as below:
-> 
-> wifi_en: regulator-wifi-en {
->     compatible = "regulator-fixed";
->     regulator-name = "wifi_en";
->     gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->     enable-active-high;
->     pinctrl-0 = <&wifi_reg_en_pins_state>;
->     pinctrl-names = "default";
->     regulator-boot-on;
->     regulator-always-on;
-> };
 
-What is the voltage of this regulator? What does it represent? What
-should be represented in the DT?
+åœ¨ 2026/01/05 æ˜ŸæœŸä¸€ 21:55, Manivannan Sadhasivam via B4 Relay å†™é“:
+> Hi,
+> 
+> This series provides a major rework for the PCI power control (pwrctrl)
+> framework to enable the pwrctrl devices to be controlled by the PCI controller
+> drivers.
+> 
+> Problem Statement
+> =================
+> 
+> Currently, the pwrctrl framework faces two major issues:
+> 
+> 1. Missing PERST# integration
+> 2. Inability to properly handle bus extenders such as PCIe switch devices
+> 
+> First issue arises from the disconnect between the PCI controller drivers and
+> pwrctrl framework. At present, the pwrctrl framework just operates on its own
+> with the help of the PCI core. The pwrctrl devices are created by the PCI core
+> during initial bus scan and the pwrctrl drivers once bind, just power on the
+> PCI devices during their probe(). This design conflicts with the PCI Express
+> Card Electromechanical Specification requirements for PERST# timing. The reason
+> is, PERST# signals are mostly handled by the controller drivers and often
+> deasserted even before the pwrctrl drivers probe. According to the spec, PERST#
+> should be deasserted only after power and reference clock to the device are
+> stable, within predefined timing parameters.
+> 
+> The second issue stems from the PCI bus scan completing before pwrctrl drivers
+> probe. This poses a significant problem for PCI bus extenders like switches
+> because the PCI core allocates upstream bridge resources during the initial
+> scan. If the upstream bridge is not hotplug capable, resources are allocated
+> only for the number of downstream buses detected at scan time, which might be
+> just one if the switch was not powered and enumerated at that time. Later, when
+> the pwrctrl driver powers on and enumerates the switch, enumeration fails due to
+> insufficient upstream bridge resources.
+> 
+> Proposal
+> ========
+> 
+> This series addresses both issues by introducing new individual APIs for pwrctrl
+> device creation, destruction, power on, and power off operations. Controller
+> drivers are expected to invoke these APIs during their probe(), remove(),
+> suspend(), and resume() operations. This integration allows better coordination
+> between controller drivers and the pwrctrl framework, enabling enhanced features
+> such as D3Cold support.
+> 
+> The original design aimed to avoid modifying controller drivers for pwrctrl
+> integration. However, this approach lacked scalability because different
+> controllers have varying requirements for when devices should be powered on. For
+> example, controller drivers require devices to be powered on early for
+> successful PHY initialization.
+> 
+> By using these explicit APIs, controller drivers gain fine grained control over
+> their associated pwrctrl devices.
+> 
+> This series modified the pcie-qcom driver (only consumer of pwrctrl framework)
+> to adopt to these APIs and also removed the old pwrctrl code from PCI core. This
+> could be used as a reference to add pwrctrl support for other controller drivers
+> also.
+> 
+> For example, to control the 3.3v supply to the PCI slot where the NVMe device is
+> connected, below modifications are required:
+> 
+> Devicetree
+> ----------
+> 
+> 	// In SoC dtsi:
+> 
+> 	pci@1bf8000 { // controller node
+> 		...
+> 		pcie1_port0: pcie@0 { // PCI Root Port node
+> 			compatible = "pciclass,0604"; // required for pwrctrl
+> 							 driver bind
+> 			...
+> 		};
+> 	};
+> 
+> 	// In board dts:
+> 
+> 	&pcie1_port0 {
+> 		reset-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>; // optional
+> 		vpcie3v3-supply = <&vreg_nvme>; // NVMe power supply
+> 	};
+> 
+> Controller driver
+> -----------------
+> 
+> 	// Select PCI_PWRCTRL_SLOT in controller Kconfig
+> 
+> 	probe() {
+> 		...
+> 		// Initialize controller resources
+> 		pci_pwrctrl_create_devices(&pdev->dev);
+> 		pci_pwrctrl_power_on_devices(&pdev->dev);
+> 		// Deassert PERST# (optional)
+> 		...
+> 		pci_host_probe(); // Allocate host bridge and start bus scan
+> 	}
+> 
+> 	suspend {
+> 		// PME_Turn_Off broadcast
+> 		// Assert PERST# (optional)
+> 		pci_pwrctrl_power_off_devices(&pdev->dev);
+> 		...
+> 	}
+> 
+> 	resume {
+> 		...
+> 		pci_pwrctrl_power_on_devices(&pdev->dev);
+> 		// Deassert PERST# (optional)
+> 	}
+> 
+> I will add a documentation for the pwrctrl framework in the coming days to make
+> it easier to use.
+> 
 
-BTW: what is powered on by those regulators? I don't see them being
-wired to the PMU.
+This series looks great.
 
--- 
-With best wishes
-Dmitry
+In practice, some PCIe devices may need to be powered down dynamically 
+at runtime. For example, users might want to disable a PCIe Wi-Fi module 
+when there's no internet usage â€” typically, commands like ifconfig wlan0 
+downonly bring the interface down but leave the Wi-Fi hardware powered. 
+Is there a mechanism that would allow the Endpoint driver to leverage 
+pwrctrl dynamically to support such power management scenarios?
+
+
+> Testing
+> =======
+> 
+> This series is tested on the Lenovo Thinkpad T14s laptop based on Qcom X1E
+> chipset and RB3Gen2 development board with TC9563 switch based on Qcom QCS6490
+> chipset.
+> 
+> **NOTE**: With this series, the controller driver may undergo multiple probe
+> deferral if the pwrctrl driver was not available during the controller driver
+> probe. This is pretty much required to avoid the resource allocation issue. I
+> plan to replace probe deferral with blocking wait in the coming days.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+> Changes in v4:
+> - Used platform_device_put()
+> - Changed the return value of power_off() callback to 'int'
+> - Splitted patch 6 into two and reworded the commit message
+> - Collected tags
+> - Link to v3: https://lore.kernel.org/r/20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com
+> 
+> Changes in v3:
+> - Integrated TC9563 change
+> - Reworked the power_on API to properly power off the devices in error path
+> - Fixed the error path in pcie-qcom.c to not destroy pwrctrl devices during
+>    probe deferral
+> - Rebased on top of pci/controller/dwc-qcom branch and dropped the PERST# patch
+> - Added a patch for TC9563 to fix the refcount dropping for i2c adapter
+> - Added patches to drop the assert_perst callback and rename the PERST# helpers in
+>    pcie-qcom.c
+> - Link to v2: https://lore.kernel.org/r/20251216-pci-pwrctrl-rework-v2-0-745a563b9be6@oss.qualcomm.com
+> 
+> Changes in v2:
+> - Exported of_pci_supply_present() API
+> - Demoted the -EPROBE_DEFER log to dev_dbg()
+> - Collected tags and rebased on top of v6.19-rc1
+> - Link to v1: https://lore.kernel.org/r/20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com
+> 
+> ---
+> Krishna Chaitanya Chundru (1):
+>        PCI/pwrctrl: Add APIs for explicitly creating and destroying pwrctrl devices
+> 
+> Manivannan Sadhasivam (7):
+>        PCI/pwrctrl: tc9563: Use put_device() instead of i2c_put_adapter()
+>        PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}' callbacks
+>        PCI/pwrctrl: Add APIs to power on/off the pwrctrl devices
+>        PCI/pwrctrl: Switch to the new pwrctrl APIs
+>        PCI: qcom: Drop the assert_perst() callbacks
+>        PCI: Drop the assert_perst() callback
+>        PCI: qcom: Rename PERST# assert/deassert helpers for uniformity
+> 
+>   drivers/pci/bus.c                                 |  19 --
+>   drivers/pci/controller/dwc/pcie-designware-host.c |   9 -
+>   drivers/pci/controller/dwc/pcie-designware.h      |   9 -
+>   drivers/pci/controller/dwc/pcie-qcom.c            |  54 +++--
+>   drivers/pci/of.c                                  |   1 +
+>   drivers/pci/probe.c                               |  59 -----
+>   drivers/pci/pwrctrl/core.c                        | 260 ++++++++++++++++++++--
+>   drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c          |  30 ++-
+>   drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c          |  48 ++--
+>   drivers/pci/pwrctrl/slot.c                        |  48 ++--
+>   drivers/pci/remove.c                              |  20 --
+>   include/linux/pci-pwrctrl.h                       |  16 +-
+>   include/linux/pci.h                               |   1 -
+>   13 files changed, 367 insertions(+), 207 deletions(-)
+> ---
+> base-commit: 3e7f562e20ee87a25e104ef4fce557d39d62fa85
+> change-id: 20251124-pci-pwrctrl-rework-c91a6e16c2f6
+> prerequisite-message-id: 20251126081718.8239-1-mani@kernel.org
+> prerequisite-patch-id: db9ff6c713e2303c397e645935280fd0d277793a
+> prerequisite-patch-id: b5351b0a41f618435f973ea2c3275e51d46f01c5
+> 
+> Best regards,
+
 
