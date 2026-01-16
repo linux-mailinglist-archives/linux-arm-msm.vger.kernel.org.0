@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-89460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCAAFD385EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 20:32:21 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC89BD38801
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 21:53:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3C2DD3004E1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 19:32:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D5004301C3F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 20:53:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D92D236999D;
-	Fri, 16 Jan 2026 19:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E4742DE6F8;
+	Fri, 16 Jan 2026 20:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="e+5GHAnv";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FgbNplMR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V5NjiLj6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PCqSgoxX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E29270540
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 19:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BC825EF9C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 20:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768591937; cv=none; b=HnE6PmgJmG3CJ8fWNCV/G4t4y7Fr1dpU36UG3xIvep3AIQk3NIiRhCVvnWiALhULwM5FCD2fHcKNPx+zT6ESwd/FISmIzGUXFxKEjQzxqga1auZQM8YFVil7sh8POC5rkahLgiJG96KnMPQwWQ3C13J+Bf3ExOzN2RFUCunBpZ8=
+	t=1768596807; cv=none; b=u+95Dem8N8Jb6EgpDthR2Pb67A+m+Uh6lCWWvwZxVAZyCS3jd0PE/w5kgPCau4Cp8Q34rbvk7NMQGP1pDQxve94XDgIomRPhEN2ZOKRiX9Iuml67YfZcbkFOAS7xpGfKksj/zq+7uNnuIsIsKFxm5IypfmSUMN13Ny0AerS0HLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768591937; c=relaxed/simple;
-	bh=YmJuWbGo7ykcz7dngSCE25Fp3gqLikDFy+c4dvxxeo0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=DWfsdtM5wjl87cZuniIxQx55hBDjWNKRRwOl4KEvTwh24zxpIlvLPkFihOrOb860SNkl+cHuksO9DkaxeDSZba1rdOxraBDgbFyOvG/V2rMaO1FFTsAOV0g+Pj9AKX1t+TwP/t40EB91H88X1SpVYdp0fQpdev5mUS66ZdWNWnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e+5GHAnv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FgbNplMR; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1768596807; c=relaxed/simple;
+	bh=NQAzBt+f0m6u3AyaLWTYa+GjN3QiLKZb2hZ9P0UggJQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jVkw9MjO1Yb1op0zLd8wueIfLKLPxWiZPuLF0S85cb4x6YIRmLlbuXzEnmYWP9E29rOKAt15wWYyrsB2ke+KX7NDkuephqYzWmjaX+CXYzi+OTF+df+Gx8Z0YlPSNQCeqkjR6tf0aYzgBne/bIfSwUmlifeJrAhlcbJyRAS4dS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V5NjiLj6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PCqSgoxX; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60GJAkPE2461187
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 19:32:14 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60GKUjbH2484532
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 20:53:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MfuMqrNwbuYEiKkmt5R7iOXAsiox5DRk7uxtOTeNr4s=; b=e+5GHAnvhKDuahEF
-	WMIZ7OYIxvPYzFhqkUpJQpTZsonJ1GOj2yRFNgWxAmin6Tt5fkfs0rFjJHlefJDj
-	N/Enc4es5Z28pa9AerbsneK4OCIQOAGLmfsQCsA2GM96G1eqEkePpR/Xdd2Z0uDG
-	FuLGgsDLl8N0jLQeUxrKF+EFlBYh6JmfOSpArZeyz9Vu3lyJpGOmc7NX5nLG+nrT
-	xxxiMoJKMKnLMTrcsuekOqVprjRL6mSnrCqShbPkrRX5PySO5U9xQAdG6arlgJqb
-	LIP6ZF8nZ1XZgJ5C5gmDoEHjvUzC0AOg/0BzxflO+g1223EvJwcQCcQ1m9fMDIip
-	zF3TSA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq9ayubcx-1
+	YWaQldqNv27w0LRRXVsBa0F3ClSqPPGePLVqAKt5/YQ=; b=V5NjiLj6SLQg9jV+
+	VgEl1f1+oOQcLDU5RMGbv71l9rwnP8xOWu7HOjGj7cU0ycWg7xaQagVbEYfj0VpF
+	7BdTZprYP+jt9nTxVV4bxdYhBIpHShUScEvDGzVo1R3heQ6octkhe2az95fFblzA
+	kFGpkNfYjU4vtyqfuVVzEWiBWColSs1vaXcxjcE15vN6QzFGP1M4LcZOXUklTGVX
+	M160P3lnxZybWGrD90CSFdsLqGAl4lezd1iOV8S4IN4ZG3sLqGofS/GOofNi0l2b
+	yRsngRKOuFcTEMx+rYvRmGfIKTYqQ1q/07N/DHmPYFPHb+jzMIoixRDsIG8hGso/
+	3nxZGA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bqvecr2ax-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 19:32:14 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2adc3990fecso1718206eec.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 11:32:14 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 20:53:25 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-2adc3990fecso1769957eec.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 12:53:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768591933; x=1769196733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MfuMqrNwbuYEiKkmt5R7iOXAsiox5DRk7uxtOTeNr4s=;
-        b=FgbNplMRqv8N8L9m8rz5KBWbWS7mMoAFL8WYjR0QLr4nY29q1xKx1j9OheMxDGSj81
-         NtyDigqTjpIOBaoEPoVrlnD1GyJUqmT5aJNYpy6oguKpooV1eiHz23KLWDgUw2YNGWQg
-         Mk2Oj7h7zQvn5DhThw8yqshTZWLSmxQB8R+ETMS8KcWtSPPjD9Kqt4LgEIanYsFRozto
-         TyS1jpN0lBnNjnfIGCeT6SiLCa2GljWR1ivU2L7RDyaKXdMmpvw3jNfYbJ5wxOkgN3V1
-         qjvLIdadfYfuaB+ENs87RL/rSMoOLhaR15xtF6pnJ+lUXN4h4VHsFmDgiSXc5AMw6RvS
-         p+6g==
+        d=oss.qualcomm.com; s=google; t=1768596805; x=1769201605; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YWaQldqNv27w0LRRXVsBa0F3ClSqPPGePLVqAKt5/YQ=;
+        b=PCqSgoxX94Ab7HCeMnSbzYhXYPs/qlJaxoQBFGfHoQdf+/HS5OSqFvDvNZUFcHWfBO
+         lzR1WbY9dQ7Y7dtqAuPB+5lynuu8CL5FVwNvK7xB+OHuAbP4LNRXiEvA6s9/322ZRlyU
+         gd8EorGZBXOXm7BkrNrbJU8bK0m9daBuskCR/OTrlsRB1vp2ux9PpoFFDjzEMsO2tMjr
+         1/iEyPRjKqMUm1OqiwDUgITXXlO25vqk8ZBGiX0ym0pT4Wdj/Ho5XKDApJrON9oSBMRr
+         SnUSN0EZy9LtIKFKTQJazul6bsIAHli3lTDctmBAf+5npW/ca3vgl7JIFecYbUmaQqvY
+         wAnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768591933; x=1769196733;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MfuMqrNwbuYEiKkmt5R7iOXAsiox5DRk7uxtOTeNr4s=;
-        b=cDxM/pKNI5+5mPY4mLv82RoDAg1e70hzKARHqQTrMl4XlRxPl7uWypoGHZv1dUiJY4
-         pINynwUqIlkRw/SunBky6e9Hk1zy0ayjSLe6043RJtrqtLTjYoSbr8Koq4jIKnZmbkT8
-         Hn+kPhOD/iZjEpHukB9xi/Ljk6bKXCz3BjtHSR0RbtraanfXX7WH5D1KWLl12++02iv5
-         eGgLjSeKz1/5gpn4ikcrdzGccEmORKNF+4yY3UQfaNhnH0OhwPtMIW5hevDZxUQdwmne
-         ENqRnRhUpOyrB5p6QjFo/TBEGhut5BI0FPUaVVqVQxe6o0WpZbuEBe7R0z/IJkZreTLr
-         uBWg==
-X-Forwarded-Encrypted: i=1; AJvYcCUYjiCmeS6RZiUabdbHdbO2TBC/U6N9fH2zSRvkx5QkrNTugX0MH9/Lhg8DSHHoUKq++o4HF0UmlY2zgbd9@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjFSoHy+94/zvyE4YWXh2JkBSCi0Vr5iUSQzwvgoEDB3//Z6nX
-	tCswWymF34b6I47jLmWa9q+FdaHdMOGnXd9X9FEFu3z4cGDvB4JJ5azIdbJofNf9TzIWtZBnCDW
-	0GO72ZldIpY250XMTXDEMupjmEYdMdR18s8Qgo0fK9ClD4fCh5ajQtzU7r0jXU3buc4MPZSFNU1
-	b9
-X-Gm-Gg: AY/fxX6QZUokHnXXbJSsGuMlJ6aXSJZxaV8BLTjQTpAZlk3wPp94gXP6Xj6ptmZlM5l
-	cLu7tLtzmKzxpDobiHJX9zLvDa4KTHu8m5o6ce2uxpgbra/DsSISnyT8VJTKSrjB5HaAnnFwHle
-	1jcEmRUxpoM7gZgnoALBnX1HMKKRqi1RZ1SqVaKGaesHtdrwEpUXn2GE9k3OyUyZ8hl2B2LQzk7
-	2mpauZBWgxIC/qclZvMy41sMN0Dh6Pu9IkpqrBLZoJy1QqHDJj5oU9buW0jKoF3s+hS8kVMrJll
-	1gZdi6BZlywkG4rfPosdSWUuCk5E+n9AMeRJ9/ybxE3a3xw28PFQNXvWQ1vJ1NjtIzcLT4Hf96y
-	GOBJ2XXzBno8nAD9NXBiy1w9livk6kTc6Lr8A8Hkca9J08mfJNftTJuQXZdWvxOauQg==
-X-Received: by 2002:a05:7301:6707:b0:2b6:aae8:6dc5 with SMTP id 5a478bee46e88-2b6b35a1332mr2610755eec.19.1768591932972;
-        Fri, 16 Jan 2026 11:32:12 -0800 (PST)
-X-Received: by 2002:a05:7301:6707:b0:2b6:aae8:6dc5 with SMTP id 5a478bee46e88-2b6b35a1332mr2610727eec.19.1768591932246;
-        Fri, 16 Jan 2026 11:32:12 -0800 (PST)
-Received: from [10.62.37.112] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b333ccc5sm3775100eec.0.2026.01.16.11.32.11
+        d=1e100.net; s=20230601; t=1768596805; x=1769201605;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YWaQldqNv27w0LRRXVsBa0F3ClSqPPGePLVqAKt5/YQ=;
+        b=UDbch5dmC2ZKZEVHPW9CXRH63VzUfhS8LTMEkrMj1GNLKfOqt0mx8Cu+QtkqLm09g1
+         wNtraNgGQzc9hakoa7jz50PcL39AmNaOL7cGmGw3z862d7HAWxbsYsoPEcW9jFIAwkW7
+         seNjWSnhPE+RDA/7alLw0semPzUiP+h8tDD2/tsAnmOB9ksxm4d5NVVd1I52jtClfiFo
+         Zb0TatrLA66FB26OqSYHmmoO8OKCoqz0q3ef5y8u4MOkaPZmRkb7mU04lTUCR/XaIl0i
+         9WDPDugEOtsM/fyDBBxNF8H3KsmBE2vQJ3lX5MDbbCkhbMuj98bPDoyI36KltGWHm4jJ
+         pvsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXO82oWYNv0iXxpryxsd4Bn1NzXd43mK7PMeD+PNDwl10uCjxv+fZj7vHIELTCfMyOD1jMJ4Ka+vqdpl/Rj@vger.kernel.org
+X-Gm-Message-State: AOJu0Yygb9iGFLqMWJtO4nrj0s53md3BrwOiqvEjRSs4vSXJ7IfTD4sl
+	tL7SWXFCcd1TpdTTKUQ2lSnSGwFGRffaosh/q99UetxR4um8aO8u4bA5KBAoD4IbIqVik9qXYM6
+	Sr9XCr4rmbN0umFeF6RsB7StezuunqMyCrscJzG5rEpcbCMvypARiIl6Gj5wJ+0TK3Pl3
+X-Gm-Gg: AY/fxX6XHgAB0CfFcsV+Bmcco695O7RqIcGlJzD4O7iZrod7qSYDgL/OB88KCX/LIMV
+	pvanC/BlrWDxzWICIR99/ONd/0LqZtvqLZtznjNcm4uXyql3FkBIYO715080N7yHM14Sjt+IQtM
+	vEzOElzKNnbR0q1R+SmdTcomJxFASedkk37EWpLhG5synHOI5bm2N97PXajfjfYR3mei+KDqUGY
+	zweFItiH8r5CZphxo1S+ApcoOA5JQ7LhZCyAZ5GuZqSO1P5S9dPW7Eo8S0qbxn+4qvwAime+wha
+	l0s70Vh1+dVn7viioWWGapwrC3YJJ0uaL1Q7a5Mit9PQ4vxkR1Oi/ywTo+2Zk2H96OM56xnrzma
+	s5h13EbrhOb5hE3+NNoIB6kluZmjLMMxItiRTkOiuZSbm5u3DreqYxTg8lnRG
+X-Received: by 2002:a05:693c:2d93:b0:2a4:3593:ccba with SMTP id 5a478bee46e88-2b6b3469163mr3076822eec.1.1768596802867;
+        Fri, 16 Jan 2026 12:53:22 -0800 (PST)
+X-Received: by 2002:a05:693c:2d93:b0:2a4:3593:ccba with SMTP id 5a478bee46e88-2b6b3469163mr3076750eec.1.1768596799664;
+        Fri, 16 Jan 2026 12:53:19 -0800 (PST)
+Received: from [10.73.212.179] (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b34c1177sm4248712eec.7.2026.01.16.12.53.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jan 2026 11:32:11 -0800 (PST)
-Message-ID: <fb402d00-ee2a-4437-af09-200ef7203420@oss.qualcomm.com>
-Date: Fri, 16 Jan 2026 11:32:10 -0800
+        Fri, 16 Jan 2026 12:53:19 -0800 (PST)
+Message-ID: <92d90a1e-e993-4044-b152-83a8700f7b63@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 12:53:18 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,604 +101,190 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-Subject: Re: [PATCH v8 3/3] media: qcom: camss: tpg: Add TPG support for
- multiple targets
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-        Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20260113-camss_tpg-v8-0-fa2cb186a018@oss.qualcomm.com>
- <20260113-camss_tpg-v8-3-fa2cb186a018@oss.qualcomm.com>
+Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
+To: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
+References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
+ <aWY6kx8Bwa_2azIl@bogus>
+ <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
+ <aWgEDAlglnGrzdR4@bogus>
+ <4fab824f-8067-49d7-8e6c-dedd67a8454d@oss.qualcomm.com>
+ <aWoVR4oNdIHnksJQ@bogus>
 Content-Language: en-US
-In-Reply-To: <20260113-camss_tpg-v8-3-fa2cb186a018@oss.qualcomm.com>
+From: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>
+In-Reply-To: <aWoVR4oNdIHnksJQ@bogus>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: XtqHuPf-fOGvg7VVq7HS_6idcNV_Y1vO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDE0NSBTYWx0ZWRfX/1UQ2Mt6l/4m
- /VHH45N8fs9WrCsmnaDQod9213O/hL0Nco0jz/GC7tLTEmG88e5whS6fZbnIdjaY5a10q6/rsR7
- jywUoJLZ6qi/pUDyALA1mvpYx6AwJU6nh5la69SXylYhuIyE14GapoXm7xJ31H1DJw9Mrc5JtqD
- 6Xk33WLF0bsatllq5y4+WN94zDEiCiJmBOQYPA4s8BRnkYSjmckKYLTpa7WaMC95IlWbtHT9MzB
- MoLqUvACLmz5w0q23SQSQqx4EWwREzS7llKQNSHzcqGSpsRr2zVOPcgsEgxnr/mBlg1CkQ+/dkN
- gkvakeRP795fG/hzmnsyrBS1Tuz5BZrVNHeqdYYQ+zqpJ9nxZ9kVC/apLBk+mXAa1WVEkj+0osX
- aQgNJ/uoR2qbOTnKD+6pMJvhN10gJQRg0sqBHPT71RxGV5fLyEjbakTGEM2XxZDqC1R3pIWPIdn
- lDR50sm1UQO8uEnCsjw==
-X-Proofpoint-GUID: XtqHuPf-fOGvg7VVq7HS_6idcNV_Y1vO
-X-Authority-Analysis: v=2.4 cv=NfDrFmD4 c=1 sm=1 tr=0 ts=696a923e cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+X-Proofpoint-GUID: KnoT0Wa0jgubh_OWljZnBvBBByDj9fK4
+X-Proofpoint-ORIG-GUID: KnoT0Wa0jgubh_OWljZnBvBBByDj9fK4
+X-Authority-Analysis: v=2.4 cv=L4YQguT8 c=1 sm=1 tr=0 ts=696aa545 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=0ve85SeRqsEghBLTLfwA:9
- a=ux8SKSwu-4WW2TTj:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=Oh2cFVv5AAAA:8 a=4G8C3JpcgD8cdIvRuoQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
+ a=7KeoIwV6GZqOttXkcoxL:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDE1NiBTYWx0ZWRfX+KwDRXmQ+b5O
+ 2jTr6sLYhHgVXSxCuV8TYiYxmj5iFva57xEDEYUhaaoJciW/pt4vDOAIxeFCCE9tfbsx6toQKV9
+ if2MUnvbgIdAGWbBPYaxthYnl3Yc6DH936/lje8xHDEYs9O7okTol5kGKqhwgEfP1mBZPlaku4n
+ wzLO7Yj46Bpfp9NQnnxRc/rEM8cljqS/Wnzo7DHUW6dK2Wx9xHkaYl7ga2HamqwOayIyeXASm4c
+ TTR+Mr4pA0DcWqzWvSFImtkm41L9Uzhk8LD34BbkXTNBS7uMTyjSD7P0koa8Cj8xH7LszEBVcQm
+ 4dSLqsPczkuTRnUiQtWL+7EewCXrML58d3+Ib0i/X4BQgubkFzPSZ/b3h86bBFpzay1LwjbJOCT
+ wz0UlXLa6+Wo5u/nBCQwM+K2nMMTAZ1zqNpr20iEyI5c5EhKghj22ue4u9Z5xrZr601x7pA945x
+ 13EEcRsXpwr70KQ5F3A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-16_07,2026-01-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160145
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601160156
 
-Hi Wenmeng,
+Hello Sudeep,
 
-On 1/13/2026 1:03 AM, Wenmeng Liu wrote:
-> Add support for TPG found on LeMans, Monaco, Hamoa.
+Thanks for the discussion & feedback.
+
+Wanted to check on below possibilities to disable the SMCCC SOC ID at 
+the vendor end, can you help comment?
+1. Introduce cmdline option
+    We are trying to pursue that in Android Kernel - 
+https://android-review.googlesource.com/c/kernel/common/+/3912874
+2. Mark SMCCC SMC ID driver as tristate & module as suggested by Dmitry
+
+If any of these other options are agreeable, will send separate patch.
+
+On 1/16/2026 2:39 AM, Sudeep Holla wrote:
+> On Thu, Jan 15, 2026 at 10:42:51AM -0800, Satya Durga Srinivasu Prabhala wrote:
+>> Hello Sudeep,
+>>
+>> Thanks for the feedback.
+>>
+>> On 1/14/2026 1:01 PM, Sudeep Holla wrote:
+>>> On Wed, Jan 14, 2026 at 08:50:23AM -0800, Satya Durga Srinivasu Prabhala wrote:
+>>>> Hello Sudeep,
+>>>>
+>>>> On 1/13/2026 4:29 AM, Sudeep Holla wrote:
+>>>>> On Mon, Jan 12, 2026 at 10:24:06PM -0800, Satya Durga Srinivasu Prabhala wrote:
+>>>>>> The ARM SMCCC SoC ID driver is currently enabled by default and publishes
+>>>>>> SMCCC-provided SoC identification into /sys/bus/soc/devices/socX/*.
+>>>>>>
+>>>>>> On platforms where a vendor SoC driver already exposes widely-consumed
+>>>>>> attributes (e.g. Qualcomm socinfo [1]), enabling the SMCCC driver changes
+>>>>>> the format of /sys/devices/soc0/soc_id (e.g. "jep106:XXYY:ZZZZ" instead
+>>>>>> of a vendor logical ID like "519") and breaks existing userspace consumers.
+>>>>>>
+>>>>> Instead of relying on a vendor-specific SoC driver, we should consider
+>>>>> disabling it and using the OS-agnostic SoC information interface provided by
+>>>>> the firmware.
+>>>> Would like to add some history here. Vendor interface existed [1] even
+>>>> before
+>>>> SMCCC SMC ID was introduced [2]. And there are several user space entities
+>>>> which
+>>>> uses the soc0 interface already.
+>>> True, but that's not the main point.
+>> That is one of the point which needs to be considered in my honest opinion.
+>> Vendor driver existed from long time (v3.10 Kernels) in Android
+>> https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-dr/drivers/soc/qcom/socinfo.c
+>> and lot of user space entities in Android depends on soc0 which is not just
+>> limited
+>> Qualcomm user space, but also, 3rd party ones.
+>>
+>>>>> The presence of this interface strongly suggests that the
+>>>>> firmware is designed to support multiple operating systems or software stacks
+>>>>> that already depend on it.
+>>>> That is correct. We started seeing the issue with user space when our
+>>>> firmware
+>>>> started implementing support for SMCCC SOC ID recently for non-Linux based
+>>>> product.
+>>>> As the firmware remain same across OSes, user space is broken on Linux.
+>>> What exactly do you mean by "firmware started implementing support for SMCCC
+>>> SOC ID recently for non-Linux based product" ? Does that really mean that
+>>> you can change the firmware for Linux based products ? I don't think so and
+>>> hence we are in this discussion.
+>>>
+>>> 1. Either it exists in which case deal with it by disabling vendor driver
+>>>      and/or fixing the userspace.
+>>>
+>>> or
+>>>
+>>> 2. It doesn't exist which is not a problem.
+>> Allow me to add some more details, so far, our firmware hasn't been
+>> supporting
+>> SMCCC SMC ID.  Due a requirement on non-Linux based product, firmware
+>> started
+>> to support the feature and same firmware is used even on Linux Android
+>> (android16-6.12)
+>> based product.
+>>
+>> I would say, firmware started supporting the feature on our newer product
+>> instead
+>> of firmware being updated on any older products.
+>>
+>> Now, as the user space remain same and is relying on soc0 interface already,
+>> user space is broken as SMCCC SOC ID enabled by default which gets compiled
+>> into Kernel and takes precedence over vendor driver which is a vendor module
+>> in case of Android.
+>>
+> See below example of lscpu and HMP.
 >
-> Signed-off-by: Wenmeng Liu<wenmeng.liu@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile         |   1 +
->   drivers/media/platform/qcom/camss/camss-csid-680.c |  14 ++
->   .../media/platform/qcom/camss/camss-csid-gen3.c    |  14 ++
->   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 257 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.c          | 128 ++++++++++
->   5 files changed, 414 insertions(+)
+>>>>> Aligning the Linux kernel with this
+>>>>> firmware-defined, OS-agnostic mechanism would reduce vendor-specific
+>>>>> dependencies and improve portability. Any gaps can be addressed by enhancing
+>>>>> userspace to correctly parse and consume this information.
+>>>> Agree. Updating entire use space would need time and we are looking to see
+>>>> if vendor specific interface can be given priority over the standard
+>>>> interface.
+>>> That statement simply doesn't make sense at all. Your product took all the
+>>> effort to implement standards and then you don't want to use it at all.
+>>> As per your claims it is not even broken(in terms of data from the sysfs
+>>> files), so I don't know what to say here, sorry ?
+>> As mentioned above, the requirement was for a non-Linux based OS which
+>> impacted Linux Android baseline.
+> Read that again and think. If other products can cope and are made to cope
+> up with the new SOC_ID interface, why is Linux so special not to follow that
+> and fix the userspace to start using new interface. If just getting ID and not
+> name is the main issue here, consider moving to the updated spec or patch up
+> in the userspace.
 >
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index d355e67c25700ac061b878543c32ed8defc03ad0..e8996dacf1771d13ec1936c9bebc0e71566898ef 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -28,5 +28,6 @@ qcom-camss-objs += \
->   		camss-video.o \
->   		camss-format.o \
->   		camss-tpg.o \
-> +		camss-tpg-gen1.o \
->   
->   obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/drivers/media/platform/qcom/camss/camss-csid-680.c
-> index 3ad3a174bcfb8c0d319930d0010df92308cb5ae4..a5da35cae2eb9acf642795c0a91db58d845f211c 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-680.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
-> @@ -103,6 +103,8 @@
->   #define		CSI2_RX_CFG0_PHY_NUM_SEL			20
->   #define		CSI2_RX_CFG0_PHY_SEL_BASE_IDX			1
->   #define		CSI2_RX_CFG0_PHY_TYPE_SEL			24
-> +#define		CSI2_RX_CFG0_TPG_NUM_EN				BIT(27)
-> +#define		CSI2_RX_CFG0_TPG_NUM_SEL			GENMASK(29, 28)
->   
->   #define CSID_CSI2_RX_CFG1					0x204
->   #define		CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN		BIT(0)
-> @@ -185,11 +187,23 @@ static void __csid_configure_rx(struct csid_device *csid,
->   				struct csid_phy_config *phy, int vc)
->   {
->   	u32 val;
-> +	struct camss *camss;
-> +	struct tpg_device *tpg;
->   
-> +	camss = csid->camss;
->   	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
->   	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
-"phy_num_sel" and "tpg_num_sel" can be in if-else. They both are not 
-required at once.
->   
-> +	if (camss->tpg) {
-> +		tpg = &camss->tpg[phy->csiphy_id];
-> +
-> +		if (csid->tpg_linked && tpg->testgen.mode > 0) {
-If the tpg is linked and the mode is not valid, shouldn't you be 
-throwing error?
-> +			val |= FIELD_PREP(CSI2_RX_CFG0_TPG_NUM_SEL, phy->csiphy_id + 1);
-> +			val |= CSI2_RX_CFG0_TPG_NUM_EN;
-Can we rename this to CSI2_RX_CFG0_TPG_MUX_EN?
-> +		}
-> +	}
-> +
->   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
->   
->   	val = CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN;
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> index 664245cf6eb0cac662b02f8b920cd1c72db0aeb2..5f9eb533723f2864df64fd6c63e2682fed4a12ae 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> @@ -66,6 +66,8 @@
->   #define		CSI2_RX_CFG0_VC_MODE		3
->   #define		CSI2_RX_CFG0_DL0_INPUT_SEL	4
->   #define		CSI2_RX_CFG0_PHY_NUM_SEL	20
-> +#define		CSI2_RX_CFG0_TPG_NUM_EN		BIT(27)
-> +#define		CSI2_RX_CFG0_TPG_NUM_SEL	GENMASK(29, 28)
->   
->   #define CSID_CSI2_RX_CFG1		0x204
->   #define		CSI2_RX_CFG1_ECC_CORRECTION_EN	BIT(0)
-> @@ -109,11 +111,23 @@ static void __csid_configure_rx(struct csid_device *csid,
->   				struct csid_phy_config *phy, int vc)
-Same as above.
->   {
->   	int val;
-> +	struct camss *camss;
-> +	struct tpg_device *tpg;
->   
-> +	camss = csid->camss;
->   	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
->   	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
->   
-> +	if (camss->tpg) {
-> +		tpg = &camss->tpg[phy->csiphy_id];
-> +
-> +		if (csid->tpg_linked && tpg->testgen.mode > 0) {
-> +			val |= FIELD_PREP(CSI2_RX_CFG0_TPG_NUM_SEL, phy->csiphy_id + 1);
-> +			val |= CSI2_RX_CFG0_TPG_NUM_EN;
-> +		}
-> +	}
-> +
->   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
->   
->   	val = CSI2_RX_CFG1_ECC_CORRECTION_EN;
-> diff --git a/drivers/media/platform/qcom/camss/camss-tpg-gen1.c b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..d7ef7a1709648406dc59c210d355851397980769
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> @@ -0,0 +1,257 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + *
-> + * Qualcomm MSM Camera Subsystem - TPG (Test Patter Generator) Module
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +#include <linux/bitfield.h>
-> +#include <linux/completion.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/of.h>
-> +
-> +#include "camss-tpg.h"
-> +#include "camss.h"
-> +
-> +#define TPG_HW_VERSION		0x0
-> +# define HW_VERSION_STEPPING		GENMASK(15, 0)
-> +# define HW_VERSION_REVISION		GENMASK(27, 16)
-> +# define HW_VERSION_GENERATION		GENMASK(31, 28)
-> +
-> +#define TPG_HW_VER(gen, rev, step) \
-> +	(((u32)(gen) << 28) | ((u32)(rev) << 16) | (u32)(step))
-> +
-> +#define TPG_HW_VER_2_0_0                TPG_HW_VER(2, 0, 0)
-> +#define TPG_HW_VER_2_1_0                TPG_HW_VER(2, 1, 0)
-> +
-> +#define TPG_HW_STATUS		0x4
-> +
-> +#define TPG_VC_n_GAIN_CFG(n)		(0x60 + (n) * 0x60)
-I know why this is here but it may be is better to group this with VC 
-based registers. In fact, can you please segregate these macros into sub 
-sections with headings like "TPG global registers", "TPG VC based 
-registers", "TPG DT based registers" etc. Just for better readability.
-> +
-> +#define TPG_CTRL		0x64
-> +# define TPG_CTRL_TEST_EN		BIT(0)
-> +# define TPG_CTRL_PHY_SEL		BIT(3)
-> +# define TPG_CTRL_NUM_ACTIVE_LANES	GENMASK(5, 4)
-> +# define TPG_CTRL_VC_DT_PATTERN_ID	GENMASK(8, 6)
-> +# define TPG_CTRL_OVERLAP_SHDR_EN	BIT(10)
-> +# define TPG_CTRL_NUM_ACTIVE_VC		GENMASK(31, 30)
-> +#  define NUM_ACTIVE_VC_0_ENABLED		0
-> +#  define NUM_ACTIVE_VC_0_1_ENABLED		1
-> +#  define NUM_ACTIVE_VC_0_1_2_ENABLED		2
-> +#  define NUM_ACTIVE_VC_0_1_3_ENABLED		3
-> +
-> +#define TPG_VC_n_CFG0(n)	(0x68 + (n) * 0x60)
-> +# define TPG_VC_n_CFG0_VC_NUM			GENMASK(4, 0)
-> +# define TPG_VC_n_CFG0_NUM_ACTIVE_DT		GENMASK(9, 8)
-> +#  define NUM_ACTIVE_SLOTS_0_ENABLED			0
-> +#  define NUM_ACTIVE_SLOTS_0_1_ENABLED			1
-> +#  define NUM_ACTIVE_SLOTS_0_1_2_ENABLED		2
-> +#  define NUM_ACTIVE_SLOTS_0_1_3_ENABLED		3
-s/NUM_ACTIVE_SLOTS/DT/?, if you really need these macros. Similarly for 
-VCs enabled.
-> +# define TPG_VC_n_CFG0_NUM_BATCH		GENMASK(15, 12)
-> +# define TPG_VC_n_CFG0_NUM_FRAMES		GENMASK(31, 16)
-> +
-> +#define TPG_VC_n_LSFR_SEED(n)	(0x6C + (n) * 0x60)
-> +
-> +#define TPG_VC_n_HBI_CFG(n)	(0x70 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_VBI_CFG(n)	(0x74 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_COLOR_BARS_CFG(n)		(0x78 + (n) * 0x60)
-> +# define TPG_VC_n_COLOR_BARS_CFG_PIX_PATTERN		GENMASK(2, 0)
-> +# define TPG_VC_n_COLOR_BARS_CFG_QCFA_EN		BIT(3)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SPLIT_EN		BIT(4)
-> +# define TPG_VC_n_COLOR_BARS_CFG_NOISE_EN		BIT(5)
-> +# define TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD		GENMASK(13, 8)
-> +# define TPG_VC_n_COLOR_BARS_CFG_XCFA_EN		BIT(16)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_X			GENMASK(26, 24)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_Y			GENMASK(30, 28)
-> +
-> +#define TPG_VC_m_DT_n_CFG_0(m, n)		(0x7C + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT	GENMASK(15, 0)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_1(m, n)		(0x80 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_1_DATA_TYPE		GENMASK(5, 0)
-> +# define TPG_VC_m_DT_n_CFG_1_ECC_XOR_MASK	GENMASK(13, 8)
-> +# define TPG_VC_m_DT_n_CFG_1_CRC_XOR_MASK	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_2(m, n)		(0x84 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE		GENMASK(3, 0)
-> +/* v2.0.0: USER[19:4], ENC[23:20] */
-> +# define TPG_V2_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD		GENMASK(19, 4)
-> +# define TPG_V2_VC_m_DT_n_CFG_2_ENCODE_FORMAT			GENMASK(23, 20)
-For better readability, can you make these TPG_V2_0_*?
-> +/* v2.1.0: USER[27:4], ENC[31:28] */
-> +# define TPG_V2_1_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD	GENMASK(27, 4)
-> +# define TPG_V2_1_VC_m_DT_n_CFG_2_ENCODE_FORMAT			GENMASK(31, 28)
-> +
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR0(n)	(0xB0 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR1(n)	(0xB4 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR2(n)	(0xB8 + (n) * 0x60)
-> +#define TPG_VC_n_COLOR_BAR_CFA_COLOR3(n)	(0xBC + (n) * 0x60)
-> +
-> +/* Line offset between VC(n) and VC(n-1), n form 1 to 3 */
-> +#define TPG_VC_n_SHDR_CFG	(0x84 + (n) * 0x60)
-> +
-> +#define TPG_CLEAR		0x1F4
-> +
-> +#define TPG_HBI_PCT_DEFAULT			545	/* 545% */
-> +#define TPG_VBI_PCT_DEFAULT			10	/* 10% */
-> +#define PERCENT_BASE				100
-> +#define BITS_PER_BYTE				8
-> +
-> +/* Default user-specified payload for TPG test generator.
-> + * Keep consistent with CSID TPG default: 0xBE.
-> + */
-> +#define TPG_USER_SPECIFIED_PAYLOAD_DEFAULT	0xBE
-> +#define TPG_LFSR_SEED_DEFAULT			0x12345678
-> +#define TPG_COLOR_BARS_CFG_STANDARD \
-> +	FIELD_PREP(TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD, 0xA)
-> +
-> +static int tpg_stream_on(struct tpg_device *tpg)
-Add function headers? For this  and a few other below.
-> +{
-> +	struct tpg_testgen_config *tg = &tpg->testgen;
-> +	struct v4l2_mbus_framefmt *input_format;
-> +	const struct tpg_format_info *format;
-> +	u8 lane_cnt = tpg->res->lane_cnt;
-> +	u8 dt_cnt = 0;
-> +	u8 i;
-> +	u32 val;
-> +
-> +	/* Loop through all enabled VCs and configure stream for each */
-> +	for (i = 0; i < tpg->res->vc_cnt; i++) {
-Here as well, can we segregate the code to global, VC based and DT based 
-configs with some comments?
-> +		input_format = &tpg->fmt[MSM_TPG_PAD_SRC + i];
-> +		format = tpg_get_fmt_entry(tpg,
-> +					   tpg->res->formats->formats,
-> +					   tpg->res->formats->nformats,
-> +					   input_format->code);
-> +		if (IS_ERR(format))
-> +			return -EINVAL;
-> +
-> +		val = FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT, input_format->height & 0xffff) |
-> +		      FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH, input_format->width & 0xffff);
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_0(i, dt_cnt));
-> +
-> +		val = FIELD_PREP(TPG_VC_m_DT_n_CFG_1_DATA_TYPE, format->data_type);
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_1(i, dt_cnt));
-> +
-> +		if (tpg->hw_version == TPG_HW_VER_2_0_0) {
-> +			val = FIELD_PREP(TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE, tg->mode - 1) |
-> +				FIELD_PREP(TPG_V2_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD,
-> +					   TPG_USER_SPECIFIED_PAYLOAD_DEFAULT) |
-> +				FIELD_PREP(TPG_V2_VC_m_DT_n_CFG_2_ENCODE_FORMAT,
-> +					   format->encode_format);
-> +		} else if (tpg->hw_version >= TPG_HW_VER_2_1_0) {
-> +			val = FIELD_PREP(TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE, tg->mode - 1) |
-> +				FIELD_PREP(TPG_V2_1_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD,
-> +					   TPG_USER_SPECIFIED_PAYLOAD_DEFAULT) |
-> +				FIELD_PREP(TPG_V2_1_VC_m_DT_n_CFG_2_ENCODE_FORMAT,
-> +					   format->encode_format);
-> +		}
-> +		writel(val, tpg->base + TPG_VC_m_DT_n_CFG_2(i, dt_cnt));
-> +
-> +		writel(TPG_COLOR_BARS_CFG_STANDARD, tpg->base + TPG_VC_n_COLOR_BARS_CFG(i));
-> +
-> +		val = DIV_ROUND_UP(input_format->width * format->bpp * TPG_HBI_PCT_DEFAULT,
-> +				   BITS_PER_BYTE * lane_cnt * PERCENT_BASE);
-> +		writel(val, tpg->base + TPG_VC_n_HBI_CFG(i));
-> +		val = input_format->height * TPG_VBI_PCT_DEFAULT / PERCENT_BASE;
-> +		writel(val, tpg->base + TPG_VC_n_VBI_CFG(i));
-> +
-> +		writel(TPG_LFSR_SEED_DEFAULT, tpg->base + TPG_VC_n_LSFR_SEED(i));
-> +
-> +		/* configure one DT, infinite frames */
-Although this driver is not supporting more than one DT in a VC right 
-now, is there a way we can make the API generic enough to receive #DTs 
-in each VS and their dimensions?
-> +		val = FIELD_PREP(TPG_VC_n_CFG0_VC_NUM, i) |
-> +		      FIELD_PREP(TPG_VC_n_CFG0_NUM_FRAMES, 0);
-> +		writel(val, tpg->base + TPG_VC_n_CFG0(i));
-> +	}
-> +
-> +	val = FIELD_PREP(TPG_CTRL_TEST_EN, 1) |
-> +		  FIELD_PREP(TPG_CTRL_PHY_SEL, 0) |
-Same here, is there a way to make the API generic to receive CPHY / DPHY 
-mode required?
-> +		  FIELD_PREP(TPG_CTRL_NUM_ACTIVE_LANES, lane_cnt - 1) |
-> +		  FIELD_PREP(TPG_CTRL_VC_DT_PATTERN_ID, 0) |
-You are assuming frame interleaved mode always. It may be is a good 
-start but a bunch of functionality is missing here. Just please think of 
-the scalability of the API even though the driver support is limited at 
-this point.
-> +		  FIELD_PREP(TPG_CTRL_NUM_ACTIVE_VC, tpg->res->vc_cnt - 1);
-> +	writel(val, tpg->base + TPG_CTRL);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tpg_stream_off(struct tpg_device *tpg)
-> +{
-> +	writel(0, tpg->base + TPG_CTRL);
-> +	writel(1, tpg->base + TPG_CLEAR);
-Why not just reuse the reset function?
-> +}
-> +
-> +static int tpg_configure_stream(struct tpg_device *tpg, u8 enable)
-> +{
-> +	int ret = 0;
-> +
-> +	if (enable)
-> +		ret = tpg_stream_on(tpg);
-> +	else
-> +		tpg_stream_off(tpg);
-> +
-> +	return ret;
-> +}
-> +
-> +static int tpg_configure_testgen_pattern(struct tpg_device *tpg, s32 val)
-> +{
-> +	if (val >= 0 && val <= TPG_PAYLOAD_MODE_COLOR_BARS)
-> +		tpg->testgen.mode = val;
-> +
-> +	return 0;
-> +}
-> +
-> +/*
-> + * tpg_hw_version - tpg hardware version query
-> + * @tpg: tpg device
-> + *
-> + * Return HW version or error
-> + */
-> +static u32 tpg_hw_version(struct tpg_device *tpg)
-> +{
-> +	u32 hw_version;
-> +	u32 hw_gen;
-> +	u32 hw_rev;
-> +	u32 hw_step;
-> +
-> +	hw_version = readl(tpg->base + TPG_HW_VERSION);
-> +	hw_gen = FIELD_GET(HW_VERSION_GENERATION, hw_version);
-> +	hw_rev = FIELD_GET(HW_VERSION_REVISION, hw_version);
-> +	hw_step = FIELD_GET(HW_VERSION_STEPPING, hw_version);
-> +
-> +	tpg->hw_version = hw_version;
-> +
-> +	dev_dbg_once(tpg->camss->dev, "tpg HW Version = %u.%u.%u\n",
-> +		     hw_gen, hw_rev, hw_step);
-> +
-> +	return hw_version;
-> +}
-> +
-> +/*
-> + * tpg_reset - Trigger reset on tpg module and wait to complete
-Doesn't seem like there is any wait here, right? Also, do you want to 
-clear the IRQs in reset?
-> + * @tpg: tpg device
-> + *
-> + * Return 0 on success or a negative error code otherwise
-> + */
-> +static int tpg_reset(struct tpg_device *tpg)
-> +{
-> +	writel(0, tpg->base + TPG_CTRL);
-> +	writel(1, tpg->base + TPG_CLEAR);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tpg_subdev_init(struct tpg_device *tpg)
-> +{
-> +	tpg->testgen.modes = testgen_payload_modes;
-> +	tpg->testgen.nmodes = TPG_PAYLOAD_MODE_NUM_SUPPORTED_GEN1;
-> +}
-> +
-> +const struct tpg_hw_ops tpg_ops_gen1 = {
-> +	.configure_stream = tpg_configure_stream,
-> +	.configure_testgen_pattern = tpg_configure_testgen_pattern,
-> +	.hw_version = tpg_hw_version,
-> +	.reset = tpg_reset,
-> +	.subdev_init = tpg_subdev_init,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 43fdcb9af101ef34b118035ca9c68757b66118df..5cddf1bc09f97c2c61f907939bb54663d8eab3d4 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -3199,6 +3199,65 @@ static const struct camss_subdev_resources csiphy_res_8775p[] = {
->   	},
->   };
->   
-> +static const struct camss_subdev_resources tpg_res_8775p[] = {
-> +	/* TPG0 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "camnoc_rt_axi", "cpas_ahb", "csiphy_rx" },
-Why should TPG need camnoc_rt_axi clk?
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg0" },
-> +		.interrupt = { "tpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "camnoc_rt_axi", "cpas_ahb", "csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg1" },
-> +		.interrupt = { "tpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "camnoc_rt_axi", "cpas_ahb", "csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg2" },
-> +		.interrupt = { "tpg2" }, + .tpg = { + .lane_cnt = 4, + .vc_cnt = 1, + .formats = 
-> &tpg_formats_gen1, + .hw_ops = &tpg_ops_gen1 + } + }, +}; + static 
-> const struct camss_subdev_resources csid_res_8775p[] = { /* CSID0 */ { 
-> @@ -3595,6 +3654,62 @@ static const struct camss_subdev_resources 
-> csiphy_res_x1e80100[] = { }, }; +static const struct 
-> camss_subdev_resources tpg_res_x1e80100[] = { + /* TPG0 */ + { + 
-> .regulators = { }, + .clock = { "camnoc_rt_axi", "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "camnoc_rt_axi", "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {  },
-> +		.clock = { "camnoc_rt_axi", "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 400000000 },
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg2" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.vc_cnt = 1,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +};
-> +
->   static const struct camss_subdev_resources csid_res_x1e80100[] = {
->   	/* CSID0 */
->   	{
-> @@ -4674,6 +4789,13 @@ static int camss_probe(struct platform_device *pdev)
->   	if (!camss->csiphy)
->   		return -ENOMEM;
->   
-> +	if (camss->res->tpg_num > 0) {
-> +		camss->tpg = devm_kcalloc(dev, camss->res->tpg_num,
-> +					  sizeof(*camss->tpg), GFP_KERNEL);
-> +		if (!camss->tpg)
-> +			return -ENOMEM;
-> +	}
-> +
->   	camss->csid = devm_kcalloc(dev, camss->res->csid_num, sizeof(*camss->csid),
->   				   GFP_KERNEL);
->   	if (!camss->csid)
-> @@ -4863,11 +4985,13 @@ static const struct camss_resources qcs8300_resources = {
->   	.version = CAMSS_8300,
->   	.pd_name = "top", .csiphy_res = csiphy_res_8300, + .tpg_res = tpg_res_8775p, 
-> .csid_res = csid_res_8775p, .csid_wrapper_res = 
-> &csid_wrapper_res_sm8550, .vfe_res = vfe_res_8775p, .icc_res = 
-> icc_res_qcs8300, .csiphy_num = ARRAY_SIZE(csiphy_res_8300), + .tpg_num 
-> = ARRAY_SIZE(tpg_res_8775p), .csid_num = ARRAY_SIZE(csid_res_8775p), 
-> .vfe_num = ARRAY_SIZE(vfe_res_8775p), .icc_path_num = 
-> ARRAY_SIZE(icc_res_qcs8300), @@ -4877,11 +5001,13 @@ static const 
-> struct camss_resources sa8775p_resources = { .version = CAMSS_8775P, 
-> .pd_name = "top", .csiphy_res = csiphy_res_8775p, + .tpg_res = tpg_res_8775p, 
-> .csid_res = csid_res_8775p, .csid_wrapper_res = 
-> &csid_wrapper_res_sm8550, .vfe_res = vfe_res_8775p, .icc_res = 
-> icc_res_sa8775p, .csiphy_num = ARRAY_SIZE(csiphy_res_8775p), + 
-> .tpg_num = ARRAY_SIZE(tpg_res_8775p), .csid_num = 
-> ARRAY_SIZE(csid_res_8775p), .vfe_num = ARRAY_SIZE(vfe_res_8775p), 
-> .icc_path_num = ARRAY_SIZE(icc_res_sa8775p), @@ -4992,11 +5118,13 @@ 
-> static const struct camss_resources x1e80100_resources = { .pd_name = "top",
->   	.csiphy_res = csiphy_res_x1e80100,
->   	.csid_res = csid_res_x1e80100,
-> +	.tpg_res = tpg_res_x1e80100,
->   	.vfe_res = vfe_res_x1e80100,
->   	.csid_wrapper_res = &csid_wrapper_res_x1e80100,
->   	.icc_res = icc_res_x1e80100,
->   	.icc_path_num = ARRAY_SIZE(icc_res_x1e80100),
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_x1e80100),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_x1e80100),
->   	.csid_num = ARRAY_SIZE(csid_res_x1e80100),
->   	.vfe_num = ARRAY_SIZE(vfe_res_x1e80100),
->   };
-
-Thanks,
-
-Vijay.
+>>>>>     Given these
+>>>>> advantages, why would this approach not be the better long-term solution?
+>>>> As mentioned above, existing user space will be broken and fixing existing
+>>>> user space is going to take time. As the feature itself is "optional" from SMCCC
+>>>> specification, if we can't disable by default, we should at-least have a way
+>>>> to disable the feature by other means.
+>>>>
+>>> The data given to the userspace from the kernel is not broken.
+>> Yes, that's well understood.
+> Thanks and that dictates the direction of these discussions.
+>
+>>> The userspace
+>>> tool seem to have made a wrong assumption and can't expect the kernel to
+>>> magically fix the issue here.
+>>>
+>>> E.g. We didn't disable HMP(a.k.a big little platforms) as the assumptions
+>>> made by several userspace tools(e.g. lscpu IIRC) was wrong at the time.
+>> Sorry, at risk of repeating the same thing again, the user space was using
+>> soc0 interface on Linux Android products for a long time base on vendor
+>> implementation. While I agree that, user space had some assumptions based
+>> on vendor implementation, if not disabling the SMCCC SOC ID by default, we
+>> should at-least have a way to disable it (via cmdline) based on vendor
+>> requirements.
+>>
+> It was the case with lscpu too. We didn't disable HMP just because lscpu
+> didn't understand or just read cpu0 data. It is exactly the case with
+> the userspace tool you are mentioning here. Kernel is not providing wrong
+> data.
+>
+>  From the ABI document in the kernel, it has been marked as socX since its
+> initial addition in 2012. So clearly userspace got it wrong and no one
+> realised it until now. There is no argument that data provided from the kernel
+> is wrong in these discussions. So I have nothing else to add unfortunately.
+>
+-- 
+Kind Regards,
+Satya
 
 
