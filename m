@@ -1,79 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-89382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C717D305F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 12:28:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F450D30763
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 12:35:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D94B9304010F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 11:27:40 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 53AD33114C1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 11:28:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7747E376BC1;
-	Fri, 16 Jan 2026 11:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 294AC376BC2;
+	Fri, 16 Jan 2026 11:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZaRYIbF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G65dgMtl";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DKZPwTkY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EA126A0D5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 11:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DB2374192
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 11:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768562847; cv=none; b=nGeXf7k8V/nfUcUqOWSS6NZOmoIBWPlY3cgRCN4oYG6WqqaWRDo9FeLcUfyB4oUs/R22AIUMCDYTvW/+lp2B1rtRcLcCyxbjaNlEVDjQIiso369gatK3Bq8JWMh2xGxzIKutPRD+y1zEp2gsl69cpRCrTSsOsO+9K3oY0fvFyz0=
+	t=1768562887; cv=none; b=QikrRqYhnMQ6FYCW9eN+7bdSTzSCEEB5pscEzQymzXINEAJye6OFzKAk2W9y4Q8YaXB/mRPq5azc5hYQUJWpwLfLNo7xEmydsjHd4Ub0h1bO/sDNZ2mDWm0tpNcbrvhjz67Qp98tEaPWWo3mcX3qfN5ewH0eMCrkjGR5+51Zr4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768562847; c=relaxed/simple;
-	bh=CbVPsVNf2q1H45vV3dHMREJWHw3M6ijzJmCXsc6k7d8=;
+	s=arc-20240116; t=1768562887; c=relaxed/simple;
+	bh=0utBFb8mqa8Nlq+uIrOaYId6hVjNADQWomDlQChWteI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hLHywgae+rNpcSI5FRTryfFn2tcYrlRo5WbIeQU2caHgDSmUsS8NdQ+duoYiNjghS1wrarvjWBT4XofYirxy2d6i/entDBqG8vZ8h56eehW/Qf2xqDTMIsmjOBRPC3+Bk70gpxA+8+KnIstjJ84AxxeGu9OpMq0A5ZcNoC2Xj/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZaRYIbF; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-81f4e136481so923828b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 03:27:21 -0800 (PST)
+	 In-Reply-To:Content-Type; b=KJZeaw7veTq8Lh96RiLtHoeD6nDrzAKIWvy+U4p4pT/Pi8UvwsBt72Nf8tHuc0uX0LknP73q1A4iFCRMW0jK78ul8HloKjHf5FjHI+XdUCPjMIp2xbbfH89ED0e7DWPvQVmyZ3sdbK4gV0VFN40xv/d6QXdah54BMzzbqsSuJso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G65dgMtl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DKZPwTkY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60G8RIwB1240858
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 11:28:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rqT8MD/WUeSfxRuizcbAkisgMvVNCMar3GwucXQStqE=; b=G65dgMtlpKJjzoMr
+	sb2EwBgroIGgvbcR0G6WoOWrPrDY5+1I7lIbFWUf4pLbgLLkCS7gCYLJH9l3+Bx8
+	gF3gdpQX5ALCv4B2CUtRqfcEjt4EtfWvnVFIBjfU7cRstmTx1UVytC1t+9n2ft/q
+	zMuFUYTsFz67z34rUfxpGtvbW3xhpC1rclX8Xy6CKUZQfXpoMSDoh9VsVuv0XR33
+	zUw3glwxFesp6biDYgdVnLzl7KoWYzpzNIgkDgDOjHV0ZDtge4sjW277d8SIdlE4
+	QnKrhr/ZcPC8tSbghsFGDL5QTu8sFevWz0qDzSzKofVW1plIy82lgxujtLJdfL2n
+	gGQ+5w==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq96ssxdk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 11:28:02 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2a0d59f0198so21240435ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 03:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768562840; x=1769167640; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1768562882; x=1769167682; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BZGfsfipZ9p+7mXmx/sNmNBBg224KcQKOBa655l0HJc=;
-        b=NZaRYIbFKYGFOL/4dnThE5w4eFEmET+SuHxtQkrIZFJ+4fFdEHVEsSLJqQURDcyxHk
-         BcnJOCgLrAyKad7wZGH+3MMO/tRTkvmkE+gF0BSJnLOfwpHVZCp2hqFEqTw+lAJdTEC3
-         DBMneG69lDBUAdpVSRIRIJw0osQlbD6x04T+XLZxDfJkirmztUFoqs7hWzP3VuZBjjnG
-         /z1Y4vs0fB3ezu9l9EkzbxbixFjprPB6wMCSejPrke8daTqfoGzu2qrputkG7FKe1WqW
-         iQmXsUP6AT480V9pGytYwDexrSdOHShBNWw52KotGbSHYGjkofYeG9fHSo16iygO4pDT
-         qdIQ==
+        bh=rqT8MD/WUeSfxRuizcbAkisgMvVNCMar3GwucXQStqE=;
+        b=DKZPwTkYB/BumA/z3eVn1GA8IWkxwKZ7iehhBf45RnnTUBjajI8sZyzTsSSM3JTGzB
+         85zKlRHmLYnQKgIghU8OxGy8DoO8y6GQZx3jAkIUl04KN9+1xjdAiZ4O7lyZQEQZ5mJU
+         VFFYVEk5W3ZvoukYeTxomJUY8YdJcM5xOWP2Q7AHALPWKlD1secvHq0CQj+GQjON3cfY
+         qd8GYWoxyLTp1SSKiQlQd4F6D6Ecx+Mi84rd6616xntMFDMSOZUk9ueBiemfm2UJK6CP
+         UIjkeHg8M5CrZwZGoVhTvg9qtQlDBkARIiO/SHt44HFRR+jB6UzPToo6wrmNgvZoqrDF
+         z/tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768562840; x=1769167640;
+        d=1e100.net; s=20230601; t=1768562882; x=1769167682;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BZGfsfipZ9p+7mXmx/sNmNBBg224KcQKOBa655l0HJc=;
-        b=ljUCEuMcU3OWRJHmjEqsqnyUCTcg4RMazNVuPvaTH0VkGttmmjYMc7tMjJUh+Wh1+Q
-         wEQvad12RRmhd0WZbIWj3qikYL2zuGo+6uJRpJ9U2tcA2tI8PjQtPKevO77qljHvYkIm
-         XzaB4d0be9zdj4dvGSYybWWjSXOHxeJLnknojN0jldnOngv/yODxp+ZFpx6u3cz8t/is
-         EN8ugh8fg56ZX1n+UXgPT1m5tCCpkaQPC7UaZV5Kpm/LbPXJuQsWCe6pWS25yAbl0Fgo
-         jAVEVEspz/Qf6l06Ic/pzlb1wCwa0njD1SvBIF+pa7/PzZt28yyjq6yy+Nv4hX7PTBN0
-         FunA==
-X-Forwarded-Encrypted: i=1; AJvYcCWFKD6kKy+lw7NyLBTMaalxPg1HZiUExBGVmn8JqBxksAXRDem9uo/wiHvlhEkK1hwylRK9jnUSi30Bag2E@vger.kernel.org
-X-Gm-Message-State: AOJu0YzknEt/4YvhLpQAncH7t4CgH6zZmv6AAGGzAfMQUZv54g/bFlTb
-	RhVf1WkKJy2vbyKvUakrwq6x2ZZFNY53noUbNulzZXfnMe6HTiYIgLPD
-X-Gm-Gg: AY/fxX7zE6P4QCUCpIYpMWwtMQTurTpZTjQPg9Wo0IW+4hZh5jL5+X1zW4cdRnb78FA
-	2EEkd8KCP+z6Nts1c3wvlgv5ONu7XQVSawcozFPJ6BY7vKo8c7dVYKqIj8loccwgf1qtRGR0Z9c
-	qiuYhX5ablI+/AcEhfyc6YPvZrGH2TwhP3bsbAMtOggUOf2pMSWzJx113mQ+g9uXTVf/0Hta91w
-	6FUCYviyAn7LJxroewxkkGypnC8HiaQGRLlW54EBLXmn/OGdkoD2ryKkB6iW3K1Y5TNguPVPG4w
-	lWdgJyV9HWivFaL03v/Xxyr7H8GUj14cl9/4jRk94PBnkScLA02m8DB5evpF8yCeZBUpKzzzk1L
-	AxHC0ta+CucMyl6+YpRh03+ZTpL6JSPviyHzIMJTrXgEV4BD4WQUTLvbaGUmiHZ8M0vcR8Y9WXt
-	X24FISnZJiRxn2NCgHjoArz/iSZvLtToaQIQ==
-X-Received: by 2002:a05:6a00:2e1e:b0:81f:5238:5560 with SMTP id d2e1a72fcca58-81fa1780c03mr2236351b3a.13.1768562839554;
-        Fri, 16 Jan 2026 03:27:19 -0800 (PST)
-Received: from [172.16.20.12] ([136.226.253.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81fa129199dsm1861074b3a.51.2026.01.16.03.27.15
+        bh=rqT8MD/WUeSfxRuizcbAkisgMvVNCMar3GwucXQStqE=;
+        b=w/QlDMWgMIaiCdIjkHjkPljwIXGz9RQxTDSqgjdNT3Sy+AxX64WyUDi2JCwrj82Fdu
+         LlJiXtYJDNTPPd630cz4As5MkgA77zhQhsXq7bkASsqJvU+btzkbpBN16m5YpLGQaTBW
+         hEWdIDkH1CSr51rszUlMAlipztdPsKLLHsDlccBneWS4JZgDjfwDRTJxxSDI5M3GG5nx
+         xfU1UGKs+wrqxZbhp4TuP6RnsLqKWOMmi6pdhbCwnjRkX1337MTPvIRFkHeXHs6ZGmN5
+         4E7IDGzmGfnyiyVGrZP9qhREBK2JKQfgbY48j+cxOEm7ZhtR0iZrfU0SNIt9bYwKDJcu
+         g10g==
+X-Forwarded-Encrypted: i=1; AJvYcCUVylcmZgwDW4RrH0es/odLNB0w7hRJaf7p2MAmiqU+S16YGiT8qkguCDSRvmzILkrO+gdPuQfm12HvLs8/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxY/e3NB9P3P1OXliKR/hRbPMm37WxHEsAgp4RkTn7Zt47NHH4N
+	5Ypw8FfkrgMx4RneAah4jqTQe5otyhqrLbPyTWvgqA4iZ7Jf5uQNnK9WgYiRoBBpYen/v/x0iQu
+	J4KFTEUCLkup+9+DlRdViJN8A0MjEowdSaQrpVdhVkk75VxhRKFri9M/pXc07E2ExISae
+X-Gm-Gg: AY/fxX7EmpYIrMR/f7EGiUm4yEEG6HfiJxeyQFwVxGdov7/mvIL+wq+NxEoR4clybfu
+	4+8O9wl80UWLGQP5XVWS49ciOTlvcJdQR4rzfhcg1/t8GjkfXXp0dtkOXrNTvtUamNDYKfR/Ch0
+	s9I5eTKm4a2PvrewyVXL2e0nQqNnky9l2hzZO8+vWe4g5yfrAHtNGtmtGWPORjUJXoUuKUZ6hc2
+	PTcxJg9TPusLLZafX96SNrpHW5H2AqJuHSGx8qqutELDIuU4P/W4fzW2ZwocWj3OUncsr4HCKKA
+	Wjk4XE17tPxIUgKsGtyWDcc8c0w0tya+5Ntsik65DNZ/Ekmg2xEcWnOQaKcbH0Gu9MNXdvlOInI
+	Hdx7SPjm4/LJq/DHa8rbD7JtRR3Ov07R+xEH66sIANFA=
+X-Received: by 2002:a17:903:2ed0:b0:2a3:ee53:d201 with SMTP id d9443c01a7336-2a7174f8e23mr25051415ad.12.1768562881833;
+        Fri, 16 Jan 2026 03:28:01 -0800 (PST)
+X-Received: by 2002:a17:903:2ed0:b0:2a3:ee53:d201 with SMTP id d9443c01a7336-2a7174f8e23mr25051195ad.12.1768562881362;
+        Fri, 16 Jan 2026 03:28:01 -0800 (PST)
+Received: from [10.204.101.164] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190aa5besm19506575ad.15.2026.01.16.03.27.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jan 2026 03:27:19 -0800 (PST)
-Message-ID: <3eba04f8-fd1e-46f7-a674-510ed6f48ed2@gmail.com>
-Date: Fri, 16 Jan 2026 16:57:42 +0530
+        Fri, 16 Jan 2026 03:28:00 -0800 (PST)
+Message-ID: <035e9f34-f28f-47fd-ac36-6277171b0e28@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 16:57:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,447 +101,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 4/4] arm64: dts: qcom: talos-evk: Add support for
- QCS615 talos evk board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Qian Zhang <qian.zhang@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260109095221.2847067-1-tessolveupstream@gmail.com>
- <20260109095221.2847067-5-tessolveupstream@gmail.com>
- <3a4e0513-5b2d-4890-a4df-5306a694cf50@oss.qualcomm.com>
- <530e2a7b-52e4-4119-ad54-8ff9e1d4fec0@gmail.com>
- <ei3zvx47jubvgrz25pemfeu6zt5be6dduqpllp5qyhbhqblvnp@c2tqv7hyicii>
+Subject: Re: [PATCH v4 6/6] media: iris: Introduce vpu ops for vpu4 with
+ necessary hooks
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod@kernel.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Rob Herring <robh@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+References: <20251210-knp_video-v4-0-8d11d840358a@oss.qualcomm.com>
+ <20251210-knp_video-v4-6-8d11d840358a@oss.qualcomm.com>
+ <54b29b03-4166-60d9-d553-d0e655749da4@oss.qualcomm.com>
+ <98481299-4db3-41f3-a974-d9d0075d92e0@kernel.org>
 Content-Language: en-US
-From: tessolveupstream@gmail.com
-In-Reply-To: <ei3zvx47jubvgrz25pemfeu6zt5be6dduqpllp5qyhbhqblvnp@c2tqv7hyicii>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <98481299-4db3-41f3-a974-d9d0075d92e0@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: R2oYh9xJwaSuTNKym1ojfJkuxbxiEgdI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA4MiBTYWx0ZWRfX3M15CTi7JprU
+ 0QvLxhsMForIrs2rzwlUjQlQPFV+HhBLJABqpCTvMQeTNgGgjPpvDXoLsPPiR+3ZQT4+pnP6Fvo
+ mq/Uc3VzibP/epcYD0Ow6BvU0oOfUAwi6ms9C/r3/gONjfMvKE5h+vHntLmbXgV5oJq32fY8rHj
+ trvps0Kbna2kDFPfAHwHUoRVhMqd3uvx6qZ28ncBSQbKlEx+C4WwFWwI/BoL2m1e54hDvshvbmy
+ 3DOr1UxAJvmG+PW91I20TltdVjDAJaeYw9zrz51aTxFZgDRBA+M6wwZ0BhGDQn+ZyU2vjjmQYHK
+ foCIJlsLpHw9bfWKTG4UnaCBzDS05/xaISwEEySQG66zQTAoJiL/XTa76bO621B+/hE53IusAKc
+ G1lcMachQt7zxjn871wXb+P+5Y3mj9hDga/mW2o1lJuyLjrAcZnrm6gWZLzZyNTa4TfB/YF92pc
+ DchiN/zKyFs1DxPjPIw==
+X-Proofpoint-GUID: R2oYh9xJwaSuTNKym1ojfJkuxbxiEgdI
+X-Authority-Analysis: v=2.4 cv=M9tA6iws c=1 sm=1 tr=0 ts=696a20c2 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=StH3JvDaWCOc6R5yz7oA:9
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_03,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160082
 
 
-
-On 16-01-2026 13:26, Dmitry Baryshkov wrote:
-> On Fri, Jan 16, 2026 at 12:28:22PM +0530, tessolveupstream@gmail.com wrote:
+On 1/16/2026 4:16 PM, Krzysztof Kozlowski wrote:
+> On 16/01/2026 10:51, Dikshita Agarwal wrote:
 >>
 >>
->> On 15-01-2026 18:47, Qian Zhang wrote:
+>> On 12/10/2025 6:06 PM, Vikash Garodia wrote:
+>>> Add power sequence for vpu4 by reusing from previous generation wherever
+>>> possible. Hook up vpu4 op with vpu4 specific implemtation or resue from
+>>> earlier generation wherever feasible, like clock calculation in this
+>>> case.
 >>>
->>>
->>> On 1/9/2026 5:52 PM, Sudarshan Shetty wrote:
->>>> Add the device tree for the QCS615-based Talos EVK platform. The
->>>> platform is composed of a System-on-Module following the SMARC
->>>> standard, and a Carrier Board.
->>>>
->>>> The Carrier Board supports several display configurations, HDMI and
->>>> LVDS. Both configurations use the same base hardware, with the display
->>>> selection controlled by a DIP switch.
->>>>
->>>> Use a DTBO file, talos-evk-lvds-auo,g133han01.dtso, which defines an
->>>> overlay that disables HDMI and adds LVDS. The DTs file talos-evk
->>>> can describe the HDMI display configurations.
->>>>
->>>> The initial device tree includes support for:
->>>> - CPU and memory
->>>> - UART
->>>> - GPIOs
->>>> - Regulators
->>>> - PMIC
->>>> - Early console
->>>> - AT24MAC602 EEPROM
->>>> - MCP2515 SPI to CAN
->>>> - ADV7535 DSI-to-HDMI bridge
->>>> - DisplayPort interface
->>>> - SN65DSI84ZXHR DSI-to-LVDS bridge
->>>> - Wi-Fi/BT
->>>>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/Makefile             |   4 +
->>>>   .../qcom/talos-evk-lvds-auo,g133han01.dtso    | 126 ++++
->>>>   arch/arm64/boot/dts/qcom/talos-evk-som.dtsi   | 616 ++++++++++++++++++
->>>>   arch/arm64/boot/dts/qcom/talos-evk.dts        | 139 ++++
->>>>   4 files changed, 885 insertions(+)
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->>>>   create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>>> index 76cf0115a00a..289b651ef0c5 100644
->>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>> @@ -324,6 +324,10 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8650-mtp.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8650-qrd.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-mtp.dtb
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8750-qrd.dtb
->>>> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk.dtb
->>>> +talos-evk-lvds-auo,g133han01-dtbs    := \
->>>> +    talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
->>>> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk-lvds-auo,g133han01.dtb
->>>>   x1e001de-devkit-el2-dtbs    := x1e001de-devkit.dtb x1-el2.dtbo
->>>>   dtb-$(CONFIG_ARCH_QCOM)    += x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
->>>>   x1e78100-lenovo-thinkpad-t14s-el2-dtbs    := x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
->>>> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
->>>> new file mode 100644
->>>> index 000000000000..ad058cf4cd93
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
->>>> @@ -0,0 +1,126 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>>> + */
->>>> +/dts-v1/;
->>>> +/plugin/;
->>>> +
->>>> +#include <dt-bindings/gpio/gpio.h>
->>>> +
->>>> +&{/} {
->>>> +    backlight: backlight {
->>>> +        compatible = "gpio-backlight";
->>>> +        gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>,
->>>> +            <&tlmm 115 GPIO_ACTIVE_HIGH>;
->>>> +        default-on;
->>>> +    };
->>>> +
->>>> +    panel-lvds {
->>>> +        compatible = "auo,g133han01";
->>>> +
->>>> +        ports {
->>>> +            #address-cells = <1>;
->>>> +            #size-cells = <0>;
->>>> +
->>>> +            /* LVDS A (Odd pixels) */
->>>> +            port@0 {
->>>> +                reg = <0>;
->>>> +                dual-lvds-odd-pixels;
->>>> +
->>>> +                lvds_panel_out_a: endpoint {
->>>> +                    remote-endpoint = <&sn65dsi84_out_a>;
->>>> +                };
->>>> +            };
->>>> +
->>>> +            /* LVDS B (Even pixels) */
->>>> +            port@1 {
->>>> +                reg = <1>;
->>>> +                dual-lvds-even-pixels;
->>>> +
->>>> +                lvds_panel_out_b: endpoint {
->>>> +                    remote-endpoint = <&sn65dsi84_out_b>;
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +    };
->>>> +};
->>>> +
->>>> +&hdmi_connector {
->>>> +    status = "disabled";
->>>> +};
->>>> +
->>>> +&i2c1 {
->>>> +    clock-frequency = <400000>;
->>>> +
->>>> +    status = "okay";
->>>> +
->>>> +    hdmi_bridge: bridge@3d {
->>>> +        status = "disabled";
->>>> +    };
->>>> +
->>>> +    lvds_bridge: bridge@2c {
->>>> +        compatible = "ti,sn65dsi84";
->>>> +        reg = <0x2c>;
->>>> +        enable-gpios = <&tlmm 42 GPIO_ACTIVE_HIGH>;
->>>> +        ti,dsi-lanes = <4>;
->>>> +        ti,lvds-format = "jeida-24";
->>>> +        ti,lvds-bpp = <24>;
->>>> +
->>>> +        ports {
->>>> +            #address-cells = <1>;
->>>> +            #size-cells = <0>;
->>>> +
->>>> +            port@0 {
->>>> +                reg = <0>;
->>>> +
->>>> +                sn65dsi84_in: endpoint {
->>>> +                    data-lanes = <1 2 3 4>;
->>>> +                    remote-endpoint = <&mdss_dsi0_out>;
->>>> +                };
->>>> +            };
->>>> +
->>>> +            port@2 {
->>>> +                reg = <2>;
->>>> +
->>>> +                sn65dsi84_out_a: endpoint {
->>>> +                    data-lanes = <1 2 3 4>;
->>>> +                    remote-endpoint = <&lvds_panel_out_a>;
->>>> +                };
->>>> +            };
->>>> +
->>>> +            port@3 {
->>>> +                reg = <3>;
->>>> +
->>>> +                sn65dsi84_out_b: endpoint {
->>>> +                    data-lanes = <1 2 3 4>;
->>>> +                    remote-endpoint = <&lvds_panel_out_b>;
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +    };
->>>> +};
->>>> +
->>>> +&mdss_dsi0 {
->>>> +    vdda-supply = <&vreg_l11a>;
->>>> +
->>>> +    status = "okay";
->>>> +};
->>>> +
->>>> +&mdss_dsi0_out {
->>>> +    remote-endpoint = <&sn65dsi84_in>;
->>>> +    data-lanes = <0 1 2 3>;
->>>> +};
->>>> +
->>>> +&tlmm {
->>>> +    lcd_bklt_en: lcd-bklt-en-state {
->>>> +        pins = "gpio115";
->>>> +        function = "gpio";
->>>> +        bias-disable;
->>>> +    };
->>>> +
->>>> +    lcd_bklt_pwm: lcd-bklt-pwm-state {
->>>> +        pins = "gpio59";
->>>> +        function = "gpio";
->>>> +        bias-disable;
->>>> +    };
->>>> +};
->>>> diff --git a/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->>>> new file mode 100644
->>>> index 000000000000..95ed335bcb08
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
->>>> @@ -0,0 +1,616 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>>> + */
->>>> +/dts-v1/;
->>>> +
->>>> +#include <dt-bindings/gpio/gpio.h>
->>>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>>> +#include "talos.dtsi"
->>>> +#include "pm8150.dtsi"
->>>> +/ {
->>>> +    aliases {
->>>> +        mmc0 = &sdhc_1;
->>>> +        serial0 = &uart0;
->>>> +        serial1 = &uart7;
->>>> +    };
->>>> +
->>>> +    chosen {
->>>> +        stdout-path = "serial0:115200n8";
->>>> +    };
->>>> +
->>>> +    clocks {
->>>> +        can_osc: can-oscillator {
->>>> +            compatible = "fixed-clock";
->>>> +            clock-frequency = <20000000>;
->>>> +            #clock-cells = <0>;
->>>> +        };
->>>> +
->>>> +        sleep_clk: sleep-clk {
->>>> +            compatible = "fixed-clock";
->>>> +            clock-frequency = <32764>;
->>>> +            #clock-cells = <0>;
->>>> +        };
->>>> +
->>>> +        xo_board_clk: xo-board-clk {
->>>> +            compatible = "fixed-clock";
->>>> +            clock-frequency = <38400000>;
->>>> +            #clock-cells = <0>;
->>>> +        };
->>>> +    };
->>>> +
->>>> +    regulator-usb2-vbus {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "USB2_VBUS";
->>>> +        gpio = <&pm8150_gpios 10 GPIO_ACTIVE_HIGH>;
->>>> +        pinctrl-0 = <&usb2_en>;
->>>> +        pinctrl-names = "default";
->>>> +        enable-active-high;
->>>> +        regulator-always-on;
->>>> +    };
->>>> +
->>>> +    vreg_conn_1p8: regulator-conn-1p8 {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "vreg_conn_1p8";
->>>> +        startup-delay-us = <4000>;
->>>> +        enable-active-high;
->>>> +        gpio = <&pm8150_gpios 1 GPIO_ACTIVE_HIGH>;
->>>> +    };
->>>> +
->>>> +    vreg_conn_pa: regulator-conn-pa {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "vreg_conn_pa";
->>>> +        startup-delay-us = <4000>;
->>>> +        enable-active-high;
->>>> +        gpio = <&pm8150_gpios 6 GPIO_ACTIVE_HIGH>;
->>>> +    };
->>>> +
->>>> +    vreg_v3p3_can: regulator-v3p3-can {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "vreg-v3p3-can";
->>>> +        regulator-min-microvolt = <3300000>;
->>>> +        regulator-max-microvolt = <3300000>;
->>>> +        regulator-boot-on;
->>>> +        regulator-always-on;
->>>> +    };
->>>> +
->>>> +    vreg_v5p0_can: regulator-v5p0-can {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "vreg-v5p0-can";
->>>> +        regulator-min-microvolt = <5000000>;
->>>> +        regulator-max-microvolt = <5000000>;
->>>> +        regulator-boot-on;
->>>> +        regulator-always-on;
->>>> +    };
->>>> +
->>>> +    wcn6855-pmu {
->>>> +        compatible = "qcom,wcn6855-pmu";
->>>> +
->>>> +        pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
->>>> +        pinctrl-names = "default";
->>>> +
->>>> +        bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
->>>> +        wlan-enable-gpios = <&tlmm 84 GPIO_ACTIVE_HIGH>;
->>>> +
->>>> +        vddio-supply = <&vreg_conn_pa>;
->>>> +        vddaon-supply = <&vreg_s5a>;
->>>> +        vddpmu-supply = <&vreg_conn_1p8>;
->>>> +        vddpmumx-supply = <&vreg_conn_1p8>;
->>>> +        vddpmucx-supply = <&vreg_conn_pa>;
->>>> +        vddrfa0p95-supply = <&vreg_s5a>;
->>>> +        vddrfa1p3-supply = <&vreg_s6a>;
->>>> +        vddrfa1p9-supply = <&vreg_l15a>;
->>>> +        vddpcie1p3-supply = <&vreg_s6a>;
->>>> +        vddpcie1p9-supply = <&vreg_l15a>;
->>>> +
->>>> +        regulators {
->>>> +            vreg_pmu_rfa_cmn: ldo0 {
->>>> +                regulator-name = "vreg_pmu_rfa_cmn";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_aon_0p59: ldo1 {
->>>> +                regulator-name = "vreg_pmu_aon_0p59";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_wlcx_0p8: ldo2 {
->>>> +                regulator-name = "vreg_pmu_wlcx_0p8";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_wlmx_0p85: ldo3 {
->>>> +                regulator-name = "vreg_pmu_wlmx_0p85";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_btcmx_0p85: ldo4 {
->>>> +                regulator-name = "vreg_pmu_btcmx_0p85";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_rfa_0p8: ldo5 {
->>>> +                regulator-name = "vreg_pmu_rfa_0p8";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_rfa_1p2: ldo6 {
->>>> +                regulator-name = "vreg_pmu_rfa_1p2";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_rfa_1p7: ldo7 {
->>>> +                regulator-name = "vreg_pmu_rfa_1p7";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_pcie_0p9: ldo8 {
->>>> +                regulator-name = "vreg_pmu_pcie_0p9";
->>>> +            };
->>>> +
->>>> +            vreg_pmu_pcie_1p8: ldo9 {
->>>> +                regulator-name = "vreg_pmu_pcie_1p8";
->>>> +            };
->>>> +        };
->>>> +    };
->>>> +
->>>> +    wifi_1p8v: regulator-wifi-1p8v {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "wifi_1p8v";
->>>> +        regulator-min-microvolt = <1800000>;
->>>> +        regulator-max-microvolt = <1800000>;
->>>> +        gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>> Please check this pin number
->>>> +        enable-active-high;
->>>> +        pinctrl-0 = <&wifi_reg_en_pins_state>;
->>>> +        pinctrl-names = "default";
->>>> +        regulator-boot-on;
->>>> +        regulator-always-on;
->>>> +    };
->>>> +
->>>> +    wifi_3p85v: regulator-wifi-3p85v {
->>>> +        compatible = "regulator-fixed";
->>>> +        regulator-name = "wifi_3p85v";
->>>> +        regulator-min-microvolt = <3850000>;
->>>> +        regulator-max-microvolt = <3850000>;
->>>> +        gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>> Please check this pin number
->>>> +        enable-active-high;
->>>> +        pinctrl-0 = <&wifi_reg_en_pins_state>;
->>>> +        pinctrl-names = "default";
->>>> +        regulator-boot-on;
->>>> +        regulator-always-on;
->>>> +    };
->>>> +};
->>>
->>> Are these two node necessary?
+>>> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>>> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+>>> ---
+>>>   drivers/media/platform/qcom/iris/Makefile          |   1 +
+>>>   .../platform/qcom/iris/iris_platform_common.h      |   7 +
+>>>   drivers/media/platform/qcom/iris/iris_vpu4x.c      | 369 +++++++++++++++++++++
+>>>   drivers/media/platform/qcom/iris/iris_vpu_common.h |   1 +
+>>>   4 files changed, 378 insertions(+)
 >>>
 >>
->> On this board, GPIO91 is wired as a common enable for both WiFi 
->> power rails: WiFi 1.8V and WiFi 3.85V.
->> I currently modeled them as two regulator-fixed nodes because these 
->> are two distinct rails.
->> Would you prefer modelling a single regulator node that controls the 
->> shared GPIO as below:
->>
->> wifi_en: regulator-wifi-en {
->>     compatible = "regulator-fixed";
->>     regulator-name = "wifi_en";
->>     gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
->>     enable-active-high;
->>     pinctrl-0 = <&wifi_reg_en_pins_state>;
->>     pinctrl-names = "default";
->>     regulator-boot-on;
->>     regulator-always-on;
->> };
+>> Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 > 
-> What is the voltage of this regulator? What does it represent? What
-> should be represented in the DT?
 > 
-> BTW: what is powered on by those regulators? I don't see them being
-> wired to the PMU.
+> Thank you for reviewing this code. I would like to point that it took
+> one month for Qualcomm to review this Qualcomm patch and in the same
+> time Vikash is sending emails (more than one!) that Bryan does not
+> review that fast as expected.
+
+Firstly, the ask to Bryan have been to pull patches (not stressed on 
+review part), infact, even fixes are waiting for merge window while they 
+can easily go into RCs. This part of the process need some improvement.
+
+I have also appreciated him when he pulled long series for initial codec 
+enablement, i think you missed those part.
+
 > 
+> I do not find it acceptable approach to harass community reviewers that
+> way. Even if you do it internally, not on the lists.
+> 
+> I think this review timeline is final argument for Vikash to stop
+> pushing such narratives and complains, because your review is expected
+> to be BEFORE the maintainer upper in the upstream flow.
 
-There are two separate TPS62130RGTR regulator ICs on the board:
-One provides 1.8V and Another provides 3.85V.
+My understanding is that, if maintainer raise patches, then its more of 
+reviews from community and having RB tag from any of community member or 
+no open comments implies the series is good to go.
 
-Both regulators use the same enable signal (SOC_GPIO_91_S4A_1P8 - 
-GPIO91), which connects to their EN pins. 
-When GPIO91 goes high, both regulators switch on at the same 
-time.
+This series is lying there for a month without any open comment, there 
+is nothing pending here to pull them.
 
-I described them as two separate regulator-fixed nodes since they 
-are different chips with different voltages.
-
-As an alternative, I suggested representing them as a single node 
-(based on the review comment from Qian Zhang) if you only want to 
-show the shared GPIO enable control instead of the individual 
-voltage rails.
-
-In AF68E module, 3.85V regulator powers VDD_PA_5G and 1.8V regulator
-powers VDD_PA_2G.
+Regards,
+Vikash
+> 
+> Best regards,
+> Krzysztof
 
 
