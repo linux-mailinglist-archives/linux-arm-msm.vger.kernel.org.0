@@ -1,180 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-89396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42504D31A18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:15:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE8EED31AB0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:17:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id BC9033000DCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 13:15:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 14DD830116C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 13:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1582923FC54;
-	Fri, 16 Jan 2026 13:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F06A72550A4;
+	Fri, 16 Jan 2026 13:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uTK8Sny2"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="bXxtbdvj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE39C23D7F7;
-	Fri, 16 Jan 2026 13:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0680227E82
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 13:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768569307; cv=none; b=EL7F78oP/7iy3KRNN4KFASkmnYZEYbp+KNLBxBgdRQ7pMrviUrQTf1Zxm2+h50lzHos0INyMEVINxXvPmAlnfBMPo8pIRu4VtTxhjo3HlXxxK0hIJAcK1yHxTc5XQhT4XgQ1MvE6mWtHT078DhMGw3F3N//XLoeNeHaZ9qlwGTY=
+	t=1768569447; cv=none; b=jAUQPFZ3XFSzMTYo5o8X2s2V3Ru38n2w8SUOadDw38mMnMBJjDEnTZHmoHMkKu/1rxGnFGdpBqSflsw5qwqdRgVbZsSkXKcfY3FGu4jjyObZp483atPBvo9laEoSn77h29oSqcHUMHjbYlkmto8xZEjgfkD1N+LkmujqiDCJysY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768569307; c=relaxed/simple;
-	bh=lemSNLJq0q0WrTxFXNntL4UfBhjsMGUXFL6M5acURZk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DV9EduNZN5AqQskgMeDPNNfipsbJ/BemvG3x/Dc7cCy9q3AclRhCr4xryZcnAz92KWcPmEcHn3eL/PRM6gQlaCTmJpMXslcs/ylOe4vrAUWAOtppM4lQvWve9aq5eoXXIezm2Gw7YfrXBGAOc+4fPqeZ3Y/DM3AvhEGF/1cRdNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uTK8Sny2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE166C116C6;
-	Fri, 16 Jan 2026 13:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768569307;
-	bh=lemSNLJq0q0WrTxFXNntL4UfBhjsMGUXFL6M5acURZk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uTK8Sny2Wcgu0sn3rdx+j4aXaEB7fGQJ0hCKXJbqP445lqeCvgPULWQpekynMtPtb
-	 /TH0ulz62fxkK4W07otBoLAdMO9LJe3d7UtAqX4rCQzh+iRhrVB5EKYd31jJx017YI
-	 UKMPkISyat0utnxRlV1FAWHbQD/lCgm4C5I3uhGA1IBytg0EvU9K6adroeeY3k7poQ
-	 dRNcsvVFgFSNemylJk18AibhfxY7b7altypjFPA79OyHeoMhMvzxwPmA8+Fn4IR+wT
-	 I7cWXbuhm9ody+s3E2KraDj/0s3kKU18WNv7Mcyxebilb4nRdGklgE3ZfhL/NHNhXp
-	 TQDWkRrP2PQRA==
-Message-ID: <6020af2a-5baa-4594-8cbc-bf7241f0128e@kernel.org>
-Date: Fri, 16 Jan 2026 14:15:02 +0100
+	s=arc-20240116; t=1768569447; c=relaxed/simple;
+	bh=0IcwqQH5YyvspgnfvtfN3G6ejhtG8SMMlKk+P1Z9ZNY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=H3vvwkY+fC5deRPlZhPdLRx2mDuTxgegUQUXxLs47brRPzQSbUj7llzdJnklAvh6YQTQH3BbkymnrLYxMPnYgZoHiOmc7ziN+6e0+3nwkpYe2SLpP0kjLpGme4y999OoaWM3qhIK705SuapIjexvd7jXszP50Jawu+mg4tyw6Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=bXxtbdvj; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-64baaa754c6so3070899a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 05:17:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1768569444; x=1769174244; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LeO3PxpMi+3RzgWBsyhtH2vzdSGJNBJ2My5HKc/4nPs=;
+        b=bXxtbdvjNWxN8CPYrzUOVoTVIk8UCAj4YMnI73pV+i3SUZNY0BkEBaOvxKjvOisM19
+         z4GLiV/jFAmjXHmKVkjtZbkhRx5XPaZE7OsgLwvsK3/7/Zt3AV5KGfQUb/jS+uXX/sl6
+         +TdgE8dOKuZC/0zxlgqXHl2pFOID1kEFo897MHioVKQAKETgAJm5aV6rpiiZzmy1SyIy
+         SQ3KMho/ferVejQqTJx3uo8ft+IUfmYP+pe8XQdjsgezHrNPIyv8298abTsBr0mH5VzJ
+         kfhr3gsp+Wu3qS7WMaoHa6kHNc8N5IynhFA6dP5n+GRjNjkQHP999M0FBfH1TspCeHJ1
+         wyPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768569444; x=1769174244;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LeO3PxpMi+3RzgWBsyhtH2vzdSGJNBJ2My5HKc/4nPs=;
+        b=eyBZ2HvSvMg1VU4J559PA1GbR3FpvcSonktEWwXy5TjnUmTgMsBjuuRACGhgYyBARU
+         J/R9+DtZB4eJ39TakV3G0SzmSBikPbJ8UPZ3yR90V/wrOCJlRGm/jMcc5m6WBTriUrC5
+         a0UlpZHI14xLZTzZC2PcEPViral9/C1J6Gaz4KxTjfqsEEeyXy0e75dRR2gSX63saXqY
+         5++GGOYltliHozh+CxO87EtCYyZJ9j7PkepkHfbaYSqQq96q8TU2YkUxaUQEPtM1QQkL
+         k37CYBaDZuKJgLJk+Zlkj1wnHwnmMHlqJ8vN08jIup1mBkT8OsEZzZH/SeyEyystLio3
+         zAtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW1ukBtjfcAa11ZZURErDmmJWMRdUaSs+wPqsGV00zmckfsTNhKBdOHPHwSif/VBiVj0/rcRJ7ogQ4bSUqR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnhMSX5GC2yte87EsU4P8gfEKf97acT87d3NP/ubPhCHGlGqOX
+	jyJpTCMAAJaejikkbr4XEvT9j6Lpb+gFUSiskZBULNIexCIMDUsfdSNjd1HfT0iDoco3vC2nfgr
+	gGlVy
+X-Gm-Gg: AY/fxX7hxy0oXvwfqyOu/h/JEH03FA7vZ90CBjIHSV4oT4P55wFA3UdqUjYEokNuIzj
+	nSzMdpoS81wjYNpOKsTOmDoOVRrii6hJJqUDjW3oXWj92MUN9+nepZl5efCqci1ArkEwFohmUVI
+	tRktnUkZGG9uDnlly1ctIjD3fYKckJ1HxycU2GYutUt3HnVu1m5dsQSxjN0jrWJMDFQxKzR7t87
+	c/F7kFsDzZKssoPeCuPgnLy6wWsOwmWHrd5Y7wb4VrEPbl+dYk7mCgXE4l6H2qEN0KwpCLSRXuw
+	qJ1yxVUEfv5gPf+VU1PGowF/OgFaRoXReXHweWjK2Ey2uwNjb5t+hLTCiTpjRhqtiCYt8151Vzn
+	va6RG6eYZVsZjwHEsucMe04nIrZeb0Sx/aGoldXyyGIOXq2+aS9/bgx4NBbrn8pLlBDNyv2mNC4
+	HV2iqtFUDfxeHRo9dF8BxUpGUyOsa5A3SC+oIk30vrirAVvVvezSg7NJV2tsyrEHvm
+X-Received: by 2002:a17:907:7201:b0:b87:281b:1453 with SMTP id a640c23a62f3a-b879324d5bbmr279364666b.59.1768569444136;
+        Fri, 16 Jan 2026 05:17:24 -0800 (PST)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8795a350dbsm235507366b.69.2026.01.16.05.17.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jan 2026 05:17:23 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/5] Support enabling interconnect path for GDSC for fixing
+ Milos camcc
+Date: Fri, 16 Jan 2026 14:17:19 +0100
+Message-Id: <20260116-milos-camcc-icc-v1-0-400b7fcd156a@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: msm: qcm2290-mdss: Fix
- iommus property
-To: Sumit Garg <sumit.garg@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
- vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
- robin.clark@oss.qualcomm.com, lumag@kernel.org,
- loic.poulain@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
- linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>
-References: <20260116062004.237356-1-sumit.garg@kernel.org>
- <20260116062004.237356-2-sumit.garg@kernel.org>
- <20260116-transparent-dexterous-nightingale-c029cb@quoll>
- <aWo0t1EoVhStmOj7@sumit-xelite>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aWo0t1EoVhStmOj7@sumit-xelite>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MuwqAMAwAf0UyGzAqRfwVcdA20YAvGhCh+O8Wh
+ xtuuEtgHJUN+iJB5FtNzyMLlQX4dToWRg3Zoa5qVxE53HU7Df20e4+aCS3NQaQhlg5ydUUWff7
+ jML7vB5s+w8FhAAAA
+X-Change-ID: 20260116-milos-camcc-icc-d41bdff31ef8
+To: Georgi Djakov <djakov@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768569443; l=1538;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=0IcwqQH5YyvspgnfvtfN3G6ejhtG8SMMlKk+P1Z9ZNY=;
+ b=BF0Kn3KVXUmmI5VyWZ3MMLd9Dx/ED72uHOpJt+C3M/p0HmU+c2cc0GJqaqF2EZhm29Kh8nBAS
+ h+npu+bFF5wAFmKECrIX1NdAbRXBeh55KJ0NEtbwkro+ohqY4bJsVIm
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On 16/01/2026 13:53, Sumit Garg wrote:
-> On Fri, Jan 16, 2026 at 09:46:54AM +0100, Krzysztof Kozlowski wrote:
->> On Fri, Jan 16, 2026 at 11:50:02AM +0530, Sumit Garg wrote:
->>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
->>>
->>> Fix IOMMU DT propety for display via dropping SMMU stream IDs which
->>> relates to secure context bank. Assigning Linux kernel (HLOS) VMID
->>> to secure context bank stream IDs is incorrect.
->>>
->>> The min value is added for iommus property to ensure in future when
->>> secure context bank stream IDs are properly supported then the iommus
->>> property is extensible.
->>>
->>> These DT bindings changes should be backwards compatible.
->>>
->>> Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
->>> ---
->>>  .../devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml   | 5 ++---
->>>  1 file changed, 2 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
->>> index f0cdb5422688..5c888f07bc0b 100644
->>> --- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
->>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
->>> @@ -33,6 +33,7 @@ properties:
->>>        - const: core
->>>  
->>>    iommus:
->>> +    minItems: 1
->>
->> Same comment as other changes like that, which I already gave guideline
->> - you need to list the items (minItems stay), because you now claim the
->> order matters and is strictly defined.
-> 
-> Not sure if I claimed that order matters now but rather the secure bank
-> stream IDs were incorrectly represented earlier in the DT.
+Some power domains like CAMSS_TOP_GDSC requires the enablement of the
+multimedia NoC on newer SoCs like Milos.
 
-The code claims this by saying that one specific entry is allowed, so
-that entry is somehow distinctive, special, different than the other entry.
+Add support for getting an interconnect path as specified in the SoC
+clock driver, and enabling/disabling that interconnect path when the
+GDSC is being enabled/disabled.
 
-> 
-> There has been ongoing disscusion related to how stream ID associated
-> with different translation context can be represented in DT here [1].
-> With that only the secure bank stream IDs can be properly represented.
-> 
-> Here I just followed the approach taken by Adreno GPU bindings for the
-> iommus property [2].
-> 
-> [2] Documentation/devicetree/bindings/display/msm/gpu.yaml +82
+Then specify that dependency in the camcc-milos driver and add it to the
+dt-bindings and milos.dtsi.
 
-Such justifications are pointless. What about commit msg which explains
-why this was added? What about entire public discussion happening with
-this patch? What about all previous revisions of that patch and
-discussions leading to this piece of code? So you just found few lines
-of code, ignored entire background and any other arguments, and copied
-it here.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (5):
+      interconnect: Add devm_of_icc_get_by_index() as exported API for users
+      dt-bindings: clock: qcom,milos-camcc: Document interconnect path
+      clk: qcom: gdsc: Support enabling interconnect path for power domain
+      clk: qcom: camcc-milos: Declare icc path dependency for CAMSS_TOP_GDSC
+      arm64: dts: qcom: milos: Add interconnects to camcc
 
-That's the approach - I found a piece of some buggy code, so I can do
-the same.
-
-Again, we discussed it 2-3 months ago for the same patch and I gave
-exactly same reason why this patch is incomplete.
-
+ .../devicetree/bindings/clock/qcom,milos-camcc.yaml  |  8 ++++++++
+ arch/arm64/boot/dts/qcom/milos.dtsi                  |  3 +++
+ drivers/clk/qcom/camcc-milos.c                       |  7 +++++++
+ drivers/clk/qcom/gdsc.c                              | 19 +++++++++++++++++++
+ drivers/clk/qcom/gdsc.h                              |  5 +++++
+ drivers/interconnect/core.c                          | 20 ++++++++++++++++++++
+ include/linux/interconnect.h                         |  6 ++++++
+ 7 files changed, 68 insertions(+)
+---
+base-commit: 48746fac3857845ce7ed4aeb56df58735208ffda
+change-id: 20260116-milos-camcc-icc-d41bdff31ef8
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
 
