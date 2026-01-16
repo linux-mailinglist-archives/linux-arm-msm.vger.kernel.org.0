@@ -1,155 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-89415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00CF6D3292C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:26:53 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78970D32DCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:50:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6CDA73026A4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:22:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BD54C30A9A51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EA1F335096;
-	Fri, 16 Jan 2026 14:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07435346E4E;
+	Fri, 16 Jan 2026 14:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="WSfOmN96"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rxm/VcE3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385B2BE029
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917D039341F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:42:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768573376; cv=none; b=pZhhXkQuZfvrAzeBqqVULmMvBSdPJnnBz9dP0NfWmvY29IY0/XSYwLIBUi1cOJ53xgogauwpmOkMmwQZw6dAKU2L+rEbJRBRfuHUXAeu0ID9HNg0LPRnLirLzIL+LPwgLeFFJROvepB3fLs5QBlEFwtUHyeHDFx115nSQxydxig=
+	t=1768574554; cv=none; b=undNMU7QgwtA9hYBNNxRujH2v+hAp3hg89TOGvR7/lVaoMNk+/dJN13Dp5Dn7jHci8IKlL1VibVBrzagaq6Xu6J3x+s1XXiJeUaUvDaH+tNXKwSwndTTXQMZP2mJjXNIhgzHIHBlgKsgddMp4ciarcRBK/OdKSvYYlULuqiIwds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768573376; c=relaxed/simple;
-	bh=qpyArYbgGexp0kw5GKDzvXd4kBpE70tAA0DX+Y4oYPc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BUPc2mEK5TBqmGZ+XR98TBhA6dj3ofdQk4YgnZ1NLjRG/vEpbmUPiDo6YBlRXW6WvSKzsY1B838wxIuNk1WEPbooJVmjJSwdhSQ4d3MpHC4JkHvKBrcGLXFkCTUvbKS/ngaOGlCU/hRzSiU9gnuL1Tt/Nll9S0aimyJFcLXwOKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=WSfOmN96; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-64d30dc4ed7so4049928a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:22:54 -0800 (PST)
+	s=arc-20240116; t=1768574554; c=relaxed/simple;
+	bh=KX2IErmnbLgLJTuS0TqC6Ce02SpKwHVKEysgCsr18GE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XVrFjuWUSzLpCNC0DlZpY3iQWhgR/D8jQLj0NP/i/RKxIirhkFlTuK00oZWb7Su1ckzqDOJeVHD6wE8E3FXNlsPw6gvD314UFPN85L6WqHQxiueYZM6FdP61zMVCiJaT2xhcOJqWn8X1vGY28aZkenx8iKk+Fy7OOJlP3pMI9r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rxm/VcE3; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-78e6dc6d6d7so21674847b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1768573373; x=1769178173; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=c4htJr+mv+3MEm3YJIQ7F3EojQWw625TtO5UiPuBMOs=;
-        b=WSfOmN96iKXxFRro8ZsEjZjB0+VznXzBvzfbcATUNuaBPPShfW2ZCBePPMuXD88jnF
-         zHKeHQ3at5UKb04WKQHnmR4T/Tlzmic4o+c+5SB/tZNpTIwSouxry9lSKWFsUzZIPi/M
-         ZzWdkQRqOfDoCrKNgCwFT4jDSdS0JOza573trLisulpNWAWud0owTAJsMkfRAo8siIwg
-         RJu55IhBgbHAAKlgoQesTUNDSJxve09HzDuOtFokfO+3HNfMkh4o4j001z7PTH/5uwcw
-         bd7QhTNe0tTpa8+XiAQyb02+bVUw4XpbLkrrBSddCYtwuuOHuvWqrSuwOcO/me0CziDS
-         wKvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768573373; x=1769178173;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1768574552; x=1769179352; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c4htJr+mv+3MEm3YJIQ7F3EojQWw625TtO5UiPuBMOs=;
-        b=pVtlSX/KIB+vIktV+KLYA5cp0u/VHnragyhePbMoP3G2P+Cku6GdZP758QLEwgJVoG
-         YqsZ/VwSQy0UjveUrBAbnVMy3JBr3LjxoSd+Z7z8Wu1iQyfHoXkAYEFc14X6U556SW2j
-         9xrCtaUni8UJ+3XPayyHKHpkDd1urfjGdOZUKCC8N2+Oxw55rhEZ6N6Dsrubgf/t5FAf
-         vz46J1WO01Ivgz8m6YOFz/OeEhj5sRJpAsx9Leb9z4A7Ng+aG+Zsjl0cEV3UVk6xm/6b
-         fNfghlrZ7ktMNp3XnajhJSi2JoT3OYmU8gXskEn3CA9eO27mdZg/4FZJrf47s//mOBt+
-         Hf0g==
-X-Forwarded-Encrypted: i=1; AJvYcCUiH93mVd1urHyMhqeb4nofq/sO7n1Amh8cPtf+v5dDmqTvhpvRBx5Ozc+6GDqcYq3EIQh2JFkIbqL2ML9u@vger.kernel.org
-X-Gm-Message-State: AOJu0YyK4uLnQNyAqWNHnzPLTi7gaE4hp83dzHSIvnJHl2EDZjjZvLFX
-	xRU2naa+BwpQh4kmO61bWD9ZgqIVw3g+9/RFcqFbfuxeNM6HZ3u1L9C1WD6yPlsuGyg=
-X-Gm-Gg: AY/fxX6ZJah8t7DUvJnfS9tmPt1cHAuImlA4pmSJrVpeotqJY3y+jZNzLYFUQUvh9QX
-	ZH0Svc2tO2j3Thw4v/cq085zAb6SeKNQAmAu46DWHRlKevWKKXOFoHIXxbrlWKhSKD3ZfqQRhT6
-	hyPebV7IcgVt63DS6zs74Ht7ROr2BtPshpfY6oxZiS0MYzQD+ocYatQ5ffQHEP0ZH8Kpm5I//v6
-	tWpPgC3FxMD76iicZn2jXo+YOjbTIiExACMjXjoI/IBWEzl3f9H13zPGKb4vPgCvUy2znbXsLZP
-	8TueM7i9+H34MFbbPIPc7n5/b8QkEVhWYc/pYXj/z2NhYVPJ1KnYt6jdDc0i1Os8jObh3geiHbY
-	B7E4iIBBeNoKcoIXmGoVb0kxCLkNSAeQP9feTPAls6Nfy1RWGyflMH//RHaFPYWbtd3xi6yImnF
-	VVMuKNCcxFBKG5aNmk18ffkjGqI9c8r6OkNgCmn0ZHVJQqSqvjeDXTIj3YuK78eU1A
-X-Received: by 2002:a05:6402:50ce:b0:653:ea2a:252d with SMTP id 4fb4d7f45d1cf-654524c77a0mr2442998a12.7.1768573373244;
-        Fri, 16 Jan 2026 06:22:53 -0800 (PST)
-Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65452bce56bsm2558871a12.1.2026.01.16.06.22.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 06:22:52 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 16 Jan 2026 15:22:52 +0100
-Subject: [PATCH] arm64: dts: qcom: milos-fairphone-fp6: Add Hall Effect
- sensor
+        bh=Y0Wu6AiQkkS9+nilzgzJB3rMYTbS0yo7XGq1n41xVt8=;
+        b=Rxm/VcE32t8SMJh3xjpZeY8t3pVt4CmxUbjEl9LWH+rgZso13cQ4bCS/kVpVtLkxRX
+         yZu9GEelMDIa2tDnC8ycKTSELBaHkpwR8hQc8EpGiL7nbAJvCZy9z3tMFVnLdN71Fuo+
+         q1euxx3NAmv0hvfssy6YGSuQh4KAz1Mu+JlIKR30bMhkUUXAJvWfdOVdulfQCcgITKD9
+         M1Nc4bX4RnSvlcgk2OdktrtHUmKb75SNVnEhBNzLJz9s5+bTLvB0SK0Cqt4CGC1sYFr6
+         ZiFoeRkR+ywalXaRESedd8XycHDuK89wOJYd+z5M1mPtkSUOao/TkO7AHw3zZu53oYpQ
+         eB+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768574552; x=1769179352;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Y0Wu6AiQkkS9+nilzgzJB3rMYTbS0yo7XGq1n41xVt8=;
+        b=bNYFKyFgahnXD4hH3jCA/mKhghSR5fNwLMj+eoYptUadEA/Z9ubp8URT2AK/ll+Vz3
+         b2aUe9Jx7KHnLq2yimXSRpKjA4QM2hQ/ftuULuB/OF6mx2Annxm/AbfXmhQ+eDYhEAMF
+         es70rjP7OfTXPF4HYScDuAOkWNYZYtEYYzNbDs76sqGmehU3xwhJrGnYh+bi4q83zgYf
+         59lV4QTAZCAzYOMqAMT94gd3Ot0zaB/5o3WdsIR+qoa7JvrZkN7Bey9JcXUW2dEAagVa
+         xUUrciZlIF/wj2IC/TFel/YTQ6NyLM744osljoO69OS2hCJ0rl8AdsdF/5oBLNuLRpK4
+         EU4g==
+X-Forwarded-Encrypted: i=1; AJvYcCU0yuI1QEtoYNrjAk83HBMIEJLfXawsYc5HxndOniin8LrSoeKlkDbnB6qVWV15ncGb1IMuJvWzk49MRCZ7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+Zj1ZHNdC2HAyEwJU0Vq8xArUxfq7T/uxEowDuq7P/lyjNPm7
+	/gfSx1sk1r72dPriuvKQBOg3rbrR1YRkp14iy2PRjjGIP4ST13QsAoCPe6Fq5U5QEdFDqvQ38xK
+	my/smrARvVTHgLavTpyofYBEadlg8iJE=
+X-Gm-Gg: AY/fxX6ktpAsHRT0joi2Q/a6sU+oclllhG7sb6iv2A136fbpAeO7PySkCKslgmkpwuO
+	dkxN5k+zeBTxjpUd1Gj6OuYuGjmDQC3LrNZIZXQhDPenLhkuHGyMuCgIgZl/eUk1e3s3KhLfVZB
+	2wnTf1xOrtsBqAK6ONrosBmCLKuBk7gkT6GynIFkHhtellbOs/T+Yvl1OgN9debShj9JbUaGSEG
+	qF96CLD59wBiwwRymgQMsH3hd9XZnbDqw8Edyv7HGR15CF/+AkNEDJawA3NWFDuuNsVA1snYnFc
+	Ork/OpYlYqv29RrAV6UHrDUcDNuFw4s+wsvfb5nKkJ+4CYBf8FiW7rXaVuoQq67kXH4I
+X-Received: by 2002:a05:690c:6609:b0:792:7828:b709 with SMTP id
+ 00721157ae682-793c66f4bd6mr24042237b3.22.1768574551609; Fri, 16 Jan 2026
+ 06:42:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260116-fp6-hall-sensor-v1-1-69275c6bd809@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQrDIBCF4avIrDugUkybq5QsbDo2A4mmjimBk
- LtX6vJ/8L4DhDKTQK8OyPRl4RRrmIuCcfLxTciv2mC1ddoYh2F1OPl5RqEoKaPR13uw4dZZP0J
- 9rZkC73/xMbTO9NkqXNoITy+EY1oWLr2KtBdsuO5gOM8fBx2O55IAAAA=
-X-Change-ID: 20260116-fp6-hall-sensor-1049f2f872ac
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768573372; l=1553;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=qpyArYbgGexp0kw5GKDzvXd4kBpE70tAA0DX+Y4oYPc=;
- b=SUQPJhnuPQ8OkZKLbWyhCU/QRzhAx9RGx7gjxBZU+8r8zevPBYChTL2y+F93PZr8Gj37riMSN
- +z5nLTFhTZgBuq7+kTL+8T2uWWz3lFzQOkXN7OoqS89Hm5E7Tx1b0y8
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+References: <20251107033924.3707495-1-quic_shuaz@quicinc.com>
+ <CAMRc=Mce4KU_zWzbmM=gNzHi4XOGQWdA_MTPBRt15GfnSX5Crg@mail.gmail.com>
+ <212ec89d-0acd-4759-a793-3f25a5fbe778@oss.qualcomm.com> <CAMRc=MdoUvcMrMga6nNYt8d-o8P-r3M_xY_JHznP3ffmZv8vkQ@mail.gmail.com>
+ <96472b7c-9288-4f81-9673-d91376189a18@oss.qualcomm.com>
+In-Reply-To: <96472b7c-9288-4f81-9673-d91376189a18@oss.qualcomm.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Fri, 16 Jan 2026 09:42:20 -0500
+X-Gm-Features: AZwV_QhPiDz6MueN4sUXp8m2kkBxLdWM5NMAxLszIhWWEfsuGtFDaz5gEkCX6YU
+Message-ID: <CABBYNZ+5ry0FWFSgOskw60jja9mE6WG5AwOi2pKxrkzqMn9bkQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Fix SSR unable to wake up bug
+To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Shuai Zhang <quic_shuaz@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add a node for the Hall Effect sensor, used to detect whether the Flip
-Cover is closed or not.
+Hi Shuai,
 
-The sensor is powered through vreg_l10b, so let's put a
-regulator-always-on on that to make sure the sensor gets power.
+On Fri, Jan 16, 2026 at 4:48=E2=80=AFAM Shuai Zhang
+<shuai.zhang@oss.qualcomm.com> wrote:
+>
+> Hi Luiz, Marcel
+>
+> On 1/16/2026 5:20 PM, Bartosz Golaszewski wrote:
+> > On Fri, Jan 16, 2026 at 9:37=E2=80=AFAM Shuai Zhang
+> > <shuai.zhang@oss.qualcomm.com> wrote:
+> >> Hi Bartosz
+> >>
+> >> On 11/7/2025 11:37 PM, Bartosz Golaszewski wrote:
+> >>> On Fri, 7 Nov 2025 04:39:22 +0100, Shuai Zhang <quic_shuaz@quicinc.co=
+m> said:
+> >>>> This patch series fixes delayed hw_error handling during SSR.
+> >>>>
+> >>>> Patch 1 adds a wakeup to ensure hw_error is processed promptly after=
+ coredump collection.
+> >>>> Patch 2 corrects the timeout unit from jiffies to ms.
+> >>>>
+> >>>> Changes v3:
+> >>>> - patch2 add Fixes tag
+> >>>> - Link to v2
+> >>>>     https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@=
+quicinc.com/
+> >>>>
+> >>>> Changes v2:
+> >>>> - Split timeout conversion into a separate patch.
+> >>>> - Clarified commit messages and added test case description.
+> >>>> - Link to v1
+> >>>>     https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@=
+quicinc.com/
+> >>>>
+> >>>> Shuai Zhang (2):
+> >>>>     Bluetooth: qca: Fix delayed hw_error handling due to missing wak=
+eup
+> >>>>       during SSR
+> >>>>     Bluetooth: hci_qca: Convert timeout from jiffies to ms
+> >>>>
+> >>>>    drivers/bluetooth/hci_qca.c | 6 +++---
+> >>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+> >>>>
+> >>>> --
+> >>> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>    Just a gentle ping. This patch series has been Acked but I haven=E2=
+=80=99t
+> >> seen it picked up by linux-next.
+> >>
+> >> Do you need anything else from me?
+> > I don't pick up bluetooth patches, Luiz or Marcel do.
+> >
+> > Thanks,
+> > Bartosz
+>
+> Could you please help clarify this?
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+There were no Fixes: or Cc: Stable in your changes to indicate they
+need to be applied to the currently RC and stable trees, in which case
+it will only be merged to next-next at a later stage.
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-index 7629ceddde2a..98b3fc654206 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -32,6 +32,16 @@ gpio-keys {
- 		pinctrl-0 = <&volume_up_default>;
- 		pinctrl-names = "default";
- 
-+		/* Powered by the always-on vreg_l10b */
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 70 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+
- 		key-volume-up {
- 			label = "Volume Up";
- 			gpios = <&pm7550_gpios 6 GPIO_ACTIVE_LOW>;
-@@ -316,6 +326,8 @@ vreg_l10b: ldo10 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			/* Hall sensor VDD */
-+			regulator-always-on;
- 		};
- 
- 		vreg_l11b: ldo11 {
+If that is not correct then lets us know if that needs either a Fixes
+or stable tag so I can send a pull request immediately.
 
----
-base-commit: ef1c7b875741bef0ff37ae8ab8a9aaf407dc141c
-change-id: 20260116-fp6-hall-sensor-1049f2f872ac
+>
+> Thanks=EF=BC=8C
+>
+> Shuai
+>
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
 
+--=20
+Luiz Augusto von Dentz
 
