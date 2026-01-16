@@ -1,196 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-89432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73710D3349E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:46:14 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F50ED3356D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:56:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 039063007CA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:41:00 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 32E923016222
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:55:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 869FD33986D;
-	Fri, 16 Jan 2026 15:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C66D633E346;
+	Fri, 16 Jan 2026 15:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIgvdVvV"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="AysNId5Q";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="R1ErBm+N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAE224AF7;
-	Fri, 16 Jan 2026 15:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92FD336ECC;
+	Fri, 16 Jan 2026 15:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768578058; cv=none; b=lg9IAcGGlEb3EzoMpXxTkwlltw+WdkKPQ44+/dqNRFt+8AkVFqI8Zg51yHw+aO233ZRMKwmPUWSE0mxccBPod7k36KR0Y2jsg5ghi9IthKlKHK9SLO1T4KeZUkl7dl+VyIdwNCh17B15dV/4i0popcHY7c1REXmOwVGQrCdSFk0=
+	t=1768578921; cv=none; b=RhDWwPvOkZqI0LimyVlbUEmqCgLdehfX2l4h3A2QG0HLfqtg0zfyUZX4eOqy68G/wCgYqa3CIA6wgkXusd54ZKLHWxnKLluw1xdNU3Hi8sqmsqRvAGQ7SJfHqrnvom/4N1vbN36NWZeM2a4pZh8Z+Tsthw4KjlPsOJos+NTThPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768578058; c=relaxed/simple;
-	bh=WtIs3FcDmyrxk0DOGlKSJzS9A/nULl2iHqMvxL6q5Cg=;
-	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=oZARwzCJ13yddk2ktjSXicyvVsFcZY58a7E4E0U5LdHNNfIs8zKjbL3uUlQsiZ5a4Rq98oXFN+MiwKey4R89I1ILbMNaYUDcm07a5GuEsFbGtRBg27akArMk8G04FqGh13EDMdolLfbzx8OxF5TakJqZ/2dFIgcBq3ZJSpt956g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CIgvdVvV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB741C116C6;
-	Fri, 16 Jan 2026 15:40:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768578057;
-	bh=WtIs3FcDmyrxk0DOGlKSJzS9A/nULl2iHqMvxL6q5Cg=;
-	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
-	b=CIgvdVvVTIFRO8yQMlIIPqPl5gO4lrzXnpBreoSiYPb+pArFKoFmjVM8TYeL3ppmV
-	 zYv+InmeyT3i6As0Q2JDDdN0kD20hykWnNxU/wHphDF7BZZzIKfG2Nb6shSmrEtlfA
-	 OirZKs8IsWVdt64DCDReOKrm4CRaFkhap4bLV0QQIPsc5o8d9gMXsvqG2/Xj5rjfdq
-	 /lUIW4e0fTC/roCYntzD6a6o8aSjw5MIOJ76Ia6mlVxVm9D4lq5nxqYPrDWyStQAgZ
-	 1VvBjYiXZKCICmduPZ3NqATGX0+PAog0BeApCZt4NIG5D8fm97Njz7dCgwqfNI4WPB
-	 lo54qrEBTPHCg==
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 16 Jan 2026 09:40:57 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1768578921; c=relaxed/simple;
+	bh=0a7Ln2IQ+ULHMcFlg3pO/pu1NhhH2XNCYS7MzyzCSMU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=faM3I/yi1T4XoFl6DUrVTsqZ3YNNffu5341TIDGR6x8j/I2TqnXDFtTrmUUJX8YLpPg89pz0Js8O4PFqiMyOau/fsjdm/FoFLOVuldHU9iNK9jdBowVICF+aqcfQSRpVS45i6Hpr1mi2H9CGc9oX/6Z/l2mGvzRF15jgIgCNTw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=AysNId5Q; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=R1ErBm+N; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1768578901; bh=N9G4ZZoCgxEpfbozwnENOe3
+	fyIB/koZiAJncSp/Rc6A=; b=AysNId5QDNvmT1YvwE+x+8EP1OEw5n5GDzMeNyvxyYRe+b3dXb
+	SFlCPTv24LzVBG8bldXmK6xwkK5PR/ifUWBEMNEqPh/+jmphEBeDI+54RWXuqKiUQtpyzRAOWKl
+	1UkO1yP5964UXUpLN9nCBOmqd29Nq5UdE9y7x+S33NoK3E/mxf4VtBrNtHowZUMgqwYhNKP6Zbd
+	FCQzlfn7LIoDVLnHputahpG4phV2aMiBCHcsmKE3VuELkidRuP0hxpT+TZy23DX2HDjrUubTFLn
+	oGyJPDMAQ+egdkmmra3ehBaR5PEXBYoQwos2AKQKt034zYuOSIKbBnKlYiu1lEgVv9Q==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1768578901; bh=N9G4ZZoCgxEpfbozwnENOe3
+	fyIB/koZiAJncSp/Rc6A=; b=R1ErBm+Nox4z8T+BSE6w0jcDIMyr2KkY7yjdFb5qJsR7dRzUZO
+	D5Arc19cLJC1dDxNDR3cLG3D02YHcEBIg1Cw==;
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH v2 0/7] Initial Redmi Note 8T support and more
+Date: Fri, 16 Jan 2026 16:54:42 +0100
+Message-Id: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Cc: devicetree@vger.kernel.org, konradybcio@kernel.org, 
- linux-kernel@vger.kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
- andersson@kernel.org, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org
-To: YijieYang <yijie.yang@oss.qualcomm.com>
-In-Reply-To: <20260116-purwa-v4-0-89b2adae9f09@oss.qualcomm.com>
-References: <20260116-purwa-v4-0-89b2adae9f09@oss.qualcomm.com>
-Message-Id: <176857775469.1631885.16133311938753588148.robh@kernel.org>
-Subject: Re: [PATCH v4 0/4] Initial patch set for PURWA-IOT-EVK
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/12Oy26DMBBFfwV5XSPb9SsoqvIfVRYGxmQUwI1NS
+ EKUf68h6qabke6V5tzzJAkiQiJV8SQRZkwYxhzER0Gakxs7oNjmTAQTmnHO6R1dGJDesO/DjUp
+ plRKeCaMFyT8/ETzeN973MecTpinEx4af+dr+kcQ/0swpoxakNNrujP60h8Hh2OOIY1eG2JHj6
+ 82PcLlmzek9QgZIyW2aVbHPbMWF2HEpLNOlkJxZSwU9x+WRlin48hyWvJbOeAgplZer65swDGU
+ +X6t/7RLQtcGpKrzkpjbeNzV40xpds9ZazRS3XrHWAQMDClqX1V6/xgh6BkkBAAA=
+X-Change-ID: 20260111-xiaomi-willow-448552f02762
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>, 
+ Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
+ Biswapriyo Nath <nathbappai@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux@mainlining.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=2335;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=0a7Ln2IQ+ULHMcFlg3pO/pu1NhhH2XNCYS7MzyzCSMU=;
+ b=5PLRU611elBsIRKYDhIELXU9upt7+sSL4vzm3BngkYsDv/SmYD3LuTr4kLOo276zVtoovizM7
+ rYweg/ImwBqBB9N1IaT0TVaXwhIU2qHwgg3rqY1ze0wZiTghR/GuglF
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
+Redmi Note 8 and 8T are sibling devices the only difference
+is Redmi Note 8T have NFC.
+This patch series is commonizing Redmi Note 8 devicetree
+for a base for both devices.
 
-On Fri, 16 Jan 2026 18:41:26 +0800, YijieYang wrote:
-> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> 
-> Introduce the device tree, DT bindings, and driver updates required to enable
-> the bring-up of the PURWA-IOT-EVK evaluation board. Focus is on two key
-> hardware components:
-> 
-> PURWA-IOT-SOM — A compact System-on-Module integrating the SoC, GPIOs, and
-> PMICs. Designed for modularity, it can pair with various carrier boards to
-> support diverse use cases.
-> 
-> PURWA-IOT-EVK — A carrier board tailored for IoT scenarios, providing
-> essential peripherals such as UART, on-board PMICs, and USB components.
-> 
-> Together, these components form a flexible and scalable platform. Initial
-> functionality is achieved through proper device tree configuration and driver
-> support.
-> 
-> The PURWA-IOT-EVK/SOM shares most of its hardware design with
-> HAMOA-IOT-EVK/SOM, differing primarily in the BOM. Consequently, the DTS files
-> are largely similar. Both platforms belong to Qualcomm’s IQ-X family. For more
-> details on the IQ-X series, see:
-> https://www.qualcomm.com/internet-of-things/products/iq-x-series
-> 
-> Hardware differences between HAMOA-IOT and PURWA-IOT:
-> - Display — PURWA uses a different number of clocks and frequency compared to
->   HAMOA.
-> - GPU — PURWA integrates a different GPU.
-> - USB0 — PURWA uses a PS8833 retimer, while HAMOA employs an FSUSB42 as the
->   SBU switch.
-> 
-> Features added and enabled:
-> - UART
-> - On-board regulators
-> - Regulators on the SOM
-> - PMIC GLINK
-> - USB0 through USB6 and their PHYs
-> - Embedded USB (eUSB) repeaters
-> - USB Type-C mux
-> - PCIe3, PCIe4, PCIe5, PCIe6a
-> - Reserved memory regions
-> - Pinctrl
-> - NVMe
-> - ADSP, CDSP
-> - WLAN, Bluetooth (M.2 interface)
-> - USB DisplayPort and eDP
-> - Graphics
-> - Audio
-> - TPM
-> 
-> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
-> ---
-> Changes in v4:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v3: https://lore.kernel.org/r/20260113-purwa-v3-0-16eefacbdce9@oss.qualcomm.com
-> 
-> Changes in v2:
-> - Update the GPU firmware path.
-> - Update the description in the cover letter.
-> - Reorder the patches.
-> - Use separate DTS files for Purwa and Hamoa.
-> - Update base commit.
-> - Link to v1: https://lore.kernel.org/all/20251222-purwa-v1-0-14ab9316e5ff@oss.qualcomm.com/
-> 
-> Changes in v3:
-> - Delete unused PMIC and thermal nodes.
-> - Add WiFi node.
-> - Add display backlight node.
-> - Add connectors and VBUS regulators for USB3 and USB6.
-> - Enable PCIe3 and PCIe5; add PCIe ports along with reset and wake-up GPIOs.
-> - Link to v2: https://lore.kernel.org/r/20260109-purwa-v2-0-f39ee10684cb@oss.qualcomm.com
-> 
-> Changes in v4:
-> - Enable TPM.
-> - Update the descriptions for video and the USB OF graph.
-> - Link to v3: https://lore.kernel.org/all/20260113-purwa-v3-0-16eefacbdce9@oss.qualcomm.com/
-> 
-> ---
-> Yijie Yang (4):
->       dt-bindings: arm: qcom: Document PURWA-IOT-EVK board
->       firmware: qcom: scm: Allow QSEECOM on PURWA-IOT-EVK
->       arm64: dts: qcom: Add PURWA-IOT-SOM platform
->       arm64: dts: qcom: Add base PURWA-IOT-EVK board
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml |    6 +
->  arch/arm64/boot/dts/qcom/Makefile               |    1 +
->  arch/arm64/boot/dts/qcom/purwa-iot-evk.dts      | 1549 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/purwa-iot-som.dtsi     |  685 ++++++++++
->  drivers/firmware/qcom/qcom_scm.c                |    1 +
->  5 files changed, 2242 insertions(+)
-> ---
-> base-commit: 377054868ffa544991cc491ecc4016589fc58565
-> change-id: 20251113-purwa-907ec75b4959
-> 
-> Best regards,
-> --
-> Yijie Yang <yijie.yang@oss.qualcomm.com>
-> 
-> 
-> 
+The patch series also contains some fixes for Redmi Note 8:
+- Fix reserved memory ranges, they were wrongly defined.
+- Remove board-id, board-id is not neccessary for the bootloader.
+- Fix reserved-gpio-ranges the reserved ranges was wrongly
+defined what caused the device crash on the boot.
+- Remove unnecessary usb-extcon, gpio102 is related to DisplayPort
+what is not supported by these devices.
+- Use memory-region property for framebuffer.
 
+Depends on:
+[1] https://lore.kernel.org/all/20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com/
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Changes in v2:
+- Fix copyright in sm6125-xiaomi-ginkgo.dts as requested.
+- Use memory-region property for the framebuffer.
+- Add comment about the NFC.
+- Remove msm-id change in favor of [1].
+- Link to v1: https://lore.kernel.org/r/20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+---
+Barnabás Czémán (7):
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove board-id
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct reserved memory ranges
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Set memory-region for framebuffer
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved gpio ranges
+      dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
+      arm64: dts: qcom: Add Redmi Note 8T
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   3 +-
+ .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 301 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 285 +------------------
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  15 +
+ 5 files changed, 320 insertions(+), 285 deletions(-)
+---
+base-commit: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
+change-id: 20260111-xiaomi-willow-448552f02762
+prerequisite-message-id: <20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com>
+prerequisite-patch-id: 1bc49c0e2bec1a47667df776e1ab265b0699ea35
 
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: 377054868ffa544991cc491ecc4016589fc58565 (use --merge-base to override)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20260116-purwa-v4-0-89b2adae9f09@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/purwa-iot-evk.dtb: phy@1bd4000 (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a required property
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-
-
-
-
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
 
 
