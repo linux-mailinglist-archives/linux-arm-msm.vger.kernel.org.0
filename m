@@ -1,162 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-89426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44048D330C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:07:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0663FD330F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:08:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6858431BC280
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:51:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 62FB730762AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF2B39A7E3;
-	Fri, 16 Jan 2026 14:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B16C2FFDF8;
+	Fri, 16 Jan 2026 14:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Au6OobVI"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="AxESZ4IZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002583939AD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC10337B84
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768575059; cv=none; b=fm49pNTNf9y6MKB2dywpUHe/mHnAT6Z68HYG0ScXI7fpG9+iwHGgm6ce2/1EjRsYuw3qepmuykSW4M5C2jvH6IRc4yGJPwlDwr/AccoeMrfvy0QXQwtH1QJeqmjxVtptnFd39sEX9Yh1vdj6JBdHN1vNNTTayDvqW08uef/QO9I=
+	t=1768575302; cv=none; b=LSUvwkt31UdgkD+vRzTxjp3Vl10fZ25q0gzpLAA0gjYb6HuCLMPZimpvVo5OUshB70rIj6KGMJW8+SmN/XRQtDQCQ1Z8Dnbh+F1Ga/lq8Y8PUi/FUuqWxPoutndY1qE7D5cvK3Dgc/NLLjPskgcokYpyiO8v4oKs3ZazkgRjRaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768575059; c=relaxed/simple;
-	bh=+zpZu6bjdZvKTMbOLVjTFjC7p+2hajSt1lFZKg+qsKU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gAOvNHDSUNikJaOF2T2uu30CuwZ5a/+cs1MbE/1qDIHF1wIdHPUIHlB3FxjTi+R+pahK8cutnoiteLfbQKdyAN04gPh/liHv8mC+c5xDCn6sThNmYR0+N0OrVBzUt4jk1CEE2DJeEcHLKaHXFnf2GZogBkvuYBjDNdRCuc/qzvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Au6OobVI; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1768575302; c=relaxed/simple;
+	bh=afqiXye3bQTM2c0rYf8KqRRgmpX3C5xIebIObRjkBlA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=FXHdp8UzbQF2AlsDpeITnZ9h0PEFZbD5rTuioAblsGFOHQoOQdSA7iPmodj9jYqYytMZi3iY0AVFkriP8tnABoVo2gpODVd+8K3ZwGsGMgDIqfsobVL5qUBPg+XnzbD2MBjt0gNp/NVNhKSQ1GN0tGVOBgdJJdcFrtUFJYaLs5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=AxESZ4IZ; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b879d5c1526so135498666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:50:56 -0800 (PST)
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-655af782859so1413079a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1768575055; x=1769179855; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NRdWStIWzRh0nMLcrgJX9j72ICaNq2gbItnjEMospDQ=;
-        b=Au6OobVIv/ws+D+Y9xNfpoqNghrcMbY24db5QiBxgUZ9Ae0taKpS8VKD9xphSoDaY9
-         w3KccMRsDNPu1G4FijeyaptlJ7Eusnihz+lkSJ86Eph8ong3Cmy4GHF6JYR/F2Qgf7KT
-         6oUgKsJh4koPmsuhaM62ab1Fiv2JFPk3gXPbVb4Xkp35GCtsJqvIiDiUBrN/c0IKehow
-         hTXyoWaPYbjCixcaRDmjvGhzKC+jSIeapV7r06O98K0S8kw81mb7hd5D/8qYKOTEzU8f
-         sLGHu+87c2szps7PLg53VP0uapcJ7aeGY6Ycn3Hlbt8TRUeJeb4ghGagNGMZAvrlYC1n
-         wxew==
+        d=fairphone.com; s=fair; t=1768575299; x=1769180099; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tQ2usQPIwau+GnGSjCyCyo2cCWUw5N5ULi+Fp0gH+7k=;
+        b=AxESZ4IZkHieOOqKH74x3EHBxLe+okH3r1fPeJ/DRRkgTfuLs1Csa9PRv/SKVrrkoT
+         JqazoxG/ZW00QqJEEkQYYj3eulakMPc/ol1o/SLecm4SVr/Seo/Pi0bltfgIrfiFx0X1
+         sWvybhIO2pfFl0wHUkwLRwnOvXxANJBOdOmGYYW+dshcy1hM7qF21Nckb9poWZVbQiw7
+         mMFyunB/VyZ/9raOmu/6vx0MP/4FBgp3prW1CRdldrI6MQ87corV9M8KIWRFoq3z6IUw
+         i932Ga9cH27/oBZvwYEtItAzKHjZcd3VguMm5fxhgVlSBRn1G3U7ay4y4rE8t7a1LVGe
+         btiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768575055; x=1769179855;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NRdWStIWzRh0nMLcrgJX9j72ICaNq2gbItnjEMospDQ=;
-        b=A5hqasZEY2r+8aggJp7P0VjLL9FQQEC19ZXvETKDFmDLmFu1Hc0RrEXHXAIVWx4e62
-         WMzIey+beAtPyhwjhFOiPcZMkKs4RyXnzSzLV5wYGx4ThCsbMGk87ljrxBaYnWcC00Uy
-         8n9jbwHM6AvD8t/4ZjYE19j1Lym+vmx+XQBWDVZg0A2vaDjVqLm+ssSuiwFW9CZDKrL/
-         967rPqayD4GFYqVowrGNBZzzkAGePBrodHXwNv2q2C12dKS0V2N54NwIHnyzJcnXfbEm
-         m/Lq0Wc0tQjreSdEOBAVsNrikGlnyDlAx/vuCqdzvm6nqB9WJ5hOIHO5hpWig3du1gK2
-         wyig==
-X-Forwarded-Encrypted: i=1; AJvYcCXCGT24tx3xHNaTiVnrlVPvyXh2zt42JcvFcPLStMi2AvsdFMQ/RcaVqUORIT03M7MpClxWVwj4ZxUVHtjs@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsYfFjAkOJ3i1FmxcGBl4KRlxzfiddm60RSX1SJafV4EttRkvR
-	QAfJs5Q58UYXrkwugfgy3N5rYLRvB9thIvqODpih31WlBzt7/o4lNB57WqHnstVMe+hKUZCu0Mv
-	95EqO
-X-Gm-Gg: AY/fxX4Sj3ZL3RoaDO2Q4XUxEOyRUz/YSzdFzW32CEt7m7GoctcuAk6wdA0Owt+KzW/
-	4bsHyJ7biYZBAwDNvTbiPFK2+ZOi+0UJVcM+YXOmXBz+OxoIKo1O1cuEgpYc+ZTPxQNuyDyugIl
-	Ty/S2sxj1X2a4/g9ypaE3PEDwxSJPI05I+wllfQuElk0jEnkgZXxemEygDb3Ln4oWU/AWUEG87/
-	fhcmrL+9pleZoMuqak4VNsIarSq2Q8/y/i8/Qe9uEmMQyu4CNiEMl9KQLMWvU3JR5SZNtotj5DS
-	NPYqKMjlFI17vUs/OU0R8At/75rhOC4Ux6ehzahMF+T0L8ik2V2Fvc+/8HCtT79YaEu3G0Ke1KH
-	YYrF9s20+WfUn7/kW6GBfFVPDnuLm/AEvIRilob+oKikODk47g58ztKpMelY6lFumYe3BVLX19e
-	UNFUvTk50bYQT6DGchSQOYzTwacDGT2HPnpqqbRuX+SvKl4pZTB+aNLHjrY9xbGWCH
-X-Received: by 2002:a17:907:1c1f:b0:b87:2abc:4a26 with SMTP id a640c23a62f3a-b87968e2de0mr245353566b.14.1768575054734;
-        Fri, 16 Jan 2026 06:50:54 -0800 (PST)
-Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65452cdab55sm2699427a12.10.2026.01.16.06.50.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 06:50:54 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 16 Jan 2026 15:50:51 +0100
-Subject: [PATCH 5/5] arm64: dts: qcom: milos-fairphone-fp6: Enable WiFi
+        d=1e100.net; s=20230601; t=1768575299; x=1769180099;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tQ2usQPIwau+GnGSjCyCyo2cCWUw5N5ULi+Fp0gH+7k=;
+        b=E85uBH+CBFrgik2n86J7+ATY8fcjKpHhMM5xgf8mlupz5Cd1Acqtx1ukBIkXwsRpJB
+         5ed55cIM0A8VBPuZ/rHl9fk6WBL0O7OE3BOh8O3EUDX1mo7WHuKZfQyJIDaSYi0xevLd
+         qFzbzIE8yTw6Ep9bBvc0NQlkLYwGwZuBeeJMg4w5zNTRIaWKv4hMAiXDiD+8bAqDhJ6l
+         n2yCwpYcNtdhVupvxwtGObyx3w7y6k6zs6xP8OhOCEhPwOZGij+ooDIczfWgaiJT3E8h
+         qipYCTsjyM58nLCRRkjxlzFLR7GAkE7KEEkLcKBRMQVqOQA/o9HSuvyM4wa5ss4EIR17
+         weFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUnZ2rHi5a64TtRVGySgD+vOvgtD1n9VuilCKnZ1zCpGaI96Fw5FmDVfPIAGelAWLjwxUzOsIjISc1Ngb2k@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd5omWadeZBlRG/uPivwOLVwkesu+RGRh7zxLNgyVFpECdxidX
+	ozo1e8h8+8fXF37ZNvUbUZBByTKRvy5Z6hELF4RbmstnHZ955N9Jryr/Tyrgx4t1Puk=
+X-Gm-Gg: AY/fxX4Ve7yVLKCMzHD1abZ+XQVPGRn1ClrRYOKCpU5qTgpmRGyQx6tk9prI1m0kcyx
+	PDUhPpR0mC3xsbhk75yW6rCSsWnLG9ErB9Wse9w2zXyLXCFZqM/IOiGW+uUG8zZxTB7npdoxLQn
+	we8okFIiuTK/pf8/TqtQ3sd8iBu2ZzQ4ga6yBNYQz/QD3mMN0sLFOI4vZ+sc3rkFlKqx3/AFTHQ
+	wX0g4d36/cACAZtj9+0LqCU0BmJ4Rfgk3qNp8F6ZLyAt8iwS02CaxaNiwIj66SuagoBh47sGj1t
+	AuZhWbfpDSZA+9AZTBfr4zHVubP7u+JfYqjtjIKtaqHIiQ8uTlVwe4rpTP1qtCSm3v1ljNLukxA
+	x56AGyTvxNfoj8GbSV+epz2oU75Ds5f/o5AFuNpnY5T2x6dtPs6dBl5XzzQPilSXwf79LhxEnlR
+	S6y+fV0+myeg+QA0inaH5knHQMhIMsDNWX0Nwk5jVX5LgYwuvbNVJjfM1+
+X-Received: by 2002:a05:6402:1e93:b0:64d:1bbf:954a with SMTP id 4fb4d7f45d1cf-654526cc242mr2815270a12.15.1768575298921;
+        Fri, 16 Jan 2026 06:54:58 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-654535c49f4sm2585127a12.31.2026.01.16.06.54.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jan 2026 06:54:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260116-milos-fp6-bt-wifi-v1-5-27b4fbb77e9c@fairphone.com>
-References: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
-In-Reply-To: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Alexander Koskovich <AKoskovich@pm.me>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768575048; l=1617;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=+zpZu6bjdZvKTMbOLVjTFjC7p+2hajSt1lFZKg+qsKU=;
- b=yLnNtWAdCAc9wPmimGKbGRUkqiPT3x0pVDreMUTno30IiB6BLzkET8WHyplhqPkv6/qvjbgva
- Ott1WGC+aPcCkO34lZRKnyPHl8ZSd8JFw/f1C/sfvAKNwm3xAzTxxFG
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 16 Jan 2026 15:54:58 +0100
+Message-Id: <DFQ3MBO2EAYF.1PRF2111N0U1I@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Bartosz Golaszewski" <brgl@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Loic Poulain"
+ <loic.poulain@oss.qualcomm.com>, "Robert Foss" <rfoss@kernel.org>, "Andi
+ Shyti" <andi.shyti@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: milos-fairphone-fp6: Add camera
+ EEPROMs on CCI busses
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260116-milos-cci-v1-0-28e01128da9c@fairphone.com>
+ <20260116-milos-cci-v1-4-28e01128da9c@fairphone.com>
+ <ae73eac1-4e27-404d-af73-88eed699db0b@oss.qualcomm.com>
+In-Reply-To: <ae73eac1-4e27-404d-af73-88eed699db0b@oss.qualcomm.com>
 
-Configure and enable the WiFi node, and add the required pinctrl to
-provide the sleep clock from the PMK8550 (PMK7635) to WCN6755.
+On Fri Jan 16, 2026 at 2:59 PM CET, Konrad Dybcio wrote:
+> On 1/16/26 2:38 PM, Luca Weiss wrote:
+>> Enable the CCI I2C busses and add nodes for the EEPROMs found on the
+>> camera that are connected there.
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 50 +++++++++++++++++=
++++++++
+>>  1 file changed, 50 insertions(+)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm=
+64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> index 7629ceddde2a..c4a706e945ba 100644
+>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> @@ -529,6 +529,56 @@ vreg_l11f: ldo11 {
+>>  	};
+>>  };
+>> =20
+>> +&cci0 {
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&cci0_i2c0 {
+>> +	/* Main cam: Sony IMX896 @ 0x1a */
+>> +
+>> +	eeprom@50 {
+>> +		compatible =3D "puya,p24c128f", "atmel,24c128";
+>> +		reg =3D <0x50>;
+>> +		vcc-supply =3D <&vreg_l6p>;
+>> +		read-only;
+>> +	};
+>> +
+>> +	/* Dongwoon DW9784 VCM/OIS @ 0x72 */
+>> +};
+>> +
+>> +
+>> +&cci0_i2c1 {
+>> +	/* Awinic AW86017 VCM @ 0x0c */
+>> +	/* UW cam: OmniVision OV13B10 @ 0x36 */
+>
+> There's a driver for this one!
 
-Thanks to Alexander Koskovich for helping with the bringup, adding
-the missing pinctrl to make the WPSS stop crashing.
+Yep! Already got patches to add the required regulators & devicetree
+support to the driver, but since I've got zero on CAMSS so far, I
+couldn't test it more than reading chip ID.
 
-Link: https://lore.kernel.org/linux-arm-msm/DBF7OWAWQ94M.FSCP4DPF8ZJY@fairphone.com/
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+>
+>> +
+>> +	eeprom@52 {
+>> +		compatible =3D "puya,p24c128f", "atmel,24c128";
+>> +		reg =3D <0x52>;
+>> +		vcc-supply =3D <&vreg_l6p>;
+>> +		read-only;
+>> +	};
+>> +};
+>> +
+>> +&cci1 {
+>> +	/* cci1_i2c0 is not used for CCI */
+>> +	pinctrl-0 =3D <&cci1_1_default>;
+>> +	pinctrl-1 =3D <&cci1_1_sleep>;
+>
+> Let's keep them per-bus-subnode so we don't have to override it
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-index cbe1507b0aaa..75f2b3a3e572 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -232,7 +232,7 @@ wcn6750-pmu {
- 
- 		clocks = <&rpmhcc RPMH_RF_CLK1>;
- 
--		pinctrl-0 = <&bluetooth_enable_default>;
-+		pinctrl-0 = <&bluetooth_enable_default>, <&pmk8550_sleep_clk_default>;
- 		pinctrl-names = "default";
- 
- 		regulators {
-@@ -704,6 +704,17 @@ &pmiv0104_eusb2_repeater {
- 	qcom,tune-usb2-preem = /bits/ 8 <0x6>;
- };
- 
-+&pmk8550_gpios {
-+	pmk8550_sleep_clk_default: sleep-clk-default-state {
-+		pins = "gpio5";
-+		function = "func1";
-+		input-disable;
-+		output-enable;
-+		bias-disable;
-+		power-source = <0>;
-+	};
-+};
-+
- &pmr735b_gpios {
- 	s1j_enable_default: s1j-enable-default-state {
- 		pins = "gpio1";
-@@ -962,3 +973,9 @@ &usb_1_hsphy {
- 
- 	status = "okay";
- };
-+
-+&wifi {
-+	qcom,calibration-variant = "Fairphone_Gen_6";
-+
-+	status = "okay";
-+};
+I don't see any upstream example of that, would the pinctrl work
+correctly with that?
 
--- 
-2.52.0
+While this isn't necessarily pretty like that, it does work :)
+
+>
+> otherwise
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
+Thanks!
+
+Regards
+Luca
+
+>
+> Konrad
 
 
