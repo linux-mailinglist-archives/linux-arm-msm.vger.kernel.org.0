@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-89435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7A17D3357F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:56:44 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4BD2D335A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:58:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 0A11C301F9CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:55:42 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8F1B23025501
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:57:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C5A833E372;
-	Fri, 16 Jan 2026 15:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A9633C18E;
+	Fri, 16 Jan 2026 15:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="AYHUiOts";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="sQTqPHWy"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JyMSeUZr";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JVPAEds1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E433EB19;
-	Fri, 16 Jan 2026 15:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26DB33BBC8;
+	Fri, 16 Jan 2026 15:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768578937; cv=none; b=nNEienPado3hi5AwYwwAuG7wG4QnJvw6OiIFdl2+wDdKH4QyJqd82ef0MnlPRHVemcJ6zJKbJaT0+tJXn91u3itJo9e67mgcuk+XwDK6gLmDEg5cyaN7edVKG3Ois6WRPgSmNJ7rhEzOEgEpYixP5lZ/qvMiwFvCAokAQJQW95g=
+	t=1768579006; cv=none; b=fnNdQ1Idw7lzxcwUWhmHOWRO7gcHfkJwQEW62haBi0dANu9Uyai71l45rKylgn70WIClMxQ8DVVnBzQ/XcGjqJMR+5EO03Cmqn2d6uoeKYR/ebuInRLcQ9KwpD8W7tDYIMTyRC9gHNUY07LtNtnZt50eD49Gg1EswFdjgAZ9ZeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768578937; c=relaxed/simple;
-	bh=AI08IkOBl0qOSd+3jS8CDcsc00XmegnRfZyCxiTlrCE=;
+	s=arc-20240116; t=1768579006; c=relaxed/simple;
+	bh=qt3inedUq/MmQoKO9566ag23yZ8vQbct6HmDG26LUVU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GiM3VCwHwUBNVemSV+9fNbwT9FKKMGPUC89t3YcgbtjsFlxnAohUpI0WTS+6LsD7G0ICyPy0fmoRa4MW02HL4D+0QcJysZhOB4hSa0EIOgNPGlHDkoAHy7T6YRNvt5omVIL8Vlm4uEXGeg5079MU4rzoyszHvWACZAhtj/2k8Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=AYHUiOts; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=sQTqPHWy; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=NP0A2aE11tZfdNx8YERFZMUXuD/KaCzS040hYjAz0zIZOFVbA7irwaLtoDjyYBM4ocSbxpgoUvnL2KHZezlFw7shSmwux83Y5+d7ATFblTHsv+AGk0SpkujdumBF6IYkvjk9Yh5w9kkRK7SXtYt/QnWo1qg+ys/RsbthiTK0X3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JyMSeUZr; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JVPAEds1; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578904; bh=B9kHDeY0RRWjO0vnPw/JSqR
-	ut4T9DvCelaqB2mnG9v0=; b=AYHUiOts+w7Zo4bGl2fBauAkVMiMgLKPdbizdpOyJmaSu4Zzp3
-	4rkzUXc9spbX1uQIAHOMgnyXivKT+R89xKcCc3trP9ql3j32kY384bmmHqyRNoGIjWtwSYXl36A
-	MsvZpXK0c0LtfeFz50YZ75AyADcT42vMA8Y/V95bBw0B5ccPmeWZjsBzgvzTYazt+VbD6AiwceR
-	MYDhXUk74vvEAu9qjD7dCjjn61czCbQstbih+9U1J4+7qFEM0/ea14YF/iiQEdYR0Rl2kThrccX
-	QkR64eDWTOX13WyDfCYSmlzxTzj3LfoAIUXxUfh7tnM2lgk7u2rZ8ytvD5pn1d2gZvg==;
+	h=To:Message-Id:Subject:Date:From; t=1768578905; bh=uKgpy2R20j2XQr08PTw877G
+	gR32Ngtgrcb0QG9cVHRc=; b=JyMSeUZraSyAu4hGlEFqT1dCfJgkjCGPd4duYSyg5vjim1rohF
+	xt8zdweztXkUEOlhtqBUhQqVLupOTS5ScRjqiuXk4t3lBJODJ7LgkZonClKC8y1KlVHEJER4IhG
+	E0za1FVCUa5pDX8juoTr/Lh6OPgQvAiS7EJCA7J7kl38oeaIZ9w/0zskbNSQwYIvKNiPmmfnd/W
+	BFakq48WN1b9pguwoXJ9S/EQbZaO8Adlg9adGVzoMGJAZtgGM7rDbEMCdwhzzSCaxXu7BHJ/Vsk
+	hh0r0NkKXToiGyUeYA6hUbKXp+JDNCxvDO1dR6KoYgh9SBeKBOflt+BZt0WNlsoTpew==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578904; bh=B9kHDeY0RRWjO0vnPw/JSqR
-	ut4T9DvCelaqB2mnG9v0=; b=sQTqPHWy+Xu/WMreQjbMKiuKcl6iK4SCcAWgaogBWx55nS8ifA
-	HvB+fdchq3PckgwDlPiIIDv+GcX8ciXimHBQ==;
+	h=To:Message-Id:Subject:Date:From; t=1768578905; bh=uKgpy2R20j2XQr08PTw877G
+	gR32Ngtgrcb0QG9cVHRc=; b=JVPAEds1t9FOW2kbOFlr1gCur/F1vUz3+YT62QtovBOfSqVvjg
+	0vRHGStPLYP4UABeP1gGw0b7NSjckyX/I4DQ==;
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Fri, 16 Jan 2026 16:54:46 +0100
-Subject: [PATCH v2 4/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove
- extcon
+Date: Fri, 16 Jan 2026 16:54:47 +0100
+Subject: [PATCH v2 5/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix
+ reserved gpio ranges
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260116-xiaomi-willow-v2-4-4694feb70cdb@mainlining.org>
+Message-Id: <20260116-xiaomi-willow-v2-5-4694feb70cdb@mainlining.org>
 References: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
 In-Reply-To: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -67,54 +67,39 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
  phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
  linux@mainlining.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=1174;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=891;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=AI08IkOBl0qOSd+3jS8CDcsc00XmegnRfZyCxiTlrCE=;
- b=z9/1qgfGUmndHIinosZRN5cIaL7w5mLgMT3QEqA6U4UGOl/8Dj8bFpDlTA9NqSzQbJRH654a/
- m6u3SxTc4P5DatFBCHbisO26OAiYP9jCHpnBm7eEn8QLttuLYUM2CS6
+ bh=qt3inedUq/MmQoKO9566ag23yZ8vQbct6HmDG26LUVU=;
+ b=hPOatdeWy0rnjVlIQcz/OaED0jutOeuKhbzkOL+quAmxNk/RYlYnT/3zu5nWmsZkkdoIaJOR6
+ 9X6Db66fW0NB/lGI0M1nNqwlpOEVTJAVo1Nv2OGeuTgk8rYRPsE+iah
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-GPIO pin 102 is related to DisplayPort what is not supported
-by this device and it is also disabled at downstream,
-remove the unnecessary extcon-usb node.
+The device was crashing on boot because the reserved gpio ranges
+was wrongly defined. Correct the ranges for avoid pinctrl crashing.
 
 Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested-by: Biswapriyo Nath <nathbappai@gmail.com>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 9 ---------
- 1 file changed, 9 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index 4e1444abc29b..a9b6e648fe3b 100644
+index a9b6e648fe3b..2605d0c942fe 100644
 --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -77,11 +77,6 @@ ramoops@61600000 {
- 		};
- 	};
- 
--	extcon_usb: extcon-usb {
--		compatible = "linux,extcon-usb-gpio";
--		id-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
--	};
--
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -304,7 +299,3 @@ &tlmm {
- &usb3 {
- 	status = "okay";
+@@ -293,7 +293,7 @@ &sdhc_2 {
  };
--
--&usb3_dwc3 {
--	extcon = <&extcon_usb>;
--};
+ 
+ &tlmm {
+-	gpio-reserved-ranges = <22 2>, <28 6>;
++	gpio-reserved-ranges = <0 4>, <30 4>;
+ };
+ 
+ &usb3 {
 
 -- 
 2.52.0
