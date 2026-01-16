@@ -1,43 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-89308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55D89D2C759
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 07:20:51 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01D51D2C74A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 07:20:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C4421302F821
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 06:20:28 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 10819300F66C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 06:20:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2659C346E69;
-	Fri, 16 Jan 2026 06:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 878D234D903;
+	Fri, 16 Jan 2026 06:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iG6MSz9h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9asVBd3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021633594F;
-	Fri, 16 Jan 2026 06:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA6D34CFAD;
+	Fri, 16 Jan 2026 06:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768544428; cv=none; b=U3L/fHUXtVr062bDeWeJJziT1yR8S5fcuSbeDPI66jrLT/rGG2Q8BEFsvkI2zslQiLQwpsCOMnbsbXZz5sbg4coVVZasyOMOY47o2jgv4neV1/627LXBmzz0UIkj4yMXan7izIxQAh7K4wkTmves3XjGcfvjUKE2lTRIgp0kxw0=
+	t=1768544434; cv=none; b=OVAGwOzzkd/CPP08pPjm72IkYsak6TUesbQy5S6Fcc79bkdGB33EQR2dX6EbLo3kIRDQ/3Qzcp0g6VjU7AL1jgWcaJVSuVd2E9aFsteGXjJSfsM6WUc+TLwTZtHjjN5xD0k8XSvdktlwv7B/SDG9pf4y8DgwoSNOjwN4VBj6NQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768544428; c=relaxed/simple;
-	bh=r4bockHOjbDL55pwMjmu8J6IiK/XeU57XA+w4GtQBv0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PyMOCSPD2F423O4ocK9HMror8W98djG8H/Tb3+LJgGy2iq4a/gex5XRp+zbGFEhAOn1JJVBVQXrHidyHOqhfa6AXkOUlLo85cSE9x4iXA67J7wr4FauKBeD3SlApgYNNDi1mnMQ1TucSJn25UenqAs+EUJ+FQjHTbVrKrMFgPuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iG6MSz9h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A99EC116C6;
-	Fri, 16 Jan 2026 06:20:20 +0000 (UTC)
+	s=arc-20240116; t=1768544434; c=relaxed/simple;
+	bh=Jag6tsEHHgyFgjS80lTSgB0FSZN04+3pIBYrGRXayho=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BZMmScu0lbY3wk9GZmlyKh1Z3xNsci1wkzwgrbpYtuN+Dk4GzVlt8U8c4yAf8Bekoc9fVW6XAIpZjb3whITWVK7tbio9WqNwb8XtEJtpm7d2NJekXLuYsa0YFp7r3b31VCTPY06fGqhdt26hgi5SEtTWxo55r3p6GNJbjsXf9z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9asVBd3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD8EC2BC9E;
+	Fri, 16 Jan 2026 06:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768544427;
-	bh=r4bockHOjbDL55pwMjmu8J6IiK/XeU57XA+w4GtQBv0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=iG6MSz9hBJtWcFVwcBE5EWwqJTIpH96F4Ivi6KKoGnrYmpl8hr3GDro1qdvyZtUwT
-	 OE2zJodVUGCxM/xS1F8oF5nqVX9pGmdT4denW9rYfUsof3CWhX5G/wFoSDJPD7Ry7B
-	 SrsXSquQ7zxWEv073gj4lHzHhHcn3Sqc4yTxFAOd0E+e9uvqA53F4t96uL6vjJfJkp
-	 P17VXnAcTU6aZnqiNdjrXDrt5be8EiJd0W5Joi9h7xvibWinQjPDB7hW13xm+Spfn5
-	 avzq7LM+GBFIwAsiOzCCP8vQus2TKXdBACbLVu36la8wSaaSegJCy39+4IfdLu+egV
-	 OLKL3rlaPVMew==
+	s=k20201202; t=1768544433;
+	bh=Jag6tsEHHgyFgjS80lTSgB0FSZN04+3pIBYrGRXayho=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=A9asVBd37NWQagAjDyp5HdtaYXuV+O6w4Lrptc0QP1UY0h/SCoh0JhxKPmjaAMRo4
+	 wObQiJlPxdwJ+KbK5izwW0F/npb4HnCxN2iaF1Yo2FokqL1hM0CAPvut3+mbFnDkmJ
+	 6300Foa4NdNrAX28wVIIMKBYc4h+mi+vY980gYPULy49rXaK0Qmyqvz7VoHweMfAUN
+	 2XBw9h3LTWoe0zsoLwCzSJx0S7pwwDlk7o+aSqw/0Ffizv5ppkrSunIhX2XDCJ/bC3
+	 DqDAPO535tQNEeGepnok2QNOQS4AUg6tACvgwDoxd8LhENY9kEiNiJ1x2Bea3AFiAa
+	 Fq0wRYaAg4YRQ==
 From: Sumit Garg <sumit.garg@kernel.org>
 To: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
@@ -55,10 +56,12 @@ Cc: andersson@kernel.org,
 	jorge.ramirez@oss.qualcomm.com,
 	linux-kernel@vger.kernel.org,
 	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: [PATCH v2 0/3] arm64: dts: qcom: agatti: Fix IOMMU DT properties
-Date: Fri, 16 Jan 2026 11:50:01 +0530
-Message-ID: <20260116062004.237356-1-sumit.garg@kernel.org>
+Subject: [PATCH v2 1/3] dt-bindings: display: msm: qcm2290-mdss: Fix iommus property
+Date: Fri, 16 Jan 2026 11:50:02 +0530
+Message-ID: <20260116062004.237356-2-sumit.garg@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260116062004.237356-1-sumit.garg@kernel.org>
+References: <20260116062004.237356-1-sumit.garg@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,34 +72,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Sumit Garg <sumit.garg@oss.qualcomm.com>
 
-Fix IOMMU DT propeties for GPU, display and video peripherals via
-dropping SMMU stream IDs which relates to secure context bank.
+Fix IOMMU DT propety for display via dropping SMMU stream IDs which
+relates to secure context bank. Assigning Linux kernel (HLOS) VMID
+to secure context bank stream IDs is incorrect.
 
-This problem only surfaced when the Gunyah based firmware stack is
-ported on Agatti replacing the legacy QHEE based firmware stack. Assigning
-Linux kernel (HLOS) VMID to secure context bank stream IDs is treated
-as a fault by Gunyah hypervisor which were previously ignored by QHEE
-hypervisor.
+The min value is added for iommus property to ensure in future when
+secure context bank stream IDs are properly supported then the iommus
+property is extensible.
 
-The DT changes should be backwards compatible with legacy QHEE based
-firmware stack too.
+These DT bindings changes should be backwards compatible.
 
-Changes in v2:
+Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
 ---
-- Dropped Gunyah related reserved memory requirement changes
-- Added DT bindings changes related to IOMMU property fixups
-- Collected review tags for the DT changes
+ .../devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml   | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Sumit Garg (3):
-  dt-bindings: display: msm: qcm2290-mdss: Fix iommus property
-  dt-bindings: media: venus: Fix iommus property
-  arm64: dts: qcom: agatti: Fix IOMMU DT properties
-
- .../bindings/display/msm/qcom,qcm2290-mdss.yaml       |  5 ++---
- .../devicetree/bindings/media/qcom,qcm2290-venus.yaml |  6 ++----
- arch/arm64/boot/dts/qcom/agatti.dtsi                  | 11 +++--------
- 3 files changed, 7 insertions(+), 15 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+index f0cdb5422688..5c888f07bc0b 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+@@ -33,6 +33,7 @@ properties:
+       - const: core
+ 
+   iommus:
++    minItems: 1
+     maxItems: 2
+ 
+   interconnects:
+@@ -107,9 +108,7 @@ examples:
+         interconnect-names = "mdp0-mem",
+                              "cpu-cfg";
+ 
+-        iommus = <&apps_smmu 0x420 0x2>,
+-                 <&apps_smmu 0x421 0x0>;
+-        ranges;
++        iommus = <&apps_smmu 0x420 0x2>;
+ 
+         display-controller@5e01000 {
+             compatible = "qcom,qcm2290-dpu";
 -- 
 2.51.0
 
