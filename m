@@ -1,152 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-89428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01ED3D33135
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:10:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E8C2AD330D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:07:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A5ED332379CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:53:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 46BDE3124993
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AE2394463;
-	Fri, 16 Jan 2026 14:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF8A02D7DDE;
+	Fri, 16 Jan 2026 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="hHHjCJ+M"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="zj0Jz96c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m21471.qiye.163.com (mail-m21471.qiye.163.com [117.135.214.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FC22FFDF8;
-	Fri, 16 Jan 2026 14:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.214.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9633A1E0E08
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768575217; cv=none; b=sW26riHlhp5RszXH/IQnEckELOSGT2eEV4GjaXMFsU9PuSQRbWSWVP5xRLHf2DJAFMaxiweZ464NjTPm0PoA8vqq8ZC8/rRMY3cHYyzfDWL+irbUBwXekBA7n8ghdibbU6DKVk0BKo1KxOpks8M/lZIz7+XmuP8BgPnV3P5wows=
+	t=1768575054; cv=none; b=TyuJ1rypsuH+YZdnjJC/hpiJPLamDAxExcQCj0ANofP6/QIbs2l5L0xVW4TDdHzTk9zoQgYYuBagd6mC8He53Xk4Y7fn9rQ8ORWqwGaL0qp6Ftjg1KkUTsqlI89HCFB9E1YrTU5cUasCmf90D7KGWjP8oNRUQwAcwlcCDUiKNKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768575217; c=relaxed/simple;
-	bh=3rGPNZW1O4ysdszwdgsirm5Xfu5YLMd4ZfYEpEyrBMY=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=KGlBfERP7C9Xj/+1cHKvs7MeKDEq17bkbISCgd3bjxCo711xsnzuEyT6SLykahIiaTL+it3YnZYPJhnRr7KMD2GtxN5oP3bcQyaTN/FoWITz3FHKZrS1dM9ENK+ZyZ//yre/NgGVD/TEGRxdidoftBkVSDzGpuHksYFL/j8CLC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=hHHjCJ+M; arc=none smtp.client-ip=117.135.214.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 30efd4248;
-	Fri, 16 Jan 2026 22:48:14 +0800 (GMT+08:00)
-Message-ID: <72e23e5a-6fdb-42c1-8d09-70a4d0890307@rock-chips.com>
-Date: Fri, 16 Jan 2026 22:48:12 +0800
+	s=arc-20240116; t=1768575054; c=relaxed/simple;
+	bh=ahUcEGPytnk8Si96cVgaUrgSwtkt/kRnPkhww2URxL8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=twdOM88D0FVE5lox711gqz6tA+9uz5EC5ZDy+PSqkPz2v2ZE0hMfk1O7moM42aw/VrxewlsQeLfmJDM0x4UuL7UjftCQ60Im77FMN7oP/Wu68lk85NG4ZHw+QszP1yfIJB9agDyripSuozyrjz3eh5Ji7gqnVhxVVwUr/Eg47co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=zj0Jz96c; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-64d02c01865so3570921a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1768575051; x=1769179851; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kMptCAYYTXce1rQ8rmGChbIW938AEbv2PXNH6WP9t4w=;
+        b=zj0Jz96ckVaszgzj30Lr5WeCC8QFhRnCAf67SFouedHOzcMxTySE0mhI+Ig6ObQNEv
+         kCWE1lrZMCWwNZ/HVqWK0MY8o+e1hwXC3Yyw+kvXFDXus81X2O9Q5jBrUOaQT3y7cTQF
+         cICceky+aRpO17MIsBPLKPnd9zCfx8NOf9WshGFtaez6HL+GfT8duiCpYQOnL8zzQ+Lw
+         uoXJmhSUNfkEdWrPD0fw5JaMSjBTjRko6si5x2gxSrirjrMFKmX6n6NFzG1ubI7A0GmI
+         DlbaLrquWdeuhd4HTzUNp3vZQBE4tIniXChbuQrqFvmWc9J61HSYNQ7Q2wacDjiRUHON
+         UIwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768575051; x=1769179851;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kMptCAYYTXce1rQ8rmGChbIW938AEbv2PXNH6WP9t4w=;
+        b=PDjAgdVxUU3/T7sGQqe64SmGhyGwrfizax91UrXKJxiLDCPl5Gnaj69TlqUNxplfAB
+         s5rd3j24YnO7rrbEq6h+AmKfyiBPd6whxQGTYa5NhdcUNKEvK1/ZZ59RcK/E7zHgFY3S
+         fJm57FBJGt/d/hYN0LF1o8l29AtXr3Jq+u3UbDjirK4CF/NAAeCKHGOlD3kUzlql1pkG
+         UEjjyF+pCC/3caKBcTP8wPc1zC/CRcD2v0hXzr15pv0F54iJsy4xF2rJSp9OfTQDaXvD
+         K0t9+n5EzY6rjgv6JzBLqVz4vI6BvARCXTNNkKNfT2KIgzxk/wmSHFAikQcOmu2nuLfU
+         kw+w==
+X-Forwarded-Encrypted: i=1; AJvYcCVXvaWKS4Pnr2qng5ImkJ8nmIyvY8XK8bioeaU3ftqE4Tr1Gyb9bdWvVM0Ojt4dOxUVUxdJitmslbaz5Q+L@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz56EKiY2v0im2PMPhefX3vlguq9XnnPOOYXV1i7eqWZWD9JhVx
+	kAk4n4Dod5hMd8QkhdyTUyFUJooyZUGiglvdQK5GF2gban53MRC2OcxFWpDPqnNLGVo=
+X-Gm-Gg: AY/fxX6UD3ovV2do3z7renVys7vSi6p6kjyfPGprs5pac4Hgkp7bZAK9Bvvuyi4Ltbz
+	j4bQIJbadUG2jszh7SiuOeZhpwVKcLUi4rHYoNU3EJLqAEw4nAzfLjToxb6nAsDGHFWSHNTgmh0
+	sFREzNFVg4D7bSfNloMquTudiX/nhLAFNUUHriYwZP5KtsU2Xh1VvEFZpugD8q9sJdHDM0rHYr1
+	zkuWw1PuSrJpP4GF+8a15QCK39Z7WreYWOEw2DBH61Q/iRnLfXUlnZricbrGScslCaOBxYnSunO
+	+TUqiEQbwGyyE3lPABQmV42ft6s/IqhlWdE1Y7RJFbB5kAl/jHroNGAryHGblasmeQlqP+ystRp
+	dGKj5IephyCrD5rw9E77yvLlSpZyeOormFQPNReydokjGGYPrIahAfWX2FUn5vpHXRz1fkSMpR1
+	g9Nsuc7LMom30sbGVaykRXhhuFhkAVoye9MmrP9CHptJ2jgrYReyntvReW6vLvuasJ
+X-Received: by 2002:a05:6402:34d5:b0:64b:a1e6:8018 with SMTP id 4fb4d7f45d1cf-654bb70fb62mr1997705a12.31.1768575051053;
+        Fri, 16 Jan 2026 06:50:51 -0800 (PST)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65452cdab55sm2699427a12.10.2026.01.16.06.50.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jan 2026 06:50:50 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Fri, 16 Jan 2026 15:50:47 +0100
+Subject: [PATCH 1/5] soc: qcom: pd-mapper: Add Milos compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, Sean Anderson <sean.anderson@seco.com>,
- manivannan.sadhasivam@oss.qualcomm.com,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Chen-Yu Tsai <wens@kernel.org>, Brian Norris <briannorris@chromium.org>,
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Alex Elder <elder@riscstar.com>,
- Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Chen-Yu Tsai <wenst@chromium.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl
- devices with controller drivers
-To: Niklas Cassel <cassel@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
-References: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
- <0da0295a-4acb-430e-ae1a-e144f07418d0@seco.com>
- <6iqn3pmk7jb7j6cvmuv6ggs6xkd6ouz6klzhzdekrlzpbgxcua@ebskaj25jukl>
- <ef5d5fdc-be08-4859-a625-cdd1ae0c46c2@seco.com>
- <55cqkglbgji7tz34hk7aishyq3wal3oba5hy2yfvdbnkugadyg@56yh35kcgtwf>
- <aWo_kP170j7r4q1a@ryzen>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <aWo_kP170j7r4q1a@ryzen>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9bc747414b09cckunm1909f32d739c49
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQk5DH1YZQ0IZThgaQk8fHRpWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=hHHjCJ+MWKnpj/DfzGn37vGEGCq1LLjBG5L3w8k1K3H7geU9RFz8ctogv0crCb/Lp9PmtS30jX50/yaRBUTLse8/cb2XeYQniulyX2iIpmZxAznCBXrjOo1h5m5ng8t9LMeVnCEFSv+Q24XTdTu3oJgn6X8vVRHV6D1etvvqBxA=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=7JHT5Ei0LrosWcfSDUb+lhrU7jo5qecDT7sHr4EJCMM=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260116-milos-fp6-bt-wifi-v1-1-27b4fbb77e9c@fairphone.com>
+References: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
+In-Reply-To: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alexander Koskovich <AKoskovich@pm.me>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768575048; l=1032;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=ahUcEGPytnk8Si96cVgaUrgSwtkt/kRnPkhww2URxL8=;
+ b=pQ0d7mU49Oaiu6eodLT7kdl3pBbBGjYE/xrRcrTvoLeTdG6y1PAvrfT20CLnuXrPrJ8aNVcfD
+ b3uSdA9TjFvBiuyZI6uYBlNz04Cgh/p0M5YyyidWOX6G3efIex9tvN/
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-在 2026/01/16 星期五 21:40, Niklas Cassel 写道:
-> On Fri, Jan 16, 2026 at 11:54:26AM +0530, Manivannan Sadhasivam wrote:
->> On Thu, Jan 15, 2026 at 02:26:32PM -0500, Sean Anderson wrote:
->>>>
->>>> Not at all. We cannot model PERST# as a GPIO in all the cases. Some drivers
->>>> implement PERST# as a set of MMIO operations in the Root Complex MMIO space and
->>>> that space belongs to the controller driver.
->>>
->>> That's what I mean. Implement a GPIO driver with one GPIO and perform
->>> the MMIO operations as requested.
->>>
->>> Or we can invert things and add a reset op to pci_ops. If present then
->>> call it, and if absent use the PERST GPIO on the bridge.
->>>
->>
->> Having a callback for controlling the PERST# will work for the addressing the
->> PERST# issue, but it won't solve the PCIe switch issue we were talking above.
->> And this API design will fix both the problems.
->>
->> But even in this callback design, you need to have modifications in the existing
->> controller drivers to integrate pwrctrl. So how that is different from calling
->> just two (or one unified API for create/power_on)?
-> 
-> FWIW, I do think that it is a good idea to create a reset op to pci_ops
-> that will implement PERST# assertion/deassertion.
-> 
+Add support for the Qualcomm Milos SoC to the protection domain mapper.
+Milos shares the same protection domain configuration as SM8550, so
+reuse the existing SM8550 domain data.
 
-That's exactly what I had in mind when looking at different PCIe host
-drivers that why individual drivers should implement their own powering
-up sequence, regarding to the face that bringing devices up should
-always follow the timing defined PCI Express Card Electromechanical
-Specification R6.0.1, section 2.2.1 "Initial Power Up(G3 to S0)"
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ drivers/soc/qcom/qcom_pd_mapper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+index 1bcbe69688d2..e6f525813b32 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -562,6 +562,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
+ 	{ .compatible = "qcom,apq8084", .data = NULL, },
+ 	{ .compatible = "qcom,apq8096", .data = msm8996_domains, },
+ 	{ .compatible = "qcom,kaanapali", .data = kaanapali_domains, },
++	{ .compatible = "qcom,milos", .data = sm8550_domains, },
+ 	{ .compatible = "qcom,msm8226", .data = NULL, },
+ 	{ .compatible = "qcom,msm8909", .data = NULL, },
+ 	{ .compatible = "qcom,msm8916", .data = NULL, },
 
-> Right now, it is a mess, with various drivers doing this at various
-> different places.
-> 
-> Having a specific callback, the driver implement it however they want
-> GPIO, MMIO, whatever, and it could even be called by (in case of DWC,
-> the host_init, by pwrctrl, or potentially by the PCI core itself before
-> enumerating the bus.
-> 
-> If we don't do something about it now, the problem will just get worse
-> with time. Yes, it will take time before all drivers have migrated and
-> been tested to have a dedicated PERST# reset op, but for the long term
-> maintainability, I think it is something that we should do.
-
-Ack. That will also consolidate more timing relate improvements
-together. For instance, almost all drivers holds PERST# for 100ms
-Tpvperl before release it, but 100ms is the minimal value defined by
-spec. I have to say it's broken for several EP cards I have debugged in 
-practice these years. With holding all powering up timing together into
-pwrctrl design could really helpful in the future.
-
-
-> 
-> I also know that some drivers have some loops with retry logic, where
-> they might go down in link speed, but right now I don't see why those
-> drivers shouldn't be able to keep that retry logic just because we
-> add a dedicated PERST# callback.
-> 
-> 
-> All that said, that would be a separate endeavor and can be implemented
-> later.
-> 
-> 
-> Kind regards,
-> Niklas
-> 
-> 
+-- 
+2.52.0
 
 
