@@ -1,746 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-89438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70538D335E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 17:02:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 427A2D33658
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 17:09:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9EE2730B2E93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:56:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D374A3015152
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:09:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A3B33EAE6;
-	Fri, 16 Jan 2026 15:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D9F392C3A;
+	Fri, 16 Jan 2026 16:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="dfnOZ/UN";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="yRxGLs0L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npUHLCxq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBED33E354;
-	Fri, 16 Jan 2026 15:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92F5376BD4;
+	Fri, 16 Jan 2026 16:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768578988; cv=none; b=EX8E/TdoA/F9lY0VNqVWO38VBx+e+bJSfirdnDkZEaJA/gF1W9+A1XAOkgYcyWy13DMNvdHfn81aRycBPDErsipW8u85wMJjsSQbO+wFeTgrYDbkbIqHbHrR57f/fUuk53IduxmX9yr+qG5MC0Q2xCWenWeZjqnL2d6bUZPQe5g=
+	t=1768579745; cv=none; b=XKPeu6KL3ftS1jy/AFdXUYOy6IYD8xsu8sJ03exjR2G6botN7kpcKX/4BGI3FtMHRH0HulAsd8ZyH4cPIpc+7Xi+mkXLhhkXcXQfqrsinrlnP4Yk7jP0HjuB9KHen192FVAlRhfxt5Y1UmfBDToa9LsedZgFcmmcrAtkLrmu58E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768578988; c=relaxed/simple;
-	bh=PVxkPR1WqHewGT9ijooDR84QHuCD3mozBW/BpqG0SI0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dw0CeNUHRqJkNWVWI9eGQM9jL6rrjwb4Fg7mVD4Id0ok1uFllhyQutGXN60PN6U7EViFYRIvOeiUW0i5hhh5n7nc12drDTOXB88z0XWtBVCWuvE/zh2DBzeC/fXdYWCrQ5tgD5IyHaJuAdRUN+XgaGFKRo730kfJO5FFzz58NII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=dfnOZ/UN; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=yRxGLs0L; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578907; bh=DGWjHXhqZxh4j+GFmqTP5AG
-	/9V15uHcZxFss3qS1T5o=; b=dfnOZ/UNqeBPWYWH1vwzCekDqJ22Dwaqo70lMDasCFGdkiW7Oe
-	9huqn9YVvDlvRWOmxPoGPRbbUeJGXu/IVCo3equ/xOsIHjQy4tAbH5MznqGPVh++V7TLV7G97wk
-	dX8KAlkxbQJ69z65Aj8zyW+CCLToERxHVoacwJPCRLBJbJdhOT5VcUc/JBmz+H1NNarMP9Q/9iO
-	rVXtCeUeNmLsUCYplDPKFtLwF5NLp0BMwObKg81wypmDMusSvbJWL9h+e5JNBsce+P+SqnsyV3v
-	90NV3O2d/XdIkNE+tZ8cppLUUdy0/cO0zocKxgIH6kyt4rKm7rvUDYITJdktO5zhFUw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578907; bh=DGWjHXhqZxh4j+GFmqTP5AG
-	/9V15uHcZxFss3qS1T5o=; b=yRxGLs0LOdR3pIeZW1DN2NKZ6qllbrQMsd4T+LIjrGI5c9EgVP
-	bYz8TODfZlaOVSPnH1lgxf30MojRRhhFmoCg==;
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Fri, 16 Jan 2026 16:54:49 +0100
-Subject: [PATCH v2 7/7] arm64: dts: qcom: Add Redmi Note 8T
+	s=arc-20240116; t=1768579745; c=relaxed/simple;
+	bh=MTcx505qajJm/H8uFpTnmbmdqOojfsTnKmRjM3IzNRs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sX+uGeybUJCA/L+lqvkVwNP1Zs/h5cSjtMQrQNuMHmTLO2BNCE0l7FhOZGhN1hHm06twJHsqLS92g+JTu3qoRpvVNikBsZgTO/jFF3aCyH6ip/aXd7C7s5SiumKy5ArWpkR19COGHs/ThKFwnGnqp6HSOLDlWjr3LrYhOs7w1Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npUHLCxq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E315FC116C6;
+	Fri, 16 Jan 2026 16:08:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768579744;
+	bh=MTcx505qajJm/H8uFpTnmbmdqOojfsTnKmRjM3IzNRs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=npUHLCxq3QkqPA/zsTdf+fhdjvZY2lGkllFt34zLRURHUw1raD9gL3pv0xfCmDa2q
+	 rkzEl3QGE1hZcLEoIvj46De2cJw9Akz/fg3jtGSgqVWARK0UVYVXRFfpHOOdj0gbhI
+	 BHsRzxWukqEYo2vIc6F8FnbA9TlQJDmvsmNLsDy/X6atl3wb/T7xgMH6Uk0+5h1uII
+	 R9SAyhMVVWkCgkLjBImkfYU3ihK8OXSPn+kK75sUO4FtHGoJHPx3+8hvIXuyBmfFZa
+	 MBD85oFBNVCvyfBupPznTmItA4Lp5VtZxVHjpVQE05Bao5N4WpsmldgsV8v76znr2s
+	 2Z93JuRuCky9A==
+Message-ID: <f35b1380-b7d4-45e7-94ad-9f76973d3289@kernel.org>
+Date: Fri, 16 Jan 2026 17:08:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260116-xiaomi-willow-v2-7-4694feb70cdb@mainlining.org>
-References: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
-In-Reply-To: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>, 
- Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
- Biswapriyo Nath <nathbappai@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- linux@mainlining.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=15508;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=PVxkPR1WqHewGT9ijooDR84QHuCD3mozBW/BpqG0SI0=;
- b=iRBoHZ8aXPEP2/jDpPIYNMS59fQeXZJh5iX6QbeAXoufs3hGglT1+weJEFfFyoU/cmD6hEKO0
- Yaf2YPPOX5JB4nEoy4/OjrWCdE+n8g2PeUi4++ndmnX7QcFQnLvScYc
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/14] wifi: ath10k: snoc: support powering on the
+ device via pwrseq
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+ Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+ Matthias Kaehlcke <mka@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+ linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
+ linux-pm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+References: <20260106-wcn3990-pwrctl-v2-0-0386204328be@oss.qualcomm.com>
+ <20260106-wcn3990-pwrctl-v2-4-0386204328be@oss.qualcomm.com>
+ <52b2b799-09e6-40a4-bea8-c7e8bf21cf51@oss.qualcomm.com>
+ <15470b51-d398-449d-9017-304df5ad7cef@kernel.org>
+ <132c34db-07c6-491b-bfda-f3c51462a184@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <132c34db-07c6-491b-bfda-f3c51462a184@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Redmi Note 8T (willow) is very similar to Redmi Note 8 (ginkgo)
-the only difference is willow have NFC.
-Make a common base from ginkgo devicetree for both device.
+On 16/01/2026 16:18, Jeff Johnson wrote:
+> On 1/15/2026 11:48 PM, Krzysztof Kozlowski wrote:
+>> On 15/01/2026 23:30, Jeff Johnson wrote:
+>>> On 1/5/2026 5:01 PM, Dmitry Baryshkov wrote:
+>>>> The WCN39xx family of WiFi/BT chips incorporates a simple PMU, spreading
+>>>> voltages over internal rails. Implement support for using powersequencer
+>>>> for this family of ATH10k devices in addition to using regulators.
+>>>>
+>>>> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/net/wireless/ath/ath10k/snoc.c | 54 ++++++++++++++++++++++++++++++++--
+>>>>  drivers/net/wireless/ath/ath10k/snoc.h |  2 ++
+>>>
+>>> My automation flagged:
+>>> * drivers/net/wireless/ath/ath10k/snoc.c has no QTI copyright
+>>> * drivers/net/wireless/ath/ath10k/snoc.h has no QTI copyright
+>>> * 2 copyright issues
+>>>
+>>> I'll add these manually in my 'pending' branch
+>>>
+>>
+>> And why is this a problem? You are not here to impose Qualcomm rules, bu
+>> care about Linux kernel. You cannot add copyrights based on what exactly?
+> 
+> I am a maintainer that is paid by Qualcomm to perform that role, and hence I
+> have a duty to enforce the legal guidance from Qualcomm when it comes to
+> contributions from other Qualcomm employees.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   3 +-
- .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 301 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 291 +-------------------
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  15 +
- 4 files changed, 319 insertions(+), 291 deletions(-)
+No, it's not your duty to enforce rules from some other departments or
+business units. Especially not without agreement of that person. You
+cannot just add copyrights to other people's commits just because you
+think that such copyrights should be there. Only the copyright owner -
+which you did not identify here and email address of contributor does
+not imply that (you don't even know what work contract a person has) -
+can add such copyrights.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0ccd6ec16dfb..9290e74651a8 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -279,8 +279,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
--dtb-$(CONFIG_ARCH_QCOM) += sm6125-xiaomi-ginkgo.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-ginkgo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-willow.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-curtana.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-new file mode 100644
-index 000000000000..2605d0c942fe
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-@@ -0,0 +1,301 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025, Gabriel Gonzales <semfault@disroot.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include "sm6125.dtsi"
-+#include "pm6125.dtsi"
-+
-+/delete-node/ &adsp_pil_mem;
-+/delete-node/ &cont_splash_mem;
-+/delete-node/ &gpu_mem;
-+/delete-node/ &ipa_fw_mem;
-+/delete-node/ &ipa_gsi_mem;
-+
-+/ {
-+	model = "Xiaomi Redmi Note 8";
-+	compatible = "xiaomi,ginkgo", "qcom,sm6125";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_SM6125 0x10000>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible = "simple-framebuffer";
-+			memory-region = <&framebuffer_mem>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	reserved-memory {
-+		adsp_pil_mem: adsp_pil_mem@55300000 {
-+			reg = <0x0 0x55300000 0x0 0x2200000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: ipa_fw_mem@57500000 {
-+			reg = <0x0 0x57500000 0x0 0x10000>;
-+			no-map;
-+		};
-+
-+		ipa_gsi_mem: ipa_gsi_mem@57510000 {
-+			reg = <0x0 0x57510000 0x0 0x5000>;
-+			no-map;
-+		};
-+
-+		gpu_mem: gpu_mem@57515000 {
-+			reg = <0x0 0x57515000 0x0 0x2000>;
-+			no-map;
-+		};
-+
-+		framebuffer_mem: framebuffer@5c000000 {
-+			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
-+			no-map;
-+		};
-+
-+		/* Matching with recovery values to be able to get the results. */
-+		ramoops@61600000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x61600000 0x0 0x400000>;
-+			record-size = <0x80000>;
-+			pmsg-size = <0x200000>;
-+			console-size = <0x100000>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&vol_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&pm6125_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+};
-+
-+&pm6125_gpios {
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&hsusb_phy1 {
-+	vdd-supply = <&vreg_l7a>;
-+	vdda-pll-supply = <&vreg_l10a>;
-+	vdda-phy-dpdm-supply = <&vreg_l15a>;
-+	status = "okay";
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		vreg_s6a: s6 {
-+			regulator-min-microvolt = <936000>;
-+			regulator-max-microvolt = <1422000>;
-+		};
-+
-+		vreg_l1a: l1 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1256000>;
-+		};
-+
-+		vreg_l2a: l2 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1056000>;
-+		};
-+
-+		vreg_l3a: l3 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1064000>;
-+		};
-+
-+		vreg_l4a: l4 {
-+			regulator-min-microvolt = <872000>;
-+			regulator-max-microvolt = <976000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l5a: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l6a: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		vreg_l7a: l7 {
-+			regulator-min-microvolt = <872000>;
-+			regulator-max-microvolt = <976000>;
-+		};
-+
-+		vreg_l8a: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		vreg_l9a: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1896000>;
-+		};
-+
-+		vreg_l10a: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1896000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l11a: l11 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1952000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l12a: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1996000>;
-+		};
-+
-+		vreg_l13a: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1832000>;
-+		};
-+
-+		vreg_l14a: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l15a: l15 {
-+			regulator-min-microvolt = <3104000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		vreg_l16a: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l17a: l17 {
-+			regulator-min-microvolt = <1248000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		vreg_l18a: l18 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1264000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l19a: l19 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2952000>;
-+		};
-+
-+		vreg_l20a: l20 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2952000>;
-+		};
-+
-+		vreg_l21a: l21 {
-+			regulator-min-microvolt = <2600000>;
-+			regulator-max-microvolt = <2856000>;
-+		};
-+
-+		vreg_l22a: l22 {
-+			regulator-min-microvolt = <2944000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l23a: l23 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+		};
-+
-+		vreg_l24a: l24 {
-+			regulator-min-microvolt = <2944000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+	};
-+};
-+
-+&sdc2_off_state {
-+	sd-cd-pins {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-+
-+&sdc2_on_state {
-+	sd-cd-pins {
-+		pins = "gpio98";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&vreg_l24a>;
-+	vqmmc-supply = <&vreg_l11a>;
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
-+	vmmc-supply = <&vreg_l22a>;
-+	vqmmc-supply = <&vreg_l5a>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <30 4>;
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index 2605d0c942fe..496f33e9d73c 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -2,300 +2,11 @@
- /*
-  * Copyright (c) 2025, Gabriel Gonzales <semfault@disroot.org>
-  */
--
- /dts-v1/;
- 
--#include <dt-bindings/arm/qcom,ids.h>
--#include <dt-bindings/gpio/gpio.h>
--#include <dt-bindings/input/input.h>
--#include <dt-bindings/input/gpio-keys.h>
--#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
--#include "sm6125.dtsi"
--#include "pm6125.dtsi"
--
--/delete-node/ &adsp_pil_mem;
--/delete-node/ &cont_splash_mem;
--/delete-node/ &gpu_mem;
--/delete-node/ &ipa_fw_mem;
--/delete-node/ &ipa_gsi_mem;
-+#include "sm6125-xiaomi-ginkgo-common.dtsi"
- 
- / {
- 	model = "Xiaomi Redmi Note 8";
- 	compatible = "xiaomi,ginkgo", "qcom,sm6125";
--	chassis-type = "handset";
--
--	qcom,msm-id = <QCOM_ID_SM6125 0x10000>;
--
--	chosen {
--		#address-cells = <2>;
--		#size-cells = <2>;
--		ranges;
--
--		framebuffer0: framebuffer@5c000000 {
--			compatible = "simple-framebuffer";
--			memory-region = <&framebuffer_mem>;
--			width = <1080>;
--			height = <2340>;
--			stride = <(1080 * 4)>;
--			format = "a8r8g8b8";
--		};
--	};
--
--	reserved-memory {
--		adsp_pil_mem: adsp_pil_mem@55300000 {
--			reg = <0x0 0x55300000 0x0 0x2200000>;
--			no-map;
--		};
--
--		ipa_fw_mem: ipa_fw_mem@57500000 {
--			reg = <0x0 0x57500000 0x0 0x10000>;
--			no-map;
--		};
--
--		ipa_gsi_mem: ipa_gsi_mem@57510000 {
--			reg = <0x0 0x57510000 0x0 0x5000>;
--			no-map;
--		};
--
--		gpu_mem: gpu_mem@57515000 {
--			reg = <0x0 0x57515000 0x0 0x2000>;
--			no-map;
--		};
--
--		framebuffer_mem: framebuffer@5c000000 {
--			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
--			no-map;
--		};
--
--		/* Matching with recovery values to be able to get the results. */
--		ramoops@61600000 {
--			compatible = "ramoops";
--			reg = <0x0 0x61600000 0x0 0x400000>;
--			record-size = <0x80000>;
--			pmsg-size = <0x200000>;
--			console-size = <0x100000>;
--		};
--	};
--
--	gpio-keys {
--		compatible = "gpio-keys";
--
--		pinctrl-0 = <&vol_up_n>;
--		pinctrl-names = "default";
--
--		key-volume-up {
--			label = "Volume Up";
--			gpios = <&pm6125_gpios 6 GPIO_ACTIVE_LOW>;
--			linux,code = <KEY_VOLUMEUP>;
--			debounce-interval = <15>;
--			linux,can-disable;
--			wakeup-source;
--		};
--	};
--};
--
--&pm6125_gpios {
--	vol_up_n: vol-up-n-state {
--		pins = "gpio6";
--		function = "normal";
--		power-source = <1>;
--		bias-pull-up;
--		input-enable;
--	};
--};
--
--&hsusb_phy1 {
--	vdd-supply = <&vreg_l7a>;
--	vdda-pll-supply = <&vreg_l10a>;
--	vdda-phy-dpdm-supply = <&vreg_l15a>;
--	status = "okay";
--};
--
--&pon_pwrkey {
--	status = "okay";
--};
--
--&pon_resin {
--	linux,code = <KEY_VOLUMEDOWN>;
--	status = "okay";
--};
--
--&rpm_requests {
--	regulators-0 {
--		compatible = "qcom,rpm-pm6125-regulators";
--
--		vreg_s6a: s6 {
--			regulator-min-microvolt = <936000>;
--			regulator-max-microvolt = <1422000>;
--		};
--
--		vreg_l1a: l1 {
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1256000>;
--		};
--
--		vreg_l2a: l2 {
--			regulator-min-microvolt = <1000000>;
--			regulator-max-microvolt = <1056000>;
--		};
--
--		vreg_l3a: l3 {
--			regulator-min-microvolt = <1000000>;
--			regulator-max-microvolt = <1064000>;
--		};
--
--		vreg_l4a: l4 {
--			regulator-min-microvolt = <872000>;
--			regulator-max-microvolt = <976000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l5a: l5 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l6a: l6 {
--			regulator-min-microvolt = <576000>;
--			regulator-max-microvolt = <656000>;
--		};
--
--		vreg_l7a: l7 {
--			regulator-min-microvolt = <872000>;
--			regulator-max-microvolt = <976000>;
--		};
--
--		vreg_l8a: l8 {
--			regulator-min-microvolt = <400000>;
--			regulator-max-microvolt = <728000>;
--		};
--
--		vreg_l9a: l9 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1896000>;
--		};
--
--		vreg_l10a: l10 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1896000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l11a: l11 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1952000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l12a: l12 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1996000>;
--		};
--
--		vreg_l13a: l13 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1832000>;
--		};
--
--		vreg_l14a: l14 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1904000>;
--		};
--
--		vreg_l15a: l15 {
--			regulator-min-microvolt = <3104000>;
--			regulator-max-microvolt = <3232000>;
--		};
--
--		vreg_l16a: l16 {
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1904000>;
--		};
--
--		vreg_l17a: l17 {
--			regulator-min-microvolt = <1248000>;
--			regulator-max-microvolt = <1304000>;
--		};
--
--		vreg_l18a: l18 {
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1264000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l19a: l19 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2952000>;
--		};
--
--		vreg_l20a: l20 {
--			regulator-min-microvolt = <1648000>;
--			regulator-max-microvolt = <2952000>;
--		};
--
--		vreg_l21a: l21 {
--			regulator-min-microvolt = <2600000>;
--			regulator-max-microvolt = <2856000>;
--		};
--
--		vreg_l22a: l22 {
--			regulator-min-microvolt = <2944000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--		vreg_l23a: l23 {
--			regulator-min-microvolt = <3000000>;
--			regulator-max-microvolt = <3400000>;
--		};
--
--		vreg_l24a: l24 {
--			regulator-min-microvolt = <2944000>;
--			regulator-max-microvolt = <2950000>;
--			regulator-allow-set-load;
--		};
--
--	};
--};
--
--&sdc2_off_state {
--	sd-cd-pins {
--		pins = "gpio98";
--		function = "gpio";
--		drive-strength = <2>;
--		bias-disable;
--	};
--};
--
--&sdc2_on_state {
--	sd-cd-pins {
--		pins = "gpio98";
--		function = "gpio";
--		drive-strength = <2>;
--		bias-pull-up;
--	};
--};
--
--&sdhc_1 {
--	vmmc-supply = <&vreg_l24a>;
--	vqmmc-supply = <&vreg_l11a>;
--	status = "okay";
--};
--
--&sdhc_2 {
--	cd-gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
--	vmmc-supply = <&vreg_l22a>;
--	vqmmc-supply = <&vreg_l5a>;
--	no-sdio;
--	no-mmc;
--	status = "okay";
--};
--
--&tlmm {
--	gpio-reserved-ranges = <0 4>, <30 4>;
--};
--
--&usb3 {
--	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-new file mode 100644
-index 000000000000..1231e440ba2c
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts
-@@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026, Barnabas Czeman
-+ */
-+/dts-v1/;
-+
-+#include "sm6125-xiaomi-ginkgo-common.dtsi"
-+
-+/ {
-+	model = "Xiaomi Redmi Note 8T";
-+	compatible = "xiaomi,willow", "qcom,sm6125";
-+
-+};
-+
-+/* Difference from Redmi Note 8 it have NFC */
-
--- 
-2.52.0
-
+Best regards,
+Krzysztof
 
