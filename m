@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-89422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8C2AD330D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:07:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F168CD330BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:07:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 46BDE3124993
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:50:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B615031397F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 14:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF8A02D7DDE;
-	Fri, 16 Jan 2026 14:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20AE639524A;
+	Fri, 16 Jan 2026 14:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="zj0Jz96c"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="M/KRtbmx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9633A1E0E08
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6BD3933FD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 14:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768575054; cv=none; b=TyuJ1rypsuH+YZdnjJC/hpiJPLamDAxExcQCj0ANofP6/QIbs2l5L0xVW4TDdHzTk9zoQgYYuBagd6mC8He53Xk4Y7fn9rQ8ORWqwGaL0qp6Ftjg1KkUTsqlI89HCFB9E1YrTU5cUasCmf90D7KGWjP8oNRUQwAcwlcCDUiKNKg=
+	t=1768575055; cv=none; b=ArnFzDIaHe1567OSZKj4Wty5iFP2bmTotUTDR2pVrS4J2o3+qn1AFiJUcjWQrFti5A/NiUVZ0Eie8qJM7x0W7+ufBSlXLZqYWMjgDKzlaBhfsJ8pIH9jamP7GRm+SNaZJ8FiXUwkFgIVcDsQaePhmybi6P5mPhqwVbNRlmlsBr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768575054; c=relaxed/simple;
-	bh=ahUcEGPytnk8Si96cVgaUrgSwtkt/kRnPkhww2URxL8=;
+	s=arc-20240116; t=1768575055; c=relaxed/simple;
+	bh=gjhNyyiXPMwDxet4wKDSHV0d9wDjmHjHxnL5eNbp+F4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=twdOM88D0FVE5lox711gqz6tA+9uz5EC5ZDy+PSqkPz2v2ZE0hMfk1O7moM42aw/VrxewlsQeLfmJDM0x4UuL7UjftCQ60Im77FMN7oP/Wu68lk85NG4ZHw+QszP1yfIJB9agDyripSuozyrjz3eh5Ji7gqnVhxVVwUr/Eg47co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=zj0Jz96c; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:To:Cc; b=M+6s+p1lOOgD9MVZ+vPANugQqkueMaygHGV/cgXwMnhJcHfKTNBJrwpslT1G+Va5FzGeC0HH56SHEE26FietgmItjXNDOlauyghvaVCW5QPjha4LMH29tQHxHQBZRbPRGyWksCQ2jusce6DNalfrsq4Vz4e5guJsaTaPd9V11LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=M/KRtbmx; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-64d02c01865so3570921a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:50:52 -0800 (PST)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-64b608ffca7so3249021a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1768575051; x=1769179851; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1768575052; x=1769179852; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kMptCAYYTXce1rQ8rmGChbIW938AEbv2PXNH6WP9t4w=;
-        b=zj0Jz96ckVaszgzj30Lr5WeCC8QFhRnCAf67SFouedHOzcMxTySE0mhI+Ig6ObQNEv
-         kCWE1lrZMCWwNZ/HVqWK0MY8o+e1hwXC3Yyw+kvXFDXus81X2O9Q5jBrUOaQT3y7cTQF
-         cICceky+aRpO17MIsBPLKPnd9zCfx8NOf9WshGFtaez6HL+GfT8duiCpYQOnL8zzQ+Lw
-         uoXJmhSUNfkEdWrPD0fw5JaMSjBTjRko6si5x2gxSrirjrMFKmX6n6NFzG1ubI7A0GmI
-         DlbaLrquWdeuhd4HTzUNp3vZQBE4tIniXChbuQrqFvmWc9J61HSYNQ7Q2wacDjiRUHON
-         UIwQ==
+        bh=mjx8cp8u1zTtz+8HPO5dBG1VmcVVPk4nfrHWtFsxXSs=;
+        b=M/KRtbmxY3K3nTUwFVbNEsKQliOss69ZFDb7zTwda8rwFtHsq1s0XjqPu9tS602ski
+         W36mjZLIA6U7YXlYRSB4ijpJykNVPOZ8Bq1acWrkwV/wzrC4low5lnlA/45me8Edfgom
+         ISXeNBoTYnwiH9Na9IioySD4Qn9L19wd6xG048k2Sw0xOOcko+ZTzg3FOrx8LQVON6ZY
+         M41HfsU/UbXCs1XdL5HHGbY4BXGhcWk+udSxsSOPT73E4MsItanaxnffuhYGyFs5zU4W
+         1KTF2qdMUqOG69HV7aez5ql4o06yFEuAWcicusIskDPstQ6ZoZu4H8UunbZ8iRv44kbF
+         KBIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768575051; x=1769179851;
+        d=1e100.net; s=20230601; t=1768575052; x=1769179852;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=kMptCAYYTXce1rQ8rmGChbIW938AEbv2PXNH6WP9t4w=;
-        b=PDjAgdVxUU3/T7sGQqe64SmGhyGwrfizax91UrXKJxiLDCPl5Gnaj69TlqUNxplfAB
-         s5rd3j24YnO7rrbEq6h+AmKfyiBPd6whxQGTYa5NhdcUNKEvK1/ZZ59RcK/E7zHgFY3S
-         fJm57FBJGt/d/hYN0LF1o8l29AtXr3Jq+u3UbDjirK4CF/NAAeCKHGOlD3kUzlql1pkG
-         UEjjyF+pCC/3caKBcTP8wPc1zC/CRcD2v0hXzr15pv0F54iJsy4xF2rJSp9OfTQDaXvD
-         K0t9+n5EzY6rjgv6JzBLqVz4vI6BvARCXTNNkKNfT2KIgzxk/wmSHFAikQcOmu2nuLfU
-         kw+w==
-X-Forwarded-Encrypted: i=1; AJvYcCVXvaWKS4Pnr2qng5ImkJ8nmIyvY8XK8bioeaU3ftqE4Tr1Gyb9bdWvVM0Ojt4dOxUVUxdJitmslbaz5Q+L@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz56EKiY2v0im2PMPhefX3vlguq9XnnPOOYXV1i7eqWZWD9JhVx
-	kAk4n4Dod5hMd8QkhdyTUyFUJooyZUGiglvdQK5GF2gban53MRC2OcxFWpDPqnNLGVo=
-X-Gm-Gg: AY/fxX6UD3ovV2do3z7renVys7vSi6p6kjyfPGprs5pac4Hgkp7bZAK9Bvvuyi4Ltbz
-	j4bQIJbadUG2jszh7SiuOeZhpwVKcLUi4rHYoNU3EJLqAEw4nAzfLjToxb6nAsDGHFWSHNTgmh0
-	sFREzNFVg4D7bSfNloMquTudiX/nhLAFNUUHriYwZP5KtsU2Xh1VvEFZpugD8q9sJdHDM0rHYr1
-	zkuWw1PuSrJpP4GF+8a15QCK39Z7WreYWOEw2DBH61Q/iRnLfXUlnZricbrGScslCaOBxYnSunO
-	+TUqiEQbwGyyE3lPABQmV42ft6s/IqhlWdE1Y7RJFbB5kAl/jHroNGAryHGblasmeQlqP+ystRp
-	dGKj5IephyCrD5rw9E77yvLlSpZyeOormFQPNReydokjGGYPrIahAfWX2FUn5vpHXRz1fkSMpR1
-	g9Nsuc7LMom30sbGVaykRXhhuFhkAVoye9MmrP9CHptJ2jgrYReyntvReW6vLvuasJ
-X-Received: by 2002:a05:6402:34d5:b0:64b:a1e6:8018 with SMTP id 4fb4d7f45d1cf-654bb70fb62mr1997705a12.31.1768575051053;
-        Fri, 16 Jan 2026 06:50:51 -0800 (PST)
+        bh=mjx8cp8u1zTtz+8HPO5dBG1VmcVVPk4nfrHWtFsxXSs=;
+        b=GbBAukYegC7CxGGLY1ZnTWiseEEiKDb1nNaJW/pXQg9oVxHBNzg1YtmEXF4X0dJxhc
+         FAno72+PkboqDb05rYtUAh0yMP1I8pgL0dv8OkjtKngiBb3rteYyBSiRAeDJwZ2xvEUV
+         VHjd8HiKwQSnbb5+w9pQBYkaW3zLWlNjtycxi+8thMSpChzJZKHRcmRtpm/3uUbJc2wp
+         EOQSUkcHjOFJSK9jG4hHsjDJiUQYhMxpIe5Rg+kECDKdeHegTWemquhD28MPOKNiIzJu
+         WKYDfAgXWv4SECWuFLu2G/TzQ6qxh5M7CG2qCs8bnDb1ZSEtBW/EmYtIsM82Sr5mpQMV
+         y6Wg==
+X-Forwarded-Encrypted: i=1; AJvYcCW5r1rTPz8uCR+psCxoGl5j39IV/KbjoGUOoqlErVprC85mY15uHQyD7zHnAMvfFWkwI0HDH9A+CIiIqvED@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0T4DZwUcfyJ6TPKBEmneYhgKvIqqldbmP/yXeKU7n1wSgENNy
+	d5zVMMdR1pbO5IrgaOirjMu2LnsGejgidtaAppBJOMaQInlg3+in3qFtOqbi4zpO990=
+X-Gm-Gg: AY/fxX5UJxA3HgylnMbpbKZGbLDQ/u6Rr3f2a4zOWEfRiwTq/9+9UpNOkskQH+VB+mO
+	Zq4HJklPXM/575sqqHMP+dieFDGDf7jZNd1gpIWQlfvu21gaTGnlNTo9s9B9atH2G7yMNfuAkLk
+	Xc3u94ydkS/A2QXjhoUI+Ze3x4OPjLlRGRpoIJzgR8uxst6WWk06jeyphT3HiAJa20qSduHaezL
+	NfeFHHmgEooSP8rlIH02YoqxiAmKuwtXt5u/3UwJDoOKrlTM4kAByYv6I1z7mKuii00gpY/JnA7
+	gORh7HcTzwZcv8duQ8acAqGHB/i67IQKA9TdoHoZDPCruiLdAOvUKejuSWeJT7Vs0s42UXbqBQO
+	RkIADcSaon1MJlgmn7o1HqWrXms/9Tjavc1EEmP9M7qcc/3nsV2KN/cZtyKsVEm18bMpahses2Z
+	LPdpDkpoMFmRdm9LSdh/MjLali4I6Lyrmz8w9aahSUKWzWF0jvPw3VlGDhaIXLJmNZ
+X-Received: by 2002:a05:6402:1ece:b0:649:2347:e15f with SMTP id 4fb4d7f45d1cf-654bb61af82mr2022241a12.31.1768575052026;
+        Fri, 16 Jan 2026 06:50:52 -0800 (PST)
 Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65452cdab55sm2699427a12.10.2026.01.16.06.50.50
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65452cdab55sm2699427a12.10.2026.01.16.06.50.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 06:50:50 -0800 (PST)
+        Fri, 16 Jan 2026 06:50:51 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 16 Jan 2026 15:50:47 +0100
-Subject: [PATCH 1/5] soc: qcom: pd-mapper: Add Milos compatible
+Date: Fri, 16 Jan 2026 15:50:48 +0100
+Subject: [PATCH 2/5] arm64: dts: qcom: milos: Split up uart11 pinctrl
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260116-milos-fp6-bt-wifi-v1-1-27b4fbb77e9c@fairphone.com>
+Message-Id: <20260116-milos-fp6-bt-wifi-v1-2-27b4fbb77e9c@fairphone.com>
 References: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
 In-Reply-To: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,35 +93,71 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768575048; l=1032;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768575048; l=1821;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=ahUcEGPytnk8Si96cVgaUrgSwtkt/kRnPkhww2URxL8=;
- b=pQ0d7mU49Oaiu6eodLT7kdl3pBbBGjYE/xrRcrTvoLeTdG6y1PAvrfT20CLnuXrPrJ8aNVcfD
- b3uSdA9TjFvBiuyZI6uYBlNz04Cgh/p0M5YyyidWOX6G3efIex9tvN/
+ bh=gjhNyyiXPMwDxet4wKDSHV0d9wDjmHjHxnL5eNbp+F4=;
+ b=9aCWGUk70yj5LCtl1yQkbB+PuccQDjLr6m/nWRrB15aM5nCuUYvR/4W9Y8+MxDkkNrS7kb8u2
+ C+9KiWmMFacBR25AAZ//iePt3boxN4/eIxF6O2AZgcmfclRZmZWZ7i9
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-Add support for the Qualcomm Milos SoC to the protection domain mapper.
-Milos shares the same protection domain configuration as SM8550, so
-reuse the existing SM8550 domain data.
+In order to set the pinctrl for the individual CTS, RTS, TX and RX pins,
+split up the pinctrl configuration into 4 nodes so that boards can set
+some properties separately.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/soc/qcom/qcom_pd_mapper.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/milos.dtsi | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-index 1bcbe69688d2..e6f525813b32 100644
---- a/drivers/soc/qcom/qcom_pd_mapper.c
-+++ b/drivers/soc/qcom/qcom_pd_mapper.c
-@@ -562,6 +562,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
- 	{ .compatible = "qcom,apq8084", .data = NULL, },
- 	{ .compatible = "qcom,apq8096", .data = msm8996_domains, },
- 	{ .compatible = "qcom,kaanapali", .data = kaanapali_domains, },
-+	{ .compatible = "qcom,milos", .data = sm8550_domains, },
- 	{ .compatible = "qcom,msm8226", .data = NULL, },
- 	{ .compatible = "qcom,msm8909", .data = NULL, },
- 	{ .compatible = "qcom,msm8916", .data = NULL, },
+diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
+index 0f69deabb60c..024e1c9992fe 100644
+--- a/arch/arm64/boot/dts/qcom/milos.dtsi
++++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+@@ -915,7 +915,7 @@ &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
+ 				interconnect-names = "qup-core",
+ 						     "qup-config";
+ 
+-				pinctrl-0 = <&qup_uart11_default>, <&qup_uart11_cts_rts>;
++				pinctrl-0 = <&qup_uart11_cts>, <&qup_uart11_rts>, <&qup_uart11_tx>, <&qup_uart11_rx>;
+ 				pinctrl-names = "default";
+ 
+ 				status = "disabled";
+@@ -1835,20 +1835,24 @@ qup_uart5_default: qup-uart5-default-state {
+ 				bias-disable;
+ 			};
+ 
+-			qup_uart11_default: qup-uart11-default-state {
+-				/* TX, RX */
+-				pins = "gpio50", "gpio51";
++			qup_uart11_cts: qup-uart11-cts-state {
++				pins = "gpio48";
+ 				function = "qup1_se4";
+-				drive-strength = <2>;
+-				bias-pull-up;
+ 			};
+ 
+-			qup_uart11_cts_rts: qup-uart11-cts-rts-state {
+-				/* CTS, RTS */
+-				pins = "gpio48", "gpio49";
++			qup_uart11_rts: qup-uart11-rts-state {
++				pins = "gpio49";
++				function = "qup1_se4";
++			};
++
++			qup_uart11_tx: qup-uart11-tx-state {
++				pins = "gpio50";
++				function = "qup1_se4";
++			};
++
++			qup_uart11_rx: qup-uart11-rx-state {
++				pins = "gpio51";
+ 				function = "qup1_se4";
+-				drive-strength = <2>;
+-				bias-pull-down;
+ 			};
+ 
+ 			sdc2_default: sdc2-default-state {
 
 -- 
 2.52.0
