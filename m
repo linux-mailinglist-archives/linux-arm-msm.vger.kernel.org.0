@@ -1,231 +1,333 @@
-Return-Path: <linux-arm-msm+bounces-89456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 075FBD37A24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 18:31:46 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id F15FED38463
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 19:32:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4CB61303D165
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 17:31:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8467E3059A8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 18:32:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 431EB369988;
-	Fri, 16 Jan 2026 17:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 973B634CFB5;
+	Fri, 16 Jan 2026 18:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tbqn46Rx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WeXJeooC";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MGIUZ3AH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBB433BBAA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 17:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1467D3491CD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 18:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768584671; cv=none; b=E5xdb/9xAkzXG/ktFd7cZBhIsD033BTOulQ4NKWOFpd71irQ4MoOzv63XT5S5F4AiznyR914SNN7RBRsuO0bTo4Q/O1gv5KubuaCLlf2m+sNETN4MsS62XZl8RLguFrMqLbqW3/lDBjN7skKLTbHeKSI1ZrjL2wFU29lVWNoyVs=
+	t=1768588352; cv=none; b=tPARmyZPjmwKGjdiOfWoOgk+21TATeg9eB6/iOcRhZZQoRNxFnZIHK1dZDClj8a0H/0xZOHY0n+ur+YPzQNYUYe/EOHyXTkIUw3QDc84rhCogMGs+WJ+bBihI3dXGoGhZXXIwhMbW/+motbUExoPQ6akWBL55RGamSRtNU8Ho2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768584671; c=relaxed/simple;
-	bh=dacZLFUsrFNSw+mnrOAiyarQ8iNk57zLC4mQM+1G4ms=;
+	s=arc-20240116; t=1768588352; c=relaxed/simple;
+	bh=GNtOFmbQPCuGx7/cehoqKwaq1nJk88tQ5TpWevZY90E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jrTvKvaWvYeOqQbgTilQPWONLY6VhdvMSHxZgEgXORRiBFN1ZcLDt5zMStdY3rIxE9cZNFPWd1QvWALpYH4CCz2vW0qYHZifhrOzk3/KDFfN8vkwIoq3MksoFLa9zRwvztBqc0S61GRVV90tsUyPNRnDbefRF+pRmoCXkqDhBj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tbqn46Rx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C4C2BCAF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 17:31:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768584670;
-	bh=dacZLFUsrFNSw+mnrOAiyarQ8iNk57zLC4mQM+1G4ms=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Tbqn46RxyswXpSrrExNUmy11j8SVEE7pu8HvZnEbz1kpwOTRAwX1Ei9LrmrNNtijf
-	 DBcPLc6iRBqqhziruuzikOYfzrxKgjD0wLfnl7NBvy26+6pAhGqwLvYCXtna81BvSo
-	 ypZRmXswlxDp0ih6lGE3JSPovzNJnoIiztS3nnvwkTYhT2TZ6zJU93c90MxHqJoKAQ
-	 MEFlfSsRs3FNk1/Qv0zxN4FIGD/BpzKBdTpD/BmdOJY/I1AXepWyR+3p0wxpa3vxJX
-	 557N1PRl0DnJjGy1M8klAYUmZeIP4FSSYYD3NaVRYPxue7dGRqyEYRY5EeBVaLZNnM
-	 hhuYeqzPdwEMw==
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-65089cebdb4so3642596a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:31:10 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVjWwTif7YVIWGlOv/WE59SFUOajSGlPUPDHM2Lz5N+Zfj3t5hs3iEhLfKZCc8V9zWSxjuVLSZjOM55ZAzs@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqSA7SKjoq0crhU1es30N4eC61EwXt2VL0A8S7e0n77VKZUnuD
-	EMRpGYuiSBH75Yc9+Yf+4aqLWuAW4OgqKqwPwpuvUjEJtMiWcEdERBkfhZDCePpleIew83PoKr4
-	HFG8nCjaEgaNgACIgbWj61aNoptlmTA==
-X-Received: by 2002:a05:6402:3547:b0:64c:9e19:9831 with SMTP id
- 4fb4d7f45d1cf-654ba1c92e9mr2632146a12.12.1768584669199; Fri, 16 Jan 2026
- 09:31:09 -0800 (PST)
+	 To:Cc:Content-Type; b=pp5GbdQjLXUGisFPh9faqRIe3kYXoBGkHElgu3mYcmYzQyE6r6shR8oD0KCpF0o1XainJ2lanRBbyCfVYEXFpsKRW+zgZihXqOE0GRyw8tKCBorVUmHYAcz9YCvq22m0y5rPpMz7wm1zSVfncEByq7zLV5YMeL1ZHPZLzyutc9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WeXJeooC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MGIUZ3AH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60GGVZVO3192458
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 18:32:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=gmJnwrq+qEZAzMC/5VtipcOHi3CTOErwfCEAzXc3NFA=; b=We
+	XJeooCi/htsfcbB3EGGRbEd7Rfn+iUsr/AiADvRPO5UG65C1LpKcIlWJNEx9zTsf
+	nmUrKVrm1VOsu98IUq3QqYRvA0nB/kswxtEDZnxv5K7x8V0MMYVhpDG5q3XT6ntC
+	L8qWt7rDw3QIo4PUYBL1kB/1cTUfjWyU4OD5kurVUwHKaTm+I0WAuA58gt6bhUpm
+	kCJAfskyctKgKxTuYopPuEV0j4zNxKoLUngtbx7lrcTtE4mRFJURjRs4FaLoa9X3
+	3PA+szo8g+2GGEJI1dO7Um6uAUmQyJvJoXqGShkfcdTkCRsDOMJrN0Nl5yryGViw
+	hEnnaIUvNfiTgoPu7mJw==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq968k8ff-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 18:32:30 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-45c8a31b1fcso3032636b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 10:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768588349; x=1769193149; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gmJnwrq+qEZAzMC/5VtipcOHi3CTOErwfCEAzXc3NFA=;
+        b=MGIUZ3AHoL4F6Sb1nCAAxcx2D56BLgVtqxly0SPdsAFXBXJyhOqXsk9JMcTLmzgxyY
+         InhfN6jlA9SGp+tMm9W03S43hVXKARhDBCKA0h1/zrm1zNj9afBgGQZlTzhx9X8NUhBy
+         PprQC15LwU2hnR5p4X5MLW+bm1qCqMEV/k31DyUfxYlX+AVfh5KnaqTgtoK91vZMz6+A
+         3SwRTRIkxs54JpBRd7a8E4F87oHYFvH+HZ378JDasxMOiiqAf1FHrkVBU4wz9NPkq9cp
+         UsouHdfZO/BCSmBPB6f2cl3ZjUHTuzxJdysUurgK2Xm4DN/MJ8/ssZBzg0J9M/xIzwKF
+         jopA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768588349; x=1769193149;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gmJnwrq+qEZAzMC/5VtipcOHi3CTOErwfCEAzXc3NFA=;
+        b=LV/RSRkRE97UxoqxcO+J8oQfwvjhllIqUZ0Sfvdqh7ihEQcIGQU3mcW1F73OF5O9+r
+         q4xkBj5PSHlpOJmCY/0ziNEogHQy3R76MPtP9r4pagVgadrx5cTaXPz5MgtKQQ/DMjm8
+         vbLakztuH2pfuj+74HjliZUkINirCkJDqaoXZNHJ9riZ+RS84RUPLwbQXzPGW2erhE/k
+         0aQX53D6hTos+FADhZ9zfx3wvJBlYh1Gz7b4OWfPYR6fKXr29IEPDbjkMhBS4KzBo4HU
+         LvPRcef/nN2BTkxBJ5/so0IyvNkEqQkiDePTXcMBM0xbQXtzAoWDzLfaQhVpNw6aCbKN
+         BAxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCKEH9mAPTQ9WJxmzJLoCgkuLO2J1etgZdX3X48II2zWRmX5kVtDL0SF90teGSccD/v+vqjNdvkiNi4PB/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBvepg9O3RHA5ZKqrMz54/5YFzs5RHwH1NODeTWIN6EXjdTlbU
+	KAOd69XxJd0soqHgcXgixy1kx/SJlTL44FlRXkoNSWOdX7gvmFaxzecwM9cD7VlF82C/ugkacfh
+	kxhVDTrcWxz1XAJSYnb7MneP27ZQnTFA4MbR9cy54a+NRNE0O5k1JHK7qkRCQjWVf3MecJbClp2
+	GGaOz6j7okVYafNYkyJVAMqiV6YkL63y5KqZrq9z2nUBU=
+X-Gm-Gg: AY/fxX7r8Gp7vFIoMydFg1hSCm5HdIbyiS3ztH2JfHbcn47SD+fl5gthybVCPTELlRz
+	mvN26Z+Yre+xQyyu3STb4yaMR/LN1u+LIABaNicgtAYhEW9YK32N9l+7P1XoHe6B77jCWkHemdX
+	vu6CWz3lsaydsaa+YNhX4XbCDtyBtwJojjDJvTjohTqcyJRCNOFQxILxMqlNEXJzWy1w==
+X-Received: by 2002:a05:6808:2902:b0:455:ee1f:e1c3 with SMTP id 5614622812f47-45c9d6b8fccmr1377676b6e.13.1768588344652;
+        Fri, 16 Jan 2026 10:32:24 -0800 (PST)
+X-Received: by 2002:a05:6808:2902:b0:455:ee1f:e1c3 with SMTP id
+ 5614622812f47-45c9d6b8fccmr1377653b6e.13.1768588344235; Fri, 16 Jan 2026
+ 10:32:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
- <20260112-pci-m2-e-v4-5-eff84d2c6d26@oss.qualcomm.com> <20260113171424.GA3925312-robh@kernel.org>
- <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
- <CAL_JsqJxBNm0y6T7vji6MXgsO65iDJ-tdUEo0cOxkw7EuMKpkg@mail.gmail.com>
- <gcmm23ji4fkcqeshcyiehuyega7kdbtvmofp4usmol2icwn6gy@i46icelwwqh5>
- <CAL_JsqKKBjurY7ZrScayvkTijR-F6GWBofry48xoPFBFi55u4w@mail.gmail.com> <ysfkemsf4w7r3eoahfpjdr3z3buec5kvw4qol2njhxrz5tsdpo@4scz632uaj5i>
-In-Reply-To: <ysfkemsf4w7r3eoahfpjdr3z3buec5kvw4qol2njhxrz5tsdpo@4scz632uaj5i>
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 16 Jan 2026 11:30:57 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLJhLgDj846Xm3xh6iTpqKcGgAc0JarsAw4gJbOOih-eA@mail.gmail.com>
-X-Gm-Features: AZwV_Qgl_qLSqXPnKjpXjk329SOPF0xVaDGWoAyGNkj_0sZsVv7qP7OLwVi399U
-Message-ID: <CAL_JsqLJhLgDj846Xm3xh6iTpqKcGgAc0JarsAw4gJbOOih-eA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/9] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key E connector
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com> <20260108-topic-smem_dramc-v3-3-6b64df58a017@oss.qualcomm.com>
+In-Reply-To: <20260108-topic-smem_dramc-v3-3-6b64df58a017@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 10:32:13 -0800
+X-Gm-Features: AZwV_QjH_LAJrQbB9_T-U4SXhnS2PgPmgjjp6eFhzSG2zqHvjXMmhiR_pWC6tNs
+Message-ID: <CACSVV01EiCmG=tLH=UOyHUVeUVnQ0X52OUeOAmXHFvRfeuj2JA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] drm/msm/adreno: Trust the SSoT UBWC config
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Sean Paul <sean@poorly.run>, Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=JNg2csKb c=1 sm=1 tr=0 ts=696a843e cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=d94RvPs_YAZp7DxcWNsA:9 a=QEXdDO2ut3YA:10 a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-ORIG-GUID: fBJxM_c-jGBQgGre0EtAj8sga4OCXTGv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDEzNyBTYWx0ZWRfXwJ061QE6rd91
+ wFy4rHIO1fGMF9wOA1o1GBYjjv5pASGzNsVrWFdqz5ltd7IqfhEH4FrrIX63n5DfpUuAC6ZCZMb
+ XmQtllTrgYqQJRIQUt+IJGC2bMZqPxKOej/Jj1ptcONtbyzsM9RwMgzEcpeD1YXnph8Yg6MVwCU
+ GHJHhs05vfW/kh5EuJln0b27XKUlDbeH2NmMCHRgxsFpb9kmSfMMnLeaaMP8jCly75KVfbPCLo8
+ 6Yo01pemQS3fHcL0G3SCTksQOV5tpk30ekXkmE7lWKD+efb3CoOhFiUDNxsnLSXLMjKeC4jydjT
+ H6yC4IVU3jp14xHDtc4RoGBs6qoxWlpGL86GZglQBnm+0BXGTCd1ploUt6pczJYGAwmfnuyjw2C
+ DyGGNQv2IvvY1dRU75CIWUaKBiABuRJacDtaO1Lo32dIPMyN9EimBRZgWTTQDQCbGad9oDfmscV
+ a4sEPtnMXFIslESM+Fg==
+X-Proofpoint-GUID: fBJxM_c-jGBQgGre0EtAj8sga4OCXTGv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_07,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160137
 
-On Fri, Jan 16, 2026 at 8:43=E2=80=AFAM Manivannan Sadhasivam <mani@kernel.=
-org> wrote:
+On Thu, Jan 8, 2026 at 6:22=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.or=
+g> wrote:
 >
-> On Fri, Jan 16, 2026 at 08:19:07AM -0600, Rob Herring wrote:
-> > On Thu, Jan 15, 2026 at 4:42=E2=80=AFAM Manivannan Sadhasivam <mani@ker=
-nel.org> wrote:
-> > >
-> > > On Wed, Jan 14, 2026 at 11:45:42AM -0600, Rob Herring wrote:
-> > > > On Wed, Jan 14, 2026 at 10:14=E2=80=AFAM Manivannan Sadhasivam <man=
-i@kernel.org> wrote:
-> > > > >
-> > > > > On Tue, Jan 13, 2026 at 11:14:24AM -0600, Rob Herring wrote:
-> > > > > > On Mon, Jan 12, 2026 at 09:56:04PM +0530, Manivannan Sadhasivam=
- wrote:
-> > > > > > > Add the devicetree binding for PCIe M.2 Mechanical Key E conn=
-ector defined
-> > > > > > > in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This c=
-onnector
-> > > > > > > provides interfaces like PCIe or SDIO to attach the WiFi devi=
-ces to the
-> > > > > > > host machine, USB or UART+PCM interfaces to attach the Blueto=
-oth (BT)
-> > > > > > > devices. Spec also provides an optional interface to connect =
-the UIM card,
-> > > > > > > but that is not covered in this binding.
-> > > > > > >
-> > > > > > > The connector provides a primary power supply of 3.3v, along =
-with an
-> > > > > > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry=
- operating at
-> > > > > > > 1.8v sideband signaling.
-> > > > > > >
-> > > > > > > The connector also supplies optional signals in the form of G=
-PIOs for fine
-> > > > > > > grained power management.
-> > > > > > >
-> > > > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@o=
-ss.qualcomm.com>
-> > > > > > > ---
-> > > > > > >  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++=
-++++++++++++++++++
-> > > > > > >  MAINTAINERS                                        |   1 +
-> > > > > > >  2 files changed, 155 insertions(+)
-> > > > > > >
-> > > > > > > diff --git a/Documentation/devicetree/bindings/connector/pcie=
--m2-e-connector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-=
-e-connector.yaml
-> > > > > > > new file mode 100644
-> > > > > > > index 000000000000..b65b39ddfd19
-> > > > > > > --- /dev/null
-> > > > > > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-c=
-onnector.yaml
-> > > > > > > @@ -0,0 +1,154 @@
-> > > > > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > > > > > +%YAML 1.2
-> > > > > > > +---
-> > > > > > > +$id: http://devicetree.org/schemas/connector/pcie-m2-e-conne=
-ctor.yaml#
-> > > > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > > > > +
-> > > > > > > +title: PCIe M.2 Mechanical Key E Connector
-> > > > > > > +
-> > > > > > > +maintainers:
-> > > > > > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcom=
-m.com>
-> > > > > > > +
-> > > > > > > +description:
-> > > > > > > +  A PCIe M.2 E connector node represents a physical PCIe M.2=
- Mechanical Key E
-> > > > > > > +  connector. Mechanical Key E connectors are used to connect=
- Wireless
-> > > > > > > +  Connectivity devices including combinations of Wi-Fi, BT, =
-NFC to the host
-> > > > > > > +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and =
-I2C.
-> > > > > > > +
-> > > > > > > +properties:
-> > > > > > > +  compatible:
-> > > > > > > +    const: pcie-m2-e-connector
-> > > > > > > +
-> > > > > > > +  vpcie3v3-supply:
-> > > > > > > +    description: A phandle to the regulator for 3.3v supply.
-> > > > > > > +
-> > > > > > > +  vpcie1v8-supply:
-> > > > > > > +    description: A phandle to the regulator for VIO 1.8v sup=
-ply.
-> > > > > >
-> > > > > > I don't see any 1.8V supply on the connector. There are 1.8V IO=
-s and you
-> > > > > > may need something in DT to ensure those are powered. However, =
-there's
-> > > > > > no guarantee that it's a single supply.
-> > > > > >
-> > > > >
-> > > > > 1.8v VIO supply is an optional supply and is only required if the=
- platform
-> > > > > supports 1.8v for sideband signals such as PERST#, WAKE#... I can=
- include it in
-> > > > > the example for completeness.
-> > > >
-> > > > My point is that PERST# and WAKE# supplies could be 2 different 1.8=
-V
-> > > > supplies and those supply the I/O pads of the GPIO pins (and possib=
-ly
-> > > > external pull-ups) that drive them. The 1.8V supply doesn't supply
-> > > > 1.8V to the slot, so making it a slot/connector property is wrong.
-> > > >
-> > >
-> > > Ok, I get your point that VIO 1.8v supply is just limited to the I/O =
-logic and
-> > > not the whole card/adapter. But I don't get your multiple supplies co=
-ncern. Spec
-> > > says, "A 1.8 V supply pin called VIO 1.8 V is used to supply the on-A=
-dapter I/O
-> > > buffer circuitry operating at 1.8 V." So it implies that either the s=
-ingle
-> > > supply available to the card through VIO might be used to power the w=
-hole I/O
-> > > circuit logic or the card can derive its own 1.8v supply from 3.3v su=
-pply.
-> > >
-> > > So how come the card can have 2 different 1.8v supplies powering the =
-I/O
-> > > circuitry?
-> >
-> > Is there a pin on the connector for 1.8V supply? I don't have the
-> > spec, but the pinout I found[1] didn't show one. If there's a pin,
-> > then I have no concern.
-> >
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 >
-> Oh yes, there is a single VIO pin defined in the spec for multiple Keys. =
-Since
-> it is optional, it could've been omitted in the design you referenced.
+> Now that the highest_bank_bit value is retrieved from the running
+> system and the global config has been part of the tree for a couple
+> of releases, there is no reason to keep any hardcoded values inside
+> the GPU driver.
 >
-> So should I name it as vio1v8-supply or vpcie1v8-supply? I don't see any =
-other
-> 1.8v supplies other than the VIO supply though.
+> Get rid of them.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-vpcie1v8 is fine.
+Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
 
-Rob
+> ---
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   | 11 ++---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 82 ++-------------------------=
+------
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  5 --
+>  3 files changed, 6 insertions(+), 92 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a5xx_gpu.c
+> index 56eaff2ee4e4..eba6e74d0084 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1728,7 +1728,6 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_dev=
+ice *dev)
+>         struct msm_drm_private *priv =3D dev->dev_private;
+>         struct platform_device *pdev =3D priv->gpu_pdev;
+>         struct adreno_platform_config *config =3D pdev->dev.platform_data=
+;
+> -       const struct qcom_ubwc_cfg_data *common_cfg;
+>         struct a5xx_gpu *a5xx_gpu =3D NULL;
+>         struct adreno_gpu *adreno_gpu;
+>         struct msm_gpu *gpu;
+> @@ -1766,13 +1765,9 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_de=
+vice *dev)
+>         a5xx_preempt_init(gpu);
+>
+>         /* Inherit the common config and make some necessary fixups */
+> -       common_cfg =3D qcom_ubwc_config_get_data();
+> -       if (IS_ERR(common_cfg))
+> -               return ERR_CAST(common_cfg);
+> -
+> -       /* Copy the data into the internal struct to drop the const quali=
+fier (temporarily) */
+> -       adreno_gpu->_ubwc_config =3D *common_cfg;
+> -       adreno_gpu->ubwc_config =3D &adreno_gpu->_ubwc_config;
+> +       adreno_gpu->ubwc_config =3D qcom_ubwc_config_get_data();
+> +       if (IS_ERR(adreno_gpu->ubwc_config))
+> +               return ERR_CAST(adreno_gpu->ubwc_config);
+>
+>         adreno_gpu->uche_trap_base =3D 0x0001ffffffff0000ull;
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.c
+> index 2129d230a92b..3a2429632225 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -729,82 +729,6 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>         gpu_write(gpu, REG_A6XX_CP_PROTECT(protect->count_max - 1), prote=
+ct->regs[i]);
+>  }
+>
+> -static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
+> -{
+> -       const struct qcom_ubwc_cfg_data *common_cfg;
+> -       struct qcom_ubwc_cfg_data *cfg =3D &gpu->_ubwc_config;
+> -
+> -       /* Inherit the common config and make some necessary fixups */
+> -       common_cfg =3D qcom_ubwc_config_get_data();
+> -       if (IS_ERR(common_cfg))
+> -               return PTR_ERR(common_cfg);
+> -
+> -       /* Copy the data into the internal struct to drop the const quali=
+fier (temporarily) */
+> -       *cfg =3D *common_cfg;
+> -
+> -       /* Use common config as is for A8x */
+> -       if (!adreno_is_a8xx(gpu)) {
+> -               cfg->ubwc_swizzle =3D 0x6;
+> -               cfg->highest_bank_bit =3D 15;
+> -       }
+> -
+> -       if (adreno_is_a610(gpu)) {
+> -               cfg->highest_bank_bit =3D 13;
+> -               cfg->ubwc_swizzle =3D 0x7;
+> -       }
+> -
+> -       if (adreno_is_a612(gpu))
+> -               cfg->highest_bank_bit =3D 14;
+> -
+> -       if (adreno_is_a618(gpu))
+> -               cfg->highest_bank_bit =3D 14;
+> -
+> -       if (adreno_is_a619(gpu))
+> -               /* TODO: Should be 14 but causes corruption at e.g. 1920x=
+1200 on DP */
+> -               cfg->highest_bank_bit =3D 13;
+> -
+> -       if (adreno_is_a619_holi(gpu))
+> -               cfg->highest_bank_bit =3D 13;
+> -
+> -       if (adreno_is_a621(gpu))
+> -               cfg->highest_bank_bit =3D 13;
+> -
+> -       if (adreno_is_a623(gpu))
+> -               cfg->highest_bank_bit =3D 16;
+> -
+> -       if (adreno_is_a650(gpu) ||
+> -           adreno_is_a660(gpu) ||
+> -           adreno_is_a690(gpu) ||
+> -           adreno_is_a730(gpu) ||
+> -           adreno_is_a740_family(gpu)) {
+> -               /* TODO: get ddr type from bootloader and use 15 for LPDD=
+R4 */
+> -               cfg->highest_bank_bit =3D 16;
+> -       }
+> -
+> -       if (adreno_is_a663(gpu)) {
+> -               cfg->highest_bank_bit =3D 13;
+> -               cfg->ubwc_swizzle =3D 0x4;
+> -       }
+> -
+> -       if (adreno_is_7c3(gpu))
+> -               cfg->highest_bank_bit =3D 14;
+> -
+> -       if (adreno_is_a702(gpu))
+> -               cfg->highest_bank_bit =3D 14;
+> -
+> -       if (cfg->highest_bank_bit !=3D common_cfg->highest_bank_bit)
+> -               DRM_WARN_ONCE("Inconclusive highest_bank_bit value: %u (G=
+PU) vs %u (UBWC_CFG)\n",
+> -                             cfg->highest_bank_bit, common_cfg->highest_=
+bank_bit);
+> -
+> -       if (cfg->ubwc_swizzle !=3D common_cfg->ubwc_swizzle)
+> -               DRM_WARN_ONCE("Inconclusive ubwc_swizzle value: %u (GPU) =
+vs %u (UBWC_CFG)\n",
+> -                             cfg->ubwc_swizzle, common_cfg->ubwc_swizzle=
+);
+> -
+> -       gpu->ubwc_config =3D &gpu->_ubwc_config;
+> -
+> -       return 0;
+> -}
+> -
+>  static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>  {
+>         struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
+> @@ -2721,10 +2645,10 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_d=
+evice *dev)
+>         msm_mmu_set_fault_handler(to_msm_vm(gpu->vm)->mmu, gpu,
+>                                   adreno_gpu->funcs->mmu_fault_handler);
+>
+> -       ret =3D a6xx_calc_ubwc_config(adreno_gpu);
+> -       if (ret) {
+> +       adreno_gpu->ubwc_config =3D qcom_ubwc_config_get_data();
+> +       if (IS_ERR(adreno_gpu->ubwc_config)) {
+>                 a6xx_destroy(&(a6xx_gpu->base.base));
+> -               return ERR_PTR(ret);
+> +               return ERR_CAST(adreno_gpu->ubwc_config);
+>         }
+>
+>         /* Set up the preemption specific bits and pieces for each ringbu=
+ffer */
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/ms=
+m/adreno/adreno_gpu.h
+> index 1d0145f8b3ec..da9a6da7c108 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -237,12 +237,7 @@ struct adreno_gpu {
+>         /* firmware: */
+>         const struct firmware *fw[ADRENO_FW_MAX];
+>
+> -       /*
+> -        * The migration to the central UBWC config db is still in flight=
+ - keep
+> -        * a copy containing some local fixups until that's done.
+> -        */
+>         const struct qcom_ubwc_cfg_data *ubwc_config;
+> -       struct qcom_ubwc_cfg_data _ubwc_config;
+>
+>         /*
+>          * Register offsets are different between some GPUs.
+>
+> --
+> 2.52.0
+>
 
