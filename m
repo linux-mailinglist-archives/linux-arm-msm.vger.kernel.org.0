@@ -1,44 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-89296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F32B7D29E7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 03:08:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18830D2A0A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 03:20:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A3B3430115DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 02:08:57 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1964B3038F2D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 02:20:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B34730FC0F;
-	Fri, 16 Jan 2026 02:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53599334C39;
+	Fri, 16 Jan 2026 02:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cUxzyPH1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orNkOYCM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA53419D065;
-	Fri, 16 Jan 2026 02:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304D51AAE13;
+	Fri, 16 Jan 2026 02:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768529337; cv=none; b=b+ensUFcarGB8J9UUZ2L1GerlznWS1g8hkYksGy0RFxPNhEBaRx/LKri29A+VBbQfrXAlenHGpr6s1ooVm0o80BMyB9BcboeypSaTUHHNJsQmjcptNr0fJYKAfpwXXFX7sDQn4vfFRMiiKYvfGgS6+Zuou7vjWa6DGNbcc2aV8M=
+	t=1768530040; cv=none; b=ZSMmbuZ08fsF58KTdu0VR0NG3efmsi3jz+An+ZpWSRyWBVRohfeEWbbOLPhN2F4YqSlKRxZrCgUW33NhPDcloZgLAqGsH2QfVCQ4i4LNWK0QpR40Wp94yy/CBSV4Rf349popaIEZ17u8EFLBzpqafJbwKGnBGCdpywlvOBKi63E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768529337; c=relaxed/simple;
-	bh=sno2tWjsBNPmpnaKlE6qtXy545sE4ON2GCYjm2//rew=;
+	s=arc-20240116; t=1768530040; c=relaxed/simple;
+	bh=YfFZJLSLFO4/tevrm1qDoUbfpCvk7oFl2EV/Jz6PUwQ=;
 	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=oFHK6Ec0jr+zIQRriIQ/m+zxCzr+zWKyl/heqTlunesgez2XIVoB8JSav/yM2AFJDHRq4Y2hc7RQczbS/hYYOclPx3m/5MM3dnPWOe9ZHQlbGIajeO9SKpG/AAzRpaEOoeKwjMQPggzyGPBkwmltb8Choh14HfsxNij/Stb/ESo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cUxzyPH1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7890FC116D0;
-	Fri, 16 Jan 2026 02:08:56 +0000 (UTC)
+	 To:Date:Message-ID; b=iji8W5rPDQ0OOKlcAl16MK1E6G2VmyiazNiKmB3queWJR8PCRHdQszteITLLHhxv9ZaTCagl/BW49yBipfX9eM2l11PNXKp44Y0JBGhuhOSdaOzbQbxa5N/87eZI5/0gEL5P0V8TL+x+nsHMzFRzxeyQHiJ52cKdB611KbrqTL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orNkOYCM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D6CC116D0;
+	Fri, 16 Jan 2026 02:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768529336;
-	bh=sno2tWjsBNPmpnaKlE6qtXy545sE4ON2GCYjm2//rew=;
+	s=k20201202; t=1768530039;
+	bh=YfFZJLSLFO4/tevrm1qDoUbfpCvk7oFl2EV/Jz6PUwQ=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=cUxzyPH1/GE0ZbZk/CuOg6tqprq5nDKPLtaNV16nL6PhCDMsGPF4JERgpWvmcBnw4
-	 NerEoIpBdO0aQQtqMbQW1zF/darIsPRQGttdVTiyqJw422E8tgVSCdcqFJ1gcYtGH4
-	 QA529vsED10PaXQsIYI7m4BEja+zsTXygdvMKGbX9naiUsMBchvwU4M4m5aeEGVGAP
-	 oP1q6+//9LFe36a+QFuxXdb8BJo2w0LGzfIkKPHE3AAgpP5Xl3kcxXlXeLi+Q6ws/P
-	 6E6VcGnYdUxAE6K771ftOhrTHpudxLP5G8Qy5y3vD1Lt2WUI9Tqoe+ZXDWPV3H1vtt
-	 lMP79gf5Nt1vQ==
+	b=orNkOYCMK1e+79szQumiLRMsOKbK9iNEQ9jn6Ee8+9doVTTgi1zzglgHZLtl3zNOC
+	 Wh87IIwNMwmorFNylgDpto8CAzDmeA4rIkSw+X+upXA4sdEUPnRxx9BH6lAPphQFv6
+	 kK1YSNR/YNTZOQy9Rxz/qml8ga0UlJ8xeIFmQ8z+cya9S6UokjxnjM8vI4q7qijJfn
+	 keHciUNZ2OhW3p0otK2iQYQdOdEkWhaPw/FfOB31xhHICPUTwBiYkvOWqju1bI/3Bo
+	 Sr0pBkoyO41SeEDJdc5k9do8/Ll+D8oy/R0IaMJg4RblazjAw4bSL1dL0tq288pbKE
+	 trBsm6AehYfVA==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -47,45 +47,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260114092742.13231-5-angelogioacchino.delregno@collabora.com>
-References: <20260114092742.13231-1-angelogioacchino.delregno@collabora.com> <20260114092742.13231-5-angelogioacchino.delregno@collabora.com>
-Subject: Re: [PATCH v8 04/10] spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
+In-Reply-To: <20251126-pmic_arb_v8-v5-0-4dd8dc5dc5a1@oss.qualcomm.com>
+References: <20251126-pmic_arb_v8-v5-0-4dd8dc5dc5a1@oss.qualcomm.com>
+Subject: Re: [PATCH v5 0/3] spmi-pmic-arb: Add support for PMIC arbiter v8 for Glymur and Kaanapali
 From: Stephen Boyd <sboyd@kernel.org>
-Cc: dlechner@baylibre.com, nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org, neil.armstrong@linaro.org, sre@kernel.org, angelogioacchino.delregno@collabora.com, krzk@kernel.org, dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com, melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com, ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org, luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com, mitltlatltl@gmail.com, krishna.kurapati@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com, Jonathan Cameron <jonathan.cameron@huawei.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, jic23@kernel.org
-Date: Thu, 15 Jan 2026 20:08:54 -0600
-Message-ID: <176852933471.16445.12620793496789127631@lazor>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, aiqun.yu@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com, Pankaj Patil <pankaj.patil@oss.qualcomm.com>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+To: Conor Dooley <conor+dt@kernel.org>, David Collins <david.collins@oss.qualcomm.com>, Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, konrad.dybcio@oss.qualcomm.com
+Date: Thu, 15 Jan 2026 20:20:37 -0600
+Message-ID: <176853003773.16445.3048989905490232224@lazor>
 User-Agent: alot/0.11
 
-Quoting AngeloGioacchino Del Regno (2026-01-14 03:27:36)
-> Some devices connected over the SPMI bus may be big, in the sense
-> that those may be a complex of devices managed by a single chip
-> over the SPMI bus, reachable through a single SID.
+Quoting Jishnu Prakash (2025-11-25 23:12:52)
+> This patch series updates the SPMI dt-bindings and driver to add
+> support for PMIC arbiter v8, targeting Qualcomm SoCs Glymur and
+> Kaanapali.
 >=20
-> Add new functions aimed at managing sub-devices of a SPMI device
-> spmi_subdevice_alloc_and_add() and a spmi_subdevice_put_and_remove()
-> for adding a new subdevice and removing it respectively, and also
-> add their devm_* variants.
+> SPMI PMIC Arbiter version 8 builds upon version 7 with support for
+> up to four SPMI buses.  To achieve this, the register map was
+> slightly rearranged.
 >=20
-> The need for such functions comes from the existence of those
-> complex Power Management ICs (PMICs), which feature one or many
-> sub-devices, in some cases with these being even addressable on
-> the chip in form of SPMI register ranges.
+> Device tree changes are not included in this series and will be
+> posted separately.
 >=20
-> Examples of those devices can be found in both Qualcomm platforms
-> with their PMICs having PON, RTC, SDAM, GPIO controller, and other
-> sub-devices, and in newer MediaTek platforms showing similar HW
-> features and a similar layout with those also having many subdevs.
->=20
-> Also, instead of generally exporting symbols, export them with a
-> new "SPMI" namespace: all users will have to import this namespace
-> to make use of the newly introduced exports.
->=20
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@coll=
-abora.com>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 > ---
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+Applied to spmi-next
 
