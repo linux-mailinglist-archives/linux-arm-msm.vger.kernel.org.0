@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-89440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4BD2D335A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 16:58:38 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CEB8D335CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 17:00:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8F1B23025501
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:57:07 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4AE0430A2785
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 15:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A9633C18E;
-	Fri, 16 Jan 2026 15:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02A333D6E6;
+	Fri, 16 Jan 2026 15:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JyMSeUZr";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JVPAEds1"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="G3bBhd0Y";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="/HxagTRA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26DB33BBC8;
-	Fri, 16 Jan 2026 15:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E80133C18E;
+	Fri, 16 Jan 2026 15:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768579006; cv=none; b=fnNdQ1Idw7lzxcwUWhmHOWRO7gcHfkJwQEW62haBi0dANu9Uyai71l45rKylgn70WIClMxQ8DVVnBzQ/XcGjqJMR+5EO03Cmqn2d6uoeKYR/ebuInRLcQ9KwpD8W7tDYIMTyRC9gHNUY07LtNtnZt50eD49Gg1EswFdjgAZ9ZeE=
+	t=1768578958; cv=none; b=C2gV/ViuSvssWUhxYNMlEtKl6PvUHVVXteckGDotQmo01RlCiOch43vYEXnNZEv5IQEFNsFOatqD9lhIIbE4TqYoqrxDsqdPnLrhHI5Vg9Kburp/Io0jurPAX6UtOddk8yIdaxud09tAc7sNy2sIRpzZE7xcj/tfJoAtjxcEhek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768579006; c=relaxed/simple;
-	bh=qt3inedUq/MmQoKO9566ag23yZ8vQbct6HmDG26LUVU=;
+	s=arc-20240116; t=1768578958; c=relaxed/simple;
+	bh=BGD37iXtuXVqveIhoKLUva+wDLcwjb4aEPD1NwPfpoQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NP0A2aE11tZfdNx8YERFZMUXuD/KaCzS040hYjAz0zIZOFVbA7irwaLtoDjyYBM4ocSbxpgoUvnL2KHZezlFw7shSmwux83Y5+d7ATFblTHsv+AGk0SpkujdumBF6IYkvjk9Yh5w9kkRK7SXtYt/QnWo1qg+ys/RsbthiTK0X3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JyMSeUZr; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JVPAEds1; arc=none smtp.client-ip=5.75.144.95
+	 In-Reply-To:To:Cc; b=kAjUE6G/TvyxfOK/B47zgGFBcf/fjTg4ThOJKr+b7zRi/erX9j7H5T7GN7Z6vrPLJZhp1rKOjTNS4P/9VCRIjqL4g51q9ZusT+ANa04mORkHropTjHUt+2qzDtteTmK7p37tZgJGbw1DpigteF68d7PQX7Oug4Xsg/a7HSLOoXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=G3bBhd0Y; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=/HxagTRA; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578905; bh=uKgpy2R20j2XQr08PTw877G
-	gR32Ngtgrcb0QG9cVHRc=; b=JyMSeUZraSyAu4hGlEFqT1dCfJgkjCGPd4duYSyg5vjim1rohF
-	xt8zdweztXkUEOlhtqBUhQqVLupOTS5ScRjqiuXk4t3lBJODJ7LgkZonClKC8y1KlVHEJER4IhG
-	E0za1FVCUa5pDX8juoTr/Lh6OPgQvAiS7EJCA7J7kl38oeaIZ9w/0zskbNSQwYIvKNiPmmfnd/W
-	BFakq48WN1b9pguwoXJ9S/EQbZaO8Adlg9adGVzoMGJAZtgGM7rDbEMCdwhzzSCaxXu7BHJ/Vsk
-	hh0r0NkKXToiGyUeYA6hUbKXp+JDNCxvDO1dR6KoYgh9SBeKBOflt+BZt0WNlsoTpew==;
+	h=To:Message-Id:Subject:Date:From; t=1768578906; bh=tXubEZSnhpcufNXftqhqFFl
+	cq77hv7GIVJJ3YGo5pfk=; b=G3bBhd0Yd1k9t72RdZx6Nusbd5uIbJGpF7uwYUHlqTcW2Qho9p
+	1DiVL51L65knmp4MBzz+JkTedk119SVKQh7QJenVnudVD7/gibOS/CBw0x4yzPJbGcZmzmRPi6U
+	zhPsH8Dk7l58vTABvkNg2Yh+31Xl1HGJvkC6kxe6zUYnL4rSy1ZJRxFLNlZsg/Eg9xouvNVmQr/
+	wvLYCPnBIHXWqJlIZswuSIwWf3HpXFESye02Jw7deXN23tB07o4FiRbkxyfPZm2kGHxedJbwp0e
+	k6gI7PDSNP/lBlufT1BhNpUJzk0KC1NP+BoHJgNrGIks9bdeyfu5M/uckBgSTcZzHww==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1768578905; bh=uKgpy2R20j2XQr08PTw877G
-	gR32Ngtgrcb0QG9cVHRc=; b=JVPAEds1t9FOW2kbOFlr1gCur/F1vUz3+YT62QtovBOfSqVvjg
-	0vRHGStPLYP4UABeP1gGw0b7NSjckyX/I4DQ==;
+	h=To:Message-Id:Subject:Date:From; t=1768578906; bh=tXubEZSnhpcufNXftqhqFFl
+	cq77hv7GIVJJ3YGo5pfk=; b=/HxagTRAsNbrqFXrFBR+ReFgjZSCEkamIaRWCJUn0IzSXUC2yo
+	zVRAY3dzI0zOAu/ALNrE+wXVzCvEsH1sXQBw==;
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Fri, 16 Jan 2026 16:54:47 +0100
-Subject: [PATCH v2 5/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix
- reserved gpio ranges
+Date: Fri, 16 Jan 2026 16:54:48 +0100
+Subject: [PATCH v2 6/7] dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260116-xiaomi-willow-v2-5-4694feb70cdb@mainlining.org>
+Message-Id: <20260116-xiaomi-willow-v2-6-4694feb70cdb@mainlining.org>
 References: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
 In-Reply-To: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,37 +68,34 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux@mainlining.org, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=891;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768578900; l=754;
  i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=qt3inedUq/MmQoKO9566ag23yZ8vQbct6HmDG26LUVU=;
- b=hPOatdeWy0rnjVlIQcz/OaED0jutOeuKhbzkOL+quAmxNk/RYlYnT/3zu5nWmsZkkdoIaJOR6
- 9X6Db66fW0NB/lGI0M1nNqwlpOEVTJAVo1Nv2OGeuTgk8rYRPsE+iah
+ bh=BGD37iXtuXVqveIhoKLUva+wDLcwjb4aEPD1NwPfpoQ=;
+ b=LOGuQhxyMSS8KYb/8MiFP7RBF42eUpCKcEU0pzzvtQhdsCDWgcSFxjNgKhEq3FgmFHJUxyTQD
+ o5kkGja/ffCD+WIwSh7oT5iikH/XP9FMssMQbWjs0ARgeYOiNF/q9Hk
 X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
  pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-The device was crashing on boot because the reserved gpio ranges
-was wrongly defined. Correct the ranges for avoid pinctrl crashing.
+Document the Xiaomi Redmi Note 8 (willow).
 
-Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
-Tested-by: Biswapriyo Nath <nathbappai@gmail.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index a9b6e648fe3b..2605d0c942fe 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -293,7 +293,7 @@ &sdhc_2 {
- };
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index d48c625d3fc4..f76cc92d5530 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -966,6 +966,7 @@ properties:
+               - sony,pdx201
+               - xiaomi,ginkgo
+               - xiaomi,laurel-sprout
++              - xiaomi,willow
+           - const: qcom,sm6125
  
- &tlmm {
--	gpio-reserved-ranges = <22 2>, <28 6>;
-+	gpio-reserved-ranges = <0 4>, <30 4>;
- };
- 
- &usb3 {
+       - items:
 
 -- 
 2.52.0
