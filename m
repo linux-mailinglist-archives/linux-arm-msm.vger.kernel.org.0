@@ -1,195 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-89480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91749D389D2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 00:23:50 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7613AD38A62
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 00:47:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DF9CB310DA93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 23:21:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9B5CD30151A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 23:47:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01E432B981;
-	Fri, 16 Jan 2026 23:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4483126DE;
+	Fri, 16 Jan 2026 23:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gVsbH5jZ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JfdTpncJ"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="K7RnfShy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB63D2FDC4D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 23:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982D117A303
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 23:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768605680; cv=none; b=hOsrWQ2tzxs2D5LYTiT1B+hnMoDV0HMes23LO4Jn203v0CFdWwFuerVLUb8rdVv37phTWeorC6dZvD9QTR5i+rEv65VtoNBxSl4uRZzrzIjYB30WVD3rduA5J9jHGLQn4ioMusOStruewcYebU7K2o51EI+DdjBMcfS/zKdtgps=
+	t=1768607246; cv=none; b=DsQTqBB69VWEmK0zR5b6mMaa8I/SgSuj1oDoKolgwIXI9QjouLP448Y3ZjR80drIwCHPjNdFbDL/zAeBllnbQs7YWkmYK2YoAuWCPMjTtugjC5CCjAuqbxQu7v+Xo8YFiMrwcvWev+GEbmWUBpcoxO4TXY5XDQbkThg8d8BKt1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768605680; c=relaxed/simple;
-	bh=oJZEE75ljDhbxjPAjmqXX/qekCyAnUUIY+vndlyCRTs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WJ+PY2N8Y/F7QUa9gAme8EmkgqNRSFHTn1azHwKQpjG81Olj1O+v4HTFvpcZoiGqKnfNDvv5vANQ+ZxBMfpVBWsBYRKq+JSvUX3W4SNRB/GrZ8XpDH0pKDL9KOKcDxvsxaGUH+YVkycMxWzl03WGxm9NC6yQYFzKpsrYVOZcuDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gVsbH5jZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JfdTpncJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60GNEMCq167573
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 23:21:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=YodHWG0Qjmm
-	xJvKMASHwO0ieWVY/Zym4kEuPLt9q2go=; b=gVsbH5jZTWKKD3qlhepO7EBZXDW
-	qz7MdvwC6PVR8TU0rWp9UXaTIQIYUURXbZQ9/KP/jYSTx21KL04EzIPRwx9m1hUq
-	PjFE/6YF+XklsQJ1+b7DjcKSNXBpUHhyzBvQSxsYOz6CjJG4TQyHIjGwMaTKMYsn
-	tAiaqzzgQL5ZMYXXAaa3cb8cbT0uCKzPbPqtctpBbRXzpKb/opflF4M68UqOWOP1
-	PQYLKYLqrHcaLjp+6bM4SQns0HNWpetAhzgru0QjhtmsjK+AokW+i1ab40kf8J0z
-	GrFZua5Tw/HyaKGIS1r/fhD+Ktu+aLmBqfVI1tGAMSDnATjeNYUFFKPHH2w==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bqved0b63-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 23:21:15 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-122008d48e5so4736725c88.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 15:21:15 -0800 (PST)
+	s=arc-20240116; t=1768607246; c=relaxed/simple;
+	bh=YCnOrVHDXhWdzQMwWovwcpqiz8uUp4sj1VBz21E2ms4=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=hVtbqcXrXAFIlIr8LbQMDMLmQs3ehZvifrJXrQjUll6YtjbYcKKNCMFLbAwRuswMTtPgg9Y/vTECnGarbXwizk8dT+8ixTyIkBFztDJRVM2pM6LztPlw2HzqRwPCxpLrPJObgnTDgQy/wYQ6wOuKgq9qxrI2ikL3iscDWIuabuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=K7RnfShy; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8c5386f1c9fso408883485a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 15:47:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768605675; x=1769210475; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YodHWG0QjmmxJvKMASHwO0ieWVY/Zym4kEuPLt9q2go=;
-        b=JfdTpncJ/UDALHZLWF/JGuLIQy9rNR2d0Hy230JSAARNiUqkRFZBgjSy7q5PJ+3t8I
-         /CIwdj3u7vbls0dMuLuRtWuIpKmNlr7MpRREfjmcR6OU5FUaLy28aEAiKiYFEStmMrnC
-         tODceKXYCUfh2vKoPpNDt8giHkpIUM0gkvzJPwdYRZvQ07jHkpTYpRCI+YcS1NQiCr8U
-         gwWTivVUOre8Muq3nvqSmqacHhGSt7IdLuHxxbZc5EcFmVY/6k5M8+8DmzirGM+DA6gP
-         i/ZSJFOf26RB/fkrJMd/+pARXb2Y0EsUvJQJrxQmhifp8WCbF3Ojs6p/sh2b+/c0fSh3
-         OY/g==
+        d=marek.ca; s=google; t=1768607243; x=1769212043; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=shfPp2KoeQSvAsE+lzy86eQNZOUQOmOwfsSErLe5hXk=;
+        b=K7RnfShykN/sP6cAjw0avQrmeFcPZ1nsq6m7Lf56G36KkxqT9HfDAEmFnyAop85t00
+         /nB724VZ9OTdVZeXO8clT4AUZZalMpsMiNiZGfKcSpGc7WOqIYpZbACf8TJNvMblOrYj
+         SUHCTLgJht3Vj7MKnirMHokMnBg657CRaXIWBea5bMvkrERfBLH6ymrXjHEdo8x7wjUU
+         erZ80J2xpg6pqilNwAYu9vWpqYcU36FyNdvqSw9xCjNK8xcIOsl6ll8BHvJc7fx5AQjM
+         CcCA+syRI5FlOO6iEclAXe4D6ejXTjfLtUZxcU13dcFibqDrxGMwq1s/ybYJmNPoBr6B
+         LCVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768605675; x=1769210475;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YodHWG0QjmmxJvKMASHwO0ieWVY/Zym4kEuPLt9q2go=;
-        b=aul1kvhGQJyeL1jqUTpq+Wh7yvBx8Lmaw2ZL/MLDoJr9+qH0xjRJT98vGYyqJLXsKe
-         q5VNozHigj3akFlXKjWzlC15L0WWUkW7isUNug92NGNXXfnvEpaoe0P5w6JPxb4ujq4D
-         BnuzoFDLN8knYAj/3kPaDCO5bbF/eWvBanrptJluLq/6uxNQRKvOxjuVyBNkU/jN2yv8
-         n324WjSXDFusJfQ8YOU/xl5v+AuNchgRJ2sq4IwPR9z2lJtyk0CUYcbOUMVv2ruSjF+8
-         tB3sOkn892NTjZAxBcl4TeN1mRcEXQKKhhWZ+idg4iB9oGupCJh8oCc1WZ68L615ZWp/
-         dRGA==
-X-Gm-Message-State: AOJu0Yyjb/Poxp/NbuDt4cbGJL/xNawmadKFhusIPcSp6JDGlaTgFcSz
-	s0uDsSA5bSwTuB2fdkwLxPnPPqtnXygZfnhjSgXVj2VwbECQe9fOaGqbi5rBUybaeQfx3GouAH6
-	nSAHF6LM/EGPbwz0Lf0wcPRRHouyuSumwST/b6HsUA5GKIds7/DYCLyly9RERITM7Kv6K
-X-Gm-Gg: AY/fxX7muWQVzQXs43i6qdawxaXNK+3tpe2cv44HhPQUX4NDyIOy7VwPPO8k50N2hTf
-	sJLELuhb86z5I8QRqYxwRCnUii7w2RYKrgQg36NAV58TPWTpiLziIBN2LAus6t5O7kXsRJBKv61
-	aon8w+CzJjB0vbOrXCHSvwnh+eMtEkJzQ4hP/mE74V26PHXq41tnfUL7Z7tKzedBiscUWd/R6Pl
-	+8I1AQ4YW49GdIMM2RKS03s8IplRREy/0Guq0XVYHh7o6y4W7xkqtF4qVBFzX1nJ4S1/URr0r/r
-	jq0I2UqeW+pCQYwNa5LCLwjAJbR37X7tO9pIXbhIjCvWVLND9Uw+WvbptvYzDb40KIUeb+J68+M
-	EuzeDE6UIAvxauI+g6a15+ou+9O4T34SrzTDwVCWXtf3+XXLrYdgnmnJS33olR28=
-X-Received: by 2002:a05:7022:128e:b0:11b:9e5e:1a40 with SMTP id a92af1059eb24-1244a72e9fcmr3479670c88.15.1768605675169;
-        Fri, 16 Jan 2026 15:21:15 -0800 (PST)
-X-Received: by 2002:a05:7022:128e:b0:11b:9e5e:1a40 with SMTP id a92af1059eb24-1244a72e9fcmr3479651c88.15.1768605674645;
-        Fri, 16 Jan 2026 15:21:14 -0800 (PST)
-Received: from hu-eserrao-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1244af10e21sm4611267c88.16.2026.01.16.15.21.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 15:21:14 -0800 (PST)
-From: Elson Serrao <elson.serrao@oss.qualcomm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 9/9] arm64: dts: qcom: qcs6490-rb3gen2: Enable EUD debug functionality
-Date: Fri, 16 Jan 2026 15:21:06 -0800
-Message-Id: <20260116232106.2234978-10-elson.serrao@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260116232106.2234978-1-elson.serrao@oss.qualcomm.com>
-References: <20260116232106.2234978-1-elson.serrao@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1768607243; x=1769212043;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=shfPp2KoeQSvAsE+lzy86eQNZOUQOmOwfsSErLe5hXk=;
+        b=KIZB7+t6NOZLv4HR78102XJ8uAlvdfZFEp9rdMgCB0EPdgWJvunGGEMiLNAKJ676em
+         eJG1TQaSGbYiDorInmsqKgHJknJgyW/J6PN3WQWfejF07E2AJYtN1rC8Piby8II+A1PP
+         RDDmN6lCs9VP6JGUiBivNURlKYbz6HiQkfzhoMV/8ZSKpOHsssPafCJjwv13Ts2SID3j
+         A7BMa4+N7MniScwBKxSzuCdeVqyAIGMPy07w36YHAdRN4PTZi+osfTdOQ7RqZzzzdIRZ
+         Qp3iCYuugAhS1Ij7TlPuNk//OknDQWEKcchHbwlfla2ucWZh+XDH6os+1OsZzyrcnQDv
+         OqqQ==
+X-Gm-Message-State: AOJu0YxcONfGa+1UpyXenxcpvoDri82JAar52xTMh+ju3NPN4KE3hTyE
+	1wBlUty6HLxiQGZQFJ08tHj+/QgUKP6Ybhj3Al1rn5Q3OrC3AmM/623mQLcYArn0UwM=
+X-Gm-Gg: AY/fxX7kloVlQeRC/SuL/PHUpLM087YWc4AGwKMaYPL5wworqEO3vjepKfI2dGPYkYm
+	ioUe0FlHpYVyx1NmuVukwWMyoRYkIO7gt0AHfUys+jm/2ltoApUrhRUi6xgeRux2/4RBHDnwPKt
+	zE23GiLQblzY5X1ylv6eIMqruL5Fnb2DprXRlySseWj3yfseZy/cKUWRLdEKtTLozC1ju+iN3RP
+	JdNE7Ci5px+A0BCPWGda0xSYOs8nQ2oKq8sQUMqp3mfOP+fpFMGp6sniKIrk6ctAL1LT9nUb6Fn
+	L7qUjPwpPFU2tUQ1d6REThHBo2KF5YvYzchoHBoYki+ZjoRZvM8brxtuC1zmhscC4/BfMs8NceH
+	ak+E5sLndFJbkAuALAKqEtZo8qi2K91Hbg1g7lk5nP529uhbsud7WKOIBEf73LcegXD6mRjhaJk
+	aI6HIiVMumt9n7gU8cMqdUXG4m7SVqwZirIeqgkHvzSPlJwwHVFlTmxkA9+Q==
+X-Received: by 2002:a05:620a:1729:b0:8a2:4d02:eeb3 with SMTP id af79cd13be357-8c6a68ed2b2mr616124385a.11.1768607243488;
+        Fri, 16 Jan 2026 15:47:23 -0800 (PST)
+Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8942e6d6366sm39414796d6.51.2026.01.16.15.47.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jan 2026 15:47:23 -0800 (PST)
+Subject: Re: [PATCH] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Abel Vesa <abelvesa@kernel.org>
+References: <20251127212943.24480-1-jonathan@marek.ca>
+ <176859948742.425550.1764024067188709567.b4-ty@kernel.org>
+ <79b3e8ae-134c-df6d-396d-9b7f766ef666@marek.ca>
+ <ycygvgw4uwm6bb7i4fbuxmzb5a42zmn6atwwdznicvili3jh2h@eaa4ddtkwc5z>
+From: Jonathan Marek <jonathan@marek.ca>
+Message-ID: <e6b0aedb-955a-5883-524c-f602ca619681@marek.ca>
+Date: Fri, 16 Jan 2026 18:45:54 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: u48MgaXsh1oKXHD6hjNOvMit5otambCF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDE3NSBTYWx0ZWRfXwoAGutGv2Eqf
- u9VWXgPo7YSlchHAB9XXBd1Vbuj9Jnymwdbdi4vVqa9jsGsJDpIWhA64l3ip72PRZ71iB/AUcNF
- HhuYulByzDJEMwaacG0Y/2Y1h6t98Jc4ugVNvkpXOhKKUZ12U8yS+7gYdwD336aNX1vfqWlAOLm
- aBxEIaitNbUi/tF19jsYGZin1fe2HdZyUdc7xuwlUlLR5+hOinf93J1k4KQAFyoTjSZCs6T2C+t
- 762qDbLKcK7cm8+b+wIv/ZIYmPWXH01fjvwI0VJLz/Q3h+3xBR6op28mPFhFRVzhRa3ZOlubV62
- jl52mY7E3U+RmKkZwJ9TnB1VRakP+wwGKVgkjEJf5TqFs2GHVGdIuAjVw7CR+85n3H8uQPOGrXP
- DjUXNEaEJkPyLWs76BP906WBrG+mmlG/ouby+jwg/8jIuW+PRFqL7teolf6DXyXMjXreH8PPSAn
- XqtkyvxNtl3zofFEUgg==
-X-Proofpoint-ORIG-GUID: u48MgaXsh1oKXHD6hjNOvMit5otambCF
-X-Authority-Analysis: v=2.4 cv=aMv9aL9m c=1 sm=1 tr=0 ts=696ac7eb cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=bAolQom50hykzV7YMrMA:9 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-16_08,2026-01-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601160175
+In-Reply-To: <ycygvgw4uwm6bb7i4fbuxmzb5a42zmn6atwwdznicvili3jh2h@eaa4ddtkwc5z>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On this board, EUD resides on the primary High-Speed USB data path between
-the connector and the DWC3 controller. Update the device tree connections
-to correctly map the connector and controller endpoints, and describe
-role-switch capability on the EUD primary path.
+On 1/16/26 6:19 PM, Bjorn Andersson wrote:
+> On Fri, Jan 16, 2026 at 05:53:59PM -0500, Jonathan Marek wrote:
+>> It turns out this change will make things worse for the (unfortunately
+>> common) EL1+64GB+brokenfirmware case.
+>>
+>> Because of that I think the Fixes: tag and "(fix 64GB models)" should be
+>> dropped from the commit message. (I can also send a v2 with extra info in
+>> the commit message if needed)
+>>
+> 
+> It seems to me that neither of these to actions will affect the impact
+> of the patch. What does "make things worse" imply?
+> 
 
-Signed-off-by: Elson Serrao <elson.serrao@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ From what Stephan wrote [1]: Without this change, devices that use 
+SMMUv3 (PCIe) use bounce buffers for memory outside the 36-bit range. 
+With this change they won't use SWIOTLB and it will crash instead. (it 
+would still crash for other reasons without this change)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index f29a352b0288..2fc2d0aed8dd 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -194,7 +194,7 @@ port@0 {
- 					reg = <0>;
- 
- 					pmic_glink_hs_in: endpoint {
--						remote-endpoint = <&usb_1_dwc3_hs>;
-+						remote-endpoint = <&eud_con0>;
- 					};
- 				};
- 
-@@ -1176,13 +1176,29 @@ &usb_1 {
- };
- 
- &usb_1_dwc3_hs {
--	remote-endpoint = <&pmic_glink_hs_in>;
-+	remote-endpoint = <&eud_usb0>;
- };
- 
- &usb_1_dwc3_ss {
- 	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
- };
- 
-+&eud_con0 {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&eud_usb0 {
-+	remote-endpoint = <&usb_1_dwc3_hs>;
-+};
-+
-+&eud {
-+	status = "okay";
-+};
-+
-+&eud0 {
-+	usb-role-switch;
-+};
-+
- &usb_1_hsphy {
- 	vdda-pll-supply = <&vreg_l10c_0p88>;
- 	vdda33-supply = <&vreg_l2b_3p072>;
--- 
-2.34.1
+[1] https://patchwork.kernel.org/comment/26681014/
 
+> Are we better off dropping this patch?
+
+This patch gets EL2+64GB (and presumably EL1 as well if OEM provides 
+updated EL2 firmware) working without crashes. That's better than having 
+all 64GB cases be broken.
+
+> 
+> Regards,
+> Bjorn
+> 
+>> On 1/16/26 4:39 PM, Bjorn Andersson wrote:
+>>>
+>>> On Thu, 27 Nov 2025 16:29:42 -0500, Jonathan Marek wrote:
+>>>> Unlike the phone SoCs this was copied from, x1e has a 40-bit physical bus.
+>>>> The upper address space is used to support more than 32GB of memory.
+>>>>
+>>>> This fixes issues when DMA buffers are allocated outside the 36-bit range.
+>>>>
+>>>>
+>>>
+>>> Applied, thanks!
+>>>
+>>> [1/1] arm64: dts: qcom: x1e: bus is 40-bits (fix 64GB models)
+>>>         commit: b38dd256e11a4c8bd5a893e11fc42d493939c907
+>>>
+>>> Best regards,
+>>>
 
