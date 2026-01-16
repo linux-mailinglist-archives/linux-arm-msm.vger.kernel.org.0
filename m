@@ -1,39 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-89338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27B6AD2DB7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 947BCD2DE33
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:18:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DD1DA3068DE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 08:08:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 24458308FB9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 08:13:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61BF82D6E66;
-	Fri, 16 Jan 2026 08:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACE425485A;
+	Fri, 16 Jan 2026 08:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="UeZ0I/xs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z7V3VKNK";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PKJ6O3BU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973172.qiye.163.com (mail-m1973172.qiye.163.com [220.197.31.72])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A1926ED25;
-	Fri, 16 Jan 2026 08:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138222F1FEA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 08:13:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768550884; cv=none; b=I5xqwzCKdR8fMumefEqaE9m18nn/+qaT0O0Y8TJECh2OpZ1c71Cbzn4ulV0QEnNN7i+oQKWvwRqD2ylq+CqfHqrRp6W95tOPOD9k76awIX3imrSGVL1Kf+ie/d3dhg9PjipEvO7Y74nbhow1tyVTu3YsJlFzg2+HQlXXc4cAA8Y=
+	t=1768551215; cv=none; b=sq+AXuKmvAI3XQ+ru9At9TBKHxQwKINB+f31n713uiq8iLMwBryy98hzdGWq3Q1FeAW8Et8UfAtvNljY6krFD0qVRNryWI9567etgfL1JoAMIEzLdcPc/3eGBDJze9pSwz23CM/cszLfikRHtd88yiCWz8SQigROBwFr+g1QySY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768550884; c=relaxed/simple;
-	bh=BaXXVsD7u+x+dzmJhW14VDMTfapIp68F3I3eFaVeZcI=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=dEJOBCpMC2Aa/oyI5NCiUXHiFtfEbnDg5KgoN6Vw3LWfAA+Dcfe+/q+boQqHYFo9Qec6GuniSbOYZmdH0N0E4fgKq0UO1pyRPNE7SZCNuNFkjswT5YpKZyZPOS5Dz8WsanxrZ/HmcdJFWEEN7JdtvXm4Io6ccUl9uE89gkU+dpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=UeZ0I/xs; arc=none smtp.client-ip=220.197.31.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 30e4d5a1a;
-	Fri, 16 Jan 2026 16:02:39 +0800 (GMT+08:00)
-Message-ID: <5925fd05-75fb-4e10-a022-bff5471bc317@rock-chips.com>
-Date: Fri, 16 Jan 2026 16:02:38 +0800
+	s=arc-20240116; t=1768551215; c=relaxed/simple;
+	bh=FNY726LB8IMRb+w4EQWel5byt72Fd7u/7c71nTwdBxs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WICEoBzPeqpsv1UyvEqWkJzYaRYIc3REHPuNWiXyGObOU5Q+5yY9q/dO2NgackCc9ENhRsu356pLZnG1D2VXQIcx0v5SAtWbj6wYDBbvTUfC8xzCpN9xkE8mlgDYEmRUVfufIiHEY24JxqY9V2N1pmM1wJV7NKr1/F+l/xYIJJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z7V3VKNK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PKJ6O3BU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60FMbJRc3714120
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 08:13:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ynv1j8bv353Wqu7/JmPfEjOt++cda3rF60jsZo4KcPI=; b=Z7V3VKNKHJhUAO17
+	zYFlMHFCLBDCTS+GA434B3Py7yo154XZGAc8biYfQCqc89bYvzEHopXnx/S0S2/n
+	GM7TCmUIwtECS16q6NWlBVSg09COKQHFkIXIdjAG3E1LIWhdPzOjKueIwJxaK3ez
+	jh0U2Wm/oBQMKrWzVhMlxS6+Ks8FWmCroQnK4KOJ6oOa1rsJwZQ8V7RC/o036dcH
+	yDle2aU3Ob6oWP56jD3PZ6k7Hm+h51DyQpjOtJ/+KDHSAj56ln+wH7xD3fbaP8N+
+	6OK8gCq+6ViUADkGBbVjpYul3UJGS5oRHYUSwok9gviBf+mi7hzZ5Z9HqvUHVbWa
+	fJ81QA==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq96p9bv6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 08:13:33 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c5454bf50e0so3291372a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 00:13:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768551213; x=1769156013; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ynv1j8bv353Wqu7/JmPfEjOt++cda3rF60jsZo4KcPI=;
+        b=PKJ6O3BU0HuG7MZefwQ3M5uHkwUk+YqO8HxVDgHsSDYuodu+NmaatwLIXc3jWzNlZS
+         NZgvSSml1UUMPGvCVcizJwqGoHFNd/2nFo1fZbj5IEkfiE/zdbEeAJJlTByDSR4xQaAT
+         n0LQF4Qoe05HbJ1SBAOiMit6mfo1Y2CosryXR7nhN9N6BOUMscfS46ZaJ5VurItQUdgU
+         ZNdECWHw+ZIVVyUzpwTGL+pOYVQHYNiVzSvcWgKKkTsNdIeUU+6MPl/wCw1V6ku5zKJb
+         hyFZbwRatYh20HAzl3GXe4gCiIZ0HJxKO8si+3OKiESuUwqLKsCfmeOlPkTQlfBaUedE
+         uyvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768551213; x=1769156013;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ynv1j8bv353Wqu7/JmPfEjOt++cda3rF60jsZo4KcPI=;
+        b=w7TiHe+mP1MP9diaUv2piC4+akvlN15zA/GTsiw1Qen2r7Tym17dJsqQEXQvZKthiR
+         3xbrCG76jlKYJAWrIAsF+IS4o3HZayoKTjaOTkoqh8sYAoWPfLmB4oUArz5MasnfqpGu
+         1Ek0xdAL5Xj5SyFdapNW8KfXJNt68QLQRgExi5v3w8Mc/Um+My3kTbYb/mSWpZ2ojiJD
+         GCaOcwS28oQv/I5DDO9fG9MANjxFGUJz5cDfqzHhGKWuwiTgCrQSVMKva9h0Tgv2Cap1
+         2GvOQsuCRan7VUZC2dUadbxITNUPIVQ7S7Y+mMxVoN6hmAf5EDyUO+XUZwpCvaluWYG1
+         S/6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVZqCgBZxdWiHpiMg3UtcBsErCyDphmMCN10AfHQv8E4ZIiIFRsZO4FmdbjQtyhW7BvAKRv6F32iOX2IhZ2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX7aBgsDVrAZkdrWgwWM2Ukm3Oe/0/FGNGOGRsKDpCFzezisPR
+	S2A7GfxRFtSFjMsMlatQqVYS3CH6cnX1I+9Lkt3hEh05Skc82nVO+kOBXMYzggaQpB2dKH21a8B
+	7jQXJo/SDxTcP8v/DFu/sfZIMwzaVtcIh9UkZA9WmQED5xwjygJGQu5aLiPMgE40QedFg
+X-Gm-Gg: AY/fxX5XPhlG4/I5tu2wdKO7AgsQ9jxhOkPgXs0qqpbvkuZJ6r+6t1IuJlPL+YQl8Ce
+	wDuNGGYnlVYD9gve9+tfVSoT7etF4FN3iTzXU0BXaezyMhyJpljb74Gr0PY/XUDSTJ7kzDUvDqj
+	Xw20/PEwofAidLvwsEyhumpHgxlUdir0a5aiPGEb78F2SLdW+DhQ2ai0G53IAnyhEmDXsKfkcED
+	sczL3oPFG7SxF4lWsgaELZrROlTFFjpbO+sQXpgvvFTqRi3VqBvibVEzdjztiaIHHU1BKCbiZsP
+	HDGjgvTjDRgVTNUqZV0KzRGPm+cjeu6vzfgP0P1WSe4YalLjydJkCyL8tYrAtEdTMkhjQplBvic
+	V7MpGXnYW6PdAm0Sm5IDrNVvwpcrQlEBTkYeq+umTpJVlsvgdx6RNc9Uc+QVbBl7sLQMY
+X-Received: by 2002:a05:6a21:600e:b0:38d:f745:4d4a with SMTP id adf61e73a8af0-38e00dd9766mr1992662637.78.1768551212589;
+        Fri, 16 Jan 2026 00:13:32 -0800 (PST)
+X-Received: by 2002:a05:6a21:600e:b0:38d:f745:4d4a with SMTP id adf61e73a8af0-38e00dd9766mr1992637637.78.1768551212076;
+        Fri, 16 Jan 2026 00:13:32 -0800 (PST)
+Received: from ?IPV6:2401:4900:889d:214b:d73:b128:21b8:6188? ([2401:4900:889d:214b:d73:b128:21b8:6188])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c5edf354b24sm1338540a12.28.2026.01.16.00.13.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jan 2026 00:13:31 -0800 (PST)
+Message-ID: <d3274681-c437-4ec1-918e-10e49cbcc676@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 13:43:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -41,236 +101,181 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Chen-Yu Tsai <wens@kernel.org>, Brian Norris <briannorris@chromium.org>,
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>,
- Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Chen-Yu Tsai <wenst@chromium.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl
- devices with controller drivers
-To: manivannan.sadhasivam@oss.qualcomm.com,
- Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Bartosz Golaszewski <brgl@bgdev.pl>
-References: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v6 0/8] Support for Adreno 612 GPU - Respin
+To: rob.clark@oss.qualcomm.com
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Jie Zhang <jie.zhang@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Qingqing Zhou <quic_qqzhou@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jie Zhang <quic_jiezh@quicinc.com>
+References: <20251231-qcs615-spin-2-v6-0-da87debf6883@oss.qualcomm.com>
+ <CACSVV0006wVK-JWweuNYAfu-a9rtn=zp93sey1srPieGEaJWRg@mail.gmail.com>
+Content-Language: en-US
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+In-Reply-To: <CACSVV0006wVK-JWweuNYAfu-a9rtn=zp93sey1srPieGEaJWRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9bc5d3efd809cckunm4edc62de6fcbcc
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGh5CHVZJTx1MSRoaSUMeGkxWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=UeZ0I/xsZN32drWV/dQz/hBJ6+WpFQrka1718RvSBCvUTdPy6e3j1JsiKGO+y10efoBM+GM7SwwdpvJGDiNxQDLgM0UFIotZpbL1NfqgPRCrs3YpWO6wXdRk/ADPl4U1b+wHurk48TuXa7PFXYHsCY+RxwPKFR7P0tJDEX0RGUA=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=Ud8+iwGQrgybsIEyL8sn0UomujULSN26bTMhyz4V/UU=;
-	h=date:mime-version:subject:message-id:from;
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA2MCBTYWx0ZWRfX7cenGpW4RkRv
+ bHISpjDGCWE9VLbqycsUOuQxj/nMtcrk9zb390f8i/fN9OiR5RR5tDwIz+FISSKeiduD7cA43gA
+ YfPAj4QdU4xH8GzJfQJruCXzwf1h/ggMRudEHE3h10oU8Gfr6qkJOqdzvea23XbxP/p+GLOID/D
+ TnTW8OFgE9h/iftMPZcTWDsY1Rgp+w0q/aZaVCD5Sv9U8kx1JVp494rV7ZhA5BZzhhGtxAR2xbR
+ jxBEFBGzgJlC3Pz01VYyr7g3M7hc/dGABu1NO7x+d9aMKuejqN6fAJuQvmkIoUyhk0niBhuNexw
+ 9ID3aN81OiIdSSCc2YLR6S7aDGIm1hQIboV4V4X0AVYejBHwyPBm8cZUpEuEEs74jfqRGABazk1
+ 1uG0zHN2HYGjXigS9tA2jZjQFvnsUZUIcsyukLefitihNqgA5mlVIeCnK82H5RGCwKjJGpMHgaf
+ 20yGLBjG+KnZo6J7bVQ==
+X-Authority-Analysis: v=2.4 cv=M7ZA6iws c=1 sm=1 tr=0 ts=6969f32d cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=ruhtLSfl90xYY3NouLkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: k4WKIJJ7HoN9aWhSRq8eqlCRKLMOU2Df
+X-Proofpoint-ORIG-GUID: k4WKIJJ7HoN9aWhSRq8eqlCRKLMOU2Df
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_02,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 suspectscore=0 adultscore=0 spamscore=0
+ phishscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160060
 
+On 1/16/2026 3:52 AM, Rob Clark wrote:
+> On Wed, Dec 31, 2025 at 12:45 AM Akhil P Oommen
+> <akhilpo@oss.qualcomm.com> wrote:
+>>
+>> This is a respin of an old series [1] that aimed to add support for
+>> Adreno 612 GPU found in SM6150/QCS615 chipsets. In this version, we
+>> have consolidated the previously separate series for DT and driver
+>> support, along with some significant rework.
+>>
+>> Regarding A612 GPU, it falls under ADRENO_6XX_GEN1 family and is a cut
+>> down version of A615 GPU. A612 has a new IP called Reduced Graphics
+>> Management Unit or RGMU, a small state machine which helps to toggle
+>> GX GDSC (connected to CX rail) to implement the IFPC feature. Unlike a
+>> full-fledged GMU, the RGMU does not support features such as clock
+>> control, resource voting via RPMh, HFI etc. Therefore, we require linux
+>> clock driver support similar to gmu-wrapper implementations to control
+>> gpu core clock and GX GDSC.
+>>
+>> In this series, the description of RGMU hardware in devicetree is more
+>> complete than in previous version. However, the RGMU core is not
+>> initialized from the driver as there is currently no need for it. We do
+>> perform a dummy load of RGMU firmware (now available in linux-firmware)
+>> to ensure that enabling RGMU core in the future won't break backward
+>> compatibility for users.
+>>
+>> Due to significant changes compared to the old series, all R-b tags have
+>> been dropped. Please review with fresh eyes.
+>>
+>> Last 3 patches are for Bjorn and the rest are for Rob Clark for pick up.
+> 
+> I guess you meant the last 4 patches are for Bjorn?
 
-在 2026/01/05 星期一 21:55, Manivannan Sadhasivam via B4 Relay 写道:
-> Hi,
-> 
-> This series provides a major rework for the PCI power control (pwrctrl)
-> framework to enable the pwrctrl devices to be controlled by the PCI controller
-> drivers.
-> 
-> Problem Statement
-> =================
-> 
-> Currently, the pwrctrl framework faces two major issues:
-> 
-> 1. Missing PERST# integration
-> 2. Inability to properly handle bus extenders such as PCIe switch devices
-> 
-> First issue arises from the disconnect between the PCI controller drivers and
-> pwrctrl framework. At present, the pwrctrl framework just operates on its own
-> with the help of the PCI core. The pwrctrl devices are created by the PCI core
-> during initial bus scan and the pwrctrl drivers once bind, just power on the
-> PCI devices during their probe(). This design conflicts with the PCI Express
-> Card Electromechanical Specification requirements for PERST# timing. The reason
-> is, PERST# signals are mostly handled by the controller drivers and often
-> deasserted even before the pwrctrl drivers probe. According to the spec, PERST#
-> should be deasserted only after power and reference clock to the device are
-> stable, within predefined timing parameters.
-> 
-> The second issue stems from the PCI bus scan completing before pwrctrl drivers
-> probe. This poses a significant problem for PCI bus extenders like switches
-> because the PCI core allocates upstream bridge resources during the initial
-> scan. If the upstream bridge is not hotplug capable, resources are allocated
-> only for the number of downstream buses detected at scan time, which might be
-> just one if the switch was not powered and enumerated at that time. Later, when
-> the pwrctrl driver powers on and enumerates the switch, enumeration fails due to
-> insufficient upstream bridge resources.
-> 
-> Proposal
-> ========
-> 
-> This series addresses both issues by introducing new individual APIs for pwrctrl
-> device creation, destruction, power on, and power off operations. Controller
-> drivers are expected to invoke these APIs during their probe(), remove(),
-> suspend(), and resume() operations. This integration allows better coordination
-> between controller drivers and the pwrctrl framework, enabling enhanced features
-> such as D3Cold support.
-> 
-> The original design aimed to avoid modifying controller drivers for pwrctrl
-> integration. However, this approach lacked scalability because different
-> controllers have varying requirements for when devices should be powered on. For
-> example, controller drivers require devices to be powered on early for
-> successful PHY initialization.
-> 
-> By using these explicit APIs, controller drivers gain fine grained control over
-> their associated pwrctrl devices.
-> 
-> This series modified the pcie-qcom driver (only consumer of pwrctrl framework)
-> to adopt to these APIs and also removed the old pwrctrl code from PCI core. This
-> could be used as a reference to add pwrctrl support for other controller drivers
-> also.
-> 
-> For example, to control the 3.3v supply to the PCI slot where the NVMe device is
-> connected, below modifications are required:
-> 
-> Devicetree
-> ----------
-> 
-> 	// In SoC dtsi:
-> 
-> 	pci@1bf8000 { // controller node
-> 		...
-> 		pcie1_port0: pcie@0 { // PCI Root Port node
-> 			compatible = "pciclass,0604"; // required for pwrctrl
-> 							 driver bind
-> 			...
-> 		};
-> 	};
-> 
-> 	// In board dts:
-> 
-> 	&pcie1_port0 {
-> 		reset-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>; // optional
-> 		vpcie3v3-supply = <&vreg_nvme>; // NVMe power supply
-> 	};
-> 
-> Controller driver
-> -----------------
-> 
-> 	// Select PCI_PWRCTRL_SLOT in controller Kconfig
-> 
-> 	probe() {
-> 		...
-> 		// Initialize controller resources
-> 		pci_pwrctrl_create_devices(&pdev->dev);
-> 		pci_pwrctrl_power_on_devices(&pdev->dev);
-> 		// Deassert PERST# (optional)
-> 		...
-> 		pci_host_probe(); // Allocate host bridge and start bus scan
-> 	}
-> 
-> 	suspend {
-> 		// PME_Turn_Off broadcast
-> 		// Assert PERST# (optional)
-> 		pci_pwrctrl_power_off_devices(&pdev->dev);
-> 		...
-> 	}
-> 
-> 	resume {
-> 		...
-> 		pci_pwrctrl_power_on_devices(&pdev->dev);
-> 		// Deassert PERST# (optional)
-> 	}
-> 
-> I will add a documentation for the pwrctrl framework in the coming days to make
-> it easier to use.
-> 
+Yes, that is correct. I missed updating this sentence after including
+the GPU cooling related dt patch.
 
-This series looks great.
+-Akhil
 
-In practice, some PCIe devices may need to be powered down dynamically 
-at runtime. For example, users might want to disable a PCIe Wi-Fi module 
-when there's no internet usage — typically, commands like ifconfig wlan0 
-downonly bring the interface down but leave the Wi-Fi hardware powered. 
-Is there a mechanism that would allow the Endpoint driver to leverage 
-pwrctrl dynamically to support such power management scenarios?
-
-
-> Testing
-> =======
 > 
-> This series is tested on the Lenovo Thinkpad T14s laptop based on Qcom X1E
-> chipset and RB3Gen2 development board with TC9563 switch based on Qcom QCS6490
-> chipset.
+> BR,
+> -R
 > 
-> **NOTE**: With this series, the controller driver may undergo multiple probe
-> deferral if the pwrctrl driver was not available during the controller driver
-> probe. This is pretty much required to avoid the resource allocation issue. I
-> plan to replace probe deferral with blocking wait in the coming days.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
-> Changes in v4:
-> - Used platform_device_put()
-> - Changed the return value of power_off() callback to 'int'
-> - Splitted patch 6 into two and reworded the commit message
-> - Collected tags
-> - Link to v3: https://lore.kernel.org/r/20251229-pci-pwrctrl-rework-v3-0-c7d5918cd0db@oss.qualcomm.com
-> 
-> Changes in v3:
-> - Integrated TC9563 change
-> - Reworked the power_on API to properly power off the devices in error path
-> - Fixed the error path in pcie-qcom.c to not destroy pwrctrl devices during
->    probe deferral
-> - Rebased on top of pci/controller/dwc-qcom branch and dropped the PERST# patch
-> - Added a patch for TC9563 to fix the refcount dropping for i2c adapter
-> - Added patches to drop the assert_perst callback and rename the PERST# helpers in
->    pcie-qcom.c
-> - Link to v2: https://lore.kernel.org/r/20251216-pci-pwrctrl-rework-v2-0-745a563b9be6@oss.qualcomm.com
-> 
-> Changes in v2:
-> - Exported of_pci_supply_present() API
-> - Demoted the -EPROBE_DEFER log to dev_dbg()
-> - Collected tags and rebased on top of v6.19-rc1
-> - Link to v1: https://lore.kernel.org/r/20251124-pci-pwrctrl-rework-v1-0-78a72627683d@oss.qualcomm.com
-> 
-> ---
-> Krishna Chaitanya Chundru (1):
->        PCI/pwrctrl: Add APIs for explicitly creating and destroying pwrctrl devices
-> 
-> Manivannan Sadhasivam (7):
->        PCI/pwrctrl: tc9563: Use put_device() instead of i2c_put_adapter()
->        PCI/pwrctrl: Add 'struct pci_pwrctrl::power_{on/off}' callbacks
->        PCI/pwrctrl: Add APIs to power on/off the pwrctrl devices
->        PCI/pwrctrl: Switch to the new pwrctrl APIs
->        PCI: qcom: Drop the assert_perst() callbacks
->        PCI: Drop the assert_perst() callback
->        PCI: qcom: Rename PERST# assert/deassert helpers for uniformity
-> 
->   drivers/pci/bus.c                                 |  19 --
->   drivers/pci/controller/dwc/pcie-designware-host.c |   9 -
->   drivers/pci/controller/dwc/pcie-designware.h      |   9 -
->   drivers/pci/controller/dwc/pcie-qcom.c            |  54 +++--
->   drivers/pci/of.c                                  |   1 +
->   drivers/pci/probe.c                               |  59 -----
->   drivers/pci/pwrctrl/core.c                        | 260 ++++++++++++++++++++--
->   drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c          |  30 ++-
->   drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c          |  48 ++--
->   drivers/pci/pwrctrl/slot.c                        |  48 ++--
->   drivers/pci/remove.c                              |  20 --
->   include/linux/pci-pwrctrl.h                       |  16 +-
->   include/linux/pci.h                               |   1 -
->   13 files changed, 367 insertions(+), 207 deletions(-)
-> ---
-> base-commit: 3e7f562e20ee87a25e104ef4fce557d39d62fa85
-> change-id: 20251124-pci-pwrctrl-rework-c91a6e16c2f6
-> prerequisite-message-id: 20251126081718.8239-1-mani@kernel.org
-> prerequisite-patch-id: db9ff6c713e2303c397e645935280fd0d277793a
-> prerequisite-patch-id: b5351b0a41f618435f973ea2c3275e51d46f01c5
-> 
-> Best regards,
+>>
+>> [1] Driver: https://lore.kernel.org/lkml/20241213-a612-gpu-support-v3-1-0e9b25570a69@quicinc.com/
+>>     Devicetree: https://lore.kernel.org/lkml/fu4rayftf3i4arf6l6bzqyzsctomglhpiniljkeuj74ftvzlpo@vklca2giwjlw/
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>> ---
+>> Changes in v6:
+>> - Move the rgmu register range update from patch#8 to patch#6.
+>> - Capture trailers
+>> - Link to v5: https://lore.kernel.org/r/20251226-qcs615-spin-2-v5-0-354d86460ccb@oss.qualcomm.com
+>>
+>> Changes in v5:
+>> - Rebase on v6.19-rc2
+>> - Make the reg list in A612 GPU's binding doc stricter (Krzysztof)
+>> - Link to v4: https://lore.kernel.org/r/20251204-qcs615-spin-2-v4-0-f5a00c5b663f@oss.qualcomm.com
+>>
+>> Changes in v4:
+>> - Rebased on top of next-20251204 tag
+>> - Added a new patch to simplify gpu dt schema (Krzysztof)
+>> - Added a new patch for GPU cooling support (Gaurav)
+>> - Updated the gpu/gmu register range in DT to be more accurate
+>> - Remove 290Mhz corner for GPU as that is not present in downstream
+>> - Link to v3: https://lore.kernel.org/r/20251122-qcs615-spin-2-v3-0-9f4d4c87f51d@oss.qualcomm.com
+>>
+>> Changes in v3:
+>> - Rebased on top of next-20251121 tag
+>> - Drop a612 driver support patch as it got picked up
+>> - Rename rgmu.yaml -> qcom,adreno-rgmu.yaml (Krzysztof)
+>> - Remove reg-names property for rgmu node (Krzysztof)
+>> - Use 'gmu' instead of 'rgmu' as node name (Krzysztof)
+>> - Describe cx_mem and cx_dgc register ranges (Krzysztof)
+>> - A new patch to retrieve gmu core reg resource by id
+>> - Link to v2: https://lore.kernel.org/r/20251107-qcs615-spin-2-v2-0-a2d7c4fbf6e6@oss.qualcomm.com
+>>
+>> Changes in v2:
+>> - Rebased on next-20251105
+>> - Fix hwcg configuration (Dan)
+>> - Reuse a few gmu-wrapper routines (Konrad)
+>> - Split out rgmu dt schema (Krzysztof/Dmitry)
+>> - Fixes for GPU dt binding doc (Krzysztof)
+>> - Removed VDD_CX from rgmu dt node. Will post a separate series to
+>> address the gpucc changes (Konrad)
+>> - Fix the reg range size for adreno smmu node and reorder the properties (Konrad)
+>> - Link to v1: https://lore.kernel.org/r/20251017-qcs615-spin-2-v1-0-0baa44f80905@oss.qualcomm.com
+>>
+>> ---
+>> Akhil P Oommen (3):
+>>       drm/msm/a6xx: Retrieve gmu core range by index
+>>       dt-bindings: display/msm: gpu: Simplify conditional schema logic
+>>       dt-bindings: display/msm: gpu: Document A612 GPU
+>>
+>> Gaurav Kohli (1):
+>>       arm64: dts: qcom: talos: Add GPU cooling
+>>
+>> Jie Zhang (3):
+>>       dt-bindings: display/msm/rgmu: Document A612 RGMU
+>>       arm64: dts: qcom: talos: Add gpu and rgmu nodes
+>>       arm64: dts: qcom: qcs615-ride: Enable Adreno 612 GPU
+>>
+>> Qingqing Zhou (1):
+>>       arm64: dts: qcom: talos: add the GPU SMMU node
+>>
+>>  .../devicetree/bindings/display/msm/gpu.yaml       |  89 +++++++++---
+>>  .../bindings/display/msm/qcom,adreno-rgmu.yaml     | 126 +++++++++++++++++
+>>  MAINTAINERS                                        |   1 +
+>>  arch/arm64/boot/dts/qcom/qcs615-ride.dts           |   8 ++
+>>  arch/arm64/boot/dts/qcom/talos.dtsi                | 149 +++++++++++++++++++++
+>>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |  14 +-
+>>  6 files changed, 357 insertions(+), 30 deletions(-)
+>> ---
+>> base-commit: 2408853dde584f01950a0f976b743739cce30eca
+>> change-id: 20251015-qcs615-spin-2-ed45b0deb998
+>>
+>> Best regards,
+>> --
+>> Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>
 
 
