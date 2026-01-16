@@ -1,116 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-89393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51CF8D315A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 13:53:24 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEFECD316B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 13:59:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 036F8307AB76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 12:53:23 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D15D0300D2A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 12:58:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B48121E0AF;
-	Fri, 16 Jan 2026 12:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C87722D4DC;
+	Fri, 16 Jan 2026 12:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o4maBpBB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H7JSTMfZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369C11C84D0;
-	Fri, 16 Jan 2026 12:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76225221F39;
+	Fri, 16 Jan 2026 12:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768568002; cv=none; b=gNo8I6jipvZ/GkywTV+LVC84a1xwfK4fKzzNUdSOBcP0Sxtw80HzsY4JGMetWRtpUWq2MiMjJjn+b763SV0vY8y5gbPLWwl+cNLiJ68YqjFkORMfsYS8qt9o+19cctR9cBowy9imh6Ye8lMRMjsfeah+nKK3Jv0Og6mLzsR3Z3A=
+	t=1768568326; cv=none; b=QeNlZMQPK3RHq2fH4UUFpe0EJC0/FNk+hW6UXPUNS2KKsSeUrWFKj9clnW4vc00H0rIQJu87iua7ubsGkdLYuGo8FbcWEj6u2yG9tnROt6G4ssZdtbbnq06k/M6JUkYjoRzCKCn+Z9d9bqbXshBH1Vo5t/XLs3OggaGd/xojcH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768568002; c=relaxed/simple;
-	bh=be2Q/jGm6FdW1LqpflqDBK1cYmcDFgJYdX6bRQzagsw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TpxTKoobIKHhtOKrVt7PoNfhGIUKcXicFlOAZL9vpKY7BOY4w/wpNltX4pENtqkxIWpbrkJ7Rh/zi26WOoRITgLMMbAaqL4uMVta/RylOPLRSDpM4+DfZu4cY7OpvpBeYyIvkuA2VgX379nqnAfKyFQxd4DGq/KqejNUXyiZ/zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o4maBpBB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2BBC116C6;
-	Fri, 16 Jan 2026 12:53:15 +0000 (UTC)
+	s=arc-20240116; t=1768568326; c=relaxed/simple;
+	bh=cbNcEyT28INXVnED1KRjcBiYiJXlAbqna6yHQQ8z4cM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iRWaiuiy9tXLSbbQAl86xkX/YJ71ClQK+Kp7IJqV1OX/071x+rs6duxR5EPclMQSLwVSb0U2445T8tV4sPFic4mZ/jQGZRt/ui7r6dbycrRLzEqfFS9RWYyRbFr4INwkjP8Bx0wc9hahVSHfGtnCNLBmF4+64rFevQIBBEGUfTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H7JSTMfZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B5AC116C6;
+	Fri, 16 Jan 2026 12:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768568001;
-	bh=be2Q/jGm6FdW1LqpflqDBK1cYmcDFgJYdX6bRQzagsw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o4maBpBBd6K0pk0TmS8RZS56h3m0pXqvARKGVOtK/5PUje3FWWAmwSiF1FJTKho+7
-	 RstmRcvCLIH8OCeMScdccdHLjCmkr4QQYHWoWS9blmu067Wri4JJPgNYIKSeJBkk+W
-	 UWQu1wEk31X1h6BoNyn0LmgLNCyDAbcMEm/t+2zt0ncJbkSy4uC3WdxdP66CU2CreT
-	 3ZGW8X3FDrO648yPRDDqnsu84R9r2EWAlVAITf60kMerwK736CACjJ+0oho17pftcu
-	 d73QgJlJVx8axouXvenfWoDnYSCPnESh0qJ8KTZ4i05Q2uFh0mPg4XMFxdPcKlU7yg
-	 wDWrMQlEzFJiw==
-Date: Fri, 16 Jan 2026 18:23:11 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
-	vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-	robin.clark@oss.qualcomm.com, lumag@kernel.org,
-	loic.poulain@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: msm: qcm2290-mdss: Fix
- iommus property
-Message-ID: <aWo0t1EoVhStmOj7@sumit-xelite>
-References: <20260116062004.237356-1-sumit.garg@kernel.org>
- <20260116062004.237356-2-sumit.garg@kernel.org>
- <20260116-transparent-dexterous-nightingale-c029cb@quoll>
+	s=k20201202; t=1768568326;
+	bh=cbNcEyT28INXVnED1KRjcBiYiJXlAbqna6yHQQ8z4cM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=H7JSTMfZZR/csPl0OSjTTKJVdPVZ27279R16b+PzlyOgw3mYwlg6adOdi5Wsm9s5I
+	 kb0FlR6SHa9RnwEoXBG7GUQcGrk8c/UFE04r/IHdWjAXmmxJtLH64oo5Unol51/6Qu
+	 XTVPntKiHh0/BcEI28wR/f0O7RJv9alE8zga+BivF1qSUFICa9gb0mw5LrASKtnU0k
+	 aN3Zvay/+sZ+0pNwXhX86QsnukLDE7tjjM2jaD4/NN39aqvClg2fv57VeiDXKc94sa
+	 E89wIwtqUYFUGts6FTkQW3QIpZkiIGXlMdn2OVo3fkrPOvvFMzy9v64ZoLSEWt2xrQ
+	 Psrg2Hd6H8VxA==
+Message-ID: <e759c977-be91-4f2e-bb40-df61b5cf70ba@kernel.org>
+Date: Fri, 16 Jan 2026 12:58:39 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260116-transparent-dexterous-nightingale-c029cb@quoll>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] media: iris: Introduce vpu ops for vpu4 with
+ necessary hooks
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Rob Herring <robh@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+References: <20251210-knp_video-v4-0-8d11d840358a@oss.qualcomm.com>
+ <20251210-knp_video-v4-6-8d11d840358a@oss.qualcomm.com>
+ <54b29b03-4166-60d9-d553-d0e655749da4@oss.qualcomm.com>
+ <98481299-4db3-41f3-a974-d9d0075d92e0@kernel.org>
+ <PbKsFxhNUWIU_gtZcnLC5O0DxRc782rkITu5doVCWVlIBgtl7o4U31bjFhmbp828q-BbriQ8n4CfCq7_UJTnxw==@protonmail.internalid>
+ <035e9f34-f28f-47fd-ac36-6277171b0e28@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <035e9f34-f28f-47fd-ac36-6277171b0e28@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 16, 2026 at 09:46:54AM +0100, Krzysztof Kozlowski wrote:
-> On Fri, Jan 16, 2026 at 11:50:02AM +0530, Sumit Garg wrote:
-> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > 
-> > Fix IOMMU DT propety for display via dropping SMMU stream IDs which
-> > relates to secure context bank. Assigning Linux kernel (HLOS) VMID
-> > to secure context bank stream IDs is incorrect.
-> > 
-> > The min value is added for iommus property to ensure in future when
-> > secure context bank stream IDs are properly supported then the iommus
-> > property is extensible.
-> > 
-> > These DT bindings changes should be backwards compatible.
-> > 
-> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > ---
-> >  .../devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml   | 5 ++---
-> >  1 file changed, 2 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> > index f0cdb5422688..5c888f07bc0b 100644
-> > --- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> > @@ -33,6 +33,7 @@ properties:
-> >        - const: core
-> >  
-> >    iommus:
-> > +    minItems: 1
+On 16/01/2026 11:27, Vikash Garodia wrote:
+>> Thank you for reviewing this code. I would like to point that it took
+>> one month for Qualcomm to review this Qualcomm patch and in the same
+>> time Vikash is sending emails (more than one!) that Bryan does not
+>> review that fast as expected.
+> Firstly, the ask to Bryan have been to pull patches (not stressed on
+> review part), infact, even fixes are waiting for merge window while they
+> can easily go into RCs. This part of the process need some improvement.
 > 
-> Same comment as other changes like that, which I already gave guideline
-> - you need to list the items (minItems stay), because you now claim the
-> order matters and is strictly defined.
+> I have also appreciated him when he pulled long series for initial codec
+> enablement, i think you missed those part.
+> 
+>> I do not find it acceptable approach to harass community reviewers that
+>> way. Even if you do it internally, not on the lists.
 
-Not sure if I claimed that order matters now but rather the secure bank
-stream IDs were incorrectly represented earlier in the DT.
+lol
 
-There has been ongoing disscusion related to how stream ID associated
-with different translation context can be represented in DT here [1].
-With that only the secure bank stream IDs can be properly represented.
+>> I think this review timeline is final argument for Vikash to stop
+>> pushing such narratives and complains, because your review is expected
+>> to be BEFORE the maintainer upper in the upstream flow.
+> My understanding is that, if maintainer raise patches, then its more of
+> reviews from community and having RB tag from any of community member or
+> no open comments implies the series is good to go.
+> 
+> This series is lying there for a month without any open comment, there
+> is nothing pending here to pull them.
 
-Here I just followed the approach taken by Adreno GPU bindings for the
-iommus property [2].
+2/6 patches in this series were marked in patchwork as having no RB so 
+they weren't pulled.
 
-[1] https://lore.kernel.org/all/20250928171718.436440-1-charan.kalla@oss.qualcomm.com/
-[2] Documentation/devicetree/bindings/display/msm/gpu.yaml +82
+That's the whole story here.
 
--Sumit
+---
+bod
 
