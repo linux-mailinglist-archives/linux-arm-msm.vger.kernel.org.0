@@ -1,492 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-89312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78DFAD2C804
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 07:24:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E440CD2C93A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 07:32:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C089C3011AAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 06:24:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F07CE303FE23
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 06:32:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ED2E34D929;
-	Fri, 16 Jan 2026 06:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4892B34D90C;
+	Fri, 16 Jan 2026 06:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="stWX1VGn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mAcXNIM4";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X1NQWGyT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB4934D4EC;
-	Fri, 16 Jan 2026 06:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B718F2D660E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768544681; cv=none; b=YR/edp9Ygwk/1utTXSBf3FNWzXwxuq2JPCkYzSFaz10mzvvq8IkFacpddskMCUDfEOjPzO7gfAvQSKr4QqgqVbpQx/11qNCHbrnCILPqfNfzMOZoDHlb+2DRDxePOLb6vEPtlw7KnqWlyjX6XrxlfsKx1EFBehljSCyDH3bCz4c=
+	t=1768545154; cv=none; b=mEbj3BEC7mbO9lFIH9zavLncRhR0D7eBWbhSppk49AIRy4tUPRu7GxBiezvRvonJvkgmIHDXwHXrI3M6X1B0FDGqBQS0MkCaxqMIw238Mb1Nfppv+YnZ2K5yEmZadJsPK9CSyrrl8n2FVaiTh8+R0UDKDwKAQUIHs43kT72SuXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768544681; c=relaxed/simple;
-	bh=nXaQD01r0B/egv+YlWWDDC2AjjCw+HjqsNVshrGwMLQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HtvxoNtimfdbyuhQqcuO8f55VlyGzskG9MgFEf8tuFJRsEOY9SEjpICgX8CBv57tGFBn4f6UM7jYqCgSkIlEekUTtfr95CSQa4+Am+kqV/NUjAIJBTnvSHmueixT5b1mZyPpjof3e1rIcpbiuaaR//+OINgGPdV0I5mSTUx5JIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=stWX1VGn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A215C116C6;
-	Fri, 16 Jan 2026 06:24:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768544680;
-	bh=nXaQD01r0B/egv+YlWWDDC2AjjCw+HjqsNVshrGwMLQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=stWX1VGneha5fSLtC9GT/wByTVPJ52rq+FIBE+oCddpcT6JOd8v6e7oZ8Qazo/xfT
-	 pY8vBNqqOVtJkcSyoacghzfU7D5YQ7DvPyA+IUjiezdK/pemwyB5Ht6kBf3mAws7iD
-	 gGSSbqfRAT/xbMV8UmI0re/7fH8RDMq27xjU9i0IcnILTfLLhS+EoHlxzbL3ec+zxK
-	 OoDlQoK+1FbJDXvPKNrRr9iE8GthZGNf6zHgif+RqyyvyaDqrs4PgjliMJfq+ouqj4
-	 lqV/adNbcF+61mbCzG9sx7GQR3MpNTr/Jrow0nLanUUklkf/FcyFVmpQ8JOQnmlsfF
-	 w5lLkiYgPL5ZA==
-Date: Fri, 16 Jan 2026 11:54:26 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Sean Anderson <sean.anderson@seco.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
-	Brian Norris <briannorris@chromium.org>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Niklas Cassel <cassel@kernel.org>, Alex Elder <elder@riscstar.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Chen-Yu Tsai <wenst@chromium.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v4 0/8] PCI/pwrctrl: Major rework to integrate pwrctrl
- devices with controller drivers
-Message-ID: <55cqkglbgji7tz34hk7aishyq3wal3oba5hy2yfvdbnkugadyg@56yh35kcgtwf>
-References: <20260105-pci-pwrctrl-rework-v4-0-6d41a7a49789@oss.qualcomm.com>
- <0da0295a-4acb-430e-ae1a-e144f07418d0@seco.com>
- <6iqn3pmk7jb7j6cvmuv6ggs6xkd6ouz6klzhzdekrlzpbgxcua@ebskaj25jukl>
- <ef5d5fdc-be08-4859-a625-cdd1ae0c46c2@seco.com>
+	s=arc-20240116; t=1768545154; c=relaxed/simple;
+	bh=cVp6/6R9XQlepJ7QgVMfMH0NCtOW5wKvgip99CTgRIg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iRb6AwENzHLrwkgpAKOfk/apsvwVGa+03MSkgNrdIlwWojsQaGmMopUDAhydzGfKY6FpuqdHa135ZjC1CqZ2MvpMQcJTlFISCSfevtMRmyCGZP41E9BH8ZkgkTZw2lcADZPxmUwCy9LOZ4TsRx1cP1jv7wvCjPpSkYy2Cqu4Bnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mAcXNIM4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X1NQWGyT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60FMckG02615131
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:32:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	571F6lMjkVoO1c608L9nLhKKPVlPXL7EwfrpN3qqPW4=; b=mAcXNIM4TYrQU45C
+	OLpMWgIAf3OjjcC3eqWuyAFpjace0Qm3u69I/YKSPBn1485Af88S7xqY4VUn4+ot
+	drghon3/sMW0zvgNiGoPPDPeEh7Yoh+tuE2hzxUXJwcbL916ilxGS57mdPhgmBk2
+	fijzSmeoL2EA9L1oqcEUl3uiGMRAoTCn5oEiXoi78rn9/z0Bsc3myUOSA7uLIVSO
+	/+K62mgF2DZs6RpAnoQEO35n/oxVrZiTxsJS2htMQsICcglYiM+zZqVlu5IytL5i
+	PP7hP7xsu00kVom/GmPvDhudCiCo3LIVxH+jCYfkGi5gy6hwXf1fK323UqKv895x
+	47cRdQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq977s3uj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 06:32:30 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2a0b7eb0a56so14831045ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jan 2026 22:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768545150; x=1769149950; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=571F6lMjkVoO1c608L9nLhKKPVlPXL7EwfrpN3qqPW4=;
+        b=X1NQWGyTogw5i/3Q01Cx40UvXRh2Gy1aghM5j0OdHcuJdYChRtDEXKDxOX1Oj682DU
+         DFl9uBAADz8M0G7lx1irA4obCYAQgGgJLJeIRp2BIphWhLbat11XrYUfUkxXG0Qmdn0d
+         x2qQccVer9b50dbytB+72OwaIZlZPLwD1BYquppZ84tv58bFYogsy23iy21T8ljuWFSh
+         byzQMriwMhqaXjiE1NouaRUwD97UpQXz0C1ikouyi6TPndVxG+E+GmKQ29/0ich+kCkE
+         od6w5aS0wCG6TKoFsITVzzUXSJC3TFfAHGm1EyVZ/Icykzs3FN1swZMitkdQXv3AaUya
+         gSnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768545150; x=1769149950;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=571F6lMjkVoO1c608L9nLhKKPVlPXL7EwfrpN3qqPW4=;
+        b=rgbRyg9z/vXWVsVTUbYSke6EkMoXUI+amaYHk7EeHRYU/edRywdKhw9YTWK9OpvE2f
+         2si5P9yfzld07FOctVQ5eMddUn1QZQGfDOlVwp2f5wXoYx86nxEa+yEYq5D+AUzGn9dz
+         EQOkUFbmftu7kW7pDR2aV3MjfjTLrJ+yrt2LjL4WnNA28c2VM8AC3bkd+2RAtbrOWT3t
+         FLBDz1FJDMPMjLwZWd4dqX/63DbR7Llm41odmvl7C0MGsm5iqYoekxQ5Ca37sfcnMAYg
+         D9RG5gOZDGCxYJ1VSahXSW7VSZvpmg8NLg3KbnlA/7K+ZRivtM1ohtPBShDg3952mPFO
+         58GA==
+X-Forwarded-Encrypted: i=1; AJvYcCVlH8b4C0PFE2eawcbKaqCoZOhSAaTmm+gR/J0avo8qC71y/uqLGQov2XFkqAitIJvqXG4zoX38bTv8Pjyy@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCI/92iAyckWNHhwHY1KB/s2EhaBOwgiSndC5OsG9ohn0YR+CV
+	JZz6cH6OnfRof2UqiDmXvZXrHQheVUs2p1b8lil+1fPWzh+ukrYqpHB1VlzFChtnzg5q/ugz/np
+	CHg6JpdL3QXWiUJooaWbHkEL0sp0Jj0jk8f/aZSlZOgHwyEfbgzNyLp2w7hfY6ZRpoKK4
+X-Gm-Gg: AY/fxX7i9w+FjR7amdcPqukpWmpU3/XH9QzDO0HFDc5bl7grR/Nqqifw7+kwq0qsl4F
+	uuA3ldQOrxNcHGNK4LiU+EpKWvtbx9LN8v2O3SHJx7PTUjMHVnggshSquo1AJhlpkswUkYZkxGv
+	8zk2E51LwGa8k6G7UdpSBF8T4AXRpgR5B+pHRWlouZwr50Qt31y6bOo+71K1fiTwpGpOC4RnPtQ
+	M3TzUk0kqB+zfmS8VCRJDRk53cksJubLlINdbGs/Y4/oH9f60EEnTeopIVJN+hXJWc/PMJeKZU7
+	yOrQGjmROlNyArlwuzsxHgy2CtWANjWPbGzhenhXczgCVcS1/GRdKhgKermHpY3caOSaKj+HnKg
+	Rcy2nPLv+90c5wIr4rlLUZ3r5U7Zmj7WzXceV
+X-Received: by 2002:a17:902:d48c:b0:2a0:e223:f6e6 with SMTP id d9443c01a7336-2a718949652mr14797105ad.46.1768545149684;
+        Thu, 15 Jan 2026 22:32:29 -0800 (PST)
+X-Received: by 2002:a17:902:d48c:b0:2a0:e223:f6e6 with SMTP id d9443c01a7336-2a718949652mr14796875ad.46.1768545149243;
+        Thu, 15 Jan 2026 22:32:29 -0800 (PST)
+Received: from [10.219.57.14] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190ab959sm10752865ad.20.2026.01.15.22.32.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jan 2026 22:32:28 -0800 (PST)
+Message-ID: <70e88549-5448-4a06-a20f-ad4395eb7350@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 12:02:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Restore ACTLR settings for MDSS on
+ sa8775p
+To: will@kernel.org
+Cc: catalin.marinas@arm.com, charan.kalla@oss.qualcomm.com,
+        dmitry.baryshkov@oss.qualcomm.com, iommu@lists.linux.dev,
+        joro@8bytes.org, kernel-team@android.com,
+        konrad.dybcio@oss.qualcomm.com, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robin.clark@oss.qualcomm.com, robin.murphy@arm.com
+References: <aWDsFoEe7PHQaL9F@willie-the-truck>
+ <20260109204551.845959-1-bibek.patro@oss.qualcomm.com>
+Content-Language: en-US
+From: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
+In-Reply-To: <20260109204551.845959-1-bibek.patro@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ef5d5fdc-be08-4859-a625-cdd1ae0c46c2@seco.com>
+X-Proofpoint-ORIG-GUID: vEU8Uge9pBYxa025n4bOF0YqSECVXxEI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA1MSBTYWx0ZWRfXyXofgt8+cwb/
+ tF7PkR81OGZBssGcJTul2KdEatlwjIl+uxHVVtncsFBAfNOParyWL0WY+tAqFurDBqM+pWH6Rxv
+ wr4zcxV343n67aF5o5pIrHZFT1519699K7geov+ncHs7KZUysWFdLnt9lvWrQI6ya7b+/kBVVF9
+ N+dl011EAR6Ohkmf21xyzACOcz2Bd0Prnqo/Kkrk40Cc+30v0XH87f8rjvkfnXlNIdopTYwUS7z
+ bbsiRkiW1qieAFg83FmEgQAPnF4maEvzJRSEqFIskHbQH8PhRA578E1lqg71vOHPAGYFOxyeWS5
+ v4VgZCiDAGf+cW93ZdBKtZ5s36/HLuHYqs5nnLFRsMjaA6sVf/YHzm8UKXd63UQJ0wbtiMLM8d0
+ BYYE26uq/4rYcrGV4hrYFYGvY8mGj0jYEIDNhEWkhBIb6Wsur08V22o8IFaDOaI7quiB23HzabJ
+ xy+6e4hwT0zGTZBvSGQ==
+X-Proofpoint-GUID: vEU8Uge9pBYxa025n4bOF0YqSECVXxEI
+X-Authority-Analysis: v=2.4 cv=dbiNHHXe c=1 sm=1 tr=0 ts=6969db7e cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=x8gyvrLTtEN-rIJzB5wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_02,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 bulkscore=0 malwarescore=0 priorityscore=1501
+ phishscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601160051
 
-On Thu, Jan 15, 2026 at 02:26:32PM -0500, Sean Anderson wrote:
+Hi Will,
 
-[...]
+Thanks for the clarification in [1].
+I’ve sent the follow‑up patch on top, including the explanation in the 
+commit message as suggested.
+Please lmk if any further adjustment is needed.
 
-> >> OK, so to clarify the problem is an architecture like
-> >> 
-> >>     RP
-> >>     |-- Bridge 1 (automatic)
-> >>     |   |-- Device 1
-> >>     |   `-- Bridge 2 (needs pwrseq)
-> >>     |       `-- Device 2
-> >>     `-- Bridge 3 (automatic)
-> >>         `-- Device 3
-> >> 
-> > 
-> > This topology is not possible with PCIe. A single Root Port can only connect to
-> > a single bridge. But applies to PCI.
+https://lore.kernel.org/all/aWDsFoEe7PHQaL9F@willie-the-truck/
+
+Thanks & Regards,
+Bibek
+
+On 1/10/2026 2:15 AM, bibek.patro@oss.qualcomm.com wrote:
+> From: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
 > 
-> OK, well imagine it like
+> The ACTLR configuration for the sa8775p MDSS client was inadvertently
+> dropped while reworking the commit f91879fdf70b ("iommu/arm-smmu-qcom:
+> Add actlr settings for mdss on Qualcomm platforms"). Without this
+> entry, the sa8775p MDSS block does not receive the intended default
+> ACTLR configuration.
 > 
->      RP
->      `-- Host Bridge (automatic)
->          |-- Bridge 1 (automatic)
->          |   |-- Device 1
->          |   `-- Bridge 2 (needs pwrseq)
->          |       `-- Device 2
->          `-- Bridge 3 (automatic)
->              `-- Device 3
+> Restore the missing compatible entry so that the platform receives the
+> expected behavior.
 > 
-> You raised the problem, so what I am asking is: is this such a
-> problematic topology? And if not, please describe one.
+> Signed-off-by: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-
-Again, this topology is also incorrect, but my point is that in whatever
-topology, if you have a PCIe switch and that requires a pwrctrl driver to power
-it on, then there will be a resource allocation problem.
-
-> >> where Bridge 2 has a devicetree node with a pwrseq binding? So we do the
-> >> initial scan and allocate resources for bridge/devices 1 and 3 with the
-> >> resources for bridge 3 immediately above those for bridge 1. Then when
-> >> bridge 2 shows up we can't resize bridge 1's windows since bridge 3's
-> >> windows are in the way?
-> >> 
-> > 
-> > It is not a problem with resizing, it is the problem with how much you can
-> > resize. And also if that bridge 2 is a switch and if it exposes multiple
-> > downstream busses, then the upstream bridge 1 will run out of resources.
-> 
-> OK, but what I am saying is that I don't believe Bridge 2 can need
-> pwrseq if Bridge 1 doesn't. So I don't think the topology as-illustrated
-> can exist.
-> 
-> It's possible that there could be a problem with multiple levels of
-> bridges all needing pwrseq, but does such a system exist?
-> 
-
-Yes, it does exists atm. Below is the TC9563 PCIe switch topology in Qcom
-RB3Gen2 board:
-
-	Host bridge
-	`--> Root Port (auto)
-	     `--> TC9563 (pwrctrl)
-
-https://lore.kernel.org/linux-arm-msm/20260105-tc9563-v1-1-642fd1fe7893@oss.qualcomm.com/
-
-And then there is also a design which is underway that connects one more TC9653
-to the downstream of existing one for peripheral expansion. So the topology will
-become:
-
-	Host bridge
-	`--> Root Port (auto)
-	     `--> TC9563 (pwrctrl)
-		  `--> TC9563 (pwrctrl)
-
-This is just one example and the OEMs may come up with many such designs and we
-cannot deny them.
-
-> > If bridge 2 is a hotplug bridge, then no issues. But I was only referring to
-> > non-hotplug capable switches.
-> > 
-> >> But is it even valid to have a pwrseq node on bridge 2 without one on
-> >> bridge 1? If bridge 1 is automatically controlled, then I would expect
-> >> bridge 2 to be as well. E.g. I would expect bridge 2's reset sequence to
-> >> be controlled by the secondary bus reset bit in bridge 1's bridge
-> >> control register.
-> >> 
-> > 
-> > Technically it is possible for Bridge 2 to have a pwrctrl requirement. What is
-> > limiting from spec PoV?
-> 
-> If this is the case then we need to be able to handle the resource
-> constraint problem. But if it doesn't exist then there is no problem
-> with the existing architecture. Only this sort of design has resource
-> problems, while most designs like
-> 
->      RP
->      `-- Bridge 1 (pwrseq)
->          |-- Bridge 2 (automatic)
->          |   |-- Device 1
->          |   |-- Device 2
->          `-- Bridge 3 (automatic)
->              `-- Device 3
-> 
-> have no resource problems even with the current subsystem.
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 456d5146831e..718d102356d9 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -43,6 +43,8 @@ static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
+>   			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
+>   	{ .compatible = "qcom,qcm2290-mdss",
+>   			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
+> +	{ .compatible = "qcom,sa8775p-mdss",
+> +			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
+>   	{ .compatible = "qcom,sc7280-mdss",
+>   			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
+>   	{ .compatible = "qcom,sc7280-venus",
+> --
+> 2.34.1
 > 
 
-Not at all. I think you don't get the issue. The Root Port is just a PCI bridge.
-If the downstream device is not found during the initial scan, and if RP is a
-non-hotplug capable device, then the PCI core will allocate resources for only
-one downstream bus. And if the PCIe switch shows up on the downstream bus later,
-then it will fail to enumerate due to resource constraint for the switch's
-downstream busses.
-
-This is pretty much what happens with the single switch TC9563 design in RB3Gen2
-that I referenced above.
-
-> >> And a very similar architecture like
-> >> 
-> >>     RP
-> >>     |-- Bridge 4 (pwrseq)
-> >>     |   |-- Device 4
-> >>     `-- Bridge 5 (automatic)
-> >>         `-- Device 5
-> >> 
-> >> has no problems since the resources for bridge 4 can be allocated above
-> >> those for bridge 5 whenever it shows up.
-> >> 
-> > 
-> > Again, if bridge 4 is not hotplug capable and if it is a switch, the problem is
-> > still applicable.
-> 
-> This doesn't apply even if bridge 4 is not hotplug capable. It will show
-> up after bridge 5 gets probed and just grab the next available
-> resources.
-> 
-
-See above. The next available resources are very limited if the upstream bridge
-is not hotplug capable. And we can't blame PCI core for this because, we are
-pretty much emulating hotplug on a non-hotplug capable bridge, which is not
-ideal.
-
-> >> These problems seem very similar to what hotplug bridges have to handle
-> >> (except that we (usually) only need to do one hotplug per boot). So
-> >> maybe we should set is_hotplug_bridge on bridges with a pwrseq node.
-> >> That way they'll get resources distributed for when the downstream port
-> >> shows up. As an optimization, we could then release those resources once
-> >> the downstream port is scanned.
-> >> 
-> > 
-> > That would be incorrect. You cannot set 'is_hotplug_bridge' to 'true' for a
-> > non-hotplug capable bridge. You can call it as a hack, but there is no place
-> > for that in upstream.
-> 
-> Introduce a new boolean called 'is_pwrseq_bridge' and check for it when
-> allocating resources.
-> 
-
-Sorry, I'm not upto introducing such hacks.
-
-> >> > Proposal
-> >> > ========
-> >> > 
-> >> > This series addresses both issues by introducing new individual APIs for pwrctrl
-> >> > device creation, destruction, power on, and power off operations. Controller
-> >> > drivers are expected to invoke these APIs during their probe(), remove(),
-> >> > suspend(), and resume() operations.
-> >> 
-> >> (just for the record)
-> >> 
-> >> I think the existing design is quite elegant, since the operations
-> >> associated with the bridge correspond directly to device lifecycle
-> >> operations. It also avoids problems related to the root port trying to
-> >> look up its own child (possibly missing a driver) during probe.
-> >> 
-> > 
-> > I agree with you that it is elegant and I even was very reluctant to move out of
-> > it [1]. But lately, I understood that we cannot scale the pwrctrl framework if we
-> > do not give flexibility to the controller drivers [2].
-> > 
-> > [1] https://cas5-0-urlprotect.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2flore.kernel.org%2flinux%2dpci%2feix65qdwtk5ocd7lj6sw2lslidivauzyn6h5cc4mc2nnci52im%40qfmbmwy2zjbe%2f&umid=db5ea813-d162-4dc2-9847-b6f01a3e22ce&rct=1768380513&auth=d807158c60b7d2502abde8a2fc01f40662980862-377ad79c69a5ff9c69de76d9fcf5f030d066027a
-> > [2] https://cas5-0-urlprotect.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2flore.kernel.org%2flinux%2dpci%2faG3IWdZIhnk01t2A%40google.com%2f&umid=db5ea813-d162-4dc2-9847-b6f01a3e22ce&rct=1768380513&auth=d807158c60b7d2502abde8a2fc01f40662980862-9a33d827cf703f2827fca86fd99acf563ca26bd9
-> > 
-> >> > This integration allows better coordination
-> >> > between controller drivers and the pwrctrl framework, enabling enhanced features
-> >> > such as D3Cold support.
-> >> 
-> >> 
-> >> I think this should be handled by the power sequencing driver,
-> >> especially as there are timing requirements for the other resources
-> >> referenced to PERST? If we are going to touch each driver, it would
-> >> be much better to consolidate things by removing the ad-hoc PERST
-> >> support.
-> >> 
-> >> Different drivers control PERST in various ways, but I think this can
-> >> be abstracted behind a GPIO controller (if necessary for e.g. MMIO-based
-> >> control). If there's no reset-gpios property in the pwrseq node then we
-> >> could automatically look up the GPIO on the root port.
-> >> 
-> > 
-> > Not at all. We cannot model PERST# as a GPIO in all the cases. Some drivers
-> > implement PERST# as a set of MMIO operations in the Root Complex MMIO space and
-> > that space belongs to the controller driver.
-> 
-> That's what I mean. Implement a GPIO driver with one GPIO and perform
-> the MMIO operations as requested.
-> 
-> Or we can invert things and add a reset op to pci_ops. If present then
-> call it, and if absent use the PERST GPIO on the bridge.
-> 
-
-Having a callback for controlling the PERST# will work for the addressing the
-PERST# issue, but it won't solve the PCIe switch issue we were talking above.
-And this API design will fix both the problems.
-
-But even in this callback design, you need to have modifications in the existing
-controller drivers to integrate pwrctrl. So how that is different from calling
-just two (or one unified API for create/power_on)?
-
-> > FYI, I did try something similar before:
-> > https://cas5-0-urlprotect.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2flore.kernel.org%2flinux%2dpci%2f20250707%2dpci%2dpwrctrl%2dperst%2dv1%2d0%2dc3c7e513e312%40kernel.org%2f&umid=db5ea813-d162-4dc2-9847-b6f01a3e22ce&rct=1768380513&auth=d807158c60b7d2502abde8a2fc01f40662980862-e06652b06144d91b37cae1f9289747fe7cbe0762
-> >> > The original design aimed to avoid modifying controller drivers for pwrctrl
-> >> > integration. However, this approach lacked scalability because different
-> >> > controllers have varying requirements for when devices should be powered on. For
-> >> > example, controller drivers require devices to be powered on early for
-> >> > successful PHY initialization.
-> >> 
-> >> Can you elaborate on this? Previously you said
-> >> 
-> >> | Some platforms do LTSSM during phy_init(), so they will fail if the
-> >> | device is not powered ON at that time.
-> >> 
-> >> What do you mean by "do LTSSM during phy_init()"? Do you have a specific
-> >> driver in mind?
-> >> 
-> > 
-> > I believe the Mediatek PCIe controller driver used in Chromebooks exhibit this
-> > behavior. Chen talked about it in his LPC session:
-> > https://cas5-0-urlprotect.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2flpc.events%2fevent%2f19%2fcontributions%2f2023%2f&umid=db5ea813-d162-4dc2-9847-b6f01a3e22ce&rct=1768380513&auth=d807158c60b7d2502abde8a2fc01f40662980862-59ecd8a94baa970f1f962febb6fe20f15058ef42
-> 
-> I went through 
-> 
-> mediatek/phy-mtk-pcie.c
-> mediatek/phy-mtk-tphy.c
-> mediatek/phy-mtk-xsphy.c
-> ralink/phy-mt7621-pci.c
-> 
-> and didn't see anything where they wait for the link to come up or check
-> the link state and fail.
-> 
-
-See tegra_pcie_config_rp().
-
-> The mtk PCIe drivers may check for this, but I'm saying that we
-> *shouldn't* do that in probe.
-> 
-
-Such drivers already exist. Sure they can just leave the LTSSM in detect state
-instead of failing probe. But if their Root Port is not hotplug capable, why
-should they expect a device to get attached to the bus after probe?
-
-That being said, we do have DWC drivers ignoring the link up failure expecting
-the link to come up later. But I may just fix that in the coming days once the
-pwrctrl APIs are added. There is no reason to wait for hotplug if the RP is not
-hotplug capable. It is just asking for troubles.
-
-> >> I would expect that the LTSSM would remain in the Detect state until the
-> >> pwrseq driver is being probed.
-> >> 
-> > 
-> > True, but if the API (phy_init()) expects the LTSSM to move to L0, then it will
-> > fail, right? It might be what's happening with above mentioned platform.
-> 
-> How can the API expect this?
-> 
-> I'm not saying that such a situation cannot exist, but I don't think
-> it's a common case.
->
-
-Starting LTSSM in phy_init() is weird I agree. I for sure know that someone
-raised this up earlier, but don't exactly remember which driver is doing it.
- 
-> >> > By using these explicit APIs, controller drivers gain fine grained control over
-> >> > their associated pwrctrl devices.
-> >> > 
-> >> > This series modified the pcie-qcom driver (only consumer of pwrctrl framework)
-> >> > to adopt to these APIs and also removed the old pwrctrl code from PCI core. This
-> >> > could be used as a reference to add pwrctrl support for other controller drivers
-> >> > also.
-> >> > 
-> >> > For example, to control the 3.3v supply to the PCI slot where the NVMe device is
-> >> > connected, below modifications are required:
-> >> > 
-> >> > Devicetree
-> >> > ----------
-> >> > 
-> >> > 	// In SoC dtsi:
-> >> > 
-> >> > 	pci@1bf8000 { // controller node
-> >> > 		...
-> >> > 		pcie1_port0: pcie@0 { // PCI Root Port node
-> >> > 			compatible = "pciclass,0604"; // required for pwrctrl
-> >> > 							 driver bind
-> >> > 			...
-> >> > 		};
-> >> > 	};
-> >> > 
-> >> > 	// In board dts:
-> >> > 
-> >> > 	&pcie1_port0 {
-> >> > 		reset-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>; // optional
-> >> > 		vpcie3v3-supply = <&vreg_nvme>; // NVMe power supply
-> >> > 	};
-> >> > 
-> >> > Controller driver
-> >> > -----------------
-> >> > 
-> >> > 	// Select PCI_PWRCTRL_SLOT in controller Kconfig
-> >> > 
-> >> > 	probe() {
-> >> > 		...
-> >> > 		// Initialize controller resources
-> >> > 		pci_pwrctrl_create_devices(&pdev->dev);
-> >> > 		pci_pwrctrl_power_on_devices(&pdev->dev);
-> >> > 		// Deassert PERST# (optional)
-> >> > 		...
-> >> > 		pci_host_probe(); // Allocate host bridge and start bus scan
-> >> > 	}
-> >> > 
-> >> > 	suspend {
-> >> > 		// PME_Turn_Off broadcast
-> >> > 		// Assert PERST# (optional)
-> >> > 		pci_pwrctrl_power_off_devices(&pdev->dev);
-> >> > 		...
-> >> > 	}
-> >> > 
-> >> > 	resume {
-> >> > 		...
-> >> > 		pci_pwrctrl_power_on_devices(&pdev->dev);
-> >> > 		// Deassert PERST# (optional)
-> >> > 	}
-> >> > 
-> >> > I will add a documentation for the pwrctrl framework in the coming days to make
-> >> > it easier to use.
-> >> > 
-> >> > Testing
-> >> > =======
-> >> > 
-> >> > This series is tested on the Lenovo Thinkpad T14s laptop based on Qcom X1E
-> >> > chipset and RB3Gen2 development board with TC9563 switch based on Qcom QCS6490
-> >> > chipset.
-> >> > 
-> >> > **NOTE**: With this series, the controller driver may undergo multiple probe
-> >> > deferral if the pwrctrl driver was not available during the controller driver
-> >> > probe. This is pretty much required to avoid the resource allocation issue. I
-> >> > plan to replace probe deferral with blocking wait in the coming days.
-> >> 
-> >> You can only do a blocking wait after deferring at least once, since the
-> >> root port may be probed synchronously during boot. I really think this
-> >> is rather messy and something we should avoid architecturally while we
-> >> have the chance.
-> >> 
-> > 
-> > By blocking wait I meant that the controller probe itself will do a blocking
-> > wait until the pwrctrl drivers gets bound. Since this happens way before the PCI
-> > bus scan, there won't be any Root Port probed synchronously.
-> 
-> You can't do that because the pwrctrl driver may *never* be loaded. And
-> this may deadlock the boot sequence because the initial probe is
-> performed synchronously from the initcall. i.e.
-> 
-> do_initcalls
->   my_driver_init
->     driver_register
->       bus_add_driver
->         driver_attach
->           driver_probe_device
-> 
-> If the PCI controller is probed before the device that has the module
-> you will deadlock! So you can only sleep indefinitely if you are being
-> probed asynchronously.
-> 
-
-Yes, I was thinking about controller drivers setting PROBE_PREFER_ASYNCHRONOUS
-flag. We can restrict the blocking wait to such drivers.
-
-> -----
-> 
-> Maybe the best way to address this is to add assert_reset/link_up/
-> link_down callbacks to pci_ops. Then pwrctrl_slot probe could look like
-> 
->     bridge = to_pci_host_bridge(dev->parent);
->     of_regulator_bulk_get_all();
->     regulator_bulk_enable();
->     devm_clk_get_optional_enabled();
->     devm_gpiod_get_optional(/* "reset" */);
->     if (bridge && bridge->ops->assert_reset)
->         ret = bridge->ops->assert_reset(bridge, slot)
->     else
->         ret = assert_reset_gpio(slot);
-> 
->     if (ret != ALREADY_ASSERTED)
-> 	    fdelay(100000);
-> 
->     /* Deassert PERST and bring the link up */
->     if (bridge && bridge->ops->link_up)
->         bridge->ops->link_up(bridge, slot);
->     else
->         slot_deassert_reset(slot);
-> 
->     devm_add_action_or_reset(link_down);
->     pci_pwrctrl_init();
->     devm_pci_pwrctrl_device_set_ready();
-> 
-
-Sorry, I'm not inclined to take this route for the reasons mentioned above.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
