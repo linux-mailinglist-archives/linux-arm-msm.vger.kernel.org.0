@@ -1,165 +1,367 @@
-Return-Path: <linux-arm-msm+bounces-89357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 899F0D2EEA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 10:42:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C294BD2EF47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 10:46:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0A9F230024DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:42:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C21893036C40
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jan 2026 09:46:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279D5357A53;
-	Fri, 16 Jan 2026 09:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF8D435CB88;
+	Fri, 16 Jan 2026 09:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gp0zeZZY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MNOxRExI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UxF+jjZ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB133587B1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:42:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D13935BDBC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:46:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768556577; cv=none; b=Ha7rXD2GDq0bIeIkmZnkWkqIvbw4K8yqcxCRI8mROMA42tOHeP7jTM/BtTNRo+cC+b1mMDIEaR4R8tWtWgCaJq8yRRu9o+Efp8V5gn9KHRCXGqbt9Lv7y88Jp5w7t/yaaYWEyeCQCv/th6HoIDj1uir+Rkv1RT+VnB9jNFYst1o=
+	t=1768556763; cv=none; b=I/lsYH8ujPOByIc6dWLegpvsPmHxNlPft9QOdWJW64n/i5BBufiEJvdJaNfyREpCIHvfLp1VABUJB/iGBdHhz5eY0Nf26I27QXGlF0/jfA6q+cW58svcrKvh1u+pi4MHUGg3lnJnpTnBtTcCCpmcJwVm/JbEP3txFBPwB9kXuTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768556577; c=relaxed/simple;
-	bh=vP063z1xuHc0hC+vX2dzTXC8+KnCaJkWrtP6q+wirGs=;
+	s=arc-20240116; t=1768556763; c=relaxed/simple;
+	bh=7twTK1As1864tT4chkQdbOnjnjGFP9Y+GEZUdpzWZ+I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u9jZMHaPMOrwtajioyCglqOI5jKS3O6uLCWxfPkG623dz+3BPytGdU03AJTBU4wnVKEybs/QxxAzDHf5PBfWeur9Cih+3UO1aBuerNlQZz+Wj48kdqG+F0yDndLni0BIwqT0yDzuGZ8HU8gRwZAdwLVrdTPq9W1C8jYDambxMR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gp0zeZZY; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b717b0f80so180659e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 01:42:54 -0800 (PST)
+	 In-Reply-To:Content-Type; b=ipc5fEZuMrMhaPuo/SqmBszgFtYnB39Pi6mstRF5qVRP7KnE/X/PxIfXiD1MB7auk551SC9T9KTyjDvUdp4D9Ksgew7ibDlzQVAfUrY8h//fJSBZBRglG1Pmv8JvP/hnrUg6bpzbme2JmhPmdyx51Dt+repduywEaEOcrPtiMRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MNOxRExI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UxF+jjZ/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60G7txvW3596324
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:46:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nyC1Xon9RSFTOalVdJjpfVTTX8JVBLYa/niJiu9b/4k=; b=MNOxRExItw560+Xj
+	nPNOPSX6lO6sIa3si/XrACUFB2NoRbgMl6xGcnmyu+eVKMVI15oQeix/StJ8GV8F
+	xnl+b6Zf7ZOG2Td0xYP+N7S0T7KCounTsOO0rO363NwIC9PASKZUEozhhLrQSmcd
+	AchdFWpqbFBMvB90NBZ+16TFCH/p3ja+78leX/kZFOaxjw+ELvyMryLga7t/Pihx
+	SLgdhTn1ruEl/4T/DFXMSpU1ELqmu7zENr3u2EyIRwRQ4WpuwMGyZbUDsUw9oKNf
+	0NfZh59I8SWRYpS4ao8HK1Cwwzc59W9DVusJiYvFd2pnkvDk8zElNK1O/PPW7r09
+	7CkNiQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bq96rsnwb-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 09:46:01 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c5539b9adbcso2666796a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 01:46:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768556573; x=1769161373; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ABv8OdJi32Gg0FcjWxhtSwfXTwcweC/Wx9N7YPA9N0A=;
-        b=gp0zeZZYrj1/zYXHzJDDYiuBvXCoy9s8aD6w+TJDlc+tpRTXp34RSryHZZA6l2QDZK
-         0NEPCb4vL478nPCv1vrxi8ZtO0DVwJ7Qp7gxHjDrmTGuV7g7+7OLuo3IUqhJFE6PuWnN
-         TS7w1UxUV167cXJixdEwadjkugBCyvoAoeE0t9+1zfwaERcki3CTVhMpa4garcdwS6aM
-         8ZWmcmBpURgjNaup+7Dw8jdoJ2C1RFqIT4icJKo3AxiUBEazxQl5/vMMW3b9//X8CNl5
-         HpnrAIM5hVNxqSzy2a+Sxb/ZosECMdL8p/+fpJ1/EvTUrbjlhPDR1sYW9sgAj+3nU49p
-         JdBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768556573; x=1769161373;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+        d=oss.qualcomm.com; s=google; t=1768556761; x=1769161561; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ABv8OdJi32Gg0FcjWxhtSwfXTwcweC/Wx9N7YPA9N0A=;
-        b=pMW/4aBpchGKeYKdYChGnHaWDbTW8RbrHqiJZVkgyx/GjT5os5GD7mHJiU60GgoGMn
-         fA2oLgW0NMFFU40F+2HVtp7pKlcyACsyM/BRIHqdXgZ5dWyMS/+Y0iCJRSQjkKi88orv
-         gsqxPH8xpjU1RBNcatj5nOAbaJCIef9NY8ByqiNywwal+Cd323xatEbkvgcpm4lb2xxG
-         dhoN7jJHknnnJXybMRDKjRSNbX7kjL2eCSfcwtqATPlSRnX2slNjX2X8QFmxTlBj8K75
-         WWErk1FwzVzZy4eyjn5oDMa/fH0z8K8ZM1JvkblJcWUmIhIZL+eVOCGOaE2EbCz5OmLE
-         4GIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXWaSLbRAlD+qzFm4QfDOY6pQBy83p3cKZd+oZVpCNS5g1ZdJibj0ybX3TCDNkBfSm3rHHTMM5OXpwZ4pdg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyh+M3MIYe081IR4cCVP5ZLWFIs+cr82kp83N3NbfPMdFJvZ0jh
-	NVWUXPmTj5nFfVe5PeT8JWv7PAr1qxGYHLPgph/T1fD8IuRYKWRoxJwonBLNvVVCI0w=
-X-Gm-Gg: AY/fxX49NtZcPMWLvpU+AKsBvchbu1n4I9PxeAgMupu98jWRl/BhdaQ9uavZQ98ijcZ
-	/8s26kLw9sXYVTSgqoLurDpE4de/bTa2tQbJpg9HI0yah4Z8o2EExSQU6USNCpmqeve3xQKcFQG
-	95Ao2nwOVGs8zcdufRuviBa/AEA3kAPOQBjKej48IUhM73THkbf3hVnDAK/EDR9I18JKykA1QZC
-	Sd96ssRpCMfDjfRXeHhZMtby3hepxH4vXD06ViPn91YXLnP5zAb6aZw5DBZ5PrjRejQ9u6aa4yi
-	kBEs1vWkDilvIg9Cnm1IYZMymfGhKbI50vSLxoSwqPCQRcS+O9UM/UW7t6iRQyyLI6TdePwhTZO
-	/t7bwIk2KLKeVCwdC9/4QBZYj8JSCvMy1CSI0ZoODqtnFdMwmkMkqpM7rxd3BbgjoC3pFFPOPPp
-	++3AYoCWXYmOYi1hMknIu2023C4398ePbl63LQm9kvJTluLO7la3J7FtaLH/3C9uQo7g==
-X-Received: by 2002:a05:6512:1514:20b0:597:d790:a1a2 with SMTP id 2adb3069b0e04-59baef18155mr314794e87.8.1768556573145;
-        Fri, 16 Jan 2026 01:42:53 -0800 (PST)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf33e82dsm618507e87.11.2026.01.16.01.42.52
+        bh=nyC1Xon9RSFTOalVdJjpfVTTX8JVBLYa/niJiu9b/4k=;
+        b=UxF+jjZ/uKhxJM5ZEgsWc1jVeDzksslp8dLINSIMPd8crDGYrExlRYE/n91pb2NO7p
+         gQoWfcFFXcNiAYXaBakcB5LdlPalKkt+1M6KLYPWdEJ0NA6WS0qt+YuS7D5t8MfHVVg2
+         DLs/spgr6IhbgJsY3MOWwmBkYiHeuRA/E4fDezBIedKZ/UjkBcByzYN/RoagxrZpOYs+
+         X8JPhz4BtqpP9t7ZZ5CbJ+2WNkjikl7AKVqq9+JmYmI1QIqXxfj4Y4jrYfn8ueYdRwXK
+         QIarQ8Dk8Y4xP3i3NOJalotyTXX+KUgTgzFsbOu3kkZR2r9mY9tecYJ2CGKl1YEYDL4a
+         7XYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768556761; x=1769161561;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nyC1Xon9RSFTOalVdJjpfVTTX8JVBLYa/niJiu9b/4k=;
+        b=RnDft1OyLgVG500dKzHY8kMHn5TzjFhxYkzsCXm0AwCb2Pk07NvQO2oVjzG5/hvxBE
+         PiYBBRcPfnTKdIB2w6HNZp8sbR9K5xjEqG5wiC8fC0dCc+1y+ORKAPbHQwu0R+Y3JSJc
+         W3GBdtlvqb2bgicE1tKujW9GpN1YbbledAuXBgDr8lX1MH2T+Nyrfjn4G8tfCHRUqSCX
+         m767M/JBiGAvRI9ZxIjxh6DpfONfYts21Qrk4Dnf5EyHMw+HwaqhoIq2KShGxYAeNJXt
+         IHPUbubjaiiMoR/138K5pcm7zgoB68u/vzwBXsZI8m2iL/HAdHSR8vWqZHT3KI8eWQ3m
+         nJKg==
+X-Gm-Message-State: AOJu0YwGCfbp553UDMysr0IMzMKZeADeJSvrwLVNp3MebvLPMnsKF0nP
+	cstlUPaYSD/msncrfRZaW8n3Suc/si87xq6KUHFh6mFM+OgvSBmg0UgrtTZ+6GYUwt3k8Yu9O0m
+	uwmtOgFH2jnpTN0ZKs6bhGiFlt3XYh6wFI+0hwvKRZFlRYzAkUJAK29jZErPPmeR09Ml5
+X-Gm-Gg: AY/fxX7yvh5J9upoqdMvx+tovWeGU1bwsMyCa/oPWtUMgmYMSLo68vfFUTsuHeHmv6a
+	pVvGIV22LNn0daqv29fNXMn6LmLHNq0Gt3L9c7nK2IkOPJrfYfaWgUbGtEmv9ZIDArrq3kuMC3U
+	PAKE/gXhccv+pDIi4p1XpIS6vrn/co6hyxuVBd0aDrwD6Mkzf2egUkCYdL8mNIIuksOkSgAl+TV
+	BRYSx34ubNlx2dJM7evXmMuSVL+EH7n8GtCXksmG2AxXEl5groEjiqQlo5k6pO67vC84sVNssIY
+	RutlD+gYojdUO/9BiaDors/VnCSYNJEQuWZsRuZp8ZvICg86nGxqutjB6Ba8gkv7sgobe0Ou0ph
+	Njot/KKyI9XT51mMO9mlJUOKtceItLKhaSM9UGsNhqg==
+X-Received: by 2002:a05:6a21:6d86:b0:38b:e398:b9fd with SMTP id adf61e73a8af0-38dfe604ed2mr2800281637.20.1768556760703;
+        Fri, 16 Jan 2026 01:46:00 -0800 (PST)
+X-Received: by 2002:a05:6a21:6d86:b0:38b:e398:b9fd with SMTP id adf61e73a8af0-38dfe604ed2mr2800259637.20.1768556760234;
+        Fri, 16 Jan 2026 01:46:00 -0800 (PST)
+Received: from [10.0.0.3] ([106.222.229.125])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81fa108b23asm1647523b3a.3.2026.01.16.01.45.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jan 2026 01:42:52 -0800 (PST)
-Message-ID: <e081fa74-9e0b-4e54-a51d-eee97ae6f4fa@linaro.org>
-Date: Fri, 16 Jan 2026 11:42:51 +0200
+        Fri, 16 Jan 2026 01:45:59 -0800 (PST)
+Message-ID: <564c05b4-a41d-df0a-abb8-564b22b9a45e@oss.qualcomm.com>
+Date: Fri, 16 Jan 2026 15:15:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: talos-evk-camera: Add DT overlay
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org
-References: <20260115-sm6150_evk-v3-0-81526dd15543@oss.qualcomm.com>
- <20260115-sm6150_evk-v3-5-81526dd15543@oss.qualcomm.com>
- <3b16ffa2-1580-426c-aa9c-f377d913d49c@linaro.org>
- <e27deffc-bbcc-48bc-9e4e-ce52698d98f3@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <e27deffc-bbcc-48bc-9e4e-ce52698d98f3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 4/6] media: iris: Move vpu register defines to common
+ header file
+Content-Language: en-US
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20251210-knp_video-v4-0-8d11d840358a@oss.qualcomm.com>
+ <20251210-knp_video-v4-4-8d11d840358a@oss.qualcomm.com>
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+In-Reply-To: <20251210-knp_video-v4-4-8d11d840358a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA3MiBTYWx0ZWRfXyVtldlwY8D8J
+ 71FC60LrslS0SZPfDfrd+iZ39ok/Yq3w9SAgqqR0oPcGrO831IN0UoVp+xXMxNMDdGVDNLnomYD
+ AgCksOgkYyDyuYiAhanqoTvIICy1SkwArbrwrcRvr08S/5jJ+T1rlXbqW8Os+7eh1jygqUveVs4
+ JTisLL23X5+V+hQEOrrqaIH3U97dIpZV6+wkcueRZEYOf0X7NxsD/EAVz/qr97iURHajWYQVjhM
+ uwYaFzxo4QZ+kBG0/+1A0qp+htXGSIxq6WyQ05icDZnXhIDO2OyDdgRRt1igwGTfBEmRJm1fptD
+ KPQThJeP6x1lb/tAlneyEpKrPWgkaWkoUDBQtuCZJq82kZc4NQq+vxjrS/yp18FpRvZiajE8kr3
+ Ro9Tsa4tO3buCxI8eEgskWMJdfksOAgInC/qkUb0QCPWMfRKtMbMBdjM8MXv1q5X6u3tuwSxjTF
+ Bm8q3m0RGUdYYwfVTtw==
+X-Proofpoint-ORIG-GUID: BkHFYz4xiOUFxWjcVGue6gH3j-9KM-ML
+X-Proofpoint-GUID: BkHFYz4xiOUFxWjcVGue6gH3j-9KM-ML
+X-Authority-Analysis: v=2.4 cv=TsTrRTXh c=1 sm=1 tr=0 ts=696a08d9 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=blWSk0AuXjsE0o78ys1YMg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=vXM2DW8_tl7Bo0BeeMgA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_03,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601160072
 
-On 1/16/26 11:32, Wenmeng Liu wrote:
+
+
+On 12/10/2025 6:06 PM, Vikash Garodia wrote:
+> Some of vpu4 register defines are common with vpu3x. Move those into the
+> common register defines header. This is done to reuse the defines for
+> vpu4 in subsequent patch which enables the power sequence for vpu4.
 > 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> ---
+>  drivers/media/platform/qcom/iris/iris_vpu3x.c      | 42 ---------------
+>  drivers/media/platform/qcom/iris/iris_vpu_common.c | 43 ---------------
+>  .../platform/qcom/iris/iris_vpu_register_defines.h | 61 ++++++++++++++++++++++
+>  3 files changed, 61 insertions(+), 85 deletions(-)
 > 
-> On 1/16/2026 5:12 PM, Vladimir Zapolskiy wrote:
->> On 1/15/26 12:12, Wenmeng Liu wrote:
->>> Enable IMX577 via CCI on Taloss EVK Core Kit.
->>>
->>> The Talos EVK board does not include a camera sensor
->>> by default, this DTSO has enabled the Arducam 12.3MP
->>> IMX577 Mini Camera Module on the CSI-1 interface.
->>>
->>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
->>> ---
->>>    arch/arm64/boot/dts/qcom/Makefile                  |  3 ++
->>>    .../boot/dts/qcom/talos-evk-camera-imx577.dtso     | 63 ++++++++++++
->>> ++++++++++
->>>    2 files changed, 66 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/
->>> qcom/Makefile
->>> index
->>> 00652614e73582fa9bd5fbeff4836b9496721d2d..be9aeff2cd1555bc436e1b8eb78d8e1c9b84f9c4 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -339,8 +339,11 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8650-qrd.dtb
->>>    dtb-$(CONFIG_ARCH_QCOM)    += sm8750-mtp.dtb
->>>    dtb-$(CONFIG_ARCH_QCOM)    += sm8750-qrd.dtb
->>>    dtb-$(CONFIG_ARCH_QCOM)    += talos-evk.dtb
->>> +dtbo-$(CONFIG_ARCH_QCOM)    += talos-evk-camera-imx577.dtbo
->>
->> Please remind me, what does dtbo-y Makefile target serve for?
-> Rob mentioned:
-> https://lore.kernel.org/all/20260106192609.GA2581379-robh@kernel.org/
-
-It'd be better to ask Rob about it, I suppose that the concern may be about
-a missing in the qcom/Makefile mechanism to build standalone .dtbo artefacts.
-
-> I checked, dtbo- is not an upstream usage, it will be updated form
-
-Right, that's why it attracted the attention.
-
-> dtbo-$(CONFIG_ARCH_QCOM) to dtb-$(CONFIG_ARCH_QCOM) in the next version.
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> index 339776a0b4672e246848c3a6a260eb83c7da6a60..cd53bcda3b3e1d6f234486df49a51150a7ec9799 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> @@ -11,48 +11,6 @@
+>  #include "iris_vpu_common.h"
+>  #include "iris_vpu_register_defines.h"
+>  
+> -#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> -#define AON_BASE_OFFS				0x000E0000
+> -#define AON_MVP_NOC_RESET			0x0001F000
+> -
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> -#define REQ_POWER_DOWN_PREP			BIT(0)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> -#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
+> -#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
+> -#define NOC_LPI_STATUS_ACTIVE		BIT(2) /* Indicates the NOC is active */
+> -#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+> -#define CORE_CLK_RUN				0x0
+> -/* VPU v3.5 */
+> -#define WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0	(WRAPPER_BASE_OFFS + 0x78)
+> -
+> -#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> -#define CTL_AXI_CLK_HALT			BIT(0)
+> -#define CTL_CLK_HALT				BIT(1)
+> -
+> -#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> -#define RESET_HIGH				BIT(0)
+> -
+> -#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+> -#define CORE_BRIDGE_SW_RESET			BIT(0)
+> -#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+> -
+> -#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> -#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> -#define MSK_CORE_POWER_ON			BIT(1)
+> -
+> -#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
+> -#define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
+> -
+> -#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
+> -
+> -#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> -#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> -
+>  #define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
+>  #define SW_RESET				BIT(0)
+>  #define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> index fef192a2de48fa47af421632829184c5896326cd..50242fc6b4653a7d74ff64500f40eb8a859a6548 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> @@ -11,13 +11,6 @@
+>  #include "iris_vpu_common.h"
+>  #include "iris_vpu_register_defines.h"
+>  
+> -#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> -#define AON_BASE_OFFS				0x000E0000
+> -
+> -#define CPU_IC_BASE_OFFS			(CPU_BASE_OFFS)
+> -
+> -#define CPU_CS_A2HSOFTINTCLR			(CPU_CS_BASE_OFFS + 0x1C)
+> -#define CLEAR_XTENSA2HOST_INTR			BIT(0)
+>  
+>  #define CTRL_INIT				(CPU_CS_BASE_OFFS + 0x48)
+>  #define CTRL_STATUS				(CPU_CS_BASE_OFFS + 0x4C)
+> @@ -35,42 +28,6 @@
+>  #define UC_REGION_ADDR				(CPU_CS_BASE_OFFS + 0x64)
+>  #define UC_REGION_SIZE				(CPU_CS_BASE_OFFS + 0x68)
+>  
+> -#define CPU_CS_H2XSOFTINTEN			(CPU_CS_BASE_OFFS + 0x148)
+> -#define HOST2XTENSA_INTR_ENABLE			BIT(0)
+> -
+> -#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> -#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> -#define MSK_CORE_POWER_ON			BIT(1)
+> -
+> -#define CPU_IC_SOFTINT				(CPU_IC_BASE_OFFS + 0x150)
+> -#define CPU_IC_SOFTINT_H2A_SHFT			0x0
+> -
+> -#define WRAPPER_INTR_STATUS			(WRAPPER_BASE_OFFS + 0x0C)
+> -#define WRAPPER_INTR_STATUS_A2HWD_BMSK		BIT(3)
+> -#define WRAPPER_INTR_STATUS_A2H_BMSK		BIT(2)
+> -
+> -#define WRAPPER_INTR_MASK			(WRAPPER_BASE_OFFS + 0x10)
+> -#define WRAPPER_INTR_MASK_A2HWD_BMSK		BIT(3)
+> -#define WRAPPER_INTR_MASK_A2HCPU_BMSK		BIT(2)
+> -
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> -
+> -#define WRAPPER_TZ_CPU_STATUS			(WRAPPER_TZ_BASE_OFFS + 0x10)
+> -#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> -#define CTL_AXI_CLK_HALT			BIT(0)
+> -#define CTL_CLK_HALT				BIT(1)
+> -
+> -#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> -#define RESET_HIGH				BIT(0)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> -#define REQ_POWER_DOWN_PREP			BIT(0)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> -
+>  static void iris_vpu_interrupt_init(struct iris_core *core)
+>  {
+>  	u32 mask_val;
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> index fe8a39e5e5a3fc68dc3a706ffdba07a5558163cf..72168b9ffa7385d53d7190265d1c0922ee04a656 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> @@ -7,11 +7,72 @@
+>  #define __IRIS_VPU_REGISTER_DEFINES_H__
+>  
+>  #define VCODEC_BASE_OFFS			0x00000000
+> +#define AON_MVP_NOC_RESET			0x0001F000
+>  #define CPU_BASE_OFFS				0x000A0000
+>  #define WRAPPER_BASE_OFFS			0x000B0000
+> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> +#define AON_BASE_OFFS				0x000E0000
+> +
+> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+> +
+> +#define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
+> +#define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
+> +
+> +#define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
+>  
+>  #define CPU_CS_BASE_OFFS			(CPU_BASE_OFFS)
+> +#define CPU_IC_BASE_OFFS			(CPU_BASE_OFFS)
+> +
+> +#define CPU_CS_A2HSOFTINTCLR			(CPU_CS_BASE_OFFS + 0x1C)
+> +#define CLEAR_XTENSA2HOST_INTR			BIT(0)
+> +
+> +#define CPU_CS_H2XSOFTINTEN			(CPU_CS_BASE_OFFS + 0x148)
+> +#define HOST2XTENSA_INTR_ENABLE			BIT(0)
+> +
+> +#define CPU_IC_SOFTINT				(CPU_IC_BASE_OFFS + 0x150)
+> +#define CPU_IC_SOFTINT_H2A_SHFT			0x0
+> +
+> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+> +#define CORE_BRIDGE_SW_RESET			BIT(0)
+> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+> +
+> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> +#define MSK_CORE_POWER_ON			BIT(1)
+>  
+> +#define WRAPPER_INTR_STATUS			(WRAPPER_BASE_OFFS + 0x0C)
+> +#define WRAPPER_INTR_STATUS_A2HWD_BMSK		BIT(3)
+> +#define WRAPPER_INTR_STATUS_A2H_BMSK		BIT(2)
+> +
+> +#define WRAPPER_INTR_MASK			(WRAPPER_BASE_OFFS + 0x10)
+> +#define WRAPPER_INTR_MASK_A2HWD_BMSK		BIT(3)
+> +#define WRAPPER_INTR_MASK_A2HCPU_BMSK		BIT(2)
+> +
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> +#define REQ_POWER_DOWN_PREP			BIT(0)
+> +
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> +#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
+> +#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
+> +#define NOC_LPI_STATUS_ACTIVE			BIT(2) /* Indicates the NOC is active */
+> +
+> +#define WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0	(WRAPPER_BASE_OFFS + 0x78)
+>  #define WRAPPER_CORE_POWER_STATUS		(WRAPPER_BASE_OFFS + 0x80)
+> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+> +#define CORE_CLK_RUN				0x0
+> +
+> +#define WRAPPER_TZ_CPU_STATUS			(WRAPPER_TZ_BASE_OFFS + 0x10)
+> +
+> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> +#define CTL_AXI_CLK_HALT			BIT(0)
+> +#define CTL_CLK_HALT				BIT(1)
+> +
+> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> +#define RESET_HIGH				BIT(0)
+> +
+> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+>  
+>  #endif
 > 
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 
-But...
-
->>> +talos-evk-camera-imx577-dtbs    := talos-evk.dtb talos-evk-camera-
->>> imx577.dtbo
->>>    talos-evk-lvds-auo,g133han01-dtbs    := \
->>>        talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
->>> +dtb-$(CONFIG_ARCH_QCOM)    += talos-evk-camera-imx577.dtb
-
-it's already here and it was here in the previous version.
-
--- 
-Best wishes,
-Vladimir
+Thanks,
+Dikshita
 
