@@ -1,147 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-89529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66D80D3912C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 22:43:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 418D5D3912E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 22:45:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 887BF30057EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 21:43:32 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 523E73005006
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 21:45:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08912E0412;
-	Sat, 17 Jan 2026 21:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F05AD2DAFAC;
+	Sat, 17 Jan 2026 21:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="camHaPpe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JkHOYd9I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6E319CD03;
-	Sat, 17 Jan 2026 21:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A151DF73A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 21:45:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768686209; cv=none; b=SRkNdQPaGfuQUG9nJAoLd8ZPy1m7fLQEzlq9au+rEeHyDnncygjZOvQNfGh2s6fZM3MDRjI8NykRIw9sUUqEBpqMfXPqi+K34R9qxrNCsY7bbF+M+oTX7ZkJLCMf+XEH4JYIG12havQ0AfIEqLDlxkel4F0OE3JuvsZYDxZmTnE=
+	t=1768686344; cv=none; b=KXehHAtfysv1cLyVYhacAbN2O0RcrcIwh8veTjWzjy7OJ0aBmPsn/jxMmRs2RIL9X83iS0iS7IFoiPq4VVOuZmjoO8UXp4yOpUPjrrcMtEjY8bTLkHQgKVbehWckpA4qZPiErHQj1krXRzF11IvcwnNXUjAhK5TBI1O7W35zTYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768686209; c=relaxed/simple;
-	bh=Yh7FjF2iO+Wbm4/uEu8pLMiCOy4rGG8q2nrbqLPs4NM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nc8UrWKs77CKpmmWnyMO8mXiaGGgUDpiKrMZ3ZclCJ1dAg8LFR9XVJa0CNTcw/10nnRcT/2VvNB2V7ruCsjx/prs/grg+e0RG8C759ARoj9DYL5E8E+vj/spXRqugtR9/U9E/PkV2beKqnHmn8MZM8zaLzBzbFPICUL7nNnL9zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=camHaPpe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA2FC4CEF7;
-	Sat, 17 Jan 2026 21:43:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768686209;
-	bh=Yh7FjF2iO+Wbm4/uEu8pLMiCOy4rGG8q2nrbqLPs4NM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=camHaPpe6TT3J5Iv9l1S2dRa+9X6A9nJAnFBzP98VlqBpDPqhSLermdyQcwgH4odx
-	 J3yw16Cpc5LHMjhl1x3eAtsVCnxguhtroR9I1iZt09g2Kxl5WCKch/Snl8pOAC9sMF
-	 3mhu1PM9LMlnktiKPQanyTkuZDrTlmIgVebneKcdZW02PmyqCZpNvgizBxJzf+WYJP
-	 zaSneizfY0V9YbBfhljykAUX0XSWOYmjtcgAO6tGw0Rztbz7MDsRaP/ZbS3WZrCidr
-	 RBbdVwyxQp+2ECyREVrqo19W1ckOZM1L6GvjxY8QnVr5yEqoQTVjwahV/TKTl18zjl
-	 CxggS1MTE5OxQ==
-Date: Sat, 17 Jan 2026 15:43:27 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Trilok Soni <trilokkumar.soni@oss.qualcomm.com>
-Cc: Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Mark Rutland <mark.rutland@arm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
-Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
-Message-ID: <thal4kzpicjancpoop6ct4gjn67k7ypgfi33tzmfstuuj4dzch@smxhbkpqnocg>
-References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
- <aWY6kx8Bwa_2azIl@bogus>
- <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
- <aWgEDAlglnGrzdR4@bogus>
- <4fab824f-8067-49d7-8e6c-dedd67a8454d@oss.qualcomm.com>
- <aWoVR4oNdIHnksJQ@bogus>
- <92d90a1e-e993-4044-b152-83a8700f7b63@oss.qualcomm.com>
- <cb7326b9-91d9-44a3-b9f0-9d2e6ab5fa42@oss.qualcomm.com>
+	s=arc-20240116; t=1768686344; c=relaxed/simple;
+	bh=0uz81NtG/vkuLGFutGR+aZqXQZBLoZNngy5nYCQ664s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fsxcnp21G+ChV47IG10j/gJyKVUkkV7Nyhfhh3ojM9jMPhddYTwcZz7tu9LaYrfmOrkJNDJdz0wFkjrWMowjuUxxnEQLohJFj5rZgD7mLAwytifEZMOBNfGoaGk8E0BUf1pbziwLCR+4QgnoJAWX1gaofFL7cTFKafzW5OdTMHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JkHOYd9I; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4801c314c84so17471345e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 13:45:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1768686342; x=1769291142; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iKeeQEgigGP3fsz7r8SWZQKQz3VCZgZtDO1jaED0ANw=;
+        b=JkHOYd9IxhzDrifYRDn6k6b2J6NkfOvukeY8uoS20HYGL4STIt8KkpU69T/9S3oOWZ
+         AWJQlndagjSD6NVjMYyMR0OkDu+Ty3h1BEQgv3ek4kFV6Cc2lF69FoFaP61AiIaIjwY1
+         LTy7UZWw90UJ6kNjBc3lcVHmSkkknkRE++xgO56XLsdud+7GtsoRcXNWGgZhDnccmApO
+         ePj1sNkD5RbmuqyWpFtCSOd5ChHukyfQ8qNL+7kqwMxj5tlZjLBg0dBBPufroWrp7rKv
+         qIfdl3kxIQQXkmBzqiYGGdv7lHtyoW9zJ1qnbB0gijUuaEcgXbW4iKKgi78Jvdaf4EwO
+         8Pvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768686342; x=1769291142;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iKeeQEgigGP3fsz7r8SWZQKQz3VCZgZtDO1jaED0ANw=;
+        b=wVXFCmH1De6ZYlJVGgWk4p+shstlO0SGpTcz82aIl2PTnDPuwYjVoETRBNJGRDCqvA
+         E2cKXMVG+JFHSg1/gF/5Vqy8IHr8RZB1xwE3kqxjK6oTc5uGGYg1vxsj21NbJJdI4uVR
+         kC93nIVkokG55CeozglZ+Sl0SK0rU1VVriqel5JarJFKTcBsrSY6OMveAeIHPZjsdCBH
+         2jg4JS3XyjU2/6MfCcntRyAaB21FjdVVXVF9MsCeoMAunyCK/hpv9dUb5HLgHq42+aTR
+         FSd6dCY4wwV/LwWmlZPTacXTEOTwUkkO1xWZIjX6sFtBCMsxzPsE/OX2aXWIWvNZi4Y+
+         zQAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUJhj2lumjqg5zasvNExtZr/jNujdvcQWVukHd21nUuDv+tmpGKNZsupN8cSRvHXot8+0/7eK2o0GqGbhB+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVh69D7YoSfe83jyyHhD3sF9T6J5HFeHM1AM6h2FDiB8+qoq6F
+	g+7IUFIoqDceiXlFVh5sg/UC+txnlpCPNKieeqL6R8LJZZ6BUQCAuuoDNnvfnNJrH1U=
+X-Gm-Gg: AY/fxX6l0m++am+VRGRiCQGXl1kQbpANsoWWMfLp5YHdv9aAfFIxRaRzJcHaTK6HHQP
+	cxFBNsGkvY2BXp8Ic4A/dhXeNuok9YU8aXjdzuSo8x8v2AeEMU41z8lPGui7xkcYMcThJqP9ylv
+	xNTwMFL1eeHq6YVI+5/ydMCPHQW4suHi9sUiWkh2+AqXZkXkjl1L3iVOLbe5sAYgPuDw0fvR7wX
+	UfW51RkPyJYcj7luHdUOtETP1UNwfDHtpXDGNafH/peiLDo1UiFGl2LWduQtEPx0dduaYSmNXAn
+	73owqQJ3lup1rVuNiG7VS0jkyYVnJ82ri40X1uUvo93AIwLin93/vln8cdCbqFaYGh1+UYXErw4
+	z6sGdcofqH4QAuJNPZjzj5cYMoWkW25HiDFBUUHTLoIOT3k+7L7vtVlDAnirPqq6w3U4DBUEBC/
+	8250fLSeXZyYA2RPhZgzHImnDt+oP7VUnIUJh1SJidtrNunWxbeV+S7o3PEgaJws0=
+X-Received: by 2002:a05:600c:8b78:b0:47e:e8c2:905f with SMTP id 5b1f17b1804b1-4801e30a790mr89523405e9.8.1768686341602;
+        Sat, 17 Jan 2026 13:45:41 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e886829sm111346115e9.8.2026.01.17.13.45.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Jan 2026 13:45:41 -0800 (PST)
+Message-ID: <6fd412e1-31d4-4f8b-9aa3-e2d7423fca66@linaro.org>
+Date: Sat, 17 Jan 2026 21:45:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cb7326b9-91d9-44a3-b9f0-9d2e6ab5fa42@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/8] media: qcom: camss: Initialize lanes after lane
+ configuration is available
+To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260117-qcom-cphy-v3-0-8ce76a06f7db@ixit.cz>
+ <20260117-qcom-cphy-v3-4-8ce76a06f7db@ixit.cz>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260117-qcom-cphy-v3-4-8ce76a06f7db@ixit.cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jan 16, 2026 at 03:53:57PM -0800, Trilok Soni wrote:
-> On 1/16/2026 12:53 PM, Satya Durga Srinivasu Prabhala wrote:
-> > Hello Sudeep,
-> > 
-> > Thanks for the discussion & feedback.
-> > 
-> > Wanted to check on below possibilities to disable the SMCCC SOC ID at the vendor end, can you help comment?
-> > 1. Introduce cmdline option
-> >    We are trying to pursue that in Android Kernel - https://android-review.googlesource.com/c/kernel/common/+/3912874
-> > 2. Mark SMCCC SMC ID driver as tristate & module as suggested by Dmitry
-> > 
-> > If any of these other options are agreeable, will send separate patch.
+On 17/01/2026 15:36, David Heidelberg via B4 Relay wrote:
+> From: Petr Hodina <phodina@protonmail.com>
 > 
-> You broke the replies by top-posting here. 
+> The lanes must not be initialized before the driver has access to
+> the lane configuration, as it depends on whether D-PHY or C-PHY mode
+> is in use. Move the lane initialization to a later stage where the
+> configuration structures are available.
 > 
-> > 
-> > On 1/16/2026 2:39 AM, Sudeep Holla wrote:
-> >> On Thu, Jan 15, 2026 at 10:42:51AM -0800, Satya Durga Srinivasu Prabhala wrote:
-[..]
-> >>>> The userspace
-> >>>> tool seem to have made a wrong assumption and can't expect the kernel to
-> >>>> magically fix the issue here.
-> >>>>
-> >>>> E.g. We didn't disable HMP(a.k.a big little platforms) as the assumptions
-> >>>> made by several userspace tools(e.g. lscpu IIRC) was wrong at the time.
-> >>> Sorry, at risk of repeating the same thing again, the user space was using
-> >>> soc0 interface on Linux Android products for a long time base on vendor
-> >>> implementation. While I agree that, user space had some assumptions based
-> >>> on vendor implementation, if not disabling the SMCCC SOC ID by default, we
-> >>> should at-least have a way to disable it (via cmdline) based on vendor
-> >>> requirements.
-> >>>
-> >> It was the case with lscpu too. We didn't disable HMP just because lscpu
-> >> didn't understand or just read cpu0 data. It is exactly the case with
-> >> the userspace tool you are mentioning here. Kernel is not providing wrong
-> >> data.
-> >>
-> >>  From the ABI document in the kernel, it has been marked as socX since its
-> >> initial addition in 2012. So clearly userspace got it wrong and no one
-> >> realised it until now. There is no argument that data provided from the kernel
-> >> is wrong in these discussions. So I have nothing else to add unfortunately.
-> >>
+> Signed-off-by: Petr Hodina <phodina@protonmail.com>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 91 ++++++++++++++--------
+>   1 file changed, 57 insertions(+), 34 deletions(-)
 > 
-> I believe that point(s) we have not touched upon are following:
-> 
-> There will be thousands of Android applications using the native interfaces
-> in the playstore in various regions like US and China and so on, which relies
-> on getting the SOC_ID to understand the product and enable / disable some features.
-> 
-> For example, benchmarks like GeekBench or Antutu may also be reading these
-> interfaces.
-> 
-> There are apps. in certain regions which are still not updated from "32-bit"
-> to 64-bit on Android yet as an example and there may be no way to reach out
-> to those developers to fix but apps. are still used by many users.  
-> 
-> If we need to move all of these third-party applications to this new interface
-> then we have to "break them" before we fix them. Do we want to have such approach?
-> 
-> We should not have enabled this feature as "default y" in the first place and should
-> have kept it as "tristate" or kept it disabled in my opinion.
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index f3a8625511e1e..9e8470358515f 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -1048,6 +1048,62 @@ static int csiphy_lanes_enable(struct csiphy_device *csiphy,
+>   	u8 val;
+>   	int i;
+>   
+> +	switch (csiphy->camss->res->version) {
+> +	case CAMSS_845:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sdm845[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+> +		}
+> +		break;
+> +	case CAMSS_2290:
+> +	case CAMSS_6150:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_qcm2290[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
+> +		}
+> +		break;
+> +	case CAMSS_7280:
+> +	case CAMSS_8250:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sm8250[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8250);
+> +		}
+> +		break;
+> +	case CAMSS_8280XP:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sc8280xp[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sc8280xp);
+> +		}
+> +		break;
+> +	case CAMSS_X1E80100:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_x1e80100[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
+> +		}
+> +		break;
+> +	case CAMSS_8550:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sm8550[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+> +		}
+> +		break;
+> +	case CAMSS_8650:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sm8650[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8650);
+> +		}
+> +		break;
+> +	case CAMSS_8300:
+> +	case CAMSS_8775P:
+> +		{ /* V4L2_MBUS_CSI2_DPHY */
+> +			regs->lane_regs = &lane_regs_sa8775p[0];
+> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sa8775p);
+> +		}
+> +		break;
+> +	default:
+> +		break;
+> +	}
+> +
+>   	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
+>   
+>   	val = 0;
+> @@ -1119,49 +1175,16 @@ static int csiphy_init(struct csiphy_device *csiphy)
+>   		return -ENOMEM;
+>   
+>   	csiphy->regs = regs;
+> -	regs->offset = 0x800;
+>   	regs->common_status_offset = 0xb0;
+>   
+>   	switch (csiphy->camss->res->version) {
+> -	case CAMSS_845:
+> -		regs->lane_regs = &lane_regs_sdm845[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+> -		break;
+> -	case CAMSS_2290:
+> -	case CAMSS_6150:
+> -		regs->lane_regs = &lane_regs_qcm2290[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
+> -		break;
+> -	case CAMSS_7280:
+> -	case CAMSS_8250:
+> -		regs->lane_regs = &lane_regs_sm8250[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8250);
+> -		break;
+> -	case CAMSS_8280XP:
+> -		regs->lane_regs = &lane_regs_sc8280xp[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sc8280xp);
+> -		break;
+>   	case CAMSS_X1E80100:
+> -		regs->lane_regs = &lane_regs_x1e80100[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
+> -		regs->offset = 0x1000;
+> -		break;
+>   	case CAMSS_8550:
+> -		regs->lane_regs = &lane_regs_sm8550[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+> -		regs->offset = 0x1000;
+> -		break;
+>   	case CAMSS_8650:
+> -		regs->lane_regs = &lane_regs_sm8650[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8650);
+>   		regs->offset = 0x1000;
+>   		break;
+> -	case CAMSS_8300:
+> -	case CAMSS_8775P:
+> -		regs->lane_regs = &lane_regs_sa8775p[0];
+> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sa8775p);
+> -		break;
+>   	default:
+> +		regs->offset = 0x800;
+>   		break;
+>   	}
+>   
 > 
 
-Kconfig defaults are not a good way to solve such conflicts, there's
-nothing saying that ACK wouldn't =y this in their config because it make
-sense for a subset of devices.
+Subject to testing.
 
-I share your concerns about the impact to user space applications where
-the authors interpreted the API in the same way as I did - there will be
-1 soc instance per soc...
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Regards,
-Bjorn
-
-> ---Trilok Soni
-> 
-> 
+---
+bod
 
