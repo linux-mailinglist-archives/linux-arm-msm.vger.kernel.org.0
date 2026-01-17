@@ -1,155 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-89521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE643D38FA1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 16:54:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50006D3904E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 19:18:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7C87C3018D67
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 15:54:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 052A53010993
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 18:18:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE59C23BCFF;
-	Sat, 17 Jan 2026 15:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 166012C028C;
+	Sat, 17 Jan 2026 18:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="b2CXADe7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olfvR3kV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC51B239562;
-	Sat, 17 Jan 2026 15:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F7C1862A;
+	Sat, 17 Jan 2026 18:18:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768665254; cv=none; b=ZqoBVoX+H3QMXUh/QmaoiqS+C9axT9pd8HjMauZHmweFdpCuag86yv77S0ENQNAAwP9WgpVO4JOin08EVZ77TRMdjRVrZ6nNMCY0jug/lr1m76Mr3mt5Css7IhEZLZPTw9xnN/zBvajcVqhorJDcjuX67QytkJBcLL3vr2XY4UI=
+	t=1768673926; cv=none; b=J/DZu17WqXxRxyr2FlxzOrYo0v+m8ZjETnx6++Vqjc9EhAXS2PH2LGvoOrA076NWxeUCZbUuH8hN0j3KYSLHYn2dIaaFIX/W/edmmFzvLtvxE39xfPT4JDrjaSEDqCrwhvdirSSl1gW6LTOemQiEFGEFzuOOtPV286E2y2BW3iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768665254; c=relaxed/simple;
-	bh=37xj4BSSul+wTxNrGjktuT/LxaChuM8/mPL0mZQ1LAI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ejHZVtam2FGgZUP/EMwVDr0pfoR2311tJhyg4MMpN9FgnBnwJJ5+UgIZM5F1BCDKJVPu8YRoXVAzVTdCb+ueDNo2u5RI83aEwD+A2lkoru23nKuCLKlS2lPZXovBR3yByb2VWhGt2gpQbw9JH0lMMNwYzCXZ8WbO1ZCQCfa1Pjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=b2CXADe7; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::f31] (unknown [IPv6:2a02:f000:10bd:e301::f31])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 599FD5340D1C;
-	Sat, 17 Jan 2026 16:53:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768665236;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=OhioEov5Is/f27kPShxfxfNl2hc2wXiOoEMELtd3/+I=;
-	b=b2CXADe7dk9EO9K78WugPHVKhyLajevCz3San8FRjAyVJE86WZklslxMqJo6sCp0lK0kT0
-	FaJQE0UOs/4OuswNy9acm8nh2vC6w2AIQj4bG+KDayAwrUCdCGQosfwE1bXCj4VgGn6OQ9
-	nIw3iVe24UWmIqgQguhOaPpW9BPPUmA=
-Message-ID: <cc2ac7ec-38af-4dc1-bdac-64813e9bfbfd@ixit.cz>
-Date: Sat, 17 Jan 2026 16:53:56 +0100
+	s=arc-20240116; t=1768673926; c=relaxed/simple;
+	bh=LXu8UxumzYO7IIQmsqvrbERKPlWY+JVjXGDt1uhfYuc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=I6ekvINPYaU8RZZCkKEDyqBli5r6K9WBUH0aqLlsWxtNL18UOJImc/Y3Leyv16VMgCYLrVIVYjdsGAFlXtIvDj51QgMCkfblwIJtwHxKvxzAowQpwudbLFiiEDjryOI1K+GgPPn+YbZ2WkIrJZRgE2IYKpFMeOecBIJcjmwMxQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olfvR3kV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 66E01C16AAE;
+	Sat, 17 Jan 2026 18:18:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768673925;
+	bh=LXu8UxumzYO7IIQmsqvrbERKPlWY+JVjXGDt1uhfYuc=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=olfvR3kVrKNUmHnM2A5YQK+ZbR+kDfaNaHvNr8OBbUjr8B1KwAR8CV1jw53fR0OmS
+	 HjU1UgoMLeqbiq7hVtx4r2n192k4tO2323Hj5dA8Q5WgZrMBTPUzbNspjF0tF8hUsd
+	 BTZoG09cY2ACiIHHdwTUjCZfvPK0LQVoB5fSyzo7kj0v6mlw85FfRQXllB+vNE6mwT
+	 8fPlnn8n5JFw7C/E0yy4OmwcW2lXZLfIGW3WT9TXOwVbwxSJVrwNvRNCB5LRVLSSqZ
+	 6ficuWt27oXnbfjXpszhq3Uyt1CbAQ5jLRj1JYAwAmJLEnpcy0czH54oschZal8FSo
+	 9zxsgMy2Aztxg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7F3C9832A;
+	Sat, 17 Jan 2026 18:18:45 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Date: Sat, 17 Jan 2026 19:18:28 +0100
+Subject: [PATCH] clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk1_clk_src
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] media: qcom: camss: Initialize lanes after lane
- configuration is available
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
- Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20260117-qcom-cphy-v3-0-8ce76a06f7db@ixit.cz>
- <20260117-qcom-cphy-v3-4-8ce76a06f7db@ixit.cz>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
- 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
- lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
- 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
- dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
- F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
- NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
- 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
- AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
- k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
- ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
- AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
- AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
- afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
- loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
- jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
- ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
- VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
- W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
- zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
- QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
- UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
- zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
- 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
- IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
- jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
- FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
- aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
- NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
- AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
- hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
- rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
- qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
- 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
- 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
- 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
- NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
- GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
- yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
- zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
- fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
- ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20260117-qcom-cphy-v3-4-8ce76a06f7db@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260117-sm7150-dispcc-fix-v1-1-2f39966bcad2@ixit.cz>
+X-B4-Tracking: v=1; b=H4sIAHPSa2kC/x2MSQqAMAwAvyI5G0iDVvAr4kHbVHNwoQERxL9bP
+ M7AzAMmWcWgrx7IcqnpsRdwdQVhnfZFUGNhYGJPznVoW+dawqh2hoBJb/ScyPMcmaSB0p1Ziv6
+ fw/i+H/Ws2eBjAAAA
+X-Change-ID: 20260117-sm7150-dispcc-fix-62f062bd20e4
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Jens Reidel <adrian@mainlining.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1272; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=DehSC42DoLuOU48sX00s0uMz8/ZmcNB/sAtQOA+m9mE=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpa9KEl7PYVfM8z3T/52r1eu/lL5DJxmGQHNlmL
+ aqy1wWgkwKJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaWvShAAKCRBgAj/E00kg
+ cjmDD/0QhyDqp28pSI9fXFMiRNW+f587HV1YFHvXnqO1mYu08kw5/7BTvFVW7Lr2ovVM4TQI71/
+ Dy/gGMyWVnlNY1CHc4C1xPJQVeRiPfdGh3T/mFx0veBH1hpUZiUvJ4q2vP+Y69NHeeyPqOt4Ekk
+ dg2C81t1vC4KzRr45ARtO0AVSDyWVkiPvJhHZQqeIqmgy1a8w5GfRoWXAt5fsU4C8f1FuJead9M
+ IoVhAjJlV7uBrDGg0mf7Q1KA3vHWtujuo+YYH2R5C9bOM+i/v3t0EIMU3Rl09edXR5FDJq0Okpf
+ aBXl8T3M+gKXev2S/ANr3Y+sGLop3w5OvednjPwXxd7S/cxgt2SYFf5Brw8Bt3lVwoT2FcfIvIk
+ ObxW8Itr7IIxgtmjlmnwJcuBBJufgUrz4K5qkwfZKpGT6UrAhT6hjK1T99LQM62em24lSFrz+Xf
+ pr87jv1r7/xLjV4uKYfp+/CfWf1w06evYyTv0gtG/IPYO5wQXpWLKLlKQWkHKnBC6h9JG03M2+Y
+ +BbKR5KzMo5hiAIR5g20qhiJv1J4r4yBiq/gM6QfcwYpN7qakU0WvFWctmblQVnaa5AiNtFW5hG
+ zbgJPwn/7uwocP53xyxR6kb624vZa45fmj8d+GSpQe54PPSy1Q0cqO0POlcK1DcA/9rFbFX8lu6
+ Bsy1qNK3BD1Y0Jw==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 17/01/2026 16:36, David Heidelberg via B4 Relay wrote:
-> From: Petr Hodina <phodina@protonmail.com>
-> 
-> The lanes must not be initialized before the driver has access to
-> the lane configuration, as it depends on whether D-PHY or C-PHY mode
-> is in use. Move the lane initialization to a later stage where the
-> configuration structures are available.
-> 
-> Signed-off-by: Petr Hodina <phodina@protonmail.com>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 91 ++++++++++++++--------
->   1 file changed, 57 insertions(+), 34 deletions(-)
-> 
+From: David Heidelberg <david@ixit.cz>
 
-Now we going to setup D/C-PHY in lanes_enable, which I perceive as 
-sub-optimal, because when C-PHY is set on the device-tree level, while 
-the device may handle both D-PHY and C-PHY, the intent is use C-PHY only 
-when available, because of the advantages, where as disadvantages are 
-mainly in the implementation complexity (which is already done).
+Set CLK_OPS_PARENT_ENABLE to ensure the parent gets prepared and enabled
+when switching to it.
 
-Thus it would be most optimal to take care of the configuration in the 
-csiphy init, which starts at point, where the device-tree properties 
-aren't parsed yet.
+Fixes: e3c13e0caa8c ("clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+I would call it more addition than fix regarding to how the commit is
+named, but generally both pclk0 and pclk1 should receive this flag.
 
-I tried to do shuffling in camss_probe to make
-csiphy->cfg.csi2->lane_cfg available in the subdevice (csiphy) init phase.
+Feel free to drop the Fixes tag.
 
-Everytime I moved camss_parse_ports earlier or camss_init_subdevices 
-later I got into some kind of trouble, thus I assume current solution is 
-(at least until some rewrite) best.
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ drivers/clk/qcom/dispcc-sm7150.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-David
+diff --git a/drivers/clk/qcom/dispcc-sm7150.c b/drivers/clk/qcom/dispcc-sm7150.c
+index 811d380a8e9f9..ed8e34ffd69b0 100644
+--- a/drivers/clk/qcom/dispcc-sm7150.c
++++ b/drivers/clk/qcom/dispcc-sm7150.c
+@@ -371,7 +371,7 @@ static struct clk_rcg2 dispcc_mdss_pclk1_clk_src = {
+ 		.name = "dispcc_mdss_pclk1_clk_src",
+ 		.parent_data = dispcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(dispcc_parent_data_4),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
+
+---
+base-commit: 46fe65a2c28ecf5df1a7475aba1f08ccf4c0ac1b
+change-id: 20260117-sm7150-dispcc-fix-62f062bd20e4
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
