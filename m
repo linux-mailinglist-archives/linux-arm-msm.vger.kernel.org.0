@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-89490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5E42D38C1A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 05:07:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 871CED38C1B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 05:07:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 516FD30443DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 04:06:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CED813034A0F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 04:06:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE6F731A7E1;
-	Sat, 17 Jan 2026 04:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A4F23093B2;
+	Sat, 17 Jan 2026 04:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igKi+hxP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aj/T3tJI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECE530DD24
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 04:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72EA2EBB8A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 04:06:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768622810; cv=none; b=pbiCI916Mwxe5K9R0/Es6+BCnFpiSvzBeZdtara2xMf7kDC1uKV6UU4kuM8YAP/kdoL14sQ95qzq7HKp0TvhvwNFDiSOb8oG32vN5ozjQjt1m6mA6a8dJTjuafWHxNh2xTZYYp81SYbGgHWBmzIT2yH2cedJYHoCZI8C2pQyDgg=
+	t=1768622812; cv=none; b=kGl3EkGtEuMGrqokqBCTbLwaLKoxyFLd4H+y7YylFWcziAPwE1KBhCI/i9Ik6k8bprSmGwrOevl9hfZynOXCZWnrPoeVB9ySmcXtsi5nYdiGGm9EtuiiIGDS0YZm4eYcbJPi/oBpP9xNcq4T/pELPqNmmQ3Id5n+jm8M2rJaq7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768622810; c=relaxed/simple;
-	bh=DLYTLurhJa/dsUPjZdKrouNuDeRcN2aGY2f/dIS8jn0=;
+	s=arc-20240116; t=1768622812; c=relaxed/simple;
+	bh=qdzZ4n+LNV/PsoK+uJu2XlZkWbAHoGmAnFcee+ROIho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zs76O58GeDqPiLXFDmvo36VzuzRE7BGhfrL3XYFerX740fxMQpr1YO4suAhcUn/Y5mjtDZdVuJnPhDMb3QOGZlAsUmmwNkwRXVaWAfdM9vS7o/3s/+kiynf38FkfyvvDV7wvVNOO8wWsvPNecJLMbAAGojIbYA7yn9YAweQL23k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=igKi+hxP; arc=none smtp.client-ip=209.85.219.50
+	 MIME-Version; b=fQAR6QFO8m7zsPDlWr9QxnUvFWU8zWZnxpA1zbUrZnkr3tNY10XqPkmMhAHJZU+v/mUcqFh2a32bQ6FD7fy6V6EKEXp7lWiz0qh0afe3n3UnAtkAq3CcZ2hpn3TzwfRqwYs8wsucLSYzXa1o0vrrOU4CLia90La8J8BimSdFhSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Aj/T3tJI; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-88888d80590so39673786d6.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 20:06:46 -0800 (PST)
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-88a2f2e5445so33330396d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 20:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768622806; x=1769227606; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768622808; x=1769227608; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WqibFg67h3gtAqqjjlrzNhRlOJB4sCD3HtefP226Fgc=;
-        b=igKi+hxPM9Zg2tfIg2I4VrZ0u1hW6UKupSJUjpLyO+TpUW8QWCPbchJck8sKAXekbg
-         +kzhO/8R8vOMzjL5W38rCN0G1HQldV8alZSIoUAwgKt68tLXuTfNVaVRmca8sqpFJTgW
-         vi0XmoLAWY+5je3np1sTFn3iyEsy2BWOSvolnDN+hJS8UX1b6Sa40dEjHPjiKZxaTjZ+
-         iloTm2TXPa7IIMbi1LP2z6jTBXJ200sXKYlYb0mRs5V0micHWeJ4CryD5EUu41oV7Fly
-         211ttRk/89iEJxlofynrOSogcBDc3PkPXGbMhF1U97gnun7vmFHLtE/7Uw/qylOpnf5K
-         AVjw==
+        bh=ahSJ784Agrct7hUV5mLfOvTi+Ib0YPHnSuXQC3QM7fc=;
+        b=Aj/T3tJIVfjqHAgjMCmWBpypr6/63+EAPxUK5+Vb0/sfCwElVsZXqZDdIm2Xc3dY+u
+         ztS9zYsGvt89gL/i5qs+HrDEus+igkRiLU9tCYGC6Jq1/ICCFNrBpXn1+2sbT179Dwdz
+         R3eUGMZnlWCJ9DyFdMPSjZTBkLrruLui8aHr2eKK2F3gK/CAvQPGGL8zDxt68xQ4rwat
+         KX9rdZaDnkRMUtuDOJFeghkeyt9LDkND601DsHGJtKWRMKXKYkqkj56tgOWTBUr/hqbd
+         Cd1o14nfFSXNSXKSOl7xZ4HH3gjIniiBKSurs1sQS9hP9Zd+4ZqBhCWrKkoV+a3TXayr
+         AZsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768622806; x=1769227606;
+        d=1e100.net; s=20230601; t=1768622808; x=1769227608;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=WqibFg67h3gtAqqjjlrzNhRlOJB4sCD3HtefP226Fgc=;
-        b=Yci67KYenrmHolpRA7XaQiDr9TmcUbLSkaH4A2XVCgS1MId3tjyEunQYlqeD+8M96u
-         qazmS1Eq/oscSAbRXJDjSfKpCvhaW5VJOuShHQwmkOOVN1MK5jefrFryIol4CeYvJ09L
-         XWfHnGIaSmJZ4wrIyGdOCI5bzvMwYAmCbZgKRC4zL42p7ZhG+4FpCCtlhOVFtmwfEoSi
-         JSPom6sf6T0ErIW/tLCKw7QJqXZYww7uXL9IjcgrI72UKyxm/6SImm/9/H7QcpZV6d3n
-         BO3Qr6+WRxpf1XxhlDEAhCHR6w2l7gUFeGK70dKAoRwGdTFz0A2yyWSYPBDwvEdLdCKp
-         BowQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVE+xK7Hqaa2OSU34WnoDT7SDPgSQboO44P6LUdYjX8c8j5M1qeUTA+XF+cEVr060XuhSfwJnAYvFUMaeiP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTXQ3Q07cH/UKKS/Rr2B+Xvcw/UhePdTkywVfILoG447/rfac5
-	QgIPxojbjci9EXJIADUG3kbjTLUcvCDhEY7pWLfPfbTU1u83Aka8k0ZE
-X-Gm-Gg: AY/fxX59/r2ZT4h+IEY/5K7T3kPgdMYBKAv4Q6WQnKADy/TwZVAHclnsu8x+BWS1++J
-	KMXoSBFeWMehgzWrQVZH6AKPyEA457V/3rTMKK7spRCWt/1CxetFkENBox89Cz9A3oIn1tnmttY
-	sLNf4CPu1TrbDzbBmEq5fznw06zsjbuphqnu0WCw1raW9QfOBk8iKDimIHP9nq2D3/6CetNs6EY
-	VCh7lHf8Oei6Xpa2TzzTaPQue/FXq1oKRm6sQkOeX55lfL/qByYdY+Y/IJ6ljKsYNS0YHPMKEcX
-	uzkmKKY5ex2b79xsxPsQu+Dszxl7bQwXVS/PzSAiL0KXLCDuhS/lgUm7qhaqne1Tpgo9vqbr5np
-	QKrEbX9tAf7vpM1iJNJwz5L+UJVX8KqFRh9rh2UesKZLD9qncwkb2NkHIUfkzC2UDOYO06qtXdE
-	X6MNjnaxyFD7OnT3AOb3VZaKHy6xtSAPfV+foAE5KXJ8Cbjpolachd4IZvTrkbgXpIjbrm8p1y1
-	q4t4Ox+gplUKg==
-X-Received: by 2002:ad4:5aae:0:b0:88a:2c78:d62d with SMTP id 6a1803df08f44-8942e47a66fmr63179296d6.26.1768622805841;
-        Fri, 16 Jan 2026 20:06:45 -0800 (PST)
+        bh=ahSJ784Agrct7hUV5mLfOvTi+Ib0YPHnSuXQC3QM7fc=;
+        b=EvVtQifJBR/Dx7ZYyCzr8AEucatRPaCU9g2LIstJtLRgJdW9EV3bJnpFptQ/rhkloD
+         Hc2otLeqPAGd1TPzTF9P3oOxtpZjys5uzjNjdJwazxhWlvDMkQ78Ua+aVrZQAcsheHtS
+         IVP4PoOSVwOSNwzbNl/AmiIVlDRLNtDXum4R9b9eRfINI6YXSBFItH0HDrOq/r8ej0qa
+         J5J6rJMvGyr6pKm3GYfjS1ADdX3XeqTz60tSR7HFHapzPFCJwCX1ZzK+VnQ3nOE0iisO
+         3up6BZRi8gtRPOmxqVQ8gn4kG0tAGfzY3Ae/aLyUJau5eDkQ9+O77rZkeGfgWZKJJDz7
+         ehVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXT1GTpU8Eyd13+u/7f44KMsv+YmYtHjqeJDNnZn7g2Nejk7GzxOtH5Ns12QuVBNQYshbsA+XUOQ9dCsLK1@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWBww9TypflasBFRuj+h7PckT59Qi5/xYw4m9rAE1d7kxQOanu
+	A3h4ozuikSwk0B9Dw6eh6Sw+M+5AkKS2icZkHi0acHEDm6Lf39kRjZUs
+X-Gm-Gg: AY/fxX4q+GzJnG8RH07gwXpsiZD2Kjofqq5oFTTMFeC8xDnP95ZTbzcjEKUPTR6XO23
+	OwFGVOend56pDe1NnITw1JwR9izrzLt+ZDDy9jYKpdAx9Tbyej301I9Z46rq0vKesfQx+QEc+Q1
+	n0l9PKMNdqLCdz5S456ppUg3BNZO3oxDtRnk5RFTMLLiaX2Vi0Qmdw6xJIYistGg7RlMDTLhytr
+	fGxDTGMLgW6rbLPGmF0Jk505XTKmdbCG3xuBWsdOczZR3ajwSAecZXknOR/zpVF6ZvO/WMaonLR
+	X3oQlHI/bQ3DNF1VlCbgbG2UunXppwqArHPM7BwS1zBi915Abi1NWuobyZ2Cmb+Qb6fg4HcIIiS
+	ML510JABEqreZtXBSxOERGTfNmAQha2nC4Ya9jlzU9iejliPRP8EsnLgyKyxYTnWgXVlLXOMOO3
+	px5WZBDvkZY/kDn1foVJ9Y/HvSYEfQX2GH0SYdmKH1nSoItT6x1C1urysB7ck7W6O/sZea+LuH4
+	lQ=
+X-Received: by 2002:ad4:5dcb:0:b0:886:3be3:9e5d with SMTP id 6a1803df08f44-8942e2f7434mr76298886d6.16.1768622807837;
+        Fri, 16 Jan 2026 20:06:47 -0800 (PST)
 Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8942e6d6366sm43908776d6.51.2026.01.16.20.06.45
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8942e6cd63esm36994196d6.49.2026.01.16.20.06.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 20:06:45 -0800 (PST)
+        Fri, 16 Jan 2026 20:06:47 -0800 (PST)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -90,9 +90,9 @@ Cc: Robert Mader <robert.mader@collabora.com>,
 	David Heidelberg <david@ixit.cz>,
 	phone-devel@vger.kernel.org,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v7 3/5] arm64: dts: qcom: sdm670: label the camss ports instead of endpoints
-Date: Fri, 16 Jan 2026 23:06:55 -0500
-Message-ID: <20260117040657.27043-4-mailingradian@gmail.com>
+Subject: [PATCH v7 4/5] arm64: dts: qcom: sdm670: add camera mclk pins
+Date: Fri, 16 Jan 2026 23:06:56 -0500
+Message-ID: <20260117040657.27043-5-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260117040657.27043-1-mailingradian@gmail.com>
 References: <20260117040657.27043-1-mailingradian@gmail.com>
@@ -104,59 +104,60 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Endpoints cannot be pre-defined since dcf6fb89e6f7 ("media: qcom: camss:
-remove a check for unavailable CAMSS endpoint") was applied, probing all
-endpoint nodes and requiring them to have a remote. There is no sensible
-remote in the SoC devicetree because camera sensors are board-specific.
+The camera subsystem is added for the SoC common devicetree, but the
+mclk pins should also be common across the SoC. Add the mclk pins for
+the cameras.
 
-The ports are meant to be extended by a board devicetree in order to
-define fully configured endpoints and connect the ports to camera
-sensors. For nodes that are only meaningful if extended, labels are
-usually assigned. Label these ports so they can be extended directly.
-
+Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/5135823c-f2e4-4873-9e3a-9d190cac0113@oss.qualcomm.com
 Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index b8a8dcbdfbe3..3eb4eaf7b8d7 100644
+index 3eb4eaf7b8d7..f21e60a6a2ef 100644
 --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -1776,28 +1776,16 @@ ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+@@ -1196,6 +1196,34 @@ tlmm: pinctrl@3400000 {
+ 			gpio-ranges = <&tlmm 0 0 151>;
+ 			wakeup-parent = <&pdc>;
  
--				port@0 {
-+				camss_port0: port@0 {
- 					reg = <0>;
--
--					camss_endpoint0: endpoint {
--						status = "disabled";
--					};
- 				};
- 
--				port@1 {
-+				camss_port1: port@1 {
- 					reg = <1>;
--
--					camss_endpoint1: endpoint {
--						status = "disabled";
--					};
- 				};
- 
--				port@2 {
-+				camss_port2: port@2 {
- 					reg = <2>;
--
--					camss_endpoint2: endpoint {
--						status = "disabled";
--					};
- 				};
- 			};
- 		};
++			cam_mclk0_default: cam-mclk0-default-state {
++				pins = "gpio13";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk1_default: cam-mclk1-default-state {
++				pins = "gpio14";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk2_default: cam-mclk2-default-state {
++				pins = "gpio15";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
++			cam_mclk3_default: cam-mclk3-default-state {
++				pins = "gpio16";
++				function = "cam_mclk";
++				drive-strength = <2>;
++				bias-disable;
++			};
++
+ 			cci0_default: cci0-default-state {
+ 				pins = "gpio17", "gpio18";
+ 				function = "cci_i2c";
 -- 
 2.52.0
 
