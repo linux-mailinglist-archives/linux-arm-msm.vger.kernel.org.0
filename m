@@ -1,120 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-89502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91FECD38E3D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 12:34:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19AAFD38E50
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 12:47:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DFE63300A78E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 11:34:14 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 68F9E3008F66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 11:46:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E5733374B;
-	Sat, 17 Jan 2026 11:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10DD4277CAF;
+	Sat, 17 Jan 2026 11:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgL1Brga"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UphNA9ij"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F035C2580E1;
-	Sat, 17 Jan 2026 11:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E096D72622;
+	Sat, 17 Jan 2026 11:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768649651; cv=none; b=rhoMd4EJF+8XNmROxuuw/CR1bwCT0Z/36I323o8KAERg63KzJKTXIJ9fjdYS2hcD/fWmbpxbOzVjUNVzzkeWFWNd4NWBO5f8pHeOGhMi9eW0ZDwl38a/bQl4uDx7YOHzNd7slivVtMzxyAtGK9R6q8pZEsAxBEp4+N3oghWwY+8=
+	t=1768650416; cv=none; b=CGvPWYDBOSGOxYqi4DxSmm5IHN2n0AYeXO7Is4DXe9UCJeZShJHT7PrYXwH/5MrKTdvEQ86dqJYbAbMzXJHilUUMaH2a0Kh/U0Cb+jRSf9dqrO8h0a+AuVMJjCMNhmdIUTQBUwmh4DbNet9+vtu0iUu+2Q4gA8p43xHpdVwynME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768649651; c=relaxed/simple;
-	bh=fv7CZKE3aaSA68XB9hs5SRb1yJ22PTBB5qdBpAufLtE=;
+	s=arc-20240116; t=1768650416; c=relaxed/simple;
+	bh=0BDMRZjZ+cF68tCc8y83Q2hV4mWRimaps4LDJoli4OA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P3y55zDem3q2/TsdSJF11/TSRbc1LeoWM0p5gCCp/C2z78zZr9jisTPzQgMfCUNh25Rf0R/J0Qd5ZnxkXq/IWB3SkCDdFr61JuFqEwiJc96m4FAhxakKQNXL6avTjvK3Wji6E32hPqDhJ+3bdzmZYqZZUY3z7pDqdFbcrrMLAfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgL1Brga; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28765C4CEF7;
-	Sat, 17 Jan 2026 11:34:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=IC9rdmHwREcDxI8Ozvn5W81irUrzejFHIPh7WVYmUP/EZdgccc9+W1GT8uO27yOyJzvNCGOe0zzt0NQROet8FOpuLjaPRZE5IbQ+h+roudPp6jIRada/ycuSVDgOytDPRPZ88R1sss7M6CR7ucbokmykYEY3JNYAomup28hq29g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UphNA9ij; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94B6C4CEF7;
+	Sat, 17 Jan 2026 11:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768649650;
-	bh=fv7CZKE3aaSA68XB9hs5SRb1yJ22PTBB5qdBpAufLtE=;
+	s=k20201202; t=1768650415;
+	bh=0BDMRZjZ+cF68tCc8y83Q2hV4mWRimaps4LDJoli4OA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HgL1BrgaT52iSum4tdHARsgvsLwD7xKFLvJG31MzNCvKC7ueYCW/5nHSK6dJ3u+QQ
-	 o+yw64hK19tYtRwAIbTlrm9pB44tz2S1lCIgzvFb72fQKGydZYBwtggW428jL4u3sn
-	 icci5MmA7ytNwQ6XoNAbfAQ2rSzhy71hQdvHuUk3ZWjJfLEy8DIiEycKWzIIfDBS4S
-	 6UWaHkbDzoBflMWYP35UuBFFvw1tVCYZ1lMYt0O/ZCQGx6qiYOIykInc5Ju3w1o//w
-	 jf9nvSwFKeZOxdZLguezq2PA3bcWlGqKkCe7TpjK+Un+Rk/aHIba+axo+cWkQ+SSEP
-	 qaDQ6vyg69k7g==
-Date: Sat, 17 Jan 2026 12:34:00 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>, Christoph Hellwig <hch@lst.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Keith Busch <kbusch@kernel.org>
-Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Koichiro Den <den@valinux.co.jp>, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-nvme@lists.infradead.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	imx@lists.linux.dev, Damien Le Moal <dlemoal@kernel.org>
-Subject: Re: [PATCH v3 0/9] dmaengine: Add new API to combine configuration
- and descriptor preparation
-Message-ID: <aWtzqJKsCHPJqDDH@ryzen>
-References: <20260105-dma_prep_config-v3-0-a8480362fd42@nxp.com>
- <aWTwrOOXX3AR8Ght@ryzen>
- <6f4elcu5iql65jeqfeqhmllquv253xh4gb37ivef2kyvsj5lps@w35ciehuwxym>
+	b=UphNA9ijerNgx0WLGbB4jQY09R5Y8tXcV0nXuw0XFsx9tr9FszPLBDisX0iBhnajn
+	 yx13skeXjRHDwhheu47HNctI8ZCfujRlJESrbicC5Pxwt9Wa3CWV7UJT4RhAV5m3Y1
+	 Z8FYs6WSCCEhk7lMltgUcP7IKdUv7zPkuln94bVilgYchrIfU/d1vU3Mn73M9bIAaQ
+	 ybrTOUrq9s1S1wnH2TJyuKZLU/8B2kqjKLa5RtkqBvcGY40lFDCYfahy6nUR2psyue
+	 EXImBbUKQNU2ZOu7hDKbx600MyvJiDGxng0uAB62eqbi+rU06d63wZaXbe93TT6H1V
+	 hCH2HqFaxe1Gw==
+Date: Sat, 17 Jan 2026 12:46:53 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Georgi Djakov <djakov@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
+	phone-devel@vger.kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/5] dt-bindings: clock: qcom,milos-camcc: Document
+ interconnect path
+Message-ID: <20260117-efficient-fractal-sloth-aaf7c2@quoll>
+References: <20260116-milos-camcc-icc-v1-0-400b7fcd156a@fairphone.com>
+ <20260116-milos-camcc-icc-v1-2-400b7fcd156a@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6f4elcu5iql65jeqfeqhmllquv253xh4gb37ivef2kyvsj5lps@w35ciehuwxym>
+In-Reply-To: <20260116-milos-camcc-icc-v1-2-400b7fcd156a@fairphone.com>
 
-On Sat, Jan 17, 2026 at 04:35:40PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Jan 12, 2026 at 02:01:32PM +0100, Niklas Cassel wrote:
-> > Frank,
-> > 
-> > Thanks a lot for your work on this series!
-> > 
-> > On Mon, Jan 05, 2026 at 05:46:50PM -0500, Frank Li wrote:
-> > >  Documentation/driver-api/dmaengine/client.rst |   9 ++
-> > >  drivers/crypto/atmel-aes.c                    |  10 +--
-> > >  drivers/dma/dmaengine.c                       |   3 +
-> > >  drivers/dma/dw-edma/dw-edma-core.c            |  41 ++++++---
-> > >  drivers/nvme/target/pci-epf.c                 |  21 ++---
-> > >  drivers/pci/endpoint/functions/pci-epf-mhi.c  |  52 ++++--------
-> > >  drivers/pci/endpoint/functions/pci-epf-test.c |   8 +-
-> > >  include/linux/dmaengine.h                     | 117 ++++++++++++++++++++++++--
-> > >  8 files changed, 177 insertions(+), 84 deletions(-)
-> > 
-> > Is the plan to merge this series via the dmaengine tree?
-> > 
+On Fri, Jan 16, 2026 at 02:17:21PM +0100, Luca Weiss wrote:
+> Document an interconnect path for camcc that's required to enable
+> the CAMSS_TOP_GDSC power domain.
+
+I find it confusing. Enabling GDSC power domains is done via power
+domains, not via interconnects. Do not represent power domains as
+interconnects, it's something completely different.
+
 > 
-> It makes sense to take it through dmaengine tree given that the changes in PCI
-> and other drivers are straightforward.
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> > If so, we might need an Ack from Mani on the pci-epf-mhi.c and
-> > pci-epf-test.c patch.
-> > 
-> 
-> Just did.
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
+> index f63149ecf3e1..707b25d2c11e 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,milos-camcc.yaml
+> @@ -25,6 +25,10 @@ properties:
+>        - description: Sleep clock source
+>        - description: Camera AHB clock from GCC
+>  
+> +  interconnects:
+> +    items:
+> +      - description: Interconnect path to enable the MultiMedia NoC
 
-Great!
+And since when clock controllers are part of interconnect path... Even
+more questions....
 
-Keith, Christoph, any chance to get an ack on the NVMe patches?
+Best regards,
+Krzysztof
 
-
-Herbert Xu, David Miller (crypto API maintainers),
-any chance to get an ack on the crypto driver ?
-There does not seem to be an explicit entry in MAINTAINERS for the atmel
-crypto driver, and another atmel crypto driver is marked as orphan.
-
-
-Kind regards,
-Niklas
 
