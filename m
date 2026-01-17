@@ -1,167 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-89485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F90ED38B88
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 03:20:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E226D38BFB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 04:54:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 95494302DB29
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 02:20:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 641653032102
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 03:54:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E25D2D9EC4;
-	Sat, 17 Jan 2026 02:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7555F3054FB;
+	Sat, 17 Jan 2026 03:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ly19mmnz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WXNBJy5H";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Sts6VP3a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C571DED4C;
-	Sat, 17 Jan 2026 02:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D2C28030E
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 03:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768616454; cv=none; b=QpnZzfSNE4odnv41dswQOdEljkUlE3HayJnIFH8xuvvozUhKTAllY19e5ZQc3WayqAhTU8CbZA7ZwjxwUxLy/cfpQIRWCdkchRiS5YPruNc/PKuxo86QdZHCcx5UsaqITBrSVOnNXptQ3ivFE993DFnLKe/vupIfUszkq0Jm0wc=
+	t=1768622094; cv=none; b=Mup96aE7Q/PQMJhKeVN2rLnYiy3TfJj1Vsr1EHvgyQhOBdaySEeM4LdtSb0nZX5NuqayNVVdOSR+T1tuIZCm+o+sYVe0jdck2vulDBrEUasImdVNhwiDPT0RAEvVi442AeC5obYT5YTbvlEx/aip0FK0iTuXvRPvKyq4kY6p9NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768616454; c=relaxed/simple;
-	bh=INs+6hwwqSyR6Q/SwGX7iuQFBsJkkf6pJ1jUIyZQ6iw=;
-	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=slo4ZApyZulzOPw/5QbxYq6l5UORMKikPqz3bHICMb7G8nWL9s1ZhuJxQjHc8ry1eE0RiefPWAT5i2jvSwlQDmfZpVVvxrq/u5BHZNK6PJRNuNKYV6NEwMSllr60+2QQgNkfmkhGeouKO8hWWXU9hXm/9Bvze6rsp4g2v5ZygjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ly19mmnz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB6DC116C6;
-	Sat, 17 Jan 2026 02:20:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768616453;
-	bh=INs+6hwwqSyR6Q/SwGX7iuQFBsJkkf6pJ1jUIyZQ6iw=;
-	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
-	b=Ly19mmnzSKl5PrNFIkOUwNJwbNc5gOxdZhJ95MGtchDMfarRg+N9NsbHKT8pKcRUF
-	 bbnqUt6eGXwJHhsFwQi2eTavB2oK7SDSrVLIFP5jtilvBrIX1zFLQx63daovDsvcv9
-	 xp1xYqCbCA0zU+HrKqZUurtCJ9sGH8yuslG38KPgKTzg+BisdwMcpZgQJiA/2Gtg42
-	 a+6LarLDL40yUOe59X+AK6DG3wYl7PBXcMlvfTRQN+eZJQMwM79Nusk2ppnArkv9uM
-	 DTe4shc831UISeo7tnJuN3dRkF+AKYKM33UL8oTBy6HV+feZnPRuoyQRTEg1wh0AV8
-	 bAlG7TeVrZeSQ==
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 16 Jan 2026 20:20:52 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1768622094; c=relaxed/simple;
+	bh=BXrb8zBMarQfydKiG56Kr8TTVhRKu2yKOODOTG/TY6A=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mkq884GMQDqsWgIuTcHF9saljQpBvRkU4K7NVtHjFrrVAgY6VGDlXClJFlHuHQkWIeCxQUpBG6seLzDlXeq5Th6dckYxgv4S8QS8fWg71AC3FBxinNgCa/Fr5XqZZG5ibRRbvjOsYP9bvuiVs5D1d+FwbkXpr6vSIKGMVSF7Sus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WXNBJy5H; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Sts6VP3a; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60H2pmQ82151656
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 03:54:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=3sNL/ED0+ow7iJyCDM2dh1
+	nRYsu8X+UUBWDh1RFitl0=; b=WXNBJy5HgcaLcaOmkYLvaM5aDALPz7M0qB4/U+
+	R22RlkNidwg0LRc6KRITlbJDVXzGflpcRI8DJ0HbvoBn+EkoKzoHIojz8TMpBdkY
+	/yfiIO52OHjlzWBujLCrOgf88KQYqR3vJpEPOCRnoj7bY5dbGERbh5NnyXSBtx+e
+	ysftlfXvHY4X1l+FDV9HxmRujAil7Kts6xfzZ3+Nf4p7RSaCATuJiakGoAcFeI+Y
+	E/oKvNfz+54xdvUykqFUvYO8qvF0pvDIgBOTZz2bz6Y+HkprLDruQCZicekSHxzs
+	KJSCdXS1dC6VaJFbHAYlt/nbSrmZ82C1fJD3ZQhqbxlkObMw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4br20x03v1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 03:54:50 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c5296c7e57so993001585a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jan 2026 19:54:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768622090; x=1769226890; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3sNL/ED0+ow7iJyCDM2dh1nRYsu8X+UUBWDh1RFitl0=;
+        b=Sts6VP3aHa3m0ObBngMCJb3uuki5r13mJLu4bDqkg+73ehnRUwB6wB8qmSwrREIKjj
+         ONxBR6S5INSs+09tN4AjpdPJ/wUqATeX3+PJ60MOBYFU7M3r5BJpWS/tyQ/AeRWLQ6um
+         HraUeUI3NKXJgsQbZtOKS6IflQxaU6ZL3BbsDI9oANJrNjZim6UGR9yYYW2OJc6T3YqA
+         Kw0ASyVVCTGLn7azw2Etp0AB/vbwJitOKQKSkkI7F3VCkgs45yzTGHkRCxB4C8PeA5P/
+         ZqjhIH6nlt2D0tX8PNPFdqbOugNkrp0F0qX9atSKJzE5tSMIOfJn3DwrkVK013CGalmI
+         w6bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768622090; x=1769226890;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3sNL/ED0+ow7iJyCDM2dh1nRYsu8X+UUBWDh1RFitl0=;
+        b=hloylQGH+JO0yeBftrFEchn2f3Qy6f7FTincYV15PH+bjx3UgvLljgxzPbt2qTIewE
+         VNj2gKmgG0OR6s/2rxjH61q/25MudNE9gP8LkW8OGAhNs8A+YWHRu+bsdG7xqp9DoOVu
+         UQeWROovN4X2IzIoDF9SYbhEOhNMOehBeOGFmIbnHZ/dkqhxMgX4KCkJ6rPOvZCxpc8J
+         3uUDhFxs+aNlZ6UBf18DS6Zz1iXFJWKflGQlkOxuXwTyYYw6f6/vxlHjMBtbbjqwoQFF
+         +BbmbUG8Xiz9C61YsdjwmTEAKaVfeFrpjYZ/hYQK/0uZIFbUUfy75ncvfGqauzYGhjFC
+         jO7A==
+X-Gm-Message-State: AOJu0YwDn+7FXA31UXnaUH7xZyQllDjx/tdkHS/ILYL6Qz28BwoYKPdn
+	VBK9FVd32xMUAip2HxysC5mwhGcrTt203DABGzHyqU/zxXfF8LG7BFr5eoxw6D1NIbCH9fDgNNY
+	FS/BlsgKGhNCLW1AHdM6ZvpgQDNALl3v79kuHGU/jbChighxJnLnCsNm+pJz8e0Nbv8bP
+X-Gm-Gg: AY/fxX5u+kLCqGRl87y0dG2+dBYOGrv4vFY+c7zCdWcvjtWxX+zRBXJP1GfjDOFBSFA
+	ZvtXkfj9fZSNF8S1nbA+G0rnAVxbLFjgvxWyfJLHoGdVB3edmluQOwed2R+1cqQq9zLAi88/zjN
+	CAC0tJx6+jccXzunndRKIFXHJw0n/o+Gw3Y9lE2w7smhvKfTWXAmU+5FOlhlBi/RLPR5BP9vBLE
+	a9lNnOv86tNxdbsbd2wP3joNTf4HQg0SmmYLTLUu2FuBDR7DlwR46VnFKgw0fQhqC8RwuTiPld1
+	xUrf/dcirbpS7IlEDIOBczCxngEukgZxyrSi1JOX9JUfqyDr702eHBJbXqwgB0ZwL0cn+7LMnlT
+	psfTmJ8ln5hCIDDQLgaqMCfNDqRUZndg18gFzgD93YbesWwQsxI4PlQ1/e1E5AT0xPkU7HxC+Re
+	wxinD53ImsUVlAFTNa7VzaxQA=
+X-Received: by 2002:a05:620a:2947:b0:8ba:187c:99e5 with SMTP id af79cd13be357-8c6a6909ac9mr719325085a.27.1768622090001;
+        Fri, 16 Jan 2026 19:54:50 -0800 (PST)
+X-Received: by 2002:a05:620a:2947:b0:8ba:187c:99e5 with SMTP id af79cd13be357-8c6a6909ac9mr719323885a.27.1768622089492;
+        Fri, 16 Jan 2026 19:54:49 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf33e7fcsm1321656e87.20.2026.01.16.19.54.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jan 2026 19:54:48 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sat, 17 Jan 2026 05:54:47 +0200
+Subject: [PATCH] clk: qcom: gfx3d: add parent to parent request map
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Cc: phone-devel@vger.kernel.org, Tony Luck <tony.luck@intel.com>, 
- devicetree@vger.kernel.org, Kees Cook <kees@kernel.org>, 
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Gabriel Gonzales <semfault@disroot.org>, Conor Dooley <conor+dt@kernel.org>, 
- linux@mainlining.org, Konrad Dybcio <konradybcio@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-hardening@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Biswapriyo Nath <nathbappai@gmail.com>
-To: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-In-Reply-To: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
-References: <20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org>
-Message-Id: <176861636288.2528721.260536635040675678.robh@kernel.org>
-Subject: Re: [PATCH v2 0/7] Initial Redmi Note 8T support and more
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAAYIa2kC/x2MywqAIBAAfyX23IKuYI9fiQ6mq+2lQiEC6d+Tj
+ sMwU6FwFi4wdxUy31LkPBrovgO/uyMxSmgMpMgqrQcM20gKozyY4mMCstWGJkXGjw5adWVu8j8
+ u6/t+9zAPbmEAAAA=
+X-Change-ID: 20260117-db820-fix-gfx3d-e61329023c8a
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2539;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=BXrb8zBMarQfydKiG56Kr8TTVhRKu2yKOODOTG/TY6A=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpawgIxN4YW1dmqsptBZiSbadBO3jjXlAUAuTbE
+ 8WT3Le56OuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaWsICAAKCRCLPIo+Aiko
+ 1WNmCACm1N2dCasPaz5rkejNYlMz3ijUAacgeqRMLEUw9dh2mZ+3N8uOczs5Y9X2VEp+/IMz9V9
+ cRAkZiBaciGolonItnRCzB45lOR65M5OJNl5OiWR3M3LwEmt7bJq6mz1SKwptXhHnylTHavxd5k
+ Wwb1vIjku4usQr4eQ9F8szeFmDpp3xMxKZSSlLCdoAPgOR5dPRtr62zCDKHZ9M5GEQ2UFidRO4K
+ Fz+OjObkOjhGAtxaFduduobH7ZCNAksx6eWdwyQ16qVZmFQLKzofYnncId9V5hYJc6f5+OMvuLM
+ x8crmVhsoCtCajlYrTOplQ7hjMU3FMClBY8y1Tf/hefYcz6a
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE3MDAyOCBTYWx0ZWRfXzLTMZ+fwEIZA
+ z7q6gyTjYgWD9oUcuwNSQ4oJUQhnG6aUzftzwIS9OliFGJKF6Q59a23KNaZJmX0X6NOPVoCp3W0
+ c1Mn1m59gUzeb8j9jz4hAQtoUppKIPZ2krCwaXsues2UZVba2s4Kmsu94GFMjlZvqVUISBXd6ly
+ EmlqlwnJZP5L/+CT9d36wmY09uW9h96yUWMtIkMJwC3EBLJP3onrXkt2gU19JRiA3Q9xjl1BoQX
+ TZIFr9cI5T9ksY/Y1b2fEhXPmtHVkIO5MQoaAyDoVydZT/x0uBuzZrjScHAmbZjAz3U2cVF/4X3
+ Bfh1YgzYUE1VL4kI0GQUrRVZLRXOm+rSlSp71UQDPxkwFTfWu2yQiD3zWJlp66ZXo2DXkvwU4e/
+ 1oOgTjCSRAgQUm3fvDavYtEoN1ehCl20TcyBtws2O0bX5HfWX2oKmVMt2YUEOzXrwilEvK+2YOG
+ +qtSlTkzlBew46zTUUA==
+X-Proofpoint-ORIG-GUID: FiJRiAjdjw5jPjO6YFjXM9WlZ681wrtP
+X-Proofpoint-GUID: FiJRiAjdjw5jPjO6YFjXM9WlZ681wrtP
+X-Authority-Analysis: v=2.4 cv=abRsXBot c=1 sm=1 tr=0 ts=696b080a cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=swfMv3hKf4AmUSlbHnEA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_09,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601170028
 
+After commit d228ece36345 ("clk: divider: remove round_rate() in favor
+of determine_rate()") determining GFX3D clock rate crashes, because the
+passed parent map doesn't provide the expected best_parent_hw clock
+(with the roundd_rate path before the offending commit the
+best_parent_hw was ignored).
 
-On Fri, 16 Jan 2026 16:54:42 +0100, Barnabás Czémán wrote:
-> Redmi Note 8 and 8T are sibling devices the only difference
-> is Redmi Note 8T have NFC.
-> This patch series is commonizing Redmi Note 8 devicetree
-> for a base for both devices.
-> 
-> The patch series also contains some fixes for Redmi Note 8:
-> - Fix reserved memory ranges, they were wrongly defined.
-> - Remove board-id, board-id is not neccessary for the bootloader.
-> - Fix reserved-gpio-ranges the reserved ranges was wrongly
-> defined what caused the device crash on the boot.
-> - Remove unnecessary usb-extcon, gpio102 is related to DisplayPort
-> what is not supported by these devices.
-> - Use memory-region property for framebuffer.
-> 
-> Depends on:
-> [1] https://lore.kernel.org/all/20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com/
-> 
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
-> Changes in v2:
-> - Fix copyright in sm6125-xiaomi-ginkgo.dts as requested.
-> - Use memory-region property for the framebuffer.
-> - Add comment about the NFC.
-> - Remove msm-id change in favor of [1].
-> - Link to v1: https://lore.kernel.org/r/20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org
-> 
-> ---
-> Barnabás Czémán (7):
->       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove board-id
->       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct reserved memory ranges
->       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Set memory-region for framebuffer
->       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
->       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved gpio ranges
->       dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
->       arm64: dts: qcom: Add Redmi Note 8T
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |   3 +-
->  .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 301 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 285 +------------------
->  arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  15 +
->  5 files changed, 320 insertions(+), 285 deletions(-)
-> ---
-> base-commit: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
-> change-id: 20260111-xiaomi-willow-448552f02762
-> prerequisite-message-id: <20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com>
-> prerequisite-patch-id: 1bc49c0e2bec1a47667df776e1ab265b0699ea35
-> 
-> Best regards,
-> --
-> Barnabás Czémán <barnabas.czeman@mainlining.org>
-> 
-> 
-> 
+Set the field in parent_req in addition to setting it in the req,
+fixing the crash.
 
+ clk_hw_round_rate (drivers/clk/clk.c:1764) (P)
+ clk_divider_bestdiv (drivers/clk/clk-divider.c:336)
+ divider_determine_rate (drivers/clk/clk-divider.c:358)
+ clk_alpha_pll_postdiv_determine_rate (drivers/clk/qcom/clk-alpha-pll.c:1275)
+ clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
+ clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
+ __clk_determine_rate (drivers/clk/clk.c:1741)
+ clk_gfx3d_determine_rate (drivers/clk/qcom/clk-rcg2.c:1268)
+ clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
+ clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
+ clk_core_round_rate_nolock (drivers/clk/clk.c:1710)
+ clk_round_rate (drivers/clk/clk.c:1804)
+ dev_pm_opp_set_rate (drivers/opp/core.c:1440 (discriminator 1))
+ msm_devfreq_target (drivers/gpu/drm/msm/msm_gpu_devfreq.c:51)
+ devfreq_set_target (drivers/devfreq/devfreq.c:360)
+ devfreq_update_target (drivers/devfreq/devfreq.c:426)
+ devfreq_monitor (drivers/devfreq/devfreq.c:458)
+ process_one_work (arch/arm64/include/asm/jump_label.h:36 include/trace/events/workqueue.h:110 kernel/workqueue.c:3284)
+ worker_thread (kernel/workqueue.c:3356 (discriminator 2) kernel/workqueue.c:3443 (discriminator 2))
+ kthread (kernel/kthread.c:467)
+ ret_from_fork (arch/arm64/kernel/entry.S:861)
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Fixes: 55213e1acec9 ("clk: qcom: Add gfx3d ping-pong PLL frequency switching")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+ drivers/clk/qcom/clk-rcg2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 2838d4cb2d58..d0a5847f9111 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1264,6 +1264,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
+ 	if (req->max_rate < parent_req.max_rate)
+ 		parent_req.max_rate = req->max_rate;
+ 
++	parent_req.best_parent_hw = req->best_parent_hw;
+ 	ret = __clk_determine_rate(req->best_parent_hw, &parent_req);
+ 	if (ret)
+ 		return ret;
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+---
+base-commit: b775e489bec70895b7ef6b66927886bbac79598f
+change-id: 20260117-db820-fix-gfx3d-e61329023c8a
 
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Deps: looking for dependencies matching 1 patch-ids
- Deps: Applying prerequisite patch: [PATCH RFT] arm64: dts: qcom: sm6125-ginkgo: Fix missing msm-id subtype
- Base: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda (use --merge-base to override)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-Warnings in base: 266
-Warnings after series: 272
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org:
-
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dtb: geniqup@4ac0000 (qcom,geni-se-qup): #address-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dtb: geniqup@4ac0000 (qcom,geni-se-qup): #size-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dtb: geniqup@4cc0000 (qcom,geni-se-qup): #address-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
-arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dtb: geniqup@4cc0000 (qcom,geni-se-qup): #size-cells: 2 was expected
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
-
-
-
-
+Best regards,
+-- 
+With best wishes
+Dmitry
 
 
