@@ -1,134 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-89498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A8D0D38DE5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 11:52:35 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 799DED38DEC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 11:57:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A27E93009D74
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 10:52:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 36C6E301A185
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 10:57:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD2B730F550;
-	Sat, 17 Jan 2026 10:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20213313E1B;
+	Sat, 17 Jan 2026 10:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZsyPC20"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2iAT2H9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F242C032C;
-	Sat, 17 Jan 2026 10:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA67926E71F;
+	Sat, 17 Jan 2026 10:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768647151; cv=none; b=OPPV0L2WNs2nkKKF+NVjH4fFrx7kDetV+fofUij8K59t+oKMGZge1eBP3t3q/Mh4ITZ/HRMQtXP3zBo1k+Tj7cmjWhP4G5pYzugzFDeZDpV3YTmcFIPjl1fWqipfBRpCX+FMoW2eaqp14pKyEt4QgXvNwV3L2U0V5cPkuQDMgKk=
+	t=1768647454; cv=none; b=VKFyIVeNhwCXkjMl/YR6UKFbgn/RM1HeBHNcZ0w86o2v7mXgsKMe/6uMLed5EhGMyYd5+VewICnL3SKStmc66z03uTrOVFtTYoTafelHx6WQh9UjZrNHevj2z9VqcmLn/4W0B6T5XKhdVj4UdF3LekDeFE2z1dHOKkGrR9ljQWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768647151; c=relaxed/simple;
-	bh=D8rJ8RkHTEhL7rsO2/lejXlsHMvngtEGWU8Zg3Qg2/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ms4hTapdg5B7g7nTO0LsJ8vfxaTpQS7yFEFGVQ4vS75DWBPvFvI6eZS0ghedTkLqEmDBD58cLVH+InRGJaOi0psLZ7Wovq7Sg/sHO4eC71vcxjmXYrsoD4BTuVyKGZlTjA7iQ5XoxEIkSziJX9/nN0+oq6ntLigHnwxWRLuuhss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZsyPC20; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D5CC4CEF7;
-	Sat, 17 Jan 2026 10:52:26 +0000 (UTC)
+	s=arc-20240116; t=1768647454; c=relaxed/simple;
+	bh=hNiv/W3QHHIP4X/UDBU+nEtCmGt9Wf1fVOHzvFVeeME=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ggPl5GDPfmsk38TRli14c3faXnY9wXUmCI4b5rpdMjcicgWhoswqlbFMDE214DMUfVyaBLTCATgm0GP7L6G+16EADrPL+XIotBNIuZ8VEen6JT5fZSAPzCrBiZFi4Qk2xtx+UZ9MstrjEWeS4qdOhcQCiwqftNhrTzTDgQUe39I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2iAT2H9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD7CC4CEF7;
+	Sat, 17 Jan 2026 10:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768647151;
-	bh=D8rJ8RkHTEhL7rsO2/lejXlsHMvngtEGWU8Zg3Qg2/Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FZsyPC20zx2++nHAXSOh5VxuAjLNKRGgtd3kvcfFeax0+uoT/zWHfV6uh7ad+L6hK
-	 jh2iHoKK8w3tSzNZ5FgMi4ki4NL1JJICylX3bVycryrWSPU05w65ve/Gq1N54c6iz8
-	 CeI4NvCQADkoe6QMArCAct2b5KDRgsU3ZCy1aBYf8JwQk09l4XacFzaO0eWekCH4M/
-	 oud+ajL465jxcd+BYj0Xk9kOQJhmKZ4clwrzCEVCMl1k0JW5GQi3xgqj47Lx0AN6I0
-	 QPxwo9BL1J5XbLiT9zzs78w2dpRomY0qBkAu9zJW8URF0rYebT2UNt6RncyqK/ioZe
-	 ep6LP7iehPRsA==
-Message-ID: <a3571017-c127-44a4-a096-48dd1557d5fa@kernel.org>
-Date: Sat, 17 Jan 2026 11:52:24 +0100
+	s=k20201202; t=1768647453;
+	bh=hNiv/W3QHHIP4X/UDBU+nEtCmGt9Wf1fVOHzvFVeeME=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y2iAT2H9xieXc+E/UTKamvCsKyuamRllOQz07wrpzr/PFi03FyaK4eix67vMva8qa
+	 Bn2N808rm098VDDpvZTC7LgjiODtwl4HQKvRT3/ijbN3qLd20pZfoW0AdaS9XU75Dr
+	 PxXMKKiB7b6oWbwSGDpalEE5EnqZcDDklM6V19UXWYu+eqE7/XXXgpiZ2cZIbX7ygJ
+	 jYHGXN9RnkohyW7Stm5PItZbX1l/sS+wVBYMXanm3cAFRILY8t+WLiXy5eAjO8V86k
+	 QNUmcYX0M83kItZP/zIuTCTT8uDcJMGostfKfUc619iS02/er1Dsuh7NsICE3aAH7j
+	 o4A7dzhUg14PA==
+Date: Sat, 17 Jan 2026 16:27:15 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Frank Li <Frank.Li@nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, 
+	Chaitanya Kulkarni <kch@nvidia.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Koichiro Den <den@valinux.co.jp>, Niklas Cassel <cassel@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org, 
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v3 3/9] PCI: endpoint: pci-epf-test: Use
+ dmaenigne_prep_config_single() to simplify code
+Message-ID: <tfqwmj24eu2rf6h4ecvkgom44tgjkaihtgmln7v3zcyy5burcb@sg3q5qafbzgf>
+References: <20260105-dma_prep_config-v3-0-a8480362fd42@nxp.com>
+ <20260105-dma_prep_config-v3-3-a8480362fd42@nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/5] dt-bindings: media: i2c: Add Sony IMX355
-To: Richard Acayan <mailingradian@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Robert Mader <robert.mader@collabora.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
-References: <20260117040657.27043-1-mailingradian@gmail.com>
- <20260117040657.27043-2-mailingradian@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260117040657.27043-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260105-dma_prep_config-v3-3-a8480362fd42@nxp.com>
 
-On 17/01/2026 05:06, Richard Acayan wrote:
-> The IMX355 camera sensor is a camera sensor that can be found as the
-> front camera in some smartphones, such as the Pixel 3, Pixel 3 XL, Pixel
-> 3a, and Pixel 3a XL. It already has a driver, but needs support for
-> device tree. Document the IMX355 to support defining it in device tree.
+On Mon, Jan 05, 2026 at 05:46:53PM -0500, Frank Li wrote:
+> Use dmaenigne_prep_config_single() to simplify code.
 > 
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> No functional change.
+> 
+> Tested-by: Niklas Cassel <cassel@kernel.org>
+> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> Signed-off-by: Frank Li <Frank.Li@nxp.com>
+
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+
+- Mani
+
 > ---
->  .../bindings/media/i2c/sony,imx355.yaml       | 105 ++++++++++++++++++
->  1 file changed, 105 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/i2c/sony,imx355.yaml
+> change in v3
+> - add Damien Le Moal review tag
+> ---
+>  drivers/pci/endpoint/functions/pci-epf-test.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index debd235253c5ba54eb8f06d13261c407ee3768ec..95b046c678da7ca4a0d9616acdd544251dc05aac 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -162,12 +162,8 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
+>  		else
+>  			sconf.src_addr = dma_remote;
+>  
+> -		if (dmaengine_slave_config(chan, &sconf)) {
+> -			dev_err(dev, "DMA slave config fail\n");
+> -			return -EIO;
+> -		}
+> -		tx = dmaengine_prep_slave_single(chan, dma_local, len, dir,
+> -						 flags);
+> +		tx = dmaengine_prep_config_single(chan, dma_local, len,
+> +						  dir, flags, &sconf);
+>  	} else {
+>  		tx = dmaengine_prep_dma_memcpy(chan, dma_dst, dma_src, len,
+>  					       flags);
+> 
+> -- 
+> 2.34.1
 > 
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
+-- 
+மணிவண்ணன் சதாசிவம்
 
