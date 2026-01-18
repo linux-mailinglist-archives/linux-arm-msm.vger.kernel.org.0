@@ -1,254 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-89549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ED08D399B9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 21:30:10 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2651CD399F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 22:16:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D8747300161A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 20:30:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 133AA30081B8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 21:16:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E76A827144B;
-	Sun, 18 Jan 2026 20:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765F81DE2A5;
+	Sun, 18 Jan 2026 21:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eMpn89t8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YaohNuLM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC37B3033DE;
-	Sun, 18 Jan 2026 20:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5351D190664;
+	Sun, 18 Jan 2026 21:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768768203; cv=none; b=tbKaasFHdcWmJ+f4BOlVVwgPMBgOS9zyrq9NwQBMcHBk8iNS7kLNm+Bf+0Atl9LClysSGZN5kxd2x2Iwazeo62bFRl0iVwYyFUDOOZGm9l+iLJRvMb0jfWyXHc1USsIfNCJyDTubHshZRqJw2t9LyrrKMzsNp4uK50Imj10Im0w=
+	t=1768771013; cv=none; b=UNjJRaDshGFU46YDGe55320iJi187SZauNGpyER5AmYU0tAL5uWDiCgCQ5RPMrpFcP+gf29L3hR17U4WqKvrAW1PRThY29nTLoCsmnRU/6l8/5vST/xzn67/ARtPDzuOhfMfwBQYuhyGZaJfvAUCR6aYb47OW08RC6JS6hu0+h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768768203; c=relaxed/simple;
-	bh=wqTCy35EmRsmBM6MSmDrCfl73aVgiBL7QYd15KURbps=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ONUlX8gjFwXF17+Yv9mGy+QF/UC7wKNfy7CfZWMfFG1pzkZb2Ge7tNbHD+bOHTnZ0PfGmJ4W841ppQx0dIK1JSBueWsNm1hmL/SVnvp9PFzE0Tl6+aF0vlfxcjWSDTzoOGFyPwpKhR399LPsPEM2wfR0HmtpJcDtAPecMOTAOtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eMpn89t8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6F9A3C2BC9E;
-	Sun, 18 Jan 2026 20:30:03 +0000 (UTC)
+	s=arc-20240116; t=1768771013; c=relaxed/simple;
+	bh=EtU+kqexD/KStxyNPxQa9UqtQF8DZTaoiII4pPCCBEk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fq8+ECZJ1DtK+avVzGZA7eJ1QtJR+0ml2djTuItxXifZzkCqYuTXGjHqT76vFeJRtdoWJXwCdF3VxYesbWxW+e0j3iFxedzPr/vxuX3RcM7/MQFemNq5JEug+4eUFbv2ktg6LrN1f6b0inqZYBtw3vh+gG+9nNB8MfDaZyTsilE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YaohNuLM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307A6C116D0;
+	Sun, 18 Jan 2026 21:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768768203;
-	bh=wqTCy35EmRsmBM6MSmDrCfl73aVgiBL7QYd15KURbps=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=eMpn89t8riybL6gs02BJ3pjN8nXArZtCfjx4mFK6smqn0gMIa9r+PAkesCS9ZYYCs
-	 ZwGg/wlQWsGEmSFl3cPS7L8oHCUhDyjpbfFhnrs+ApqFudCD7q9hEwugFqBGHO6QlH
-	 7DTFSgewiQV7X2fTN+eh+UKk2Di2jJyEf4Ltl4hTpRaaRCXGwKNWme0wXISQL48Nk+
-	 oJ1pxfWhZSTn9c6kJSFAGIwTN0fL7bS2ZH5PidPCPxsTzh5eatHPp8Z/XcQdyBeBZ+
-	 pj6Syok1zN70h8YEcuDNE5/AZAgNX7KIA+AWoZCUEh+MUYfkuIXiFC5ip1xARl5fM/
-	 BUZEZy32pE8YA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E5AACA5FE5;
-	Sun, 18 Jan 2026 20:30:03 +0000 (UTC)
-From: Yedaya Katsman via B4 Relay <devnull+yedaya.ka.gmail.com@kernel.org>
-Date: Sun, 18 Jan 2026 22:29:42 +0200
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Add
- Focaltech FT3518 touchscreen
+	s=k20201202; t=1768771012;
+	bh=EtU+kqexD/KStxyNPxQa9UqtQF8DZTaoiII4pPCCBEk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YaohNuLM4zm1yDpQACKj8DLMv8bI9cRAkZKQPFp3MS3DHuRMORhutqAdvFKh4z0qy
+	 a8ENExmWluK1ny/TxKVItRSD22nFESu1CYkDGIah7hLJzhQeYyvx0AxUI8ItG6fGY+
+	 jwmHy3oufyM9ndiwuP5kpKZQbSB+hbo/HnRWyjDEecLKCexLylKEfA5paDpkRCbrrd
+	 B+tg8imXaxnsdx9L4oFR2Tj3tYevHuqfSTYPNWyoNNZ8M239zYt67TpzbhDQHsWJxb
+	 1miMHAQCMZJDwARPpCsjZ+nU6e1XlC0l3m7t/tsbARJkr8tfTW3dTUyvxmui8o7WUC
+	 5NF0dI4J74P2g==
+Date: Sun, 18 Jan 2026 15:16:50 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Trilok Soni <trilokkumar.soni@oss.qualcomm.com>, 
+	Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
+Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
+Message-ID: <mzs5vq2jsrmb6kdriuxawbamyim6dhgy34ne6tucnhlalt5y3w@ghckxur3cn6m>
+References: <20260112-disable_smccc_soc_id-v1-1-a5bee24befb4@oss.qualcomm.com>
+ <aWY6kx8Bwa_2azIl@bogus>
+ <86331062-301b-40b1-9df1-78f7751508b4@oss.qualcomm.com>
+ <aWgEDAlglnGrzdR4@bogus>
+ <4fab824f-8067-49d7-8e6c-dedd67a8454d@oss.qualcomm.com>
+ <aWoVR4oNdIHnksJQ@bogus>
+ <92d90a1e-e993-4044-b152-83a8700f7b63@oss.qualcomm.com>
+ <cb7326b9-91d9-44a3-b9f0-9d2e6ab5fa42@oss.qualcomm.com>
+ <aWzuuwQi_nsHoj_5@bogus>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260118-touchscreen-patches-v3-3-1c6a729c5eb4@gmail.com>
-References: <20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com>
-In-Reply-To: <20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com>
-To: =?utf-8?q?Kamil_Go=C5=82da?= <kamil.golda@protonmail.com>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Yedaya Katsman <yedaya.ka@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768768201; l=3979;
- i=yedaya.ka@gmail.com; s=20260113; h=from:subject:message-id;
- bh=gc0uiHv+Kr2394WFOHhQSa//UoZdP1/ciZ1jZkUwa0E=;
- b=cSROccKeZFVWmSgQUYE5KsGt/3EsRqvOweoKWRwOueObEAs7gZRtAmM9lS6Of5R7naU2o8QE3
- k4JLpMG7w8cCGO3ZC1H3yHkXI+VW4LyfOz6VfJD2zieZB3meiAsHFYs
-X-Developer-Key: i=yedaya.ka@gmail.com; a=ed25519;
- pk=CgNmxD3tYSws5dZfpmJfc6re/bV/f47veVijddHLytk=
-X-Endpoint-Received: by B4 Relay for yedaya.ka@gmail.com/20260113 with
- auth_id=601
-X-Original-From: Yedaya Katsman <yedaya.ka@gmail.com>
-Reply-To: yedaya.ka@gmail.com
+In-Reply-To: <aWzuuwQi_nsHoj_5@bogus>
 
-From: Yedaya Katsman <yedaya.ka@gmail.com>
+On Sun, Jan 18, 2026 at 02:31:23PM +0000, Sudeep Holla wrote:
+> On Fri, Jan 16, 2026 at 03:53:57PM -0800, Trilok Soni wrote:
+> > 
+> > I believe that point(s) we have not touched upon are following:
+> > 
+> > There will be thousands of Android applications using the native interfaces
+> > in the playstore in various regions like US and China and so on, which relies
+> > on getting the SOC_ID to understand the product and enable / disable some features.
+> > 
+> > For example, benchmarks like GeekBench or Antutu may also be reading these
+> > interfaces.
+> > 
+> > There are apps. in certain regions which are still not updated from "32-bit"
+> > to 64-bit on Android yet as an example and there may be no way to reach out
+> > to those developers to fix but apps. are still used by many users.  
+> > 
+> 
+> Fair enough, but apps get updated on Android phones every day. So sorry if I
+> don’t consider this as something impossible. I do understand many apps are not
+> actively developed, yet that is no reason to say the wrong assumptions made by
+> these apps are correct.
+> 
 
-Add device tree node for the Focaltech FT3518 touchscreen on
-Xiaomi Mi A3 (laurel-sprout).
+It might be what you're saying is true, at least for the top-10
+applications in the app store. But that is not how we manage or maintain
+the userspace interface in the Linux kernel - we don't break userspace.
 
-Add pmx_ts_* gpio configurations and reference them in the touchscreen
-node.
-Note that gpio pin 83 for the regulator isn't documented downstream
-except in the touchscreen node so it's not defined in the tlmm.
+> > If we need to move all of these third-party applications to this new interface
+> > then we have to "break them" before we fix them. Do we want to have such approach?
+> > 
+> 
+> Sorry, which new interface are you referring to?
+> Are we still talking about /sys/devices/socX/?
+> If so, are you suggesting that X=0 and X=1 represent two different interfaces?
+> If that’s the case, I honestly have no words.
+> 
 
-Enable qupv3_id_0 and i2c2 bus that the touchscreen is on.
+Please do have words, because I really would like to understand what the
+expectation of userspace is in the even that there's both soc0 and soc1,
+regardless of which is which.
 
-Downstream references:
-Link: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/laurel-r-oss/arch/arm64/boot/dts/qcom/trinket-pinctrl.dtsi
-Link: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/laurel-r-oss/arch/arm64/boot/dts/qcom/laurel_sprout-qrd.dtsi
-
-Co-developed-by: Kamil Gołda <kamil.golda@protonmail.com>
-Signed-off-by: Kamil Gołda <kamil.golda@protonmail.com>
-Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
----
- .../boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts  | 113 +++++++++++++++++++++
- 1 file changed, 113 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-index 994fb0412fcbdf5466f87a325c48b697a37b514b..5e55acacee9585f34eead20661268103f0b7889c 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-@@ -82,6 +82,18 @@ key-volume-up {
- 		};
- 	};
- 
-+	ts_vdd_supply: regulator-ts-vdd {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ts_vdd_supply";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 83 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		startup-delay-us = <70000>;
-+	};
-+
- 	thermal-zones {
- 		rf-pa0-thermal {
- 			thermal-sensors = <&pm6125_adc_tm 0>;
-@@ -128,6 +140,28 @@ &hsusb_phy1 {
- 	status = "okay";
- };
- 
-+&i2c2 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "focaltech,ft3518";
-+		reg = <0x38>;
-+		interrupts-extended = <&tlmm 88 IRQ_TYPE_EDGE_FALLING>;
-+
-+		vcc-supply = <&ts_vdd_supply>;
-+
-+		pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
-+		pinctrl-0 = <&ts_int_active &ts_reset_active>;
-+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-+		pinctrl-2 = <&ts_release>;
-+
-+		reset-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
-+
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1560>;
-+	};
-+};
-+
- &pm6125_adc {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&camera_flash_therm &emmc_ufs_therm>;
-@@ -220,6 +254,10 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators-0 {
- 		compatible = "qcom,rpm-pm6125-regulators";
-@@ -387,6 +425,81 @@ &sdhc_2 {
- 
- &tlmm {
- 	gpio-reserved-ranges = <22 2>, <28 6>;
-+
-+	pmx_ts_reset_active {
-+		ts_reset_active: ts_reset_active {
-+			mux {
-+				pins = "gpio87";
-+				function = "gpio";
-+			};
-+
-+			config {
-+				pins = "gpio87";
-+				drive-strength = <8>;
-+				bias-pull-up;
-+			};
-+		};
-+	};
-+
-+	pmx_ts_reset_suspend {
-+		ts_reset_suspend: ts_reset_suspend {
-+			mux {
-+				pins = "gpio87";
-+				function = "gpio";
-+			};
-+
-+			config {
-+				pins = "gpio87";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+		};
-+	};
-+
-+	pmx_ts_int_active {
-+		ts_int_active: ts_int_active {
-+			mux {
-+				pins = "gpio88";
-+				function = "gpio";
-+			};
-+
-+			config {
-+				pins = "gpio88";
-+				drive-strength = <8>;
-+				bias-pull-up;
-+			};
-+		};
-+	};
-+
-+	pmx_ts_int_suspend {
-+		ts_int_suspend: ts_int_suspend {
-+			mux {
-+				pins = "gpio88";
-+				function = "gpio";
-+			};
-+
-+			config {
-+				pins = "gpio88";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+		};
-+	};
-+
-+	pmx_ts_release {
-+		ts_release: ts_release {
-+			mux {
-+				pins = "gpio87", "gpio88";
-+				function = "gpio";
-+			};
-+
-+			config {
-+				pins = "gpio87", "gpio88";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+		};
-+	};
- };
- 
- &ufs_mem_hc {
-
--- 
-2.52.0
+What does it even mean to have two different socs presented here? How
+would userspace know which one to refer to? Should it refer to both and
+guess which one makes more sense to it?
 
 
+To me, when you decided to add a second caller to soc_device_register()
+you created a regression in the userspace interface. If nothing else
+it's a leaky abstraction.
+
+> > We should not have enabled this feature as "default y" in the first place and should
+> > have kept it as "tristate" or kept it disabled in my opinion.
+> > 
+> 
+> Sorry, but how do you envision this working with a single defconfig? Please
+> consider the issues on platforms beyond the ones you’re focused on as well.
+> 
+
+Glad that we're on the same page regarding both defconfig and
+our considerations.
+
+Regards,
+Bjorn
+
+> -- 
+> Regards,
+> Sudeep
+> 
 
