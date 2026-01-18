@@ -1,52 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-89537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04BE9D393AC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 10:51:21 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33A89D393FA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 11:27:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 75D443002D07
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 09:51:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A1641300D142
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 10:27:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5100528C009;
-	Sun, 18 Jan 2026 09:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02019293C42;
+	Sun, 18 Jan 2026 10:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="h4fwmOFV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WisN+iYo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9206F2773E4;
-	Sun, 18 Jan 2026 09:51:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D1B238D22
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 10:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768729879; cv=none; b=Fk9gAAmMNxweHXMLnorM8YXDIED5k7RrQllC0WHF96aCha/lrQxeh7t6a5DSy+oMvMF/+QWUrX11lDknbU99ei7p1NXFtA2yEb/pRCjCqhxM/VeLh0rJFrhA+fnqmE+R5XTwKJRXnFjBBxl4JhRzuugdbAE9RC2BjAI2ITPTcv8=
+	t=1768732031; cv=none; b=HivCWN1s7KZomIAjr6mJ11GmZhszE5fETGFKir1H26juQiZrusBVAajoGrCUUS9htMOWI1NPp+YlWNiShd58x+yyP8ofzsAV++xaFjNXtNFCGtbpcSw/6oyZsG7DwfheP9CqPR5IhGeHQZ8k0tA93vc3DvpUEvREO+QnDYs4Slw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768729879; c=relaxed/simple;
-	bh=YQH9wALI15ggu/SvVJ37+5CWyLhWhsrN/jrIUp2rzlE=;
+	s=arc-20240116; t=1768732031; c=relaxed/simple;
+	bh=g3v9aNdNytZLZ6rBo2v8ocKbRD+tgP/M2fp0XY9ZWC4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KLCZDGfUcPMWKpbAbhyip/YB8tlAl4zYo9RqHKNF9/Bxq6Hm5Rqwgaj9zwE10bwtsPQT6c2+CpdPNHIsUKbXw27ZFytV6njipDZubF7h4J6ViBPGxdtSszb5NA/vZ5CbxAE+Z8hliUMe8iGwu+r5uwK+kunJCmfA7Nv3Ac2ZGdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=h4fwmOFV; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.88.28] (78-80-19-209.customers.tmcz.cz [78.80.19.209])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 5C81653408F0;
-	Sun, 18 Jan 2026 10:51:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768729870;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=HlYIEg/O/ZZsjnII1Nxck2PBt3vKflZfmBTzXo06dMs=;
-	b=h4fwmOFVBfN1JiJs6mPfpeP/0pqKO9XrQ3GGEtmzuD23YDahjNX3IfdnKm57IE852/7ksB
-	54xSOZUccqxI5eDWlLyiDy35+vHnN11nTCP7e+q7zhPXJZKu9HQ4R+gdXN4QusZZ6QQPJF
-	LAdbIe/jNdGo5uwFsOY8OO54jNRALrY=
-Message-ID: <010df7e2-ea01-4b32-ae4f-40bff3ad278b@ixit.cz>
-Date: Sun, 18 Jan 2026 10:51:06 +0100
+	 In-Reply-To:Content-Type; b=o/cYoY8uIVApZ1GvUNALBcdNWQfX0+UG0EuQ2s63dRi95xo/7D+Axe7bcXkDzZ5nw7VsyVPMgjHlsCH1VA65qXkPPd9EzzWUrpFIatlEDk0RXRi6X4SwSZivhC2WrhzUjSjxgp5qJjFGDSKlrVSyj2UWUjzRzSlnbpQu7I/YF1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WisN+iYo; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-47f3b7ef761so17661435e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 02:27:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1768732029; x=1769336829; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2wVayVrE8vfLjDsbFPedYadpWwsg6eC8hmmLmvT9NIU=;
+        b=WisN+iYoyZlLt8E6rcLH8jHzINlF5qvyjphoOLJW/ZzznGjOj4lDpJIgfD8XoNA4ot
+         xY6IkwkZ9AiJYXPWD6t7fZ2O1DVDnwoXjIbihHmaISUWs+feLk1NJRyvrFU+uhwd7isC
+         0tbCJ4Pg/f+39JD0rwu+toacbbI00n2kY76pMm4oKWsTbF8HEuuZmyQfUbP/PEuvbpqx
+         mPA4vYNCMybaruxJuKLuHszEGgvetQU5weXT7528KJdFvqYXYg5lplGjoXJgEe/0Mk3f
+         zBq1mpNKhDgGnKpuLKME0iRNpjG7aNSwl64zEg2PrdpnJpeR/AYQBacvYVkqNzSFamua
+         9eFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768732029; x=1769336829;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2wVayVrE8vfLjDsbFPedYadpWwsg6eC8hmmLmvT9NIU=;
+        b=tIZYGIF1Ybgdz3dhBY373cb+lHN/Egw6AB2imBwW7z5Nq5l31bEi07QQUIWhXQURYZ
+         PuOWJ30kpb34sDOesGWHetgYwBkBucu3cruHV4u2IkDzNyq3nVC+gHoTFChOybjbNmMP
+         U+SjSm+mrhEPT8NLTBxYcrcdKwDYoPyykzYF9soAyGJa4i5ZGPThbgW3mKqiw6IPZhNS
+         MRA4m6b2EJ9T0IpzRhw+35mx9jTjCSjt9CTTVPQWfkT3Pb60A9gYpU87cnXK0G/kIllp
+         ayKRuvs9OprBNIq2QxgqQsaln6tjNi/Vz0vdCEneqcxMxGI7DxubBYbq9IIa2Gebi9tg
+         QM+A==
+X-Forwarded-Encrypted: i=1; AJvYcCUOxyHJ/e0Rg38DtaZMqjL43tTH7ys1ioMEsVxmH48SdTCsii893mjALuhAYeCgusIzAoZ6B5/10GHyBuuU@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYbm52e0sl6J2Bgrn4UD3QEmuvlB1nqVsLHgfXN/H9Ee/0A4QU
+	rsjU0qvtQtXrJzv6c+cNaNDSKSDGLj3icF8shS1PHCvmsIBWynEBATmSdcFyyMwnPgg=
+X-Gm-Gg: AY/fxX4VS7jX58geoYJe00eiACX77VjT75pVP8K7zU7o9ByjwiPzbWKba39Pgnoadz8
+	038v1Xw9P91dCONBij+Nf794z7gX4Ga0RvZNV1uSjEVkhYYpnycBwk26kW1tjilcMFqkfC7Ag7B
+	A36J8hlYCySTrR1cj0X57FJLiOQFG71FHAQ9XZPofD/KNB6DEmH8b7uByGSmdfskc1onyUBcUJk
+	hxKIwf2hl8Q4y/tmIKElfHQTZu5Jg6b3cH27oNtAZaBFt4MX9R+a3j4Y7SFKDzMDJsXrCCs68AG
+	1qfcnqMWDIYSSkdm+S1dEz69NmHvlUZg+/AlHh2O76O/yOKLBuj/oOvq3CNnfFT91Ddt2r6htFN
+	glRWanVXxGlVgZi91OxJSFLqIEcdWoFf6uTQ4/MLyObUQAM/Jt52yYZeAAhAw4W68h111/0iSyw
+	gDdI28qIplae7U8pc15UiDmOkdOm49htJUQaLREHnWhCGCMrNCS1HT8ZjPrNbXHpA=
+X-Received: by 2002:a05:600c:8714:b0:479:3a86:dc1c with SMTP id 5b1f17b1804b1-4801e3531c2mr111870855e9.36.1768732028854;
+        Sun, 18 Jan 2026 02:27:08 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47f428acae8sm190955195e9.4.2026.01.18.02.27.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Jan 2026 02:27:08 -0800 (PST)
+Message-ID: <fdf976a3-d386-40ac-99f9-5d6d1a175677@linaro.org>
+Date: Sun, 18 Jan 2026 10:27:05 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,8 +83,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 5/8] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 MIPI
  CSI-2 CPHY init
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+To: David Heidelberg <david@ixit.cz>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
  Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
@@ -70,114 +97,27 @@ Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 References: <20260117-qcom-cphy-v3-0-8ce76a06f7db@ixit.cz>
  <20260117-qcom-cphy-v3-5-8ce76a06f7db@ixit.cz>
  <4936947b-f402-4817-acf7-299abbeeb23b@linaro.org>
+ <010df7e2-ea01-4b32-ae4f-40bff3ad278b@ixit.cz>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <4936947b-f402-4817-acf7-299abbeeb23b@linaro.org>
+In-Reply-To: <010df7e2-ea01-4b32-ae4f-40bff3ad278b@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 17/01/2026 22:49, Bryan O'Donoghue wrote:
-> On 17/01/2026 15:36, David Heidelberg via B4 Relay wrote:
->> From: Casey Connolly <casey.connolly@linaro.org>
+On 18/01/2026 09:51, David Heidelberg wrote:
 >>
->> Add a PHY configuration sequence for the sdm845 which uses a Qualcomm
->> Gen 2 version 1.1 CSI-2 PHY.
+>> If checkpatch.pl doesn't complain about it, I think it probably should.
 >>
->> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
->> mode. This configuration supports three-phase C-PHY mode.
->>
->> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
->> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Co-developed-by: David Heidelberg <david@ixit.cz>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 70 ++++++++++++ 
->> +++++++++-
->>   1 file changed, 69 insertions(+), 1 deletion(-)
->>
-
-[...]
-
->> @@ -1050,7 +1114,11 @@ static int csiphy_lanes_enable(struct 
->> csiphy_device *csiphy,
->>       switch (csiphy->camss->res->version) {
->>       case CAMSS_845:
->> -        { /* V4L2_MBUS_CSI2_DPHY */
->> +        if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
->> +            regs->lane_regs = &lane_regs_sdm845_3ph[0];
->> +            regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845_3ph);
->> +
->> +        } else { /* V4L2_MBUS_CSI2_DPHY */
+>> Please standardise the location of the comment and have one for the 
+>> CPHY and one for the DPHY configs.
 > 
-> This is inconsistent commenting Ted and I'd reckon something 
-> checkpatch.pl spits back at you.
+> Then I can rather replace the else with elseif (== DPHY) and make the 
+> comment irrelevant. What is your recommendation?
 > 
-> If checkpatch.pl doesn't complain about it, I think it probably should.
-> 
-> Please standardise the location of the comment and have one for the CPHY 
-> and one for the DPHY configs.
+> David>
 
-Then I can rather replace the else with elseif (== DPHY) and make the 
-comment irrelevant. What is your recommendation?
+I think the code is pretty self-documenting without a comment.
 
-David>
->>               regs->lane_regs = &lane_regs_sdm845[0];
->>               regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
->>           }
->>
-> 
-> Once implemented.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> ---
-> bod
-
--- 
-David Heidelberg
-
+---
+bod
 
