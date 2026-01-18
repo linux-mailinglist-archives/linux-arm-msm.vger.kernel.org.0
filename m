@@ -1,173 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-89542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB103D3992B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 19:37:20 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DE13D39933
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 19:38:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AA3973009F5A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 18:37:14 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A0AFC3001183
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 18:38:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8644130100E;
-	Sun, 18 Jan 2026 18:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61FC23002BA;
+	Sun, 18 Jan 2026 18:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGouaB3k"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CV27rbYX";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="g67BqGOY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F225E3016E1
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 18:37:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768761433; cv=pass; b=EQg6fYJR75lC6iZZgWkk7Giq5h1aiU3LSn7sfBgH3ne6e33t8Ki3A60sf8FjvDD+g02sQM8Nc69Newq9JnN8HP7znOsdTB1zIChU50uKy992lGp1CnQNGO4rGCQ8pVmFSfasR43Hm1k6XJ3G0ZaJKHRSmtFJu8e/rLYClQkQiIQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768761433; c=relaxed/simple;
-	bh=FafNYUVdaGzrXDndD0nXOLhWN6HVNmsTnD8p1x+z+c4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FB9BA34
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 18:38:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768761494; cv=none; b=oKkIBeTPN2xLSuv8fWAsqEuOAs6mgwk2T710qR7AF17kn+/mXt47xlZuuopuYVqnO2xsiofzRUEgyhe/5CeCG9s510L42LiYZ+it92HJYZVOOLQDrWDhhLa0TGhFAYpl37o34+UIyotxWvdzlSkhRlrpVTjV9Bd2znGGtDjD2AA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768761494; c=relaxed/simple;
+	bh=fap6q+lV+ndLCOlD0LNxdpd0P9dPjJr3wz7qo5n2L4Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A0u9SW/Tfz14vdoHHP4wk8UrDVEYIlyV6tYz2zbL0n9LS1dUusmMeUVDO7WflbRflegpD9f9SaXG8ueX41PkXpVfOfsJR0HBFgvZ8S6iB7nZ5OW8A3wa4k9tSrG4MGVtm+DeY/oBVk0pwtht0FTMDq30UGz0WQKqPti9lBy/qN8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DGouaB3k; arc=pass smtp.client-ip=209.85.167.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-45c8e85deffso1235119b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 10:37:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768761431; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BUj3AKsScw1sDI2dvLalpWMm0hRE1JwKpWFct5q7UlrChYTwrpvwwhpFtbD8H1gSCW
-         DWCdOhV1mNqYcXY1WgGzrI+38+W2uydsNOt/rfL7FTULzbdqEACtHLrPWtw1hHtf7yGD
-         eD+Uv8R5zF1NalBkrgDzZKhAMohlKw60zk7ldRjQgePVlTB3yIZjtX3B6y8uNfc4O9ve
-         NLc19uFewXMHI/l1njSFkATVAw8a137IFfKAC+OJme67FAIgJj0rKw7/vT4RuzXct0G6
-         E39imVjrToZyWZvblRT/mv7ei5nW3WYS8GCaWIZWylMZZ98qJs+iRvxM+Gfg6Rg5spbs
-         XkDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tSfCZRWiq+F2guXeIq82E8iOGM2R1T/WtMgXIZ3rrvo=;
-        fh=YXkxh8VhABmRLGqi6eSHbHv1t/vP2kpsO6ib+So+IU4=;
-        b=F6Wsb8vVAZJzknJNDpadsBesNJV81MMjpLqgX7fdFFHrXiQb6ieL819tvCMl6g2NBX
-         avNIV4rBx4TH3mbMTCechX/Bf+UI1XhvBwT5K9NhPT1HiUlwOK7mUYTcrE3FhFCnN968
-         0WZ2Ayr5RNc3uYHWlvkJN5L8Ht3Gqhd5zliWnTPf3yhmQvIiJ2qaUn3nAaLtMWXZju8L
-         IeOjlsRpvvaHqswPBmUwO6lJwHnhTYGJ+KBUMhLAPxgulwyrV2joUAKxACVqJ4WjuX0M
-         fthuykwgp2DKAhtA66qiGUcHVOiB4rbPdnkDJe59CYFY1Oh/QQfs2QQRf7KbOF7OFr2E
-         uGoA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	 To:Cc:Content-Type; b=fVqv5v5nKAKRz46K8VM2g+wWzlzhNVgEJyDdKWDW1QqihG0an9wn3N9OjJa4ejn1I++2tXp5lgRY+SGTAJOke1uxnqf+gVJGVbBDt3aaCQvCvO4ginXlGyUha4Kx1JVt7Afq28kjGwFJehpcq9M6t0qG2IxPKrh2gnL2mmsEYgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CV27rbYX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=g67BqGOY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60IBKjRt3010904
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 18:38:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=uPueFjx6XXI3IgjOBwtEmTId/PmNsrUzTFcwr/mBHzk=; b=CV
+	27rbYXPYZl9F71kuekp78woUOTLY3TMuwn0+byQ/155TQoShTdu3oayFm0g7Ce3A
+	lYQ4qJVIwVLHQQs4K0NWmlJR7bbaCzT5lsPk5C536S1woy26gx9VjGGLPCIykNWD
+	31RmkvnXio96b3FF/N1UkQxUdFgjn6gkJx81mMtggyCJlvQMH1KpBdrApG1TRpdb
+	5VCiQuLugM6C6HgBgYE1AZ73Ees852ZEr+hJUdxsRaumduFtFv0RpQQhD8j8izLx
+	PbnBUPTtSku7XGxw8cYl3Iw1lcT++kGZF+jKlbkiY8Axcua/QoVSk44xvowz5D+q
+	jBZob4VY3c/INJ1FcJMg==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4br2gujv6m-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 18:38:11 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-45c7dc03e6dso5312838b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Jan 2026 10:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768761431; x=1769366231; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1768761491; x=1769366291; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tSfCZRWiq+F2guXeIq82E8iOGM2R1T/WtMgXIZ3rrvo=;
-        b=DGouaB3kbJwOYEsQrPSLEc2J2gM0BwyBxfJoqk5zttGbLqCiTQxlpa9kK2n/XC3C8H
-         8WWTFWQ2L47ZQUg5jlBavyAmKbToPNjyRbbaqmtoOpX+XbwlQZYCB9Dzr21ts2HKb5Ru
-         gn8Keu8khvCvdd1HDAHmAGalQg6u94LKlJprTzWJmFuixwWWSQ4db2I/xBZq6sDbbigH
-         hQKbpVA+04ScIbqm/jzsjzR9eEC7keSdyN5XnaLrzdH9RwIy06CINsfdayPDjjy9bJhA
-         7r8m/8F77d+5/iM/tm+r6JvWHgPMgpQrnH+To5E46wXabfAMihM1KWgyjBYEMyIJdOaN
-         6VCQ==
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uPueFjx6XXI3IgjOBwtEmTId/PmNsrUzTFcwr/mBHzk=;
+        b=g67BqGOYvpe5mkwIHI6jwCoie0/PGkx4d0kOnIOtKliyge7sm/NYmhYAqrpZqmmPUI
+         hkgwJwK960cuLDI02QWdzacr5ujy4z17dRuiafQ77piZm6UkoGY3Qz5y3Q1qyWab5n07
+         Ch2+myDF5UekhxvlEDKQUHH84d4q725e0/jvRAdEuDofEFQKwWYPFip3heUInUUo/rv1
+         nL1qfbLahHV+aXcDIsCDcRZrPg70ibtA9Zbgpal1HxRnVorlzuRyw76KFkWY8IDHRe5V
+         YIzhMtQqj1Jws6I2o5De+yUQ03Vaa8er7qXl4h5JuTNQzarpRZ29Ob5E3diT7Xiro6X1
+         +eEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768761431; x=1769366231;
+        d=1e100.net; s=20230601; t=1768761491; x=1769366291;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tSfCZRWiq+F2guXeIq82E8iOGM2R1T/WtMgXIZ3rrvo=;
-        b=JfxtvfV0E3EUQVOgLxzrdIGBVrjP7KXIhCkH2Y3kAxstSoOe2S5roPwv4DdTmQkdRN
-         iNB07LjXL296lihvazmTH96P9HiiLdZPrwX7trDJMTnaKRYO07gIJEfUJEsk8iXn7amT
-         AdhQQEfOYJbYTHYZMuGAUzygAUO3aP8LGRvnNo6XgOImsTX3cg8C8e11ZUxS7B+qYf2z
-         l5Esk9SVN8W+SSpGy3aDInmawbvy/032F+/PLjdGl8wj8/GbWmGSBvs94LxIfnydP9w0
-         +Zy7ThQDXXodLnMMxSOqBxhjQznnOZ4xvppY+eVT+OcQVKzhjhgQj76Fnq2Z4miqC+QR
-         U0TA==
-X-Forwarded-Encrypted: i=1; AJvYcCW1XBw37V0HfR8QCHiO6NX5Vq8quFXW4qeY6B0/HmfcWgnCgrpGp4Y86hU1q3y+xpKvUyMunyNovZboK2Bo@vger.kernel.org
-X-Gm-Message-State: AOJu0YziCw+W+QvjMMbnMZ5MMLfWmm3nNPVfz5VZQUcsYg/MJ/zbK9/Q
-	NvVSJKJG3w29KX0/8JQpGcXjat6kplFhk4//6LLotqaBUfRoQ5m2ESBNl3/1HzkWE9W7HcTlpGX
-	kEOei7iBvuATwj0b5gnDnLrA+tqJvxnk=
-X-Gm-Gg: AY/fxX7N2KkpB6RpX96wIJFJRw9tmO5n9pdDMt9L0L9+1RkiW5bqdCffk9uW3GK4+9k
-	MU/jgEIMybR6MWgGM2m7jRKkXu7qdr6K3mbESfVY2gcS5ut2w0c2eCMuimj5qOcvV/pTvoEeE11
-	1ObjGvIRMiTQQYDRtrkgaOUupIRCX81AQvMUrDYEzSd4+mhHaORcmgyneLH4TqRgrpi2A6xyWbw
-	IJ3thtRk6h8zIYTwPXcxTU7B8k6ReQb9NbxJjXdyF0LpY50pRiv6DqxnmPd9krDPmaeqSw6
-X-Received: by 2002:a05:6808:1803:b0:450:d056:e0f0 with SMTP id
- 5614622812f47-45c9d6fbd2dmr3104899b6e.2.1768761430702; Sun, 18 Jan 2026
- 10:37:10 -0800 (PST)
+         :reply-to:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPueFjx6XXI3IgjOBwtEmTId/PmNsrUzTFcwr/mBHzk=;
+        b=Ghe0y/YBiPjutu1FdOnrPIqAGofWWVlKDBmBNdo1cDDXMLTuLHSeAOQcFVj2aXIX3Q
+         HO0MugdSKu6KE6cDvBRHQO/OUvQtugdfikwuQ0C+dCOR+VdjV0CZ9F/GNPMGb7A26wVp
+         Tro+7KDhjK0mk5Yrtor5yAf+08PvtHWyQTqRzg4vI9lmHCrU/COfkUhCW289INDBOk85
+         61KOAh475ZnOUT34c4DL/ZoNMNeN/QgaFcJCU5ToYGQLvnZckdBtg0V6vOEP2BpghuN5
+         2wKWshlPerrIYRXuNnOaLO7KF9jTK02/FVBu8Gh6koQHbRDDKidsHsBxkFibyv1BIPll
+         QUbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUnwKT3hNzR0Q6UsluEelb41EMkkhw6UwrDVGnuwo77twu5rdjDRrEjAI2ZyVzVEpdO00CxO6NNUiowmGzf@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbiVzyIC9mPoKedHskAuvd2aM7u5jSxi9XcrQusX/+vWgdST7j
+	D1Gq+uyxCO103Wl1DZ/6aE7hlpP+lqWZQuYJFw9+cN2XJroPykZZ9BBPzXIr4XdrYh7FAMi+dke
+	emdfbArA+k8P6cHUmTuqrvF63l5wpYogz7eCSqqrPtw3pS/pMFbmKioMITGVnYSiaBe0RST6S61
+	k2U8WdY4pMi0khmQlPPbCUh8htWRTqDoU6/cUK8DLuxGYU/ZUtW+k=
+X-Gm-Gg: AY/fxX61dgE+R6fDyBG+Ok+9XIokcV1Ai6/dCVbA3Fy0/d8QJ7FyrePVBX6xSPQl862
+	4SOo7iaIZQbalcgH2FZsLmfKAtTszuk5E8FlZ7yPzyFqlLSv2AS+H/9wqLCms/scM3m6zAwl4xn
+	ofvc64ODyXRhRcANmd0McM/DCvY/Zeeptfu14Ge092la4T4lE+yG4qIxLE1E3CsVIhfQ==
+X-Received: by 2002:a05:6808:4fd1:b0:450:bd1a:19b1 with SMTP id 5614622812f47-45c9bf853dbmr4708165b6e.7.1768761491094;
+        Sun, 18 Jan 2026 10:38:11 -0800 (PST)
+X-Received: by 2002:a05:6808:4fd1:b0:450:bd1a:19b1 with SMTP id
+ 5614622812f47-45c9bf853dbmr4708156b6e.7.1768761490719; Sun, 18 Jan 2026
+ 10:38:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251031-knp-ipcc-v3-0-62ffb4168dff@oss.qualcomm.com>
- <20251031-knp-ipcc-v3-1-62ffb4168dff@oss.qualcomm.com> <20260116162057.GA1681736-robh@kernel.org>
- <af235d3c-cbf0-4cb9-af3b-37c1600d421c@kernel.org> <CAL_JsqJyRa-U03XvPNchpoyYNmSJQacrYs30yd=a_s-6PnppSw@mail.gmail.com>
-In-Reply-To: <CAL_JsqJyRa-U03XvPNchpoyYNmSJQacrYs30yd=a_s-6PnppSw@mail.gmail.com>
-From: Jassi Brar <jassisinghbrar@gmail.com>
-Date: Sun, 18 Jan 2026 12:36:59 -0600
-X-Gm-Features: AZwV_Qj5G-F3L-j94OKUIlg3HGOuNjgJrkJ24hCuEmpYd9lziCqxW1g0Pts9gpo
-Message-ID: <CABb+yY3BczzocDR_Z49UO92iF9KLjq94EJZ10qy_aga1GrSBvw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: mailbox: qcom: Add IPCC support for
- Kaanapali and Glymur Platforms
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+References: <20260117-msm-ubwc-fixes-v1-0-d5c65ea552c7@oss.qualcomm.com> <20260117-msm-ubwc-fixes-v1-4-d5c65ea552c7@oss.qualcomm.com>
+In-Reply-To: <20260117-msm-ubwc-fixes-v1-4-d5c65ea552c7@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Sun, 18 Jan 2026 10:37:59 -0800
+X-Gm-Features: AZwV_QgKLlYDPQGFk2klj6r5W2bSSRNovXrFJIeJ0DKvvOwX1LEbt5gRB_dHw38
+Message-ID: <CACSVV02muSij-mYodK9uXRbe0WYso4DW_43_px_w=FDmK0=V=A@mail.gmail.com>
+Subject: Re: [PATCH 4/4] drm/msm/dpu: fix SSPP_UBWC_STATIC_CTRL programming on
+ UBWC 5.x+
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE4MDE2MyBTYWx0ZWRfXzWuufSO5UNVI
+ ckLPtVUuvnP+BauCn9ubqdboJqpJbP1rp6ZpN80urxQqPykJYuqiGV9ZIYR3ATjBbtr59Fmo8k1
+ 0H29TYMDFT0TnCWG963L68Y8PqMGoP4xZm6y5UBzjQnKFTE+T+TEQYj74KePw/NANyc6mdDrGs3
+ riZjofXQvUb1DfvxFW+Ey+LXLVc2zWYA1QtiJd2yRU1ZLrqfxUOT4umUMVT5j5lt130EPVukLr7
+ yQetDPVVY2252BTQM9fKf1x7GoGUNn4l+2eGe8QoqLKIC5nx9BBLjhxQs9iN7UKA4h5hdx4V/Og
+ k+BszRP76QHwT4IV4ECnp/7uGuUFKZCLJCaUNdnugwv3arR1zH5+0R8Dg5tKvt+1/DcKrFTssMC
+ mFzwpep0ZqT+hfiqv95r1MUc0mOKCFoREj4aDLBiHuYUGdxqmoLIgf4mVWiYedvv1W+C45zm+rE
+ MBQd7wzgjKu+125XDXg==
+X-Authority-Analysis: v=2.4 cv=Sev6t/Ru c=1 sm=1 tr=0 ts=696d2893 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
+ a=pSJFZ7BqxfWaFcy_hbQA:9 a=QEXdDO2ut3YA:10 a=efpaJB4zofY2dbm2aIRb:22
+X-Proofpoint-GUID: C7CpooyEwWmL75Go0YdQMgUDKOqqMRDT
+X-Proofpoint-ORIG-GUID: C7CpooyEwWmL75Go0YdQMgUDKOqqMRDT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-17_03,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 impostorscore=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601180163
 
-On Fri, Jan 16, 2026 at 11:13=E2=80=AFAM Rob Herring <robh@kernel.org> wrot=
-e:
+On Fri, Jan 16, 2026 at 10:36=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
 >
-> On Fri, Jan 16, 2026 at 10:25=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel=
-.org> wrote:
-> >
-> > On 16/01/2026 17:20, Rob Herring wrote:
-> > > On Fri, Oct 31, 2025 at 12:41:44AM -0700, Jingyi Wang wrote:
-> > >> Document the Inter-Processor Communication Controller on the Qualcom=
-m
-> > >> Kaanapali and Glymur Platforms, which will be used to route interrup=
-ts
-> > >> across various subsystems found on the SoC.
-> > >>
-> > >> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> > >> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> > >> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> > >> ---
-> > >>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 2 ++
-> > >>  1 file changed, 2 insertions(+)
-> > >
-> > > I guess no one is going to apply this, so I did.
-> > >
-> > > If your patches don't get applied, please chase the maintainers (Jass=
-i)
-> > > to apply them.
-> >
-> >
-> > This or it is an effect of known problem with mailbox and interconnect
-> > subsystems - maintainers never send notifications of applied patches
-> > (neither publicly nor privately like Greg does), so you will never know
-> > if anything gets applied.
-> >
-> > This as well could be in the next silently (wasn't in 15th Jan, though)=
-.
+> Code in dpu_hw_sspp_setup_format() doesn't handle UBWC versions bigger
+> than 4.0. Replace switch-case with if-else checks, making sure that the
+> register is initialized on UBWC 5.x (and later) hosts.
 >
-> Further investigation finds Jassi did apply this and 3 other patches.
-> Stephen reported a conflict on 1/6 with another Qcom patch
-> (conflicting with Bjorn's tree). No reply to Stephen, but *all* the
-> mbox binding patches were dropped.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 41 ++++++++++++++---------=
+------
+>  1 file changed, 20 insertions(+), 21 deletions(-)
 >
-> Here's what was dropped:
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_hw_sspp.c
+> index a99e33230514..b0c97f5e47ea 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -279,6 +279,7 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pi=
+pe *pipe,
 >
-> f8f632c18c32 dt-bindings: mbox: add pic64gx mailbox compatibility to
-> mpfs mailbox
-> 945dc11a38a0 dt-bindings: mailbox: qcom: Add CPUCP mailbox controller
-> bindings for Kaanapali
-> 66b6e5daa915 dt-bindings: mailbox: qcom: Add IPCC support for
-> Kaanapali and Glymur Platforms
-> 9a92e22740e6 dt-bindings: mailbox: mediatek,mt8196-vcp-mbox: add mtk
-> vcp-mbox document
+>         if (fmt->fetch_mode !=3D MDP_FETCH_LINEAR) {
+>                 u32 hbb =3D ctx->ubwc->highest_bank_bit - 13;
+> +               u32 ctrl_val;
 >
-Yes, I had to reconstruct the mailbox for-next branch because some
-patch had an issue and the pr was not merged after a very late fix.
-Sorry I didn't realize people not receiving pick-confirmations was so
-problematic. I will make sure I reply to every patch that I pick.
-Thanks.
+>                 if (MSM_FORMAT_IS_UBWC(fmt))
+>                         opmode |=3D MDSS_MDP_OP_BWC_EN;
+> @@ -286,30 +287,28 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_=
+pipe *pipe,
+>                 DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
+>                         DPU_FETCH_CONFIG_RESET_VALUE |
+>                         hbb << 18);
+> -               switch (ctx->ubwc->ubwc_enc_version) {
+> -               case UBWC_1_0:
+> +
+> +               if (ctx->ubwc->ubwc_enc_version =3D=3D UBWC_1_0) {
+>                         fast_clear =3D fmt->alpha_enable ? BIT(31) : 0;
+> -                       DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> -                                       fast_clear | (ctx->ubwc->ubwc_swi=
+zzle & 0x1) |
+> -                                       BIT(8) |
+> -                                       (hbb << 4));
+> -                       break;
+> -               case UBWC_2_0:
+> +                       ctrl_val =3D fast_clear | (ctx->ubwc->ubwc_swizzl=
+e & 0x1) |
+> +                               BIT(8) | (hbb << 4);
+> +               } else if (ctx->ubwc->ubwc_enc_version =3D=3D UBWC_2_0) {
+>                         fast_clear =3D fmt->alpha_enable ? BIT(31) : 0;
+> -                       DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> -                                       fast_clear | (ctx->ubwc->ubwc_swi=
+zzle) |
+> -                                       (hbb << 4));
+> -                       break;
+> -               case UBWC_3_0:
+> -                       DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> -                                       BIT(30) | (ctx->ubwc->ubwc_swizzl=
+e) |
+> -                                       (hbb << 4));
+> -                       break;
+> -               case UBWC_4_0:
+> -                       DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> -                                       MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(=
+30));
+> -                       break;
+> +                       ctrl_val =3D fast_clear | ctx->ubwc->ubwc_swizzle=
+ | (hbb << 4);
+> +               } else if (ctx->ubwc->ubwc_enc_version =3D=3D UBWC_3_0) {
+> +                       ctrl_val =3D BIT(30) | (ctx->ubwc->ubwc_swizzle) =
+| (hbb << 4);
+> +               } else if (ctx->ubwc->ubwc_enc_version =3D=3D UBWC_4_0) {
+> +                       ctrl_val =3D MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(30)=
+;
+> +               } else { /* UBWC 5.0+ */
+
+Is this the same for UBWC 6?  Should we warn on version > UBWC_6_0?
+
+BR,
+-R
+
+> +                       if (MSM_FORMAT_IS_YUV(fmt))
+> +                               ctrl_val =3D 0;
+> +                       else if (MSM_FORMAT_IS_DX(fmt)) /* or FP16, but i=
+t's unsupported */
+> +                               ctrl_val =3D BIT(30);
+> +                       else
+> +                               ctrl_val =3D BIT(30) | BIT(31);
+>                 }
+> +
+> +               DPU_REG_WRITE(c, ubwc_static_ctrl_off, ctrl_val);
+>         }
+>
+>         opmode |=3D MDSS_MDP_OP_PE_OVERRIDE;
+>
+> --
+> 2.47.3
+>
 
