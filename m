@@ -1,79 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-89536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41B9BD39143
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 22:57:00 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04BE9D393AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 10:51:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9B6893009D74
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jan 2026 21:56:59 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 75D443002D07
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Jan 2026 09:51:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E162ED869;
-	Sat, 17 Jan 2026 21:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5100528C009;
+	Sun, 18 Jan 2026 09:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O6pRloz7"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="h4fwmOFV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ixit.cz [185.100.197.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C684296BA5
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 21:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9206F2773E4;
+	Sun, 18 Jan 2026 09:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768687017; cv=none; b=jeP1T3CHFuCkTu5aWaxaUNPtPWqIPAGcQEyB0XRJsB1YLgWdC7IUC4oRvV2OdH9HukA8H1z5S4uPzbcd0Fr2FmnpWkJoXxxbaumL2vaNr0J9AxkLX6Dm3agNI+QO+1Jzrr80/w6APu2kytErGAze+DopuSV7qktZrfW8b6D4s+w=
+	t=1768729879; cv=none; b=Fk9gAAmMNxweHXMLnorM8YXDIED5k7RrQllC0WHF96aCha/lrQxeh7t6a5DSy+oMvMF/+QWUrX11lDknbU99ei7p1NXFtA2yEb/pRCjCqhxM/VeLh0rJFrhA+fnqmE+R5XTwKJRXnFjBBxl4JhRzuugdbAE9RC2BjAI2ITPTcv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768687017; c=relaxed/simple;
-	bh=vF4TN1yu22+nztG/+fn/F8a92h6FiVLorTUIC6RyXGA=;
+	s=arc-20240116; t=1768729879; c=relaxed/simple;
+	bh=YQH9wALI15ggu/SvVJ37+5CWyLhWhsrN/jrIUp2rzlE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c4ODB2Bb8N8GRff0pz0/AAhJZL/je0DySsyi3yzplm2tfbKrUW+bY1WsgCjYGAiFJ/otwKaR3w3AxTA2GPShEexC0H2WiUL177cMUXe5m5onA693UiD7q6HQHOm8MhO1S7QZnfMcucO1DI/fCelMBbT35TyMUOv4dfW9RBd6KPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O6pRloz7; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4801d7c72a5so14125385e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jan 2026 13:56:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768687013; x=1769291813; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=okLeQShl2fqm0YxPatMOb07vCxHIVDXXSr6Cq83TEoo=;
-        b=O6pRloz7Xa9a2ROMub5Uygp0vjiES3ND/eE4d1qElydlgQJrlJRFZNUJZPn6PLy3Ko
-         N2SAtmJ7YzVUGq/ttiQOgRYs3T2Br4ep+ufQaq/+XN4c4YN7QpxlagloNQlbRiwu8ko9
-         Cn4PJ2o8NuCfXx5XiNtu52iZVMXCLRjoy9msgQjQh50pXcxd4KXZbJL5lE98Lm4GNlSg
-         cTjQOFyquWqy/5bkeD/+Zre8D1A8yi0WcaSWSMIto+220JOfyHLmOikPgLGOjvnVhK0h
-         XSqJs2IxzXiKJvPqIdSlczoUlPhpKoTT3vQtUF1rx8mtZ7zqXOo6Ju5V6vaya+a7Zuoj
-         K50w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768687013; x=1769291813;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=okLeQShl2fqm0YxPatMOb07vCxHIVDXXSr6Cq83TEoo=;
-        b=En1MzBtdGQEFQpqbG6isF4tdMjt0K5UVY0+2884GXV7+KAi2pYuHHdoO+irslXUY1U
-         AsGo1h26OAiUKJH1ip1Ti9cBh+T43ApAJ65ORg9vqZhgZEwxn2XSjQbg2FdBy9issez1
-         0mxcDW3q5A5lDLa/pduVkHIEi9lYH44ayngaa+VDcAa7GfnXkSTM746oNlNfgCzV+06k
-         1OXcnjZeIwHuEbbpfsvr9Wfoiob3MMIz6dwI7M5LxAIbHAk4+Jk4HGMh3lxaVNn6xts6
-         o8MKOlB+x7mAjglOWKJmULFd8fomd8c96yY+C+z0AjKSnK9DCz47ldiQ7Z/kdctExPXT
-         FG6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCViT3oC6tn3l8yF8xsAkYerH8ZR/BTzQscin2m6QHqx5NRc2hb3RHa2cF/zKENJa8NORKqkthpBGn0pu7ZW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwgqLdEz/E4YJ3/7r3yzqz2bGYXJ4lgCUBr3A+dKoMb4lhi2joR
-	zjAghjjHXofYNFPRQ8DCRV8TqNkYwTLfCSPn4rbYbOqdA8aIqquP8+QH3L1/G0lFqXo=
-X-Gm-Gg: AY/fxX4hhrmv5bTo5ihfZcWzdrYd3a+Mjo8OXfuv9jwz179EU7dcZS7+V1P67uQC+t3
-	k/z4JSBH35WC1lkwcwPEjMoi5k0e0E0gRpRH05Yune2ClS1ZLyftqDbBrqM6sUi7CTqK5G40xqS
-	w22IUW3dwkMEekTjsEOYf3iuss9V+LZEkvg4cbfB+LiuvsziAAcSzRgZKvJmc8C4BepvWdS9gSA
-	w2+YtRr3bDxUWRMYoknIaI70Ujs904hJJ0Kf82CPwmI6uo+fFQHM7/RLbuKcJGZPuKeg55XD+kW
-	j6+KyvG0axb1vCxygv614sxKiEbMbFosbde7O9Rj7YdQjpalg+pIRqXoCaTjcLN5guhh0LlWPON
-	IS/tcrE8YuV87FRlZCDibVUs9lz+8DrdTNjIJS4IupIB3MWpBz+CqsxzeaVlFbz8oG3TTBMwW09
-	C+CsiahleCUl8Zk8BR35Fd/82gCVBTRQEwIoa4ar3iLxiYtN8UT40e
-X-Received: by 2002:a05:600c:4e90:b0:47e:e20e:bba3 with SMTP id 5b1f17b1804b1-4801eab54ccmr80999525e9.7.1768687013504;
-        Sat, 17 Jan 2026 13:56:53 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47f4b26764fsm167386705e9.12.2026.01.17.13.56.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jan 2026 13:56:53 -0800 (PST)
-Message-ID: <6cdc17f7-0926-4230-8be8-ecf26cc26df4@linaro.org>
-Date: Sat, 17 Jan 2026 21:56:51 +0000
+	 In-Reply-To:Content-Type; b=KLCZDGfUcPMWKpbAbhyip/YB8tlAl4zYo9RqHKNF9/Bxq6Hm5Rqwgaj9zwE10bwtsPQT6c2+CpdPNHIsUKbXw27ZFytV6njipDZubF7h4J6ViBPGxdtSszb5NA/vZ5CbxAE+Z8hliUMe8iGwu+r5uwK+kunJCmfA7Nv3Ac2ZGdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=h4fwmOFV; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.88.28] (78-80-19-209.customers.tmcz.cz [78.80.19.209])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 5C81653408F0;
+	Sun, 18 Jan 2026 10:51:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1768729870;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=HlYIEg/O/ZZsjnII1Nxck2PBt3vKflZfmBTzXo06dMs=;
+	b=h4fwmOFVBfN1JiJs6mPfpeP/0pqKO9XrQ3GGEtmzuD23YDahjNX3IfdnKm57IE852/7ksB
+	54xSOZUccqxI5eDWlLyiDy35+vHnN11nTCP7e+q7zhPXJZKu9HQ4R+gdXN4QusZZ6QQPJF
+	LAdbIe/jNdGo5uwFsOY8OO54jNRALrY=
+Message-ID: <010df7e2-ea01-4b32-ae4f-40bff3ad278b@ixit.cz>
+Date: Sun, 18 Jan 2026 10:51:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,10 +54,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] media: qcom: camss: Account for C-PHY when
- calculating link frequency
-To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
+Subject: Re: [PATCH v3 5/8] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 MIPI
+ CSI-2 CPHY init
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
  Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
@@ -95,135 +68,116 @@ Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  phone-devel@vger.kernel.org
 References: <20260117-qcom-cphy-v3-0-8ce76a06f7db@ixit.cz>
- <20260117-qcom-cphy-v3-8-8ce76a06f7db@ixit.cz>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ <20260117-qcom-cphy-v3-5-8ce76a06f7db@ixit.cz>
+ <4936947b-f402-4817-acf7-299abbeeb23b@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260117-qcom-cphy-v3-8-8ce76a06f7db@ixit.cz>
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <4936947b-f402-4817-acf7-299abbeeb23b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 17/01/2026 15:36, David Heidelberg via B4 Relay wrote:
-> From: David Heidelberg <david@ixit.cz>
+On 17/01/2026 22:49, Bryan O'Donoghue wrote:
+> On 17/01/2026 15:36, David Heidelberg via B4 Relay wrote:
+>> From: Casey Connolly <casey.connolly@linaro.org>
+>>
+>> Add a PHY configuration sequence for the sdm845 which uses a Qualcomm
+>> Gen 2 version 1.1 CSI-2 PHY.
+>>
+>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+>> mode. This configuration supports three-phase C-PHY mode.
+>>
+>> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Co-developed-by: David Heidelberg <david@ixit.cz>
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
+>>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 70 ++++++++++++ 
+>> +++++++++-
+>>   1 file changed, 69 insertions(+), 1 deletion(-)
+>>
+
+[...]
+
+>> @@ -1050,7 +1114,11 @@ static int csiphy_lanes_enable(struct 
+>> csiphy_device *csiphy,
+>>       switch (csiphy->camss->res->version) {
+>>       case CAMSS_845:
+>> -        { /* V4L2_MBUS_CSI2_DPHY */
+>> +        if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +            regs->lane_regs = &lane_regs_sdm845_3ph[0];
+>> +            regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845_3ph);
+>> +
+>> +        } else { /* V4L2_MBUS_CSI2_DPHY */
 > 
-> Ensure that the link frequency divider correctly accounts for C-PHY
-> operation. The divider differs between D-PHY and C-PHY, as described
-> in the MIPI CSI-2 specification.
+> This is inconsistent commenting Ted and I'd reckon something 
+> checkpatch.pl spits back at you.
 > 
-> For more details, see:
-> https://docs.kernel.org/driver-api/media/tx-rx.html#pixel-rate
+> If checkpatch.pl doesn't complain about it, I think it probably should.
 > 
-> Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Please standardise the location of the comment and have one for the CPHY 
+> and one for the DPHY configs.
+
+Then I can rather replace the else with elseif (== DPHY) and make the 
+comment irrelevant. What is your recommendation?
+
+David>
+>>               regs->lane_regs = &lane_regs_sdm845[0];
+>>               regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+>>           }
+>>
+> 
+> Once implemented.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
 > ---
->   drivers/media/platform/qcom/camss/camss-csid.c   |  2 +-
->   drivers/media/platform/qcom/camss/camss-csiphy.c |  6 ++++--
->   drivers/media/platform/qcom/camss/camss.c        | 16 +++++++++++++---
->   drivers/media/platform/qcom/camss/camss.h        |  2 +-
->   4 files changed, 19 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index b50b0cfe280c1..24f244d2959c9 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -545,7 +545,7 @@ static int csid_set_clock_rates(struct csid_device *csid)
->   	fmt = csid_get_fmt_entry(csid->res->formats->formats, csid->res->formats->nformats,
->   				 csid->fmt[MSM_CSIPHY_PAD_SINK].code);
->   	link_freq = camss_get_link_freq(&csid->subdev.entity, fmt->bpp,
-> -					csid->phy.lane_cnt);
-> +					csid->phy.lane_cnt, csid->phy.cphy);
+> bod
 
-Just pass &csid->phy ..
->   	if (link_freq < 0)
->   		link_freq = 0;
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 08dd238e52799..1ea0d0ef354ff 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -144,8 +144,9 @@ static int csiphy_set_clock_rates(struct csiphy_device *csiphy)
->   	u8 bpp = csiphy_get_bpp(csiphy->res->formats->formats, csiphy->res->formats->nformats,
->   				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
->   	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
-> +	bool cphy = csiphy->cfg.csi2->lane_cfg.phy_cfg == V4L2_MBUS_CSI2_CPHY;
->   
-> -	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
-> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes, cphy);
-
-CPHY shouldn't be a boolean special case - you have a use-case for the 
-containing structure, so pass that instead.
->   	if (link_freq < 0)
->   		link_freq  = 0;
->   
-> @@ -270,9 +271,10 @@ static int csiphy_stream_on(struct csiphy_device *csiphy)
->   	u8 bpp = csiphy_get_bpp(csiphy->res->formats->formats, csiphy->res->formats->nformats,
->   				csiphy->fmt[MSM_CSIPHY_PAD_SINK].code);
->   	u8 num_lanes = csiphy->cfg.csi2->lane_cfg.num_data;
-> +	bool cphy = csiphy->cfg.csi2->lane_cfg.phy_cfg == V4L2_MBUS_CSI2_CPHY;
->   	u8 val;
->   
-> -	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes);
-> +	link_freq = camss_get_link_freq(&csiphy->subdev.entity, bpp, num_lanes, cphy);
->   
->   	if (link_freq < 0) {
->   		dev_err(csiphy->camss->dev,
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index ea0c8cf3cd806..556fedd92e065 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -32,6 +32,14 @@
->   #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
->   #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
->   
-> +/*
-> + * C-PHY encodes data by 16/7 ~ 2.28 bits/symbol
-> + * D-PHY doesn't encode data, thus 16/16 = 1 b/s
-> + */
-> +#define CAMSS_COMMON_PHY_DIVIDENT 16
-> +#define CAMSS_CPHY_DIVISOR 7
-> +#define CAMSS_DPHY_DIVISOR 16
-> +
->   static const struct parent_dev_ops vfe_parent_dev_ops;
->   
->   static const struct camss_subdev_resources csiphy_res_8x16[] = {
-> @@ -4280,20 +4288,22 @@ struct media_pad *camss_find_sensor_pad(struct media_entity *entity)
->    * camss_get_link_freq - Get link frequency from sensor
->    * @entity: Media entity in the current pipeline
->    * @bpp: Number of bits per pixel for the current format
-> - * @lanes: Number of lanes in the link to the sensor
-> + * @nr_of_lanes: Number of lanes in the link to the sensor
->    *
->    * Return link frequency on success or a negative error code otherwise
->    */
->   s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
-> -			unsigned int lanes)
-> +			unsigned int nr_of_lanes, bool cphy)
->   {
->   	struct media_pad *sensor_pad;
-> +	unsigned int div = nr_of_lanes * 2 * (cphy ? CAMSS_CPHY_DIVISOR :
-> +						     CAMSS_DPHY_DIVISOR);
->   
->   	sensor_pad = camss_find_sensor_pad(entity);
->   	if (!sensor_pad)
->   		return -ENODEV;
->   
-> -	return v4l2_get_link_freq(sensor_pad, bpp, 2 * lanes);
-> +	return v4l2_get_link_freq(sensor_pad, CAMSS_COMMON_PHY_DIVIDENT * bpp, div);
->   }
->   
->   /*
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 6d048414c919e..6bf7738837b89 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -163,7 +163,7 @@ int camss_enable_clocks(int nclocks, struct camss_clock *clock,
->   void camss_disable_clocks(int nclocks, struct camss_clock *clock);
->   struct media_pad *camss_find_sensor_pad(struct media_entity *entity);
->   s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
-> -			unsigned int lanes);
-> +			unsigned int lanes, bool cphy);
->   int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
->   int camss_pm_domain_on(struct camss *camss, int id);
->   void camss_pm_domain_off(struct camss *camss, int id);
-> 
+-- 
+David Heidelberg
 
 
