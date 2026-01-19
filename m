@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-89626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8143ED3A720
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:43:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAA28D3A729
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:43:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B622C30973BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:42:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 16514307EC4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:42:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55006314A8A;
-	Mon, 19 Jan 2026 11:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44AF0314A6D;
+	Mon, 19 Jan 2026 11:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4n+kxt+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FEEaTiat"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308151D5147;
-	Mon, 19 Jan 2026 11:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210483148C9;
+	Mon, 19 Jan 2026 11:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768822957; cv=none; b=SG6jfqHgP/wYxCaCCmPWVD4cwi626B7cv9Mnz6Wy9LAs+bLbb2s5btyeMYVeWBE3H0xDEyY7KbRT7mFFvD483ByRigPI/hQkMFv4rG9qnLsJdRuJSITKHy1swzDCnJsTtrwqGvRELFxNbyzzWYX4+JSsGG6EjUYzm3D8YuS1QbQ=
+	t=1768822965; cv=none; b=MRKV9rbREuASYkQB+vZ4US14EM6ewfR4AI62MQYb+9QtbMd62NRv3dZMe0xzxGWdQ1aNPUpDk4kkgZctDNWU/iSGvLJnnpKtEUOTdwkl0Hk3LepWjjG7kRUy7DrwE5y1Ib4+K/hkQoAHmsXPuFvyzf2nLz92QPenf4/O6IIVdJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768822957; c=relaxed/simple;
-	bh=p7BwBZ3CJoQk4HVe4nHFMeZrazckI11cQtdGd5Uk0oM=;
+	s=arc-20240116; t=1768822965; c=relaxed/simple;
+	bh=0WqmN8JXKpp77gbIogDDuIDT8CMQDVU9Rl3kOBjPqMc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C/1ENWRuE9Fk/fE/8iQRFSDRmWXS+JeDHi8gcUY/hiVoJlqK3sPBbfvg/ya37rgY7+99gvkN7bpPrWQU3Ecvzo+qRHB437ZrpYSaXcl3txrneUv1TmzFoB/Tpud/cfVzzWadbwuHQBgs9ntC0hYfg/qIlf97AUfmF9GWle0S0II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4n+kxt+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6043DC19423;
-	Mon, 19 Jan 2026 11:42:32 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Ze0Ql8djL9t4mrU03O2kHwp/UQc8hctbLCRpINlfsfR+6pLIAGbv7nZ6U7opnUM4fpXSuWDVoNGHDbx4THMeY1BXvVvmmUZ6HmM6yCqD8l2cs4LMxP9dm8Oz0Q5h+qZy7+kqeHBSrg0PhEnUH1RrABNj1g1UdZOkpfKxZEYLQJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FEEaTiat; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB6EC116C6;
+	Mon, 19 Jan 2026 11:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768822956;
-	bh=p7BwBZ3CJoQk4HVe4nHFMeZrazckI11cQtdGd5Uk0oM=;
+	s=k20201202; t=1768822962;
+	bh=0WqmN8JXKpp77gbIogDDuIDT8CMQDVU9Rl3kOBjPqMc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=E4n+kxt+DomryQl/qdyRD4EGO5UGOUHMNWVxtLEwty23OfrzrgjpsFBuSUuS4vQ6b
-	 jCXa4bp5i23LVw/ux1NzQ2y4yLBlfqIsLzhxexOJ60qig2n9OzKlUBf8A2L5kd/Tme
-	 rab+dmcsweAAflcel0p6Ijrb9IbeKkYioc94w7Dd3IfIjcNzUuQNV2nw+rX78na6xD
-	 TzRblZATPChHaaAa4UT2ab2IxOvUPuQkHNlxNa+5rqGTEkT5T0u+ZxRgDzz+ztpFx4
-	 MQCXkgaYooHAKQwDEwC1JSmNzaRUxvCyu235ShEG9ZGFjaDbECJ7D9Q0fw+l8MT1pQ
-	 hPmUndch2A6QQ==
+	b=FEEaTiatzKpAEooBc88YCLtAwOEfFv+77Mh9FFlkbwZfj4LRg0NPmJQ12VBFnHDRk
+	 2y26VgXCeUZ1rEEeo4kg/qc+zu1BMjRrMZNhXtL3aV8ecmUeReRJ8li6GsB16t/iq0
+	 Ie6nFtAwTD3/dfk85vW6LM6p82uT4+2QJgFZc8YTXFeJO+ebyhQ2Vtpz2Ryav9CggM
+	 2XTwt5Pzgc4rD7dQW+cz4OhQDcGQb7Brl59WlIN7wljF/hfJ52BebT7UVDNRF5JxnX
+	 rWiqbb9QK4fJpSX4WGl3t5nZGXxeyzft6c4RqFRw4KM3bE31Df+7zqrL67vOwKo3Kn
+	 gp+A1SR8PPGVA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 19 Jan 2026 12:42:23 +0100
-Subject: [PATCH v2 01/10] dt-bindings: net: bluetooth: qualcomm: Fix
- WCN6855 regulator names
+Date: Mon, 19 Jan 2026 12:42:24 +0100
+Subject: [PATCH v2 02/10] arm64: dts: qcom: qcs615-ride: Fix BT RFA supply
+ name
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-1-6d1c75608bbb@oss.qualcomm.com>
+Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-2-6d1c75608bbb@oss.qualcomm.com>
 References: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 In-Reply-To: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
@@ -68,68 +68,41 @@ Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
  linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
  Abel Vesa <abel.vesa@oss.qualcomm.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=2102;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=863;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=ArYjsTFvVwtiWc2pr6zBuOLAPh5xnWBuoOEgYD+yios=;
- b=PL/FD9C+sG8CwGlEc5eP5d0GxP5DL68x/+i5DPcrVkfeFcdYVm2Q4jdKvwqogMMCLnK9GPdP3
- 0f5++aVL9doBIVJ5if5Q3HHVy+GDCuiPN97CE42wOeJmboL3FO1tL7c
+ bh=tfzwWG3L2JfGD0ZoqXQRMBmnJt2T7qtwxau7HUk6IBk=;
+ b=SrOvNP3wNH7x4Qm8xL1QNlhJqHyfyMfCPHrMVHKHikAoEozeKFFrruovvkedRsBFdUVF0NdrD
+ qNM4XKL2HbQB5mX8fb48cRcOkk1zlUswENr03EEkP0k3PfwnVgcF2hS
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Commit 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description
-closer to reality for wcn6855") changed the vddrfa1p7-supply to 1p8
-for whatever reason.
+Fix up the supply name to align with bindings.
 
-The schematics footprint for this chip definitely says 7 on the input
-leg and the driver still expects 1p7. Bring it back.
-
-Fixes: 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description closer to reality for wcn6855")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- .../devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml         | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
-index 45630067d3c8..0beda26ae8bb 100644
---- a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
-+++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
-@@ -50,9 +50,6 @@ properties:
-     description: VDD_RFA_1P7 supply regulator handle
-     deprecated: true
+diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+index 5a24c19c415e..3c204ccba052 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+@@ -628,7 +628,7 @@ bluetooth {
+ 		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+ 		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+ 		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+-		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
++		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+ 	};
+ };
  
--  vddrfa1p8-supply:
--    description: VDD_RFA_1P8 supply regulator handle
--
-   vddrfacmn-supply:
-     description: VDD_RFA_CMN supply regulator handle
- 
-@@ -68,7 +65,7 @@ required:
-   - vddbtcmx-supply
-   - vddrfa0p8-supply
-   - vddrfa1p2-supply
--  - vddrfa1p8-supply
-+  - vddrfa1p7-supply
-   - vddrfacmn-supply
-   - vddwlcx-supply
-   - vddwlmx-supply
-@@ -91,7 +88,7 @@ examples:
-             vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
-             vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-             vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
--            vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+            vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-             vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-             vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-             vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
 
 -- 
 2.52.0
