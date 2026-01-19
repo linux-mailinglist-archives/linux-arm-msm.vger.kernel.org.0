@@ -1,32 +1,32 @@
-Return-Path: <linux-arm-msm+bounces-89653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76E51D3A8E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:33:57 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E74ED3A8EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:34:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 72A0C301B10E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:33:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 88E44302FA24
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A8E035B140;
-	Mon, 19 Jan 2026 12:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FC8D35A927;
+	Mon, 19 Jan 2026 12:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="PEysbkLt"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="N0Z9TTTj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786B5322B79;
-	Mon, 19 Jan 2026 12:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A36431353D;
+	Mon, 19 Jan 2026 12:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768826035; cv=none; b=nCqjGJ8Dme40R6xPMW8LQ+odFYRuanMa8lUhFFkx2JFIb0d1PUG3Z3QllB1wnuRaogRocs8zSu0zQr19PceONfdicdSfsF9x9GzRbpSz8uhP536rK5U3IwdNpeMV+onBiL69HemrExs1zEz3tosU+dalEMqnjaIsAWcz5jf/fZY=
+	t=1768826043; cv=none; b=EiJ88uo4o+T25St77W1XU9jY7KEia+vE2z7IP+H4sgr+MfXjtIXJM/azrJu8T0uBnJLFLjkTeOBktHn5OrR5dux5W4I4QS7ZBBBQVyLohZxmGbN+/KoSCWQBqQpPbwRaaGL4zhuJ4rzWK401q54Qd7+WieIz4wS8paOtrAaTfyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768826035; c=relaxed/simple;
-	bh=BwZ0sIglVUVFcqQtQpfp75DnUm07L/kBuNKkrlyHKO8=;
+	s=arc-20240116; t=1768826043; c=relaxed/simple;
+	bh=3eaVh3NThKscw95mLSso23TaHbF3p0jsLKW8+wCNSLM=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=s+SJVaXB/kvouh3D1w8d/DWOa7pAsEkw2SoAEy8nb9+GhQULQZ6rYDealEThLhHULUe4tjwsg3y1hPUu24fU7XtOLWZ4nX0nTR8bhi/9yhxnHYing6Nh4pby4GoKdL/u5oPOv/5pgXi75eFgdHfSQPVdVOzIVHp1C26Y06Zp6I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=PEysbkLt; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=XJ2cwvXSkaghsuq1CnKeb4ZDaLXwyQBbaWa3IuIbCwokMeMBOc71Y5nkjz7FOBAnc29yKNu7nT9pk83ntO/CPFhHO2NR29yErO5h0NbEzrLuob2zoQYJ1yab5nY4ZDjZj9wHrJRBRLtCJ8PPRLhOfrHCComUr4ASaoMQe90FeJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=N0Z9TTTj; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -35,22 +35,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Cuem9DrHcMzx7kurQPxyVrqAdGnuyKkldgZxfhbywFA=; b=PEysbkLtMchqxwPwnWnPFFQSQv
-	jRw02GVIFSgRA7jb/g98X37blokY+SpcmkxERg+aL7KqUvSxEqBZFBoqnt/UqsLpU/bmrRhyUQGYO
-	t54MP805cgqFMMoHtBPC3DnN3S+kk3Ax/Uu6S+TzVRuBiWOq5JlYAbd1YRhLkcXZvMQNm2PV7dVkZ
-	2StLfc7sHAclkrZL6BGY+APd4BzuxkK27DWELPy36MVQj1gXQK8jSk2CNIeFSYElEoejuyk6sI8ug
-	+eD8SzWdFGzC9FG4Vv57+JE+3KbHUeCwovCNnWMXChdNHgmGevz+WkYY7HXHhln0cjD7LqTyPqNCa
-	qp87UKoQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:57544 helo=rmk-PC.armlinux.org.uk)
+	bh=+EOlIWQHz2l2Rz9SdTj/6rqKi810vRGn4tfa7WR8n/s=; b=N0Z9TTTj0auFs9xg1GDt0fGXyH
+	XtADtHVGvDXK6MfFTGoGZYzMvGYP74mLQPpzcmRR8x45eg5p4kA4Er9sIt/iKPWRWZ887GQD+71Ns
+	HEdPaG/xs+SBZXzpdFJrg09I7fLYRefF7FBbtD94irBF2KGMEGHWhZZgyUCUl9/5/oaQ/AjdCOAyz
+	/a57YtMvDxmSachfv5AiLpi6xRIJWrbedGvvJmTZJU7wpMMi8+wIUQ22WEqhLL0TfxbgGhCaPmTC0
+	XBvUaaZg8U6FfMN6xENXhpMN6OTM/S/1jwVP+dJ6Ye1eESykgdpEX1GFcLwoiZ/w7hY3xW+0DqZJy
+	dJytma7w==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:55606 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vhoS3-0000000051p-0Zw9;
-	Mon, 19 Jan 2026 12:33:47 +0000
+	id 1vhoS9-00000000526-07Lw;
+	Mon, 19 Jan 2026 12:33:53 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vhoS2-00000005H1N-12dx;
-	Mon, 19 Jan 2026 12:33:46 +0000
+	id 1vhoS7-00000005H1T-1dXt;
+	Mon, 19 Jan 2026 12:33:51 +0000
 In-Reply-To: <aW4kakF3Ly7VaxN6@shell.armlinux.org.uk>
 References: <aW4kakF3Ly7VaxN6@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -72,8 +72,8 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 02/14] net: stmmac: qcom-ethqos: convert to
- set_clk_tx_rate() method
+Subject: [PATCH net-next 03/14] phy: qcom-sgmii-eth: add .set_mode() and
+ .validate() methods
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,81 +83,101 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vhoS2-00000005H1N-12dx@rmk-PC.armlinux.org.uk>
+Message-Id: <E1vhoS7-00000005H1T-1dXt@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 19 Jan 2026 12:33:46 +0000
+Date: Mon, 19 Jan 2026 12:33:51 +0000
 
-Set the RGMII link clock using the set_clk_tx_rate() method rather than
-coding it into the .fix_mac_speed() method. This simplifies ethqos's
-ethqos_fix_mac_speed().
+qcom-sgmii-eth is an Ethernet SerDes supporting only Ethernet mode
+using SGMII, 1000BASE-X and 2500BASE-X.
 
+Add an implementation of the .set_mode() method, which can be used
+instead of or as well as the .set_speed() method. The Ethernet
+interface modes mentioned above all have a fixed data rate, so
+setting the mode is sufficient to fully specify the operating
+parameters.
+
+Add an implementation of the .validate() method, which will be
+necessary to allow discovery of the SerDes capabilities for platform
+independent SerDes support in the stmmac network driver.
+
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 21 ++++++++++---------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c | 43 +++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 869f924f3cde..80ea69fc8ee5 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -102,7 +102,6 @@ struct qcom_ethqos {
- 	void __iomem *rgmii_base;
- 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
- 
--	unsigned int link_clk_rate;
- 	struct clk *link_clk;
- 	struct phy *serdes_phy;
- 	int serdes_speed;
-@@ -174,19 +173,20 @@ static void rgmii_dump(void *priv)
- 		rgmii_readl(ethqos, EMAC_SYSTEM_LOW_POWER_DEBUG));
+diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+index 5b1c82459c12..4ea3dce7719f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
++++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+@@ -7,6 +7,7 @@
+ #include <linux/ethtool.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/phy.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+@@ -286,6 +287,37 @@ static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
+ 	return 0;
  }
  
--static void
--ethqos_update_link_clk(struct qcom_ethqos *ethqos, int speed)
-+static int ethqos_set_clk_tx_rate(void *bsp_priv, struct clk *clk_tx_i,
-+				  phy_interface_t interface, int speed)
++static int qcom_dwmac_sgmii_phy_speed(enum phy_mode mode, int submode)
++{
++	if (mode != PHY_MODE_ETHERNET)
++		return -EINVAL;
++
++	if (submode == PHY_INTERFACE_MODE_SGMII ||
++	    submode == PHY_INTERFACE_MODE_1000BASEX)
++		return SPEED_1000;
++
++	if (submode == PHY_INTERFACE_MODE_2500BASEX)
++		return SPEED_2500;
++
++	return -EINVAL;
++}
++
++static int qcom_dwmac_sgmii_phy_set_mode(struct phy *phy, enum phy_mode mode,
++					 int submode)
++{
++	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
++	int speed;
++
++	speed = qcom_dwmac_sgmii_phy_speed(mode, submode);
++	if (speed < 0)
++		return speed;
++
++	if (speed != data->speed)
++		data->speed = speed;
++
++	return qcom_dwmac_sgmii_phy_calibrate(phy);
++}
++
+ static int qcom_dwmac_sgmii_phy_set_speed(struct phy *phy, int speed)
  {
-+	struct qcom_ethqos *ethqos = bsp_priv;
- 	long rate;
- 
--	if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
--		return;
-+	if (!phy_interface_mode_is_rgmii(interface))
-+		return 0;
- 
- 	rate = rgmii_clock(speed);
--	if (rate > 0)
--		ethqos->link_clk_rate = rate * 2;
-+	if (rate < 0)
-+		return rate;
- 
--	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
-+	return clk_set_rate(ethqos->link_clk, rate * 2);
+ 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
+@@ -296,10 +328,21 @@ static int qcom_dwmac_sgmii_phy_set_speed(struct phy *phy, int speed)
+ 	return qcom_dwmac_sgmii_phy_calibrate(phy);
  }
  
- static void
-@@ -645,7 +645,6 @@ static void ethqos_fix_mac_speed(void *priv, int speed, unsigned int mode)
- 	struct qcom_ethqos *ethqos = priv;
- 
- 	qcom_ethqos_set_sgmii_loopback(ethqos, false);
--	ethqos_update_link_clk(ethqos, speed);
- 	ethqos_configure(ethqos, speed);
- }
- 
-@@ -797,10 +796,12 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 				     "Failed to get serdes phy\n");
- 
- 	ethqos->serdes_speed = SPEED_1000;
--	ethqos_update_link_clk(ethqos, SPEED_1000);
-+	ethqos_set_clk_tx_rate(ethqos, NULL, plat_dat->phy_interface,
-+			       SPEED_1000);
- 	ethqos_set_func_clk_en(ethqos);
- 
- 	plat_dat->bsp_priv = ethqos;
-+	plat_dat->set_clk_tx_rate = ethqos_set_clk_tx_rate;
- 	plat_dat->fix_mac_speed = ethqos_fix_mac_speed;
- 	plat_dat->dump_debug_regs = rgmii_dump;
- 	plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
++static int qcom_dwmac_sgmii_phy_validate(struct phy *phy, enum phy_mode mode,
++					 int submode,
++					 union phy_configure_opts *opts)
++{
++	int ret = qcom_dwmac_sgmii_phy_speed(mode, submode);
++
++	return ret < 0 ? ret : 0;
++}
++
+ static const struct phy_ops qcom_dwmac_sgmii_phy_ops = {
+ 	.power_on	= qcom_dwmac_sgmii_phy_power_on,
+ 	.power_off	= qcom_dwmac_sgmii_phy_power_off,
++	.set_mode	= qcom_dwmac_sgmii_phy_set_mode,
+ 	.set_speed	= qcom_dwmac_sgmii_phy_set_speed,
++	.validate	= qcom_dwmac_sgmii_phy_validate,
+ 	.calibrate	= qcom_dwmac_sgmii_phy_calibrate,
+ 	.owner		= THIS_MODULE,
+ };
 -- 
 2.47.3
 
