@@ -1,129 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-89706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2ED65D3AF4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 16:39:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 952CED3AF76
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 16:47:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E3F15303B7E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 15:39:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9F1B430778AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 15:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48C1838B983;
-	Mon, 19 Jan 2026 15:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D4D118DB0D;
+	Mon, 19 Jan 2026 15:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FKCL1yJ/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Gs2wIgAc";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gPdLtoyF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E0F2BEC41;
-	Mon, 19 Jan 2026 15:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABF33090DD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 15:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768837174; cv=none; b=M2VWM+m7IQdUi38+SIJ7CFtwy/nApjfurFa/7s6y52uc3JlkGzear4HhvyrmlvBB/7wciwU2Ea8VWj+yZYtW6cYU3c+A0fbiL1vzTxnrx2uK87Ml6AqYdfB01Xa8DluUrfyxqyesGj8VRxDm423WsF8i2aXbs82q1edw0uzC9vs=
+	t=1768837531; cv=none; b=RThuyH+HhGEZpBLGxblXnMrC8v0Yewim6b4bIxiPlNTklr4nozb6pxWNj/hKH+Q6bSDjGF4LvgelKhutvPdxQA4s+IEZ/Gsn6Bcn62XDflx/BquTTi/rAJo4AjfyuuYX3LjPXyI1hDuqHJ9zEbOkjHx7EvMbbMEHpLxYu8OmqIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768837174; c=relaxed/simple;
-	bh=Z6RSsNUMp63J3RytT+Huq4TSmlNeegd84ZJvwexaTLw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OexS7sgJVsgiQUtzMdBVW3ybTzWq9/9JKW3P+U7/x7AvYZTWFF7julTb8yg6AhKJEwoOlQhLaDGSObIR/T1KL2KovfI5asl/XBCDt6FnTpAVNxSxIpKk2WWfezIO0lLAGekV/WnmCAPVZxHCfQlDmBlw5TNV9NB6GXOt675gwKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FKCL1yJ/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98A7C116C6;
-	Mon, 19 Jan 2026 15:39:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768837173;
-	bh=Z6RSsNUMp63J3RytT+Huq4TSmlNeegd84ZJvwexaTLw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FKCL1yJ/9OH9r38bk7wJYrsP2yXH1TXQGfbSpnhe+kYzlnTph7DFKhyN8rf3MuKxh
-	 bPd2ivES2hdoxRDGV0eyZhfzlFhBvJueolK/XoWTqC+7hbfI0YFQBbELpn1RzwaHnA
-	 KAyJixdRdjj6Dfamm07eN8mnVcEUbUimLDc/FzzUrdImY1lE7Vqy2JZiRgfJzH52Nf
-	 oZyJ58U7F5tttyLbAVkSeQbS3gAWNoMLxVB/KGRimYrKdfDbkwADqvf/C+QN5MqwMv
-	 CF5sxNqMNBR2HEyHltId6SOQ2oic2z1IOStq89HtqGoYP1I8op/mpP1VlIEKMZHrix
-	 XPu4a/J/ThJUA==
-Date: Mon, 19 Jan 2026 09:39:30 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Brian Masney <bmasney@redhat.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gfx3d: add parent to parent request map
-Message-ID: <vlvp4od6ykhneabgtpln7vpyyfpfuilasbmbfu222zgspc2ppl@iuuzldtoejaj>
-References: <20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com>
+	s=arc-20240116; t=1768837531; c=relaxed/simple;
+	bh=ueatqlSRaZNQtdkbSIcVnGvg4lTbklxPzJQpdEFKQ7I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fBVvC475PJBUVwb6Pqi6KbP7C0U3ew6tIfnbTOaG/h5Bz28RaEXsMG0APbmRiOQ7koFwITkxS186n4O1mLKW140cKrSfRNvtJdKP68ERpe0/H4yw5H9Rkb/velkysBmj9cBFZ9m59vA15XMlvGUE/gKSUaMfyJrkvS2/caPcpu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Gs2wIgAc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gPdLtoyF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60JEoZVk2305926
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 15:45:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OdDan9HGVtfj4FJo5UKWFffsTLKNtaQDs0FP5LiRLhs=; b=Gs2wIgAcZmWxyTDd
+	KeYVdDB8Gxa8ozC+wZyQ8fw97Su9GC5M6k0uqbUT6nK/uAAkATM7a7RHJ16ou/LI
+	C+8/C0ae7so73IFo+TUeCf3s9WshDkc+fMiOchKyJOwP/Aoi81xOni7EvYNaWCMa
+	2PuiSEWzDDvxgssAFrwVSuG9iMgP+N4ioVSGladcUPBMNAKLNiKtQ4C138Xm0AjN
+	MNchec/spjYXwWUWNQrp+p62tgOTYmfChxd12y1inYXsjzuYwJSYh0mT5O0lzoAs
+	97RvL5C7FB2ui6XM301aTlKKENW1TFEbBGlb1m1OrL/hfS+ECcxCXP8KVVLUDQFS
+	UQvRFQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bspqv8567-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 15:45:28 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c231297839so99784785a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 07:45:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768837528; x=1769442328; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OdDan9HGVtfj4FJo5UKWFffsTLKNtaQDs0FP5LiRLhs=;
+        b=gPdLtoyFwg0rLaxyW6yx8umaY/9gMSbNpXPAyGC/clMVGfq8YqQEz+DlpTmOUkLckn
+         tUWiGMMxPpOymYxzxQ3LZnwxEcjgpzzuDDkn2X0LiphCa7F/hImJ7clHuTpybiwLmi2U
+         fRFwGWilX8xdQlrj0u017lIBsrvXvMgHaIT1i6GbP9AsBqJgXekotE0ZxGF4SBzbTCPT
+         w4fDdBd2NW/wJja4AEsfsn/jXlscaHREmcXFOtOCNnKn/MMttJAbdx5rekBJge9X+YkT
+         bbvYg8fXNSoRKWYjJl5AbaEQjo/ohd7YUtLRzvRegIrBJL63gg+MwfeN5ilGqIrSMZs6
+         Ce8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768837528; x=1769442328;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OdDan9HGVtfj4FJo5UKWFffsTLKNtaQDs0FP5LiRLhs=;
+        b=SPh4TtFnSM0z8jJu8DEt2+67G0tgUdKWECM/kKTPEDYU2Tm9481lyw5IwoKGmJtYQp
+         +2bA6rPm6puCXe7TAHfgGi136pXg9ibW8BJFcW96zKptMf9+lsvb6ZT2JSEI0X0LbjJ5
+         rHFA0FTYUYtfQe5AKe5CcVBUbQwA4Gj4zkSFBz2FcMWMPDZvC927dt2YcK02yVslxnwJ
+         OhYI/rNFKqRNf/FL8gDU1SpKMx6sTym9ekbfC7sHeW9xKzLfHszJPGFIwOssW7UQ+zyv
+         CaRLqF6sclo649MLd4yc/di0ov66u9owQKItoarFOfLsgC/Cf8ewHAImr/Rzf0zoOxtl
+         d+LQ==
+X-Gm-Message-State: AOJu0Yys778gW7fB7QOBWGlHEidvnhhP02Bcfdrp6N5Nht83MwRqX/mA
+	tBfh2mrSVsqjPaNQTni+e+bbJ7edg2dwfIvGKwdtCgRwoJy7DKALhhlADXymg2e+oGdhBo62V8M
+	2gXN4yaJBtlD0ppwd7k0oSq+50qEV93F8aT/yidfcr07oqDhQnCIyPi/MO1gIXDouAVio
+X-Gm-Gg: AY/fxX7n5wdx/gQ2q/lgxbVsM/Wgv7l7gl+7oCyZoElhsN664+1PN5XEdi4Q07YNYwA
+	lt7dmTGEVyPnTzb8jOX7x3s6PQkLoxEbF1Xk0EBlPKpuwB0wqNDLqxeZRYJS9ezmXMv4suOxO0v
+	OipU1fhv/SbOFvZkMofajJwV4KV5QWj6rv61aLtpI+fiV3NIUXxGyou7sVMEM1ut1u6DMq3heOv
+	QdEFOGJxnLbFBt1Yp087nXCjCfPOC7EYnjrk8jNrwtm57JTFrsVngGCtQbyt1BFOKK98zzyFek/
+	P5z50PZiQ7DTxEGwNxfpQ/YX7+KICvru5c4J1vWcuClMwOg8jSPKGX2aQIqX5MWDv2m4McxeKco
+	tfYG9nO2J9djaZkW6jPW33DCgFDQVV6ixbyNkn11NU5YZ7+jqbzQPDTxB7KUoV+HfJko=
+X-Received: by 2002:a05:620a:7017:b0:89f:63e7:b085 with SMTP id af79cd13be357-8c6a67c651amr1276687385a.10.1768837527863;
+        Mon, 19 Jan 2026 07:45:27 -0800 (PST)
+X-Received: by 2002:a05:620a:7017:b0:89f:63e7:b085 with SMTP id af79cd13be357-8c6a67c651amr1276684185a.10.1768837527212;
+        Mon, 19 Jan 2026 07:45:27 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b87959fbefdsm1110425566b.55.2026.01.19.07.45.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jan 2026 07:45:26 -0800 (PST)
+Message-ID: <89f59f3c-8cdb-4190-acdd-d09136c7b67f@oss.qualcomm.com>
+Date: Mon, 19 Jan 2026 16:45:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix volume up
+ button
+To: nathbappai@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260119-xiaomi-ginkgo-features-v1-0-3c8fae984bda@gmail.com>
+ <20260119-xiaomi-ginkgo-features-v1-1-3c8fae984bda@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260119-xiaomi-ginkgo-features-v1-1-3c8fae984bda@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Js78bc4C c=1 sm=1 tr=0 ts=696e5198 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=0z5cGoq-UR3Mgirp60AA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: nwuJ_Gp3hy7wkLlDPPrBPiVoNXERkhdN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDEzMSBTYWx0ZWRfX/NjeNLMt/TWv
+ m/NeXUO7wLORpBxrMJvR+KYS2VSCWaHBUMtrXiJQKAIClj5bCDyNXLGqWvMSqPmHyKYhusTop9z
+ Wfxs4qLywjy6kK/bukiuvRJN04CuvfwBKnCJ2WLl8wlI+5gnVSgHyAl6QYVUzNRkuXUrjwhXZNF
+ wF7ZeLw+gyCVDK1dmBQM7LDhUaHhn+LDYuRJw1CPNPZ4V1gSSavt7GKg7OedtRjxbYaal0Tt24w
+ SGqRFsNkfztGqHIRbNWUlV5LeXPeJi0Sy8IalJYcv7D69qxelm2/YSnDE8kR7I4EHAf5/A3cOiH
+ uBKVerixmFiDJ0FTULZ4TWjr16A+nPIHOAceIz8uks/Ynymw5raVbzPBHDDjTt2VALZHHOm7dV9
+ 11ZMzKkr5bVioLACy4vX451xnDz8bPdVw11LeRQMijZAmgMfPeEaIMQWKhRqu12UlpBDje2hIaY
+ BugI9rndgzxIZb0u1Gg==
+X-Proofpoint-GUID: nwuJ_Gp3hy7wkLlDPPrBPiVoNXERkhdN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-19_03,2026-01-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 adultscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601190131
 
-On Sat, Jan 17, 2026 at 05:54:47AM +0200, Dmitry Baryshkov wrote:
-> After commit d228ece36345 ("clk: divider: remove round_rate() in favor
-> of determine_rate()") determining GFX3D clock rate crashes, because the
-> passed parent map doesn't provide the expected best_parent_hw clock
-> (with the roundd_rate path before the offending commit the
-> best_parent_hw was ignored).
+On 1/19/26 4:13 PM, Biswapriyo Nath via B4 Relay wrote:
+> From: Biswapriyo Nath <nathbappai@gmail.com>
 > 
-> Set the field in parent_req in addition to setting it in the req,
-> fixing the crash.
+> gpio6 in pm6125 is used for EMMC and UFS thermal monitoring. It is
+> changed to the correct gpio for volume up button.
 > 
->  clk_hw_round_rate (drivers/clk/clk.c:1764) (P)
->  clk_divider_bestdiv (drivers/clk/clk-divider.c:336)
->  divider_determine_rate (drivers/clk/clk-divider.c:358)
->  clk_alpha_pll_postdiv_determine_rate (drivers/clk/qcom/clk-alpha-pll.c:1275)
->  clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
->  clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
->  __clk_determine_rate (drivers/clk/clk.c:1741)
->  clk_gfx3d_determine_rate (drivers/clk/qcom/clk-rcg2.c:1268)
->  clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
->  clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
->  clk_core_round_rate_nolock (drivers/clk/clk.c:1710)
->  clk_round_rate (drivers/clk/clk.c:1804)
->  dev_pm_opp_set_rate (drivers/opp/core.c:1440 (discriminator 1))
->  msm_devfreq_target (drivers/gpu/drm/msm/msm_gpu_devfreq.c:51)
->  devfreq_set_target (drivers/devfreq/devfreq.c:360)
->  devfreq_update_target (drivers/devfreq/devfreq.c:426)
->  devfreq_monitor (drivers/devfreq/devfreq.c:458)
->  process_one_work (arch/arm64/include/asm/jump_label.h:36 include/trace/events/workqueue.h:110 kernel/workqueue.c:3284)
->  worker_thread (kernel/workqueue.c:3356 (discriminator 2) kernel/workqueue.c:3443 (discriminator 2))
->  kthread (kernel/kthread.c:467)
->  ret_from_fork (arch/arm64/kernel/entry.S:861)
+> Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
 > 
-> Fixes: 55213e1acec9 ("clk: qcom: Add gfx3d ping-pong PLL frequency switching")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Why didn't Brian get Cc'ed on this patch? I'd love to have his input.
+For future submissions, please remove the newline you kept before fixes
+and s-o-b, so that the "tags section" is contiguous
 
-Regards,
-Bjorn
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-> ---
->  drivers/clk/qcom/clk-rcg2.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index 2838d4cb2d58..d0a5847f9111 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -1264,6 +1264,7 @@ static int clk_gfx3d_determine_rate(struct clk_hw *hw,
->  	if (req->max_rate < parent_req.max_rate)
->  		parent_req.max_rate = req->max_rate;
->  
-> +	parent_req.best_parent_hw = req->best_parent_hw;
->  	ret = __clk_determine_rate(req->best_parent_hw, &parent_req);
->  	if (ret)
->  		return ret;
-> 
-> ---
-> base-commit: b775e489bec70895b7ef6b66927886bbac79598f
-> change-id: 20260117-db820-fix-gfx3d-e61329023c8a
-> 
-> Best regards,
-> -- 
-> With best wishes
-> Dmitry
-> 
-> 
+Konrad
+
 
