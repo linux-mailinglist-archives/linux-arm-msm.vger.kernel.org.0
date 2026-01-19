@@ -1,136 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-89738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABF8AD3B4D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 18:47:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 475B5D3B468
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 18:33:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 11EDA3015ADB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 17:25:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0D23C3054359
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 17:33:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDD08326957;
-	Mon, 19 Jan 2026 17:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51D76329C4D;
+	Mon, 19 Jan 2026 17:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VEyzhk9Z"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="HkrynRV2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2E031A543;
-	Mon, 19 Jan 2026 17:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDB62DEA67;
+	Mon, 19 Jan 2026 17:33:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768843534; cv=none; b=eyfhyHYGitlam74nufwhQhl9afTzKNwjgaZBwXavLCS5USqNzDDhRnhPa9w2N6uvqGSJLFZg++qJrVjKdEpIEPjmwKtCPZhNBQTo2H7+vdEX4HubBoTCf5zFD+hc4+M2vYBCuE2YjuYRRyogHxnN3gteRz/cTUOzgpyk4zedK3U=
+	t=1768844007; cv=none; b=AbyWsHZfHme6KaqfC/D/fyu1JulNgBywirXNikttjNyQkp3cXVU1EiUxoGPzD5UeM02zTsIoJqCfkMS+OzldzDf9DfhEhOzvLoW982dES7nRilcSG7B3yz5Om+1pksZfj9Z4nkoSngp8spZcUt55ALUytgxwVOgZtr0yHXXg0Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768843534; c=relaxed/simple;
-	bh=ef9KQiTORUeb2xh0Xx3sReVnHgoY66PauPM/FZXCvKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tpI++xr1YxQNe9v7eS64SUf0l7j1baFLA6kG8kFKf+Yek9jvNQTE1aWXKtcM+8UcSthVOPlyLYqk+u5fBgdDs+v0XgvWDcnkbGZq4gW772m3BNCOShNkPxEcIvu+YtACnoKQYEAFumgKB9Ym03BlPvC/ZkDvRw6ey/nQu4YL4aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VEyzhk9Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CA9C116C6;
-	Mon, 19 Jan 2026 17:25:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768843534;
-	bh=ef9KQiTORUeb2xh0Xx3sReVnHgoY66PauPM/FZXCvKU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VEyzhk9ZqdotAX7CWbrJ8CF/jmjwQf/SDsxcWMpaKGVGLWpbZpmXyXk26ST9ULELX
-	 0rp1RQBRbcV7SWWtXwe6HIO5PhcXE9fmFgPSZAoTtUGUmJzM2HiV+fdev8TvJSe6/C
-	 aIvrXwejtSNAAeolmTbC+msJEIvFFGXcc3hXo83q/VHu+gutfs9yXpwCug47930cvw
-	 1cV4L6X2lwNWANrA1tIN1YxfWWz7csgxms2BtforRUKaCgPoRzhJzgIULLD0U+Npkm
-	 V5v+HILIwJc7O5Qn7zmhNTVrj/R+fQ2x5VHOT8Ny5b9Xv/HUTSMBW6B5fWH/N5iaI8
-	 ZTLeGRn/z7STw==
-Date: Mon, 19 Jan 2026 11:25:31 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Sudeep Holla <sudeep.holla@arm.com>, 
-	Trilok Soni <trilokkumar.soni@oss.qualcomm.com>, Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
-Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
-Message-ID: <i4zd3jesjrbljym7xuhwo5v7gwbsbuesuarnxr462eeuosevij@64hcfdzht6w3>
-References: <4fab824f-8067-49d7-8e6c-dedd67a8454d@oss.qualcomm.com>
- <aWoVR4oNdIHnksJQ@bogus>
- <92d90a1e-e993-4044-b152-83a8700f7b63@oss.qualcomm.com>
- <cb7326b9-91d9-44a3-b9f0-9d2e6ab5fa42@oss.qualcomm.com>
- <aWzuuwQi_nsHoj_5@bogus>
- <mzs5vq2jsrmb6kdriuxawbamyim6dhgy34ne6tucnhlalt5y3w@ghckxur3cn6m>
- <aW5Fdjag_w7i0zWN@bogus>
- <vvvq5rnbzs7ngtahqrar4iqinizthyrv3ipqnjp6ln34di365j@bbwdyda6gw3u>
- <aW5iQABCRukZXpZH@bogus>
- <3ldzdsyspd3s6on3cwyanjeheegoeba6kn6qaybojtqeca7335@cyemyxk6kck4>
+	s=arc-20240116; t=1768844007; c=relaxed/simple;
+	bh=wv3iGVgADZfczhmEdP1XRF7qtuIrc52olJlqa3xFPk8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dJDNug2y+cI4n+QbJMjwccSNYxO5u4Vf67hI5gSsuT0cTR8izkt2HGV9cvZyB6YC+qe103r7ZaeMAzBCXLwkUec/fwF+2AJnevMa2LVgW2gKBmUIE2COMYEYlS8tEmhE8e/Gh1UaRfWdIKTcyHTs0zWL0hpCqjcfjZqVklTb1rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=HkrynRV2; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.88.125.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 2B7B6534326A;
+	Mon, 19 Jan 2026 18:33:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1768844001;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=qwSKq3FSr+ZsvZCd240HErUbHksnnk4TWi2yz+40qgo=;
+	b=HkrynRV2qGbhsPswcbE+EnvifCfc7rPmOE/M+zqFK2Lhm+rSv4oGAM38KgCA9nnOBW/+LG
+	GjMvUGz6qm4/UG8oOeCGHZ60TlHsERc38p6xN7A3yIymVah3gleHVvnTRtUXisqbQCrn8l
+	SRpK1rkKq0pEHMCLln3AgPWuksiBT8s=
+Message-ID: <b53a78cf-3c66-44ac-8f13-2925e3d9b9a2@ixit.cz>
+Date: Mon, 19 Jan 2026 18:33:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ldzdsyspd3s6on3cwyanjeheegoeba6kn6qaybojtqeca7335@cyemyxk6kck4>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] sdm845: tama: Add AMS TCS3400 ambient light sensor
+To: petr.hodina@protonmail.com, Jonathan Cameron <jic23@kernel.org>,
+ David Lechner <dlechner@baylibre.com>, =?UTF-8?Q?Nuno_S=C3=A1?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20260119-tsc3400-v1-0-82a65c5417aa@protonmail.com>
+ <20260119-tsc3400-v1-3-82a65c5417aa@protonmail.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20260119-tsc3400-v1-3-82a65c5417aa@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 19, 2026 at 07:20:09PM +0200, Dmitry Baryshkov wrote:
-> On Mon, Jan 19, 2026 at 04:56:32PM +0000, Sudeep Holla wrote:
-> > On Mon, Jan 19, 2026 at 06:44:23PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, Jan 19, 2026 at 02:53:42PM +0000, Sudeep Holla wrote:
-> > > > On Sun, Jan 18, 2026 at 03:16:50PM -0600, Bjorn Andersson wrote:
-> > > > > On Sun, Jan 18, 2026 at 02:31:23PM +0000, Sudeep Holla wrote:
-> > > > > 
-> > > > > To me, when you decided to add a second caller to soc_device_register()
-> > > > > you created a regression in the userspace interface. If nothing else
-> > > > > it's a leaky abstraction.
-> > > > > 
-> > > > 
-> > > > In that case, shouldn't soc_device_register() made to give error when an
-> > > > attempt to call it more that one time then ? Also should be change the
-> > > > ABI documents to refer it as soc0 and not socX ?
-> > > 
-> > > Then the whole SoC bus is an overkill. But I have a strange question
-> > > here. Consider the device having the "BT / WiFi SoC" next to the main
-> > > SoC. Is that SoC a legit target to export informaiton through sysfs /
-> > > soc bus?
-> > > 
-> > 
-> > Just for clarity, I agree with you and there could be duplication of
-> > information if there are multiple source for that information. E.g.,
-> > the setup in this discussion where the EL3 firmware provides SOC_ID
-> > information via SMCCC SOC_ID and DT providing vendor specific information
-> > about the platform. Both are getting exported via sysfs but the problem
-> > here is SOC_ID has displaced vendor specific DT info from soc0 to soc1.
+On 19/01/2026 18:19, Petr Hodina via B4 Relay wrote:
+> From: Petr Hodina <petr.hodina@protonmail.com>
 > 
-> I understand the context and I understand that we ended up having two
-> soc devices for the main SoC. And that's exactly why I'm asking about
-> the WCN SoC exporting the information through the same interface. If it
-> is a legit user, then it is a possible outcome that WCN binds to soc0
-> while the main core gets bound to soc1 (even without SMCCC_ID in place).
+> Add device tree node for TCS3400 ambient light sensor with
+> power supplies, interrupt on GPIO11, and pinctrl states.
 > 
-> Likewise if WCN if a legit user of soc_device_register(), then we can't
-> make it fail after registering the first entry.
+> Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+> ---
+>   .../boot/dts/qcom/sdm845-sony-xperia-tama.dtsi     | 36 +++++++++++++++++++++-
+>   1 file changed, 35 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> index 7dc9349eedfd..15d56d6831c5 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> @@ -485,7 +485,23 @@ &i2c14 {
+>   	clock-frequency = <400000>;
+>   
+>   	/* SONY ToF sensor @ 52 */
+> -	/* AMS TCS3490 RGB+IR color sensor @ 72 */
+> +
+
+Nice! Few comments:
+
+You replacing sensor comment at 0x72 with one 0x39, could be there 
+different sensor model with different address? e.g. tcs3400 vs tcs3490?
+
+Also the node should go above ToF sensor as @39 < @52.
+
+> +	tcs3400_sensor: tcs3400_sensor@39 {
+> +		compatible = "ams,tcs3400";
+> +		reg = <0x39>;
+> +
+> +		interrupts-extended = <&tlmm 11 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +		vdd-supply = <&vreg_l22a_2p8>;
+> +		vio-supply = <&cam_vio_vreg>;
+> +
+> +		pinctrl-0 = <&ams_sensor_default>;
+> +		pinctrl-1 = <&ams_sensor_sleep>;
+
+pinctrl-names missing
+
+> +
+> +		ams,rgbcir-vdd-supply = <1>;
+> +		ams,rgbcir-gpio-vdd = <0>;
+> +		ams,rgbcir-vio-supply = <1>;
+> +	};
+>   };
+>   
+>   &ibb {
+> @@ -751,6 +767,24 @@ int-pins {
+>   			bias-pull-down;
+>   		};
+>   	};
+> +
+> +	ams_sensor_default: ams-sensor-default-state {
+> +		int-pins {
+> +			pins = "gpio11";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	ams_sensor_sleep: ams_sensor-sleep-state {
+> +		int-pins {
+> +			pins = "gpio11";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+> +		};
+> +	};
+>   };
+>   
+>   &uart6 {
 > 
 
-But by this definition, a vast variety of discrete IP should register
-with this interface - instead of providing such information in their
-respective functional interface.
+-- 
+David Heidelberg
 
-My interpretation is that the soc_device_register() related to the
-entity which is represented as /soc in your DeviceTree.
-
-For a broader "dumping ground for different IP to register their
-version information", we'd need some way to associate each entity with
-the related component - which I believe there is none, because then you
-could have used the specific driver interface in the first place.
-
-(I.e. there's no representation of the WCN SoC in our system, we have
-representations for the PMU, the WiFi, and the BT core, but not the
-whole).
-
-Regards,
-Bjorn
-
-> > 
-> > We are exploring ways to see how user space can survive this.
-> 
-> -- 
-> With best wishes
-> Dmitry
 
