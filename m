@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-89665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71617D3A92F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:40:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F0FCD3A91A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:38:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D19A830D0C8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:38:06 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 304D83004CA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:38:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39E7635B120;
-	Mon, 19 Jan 2026 12:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4653F35BDD1;
+	Mon, 19 Jan 2026 12:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="LIoAmWy8"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="xFBShbZl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41233254BA;
-	Mon, 19 Jan 2026 12:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73E735BDCB;
+	Mon, 19 Jan 2026 12:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768826286; cv=none; b=Vo8AlAgVnZsDpzGf7pEjshrGM8DzSv7N/Wl7SkpyNFQw7fjqlPTW2SETtyNKBJz66Jan9Tp3vaKa5BqxG5vXIUgnw1UViCp25TgALnNaRyeuoie1bNUpUOcZmf+e3NlIyLQgtgn9rBfb9eL8Sa/jlmL8aXUkJNs2Tm7cnAhyjsg=
+	t=1768826334; cv=none; b=H4VEyG8yJ97jFTRLDlA8keuhPcjShOeO7+QLiZoCab1HCIO+DyD16yLWlewD7Wz0YBnbFcS67+/WJvF/SCCn3ssGFRO4i1973VE+L20DK4LAJVg4Txr4x8dFcsXOB8LyfFkZ5ubewBjrPg8A7qvLRohpZ2JKuPOCA2hoe9uPNG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768826286; c=relaxed/simple;
-	bh=Wvf1Gpak1waJ2w42RsYA/dnIrRy+s6uikzOE50ps/+c=;
+	s=arc-20240116; t=1768826334; c=relaxed/simple;
+	bh=E9dAPr1pqzpqBKdHdd1G75dqznaP8KJjXeEmhpJFD7g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mOBbfypljbfKf4mJroVxSOu7y67EJo66fLkKtJu8zf4F7d5jEXxPBCbVPnmoS19Bz1vX34Ljn+2fktzL6BkcKvomyClU+enhkdpf0HqQa5gdanSZ8pTN9hPr4A5CyL37X8ldgbYL2HH1QQ3RBUU9MV57Rq4sWT4QFegjy8dBMzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=LIoAmWy8; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=kjrmegCdHIrphGT1DKDwmBdo7SIdp8PmuuXD+X3sJKmG+KElYMpyPrj/H3tLFbUFRS1spJB9Pct6tJHvWYG4YR085uBByJkI9xwx+bKvlZl1jrY4bwgLqcSyk6N0SSgpDQDpdurXTTEoJ28SsLWRzmA9CS0XT+IYhFlorfOSm6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=xFBShbZl; arc=none smtp.client-ip=185.100.197.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [192.168.162.203] (unknown [176.98.251.102])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id B98C3534338C;
-	Mon, 19 Jan 2026 13:37:55 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id BC34353433B3;
+	Mon, 19 Jan 2026 13:38:49 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768826276;
+	t=1768826329;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=H5r6hHJ/Gw66MMMhlUUUy8WDMvn6Tc/626KCGjrEra4=;
-	b=LIoAmWy8Pueto8F+1pHkn5aqm2s0ydRP2X+2Q10k+6KVeHVDC+oRTZxaVM+CFNFHRxfRmN
-	SQcMdyI6kTHnJTTUvjzjq0RvjKSYQFNx3h9XV4azj+lLUZBq9VynrcuEZtnZ2Zs+xMghWy
-	0jHJoAvC0O0REEipeIrLMvEnbKot+3I=
-Message-ID: <454f47c1-6c94-450d-aa4f-c658dcddb5ea@ixit.cz>
-Date: Mon, 19 Jan 2026 13:37:53 +0100
+	bh=mLeSxnMckZiNm9suoR5kXwUjl9n/d3erkQ4RDVsO/Xo=;
+	b=xFBShbZllc3C0ppYInmaFC/LPCc4EQKsFEA/0OeXbsrsfmm17cFd1jyC5qFpsV4Sybjp2G
+	H1SVtlvD11wD9APAL1OGD8l5+5JFn2wDeheuHpky0FkI4KDKCqLkn5WDAsa59ZZtq/p4Qh
+	UVqcCbj74knjpQMS3GeQNSIK7adKqmU=
+Message-ID: <d2d0f226-1d0c-4df9-bba2-b772811045cc@ixit.cz>
+Date: Mon, 19 Jan 2026 13:38:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,15 +54,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-sony-xperia-tama: Add
- bluetooth
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sdm845-sony-xperia-tama: Correct
+ uart instances
 To: petr.hodina@protonmail.com, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
 References: <20260119-akatsuki-uart-v1-0-238f4da4fa56@protonmail.com>
- <20260119-akatsuki-uart-v1-2-238f4da4fa56@protonmail.com>
+ <20260119-akatsuki-uart-v1-1-238f4da4fa56@protonmail.com>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -108,62 +108,24 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20260119-akatsuki-uart-v1-2-238f4da4fa56@protonmail.com>
+In-Reply-To: <20260119-akatsuki-uart-v1-1-238f4da4fa56@protonmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 19/01/2026 12:58, Petr Hodina via B4 Relay wrote:
 > From: Petr Hodina <petr.hodina@protonmail.com>
 > 
-> Enable the bluetooth interface on the uart6
+> Change the uart instances:
+> - uart6 is for bluetooth
+> - uart9 is for serial console (available on the uSD pinout)
 > 
 > Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
 > ---
->   arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> index 68841e036c20..f23f9757a08b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-> @@ -755,6 +755,23 @@ int-pins {
->   
->   &uart6 {
->   	status = "okay";
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn3990-bt";
-> +
-> +		/*
-> +		 * This path is relative to the qca/
-> +		 * subdir under lib/firmware.
-> +		 */
-> +		firmware-name = "akatsuki/crnv21.bin";
-
-Looks good, thou the path should follow `$Vendor/$codename` pattern.
-
-In general, if it's generic firmware, fw path here should be
-
-Sony/tama/
-
-otherwise LGTM.
-
-David
-
-> +
-> +		vddio-supply = <&vreg_s3a_1p3>;
-> +		vddxo-supply = <&vreg_s5a_1p9>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p0>;
-> +
-> +		max-speed = <3200000>;
-> +	};
->   };
->   
->   &uart9 {
+>   arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 
--- 
-David Heidelberg
+Thank you!
 
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
