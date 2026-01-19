@@ -1,32 +1,32 @@
-Return-Path: <linux-arm-msm+bounces-89656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73FE5D3A8F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70AB2D3A8FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 13:35:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C1A4B30486B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:34:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B95CE30053F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:34:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E1EB35A939;
-	Mon, 19 Jan 2026 12:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68FFF322B79;
+	Mon, 19 Jan 2026 12:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="L7epFtVk"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="CF6pqDND"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9223D28FFE7;
-	Mon, 19 Jan 2026 12:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469DB28FFE7;
+	Mon, 19 Jan 2026 12:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768826060; cv=none; b=OH3SzGo4haImms/RvBtbnIDAPpgTVNs1vDX4+DEYMadUtdvpJzn+92f24f1qGL+qbAErCFOGZt35MKCVwLyTVwUiSbtX3/2ds0qVPwpwo8P00NDBivoKOSiJ7hxtR4jEHiEQs9HATX7QTPDv0l51MtCW3J7vG9aRklAc5nuzTTk=
+	t=1768826068; cv=none; b=VDPZl7V6hmWIUPX6fQre8I6WaUj46iDaqYSI9N5aX5pwPvEo/4BXSLG66yR7RamA8BEqQsMyWR4UvVdQTrsUnKwqSeKt+6NhRgidaJtbOAo/pusTNZan/G9c/7iJgtRfOCFwo2i4TtuQfYQ+QHA473EPOlVqFf+9VtGHaW1AcZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768826060; c=relaxed/simple;
-	bh=pAgAFCApchRHEZKYSc3KxzzjZEBj8SAKOBEiKKka5tU=;
+	s=arc-20240116; t=1768826068; c=relaxed/simple;
+	bh=dvMV4003XIwPch/kAAX1D1dC4Cj2SAtD8y62MzqhhVQ=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=g/dsZqs/mueEiJpjQmLPgBccORzrctsJq51l3HPiszjbgm6I8DSjoK96gMpGHyj4MG5H5luwhuGRzggi0Ys3+arT7miPltcK3kJUxpSwbCXRnmmgROkx3zLeTsQGVWzUUBDQTyhyEHvlKgLNg/OJJL7mkgk9sQAp2n5MXCDLRVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=L7epFtVk; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=jfJnM3EO/9O3a5qnJFeeETyKOZUupV1FeL4EJV+w2izyf+Ki4kr6Sb+VTwQ9g8CK5yFA0o20zHLNtwjGpSaW+jZIV9HTixQwTPi1vwwyoNZj3cL6/MiA32UAI3RulJbHhMJkePgm5+NnkQx46CVjtgSquuf/Oqu4+aWtnwqZ5z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=CF6pqDND; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -35,22 +35,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=29OlLnxxrvvgvoEr2VUcWHs7YNVIlbiFByX7LDRKo6E=; b=L7epFtVkEZFJvR1h2hTP+qJO2h
-	PVtyhyYMfJPUIgNtsiQKMuvwVv4UOpUXNAjOrBAvk/8833tn4NaZD5X78StJm0ucgAkz/mufJowfJ
-	juFQg0ZxWxfb3PZWvYQvR6073Kc6TyoftKIvW87a0yfs5OrkbaPpU/8qDxmH5An3ZxWhqSiAYZNWI
-	Rgx+K4wL05JsYVD/aemKGW6rLITX0mcV9NIUYvA0SxWnElQClBdpCVzg2cdZyEe0UhvM4W58t2+gM
-	iAn49rLCllYf6AwRhDuwogdB6PT53LJbcnVfE25aDnjqPgFhvyWMX0E7BuocH9mROKhdfmf41rnIR
-	pfXtvpIw==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:58586 helo=rmk-PC.armlinux.org.uk)
+	bh=MarsTdgtHs8teQdoPboCZ01yZL+brlqUeB6u3oqnnnU=; b=CF6pqDNDQ8IIc3EmKIKQV4HK2n
+	gCKr/hrdE5IDU3DZfKLn7EUn7Df35DvQ1HHfKOyYJiP4l0gZk9VOtQnnJNa0CfPoZFE6t6GUWBLSS
+	FDLd+lSommiDkXlBwxf/dcH4T2cSlB87VEZ994JpHfDXw+kfmTMt0gUXO0SWfEsAWafFAs3azTom1
+	Y4bJ6pVpmnowAZl4u5CCr3HfIeQ+bbqRgvdDjGJRviAYH0s7895bvFJMhankR43CcMcrjvAs7SST5
+	rlaG9/FFKUNNYFX0FkLtiB+5Uh58UTa7wrIS/9MtXQLbhvbA/6z9nRYwxArB4VkqY6Zfvy73r3xbe
+	qb0QxpTg==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:58588 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vhoSK-0000000052r-2dVw;
-	Mon, 19 Jan 2026 12:34:04 +0000
+	id 1vhoST-00000000537-2gbv;
+	Mon, 19 Jan 2026 12:34:13 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vhoSH-00000005H1f-2cq9;
-	Mon, 19 Jan 2026 12:34:01 +0000
+	id 1vhoSM-00000005H1l-357D;
+	Mon, 19 Jan 2026 12:34:06 +0000
 In-Reply-To: <aW4kakF3Ly7VaxN6@shell.armlinux.org.uk>
 References: <aW4kakF3Ly7VaxN6@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -72,7 +72,8 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 05/14] net: stmmac: add stmmac core serdes support
+Subject: [PATCH net-next 06/14] net: stmmac: qcom-ethqos: convert to dwmac
+ generic SerDes support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,364 +83,136 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vhoSH-00000005H1f-2cq9@rmk-PC.armlinux.org.uk>
+Message-Id: <E1vhoSM-00000005H1l-357D@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 19 Jan 2026 12:34:01 +0000
+Date: Mon, 19 Jan 2026 12:34:06 +0000
 
-Rather than having platform glue implement SerDes PHY support, add it
-to the core driver, specifically to the stmmac integrated PCS driver
-as the SerDes is connected to the integrated PCS.
+Convert qcom-ethqos to use the dwmac core's generic SerDes support,
+which will handle SerDes initialisation, powering, and mode setting.
 
-Platforms using external PCS can also populate plat->serdes, and the
-core driver will call phy_init() and phy_exit() when the administrative
-state of the interface changes, but the other phy methods will not be
-called.
+Note that generic support requires the SerDes to support phy_validate()
+in order to probe which PHY interface modes are supported, and
+phy_set_mode_ext() to configure the appropriate PHY interface mode
+(and thus the speed.)
 
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
---
-rfc->v1: avoid calling phy_get_mode() with NULL serdes PHY
 ---
- drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c |  14 ++-
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.c  |  38 +++++-
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.h  |   1 +
- .../ethernet/stmicro/stmmac/stmmac_serdes.c   | 111 ++++++++++++++++++
- .../ethernet/stmicro/stmmac/stmmac_serdes.h   |  16 +++
- include/linux/stmmac.h                        |   2 +
- 7 files changed, 180 insertions(+), 4 deletions(-)
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.c
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.h
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 50 ++-----------------
+ 1 file changed, 3 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
-index c9263987ef8d..a3c2cd5d0c91 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Makefile
-+++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
-@@ -7,7 +7,7 @@ stmmac-objs:= stmmac_main.o stmmac_ethtool.o stmmac_mdio.o ring_mode.o	\
- 	      dwmac4_dma.o dwmac4_lib.o dwmac4_core.o dwmac5.o hwif.o \
- 	      stmmac_tc.o dwxgmac2_core.o dwxgmac2_dma.o dwxgmac2_descs.o \
- 	      stmmac_xdp.o stmmac_est.o stmmac_fpe.o stmmac_vlan.o \
--	      stmmac_pcs.o $(stmmac-y)
-+	      stmmac_pcs.o stmmac_serdes.o $(stmmac-y)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 80ea69fc8ee5..a0b893d3fbd4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -103,8 +103,6 @@ struct qcom_ethqos {
+ 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
  
- stmmac-$(CONFIG_STMMAC_SELFTESTS) += stmmac_selftests.o
+ 	struct clk *link_clk;
+-	struct phy *serdes_phy;
+-	int serdes_speed;
+ 	phy_interface_t phy_mode;
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 24a2555ca329..6c515f9efbe7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -48,6 +48,7 @@
- #include "stmmac_fpe.h"
- #include "stmmac.h"
- #include "stmmac_pcs.h"
-+#include "stmmac_serdes.h"
- #include "stmmac_xdp.h"
- #include <linux/reset.h>
- #include <linux/of_mdio.h>
-@@ -3549,12 +3550,16 @@ static void stmmac_safety_feat_configuration(struct stmmac_priv *priv)
- 
- static void stmmac_clk_rx_i_require(struct stmmac_priv *priv)
- {
-+	dwmac_serdes_power_on(priv);
-+	/* Only sets the SerDes mode if it wasn't already configured. */
-+	dwmac_serdes_init_mode(priv, priv->plat->phy_interface);
- 	phylink_rx_clk_stop_block(priv->phylink);
- }
- 
- static void stmmac_clk_rx_i_release(struct stmmac_priv *priv)
- {
- 	phylink_rx_clk_stop_unblock(priv->phylink);
-+	dwmac_serdes_power_off(priv);
- }
- 
- /**
-@@ -4152,10 +4157,14 @@ static int stmmac_open(struct net_device *dev)
- 	if (ret)
- 		goto err_runtime_pm;
- 
--	ret = __stmmac_open(dev, dma_conf);
-+	ret = dwmac_serdes_init(priv);
- 	if (ret)
- 		goto err_disconnect_phy;
- 
-+	ret = __stmmac_open(dev, dma_conf);
-+	if (ret)
-+		goto err_serdes;
-+
- 	kfree(dma_conf);
- 
- 	/* We may have called phylink_speed_down before */
-@@ -4163,6 +4172,8 @@ static int stmmac_open(struct net_device *dev)
- 
- 	return ret;
- 
-+err_serdes:
-+	dwmac_serdes_exit(priv);
- err_disconnect_phy:
- 	phylink_disconnect_phy(priv->phylink);
- err_runtime_pm:
-@@ -4226,6 +4237,7 @@ static int stmmac_release(struct net_device *dev)
- 
- 	__stmmac_release(dev);
- 
-+	dwmac_serdes_exit(priv);
- 	phylink_disconnect_phy(priv->phylink);
- 	pm_runtime_put(priv->device);
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-index 2f826fe7229b..4d1902f3a58f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-@@ -1,12 +1,25 @@
- // SPDX-License-Identifier: GPL-2.0-only
- #include "stmmac.h"
- #include "stmmac_pcs.h"
-+#include "stmmac_serdes.h"
- 
- static int dwmac_integrated_pcs_enable(struct phylink_pcs *pcs)
- {
- 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
-+	struct stmmac_priv *priv = spcs->priv;
-+	int ret;
- 
--	stmmac_mac_irq_modify(spcs->priv, 0, spcs->int_mask);
-+	ret = dwmac_serdes_power_on(priv);
-+	if (ret)
-+		return ret;
-+
-+	if (spcs->interface != PHY_INTERFACE_MODE_NA) {
-+		ret = dwmac_serdes_set_mode(priv, spcs->interface);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	stmmac_mac_irq_modify(priv, 0, spcs->int_mask);
- 
+ 	const struct ethqos_emac_por *por;
+@@ -584,14 +582,6 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos, int speed)
  	return 0;
  }
-@@ -14,8 +27,11 @@ static int dwmac_integrated_pcs_enable(struct phylink_pcs *pcs)
- static void dwmac_integrated_pcs_disable(struct phylink_pcs *pcs)
- {
- 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
-+	struct stmmac_priv *priv = spcs->priv;
  
--	stmmac_mac_irq_modify(spcs->priv, spcs->int_mask, 0);
-+	stmmac_mac_irq_modify(priv, spcs->int_mask, 0);
-+
-+	dwmac_serdes_power_off(priv);
+-static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
+-{
+-	if (ethqos->serdes_speed != speed) {
+-		phy_set_speed(ethqos->serdes_phy, speed);
+-		ethqos->serdes_speed = speed;
+-	}
+-}
+-
+ static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
+ {
+ 	stmmac_pcs_ctrl_ane(priv, enable, 0);
+@@ -609,17 +599,14 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos, int speed)
+ 	case SPEED_2500:
+ 		rgmii_setmask(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+ 			      RGMII_IO_MACRO_CONFIG2);
+-		ethqos_set_serdes_speed(ethqos, SPEED_2500);
+ 		ethqos_pcs_set_inband(priv, false);
+ 		break;
+ 	case SPEED_1000:
+ 		rgmii_setmask(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+ 			      RGMII_IO_MACRO_CONFIG2);
+-		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+ 		ethqos_pcs_set_inband(priv, true);
+ 		break;
+ 	case SPEED_100:
+-		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+ 		ethqos_pcs_set_inband(priv, true);
+ 		break;
+ 	case SPEED_10:
+@@ -627,7 +614,6 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos, int speed)
+ 			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR,
+ 					 SGMII_10M_RX_CLK_DVDR),
+ 			      RGMII_IO_MACRO_CONFIG);
+-		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+ 		ethqos_pcs_set_inband(priv, true);
+ 		break;
+ 	}
+@@ -648,30 +634,6 @@ static void ethqos_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ 	ethqos_configure(ethqos, speed);
  }
  
- static void dwmac_integrated_pcs_get_state(struct phylink_pcs *pcs,
-@@ -32,6 +48,15 @@ static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
- 				       bool permit_pause_to_mac)
+-static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
+-{
+-	struct qcom_ethqos *ethqos = priv;
+-	int ret;
+-
+-	ret = phy_init(ethqos->serdes_phy);
+-	if (ret)
+-		return ret;
+-
+-	ret = phy_power_on(ethqos->serdes_phy);
+-	if (ret)
+-		return ret;
+-
+-	return phy_set_speed(ethqos->serdes_phy, ethqos->serdes_speed);
+-}
+-
+-static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
+-{
+-	struct qcom_ethqos *ethqos = priv;
+-
+-	phy_power_off(ethqos->serdes_phy);
+-	phy_exit(ethqos->serdes_phy);
+-}
+-
+ static int ethqos_clks_config(void *priv, bool enabled)
  {
- 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
-+	int ret;
-+
-+	if (spcs->interface != interface) {
-+		ret = dwmac_serdes_set_mode(spcs->priv, interface);
-+		if (ret)
-+			return ret;
-+
-+		spcs->interface = interface;
-+	}
+ 	struct qcom_ethqos *ethqos = priv;
+@@ -790,12 +752,11 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
  
- 	dwmac_ctrl_ane(spcs->base, 0, 1, spcs->priv->hw->reverse_sgmii_enable);
+-	ethqos->serdes_phy = devm_phy_optional_get(dev, "serdes");
+-	if (IS_ERR(ethqos->serdes_phy))
+-		return dev_err_probe(dev, PTR_ERR(ethqos->serdes_phy),
++	plat_dat->serdes = devm_phy_optional_get(dev, "serdes");
++	if (IS_ERR(plat_dat->serdes))
++		return dev_err_probe(dev, PTR_ERR(plat_dat->serdes),
+ 				     "Failed to get serdes phy\n");
  
-@@ -71,6 +96,7 @@ int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset,
- 			       u32 int_mask)
- {
- 	struct stmmac_pcs *spcs;
-+	int ret;
+-	ethqos->serdes_speed = SPEED_1000;
+ 	ethqos_set_clk_tx_rate(ethqos, NULL, plat_dat->phy_interface,
+ 			       SPEED_1000);
+ 	ethqos_set_func_clk_en(ethqos);
+@@ -816,11 +777,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	if (data->dma_addr_width)
+ 		plat_dat->host_dma_width = data->dma_addr_width;
  
- 	spcs = devm_kzalloc(priv->device, sizeof(*spcs), GFP_KERNEL);
- 	if (!spcs)
-@@ -81,6 +107,14 @@ int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset,
- 	spcs->int_mask = int_mask;
- 	spcs->pcs.ops = &dwmac_integrated_pcs_ops;
- 
-+	if (priv->plat->serdes) {
-+		ret = dwmac_serdes_validate(priv, PHY_INTERFACE_MODE_SGMII);
-+		if (ret)
-+			dev_warn(priv->device,
-+				 "serdes does not support SGMII: %pe\n",
-+				 ERR_PTR(ret));
-+	}
-+
- 	__set_bit(PHY_INTERFACE_MODE_SGMII, spcs->pcs.supported_interfaces);
- 
- 	priv->integrated_pcs = spcs;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-index c4e6b242d390..36bf75fdf478 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-@@ -53,6 +53,7 @@ struct stmmac_pcs {
- 	struct stmmac_priv *priv;
- 	void __iomem *base;
- 	u32 int_mask;
-+	phy_interface_t interface;
- 	struct phylink_pcs pcs;
- };
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.c
-new file mode 100644
-index 000000000000..d46a071bc383
---- /dev/null
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.c
-@@ -0,0 +1,111 @@
-+#include <linux/phy/phy.h>
-+
-+#include "stmmac.h"
-+#include "stmmac_serdes.h"
-+
-+static phy_interface_t dwmac_serdes_phy_modes[] = {
-+	PHY_INTERFACE_MODE_SGMII,
-+	PHY_INTERFACE_MODE_1000BASEX,
-+	PHY_INTERFACE_MODE_2500BASEX
-+};
-+
-+int dwmac_serdes_validate(struct stmmac_priv *priv, phy_interface_t interface)
-+{
-+	return phy_validate(priv->plat->serdes, PHY_MODE_ETHERNET, interface,
-+			    NULL);
-+}
-+
-+int dwmac_serdes_init(struct stmmac_priv *priv)
-+{
-+	size_t i;
-+	int ret;
-+
-+	if (!priv->plat->serdes)
-+		return 0;
-+
-+	/* Encourage good implementation of the SerDes PHY driver, so that
-+	 * we can discover which Ethernet modes the SerDes supports.
-+	 * Unfortunately, some implementations are noisy (bad), others
-+	 * require phy_set_speed() to select the correct speed first
-+	 * (which then reprograms the SerDes, negating the whole point of
-+	 * phy_validate().) Weed out these incompatible implementations.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(dwmac_serdes_phy_modes); i++) {
-+		ret = phy_validate(priv->plat->serdes, PHY_MODE_ETHERNET,
-+				   dwmac_serdes_phy_modes[i], NULL);
-+		if (ret == 0 || ret == -EOPNOTSUPP)
-+			break;
-+	}
-+
-+	if (ret == -EOPNOTSUPP)
-+		dev_warn(priv->device,
-+			 "SerDes driver does not implement phy_validate()\n");
-+	if (ret) {
-+		/* The SerDes PHY failed validation, refuse to use it. */
-+		dev_warn(priv->device,
-+			 "SerDes driver fails to validate SGMII, 1000BASE-X nor 2500BASE-X\n");
-+		return -EINVAL;
-+	}
-+
-+	ret = phy_init(priv->plat->serdes);
-+	if (ret)
-+		dev_err(priv->device, "failed to initialize SerDes: %pe\n",
-+			ERR_PTR(ret));
-+
-+	return ret;
-+}
-+
-+int dwmac_serdes_power_on(struct stmmac_priv *priv)
-+{
-+	int ret;
-+
-+	ret = phy_power_on(priv->plat->serdes);
-+	if (ret)
-+		dev_err(priv->device, "failed to power on SerDes: %pe\n",
-+			ERR_PTR(ret));
-+
-+	return ret;
-+}
-+
-+int dwmac_serdes_init_mode(struct stmmac_priv *priv, phy_interface_t interface)
-+{
-+	struct phy *serdes = priv->plat->serdes;
-+
-+	if (!serdes || phy_get_mode(serdes) == PHY_MODE_ETHERNET)
-+		return 0;
-+
-+	return dwmac_serdes_set_mode(priv, interface);
-+}
-+
-+int dwmac_serdes_set_mode(struct stmmac_priv *priv, phy_interface_t interface)
-+{
-+	struct phy *serdes = priv->plat->serdes;
-+	int ret;
-+
-+	ret = phy_set_mode_ext(serdes, PHY_MODE_ETHERNET, interface);
-+	if (ret)
-+		dev_err(priv->device,
-+			"failed to set SerDes mode %s: %pe\n",
-+			phy_modes(interface), ERR_PTR(ret));
-+
-+	return ret;
-+}
-+
-+void dwmac_serdes_power_off(struct stmmac_priv *priv)
-+{
-+	int ret;
-+
-+	ret = phy_power_off(priv->plat->serdes);
-+	if (ret)
-+		dev_err(priv->device, "failed to power off SerDes: %pe\n",
-+			ERR_PTR(ret));
-+}
-+
-+void dwmac_serdes_exit(struct stmmac_priv *priv)
-+{
-+	int ret = phy_exit(priv->plat->serdes);
-+
-+	if (ret)
-+		dev_err(priv->device, "failed to shutdown SerDes: %pe\n",
-+			ERR_PTR(ret));
-+}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.h
-new file mode 100644
-index 000000000000..a31e6c9e0570
---- /dev/null
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_serdes.h
-@@ -0,0 +1,16 @@
-+#ifndef STMMAC_SERDES_H
-+#define STMMAC_SERDES_H
-+
-+#include <linux/phy.h>
-+
-+struct stmmac_priv;
-+
-+int dwmac_serdes_validate(struct stmmac_priv *priv, phy_interface_t interface);
-+int dwmac_serdes_init(struct stmmac_priv *priv);
-+int dwmac_serdes_power_on(struct stmmac_priv *priv);
-+int dwmac_serdes_init_mode(struct stmmac_priv *priv, phy_interface_t interface);
-+int dwmac_serdes_set_mode(struct stmmac_priv *priv, phy_interface_t interface);
-+void dwmac_serdes_power_off(struct stmmac_priv *priv);
-+void dwmac_serdes_exit(struct stmmac_priv *priv);
-+
-+#endif
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index f1054b9c2d8a..4db506e5cf13 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -193,6 +193,7 @@ enum dwmac_core_type {
- #define STMMAC_FLAG_HWTSTAMP_CORRECT_LATENCY	BIT(13)
- 
- struct mac_device_info;
-+struct phy;
- 
- struct plat_stmmacenet_data {
- 	enum dwmac_core_type core_type;
-@@ -222,6 +223,7 @@ struct plat_stmmacenet_data {
- 	 * that phylink uses.
- 	 */
- 	phy_interface_t phy_interface;
-+	struct phy *serdes;
- 	struct stmmac_mdio_bus_data *mdio_bus_data;
- 	struct device_node *phy_node;
- 	struct fwnode_handle *port_node;
+-	if (ethqos->serdes_phy) {
+-		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+-		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+-	}
+-
+ 	/* Enable TSO on queue0 and enable TBS on rest of the queues */
+ 	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
+ 		plat_dat->tx_queues_cfg[i].tbs_en = 1;
 -- 
 2.47.3
 
