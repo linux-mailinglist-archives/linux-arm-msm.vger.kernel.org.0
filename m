@@ -1,47 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-89638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A9DD3A769
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:52:41 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2653D3A786
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:57:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3BC3730A9D44
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:48:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D2175301D0F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:53:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EEBD318120;
-	Mon, 19 Jan 2026 11:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dGpWhgAu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B826318EE5;
+	Mon, 19 Jan 2026 11:53:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F9D3148C8;
-	Mon, 19 Jan 2026 11:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580FC31A7F1;
+	Mon, 19 Jan 2026 11:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768823301; cv=none; b=QOLFgs3UdVk2ihZbWX8bUgXRbZLk/y35Fn5XUvJKEPtvuMzt2vjGYXUfExit6HkAOhPeMA3bY7SlQ5inezBZ412R8ctqPFvc+UA7pQRUpCRcVbTXh3qdE52zaA+JG5xU7g0FJJRjUQquuytpm3plpI/a9KImiXPMyABMvPJIbJs=
+	t=1768823635; cv=none; b=eV14JpXtobRgn2HbM9Hu++mXVQG/sReHW6c3CrlJDPxXgkjUV3qeNVOAjWrqKeaP9WZAqJRvS6LPilKnCA/ekr7cSt2UDSB559Euplxsll/ClX+/D+n/o8cYUeq6mQQTRJ74LznWYBZ1aoBR3TruQUahysQJwf0INheFm4viZtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768823301; c=relaxed/simple;
-	bh=m6fiWE2pnNbhhpX2oZo1w8HwzGDymsBUVv89HVOO69U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ilmh0pKdJc8ojvhSA9pluEOJJ3G6OOYJIpSEzx1RWI2VCn+zzhv6D7niTCC4PogRiEGH2w1z4UGgwlXIM9OsYY8rm1fQJJ6rFGVMfaQPpC00KrXAqf0mHFSXtxsS9k0Z7UMVo6Ge+vr8rhGXLaADfyMcMfc4xgwMLzbxdmUn2MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dGpWhgAu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0655C116C6;
-	Mon, 19 Jan 2026 11:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768823300;
-	bh=m6fiWE2pnNbhhpX2oZo1w8HwzGDymsBUVv89HVOO69U=;
-	h=From:Date:Subject:To:Cc:From;
-	b=dGpWhgAurL7BUnf4WTlLuqSPiBQMLfaJ+N4lNv78Mqtkq6aOvXdiNKHYVnTFQq3Gg
-	 +BVC6XpwEtrGE27QhPeKoor+bKLLEDwAcmx/RUiaAkkUxYcWZqIrYvJVLWQcInXPOQ
-	 ylySNStLJ8At2aG6CyVM8D5BukbjCuc+GZ/rLfMRZ96j/z0QfJtxn9JTfETdBzPStM
-	 HqYAjgVM98kJrpJtqyd1hBu7OS3zdqU/8sNkJ2dcpQ5pCIClyNZY0z5MZE7X4OnC+f
-	 ILjJu6T0+H3Eibk/w3W5AGWdBuuP8R4+uVrcYBzG6CHDou8/S207qOO1hXqVJr5EL6
-	 3hGumzdCnjm/w==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 19 Jan 2026 12:48:02 +0100
-Subject: [PATCH] dt-bindings: phy: sc8280xp-qmp-pcie: Disallow bifurcation
- register on Purwa
+	s=arc-20240116; t=1768823635; c=relaxed/simple;
+	bh=wWQ/33mdutWx2GuOH6RRm0CECmdgEOZ1pAzWII+NRQM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AxNLbsj/H0RcBHd8lurqFMweVI+PRkBxgp6Un0+EhYCAiNcitba4w7rgXz8QRGkjCoG1lniWAZXPPkRb4jlKy29Yi11D3kUmVT0o2dyP9GuGH/88tgr/khFs6oT4JHGpAvEK6oPITDodiGG4zdcF1chk/Xxy1ItX3M+7JOD56Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3EA41153B;
+	Mon, 19 Jan 2026 03:53:42 -0800 (PST)
+Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id B58693F632;
+	Mon, 19 Jan 2026 03:53:46 -0800 (PST)
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	kernel@oss.qualcomm.com,
+	coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Leo Yan <leo.yan@arm.com>
+Subject: Re: [PATCH RESEND v5 0/3] coresight-tnoc: Add support for Interconnect TNOC
+Date: Mon, 19 Jan 2026 11:53:31 +0000
+Message-ID: <176882354703.1800388.16602778597439476199.b4-ty@arm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251203-itnoc-v5-0-5b97c63f2268@oss.qualcomm.com>
+References: <20251203-itnoc-v5-0-5b97c63f2268@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,85 +60,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260119-topic-purwa_phy_shutup_warning-v1-1-997a692b31c6@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3NMQ6DMAxA0asgz41EMiDCVaoqcsEQL8FySClC3
- J2I8S3/n5BJmTIMzQlKP868pgr7amCMmBYyPFWDa13XWuvNtgqPRoruGCQeIceyFQk7auK0mN5
- b6hG/zs8OakSUZv4/g/fnum6VGMFkcAAAAA==
-X-Change-ID: 20260119-topic-purwa_phy_shutup_warning-891e8aab29f2
-To: Vinod Koul <vkoul@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- YijieYang <yijie.yang@oss.qualcomm.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768823296; l=1939;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=zafLI2H+tXlTDyy9bg4Qs3Rs79fUkAKI4Fp2LAgvkag=;
- b=xMtsEXOFlGjBtcLWdBg61jlatkGD/wYUEzbmPAYeQhklx4IQ70ZSTFCzFs9+IO93tnU6QAYA9
- UO8+tyvJDlxDvGch8lq32075lXJNwX6bGI+2xuSCiRKOUz8TQ9KYG/R
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Neither of the two Gen4x4 PHYs found on Purwa supports bifurcation.
-The PHY is however physically laid out as if it were to, since there
-are two separate ports (A/B).
+On Wed, 03 Dec 2025 20:43:06 -0800, Yuanfang Zhang wrote:
+> This patch series adds support for the Qualcomm CoreSight Interconnect TNOC
+> (Trace Network On Chip) block, which acts as a CoreSight graph link forwarding
+> trace data from subsystems to the Aggregator TNOC. Unlike the Aggregator TNOC,
+> this block does not support aggregation or ATID assignment.
+> 
+> 
 
-Split out a new if-then block to un-require the bifurcation register
-handle to squash this warning:
+Applied, thanks!
 
-purwa-iot-evk.dtb: phy@1bd4000 (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a required property
-
-Fixes: 2e1ffd4c1805 ("dt-bindings: phy: qcom,qmp-pcie: Add X1P42100 PCIe Gen4x4 PHY")
-Reported-by: Rob Herring <robh@kernel.org>
-Closes: https://lore.kernel.org/linux-arm-msm/176857775469.1631885.16133311938753588148.robh@kernel.org/
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-index 3a35120a77ec..431e8cb5df84 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-@@ -136,13 +136,22 @@ allOf:
-           items:
-             - description: port a
-             - description: port b
--      required:
--        - qcom,4ln-config-sel
-     else:
-       properties:
-         reg:
-           maxItems: 1
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc8280xp-qmp-gen3x4-pcie-phy
-+              - qcom,x1e80100-qmp-gen4x4-pcie-phy
-+    then:
-+      required:
-+        - qcom,4ln-config-sel
-+
-   - if:
-       properties:
-         compatible:
-
----
-base-commit: 46fe65a2c28ecf5df1a7475aba1f08ccf4c0ac1b
-change-id: 20260119-topic-purwa_phy_shutup_warning-891e8aab29f2
+[1/3] dt-bindings: arm: qcom: Add Coresight Interconnect TNOC
+      https://git.kernel.org/coresight/c/2b3625a83245
+[2/3] coresight-tnoc: add platform driver to support Interconnect TNOC
+      https://git.kernel.org/coresight/c/5799dee92dc2
+[3/3] coresight-tnoc: Add runtime PM support for Interconnect TNOC
+      https://git.kernel.org/coresight/c/4d9024d14d1b
 
 Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Suzuki K Poulose <suzuki.poulose@arm.com>
 
