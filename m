@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-89629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034F8D3A732
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:44:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1B03D3A73B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:46:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93CFF30F2CEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:42:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 46607309186C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63AE0314A8A;
-	Mon, 19 Jan 2026 11:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6775D314A8A;
+	Mon, 19 Jan 2026 11:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="muErzuUG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHaxZMRx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4055F3148B3;
-	Mon, 19 Jan 2026 11:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C6A313551;
+	Mon, 19 Jan 2026 11:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768822974; cv=none; b=mXOds3JxhwlQPX+dpv5GmgpM8/sgAa3cnrSovEj83n7FaAamTXyxz/sPj77f0o0XqewkjM8+W6INW1TLm2cjKF1WV9bZvyyc3mFWQwGJOYDZ5RgjWcSl4bTf5ZuvR8eV0GMbiRn3dX6vtpdPIJcD+sfQ5Kv5Pz8P88/sYHGXNn4=
+	t=1768822979; cv=none; b=NfuZM638WcskTH60jteNuuG28yeqHTNJ/wls/t0BeUw3v+fhQRRnUoSvZemEPaJwQ3E+DrlK6jJbdnzH84XEhm2yISXjR/iYjRJ58WW4tVq1aIDauE459h4INx038ywUzE4bcBVDREN+IpDRTF1gqV+SWLO0AOmk2YGAt7C3WIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768822974; c=relaxed/simple;
-	bh=msjjeVVEXCIo7tX7DIw0WATS3piJKc8rVSrsxD3EY2U=;
+	s=arc-20240116; t=1768822979; c=relaxed/simple;
+	bh=a+XnINu1If+1qZZ2ueJpWhvrHaPLUO1jcqezn7ogPNs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lRYcIVIYfEDgozieFXDCRpkaah2Ka1cillHOyqzZxWK/DrxB5eAGFEIlNZscoBI+uO+U9Z0KPQPihdoNZbnNxEXtirysenhmvNKMTIIKSl4UQsBV0zR71A4X9bEEXsSDysXmJU1WOj6EN0++6pbU9ZxeDySQmGxZNCQ/2EP78yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=muErzuUG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B7CC116C6;
-	Mon, 19 Jan 2026 11:42:48 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=K8p+h3d1maQ+WtT2p8quKQNMRyLM8Cv960NsEAzIEiJb+8AWCZvYh5PYsK2e2AF0KKsoXDxMMZnwOyOPgweSFBURLKqqp7v8u1Rlk1TV2ADIv99+11Fv0IVaWWAXgfNBBsi00xDS+t5I2LtCXzrEDaIyaXjWJTvOPPgKl8stE28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHaxZMRx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FECC116C6;
+	Mon, 19 Jan 2026 11:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768822973;
-	bh=msjjeVVEXCIo7tX7DIw0WATS3piJKc8rVSrsxD3EY2U=;
+	s=k20201202; t=1768822979;
+	bh=a+XnINu1If+1qZZ2ueJpWhvrHaPLUO1jcqezn7ogPNs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=muErzuUGpHE2LxCgCfVlUx6L9etfZ38i4hSaPFLfXFayMo3AA1GxxDn/whSUCtlGV
-	 6yfAT/z8CDt4YYObAJCz9r1uznbI1YQpyHsHZS26ogmnDD2hp8EOurtkfhm2oro1ak
-	 bnxUJLxoO2zWpcqj7FCTN/8GtFEIvmixJOvtBrd3kWmAUCkLReqcqM7BgeMgKHXz5v
-	 v8ilFsOj1gz+RsQYFkcPGwB/Ml3hw6vRNLz3DQla/KnVWnMJp2PefBJDUuAP8kEMjf
-	 qkWsltrJsHBkWPQ58yu1PtBhUKjsl9EEQlRLzD+0S12y0wlbIE/C8z7JEPCeg8W9wI
-	 pVv0X+5GYNMFw==
+	b=KHaxZMRxN4MoOBMU9kUG/no7/B9xn9ztLo6ctF54OeIU5wXxrnS0h9ySb/SQmB3Z2
+	 vj7ccVX6AfSgu1438xsSnLxvJA79pXQDHO/0mDVZOiQ11hb53Ul6pkN/4xxHVNWykf
+	 yMASR+nWo7VFCK9+69+Z/KxK1TYxKRx/sD61Th3/0aqo/DgdSMy+Oc+eETEA2CwFT3
+	 lJLcpIjoXGuSOb4snX3CBXxUwbfAn0NksqEVDQ/RtQn3mquajZjZV5+uVM7KlTqRzV
+	 2pdKCx+PfhGxdBGEcf/klgz+SVnUFMFopw5066EYuJvBWcVlLOlxS1QzBYYIKBj1ew
+	 mAs3zwKOd2zNQ==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 19 Jan 2026 12:42:26 +0100
-Subject: [PATCH v2 04/10] arm64: dts: qcom: sc8280xp-gaokun3: Fix BT RFA
+Date: Mon, 19 Jan 2026 12:42:27 +0100
+Subject: [PATCH v2 05/10] arm64: dts: qcom: sc8280xp-x13s: Fix BT RFA
  supply name
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-4-6d1c75608bbb@oss.qualcomm.com>
+Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-5-6d1c75608bbb@oss.qualcomm.com>
 References: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 In-Reply-To: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
@@ -71,11 +71,11 @@ Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
  Abel Vesa <abel.vesa@oss.qualcomm.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=946;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=976;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=72yub5UTSzLWMlyttbET2viSXeyaZzXB/odSIl/Fje4=;
- b=3/4wzGaEoN6gKN/czRtqqOjc2CERvlR0pfsDLpTT/kNsGNhF6yyCWaNmXfLrn6uCapXXUkxLu
- /lya0pPo1JzCvoZajUMJWkqczFg2QLRhCJeUdwNOnYwE6DDGjIiHle2
+ bh=9GCz88hUbhXE6xSvyYqCDhxEuOu/NqDetb5F3xkdqKg=;
+ b=XZKflV8rJWSzRWkEeHEw2vTgjisFT3LCHYbs/kTCZSWwz6w5fIDlY7kQuMU+c95Bu4+7nKWMQ
+ JTC3ANRfB5vCbPEV823FuaeSOBNZgGB4Dq9opXF1uAk6V8LfwHdFFTb
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
@@ -87,14 +87,14 @@ Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 9819454abe13..f3c00be67081 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -1122,7 +1122,7 @@ bluetooth {
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index d84ca010ab9d..abd9c5a67b9f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1331,7 +1331,7 @@ bluetooth {
  		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
  		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
  		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
