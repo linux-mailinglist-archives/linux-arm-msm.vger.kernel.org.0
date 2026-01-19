@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-89633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B70FD3A751
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:47:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D9F79D3A756
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:48:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9A936309C5D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:43:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6653D30695E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:43:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BCF2314B7F;
-	Mon, 19 Jan 2026 11:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BAF5314B84;
+	Mon, 19 Jan 2026 11:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuxnBtef"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2xVgPe9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3A314A6D;
-	Mon, 19 Jan 2026 11:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588D2313285;
+	Mon, 19 Jan 2026 11:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768822995; cv=none; b=BZ9A0Dw/76PDvgZx7UhA405rl1WVo9PR9M/DBoC0hDKofSsP2Y+r0kqHhevl17pODuykqXbBXNzHYo8bzeZhNWyridKlnd3fyX//xkWNNeBzW7utDdUC7r4F/LwHbxYt9TKmcJkCxG1EbV4RqQk8cj3AZnD43HVoNdqm1iPs9u4=
+	t=1768823001; cv=none; b=JnH8oZx0cZYXjxmRvH84KlRcHuD/albJMCFBpXkkHBmFu162IWTWSkEwkMEFt68epAvdAm9PCdwaO0deTKyjx8Py/Tmk+UIdG+oQ7NSHHOdCAipBA/YTWAljDUXLffob0lWo0z1Os9w1MEgnwdYM+lybP76JuqbbtJxBcwnEsIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768822995; c=relaxed/simple;
-	bh=kQnMEwaG5DUNa6ELSKdaUXrdBgT1+bgfIgmn+W/pJbA=;
+	s=arc-20240116; t=1768823001; c=relaxed/simple;
+	bh=c4fYD1uabnTg2Y3YGXef3SyhWLDKug/8DPbDTe0wgkw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VsiE1xurOKUadJLbjtLRyj9ffvIimuztpeoYMLiE4h6XQ3+fRhLGbWs7cWX3oGlJQXF9rN5+JvVkMB2jNSZ8lcSat1FHFcTCRu+nsFVg7zhnAtFhD8sEwI6brG2F/5NCsfsaEg4/jGmExyOE9L9qSMP0mpUccuOdL8LK5MiyjGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuxnBtef; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CB0C116C6;
-	Mon, 19 Jan 2026 11:43:10 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=dYP+WdZJM68YMdi27P7TaNAs+EuoOvrIk+m9FkURHhfI8QuBxVChS+XzayN5vdKNTaaxVR7Ty7aG/JLnw5sy/SigJqJxvMTu8SDYuuYLaZjzrAW8G8vRR9DmV48jaK24HMnKeHDJcVe4MEJvKU6mFYqv6Sl/VN4HbxEYwJmRQPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2xVgPe9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6217CC116C6;
+	Mon, 19 Jan 2026 11:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768822994;
-	bh=kQnMEwaG5DUNa6ELSKdaUXrdBgT1+bgfIgmn+W/pJbA=;
+	s=k20201202; t=1768823001;
+	bh=c4fYD1uabnTg2Y3YGXef3SyhWLDKug/8DPbDTe0wgkw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=VuxnBtefMrUCW8wV2B+Icr2GU/oMrXDwIcy6hXXltuwcHJEuFft+3ukjFkvEN/u2w
-	 UXdN/mp44j9YWucDQF+h2NKuMWS+Iq9vHjDAS6eiMsmsd0uf5qFp4i78tBZP2WCHtV
-	 L8GGGRjJ6kMpxASvm4WC01xCyF31RIPiF8ro0KbA+dLyRVwgFJGVKRMphIq5nIU0XB
-	 qjz7xf+TnpPScoDBzLvfiN1ZY97fPVL5oB+uJ5rlGc0oiYuK+frMwnq0ePofocDKSn
-	 8vC6A0+CC7QNwjAMqJgf2wd3T1kUh6BUV+VW1m2wp+0XZYHwoP4B3y12KRC1hkVj5d
-	 cyUQV3R4x11RQ==
+	b=h2xVgPe92FI7+IBBCzcKP4VxsqsdhWIwiN3FNtehzx1jGebgiHra1q8XN2tu9clO0
+	 wONfeSJP7vLFzwsxKg/ii1zgGJblzqQf5vj5riPIEesCTX5RhGNpfMlOzpCQbiiQpz
+	 nixTH/GpvKF5Neo7clIOFYBfQvBpsIZEcEe52CMOrB3FPeMgRf5co/rtUUxaR8MtPp
+	 7HPcLjUYatP09KV+AiBKIPOKBVJX+6Bx7h02mqES0e6Xgfla/RZkmgiMTAoZJ6cTy+
+	 ov41yW+hNGJIqvBHwTwW2KlGLFMubj6NiJltuJoZM6diJWLPuSjaY/g7IOo+bQEyLY
+	 6SF9PnYvVIK/g==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 19 Jan 2026 12:42:30 +0100
-Subject: [PATCH v2 08/10] arm64: dts: qcom: x1-omnibook-x14: Fix BT RFA
+Date: Mon, 19 Jan 2026 12:42:31 +0100
+Subject: [PATCH v2 09/10] arm64: dts: qcom: x1-zenbook-a14: Fix BT RFA
  supply name
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-8-6d1c75608bbb@oss.qualcomm.com>
+Message-Id: <20260119-topic-wcn6855_pmu_dtbdings-v2-9-6d1c75608bbb@oss.qualcomm.com>
 References: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 In-Reply-To: <20260119-topic-wcn6855_pmu_dtbdings-v2-0-6d1c75608bbb@oss.qualcomm.com>
 To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
@@ -71,11 +71,11 @@ Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
  Abel Vesa <abel.vesa@oss.qualcomm.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=904;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768822946; l=1057;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=5N5rNoYe4y7JRpJd4RAKLjE4Bj/v2wKotR8f0o6Q/7Q=;
- b=pngtZ9aDrnPOHhsPcrRs0MzNIwCbGIbfNp/KZ9gMQsX7CQIPHhjRfuhC9oUjWIyAwKlWccuOo
- sfoxvAlCWujCZ9jlcVDDIqHhSLe3MC+E4MkeDylBaTlN28wgPwU7tfs
+ bh=HJWVOsKuE3+yAD8luM6AKUlLWyMYMr8aaeSiz49gRFo=;
+ b=PtSRbu9CH36Epl9KUGeaqtQJqzpt8JWQbHOhWeqtTHrtAarwxTxg10NxQyrPwroyejZ7gvNCw
+ FOyQG7AOZkCCTRQRDUpsj6tvpU3DgJYxrqW+CmpxFqz4UHpANqT2kSc
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
@@ -87,22 +87,22 @@ Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi b/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-index a4075434162a..30f18c8cbcbc 100644
---- a/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-hp-omnibook-x14.dtsi
-@@ -1450,7 +1450,7 @@ bluetooth {
+diff --git a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
+index 22470a97e1e3..7f5860d2b6cc 100644
+--- a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
+@@ -128,7 +128,7 @@ bluetooth {
  		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
  		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
  		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
 -		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
 +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
- 	};
- };
- 
+ 		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+ 		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+ 		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
 
 -- 
 2.52.0
