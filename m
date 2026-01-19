@@ -1,150 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-89744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6764D3B729
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 20:22:57 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C017D3B767
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 20:38:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A51CF301A631
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 19:22:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5FB72301AE3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 19:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 257662773C6;
-	Mon, 19 Jan 2026 19:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 541412D978B;
+	Mon, 19 Jan 2026 19:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I7N09X08"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8P5r7kN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0240F21FF3B;
-	Mon, 19 Jan 2026 19:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8D81DF987;
+	Mon, 19 Jan 2026 19:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768850574; cv=none; b=BLqWJk/S7zEXD+WTFJO3Asx7W1zGb2Nt52/BHrW3n3B/e1bdLu1Qm9s+WX+6rWLIWWVpyDv+pTOzoRJDl0fg1PrtFdDavimoZt7gKPUGGSrlHw+qx/qEUHS2zSB9jA12gVrEbFfdU6ZfVeVP+3aBHaMGM2/OjG8gLGjI44cFU/s=
+	t=1768851488; cv=none; b=Iu1uelOt5LEGHHF+XZi7/icbzeRe4u9EOZ3g87LGJQAGQqudJX1/1B5ngAiuwCUvD77Q2pKgyvfBxkpnqSuFyNi8R9xUyoBRbe2aaOhmF2+0NfpM8KWV8tan/8X4chp1+2AZyeJiObs23XALBfhBrMKWj4PntDMK21HBXd9bC3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768850574; c=relaxed/simple;
-	bh=2LdEtzd4yY/cOLWnRNwnA2H0y8xNK5Tws6k5kwhhDHw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/RcsC1GtbNLOvO1sqYOhKtwuh0707TZm+wiqY9VdxNcDxnkblHmS1XbdRSuVFjr6xK0LEdrN9IwxrDBz556rAuIZGLlFQJFv6QTvWuJWbUPFst6eAKQRQ0Mk/vugGxZTVFZ+tkb+deU3+rNULyWBXTFzZXk48SNCU63UsYJYnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I7N09X08; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5C3C116C6;
-	Mon, 19 Jan 2026 19:22:52 +0000 (UTC)
+	s=arc-20240116; t=1768851488; c=relaxed/simple;
+	bh=FLrPm7zsFV+yX4Xhn4nI/GYSI+1XDBlel+KuBQu2hOU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DAOgPw3cDMKozaTfHJxLToMwmBBXtIl3jyZ6kgtCZrGNXFhanuJhp9MbFor8RBN2wJrCPGpRx99bF0PEEgR/ptZzXPmV58Va1ldoo1skxQ9QCPIIfOUN8n7TR0BlYL+Vs1pm6LRDEtGO5auQ40i2alxOz8jEjLB6iBmgR5nSx14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8P5r7kN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02FDC116C6;
+	Mon, 19 Jan 2026 19:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768850573;
-	bh=2LdEtzd4yY/cOLWnRNwnA2H0y8xNK5Tws6k5kwhhDHw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7N09X08cA5BT8y2j+GVNAp0K6LCAHFqyyYBiJdDWO/rzKGZlm1JfL6QYjE+TK9m0
-	 y60IDssQIheI3yyf+58W8t8wtwGr8N1xJmWq9HjoijJpJmm6uk2Fo+nAjYfgsJTeyI
-	 G1C7UTub7M3prpafX8BysuxFLyfE4tOpWGbyQiWRP47OWEsBKmnFCPPfIYPRmcuOUK
-	 XcL5zXHSAPMCVdW+WSmTP1kQAzCe1dyjqJlnp+Z0EH1bOxmCRj+H4nJn6Pk9MK4DPS
-	 S7ZaOxegEty1GYlo6RSKlcrJtOaOdMxE9u6tBPDI55j8JkUuldjCyaMmbSK6K/RqEq
-	 NEJb1Ik5WTe5Q==
-From: Jakub Kicinski <kuba@kernel.org>
-To: rmk+kernel@armlinux.org.uk
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	linux-phy@lists.infradead.org,
-	davem@davemloft.net,
-	maxime.chevallier@bootlin.com,
-	alexandre.torgue@foss.st.com,
-	mohd.anwar@oss.qualcomm.com,
-	neil.armstrong@linaro.org,
-	hkallweit1@gmail.com,
-	mcoquelin.stm32@gmail.com,
-	netdev@vger.kernel.org,
-	edumazet@google.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	vkoul@kernel.org,
-	andrew@lunn.ch,
-	pabeni@redhat.com,
-	andrew+netdev@lunn.ch,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [net-next,12/14] net: stmmac: add support for reading inband SGMII status
-Date: Mon, 19 Jan 2026 11:21:35 -0800
-Message-ID: <20260119192135.1245138-1-kuba@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <E1vhoSr-00000005H2N-2H2L@rmk-PC.armlinux.org.uk>
-References: <E1vhoSr-00000005H2N-2H2L@rmk-PC.armlinux.org.uk>
+	s=k20201202; t=1768851487;
+	bh=FLrPm7zsFV+yX4Xhn4nI/GYSI+1XDBlel+KuBQu2hOU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=g8P5r7kN+crbt5ArXjg1zaCWV4KjGM+iprRXXofeTZQho+BwScXENhVk2qCItFMWf
+	 4kHnIr4y4U4szATf31Av5ybZGpye2wUPaxSRVTqW+m5O3+Z6wEHgZxgevPaIFTeowA
+	 UlW5Hi/Z7VOy6222WYI0OH//qpzxAYMy4rwZwMhBz4Lhk7hQDLhB+G3doi/e7RDNoE
+	 EGtAnZdsP1LC5o3g0hrn4u1Ilmngz5NUD+ZAs1EF6158fMMjM4bfRAa2PSH28iVaXu
+	 OCWQNWaOFZUHKu3viLyPj2y3IYKQYliU6Mef27oWfXMtvDCOnaZFszsLNB/lzCzqMz
+	 wwU7WS5c3/5nA==
+Date: Mon, 19 Jan 2026 13:38:04 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 01/10] dt-bindings: net: bluetooth: qualcomm: Fix WCN6855
+ regulator names
+Message-ID: <5w7tocv5tciidh3ms6l267cw5rj5yvyvphmyjy3kp5xf36cavp@5g2vpi6vefzy>
+References: <20251205-topic-wcn6855_pmu_dtbdings-v1-0-165611f687c8@oss.qualcomm.com>
+ <20251205-topic-wcn6855_pmu_dtbdings-v1-1-165611f687c8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251205-topic-wcn6855_pmu_dtbdings-v1-1-165611f687c8@oss.qualcomm.com>
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
+On Fri, Dec 05, 2025 at 01:47:20PM +0100, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> Commit 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description
+> closer to reality for wcn6855") changed the vddrfa1p7-supply to 1p8
+> for whatever reason.
+> 
+> The schematics footprint for this chip definitely says 7 on the input
+> leg and the driver still expects 1p7. Bring it back.
+> 
+> Fixes: 5f4f954bba12 ("dt-bindings: bluetooth: bring the HW description closer to reality for wcn6855")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
----
-net: stmmac: add support for reading inband SGMII status
+@Luiz, this would conflict with the change in your tree, so I can't take
+it together with the dts changes. Can you please pick this binding
+patch, so that I then can pick up the related dts changes?
 
-This patch adds support for reading link status, speed, and duplex for
-SGMII links from the RGSMII status register. New fields are added to
-stmmac_pcs_info and stmmac_pcs structures for the register offset and mask.
+Regards,
+Bjorn
 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-> index 73fc56ce5e55..9dd7e78cfbc4 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-
-[ ... ]
-
-> @@ -111,7 +121,37 @@ static void dwmac_integrated_pcs_get_state(struct phylink_pcs *pcs,
->
->  		phylink_mii_c22_pcs_decode_state(state, neg_mode, status, lpa);
->  	} else {
-> -		state->link = false;
-> +		rgsmii = field_get(spcs->rgsmii_status_mask,
-> +				   readl(spcs->rgsmii));
-                                   ^^^^
-
-When dwmac1000_pcs_init() or dwmac4_pcs_init() is used, the pcs_info
-structures do not initialize the new rgsmii_offset and rgsmii_status_mask
-fields. For example, dwmac4_pcs_info in dwmac4_core.c only sets:
-
-    static const struct stmmac_pcs_info dwmac4_pcs_info = {
-        .pcs_offset = GMAC_PCS_BASE,
-        .int_mask = GMAC_INT_PCS_LINK | GMAC_INT_PCS_ANE,
-    };
-
-This leaves rgsmii_status_mask implicitly zero. Calling field_get() with a
-mask of zero violates its API contract (mask must be non-zero) and results
-in undefined behavior from __ffs(0).
-
-Should the existing dwmac1000_pcs_info and dwmac4_pcs_info structures be
-updated to provide proper values for the new fields? Or should there be a
-guard check before calling field_get() when rgsmii_status_mask is zero?
-
-> +
-> +		state->link = status & BMSR_LSTATUS &&
-> +			      rgsmii & GMAC_RGSMIII_LNKSTS;
-
-[ ... ]
-
-> @@ -205,6 +245,8 @@ int stmmac_integrated_pcs_init(struct stmmac_priv *priv,
->
->  	spcs->priv = priv;
->  	spcs->base = priv->ioaddr + pcs_info->pcs_offset;
-> +	spcs->rgsmii = priv->ioaddr + pcs_info->rgsmii_offset;
-> +	spcs->rgsmii_status_mask = pcs_info->rgsmii_status_mask;
-
-The values are copied from pcs_info here, but dwmac1000_pcs_info and
-dwmac4_pcs_info do not initialize these fields.
-
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> index a7c71f40f952..f9e7a7ed840b 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> @@ -29,12 +29,16 @@ struct stmmac_priv;
->
->  struct stmmac_pcs_info {
->  	unsigned int pcs_offset;
-> +	unsigned int rgsmii_offset;
-> +	u32 rgsmii_status_mask;
->  	u32 int_mask;
->  };
-
-These new fields need to be initialized by all users of stmmac_pcs_info.
+> ---
+>  .../devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml         | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
+> index 45630067d3c8..0beda26ae8bb 100644
+> --- a/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,wcn6855-bt.yaml
+> @@ -50,9 +50,6 @@ properties:
+>      description: VDD_RFA_1P7 supply regulator handle
+>      deprecated: true
+>  
+> -  vddrfa1p8-supply:
+> -    description: VDD_RFA_1P8 supply regulator handle
+> -
+>    vddrfacmn-supply:
+>      description: VDD_RFA_CMN supply regulator handle
+>  
+> @@ -68,7 +65,7 @@ required:
+>    - vddbtcmx-supply
+>    - vddrfa0p8-supply
+>    - vddrfa1p2-supply
+> -  - vddrfa1p8-supply
+> +  - vddrfa1p7-supply
+>    - vddrfacmn-supply
+>    - vddwlcx-supply
+>    - vddwlmx-supply
+> @@ -91,7 +88,7 @@ examples:
+>              vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
+>              vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+>              vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> -            vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
+> +            vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+>              vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+>              vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+>              vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
+> 
+> -- 
+> 2.52.0
+> 
 
