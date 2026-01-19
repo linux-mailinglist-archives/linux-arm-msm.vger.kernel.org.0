@@ -1,209 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-89623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B60D5D3A6CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:28:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E373D3A6DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 12:30:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 827F830026A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:24:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3B9103091B22
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 11:27:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A47473112B7;
-	Mon, 19 Jan 2026 11:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9944631065B;
+	Mon, 19 Jan 2026 11:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lP4RYpxk";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Kk/vxgne"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MM31kRt3";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DrA4vU0g"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE52130FC34
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7430FC2C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768821878; cv=none; b=KxWcr7IWosObcfXbOzEP2rCnD6/7LFf51A4C/p+QqEWjFsC7uedS5WgV25M2s/bUGC4kI5zJ1F6/v+XEPMsB/L3Ula/tqwQ3YmGOcm2OxVCEsZRM4apQoC4zZ/oDCl0ieVznxFUMI8K73dZSW1M8LTaY2wRZJZ5Cm8VXB4CxbYg=
+	t=1768822066; cv=none; b=rlTdduvtBMQZRGWh4rbp1j19b0xtCNHSMaLYxlq+FuHlduXH09u3S03zdpyy1aR0vM3WInTcP/uQAst1/wEgYD3yK/+Ogq6vtfjEp4IeQULfpJmUTjc3TO/ea3d5NCeLz3kfZorBmm525kSn0eZ13vbOsq3GQY7fi31JLHwUY7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768821878; c=relaxed/simple;
-	bh=AFl8FfeWyQuM11ZNIUeJzzcHcsoUvkod/1Gt2osLgvk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rIFOQEV17f13rf95AwR7HvAMabO/eMuxux+eSv8D+rsBkyBjPtxk+kpfRJ26iHwByv5S+b6AToO3D+GkBP2DI0Uk/LA+lvOFi6cROz3WusrmpqqEAV4wDOuVwthlXPAwW4wGX2mm8Q4qoqhe79QN+Dvk74TP5v5et+DTipbv7iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lP4RYpxk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Kk/vxgne; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1768822066; c=relaxed/simple;
+	bh=/fRgpPDFrFjyPylu72jbzbQOGgll0O3VhJWFU/lUqJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b8eQgZFoNcxNwecZ9odB/7FL2KzHhT3AQQqGFWGl0KV2Ou+bd6PvlFJYYAsZ8PE1dK+Z5kCgtLOXposABxK/D5sushA8qVeTviEs6jI3yLKbgfnG+QC8a2v3c5durZ8mxwxyYdxI/uwwSj/ZfOn5OHpUL/a7KpXC2JLznYlMBZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MM31kRt3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DrA4vU0g; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60J91F3M748347
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:24:34 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60J90gMH227781
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:27:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TUNGnYuQvZC7DS92zYQiiN2dGMEBlKTwjdJdDY2hLoQ=; b=lP4RYpxktNZWtH0q
-	cczG7KgpgT8mhMgot0FCfT/iPmEgjUJ8hI2Na734lgGTU16RJ42ob1StxS2t5JwI
-	z5GjAZDFI31SC+APbxWAjKVWJ++/4tsROZ1Rdz+mJfTn2OBg3D/tOmBKNFAe5cqe
-	GylGiQw3AYCDStqghOIBxXD/j3kxoDl3tbDQhl8b9nbKYbc8rJjKqtOiDHo/XwXA
-	b0TGaefzFeBiUew/1zuFeSW4Q14XZsvIgqprTePPqTL+wWPnhOq9D7cKqpCLRzvS
-	L6bD6KLXH7pDQRZYJ1s7FduXAHlQ/cKZTu+oS3N4VDKep4jMvpqbeberhWnoWCIc
-	o1GfZg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4br2t74umm-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=YuV0fhRi68aQUo3arYwp0jdp
+	xbF2bng4GId0KIEDBMo=; b=MM31kRt3LRCi0X7MXfkvoUzuW5Liia/0wuqyKjRd
+	DtQtHzrFoi/UEj7kkpM7mAzCrJusM/zWH1Tj0dWBfytE20pUGuEBZwaTeXswbi4c
+	2FcrQc/SLI8t2c1CYZvQqrO2lw3zXD5azw0zvZAGH/GRauFlrpSuGtGV3ipQ7v3L
+	DPr2iIrYqVgbaeDFZc1TvBF/K/+ddPQhW3sWEdcZBSIzCFnf1DDG0OhOje4uWUAi
+	2simUt6wBA10a/EiOSZ/5SdO83wsoM89a/jMojHGfpcClZsZdHGP65Lyk+MRaGzZ
+	+LFcMPRhY9nixmu7gUGK0ePgx0j/7W6G2ODlmj71XgjtYw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bsgfr8rkr-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:24:34 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c52f07fbd0so234867085a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 03:24:34 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 11:27:44 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c538971a16so936906285a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 03:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768821870; x=1769426670; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TUNGnYuQvZC7DS92zYQiiN2dGMEBlKTwjdJdDY2hLoQ=;
-        b=Kk/vxgnegl+i6hQqywuV8jrcm6Jsfgw8Jx0hjNHIde2HW7MKzN5PGQqbNKAocCnivJ
-         j6rbMofkxXu76pFMIiDy0KZQ7lcJUVHq030nsmqvtCWAq07Qynr96bVYFLok78wRHoPr
-         +bmI9mrVayGkfFdRZ1k3BWVZcLQmrBUVz7TkgptsnBlvWUmDttdHn5iHUg4fUcRgfBU8
-         kBNhagPSoyqZBXveKZl3GPGDn5O6fxEhItPMRu9E5W+waQWNAeljhvAgmlLaeeuJ5AtM
-         FCJjvpVT6KimyedIaNidJep8xor4T1mq4GE14mz8wWXB5hdEGOSm0vK7fii8un7KlfKJ
-         b3sA==
+        d=oss.qualcomm.com; s=google; t=1768822063; x=1769426863; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YuV0fhRi68aQUo3arYwp0jdpxbF2bng4GId0KIEDBMo=;
+        b=DrA4vU0gCShV0o77OeWIOjmdBfqUCNUVyJ+waoTUOcSXg+U/bfQ/9krQIx7oBNCBH6
+         RRNfceh5oun6pUVArZmy9RieZWvpdfwjwfWusVH3m3TJaaBgWWT6QC/7BiQGjyBjwwKW
+         +tJZig6BBBOfqLklvaIMtO+vB7kXbfj4V/d5EptdSJi2/zl18cswBntsoWf26FXW25uq
+         01RhTGWwxffUulzkGoyrQ+ilQ7UdDzm9KgbxqFBdGPCk4gXhm03ZFCVYq3bvTp66/PC7
+         6jcZA03BXmVQngvy/KydnuNIqjHJNWpcoEhiOFdsyb4tPOn+u9IaGIWE738ssZ9GVYvx
+         s6Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768821870; x=1769426670;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=TUNGnYuQvZC7DS92zYQiiN2dGMEBlKTwjdJdDY2hLoQ=;
-        b=bYRuEb6wxAkwz/Nn8CWEnA+HgpVceICg6TjsEEEeAqcmWsABYvunBZ1HY2uP0Uy/fO
-         tdEjDMZyCiKuyiYCoTChbwG6GV7ctneoxLkIA9pZBTtRqWIPknSxCe13IdUMVy15qs5z
-         pbdCvIezR2QmURMf03nHHH2QwMva/1SxsdQaFEVWIhY+7F5MyyB8lG+NtPTYGrGm3m5C
-         Cbru4g35ny0gih+3l/TZgiuaC/4ylR1Q/pjGsQMplEWWULDcooUPkFjPmU9c43yaUM3b
-         UPYktKUiavyfHmRIi21mXeDUlLM+YhAUW6u0862VMwhfLxnouc6TOlpBKroBGLZ3tFRB
-         RdrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXmY0n224oMhiuGrztT7qY0vOQ0PMXou6ltLTOEfTc++yvtPyfz4k16cCUZPJROc7xx4aHsVtzxrcBiSjic@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIvCRbyh89023MRfv6ZmrpfjZOz0tN7DTESVJ8KqF3q6djN/ul
-	JsIyNjK0afXbMg+kqZiZ7dLOy1WZXka0JfYRVhKOLiph0+EwCeb+8eDxn2Hgbb6wsHMHSQ0LXvF
-	lq7LQfXQYPrRZ2oZfxZl6dOXXxwCn/454m7oujzIMohP6wxEicjvRP7yZdVYevkYVyWHD
-X-Gm-Gg: AY/fxX6Z3dyfZrTAA5XiVbdOEn6DWal5P2r4jeloM6TwuTsWGAMOauDlRcP9EBfTBjB
-	pPKI2g4rkRvKusGo5GXMVtCeU8NnczQd5fqY62SrdcE9ds2THJjwd5k6Xax2FxQYWiAj6I8o3AK
-	64K1qjpFXQJz0mDAAKolbzBtw6+qO5zw4vjIwItGHIf6Dj3sq2UbAnVe5+WXWk7Kv3Nqe4FGHKA
-	95/n1Bc1DrQF+Hv1vECCN8B3UsBm2RKcXZ0QTSltjjNhnk9neidp/uOTuMcr33IjTEmbqAVShtR
-	Gzm79BJ16xCMGnQmFpJW8rSvg4DFTvdUnsRfppXu3aJSNyRDkMhzntKciBQkZrBr2C8qVF3bcLI
-	F5dAOo+PGa4uyR2ZOW4w9XbdA8gGp8CmjlmZ1folJQWLjMfQpdWO2smolJ4F0HWkuvrz7neyGGK
-	7U4E3tFbGBIYJta7hWy3G6/PI=
-X-Received: by 2002:a05:620a:40d3:b0:8c3:528b:1b10 with SMTP id af79cd13be357-8c6a696323bmr1545283385a.90.1768821870342;
-        Mon, 19 Jan 2026 03:24:30 -0800 (PST)
-X-Received: by 2002:a05:620a:40d3:b0:8c3:528b:1b10 with SMTP id af79cd13be357-8c6a696323bmr1545277285a.90.1768821869747;
-        Mon, 19 Jan 2026 03:24:29 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768822063; x=1769426863;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YuV0fhRi68aQUo3arYwp0jdpxbF2bng4GId0KIEDBMo=;
+        b=utCt63Xwh/Ud+AxfbXrCbYTzKgMSw/YbRzWVlJ2WmR2hXOR7tk9MMsqm/M4gD62tiL
+         Pibe6jn86AEdUMWRezhuKmi7TRLMhc7zVYkp1gkgg8WskHX33ifGsCI79GVf3fuyEeAK
+         TOdR9eJ+wFmC5BRHs6JzxMruiAvG8YQCL3nEZuCXmg2OElI++GmsM8JHWsv6ttdh/yXE
+         5DBGFztnsIbjXyuDdb50der5zoBrAFivMWlbfPU5PR9hruc273HqMjN3z1jE4TdknfJG
+         wB2yOUitj6vXXbz1J6Y8ep8CdXelTmbbAfjknMS77skydBEVUzGl9ERpRylAsCC33oTl
+         wYBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBu9oMDuZdU/skDIuvSgip+UDB0kPTO1SIVUru7M3H6mk6B/HcD4mFvh96NQSeFNcNI7vI0GzbjRppV9W3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmEMi72+pPJ6jCypN9GRMAe/B3Ks/67tjRe4kavmLWYlBkfyH4
+	QyqUqfRwzXXIQPIbsbkKVqFww5p0c/K++nAAQg638doKSARLNBRuO0QSuej1dxgZuyVirAeiYWW
+	0nR09vyxFrlhu9vdcmwWhc9H+W9we15jD3/ErmAOMY4KPtF3Fz+OB3JjvYQewqtx/gonI
+X-Gm-Gg: AY/fxX7TbcyJgG11PFeknVayKx6CnFgQV1VkUwO9+ObAs2QVyoPi6zrPDGJY4uqdLub
+	Y8GjOvwpLwHoNKeRxFgXNVTGBlIS3Vd5XO1d79HdBBYokmoDToCakWhE6NmGXW22wFjOU9ZEiXW
+	zRSj3SAcOIawRnFXqhbWGcWxBWpMVnCQBv1HtQOmW0Fmfdlsxybzf4yw0pcwxxfSIAThe4luBTi
+	zQGIVaFAKUq7LCTGoU42UsuWndH1aNvRTNeTB+TRyi4MCDeiJjlcZvlJdLM4yyTpXnjPus/py9N
+	opiVqQaExNPXX4gUTrmAm9Wq8+ZLg/6ra+BzK/olV3QYrcVsTjtinrz7N/x5ZaWkHqc3kb/aEGV
+	VXyT1ZMHOQwGSZpNaXTOr6J39L8T+cibt9LFXVmAVq3msnpUcSxuR7WMB5FOh8hyNL34MGP6Xav
+	5Sy+TM3HnjPyYUSLDJ1R/huds=
+X-Received: by 2002:a05:620a:4492:b0:8b2:76c6:a7ae with SMTP id af79cd13be357-8c6a67703f7mr1563568685a.50.1768822063442;
+        Mon, 19 Jan 2026 03:27:43 -0800 (PST)
+X-Received: by 2002:a05:620a:4492:b0:8b2:76c6:a7ae with SMTP id af79cd13be357-8c6a67703f7mr1563564785a.50.1768822062959;
+        Mon, 19 Jan 2026 03:27:42 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38384fb9ab8sm32747931fa.48.2026.01.19.03.24.28
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf33ed36sm3270117e87.18.2026.01.19.03.27.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 03:24:29 -0800 (PST)
+        Mon, 19 Jan 2026 03:27:42 -0800 (PST)
+Date: Mon, 19 Jan 2026 13:27:40 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        =?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-        Chen-Yu Tsai <wens@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>, Liu Ying <victor.liu@nxp.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
         Dmitry Baryshkov <lumag@kernel.org>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
         Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
-        Sandy Huang <hjc@rock-chips.com>,
-        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v4 00/10] drm/connector: hdmi: limit infoframes per driver capabilities, second approach
-Date: Mon, 19 Jan 2026 13:24:27 +0200
-Message-ID: <176882185857.86521.18172781461760523152.b4-ty@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260107-limit-infoframes-2-v4-0-213d0d3bd490@oss.qualcomm.com>
-References: <20260107-limit-infoframes-2-v4-0-213d0d3bd490@oss.qualcomm.com>
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Val Packett <val@packett.cool>
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix SSPP_UBWC_STATIC_CTRL
+ programming on UBWC 5.x+
+Message-ID: <fnlkcpf4dfgcy4cshl6g3ibjoon7pvdxyvmejokqygfyc2b2v3@og2xzf6fzuhj>
+References: <20260119-msm-ubwc-fixes-v3-0-34aaa672c829@oss.qualcomm.com>
+ <20260119-msm-ubwc-fixes-v3-4-34aaa672c829@oss.qualcomm.com>
+ <4cc944b3-8a41-45a2-95c8-c55dbcbf0830@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Fdc6BZ+6 c=1 sm=1 tr=0 ts=696e1472 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4cc944b3-8a41-45a2-95c8-c55dbcbf0830@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: zrfp-xk4nyiXVfzOhmYRDaYYsnxPnTpi
+X-Proofpoint-GUID: zrfp-xk4nyiXVfzOhmYRDaYYsnxPnTpi
+X-Authority-Analysis: v=2.4 cv=c4OmgB9l c=1 sm=1 tr=0 ts=696e1530 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=dLs8YEEMlrLrhmPZdm0A:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: o9ge2n3bUVn4eoXE33NwdO5w3ttkukss
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA5NCBTYWx0ZWRfX4wZm6zZLypWo
- CkrqYeYm9e1XzOsYG3zV/BwdXxZ+S603SY41qB+GzsnKJX+aUy2JkD27qPpHR/5p1KAYzp3jpFO
- w0M0/MzmvZ4i2RrVNur+Q+O1qPVUHAsgNGHQ9LJ5W7lASscEM34BNpbf3EnTL7ZyZmytANQAGh5
- fsaZVAyg2kEQJiJuNgfFTDU8XDktc/0rqI6/Yl3HCmZv0/1M2rN3nTCYQkRYDyJbLpVBnkxbl6H
- mJQ2kOF50hBFKECUYyCKwK5PGdA4hc7w42Ub65abBTiFCuR2YLA2VxWFIZquQ/87TO18HIy+hap
- cr9FH9jIZCylx1+DaqcvrHUN8+l6VX9PtX/M4irvnBSAdF41Bf0v+ZS7bXBoyX8ProfjnzXpzKz
- sCTSDYFtL/axf0NK4U6M475S7umNeyWiHiHHcr8S+0xYj+dbBH5H4a627AQyrJsCo3n0C87he7O
- zBFYE/0rVjfhOGnMReQ==
-X-Proofpoint-GUID: o9ge2n3bUVn4eoXE33NwdO5w3ttkukss
+ a=EUspDBNiAAAA:8 a=_JD9MDjJDg31YIc5yKYA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA5NCBTYWx0ZWRfX+lBaXQw/B/BI
+ s5yLn7jEXs5fXuo46RtQcJwfO3VzSDclyr8iktyGqIojweB0i6qHzzSmOj4fcUOM+BeWEp8reA1
+ 1hIpBXPEmm9TxZyYdSgwZnMtNoy2AFdndGEpLr76AlJ5D6qzglKTLQkMMiogD7HzeMClx9Mbruq
+ zXMljbhCoQqOmbVlrheWaZYnrzb+Cpn2R2d0EwvPP1vbcO+sQfdvMrR9Zzw+CrvhrpgalEunBBF
+ yKAwqhzldW8uHmyuwjkvabA0rOdfcMBnEJnX3QYwCV2IL2JOvJlTIj5JLlNl7Dp14BVaH1k3fPO
+ gDWw7nr1sk6hO1uzY3CAo3s+ipZNKUmSJZd5iuML5WTQgoTUQnIglYvZiIeBEeQJG2YRNniF6UC
+ RFaj2s4me3INmQpQde5Qpx9cUBweR7h7Eu/f3YJH0Fc1281yiUyXm/cs3Wr0YAIqkuk9klmoslS
+ kQQX28Fm59soRyHEdDA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-19_02,2026-01-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601190094
 
-On Wed, 07 Jan 2026 20:14:57 +0200, Dmitry Baryshkov wrote:
-> It's not uncommon for the particular device to support only a subset of
-> HDMI InfoFrames. Currently it's mostly ignored by the framework: it
-> calls write_infoframe() / clear_infoframe() callbacks for all frames and
-> expects them to return success even if the InfoFrame is not supported.
+On Mon, Jan 19, 2026 at 12:08:07PM +0100, Konrad Dybcio wrote:
+> On 1/19/26 9:17 AM, Dmitry Baryshkov wrote:
+> > Code in dpu_hw_sspp_setup_format() doesn't handle UBWC versions bigger
+> > than 4.0. Replace switch-case with if-else checks, making sure that the
+> > register is initialized on UBWC 5.x (and later) hosts.
+> > 
+> > Fixes: c2577fc1740d ("drm/msm/dpu: Add support for SM8750")
+> > Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 44 +++++++++++++++--------------
+> >  1 file changed, 23 insertions(+), 21 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> > index a99e33230514..80a9fb76b139 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> > @@ -279,6 +279,7 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
+> >  
+> >  	if (fmt->fetch_mode != MDP_FETCH_LINEAR) {
+> >  		u32 hbb = ctx->ubwc->highest_bank_bit - 13;
+> > +		u32 ctrl_val;
+> >  
+> >  		if (MSM_FORMAT_IS_UBWC(fmt))
+> >  			opmode |= MDSS_MDP_OP_BWC_EN;
+> > @@ -286,30 +287,31 @@ static void dpu_hw_sspp_setup_format(struct dpu_sw_pipe *pipe,
+> >  		DPU_REG_WRITE(c, SSPP_FETCH_CONFIG,
+> >  			DPU_FETCH_CONFIG_RESET_VALUE |
+> >  			hbb << 18);
+> > -		switch (ctx->ubwc->ubwc_enc_version) {
+> > -		case UBWC_1_0:
+> > +
+> > +		if (ctx->ubwc->ubwc_enc_version == UBWC_1_0) {
+> >  			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
+> > -			DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> > -					fast_clear | (ctx->ubwc->ubwc_swizzle & 0x1) |
+> > -					BIT(8) |
+> > -					(hbb << 4));
+> > -			break;
+> > -		case UBWC_2_0:
+> > +			ctrl_val = fast_clear | (ctx->ubwc->ubwc_swizzle & 0x1) |
+> > +				BIT(8) | (hbb << 4);
+> > +		} else if (ctx->ubwc->ubwc_enc_version == UBWC_2_0) {
+> >  			fast_clear = fmt->alpha_enable ? BIT(31) : 0;
+> > -			DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> > -					fast_clear | (ctx->ubwc->ubwc_swizzle) |
+> > -					(hbb << 4));
+> > -			break;
+> > -		case UBWC_3_0:
+> > -			DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> > -					BIT(30) | (ctx->ubwc->ubwc_swizzle) |
+> > -					(hbb << 4));
+> > -			break;
+> > -		case UBWC_4_0:
+> > -			DPU_REG_WRITE(c, ubwc_static_ctrl_off,
+> > -					MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(30));
+> > -			break;
+> > +			ctrl_val = fast_clear | ctx->ubwc->ubwc_swizzle | (hbb << 4);
+> > +		} else if (ctx->ubwc->ubwc_enc_version == UBWC_3_0) {
+> > +			ctrl_val = BIT(30) | (ctx->ubwc->ubwc_swizzle) | (hbb << 4);
+> > +		} else if (ctx->ubwc->ubwc_enc_version == UBWC_4_0) {
+> > +			ctrl_val = MSM_FORMAT_IS_YUV(fmt) ? 0 : BIT(30);
+> > +		} else if (ctx->ubwc->ubwc_enc_version <= UBWC_6_0) {
+> > +			if (MSM_FORMAT_IS_YUV(fmt))
+> > +				ctrl_val = 0;
+> > +			else if (MSM_FORMAT_IS_DX(fmt)) /* or FP16, but it's unsupported */
+> > +				ctrl_val = BIT(30);
+> > +			else
+> > +				ctrl_val = BIT(30) | BIT(31);
 > 
-> Sort that out, making sure that all interfaces are consistent:
-> - split function interfaces, having a pair of callbacks per each
->   InfoFrame type.
-> - write_infoframe() / clear_infoframe() functions return -EOPNOTSUPP
->   for unsupported InfoFrames.
-> - don't create and enable unsupported InfoFrames.
-> - limit debugfs to provide supported InfoFrames only.
+> Can we name these magic bits?
+
+I will raise the question internally. In general, I'd like to start
+shifting towards generated reg descriptions, but it will take some time
+to implement.
+
 > 
-> [...]
+> There's 2 more bitfields that I see downstream sets here (but it
+> doesn't claim to support UBWC6).. 
 
-Applied to drm-misc-next, thanks!
+For the formats which we don't support upstream. I'll add a comment
+here (and I probably should send another iteration anyway, fixing the
+error register too).
 
-[01/10] drm/tests: hdmi: check the infoframes behaviour
-        commit: 7436a87db99d57196c49d10de35f41531993d5f1
-[02/10] drm/vc4: hdmi: implement clear_infoframe
-        commit: 3a4ceb89a9723088615ea1c960fc589f87caddb7
-[03/10] drm/sun4i: hdmi_enc: implement clear_infoframe stub
-        commit: 638409979c5f7d3155afcded67532003e07a7d0e
-[04/10] drm/connector: make clear_infoframe callback mandatory for HDMI connectors
-        commit: afc399f7a5ea7bf405b2ef85c7470529b1a9e47c
-[05/10] drm/bridge: refactor HDMI InfoFrame callbacks
-        commit: b626b1a1c9ccadd8861870a2a450f02e0c61ab88
-[06/10] drm/display: hdmi_state_helper: split InfoFrame functions per type
-        commit: e802c783be94bf71541a7e2ac8b1b5486aad10db
-[07/10] drm/display: hdmi_state_helper: reject Audio IF updates if it's not supported
-        commit: 1d8847f457648ed4932019dcd3081bc27bcea936
-[08/10] drm/display: hdmi_state_helper: don't generate unsupported InfoFrames
-        commit: 4fc30c2c5c61db88e3d6644bd3dd2032ec4bee06
-[09/10] drm/display: bridge_connector: dynamically generate HDMI callbacks
-        commit: ae219fdc952c315182b471f5aa71b379584b70ca
-[10/10] drm/debug: don't register files for unsupported HDMI InfoFrames
-        commit: 5a4e4e30f6dc4d2a68eec08257128906572f3346
-
-Best regards,
 -- 
 With best wishes
 Dmitry
-
 
