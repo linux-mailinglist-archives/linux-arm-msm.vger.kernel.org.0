@@ -1,165 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-89749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07B12D3B839
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 21:25:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EACDD3BD58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 02:58:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0EB80302036A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jan 2026 20:25:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 473BF303E035
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 01:57:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FA082EBB99;
-	Mon, 19 Jan 2026 20:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7D532441B8;
+	Tue, 20 Jan 2026 01:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeU6eD9I"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ewrE0n4i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C52D258EFF;
-	Mon, 19 Jan 2026 20:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B5619D071;
+	Tue, 20 Jan 2026 01:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768854341; cv=none; b=VVsmimpbWyaKqvg5y6HKrciNHWVbCzu0RTyX4MTD/NKgYpAw5xPu0QrbCx5xZwiOa/p5jkSlCRX/Kxh1EhcdiQ6cjP1Nsx8wDut+xhExbrD3d2WJxl7lJkEp0V+5VyNsi5waCd70K4lv3nNUz+obwdfJaL+v8AN3x6HTCelqwGk=
+	t=1768874269; cv=none; b=ufre8PnmNQ8Zo+6HkHAbyuBUt0OHXEBLL2foWYuAGXTaxzXCLQv6dCGjybqz+AGBPIBvw7L1NHKIY+uOJkbJsXMqbtt823iIPckAja0mmYurJszfSBDPFJqoQi1v8PwjwRnjWZC9ERBW0lEsBfDEJwj8UqswuGnMQ6fRpK8syZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768854341; c=relaxed/simple;
-	bh=8d3W0K4c8D26haPLNtGJkI7Gi+VMOP9nhNsuB6f8Ybs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wu6s7W9IITDJwDhN3hZY7DN66CIgCZj6Z0/1uVSP1hBxGJzDFE9am3t6VHakWF/peikl1uFFpmB473TEDXr00Gj++zUhRRsVwByOF01URpbseejAyN4w6OM/vCSYEjiYZFD8oSXkXgwyMUA+Qx+O2lj4bHQNSvZl8jHYiFQML6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeU6eD9I; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17376C116C6;
-	Mon, 19 Jan 2026 20:25:40 +0000 (UTC)
+	s=arc-20240116; t=1768874269; c=relaxed/simple;
+	bh=NXn23f/rzxC3vQjUhfEShCoK+q3JfWeY+OcZLLkAT/o=;
+	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=KjCBGLMX2NEFIWI8BmZVeTosEFbogLpfQBnN2OLfXnEOi59O8VSuqgYyuLt8doErcNuj5x2aNFfp1el0w3gx+MmGFnyrLVIA7K3PbUGIrPGgAXDjAlO3JIPHnuYzMcAGRtzIhH8+6PezqqrZcP82nSq9AjC8WLEG+iUn9dNLglc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ewrE0n4i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF28C116C6;
+	Tue, 20 Jan 2026 01:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768854340;
-	bh=8d3W0K4c8D26haPLNtGJkI7Gi+VMOP9nhNsuB6f8Ybs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WeU6eD9Io4nLlYEbk5smaUpvQaQd2qHv0p10DtuEmfGpwBznIAqfnh59UR0X/hvKU
-	 iJXW8HPPF7RT/DqECRw2MYujG5qAufNIUczrpd4oR+pLj39kxFQ0pKDciGSRR3ycYl
-	 ft5bRGDPO6wCCsNXoK9+8Dn7+1Bces/pKT12OpYeuNjCUPy6qAQhehoJpeFun5uSre
-	 6TYlpzQuuS0e/e5cyeikQozZUNTcxm6MPDDHHVFr6xCjI9T+SwpG+0z9oJsNH7eYuQ
-	 PytEpmDHMn3/gASmL0gOy7acPBJevU3cieHq9dD2TZt2njOPtuslboKAHEJe+IFE4C
-	 pv8ISjWpvuYJA==
-Date: Mon, 19 Jan 2026 14:25:38 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Sudeep Holla <sudeep.holla@arm.com>, 
-	Trilok Soni <trilokkumar.soni@oss.qualcomm.com>, Satya Durga Srinivasu Prabhala <satya.prabhala@oss.qualcomm.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, trilok.soni@oss.qualcomm.com
-Subject: Re: [PATCH] firmware: smccc: default ARM_SMCCC_SOC_ID to disabled
-Message-ID: <ta63kpklakanlc6dnmsqgr7u2o3ghdnt7uyyu3obbjask2voyv@eu6rhwhqzeyv>
-References: <92d90a1e-e993-4044-b152-83a8700f7b63@oss.qualcomm.com>
- <cb7326b9-91d9-44a3-b9f0-9d2e6ab5fa42@oss.qualcomm.com>
- <aWzuuwQi_nsHoj_5@bogus>
- <mzs5vq2jsrmb6kdriuxawbamyim6dhgy34ne6tucnhlalt5y3w@ghckxur3cn6m>
- <aW5Fdjag_w7i0zWN@bogus>
- <vvvq5rnbzs7ngtahqrar4iqinizthyrv3ipqnjp6ln34di365j@bbwdyda6gw3u>
- <aW5iQABCRukZXpZH@bogus>
- <3ldzdsyspd3s6on3cwyanjeheegoeba6kn6qaybojtqeca7335@cyemyxk6kck4>
- <i4zd3jesjrbljym7xuhwo5v7gwbsbuesuarnxr462eeuosevij@64hcfdzht6w3>
- <2fmnaxj2ma2bb5iuuu4yzmenp3tsxjko6rziwuaaqr6rqvegbw@s4x6eiwhlkcm>
+	s=k20201202; t=1768874269;
+	bh=NXn23f/rzxC3vQjUhfEShCoK+q3JfWeY+OcZLLkAT/o=;
+	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
+	b=ewrE0n4iNCn5vsnIIGv1IiOwR/h+wxPXYnyD3isWEPoLJ/MF1CiQ5E4M2aBbLacFN
+	 Bpjy/ARvBD9LIbkmLNf7sKPXGoVaJvMIOJ9tRTjGK4U6AEf9/CA5VdZweE5uZKrMld
+	 +KsUP0KDldvW+PW6bhGJMwJ7YrFoaa5PVaDQWqPGFSkevpWNKRyUWFeYDmsgJDXuB6
+	 1fSZSmRceUF4dIV7EqKIHk1yW92DF8q7v3oqr3CHt1IAyQZJUGGIZh4PpooFNSu1yf
+	 VyWIIqySN3zMiKhreskOMYOLnV83bpVkhJwbjQe/Gcio2NJOELam1CwK9c3VqyOdlD
+	 7/J0upW0a05XA==
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 19 Jan 2026 19:57:48 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2fmnaxj2ma2bb5iuuu4yzmenp3tsxjko6rziwuaaqr6rqvegbw@s4x6eiwhlkcm>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-input@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ devicetree@vger.kernel.org, 
+ =?utf-8?q?Kamil_Go=C5=82da?= <kamil.golda@protonmail.com>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>
+To: Yedaya Katsman <yedaya.ka@gmail.com>
+In-Reply-To: <20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com>
+References: <20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com>
+Message-Id: <176887409321.799867.15185739103671631449.robh@kernel.org>
+Subject: Re: [PATCH v3 0/3] Support FT3518 touchscreen in xiaomi-laurel
 
-On Mon, Jan 19, 2026 at 09:46:08PM +0200, Dmitry Baryshkov wrote:
-> On Mon, Jan 19, 2026 at 11:25:31AM -0600, Bjorn Andersson wrote:
-> > On Mon, Jan 19, 2026 at 07:20:09PM +0200, Dmitry Baryshkov wrote:
-> > > On Mon, Jan 19, 2026 at 04:56:32PM +0000, Sudeep Holla wrote:
-> > > > On Mon, Jan 19, 2026 at 06:44:23PM +0200, Dmitry Baryshkov wrote:
-> > > > > On Mon, Jan 19, 2026 at 02:53:42PM +0000, Sudeep Holla wrote:
-> > > > > > On Sun, Jan 18, 2026 at 03:16:50PM -0600, Bjorn Andersson wrote:
-> > > > > > > On Sun, Jan 18, 2026 at 02:31:23PM +0000, Sudeep Holla wrote:
-> > > > > > > 
-> > > > > > > To me, when you decided to add a second caller to soc_device_register()
-> > > > > > > you created a regression in the userspace interface. If nothing else
-> > > > > > > it's a leaky abstraction.
-> > > > > > > 
-> > > > > > 
-> > > > > > In that case, shouldn't soc_device_register() made to give error when an
-> > > > > > attempt to call it more that one time then ? Also should be change the
-> > > > > > ABI documents to refer it as soc0 and not socX ?
-> > > > > 
-> > > > > Then the whole SoC bus is an overkill. But I have a strange question
-> > > > > here. Consider the device having the "BT / WiFi SoC" next to the main
-> > > > > SoC. Is that SoC a legit target to export informaiton through sysfs /
-> > > > > soc bus?
-> > > > > 
-> > > > 
-> > > > Just for clarity, I agree with you and there could be duplication of
-> > > > information if there are multiple source for that information. E.g.,
-> > > > the setup in this discussion where the EL3 firmware provides SOC_ID
-> > > > information via SMCCC SOC_ID and DT providing vendor specific information
-> > > > about the platform. Both are getting exported via sysfs but the problem
-> > > > here is SOC_ID has displaced vendor specific DT info from soc0 to soc1.
-> > > 
-> > > I understand the context and I understand that we ended up having two
-> > > soc devices for the main SoC. And that's exactly why I'm asking about
-> > > the WCN SoC exporting the information through the same interface. If it
-> > > is a legit user, then it is a possible outcome that WCN binds to soc0
-> > > while the main core gets bound to soc1 (even without SMCCC_ID in place).
-> > > 
-> > > Likewise if WCN if a legit user of soc_device_register(), then we can't
-> > > make it fail after registering the first entry.
-> > > 
-> > 
-> > But by this definition, a vast variety of discrete IP should register
-> > with this interface - instead of providing such information in their
-> > respective functional interface.
+
+On Sun, 18 Jan 2026 22:29:39 +0200, Yedaya Katsman wrote:
+> Adds support for the touchscreen in the Xiaomi Mi A3 (xiaomi-laurel)
+>  smartphone, FocalTech FT3518
 > 
-> I *suppose* that was the intention. Otherwise there is little point in
-> having socX defined in the ABI.
+> Original tree was here:
+>  Link: https://gitlab.postmarketos.org/SzczurekYT/linux/-/commits/laurel
 > 
-> > 
-> > My interpretation is that the soc_device_register() related to the
-> > entity which is represented as /soc in your DeviceTree.
-> > 
-> > For a broader "dumping ground for different IP to register their
-> > version information", we'd need some way to associate each entity with
-> > the related component - which I believe there is none, because then you
-> > could have used the specific driver interface in the first place.
+> Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
+> ---
+> Changes in v3:
+> - Rename regulator node and reorder nodes
+> - Add gpio pin configuration for pmx_ts_* in sm6125, and reference in the
+>   touchscreen configuration as pinctrl-*. Doesn't have configuration for
+>   the gpio 83 pin since it isn't documented downstream.
+> - Link to v2: https://lore.kernel.org/r/20260114-touchscreen-patches-v2-0-4215f94c8aba@gmail.com
 > 
-> We can be using of_node / fwnode pointers for that (where available).
-> However, I guess, there would be no fwnode for SMCCC SOC_ID.
+> Changes in v2:
+> - Fixed name and email in signoffs
+> - Link to v1: https://lore.kernel.org/r/20260113-touchscreen-patches-v1-0-a10957f32dd8@gmail.com
+> 
+> ---
+> Yedaya Katsman (3):
+>       dt-bindings: input: touchscreen: edt-ft5x06: Add FocalTech FT3518
+>       drivers: input: touchscreen: edt-ft5x06: Add FocalTech FT3518
+>       arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Add Focaltech FT3518 touchscreen
+> 
+>  .../bindings/input/touchscreen/edt-ft5x06.yaml     |   1 +
+>  .../boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts  | 113 +++++++++++++++++++++
+>  drivers/input/touchscreen/edt-ft5x06.c             |   6 ++
+>  3 files changed, 120 insertions(+)
+> ---
+> base-commit: b71e635feefc852405b14620a7fc58c4c80c0f73
+> change-id: 20260113-touchscreen-patches-beb2526bd5fb
+> 
+> Best regards,
+> --
+> Yedaya Katsman <yedaya.ka@gmail.com>
+> 
+> 
 > 
 
-I prefer a model where the kernel abstracts the hardware and firmware
-away from userspace, and presents useful and purposeful information to
-the applications.
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
 
 
-When I cat /proc/cpuinfo I get an abstract representation of the CPU
-cores that are visible to the current system, I don't have to
-cross-reference the output against some hardware/firmware description
-table to make sense of the data.
+This patch series was applied (using b4) to base:
+ Base: b71e635feefc852405b14620a7fc58c4c80c0f73 (use --merge-base to override)
 
-It could have told me about the CPU core(s?) in the WCN chip dangling
-off that PCIe link...but it would also have made the output absolutely
-useless.
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
 
-> > (I.e. there's no representation of the WCN SoC in our system, we have
-> > representations for the PMU, the WiFi, and the BT core, but not the
-> > whole).
-> 
-> The mapping is really a separate topic. I can imagine "just an
-> enumeration" kind of ABI.
-> 
 
-Let's imagine a more concrete example. I'm implementing some service and
-I want to use the value from the "serial_number" soc attribute to
-identify the device. I read soc[012]/serial_number and get 3 different
-answers (in "random" order!).
+Warnings in base: 429
+Warnings after series: 431
 
-Would that interface be useful to you without any form of means to
-determine which set of attributes is representing which "SoC"?
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com:
 
-Regards,
-Bjorn
+arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dtb: pinctrl@500000 (qcom,sm6125-tlmm): Unevaluated properties are not allowed ('pmx_ts_int_active', 'pmx_ts_int_suspend', 'pmx_ts_release', 'pmx_ts_reset_active', 'pmx_ts_reset_suspend' were unexpected)
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm6125-tlmm.yaml
+
+
+
+
+
 
