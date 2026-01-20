@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-89891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sCkuEe76b2mUUgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:00:14 +0100
+	id AAiYHg8HcGmUUgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:51:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD7114CA64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:00:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E51784D495
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:51:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id EDC45A6DAB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:41:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C124AA6DEFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:41:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 039CA44BC80;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F4BD44BC91;
 	Tue, 20 Jan 2026 21:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rfHLZZfC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoLRF7xk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B891B44A718;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B886544A717;
 	Tue, 20 Jan 2026 21:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768945265; cv=none; b=s4JrpeM5qCOew/X84xLqYaiJHBbXv7WKIWy+7vIGnlLmQjLBaDYwUnt/l+EQtbGKnfB8+3sG43BcKUb+IBvzpv5hFa1jAzCvd9w9FJOwLKHv8wVy8cAnLCftz9NWthpSZyOGvtRnx8LDkleImu0f1ls+65WXHOP1wiDXvqKyHFI=
+	t=1768945265; cv=none; b=BXYAfjLc29lYXNmO4fH7C9Ur/v4Yjr4FteSSDVMQPswViKbe20NhV+JoWExK67jiAp0JX2j4o3/GogBi7z8C8/vQru+xuVn3HeCrPHq6RlFlwPgykZQ0mrEcHh0m3UK5/ZSDU9Kr4KYqdnPz3jg+xYN5Zb3n6oZndYUXH/7Q0+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1768945265; c=relaxed/simple;
-	bh=+4fd9yQ9/KUUlc1kbAxqg83L2EiSBV6K7m69iKVHkyQ=;
+	bh=l67nESRyJfuCWmAR9yt7cBpBMGDGFkmCexiZLpjYsKo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kcDEdNy+UBdDIJIboO+DAITJ66LzbAauGYHkzG5+QatUVNnMog4B56t2cJBxfw+6Pj8ACS0ueviy/FJWsqEfvwXCZa2qY3Z4engRU4DfseqHab59iOEaV10L7uPEZYZASFvQOBS0f/Jbbze8HIFR55C5sJ0IZrdPGSugwYQSg9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rfHLZZfC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1C852C19422;
+	 In-Reply-To:To:Cc; b=rATP64mBE/3vLEcQdhiwsUx1RNvH/8yGsqen6ItHDmed+OQr3MPK0TdiXxwOzCnkkFz0XOJwArPKuxp8ecquTYt2PKll0KBBkmUua8U7z2C1qvBY5mNkywtEqvcMzMcCaxN4uAKP6Xw1M8t9d1okR8ZC7VHXL6ISEUm4WgHC52c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoLRF7xk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 250A6C19425;
 	Tue, 20 Jan 2026 21:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1768945264;
-	bh=+4fd9yQ9/KUUlc1kbAxqg83L2EiSBV6K7m69iKVHkyQ=;
+	bh=l67nESRyJfuCWmAR9yt7cBpBMGDGFkmCexiZLpjYsKo=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rfHLZZfCUheg7zBnVHJR4vzT7xN/sy7c8LCFG28WWLhBDTj1SCrB4hNXKyiAN0PQi
-	 0yT8DvyzhDfP/FS1PajiJebdKUfszmP8pYiI/5kCBmfizGbgX3z3To4AHimRIFSjUY
-	 YDn6kGtdx5ACvnPyfV8g7q1JPCSz8ehHjKuHLtBJ/jTgwcn2qJCC/UMWy/1gYKvbZQ
-	 wd5aYKy5nmdajBi+NnaR2bYIlsWqi8NPaybtVUJ+ka9P+2Y6BjlkIERx/+8mQfrwuH
-	 jLIWODE7HemA6cdBHDW5unmrLC5mZERfCRXKX0GWa1O89vE12Echl9fLROYbDyYGF6
-	 skz4laNSezoMw==
+	b=JoLRF7xkj/uq242BK0GAhN+g3cRIW8PYHOAVTKyodHTiv6KUlN10Vv7zNKYhIUwXH
+	 mSZXiw+6/XAQwpYiSxzHL9l5dM2ELe4P0feU0HTSpFzkOnV9USaTzgM8xuXKxf73fd
+	 ATVT3Dxv/0m6F/vbdpAZfKVXfsdTnFDpzhimOqc5W+618+/E7pk8UUrQ6JRdGaT5e0
+	 WG66+pHLbivkKfOsb5biKPLwbS+tyBtFk3T3Qk2wGesBQ2pBpainKPGKlx166kneQ/
+	 3Qpi11Q4CS3G+t+eioBtnY90GwTmAoVjA+UxzCvs95+7aOIcU2rRmYxM445Ny4bFQh
+	 wzOHNsqwbUOjA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09226D262AB;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AD37D262A7;
 	Tue, 20 Jan 2026 21:41:04 +0000 (UTC)
 From: Yedaya Katsman via B4 Relay <devnull+yedaya.ka.gmail.com@kernel.org>
-Date: Tue, 20 Jan 2026 23:40:55 +0200
-Subject: [PATCH v4 2/3] drivers: input: touchscreen: edt-ft5x06: Add
- FocalTech FT3518
+Date: Tue, 20 Jan 2026 23:40:56 +0200
+Subject: [PATCH v4 3/3] arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Add
+ Focaltech FT3518 touchscreen
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,8 +60,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-touchscreen-patches-v4-2-30145da9d6d3@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260120-touchscreen-patches-v4-3-30145da9d6d3@gmail.com>
 References: <20260120-touchscreen-patches-v4-0-30145da9d6d3@gmail.com>
 In-Reply-To: <20260120-touchscreen-patches-v4-0-30145da9d6d3@gmail.com>
 To: =?utf-8?q?Kamil_Go=C5=82da?= <kamil.golda@protonmail.com>, 
@@ -70,98 +70,173 @@ To: =?utf-8?q?Kamil_Go=C5=82da?= <kamil.golda@protonmail.com>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Yedaya Katsman <yedaya.ka@gmail.com>, SzczurekYT <szczurek@szczurek.yt>
+ Yedaya Katsman <yedaya.ka@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768945262; l=2061;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768945262; l=3196;
  i=yedaya.ka@gmail.com; s=20260113; h=from:subject:message-id;
- bh=JnmTIk3Utyw1IEV6j9HoQE20ccGFIPQTbMPlc8S8rg0=;
- b=sEhf2uiCFUFoXmNev24sziRW7EihOsXcEtvY3LQcZRZRcvnq9nDLqaVcJd7I9aVTBVNq0IcAo
- INuaI7VgI6RCZXymO/JvtaBNQysLyxBkz2Kz+W2fFjbU02ClByQbIpB
+ bh=0OJcZN5EkgFMxF6oJTCa+mjxwCLl+uegWcoEfOLwYYU=;
+ b=hdxeCV8WmSK99x2zhrzB4aAtWrvG3y+/Smar6Z5HHOl+meNxRBjTRmGbHE2yr1oI0/iIc9PhF
+ 8fTVBNiphLYB+euiIalcxllSwHKAF/Lbu5fcquWWbAEaKPBb0uQvSYb
 X-Developer-Key: i=yedaya.ka@gmail.com; a=ed25519;
  pk=CgNmxD3tYSws5dZfpmJfc6re/bV/f47veVijddHLytk=
 X-Endpoint-Received: by B4 Relay for yedaya.ka@gmail.com/20260113 with
  auth_id=601
 X-Original-From: Yedaya Katsman <yedaya.ka@gmail.com>
 Reply-To: yedaya.ka@gmail.com
-X-Spamd-Result: default: False [1.54 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-89891-lists,linux-arm-msm=lfdr.de,yedaya.ka.gmail.com];
+	TAGGED_FROM(0.00)[bounces-89890-lists,linux-arm-msm=lfdr.de,yedaya.ka.gmail.com];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
 	FREEMAIL_TO(0.00)[protonmail.com,kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	HAS_REPLYTO(0.00)[yedaya.ka@gmail.com];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,szczurek.yt];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	DBL_PROHIBIT(0.00)[0.0.0.38:email];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: AD7114CA64
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,protonmail.com:email]
+X-Rspamd-Queue-Id: E51784D495
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Yedaya Katsman <yedaya.ka@gmail.com>
 
-The driver also works with FT3518, which supports up to 10 touch points.
- Add compatible data for it.
+Add device tree node for the Focaltech FT3518 touchscreen on
+Xiaomi Mi A3 (laurel-sprout).
 
-Co-developed-by: SzczurekYT <szczurek@szczurek.yt>
-Signed-off-by: SzczurekYT <szczurek@szczurek.yt>
+Note that gpio pin 83 for the regulator isn't documented downstream
+except in the touchscreen node so it's not defined in the tlmm.
+
+Enable qupv3_id_0 and i2c2 bus that the touchscreen is on.
+
+Downstream references:
+Link: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/laurel-r-oss/arch/arm64/boot/dts/qcom/trinket-pinctrl.dtsi
+Link: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/laurel-r-oss/arch/arm64/boot/dts/qcom/laurel_sprout-qrd.dtsi
+
+Co-developed-by: Kamil Gołda <kamil.golda@protonmail.com>
+Signed-off-by: Kamil Gołda <kamil.golda@protonmail.com>
 Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
 ---
- drivers/input/touchscreen/edt-ft5x06.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts  | 65 ++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/drivers/input/touchscreen/edt-ft5x06.c b/drivers/input/touchscreen/edt-ft5x06.c
-index bf498bd4dea9651ac939fe137b1c0f05e8557962..d0ab644be0069b5ab29ed037fa090a4279870193 100644
---- a/drivers/input/touchscreen/edt-ft5x06.c
-+++ b/drivers/input/touchscreen/edt-ft5x06.c
-@@ -1475,6 +1475,10 @@ static const struct edt_i2c_chip_data edt_ft5x06_data = {
- 	.max_support_points = 5,
+diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+index 994fb0412fcbdf5466f87a325c48b697a37b514b..ea9dbc6927a14ca66da818b81aeb0c95ec3c2e7a 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
++++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
+@@ -82,6 +82,18 @@ key-volume-up {
+ 		};
+ 	};
+ 
++	ts_vdd_supply: regulator-ts-vdd {
++		compatible = "regulator-fixed";
++		regulator-name = "ts_vdd_supply";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 83 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		startup-delay-us = <70000>;
++	};
++
+ 	thermal-zones {
+ 		rf-pa0-thermal {
+ 			thermal-sensors = <&pm6125_adc_tm 0>;
+@@ -128,6 +140,27 @@ &hsusb_phy1 {
+ 	status = "okay";
  };
  
-+static const struct edt_i2c_chip_data edt_ft3518_data = {
-+	.max_support_points = 10,
++&i2c2 {
++	status = "okay";
++
++	touchscreen@38 {
++		compatible = "focaltech,ft3518";
++		reg = <0x38>;
++		interrupts-extended = <&tlmm 88 IRQ_TYPE_EDGE_FALLING>;
++
++		vcc-supply = <&ts_vdd_supply>;
++
++		pinctrl-names = "default","sleep";
++		pinctrl-0 = <&ts_int_active &ts_reset_active>;
++		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
++
++		reset-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
++
++		touchscreen-size-x = <720>;
++		touchscreen-size-y = <1560>;
++	};
 +};
 +
- static const struct edt_i2c_chip_data edt_ft5452_data = {
- 	.max_support_points = 5,
+ &pm6125_adc {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&camera_flash_therm &emmc_ufs_therm>;
+@@ -220,6 +253,10 @@ &pon_resin {
+ 	status = "okay";
  };
-@@ -1503,6 +1507,7 @@ static const struct i2c_device_id edt_ft5x06_ts_id[] = {
- 	{ .name = "edt-ft5x06", .driver_data = (long)&edt_ft5x06_data },
- 	{ .name = "edt-ft5506", .driver_data = (long)&edt_ft5506_data },
- 	{ .name = "ev-ft5726", .driver_data = (long)&edt_ft5506_data },
-+	{ .name = "ft3518", .driver_data = (long)&edt_ft3518_data },
- 	{ .name = "ft5452", .driver_data = (long)&edt_ft5452_data },
- 	/* Note no edt- prefix for compatibility with the ft6236.c driver */
- 	{ .name = "ft6236", .driver_data = (long)&edt_ft6236_data },
-@@ -1519,6 +1524,7 @@ static const struct of_device_id edt_ft5x06_of_match[] = {
- 	{ .compatible = "edt,edt-ft5406", .data = &edt_ft5x06_data },
- 	{ .compatible = "edt,edt-ft5506", .data = &edt_ft5506_data },
- 	{ .compatible = "evervision,ev-ft5726", .data = &edt_ft5506_data },
-+	{ .compatible = "focaltech,ft3518", .data = &edt_ft3518_data },
- 	{ .compatible = "focaltech,ft5426", .data = &edt_ft5506_data },
- 	{ .compatible = "focaltech,ft5452", .data = &edt_ft5452_data },
- 	/* Note focaltech vendor prefix for compatibility with ft6236.c */
+ 
++&qupv3_id_0 {
++	status = "okay";
++};
++
+ &rpm_requests {
+ 	regulators-0 {
+ 		compatible = "qcom,rpm-pm6125-regulators";
+@@ -387,6 +424,34 @@ &sdhc_2 {
+ 
+ &tlmm {
+ 	gpio-reserved-ranges = <22 2>, <28 6>;
++
++	ts_reset_active: pmx-ts-reset-active-state {
++		pins = "gpio87";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++
++	ts_reset_suspend: pmx-ts-reset-suspend-state {
++		pins = "gpio87";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
++	ts_int_active: pmx-ts-int-active-state {
++		pins = "gpio88";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++
++	ts_int_suspend: pmx-ts-int-suspend-state {
++		pins = "gpio88";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
+ };
+ 
+ &ufs_mem_hc {
 
 -- 
 2.52.0
