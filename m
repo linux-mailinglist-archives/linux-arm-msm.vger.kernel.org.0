@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-89873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id okXDMgrWb2mVRQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 20:22:50 +0100
+	id AEzPDL7Ob2mgMQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:51:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2544A4A378
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 20:22:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4E6449CE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:51:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 99F907E9F40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 18:02:14 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6BF1476DB55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 18:02:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16689449ED2;
-	Tue, 20 Jan 2026 18:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F7EF44CF31;
+	Tue, 20 Jan 2026 18:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Eadyysqy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mfc7xhxd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC23E44BC82
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 18:01:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3998E44B693
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 18:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768932077; cv=none; b=batSFwRDojH4Ry0JXOl1InYbX1XHQsqhLwN4mPVOYsXhEmz+uQo24k0SZTeuUWuHoY64kRtRmakA/WqV1PkZ87rj7yBLQggk4UaIhv9uUXlpxXfESVMURpzs+tXkIThaBteFOQKoJ9EI5n1n81khqtOx/ETe8deeY27Tk+Tdi1M=
+	t=1768932081; cv=none; b=tW3ItZXbO0WkxMqMY/SROtSA8wk6tmH22fD9jcVyMDN1gKSmZMXGuOH4y6DWe6hU91E7pBboTMH2txixiWRLs5SPm5yKtRIyO1azZnQCHxes5Ca+9EJpB2ApY6iC+li/aH8pQa24LTKyG2epOGt3Uom5Lh5IjgoNUQLVFAjMDEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768932077; c=relaxed/simple;
-	bh=RRFr0s3h67aeWrsqyfTBr0cjbL/dLggQ/RzMrfxX1O0=;
+	s=arc-20240116; t=1768932081; c=relaxed/simple;
+	bh=UtIGYYPsmVU0cdAjltDJ/bhj9TOFnyfz8pZYAdGwY+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJoaB/BeRGjXP2gMVmF0GqFmwVyKzDVa64nAoQv8gBKt9NYG4SOdcaz1QJOSEtf593ceoTRbw4zduVpDlJUOOWE+9e9KOhGjmlTVfoXEWGenu94f2EJHzVgh9UKPHC2C/WHvghuFaod/CTRlxcyeMm6jJ0M0hjLKqnUq5gCuuc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Eadyysqy; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=lj5Z4ZxrJl+GbdKAYwaBZsTtxq6KzdF50Hxv9KXL+N0gd4oOMVvaI9l8M+VyEMS6SYmeaL3L6PmelmQSM9WnRvsSIywfXx54ahxrhdWYxeqkrdm9CRLeZ6ybmF6ALB6ew7Q7qPLcpKvkkyAJuQ/aifSRrpbD9XG17vBCdh7qnxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mfc7xhxd; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4801bbbdb4aso501395e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 10:01:14 -0800 (PST)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4801d24d91bso40303465e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 10:01:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768932073; x=1769536873; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768932077; x=1769536877; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WY/yEu59nUefrkGJmBAthiZgz7EKiY+FHwtG9ydqOHE=;
-        b=Eadyysqy9ULWKNQS7Bla7Y6kLHeel5NVVc2JuEmhV1g6X3/YGNNPKR3tP+3sj4se75
-         UFmUn432hUVNgJzwbt57RpelxBAcgc4Xzb6zUamyF9QfKXmBzlTtP8Ye2AHW9zGTOPX3
-         bebsLxZA0lUALB1RLOxZAfS2kcOZZdvGC9HEkD4FJpiktE3MWV8g1th2edH93Mb7/7l4
-         UGuRWmTefyfyfZKjZqKHrfrrDbuRQjIh4EJFMaC02BKjXMNmJpUfitIHUsFWgymOqqnd
-         Mzj13Tf9UeEdZjOg/jUc+yS7rNwMf8c7C1/+Qx86h012Sow8oILVWZTnmDeA6Sx6f+u0
-         ZRRA==
+        bh=rbfcP16YMUeLb4fc2ECoe5H8Z84bCAdkWDIyOMOcBSI=;
+        b=Mfc7xhxdd4gCufWMkMh3pZkHow4ilHUHunxP7osPGvqw+zUy4Zw4qfpR3ms1xN9kLw
+         hmqWk56uCvBK0A4C7X07fqK7740dt08vQcg8glGuKfFL/cG2nvdNNs5KNE5qMmEBgWGc
+         AWpx4Cio90bHc/x2xsOvFBCB6olOeNDNwC/2CGQee191Ao2OHslOTf5hs8Qx+TZkMo1f
+         zhuU0nK8x7rErWogAIHWywwyDVyaCaR8GIFZ3PJRWFhJgDcbA+9Sko5l37Wqn1ixsTX5
+         1LcvbqoDkHshP9737Boc0USWRGBlxASP6h60wm1Xe6KlKvPcAg74DWhBdj44FXUiyN+E
+         WryA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768932073; x=1769536873;
+        d=1e100.net; s=20230601; t=1768932077; x=1769536877;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=WY/yEu59nUefrkGJmBAthiZgz7EKiY+FHwtG9ydqOHE=;
-        b=NcJPLv1kGkH0t1ZPGUgfNw+bj+eEyncCnJT1Fh8X1MJQeP8qhlLdgIu7zKaC0ygw0s
-         xQSpGnqgF0YGaLdXTlZnm/+s1/J6MkokZ65jeDyC4VlEBgNi9GG7SXYnZvhAi44TlpMc
-         hjllIJ0DBhma9ixypdN9mZPdcOsT5qD1o94W5Ci/M6Cv9XRFV9rwxXKCjhdbac5by2QN
-         tEoyvyxBewRrNTrZX3aozwapBqnWiBxlKhwbp1VGl9pnUvjE0pEABL/2V0grr7wFLkpL
-         YfiCcJf63tycMiqANUJf8MLBhTjRW6ImSovGYWjIbceQNIa/vdEKXqj8dBSqTF1USdrN
-         q54Q==
-X-Gm-Message-State: AOJu0YwiJxaWv8vOjZnJhJDpic6cNKJM84S1Sxaik7G5pLJqkJl7J0Sn
-	p2XB9vwI0xrYQH96nRIeqN9D/YzmC5LZmq5hTOJnryyS3p8MSArIU2TILKKOBeuj
-X-Gm-Gg: AY/fxX4e25rm6J/yd/q9u4rYoAzAGAvpLIRzTa5QpIQ6/2Jm/fGFp3veJuHeROX1yeb
-	tWgm6MEHgrfg5enFnx1YoOvlnjMDBX4j4RgybuztFwIon6zLiCP7rKoN3lsIFS/O+1hKMnS+fpq
-	nN0qO5uPw78OUQyOwKkO5pNLzDgEUAmxFsAeDHNfkl+Fpx/fvHhXrk0UcaINfcWom7LfuW3A0zu
-	KfqW6fMsoNVJbSSI6sy27uXCsLvfkOKm6/U/Fj4GXP6dUWNl+wa/TBLUV5hbsCgIwkTk9y47ONO
-	xjDJPxZuqNduOMJzJotJeJkTEh5W9JQvuarLewitIQorwD5JVgj+hmYSW070fCvvyHNpPoya/7r
-	y8+0JnpmCg1Fwoc9mzT3ZO7TbWrYQOEOcjBF5MQX6MtpbCgoebcnUan/Lbgr8WvlHAhGlzGs9Lc
-	MSXqQsd3bRz5zO/Sw6VFuD
-X-Received: by 2002:a05:600c:3e8e:b0:47b:deb9:163d with SMTP id 5b1f17b1804b1-4801e53c118mr177499455e9.7.1768932072455;
-        Tue, 20 Jan 2026 10:01:12 -0800 (PST)
+        bh=rbfcP16YMUeLb4fc2ECoe5H8Z84bCAdkWDIyOMOcBSI=;
+        b=WBMvih4xFFZnh3YqqaZBeSqZedPeO8SgsCdVZZFqxLpWxxmktHrXOaAB7HDXbkBExR
+         X599l7eNNqgUJuzR13MgqStvLuJ+4guxqHi+7nzM6TI/GutbvBF7QKGtZuEObt83j+uN
+         93Zy25sHqWEM6EBuKuVJgcalZU8dnJtsMrOIN3w/KK7A7UPRrijDnjmYjA81MnsOJy7k
+         kpA51HwBfH6pJIMb3YTnhsTOY/T6WM9S/x81arnQ0BHh3/ASzLRndX9PmUq5F55czHP1
+         Zl7HBzviNFXIhrDGlr/3fWJXT2SF2EbkxFDVDsha7rpcbAY57QTGq+rVm674IPbhwA6H
+         CPZA==
+X-Gm-Message-State: AOJu0YwibbBWxRqncTxKf4/zsdjcN9FuP/FWKFS/rTnfFGe8fz9029cy
+	xx2F1F1IhUJDYXTocIL58CQyA+kyNLYumUT2WDRec3HatRJQGvJCvePNLztu6Q3A
+X-Gm-Gg: AY/fxX73Z8Vnxr/mbUhZOgdIWDyXzvOiMJNu7J6DWGDv6bSHXPnIZDwWaK6fOKL/5yM
+	ZiLolT02Z5FnnFh6SXskyW1jcGVUqxyQIWpdexbdUulw+49gXCZ0H1KQjjwtM88nWcZi/NCWO0h
+	11PcPhXSac/lC+npRMhzJ9fS6JFylBnWia0bl14Dd7NOLl8VS1TLuj+nnV7RAb1PCoqyWZguKHS
+	fQk7HSsK7nvIyeG/6NAIReMQanQSJjFQOoTGsTwYpVepFPVxJNk9Ln5CWeYNxBZV0W1wR+eLuM3
+	7as9IWGDRQcKeLjM4DpAbuVZYZottC7fD9rb8GMYdD+Brw63oxQhjlTXdLJjn0qaUveH+qkIlus
+	ShgY5+x3DAV8D7OW8D+vpz+Kypp2qPj3pDDhBAcl7FRNumx9UYenNoSwn2SdX5D/1EfQK6aufUX
+	z/s7vw1x5wkjdxxudpj0PQ
+X-Received: by 2002:a05:600c:608b:b0:479:1b0f:dfff with SMTP id 5b1f17b1804b1-4803e7a2cc0mr41444185e9.10.1768932076674;
+        Tue, 20 Jan 2026 10:01:16 -0800 (PST)
 Received: from unknown.zextras.com ([78.208.157.140])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-47f429071a2sm312013015e9.11.2026.01.20.10.01.11
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-47f429071a2sm312013015e9.11.2026.01.20.10.01.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 10:01:12 -0800 (PST)
+        Tue, 20 Jan 2026 10:01:16 -0800 (PST)
 From: Gianluca Boiano <morf3089@gmail.com>
 To: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
@@ -86,10 +86,11 @@ Cc: andersson@kernel.org,
 	conor+dt@kernel.org,
 	robh@kernel.org,
 	david@ixit.cz,
-	Gianluca Boiano <morf3089@gmail.com>
-Subject: [PATCH 4/7] arm64: dts: qcom: add device tree for Xiaomi Redmi Note 6 Pro (tulip)
-Date: Tue, 20 Jan 2026 19:00:49 +0100
-Message-ID: <20260120180052.1031231-5-morf3089@gmail.com>
+	Gianluca Boiano <morf3089@gmail.com>,
+	Joe Mason <buddyjojo06@outlook.com>
+Subject: [PATCH 6/7] arm64: dts: qcom: add device tree for Xiaomi Mi A2 (jasmine)
+Date: Tue, 20 Jan 2026 19:00:51 +0100
+Message-ID: <20260120180052.1031231-7-morf3089@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120180052.1031231-1-morf3089@gmail.com>
 References: <20260120180052.1031231-1-morf3089@gmail.com>
@@ -112,10 +113,10 @@ X-Spamd-Result: default: False [1.04 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	TO_DN_SOME(0.00)[];
 	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
-	TAGGED_FROM(0.00)[bounces-89873-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-89875-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,ixit.cz,gmail.com];
+	FREEMAIL_CC(0.00)[kernel.org,ixit.cz,gmail.com,outlook.com];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
@@ -126,74 +127,73 @@ X-Spamd-Result: default: False [1.04 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_PROHIBIT(0.00)[0.0.0.1:email];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,a0000000:email]
-X-Rspamd-Queue-Id: 2544A4A378
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,outlook.com:email,a0000000:email]
+X-Rspamd-Queue-Id: C4E6449CE9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add initial device tree support for the Xiaomi Redmi Note 6 Pro
-(codename: tulip), a smartphone based on Qualcomm SDM636 SoC with
-4GB RAM and a 6.26" 1080x2280 display.
+Add initial device tree support for the Xiaomi Mi A2
+(codename: jasmine), a smartphone based on Qualcomm SDM660 SoC with
+4/6GB RAM and a 5.99" 1080x2160 display.
 
 This enables:
 - Booting to a framebuffer console
 - USB support
-- Hall effect sensor
+- Touchscreen (Novatek NT36672A)
 - Battery monitoring
 - Charging (pm660_charger)
-- Status LED (pm660l_lpg)
 
+Co-developed-by: Joe Mason <buddyjojo06@outlook.com>
+Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
 Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
 ---
  arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sdm636-xiaomi-tulip.dts     | 333 ++++++++++++++++++
+ .../boot/dts/qcom/sdm660-xiaomi-jasmine.dts   | 333 ++++++++++++++++++
  2 files changed, 334 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm636-xiaomi-tulip.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm660-xiaomi-jasmine.dts
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6f34d5ed331c..6168d204ca91 100644
+index a1cf067fdfeb..8f7b66bee6be 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -243,6 +243,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-fairphone-fp3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-motorola-ocean.dtb
+@@ -245,6 +245,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-motorola-ocean.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-xiaomi-tulip.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-xiaomi-tulip.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-xiaomi-whyred.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-jasmine.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-sargo.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm636-xiaomi-tulip.dts b/arch/arm64/boot/dts/qcom/sdm636-xiaomi-tulip.dts
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-jasmine.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-jasmine.dts
 new file mode 100644
-index 000000000000..44ffc1e31401
+index 000000000000..784a6c41be6d
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm636-xiaomi-tulip.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-jasmine.dts
 @@ -0,0 +1,333 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
-+ * Copyright (c) 2022, Gianluca Boiano <morf3089@gmail.com>
++ * Copyright (c) 2022, Joe Mason <buddyjojo06@outlook.com>
 + */
 +
 +/dts-v1/;
 +
-+#include "sdm636.dtsi"
++#include "sdm660.dtsi"
 +#include "sdm660-xiaomi-common.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
 +
 +/ {
-+	model = "Xiaomi Redmi Note 6 Pro";
-+	compatible = "xiaomi,tulip", "qcom,sdm636";
++	model = "Xiaomi Mi A2";
++	compatible = "xiaomi,jasmine", "qcom,sdm660";
 +	chassis-type = "handset";
 +
 +	battery: battery {
 +		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <4000000>;
++		charge-full-design-microamp-hours = <3000000>;
 +		voltage-min-design-microvolt = <3400000>;
-+		voltage-max-design-microvolt = <4408000>;
++		voltage-max-design-microvolt = <4400000>;
 +	};
 +
 +	reserved-memory {
@@ -208,15 +208,27 @@ index 000000000000..44ffc1e31401
 +	};
 +};
 +
-+&framebuffer0 {
-+	width = <1080>;
-+	height = <2280>;
-+	stride = <(1080 * 4)>;
-+
++&blsp_i2c1 {
 +	status = "okay";
++
++	touchscreen@1 {
++		compatible = "novatek,nt36672a-ts";
++		reg = <0x1>;
++		iovcc-supply = <&vreg_l11a_1p8>;
++		interrupts-extended = <&tlmm 67 IRQ_TYPE_EDGE_RISING>;
++		pinctrl-0 = <&ts_active>;
++		pinctrl-names = "default";
++		reset-gpios = <&tlmm 66 GPIO_ACTIVE_LOW>;
++		touchscreen-size-x = <1080>;
++		touchscreen-size-y = <2160>;
++	};
 +};
 +
-+&gpio_hall_sensor {
++&framebuffer0 {
++	width = <1080>;
++	height = <2160>;
++	stride = <(1080 * 4)>;
++
 +	status = "okay";
 +};
 +
@@ -224,20 +236,6 @@ index 000000000000..44ffc1e31401
 +	monitored-battery = <&battery>;
 +
 +	status = "okay";
-+};
-+
-+&pm660l_lpg {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	qcom,power-source = <1>;
-+
-+	status = "okay";
-+
-+	led@3 {
-+		reg = <3>;
-+		color = <LED_COLOR_ID_WHITE>;
-+		function = LED_FUNCTION_STATUS;
-+	};
 +};
 +
 +&pm660l_wled {
@@ -283,22 +281,22 @@ index 000000000000..44ffc1e31401
 +		/* SDHCI 3.3V signal doesn't seem to be supported. */
 +		vreg_l2b_2p95: l2 {
 +			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3100000>;
++			regulator-max-microvolt = <2696000>;
 +			regulator-enable-ramp-delay = <250>;
 +			regulator-allow-set-load;
 +		};
 +
 +		vreg_l3b_3p3: l3 {
-+			regulator-min-microvolt = <1710000>;
-+			regulator-max-microvolt = <3600000>;
++			regulator-min-microvolt = <1700000>;
++			regulator-max-microvolt = <3300000>;
 +			regulator-enable-ramp-delay = <250>;
 +			regulator-allow-set-load;
 +			regulator-always-on;
 +		};
 +
 +		vreg_l4b_2p95: l4 {
-+			regulator-min-microvolt = <1700000>;
-+			regulator-max-microvolt = <2950000>;
++			regulator-min-microvolt = <2944000>;
++			regulator-max-microvolt = <2952000>;
 +			regulator-enable-ramp-delay = <250>;
 +
 +			regulator-min-microamp = <200>;
@@ -319,6 +317,7 @@ index 000000000000..44ffc1e31401
 +			regulator-max-microvolt = <3328000>;
 +			regulator-enable-ramp-delay = <250>;
 +			regulator-allow-set-load;
++			regulator-system-load = <800000>;
 +		};
 +
 +		vreg_l7b_3p125: l7 {
@@ -422,7 +421,7 @@ index 000000000000..44ffc1e31401
 +
 +		vreg_l8a_1p8: l8 {
 +			regulator-min-microvolt = <1750000>;
-+			regulator-max-microvolt = <1900000>;
++			regulator-max-microvolt = <1800000>;
 +			regulator-enable-ramp-delay = <250>;
 +			regulator-system-load = <325000>;
 +			regulator-allow-set-load;
@@ -484,13 +483,13 @@ index 000000000000..44ffc1e31401
 +		};
 +
 +		vreg_l17a_1p8: l17 {
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <2950000>;
++			regulator-min-microvolt = <1648000>;
++			regulator-max-microvolt = <2952000>;
 +			regulator-enable-ramp-delay = <250>;
 +		};
 +
 +		vreg_l19a_3p3: l19 {
-+			regulator-min-microvolt = <3200000>;
++			regulator-min-microvolt = <3312000>;
 +			regulator-max-microvolt = <3400000>;
 +			regulator-enable-ramp-delay = <250>;
 +			regulator-allow-set-load;
@@ -498,12 +497,15 @@ index 000000000000..44ffc1e31401
 +	};
 +};
 +
-+&sdhc_2 {
-+	status = "okay";
-+};
-+
 +&tlmm {
 +	gpio-reserved-ranges = <8 4>; /* Fingerprint SPI */
++
++	ts_active: ts-active-state {
++		pins = "gpio66", "gpio67";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
 +};
 -- 
 2.52.0
