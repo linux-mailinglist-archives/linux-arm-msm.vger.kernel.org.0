@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-89816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6NpEB+SAcGktYAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:31:48 +0100
+	id WJ03D9eQcGkaYgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:39:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 716B552D5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:31:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D38BB53B32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:39:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 907626069B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 11:20:56 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F33BE607116
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 11:21:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53ABF421F12;
-	Tue, 20 Jan 2026 11:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0135421F1D;
+	Tue, 20 Jan 2026 11:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ISLRi0OO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lbnFej/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AAD421EE6;
-	Tue, 20 Jan 2026 11:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E294219E3;
+	Tue, 20 Jan 2026 11:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768907997; cv=none; b=mrmZgg04TaypXW/UhxX8C9XgmAle7ry8BCHMlC6JqFgC2GGgd+hLON9JQUc4qHbs3jCH8/B7YGm9OkZ0X8mN2Tkjeq6OtoERAIElpJFFmBgtIrjUIeqGQu8dNO1RSFoj7+hu/rDERt+NS4ftH+KC0mizFPpcW186n8t+/uieMBg=
+	t=1768908001; cv=none; b=HMK/cDKWZCbN4djZYpBAiC6LwK0lffCwGOzl0dwa0FwBPfdVL4MgTwASjc5ReMsPjImk/d5ZmdU2/dEY9zLzi1qL6jX1NUOH2qrXgNK86WVuxX35MD9oC4nL6OG3HHQDdlA6vyxFbq9iaQGB4A9CfvtL+HGrk0/nkzoa5Vc0+EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768907997; c=relaxed/simple;
-	bh=goKGK1LGG+MNlqbM0Sgh9lkoW+uoM9IRy49fxa/8P3Y=;
+	s=arc-20240116; t=1768908001; c=relaxed/simple;
+	bh=lXA7xXuvlXD/gm2j6AzGoRANYcJpsALguHdGsdxgbr8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Bt8oD75MgNkbyWJUMZucgMfQd42LO1VKUy1ZwKkotolmz6Yfn3K3q6DBeeyq/MQk3dyn0gU9jQPuMlAuMOFpHlsuY2vml4DyleAmJ7UttsrLZ7mP+G7lSsmOFVRdGZYBVMD/FLaJ8muRbGX+XQq7SlmkOe6lPwJnkt1GRZx+PJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ISLRi0OO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F95C19423;
-	Tue, 20 Jan 2026 11:19:52 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=orxw3ZPsimRzQvq2oa9JG9RceSyR1neLRi6Eo1xdGG0rvI3rplt8jFY8fG/rdzuFFrsQvbxbo9rEE9M2JrEssF/e51mM5/xNslVuW25qVsFEsRDgZDefHZoGGUB0yAt6vGJx3Y+EyAi1/hMRIXPjS9X6EpNNymBr5g6yZKvNHU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lbnFej/q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3308AC19421;
+	Tue, 20 Jan 2026 11:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768907996;
-	bh=goKGK1LGG+MNlqbM0Sgh9lkoW+uoM9IRy49fxa/8P3Y=;
+	s=k20201202; t=1768908001;
+	bh=lXA7xXuvlXD/gm2j6AzGoRANYcJpsALguHdGsdxgbr8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=ISLRi0OOoediiMygI2Fi3wDlj1zAwl+4l6mcwIwLa6mgDHfbwL85objfTRFXkBZ27
-	 arPuHGD8Nktszz1jwG7xGXOsnNq0u+LsrVC9XwABpaImlPqbGgsrrkJCOQ+NhRo/Aq
-	 jP7hCe1a7YqJzTXe3E8qwSgxUTnQBXKLVjQpizNdWTqqScejRvEMoEPlYVW9ZzCE9r
-	 kjhwg5H0fhN+wLCkzRJUs+wWNkPWvADM5xvjuHQwCMHbMeRiuui5x2IWN6Q1LwRWgJ
-	 3ToIgqmDljk2IoQ/YMYEQrsK207U5oIoayAamL+yKzIiK169FIhyQbhJJTJuJrqYt5
-	 fY4pK+yJPksPw==
+	b=lbnFej/qP5JCu9kfvaDXL80HYnJDqnMvFP8BPBuzA8fVFlK++F1VUZ7WKraKIyoIJ
+	 IM2f9KeTbNcmZ6/H9562eRpu+N856RRJNgCSHCquZcZUJpcBqIj52iJdwhkt1UPMOt
+	 8mkLu/ASxQxJZX4K1T3NvW3i54SplCU82uFv+RCckEBUOR1QtwhRVnDoEEG7b+JJTR
+	 dN2Oq+Cw25QGHZKzCAEfy1VphayrJI2HvjvroCj8i5JWjFjgKcmWdt9uFz3KqeCmbG
+	 RDrKIlS+OjQHslaiuQTcEmKpkqdoN2xpQyXZluW8O0ujxMWFKWcXTJKYnj9NKQmmJP
+	 uQLHD0LPsC6pA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 20 Jan 2026 12:19:26 +0100
-Subject: [PATCH 2/3] clk: qcom: dispcc-sc7180: Add missing MDSS resets
+Date: Tue, 20 Jan 2026 12:19:27 +0100
+Subject: [PATCH 3/3] arm64: dts: qcom: sc7180: Add missing MDSS core reset
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-topic-7180_dispcc_bcr-v1-2-0b1b442156c3@oss.qualcomm.com>
+Message-Id: <20260120-topic-7180_dispcc_bcr-v1-3-0b1b442156c3@oss.qualcomm.com>
 References: <20260120-topic-7180_dispcc_bcr-v1-0-0b1b442156c3@oss.qualcomm.com>
 In-Reply-To: <20260120-topic-7180_dispcc_bcr-v1-0-0b1b442156c3@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -71,13 +71,14 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Harigovindan P <harigovi@codeaurora.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Val Packett <val@packett.cool>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768907983; l=1364;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768907983; l=955;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=5uioIRX5bNPGEXJdAqjegWWAkYww9nYj6t1Oh9jO/1c=;
- b=6Jqee0Y1Z1DmVLI92TbHkYsSH7bhZvOETJGTdZ4GK+gHDRKvnNhLmbbpI9ebK7hm6U4CbqqTV
- 6dbj1baPOmzBHped3k0ti9iYtA/+wEJsgfb3vSpa8f2q2aI6h8BXrtS
+ bh=2dPiGu+ReEYYtC3VfBXo5TkLCObP/kpIYgcp9+6W0CY=;
+ b=8m45au3DfCytfz4q/h/ct8eXpl+zTmaFd3jee3fUxwb2ygnA2ZWdgHgTB90TO1xXD16M0pENe
+ etrAmbi6yeJDL/V4gf0h2PQKcvcc5G/zJupSWyvh7e9v4HcUL+3YSzb
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spamd-Result: default: False [-0.46 / 15.00];
@@ -88,13 +89,13 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-89816-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-89817-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -105,54 +106,38 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,qualcomm.com:email]
-X-Rspamd-Queue-Id: 716B552D5E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,oss.qualcomm.com:mid,qualcomm.com:email,packett.cool:email]
+X-Rspamd-Queue-Id: D38BB53B32
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-The MDSS resets have so far been left undescribed. Fix that.
+To make sure the core starts in a predictable state, it's useful to
+first reset it.
 
-Fixes: dd3d06622138 ("clk: qcom: Add display clock controller driver for SC7180")
+Wire up the reset to fulfill that missing part of the HW description.
+
+Reported-by: Val Packett <val@packett.cool>
+Fixes: a3db7ad1af49 ("arm64: dts: sc7180: add display dt nodes")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/clk/qcom/dispcc-sc7180.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
-index ab1a8d419863..d7e37fbbe87e 100644
---- a/drivers/clk/qcom/dispcc-sc7180.c
-+++ b/drivers/clk/qcom/dispcc-sc7180.c
-@@ -17,6 +17,7 @@
- #include "clk-regmap-divider.h"
- #include "common.h"
- #include "gdsc.h"
-+#include "reset.h"
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 45b9864e3304..f7937fa88536 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3221,6 +3221,8 @@ mdss: display-subsystem@ae00000 {
+ 				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+ 			clock-names = "iface", "ahb", "core";
  
- enum {
- 	P_BI_TCXO,
-@@ -636,6 +637,11 @@ static struct gdsc mdss_gdsc = {
- 	.flags = HW_CTRL,
- };
- 
-+static const struct qcom_reset_map disp_cc_sc7180_resets[] = {
-+	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
-+	[DISP_CC_MDSS_RSCC_BCR] = { 0x4000 },
-+};
++			resets = <&dispcc DISPCC_MDSS_CORE_BCR>;
 +
- static struct gdsc *disp_cc_sc7180_gdscs[] = {
- 	[MDSS_GDSC] = &mdss_gdsc,
- };
-@@ -687,6 +693,8 @@ static const struct qcom_cc_desc disp_cc_sc7180_desc = {
- 	.config = &disp_cc_sc7180_regmap_config,
- 	.clks = disp_cc_sc7180_clocks,
- 	.num_clks = ARRAY_SIZE(disp_cc_sc7180_clocks),
-+	.resets = disp_cc_sc7180_resets,
-+	.num_resets = ARRAY_SIZE(disp_cc_sc7180_resets),
- 	.gdscs = disp_cc_sc7180_gdscs,
- 	.num_gdscs = ARRAY_SIZE(disp_cc_sc7180_gdscs),
- };
+ 			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-controller;
+ 			#interrupt-cells = <1>;
 
 -- 
 2.52.0
