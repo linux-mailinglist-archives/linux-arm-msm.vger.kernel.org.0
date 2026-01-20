@@ -1,204 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-89856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oM0KAHeyb2nHMAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:51:03 +0100
+	id yER+KRCvb2lBGgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:36:32 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87AD147F72
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:51:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3115A47B48
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:36:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B98A98AD377
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 15:33:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8695A9CC80C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 15:34:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6590A47D948;
-	Tue, 20 Jan 2026 15:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0504245BD5A;
+	Tue, 20 Jan 2026 15:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bR3/T7zd"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fuiLwAjP";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="qIejbGZg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850EE47D94B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 15:13:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE0C428834
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 15:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768922035; cv=none; b=OgkQ7r1p9SwmxS+7Sn8fs5NXycLYneVtj5c4HDg2TSpBJXypC+XL0vfDwshvQT952OeK3+EI59RoghLapL75VCkHXQV9EtvTxxVFngvebzPM5UJHolfZR1zbh7lahckw8oy+cmszXA4HovHTZiBl+hKXSJLrBxLlxiyywfgoFwE=
+	t=1768922080; cv=none; b=aV0hDYCS8KIOAk2759Rj222Kf8L0WeRxXB/3au5I/iinbX5bHaOEPr6O3eSvQw9Bxkb16Vc8t6/DSzEor+JI10NQVfFISwA6CpvtGAHWkZV/Lp7Xjuvi0+CNGzkbnvtH6ojeOaf14vwUJxM4itmAgMMeRK5lowYu8gMo1ML5ovY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768922035; c=relaxed/simple;
-	bh=tTdNJ9w0A3SRS2jGZyO87hh6ddJ8/yTI7BHcKalWjPA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e0aQkNfheVSOSp9+cI3gpHteHd0qI05Ew1zvk9RlO0kd7Y7Ir2jo8Ox5hbL3jOMXO8yv1sKzLW8gjoakH1GdecVGG13Jr0zxnLuiVOtpjBqopItuF5EvQMlB/uK9zKN+zimhJAxvKR4Zgv+ohf8ANuPW5Eqrmiep0JC2YdpVwbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bR3/T7zd; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4801c731d0aso32848125e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 07:13:52 -0800 (PST)
+	s=arc-20240116; t=1768922080; c=relaxed/simple;
+	bh=zctGoCy9tj06FxCF/1MEy/+RkDyWDn4JObiaM6T8qrw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tv7c3ElqWOO/PuoEFt7xXLoJdlb3hS3SgUR5Laj/gyrOZlQsLf/ubG642UeHj87Ayc7mrVUzFxBEJ1DMxQjzYuJbeBAEbe2RzhUaajesN3c6dn40FYP1Cls969LuYIipa/bAfCxQBgEpRFNnKkn5X4cgQJjfvYbK96UGJcjnyn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fuiLwAjP; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=qIejbGZg; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1768922078;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fMaak1xtD3IGbAXkM0qNP33HT0c4dctivzgnO4kRoKw=;
+	b=fuiLwAjPxBZGII2j56pSln4Yjhve0q/0dE8Gk6brgciI0vRElg2IAfqJj7PsLXaOZ62cPl
+	1zW+i5fu9cgL+dFiXFAJK9+YSLigKrZ7eaifeMpLGkuoP/vTjmSY1kLL5/nfExJq6WbU5u
+	dpG2QKj7mKbSLCEnfVj1bUFbFVPX+J0=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-146-HDcrZVYnP5mA9BRXXb8vxA-1; Tue, 20 Jan 2026 10:14:36 -0500
+X-MC-Unique: HDcrZVYnP5mA9BRXXb8vxA-1
+X-Mimecast-MFC-AGG-ID: HDcrZVYnP5mA9BRXXb8vxA_1768922076
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-89463017976so18443816d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 07:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768922031; x=1769526831; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KfHF8XX2sLoiWwn6mh6WL+QXvB0XHx4J/lS+4r+T224=;
-        b=bR3/T7zdFsQ79orClB/OtuJkhWjteFZ0ldd6bNXwgN6fisE5qcOQgkjwxTZFoHHc5y
-         7yOyZDtZSZaDTS8ifjUmEfV9CoS4RA0mOQRRHhOX37mQc5i2WUhVK/u4Fj0WEq244H2m
-         EL8NGU7vTFgO0C5cgmMINHG7iQ82UZZYrBQhBcFL3LFsiYgUncQGXA/w0u1AqIGJk6WN
-         JM0QyEhH/TdLoVc9N/tGqY0ahOhJLCkixGa08RxflOIfnO2f/B+6aHagRzCQwLkG22Bf
-         QqDk0s97FGVeslJMAlK5OHWLIEqY2BEyQ63ZNs6fO3Us9xRwOe7ylg8LmnX5TJqPW7qe
-         UMhw==
+        d=redhat.com; s=google; t=1768922076; x=1769526876; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fMaak1xtD3IGbAXkM0qNP33HT0c4dctivzgnO4kRoKw=;
+        b=qIejbGZgKamY4rFzHLL83mnZxmxYlNkYzHuhzFCuUmVKbQMZDQKvJ7sRI0bwumDziy
+         pc9UXdCLKaDNL7g09rIc5uT9boJoTG85cffw/xUmrm090O6wsQl6tH00NOC9tdZFZuGD
+         kRDPdGeO1zff89wihMvd4J4xigGh1kaS5weMQyueaaVsq3gvf0tzS5FfS2/1CeGOSmfd
+         n0khonoKHvSM55rdEmANHcksCKRif0/MewXEcjVJ8ARWfnZMHW9P+c9tqQ0/FIgVtqO+
+         PKQ+G0qhDaigWjHUefdedvAKo89+h8Yla13NmkKSapxsJOQ3naP+qQgnX0q6ek7M+oaf
+         BdFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768922031; x=1769526831;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KfHF8XX2sLoiWwn6mh6WL+QXvB0XHx4J/lS+4r+T224=;
-        b=eHLtcCvkPs53vJ1V6oRf5hfmfboDnCVQzgl6E4ZUVXw+6rAgnHraRmhQWmczoTvZWN
-         6NVdJQPbzQtrnkAM+t+EZ3EUG4ID4ON+RIvr2McCdwU1EsoEbQ6TPDvtWvMlLZwL9/9W
-         JunniQUL8+zBDCrbtg+8dEmfej6VUhbgLEVOn+zzIHYgbz/bfWxXLc7mplM2WliHf0Lz
-         OqNv9D1kAghYNpvSS+s6DTtc/wZefZ2yqgsvVQKfbtjO5271292QMMeo2IVHy8wPXfL1
-         d1XZ1MCqacwpXqmgzIlA4eq2jnbea34QwkygbMaVuWwWCW3HDi6ew/te0qrwFo2ZVjhK
-         RhSw==
-X-Gm-Message-State: AOJu0YzAjNMU+M/UO/XYFcfknO/QcpBjb2eUggnSQmS1ee8qR4oSMQ1V
-	iFuUnkl0ZYw6KwvmaYGbNJoHccqMoo9WrbHgcGgN/F+7TrnspHw+3URSoa2lb5iciok=
-X-Gm-Gg: AY/fxX7vma6+hN010aTS/x9oli1AdK8wuLkRpZuz83RPuKwYrz+7iUIGbGylGNvTYXy
-	Xm2NZ/kf+5ejNLXKQ1mTUtPlTq5BJ9cNC0rBjA/r3yW94y/zCVV68WDIumvbn72UeWNN63OysHE
-	DvTQMYVJMgz91cv2BjNjQmug8icWWd1D5/F59SIKsiOIS7Xp7cTIlbBr2pDIqufxCE1X2Tl8ikH
-	i4akjTQq1mrHb0o4UL4oVSGFTnKYY6EIwok2yIL3pshyOv69n+EKYI7KHGp+6yivslzkpUOJr4B
-	p3kX/2YODhApxUkFeFAuAO0YctPvzQ7M2fwuJCVEP/OoEvagsOcSTsjUPPlJD3YKH4jeXtm9huv
-	DrWNFN+lOgU6gkaDC23zZf9SiLRHKc/y9xN+u9Ddh57dBWx/wCUMqhydseab8R//DSKcttiobsD
-	Xb+4cOnZWtCNEIaLcCYQyck2DciMReIwM=
-X-Received: by 2002:a05:600c:458d:b0:47d:264e:b435 with SMTP id 5b1f17b1804b1-4801e34209cmr173700875e9.22.1768922030743;
-        Tue, 20 Jan 2026 07:13:50 -0800 (PST)
-Received: from [192.168.1.221] ([94.202.56.172])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e9ee5c3sm113053335e9.2.2026.01.20.07.13.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Jan 2026 07:13:50 -0800 (PST)
-Message-ID: <ae85df64-b6b7-43d7-ba50-9c0525481299@linaro.org>
-Date: Tue, 20 Jan 2026 17:13:43 +0200
+        d=1e100.net; s=20230601; t=1768922076; x=1769526876;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fMaak1xtD3IGbAXkM0qNP33HT0c4dctivzgnO4kRoKw=;
+        b=EByiImrgSmwiS6vCE4r1yOM4K2gLexLKrDMYFcBnGucT+Uv9D0qSCYOI10yvNMj40u
+         wM8kwGYLl0JyFbxenBcbryvr48k8oIIOAyWu8uNRUGPVLV5RCC11yXcUENErEOyFd6af
+         IRY8kmQ4eW3jSxUKrQsed/qOo8dlILyDdpeGCdoFwfeu6ZXiU1u3bPqyGe39+s9olSZ2
+         1d7oRpD5+k1Cud2HW80DOntIdOrbnJbCTkLUi0fz7nO6GfEING1dyH2EgxobQXHf0LER
+         uPkZxS9r27dw5RsuAvKRGDJN86ZT+SgpnMIMyAFKWeqHrD4qGdORW2oJRHtMvno5o1Vj
+         BEYg==
+X-Forwarded-Encrypted: i=1; AJvYcCXjIiE3rNVBbAUL4rxPWIN7AQzwg5mjSo6a5TXFHp8ZZhlsDvp3xqNrWaipBr6ntMP8u2p/03D1ExXrIVD3@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiisZQiCIaF0UNKbU6jzK2ENlne15NxP80JmPkK2dCTNZR0lYj
+	gGdHkWXEwnX1yaiA2X0lm2FoU5RkJFokdYAyraMrsWjFEtpoR7o2bZXd3n3MSwl1EbY1Poo0KJD
+	m3m0u/SSE43t8ZMutk/lesjskL8+Txb1SB3w9HT/o353pbSN3VAEIqWkMUOWrXCF/lxU=
+X-Gm-Gg: AZuq6aLDiCxfGwU7/4cJwegOlk+fIGAL5pRmcQ9rzZ3ZfvO/rZ0Ms3v3y4dz/nONOQo
+	gQYB3l8L9qPgkAvSNdYVkvM940YJP58djwVG4Hv/IPEPGAYwc92fU+U8kxIZZNpxX02H1Adkq4T
+	8k61KA3SnrCDBF00v9Nue/nmjtqOjfhYaW1vAOibvXt5n3SproL49XK/cn6HenF5Jxdg57rLK88
+	kw99XJsYPxYIyb5U2SYVID6KcrYnjGL+Qj1wLIj7oB2ELShpcu4S+lezjbgiHs+ylDe/p6Z9ax9
+	yb/28/5p0O+C3xVxOINQOSmQurjklNtMkDM0ESO6rgb1VePY0kuNYxE/Xr3PSyjY7gHGSBJrG3O
+	NuCOSz8u5r6VV/9launbDsh9OEowfTuin8cj1qYcKYa49
+X-Received: by 2002:a05:6214:1cc9:b0:88a:3b1d:2f70 with SMTP id 6a1803df08f44-8942e0c3442mr216662316d6.10.1768922076050;
+        Tue, 20 Jan 2026 07:14:36 -0800 (PST)
+X-Received: by 2002:a05:6214:1cc9:b0:88a:3b1d:2f70 with SMTP id 6a1803df08f44-8942e0c3442mr216661746d6.10.1768922075621;
+        Tue, 20 Jan 2026 07:14:35 -0800 (PST)
+Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8942e5e49f2sm109107766d6.6.2026.01.20.07.14.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 07:14:33 -0800 (PST)
+Date: Tue, 20 Jan 2026 10:14:32 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gfx3d: add parent to parent request map
+Message-ID: <aW-b2EmynhZlp0mZ@redhat.com>
+References: <20260117-db820-fix-gfx3d-v1-1-0f8894d71d63@oss.qualcomm.com>
+ <vlvp4od6ykhneabgtpln7vpyyfpfuilasbmbfu222zgspc2ppl@iuuzldtoejaj>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/26] mm/memblock: Add MEMBLOCK_INSPECT flag
-To: Mike Rapoport <rppt@kernel.org>, david@redhat.com
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, tglx@linutronix.de, andersson@kernel.org,
- pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com,
- tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-arch@vger.kernel.org, tony.luck@intel.com, kees@kernel.org
-References: <20251119154427.1033475-1-eugen.hristev@linaro.org>
- <20251119154427.1033475-19-eugen.hristev@linaro.org>
- <aVImIneFgOngYdSn@kernel.org>
- <4b8953ac-567b-4d68-9c25-72a69afdf1b3@linaro.org>
- <aVlsqdgXSBLIE9Xi@kernel.org>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <aVlsqdgXSBLIE9Xi@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <vlvp4od6ykhneabgtpln7vpyyfpfuilasbmbfu222zgspc2ppl@iuuzldtoejaj>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Spamd-Result: default: False [-1.96 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	TAGGED_FROM(0.00)[bounces-89856-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[redhat.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[redhat.com,quarantine];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-89857-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	FROM_HAS_DN(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[eugen.hristev@linaro.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,linaro.org:mid,linaro.org:dkim]
-X-Rspamd-Queue-Id: 87AD147F72
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 3115A47B48
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-
-On 1/3/26 21:23, Mike Rapoport wrote:
-> On Sat, Jan 03, 2026 at 08:36:40AM +0200, Eugen Hristev wrote:
->>
->>
->> On 12/29/25 08:56, Mike Rapoport wrote:
->>> Hi Eugen,
->>>
->>> On Wed, Nov 19, 2025 at 05:44:19PM +0200, Eugen Hristev wrote:
->>>> This memblock flag indicates that a specific block is registered
->>>> into an inspection table.
->>>> The block can be marked for inspection using memblock_mark_inspect()
->>>> and cleared with memblock_clear_inspect()
->>>
->>> Can you explain why memblock should treat memory registered for inspection
->>> differently?
->>
->> It should not, at a first glance.
->>
->> The purpose of the flag is to let memblock be aware of it.
->> The flag is there to have a "memblock way" of registering the memory,
->> which inside memblock , it can translate to a meminspect way of
->> registering the memory. It's just an extra layer on top of meminspect.
->> With this, it would be avoided to call meminspect all over the places it
->> would be required, but rather use the memblock API.
+On Mon, Jan 19, 2026 at 09:39:30AM -0600, Bjorn Andersson wrote:
+> On Sat, Jan 17, 2026 at 05:54:47AM +0200, Dmitry Baryshkov wrote:
+> > After commit d228ece36345 ("clk: divider: remove round_rate() in favor
+> > of determine_rate()") determining GFX3D clock rate crashes, because the
+> > passed parent map doesn't provide the expected best_parent_hw clock
+> > (with the roundd_rate path before the offending commit the
+> > best_parent_hw was ignored).
+> > 
+> > Set the field in parent_req in addition to setting it in the req,
+> > fixing the crash.
+> > 
+> >  clk_hw_round_rate (drivers/clk/clk.c:1764) (P)
+> >  clk_divider_bestdiv (drivers/clk/clk-divider.c:336)
+> >  divider_determine_rate (drivers/clk/clk-divider.c:358)
+> >  clk_alpha_pll_postdiv_determine_rate (drivers/clk/qcom/clk-alpha-pll.c:1275)
+> >  clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
+> >  clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
+> >  __clk_determine_rate (drivers/clk/clk.c:1741)
+> >  clk_gfx3d_determine_rate (drivers/clk/qcom/clk-rcg2.c:1268)
+> >  clk_core_determine_round_nolock (drivers/clk/clk.c:1606)
+> >  clk_core_round_rate_nolock (drivers/clk/clk.c:1701)
+> >  clk_core_round_rate_nolock (drivers/clk/clk.c:1710)
+> >  clk_round_rate (drivers/clk/clk.c:1804)
+> >  dev_pm_opp_set_rate (drivers/opp/core.c:1440 (discriminator 1))
+> >  msm_devfreq_target (drivers/gpu/drm/msm/msm_gpu_devfreq.c:51)
+> >  devfreq_set_target (drivers/devfreq/devfreq.c:360)
+> >  devfreq_update_target (drivers/devfreq/devfreq.c:426)
+> >  devfreq_monitor (drivers/devfreq/devfreq.c:458)
+> >  process_one_work (arch/arm64/include/asm/jump_label.h:36 include/trace/events/workqueue.h:110 kernel/workqueue.c:3284)
+> >  worker_thread (kernel/workqueue.c:3356 (discriminator 2) kernel/workqueue.c:3443 (discriminator 2))
+> >  kthread (kernel/kthread.c:467)
+> >  ret_from_fork (arch/arm64/kernel/entry.S:861)
+> > 
+> > Fixes: 55213e1acec9 ("clk: qcom: Add gfx3d ping-pong PLL frequency switching")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > 
-> memblock APIs are not available after boot on many architectures, most
-> notable being x86.
-> 
-> But regardless, I can't say I understand why using memblock APIs for
-> meminspect is better than using meminspect directly.
-> I'd imagine that using meminspect register APIs would actually make it more
-> consistent and it would be easier to identify what memory is registered
-> with meminspect.
-> 
-> In the end, memblock_alloc*() returns dynamically allocated memory, just
-> like kmalloc(), the difference is that memblock is active very early at
-> boot and disappears after core MM initialization.
+> Why didn't Brian get Cc'ed on this patch? I'd love to have his input.
 
-Hi Mike,
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-Thanks for sharing your opinion.
+clk_alpha_pll_postdiv_round_rate() previously had this code:
 
-David, what do you think, does it make sense to have this flag or we can
-ditch it and use meminspect directly ?
+        return divider_round_rate(hw, rate, prate, table,
+                                  pll->width, CLK_DIVIDER_POWER_OF_TWO);
 
-Also, for some memory blocks, they do not disappear ever, e.g. the
-printk log buffer, it's allocated early and never freed, so it's
-required to have some memblocks marked for inspection.
+divider_round_rate() called divider_round_rate_parent(), which had this
+code that set the best_parent_hw:
 
-Eugen
+long divider_round_rate_parent(struct clk_hw *hw, struct clk_hw *parent,
+                               unsigned long rate, unsigned long *prate,
+                               const struct clk_div_table *table,
+                               u8 width, unsigned long flags)
+{
+        struct clk_rate_request req;
+        int ret;
 
-> 
->> And further, inside memblock, it would be a single point where
->> meminspect can be disabled (while preserving a no-op memblock flag), or
->> easily changed to another API if needed.
->> Ofcourse, one can call here directly the meminspect API if this is desired.
->> Do you think it would be better to have it this way ?
->>
->> Thanks for looking into it,
->> Eugen
-> 
+        clk_hw_init_rate_request(hw, &req, rate);
+        req.best_parent_rate = *prate;
+        req.best_parent_hw = parent;
+
+        ret = divider_determine_rate(hw, &req, table, width, flags);
+        if (ret)
+                return ret;
+
+        *prate = req.best_parent_rate;
+
+        return req.rate;
+}
+
+I coverted clk_alpha_pll_postdiv_round_rate() to
+clk_alpha_pll_postdiv_determine_rate(), and that now directly calls
+divider_determine_rate().
+
+I'll look through the other cases where divider_round_rate_parent() was
+called just to be sure there's no other cases of this.
+
+Brian
 
 
