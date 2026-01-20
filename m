@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-89830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IIKLGFVmcWmaGgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 00:50:45 +0100
+	id yDRTAPQ6cGmgXAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:33:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCFD25FAA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 00:50:44 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 640CE4FD08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:33:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D723070C20E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 12:31:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 619D3829C83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 12:33:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AD0942846D;
-	Tue, 20 Jan 2026 12:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0713B3E9F8C;
+	Tue, 20 Jan 2026 12:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UT5s/7+B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BdI4N5tm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E83A8FFF;
-	Tue, 20 Jan 2026 12:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC31E35A939;
+	Tue, 20 Jan 2026 12:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768912219; cv=none; b=iF/QwP1L0uLXuhDraj2QJzK0sggkgL53zo/FBITp7b43bU8iNueFWoGSJX2nBzgwZ5xNqLg35gwINEith84i8VX3Cmg9YCmjtLFIpTCsOSrraxZfib+GAAv+Hu+hTvrLhb9Nd1J1JVG0cZHahaUHDUDWDUpn8Kp9Rw3wfNWw6GY=
+	t=1768912300; cv=none; b=t0UAByMkhURgB0dcjt2gv66a9MzCutv7eDLha/3sgNZwIii94mMRtUcU7IxB8Cyjis1ZWlLWk4zelyuZIr6hjwEooy7j1BUsw2wIQOVIBAAi5MEYIyXcQjkBlzwo+tufQ6Uk9x8U28hgh1ni1NiDNs7rAt6idZxxjFgJ9qhS0wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768912219; c=relaxed/simple;
-	bh=xBs/MwE3PqTwhLqA7Q8KYvDEWAqMaIzPGGNLMJe5yOA=;
+	s=arc-20240116; t=1768912300; c=relaxed/simple;
+	bh=9C4iEBqyXAfkbe6trSaNFjqrSpj7O42c6FjkKJkCPIE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IH/Fj1ripwKK8TIR/zd+PX+t7vNmhsUdCHTXp22yj6DvM3hl0qeSPaVWoRaHxQThmhTL+QvWAaLrJLCRjLzfAEInqXYThooOtlI0ODMV9niwsRymeXKqwXVu5IRYXg5qNfFHRGbQyWFME4lgRcBw/X0Fzrw9qj3sXvLYBZkgc70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UT5s/7+B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0E9C16AAE;
-	Tue, 20 Jan 2026 12:30:15 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tZzUoSLndb2Qlxyu9xJJb+WL28TKLcSwfNpQwjpiiGMeJ2hu64P+n24b9QfuA/BZ1hVUo7tre5vwYCSizcOZf7g17d3p8SG2wwM39pWvyDKiec6bvZDzEuXZpyyYpzIRAwdtbRkZ4bwyRmNxUHHEqOp6+0NfywHyrjMpjzrVA9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BdI4N5tm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745B4C16AAE;
+	Tue, 20 Jan 2026 12:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768912218;
-	bh=xBs/MwE3PqTwhLqA7Q8KYvDEWAqMaIzPGGNLMJe5yOA=;
+	s=k20201202; t=1768912300;
+	bh=9C4iEBqyXAfkbe6trSaNFjqrSpj7O42c6FjkKJkCPIE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UT5s/7+BdcwGYFN3XpVEaTOIu6U/5Yt59Xdx3BihSaQASRv3Nbi3R+Hzha1frQuie
-	 f0QYK3CWvcsbZ/ESYSA7S9+1+qx0qV+4UORENMQtqnX/L58dzxnSXozdPjMJ1YPJqj
-	 Vypp4jUjbaUGlGre1lkLHhiawj8WWX792PWtxa1ntu04QNraGDnj3elr36LIwNpHrO
-	 rORK/koYljxFrZ1E7M0ZRq7CB3R6FTq7b0WCVa2+gILOSEC72IVa1vQWV1WBgCW71b
-	 702zAA1Ojhe00ox/lIzxazo93HTkSD2RyDYqk3MAU61156mRciN8JUtztJWNW53iDm
-	 s8Jd/3CEpTz8A==
-Message-ID: <bdc8011b-6501-43e5-815b-a981df665e03@kernel.org>
-Date: Tue, 20 Jan 2026 13:30:13 +0100
+	b=BdI4N5tmJoSSUvjTBD13rGVuSrXpKul6I8CTBjgRLxVJDFttCt/uFllcbSFJj35zW
+	 iyIaBkicCp6/2/p7i8O0GFeqd/ExgikyD+iYFHT9EjqkD0Om/sHhB+AkfFJmglA6RC
+	 kYDgZ7KykN8gQifnrXaarauRX7YZK2ovIqAKK9MXMgBzve+s5fXKqcT5ykKjfdt4r2
+	 Ee4JUmnNS4su75mmMl9h5mnabqnTyW8Xh9IDnzM+6xHWauRxDV8vRSJZfVYNoo5zj8
+	 UaPlPnoMzQG3u2iMOUsWLEMTf1yOqlUz0zqaFewYrnCRWOKeis9szSf8HfufFHjuuB
+	 /qcb5p4ExuoXA==
+Message-ID: <8f3ea845-2f5a-42e1-b8c9-4e183c463e58@kernel.org>
+Date: Tue, 20 Jan 2026 13:31:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,22 +55,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: msm: qcm2290-mdss: Fix
- iommus property
-To: Sumit Garg <sumit.garg@kernel.org>
+Subject: Re: [PATCH RFT 3/3] arm64: dts: qcom: glymur-crd: Enable USB support
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+ Abel Vesa <abel.vesa@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
- vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
- robin.clark@oss.qualcomm.com, lumag@kernel.org,
- loic.poulain@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
- linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>
-References: <20260116062004.237356-1-sumit.garg@kernel.org>
- <20260116062004.237356-2-sumit.garg@kernel.org>
- <20260116-transparent-dexterous-nightingale-c029cb@quoll>
- <aWo0t1EoVhStmOj7@sumit-xelite>
- <6020af2a-5baa-4594-8cbc-bf7241f0128e@kernel.org>
- <aW9yCK0rPjRcqplk@sumit-xelite>
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+ Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+References: <20260113-dts-qcom-glymur-add-usb-support-v1-0-98d6d387df01@oss.qualcomm.com>
+ <20260113-dts-qcom-glymur-add-usb-support-v1-3-98d6d387df01@oss.qualcomm.com>
+ <1299cddb-8205-47bc-89c4-98b4ddcd688c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,27 +114,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aW9yCK0rPjRcqplk@sumit-xelite>
+In-Reply-To: <1299cddb-8205-47bc-89c4-98b4ddcd688c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.96 / 15.00];
-	DATE_IN_PAST(1.00)[35];
+X-Spamd-Result: default: False [-0.46 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	TAGGED_FROM(0.00)[bounces-89830-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-89831-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -144,66 +142,40 @@ X-Spamd-Result: default: False [-0.96 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: CCFD25FAA7
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 640CE4FD08
 X-Rspamd-Action: no action
+X-Rspamd-Server: lfdr
 
-On 20/01/2026 13:16, Sumit Garg wrote:
-> 
+On 20/01/2026 13:07, Pankaj Patil wrote:
+> On 1/13/2026 6:03 PM, Abel Vesa wrote:
+>> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
 >>
->>>
->>> There has been ongoing disscusion related to how stream ID associated
->>> with different translation context can be represented in DT here [1].
->>> With that only the secure bank stream IDs can be properly represented.
->>>
->>> Here I just followed the approach taken by Adreno GPU bindings for the
->>> iommus property [2].
->>>
->>> [2] Documentation/devicetree/bindings/display/msm/gpu.yaml +82
+>> The Qualcomm Glymur Compute Reference Device comes with 3 Type-C ports,
+>> one USB Type-A, and a fingerprint reader connected over USB. Each of these
+>> 3 Type-C ports are connected to one of the USB combo PHYs and one of the
+>> M31 eUSB2 PHYs. The Type-A is connected to the USB Multi-port controller
+>> via one of the M31 eUSB2 PHYs and one combo PHY. The fingerprint reader
+>> is connected to the USB_2 controller. All M31 eUSB2 PHYs have associated
+>> eUSB2 to USB 2.0 repeaters, which are either part of SMB2360 PMICs or
+>> dedicated NXP PTN3222.
 >>
->> Such justifications are pointless. What about commit msg which explains
->> why this was added? What about entire public discussion happening with
->> this patch? What about all previous revisions of that patch and
->> discussions leading to this piece of code? So you just found few lines
->> of code, ignored entire background and any other arguments, and copied
->> it here.
-> 
-> Looks like you are mixing other patch-set with this one.
-
-How different? You found some old code and use it as argument that you
-can do the same:
-
-"Here I just followed the approach taken by Adreno GPU bindings for the"
-
-so how I am mixing patchsets in my response above?
-
-
-> 
+>> So enable all needed controllers, PHYs and repeaters, while describing
+>> their supplies. Also describe the PMIC glink graph for Type-C connectors.
 >>
->> That's the approach - I found a piece of some buggy code, so I can do
->> the same.
->>
->> Again, we discussed it 2-3 months ago for the same patch and I gave
->> exactly same reason why this patch is incomplete.
-> 
-> Sorry you are just mixing different discussions here. I am trying to fix
+>> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+>> Co-developed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+>> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+>> ---
 
-How am I mixing? Exactly same approach was posted for other SoC. I gave
-same comments. Same comments apply here.
 
-> the SMMU stream IDs for Agatti SoC which listed secure bank stream IDs
-> incorrectly.
+Please kindly trim the replies from unnecessary context. It makes it
+much easier to find new content.
 
-You explain what you did, but you did not explain why or how I mixed
-anything.
-
-> 
-> And this is the first version of this patch only for DT bindings fix for
-> Agatti, there are no prior discussions I had on this aspect upstream.
-
-I did not say you had discussions before. I said exactly same problems
-were being solved and I give here and there exactly the same feedback.
+I went through entire pages of quoted text and found no relevant
+answer... probably because it was deep hidden in these pages of
+irrelevant quote.
 
 Best regards,
 Krzysztof
