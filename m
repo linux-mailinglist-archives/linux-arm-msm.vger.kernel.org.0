@@ -1,53 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-89866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yH/1F6zYb2n8RwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 20:34:04 +0100
+	id cLgjDknhb2n8RwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:10:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9D864A80F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 20:34:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A4B94B118
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:10:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 819719217C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:31:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E3342909D14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 17:44:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87BCA3D649C;
-	Tue, 20 Jan 2026 17:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2866942E014;
+	Tue, 20 Jan 2026 17:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kl/zhGyR"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="pq6r8SCH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DD130ACFB;
-	Tue, 20 Jan 2026 17:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3EE42B73F;
+	Tue, 20 Jan 2026 17:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768930267; cv=none; b=FpDVdsR1FgSJAeapmxzzdoP0UALy0kM8/wjfUzFOzXeWfFHDRw4yuIXozBFCYXtW9smAa2I7aedRcghdHXCziSjMUbYUwbYkkZPkBSY1aVsvvG3Hgzem4OqwShKhP2m9IevfBzfPtSi3OZJsh6EcjKCGh2S9axjsxELiDIQToWs=
+	t=1768931086; cv=none; b=k9eXgppivc7W4kLFEyvmlnxZQ9cKhRfy8Su764v2gP26klhBA2tHv5GpkPmYh6q1spMuIcwm8Lqo8no0SaXmc09W816rhUQcJbrZZbKZiqO0eM2wdiwK21h/p7TWIbnRMYP8laNlv+1kKKpVsuo4f1BP2RlQCrr35q4SAekHeM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768930267; c=relaxed/simple;
-	bh=VIKlUDgyHdv2c/M6fpYFalNrJjSA1Ld1k6OBaxLX+wE=;
+	s=arc-20240116; t=1768931086; c=relaxed/simple;
+	bh=rAL6Wr3kK2sfuIOQLxh2BNLuJGx6cQHRQ++WrUiVuBA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bV36jUuc55B2hSLw510yWBvrLuU7aPoP6P/LZSJKJskYHNNLLLlSfkOF4E7fBaPpeSbfPbfS9fqcqGfGTftt+8JB7LLyuNNNROONgoNBegS4S1oaJCFJnVg4iiqQRY6YsJR+pvasyIt6rqYHE05moQn+tonQJAkLQJimuAkQNLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kl/zhGyR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1768C16AAE;
-	Tue, 20 Jan 2026 17:31:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768930266;
-	bh=VIKlUDgyHdv2c/M6fpYFalNrJjSA1Ld1k6OBaxLX+wE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Kl/zhGyR5zsuZdYwD50o1YCzyzIKhir0ym7wY/ZnGU1eX/giEFZI/9+0fyaYWxFxx
-	 Vmayd9sBvm3ytLKVeMYcKqywHNXVM/5aCFScsaCWX8LR5/Xo7zZ3vTlY5N2fN6Xxf5
-	 WCNhkKQjlbXdvSoGYS+ye78tvLb58vUjszMT2E/Uervu5bukKNDIhWUYV8rIUAcBH4
-	 tMsPFy3OCLZOXQf0eyZOZETj+mge9+QDIaJmGK1idXIC/3ZxcG4sVpdGrNyd9tzUaZ
-	 BNm+fG6gd+A+Oct8aYCurAOuI0XVKTEVcB+P2Zf+KTG+mpT7A91wsK6Mv4U5yUAx6S
-	 G5B1nDCAc+hlA==
-Message-ID: <95b38a2a-d08f-4416-8492-f9c6767c61d6@kernel.org>
-Date: Tue, 20 Jan 2026 18:31:01 +0100
+	 In-Reply-To:Content-Type; b=J43gttLBRkiOp0K3/DnwLtfkaWPv7WfTJjnUra/k2VaR3fwiCR2J1vysS5ysjkqc7EwLqdmlnSZPw1dEmOzDxgCzPSoB8s8/fO917w3yvY10dC64E+3RLTOz0Oo9fvKv0AJR5qRdagbzBVfbzZDmuDi392nxr03Sj0u0CunJVdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=pq6r8SCH; arc=none smtp.client-ip=199.89.1.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 011.lax.mailroute.net (Postfix) with ESMTP id 4dwZTR5PLfz1XM0nq;
+	Tue, 20 Jan 2026 17:44:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1768931081; x=1771523082; bh=jSVp0+GqBqVYbXvWwMsku3Rn
+	5OOybZ+l8MKCb477KGY=; b=pq6r8SCHkeRLsxJulK8m7wdsq7JxNce89K6lyAW6
+	XraVAkzRlbOn0TS04ClnCXVE864VQtGCz9KLlOjkoPQsiWVojM3syjAatBGPd62Z
+	jm/PlEhxJeT50V+F+tkUmdIFmNgG4/uhsRlxVjgZ5PX/oylUYSDKrTLQh3wsYKD7
+	i8t7S5noxJcpsLuXToYJMAbqoAmF4BLoONN014II1clr63GE/o4MftYHrwtRPa1x
+	PPltVGAwlawoBocQrjENozY10A0SLnHnQwCwdUCfmLGWfK97TtrGEKeFucztbOtq
+	rBoTG+DTfBs+uj/dBvy0lSSONZddbvlLSmbydUSB2VKF2Q==
+X-Virus-Scanned: by MailRoute
+Received: from 011.lax.mailroute.net ([127.0.0.1])
+ by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id KYOagl7B8MUb; Tue, 20 Jan 2026 17:44:41 +0000 (UTC)
+Received: from [100.119.48.131] (unknown [104.135.180.219])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4dwZTL27pmz1XM5jn;
+	Tue, 20 Jan 2026 17:44:38 +0000 (UTC)
+Message-ID: <b815dd96-5518-4667-9fde-d23391102717@acm.org>
+Date: Tue, 20 Jan 2026 09:44:37 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,112 +70,63 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom,glymur-tlmm: Document
- Mahua TLMM block
-To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
- Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+Subject: Re: [PATCH V5 3/4] scsi: ufs: core Enforce minimum pm level for sysfs
+ configuration
+To: Ram Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>, mani@kernel.org,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org,
+ James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260120-pinctrl-qcom-mahua-tlmm-v3-0-8809a09dc628@oss.qualcomm.com>
- <20260120-pinctrl-qcom-mahua-tlmm-v3-1-8809a09dc628@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+References: <20260113080046.284089-1-ram.dwivedi@oss.qualcomm.com>
+ <20260113080046.284089-4-ram.dwivedi@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260120-pinctrl-qcom-mahua-tlmm-v3-1-8809a09dc628@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20260113080046.284089-4-ram.dwivedi@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-1.96 / 15.00];
+X-Spamd-Result: default: False [-0.46 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[acm.org:s=mr01];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-89866-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-89867-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[acm.org,reject];
+	DKIM_TRACE(0.00)[acm.org:+];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[bvanassche@acm.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: D9D864A80F
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,acm.org:email,acm.org:dkim,acm.org:mid]
+X-Rspamd-Queue-Id: 9A4B94B118
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 20/01/2026 18:22, Gopikrishna Garmidi wrote:
-> Document the pinctrl compatible for the Mahua SoC, a 12-core variant
-> of Glymur. The PDC wake IRQ map differs since PDC handles the interrupt
-> for GPIO 155 instead of GPIO 143 as seen on Glymur.
+On 1/13/26 12:00 AM, Ram Kumar Dwivedi wrote:
+> Some UFS platforms only support a limited subset of power levels.
+> Currently, the sysfs interface allows users to set any pm level
+> without validating the minimum supported value. If an unsupported
+> level is selected, suspend may fail.
 > 
-> Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,glymur-tlmm.yaml | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
+> Introduce an pm_lvl_min field in the ufs_hba structure and use it
+> to clamp the pm level requested via sysfs so that only supported
+> levels are accepted. Platforms that require a minimum pm level
+> can set this field during probe.
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
