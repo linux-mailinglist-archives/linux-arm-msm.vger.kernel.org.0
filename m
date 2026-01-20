@@ -1,98 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-89753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA7E5D3BE06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 04:50:26 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1391AD3BE9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 06:05:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 776A034C886
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 03:50:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F35A04EA296
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 05:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D46633507B;
-	Tue, 20 Jan 2026 03:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE845361645;
+	Tue, 20 Jan 2026 05:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZmqhouTb"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="ZTZDLJy8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E27335070
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 03:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F58358D38;
+	Tue, 20 Jan 2026 05:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768881022; cv=none; b=nXbAPLGXlI/0A1QX+4vftuvf+4E4SgKhg48uffueTXlcqg62bga/HSrkvW+oyNLap6UCnk5kdW+4EawVzxdfih86S3s4qDutuHlolBN3/6jFbf8wr/vvJI9rDt1qMrsoqwXoa5TjFJ8kLThNGJ6wkmwKln6xb1F1AoX50r/1s1o=
+	t=1768885508; cv=none; b=DWDFejuhE4dK/TeMesgxalv2w4uqfPlGZW+1Bcrffp7hRr4LaP7FiZaOTfKl5WYOy1wplktpb+pNKeoSZEAMUE+DnqPM206H/tLznhG6bJv/MIU+Pd9h2hmC+SD6EZ9BeaNV4B7NfCb8pKC9NZNNzMprYqUn3uzCxmmynpvvsew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768881022; c=relaxed/simple;
-	bh=YouqfwVWzYXpcikOlfu9sTS3gDOn1ZFujhD3ULTm95g=;
+	s=arc-20240116; t=1768885508; c=relaxed/simple;
+	bh=BrIXmvybUtoWY4wENWrhxh7+xxm2r7BqU2j1hKLg/G4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cER+Zpa/5E9KCJ/qgwVhxpfMISOXFc02R+1i9K9pK+HORyCGo9vUQZggydmna4WW5PjATSQJbdEGzx3TXGGrjxAjEXus9stnaES9cLbjr+rOznIAWF9wt6ZNDnWMeJil3TVE0V6WoTPVWg7rCw4As9YrRS1vPbiz4Cm+GxlfKIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZmqhouTb; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8c59bce68a1so315915585a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jan 2026 19:50:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768881020; x=1769485820; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J0ylyK0Iu22RJ/xkcdGlRObGYO0FeHTfl507VqBaAx4=;
-        b=ZmqhouTbwST4ddALMVWqWYXrD6SOgQJIASZXcp1vBD6BF+Zo55rXjoSNVULPX/aRUW
-         ur9RsyoFLFnJ6IMDWoqqNtsRoLyCqppfLbCN8/CR4nkAyXRqFlfP9OHMcxp9pm8FaKRI
-         NYcwVFQ4jagrD5FgIYl/XzZKnbl3Wic0TpoI1ow0pjv9PA04fsQ8uuiePnWSlvfeGx+m
-         r3apki+c9emFM70Q++iVoS2lyRHcMo4Wji42O7/5C3eyQ9mdC7TDLksftz4wFGgcqauk
-         Ceczqnr/IlqyLmvKDN8Hj7H1NnXphNcPnq5zRf4rkbHVZOPqwDlgD7bhijGExMXJhnbd
-         oqUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768881020; x=1769485820;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J0ylyK0Iu22RJ/xkcdGlRObGYO0FeHTfl507VqBaAx4=;
-        b=oUu+aT280IqQJL0FaJAN06mqBYAl4h8oxL/Lm2AjGMoYz2PQ0RNJW/GFoxZzBdv11v
-         p6kkvQxy9hV6bUS055kA4m4ryqSMj9pHP0YBNyZYPbayX5WCC5VqMsI4+oxEOrnig2+0
-         lzg1p0UkiR+Ackheg0NO4aOF4dkfNuvSzHtyCLYhlEVtxtv5A4jfzZinYDU7nlLRSkfe
-         irKmalOzIs8CA1gfG7hHR3A5kiyzZViIhS81N3CFFQo9Vicv2LbjeemZ+QOhLyBH1jEa
-         2W2p4uu/gHxZl/yPXNx5ZQU8WHx0aaOzNx9AnfJ/wjUsFD5ZOu6NR8a6faDJsCqVY8FY
-         br2A==
-X-Forwarded-Encrypted: i=1; AJvYcCX4R3pM6HpYODVzDfJ2Hd/T1iUX4rv1r+Kds0muV+Efx5T9d+sWVZ93gK0KjapccsUrwp9PvKqSf1w9q0qz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/iQKqrD8r69lfF0mxxE63lBMsSJZhhJfBdeejX4ccoJiIE4ez
-	HAlLTlATul0YLgq2iIxi8w1qzs7CqCK2gbF1dKtDlPyFrjmoF7R8sBlh
-X-Gm-Gg: AY/fxX7QL97hAbTOsn1HklUvLJvPsKgFIK7Br2zPyaOxqHdkDSSFQtU7o8VfUZCF9Or
-	ABNFG1IXLrkvVWTR5nW0XYhZtpxmExeZuPjQf6KsjRpGjcpp9iVSXm1gw3tCrH5/ZJuj260uaFl
-	jdkBgBCuCmXn5sCH+CpPkZHUV6V+YAS2PqF23UkZZg4jh+LAHySZ2dVE1NveSit4+sWY4490bK7
-	XPCkbzy2TXMehwVhEVrx+MNjZ9XXUH7b8iqy2xC6Nhznf1057O3sQqa1Gi8CkfSuuM0qx31XgsY
-	VtLzeTdd2yeo1QF8he0OIOlxkFTdxTNpqkQT0Xju1hz3NOoydr2xv0fXOWYZ7pBtjL+s1CVvi6+
-	aA8DtCspDdOruJ5c8JeAA5YyrkJqLBaLNB3pm7BU6N4V+5/BPL6MAltBHFYXl2UIZCS+kKaIw7r
-	bkMh+Gwd+KAoL7lE8xfguTb+Mq
-X-Received: by 2002:a05:620a:3f97:b0:8b2:2607:83d5 with SMTP id af79cd13be357-8c6ccf2381fmr56720685a.75.1768881019642;
-        Mon, 19 Jan 2026 19:50:19 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c6a7250a60sm936184085a.31.2026.01.19.19.50.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 19:50:19 -0800 (PST)
-Date: Mon, 19 Jan 2026 22:50:41 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Robert Mader <robert.mader@collabora.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v7 2/5] media: i2c: imx355: Support devicetree and power
- management
-Message-ID: <aW77kXzBjAlIMG1C@rdacayan>
-References: <20260117040657.27043-1-mailingradian@gmail.com>
- <20260117040657.27043-3-mailingradian@gmail.com>
- <a29ff1e4-117c-4703-b0c7-73ad4e369201@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPKTgc4Vxq3oSNIMVsTFWE39yynrCqiBEuLGe2dXvF5eiPxLHNL+zWWTWlV3XecPZQ3eT+Z2m+BepByNOT72foaXpokuRzGJYLWG03Fg4ByWDM51/J0ctPr5tuJW4iz1VUynIXoksJMPguQWPJTeISineHAkj6gAKP/oREVlPf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=ZTZDLJy8; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wCN4UYMt+Rx9hUfDdniW1Dw+n2P8tOWoG81cAbW5WLA=; b=ZTZDLJy8AtdAVEYsVuFeC7mDKa
+	uqcRNQ3b5NqGxITW36UeV/zro1ZtWcMy7ec+fSFOg1es3Z1d06YQfxeHw3FG2kmC07/YObcV3gTb8
+	aARNhEQZR4bvFJA5sZRxDN7DurNgQ9+5GCqBgbKu7mUIXt/3wx/sHJWfx09jYEouEMxiLKmhgPaNu
+	sFXgMjYw7twYE+jl/TdOcy0GJNScd+FPGLfbg6qY4ySI+la+/N5KmtzDmwS2+WwgdM5jm3Vd5+DQ5
+	GrrOuyciKjra04i3y4zgH6yU4yuGKHPnA61cyJKRTFbl0Sx8IuCJUq2Mu0IePKXBYWNlBoAd3wlJG
+	fV3zK6qQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:46264)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vi3vE-000000005rn-1wmm;
+	Tue, 20 Jan 2026 05:04:56 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vi3vB-000000007Am-2N4p;
+	Tue, 20 Jan 2026 05:04:53 +0000
+Date: Tue, 20 Jan 2026 05:04:53 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: linux-phy@lists.infradead.org, davem@davemloft.net,
+	maxime.chevallier@bootlin.com, alexandre.torgue@foss.st.com,
+	mohd.anwar@oss.qualcomm.com, neil.armstrong@linaro.org,
+	hkallweit1@gmail.com, mcoquelin.stm32@gmail.com,
+	netdev@vger.kernel.org, edumazet@google.com,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	vkoul@kernel.org, andrew@lunn.ch, pabeni@redhat.com,
+	andrew+netdev@lunn.ch, linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [net-next,05/14] net: stmmac: add stmmac core serdes support
+Message-ID: <aW8M9ZiiftGBQIRM@shell.armlinux.org.uk>
+References: <E1vhoSH-00000005H1f-2cq9@rmk-PC.armlinux.org.uk>
+ <20260119192125.1245102-1-kuba@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,36 +76,72 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a29ff1e4-117c-4703-b0c7-73ad4e369201@linaro.org>
+In-Reply-To: <20260119192125.1245102-1-kuba@kernel.org>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Sat, Jan 17, 2026 at 02:03:02PM +0200, Vladimir Zapolskiy wrote:
-> On 1/17/26 06:06, Richard Acayan wrote:
-(snip)
-> > +static int imx355_power_on(struct device *dev)
-> > +{
-> > +	struct i2c_client *client = container_of(dev, struct i2c_client, dev);
-> > +	struct v4l2_subdev *sd = i2c_get_clientdata(client);
-> > +	struct imx355 *imx355 = to_imx355(sd);
-> > +	int ret;
-> > +
-> > +	ret = clk_prepare_enable(imx355->clk);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to enable clocks: %d\n", ret);
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = regulator_bulk_enable(ARRAY_SIZE(imx355_supplies),
-> > +				    imx355->supplies);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to enable regulators: %d\n", ret);
-> > +		goto error_disable_clocks;
-> > +	}
-> > +
-> > +	gpiod_set_value_cansleep(imx355->reset_gpio, 1);
-> > +	usleep_range(1000, 2000);
+On Mon, Jan 19, 2026 at 11:21:25AM -0800, Jakub Kicinski wrote:
+> This is an AI-generated review of your patch. The human sending this
+> email has considered the AI review valid, or at least plausible.
 > 
-> The deassert above is not needed IMO, anyway.
+> For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
+> ---
+> net: stmmac: add stmmac core serdes support
+> 
+> This commit adds SerDes PHY support to the stmmac core driver, moving it
+> from platform glue into the integrated PCS driver. The SerDes is managed
+> through phy_init/phy_exit for lifecycle and phy_power_on/phy_power_off
+> for the power state.
+> 
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
+> > index 2f826fe7229b..4d1902f3a58f 100644
+> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
+> 
+> [ ... ]
+> 
+> > static int dwmac_integrated_pcs_enable(struct phylink_pcs *pcs)
+> > {
+> > 	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
+> > +	struct stmmac_priv *priv = spcs->priv;
+> > +	int ret;
+> >
+> > -	stmmac_mac_irq_modify(spcs->priv, 0, spcs->int_mask);
+> > +	ret = dwmac_serdes_power_on(priv);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	if (spcs->interface != PHY_INTERFACE_MODE_NA) {
+> > +		ret = dwmac_serdes_set_mode(priv, spcs->interface);
+> > +		if (ret)
+> > +			return ret;
+>                         ^^^^^^^^^^
+> 
+> If dwmac_serdes_set_mode() fails here, doesn't this leave the SerDes in
+> a powered-on state? dwmac_serdes_power_on() succeeded at this point but
+> there's no corresponding dwmac_serdes_power_off() call before returning
+> the error.
+> 
+> Looking at phylink_major_config(), it appears to discard the return
+> value from phylink_pcs_enable(), so the caller won't know to call
+> pcs_disable() to clean up the power state.
 
-This assert is for clarity, otherwise it isn't obvious that the GPIO is
-asserted low when the function is called. It should stay.
+This AI analysis is incorrect.
+
+By the time phylink_pcs_enable() has been called, the PCS is already
+plumbed in to phylink. It _will_ have phylink_pcs_disable() called on
+it at some point in the future, either by having the PCS displaced
+by another in a subsequent phylink_major_config(), or by a driver
+calling phylink_stop().
+
+If we clean up here, then we will call dwmac_serdes_power_off() twice.
+
+Yes, it's not "nice" but that's the way phylink is right now, and
+without reworking phylink to record that pcs_enable() has failed
+to avoid a subsequent pcs_disable(), and to stop the major config
+(which then potentially causes a whole bunch of other issues). I
+don't even want to think about that horrid scenario at the moment.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
