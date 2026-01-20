@@ -1,190 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-89883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ICvRLnbwb2m+UQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:15:34 +0100
+	id yN2vJ8z3b2m+UQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:46:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 608F34C132
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:15:34 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E3594C7D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:46:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6C8C38A8408
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:50:02 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C642F9E64F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 013093A0B06;
-	Tue, 20 Jan 2026 19:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B91FC376BE0;
+	Tue, 20 Jan 2026 19:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwzEiHNM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eV7uS9Z3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25FE399A66;
-	Tue, 20 Jan 2026 19:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D2E3A35A1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 19:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768938581; cv=none; b=AtNPGC38V/9Lragfgg0KkemVqAA2yprAx87KqNg+3e8fJ5cYz37y0ENoDmBAbaXUYVlG0XtBEb9oB5OVPo0NWQ3lbJnvJhCi+41E0YIeogh0l8lTLI/0R2agXYyE6dCchcfPxOm7+AkkIYzQqt36JgxTcP3jyX4ukME+zww3ouE=
+	t=1768938797; cv=none; b=IUSYko6SAl5JJlZ1s2Kf6W+40npFHlAYV+e+uabxlAM5dkskP5SWZZuvKMZlV2TbiP6Db69ICtMbH7l+5D33YpYf2F4edGHK4hdZE1J5SMs8WM0s7Mu/4U16RUMFojn96sWAZHOAhTqV/P8oIMTFGEgbgOIEG+R4KYKS7f/W5SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768938581; c=relaxed/simple;
-	bh=kQ5wPQq2/U4blH4aBlsWKFYKSlrG3CZQkf90M+nd7o8=;
-	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=SG7y2LJSpHeTNzb9c5PYLhYAlteXmNF/afso5nJjgUGJMVYXTlqhXzjuHUxshrebkt1fCJ5xjBxfgRgge7INYqTT8n5rwIyY9MrKpF+Mtq9CTaLqVDIdH+3+KgBmigzLdKyNXK0KF8eEy0T4wEveHr/nVWBSqsnLFhMGoa81m2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwzEiHNM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486B3C16AAE;
-	Tue, 20 Jan 2026 19:49:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768938581;
-	bh=kQ5wPQq2/U4blH4aBlsWKFYKSlrG3CZQkf90M+nd7o8=;
-	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
-	b=bwzEiHNM61qLDewc2y5slgZLis4CQNCpYmQ7SOnkjdqx+r5jZMru3mLaxpGbWxaiq
-	 3uC8ijwgzb1qp+FIEVdQW0hFZ4ByXEpUgJ7H6IN6F6BsJcV5PpSS9sDrVuh0NsWSZz
-	 bHZfTf7cecBhEaJ7mWUSEdJYDbicveNlaz4WE3hXjgsjtS8LRScPp2AtiOMeI0jGnR
-	 tmEOLBqXA/1SHuqvVS9+B1oEIMLLxWi6JAqBtMgxl21BlkzizwOtV3rBV39hanGVGi
-	 epca1iK2R2GqzRADGCthNK1SJ7LP7KYJf3cXbeoxamJIcfmUv5Uy55hi8hJTaSqO5q
-	 oK2ks800Ryjhg==
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 20 Jan 2026 13:49:40 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1768938797; c=relaxed/simple;
+	bh=hzlIGlYQi366/pUFdNolodFmxI59+xO3Up7iWwZOf0I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W0mgeE4VLWTGhbOTiBm7v/VLNUXPkoQmudCoEvgV1naRQOaMbWkPCjFdZR7alfjEaiBfGpn8agzLO5rV053CcVZ9dF+og6zSbCcDBsPgRCztwwtDL+RCHBNkbZyONRnQ/ikilyyHSRgb+T43r6YWP2CwwqCGTPtFAQ/CIrZ0+Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eV7uS9Z3; arc=none smtp.client-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-11f1fb91996so12999110c88.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 11:53:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768938793; x=1769543593; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FKSGoUPQXpk7imDzMvWC4kCJaezJl3fPb9J0kmFWLxE=;
+        b=eV7uS9Z3/ESxSPdR4BMwFVQglCKVJeDCfGbDBnkC2NVKd+CuTESYZ/S1AJrxvoWzDy
+         bg4MINHvtS7Y9uVRrH04jS9eLhHzYgUg+rbgpLU2/XHIdCLc7b6xjSwvM9K8peM2rRfa
+         KPoXFn1VB/Jw2u6P5xrfNGOuZPiltCPOW+Kum82Fde+KnNdEF+Gg6Seijmdevi3btilt
+         A60cDJXknpMnrIrg7PswXWQ9a5epiiURd6m8OsK2DK9Uo6pIT5QHUCP6b8TaXLHtm5c5
+         kglQrqIDNi/tEzJc0Qo8Mvn0NyTcLFktFVDS+FYwSN9FzYtcfUHOank9IxG2XOHuuAkD
+         Mm1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768938793; x=1769543593;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FKSGoUPQXpk7imDzMvWC4kCJaezJl3fPb9J0kmFWLxE=;
+        b=Jsuf97mHq9CNN4P+VmwWWoduhvl5g+br2Sqtk4bTmms1aUsflas9CXqTrX1tI6Jyy8
+         ilIuDjc024vmGWxfpdearY6FaOw17zQA15G85bJ0ENQRvlTkKb7W4nwpNeNJJRR9NdSx
+         mEJv8C8QEyOBvnW/JOJpMFWcWoJUKhp2gLMX6/yidlHwQ9ZOfCnzH0HMIsIboN8AdL+8
+         /7FXaxgGtlPXjuoH8w6s+mjKiqfkYcrlHhSv1Ck2RB90SIe2uqRbKr4nV2GlqCZqTbLg
+         Yz6j+j11H1hGXG8MG+Fk/ZB00OGxo97/2vgEOBYNroMowKCCwQ5wtEmnUiZsQGDuaJvk
+         wV3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVDADJfPv4hy7rf6u8ChjKAg02rQO3qi54aMgxop/i6fq1ywZI6HjiZDLDjSpjigdRm/6IjBvK9RCz9msCd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxux3SpJ3kBF51Z2T3ETIw+WECUUZ8K3eSS7RdI5Gyk7E4tt8e4
+	u5wbA4RtQcwunVBVH5gT9FKaYB1m84+kBm2Vr33D5Quz9sQJparZDHut
+X-Gm-Gg: AZuq6aIU0xwFnwAgKqHx094giwhjj5sgVDqFN+s3nlj4gco+GXRTaaJS5YMOG3y1Bpy
+	dqzaYO9ERV65SDk5INcsbToseE46k+1lpdhJXPBYLhpN2Qos5dTOh2Z9CiQqjh4Q4mzFLGR65sV
+	yLOAkgvfIvc4f8XdYwVOKpDQu1b3aLrmBz4dd03xaBAPuo8R00uW5aceWQGux7ErBJddIm73xES
+	Poaw9R4q6b46plTOhN/FsK1ZBIbOaB4hetzoaP8g/LUhdZZLmeqb91/zRcqte3BN5Oj8pZap5An
+	tQ5+H+6lYD4lg9ea0CgxM9eHDXGw68G9adHGg3B3X8dW5ytcZIpRvEXFoMrvRaVSTuLPGVr56vi
+	qVyw7qQ0NZRovPWs+wpgR+RFnzHFkSDIu6rPSFWhrxZbLOXY2ZyThdytNP+XJ75TPr0C4oEI+FL
+	j8g+2kJ33hjB9v2E155BTa57VBwRh58gi1nYaeWfihvd/iZy9qPouP
+X-Received: by 2002:a05:7300:23c7:b0:2ae:56dc:eb18 with SMTP id 5a478bee46e88-2b6b5002350mr13024649eec.21.1768938793431;
+        Tue, 20 Jan 2026 11:53:13 -0800 (PST)
+Received: from google.com ([2a00:79e0:2ebe:8:d631:e554:f0bd:4106])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b364579csm18213930eec.23.2026.01.20.11.53.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 11:53:12 -0800 (PST)
+Date: Tue, 20 Jan 2026 11:53:09 -0800
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: yedaya.ka@gmail.com
+Cc: Kamil =?utf-8?B?R2/FgmRh?= <kamil.golda@protonmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: input: touchscreen: edt-ft5x06: Add
+ FocalTech FT3518
+Message-ID: <g7lgjwenwdclj6etwae3jjunfxsgglbemv7jhmcy7hmcyzxxkj@bqolb5yjxbq3>
+References: <20260118-touchscreen-patches-v3-0-1c6a729c5eb4@gmail.com>
+ <20260118-touchscreen-patches-v3-1-1c6a729c5eb4@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Cc: Pin-yen Lin <treapking@chromium.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Matthias Kaehlcke <mka@chromium.org>, Icenowy Zheng <uwu@icenowy.me>, 
- linux-arm-msm@vger.kernel.org, 
- =?utf-8?q?J_=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bjorn Andersson <andersson@kernel.org>, linux-usb@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
- Mike Looijmans <mike.looijmans@topic.nl>, devicetree@vger.kernel.org, 
- Catalin Popescu <catalin.popescu@leica-geosystems.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <swboyd@chromium.org>, 
- Chaoyi Chen <chaoyi.chen@rock-chips.com>
-To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-In-Reply-To: <20260120103312.2174727-1-swati.agarwal@oss.qualcomm.com>
-References: <20260120103312.2174727-1-swati.agarwal@oss.qualcomm.com>
-Message-Id: <176893840697.630984.16476349580844756180.robh@kernel.org>
-Subject: Re: [PATCH v4 0/4] Enable secondary USB controller in host mode
-X-Spamd-Result: default: False [0.54 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260118-touchscreen-patches-v3-1-1c6a729c5eb4@gmail.com>
+X-Spamd-Result: default: False [0.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-89883-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-89884-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_CC(0.00)[protonmail.com,kernel.org,vger.kernel.org,oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[dmitrytorokhov@gmail.com,linux-arm-msm@vger.kernel.org];
+	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,qualcomm.com:email,ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,devicetree.org:url,0.0.0.47:email]
-X-Rspamd-Queue-Id: 608F34C132
+	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:email,qualcomm.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 1E3594C7D4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-On Tue, 20 Jan 2026 16:03:08 +0530, Swati Agarwal wrote:
-> Enable secondary USB controller in host mode on lemans EVK platforms.
+On Sun, Jan 18, 2026 at 10:29:40PM +0200, Yedaya Katsman via B4 Relay wrote:
+> From: Yedaya Katsman <yedaya.ka@gmail.com>
 > 
-> Changes in v4:
-> Updated power supply property for hub.
-> Updated details for all 4 ports of hub.
+> Document FocalTech FT3518 support by adding the compatible.
 > 
-> Changes in v3:
-> Updated binding properties for genesys hub.
-> 
-> Changes in v2:
-> Add Genesys Logic GL3590 hub support.
-> Rename hd3ss3220_ instance for primary port controller.
-> 
-> Link to v3:
-> https://lore.kernel.org/all/20251220063537.3639535-1-swati.agarwal@oss.qualcomm.com/
-> 
-> Link to v2:
-> https://lore.kernel.org/all/20251216120749.94007-1-swati.agarwal@oss.qualcomm.com/
-> 
-> Link to v1:
-> https://lore.kernel.org/all/20251203-swati-v1-1-250efcb4e6a7@oss.qualcomm.com/
-> 
-> Swati Agarwal (4):
->   dt-bindings: usb: Add binding for Genesys Logic GL3590 hub
->   usb: misc: onboard_usb_hub: Add Genesys Logic GL3590 hub support
->   arm64: dts: qcom: lemans-evk: Rename hd3ss3220_ instance for primary
->     port controller
->   arm64: dts: qcom: lemans-evk: Enable secondary USB controller in host
->     mode
-> 
->  .../bindings/usb/genesys,gl850g.yaml          |  17 ++
->  arch/arm64/boot/dts/qcom/lemans-evk.dts       | 217 +++++++++++++++++-
->  drivers/usb/misc/onboard_usb_dev.c            |   1 +
->  drivers/usb/misc/onboard_usb_dev.h            |   8 +
->  4 files changed, 239 insertions(+), 4 deletions(-)
-> 
-> --
-> 2.34.1
-> 
-> 
-> 
+> Co-developed-by: Kamil Gołda <kamil.golda@protonmail.com>
+> Signed-off-by: Kamil Gołda <kamil.golda@protonmail.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
 
+Applied, thank you.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20260120 (exact match)
- Base: tags/next-20260120 (use --merge-base to override)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-
-Warnings in base: 209
-Warnings after series: 211
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20260120103312.2174727-1-swati.agarwal@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/lemans-evk.dtb: usb-typec@47 (ti,hd3ss3220): ports: 'port@1' is a required property
-	from schema $id: http://devicetree.org/schemas/usb/ti,hd3ss3220.yaml
-
-
-
-
-
+-- 
+Dmitry
 
