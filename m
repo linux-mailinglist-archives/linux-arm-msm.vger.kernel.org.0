@@ -1,257 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-89880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ACZ8DZr0b2m+UQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:33:14 +0100
+	id 4FDED5Lfb2n8RwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:03:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD4134C52D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 22:33:13 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4A864AF7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 21:03:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 393FEA8C7DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:23:19 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 990B78CD4E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 19:37:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 345C447A0C5;
-	Tue, 20 Jan 2026 19:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 425AA421F1B;
+	Tue, 20 Jan 2026 19:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jgX58MKi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jch5is9l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC358303C87;
-	Tue, 20 Jan 2026 19:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A02337C0FF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 19:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768936984; cv=none; b=teDMDnyOGKs9WZ3x8X8RUAtpVr0UzCWCsitGUPSkEFmSYrh8eyKpcrUNmU4b7sgEuqEVFpJE4lPcMOoD6YR4Q7jiqLjDX7EM8+TNcJTDER2YkgFBjvpoGh/ip/hJydgsYPZUB6ar/SdBO1kIkOqrwQUj1kZrleJkZhJeCs4DSSo=
+	t=1768937810; cv=none; b=hHyErmW0ETGzqR6DzKmN0asWyJ2fVMjnsc3CIFL/9HMs7I9/TFhwBxjyyVC+Lc46jQIv8JX6KH3klnDB7GcIoiCTfnD9R1cU9ICpQu9tsqm/O2UDkCiwt0+uvW3ESgEKr9ojK2d2kR+wbCGFfTAGFrBYFYIXio4n2pLeBZMo6jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768936984; c=relaxed/simple;
-	bh=8rZs4ctIFUWV+s7flKGQlMaVzkDSCztd/ihtff8Ht6w=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=G7Eiee9cOQ7+u1BNFsUax/4KwwNrloQeR9+EXUPBiJB+58yb/xZao0fPVJmdr7NzQfekOpcl4sEWeSpR4j2Q3AA+hZPRMKpQYbspgG4HskHfENCg9QEXW6u8SFbSslNR34AVlljEMDLkCO0JfmRzK6geu5/LyrjkWtL2n2J/VZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jgX58MKi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA9BC16AAE;
-	Tue, 20 Jan 2026 19:22:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768936983;
-	bh=8rZs4ctIFUWV+s7flKGQlMaVzkDSCztd/ihtff8Ht6w=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jgX58MKi+zjgv/xDIQx4cHK0wTdbY5WHIpWy6zaWGiyru1YA6cG7Qbw7G8M9RhL3S
-	 SSiru+ZKHzsLIh6rtTpzRanq5020WDpXXkfsUjC/Hil6perlOH41PXAjqsRSipdXvS
-	 IPP61htVkOsCqcy9Pqn5fLS8BPsTMosoZ9eOUO70Q6cEURtv9hoJC0lOmTM5QlYWiG
-	 wz6tqUkz/prRaWfMAFRhQ1iN0dHrXg8oROA8glqKMy/5Onkhv0z+Jp0+qs66q2UQYi
-	 BzO1NPQx1qqbWombFmTG5JqwfCmxs4g31+tAPZmi39pA4KsUWJBmYbw0vvIV/lZYxv
-	 FMvcuLOxsC4SQ==
-From: Mark Brown <broonie@kernel.org>
-To: Varshini Rajendran <varshini.rajendran@microchip.com>, 
- Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Haotian Zhang <vulab@iscas.ac.cn>, Sunny Luo <sunny.luo@amlogic.com>, 
- Janne Grunau <j@jannau.net>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Chen-Yu Tsai <wens@kernel.org>, 
- Amelie Delaunay <amelie.delaunay@foss.st.com>, 
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>, 
- Patrice Chotard <patrice.chotard@foss.st.com>, 
- Heiko Stuebner <heiko@sntech.de>, 
- William Zhang <william.zhang@broadcom.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Manikandan Muralidharan <manikandan.m@microchip.com>, 
- David Lechner <dlechner@baylibre.com>, 
- Florian Fainelli <florian.fainelli@broadcom.com>, 
- Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>, 
- Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>, 
- Charles Keepax <ckeepax@opensource.cirrus.com>, 
- Bartosz Golaszewski <brgl@kernel.org>, 
- =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>, 
- Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>, 
- Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, 
- Huacai Chen <chenhuacai@kernel.org>, 
- Xianwei Zhao <xianwei.zhao@amlogic.com>, 
- Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>, 
- Sergio Perez Gonzalez <sperezglz@gmail.com>, 
- Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>, 
- Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Rosen Penev <rosenp@gmail.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
- Luis de Arquer <luis.dearquer@inertim.com>, 
- Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>, 
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
- =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clement.legoffic@foss.st.com>, 
- Alessandro Grassi <alessandro.grassi@mailbox.org>, 
- Darshan R <rathod.darshan.0896@gmail.com>, 
- Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>, 
- Haixu Cui <quic_haixcui@quicinc.com>, 
- Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-amlogic@lists.infradead.org, asahi@lists.linux.dev, 
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
- linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
- patches@opensource.cirrus.com, imx@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
- linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>, 
- Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>, 
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Ryan Wanner <ryan.wanner@microchip.com>, 
- Michael Hennerich <michael.hennerich@analog.com>, 
- =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
- Kamal Dasu <kamal.dasu@broadcom.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
- Kursad Oney <kursad.oney@broadcom.com>, 
- Anand Gore <anand.gore@broadcom.com>, 
- =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>, 
- David Rhodes <david.rhodes@cirrus.com>, 
- Richard Fitzgerald <rf@opensource.cirrus.com>, 
- Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
- Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
- Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>, 
- Yinbo Zhu <zhuyinbo@loongson.cn>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Daire McNamara <daire.mcnamara@microchip.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
- Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
- Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>, 
- Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>, 
- Haojian Zhuang <haojian.zhuang@gmail.com>, 
- Robert Jarzmik <robert.jarzmik@free.fr>, 
- Chris Packham <chris.packham@alliedtelesis.co.nz>, 
- Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
- Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
- Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Alain Volmat <alain.volmat@foss.st.com>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>, 
- Masahisa Kojima <masahisa.kojima@linaro.org>, 
- Jassi Brar <jaswinder.singh@linaro.org>, 
- Laxman Dewangan <ldewangan@nvidia.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Sowjanya Komatineni <skomatineni@nvidia.com>, 
- Masami Hiramatsu <mhiramat@kernel.org>, 
- =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
- Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
-In-Reply-To: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
-References: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
-Subject: Re: [PATCH v2 0/4] spi: Make SPI core to take care of fwnode
- assignment
-Message-Id: <176893695845.778248.8132133480043006428.b4-ty@kernel.org>
-Date: Tue, 20 Jan 2026 19:22:38 +0000
+	s=arc-20240116; t=1768937810; c=relaxed/simple;
+	bh=t6wsKS4Mv3ldNLxq4tVreWNmfuoojtATZJcpIorvR7Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DUxuCffSd7UaqU+HhYLHEclaR83FammvdSyMuN5eLzJjLeuqHNrWHAB9qGP8aTPv5j4ScOCUB/bzTJRupZjXruDDy4UH0EX6JgrPjl/4LaFpZ58mnMkVDEppDthvzHJybD1XYpBLd32pAcy0HNU7VFQK4kiiks430JmbdalskuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jch5is9l; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4801c314c84so37576375e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 11:36:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768937807; x=1769542607; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=I12N906HgVHTbvGqoi2UPUu+CNEO7P3/9i+Vob4xl7c=;
+        b=Jch5is9l4OUhYJP9sHZbW/bki9DSPuO7Z73ZiJV08Hgo9W4P1gjY/OYt8d2uzjapjO
+         RYp7mOW99vK5Z60QblP1n3QmyTrIK6SXPAQjMcQcLkLRj89LuO1zhZS5BVV1KvUG/oXh
+         tazKud6S3wBRd4CkVPXVntoFH3mZDP700z3rBFnC+I2A6h/WPzpjqeCdK70WUfIzfuOh
+         cDqT5xelKnxOQF/jvGSR+QPz6sEgf/lFNoWqK9tOIETkroXEjOgREZ/lvss6r8QcsMfX
+         +hSeuUnfKTqhJ0u+ezUaVqeLlWi290vyYFLgw7gEBxe3N5AbjNPjKtkBIIqHFz8J5kml
+         4dWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768937807; x=1769542607;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I12N906HgVHTbvGqoi2UPUu+CNEO7P3/9i+Vob4xl7c=;
+        b=OOqA5ALEGzagWKfrnMaHBEgxvj52CbGBPj1CSN4gQRvWKlFIlK4f/L32NfSN/6tEDD
+         Td3RCWQW9UpPbCgDWC9uBTIY4Mlxf7UyGjLakDxiidY1JjyloJX4G/uk6NztHRGxWO+u
+         E/bd1iuVBq09Ewiv/isB8bytvaDIMEKwrcFc5W7wxJE7F6oyR0g2Zr7X0wMj/f5Klh6x
+         RFhtdZPXTH8j/lT5GuAC8ZLn9382gUHYYCS3KIedUPOC+U1SedKgKYWXxLNIreTSRdC6
+         W7nvMlINkaWQ/d1CFqDqxPdjZ3pAfgSAVSlJLSGM92J0wZ4iuoqyCcbF9eKOZVDIbPk/
+         MjFw==
+X-Forwarded-Encrypted: i=1; AJvYcCVWej80oyFPbR8gAmGjdaegXlSrNUsXGHVTkZ7q+Gcpj8kFTYnNy2DHtifuuK/3fQ0FhdPJ92MVV52mil9U@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWj4+oHP6howExS0rC6oGknqVHWoGE4hFFsf0tOJtdUt+IpM3d
+	v9SMl2ZD0+OSgHH4KWbk0qubo94e3xiffu3U+mryutnBKWHRSf3cXqOf
+X-Gm-Gg: AY/fxX5mdCYfGy4aGVEoLvuwKA24Arss489U5NQB8LbSesWapWuw3fucLEveyB6zCm3
+	AcNcqh2Onfm9AwRW7qtUQelCmIox/OYNfFocBOoazmmQQwXsE1GzSfxvqVa+cfBNIvUGcZ3uhfJ
+	UzodPJ3eGxakz8NkUMYDqd5x2uRMAkGAcDvSMcrEs0rEVPerpxA/pMUHeslGFp+BiZoIdeKCH9p
+	E5C33Oj9A29/j5kASXaqhGgMPivAdXXEL3LGbRgR4YjHotWkKupeJBHjjFCPUbPquWn2EusPPVI
+	QnMPJyqg8ezAXBt+Yy3Qfrmn2bUUlRVJGhJnS5PvYC41O3ZqRNejuiLnWCKKKt3lkR1k6iS7VIA
+	XYXRonjh6gswayX3InM5hExYI2zo64vmoGaEQSFo+PP3jW8yzFwnsRqVW38wZ67w7WjnBXU7b6Q
+	UXIeX1PXQ1JYUE+rLLnZI0
+X-Received: by 2002:a05:600c:1387:b0:477:df7:b020 with SMTP id 5b1f17b1804b1-4801e34301amr200601805e9.18.1768937806632;
+        Tue, 20 Jan 2026 11:36:46 -0800 (PST)
+Received: from unknown.zextras.com ([78.208.157.140])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4801e8c05c3sm256267695e9.11.2026.01.20.11.36.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 11:36:46 -0800 (PST)
+From: Gianluca Boiano <morf3089@gmail.com>
+To: andersson@kernel.org
+Cc: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Gianluca Boiano <morf3089@gmail.com>
+Subject: [PATCH] arm64: dts: qcom: sdm630: add SPI7 interface
+Date: Tue, 20 Jan 2026 20:36:34 +0100
+Message-ID: <20260120193634.1089688-1-morf3089@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.15-dev-47773
 X-Spamd-Result: default: False [-0.46 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[microchip.com,bootlin.com,tuxon.dev,kernel.org,airoha.com,gompa.dev,jms.id.au,codeconstruct.com.au,analog.com,broadcom.com,milecki.pl,cirrus.com,opensource.cirrus.com,gmail.com,nxp.com,hpe.com,huawei.com,pengutronix.de,intel.com,loongson.cn,linaro.org,baylibre.com,google.com,zonque.org,free.fr,alliedtelesis.co.nz,renesas.com,samsung.com,sifive.com,linux.alibaba.com,foss.st.com,nvidia.com,gmx.net,amd.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-89880-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[microchip.com,iopsys.eu,collabora.com,iscas.ac.cn,amlogic.com,jannau.net,googlemail.com,glider.be,kernel.org,foss.st.com,aspeedtech.com,andestech.com,sntech.de,broadcom.com,kaod.org,baylibre.com,gmail.com,qq.com,cixtech.com,opensource.cirrus.com,bootlin.com,outlook.com,linaro.org,marek.ca,nxp.com,linux.intel.com,vivo.com,quicinc.com,samsung.com,inertim.com,renesas.com,socionext.com,mailbox.org,nvidia.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
+	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-89881-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[morf3089@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[150];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_COUNT_FIVE(0.00)[5];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: CD4134C52D
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,0.62.65.128:email]
+X-Rspamd-Queue-Id: E4A864AF7B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 12 Jan 2026 21:21:22 +0100, Andy Shevchenko wrote:
-> It seems all of the SPI drivers want to propagate fwnode (or of_node)
-> of the physical device to the SPI device. Make sure we don't duplicate
-> it over and over in each new driver (+2 in this cycle) by making core
-> to take care of that. Note, similar is done already by IIO and
-> I²C subsystems.
-> 
-> There is one noticeable and quite specific case that is taken care in
-> the first patch and now we have a confirmation from Cirrus that everything
-> is okay.  The rest is just a mechanical conversion after checking that
-> the parent device is assigned to the same that provides the respective
-> fwnode.
-> 
-> [...]
+Add spi7 interface to SDM630 device tree.
 
-Applied to
+Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 34 ++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/4] spi: Propagate default fwnode to the SPI controller device
-      commit: f2d1a3318eb1ec860999db48cb8d13b43261624d
-[2/4] spi: Drop duplicate of_node assignment
-      commit: 3974a585be78a1dc90a19d5cf1846a99954e3842
-[3/4] spi: Drop duplicate fwnode assignment
-      commit: 103c510e1c6832720059756d155dd13a42baa7ab
-[4/4] spi: Drop duplicate device_set_node() call
-      commit: 37fbc1ab0f225d23f0839260a11375b4f1f7cf8c
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 8b1a45a4e56e..92afb5428e3c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1013,6 +1013,20 @@ data-pins {
+ 					drive-strength = <2>;
+ 				};
+ 			};
++
++			spi7_default: spi7-default-state {
++				pins = "gpio24", "gpio25", "gpio26", "gpio27";
++				function = "blsp_spi7";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			spi7_sleep: spi7-sleep-state {
++				pins = "gpio24", "gpio25", "gpio26", "gpio27";
++				function = "blsp_spi7";
++				drive-strength = <6>;
++				bias-disable;
++			};
+ 		};
+ 
+ 		remoteproc_mss: remoteproc@4080000 {
+@@ -1944,6 +1958,26 @@ blsp_i2c7: i2c@c1b7000 {
+ 			status = "disabled";
+ 		};
+ 
++		blsp_spi7: spi@c1b7000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b7000 0x600>;
++			interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP3_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++
++			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
++			dma-names = "tx", "rx";
++
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&spi7_default>;
++			pinctrl-1 = <&spi7_sleep>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			status = "disabled";
++		};
++
+ 		blsp_i2c8: i2c@c1b8000 {
+ 			compatible = "qcom,i2c-qup-v2.2.1";
+ 			reg = <0x0c1b8000 0x600>;
+-- 
+2.52.0
 
 
