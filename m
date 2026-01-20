@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-89768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7483CD3C058
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 08:27:16 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FBDCD3C060
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 08:28:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 51E2B402FF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 07:17:27 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 82A3C407054
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 07:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD4BF392B99;
-	Tue, 20 Jan 2026 07:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ECAF396B97;
+	Tue, 20 Jan 2026 07:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoRpSNXa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mkROSJIj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D50C2EFDBB;
-	Tue, 20 Jan 2026 07:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF09E33A6E8;
+	Tue, 20 Jan 2026 07:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768893441; cv=none; b=kcoOEy8D2Zkr/yBHDEU/vCu7pnwG3LnT+ifDfHwohUhsdqVlTuFz78LsMQYEkbULluuuk1kZx+4R+uP1YpbSDwyVMzMH90RdaO9m4p1JW4TqPAOnogYquP9+SE1wydwQ/vrFSDOGzyh9bx3mWPfGptXnQAfQX526iBwHYg9W1ho=
+	t=1768893632; cv=none; b=Y1ZUJOi9CfREWZgNKrYfWSnu9s5JhVX3rJ03tXEQuMZXptLaQLKVdu17T19+f677SUXIUkI4cmdaWtq6QEkMS3WeHhW8P1E7rSU7Vnm65HRJ/McQzRkJqf7YQTXYedGbPOYJNcYiJ4U8hsB+eOXuG00MzO1gRFZRwkjXDxgEI1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768893441; c=relaxed/simple;
-	bh=PavEgEip3CFvVrh74VGbDNPmCTt9qpNGuJnIFz1n5vg=;
+	s=arc-20240116; t=1768893632; c=relaxed/simple;
+	bh=vGl+Qlh1JJx7DD0yHUg0mIjfegHURXiJvMHh+UuyXII=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cVwqi7wFZGb1a3CRjeFXVCFi02UQWD01diKsht2r5/n+mKgU9V29JrPyecw1w8xmTepBivTB9pOTKUFCxb/OXww8QY670BtQyB361NLRompla6ki+7OtHcM0uPm0KeHaszi0BXQKHc5Oc8pGIVIzgVL8k3wU2Pqa5QwIHs31YxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoRpSNXa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20288C16AAE;
-	Tue, 20 Jan 2026 07:17:16 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ltvhSgYegJUxngSTYFuiGoRvPuq/LWkTWrmogLAC6LvXKJNZYPXaBSJ6miH526XYK8jGEtHT34kWj7Z1Tn6SFcbgmgju4om97y7dhEUPQThxvHUXTb8G/rMUncB2v3MiCYCOyo1vX80rHNKHGqLq068W0s5MtxjOiFIGuVi27GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mkROSJIj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FC0C16AAE;
+	Tue, 20 Jan 2026 07:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768893439;
-	bh=PavEgEip3CFvVrh74VGbDNPmCTt9qpNGuJnIFz1n5vg=;
+	s=k20201202; t=1768893629;
+	bh=vGl+Qlh1JJx7DD0yHUg0mIjfegHURXiJvMHh+UuyXII=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JoRpSNXaKVROkNPtSD0+O0l6+cSPAzCFnkkfJzxFModPsbeLxLKJ5OayG9Dy+J8VB
-	 cqApXI2oXEgZVEDnCefNfXCcXEuXaBKcuUkBwZupNUJ3koAiTao3HrGvJL1St8F3EK
-	 n/DPEg9fY7s9qgAQ0eRSb/LFc6MIKipV2ue0zQA0H7ifC6LPmO9uwNWIf94wijzx1L
-	 lQcgLNDZYZy0F/5g0QZCv6tj0VuL3CAJrUYyDtp0ftpfWrw5uJHAD74ogHWzd1jZVZ
-	 bp1PcuKtQVRHrrUnB7MgOmCJlB/eYn2PPPA7ZmcFNO/tSSUyikgiuERUufWoHCYlUf
-	 B/7tKyTB4NaPw==
-Message-ID: <a7ab2c3f-bbd0-435e-a707-44101428a39b@kernel.org>
-Date: Tue, 20 Jan 2026 08:17:15 +0100
+	b=mkROSJIjoSszKpeBE5XvIgb+wWA199Tv5c+6Hee51NV13k9WIOOMg2E9JYZaIOcUj
+	 7QbDxzYbhmRw9dUM4nBblmqTSbVZ7AJ8EmKooMphfsDts2sOsHnsMMHxa+EmwiSg4B
+	 EqXH/VwSAJ/Ns1vGT52RRApCRI0IpSmJ1gMliwjcb0Pmv/h8euvj/7+vEB5/MJ/UCv
+	 EJV+aLyMIt3Oy93LiujnXWke9j2qTm4cRL3idet3DKV9BN+8qG/naxvaGzQsMjeI5/
+	 R08JotrLT/RvSd90iT1kHTNTclkozmFGkWG+nOswjohRW/ebWpxCE+KAUlxZLsFGau
+	 id2ECx4GbJc3g==
+Message-ID: <4d6ffe96-2113-42fd-97e5-42247f073aef@kernel.org>
+Date: Tue, 20 Jan 2026 08:20:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: Add base PURWA-IOT-EVK board
-To: Yijie Yang <yijie.yang@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20260116-purwa-v4-0-89b2adae9f09@oss.qualcomm.com>
- <20260116104136.2922032-4-yijie.yang@oss.qualcomm.com>
- <d15bbe2a-a88a-4a88-a685-ecd4f058c3af@kernel.org>
- <3404f2f4-7edb-4bff-925b-0a6a7a450f5c@oss.qualcomm.com>
- <0cb38b14-13bd-43e9-8dca-3d78afd62a28@kernel.org>
- <ba0f5539-011b-4778-8025-16950f5e5a62@oss.qualcomm.com>
+Subject: Re: [PATCH 1/9] dt-bindings: soc: qcom: eud: Restructure to model
+ multi-path hardware
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Elson Serrao <elson.serrao@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260116232106.2234978-1-elson.serrao@oss.qualcomm.com>
+ <20260116232106.2234978-2-elson.serrao@oss.qualcomm.com>
+ <20260117-courageous-chamois-of-focus-20d5d5@quoll>
+ <sfazro75vspadpe4wco7zvlalcy2wbrbdjx2wn7lyonjgw22sf@z73u67pinusx>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,49 +109,63 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ba0f5539-011b-4778-8025-16950f5e5a62@oss.qualcomm.com>
+In-Reply-To: <sfazro75vspadpe4wco7zvlalcy2wbrbdjx2wn7lyonjgw22sf@z73u67pinusx>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/01/2026 07:49, Yijie Yang wrote:
-> 
-> 
-> On 1/19/2026 3:05 PM, Krzysztof Kozlowski wrote:
->> On 19/01/2026 04:13, Yijie Yang wrote:
+On 19/01/2026 20:58, Bjorn Andersson wrote:
+> On Sat, Jan 17, 2026 at 12:57:58PM +0100, Krzysztof Kozlowski wrote:
+>> On Fri, Jan 16, 2026 at 03:20:58PM -0800, Elson Serrao wrote:
+>>> The Qualcomm Embedded USB Debugger (EUD) hardware can intercept up to
+>>> two independent High-Speed UTMI data paths, depending on the SoC
+>>> configuration. Each path operates independently with:
 >>>
+>>> - Dedicated PHY interface
+>>> - Distinct USB connector and controller associations
+>>> - Role dependent routing
 >>>
->>> On 1/17/2026 12:19 AM, Krzysztof Kozlowski wrote:
->>>> On 16/01/2026 11:41, YijieYang wrote:
->>>>> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
->>>>>
->>>>> The PURWA-IOT-EVK is an evaluation platform for IoT products, composed of
->>>>> the Purwa IoT SoM and a carrier board. Together, they form a complete
->>>>> embedded system capable of booting to UART.
->>>>>
->>>>> PURWA-IOT-EVK uses the PS8833 as a retimer for USB0, unlike HAMOA-IOT-EVK.
->>>>> Meanwhile, USB0 bypasses the SBU selector FSUSB42.
->>>>>
->>>>
->>>> NAK.
->>>>
->>>> Warnings were reported at v3. Did you address them? No, you completely
->>>> ignored them, so warnings are reported again at v4.
->>>>
->>>> What do you think these emails are for?
+>>> Model these hardware paths as separate eud-path nodes to accurately
+>>> represent the physical topology and add below per-path properties:
 >>>
->>> This warning is caused by the pcie3_phy node in purwa.dtsi, which is not
->>> introduced by this patch set. Since it does not impact functionality,
+>>> phys: EUD exposes a High-Speed debug hub that relies on HS-PHY for its
+>>> operation. This property references the HS-PHY associated with the UTMI
+>>> path.
+>>>
+>>> usb-role-switch: Indicates that the USB port on this UTMI path supports
+>>> role switching. In device role, debug mode inserts the EUD hub into the
+>>> UTMI path. In host role, the EUD hub is bypassed and UTMI traffic flows
+>>> directly between the PHY and the USB controller.
+>>>
+>>> This change breaks backwards compatibility, but the previous binding
+>>> omitted critical resources like PHY and did not describe per-path
+>>> topology. Without these modifications EUD cannot be guaranteed to
+>>> function.
 >>
->> Your patchset introduces that warning. There was no such warning before.
+>> It was working for 3 years, so your guarantees are just imprecise. FUD
+>> is not an argument.
 >>
->> My NAK still stays, such patchset must not be merged.
+>> Qualcomm task at 2022 was to post complete bindings. These were posted
+>> and accepted. Three years later you say that previous posting was
+>> bollocks and this cannot even work?
+>>
 > 
-> This patch series can continue to be reviewed with the dependency noted, 
-> right?
-> https://lore.kernel.org/linux-arm-msm/20260119-topic-purwa_phy_shutup_warning-v1-1-997a692b31c6@oss.qualcomm.com/T/#u
+> That is correct. The description of the hardware that was provided when
+> this was upstreamed and the binding that was accepted based on this
+> description is wrong.
+> 
+> There's absolutely a value in maintainting backwards compatibility in
+> general, but is this one of those cases?
+> 
+>> Nah, take responsibility of what you did in the past.
+>>
+> 
+> In my view the responsible thing is to accept that we got it wrong and
+> make sure EUD is enabled end-to-end so people can actually use it.
 
-It's not a dependency. You only need to mention where the bindings are
-addressing the issue, preferably in patch changelog.
+I would expect to see what is not working. This is in mainline for three
+years, so the assumption is that it was working for these three years.
+If it wasn't, this should be described and "cannot be guaranteed to
+function" is just imprecise.
 
 Best regards,
 Krzysztof
