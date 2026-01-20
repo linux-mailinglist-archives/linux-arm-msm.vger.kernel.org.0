@@ -1,166 +1,259 @@
-Return-Path: <linux-arm-msm+bounces-89911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aMEKIVYUcGlyUwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:48:38 +0100
+	id KHR9HX0RcGlyUwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:36:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id E16974E18C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:48:37 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D86B14DE8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:36:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C1BB15CFAB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:05:49 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B687596ECF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:06:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BE3A3F23AC;
-	Tue, 20 Jan 2026 23:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 382B640F8E5;
+	Tue, 20 Jan 2026 23:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="yYgIl8ce"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="o1jl8yGi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CHvDwthY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262ED3EFD35;
-	Tue, 20 Jan 2026 23:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7288340B6F0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 23:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768950198; cv=none; b=P9sHJWBDc8JpDmA1MW4tZvXCU5wKvR5DpSCfMVoeCtpM7APQQUi8mWMJWUh3q52EO2tK7ILZNFdv+G31zgiNXll8EbxO+QRTcGBGHVAj8UdT5V5RpCs8pgCSh3evw7GCjasBx1Qo++MPZVtMBChehpFU8E2el5UaREY9cJRRCzA=
+	t=1768950311; cv=none; b=CverRBHNGNOT9GN8e5+DM+W4PD9tp/wuSRRNC9EWMVz9+Y2MQAUy4b/fkGkWI9KgmdjPgPmD44ojGDIcZIMMCayTKUckGN+KqwGQxiDidbC8WIX+mCs6U39sjtYNq1Da7R3ocVZ7czkxTMGlQLcK1LIrUYN5caS7xDBnHJG4cso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768950198; c=relaxed/simple;
-	bh=3SkqePa7F4GgOrv16HvTmu1l/9Jlmxv9+bA42DDfZic=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=JKKVfeywJt48su1p9saKUQffIwMZNSQUgyeL9SpzU0OeCgInJQvueTMHTRBqJ7CWmSFM/nrDInWR4/ozrEVzvq4VPmmlp5jSJUZjTOMKg4wd/2EoSv446GRMkhdm/DZqQDSruJOE7ukhKOW56Fj2fC+M60DpTm2lJyCTNclQz9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=yYgIl8ce; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::f31] (unknown [IPv6:2a02:f000:10bd:e301::f31])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3D3715340B79;
-	Wed, 21 Jan 2026 00:03:06 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768950186;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
-	bh=x7MRDdbzlQeW/VlH/7DqJdS9gXtRL9mTDSmljfQzFWI=;
-	b=yYgIl8ceYxQQbxbVu4G9vJp+ctUgUVLRQ4v3cscpYaVS1u4d3TPCaNrZu1+amRw/PYDrUN
-	PJxQn4x6n9qYT1XMtTRarZqp7JvUzFlrHFCSfkata2azfmV+eHxMaCgiePhU57oCDhGFSM
-	tTC423I2xFS+emcNJhGwT2XieHh/V0Q=
-Message-ID: <7b29f6a4-7ca3-41ef-a8ea-969c401a5c38@ixit.cz>
-Date: Wed, 21 Jan 2026 00:03:05 +0100
+	s=arc-20240116; t=1768950311; c=relaxed/simple;
+	bh=1j0Q7pzf7hRqlVAsUJvrX/tEEQPL7qnr4VVR8jMUNds=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Srlfg2JJQe1kOcrWQIDT9A16/4zKiyphtO9CqGhTqBAp1CBXgAMOHGXo7qn2dukxqzNH9UyTrC81AoN38qJ7b/QLi0uM+f2RH3a+EeeT8MSnK/xNZ+rzbe5J8G4GCPmDbrm6CitIupCNiLhpNUdeDHdeHSS11Vi88j0cF5bdXt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=o1jl8yGi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CHvDwthY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60KKsQMK1037155
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 23:05:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=GX80EvWIrKsY9lpmTcbAZWS9
+	rKhCDtXMk6nX0x3Jqa4=; b=o1jl8yGiCVqVRV+QVz0wLA7JlQUIVvqJ9dafY23/
+	raqoYDeVFq5SPb/r3Q4LGOLkP1LVn+ctg6Znx3RJYRe3COBikG/P+gDSzgMgSd/J
+	SCTa1klEBv1dG/LyX9LuKDv5SKD+tGCQn3mRmEFJjy39f01mNkelrasRV4/p1NyV
+	eO80qasxDBAm2qJLDsYhilbb3MWqsD+qcWJJS4spSRO0VQt5OCwzzBFbi3EowPzD
+	4Xr2teINTn50uxUrjPsjCyofeN2EsJn0rBAWMEOogesSZWvxLZMc/WpT5J4Uzo9q
+	tyQJA2BwmoKK04Dbl79z/SfMeHE+EON7JQQ+u7WHKxVVuQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bth55gc7u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 23:05:08 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8c538971a16so202304485a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 15:05:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768950308; x=1769555108; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GX80EvWIrKsY9lpmTcbAZWS9rKhCDtXMk6nX0x3Jqa4=;
+        b=CHvDwthY/yeqz/Bnr2kIuT9VV/ea8WpxUjKCJ0c4k6zuXJJjmPHT4WuqtjKdRgEsiw
+         05r89Ocr5EBOupP+NhRhyz5k/TUXavML4DD5yYqt6GBkSu0wwcOyW7Zm4q/pube7uMVI
+         qbindJKDi2e01Um4TQuTLTk9ubQ7iTg4AL6F7Pa2ZR7GzMBxQeH5ZQ46leyvWANIIIVb
+         oxrNk2Qrek3EU4CaqRlagCSkJ657PJWn660Fwj7O0QG8SxUdHc0A9J1GQuVV0jEj2rZo
+         XuMm4kaqpzn92aeO8opWPDCaIjvW0EuhatZo2Pu2h8GYg0gBYYQCI1O1TW52c4abMALS
+         mvsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768950308; x=1769555108;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GX80EvWIrKsY9lpmTcbAZWS9rKhCDtXMk6nX0x3Jqa4=;
+        b=M5yvnJdCCLcUohaWQMHOchx+wszwPt54KWR2IopvSjVUC7DgUXPVBhHUslrSRx2ypr
+         lYMzkEiZIfTL8Cjtda0MTnzQUUnZCt9Qd7h3Pfp7oHBwXA1NImhF26smmFDyBejAn8rn
+         6Fd+87vgUbX/3THWGHgS/Nypjg/McTVXldWeVdc/8zVE+VPbO4+oDV5jmo6AmKbWWNnx
+         8ifX6rWHxEcwv7YcAH4cnJlhVfd2JntWlwTHUKo0JXTPKerVMm0/YqFSN+wo1zAH70Vg
+         jsgwGPdHawLcqRd+VWhOdSGBGD+8Hqbm/L72XgHgDq50Hdl/nfqhV9Vb9kLQOWo/yRdN
+         ZUCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU833Y+m4CJXys7G1abEdR43Xpr59vPhPKn7P1q2+am13xaa0OYT3uYVnHWOx+FfH2zgZKfPsHX0ZeWHxlp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+xLjsELCuTXFZoQK6+hA7FaTXkSIdF3kpVyQlG9PHHLkExRhG
+	7FYtB1P8NgcGE2UzNkRzp4Px4d182yZWV6Y0/8hvDuyirjebw79Qbg7Fh+oegll2o+brgsFTvth
+	JvEXEDJnjwzWuwN1TXIcwJsWtZf+97/1PYY16s60BHzmK20+dKtHthLjwymGQAxPoI5g0
+X-Gm-Gg: AY/fxX4Z6L6c1A5Vghfu5U7gUtm/yFLmb3tgDD9d8m15VQovOWk7q3bHzbZlmeJRfbd
+	vrEm40aMo+BPjccAVBZ+kEbqEmX4hbg+6Gg333uVGJ3JxbluQfxVQit5ZfLC4lF8Ft9tpF5NPiQ
+	7Q4jZqypsmJyOAtVV08Ao6XumY4/SBqMXSw75egANoLDO+xmIDcuB4jcsoBcPs0CUvfNjtm53fJ
+	0nZ+KGCzOOE8/okw1fqgYYuPNaZ8zzECQqccHB7eNbckHtPwvu+YDcjtcYizZB0QL4vjYo0QEWY
+	jmRjA+kj7C5s+Rkrs2ue8iWdIIQ0XuRBV9oC4jcmPArtWflJlIkcGIPAcMw6JOSkFBgHpB4nxWV
+	CMDkvKbS8M9NaOSkO5LeM4To8Hj8mpkHuSuZpzP+R4akFvABNYYG/PVonikTTM+XXiVA5MJ/x13
+	jPBeER3RlFe1nSFM2xMHoixW4=
+X-Received: by 2002:a05:620a:708a:b0:8b2:d56a:f2f3 with SMTP id af79cd13be357-8c6cce504d4mr450311585a.87.1768950307556;
+        Tue, 20 Jan 2026 15:05:07 -0800 (PST)
+X-Received: by 2002:a05:620a:708a:b0:8b2:d56a:f2f3 with SMTP id af79cd13be357-8c6cce504d4mr450307985a.87.1768950307087;
+        Tue, 20 Jan 2026 15:05:07 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38384dbe6c1sm42390371fa.22.2026.01.20.15.05.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 15:05:06 -0800 (PST)
+Date: Wed, 21 Jan 2026 01:05:04 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: milos-fairphone-fp6: Add Hall Effect
+ sensor
+Message-ID: <wpjvuclvpjft7y2rlrmfgszkzmc5vvmohif3etqrtvymxjjyjk@h2dujh5egdvd>
+References: <20260116-fp6-hall-sensor-v1-1-69275c6bd809@fairphone.com>
+ <3a17f2e5-0724-4d70-bd22-1e612142b3e8@oss.qualcomm.com>
+ <DFSOPXFSOUY2.2Z6XCLCD796Q@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Linux Next Mailing List <linux-next@vger.kernel.org>
-Cc: phone-devel <phone-devel@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
- Pavel Pisa <pisa@cmp.felk.cvut.cz>, Petr Hodina <petr.hodina@protonmail.com>
-From: David Heidelberg <david@ixit.cz>
-Subject: sdm845 broken on next-20260119 & 20
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-1.96 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DFSOPXFSOUY2.2Z6XCLCD796Q@fairphone.com>
+X-Proofpoint-ORIG-GUID: _FRtvCR5cqEb0vkt5ayHA6ylNtrk6SnW
+X-Authority-Analysis: v=2.4 cv=Oa6VzxTY c=1 sm=1 tr=0 ts=69700a24 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=6H0WHjuAAAAA:8 a=5kQVAYz2r87DXKKq-r4A:9 a=CjuIK1q_8ugA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDE5MSBTYWx0ZWRfX+98iXFyogfrs
+ LF+NlzfUkepZZ3xrpXOrJ1Mf6egGBJetisCsv8YeuOzWyUYUjuaIiOhAbzcjwx882aZ+zYByYDL
+ 9hhdJDGA9N2Qe4IDmf3vDNkYye8fw+85LNgqaitGRoF0RjYU1Vx42WX2E5r/W8jwwcl65fNdouG
+ Wn3j69k2XoqaIqojivc2Npu1qtOtCwYPyeJb36LFmK0pj/eiFTYV/leZMS6XEP0iZiUps9RpUZ8
+ TQDxHu56IWN1rITxFLHnZuczJD9pjQaqWrozbbM171p+jV0siFd6r0dNFdQA3cpm023qthTbvEG
+ dBtRVxlhr4zRMeRkdIBuNZNSDpVBN7Oyq1632Y7uI0FVmkZsIjDmTACRotVl0rhz8Ia99r2rfxr
+ vKe21dvIVvMuGmyBqg2f4BsbaaZHtaoo6u+2LwASx9+BSXznWNvCY7Y+kOHWkNwXnZPY7BqjHS2
+ Qp4szTyBxofbCicBAaw==
+X-Proofpoint-GUID: _FRtvCR5cqEb0vkt5ayHA6ylNtrk6SnW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-20_06,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601200191
+X-Spamd-Result: default: False [0.04 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-89911-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[vger.kernel.org,cmp.felk.cvut.cz,protonmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[ixit.cz,quarantine];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-89912-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
+	FREEMAIL_TO(0.00)[fairphone.com,gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,fairphone.com:email,oss.qualcomm.com:dkim,qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,ixit.cz:mid,ixit.cz:dkim]
-X-Rspamd-Queue-Id: E16974E18C
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: D86B14DE8E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Heya,
+On Mon, Jan 19, 2026 at 04:52:23PM +0100, Luca Weiss wrote:
+> On Mon Jan 19, 2026 at 3:41 PM CET, Konrad Dybcio wrote:
+> > On 1/16/26 3:22 PM, Luca Weiss wrote:
+> >> Add a node for the Hall Effect sensor, used to detect whether the Flip
+> >> Cover is closed or not.
+> >> 
+> >> The sensor is powered through vreg_l10b, so let's put a
+> >> regulator-always-on on that to make sure the sensor gets power.
+> >
+> > Is there anything else on L10B? Can we turn it off if the hall sensor
+> > is e.g. user-disabled?
+> 
+> It's the voltage source for pull-up of sensor I2C bus (so
+> ADSP-managed?), DVDD for amplifiers and VDD for a most sensors like
+> the gyro.
+> 
+> So realistically, it'll probably be (nearly) always on anyways. And I
+> don't want to shave another yak by adding vdd support to gpio-keys...
 
-not bisected yet, but we having problems with 20260119 & 20.
+Why? If it is exactly what happens on the board: the device producing
+GPIO events _is_ powered via a vdd. Added Input maintainer / list to cc.
 
-No usb initalization on any device.
-
-Pixel 3
-  - serial doesn't work
-  - framebuffer shows early fb init and logos, freeing initrd memory
-
-OnePlus 6T
-  - we get a penguins logos, but nothing else than blinking cursor
-
-For now, working version is based on next-20260109 (we have to test more 
-recent tags). Version next-20260115 somehow (with some IRQ issues) 
-worked too.
-
-If anyone has tips what to look for, we're grateful.
+> 
+> Regards
+> Luca
+> 
+> >
+> > Konrad
+> >
+> >> 
+> >> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 12 ++++++++++++
+> >>  1 file changed, 12 insertions(+)
+> >> 
+> >> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >> index 7629ceddde2a..98b3fc654206 100644
+> >> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >> @@ -32,6 +32,16 @@ gpio-keys {
+> >>  		pinctrl-0 = <&volume_up_default>;
+> >>  		pinctrl-names = "default";
+> >>  
+> >> +		/* Powered by the always-on vreg_l10b */
+> >> +		event-hall-sensor {
+> >> +			label = "Hall Effect Sensor";
+> >> +			gpios = <&tlmm 70 GPIO_ACTIVE_LOW>;
+> >> +			linux,input-type = <EV_SW>;
+> >> +			linux,code = <SW_LID>;
+> >> +			linux,can-disable;
+> >> +			wakeup-source;
+> >> +		};
+> >> +
+> >>  		key-volume-up {
+> >>  			label = "Volume Up";
+> >>  			gpios = <&pm7550_gpios 6 GPIO_ACTIVE_LOW>;
+> >> @@ -316,6 +326,8 @@ vreg_l10b: ldo10 {
+> >>  			regulator-min-microvolt = <1800000>;
+> >>  			regulator-max-microvolt = <1800000>;
+> >>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> >> +			/* Hall sensor VDD */
+> >> +			regulator-always-on;
+> >>  		};
+> >>  
+> >>  		vreg_l11b: ldo11 {
+> >> 
+> >> ---
+> >> base-commit: ef1c7b875741bef0ff37ae8ab8a9aaf407dc141c
+> >> change-id: 20260116-fp6-hall-sensor-1049f2f872ac
+> >> 
+> >> Best regards,
+> 
 
 -- 
-David Heidelberg
-
+With best wishes
+Dmitry
 
