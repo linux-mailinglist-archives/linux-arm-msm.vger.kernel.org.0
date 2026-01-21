@@ -1,190 +1,343 @@
-Return-Path: <linux-arm-msm+bounces-89962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SL21OhGOcGkaYgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:28:01 +0100
+	id KJQ2IS6PcGkaYgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:32:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CBD153900
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:28:01 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E89539CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:32:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DF7C57C5E61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:22:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6D6B47E24CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:26:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0014544A727;
-	Wed, 21 Jan 2026 08:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 106A7478845;
+	Wed, 21 Jan 2026 08:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="tS5LR9pl"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VuEl6Dwx";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bx+OuXMw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2953A7836;
-	Wed, 21 Jan 2026 08:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768983732; cv=none; b=B3fGbTR2DCnr1ZWBx/xlgAUhb41EcqFeaJzfyF4gbYj4U7l/kdwg1lI6arij3ApQOAMiauinWIv5cn9eZJHFzbYyLRgcYqUhT8wQ6bQfYPdAKFHNr2v/TnZjb/2xVzMlpJLndhfMSG+aqfGk32qiuHlCKs+hPkqRtHSDbruatpM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768983732; c=relaxed/simple;
-	bh=neCW6M3yNRF86hoxzQ7bEPmquqnlzjeQtApILuwrVl8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CBEY9LVmABAsmb2+A/G2ASG/Fpm4FqTTUjpjyQk948wu9OpZIc3+fKfgsv+8YqmV7hSYFKiHSWIKV0/7di4jp+MOWky+1xtCBZQkfB+sEZHz3raB8YuJXvakMaQIRoY87OdgnXNAj1ie6ziEzYi4uimi11OfuL4HYbv2FSbWLm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=tS5LR9pl; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::f31] (unknown [IPv6:2a02:f000:10bd:e301::f31])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id B0BCF53409F0;
-	Wed, 21 Jan 2026 09:22:07 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1768983727;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=mOrgls/1HYztjNfiBK1NNJX6NopNMhbLoIbNbrpJWy8=;
-	b=tS5LR9pl3btfy0ptUAgAiwZ81qBDYby4z/OVHyictVToXZPSOvpyj7u24AODE0DvWGgc5C
-	h1kF0rWoEmf+zzteSsHYoK8Hvg1+HdxW5X7NpbdOnt/LxyJdjIvlyuCo1ngbs+q1yQuS5C
-	idtsWVVPblnGnvPp8huVFZUf6VYZ0P8=
-Message-ID: <dfb72933-938f-43f2-87f3-2e3ab9697125@ixit.cz>
-Date: Wed, 21 Jan 2026 09:22:07 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF464657F4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 08:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768983910; cv=pass; b=qJlkKKWwMZEaaoxSairDkOYJLDoa0fzaP0aM2OTx/DO+HWPCHrdm8I08JWsTXKP9bB7Nf+XwyIbnbhaifetcFqwzXGnguqY6AXFByqoDzWUjw9zjQJueFGLyVPb4HkyImjl1Ikn86WoFu+rmLLCImw1l9d7rGyD6aQq1uE7Gs1E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768983910; c=relaxed/simple;
+	bh=2kN+Fo/xCASXeXOYO+GORmWpWIebjF+hSbGqWLVVco4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l6jCjyCgV00aFGrBKvqVWgaHQjykKk5wr0tkaUFqbmNDE3lMfdMBUBC3ECNC8cbyFBRICZiv6Bz9eVerO5zrjBFWSphpno7KuOue/J86wJzVziqZM4qXZD6cdjGxVGalhn42NdbqLzhR0n4E2KH7ECxyKS+6qBC7NexmJW8uYG8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VuEl6Dwx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bx+OuXMw; arc=pass smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60L21rvq3256432
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 08:25:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GToWD4T54knt3b2uU5b/mINEY2hrA9kQR2c/GP7hTc8=; b=VuEl6Dwx353pTapr
+	n4QS/eFFKfTd2auKB1O+8gA6NB8scZA2LDZbqciWuQJi3QPRILOkZiKxSQncTywH
+	O2A7gaB0wHpJtdUxukrs725xV6O7HyTLAmHkL7oJbvrU9cmowcN5qTFCvXoBucvF
+	lux7XFOunZYmIaaX314MwW+YVTh6IvUZDX0ncbo8D7rEeHIMJE/JG6ENmTpu3dbz
+	vF3mYs+bq4asvYy2lUlBSXM0r+5IFG7xOwhtQr7g7sNPFTrl4yG3L1xGV5Cpv9md
+	yK+dtGiektmffVwkC7iZH8gy3USFLGqBSv/5u7HVxS4Kh4/fSHmHKjNl0g1ZgGsZ
+	VL9d4w==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bt6u7vb3r-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 08:25:06 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-29f1f79d6afso68880855ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 00:25:06 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768983906; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YiSbu8bMESNj7WcoIcLmkAoDeM/cMRZ3nppDxiyVQ2nxv6l8Z263RsMiZnXVy3VDwl
+         JFMutzWJ5xl8tW9A1+SR8cd/FqjlGHd3G6wIz9zzqPUgRSpbo5PFlATx5mepSDCoM3oh
+         XRO+fIH/WBUJZQ/5VpJYvINEKA21Gx8B5qwY+oa7k/7Y2mJFWQK1kcwTuT8rN6qZEApv
+         BRokctCHCf2i3MSkx2RBmRSdPa5pI0qx5QWzeunWgvwrFXrnPyd37c7v4nCbwSSEMxQ2
+         yNjjBnO645CiLJxOUwzSVTIWlNOnkS9xGdgZqYoVs02mEvxEXGZhtqhRvym+ENHLwFq2
+         hRUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=GToWD4T54knt3b2uU5b/mINEY2hrA9kQR2c/GP7hTc8=;
+        fh=YhOoGqfoIjYjydTFKrYpRbWGTHu8nFZdT+iuUsiOZRk=;
+        b=WUvxONuGJwzwe9kDcgD3zhRJo8t5+cFm721hhAkud4h6DkknmM6Qebg5y8e2bgTbve
+         n4ToNshtDkO6M8EO+NeiMee2b29DFiadLrJxDj4kyVzbYHhUPHxENuWWToeXJTZT7Mk7
+         9HfQzHIMBDofGtUcSy9ueU0sOZbUFkr9A0NsoWHBpqqh0v1hyGTplIspuJcLNh4/95A5
+         IzXYqXTxIbamAKbSP/ZegpJFsP/Nv/GnS5K3mXOt0SvCxWF+7AmtNyIekSdptjM5zqlx
+         cTjsd1QeBU0aih8igxid6Zb2QDB1QNDIyyYc3P6H4IRQvcx29mA/cr693XsTlQENefus
+         3ucw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768983906; x=1769588706; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GToWD4T54knt3b2uU5b/mINEY2hrA9kQR2c/GP7hTc8=;
+        b=bx+OuXMwzEif4Ustdk9uiz8U3gOmgJWmAdttbEEKb4RFrB7/XFsai9396EEIrRI2pr
+         vzYTDJv56hpfnFTuyYnCpbrL2Jxqgs+XajJmP7MTiUAND+mfsdjwNu161UAy+cnqk3/x
+         QEd40hmIRvP5i9G040AEQkgnDfoGoA7rw86u0sce3z9RMVv4XTZZMMqww4O71HMwGt/d
+         KHuij2gyJVXCB6a3VOY93L7I0rEf6YjJHi17cwIU2OXfGh2S4SbgHFidfC/tIIYSAN9h
+         CdFu/tq8q+v/JP5cx4A3980C4sABHOC6uVhpYQ4jHNqjuaWUIoGHqGlwbbQuLTQ9kgpw
+         HEng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768983906; x=1769588706;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GToWD4T54knt3b2uU5b/mINEY2hrA9kQR2c/GP7hTc8=;
+        b=orzV2xYSTkyOkkoQQbQN7g+sgDEMuBI92vDpmta8OLhDm25oR6sqDu8gZKGjXbE3S6
+         trMtZClO46lMlWvBNgwLs6BiqQMrhdjAG/bzYVTusshHkptp3UH3wkM0o2JljuNgTp7B
+         6OjLNROl0hKcZ/huC1Cse+HMPxSKU5ktyr9qn3YxiMbQFW2i+AM9L9zsj0Gk4I1ljhZ/
+         M0vbxkM6DwrxqPuHOKbjER2WfFXjsnjLlANEqzkdB6n6E9wcRdT7PxHb5hZXbZONd4iq
+         GFJtvjQoIeIYM3OkKjyERwO4DUFKxkB9S7BGdd/X6TfP5a1O8o7SV0zQErRs+dhJvPrm
+         tPng==
+X-Forwarded-Encrypted: i=1; AJvYcCVEK4hTMJWujWk3ho+NGQ1dySBHwKQgKKI2FXyKIQ4kz4cyd0q2SkR2F6GJuuGvtOzPuV+0YW55kuuQJ242@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+a3wHb/rq9Xi9RnyDRNKbpslyEcLGpySKI0wzk2bt0yg889ZD
+	46XBZMh0MBrrwNKV4mQaJ7AUT7AtknKw5mGbpJj8xOyFD7U2ck7eD0B4AQrK8a9RNiU2mXLHok3
+	xm3IjZA8dtnqyE7vD8pPtIi46w63YVZfSbwu0LbdeB5ATVA82FVWbrM7v++Q/tq1EdX54/+T4RP
+	H59QbF4xOS3ZCRJVOlZxQD0jntMlBktGjcRkknp71TpkU=
+X-Gm-Gg: AZuq6aJxgLe2RmvFqbSDuCd0Ad+Se0stRqhGZR67Sp7UzZDbxAHYteWTidFumeDEGD9
+	o2PSUlpvc+uOJRYt3L249KplcBZXXVCd7fTyzEzGXo/PkuXebKSYIRwt6IUSZXr8FhvYASLIGwK
+	G227H3/B9Q/tkqLn31MbEWZ6QHnPdyA0qRlTODs0W6s4Otp+nDZxNVfH0cqhBSkzkvefkl+zdav
+	gLa4/67NpjDjdEjoS8XP43TeyE=
+X-Received: by 2002:a17:903:ac7:b0:2a0:da38:96d8 with SMTP id d9443c01a7336-2a7188a2b7bmr151194955ad.25.1768983905747;
+        Wed, 21 Jan 2026 00:25:05 -0800 (PST)
+X-Received: by 2002:a17:903:ac7:b0:2a0:da38:96d8 with SMTP id
+ d9443c01a7336-2a7188a2b7bmr151194775ad.25.1768983905209; Wed, 21 Jan 2026
+ 00:25:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] soc: qcom: extend interface for big endian support
-To: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251119104008.3505152-1-alexander.wilhelm@westermo.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- xsFNBF5v1x4BEADS3EddwsNsvVAI1XF8uQKbdYPY/GhjaSLziwVnbwv5BGwqB1tfXoHnccoA
- 9kTgKAbiXG/CiZFhD6l4WCIskQDKzyQN3JhCUIxh16Xyw0lECI7iqoW9LmMoN1dNKcUmCO9g
- lZxQaOl+1bY/7ttd7DapLh9rmBXJ2lKiMEaIpUwb/Nw0d7Enp4Jy2TpkhPywIpUn8CoJCv3/
- 61qbvI9y5utB/UhfMAUXsaAgwEJyGPAqHlC0YZjaTwOu+YQUE3AFzhCbksq95CwDz4U4gdls
- dmv9tkATfu2OmzERZQ6vJTehK0Pu4l5KmCAzYg42I9Dy4E6b17x6NncKbcByQFOXMtG0qVUk
- F1yeeOQUHwu+8t3ZDMBUhCkRL/juuoqLmyDWKMc0hKNNeZ9BNXgB8fXkRLWEUfgDXsFyEkKp
- NxUy5bDRlivf6XfExnikk5kj9l2gGlNQwqROti/46bfbmlmc/a2GM4k8ZyalHNEAdwtXYSpP
- 8JJmlbQ7hNTLkc3HQLRsIocN5th/ur7pPMz1Beyp0gbE9GcOceqmdZQB80vJ01XDyCAihf6l
- AMnzwpXZsjqIqH9r7T7tM6tVEVbPSwPt4eZYXSoJijEBC/43TBbmxDX+5+3txRaSCRQrG9dY
- k3mMGM3xJLCps2KnaqMcgUnvb1KdTgEFUZQaItw7HyRd6RppewARAQABzSBEYXZpZCBIZWlk
- ZWxiZXJnIDxkYXZpZEBpeGl0LmN6PsLBlAQTAQgAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIe
- AQIXgBYhBNd6Cc/u3Cu9U6cEdGACP8TTSSByBQJl+KksBQkPDaAOAAoJEGACP8TTSSBy6IAQ
- AMqFqVi9LLxCEcUWBn82ssQGiVSDniKpFE/tp7lMXflwhjD5xoftoWOmMYkiWE86t5x5Fsp7
- afALx7SEDz599F1K1bLnaga+budu55JEAYGudD2WwpLJ0kPzRhqBwGFIx8k6F+goZJzxPDsf
- loAtXQE62UvEKa4KRRcZmF0GGoRsgA7vE7OnV8LMeocdD3eb2CuXLzauHAfdvqF50IfPH/sE
- jbzROiAZU+WgrwU946aOzrN8jVU+Cy8XAccGAZxsmPBfhTY5f2VN1IqvfaRdkKKlmWVJWGw+
- ycFpAEJKFRdfcc5PSjUJcALn5C+hxzL2hBpIZJdfdfStn+DWHXNgBeRDiZj1x6vvyaC43RAb
- VXvRzOQfG4EaMVMIOvBjBA/FtIpb1gtXA42ewhvPnd5RVCqD9YYUxsVpJ9d+XsAy7uib3BsV
- W2idAEsPtoqhVhq8bCUs/G4sC2DdyGZK8MRFDJqciJSUbqA+5z1ZCuE8UOPDpZKiW6H/OuOM
- zDcjh0lOzr4p+/1TSg1PbUh7fQ+nbMuiT044sC1lLtJK0+Zyn0GwhR82oNM4fldNsaHRW42w
- QGD35+eNo5Pvb3We5XRMlBdhFnj7Siggp4J8/PJ6MJvRyC+RIJPGtbdMB2/RxWunFLn87e5w
- UgwR9jPMHAstuTR1yR23c4SIYoQ2fzkrRzuazsFNBF5v1x4BEADnlrbta2WL87BlEOotZUh0
- zXANMrNV15WxexsirLetfqbs0AGCaTRNj+uWlTUDJRXOVIwzmF76Us3I2796+Od2ocNpLheZ
- 7EIkq8budtLVd1c06qJ+GMraz51zfgSIazVInNMPk9T6fz0lembji5yEcNPNNBA4sHiFmXfo
- IhepHFOBApjS0CiOPqowYxSTPe/DLcJ/LDwWpTi37doKPhBwlHev1BwVCbrLEIFjY0MLM0aT
- jiBBlyLJaTqvE48gblonu2SGaNmGtkC3VoQUQFcVYDXtlL9CVbNo7BAt5gwPcNqEqkUL60Jh
- FtvVSKyQh6gn7HHsyMtgltjZ3NKjv8S3yQd7zxvCn79tCKwoeNevsvoMq/bzlKxc9QiKaRPO
- aDj3FtW7R/3XoKJBY8Hckyug6uc2qYWRpnuXc0as6S0wfek6gauExUttBKrtSbPPHiuTeNHt
- NsT4+dyvaJtQKPBTbPHkXpTO8e1+YAg7kPj3aKFToE/dakIh8iqUHLNxywDAamRVn8Ha67WO
- AEAA3iklJ49QQk2ZyS1RJ2Ul28ePFDZ3QSr9LoJiOBZv9XkbhXS164iRB7rBZk6ZRVgCz3V6
- hhhjkipYvpJ/fpjXNsVL8jvel1mYNf0a46T4QQDQx4KQj0zXJbC2fFikAtu1AULktF4iEXEI
- rSjFoqhd4euZ+QARAQABwsF8BBgBCAAmAhsMFiEE13oJz+7cK71TpwR0YAI/xNNJIHIFAmX4
- qVAFCQ8NoDIACgkQYAI/xNNJIHKN4A/+Ine2Ii7JiuGITjJkcV6pgKlfwYdEs4eFD1pTRb/K
- 5dprUz3QSLP41u9OJQ23HnESMvn31UENk9ffebNoW7WxZ/8cTQY0JY/cgTTrlNXtyAlGbR3/
- 3Q/VBJptf04Er7I6TaKAmqWzdVeKTw33LljpkHp02vrbOdylb4JQG/SginLV9purGAFptYRO
- 8JNa2J4FAQtQTrfOUjulOWMxy7XRkqK3QqLcPW79/CFn7q1yxamPkpoXUJq9/fVjlhk7P+da
- NYQpe4WQQnktBY29SkFnvfIAwqIVU8ix5Oz8rghuCcAdR7lEJ7hCX9bR0EE05FOXdZy5FWL9
- GHvFa/Opkq3DPmFl/0nt4HJqq1Nwrr+WR6d0414oo1n2hPEllge/6iD3ZYwptTvOFKEw/v0A
- yqOoYSiKX9F7Ko7QO+VnYeVDsDDevKic2T/4GDpcSVd9ipiKxCQvUAzKUH7RUpqDTa+rYurm
- zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
- fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
- ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20251119104008.3505152-1-alexander.wilhelm@westermo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260120070650.3192679-1-wei.zhang@oss.qualcomm.com>
+ <i77z7i45g72k4hqzd33z643xiuol7olbk65dzv62fgdhcllsmc@kcixnktiyknq> <135000f3-b444-44e3-bbce-e5e274e6180a@oss.qualcomm.com>
+In-Reply-To: <135000f3-b444-44e3-bbce-e5e274e6180a@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Wed, 21 Jan 2026 10:24:54 +0200
+X-Gm-Features: AZwV_Qg8HbtdhYG-rmP6JqL0rwHJc6f0wsaRxPDa2v1L6AgDH2p5c13YCwqYgE8
+Message-ID: <CAO9ioeUun44YHh9SDfZikXbUJaETHgpZkv+tDpVM9+gE8XPALg@mail.gmail.com>
+Subject: Re: [PATCH v8] arm64: dts: qcom: qcs8300-ride: enable WLAN on qcs8300-ride
+To: "Wei Zhang (Stone)" <wei.zhang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=P/w3RyAu c=1 sm=1 tr=0 ts=69708d62 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=R4slFI7RHdfiIwh5emwA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDA2OSBTYWx0ZWRfX7gkj0PBKv2G5
+ bM8fdz9okC42QA4tx3RZrCk8bicCO7BIYYQL4WvBYyPMKCgEAgO7O1qeg1le7Qs5Ky+8t93KjlJ
+ RgpqNv+1y5zDGFNGm7x3abtrIqNFVCazgXC+NSyDS0O4b+98B3IJJFfO60cEVNU4z6aP/KDpT2r
+ XzOCuYucc1j9MxpiSOhs36tsp7MVt767tikEO13hnVQSMojSJzR2rew5lW8CZoL299iVv7oux/j
+ YgYvrlxxGUMgpBhjGeLM0m7ENfymkN4wo0AeZOMfaMw3QKSkAB9RFxaAMq8Dw6BPjClEf+ybL4z
+ egL7n79EB66KIfqBEEp5SRzEVvhV8/jcB9bI7i6SlD4SrVkL/8Ko++j4O/Nwmg7FFziA4aTUkVb
+ 6OjLLy2/wFGW/kRS7kd5CmymbEqG22AlM7ox6SnQCkXm6lJ90J3p3P2nrUyLMClcfvZT4lDjVAz
+ Ky2KFtirSpZ2n/H04Tg==
+X-Proofpoint-ORIG-GUID: kMf880BsPCpHLLAPU0TF8pqNK60UHKJo
+X-Proofpoint-GUID: kMf880BsPCpHLLAPU0TF8pqNK60UHKJo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-21_01,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 spamscore=0 phishscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601210069
 X-Spamd-Result: default: False [-1.96 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-89962-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[ixit.cz,quarantine];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-89963-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: 6CBD153900
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,mail.gmail.com:mid,0.0.0.0:email,qualcomm.com:email,qualcomm.com:dkim]
+X-Rspamd-Queue-Id: E6E89539CB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 19/11/2025 11:40, Alexander Wilhelm wrote:
-> Currently, the QMI interface only works on little endian systems due to how
-> it encodes and decodes data. Most QMI related data structures are defined
-> in CPU native order and do not use endian specific types.
-> 
-> Add support for endian conversion of basic element types in the QMI
-> encoding and decoding logic. Fix the handling of QMI_DATA_LEN fields to
-> ensure correct interpretation on big endian systems. These changes are
-> required to allow QMI to operate correctly across architectures with
-> different endianness.
-> ---
+On Wed, 21 Jan 2026 at 08:59, Wei Zhang (Stone)
+<wei.zhang@oss.qualcomm.com> wrote:
+>
+>
+> On 1/20/2026 3:44 PM, Dmitry Baryshkov wrote:
+> > On Mon, Jan 19, 2026 at 11:06:49PM -0800, Wei Zhang wrote:
+> >> Enable WLAN on qcs8300-ride by adding a node for the PMU module
+> >> of the WCN6855 and assigning its LDO power outputs to the existing
+> >> WiFi module.
+> >>
+> >> On the qcs8300-ride platform, the corresponding firmware and BDF
+> >> are QCA6698AQ instead of WCN6855, which have been added in the
+> >> 20250211 release.
+> >>
+> >> Signed-off-by: Wei Zhang <wei.zhang@oss.qualcomm.com>
+> >> ---
+> >> This patch depends on:
+> >> - PCIe
+> >> https://lore.kernel.org/all/20251128104928.4070050-1-ziyue.zhang@oss.q=
+ualcomm.com/
+> >>
+> >> Changes in v8:
+> >> - Reordered regulator nodes to maintain alphabetical consistency (Dmit=
+ry)
+> >> - Place wifi@0 node under existing pcieport0 label
+> >> - Link to v7: https://lore.kernel.org/all/20260119090758.2780678-1-wei=
+.zhang@oss.qualcomm.com/
+> >>
+> >> Changes in v7:
+> >> - Align regulator node names to match the existing naming style in the=
+ dts (Dmitry)
+> >> - Link to v6: https://lore.kernel.org/all/20260119080125.2761623-1-wei=
+.zhang@oss.qualcomm.com/
+> >>
+> >> Changes in v6:
+> >> - Rebase patches
+> >> - Remove unintended 'output-low' from wlan-en-state pinctrl (Konrad)
+> >> - Link to v5: https://lore.kernel.org/all/20251113055148.2729943-1-wei=
+.zhang@oss.qualcomm.com/
+> >>
+> >> Changes in v5:
+> >> - Rebase patches
+> >> - Flip the order of property-n and property-names (Konrad)
+> >> - Flip the order of bias and output property (Konrad)
+> >> - Link to v4: https://lore.kernel.org/all/20250325075331.1662306-1-qui=
+c_stonez@quicinc.com/
+> >>
+> >> Changes in v4:
+> >> - Rename the symbol pcieport0 to pcie0_port0 (Konrad)
+> >> - Adjust the property order in node pcie0_port0 (Konrad)
+> >> - Add to the commit message mentioning FW and BDF used by QCS8300 (Dmi=
+try)
+> >> - Specify the calibration data using the correct variant (Dmitry)
+> >> - Link to v3: https://lore.kernel.org/all/20250318093350.2682132-1-qui=
+c_stonez@quicinc.com/
+> >>
+> >> Changes in v3:
+> >> - Complete the nodes property definitions according to DTS binding req=
+uirements (Bjorn)
+> >> - Link to v2: https://lore.kernel.org/all/20250227065439.1407230-1-qui=
+c_stonez@quicinc.com/
+> >>
+> >> Changes in v2:
+> >> - Rename the nodes name according to DTS coding style (Konrad & Krzysz=
+tof)
+> >> - Provide regulator-min/max-microvolt to the regulators (Konrad)
+> >> - Link to v1: https://lore.kernel.org/all/20250210062910.3618336-1-qui=
+c_stonez@quicinc.com/
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 105 ++++++++++++++++++++=
+++
+> >>   1 file changed, 105 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/bo=
+ot/dts/qcom/qcs8300-ride.dts
+> >> index 68691f7b5f94..864b32503d29 100644
+> >> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+> >> @@ -24,6 +24,26 @@ chosen {
+> >>              stdout-path =3D "serial0:115200n8";
+> >>      };
+> >>
+> >> +    vreg_conn_1p8: regulator-conn-1p8 {
+> >> +            compatible =3D "regulator-fixed";
+> >> +            regulator-name =3D "vreg_conn_1p8";
+> >> +            regulator-min-microvolt =3D <1800000>;
+> >> +            regulator-max-microvolt =3D <1800000>;
+> >> +            startup-delay-us =3D <4000>;
+> >> +            enable-active-high;
+> >> +            gpio =3D <&pmm8650au_1_gpios 4 GPIO_ACTIVE_HIGH>;
+> >> +    };
+> >> +
+> >> +    vreg_conn_pa: regulator-conn-pa {
+> >> +            compatible =3D "regulator-fixed";
+> >> +            regulator-name =3D "vreg_conn_pa";
+> >> +            regulator-min-microvolt =3D <1800000>;
+> >> +            regulator-max-microvolt =3D <1800000>;
+> >> +            startup-delay-us =3D <4000>;
+> >> +            enable-active-high;
+> >> +            gpio =3D <&pmm8650au_1_gpios 6 GPIO_ACTIVE_HIGH>;
+> >> +    };
+> >> +
+> >>      regulator-usb2-vbus {
+> >>              compatible =3D "regulator-fixed";
+> >>              regulator-name =3D "USB2_VBUS";
+> >> @@ -33,6 +53,68 @@ regulator-usb2-vbus {
+> >>              enable-active-high;
+> >>              regulator-always-on;
+> >>      };
+> >> +
+> >> +    wcn6855-pmu {
+> >> +            compatible =3D "qcom,wcn6855-pmu";
+> >> +
+> >> +            pinctrl-0 =3D <&wlan_en_state>;
+> >> +            pinctrl-names =3D "default";
+> >> +
+> >> +            vddio-supply =3D <&vreg_conn_pa>;
+> >> +            vddaon-supply =3D <&vreg_conn_1p8>;
+> >> +            vddpmu-supply =3D <&vreg_conn_pa>;
+> >> +            vddpmumx-supply =3D <&vreg_conn_1p8>;
+> >> +            vddpmucx-supply =3D <&vreg_conn_pa>;
+> >> +            vddrfa0p95-supply =3D <&vreg_conn_1p8>;
+> > How comes that 0.95V pin is powred on by 1.8V? How comes that 1.3V
+> > pin is powered on by 1.8V?
+> On this platform, all power domains of the WLAN module are enabled
+> through external buck converters controlled by PMIC GPIO4.
+> PMIC=E2=80=91C GPIO_4 is used for DBU3 ENABLE (PWR_CTRL2_VDD_1P8), and it=
+ is
+> also used to enable the core voltages required by the WLAN card (1.95=E2=
+=80=AFV,
+> 1.35=E2=80=AFV, 1.05=E2=80=AFV. etc).
+> Do we also need to define a regulator for vddrfa1p3-supply,
+> vddrfa1p9-supply, vddrfa0p95-supply, etc?
 
-Hello,
+Could you please describe the hardware. Accurately. Not by using
+clumsy shortcuts or incorrect simplifications.
 
-I recently (next-20260119) started receiving errors on Pixel 3:
+> >
+> >> +            vddrfa1p3-supply =3D <&vreg_conn_pa>;
+> >> +            vddrfa1p9-supply =3D <&vreg_conn_1p8>;
+> >> +            vddpcie1p3-supply =3D <&vreg_conn_pa>;
+> >> +            vddpcie1p9-supply =3D <&vreg_conn_1p8>;
+> >> +
+> >> +            wlan-enable-gpios =3D <&tlmm 54 GPIO_ACTIVE_HIGH>;
+> >> +
 
-[   21.158943] ipa 1e40000.ipa: received modem running event
-[   21.164616] qmi_encode: Invalid data length
-[   21.168930] qcom_q6v5_pas remoteproc-adsp: failed to send subsystem event
-[   21.175844] qmi_encode: Invalid data length
-[   21.180494] qcom_q6v5_pas remoteproc-cdsp: failed to send subsystem event
-[   21.187467] qmi_encode: Invalid data length
-[   21.191772] qcom-q6v5-mss 4080000.remoteproc: failed to send 
-subsystem event
-[   21.199088] qmi_encode: Invalid data length
-[   21.203360] qcom-q6v5-mss 4080000.remoteproc: failed to send 
-subsystem event
-[   21.210636] remoteproc remoteproc0: remote processor 
-4080000.remoteproc is now up
 
-Since it's not well tested, I believe there could be problem with 
-configuration, but after reverting this series, no errors pop up.
 
-I would believe maybe these errors was previously hidden, but just to be 
-sure asking here.
-
-Thanks
-David
-
-[...]--
-David Heidelberg
-
+--=20
+With best wishes
+Dmitry
 
