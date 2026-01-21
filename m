@@ -1,87 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-89973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WN53BpKjcGlyYgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 10:59:46 +0100
+	id 4N46KdOmcGlyYgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 11:13:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B416754CEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 10:59:45 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FBFF55051
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 11:13:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id B6B7B60314F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:52:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7203E8CA90E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:55:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FFF5480DC0;
-	Wed, 21 Jan 2026 09:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC45F481229;
+	Wed, 21 Jan 2026 09:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tckXVLWP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AeTaM+kt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D5848096E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 09:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10FA480DCD;
+	Wed, 21 Jan 2026 09:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768989073; cv=none; b=sF2ypBdEVehgatgME98iFYBQLN8wW6b15qsq7EE0fga00HD02Q6jdD+QQVJHzlpGAJvHQOB1E/eMYuZZcKItofRYXq4h14yIhskPXgrvhvpNzECbbH0UB0Q+NVrkzpUctmx5dYnJAGFHK4b9hiuXk+eDlH6ZsBS6OhWw+wLkHNQ=
+	t=1768989198; cv=none; b=RHIUrKF04QTffUiGG4aSPmKQbEHmnbi7Fl65dwQdKMa87WSEKEti9IMvkzn/+09+kJUcUKriQRtaqukr1KpIW02zDA6LUWs2ZjK0t7H9vsQWLPzEktACQIvbNAhAF0H49K1lFr+u1VC8msogqqNwElzM1Vb9iCVA4fCmGBUQs0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768989073; c=relaxed/simple;
-	bh=Vfy/7YC662hAM+GAFuZhIoPkRBd1dwGhvPNeakMPM7I=;
+	s=arc-20240116; t=1768989198; c=relaxed/simple;
+	bh=sgHLvdiYH0ctUHHwHYIfRo6V1QGR3Q0o/e7nTsoFxYE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R21r44an2iCEJNBN/ypJKeJxnTSsRkCqrtONJ9NNrhfH/RLP4tv2W0xNFeZNXEi4A7BTDNJbVkgB5r/8kJms/zcBJy+KIULJr37loBBRunhXQOtsfCnGjJP930aeMTUp5tJCfuhEZUIBprnR3Tckmo3AKKPkJfODVmTrgNOk9e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tckXVLWP; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4801bc328easo55360975e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 01:51:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1768989069; x=1769593869; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oBJUElWuhwE3q3MLB3VE93xamoIHkqUdh2GNEp2nbps=;
-        b=tckXVLWPH/IhaJ4KLEli5yjGoWx4t9bwOdX+o/nmfb+RxiopF7L/l8jHM2f3ysXION
-         UgQmTDkzGfef7OlGfrUGrTsGCPuP/QGo1Trdv357gLtcuLbg9Ma2gAOESXH4gi6yb1gV
-         82+GXl8j9ZOaUiG6lcP+/uFnIQBYYfu5RWANZ+gXZo/PuL/MzJB3QvAB8Wpl1bMd0wjt
-         4aXryoqTQ+vj/6089KGzmm/fHkLxuu6VRMFGrtD6PY+zJAlRrKwrhriMDeyvzn8wryts
-         R62o9sAwoROex54qc/7yQwLfI3J3oxlZ5WBqTev/o32YEddfAB24w6p3DIn0oU3ju05u
-         aoVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768989069; x=1769593869;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oBJUElWuhwE3q3MLB3VE93xamoIHkqUdh2GNEp2nbps=;
-        b=wixz7PMcsYUsAOsegmFzv6Kov6+PjtlRm22T/AqhdR1k5K+x+6yvAH68ImmuslSH4V
-         jfwNQ1dVzQX0QgTs56eqYQJy+HOxOuviYiESbDpXe1DlK13/wRUXwIfT8QdODirV1Vrb
-         nRNcFQv5raxGw5LzwQVFR1qHvbIaVWp9Aet0gZVcuYFRUEhn2E7Y6bUpX3afjjKF9TRK
-         eMd3lbWxKmzgkuesUoA7bw9TR2pyUiUjo4HB2fsyRotH/BccNdc6+t+ZUoiJ2svgbJQj
-         7kBHknTWhuyVlEeeQNdQUbvvk/RYMVrwXeHEqGXBrflpcMqn+43Jr91pE+CXDsh8DW4Y
-         +gbQ==
-X-Gm-Message-State: AOJu0YyxAf1wfrVb7sDAaNlttuOqf1GRq7LzsybfKYjMIjYl/HmC2Cj+
-	zMrdiO9AuuS2HsAOfYumsSqk4DI0FusuAj2XQeSByrhB7lFN4iUALzuMRVGO9oB9FL8=
-X-Gm-Gg: AZuq6aJ047TyMCLJXt90wKkA+rgZcN+HqH4R7NysiWO1JxbyWpviqj6jVWYl7M5kdux
-	55G+VEGMtCnyVbndDd1CrukHCPgkLk+juu9GybjC5rVGj23R22EnrsmyZ8Obi7elmRFvrlUVsQ7
-	7LkijTKH4L1TN/VKMM3Uids3/DgmUv4TAnVLcksRTKf+oDUI7XHPXeY/LZECARsvNg1l+qn3f8n
-	4Gg5+DZLnT/LyGkxYDWfeEP2GDANCnlspAmb4+5LG/JqctRaiUxl96RyvGxH5R3V7PVgWG+5ggy
-	S4dRdtL+sAKqDuJk49myazaYaJIl47Br0eIhF1Ye10XQ4HIc/CreHiOlbQUJQ9VNmg7H5zolJ/B
-	f+cQ0SWOyyQzcmbwqviObdOrVm8UKnZ6coewP0x9LJCAa6ygmJLYTs3iSKRrO18XLdGUz93b5eE
-	ixeooBfcgMCwxZJwRARzL3JHJNFfGwL/eTb0QY4KIcbeTNytnw34BrWIoPfuquYtdBw0SGT0FHI
-	A==
-X-Received: by 2002:a05:600c:3581:b0:47d:3ffa:5f03 with SMTP id 5b1f17b1804b1-4801eb03348mr260126345e9.21.1768989069215;
-        Wed, 21 Jan 2026 01:51:09 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:3d9:2080:8ae8:f59d:ae95:f372? ([2a01:e0a:3d9:2080:8ae8:f59d:ae95:f372])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47f429071besm352015945e9.10.2026.01.21.01.51.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jan 2026 01:51:08 -0800 (PST)
-Message-ID: <ddb69470-db7e-4ec0-afd4-4f1631e45baf@linaro.org>
-Date: Wed, 21 Jan 2026 10:51:08 +0100
+	 In-Reply-To:Content-Type; b=EpbngJjssXhHbHDlEWbMWgQXlJ+NpAqjKYe23xlTZC9Ywc1JCcHPYscgkb5Fx42kGji4qbImwDyFVzNkOT0IQe4qJa41e5KiCbD7J9mxJypC86+NU5J5BHsKedO0ZC9x7WACzMtFNWlCpu3q4l/9ryR0qFNv8/P5RxhlzY8c4ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AeTaM+kt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFE0C116D0;
+	Wed, 21 Jan 2026 09:53:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768989196;
+	bh=sgHLvdiYH0ctUHHwHYIfRo6V1QGR3Q0o/e7nTsoFxYE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=AeTaM+ktw5cvQDxq1I/2ZqXy8IrsS4831ffWcZy3WlbVku/JWim9oAaCPK/8ObENl
+	 JiaGUHDLM7runCyMqX1Rdg/KTzovPMxOhqWnpGxP5tRRikpv6z2OUPTCDiY+50YDnN
+	 c4LPsQkyKKBza6wpnK2qfAqkNAeKKhlqcvG/LTIHQnqHpETbW/zrLIeQVV+iU8/lJU
+	 ROaCHaEwZ0MZR0mJaVs8gsOodwjcADX/TfOP8eAw0vNx7Mg3r6JFzHf9UY/AzLvFe5
+	 WpKfwcFOSsQEKXVnDMoU/8KWgjrCBcjG1GWWxxg9cEy/tnmpzwMDtIeBq41dQQmaDz
+	 bEicWFcyt2QXw==
+Message-ID: <69c50416-452a-43ca-8ea1-d98d570f93a8@kernel.org>
+Date: Wed, 21 Jan 2026 10:53:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,7 +55,6 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
 Subject: Re: [PATCH v2 2/7] dt-bindings: vendor-prefixes: Add AlgolTek
 To: Val Packett <val@packett.cool>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -97,94 +62,106 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260120234029.419825-2-val@packett.cool>
  <20260120234029.419825-4-val@packett.cool>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
 In-Reply-To: <20260120234029.419825-4-val@packett.cool>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-1.96 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	TAGGED_FROM(0.00)[bounces-89973-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,linaro.org:email,linaro.org:dkim,linaro.org:mid,linaro.org:replyto,packett.cool:email];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	PRECEDENCE_BULK(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	TAGGED_FROM(0.00)[bounces-89974-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
 	RCPT_COUNT_SEVEN(0.00)[7];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: B416754CEF
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,packett.cool:email]
+X-Rspamd-Queue-Id: 1FBFF55051
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 1/21/26 00:30, Val Packett wrote:
+On 21/01/2026 00:30, Val Packett wrote:
 > AlgolTek is a Taiwanese chip manufacturer specialized in high-speed
 > signal and power transmission and conversion.
 > 
 > Signed-off-by: Val Packett <val@packett.cool>
 > ---
->   Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> index 63730f75a578..f2bd32fbb717 100644
-> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> @@ -86,6 +86,8 @@ patternProperties:
->       description: Aldec, Inc.
->     "^alfa-network,.*":
->       description: ALFA Network Inc.
-> +  "^algoltek,.*":
-> +    description: AlgolTek, Inc.
->     "^allegro,.*":
->       description: Allegro DVT
->     "^allegromicro,.*":
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+I initially silently ignored this patch because this is churn to deal
+with such one liners. This should be squashed. But after talk with
+Dmitry let's clarify.
 
-Thanks,
-Neil
+If you target different trees, then:
+1. Do not combine them into one patchset
+2. If combining, do not mix the order like 1/7 goes to foo, 2/7 goes to
+bar, 3/7 goes to foo again, 4/7 goes to bar again.
+
+Make it easy for maintainers, so we won't spend time deciphering this or
+acking multiple of such single liners (I asked this on mailing list
+multiple times).
+
+Best regards,
+Krzysztof
 
