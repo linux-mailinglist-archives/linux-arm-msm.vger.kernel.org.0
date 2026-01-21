@@ -1,146 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-90089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CC3lCMRFcWn2fgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:31:48 +0100
+	id QBlaBhdZcWkNEwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 23:54:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7B595E152
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:31:47 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B815D5F1E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 23:54:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E06EB844D17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:02:26 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CF499901CF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:54:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8A7E425CEB;
-	Wed, 21 Jan 2026 21:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A021E40B6F6;
+	Wed, 21 Jan 2026 22:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxRz7f6t"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HRnIqR3t";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="GtDoFVbf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9DA3321BF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 21:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66A4425CC7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 22:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769029341; cv=none; b=TllUiLRHzRPuYvMASlptWXF+vhLV5/X7lSwx2S7iPVbimjs+/9UkHXxJ3ekRqXLdVyCbo8Z0V6+Ynz9j3TC0A/FPbmjflsaW4ZsRhRJnNbK1D7a+cVeCMAFsK22ab+15fSx2e/BnAtriT47ASeCqPUz/SGqiPYD/A+qhHctMW7c=
+	t=1769036044; cv=none; b=pew2Zd5S+YH/sDx4HRZoMNLThxnx0YMdtdzOT7Tw+BRdlupk6CHUrE0M99VuAEbb49nPB8vrF2enYtZtt40O5pjWsuplhHfgPVlZWnQr6mcYScF2O1b/kLiX9Sssww3W3uyFQ60bSQcEzHMT22VyAR2Fa7a+CU22yVYb4n/zwKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769029341; c=relaxed/simple;
-	bh=vE52ZZoZJn6jfGKNFJhmt+K+7owBh9ZcuK+dIiYw9JQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CaIC5pEH3wAPvEttwKpELosRXK+tW1buw1SM0gPM/FwS8lcGyMes4NvojhtRxc4PIIEYGc/7gdOwTxC3wQYcrZBzmi8oKjJcJMN/wSmg6sbPbo//eSUUGmaBwY6+gmQJCcsdBtvYkObyDPvQKw/kHR1K8xDxSqNyFtgrD0lnkKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxRz7f6t; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4327555464cso172851f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 13:02:18 -0800 (PST)
+	s=arc-20240116; t=1769036044; c=relaxed/simple;
+	bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CylOzY+9YkjUB3o4d8zQKpL8tLxDzoQitQJWJ2HFImUYEyQevYZ4z46ePyDPN5FJO/4iDbuBppxhYH9aZDUTDXYykEbhhMQxxKv9ZU0vj3ZNFX6LxhTPsgVUeVyWJpIEP0QVRxd/g6GkKC8hLGIqxOX5cTFLAoDGM27AqQnqcYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HRnIqR3t; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=GtDoFVbf; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1769036034;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+	b=HRnIqR3t3Rkd7ysV+hJ0eEgVek9bLr0i3uuVycuVcWvN+TPcQmBYxfQAkZi8FrtoLlarEl
+	pQOcKXvJz5oPql7klxMX6v1SsKarP8QvmQXVbAl0uS/o0iE9bU8VO4jzI4l8FYJJoXsRq7
+	LR84vGtKQTT+t2bdY1nd/iV7psbjeVQ=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-134-XyQ1VMo9MV6F2Q0-aiSAXQ-1; Wed, 21 Jan 2026 17:53:51 -0500
+X-MC-Unique: XyQ1VMo9MV6F2Q0-aiSAXQ-1
+X-Mimecast-MFC-AGG-ID: XyQ1VMo9MV6F2Q0-aiSAXQ_1769036031
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-5014d8b3ae0so8896731cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 14:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769029337; x=1769634137; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=redhat.com; s=google; t=1769036031; x=1769640831; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sa/7GdD7A4/u70FqBtQBR6RTLsWyqjA9Qwa5O2OHUBI=;
-        b=IxRz7f6tmPaPO6PEMcT8Q5UFSmcgYsPvbii6C65s4mjjdp1XCgj14hOo5dtrZQp63a
-         WQNNB91dOOFUTRWJ95L9bu6X3CSf+NT/edZa6A3xgV8taPxI4YUQm1MgHasHm05Tb7b0
-         zx0p2nFKCVVc9VUOwDmtM3/GxkkuGcqxuzuebxoCvJmuKWvdzQjbWDoTBkF9su0Ar028
-         xTJeFJuLIypVZhSAIrTU+HY6CYyzCYzVcw4iUaJnrhcbU4mA3mKNHLqJMza5nPdpxTam
-         PbHVfx4FD4+rPDDpBqqdneDkJSUYp613ElilyOvS9zq0pFueAdnUYLOl67dieVRxec68
-         C6Vg==
+        bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+        b=GtDoFVbfPIev6Y45lnUj8xiA8GxcY4vLl7Zc+zcX/Z69kLArm87l/wSqn/UI7DCfSf
+         U30AimhGVESqjkpe/jreBjvHZgsNKn7docRbMu16NEBpLoFzCGFBxuqLQUgyXu5dVQis
+         HaT4reFMxuhHlp5vW+xnI6QoI8md1+lGBpH4Eb4H/yOGB69lkFRTa1lL7OKfKMCx8Ztb
+         SHjmUGudpNV/kOuCkjTFdlmS47bqkS46ZDIM4ORSaYcXzVvSvs2cwZCDSH5+19PCe80n
+         iObPgZrtysxGJfgmz4JJmJvBVw1Pbm/IW6vXLbEl2gCIfT251WTL2usfoDhuCbaPGo68
+         ebYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769029337; x=1769634137;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1769036031; x=1769640831;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Sa/7GdD7A4/u70FqBtQBR6RTLsWyqjA9Qwa5O2OHUBI=;
-        b=w3i0qNzlakDQYYe8lIn0J/i0UBDu0UNvjcC+Ec/ceBOff0PQNT6slpFJST35upG/8H
-         WrXwpyBqNV9ULN9FnxS1R8mjKkoE3nMRoIVeqxmS8/ucNE1VuQBrU0s+p5yE9AWt4fD9
-         rAKEbspHb7zpFVDAnxm5u7MhoFVAJfIvEdQjxKv+xvWku23UNk15cWnX81WGJFk1x/Jl
-         nXDB/5fCaoQP1rp0MvkteGlsM/7H3fTjmFnGis8Uw+hqLe3LF4QCi8tU5x6SLhlR1NA1
-         mqdD1M0WheUWrejlPcm+DPyqst99tbRAMdFdfuISR05VdAttpJbG0hqQbd8Rp1Df3PZl
-         7Olw==
-X-Gm-Message-State: AOJu0YzBo+YJ7o65KQZOzFgeC7q968BO+ye2lXDyJZE8/uLuveSU+GS8
-	tReNCoaA8Htj6jfiYJ5/N9p8/Rupr5NA/j8iZoeNgOh2XyMJWaqyoxrajAE15A==
-X-Gm-Gg: AZuq6aLmuXJYhifcafPP21NQL3LJS0OCRGfkgQsx0ISfXGg5b2dGxFrogYl5r/xw4fS
-	sIr9T15ndhudtUnBx9Y98uwprSymHXYx+/HvSkDy4N7yrGrn7JBkF4JLg4nGZ3eL3lvTEyYIXhC
-	Z1+XSL8zgj462DkTZZxUp81f1tpSF7heUr5dywKUgQvIt2Ii2K7sHEwKuqTJnlrNx0KugU1l3aB
-	B9mqk7pYPyXwbZT+oZI1lzuuDdB3jgM7MnqM5P5PNjUPUyiein7XVcVrc9XNuA+mzg9es+f6PY6
-	RAyVFYm3BUtc2AFczMq/rxWos8uDiWppFe/IXYMOPKf9HB8h05zN+X/e3SeMEorE6WX9PahwrHC
-	OtMFmnUt5haCF6TQK6yPJCShYdYDtspwTly4tpSS8UhTIDAsg+UDdb6496WHnlW40ae5KBIj25C
-	wHC1QmtY1/avmaMJ4V8dus/hp0Jw==
-X-Received: by 2002:a05:6000:2882:b0:432:a9db:f99d with SMTP id ffacd0b85a97d-4358ff80f34mr11272640f8f.36.1769029336624;
-        Wed, 21 Jan 2026 13:02:16 -0800 (PST)
-Received: from unknown.tail46804.ts.net ([78.209.12.160])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-43596b62700sm11031394f8f.42.2026.01.21.13.02.15
+        bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+        b=Ydfu2PclAMxLOfyz01F0511X3Pj9xmrNOVpuV+r7S6UG9VkmhLpYs7Z7LhXII+yKwQ
+         kN5LFckOOnmzVi3oGpJa4ALOJYF9cE2UPIHW5gTX0kCBlXir+uVaOEXHsnFMpi0etpRU
+         5XHoOYpVFtasn4Ww7P64CQahF9Qg+ls7YziMnfSYzflA6z8LJTLPwUP9mruEBe5MBTWS
+         qQaJ/jsPJ5ZhwQZveu5fKb/udq1j6yjlQ8Q03VHzCXAEa64Fyd3Q4Nqle79tPOLbJDMN
+         17h6Kgqydf9sFD7mrPqjNPjbxG7DFl76yhxmag8ivibi3m7RgKVYOEaEkMK3JZRjKSIc
+         rxKg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVzho7C9VuvyICahdj2iLNn6ShJv00aM/RGwNArGA8HQWTyfk1IdkQoFmviDLMIu7UZs1goKi1NjhM5Cpc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxASNE8jRJxJflhpXfSt4gR9lxjt25wdur23j9sm3gAQO/BTjfm
+	e/pGCSRjXuwBs3bbQ0kKJFwYIci7b1r8CPD4B5UvrctJt6PUwYxAZo/PohLa8WJc22Lolb2dDvp
+	h3qZv1R5gcEx6cAdoWquD455UGOSi5ZPpyLU7aPsdMAt5Wb9xNXJUDLz65A5lbCcr5JY=
+X-Gm-Gg: AZuq6aIu/LDRCUyHtw7X1yio+qGttEpjGF1o+qrKk0zJkbIJFVbgAS2RYKggAMvPsDK
+	2zShUcJBXvniNZ2QfymQzXPbrHg91MgRQrBVW7S5qCIEyOxqhCChzM2POPVwHB5IX50EpTUJiJG
+	PG65bX39BNjGYOf1r5PM3sRcCo2/jYCnUcpG3ZXDuCAXAyerXzypbe2NMld8KD7FATia14FtffS
+	XzWfkEttiuTOjEXkVBwmhYPxkuj03j7dC3H9hz+9nyLWjbtnKtWLWKgvRQ6H1ssbEL3h7X6KkrC
+	nRKzVOq1uv/FUmrUgRmfPnRaNtSiwzAoubmkQRhP4UkhGN9+KsGY3hFeijH6QFm4JIwKEAVBBKN
+	hYuSyjZv8
+X-Received: by 2002:ac8:5fca:0:b0:4e7:2210:295f with SMTP id d75a77b69052e-502d84b0ca5mr87957191cf.13.1769036030790;
+        Wed, 21 Jan 2026 14:53:50 -0800 (PST)
+X-Received: by 2002:ac8:5fca:0:b0:4e7:2210:295f with SMTP id d75a77b69052e-502d84b0ca5mr87956771cf.13.1769036030338;
+        Wed, 21 Jan 2026 14:53:50 -0800 (PST)
+Received: from redhat.com ([2600:382:8125:73a8:e201:8ac3:bd7d:6acd])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-502a1f1abb9sm117138811cf.30.2026.01.21.14.53.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 13:02:16 -0800 (PST)
-From: Gianluca Boiano <morf3089@gmail.com>
-To: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org,
-	konrad.dybcio@oss.qualcomm.com,
-	krzysztof.kozlowski@linaro.org,
-	alexey.min@gmail.com
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: Add Xiaomi SDM636/SDM660 devices
-Date: Wed, 21 Jan 2026 22:02:05 +0100
-Message-ID: <20260121210205.29922-1-morf3089@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120180052.1031231-1-morf3089@gmail.com>
-References: <20260120180052.1031231-1-morf3089@gmail.com>
+        Wed, 21 Jan 2026 14:53:49 -0800 (PST)
+Date: Wed, 21 Jan 2026 17:53:44 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev,
+	Chen-Yu Tsai <wens@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-rtc@vger.kernel.org,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-actions@lists.infradead.org,
+	Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Michal Simek <michal.simek@amd.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH 00/27] clk: remove deprecated API divider_round_rate()
+ and friends
+Message-ID: <aXFY-FxqeBv4BsHd@redhat.com>
+References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [1.04 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Rspamd-Server: lfdr
+X-Spamd-Result: default: False [-0.46 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90089-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[48];
+	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,gmail.com,lists.linux.dev,kernel.org,sholland.org,lists.infradead.org,bootlin.com,suse.de,socionext.com,nuvoton.com,mleia.com,timesys.com,linux.alibaba.com,foss.st.com,st-md-mailman.stormreply.com,amd.com,oss.qualcomm.com,ffwll.ch,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,linaro.org];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,linaro.org,gmail.com];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FROM_NEQ_ENVFROM(0.00)[morf3089@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_FROM(0.00)[bounces-90090-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[redhat.com,quarantine];
+	DKIM_TRACE(0.00)[redhat.com:+];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_NONE(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
+	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: D7B595E152
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns]
+X-Rspamd-Queue-Id: B815D5F1E8
 X-Rspamd-Action: no action
-X-Rspamd-Server: lfdr
 
-Thanks everyone for the reviews!
+Hi Stephen,
 
-v2 is in progress addressing:
+On Thu, Jan 08, 2026 at 04:16:18PM -0500, Brian Masney wrote:
+> Here's a series that gets rid of the deprecated APIs
+> divider_round_rate(), divider_round_rate_parent(), and
+> divider_ro_round_rate_parent() since these functions are just wrappers
+> for the determine_rate variant.
 
-- Konrad's consolidation suggestions (ramoops, hall sensor, pm660_charger,
-  pm660l_wled, gpio-reserved-ranges moved to common dtsi)
-- Fixed copyright attribution in common dtsi
-- Added Co-developed-by for Alexey Minnekhanov's lavender regulator work
-- Added comments explaining l3b regulator-always-on (touchscreen power)
+I sent you a GIT PULL for what can go to Linus for the upcoming merge
+window from this series:
 
-Will send v2 after allowing time for any additional feedback on v1.
+https://lore.kernel.org/linux-clk/aXFYU324yQ6uBmk0@redhat.com/T/#u
 
-Gianluca
+Thanks,
+
+Brian
+
 
