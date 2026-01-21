@@ -1,75 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-89942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oBqUKSg8cGmgXAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:38:32 +0100
+	id 0HSoHFI8cGmgXAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:39:14 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 179E54FE3E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:38:32 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 133804FE72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:39:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 62396BC3A59
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 02:37:38 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id AD668A2DA81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 02:37:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C45C534A78B;
-	Wed, 21 Jan 2026 02:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32E1034CFB3;
+	Wed, 21 Jan 2026 02:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XrAkiDq0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8vm0aX8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F9634A3DB;
-	Wed, 21 Jan 2026 02:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036F934BA54;
+	Wed, 21 Jan 2026 02:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768962965; cv=none; b=uGhc1uUAAUhszCm4JpiAKkBg8fS226vMv0XrNgUfqIEoIT1af2Lb4jZtdRmXdz1JY9D8Bu2noOQMitDwnOWI8E63ceQJDuBcaTSV8eM4hGxdRGxE1xrW+1aToy3crn2c+v9E+rMxxP4yQjKeP+GwotB+aghB+8UV0O3NVUTIBVQ=
+	t=1768962967; cv=none; b=kn6utmgat4EJf9Sj1GovU1sYLA6b04zVC0x3+fJvlHj2XSn7jh+gRbY9jcrIhEwQWo3870lD6zWbyDKSdZJ+QZVaBa5JuY9X6XlfJ64dY+6zYCBUBbDh1DCmbTBCk4pHWPtEEJ/45tFIU/NMgH+kGoO0wShJ+6hfjxSXSR8mFps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768962965; c=relaxed/simple;
-	bh=gRc2XsAeTf9qp/tkzt6tsPrj6Ez7VEMteFx06Iu1wqA=;
+	s=arc-20240116; t=1768962967; c=relaxed/simple;
+	bh=FnqIU4qejZS4ruoOiEYIE3JKixs8pSw2Da+eUYvghBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BnOLHtCZMnWfMkGSywfTGHhZ6EYKR3Isq1FUrfiUocdDc2fKWLu9g0F/75oqQDYmidO9kwq5vrRoRD8fp5qpVJ7Xc8J6bJ2xI+wggBQjUy19rwgKMZiTXLanZ4nMNGv0IesV4Uxg2Eq4TrWj1ex13POLMxSR6Igk2rBZWcbL6u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XrAkiDq0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD13C19425;
-	Wed, 21 Jan 2026 02:36:04 +0000 (UTC)
+	 MIME-Version:Content-Type; b=sbKt/YAwNOY2oXq0LbOWhU6/cp+wkf+v5gjOSUTJHiDheqzDdGFHfNmD5Bq5CO5ASThhsjGyacUQ/83KgX1XvKxseeN4RxLv3UoyCw+FX/GvaRpbi5I0nQ5Bx8gm0mae345Gm5yhvQ270vs9a4TyPJ0jyhQB/Y4DB+Gnc7zU4nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8vm0aX8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5FBC19423;
+	Wed, 21 Jan 2026 02:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768962965;
-	bh=gRc2XsAeTf9qp/tkzt6tsPrj6Ez7VEMteFx06Iu1wqA=;
+	s=k20201202; t=1768962966;
+	bh=FnqIU4qejZS4ruoOiEYIE3JKixs8pSw2Da+eUYvghBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrAkiDq0ri1V6iHFqoXYwEsMJ/CnojSTMlP87bH6usrDbWWt25rv2rHGxvS90Ly+2
-	 k18+H4gSxtwTeEFC0qw41KlPuHSgMAGki1ra9oBOfn3GXCWaJc223X1a13lEXgcpJn
-	 V89QH9TqT1/8nBdmKIPSNcZwDxA2n5+cPWy441Jo+7SzoxFO7OGcXKwkUwaUONHVkZ
-	 h2evTxkjVhkHXM0txLw82wywQfBEo2Mx10xAdHKrBZjaxWbG1jPCngXZxKOgzDQvaZ
-	 0mvW6SYWUi1qHhfHp5VvZRULzphbg44GefctH+JhMTHYMDtjrt5GSDktHJTTkciOjL
-	 lDzZdRGFicNwg==
+	b=g8vm0aX8ToeraFrtjYB8aWWRctHYbd+4c+Nn4GqNEHRDEjQ62kMtPRNP3ozMUcL3l
+	 lPIhRfgh+fr/3ubYwXAZv4LhVa3LDe6EO2YY1fZlwe2Ri2bzRGSQTfjI54mZnc7l4O
+	 wdoO1Ga4NI55CA9b5vy+00WR77ApVOnep7PFvMxEgo5RIvSVmTjUTTHNWgrg/N+xi9
+	 pKfcsghReCS2ZB2JOQgQsQCW/OtpbhEXPVW6xYRnWiqXhuc0MitTVoWKV9X7fgrtuV
+	 /LDaEkdqv41WL/Op9OWk+4Qx0rMlZQboa4IeK2IjlKxWMGNO8+o2Mll9eWMO7/wQVB
+	 F09NkPWJLkZsg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca@lucaweiss.eu>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-i2c@vger.kernel.org,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/7] Camera I2C (CCI) enablement on MSM8953 and Fairphone 3
-Date: Tue, 20 Jan 2026 20:35:54 -0600
-Message-ID: <176896294103.1060469.9135824878140576272.b4-ty@kernel.org>
+	konrad.dybcio@oss.qualcomm.com,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: mukesh.savaliya@oss.qualcomm.com
+Subject: Re: (subset) [PATCH 1/1] arm64: dts: qcom: talos: Drop opp-shared from QUP OPP table
+Date: Tue, 20 Jan 2026 20:35:55 -0600
+Message-ID: <176896294110.1060469.5525109788160217073.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251028-msm8953-cci-v2-0-b5f9f7135326@lucaweiss.eu>
-References: <20251028-msm8953-cci-v2-0-b5f9f7135326@lucaweiss.eu>
+In-Reply-To: <20251111170350.525832-1-viken.dadhaniya@oss.qualcomm.com>
+References: <20251111170350.525832-1-viken.dadhaniya@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,55 +72,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.46 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.96 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-89942-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	TAGGED_FROM(0.00)[bounces-89943-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: 179E54FE3E
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 133804FE72
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Tue, 28 Oct 2025 17:40:45 +0100, Luca Weiss wrote:
-> Add the compatibles and config for CCI on MSM8953, then enable these I2C
-> busses on Fairphone 3 and configure the EEPROM found with one of the
-> camera modules.
+On Tue, 11 Nov 2025 22:33:50 +0530, Viken Dadhaniya wrote:
+> QUP devices are currently marked with opp-shared in their OPP table,
+> causing the kernel to treat them as part of a shared OPP domain. This
+> leads to the qcom_geni_serial driver failing to probe with error
+> -EBUSY (-16).
 > 
+> Remove the opp-shared property to ensure the OPP framework treats the
+> QUP OPP table as device-specific, allowing the serial driver to probe
+> successfully
 > 
+> [...]
 
 Applied, thanks!
 
-[4/7] arm64: dts: qcom: msm8953: Re-sort tlmm pinctrl states
-      commit: 589deb6bc2757787f2b15a84017c23839db3bf8e
-[5/7] arm64: dts: qcom: msm8953: Add CCI nodes
-      commit: 842c0aa3e04201bc13f51f5ce9edbb8100ef0d73
-[6/7] arm64: dts: qcom: sdm632-fairphone-fp3: Add camera fixed regulators
-      commit: 9e834e768d0b2e9007cd6a5c778d2d8e3674e78f
-[7/7] arm64: dts: qcom: sdm632-fairphone-fp3: Enable CCI and add EEPROM
-      commit: cfc22c2121cbf8bb75cb9a9993f13c17587ed55e
+[1/1] arm64: dts: qcom: talos: Drop opp-shared from QUP OPP table
+      commit: dda4bdd325326dd67ae4401f4f3d35b9cf781e3f
 
 Best regards,
 -- 
