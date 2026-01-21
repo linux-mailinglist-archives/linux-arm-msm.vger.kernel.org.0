@@ -1,132 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-89927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sChtCtkWcGlyUwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:59:21 +0100
+	id iCC4HNwYcGkEVwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 01:07:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B77FB4E39E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:59:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 114BB4E4E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 01:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0B62D48E1CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jan 2026 23:59:17 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F051F38984B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 00:07:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34AE133C53F;
-	Tue, 20 Jan 2026 23:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C6CD14884C;
+	Wed, 21 Jan 2026 00:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="Jdd9XQ6M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lzXjNhBM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53827407571
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 23:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5FF1E2858;
+	Wed, 21 Jan 2026 00:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768953547; cv=none; b=IsES2Ij3rzjYk+7daKpFQtI8tpkgqok/IW5mTVVXmaP8zdNUf2fyj9RFXMSa0JVUUbadGXEt8Ug7/krT69fYtWxYKl+Aclp4rtJA1r7eIWfivp9M0Xg9LlJc3cpxHxDWrqahVj5h5Pwk8dzB+mlPgEKYrss8RzZgwc3Hxmc4JtI=
+	t=1768954059; cv=none; b=h9MeFb+7LrAx0DScUbnIp3X6bxxuJ77z2kNS1Hwp6G6yLgaAWWJ3yy7iylbKKpebFseUcK+UlhLM6TfA8pXLjNPCtJ6oVAxuZ/4KTj4K8okNi9PUPoWCKjcbY4NmygGXyayVZd4YybbQ2AQOLo1eqHbobEm2Q6oJ9cC2P00idhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768953547; c=relaxed/simple;
-	bh=iCgyARgrL4jNc+f7AfiLwakcw8KtvOcHUGBvFMS8Dxs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FPzuJNtQl4fjptaeJG9Jl8voYywbI4W7w2rKeeA318f9n9QIu/SOWp5xHXnxoVBhm0sVZO8uI564TJlgOe61n6xIf4ZiAlPh5dJdlDcwPhPPi7cwZRJOz9tB4drfhvMMS+4vWGmq1ONCuc/DTYAlh2jmeuMYt/eet+QMzHRAZIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=Jdd9XQ6M; arc=none smtp.client-ip=95.215.58.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1768953533;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=G/t8n4CvPeAIf8maRs4pi1rTzryPPyw3YqamULJfMYo=;
-	b=Jdd9XQ6MFA2UTzbhfvSI9aHS7nhYSc7nPicTRADMvrjdxHU7F5PJAzgHI8WdiV0yJX4YfH
-	hFtiWWGXNbF+kgJhFIev2xkGzvqevwng/auxOZC6K4+BW5YArfEYaDHAqIutO7s9EDH97u
-	sEoIx9nwnDJv5zVxx/GBJw100ZoeXZ33dCKaPL8amxEUQJqT6XU6NB0nzu9/w1u1EouRax
-	ZuVFlo8brBcU3Fxwjy0eDbytUbtQHdfQBoo8AV4cen/KVetWHJIXziit+ywLahBpBTzNzq
-	P8hGntUmvG1OmKHh2UkxtQp8ohJjgeVvZYann31qM7HMoXk+GS8D1h0P6ViKAw==
-From: Val Packett <val@packett.cool>
-To: Sebastian Reichel <sre@kernel.org>,
-	Abel Vesa <abelvesa@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Val Packett <val@packett.cool>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] power: supply: qcom_battmgr: Recognize "LiP" as lithium-polymer
-Date: Tue, 20 Jan 2026 20:57:58 -0300
-Message-ID: <20260120235831.479038-1-val@packett.cool>
+	s=arc-20240116; t=1768954059; c=relaxed/simple;
+	bh=Adto9cqyIUbuT91QVuAsWGY7ABXKqalyOtX89b9umNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eO4UNz1EbJpCgQNqoY4RcBvDxO23n02FqpVGhhvca0/nU19wr+wzjOTBfCr/LamV7Rix6AixnhXPSeKEj3f03ZiG9Isr0ca65tKu1/soSi0p2ia9r20P4zinVZHEx5yiyw2YJwFFNzlcd3s0Nz220c7kgyMv9uD/R6aZ2B7b1CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lzXjNhBM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3427C19424;
+	Wed, 21 Jan 2026 00:07:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768954058;
+	bh=Adto9cqyIUbuT91QVuAsWGY7ABXKqalyOtX89b9umNI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lzXjNhBMlG7RoCrd6alJaDICfuWiUE64kM+PjGmee04iaHiAx7PhrMvErPmeBxU5S
+	 kdVUIJj1WLj0/yP7bdQVzsCtGRTRGne3ka1eV4LB/shuTsrpLJyicjFMPPnJXrb+sC
+	 3cREvtVEW4o7DC5N+GMIYyrcQO178ZQCoASPU04N/c5z/BfqvrfI6jPzXpUiREitZY
+	 zNRu+JPWFLyI5wTi20ClbtJXZRlfJJ8jMSLgsGxJursT+BzAsAk1OVvRYlxGC6CiaS
+	 /beLxRrpUjKq5Mfme1oZX6QLns8pUQXG64Et4EwjpSTTi4yjhPV0N6SBpCH/iSfZXU
+	 gfzhIrl1RjGkA==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id BA64B1AC56A2; Wed, 21 Jan 2026 09:07:34 +0900 (JST)
+Date: Wed, 21 Jan 2026 00:07:34 +0000
+From: Mark Brown <broonie@kernel.org>
+To: David Heidelberg <david@ixit.cz>
+Cc: Linux Next Mailing List <linux-next@vger.kernel.org>,
+	phone-devel <phone-devel@vger.kernel.org>,
+	linux-arm-msm@vger.kernel.org, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+	Petr Hodina <petr.hodina@protonmail.com>
+Subject: Re: sdm845 broken on next-20260119 & 20
+Message-ID: <aXAYxjgZxHl49Cp2@sirena.co.uk>
+References: <7b29f6a4-7ca3-41ef-a8ea-969c401a5c38@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spamd-Result: default: False [-0.46 / 15.00];
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="f5XanGDfEE7krxOm"
+Content-Disposition: inline
+In-Reply-To: <7b29f6a4-7ca3-41ef-a8ea-969c401a5c38@ixit.cz>
+X-Cookie: Think big.  Pollute the Mississippi.
+X-Spamd-Result: default: False [-4.06 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[packett.cool,quarantine];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	FREEMAIL_CC(0.00)[vger.kernel.org,cmp.felk.cvut.cz,protonmail.com];
+	TAGGED_FROM(0.00)[bounces-89928-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-89927-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	DKIM_TRACE(0.00)[packett.cool:+];
-	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
 	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:email,packett.cool:dkim,packett.cool:mid,ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: B77FB4E39E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 114BB4E4E3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On the Dell Latitude 7455, the firmware uses "LiP" with a lowercase 'i'
-for the battery chemistry type, but only all-uppercase "LIP" was being
-recognized. Add the CamelCase variant to the check to fix the "Unknown
-battery technology" warning.
 
-Fixes: 202ac22b8e2e ("power: supply: qcom_battmgr: Add lithium-polymer entry")
-Signed-off-by: Val Packett <val@packett.cool>
----
-v2: removed extra parentheses
-v1: https://lore.kernel.org/all/20260117210941.6219-1-val@packett.cool/
+--f5XanGDfEE7krxOm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- drivers/power/supply/qcom_battmgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Wed, Jan 21, 2026 at 12:03:05AM +0100, David Heidelberg wrote:
+> Heya,
+>=20
+> not bisected yet, but we having problems with 20260119 & 20.
+>=20
+> No usb initalization on any device.
+>=20
+> Pixel 3
+>  - serial doesn't work
+>  - framebuffer shows early fb init and logos, freeing initrd memory
+>=20
+> OnePlus 6T
+>  - we get a penguins logos, but nothing else than blinking cursor
+>=20
+> For now, working version is based on next-20260109 (we have to test more
+> recent tags). Version next-20260115 somehow (with some IRQ issues) worked
+> too.
+>=20
+> If anyone has tips what to look for, we're grateful.
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index c8028606bba0..80572ee945b4 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1240,7 +1240,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
- 	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
- 	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
--	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-+	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN) ||
-+	    !strncmp(chemistry, "LiP", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
- 
- 	pr_err("Unknown battery technology '%s'\n", chemistry);
--- 
-2.51.2
+Is this possibly the issue reported in:
 
+   https://lore.kernel.org/r/7ae38e31-ef31-43ad-9106-7c76ea0e8596@sirena.or=
+g.uk
+
+with boot hangs late in boot?  That was affecting a number of other
+Qualcomm platforms.
+
+--f5XanGDfEE7krxOm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlwGMMACgkQJNaLcl1U
+h9Ab+wf+MV0M6jRVMlFD154ZooR1Ng4UkgMEw1Ff/F5ZO1RQ6KdnHTuaxcFosX3v
+xOp5Z7DJqtrAM+H1a8qDZ7X9W9SXd2YZ8VKzsYFnTxWB46yjbH2VvbU1tyttmVIX
+nKf+IJWy/nhOb6q3ZvvOwXmkRSuy1U2VL+LlNEHSuKk/+IBPk8qQmh9wShXcN6Hp
+7hGh3fFINp7aS2eZg03Mw70Eag2xAnAFHzN6Z09uQ3/zHK8+aUfvjSwrRx/DnvVP
+EB1+sHkRlMLRFytTPzjEW2DHmmdjRblXCt0+ybrDvGRayTUBTP5TPvlgijyhMG+g
+R+FonqEYbwLQQMo6PmS4GsdvDLuIQw==
+=O/b0
+-----END PGP SIGNATURE-----
+
+--f5XanGDfEE7krxOm--
 
