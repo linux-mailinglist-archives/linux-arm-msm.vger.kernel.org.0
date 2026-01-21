@@ -1,63 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-90079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6JWTGxg3cWnKfQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:29:12 +0100
+	id ODNrFd46cWnKfQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:45:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25EC45D3CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:29:12 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0BAD5D85B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:45:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CC06D76174F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 19:56:23 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AEC24706E5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 19:56:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8CA63D4111;
-	Wed, 21 Jan 2026 19:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5562FFFA5;
+	Wed, 21 Jan 2026 19:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J1y+Uezu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKXOgrQO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AF93D3333;
-	Wed, 21 Jan 2026 19:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82CC3D6481;
+	Wed, 21 Jan 2026 19:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769025373; cv=none; b=dGWsMvjPFibRCmPc0cbbWx/5/VU+HGSFiX8BqIhOsgEJvtmcSMeJISWhyx7JdXE86npufs1ox0GPHo761p0EAvqt+eBxqeRRRJMoOlGtbJOQHNVY8PTS9YsNkqEqRQRvm7jg48BeJhUunq3DDNJ6ueHxupB3b4GhCV22rvoNTGw=
+	t=1769025374; cv=none; b=MJodFUoS6tv8Ytr3XzIQEeHt1MGCl2dPsIE+lkit6bHWx8OAr9CD4/s4AnpSnhxhmSLX2IhatRvCS2bfCHG+qHMrudpmppD2s50psmIOgUv2wt2Scbhyieh85wH+eiopI98GkcdkIJUE05qMBB0gZREtyTe1ReNHDW9iHCduStE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769025373; c=relaxed/simple;
-	bh=VYaXfQ1rD23pD1bAcxSad5GEitHF7pQHKFVJ6pBbbIg=;
+	s=arc-20240116; t=1769025374; c=relaxed/simple;
+	bh=5wF6KC7lKFrHsyvXzQeBOOQvE0RwI6swHUCZuVPrOI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AiyRWhDYC5Z2INWx36of3UzoX4l9ZpLzaVNsA6xoJUisi41Ju9OPDWFJ19JXXaPwP1KqCcy1O738MyENsJ3BvnIwrwN1owztOMDQf4yQ/azaKNy9R6IEM3j4mNKvPkByrHOdM71aI23ezQ4IzYdRPUVpDHdcXIYRwww7DTa6wP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J1y+Uezu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3E1C4CEF1;
-	Wed, 21 Jan 2026 19:56:12 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mX00vyE9F94DJyuKDsoy6a8AOrb4c1yiPKo55RXIYpJhwCT5eEd41XRNkyRRB/vEac4XgtGcNy7GUOT17Vl+EQXkwJSaP1R5JqQti59EGD2i2iU1jCYBMPvka70FK8ernAAJ+W7MMpqFkG7DLRCHSgoVHDJ9DV31XqNpvyG/Of0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKXOgrQO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F308C16AAE;
+	Wed, 21 Jan 2026 19:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769025372;
-	bh=VYaXfQ1rD23pD1bAcxSad5GEitHF7pQHKFVJ6pBbbIg=;
+	s=k20201202; t=1769025374;
+	bh=5wF6KC7lKFrHsyvXzQeBOOQvE0RwI6swHUCZuVPrOI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1y+UezuZ2qtaX6lLsrECXiwrifFA9tCDfu90y6CO5bVrL1MC+IrMHiRI8dbDmSzR
-	 KM5E/bhMBhFINA+ppXzSt7yHaTH5SGFQviKwplfVTybugc6BmJ5sRW++/+ivBAQEFc
-	 3w9ABMLSjLlEs/aav7J2WjRqmJIZRyNpu4687oKVMVwgEBVkue3r65leSYcXhyO9D+
-	 1UNap+7SUXOvKhqeFD1yACxCA8rEh0xGbuxQwDdgyMDfQnxvBahzJjW7K+jVILOZeB
-	 UXT3QAE/QnYYC5uc0K4xK/01cYN6a0EKmxOuCZqPHQZJIgOWzhBNvb+j8H5GQUw3nw
-	 y5E9pnFJWDTNQ==
+	b=WKXOgrQOc8b0zTRI6YhQyvzOPgOBzWL1tszF1M/PoQ7hYebIggwlj4lPCTR5GbVfi
+	 yJQZwCyMNxvDuKclxz7XWXGolIEPFCBHRXwnmmUzFU65eisF3T0w+Vt99+cw2cSRlk
+	 Vq6mKyOWBbAmItHgIzdgY8ST4c55ZV5JckJXDZh9BgFjdEC3cUWSVN/9Zhva508LG/
+	 Q1i5J+wBWNM5zg+EnusUBGn2llawymvzGE3TD1jxROnboavV+XFbZiTCS2MzpARMH6
+	 i7XhY8fqDWKHPUBtVwttDNXIDP8zjUzXMWp1q6R/muoDFpGZjd9TAzRw8GX7PYddyq
+	 kRVCB6mhk6mrQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Christian Marangi <ansuelsmth@gmail.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Subject: Re: [PATCH v2] soc: qcom: smem: fix qcom_smem_is_available and check if __smem is valid
-Date: Wed, 21 Jan 2026 13:56:03 -0600
-Message-ID: <176902536619.1171053.12926970247037926721.b4-ty@kernel.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: oneplus-enchilada: Specify i2c4 clock frequency
+Date: Wed, 21 Jan 2026 13:56:04 -0600
+Message-ID: <176902536620.1171053.17901044612421280423.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251122185002.26524-1-ansuelsmth@gmail.com>
-References: <20251122185002.26524-1-ansuelsmth@gmail.com>
+In-Reply-To: <20251130-enchilada-i2c-freq-v1-1-2932480a0261@ixit.cz>
+References: <20251130-enchilada-i2c-freq-v1-1-2932480a0261@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,45 +76,45 @@ X-Spamd-Result: default: False [-1.96 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90079-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,vger.kernel.org,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	TAGGED_FROM(0.00)[bounces-90080-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: 25EC45D3CB
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: C0BAD5D85B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Sat, 22 Nov 2025 19:49:56 +0100, Christian Marangi wrote:
-> Commit 7a94d5f31b54 ("soc: qcom: smem: better track SMEM uninitialized
-> state") changed the usage of __smem and init now as an error pointer
-> instead of NULL.
+On Sun, 30 Nov 2025 00:22:39 +0100, David Heidelberg wrote:
+> Per the binding, omitting the clock frequency from a Geni I2C controller
+> node defaults the bus to 100 kHz. But at least in Linux, a friendly info
+> print highlights the lack of explicitly defined frequency in the
+> DeviceTree.
 > 
-> qcom_smem_is_available() wasn't updated to reflect this change and also
-> .qcom_smem_remove doesn't reset it on module exit.
+> Specify the frequency, to give it an explicit value, and to silence the
+> log print in Linux.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: smem: fix qcom_smem_is_available and check if __smem is valid
-      commit: 0f727e88b8353fd75ed3afdac95703da0d007c23
+[1/1] arm64: dts: qcom: oneplus-enchilada: Specify i2c4 clock frequency
+      commit: 1ef28ee5c51f21bc3ff493dfdc175827bbabf195
 
 Best regards,
 -- 
