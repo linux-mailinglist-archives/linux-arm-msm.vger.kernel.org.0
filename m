@@ -1,227 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-89933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WLUmJjkqcGmyWwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 02:22:01 +0100
+	id sAytDo44cGmgXAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:23:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A37A4F03A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 02:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C40E14FB1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 03:23:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3C85B802F08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 01:21:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E8304B828FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 02:21:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C4930DD07;
-	Wed, 21 Jan 2026 01:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD4B5326D51;
+	Wed, 21 Jan 2026 02:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EGIQMPlX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WLYmxcMl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iz98ZNR0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8478130C36D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 01:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C722F60A3;
+	Wed, 21 Jan 2026 02:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768958431; cv=none; b=PRneYVHSeL7QQPxeyWtOUpI+vffvGdZHFgVD5MW+X4XaJ62BeMpFN/+NQ6atyGOGd/ZgSCPPXGHRw6kECz5+0xLhK7BMumoQ7iwjRWq4NMya3qFe9R9yaRAtODAkWuf84O97CZRpurb9QTCaTXe186KUsTAXoXBwM2wmN2wcZ0E=
+	t=1768962094; cv=none; b=sksnpzfh6nB7cij+bpCVT1LDDKBMWYI6xNFR3eewTI2hE0pE9j9KWBmzApIbdMm0cEWlMj1osqNcR6+Pp7PONGpBIrFFJ2cAUt13pialDU7MO48+R4db3Wn7yoB541hcuAmOkLW2rtI3Qe5r7Wk5hce2/GgbqGkwGAhOPIDnnDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768958431; c=relaxed/simple;
-	bh=UFxsZFjoBBxzDzolWUEiJPPHs9TpgdaiRQINz1dfp/g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a+vKWem8ZhqU6XBUMfqicVqZIBtrZHcxY5EWVjZ/C8MQ1v3Y5Ae/RpXbA048DSorpWHSgBjWe5CoFBXsPg+VaaBZpRqJ49mLg4m6eZreT0uuHNJBjm1Kg7bIvfF8GxR1nIporEhinviMlVtxmxlkpeHHmSr9pdXhQcg/37YtUVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EGIQMPlX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WLYmxcMl; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60KHrIOo2827451
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 01:20:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GxiQLmlTsdvKzrs2ro8tcxJmpLG39Vy46ft+XTCJ8eU=; b=EGIQMPlX7EZRAgMc
-	EphulYo16uZm3gNPXZVtG6QlkM4PEm0hKFMrdC6ooiU1mFVUggTMtOaSI9AoC0CJ
-	wNFSqblAJyXpTCO/5Vn21upvjgBAeAe8X3/LV2qSerYw74G38zSB1IcRSEQLM6KH
-	9bPqZpPmfqH8j+LfYy6bDoI3vF913ROCJA/A1Qp48IdEAMiIdv5nkGCdOltKrR7K
-	P7lU+G3bzxgDbVP8qLgJkZRIAHmQSkOBhG3kX4cLTlxEf7s7hl8b2jHBPcYxQxPP
-	xikq+e6F0rO1Nb0MCW1eMag+/ESBLwe4xttPn+y2BffTvGM8nYzgXl0WVjYbqzYl
-	vVCIew==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4btegk9d12-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 01:20:28 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c6a0ec2496so1163172485a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jan 2026 17:20:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768958428; x=1769563228; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GxiQLmlTsdvKzrs2ro8tcxJmpLG39Vy46ft+XTCJ8eU=;
-        b=WLYmxcMlo/Zq4keyluzgV5Z7BJgGYmvRY8oWrHMhx2O9SahqlZxPtU0VxtrytJCb6+
-         wMpbgGN4J/uCxPdk2DPpxG5zmLTscbVxsqh9sMbNqKo4JMtN+7IfmaK7/1LMLdAUVIFD
-         qTVdTOQ9lr3VDAh66r2MIckAIJ9hMqTchUOd1vG62zDq84apnPNEefo/uLLtr1LdiK+z
-         4v924DVv1JkGBB1FJvv8UHRvaFcGqb4Bwx1QGCE4iit0LkTckszwvmWiIne5TWt8FFQF
-         bHlgvFqg9CFkPePGR3DL/vaom+BMqTA0Q3Vcm8aYNPS+CBgTPK8YW58uBRDS8h2S7gE9
-         4iLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768958428; x=1769563228;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GxiQLmlTsdvKzrs2ro8tcxJmpLG39Vy46ft+XTCJ8eU=;
-        b=OX4ApQYZ6Ab5q/Z95rzIPJQqYRzvY2iAJENUMcRRfUoN8euNn/Y8HC9w3CYyD1kp2J
-         WG4J2OEKPi+2CrdM1Sbyf/VLyjNWOXl7AqX1WKnmVLpz7FWeVd9an+DoXp/QR4macquR
-         GjDZjQc+QRJ2uXTJB+gA26VnrYz3BbnQ73tvZSKssbZMNQyFye5atF2yxBXouhMcWJbz
-         BNU246ohmyf+Cd0Vq2T/gKDA19e8qJ+KGpWVKFBY48YuNoTIvrYhU7V54Ijk+d7lN9le
-         pVxgLtOX2RTfBL4Y3Bj4bj+oKBDU6IBF96BSK/5stm8z2EYvp0C3zd0DOiZPV37otnId
-         xx1g==
-X-Gm-Message-State: AOJu0YxSYyd1XNHXs3rO/x50yvikNeTatehp3/en4iT15dbP7uC++fZM
-	cW68xg63/fshmVdOfQ5MX/tZDzn40Uttd+WO7aKJifz0WSjxJU58xZbN6CLpiP/GvcgvWUVCEY9
-	4yBUhwb0oZCHi9ClcKRErL1XE+n0CvRX5QojJB3ktgKOGWQY0Po/EALXlGPjQNNgLdpuq
-X-Gm-Gg: AZuq6aIWdRZG8HmhaRfYbm0TrH/AX6FgeCR/eMBCYh2yg75/8lElYlGbsdkJ2MQxm+l
-	QKL3+qGiDGfy4rwOx9lMa53ID23pEZl4WPNCcoZ/wxj32pFcHi2rS7KCXYXsE7Tnv+Mwe8aSkhw
-	qsok9F8n5rV/KAwWL31RYa3d87kG4wQqckcAyKNJBJIwokOdx5C1oawBN92MutWKcVZ60BCtt0D
-	G/R1hv1dqMEYsVtt8N4dx6U7RNa4bGA0S5MNw4xc/WJKAhcVfaki61dscRvEhdne6CKy/+GicYk
-	ICXAgcU4jCkymyhkeZ/S0OWh6cUZnEO1Gp0yVQ7f56BdCnGWhYIRIYncVKNpVT/yBam3X9AjW3G
-	jpl7kuR9bmdKugu3Ut1QBSEe1/eiucUiNC0ud+nxC9q4NgZMZ2pnu51lopa2PKqAkngfqgchxlM
-	qUJ7lOiRB4q3gFBnCIZvZA5zo=
-X-Received: by 2002:a05:620a:19a9:b0:8a6:e2b4:ba73 with SMTP id af79cd13be357-8c6a676deefmr2388903085a.51.1768958427692;
-        Tue, 20 Jan 2026 17:20:27 -0800 (PST)
-X-Received: by 2002:a05:620a:19a9:b0:8a6:e2b4:ba73 with SMTP id af79cd13be357-8c6a676deefmr2388899585a.51.1768958427183;
-        Tue, 20 Jan 2026 17:20:27 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59baf3543d2sm4383110e87.43.2026.01.20.17.20.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 17:20:25 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: robin.clark@oss.qualcomm.com, lumag@kernel.org, jesszhan0024@gmail.com,
-        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
-        simona@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, neil.armstrong@linaro.org,
-        konrad.dybcio@oss.qualcomm.com,
-        yuanjie yang <yuanjie.yang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
-        aiqun.yu@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com
-Subject: Re: [PATCH v6 00/12] drm/msm: Add support for Kaanapali
-Date: Wed, 21 Jan 2026 03:20:21 +0200
-Message-ID: <176895840440.3580355.4970268867453461816.b4-ty@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115092749.533-1-yuanjie.yang@oss.qualcomm.com>
-References: <20260115092749.533-1-yuanjie.yang@oss.qualcomm.com>
+	s=arc-20240116; t=1768962094; c=relaxed/simple;
+	bh=rwFYIhlg90jmywlJZCXUWi2xc01CWNMPcq6ftxOzJiY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oCfS83Q10OTO1/9kBv5h3+wnjpR9+NtQM35duMDNGuXbNV2qN8cd8jcWAHwbTomiatE2k0+/3iVgDDt5nhLeQ//cK7+P8+j4uzpdz4e6je5KuIoU/d6U+DbwuMTFR8FvbMDK9mJXmsMB3bMWO1BmwkguSRpIj0w9CNx09+XmweI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iz98ZNR0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EC5C16AAE;
+	Wed, 21 Jan 2026 02:21:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768962094;
+	bh=rwFYIhlg90jmywlJZCXUWi2xc01CWNMPcq6ftxOzJiY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iz98ZNR0DpMwiv3kp7J+tXO9gXPtlllCj+KLaPcy4/lVyG+dkFPvsQf//lYjxRkSV
+	 C2v5mFq32tiT4MeBXRtGKJa+qnngjkob5XeqDT6qUgDpqFWf5aVxEBeASCwKjSV/00
+	 flvqrjZi3JHFxstXRjWg22hF7Yb6CwFJTR07A657YAaMBqNYPoZxKLUl+OJHfxw2G7
+	 hDgN/Q2bYfBg2VbjxyG4EyPaq9UoaI4+CesNSyiwqguXHsM9SAM5aMEjxST6u9rIHu
+	 s1/vTY4BMSAjVDLohUSeQMuXemDMDKqh7MhZ1lgC/krhdpVhvIv+1PRdV615aPQhU0
+	 LdL7zZDlAYOqw==
+Date: Tue, 20 Jan 2026 20:21:31 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Elson Serrao <elson.serrao@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Souradeep Chowdhury <quic_schowdhu@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/9] dt-bindings: soc: qcom: eud: Restructure to model
+ multi-path hardware
+Message-ID: <l2gv232wwct4px45rb27eouehx7nmy4b6n6lb4aoa6e3npeun6@dih26d4gzmuo>
+References: <20260116232106.2234978-1-elson.serrao@oss.qualcomm.com>
+ <20260116232106.2234978-2-elson.serrao@oss.qualcomm.com>
+ <20260117-courageous-chamois-of-focus-20d5d5@quoll>
+ <sfazro75vspadpe4wco7zvlalcy2wbrbdjx2wn7lyonjgw22sf@z73u67pinusx>
+ <4d6ffe96-2113-42fd-97e5-42247f073aef@kernel.org>
+ <5cec9127-bdc5-49d7-80e1-2ae26f81163c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 6xw840yVXiU74TI14BDV-xbCac5_Btdj
-X-Authority-Analysis: v=2.4 cv=X9lf6WTe c=1 sm=1 tr=0 ts=697029dc cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=e5mUnYsNAAAA:8 a=s59xupi2FMclaisc2rYA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-GUID: 6xw840yVXiU74TI14BDV-xbCac5_Btdj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDAwOSBTYWx0ZWRfX/cG74wncfzey
- JnQWerXWQfJY3DXjFLIwDH7O6IzSgwLqzOMo++lthGKl6iYcXsW8TTx471KnRlDqZVhhKU7u/nQ
- 5m7r123q7cVkDc3GvTQ/644KhdAbuBR0pra5fkt45cb+7gmA8sEfffcMHRhMdQlRILnrjc9+54R
- qpJtTqsIgPqFu9NuROAF+zL6PjKcfYx1qaoNTk5P8x9L/fCTUmTyNywPtGBbyj8gnkF1fJeNJh/
- u3yA5n9gqbb+3Y8dlKGPhvUvNNFARTR8PrGYMYIBmJnTxICqKDsZ0qHDigbOKVQ8/4+n6dyuIWK
- wxRxIpRWoquUa5cb2vTacuAnB7NJXL7v2F5ghImEcKpaCnAAb5NtxIRVjV836I/pKJKm0wSr7py
- 08iKE4AsQhpCB0uEMrY7xBSaaikySt/d/DhfjsXjScuwFau4PtPDmObbhSGY/NRY4wNOUK2M2nG
- zggBV6GPmotKRj94pfQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-20_06,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 adultscore=0 impostorscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601210009
-X-Spamd-Result: default: False [-0.46 / 15.00];
+In-Reply-To: <5cec9127-bdc5-49d7-80e1-2ae26f81163c@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	TAGGED_FROM(0.00)[bounces-89933-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,linaro.org];
-	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.freedesktop.org:url,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-89934-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
+	TO_DN_SOME(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 1A37A4F03A
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: C40E14FB1C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, 15 Jan 2026 17:27:37 +0800, yuanjie yang wrote:
-> The Kaanapali MDSS has some differences compared to the SM8750 MDSS:
-> - DSI PHY/DSI base address have some changes.
-> - DPU 13.0:
->   - SSPP layout has a great change.
->   - interrupt INTF layout has some changes.
+On Tue, Jan 20, 2026 at 02:16:17PM -0800, Elson Serrao wrote:
 > 
-> This patchset contains DSI PHY, DSI Controller, DPU & MDSS bindings
-> in addition to the driver changes.
 > 
-> [...]
+> On 1/19/2026 11:20 PM, Krzysztof Kozlowski wrote:
+> > On 19/01/2026 20:58, Bjorn Andersson wrote:
+> >> On Sat, Jan 17, 2026 at 12:57:58PM +0100, Krzysztof Kozlowski wrote:
+> >>> On Fri, Jan 16, 2026 at 03:20:58PM -0800, Elson Serrao wrote:
+> >>>> The Qualcomm Embedded USB Debugger (EUD) hardware can intercept up to
+> >>>> two independent High-Speed UTMI data paths, depending on the SoC
+> >>>> configuration. Each path operates independently with:
+> >>>>
+> >>>> - Dedicated PHY interface
+> >>>> - Distinct USB connector and controller associations
+> >>>> - Role dependent routing
+> >>>>
+> >>>> Model these hardware paths as separate eud-path nodes to accurately
+> >>>> represent the physical topology and add below per-path properties:
+> >>>>
+> >>>> phys: EUD exposes a High-Speed debug hub that relies on HS-PHY for its
+> >>>> operation. This property references the HS-PHY associated with the UTMI
+> >>>> path.
+> >>>>
+> >>>> usb-role-switch: Indicates that the USB port on this UTMI path supports
+> >>>> role switching. In device role, debug mode inserts the EUD hub into the
+> >>>> UTMI path. In host role, the EUD hub is bypassed and UTMI traffic flows
+> >>>> directly between the PHY and the USB controller.
+> >>>>
+> >>>> This change breaks backwards compatibility, but the previous binding
+> >>>> omitted critical resources like PHY and did not describe per-path
+> >>>> topology. Without these modifications EUD cannot be guaranteed to
+> >>>> function.
+> >>>
+> >>> It was working for 3 years, so your guarantees are just imprecise. FUD
+> >>> is not an argument.
+> >>>
+> >>> Qualcomm task at 2022 was to post complete bindings. These were posted
+> >>> and accepted. Three years later you say that previous posting was
+> >>> bollocks and this cannot even work?
+> >>>
+> >>
+> >> That is correct. The description of the hardware that was provided when
+> >> this was upstreamed and the binding that was accepted based on this
+> >> description is wrong.
+> >>
+> >> There's absolutely a value in maintainting backwards compatibility in
+> >> general, but is this one of those cases?
+> >>
+> >>> Nah, take responsibility of what you did in the past.
+> >>>
+> >>
+> >> In my view the responsible thing is to accept that we got it wrong and
+> >> make sure EUD is enabled end-to-end so people can actually use it.
+> > 
+> > I would expect to see what is not working. This is in mainline for three
+> > years, so the assumption is that it was working for these three years.
+> > If it wasn't, this should be described and "cannot be guaranteed to
+> > function" is just imprecise.
+> > 
 
-Applied to msm-next, thanks!
+I see, that I agree with.
 
-[01/12] dt-bindings: display/msm: qcom,kaanapali-dpu: Add Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/60772c225f0f
-[02/12] dt-bindings: display/msm: dsi-phy-7nm: Add Kaanapali DSI PHY
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b92efcf5197e
-[03/12] dt-bindings: display/msm: dsi-controller-main: Add Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/ac9d8bf74862
-[04/12] dt-bindings: display/msm: qcom,kaanapali-mdss: Add Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/526015977816
-[05/12] drm/msm/mdss: Add support for Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3d2d7a3386e8
-[06/12] drm/msm/dsi/phy: Add support for Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/223bff623c7d
-[07/12] drm/msm/dsi: Add support for Kaanapali
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/2482c6f93aa6
-[08/12] drm/msm/dpu: Add interrupt registers for DPU 13.0.0
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b78956dc9ed7
-[09/12] drm/msm/dpu: Refactor SSPP to compatible DPU 13.0.0
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/cc4b81f178c7
-[10/12] drm/msm/dpu: Add Kaanapali SSPP sub-block support
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/688c7734002a
-[11/12] drm/msm/dpu: Add Kaanapali WB support
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/c6c9f129e98e
-[12/12] drm/msm/dpu: Add support for Kaanapali DPU
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/83fe2cd56b1d
+> Thanks, Bjorn and Krzysztof, for the feedback.
+> 
+> Let me clarify what I meant by “cannot be guaranteed to work”, as I agree
+> the phrasing can be improved to more precisely convey the intent.
+> 
+> The concern is not that EUD did not or could not work historically.
+> Rather, the issue is that the hardware description provided by the
+> binding does not explicitly describe ownership and control of hardware
+> resources that EUD depends on. As a result, correctness of EUD operation
+> relies on behavior outside of what is expressed in the description.
+> 
+> Concretely, the binding does not reference the HS-PHY. In practice,
+> EUD may function because the USB controller (e.g. DWC3) keeps the
+> PHY powered and configured.
+> 
+> However, this relationship is not described as a contract in the
+> binding. The USB controller may legitimately relinquish PHY control as
+> part of its own power-management or low-power transitions. The EUD
+> hardware is capable of operating independently, but doing so requires
+> EUD to have explicit control of the PHY.
+> 
+> The hardware specification lists the PHY as a required resource of the
+> EUD debug hub. Not modeling it in the binding therefore leaves the
+> description incomplete, because EUD resource requirements are being met
+> implicitly through another hardware block (USB controller) rather than
+> being described directly.
+> 
+> In addition, the hardware can expose multiple UTMI paths (dual-port
+> EUD), which the current binding cannot represent.
+> 
+> The intent of this patch is therefore to correct and tighten the
+> binding so that the hardware resources and topology EUD depends on are
+> explicitly modeled, rather than relying on side effects of USB controller.
+> 
+> I will update the backwards compatibility justification accordingly.
+> 
 
-Best regards,
--- 
-With best wishes
-Dmitry
+Please try to consolidate this whole explanation a bit and include it in
+the commit message.
 
+Regards,
+Bjorn
 
+> Thanks
+> Elson
 
