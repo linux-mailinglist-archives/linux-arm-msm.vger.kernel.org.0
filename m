@@ -1,49 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-90000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yASaNPS4cGmWZQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 12:31:00 +0100
+	id aETVFMa4cGmWZQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 12:30:14 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF2D356034
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 12:31:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C25656007
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 12:30:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E3E325C4177
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 11:28:18 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9B9433A71D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 11:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 578893D3309;
-	Wed, 21 Jan 2026 11:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7C8C340D92;
+	Wed, 21 Jan 2026 11:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="g9i1Dzvy"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="afXhcgWL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3065D3C197D;
-	Wed, 21 Jan 2026 11:27:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47ED330332;
+	Wed, 21 Jan 2026 11:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768994872; cv=none; b=Vl/sa9zMJmapScBws61WvJG9Xzxx4eMylgEZuzFOobEg2xhs2cM5shwM3qt6oIc/FZnjIpWYcf8sqT0vNcmJ8d7wUcBWP1F6AsRyI9Uj9Ef2UCKSAwL5nxkB3vkYlNICqIc6qdbxRESVTyQIUGuhDA37xsBqKsoDYZ0K387D1wY=
+	t=1768994866; cv=none; b=NL6xUi7DHClXIBpUUvTAJNYWjfwDjrmIyH62Tj+9L7m6xRI1Td3MeR3z4lD5igPVpT2qV3OOMzBcRPUwkMDsi+2GXD8KmFiVe/E1hahInJQMHF4i7uUv5NfJGwTgJnJ17y2W7wxYNN/cL1FCvaerXNlZoYtdZEdO8NY1Hn7Yxh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768994872; c=relaxed/simple;
-	bh=ONU+/tTPm7P065gKLZFaH3RLShF0CVB1GH3kFUvopyI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Y+HSm4TWsBK1MZofs19YwI8aGkg21KrsoD0wfCIRlZ0RqyWOYZgMKLdbhkFoTZ93O4eDzp6bi7htuL/l6DX2KRp8d6vnE3oeQeGDUfS0gPnIeNepm2SqeVaDIWcQTyv1G7TR7CRGh9YEiKq8R/LPvF5+FYEeij+AkUiAgS3xM5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=g9i1Dzvy; arc=none smtp.client-ip=220.197.31.5
+	s=arc-20240116; t=1768994866; c=relaxed/simple;
+	bh=nJiKyEFy3NycFn2aqdfmk6rBElbJDF+OudVwAdCGA0Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cs/akYytckVUY9+HZNUiP0FjadERYbX8/4t5WIlpE3hMhMKOhnY5VN4asSkSaOFTjc/owMrp1PtxDBgm0VvpdiHfb4f48Q8o8b57BLG79mUk78t1eTm3ldJDlEd2pKMvyLR0aaVacifrhFkrli2uvX1/NtWTdtFESML5KmxvqM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=afXhcgWL; arc=none smtp.client-ip=117.135.210.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=n0
-	Idhw1YVNOd+eeqmLfJonmPgAITCx0p2fQGtJtHWwU=; b=g9i1Dzvy4DstMRHZcH
-	0//nC29r8D2u5h8DrEDMbd4s2pcrrPKvnSag/0bbffAbKgD8W+I0XWNbrqlcfq4b
-	MkL2wL269aMA4O8ZGA0+wY0peF4Irhj94jxpz2ydZVxHcowilFHLhjnjYIMt+X9n
-	pfmI9esWUg2rae4hBBVPPHBvM=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=aW
+	DL3NhpTV2DlRfG+4JnVvIT2wqsclMherU8MG9SAig=; b=afXhcgWLCJlvQ2MPxf
+	7+jRgEryHh6W1Eq3bJwQAwDW58nsaBC7JHZHXsFN6jb1+fEnQtld+3AAsSzdZhSv
+	PDyJZqBWiO5O43VOCCOMgINNJW2ssDCmrXCtdDTYvo3nfUw5U9tTUbDZibCE3bUu
+	io2uCtX/2hvIipn6+uMQ0y5ZM=
 Received: from dev (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wDnX0EauHBpJphfHg--.638S2;
-	Wed, 21 Jan 2026 19:27:24 +0800 (CST)
+	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wDnX0EauHBpJphfHg--.638S3;
+	Wed, 21 Jan 2026 19:27:25 +0800 (CST)
 From: weifu wu <wwfu06@163.com>
 To: andersson@kernel.org,
 	konradybcio@kernel.org,
@@ -54,10 +55,12 @@ Cc: krzk+dt@kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	weifu wu <wwfu06@163.com>
-Subject: [PATCH v3 0/2] arm64: dts: qcom: add Acer Swift SFA14-11 support
-Date: Wed, 21 Jan 2026 19:27:19 +0800
-Message-ID: <20260121112721.2981491-1-wwfu06@163.com>
+Subject: [PATCH v3 1/2] dt-bindings: arm: qcom: add Acer Swift SFA14-11
+Date: Wed, 21 Jan 2026 19:27:20 +0800
+Message-ID: <20260121112721.2981491-2-wwfu06@163.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260121112721.2981491-1-wwfu06@163.com>
+References: <20260121112721.2981491-1-wwfu06@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,12 +68,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDnX0EauHBpJphfHg--.638S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7ur1DGFW3tw15JFyDGF1kuFg_yoW8Gr4rpa
-	9Ykw43X3Z7uF1xG3WSq39rXr15Wrn5JFy5KrnxAryDKrZ0yF10vryfK3sYqF17Gr4xua1j
-	vF4xZFZ7K348taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0JUjQ6dUUUUU=
-X-CM-SenderInfo: pzzi3iqw6rljoofrz/xtbC3ByrhmlwuBxBDQAA3c
+X-CM-TRANSID:_____wDnX0EauHBpJphfHg--.638S3
+X-Coremail-Antispam: 1Uf129KBjvdXoWrury8Wr4DZr48Jry3AF4fZrb_yoWfJrg_Ca
+	n7Gw4vvFs5AFsYvws0yF4fJr13Gw4akrs7C3Zxtr1rA340y398KFZ7t3s3Ar17ur47ur1f
+	CF4rJryDZFsrGjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sR_DGYJUUUUU==
+X-CM-SenderInfo: pzzi3iqw6rljoofrz/xtbC3B6rhmlwuB5BHQAA3M
 X-Spamd-Result: default: False [-0.46 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
@@ -80,7 +83,7 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90000-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-89999-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,163.com];
 	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -99,36 +102,33 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: AF2D356034
+X-Rspamd-Queue-Id: 8C25656007
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This patch series adds support for the Acer Swift 14 Go Pro AI (SFA14-11) laptop powered by the Qualcomm X1E78100 SoC.
+Add DT binding documentation for Acer Swift SFA14-11 laptop based on Qualcomm X1E78100 SoC.
 
-Patch 1 updates the DT bindings: it adds the new compatible string "acer,swift-sfa14-11" preceding the existing ThinkPad T14s entry.
-Patch 2 synchronizes with the linux-next-20260120 source tree and adjusts the device tree node ordering based on previous review feedback.
+This introduces a new compatible string for the Acer Swift SFA14-11 board.
 
-All validation checks have passed successfully: dt_binding_check and dtbs_check both report no issues.
-Additionally, the DTS has been fully validated through two steps:
-1. Successful dtbs compilation
-2. Successful boot test on the target Acer Swift SFA14-11 hardware
+dt_binding_check and dtbs_check passed without errors
 
-Test commands:
-make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/arm/qcom.yaml 
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CHECK_DTBS=y arch/arm64/boot/dts/qcom/ -j$(nproc)
+Signed-off-by: weifu wu <wwfu06@163.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
-
-weifu wu (2):
-  dt-bindings: arm: qcom: add Acer Swift SFA14-11
-  arm64: dts: qcom: add Acer Swift SFA14-11 device tree
-
- .../devicetree/bindings/arm/qcom.yaml         |    1 +
- arch/arm64/boot/dts/qcom/Makefile             |    2 +
- .../dts/qcom/x1e78100-acer-swift-sfa14-11.dts | 1784 +++++++++++++++++
- 3 files changed, 1787 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-swift-sfa14-11.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index d48c625d3fc4..3de631667701 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1076,6 +1076,7 @@ properties:
+ 
+       - items:
+           - enum:
++              - acer,swift-sfa14-11
+               - lenovo,thinkpad-t14s-lcd
+               - lenovo,thinkpad-t14s-oled
+           - const: lenovo,thinkpad-t14s
 -- 
 2.51.0
 
