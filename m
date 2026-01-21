@@ -1,92 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-90088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6FiTNRZFcWn2fgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:28:54 +0100
+	id CC3lCMRFcWn2fgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:31:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id A55AF5E0AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:28:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B595E152
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 22:31:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8301980762C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 20:30:19 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E06EB844D17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 21:02:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A26F3A9D92;
-	Wed, 21 Jan 2026 20:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8A7E425CEB;
+	Wed, 21 Jan 2026 21:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQQM99/0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxRz7f6t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6115F3612DE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 20:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9DA3321BF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 21:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769027415; cv=none; b=lnQ6c8LBbkvxtfLqvTRTvgOJ7HQXfvhVzFb64wTOwKPb8+3WLVdf/WKWPaYAxBwo7AOKlE15fMi3ZAhvD59uyhkTp4OUToZIZnk6KWA6mUO4TOM4gGKl0PJQ9N7nf71qlRb0hXe/Z3on8zVVrzuWqtiTbf/c01tKS1miQmraSQY=
+	t=1769029341; cv=none; b=TllUiLRHzRPuYvMASlptWXF+vhLV5/X7lSwx2S7iPVbimjs+/9UkHXxJ3ekRqXLdVyCbo8Z0V6+Ynz9j3TC0A/FPbmjflsaW4ZsRhRJnNbK1D7a+cVeCMAFsK22ab+15fSx2e/BnAtriT47ASeCqPUz/SGqiPYD/A+qhHctMW7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769027415; c=relaxed/simple;
-	bh=IkKGhXlv8BXOPrsRFO93I4wdNC5DdD4TsBzL7eCwAyg=;
+	s=arc-20240116; t=1769029341; c=relaxed/simple;
+	bh=vE52ZZoZJn6jfGKNFJhmt+K+7owBh9ZcuK+dIiYw9JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSnVPcunMxoDtlEp6wA7o2pq3WX7rlnSR8BxWg+oU/0DLskEkYztYy/T9D/5wcfTQOVQQtgbu0AUmAvOxo7j/ZdT/4n/eeny2oMnqHBIfyzQX2zTA9eOOOSQyBqdtNtnZqDkxLAi+xzNai9ocAVczX7pu66+oBMKlQSgPjPSM78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQQM99/0; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version; b=CaIC5pEH3wAPvEttwKpELosRXK+tW1buw1SM0gPM/FwS8lcGyMes4NvojhtRxc4PIIEYGc/7gdOwTxC3wQYcrZBzmi8oKjJcJMN/wSmg6sbPbo//eSUUGmaBwY6+gmQJCcsdBtvYkObyDPvQKw/kHR1K8xDxSqNyFtgrD0lnkKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxRz7f6t; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4801eb2c0a5so2291025e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 12:30:13 -0800 (PST)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-4327555464cso172851f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 13:02:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769027412; x=1769632212; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769029337; x=1769634137; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IkKGhXlv8BXOPrsRFO93I4wdNC5DdD4TsBzL7eCwAyg=;
-        b=eQQM99/0StpN6/62jjR/nF+rr4EFUkMnRaLAg16qqRIt6U+rhZGe7VV2J7GAncRfbl
-         D6fV/vLef9baa2usGYuMH4tWpymYgdTc93wSw3wlD3GQ+cdr9MESHrQwbPLIcP72WkBN
-         qBEK5EKAJCxeep3HZafM/3v4V0lpsoEBnAlEAnwbM8GQJ3sDN5vbh+94pesszLMWDZbh
-         zJfJwIToQXVgro3zJn/Wx2+TAanTALqDPZviGQ1DjChxpV4CXDRVEBV3kzL5sQgDCyMj
-         JiDkS7wRWGudEJNgDpiqVO+ENzev+8v1KQ0EjAZbdi6AwXq0ZFzTLXfR+XupAJVyXB17
-         i97A==
+        bh=Sa/7GdD7A4/u70FqBtQBR6RTLsWyqjA9Qwa5O2OHUBI=;
+        b=IxRz7f6tmPaPO6PEMcT8Q5UFSmcgYsPvbii6C65s4mjjdp1XCgj14hOo5dtrZQp63a
+         WQNNB91dOOFUTRWJ95L9bu6X3CSf+NT/edZa6A3xgV8taPxI4YUQm1MgHasHm05Tb7b0
+         zx0p2nFKCVVc9VUOwDmtM3/GxkkuGcqxuzuebxoCvJmuKWvdzQjbWDoTBkF9su0Ar028
+         xTJeFJuLIypVZhSAIrTU+HY6CYyzCYzVcw4iUaJnrhcbU4mA3mKNHLqJMza5nPdpxTam
+         PbHVfx4FD4+rPDDpBqqdneDkJSUYp613ElilyOvS9zq0pFueAdnUYLOl67dieVRxec68
+         C6Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769027412; x=1769632212;
+        d=1e100.net; s=20230601; t=1769029337; x=1769634137;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=IkKGhXlv8BXOPrsRFO93I4wdNC5DdD4TsBzL7eCwAyg=;
-        b=qGqt5UFizLQqRI36TKKiPG1fD2+Bvd+qAiBw+dDg+YAisAsWE5AO3qOOBzseQFoRtr
-         LgVOIHkpUPXlcOjiPJzTby3vId2cw7wbBwltxlPGiLc3/R+cOncSjqM2aQ6jrYXIrbuX
-         /+y6JbUtZ0X18QztOxVGk4Uy9umx4B+zwP6Ywj+BBxtiijh7mtYAB1dyKYSm7S/vkqla
-         +k9K6voCtnH+68EL7WdMgFTPGFkrH8NFV4ibGH7Fi4FEuoE+U7HxjacK0hKM2jN15SBQ
-         a3FUWz9i9f8+h4m3TNT5/LQPD53PueK6LG3NyqU+rhP0pRVNOMgVKxmZjD1403ZAShFV
-         tZcA==
-X-Gm-Message-State: AOJu0YzCU8ynAPZDkXz5c1SMKjdSMDJfe2o7CChA/lcaukSXRWtlm7Rc
-	tqaac/B884AcV8oBZh4+/uxpnvfqtkZ6jMz1iJnrkRUZMljJ2biz/mu1748IaA==
-X-Gm-Gg: AZuq6aIXoqfvmCnU/bzijIManC4MCerwljZ3glKTkKQQjk74pPvw90N/+3Bl0Edy+BR
-	UM5P6NFE3auBNlRuxUggBiDeba93fB12VJdPHgDiHxFLi+QGti9TufnC0dvNe74Y8CII9OM+8ot
-	reLGEJT732g6klL8CL9HhG78eaEiv+0fMcz126Ys9EBUVXylVHewUk167TgkpsNcAPmcL3tPrWe
-	GjD4E2iyFaXKbK9koJ+/EkDCMy8/1gQ1ob3KNT/gO7i9lI62H7/uPctCNvPC73VQNj/FA23zeWt
-	VDuCCtwyazLN9hGWbYqZPjQb4D6xMjM6AELSCvpOSa1IY+FiO39I5gD2qAC2soHsSIhXMo6ExUK
-	E2deAdzZ9zTY8SOxsiXIB2I/eNOw/F6fcQfyBqxLQitchoeBDAFJ46NPYsUpeIaolC1Z1PJK6Iv
-	/S3n6BfHPE8hDXzciiV8ou8+OGd8BhptuhkQ6N
-X-Received: by 2002:a05:600c:3b9c:b0:477:af07:dd1c with SMTP id 5b1f17b1804b1-4801e3495c1mr286348815e9.35.1769027411529;
-        Wed, 21 Jan 2026 12:30:11 -0800 (PST)
+        bh=Sa/7GdD7A4/u70FqBtQBR6RTLsWyqjA9Qwa5O2OHUBI=;
+        b=w3i0qNzlakDQYYe8lIn0J/i0UBDu0UNvjcC+Ec/ceBOff0PQNT6slpFJST35upG/8H
+         WrXwpyBqNV9ULN9FnxS1R8mjKkoE3nMRoIVeqxmS8/ucNE1VuQBrU0s+p5yE9AWt4fD9
+         rAKEbspHb7zpFVDAnxm5u7MhoFVAJfIvEdQjxKv+xvWku23UNk15cWnX81WGJFk1x/Jl
+         nXDB/5fCaoQP1rp0MvkteGlsM/7H3fTjmFnGis8Uw+hqLe3LF4QCi8tU5x6SLhlR1NA1
+         mqdD1M0WheUWrejlPcm+DPyqst99tbRAMdFdfuISR05VdAttpJbG0hqQbd8Rp1Df3PZl
+         7Olw==
+X-Gm-Message-State: AOJu0YzBo+YJ7o65KQZOzFgeC7q968BO+ye2lXDyJZE8/uLuveSU+GS8
+	tReNCoaA8Htj6jfiYJ5/N9p8/Rupr5NA/j8iZoeNgOh2XyMJWaqyoxrajAE15A==
+X-Gm-Gg: AZuq6aLmuXJYhifcafPP21NQL3LJS0OCRGfkgQsx0ISfXGg5b2dGxFrogYl5r/xw4fS
+	sIr9T15ndhudtUnBx9Y98uwprSymHXYx+/HvSkDy4N7yrGrn7JBkF4JLg4nGZ3eL3lvTEyYIXhC
+	Z1+XSL8zgj462DkTZZxUp81f1tpSF7heUr5dywKUgQvIt2Ii2K7sHEwKuqTJnlrNx0KugU1l3aB
+	B9mqk7pYPyXwbZT+oZI1lzuuDdB3jgM7MnqM5P5PNjUPUyiein7XVcVrc9XNuA+mzg9es+f6PY6
+	RAyVFYm3BUtc2AFczMq/rxWos8uDiWppFe/IXYMOPKf9HB8h05zN+X/e3SeMEorE6WX9PahwrHC
+	OtMFmnUt5haCF6TQK6yPJCShYdYDtspwTly4tpSS8UhTIDAsg+UDdb6496WHnlW40ae5KBIj25C
+	wHC1QmtY1/avmaMJ4V8dus/hp0Jw==
+X-Received: by 2002:a05:6000:2882:b0:432:a9db:f99d with SMTP id ffacd0b85a97d-4358ff80f34mr11272640f8f.36.1769029336624;
+        Wed, 21 Jan 2026 13:02:16 -0800 (PST)
 Received: from unknown.tail46804.ts.net ([78.209.12.160])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4804245245esm35494995e9.0.2026.01.21.12.30.10
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-43596b62700sm11031394f8f.42.2026.01.21.13.02.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 12:30:11 -0800 (PST)
+        Wed, 21 Jan 2026 13:02:16 -0800 (PST)
 From: Gianluca Boiano <morf3089@gmail.com>
-To: konrad.dybcio@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 4/7] arm64: dts: qcom: add device tree for Xiaomi Redmi Note 6 Pro (tulip)
-Date: Wed, 21 Jan 2026 21:30:09 +0100
-Message-ID: <20260121203009.13540-1-morf3089@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	krzysztof.kozlowski@linaro.org,
+	alexey.min@gmail.com
+Subject: Re: [PATCH 0/7] arm64: dts: qcom: Add Xiaomi SDM636/SDM660 devices
+Date: Wed, 21 Jan 2026 22:02:05 +0100
+Message-ID: <20260121210205.29922-1-morf3089@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <d2aff319-d98a-4007-bfb5-8766e3c3c206@oss.qualcomm.com>
-References: <d2aff319-d98a-4007-bfb5-8766e3c3c206@oss.qualcomm.com>
+In-Reply-To: <20260120180052.1031231-1-morf3089@gmail.com>
+References: <20260120180052.1031231-1-morf3089@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,7 +96,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.46 / 15.00];
+X-Spamd-Result: default: False [1.04 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
@@ -103,43 +106,41 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90088-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[morf3089@gmail.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-90089-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	TO_DN_NONE(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,linaro.org,gmail.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FROM_NEQ_ENVFROM(0.00)[morf3089@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_NONE(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: A55AF5E0AD
+X-Rspamd-Queue-Id: D7B595E152
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Jan 21, 2026, Konrad Dybcio wrote:
-> Consolidate ramoops, hall sensor, pm660_charger, pm660l_wled, regulators
+Thanks everyone for the reviews!
 
-Good suggestions. For v2 I will:
+v2 is in progress addressing:
 
-1. Move ramoops to common with default configuration
-2. Enable hall sensor by default in common, disable in devices without it
-3. Move pm660_charger and pm660l_wled enable to common
-4. Move common gpio-reserved-ranges to common dtsi
-5. Compare and consolidate regulator settings where identical
+- Konrad's consolidation suggestions (ramoops, hall sensor, pm660_charger,
+  pm660l_wled, gpio-reserved-ranges moved to common dtsi)
+- Fixed copyright attribution in common dtsi
+- Added Co-developed-by for Alexey Minnekhanov's lavender regulator work
+- Added comments explaining l3b regulator-always-on (touchscreen power)
 
-sdhc_2 status must remain per-device since jasmine/platina lack SD slots.
-
-Thanks for the review!
+Will send v2 after allowing time for any additional feedback on v1.
 
 Gianluca
 
