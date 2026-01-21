@@ -1,86 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-90025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iJKkMXvccGnCaQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 15:02:35 +0100
+	id eHUnDlnbcGnCaQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 14:57:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B5EB58181
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 15:02:35 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD2C85806C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 14:57:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 16E57A22B0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 13:32:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8DF926AAC36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 13:32:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E5AB494A11;
-	Wed, 21 Jan 2026 13:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF89249550C;
+	Wed, 21 Jan 2026 13:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qhc6knRM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WC59cq54"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ED3494A18
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 13:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A413495511
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 13:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769002006; cv=none; b=MrBl29lnwJW3k1wt/s3a5/nlAgN4ZbK8dgtwuOyNMm8yNVd1L2Evv4pr0r194CdvNoHUIjY0rijpYrSp7Iqz0ZoCGWFnxZNCyDGDowleso41c0OmZjL8vg0PgWqe+FfavgT6y8SF4L6M0mJE+KODwb9tFfJ4Bu+QeVq3U/iTeUc=
+	t=1769002010; cv=none; b=rsEqc7YFFAQkmQ7fWZbMJVs4IHM+aq//rVKWe7IU7uZljYIIY8VH+HsJ6INP6yQk++/tLzy6TpsfuBUJn1ooojldoHD/2q/zod735Kv79OLx3rRHgiQcP5r1Q/uSbSvguaaE1YuTKTzvtEnHadkvUDNWOZuDyUwUwBvrSP9rRw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769002006; c=relaxed/simple;
-	bh=bOS34N3APqGI6AgUcL30CVUFlmgWDAw1B3mfScCEFCA=;
+	s=arc-20240116; t=1769002010; c=relaxed/simple;
+	bh=RZ6L5kG6KnttCqZHYH2jeIzUhBdGGcKDyqVGSs/BMTw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KdZDNAyC5yuxmiDUNHU0Vz8maHG+UgbXP+lP8aGhz588xZUxnVUOnWU/IbY+hf2vKQ6YIS4Thidfw0psbZ3A+0IAWY+myXNtJrpOWnL3RY5t9duU3082vtRMcLukPgx0Ekw3xYdJkbB9zJFTysVZ+pmlZsaTcRo3jfiFm1tJjgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qhc6knRM; arc=none smtp.client-ip=209.85.215.175
+	 In-Reply-To:To:Cc; b=laxBFfg/6HRVa6rjUnnWd4AkCGTNrlPAT2tnWtqrJAfaGGlF83qoDUWj/7KNhDKaVBN38EIBwsGJRvzqS+epOx7b8BmvIoHNi3Qsj+bvJUpFNptm9RHr2R1Ctgbxjx0WfN9TuKINcYxb+mq7VSsBE2NdHfPSuFZ68fkwLw9JvK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WC59cq54; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c4464dfeae8so4069911a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 05:26:44 -0800 (PST)
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a1388cdac3so45509175ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 05:26:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769002004; x=1769606804; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769002008; x=1769606808; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+wsNHq0zgqFRtWN3Q3r2Wx4pD8bNO8exoPE+MC/eMk8=;
-        b=Qhc6knRM+5lcyB4yk2sHeDTkITehR4e1Q09x5alijN2pqsrrxWrDG9a6QNP48wL/vr
-         qqY6L9Fh0RnDuOTkmcCHf4GYPDD5Rp2g1yjQTMJDgPtqwfw9GGFOII5UcYXgVjMOAmqc
-         couxCkC4VZJI7OmWVgqak8CWeSZkkPS+/XyFvH0xRcD9czEacDyyzyysMVjgRgru708/
-         ZYU8myMZ3VzPR3AIQ6usYJXRaeAyI/zF/SNrWTIb616q67ClC+gnp7bdOM6bO/SrwMVs
-         SWppIbSLqjkgiTyDjQya+fGCGUcbBvgH1912pQrS2dA0AIkPiEKM23Ddry+wX9QVuGoR
-         iaiQ==
+        bh=RpR/stwl1z8brk4SsorW5KRgaoHVnvVVxmk1S9SRSNY=;
+        b=WC59cq54wcnmyqyUiRehjHQiraMhZkPI/UE3zRz24yPozhrJB1wgQRVufedXMG5uYZ
+         U/M6VS1ZEA4JWP0e4wQDizNrKBmp61VXMiJvUCFL6P/NyRVXfjkhUEIVtcAAeR3OqbeM
+         QjJwn5k17G0rT2RIG4gtEfEyx/U3cEcAEiEd07JUtmoE3FGCy+UrlCUinEaHTi1LEdNn
+         51vKzeMdgQKMCy2k9DB0tWN3zU3EvACiHaslPt6GGd4lSjUvSp6o0e4LdiyONmoJ3lgh
+         GoJBtGZs3ANCKYNjWuvv/0QzCA0+yjxrCbfggE5Tio6gBjD/BJMIwm4U0vCRpQsBAEL4
+         NWlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769002004; x=1769606804;
+        d=1e100.net; s=20230601; t=1769002008; x=1769606808;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=+wsNHq0zgqFRtWN3Q3r2Wx4pD8bNO8exoPE+MC/eMk8=;
-        b=BmffK0+DMGGOfgNDk4HweG+DLohn9QLuSdjpXfog7RDv5rohZKSDTiAQtVKWNdwaD4
-         m+vOLgF9/7EXsKFrQSRGOjbh4i/PlYs1wuucsLxR/lZDmzBilVuXW9rVSgjFKe8xsqxG
-         L+eqm7Ya5jFnKjqjd0oWJMh5GNE2QOSdhSsvNUXjMUSZtGZUCJIRasWWRxJhEqL1KKzR
-         HUAjh8OQGfqYYuZsJ3zrapM1Gf/9Oyh89vVdFgesZjCZj2mMGiLfkq5zurbkQm40aSOQ
-         TJ2bEO2QfBiTdnBLOtsDwy0pGKaRvLOZa7bhVq7TG13SEgBB5vvWJgNdMoBvrRgP7Kil
-         p3nA==
-X-Gm-Message-State: AOJu0YxhIcyK9248iqUPtC7ThzbuLh2GSXOQr5KOVX+SYhEdPs6iitKc
-	DrfBybowPpeampMITofEO5lIVH/ZO7mp0M9qTbLghbXa3dOUdUjSTOf5
-X-Gm-Gg: AZuq6aLhJt+JQn6tJ0eN+4gU3/qkI/t9iuIJ6rCLKsVnoKjLlRKelGY5d1OyXgR/h71
-	68UKZb2i/73nJt8AcHpRVryAEphzKTaGsvbA9fmdAritgs2dvcSu6w32JfgTsdgCO0z5kp2I/Gz
-	82lWPc8IkPGWQmF8W6Qmg679wjC6IZ4vecVCNFxi16rOlwYnk98l4A2ZwunfjgJHB+vQAvb7Nx8
-	ibGH/nE1RL6nZqCfkzx1h2KjPsSQJWE/HvIWWHuiDFDueksu6HHW9SPCoV4YimeugZnYAcXR3xD
-	kdJY2abjyyz86YGY2oHuz3kIv2siaTh2UUJZN9x7Yem3S1Ar+ZPoU4Tu2iTp66H+sN+e+KsgbrE
-	HNzl/j0+Ks//QNTLbfQPJR3u61Yn/eefx/+KJ2sV6PFaczRi3cK3tizNcLlBAoeLQCl3NBc2TjR
-	h06V2HO4s5vqTB1ZjQ
-X-Received: by 2002:a17:903:3bc3:b0:2a7:c6c8:2cf with SMTP id d9443c01a7336-2a7c6c80a68mr1676125ad.22.1769002004091;
-        Wed, 21 Jan 2026 05:26:44 -0800 (PST)
+        bh=RpR/stwl1z8brk4SsorW5KRgaoHVnvVVxmk1S9SRSNY=;
+        b=Tg0eyvPuHvy9hzls2lZVSGcNDvXHupiENALhJH2LCShIOdTeCzevtceMCnYdn8k4Ac
+         myvHAl6qVjZ+3I2rtCGRQDdpP/gvAOz70VNdfFSPnlxP6kHZtbnbgqSlqbyVQVfZgwdL
+         ioPiGaGh9Lu1AppqLIb6jZaQE5j4WH12V0eOT8xYcnPtTqZZk9Zgzt50qUO+XrjYmPls
+         v7hwLqgh/U1UjLBG93XaxhL6AidwXb6Cle6Qiw84JoqtLjHGv11RM6JCb3pLKQz66csj
+         3bgc6sj24fBy2qn/uYX+a0dfr3ZSJWYcR/LFu4mfBpNzgvuVyhWgZHfhZ6RMB8cBW8dW
+         nslA==
+X-Gm-Message-State: AOJu0YwxLY7cGpffRCubbhUWYf9uWvaQkiunYlFa07j/EiCSZN8l72KA
+	dP5YZoSXVqioxV6kih4BGx90cOCBoB+aG8NF8A6ROG5ECtRYH/d63SGT
+X-Gm-Gg: AZuq6aK4McOy95pvafJL3XPHlGi2n2YCptBtfG+ifHRniXZ++VgO6uJiuvxPg5wdn0L
+	TKi0WLr6kD/Vrk97J0P8d4s57saXHEfLc9aJzzcKoadjkXOisjfkcTqfvOd3tIcf9ZNV+lqDZhJ
+	5dUBt7gjUi2Hwv8zlHTmDQ0BZoUAkEJ5DMGQ0EFhGHXx37FP6iHcekifjdZf01EMY0S+Rqf9aVU
+	sZ6ZOAZxtZqJc8TDksm6d9rETaMlWfJTAh1iuzbgxzwpQgNEUPXLTGU5YIR/SHFdSEl/zaFkUZu
+	Qetoz5Kx8fstMqEz6UYGdWSCUqzZKov6/+9Hydyt6VTgyyeyxJYCYRRww47i7HUGdi1K77YMCQ5
+	Ng0/xHEJNRKPuThm0wg7cNLr4+7HH0AFTXNOYbAQv4oHBdeqrkMJletP4ZaBqMixrdTouX4dsV9
+	+8vYSWHCZu4ZHGDKOkP/SlUuiivp0=
+X-Received: by 2002:a17:903:124f:b0:29d:7b9b:515b with SMTP id d9443c01a7336-2a717518f89mr159861135ad.20.1769002007797;
+        Wed, 21 Jan 2026 05:26:47 -0800 (PST)
 Received: from [192.168.0.101] ([45.113.101.30])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2a7194164dfsm151487235ad.88.2026.01.21.05.26.40
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2a7194164dfsm151487235ad.88.2026.01.21.05.26.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 05:26:43 -0800 (PST)
+        Wed, 21 Jan 2026 05:26:47 -0800 (PST)
 From: Biswapriyo Nath <nathbappai@gmail.com>
-Date: Wed, 21 Jan 2026 13:26:20 +0000
-Subject: [PATCH v2 4/5] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Enable
- debug UART
+Date: Wed, 21 Jan 2026 13:26:21 +0000
+Subject: [PATCH v2 5/5] arm64: dts: qcom: pm6125: Enable RTC by default
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260121-xiaomi-ginkgo-features-v2-4-fb3ee94922d0@gmail.com>
+Message-Id: <20260121-xiaomi-ginkgo-features-v2-5-fb3ee94922d0@gmail.com>
 References: <20260121-xiaomi-ginkgo-features-v2-0-fb3ee94922d0@gmail.com>
 In-Reply-To: <20260121-xiaomi-ginkgo-features-v2-0-fb3ee94922d0@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -98,15 +97,13 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Biswapriyo Nath <nathbappai@gmail.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ phone-devel@vger.kernel.org, Biswapriyo Nath <nathbappai@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769001984; l=1207;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769001984; l=641;
  i=nathbappai@gmail.com; s=20260118; h=from:subject:message-id;
- bh=bOS34N3APqGI6AgUcL30CVUFlmgWDAw1B3mfScCEFCA=;
- b=Vz2aLtL2O6Wg2x21r38IOz/UfkPhbB7fhWqA+y0R2ZrPCl2JjKXvIuwzILAvT611RVq06r19a
- AT0x+YL7ICYCaN/+mplt04kozP9nqYIZRzFNkhzPD1C4UzCqo2Saavf
+ bh=RZ6L5kG6KnttCqZHYH2jeIzUhBdGGcKDyqVGSs/BMTw=;
+ b=wFm7x5dv3jz+UuxY5G5CpNmEH9BbjfI4Zjwnm6k3n8KphNLpwjvIIzZ7Lk0ztv6aj/S9qSat/
+ 4+X96ondt8GBu7bJ4cTswfiMFbtpW3LTkeF0VUrpJ4NjgB+zjkgj/u/
 X-Developer-Key: i=nathbappai@gmail.com; a=ed25519;
  pk=slmb/9yXbet+KTiT3EYLCp0p0MEOYa3EdjUXP+HXfjg=
 X-Spamd-Result: default: False [-0.46 / 15.00];
@@ -117,77 +114,50 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90025-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com];
 	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_FROM(0.00)[bounces-90026-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[nathbappai@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: 4B5EB58181
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,0.0.23.112:email,c000:email]
+X-Rspamd-Queue-Id: DD2C85806C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Enable the debug uart node in xiaomi ginkgo exposed as test points.
+sm6125 soc uses this for real time clock.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/qcom/pm6125.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-index 6e0333378..9a5918abc 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
-@@ -26,6 +26,10 @@ / {
+diff --git a/arch/arm64/boot/dts/qcom/pm6125.dtsi b/arch/arm64/boot/dts/qcom/pm6125.dtsi
+index d0db28336..cb067adb7 100644
+--- a/arch/arm64/boot/dts/qcom/pm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm6125.dtsi
+@@ -138,7 +138,6 @@ pm6125_rtc: rtc@6000 {
+ 			reg = <0x6000>, <0x6100>;
+ 			reg-names = "rtc", "alarm";
+ 			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+-			status = "disabled";
+ 		};
  
- 	qcom,msm-id = <QCOM_ID_SM6125 0x10000>;
- 
-+	aliases {
-+		serial0 = &uart4;
-+	};
-+
- 	chosen {
- 		#address-cells = <2>;
- 		#size-cells = <2>;
-@@ -120,6 +124,10 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators-0 {
- 		compatible = "qcom,rpm-pm6125-regulators";
-@@ -296,6 +304,10 @@ &tlmm {
- 	gpio-reserved-ranges = <0 4>, <30 4>;
- };
- 
-+&uart4 {
-+	status = "okay";
-+};
-+
- &usb3 {
- 	status = "okay";
- };
+ 		pm6125_gpios: gpio@c000 {
 
 -- 
 2.52.0
