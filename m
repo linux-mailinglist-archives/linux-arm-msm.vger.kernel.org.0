@@ -1,208 +1,320 @@
-Return-Path: <linux-arm-msm+bounces-89951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-89952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oGqZH9iHcGkEYQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-89951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:01:28 +0100
+	id CPGOGBuIcGkEYQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-89952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:02:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id E532B53308
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:01:27 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00D095336E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 09:02:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DDD6C749B04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:00:19 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1FE77467326
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jan 2026 08:02:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DDDB47799C;
-	Wed, 21 Jan 2026 07:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 914A847279D;
+	Wed, 21 Jan 2026 08:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FMhLPQSD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jDojYV6e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0D83587C4;
-	Wed, 21 Jan 2026 07:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3888B4534A4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 08:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768982395; cv=none; b=PI9Cs67SlY5tMR+ygHD/PRKDU3Z+bjvGyD5hor9YEiyf8rb8f7OXq3W7c0AfGTJa2hnO2jPAHl4cYy7VCRbOcljenXqgZuiXynm0hugNFo+wJdPxTIbdohrlOyg3BAvoVUgFk3nHRTFc1FKE8Gx4JGQMM5tu+0toAjOG5bkdey0=
+	t=1768982525; cv=none; b=dC5avmmt3szJb4pT01dVZ76RhDCL9zmSpUNtaD61QHike83MS0UJZpW7URAgacCQXAXl04GOAJp7G4cWD3DRyY+Zal5gH/hf0wa9RddoRz9IwtqPG03yQ30oMZ8BtN6nBcsiEIsnoRWaDqIQ74YLEsP2kGMZnuAusAdrD9VQluE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768982395; c=relaxed/simple;
-	bh=io1fuLM2bPpdo2pOtJh3tY79IVh9SYXi8xNbc0XZ0kc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vEu0mBas1AZrkm39Kl6TZZ1FA9kBke51TCMTC3FcE/MUg0VBlnHK0qvegw8At7GEeuWDgj8XI6DAyS3jhEO32YmMYjgY25UhK7ByaIS9jgApD4MXXFgufJgu0KCmSneT/ZQkn0tEiWizMHbupXYF9whAnnzdauBiv2NvSaySH8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FMhLPQSD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C97C116D0;
-	Wed, 21 Jan 2026 07:59:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768982394;
-	bh=io1fuLM2bPpdo2pOtJh3tY79IVh9SYXi8xNbc0XZ0kc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FMhLPQSDomns64O2lPYMFkd75nzhtoAPl5JrY0O5Cuu4G9ZWA6L629DTzfulg1e+9
-	 ZbUV+mR7zX7/sF4PQlGl+2shFvoEIRZV6bbIFLy1XRXJhEtjoyofIormF6/jzzAf9h
-	 lO38tdbaS4N+L0IB3WmyL5/e1eIiUpepL1d6R5mv2EFC4IykBZ6+Vjg2V/ZVYl4gh8
-	 bFEqCVrBPv5eu4f5eWfGHebPBzvvqMEwTnuoWmifo7ofwLu0xyLIH3FmjpEuN0SXhG
-	 wI1R/iNA6IizuhZ9JBTtA2EiR3Uf37rrq54pe+x2fXaa0L91TCPGxqFXUNDUp6v/HS
-	 cvKPFoiDcVI3Q==
-Date: Wed, 21 Jan 2026 13:29:44 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, akhilpo@oss.qualcomm.com,
-	vikash.garodia@oss.qualcomm.com, dikshita.agarwal@oss.qualcomm.com,
-	robin.clark@oss.qualcomm.com, lumag@kernel.org,
-	loic.poulain@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: msm: qcm2290-mdss: Fix
- iommus property
-Message-ID: <aXCHcCMu47JRHyLt@sumit-xelite>
-References: <20260116062004.237356-1-sumit.garg@kernel.org>
- <20260116062004.237356-2-sumit.garg@kernel.org>
- <20260116-transparent-dexterous-nightingale-c029cb@quoll>
- <aWo0t1EoVhStmOj7@sumit-xelite>
- <6020af2a-5baa-4594-8cbc-bf7241f0128e@kernel.org>
- <aW9yCK0rPjRcqplk@sumit-xelite>
- <bdc8011b-6501-43e5-815b-a981df665e03@kernel.org>
+	s=arc-20240116; t=1768982525; c=relaxed/simple;
+	bh=WnMaF78Y5j5jsDtvdu33Avxi2Q4yFc5RtwudZjqJl5o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pbM125z/O7m9USr/Ruru+vntGgofSegrBlErF3k7RCOtldF6wi7JktQdVPWS24Bi/hR/rJxm1DujhPKpP4osalRINefFvLAaXHQC6hGO3/GUKbgnJUNA6CEgY1ReFJ/ccC6pzrl2MMeC12tTaglkYvBqvgg6X791+PB49yGrWBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jDojYV6e; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a0834769f0so43234485ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 00:02:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1768982522; x=1769587322; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SqFvFXu0jGZHtPXoUYA9xsq2a6yDeDGBB1pPLJQJ1aA=;
+        b=jDojYV6e+fZ+z0f1jwcp5M+43duHwHVppVuD0AAe2/EbIWzTPmzJyC6T+yxhZ3M1E/
+         dgaXqk4QVEFtuiPB0+EPZFA7299L/gMfs/+1lwxxI5vp0VJMqpbcGz0sGW4RO8DxeTSc
+         tHB3U5OSI2zCqUHnQEOf247X/r6fevH0Dou4dFrjbAQ67MI4yyx6+lvpWSJMhvfZoDki
+         t5pL7kX+CV+ycAYitZ4LVGksRvD44NUIUd4fm0ytU3CMTaqvvS9wE/ImcpiNMNnFpIcT
+         /F/wn6P+WtpqU9t32NN870AdVOWqjtS8M+EAVKTxf5dmHpJKzZVtPuzM/miLVy6pjhY8
+         9xTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768982522; x=1769587322;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SqFvFXu0jGZHtPXoUYA9xsq2a6yDeDGBB1pPLJQJ1aA=;
+        b=KCl7a6bndT82GBsqq02lbY0hF+KoEc6EPKPqEjPv34v21tbc6NHtFHOvqAzyTv4Uu5
+         IUNzMNYxu08G2luFsQGDWunMq0RiXAIXPf94BWGrOTTDw4pSQ5xoPHpJfLklUPePkyUi
+         tNZiTlB9PMwwrpDekiqUKF6finm2Y1vEwDlHUCskNZIJKVq+/H8XjMgkhFl9P007u1HY
+         siOlZY0eSdUv9En9RhdvZe0QlSQf3DDFxqIwRBMbU4CzcPOZjQBg8zcW2oKOC1WnvMNa
+         LMN9TVYlP9lhTb5KkDghMqLIsP9Ym4VP9/0O51p9anFHF6gaX2KVO6Itk3NVnUVuwo3m
+         UFnw==
+X-Gm-Message-State: AOJu0YyAlq7/KH0Lyl30yjBB7Bss/y9/LllckkUVIEUjOUE9iFCdWMFB
+	QMDpP+/Rg/Zbx9Mi+QpzI8h5RFYQu/DxxC+72ZiLEfN3dXcMkgFIX0g9YfJmFz/tATc=
+X-Gm-Gg: AZuq6aLxqSabRCz2y2PtavWgdkPH8lOIJG8FYemDTZShvROFJM7717os/SkL9OT3pOg
+	s0afhJ+gBQ4RIOF7GH4P2nhnPn9mvnpK6cVaM3FEu0LBExYUkywLAmsd3HP4mZjQhTLcwQClmVK
+	9ggfPAYC6iy/DDnYHYpuLJvt776VK774EBJaXLVHZ/zC4KzP0LmCwCTTHfBwHDkoqnduvzjXr37
+	OIqGmeTojxBiJ6GXVIh0UyBldEKogAR8HjZjzjf1VLD0sae3oc+jqbTRKX9BGbUoRL0iVYwpY9D
+	sdVWmX0TJ1ThqjNPE6KPQ417q6ToXPBcudNtXj6D3sbMi4wqimyU/W5W5Ak9iHhL/X8m4lN9352
+	1G14FdWJHhWSLWccVRtNoT1Xp82BasoGWf6MN+VB28vC+pMU9kbuYRccMta/0RcqO/v0Nq0o=
+X-Received: by 2002:a17:902:da8f:b0:2a0:9d16:5fb4 with SMTP id d9443c01a7336-2a7188896d2mr184266045ad.18.1768982521970;
+        Wed, 21 Jan 2026 00:02:01 -0800 (PST)
+Received: from [127.0.1.1] ([2a12:a305:4::4039])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190d14cfsm146851545ad.38.2026.01.21.00.01.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jan 2026 00:02:01 -0800 (PST)
+From: Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH v17 0/4] drm/msm/dpu: Support quad pipe with dual-interface
+Date: Wed, 21 Jan 2026 16:01:49 +0800
+Message-Id: <20260121-msm-next-quad-pipe-split-v17-0-6eb6d8675ca2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bdc8011b-6501-43e5-815b-a981df665e03@kernel.org>
-X-Spamd-Result: default: False [-1.46 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAO2HcGkC/x2MQQqEMAwAvyI5G7AVXdaviIdqUzew1tpUEcS/W
+ zzOwMwFQpFJoCsuiHSw8OozqE9ZwPQzfiZkmwXoSreV0goXWdDTmXDbjcXAgVDCnxOa8duMLdX
+ O2RpyHiI5Pt93P9z3A40cthNrAAAA
+To: Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Jun Nie <jun.nie@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768982516; l=8902;
+ i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
+ bh=WnMaF78Y5j5jsDtvdu33Avxi2Q4yFc5RtwudZjqJl5o=;
+ b=R1Viwafw2T0Yz4dzFH+erRLeucXxdiR/TRAfJCEE/4QhCwkSept65by4trdOIoGieQX2tAgi0
+ xyU1bdt3XwlCD2Sno1J271+iUHMxB/EtdREq85bjEVrOZq7Q/GkrXYU
+X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
+ pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
+X-Spamd-Result: default: False [-1.96 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-89952-lists,linux-arm-msm=lfdr.de];
+	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-89951-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[linux.dev,kernel.org,poorly.run,somainline.org,gmail.com,ffwll.ch,oss.qualcomm.com,linaro.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
 	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jun.nie@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
-X-Rspamd-Queue-Id: E532B53308
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: 00D095336E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Jan 20, 2026 at 01:30:13PM +0100, Krzysztof Kozlowski wrote:
-> On 20/01/2026 13:16, Sumit Garg wrote:
-> > 
-> >>
-> >>>
-> >>> There has been ongoing disscusion related to how stream ID associated
-> >>> with different translation context can be represented in DT here [1].
-> >>> With that only the secure bank stream IDs can be properly represented.
-> >>>
-> >>> Here I just followed the approach taken by Adreno GPU bindings for the
-> >>> iommus property [2].
-> >>>
-> >>> [2] Documentation/devicetree/bindings/display/msm/gpu.yaml +82
-> >>
-> >> Such justifications are pointless. What about commit msg which explains
-> >> why this was added? What about entire public discussion happening with
-> >> this patch? What about all previous revisions of that patch and
-> >> discussions leading to this piece of code? So you just found few lines
-> >> of code, ignored entire background and any other arguments, and copied
-> >> it here.
-> > 
-> > Looks like you are mixing other patch-set with this one.
-> 
-> How different? You found some old code and use it as argument that you
-> can do the same:
-> 
-> "Here I just followed the approach taken by Adreno GPU bindings for the"
-> 
-> so how I am mixing patchsets in my response above?
+2 or more SSPPs and dual-DSI interface are need for super wide panel.
+And 4 DSC are preferred for power optimal in this case due to width
+limitation of SSPP and MDP clock rate constrain. This patch set
+extends number of pipes to 4 and revise related mixer blending logic
+to support quad pipe. All these changes depends on the virtual plane
+feature to split a super wide drm plane horizontally into 2 or more sub
+clip. Thus DMA of multiple SSPPs can share the effort of fetching the
+whole drm plane.
 
-You are referring to discussions of which I wasn't part of. The reason I
-mentioned Adreno GPU binding here is because I had to drop the secure
-bank stream ID for Adreno GPU as well here [1]. But it didn't required
-any DT bindings change while the venus and display IOMMU property
-required this change.
+The first pipe pair co-work with the first mixer pair to cover the left
+half of screen and 2nd pair of pipes and mixers are for the right half
+of screen. If a plane is only for the right half of screen, only one
+or two of pipes in the 2nd pipe pair are valid, and no SSPP or mixer is
+assinged for invalid pipe.
 
-So how do you justify that GPU iommu DT bindings are correct while the
-venus and display iommu DT bindings require update.
+For those panel that does not require quad-pipe, only 1 or 2 pipes in
+the 1st pipe pair will be used. There is no concept of right half of
+screen.
 
-Is there any documented behaviour for how the minItems/maxItems need to
-be used? Or is this just implementation defined based on mailing list
-discussions? And for sure all kernel contributors won't be aware about
-all those discussions happening.
+For legacy non virtual plane mode, the first 1 or 2 pipes are used for
+the single SSPP and its multi-rect mode.
 
-[1] https://lore.kernel.org/all/20260116062004.237356-4-sumit.garg@kernel.org/
+    Changes in v17:
+    - Fix iommu warning on Hamoa.
+    - Extract plane splitting into a dedicated function.
+    - Defer plan splitting and SSPP allocation until CRTC check
+      so that topology information is available.
+    - Add virtual plane condition to quad-pipe topology so that
+      legacy devices are not impacted.
+    - Drop the merged 8 patches of v16, only the last 2 is revised
+      and sent here.
+    - Link to v16: https://lore.kernel.org/linux-arm-msm/20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org
 
-> 
-> 
-> > 
-> >>
-> >> That's the approach - I found a piece of some buggy code, so I can do
-> >> the same.
-> >>
-> >> Again, we discussed it 2-3 months ago for the same patch and I gave
-> >> exactly same reason why this patch is incomplete.
-> > 
-> > Sorry you are just mixing different discussions here. I am trying to fix
-> 
-> How am I mixing? Exactly same approach was posted for other SoC. I gave
-> same comments. Same comments apply here.
+    Changes in v16:
+    - Rebase to latest branch msm-next-lumag.
+    - Fix IGT test failures.
+    - Drop patches that have been merged.
+    - Link to v15: https://lore.kernel.org/r/20250819-v6-16-rc2-quad-pipe-upstream-v15-0-2c7a85089db8@linaro.org
 
-I still don't know which other SoC discussions you are reffering too.
-Care to provide a link?
+    Changes in v15:
+    - Polish logic in sspp check and assignment.
+    - Link to v14: https://lore.kernel.org/r/20250801-v6-16-rc2-quad-pipe-upstream-v14-0-b626236f4c31@linaro.org
 
-> 
-> > the SMMU stream IDs for Agatti SoC which listed secure bank stream IDs
-> > incorrectly.
-> 
-> You explain what you did, but you did not explain why or how I mixed
-> anything.
+    Changes in v14:
+    - Add patch to fix null pointer bug SSPP sharing, which is missed in
+      the last version.
+    - Polish single pipe check with removing loop.
+    - Polish logic of SSPP sharing test in dpu_plane_virtual_assign_resources()
+    - Polish argument of dpu_plane_virtual_assign_resources().
+    - Link to v13: https://lore.kernel.org/r/20250728-v6-16-rc2-quad-pipe-upstream-v13-0-954e4917fe4f@linaro.org
 
-I tried my best to describe the why part in commit descriptions:
+    Changes in v13:
+    - Modify the SSPP assignment patch for sharing SSPP among planes in
+      quad-pipe case.
+    - Link to v12: https://lore.kernel.org/r/20250707-v6-16-rc2-quad-pipe-upstream-v12-0-67e3721e7d83@linaro.org
 
-"
-Fix IOMMU DT propeties for GPU, display and video peripherals via
-dropping SMMU stream IDs which relates to secure context bank.
+    Changes in v12:
+    - Polish single pipe case detection in a plane. Add stage index check when
+      sharing SSPP with multi-rect mode in 2 planes.
+    - Abstract SSPP assignment in a stage into a function.
+    - Rebase to latest msm/msm-next.
+    - Link to v11: https://lore.kernel.org/r/20250603-v6-15-quad-pipe-upstream-v11-0-c3af7190613d@linaro.org
 
-This problem only surfaced when the Gunyah based firmware stack is
-ported on Agatti replacing the legacy QHEE based firmware stack. Assigning
-Linux kernel (HLOS) VMID to secure context bank stream IDs is treated
-as a fault by Gunyah hypervisor which were previously ignored by QHEE
-hypervisor.
-"
+    Changes in v11:
+    - Change function name from dpu_plane_check_single_pipe to
+      dpu_plane_get_single_pipe.
+    - Abstract SSPP assignment in stage into a function.
+    - Link to v10: https://lore.kernel.org/r/20250526-v6-15-quad-pipe-upstream-v10-0-5fed4f8897c4@linaro.org
 
-Let me know if the why part is still unclear.
+    Changes in v10:
+    - Drop changes in drm helper side, because num_lm == 0 does not lead to
+      any issue in the first call to dpu_plane_atomic_check_nosspp() with
+      latest repo. It is initialized properly right after the call in
+      drm_atomic_helper_check_planes(), thus the later plane splitting works
+      as expected.
+    - Rebase to latest msm-next branch.
+    - Fix PIPES_PER_STAGE to PIPES_PER_PLANE where handling all pipes, instead
+      of stages.
+    - Link to v9: https://lore.kernel.org/r/20250506-quad-pipe-upstream-v9-0-f7b273a8cc80@linaro.org
 
-> 
-> > 
-> > And this is the first version of this patch only for DT bindings fix for
-> > Agatti, there are no prior discussions I had on this aspect upstream.
-> 
-> I did not say you had discussions before. I said exactly same problems
-> were being solved and I give here and there exactly the same feedback.
-> 
+    Changes in v9:
+    - Rebase to latest mainline and drop 3 patches as mainline already cover
+      the logic.
+      "Do not fix number of DSC"
+      "configure DSC per number in use"
+      "switch RM to use crtc_id rather than enc_id for allocation"
+    - Add a patch to check crtc before checking plane in drm framework.
+    - Add a patch to use dedicated WB number in an encoder to avoid regression.
+    - Revise the condition to decide quad-pipe topology.
+    - Link to v8: https://lore.kernel.org/r/20250303-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v8-0-eb5df105c807@linaro.org
 
-Care to provide link to earlier discussions?
+    Changes in v8:
+    - Fix looping pipes of a plane in _dpu_plane_color_fill()
+    - Improve pipe assignment with deleting pipes loop in stage.
+    - Define PIPES_PER_PLANE properly when it appears fisrt.
+    - rename lms_in_pair to lms_in_stage to avoid confusion.
+    - Add review tags.
+    - Link to v7: https://lore.kernel.org/r/20250226-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v7-0-8d5f5f426eb2@linaro.org
 
--Sumit
+    Changes in v7:
+    - Improve pipe assignment to avoid point to invalid memory.
+    - Define STAGES_PER_PLANE as 2 only when quad-pipe is introduced.
+    - Polish LM number when blending pipes with min() and pull up to caller func.
+    - Add review tags.
+    - Link to v6: https://lore.kernel.org/r/20250217-sm8650-v6-14-hmd-deckard-mdss-quad-upstream-oldbootwrapper-36-prep-v6-0-c11402574367@linaro.org
+
+    Changes in v6:
+    - Replace LM number with PP number to calculate PP number per encoder.
+    - Rebase to Linux v6.14-rc2.
+    - Add review tags.
+    - Link to v5: https://lore.kernel.org/r/20250118-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v5-0-9701a16340da@linaro.org
+
+    Changes in v5:
+    - Iterate SSPP flushing within the required mixer pair, instead of all
+      active mixers or specific mixer.
+    - Limit qaud-pipe usage case to SoC with 4 or more DSC engines and 2
+      interfaces case.
+    - Remove valid flag and use width for pipe validation.
+    - Polish commit messages and code comments.
+    - Link to v4: https://lore.kernel.org/r/20250116-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-33-v4-0-74749c6eba33@linaro.org
+
+    Changes in v4:
+    - Restrict SSPP flushing to the required mixer, instead of all active mixers.
+    - Polish commit messages and code comments.
+    - Rebase to latest msm/drm-next branch.
+    - Move pipe checking patch to the top of patch set.
+    - Link to v3: https://lore.kernel.org/dri-devel/20241219-sm8650-v6-13-hmd-deckard-mdss-quad-upstream-32-v3-0-92c7c0a228e3@linaro.org
+
+    Changes in v3:
+    - Split change in trace into a separate patch.
+    - Rebase to latest msm-next branch.
+    - Reorder patch sequence to make sure valid flag is set in earlier patch
+    - Rectify rewrite patch to move logic change into other patch
+    - Polish commit messages and code comments.
+    - Link to v2: https://lore.kernel.org/dri-devel/20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org
+
+    Changes in v2:
+    - Revise the patch sequence with changing to 2 pipes topology first. Then
+      prepare for quad-pipe setup, then enable quad-pipe at last.
+    - Split DSI patches into other patch set.
+    - Link to v1: https://lore.kernel.org/all/20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org
+
+To: Abhinav Kumar <abhinav.kumar@linux.dev>
+To: Dmitry Baryshkov <lumag@kernel.org>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+---
+Jun Nie (4):
+      drm/msm/dpu: Extract plane splitting into a dedicated function
+      drm/msm/dpu: Defer SSPP allocation until CRTC check
+      drm/msm/dpu: support plane splitting in quad-pipe case
+      drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI case
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         |  42 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      |  29 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c        | 270 ++++++++++++++++-------
+ 7 files changed, 237 insertions(+), 118 deletions(-)
+---
+base-commit: 837f96989da508a94e1db77e6c5ba36a60dd010b
+change-id: 20260121-msm-next-quad-pipe-split-ab95b6e3ffd3
+
+Best regards,
+-- 
+Jun Nie <jun.nie@linaro.org>
+
 
