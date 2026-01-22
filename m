@@ -1,68 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-90206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4Ea/HlIwcmmadwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:12:34 +0100
+	id mFqxLj06cmlMfAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:54:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7F3167BCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:12:33 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 237B4682F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:54:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 44146962199
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 13:39:23 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1B2667A44F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 13:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C8133C53D;
-	Thu, 22 Jan 2026 13:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB76731B808;
+	Thu, 22 Jan 2026 13:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iCaTcWZL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fC7xpRFe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E4E325729;
-	Thu, 22 Jan 2026 13:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F6431DDA4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 13:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769089044; cv=none; b=i1vRcnrDDHs7patXP+XrMoF94wQ+keSFRrNVc7JeBWXYwRi2M7g3zcDCYtVEBHH4pMFLvEMOAF/Cguvrq6ROzNvXrj7wNoZjwWinoj6g+Zk/r1mEE+Oh8Ugj7M/tAmYTgnSE48RcQlcOf/avkrAIKAVB6GfDt88ccsmeKhz3/mA=
+	t=1769089037; cv=none; b=GnnTXqKMLa24621AN48Pq/uiWyiT86sxsEaTTWzMfBO280WE1n/gRc/kTCEmJHGDi9LyDV8EiHq1Bl/cqbLsRGaRC8w4A/67YOMj7TAhsFET8ubzq3X0APTRT48il6C4bHpkMZKl/Cnj5L1GUkjqu28JRRlkW1ZVmOMfMr2x0oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769089044; c=relaxed/simple;
-	bh=17Rsxmm48XcSNDgj1/89nZeo14vQUwjienKlcXNwShc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=R1mU5j8x+GvlpefPDJOiU30ZiPi/asgIk3djV0m/zwGlDDaNKKZHJ2gsd8rz+FC7nJVHBTjTGyfVaks9m9r95gqrMm7ZICbDY8/MqtU5pImfnFa5fw8gzQaUZiIWRiel+Q6ctbFHN9TkmVn4naTXncw2H8tns9SC35gYqH3p7ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iCaTcWZL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60M7te572276572;
-	Thu, 22 Jan 2026 13:37:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bjvEcP0zllrlhGgMUTlfiHuGnzsjT7hoHTLw8PrG76U=; b=iCaTcWZLPAtvvsr7
-	lUIqvxlN8yIyzY8PjAUrt7cBngDEQzJSm4OTwjwdnMrQLGZVH71gwA/AINieNQM4
-	LNDkiKViM8FS8uenGClSFNnWy/w3CSR2NrBRdrYZ3SwI5+NFRZ59nthsGpM+TIq0
-	ujvWV6+y9TasQFKf2ASpH+G5n9kycc347j0vudgdX4xKtH2VvGZySurisftsHFov
-	xZAvaNJzzj15ziayEGyTjt9nPGCVLRKg3ZpMp/chSaTsTMFOIpTLcybTDsFrKK8Y
-	8yTbzQ9nW24JbpDe+abBXughXiHP0+yyW9T45wRZvzdUdOtOSyGaLEYLAE+wSAlo
-	CFhERw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu7fatffk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Jan 2026 13:37:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 60MDbGNU018373
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Jan 2026 13:37:16 GMT
-Received: from [10.217.216.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 22 Jan
- 2026 05:37:12 -0800
-Message-ID: <1f32c439-77e0-42e3-aa7d-e482daa4707d@quicinc.com>
-Date: Thu, 22 Jan 2026 19:07:09 +0530
+	s=arc-20240116; t=1769089037; c=relaxed/simple;
+	bh=NEO0Wib2XUAkRs4MoAFw6l9bb9xKdSkfQ3peJhKOaEc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=teFonkqMbXwkjooI3UQ9wzfAfx67N4qehS+JAuZdN3Jh4I7PDb/EwkAWHENverwZdSxtye0a+zylUStJsfBNPltjIYEXJNPn7QarxefVPgG/nTF8ZQCSrBiMMWZ3guK9d5zSFvlMrA+XZ3P8ZPO1WiKdoxMiblIntTSyCSldpZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fC7xpRFe; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4801d24d91bso10433875e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 05:37:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1769089033; x=1769693833; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eEJn28UsVkdJy0uU3rgrwA+Zjuc5hG2Gw87IADiyNbQ=;
+        b=fC7xpRFerz9c0y15wmAOkzOYDmOymVhwBDGJlm9GG+d4u7+bySYIg9/2nm8vzIPzm4
+         ykq6IfzdRiCXkxeTUcFtD3ytRg3vxNYDZNLoDCHYkWO79hKUQfjiPrThYMzoKxK1G9PK
+         sChovRMmLvusVgB699+e9JO4Mo4+iYHNmEsAUiqhNYWshL9PYhwM1YWHHyAVDwMD53fQ
+         qouHFzm9teoUMsDDURqcwh0qzMYSxDhFWB+L9cXETu2+UuUyP3+qZ1YhvsPNNkSv/JOI
+         qGJExM/SS0BxsBbmWt9iEpzkQVHYAqNrdV1ZgkNRYQG+KurAwAIhf3+Sz99CSz3erFdM
+         KyyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769089033; x=1769693833;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eEJn28UsVkdJy0uU3rgrwA+Zjuc5hG2Gw87IADiyNbQ=;
+        b=hpjfmtKg4hkICVQiVMYwX8r1Vir9+7Wr15G/QfzM9xXA8Bzwoq4ihuxaGUf7a92xQ+
+         D9fH3rgGIie1budFxiiBOmzK6uPlK0FBPvVADH6J6rSQq0jW2GQAelQykZtk1BEVWdg6
+         zyn7Aw9AycWQtVoz5ve+RDJrJKpVfPiG02QBoWdn/hpPMfRmTtkNGLT0y3R4aBhKQuNW
+         2dU5EIR4RzxR+j3Qxw7TH060C0848Vu/NRnlhSohWMagdnBkQS3hKZanRTDD7+4U8qXA
+         MLzKq1Pxn68O/WWCd/2dHMR+4u59IvVmlR3GU3GLqWKk8Ja6SQh/h/+1jKSlirkn2lNk
+         CbcA==
+X-Forwarded-Encrypted: i=1; AJvYcCWOIOktaurLiW2jFv38oXIK6SCgnCZfF9r63MZfRh2CajGYsvOn5kLlqkF+XwAFuOan01ipvFGhD0LZNzwz@vger.kernel.org
+X-Gm-Message-State: AOJu0YzX2E1TQVHATYPLFcCDn8aJpeO+4SPPQxwjdxCtW5NnuRZ43kNC
+	MgmDFDWMjbZETYvpvuKiA9e2NQc/OdKB12rrQy5jJQj7cQj8Hn0KTL5evApvL81LGbw=
+X-Gm-Gg: AZuq6aJLAb6KUtQetEkZIYbHvvlNzE1jqwoioP4z3igeZ8Bwj/nupLcb7L4KkhJOjK2
+	u15BdZENPUkGFByjq50l57iubNmWQ3dYGf025bw0677b3UFbBImuLtHsFShOm7SRoXi2BgRld+3
+	opatwiMiltEViH0fuRD/h/JTasVIIXHHQsC2RtwMcZXKOJB0AMsfkipdrXO+TZ4NGwvynuEZ731
+	3w39IpSfzeSTOZSyCQOrmk7gpzYmZ5RgIAO8EMtKLJ+GFmb+MdvSDi3SSXDoU1LJjSpbg8g2zYD
+	Jq1bK+OR0/IQPUjkNIDTw1x+wuey8Y5YJtEXYbk2rgcUpabB4DXR/tG5gcg92eoj8ycEiiKbarK
+	6HIVFmw0j+UtSWjJw39as5sjKEv4zaAfmqhJAR5gbqlD/4mTkTo3x8awldyIRf09WAhqC2axSBY
+	n7rUDAULv1BJp87+9NEBYPH+YAV8+OvWU+01lFC6I+Tq0MdThI6j9xW8sxEUFMBSc=
+X-Received: by 2002:a05:600c:8b75:b0:477:9574:d641 with SMTP id 5b1f17b1804b1-4803e7e8531mr130800565e9.22.1769089033318;
+        Thu, 22 Jan 2026 05:37:13 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080:9dc7:6955:8850:f258? ([2a01:e0a:3d9:2080:9dc7:6955:8850:f258])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4804702876asm75878365e9.1.2026.01.22.05.37.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jan 2026 05:37:12 -0800 (PST)
+Message-ID: <f80a1ecc-d33c-4872-9b9a-466b56877580@linaro.org>
+Date: Thu, 22 Jan 2026 14:37:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,207 +89,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] mmc: sdhci-msm: Add Device tree parsing logic for
- DLL settings
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Adrian Hunter
-	<adrian.hunter@intel.com>, <linux-mmc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@oss.qualcomm.com>
-References: <20251215120009.3877889-1-quic_rampraka@quicinc.com>
- <20251215120009.3877889-5-quic_rampraka@quicinc.com>
- <fkb4iietzzmhvatmvjn6s6dpdibmnhj5g4xjcsrvzfwkipgwwz@wde3bcrqxrhw>
-Content-Language: en-US
-From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-In-Reply-To: <fkb4iietzzmhvatmvjn6s6dpdibmnhj5g4xjcsrvzfwkipgwwz@wde3bcrqxrhw>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Hrx72kTS c=1 sm=1 tr=0 ts=6972280d cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=9ARYc1Rnt4muMi-1TfQA:9 a=QEXdDO2ut3YA:10 a=-_B0kFfA75AA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEwMiBTYWx0ZWRfX3GZxRFdheu5P
- ylm3FlvjwiHlHmW/ktH8UiAPouDASoRyy/kQlid4BHxJYHOQ297n8oP+e5yV2WFu7iT2iRFw10m
- 6AVCDPxgWtaYMRdBmZjAZAbVah2rGI37Gns2v5R7+mbpzwJ0moT5S76qb0Na2Y1TnhpxybfIMZR
- jM6+ocVJX2OUYpdSCchUfzERwshzgIApwT1QOl93lBYPEdGA+RKGJk5sx6vzIwSH/nKJjcLS4Z7
- +pJwrfeGJvnEpzP2f/6epWrqsqoBKdmxWzvKmfbzwbym4bsNFjnfTROXcoA4itXx7r/7TxH2xfc
- XNQlhM0mIrgeFe+SPYN4Qpr2caK85NP6pF0LkbC8cKFNuFuPwU6NwNPeM3a8JR6I62IWxF0GWPw
- DI156HlLXaZX7NUEtewXfCLIcqSl3A/PZPLuSdafdAkGM5wQDDYGKW3zO6VTZJDaXg5N1gg0TRq
- Wvhh6YRBsZ4+FNm3MvQ==
-X-Proofpoint-ORIG-GUID: RwX1YrpZxoHUSFFYtyUYtrTV8NX5lH-g
-X-Proofpoint-GUID: RwX1YrpZxoHUSFFYtyUYtrTV8NX5lH-g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_01,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601220102
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: add basic devicetree for Ayaneo
+ Pocket S2 gaming console
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Kancy Joe <kancy2333@outlook.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-0-bb3f95f1c085@linaro.org>
+ <20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-3-bb3f95f1c085@linaro.org>
+ <01de9fc2-f60c-4bc0-af61-c070213df29b@oss.qualcomm.com>
+ <53a1370b-89a4-4276-949a-e3ad95dbad2c@linaro.org>
+ <SEZPR04MB6873411EA1A8B69AD45B286CA397A@SEZPR04MB6873.apcprd04.prod.outlook.com>
+ <687b781c-dee6-4b8e-89b2-e082a860be3a@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <687b781c-dee6-4b8e-89b2-e082a860be3a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.46 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90206-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[quicinc.com,none];
-	DKIM_TRACE(0.00)[quicinc.com:+];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90205-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,outlook.com:email];
+	HAS_ORG_HEADER(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,outlook.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[quic_rampraka@quicinc.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: E7F3167BCC
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: 237B4682F3
 X-Rspamd-Action: no action
 
-
-On 12/18/2025 7:02 PM, Bjorn Andersson wrote:
-> On Mon, Dec 15, 2025 at 05:30:08PM +0530, Ram Prakash Gupta wrote:
->> From: Sachin Gupta <quic_sachgupt@quicinc.com>
+On 1/22/26 13:34, Konrad Dybcio wrote:
+> On 1/22/26 10:34 AM, Kancy Joe wrote:
 >>
->> This update introduces the capability to configure HS200
->> and HS400 DLL settings via the device tree and parsing it.
-> No it doesn't, it merely reads a bunch of integers from DeviceTree and
-> does nothing with them.
->
-> Please write your commit message in imperative mood (avoid "This
-> update") and please include a reasoning for why this commit exists, or
-> as
-> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-> says "Describe your problem.".
-
-Will update this commit with only parsing explanation. and would remove "This update"
-
->> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
->> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
->> ---
->>  drivers/mmc/host/sdhci-msm.c | 41 ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 41 insertions(+)
+>> On 1/22/2026 5:25 PM, Neil Armstrong wrote:
+>>> On 1/22/26 10:15, Konrad Dybcio wrote:
+>>>> On 1/21/26 5:40 PM, Neil Armstrong wrote:
+>>>>> From: KancyJoe <kancy2333@outlook.com>
+>>>>>
+>>>>> Add initial Device Tree for the Ayaneo Pocket S2 gaming console based
+>>>>> on the Qualcomm Snapdragon 8 Gen 3 platform.
+>>>>>
+>>>>> The design is similar to a phone wihout the modem, the game control
+>>>>> is handled via a standalone controller connected to a PCIe USB
+>>>>> controller.
+>>>>>
+>>>>> Display support will be added in a second time.
+>>>>>
+>>>>> Signed-off-by: KancyJoe <kancy2333@outlook.com>
+>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>> ---
+> 
+> [...]
+> 
+>>>>> +        pinctrl-names = "default",
+>>>>> +                "sleep";
+>>>>> +
+>>>>> +        pwms = <&pm8550_pwm 3 50000>;
+>>>>> +
+>>>>> +        #cooling-cells = <2>;
+>>>>> +        cooling-levels = <0 16 32 45 60 80 105 130 155 180 205 230 255>;
+>>>>
+>>>> Does this come from a preexisting map?
+>>>
+>>> Kancy ?
 >>
->> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->> index dc79f828522b..1fcd92158bee 100644
->> --- a/drivers/mmc/host/sdhci-msm.c
->> +++ b/drivers/mmc/host/sdhci-msm.c
->> @@ -266,6 +266,19 @@ struct sdhci_msm_variant_info {
->>  	const struct sdhci_msm_offset *offset;
->>  };
->>  
->> +/*
->> + * DLL registers which needs be programmed with HSR settings.
->> + * Add any new register only at the end and don't change the
->> + * sequence.
-> /* You have to only add entries at the end, but I'm not going to tell you why... */
-
-Its for future proofing for any new register addition so that it does not break
-existing targets. I ll update this comment.
-
->
->> + */
->> +struct sdhci_msm_dll {
->> +	u32 dll_config;
->> +	u32 dll_config_2;
->> +	u32 dll_config_3;
->> +	u32 dll_usr_ctl;
->> +	u32 ddr_config;
->> +};
->> +
->>  struct sdhci_msm_host {
->>  	struct platform_device *pdev;
->>  	void __iomem *core_mem;	/* MSM SDCC mapped address */
->> @@ -274,6 +287,7 @@ struct sdhci_msm_host {
->>  	struct clk *xo_clk;	/* TCXO clk needed for FLL feature of cm_dll*/
->>  	/* core, iface, cal and sleep clocks */
->>  	struct clk_bulk_data bulk_clks[4];
->> +	struct sdhci_msm_dll dll[2];
->>  #ifdef CONFIG_MMC_CRYPTO
->>  	struct qcom_ice *ice;
->>  #endif
->> @@ -302,6 +316,7 @@ struct sdhci_msm_host {
->>  	u32 dll_config;
->>  	u32 ddr_config;
-> So this dll_config/ddr_config pair is no longer supposed to be used? Or
-> are there now two sets of dll and ddr configurations to be provided?
->
-> Regards,
-> Bjorn
-
-These are kept to continue support for the older targets, with newer targets
-which are all with artanis dll, these wont be used.
-
-Thanks,
-Ram
-
->
->>  	bool vqmmc_enabled;
->> +	bool artanis_dll;
->>  };
->>  
->>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
->> @@ -2534,6 +2549,23 @@ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
->>  	return ret;
->>  }
->>  
->> +#define DLL_SIZE 10
->> +static int sdhci_msm_dt_parse_dll_info(struct device *dev, struct sdhci_msm_host *msm_host)
->> +{
->> +	u32 *dll_table = &msm_host->dll[0].dll_config;
->> +	int ret;
->> +
->> +	msm_host->artanis_dll = false;
->> +
->> +	ret = of_property_read_variable_u32_array(dev->of_node,
->> +						  "qcom,dll-presets",
->> +						  dll_table, DLL_SIZE, DLL_SIZE);
->> +	if (ret == DLL_SIZE)
->> +		msm_host->artanis_dll = true;
->> +
->> +	return ret;
->> +}
->> +
->>  static int sdhci_msm_probe(struct platform_device *pdev)
->>  {
->>  	struct sdhci_host *host;
->> @@ -2580,6 +2612,15 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>  
->>  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->>  
->> +	/*
->> +	 * Parse HSR dll only when property is present in DT.
->> +	 */
->> +	ret = sdhci_msm_dt_parse_dll_info(&pdev->dev, msm_host);
->> +	if (ret == -ENODATA || ret == -EOVERFLOW) {
->> +		dev_err(&pdev->dev, "Bad DLL in dt (%d)\n", ret);
->> +		return ret;
->> +	}
->> +
->>  	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
->>  	if (ret)
->>  		return ret;
->> -- 
->> 2.34.1
+>> No it is not a preexisting map. I add it(and the thermal part) myself to get dynamic fan speed control work. Perhaps you can also use userspace fan control daemon instead of hardcode it here. In android the vendor control the fan speed in userspace too.
 >>
+>> Following block is what the stock fw defined. I changed the granularity to make fan speed (or noise actually) sounds more "smooth".
+>>
+>> ```
+>>
+>> cooling-levels = <0 64 128 255>;
+>>
+>> ```
+> 
+> FWIW the corresponding pwm-backlight driver has this
+> num-interpolated-steps property which computes a smooth map.. not sure how
+> many cooling levels are resonable for a PWM fan, but then I would intuitively
+> not object to having more as opposed to less..
+
+Good suggestion !
+
+Neil
+
+> 
+> Konrad
+
 
