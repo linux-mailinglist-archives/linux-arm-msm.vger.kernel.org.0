@@ -1,201 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-90217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6JZCJTc7cmlMfAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:59:03 +0100
+	id aMyyHXBBcmnpfAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 16:25:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0636368378
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:59:02 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F0A268B8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 16:25:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B59EC96359B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:40:05 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 967B478B53E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:41:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26FC3349AEC;
-	Thu, 22 Jan 2026 14:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E63334DB57;
+	Thu, 22 Jan 2026 14:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hN6y9gqA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vHFoYMdg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2BE343D7F;
-	Thu, 22 Jan 2026 14:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4D42E1F01;
+	Thu, 22 Jan 2026 14:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769092801; cv=none; b=XZvXaV/9W6NXsLfiYmIofdolWZp1VqHWbTFk2riPV7mvDHdn47yOAcOPNGix+ItaLs393M9kz3bK//fvyqaNHsjtb39W0RlaRq8if+znxU1Ejy+cw/M5uM3vj2WD4Zs5FNaQGuAzZPLOzVvuvbUR7363+xw3yRaCuOwoWxL+j4s=
+	t=1769092897; cv=none; b=JqlWnZNxYYdG9RsH9HUgwzjnJc5sU2j2ogPKmSVQNtKTMSrq8Ae6pFO6y2eFffjozTg6i6zBYnHGm0w39Twt4PmnsZzIHC/UUhTaKioye/7rvYW4oYUsMlOnDZ2TK65XVOssxzd5/lpIwv4P5cgdmsrB4AhIxvk0apZi4dAFPYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769092801; c=relaxed/simple;
-	bh=1ieLDIlqa3rrEJoM3l1ytVw+31Xyr7caHGb5FP+IeH0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pDr7j340aDcIwJNRhcLmeufzLYZpKr/PCUPjnTPaxoeDCyMGhe1vrOwUzcHUjcXi2vT6Pv+ypJqoPR55urFY0aZch++ODQbQyAS//EoVs7iQ2O+aaqv6wU/xvtpQAIByWL5n9ihUEeHTJt0cqPPwkai2Pkzwu4mu34ZGVsgs2Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hN6y9gqA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC1BC116C6;
-	Thu, 22 Jan 2026 14:39:52 +0000 (UTC)
+	s=arc-20240116; t=1769092897; c=relaxed/simple;
+	bh=MdN8tApaGhTAeUwctL8TWZWqe4uqbNP2GFX5k0FZzjw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
+	 References:In-Reply-To; b=twc/ARKAKXhSqQmal6JwiXFdvKwiewsg9RMY6NoQDA8zrFeGq2sXe3CdGWhov+zulYd5/b6NjtSd7NKwBaSpXn7XHofI4MQCtkXBnAUkFbZ5lbp/0PODS2pAPjPNyEiACIJbNrdxj+V5gPmDGtKwaOqagvIEGtc/no4AO677JVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vHFoYMdg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C546C116C6;
+	Thu, 22 Jan 2026 14:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769092801;
-	bh=1ieLDIlqa3rrEJoM3l1ytVw+31Xyr7caHGb5FP+IeH0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hN6y9gqAWxAcQsPwSSNk6yDY0nA/2zMjHltdGPEYl32qpcc756s/+sUezdnA5xT2a
-	 g+JcA26d40PYgkM5c65D4eQgm33IOUbjc68X9eSb2HN3Ieb0rFa68JBdTci6t/Fxmr
-	 ahoZp1wZpSoDAPDs7x2VfXnd4kD3oUv+QSfhSn5vCykEyKgWtJQiH9eJymSoXC2SoC
-	 qjkWRHymFFXa9XrCdmAXNvOGRZy3Yo3odm3eqAbR0MAMKDmU2P9Uo9fQmEbJm7NhI1
-	 WSuDgmkzsnr0G1gkovOOBlfhAEi9BA3yooLMxccj/atS+iDSbvD19S6wV8Ah+lTQ5K
-	 CBPac2Zv4CdFQ==
-Date: Thu, 22 Jan 2026 20:09:45 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>, Bjorn Helgaas <helgaas@kernel.org>, 
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-Message-ID: <4ywec7ifq4s2hqd3rg4mxcwkj345vvifpyihsywz3unn77fkdu@74wzarashnul>
-References: <20250922-pci-dt-aspm-v2-0-2a65cf84e326@oss.qualcomm.com>
- <20250922-pci-dt-aspm-v2-1-2a65cf84e326@oss.qualcomm.com>
- <7306256a-b380-489b-8248-b774e6d3d80e@nvidia.com>
- <76sr3yuwdaon3o3u5dfjycwlxhxcarid5tevgtao6aaapvwbzd@e7bam35dzt3k>
- <9a76a4a7-c02c-436a-8f69-57606a6b2bed@nvidia.com>
+	s=k20201202; t=1769092896;
+	bh=MdN8tApaGhTAeUwctL8TWZWqe4uqbNP2GFX5k0FZzjw=;
+	h=Date:From:Subject:Cc:To:References:In-Reply-To:From;
+	b=vHFoYMdgIMY5+6FflDXfL5BZe45Uh6TMPu62RAtX/7+OUJxIDTC4hKk0yoOIltmHm
+	 wXwlvxgKkMKp1PIAgllRKARyufu0WDKmrgqg0leaAlYPRUzYAhjG/HTfpd1ThNKeep
+	 pJzkNTJ4fue2bAQD68BPX3ZwpZ01pzBiCI7a28ksukxepfURCfQyD3nz3DBHsssDEA
+	 9JSJ4EskLt4wgSNkpRt55lh9gDZ6Mv4z7EwfhKNkHCjDvuiknOjsMUq1Uu46S5rlm4
+	 DuuGBzjUU/OVHISM4si3QDiqqdMZcdTO/24l4HREj+gS2XmAmuHVAq42Wslk/lmAxT
+	 RYaQyhKWMXBoA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9a76a4a7-c02c-436a-8f69-57606a6b2bed@nvidia.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 22 Jan 2026 15:41:31 +0100
+Message-Id: <DFV73ATZO1W0.1ZAP6UN1HFL2H@kernel.org>
+From: "Danilo Krummrich" <dakr@kernel.org>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: do not register driver in probe()
+Cc: <driver-core@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+ <linux-arm-msm@vger.kernel.org>, "Danilo Krummrich" <dakr@kernel.org>
+To: <gregkh@linuxfoundation.org>, <rafael@kernel.org>, <broonie@kernel.org>,
+ <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+ <robin.clark@oss.qualcomm.com>, <hanguidong02@gmail.com>,
+ <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260121141215.29658-1-dakr@kernel.org>
+In-Reply-To: <20260121141215.29658-1-dakr@kernel.org>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
+	MV_CASE(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90217-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,kernel.org,vger.kernel.org,linux.intel.com,canonical.com,gmail.com];
+	TAGGED_FROM(0.00)[bounces-90218-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,arm.com,8bytes.org,oss.qualcomm.com,gmail.com,quicinc.com];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0636368378
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0F0A268B8F
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 01:43:41PM +0000, Jon Hunter wrote:
-> 
-> On 22/01/2026 13:17, Manivannan Sadhasivam wrote:
-> 
-> ...
-> 
-> > > Since this commit was added in Linux v6.18, I have been observing a suspend
-> > > test failures on some of our boards. The suspend test suspends the devices
-> > > for 20 secs and before this change the board would resume in about ~27 secs
-> > > (including the 20 sec sleep). After this change the board would take over 80
-> > > secs to resume and this triggered a failure.
-> > > 
-> > > Looking at the logs, I can see it is the NVMe device on the board that is
-> > > having an issue, and I see the reset failing ...
-> > > 
-> > >   [  945.754939] r8169 0007:01:00.0 enP7p1s0: Link is Up - 1Gbps/Full -
-> > >    flow control rx/tx
-> > >   [ 1002.467432] nvme nvme0: I/O tag 12 (400c) opcode 0x9 (Admin Cmd) QID
-> > >    0 timeout, reset controller
-> > >   [ 1002.493713] nvme nvme0: 12/0/0 default/read/poll queues
-> > >   [ 1003.050448] nvme nvme0: ctrl state 1 is not RESETTING
-> > >   [ 1003.050481] OOM killer enabled.
-> > >   [ 1003.054035] nvme nvme0: Disabling device after reset failure: -19
-> > > 
-> > >  From the above timestamps the delay is coming from the NVMe. I see this
-> > > issue on several boards with different NVMe devices and I can workaround
-> > > this by disabling ASPM L0/L1 for these devices ...
-> > > 
-> > >   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5011, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5036, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0x1b4b, 0x1322, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0xc0a9, 0x540a, quirk_disable_aspm_l0s_l1);
-> > > 
-> > > I am curious if you have seen any similar issues?
-> > > 
-> > 
-> > Marek reported a similar issue on ARM Juno board [1] on which one of the switch
-> > downstream port failed to come up while *entering* system suspend. But I was
-> > clueless as to why the device fails to function only while entering system
-> > suspend and not during runtime. I suspect something is going wrong in the
-> > suspend path.
-> > 
-> > In your case, looks like the device is failing while resuming from suspend. Did
-> > you see any error log during suspend as well?
-> 
-> I don't see any errors on entering suspend, just resuming from suspend. One
-> other thing that I notice, on resuming in a good case I see ...
-> 
->  tegra194-pcie 141e0000.pcie: Link didn't transition to L2 state
-> 
-> In a bad case I see ...
-> 
->  tegra194-pcie 141e0000.pcie: Link didn't transition to L2 state
->  tegra194-pcie 14160000.pcie: Link didn't transition to L2 state
->  tegra194-pcie 14160000.pcie: Link didn't go to detect state
-> 
+On Wed Jan 21, 2026 at 3:12 PM CET, Danilo Krummrich wrote:
+> Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
+> qcom_smmu_impl_init") intended to also probe the TBU driver when
+> CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding
+> platform_driver_register() call into qcom_smmu_impl_init() which is
+> called from arm_smmu_device_probe().
+>
+> However, it neither makes sense to register drivers from probe()
+> callbacks of other drivers, nor does the driver core allow registering
+> drivers with a device lock already being held.
+>
+> The latter was revealed by commit dc23806a7c47 ("driver core: enforce
+> device_lock for driver_match_device()") leading to a deadlock condition
+> described in [1].
+>
+> Additionally, it was noted by Robin that the current approach is
+> potentially racy with async probe [2].
+>
+> Hence, fix this by registering the qcom_smmu_tbu_driver from
+> module_init(). Unfortunately, due to the vendoring of the driver, this
+> requires an indirection through arm-smmu-impl.c.
+>
+> Reported-by: Mark Brown <broonie@kernel.org>
+> Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596=
+@sirena.org.uk/
+> Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/=
+ [1]
+> Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@a=
+rm.com/ [2]
+> Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_d=
+evice()")
+> Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qco=
+m_smmu_impl_init")
+> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 
-But this error print is coming from:
-
-	tegra_pcie_dw_suspend_noirq()
-		\__ tegra_pcie_dw_pme_turnoff()
-
-This function broadcasts PME_Turn_Off message and expects the PME_TO_Ack
-response from the device. But in both working and non-working cases, response is
-not being received. Then the driver *deasserts* PERST# without asserting it
-before (which is weird) and then restarts LTSSM expecting the LTSSM to be in
-Detect state. And this one is not happening in non-working case. I don't know
-why, maybe the device got crashed?
-
-Can you also try skipping the suspend/resume handlers to isolate the issue with
-PME_Turn_Off?
-
-diff --git drivers/pci/controller/dwc/pcie-tegra194.c drivers/pci/controller/dwc/pcie-tegra194.c
-index 0ddeef70726d..a5bb122a9477 100644
---- drivers/pci/controller/dwc/pcie-tegra194.c
-+++ drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -2490,7 +2490,7 @@ static struct platform_driver tegra_pcie_dw_driver = {
-        .shutdown = tegra_pcie_dw_shutdown,
-        .driver = {
-                .name   = "tegra194-pcie",
--               .pm = &tegra_pcie_dw_pm_ops,
-+//             .pm = &tegra_pcie_dw_pm_ops,
-                .of_match_table = tegra_pcie_dw_of_match,
-        },
- };
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Applied to driver-core-linus, thanks!
 
