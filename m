@@ -1,371 +1,439 @@
-Return-Path: <linux-arm-msm+bounces-90128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OLySI07kcWk+MgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:48:14 +0100
+	id wFajJ/rlcWngMwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:55:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3428663679
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:48:14 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 120D463873
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:55:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 23FFF44A296
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 08:39:11 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E223F7A8AA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 08:49:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73AEB30BB80;
-	Thu, 22 Jan 2026 08:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D41389469;
+	Thu, 22 Jan 2026 08:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WJx43O4U"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="fRLcHDS9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021110.outbound.protection.outlook.com [40.107.74.110])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B792F7AB8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 08:39:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769071145; cv=none; b=mSUzj8Dcb4FEK4WY2rFFqZmBknNKxM3hSJbKN8GuS6peCXoOGWSdKCPP+VDzBFdRs4OHWecZHLQhCIeEeEyEPqlxednwyOn1Qbc8WYrBCp5tVZS5/TK229TJ46Ohtjyu6z/ZVoP2q1U3bl94Cr3FPTGaOzL8fJ6MO5TjOSe1AD8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769071145; c=relaxed/simple;
-	bh=Bsok9y0iUeV7AveEoSqBf60zCkbG3Xq4f+71bZRjVKc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=cd1zKcEx7WTuK+jqbBp9FSAbUF3K6PbFzFD1bWPjSQJhBWplj1lhQpMRYL5VIpvz0CsAsxXgw+5JiSfUYrVKhRMe6fwsXPsI6KS3yEjzLuRWRZAklh/6V3QQSkVf+xJJ59s4wNFB8NtFWPwykfEtt+vipEocINmz+lojd5ccG2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WJx43O4U; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so5569245e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 00:39:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1769071140; x=1769675940; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WRgWt3QOSpx0eS1nwXFOWd2CSZ21RZ8VIcbpaI5Urno=;
-        b=WJx43O4UdQcqks0hvtf5gC0hbuGCkvUXTBd5ovn6D8Ub8Qzgpgd2qpehnZ4qGgrNjO
-         NFYTnyiymeW1Rzg+aowhTWzhnZoVfmegiN9uRnaJkyphQ9KIz0cY3PQMgwujpGk4/GpG
-         Rd2iQVPBRQf/cyerZ/5AjBPwUUDkC0u3w+HDOMiZ8T7MLL4IXPnb/2Ybv5KCmN+sgrOf
-         u7UjKsBtWGC9bszBBPoUlNEUK0zLeVVUOJ1q03nlj5Hbq9H9rOpNl2dtKaHakS2EG0qw
-         QQjYpEb79zT8h/SNHB1JF5Pweuvqf8NnhPFjt9QrDye5y81c6s7+RwYhQRKFl8WvR/jI
-         qduQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769071140; x=1769675940;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WRgWt3QOSpx0eS1nwXFOWd2CSZ21RZ8VIcbpaI5Urno=;
-        b=ZLcNWXCWosPUp4hJNAFlGdpJ8LhNmCe/UkFUd41BiFENkARqJsyezBL84PTE4CxkQW
-         W9UyLN3hw8zd4slfVBswZciRrl/fqIFnxSUJsdiVx1jPZkSB3ZpX8vMZq0mpDR60pNLR
-         MxCcxKx2z1mCrPxsQTD6lOJIYJwdirW3nkIx1to4hXfgAh5s7xlWDzDqkRgxPf37ycWu
-         bc7PdLIlPQc9gVcFH/inI1HhlygFTQ1k7s2AQI7ZYurLLAy7yBCbjgHdCB/JT/wTdsu9
-         9bxGZC95cdNaAuWHVPcbPIANzN3zrXLv6x4nCVH/obuY9rtdbfZN03/irVjKJkFc1C/k
-         04Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCWlylrCrret7T7G/G0h39VRCgqceu15HxsNhA/UB9kuue60tR+ACpWwoskkXjvsTAxTU1sh0A3jpn4Is8KL@vger.kernel.org
-X-Gm-Message-State: AOJu0YybfMBXdpjq2i1tF5TmDRqS7995mmD76hChq5qf7nTnO9fdx2q5
-	zGZA3eqzu/8Lx+cKXUrM5+1QpbiC4wFxmFDAMk7nr3aTMxqLVw3yWfxMjMwsfw747PA=
-X-Gm-Gg: AZuq6aJ6XvjYTUlpJhPpVAy5ifsIkPpbnxHdgcTOCzbYtoCv4sijx7lB1qowzm2xNhx
-	Zt9awzHYj1acm/dZyUV2LQn+sSymStfw2ZCYwB/JpuwCXZlvZj5T36LXthm2lsy0BrmFbf9sfze
-	r3NGHEApq+vym0uHgSrFfvXso5kBFUm+/nV02BoDRSc/nYXtCR9RRcC7w6wHRWgO3N0tnhyOWOH
-	HMX10zsUadVvVIRfuK5MXqz1e+Uv/jPcN13BR53qB4uZZ5RarcLwyHg3/eUFcddouxhmd4kkY0D
-	4aCyB6lIZEUAvpNWMzWi8X5SUes+qu9uY45REwe/CT2ggL9jKltudI2TWtsZn4XOR7cK/Bm3Pjg
-	98h5lwKyDTKjyyaGp5CHEugICgcuwopMgZmRm8o53M+dLW8Xi0NBhshFAKmwrnQv6rTSF6wcD0g
-	zhTgA74DJW/FwfeSImhhC5WlfGcc8Ds+1w16wQ1EWhq1mbP3lRJhUiKlu0WBH3HbI=
-X-Received: by 2002:a05:600c:4653:b0:47e:e0b3:2437 with SMTP id 5b1f17b1804b1-480470689femr23241895e9.5.1769071140057;
-        Thu, 22 Jan 2026 00:39:00 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:3d9:2080:9dc7:6955:8850:f258? ([2a01:e0a:3d9:2080:9dc7:6955:8850:f258])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-480470cf385sm48724455e9.13.2026.01.22.00.38.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jan 2026 00:38:59 -0800 (PST)
-Message-ID: <5c54dffe-f8eb-4b45-97b0-512a9658c212@linaro.org>
-Date: Thu, 22 Jan 2026 09:38:58 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B1137F109;
+	Thu, 22 Jan 2026 08:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.110
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769071763; cv=fail; b=LxVzgZBFyiAzkhq8P3f+iZ6nvM6I9+uO5j8LPMAqk+ojG6ZhptJyrFBEh1zgzp22XrYU3RBFHzPaR1NsMYiqF52RtcaZ2QQ7EIPisyVTo+zWMmwJwIKq/pAPKTmuiplxHy2JmH8JNrtslmuR0ZsNCsaddDvv6O8gTV20HHwRfSo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769071763; c=relaxed/simple;
+	bh=z2Yr5UzhNzNTfF3pPgngFI9nKiOeuIBAUdjAzNn6KCE=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=pUuLh/Q70lSIZ2peel1yf8gt+kCSCureoC+B7ws89bNMKEFL6lCLnJxX64bXvrX1c3ZL+v1KeWUVyK047JID8Cdef/FOJdTt+R09XPHo3kY1XIl4pOXi0zoVuFkmyweiB2lpDyIxBUq7CGqh2TKU7nRKjhOlhtX4ytbiXh2fVhk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=fRLcHDS9; arc=fail smtp.client-ip=40.107.74.110
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Qdf/JYHTz7fgPTrjm1MzvLubOOpQ72dw+64has5x6ZXLPiBTAM+1dbKXMuT6U+LRZB9w3t1+vpQgjQacyZsxZdrXKTToaYskd4N3RGSnkU2ohQBv8Dp+P0Q4ceAgZ2m5xRBT4bF6Wta/gQ/q4fsnePGKgxgq9U7YFlgvU4t5PMRne29HeGLQolJ85RS8PQQFkphqJimqR36QXOQ9wnr1bUZH/4KRsMpIoyW/V1TGWHmPtlIex0+8TKftu0d2pNDkW5tOoTiqV4RBHHhe3AZuVmE62b2C+aQM4g5XmglhLyUcV3E9fn8OflQmx0xQxVH7a1L5wj7p5UUaAbUGbAMwsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Cc7PNXwsqrG1UZuUgPLY0U/x6PkZe//P+PHZOfj2ljU=;
+ b=r8J4DfK9Exqum+wsYWTfyS60U/O5C/TUQdO1Yvwa6Xlppq2V8IFM3X5/ZrJ2dn89I2fJ+Vf7ogsyoav1+6GIzLFKhqvKLyt2rOEgxQyX+a+ZqWi0CivKY7Yo8OSRHzWO/idKc6n7vJ9mv7Dac/Ra3VpDxuL0gIANBORvGyIkH2ZlpN8b08IEteFrX3PedlCoWQq55dSfsjloBgTcR3fS811qZZ1jUiHGlNX5vK2m9cBsak9aOCf5uf2CB3FsWCURVZcyr1o5btnQjGN0dNf2kn6OWNx4SOpfHurv7Ve8TmbyVnm9+1EFdLH4hGaye0umOsgQ4n/cLa5IOkJvjK9VWQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Cc7PNXwsqrG1UZuUgPLY0U/x6PkZe//P+PHZOfj2ljU=;
+ b=fRLcHDS9Vi6JlSIL6VGyjeq6aDJ7kvw7BfSzgGOQViSqPAtvx4mgxnAeujZfERYRml9Dv8lcWjNBpIIYUCxx1tWnMvZKS1Sii1JmSxIc9YZT4bl5vzqaC7DUXhanlIQlBRxSaQoDkBR+ThwAk2H8cdEqN8EL8F0UusPlmfbI+uI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by OS9P286MB6581.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:419::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.10; Thu, 22 Jan
+ 2026 08:49:18 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9542.009; Thu, 22 Jan 2026
+ 08:49:17 +0000
+From: Koichiro Den <den@valinux.co.jp>
+To: jingoohan1@gmail.com,
+	mani@kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	robh@kernel.org,
+	bhelgaas@google.com,
+	cassel@kernel.org
+Cc: vigneshr@ti.com,
+	s-vadapalli@ti.com,
+	hongxing.zhu@nxp.com,
+	l.stach@pengutronix.de,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	minghuan.Lian@nxp.com,
+	mingkai.hu@nxp.com,
+	roy.zang@nxp.com,
+	jesper.nilsson@axis.com,
+	heiko@sntech.de,
+	srikanth.thokala@intel.com,
+	marek.vasut+renesas@gmail.com,
+	yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be,
+	magnus.damm@gmail.com,
+	christian.bruel@foss.st.com,
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	hayashi.kunihiko@socionext.com,
+	mhiramat@kernel.org,
+	kishon@kernel.org,
+	jirislaby@kernel.org,
+	rongqianfeng@vivo.com,
+	18255117159@163.com,
+	shawn.lin@rock-chips.com,
+	nicolas.frattaroli@collabora.com,
+	linux.amoon@gmail.com,
+	vidyas@nvidia.com,
+	Frank.Li@nxp.com,
+	linux-omap@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v9 0/5] PCI: endpoint: BAR subrange mapping support
+Date: Thu, 22 Jan 2026 17:49:04 +0900
+Message-ID: <20260122084909.2390865-1-den@valinux.co.jp>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCP286CA0323.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:3b7::15) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: add basic devicetree for Ayaneo
- Pocket S2 gaming console
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, KancyJoe <kancy2333@outlook.com>
-References: <20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-0-bb3f95f1c085@linaro.org>
- <20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-3-bb3f95f1c085@linaro.org>
- <hmnyvxz7ashufiiil6hf4lg5g435e53zd3xla7qeqcb2styrqg@jkbjl6arm33g>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <hmnyvxz7ashufiiil6hf4lg5g435e53zd3xla7qeqcb2styrqg@jkbjl6arm33g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB6581:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5267aa78-e120-4e0a-4370-08de5993204a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|10070799003|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?ETHuRQRwQsA7bCM5NU1oLLGMVyNAlhWLFGy0B5i1Vf8E5GElAlgg62c33i/I?=
+ =?us-ascii?Q?plkk4I3hcyXtRqps5Fj4FFomY+edXJiTWnkEmFEUe64yHyyZttNkCE8XXVKe?=
+ =?us-ascii?Q?e0pQ+b0oA+HQty9d6hLJdeSxptrpLHaGIiU6AV1EZwfLvnQziUnH7NxPaI8A?=
+ =?us-ascii?Q?sKCWptciKWj2TxFa7UG6neFNDQgZOn9wsI9ZAJn4lxYZH5iW2k0ERJsjA9tA?=
+ =?us-ascii?Q?SlioROHuNJ76D07OQ97x7GZMiwf0SZzd8T39/I7xvb/K13saG11XU52rIDKS?=
+ =?us-ascii?Q?lnkwxRpPCiS1BYh16eOfvp3/TKh/kx+sf4i/jUtyF/rQVLKDtg1vaYpwgLaD?=
+ =?us-ascii?Q?h6NeMMM9K756tS5k+cb/7xBddouCHSDazCUFC9BDhKH1O/UPA772ZZwpyDPO?=
+ =?us-ascii?Q?meR19+jrV2btKpyJP6mvhNHZ1xNpgiI824tttbQzup/PFelzbIRsi/CU2Yk7?=
+ =?us-ascii?Q?+pAPSOwT8fm5gNdk8Hzmtk0BIfDugW4EkXkF4CTJjaD2oii7aM4lo8SbI0Vc?=
+ =?us-ascii?Q?olENom0NLa+jFbfeL5YvZEorlPYoJsGXz2INUJn1QCm6PQQ6zfrznL9xohoZ?=
+ =?us-ascii?Q?XGzMiS3TN7SJAUXGOd1jCspB6mkdZo+1NmquMcNIuQQxROExZAUHwhNGOKUV?=
+ =?us-ascii?Q?HXpVmiN6TY3TTbbfX0u23eLHvyA7uJGWT0LjWXAnTXgFFwLxOTmq7e5l5T3I?=
+ =?us-ascii?Q?tcAhy3JmILnhaJOhRmZHfVutz5a3gh+nRulBIK+ExgkzZmMnSaULgYN1iqjW?=
+ =?us-ascii?Q?3+2tuUh7YqYGgdRhILqvebJRWZi07r2uIi+JVt2EoLGPoJupwUiVyW6V0EGL?=
+ =?us-ascii?Q?guyB1AY8kxrOzahM2w+SfWB9NjzZolKzNs/ShgDPvkhHJrdtGuxM05vPQOxR?=
+ =?us-ascii?Q?XGFXtS2aA10d+P+NJAUaEMFavMK7Sb9b0+Yz1c3iIym/Dsp6V2RQWe4mlzGK?=
+ =?us-ascii?Q?tWbcMaj5sNOVQlQtWj2QZqAROYrnXG8qbFXW3gD+Q24FWiYYVrGoj+nzdUUk?=
+ =?us-ascii?Q?0PdlF4M7G9ap5SjDAw/tQrPwYjDgLXThX7jGrhmXTTCNfK80ixOrLGb2fcAN?=
+ =?us-ascii?Q?1tU5I3WZdUC0tTrZeqrIcQU5aM7vanCbAt8qKI8+iPk1hE/S255D1npfv8H3?=
+ =?us-ascii?Q?fuW7ZXJs6PyRU6tqAV7x84pPcurH3EFLs7rcHUkQcre4P+43wOxuhsmCwldT?=
+ =?us-ascii?Q?GNSOlDUPh6MgUQTGF45W7b7010dUhTRiKvFF2pf2AO5nyxg+2Vz2Ztk2Z+I/?=
+ =?us-ascii?Q?4w9QTixFuJK/IfT1WPAbYlbDLDN863f7zbXo4HIVgqXv7YAfpq5AhZtqYK2O?=
+ =?us-ascii?Q?9B57ClDlT6jPME6ugdPc/bk4T2EMAJJZ/VrdlOSlPHjrn1SDerHpHdR0tXDq?=
+ =?us-ascii?Q?oWS5Lyr96+cTRWV6Bq5+PG9r0COJMUz5LM/QbQek3RuZitGBtQZ+QcgpqbZY?=
+ =?us-ascii?Q?D5XsrzeWjnm4y0rQCjdpbvDxMpLS8rAZ2x0bVwk6uU3l6VqSEz/AvwlfTpWZ?=
+ =?us-ascii?Q?PVpTQlCUcz4PlFiatzco0HNLqyEfeAmYjh9CoYfKJhH7Wm7wkzn1Ys1cjx8i?=
+ =?us-ascii?Q?Ab7GLyh3d1elHc+VCvc=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(10070799003)(366016)(1800799024);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?9UViOPS3aVlb3YyiirBFR/DtC9MuXqBedTzPpbFahB4np5xnzPUBN4qha9HO?=
+ =?us-ascii?Q?kM8F9BdmECtx9X2MUdH9mT1sZffr9gFdvEwXp2ykPn7A47mavpm0ghVHkTX2?=
+ =?us-ascii?Q?R9UN44uQFCUznXrrfgpn94jfCsK1v5WVNaDcRQJKzq4UjncnGTCre5mHiKXf?=
+ =?us-ascii?Q?bEiVKC2CDdc2YKiRuwVBxt9hNTvqz26HB54cHGwkatCekCOtC0d1E/77/gHi?=
+ =?us-ascii?Q?p3R8XNv9k5CR4qERud/hIVrCFOQrFP18YdKQMLmlZ2X3gonj2c60ZAnWAAWK?=
+ =?us-ascii?Q?b16B499c1tgbCc0sESRH4yMnmRvyo5BhCKPIXFXg7/VkK+Wj1/mDwsl97VM0?=
+ =?us-ascii?Q?bT9YIThliLXV/2Fq+P/WTKokJs2y9Vtr/lEcuyWTfTiuObzHKzb8mL13nE17?=
+ =?us-ascii?Q?caUWwi6gKBErG9tt5HqYJl3vA5mMdbxq+9+G0xZias/y4mUKUu7Y733XEWoD?=
+ =?us-ascii?Q?uiCcpj6YdGKdVwOhA10xQE83HFSymyMtJA7Y6eGTk2VQqqa++SbCQxF7vkF/?=
+ =?us-ascii?Q?6UMTo76UDccQg7s0VTTqiR8rfU+aNhfDFQdOtGrR0kdXdb52D31/H87sIpQw?=
+ =?us-ascii?Q?qZgpkHe35Av0nJj0GR0s2+hDiGyvxdyUv84QO6wlVZqr4qxFHlI3R35TN+pT?=
+ =?us-ascii?Q?5k0za1lGl0dTZ3qsacOU+B8+FMH2G9go2FhvMQhfqB93k8sSyeautIHivyVE?=
+ =?us-ascii?Q?zFYtCLZVP/swIvzFyYle3ZiKjcI2zXiP+qB1J8bKpeLOIya9kKX/ZGyx1HWN?=
+ =?us-ascii?Q?SfuMX52SKtPwGH+zY8KPohDvgICNEAhO3PEkOdj0rTmKTbzgP2AzXk44QyKx?=
+ =?us-ascii?Q?s8bpeEVFABFP/duuZOACZFzxSGAW1Rebj/b79gd1Cl/m9Pwl6Qq33vkrob6Q?=
+ =?us-ascii?Q?N/846xJwa0lQSFW0tAs9qn0KM9eg5yOxcqKxgRneY8LEEf45gGLohYkeaRoe?=
+ =?us-ascii?Q?j3CzX+NcfWkIe4O0wlvJ2iMQDkPqJ2XGs/1ZXhdqvIPJfLXxDPiiLqW7MSup?=
+ =?us-ascii?Q?oNH8uQo9t6vbdJ6/Zu3Fijw2qgsAqr1fPVvo33dRFfbYTv0DWkUkrL9trOlo?=
+ =?us-ascii?Q?FPpHhIJM7CywjB39ZWuuTnDbWSJ+feRxgEi/3lTPxzy2nNfcF1HPkhseUX0Z?=
+ =?us-ascii?Q?XoB5eVAv3jZCZ1vnp8/l5WJeFd/vKSnpnaZvnnxUx8kW4ADo6xECUiXT5tMG?=
+ =?us-ascii?Q?wzg0px9+qAADO5SGEF77lpJAkUdRRdIJnSitajuOYfTpGW0DUZ8QeNDteX3R?=
+ =?us-ascii?Q?1n2rMaYHcA+RZuQT18KNZc2GwK4CxV883cPEhT3jFYqbpS2TKOQqK+wXRg2E?=
+ =?us-ascii?Q?v5JXksB4JS2g2RtPw/nerN/kBox0L484huM6p7oTdgyDleZJFlUhrk4vDkID?=
+ =?us-ascii?Q?DlDC/RQD1RP/gDSyOvDz3Lj5qlMA2QR0+HpYKoIxwl8uDab/6xMer0Zg4+eR?=
+ =?us-ascii?Q?1e4RP+vhJnwe7+GWOsSgZwOv1lT5vrvCaAbPhZXZVBcB9+LgKjv+ESxAN7SY?=
+ =?us-ascii?Q?yW7N+0yQ0tsXcyA3tcoTK2gAu9arfss432X44wnLCM7CGbrilhyqXqU6nXDZ?=
+ =?us-ascii?Q?vOErrqpz7j54z+BCKI/pL357WfeEF3nPt/yji+Dwtt8gfz2mszPmgR27ySUZ?=
+ =?us-ascii?Q?pqzyIIZeItBIg6b3KhTbUQN/VbxJqIED1EUZMFl+zzNOvBsDuU4tB+JxlQFc?=
+ =?us-ascii?Q?KczREHFjSD3nhk5KGaWVQBnXGLbo+/BEfnG8A9IAbQF1DQpQwL6OEFNJ2CDg?=
+ =?us-ascii?Q?xKzyq9+BVnD0GAfjuTg+eHpDXP2ASyhmB4mb7MdHkgclRNaxwu7B?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5267aa78-e120-4e0a-4370-08de5993204a
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2026 08:49:17.1232
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xDFs+WKskWcBClcC+/tGMJKbgGskbeYAlrxa7JpjBY7hln+ukjVDNuWKwhQtdqU/2UfFs3kNRt9nbJ8HrhgrUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB6581
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.46 / 15.00];
+X-Spamd-Result: default: False [3.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_DKIM_ALLOW(-0.20)[valinux.co.jp:s=selector1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org,outlook.com];
-	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
-	TAGGED_FROM(0.00)[bounces-90128-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[outlook.com:email,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,1c:email,0.0.0.0:email,linaro.org:dkim,linaro.org:email,linaro.org:replyto,linaro.org:mid,e:email,0.0.0.1:email];
-	HAS_ORG_HEADER(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	PRECEDENCE_BULK(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-90130-lists,linux-arm-msm=lfdr.de];
+	FROM_NEQ_ENVFROM(0.00)[den@valinux.co.jp,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org,google.com];
+	FREEMAIL_CC(0.00)[ti.com,nxp.com,pengutronix.de,kernel.org,gmail.com,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 3428663679
+	PRECEDENCE_BULK(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[valinux.co.jp,none];
+	DKIM_TRACE(0.00)[valinux.co.jp:+];
+	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[53];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns,valinux.co.jp:mid,valinux.co.jp:dkim]
+X-Rspamd-Queue-Id: 120D463873
 X-Rspamd-Action: no action
 
-On 1/22/26 02:30, Dmitry Baryshkov wrote:
-> On Wed, Jan 21, 2026 at 05:40:28PM +0100, Neil Armstrong wrote:
->> From: KancyJoe <kancy2333@outlook.com>
->>
->> Add initial Device Tree for the Ayaneo Pocket S2 gaming console based
->> on the Qualcomm Snapdragon 8 Gen 3 platform.
->>
->> The design is similar to a phone wihout the modem, the game control
->> is handled via a standalone controller connected to a PCIe USB
->> controller.
->>
->> Display support will be added in a second time.
->>
->> Signed-off-by: KancyJoe <kancy2333@outlook.com>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->>   .../boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts      | 1445 ++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi               |    2 +-
->>   drivers/gpu/drm/msm/dsi/dsi.c                      |    4 +-
->>   4 files changed, 1449 insertions(+), 3 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 6f34d5ed331c..1ba29755e5ba 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -313,6 +313,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-samsung-q5q.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-sony-xperia-yodo-pdx234.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-ayaneo-pocket-s2.dtb
->>   
->>   sm8650-hdk-display-card-dtbs	:= sm8650-hdk.dtb sm8650-hdk-display-card.dtbo
->>   
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
->> new file mode 100644
->> index 000000000000..141d92933957
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
->> +
->> +&i2c3 {
-> 
-> clock-frequency?
+This series proposes support for mapping subranges within a PCIe endpoint
+BAR and enables controllers to program inbound address translation for
+those subranges.
 
-We never did so far we we didn't need more than 100KHz
+Note: This series is a spin-off from a larger RFC series:
+      https://lore.kernel.org/all/20260118135440.1958279-1-den@valinux.co.jp/
+      The first user will likely be epf-vntb for Remote eDMA-backed NTB
+      transport, demonstrated in that RFC series.
 
-> 
->> +	status = "okay";
->> +
->> +	wcd_usbss: typec-mux@e {
->> +		compatible = "qcom,wcd9395-usbss", "qcom,wcd9390-usbss";
->> +		reg = <0xe>;
->> +
->> +		vdd-supply = <&vreg_l15b_1p8>;
->> +		reset-gpios = <&tlmm 152 GPIO_ACTIVE_HIGH>;
->> +
->> +		mode-switch;
->> +		orientation-switch;
->> +
->> +		ports {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +
->> +				wcd_usbss_sbu_mux: endpoint {
->> +					remote-endpoint = <&pmic_glink_sbu>;
->> +				};
->> +			};
->> +
->> +			port@1 {
->> +				reg = <1>;
->> +
->> +				wcd_usbss_headset_out: endpoint {
->> +					remote-endpoint = <&wcd_codec_headset_in>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&i2c6 {
-> 
-> clock-frequency?
-> 
->> +	status = "okay";
->> +
->> +	typec-mux@1c {
->> +		compatible = "onnn,nb7vpq904m";
->> +		reg = <0x1c>;
->> +
->> +		vcc-supply = <&vreg_l15b_1p8>;
->> +
->> +		retimer-switch;
->> +		orientation-switch;
->> +
->> +		ports {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +
->> +				redriver_ss_out: endpoint {
->> +					remote-endpoint = <&pmic_glink_ss_in>;
->> +				};
->> +			};
->> +
->> +			port@1 {
->> +				reg = <1>;
->> +
->> +				redriver_ss_in: endpoint {
->> +					remote-endpoint = <&usb_dp_qmpphy_out>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&iris {
->> +	status = "okay";
-> 
-> With the default firmware?
 
-Yes
+Motivation
+==========
 
-> 
->> +&remoteproc_adsp {
->> +	firmware-name = "qcom/sm8650/ayaneo/ps2/adsp.mbn",
->> +			"qcom/sm8650/ayaneo/ps2/adsp_dtb.mbn";
->> +
->> +	status = "okay";
->> +};
->> +
->> +&remoteproc_cdsp {
->> +	firmware-name = "qcom/sm8650/ayaneo/ps2/cdsp.mbn",
->> +			"qcom/sm8650/ayaneo/ps2/cdsp_dtb.mbn";
-> 
-> Is it fused?
+(This section is identical to my earlier explanation at:
+https://lore.kernel.org/linux-pci/waapztvy6jyjqtfcoo3rbgvagi4z3p5afw6x2acgf5bxatcui6@nkodhtqqtetr)
 
-No but as Kancy reported, it's usual vendord provides their own
-version with battery & features tuning.
+The motivation for BAR subrange mapping is that some EP platforms
+effectively have only two practically usable BARs, while needing multiple
+logically independent inbound mapping.
 
-> 
->> +
->> +	status = "okay";
->> +};
->> +
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index 07ae74851621..fcd5a1a45803 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -3917,7 +3917,7 @@ opp-32000000-4 {
->>   				};
->>   			};
->>   
->> -			pcie@0 {
->> +			pcieport1: pcie@0 {
->>   				device_type = "pci";
->>   				reg = <0x0 0x0 0x0 0x0 0x0>;
->>   				bus-range = <0x01 0xff>;
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
->> index d8bb40ef820e..0781dce7cda2 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> 
-> Something stray
-> 
->> @@ -43,12 +43,12 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
->>   	of_node_put(phy_node);
->>   
->>   	if (!phy_pdev) {
->> -		DRM_DEV_ERROR(&pdev->dev, "%s: phy driver is not ready\n", __func__);
->> +		DRM_DEV_ERROR(&pdev->dev, "%s: 0 phy driver is not ready\n", __func__);
->>   		return -EPROBE_DEFER;
->>   	}
->>   	if (!msm_dsi->phy) {
->>   		put_device(&phy_pdev->dev);
->> -		DRM_DEV_ERROR(&pdev->dev, "%s: phy driver is not ready\n", __func__);
->> +		DRM_DEV_ERROR(&pdev->dev, "%s: 1 phy driver is not ready\n", __func__);
->>   		return -EPROBE_DEFER;
->>   	}
+For example, on Renesas R-Car Gen4 Spider, 64-bit BAR0 and BAR2 are the
+only practically usable BARs, since BAR4 is only 256 bytes. epf-vntb
+already needs two separate regions (config+spad and MW1 for the
+data-plane), leaving no spare BAR. Adding ntb_msi requires yet another MW,
+which simply does not fit unless an existing BAR is further divided.
 
-Aw, will drop in v2
+In theory, some vNTB regions (e.g. config+spad and dynamically allocated
+memory-backed MWs) could be tightly packed into a single physically
+contiguous BAR region to barely make it work. However, it immediately makes
+features mutually exclusive (e.g. ntb_msi / ntb_edma cannot coexist), and
+the layout becomes extremely fragile.
 
-Neil
+Similarly, for remote eDMA-backed NTB transport, the host needs separate
+inbound access to the eDMA register block and the LL regions, which are
+distinct local address ranges. Without subrange mapping, the only choice is
+unnatural layout (e.g. dedicating one BAR entirely to eDMA register block,
+and another one to everything else that can be packed into a single locally
+contiguous memory region), even when this is barely possible.
 
->>   
->>
->> -- 
->> 2.34.1
->>
-> 
+So while some cases might be made to work by aggressive packing, they are
+already at the limit on platforms such as R-Car Spider. BAR subrange
+mapping allows these features to be implemented in a straightforward,
+loosely-coupled, and extensible way on platforms with severely constrained
+BAR resources.
+
+
+Patch layout
+============
+
+- Patch 1/5 introduces dynamic_inbound_mapping feature bit. This can be
+  used as a safeguard to check whether a BAR can really be reconfigured
+  without clearing/resetting it.
+
+- Patch 2/5 introduces generic BAR subrange mapping support in the PCI
+  endpoint core.
+
+- Patch 3/5 advertises dynamic inbound mapping support via
+  DWC_EPC_COMMON_FEATURES for all DWC-based glue drivers.
+
+- Patch 4/5 adds an implementation for the DesignWare PCIe endpoint
+  controller using Address Match Mode IB iATU. It also advertises
+  subrange_mapping support via DWC_EPC_COMMON_FEATURES.
+
+- Patch 5/5 updates a documentation for pci_epc_set_bar().
+
+
+Kernel base
+===========
+
+- repo: git://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git
+- branch: controller/dwc
+- commit: 86291f774fe8 ("PCI: dwc: Remove duplicate
+                         dw_pcie_ep_hide_ext_capability() function")
+
+
+Changelog
+=========
+
+* v8->v9 changes:
+  - Dropped now meaningless source code comments, which should have been
+    removed in v8 (feedback from Frank).
+  - Added motivation text to the cover letter and to Patch 2/5 and Patch
+    4/5.
+  - Rebased onto the latest controller/dwc branch (see "Kernel base"
+    section above).
+
+* v7->v8 changes:
+  - Drop the explicit submap offset and use_submap fields. The submap
+    array order now defines BAR offsets (gapless decomposition). Commit
+    messages and source code documentations are adjusted accordingly.
+  - Drop the no-longer-needed dw_pcie_ib_map and add ib_atu_indexes field
+    to track iatu indexes used for teardown.
+  - Move inbound mapping teardown into dw_pcie_ep_set_bar() to cover all
+    BAR transition cases.
+  - Centralize feature bit advertisement via DWC_EPC_COMMON_FEATURES.
+  - Added a (epf_bar->num_submap && !epf_bar->submap) check in
+    pci_epc_set_bar().
+  - Note that some Reviewed-by tags are dropped, as the changes need to be
+    re-reviewed.
+
+* v6->v7 changes:
+  - Added missing check of dynamic_inbound_mapping feature bit in
+    pci_epc_set_bar() when use_submap is set true.
+  - Addressed the remaining review comments from Niklas (patch reordering,
+    splitting, and source code comment/documentation refinements).
+
+* v5->v6 changes:
+  - Added a new feature bit dynamic_inbound_mapping and set it centrally
+    in dw_pcie_ep_get_features() for all DWC-based glue drivers.
+  - Updated documentation for pci_epc_set_bar().
+  - Dropped a needless and harmful dw_pcie_ep_clear_bar() call on the error
+    path.
+  - Fixed "Bar Match Mode" to "BAR Match Mode" in a source code comment.
+
+* v4->v5 changes:
+  - Added subrange_mapping to struct pci_epc_features and enforced a
+    strict capability check in pci_epc_set_bar() (reject use_submap when
+    unsupported).
+  - Changed DWC-based glue drivers to return a mutable features pointer
+    and set subrange_mapping centrally at the DWC midlayer.
+  - Split the series into 3 patches accordingly.
+
+* v3->v4 changes:
+  - Drop unused includes that should have been removed in v3
+
+* v2->v3 changes:
+  - Remove submap copying and sorting from dw_pcie_ep_ib_atu_addr(), and
+    require callers to pass a sorted submap. The related source code
+    comments are updated accordingly.
+  - Refine source code comments and commit messages, including normalizing
+    "Address Match Mode" wording.
+  - Add const qualifiers where applicable.
+
+* v1->v2 changes:
+  - Introduced stricter submap validation: no holes/overlaps and the
+    subranges must exactly cover the whole BAR. Added
+    dw_pcie_ep_validate_submap() to enforce alignment and full-coverage
+    constraints.
+  - Enforced one-shot (all-or-nothing) submap programming to avoid leaving
+    half-programmed BAR state:
+    * Dropped incremental/overwrite logic that is no longer needed with the
+      one-shot design.
+    * Added dw_pcie_ep_clear_ib_maps() and used it from multiple places to
+      tear down BAR match / address match inbound mappings without code
+      duplication.
+  - Updated kernel source code comments and commit messages, including a
+    small refinement made along the way.
+  - Changed num_submap type to unsigned int.
+
+v8: https://lore.kernel.org/all/20260115084928.55701-1-den@valinux.co.jp/
+v7: https://lore.kernel.org/all/20260113162719.3710268-1-den@valinux.co.jp/
+v6: https://lore.kernel.org/all/20260113023715.3463724-1-den@valinux.co.jp/
+v5: https://lore.kernel.org/all/20260108172403.2629671-1-den@valinux.co.jp/
+v4: https://lore.kernel.org/all/20260108044148.2352800-1-den@valinux.co.jp/
+v3: https://lore.kernel.org/all/20260108024829.2255501-1-den@valinux.co.jp/
+v2: https://lore.kernel.org/all/20260107041358.1986701-1-den@valinux.co.jp/
+v1: https://lore.kernel.org/all/20260105080214.1254325-1-den@valinux.co.jp/
+
+
+Thank you for reviewing,
+
+
+Koichiro Den (5):
+  PCI: endpoint: Add dynamic_inbound_mapping EPC feature
+  PCI: endpoint: Add BAR subrange mapping support
+  PCI: dwc: Advertise dynamic inbound mapping support
+  PCI: dwc: ep: Support BAR subrange inbound mapping via Address Match
+    Mode iATU
+  Documentation: PCI: endpoint: Clarify pci_epc_set_bar() usage
+
+ Documentation/PCI/endpoint/pci-endpoint.rst   |  24 +++
+ drivers/pci/controller/dwc/pci-dra7xx.c       |   1 +
+ drivers/pci/controller/dwc/pci-imx6.c         |   3 +
+ drivers/pci/controller/dwc/pci-keystone.c     |   1 +
+ drivers/pci/controller/dwc/pcie-artpec6.c     |   1 +
+ .../pci/controller/dwc/pcie-designware-ep.c   | 203 +++++++++++++++++-
+ .../pci/controller/dwc/pcie-designware-plat.c |   1 +
+ drivers/pci/controller/dwc/pcie-designware.h  |   8 +
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |   2 +
+ drivers/pci/controller/dwc/pcie-keembay.c     |   1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   1 +
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c   |   1 +
+ drivers/pci/controller/dwc/pcie-stm32-ep.c    |   1 +
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   1 +
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c |   2 +
+ drivers/pci/endpoint/pci-epc-core.c           |   8 +
+ include/linux/pci-epc.h                       |   9 +
+ include/linux/pci-epf.h                       |  23 ++
+ 18 files changed, 281 insertions(+), 10 deletions(-)
+
+-- 
+2.51.0
 
 
