@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-90214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aD/BFP5CcmnpfAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 16:32:14 +0100
+	id 2EzbCdM4cmmadwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:48:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07C7468E62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 16:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3A65681C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 15:48:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3F4097A2A3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:14:20 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 156C07C2AF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:14:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A26A34AB05;
-	Thu, 22 Jan 2026 14:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A252A34D4FA;
+	Thu, 22 Jan 2026 14:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h3ZRJxEU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kDvzDNDE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9827346A0B;
-	Thu, 22 Jan 2026 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F265A34A78D;
+	Thu, 22 Jan 2026 14:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769091226; cv=none; b=WcTf65lzPQKUbzQhX1v9prEdMcHeylHRWIw3DOHb+7FZEuD33rPoT9duIrq9xszrRQU1lrNfhiCiXJCB66U3JetqEnXOc2Gc0rDf8YnRWVfAPOCUe+ep86tVsQNor4ZFJCDHzso6jL2OaLMugSwaDaC42tFn7rYUGiYsJMh3dr4=
+	t=1769091227; cv=none; b=UVDuyfS8aFmkDWlr9TxSDrIMsO5hN/KXL2euJ/z93iJtaxvaAVkW+NF9gcftJfzDGJYglybzA3CWOmE6XvM1CfW2l319rPPUt6yo1nIj/RGhrWJO57SuKpxxbH3ob+G5DlL5OsyjeNm2zbM2miPq4Rg8zH0gStH9xkMLxfJwXgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769091226; c=relaxed/simple;
-	bh=fUwxz3ydpRhMyBoChVTw/KF4/LIDJ6fZK3ivdu8g9bA=;
+	s=arc-20240116; t=1769091227; c=relaxed/simple;
+	bh=rvbMOzhV/pqqIVLf0z4e2+FBomHlnIj9UpbG0L3Kih4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=m2A4ox3Plg+CS47eRr0OxJDZAdTnZJTzh72c08kble6IPHwMx9xcZtY9vgJ2o+N4LxSLyZRy/dWq+p3hCEmgAwJN3p4ny9PZCQB16XanxAa2RJNsCJsKLCyyIGarPT1zVopCz12+2VsPMofM0o3H3LFNEIXrpYC9tSjubMvRbJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h3ZRJxEU; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=L2FZ8YkuJSC6E764PqPO1/ZIdLG+UZNHU2hmgCn1jKtNS4VJn7Lxx/mKPa9J+9gf2hkjuYiYMVraX1ChTo0iUMUtDc0eB2fziCJ451YQTOWKWBLsLHbj/wdqR5wZyboVkzYgC4C6EC+unXseqIsTst+ykHJEDfgbF/2Bl6k4h7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kDvzDNDE; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60M840Fx2282653;
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60MCTxOw3902080;
 	Thu, 22 Jan 2026 14:13:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=LSHNFL3tKNI
-	7c8D8QgjJv8jXY7CgFs/Bf8DrUthXzxs=; b=h3ZRJxEU/cMkpvBUBxy9Q2qbSIF
-	TnvT1+6Oj686hE75NI13JWUrNDphKkb+DJbmXksPPKNKEZO9FVOIIJ1Sxl6SYsPx
-	un0YzL4TnTImEkD8fka0ER5n38tRWZplWlCcMwc3HTZh3i609P6BKXvLinSZWdzO
-	W2nsw5T/hUKZDVk4NDVVlXcYRFCmGzfcktXJR2cUq4kvP1xcp6Wq2kBkDLwPuzHZ
-	yDHs/G2eAdVroabn6sJnDgVDv2SusoYcvkZNFDiJX/F0qryuq3Jnzh8GmBqFMO5N
-	SJx2uSB3xE4WnXFJ7957pQCqZ2ExTqk3tU65+h0pwP4vus5QHYqgIu9hU7g==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=ImuYD66sVwW
+	N+Mt6iFHeG880YkzyHX+kIKXxIJIAedM=; b=kDvzDNDEaDkchNLtC3qnnACLuNX
+	NFQFWLlwdn/wK2V/Jl9Jbo2F9d2zu1rD2hxE2Z5JLF/TXbuWN7qnEab5/CvCrPzV
+	hLRj17cM8482h9BAwC/HuyqRqhNocQMGRIqpykuswp4/e957yVkChh4iI/7IhoUI
+	dro8CCUH95QIq+r0hboK38BJAe2M04TQe2TgC1bAq6GeUSyMcGzzeWzmtQ/a0BMR
+	4DH/8tUHJJDK9wmldGvnI1/Omm0Gc702brALtMaRzWJ7BlmC/oKJVe2gteBMnLYN
+	5MbdkH4/wnmGSFcxr2Uojc8Ie494f22nSQhGc6+AAPcuNJSTZ+7srjWpTGQ==
 Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu7fatjvr-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu4khk3gg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Jan 2026 14:13:37 +0000 (GMT)
+	Thu, 22 Jan 2026 14:13:38 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MEDYn2003653;
-	Thu, 22 Jan 2026 14:13:34 GMT
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MEDZFU003667;
+	Thu, 22 Jan 2026 14:13:35 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4br3gmypnr-1
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4br3gmypnw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Jan 2026 14:13:34 +0000
+	Thu, 22 Jan 2026 14:13:35 +0000
 Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60MEDYox003646;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60MEDX33003636;
 	Thu, 22 Jan 2026 14:13:34 GMT
 Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.101.157])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 60MEDYpW003641
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 60MEDYOK003652
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 22 Jan 2026 14:13:34 +0000
 Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2342877)
-	id 7A24F5EC; Thu, 22 Jan 2026 19:43:33 +0530 (+0530)
+	id EE09D5EE; Thu, 22 Jan 2026 19:43:33 +0530 (+0530)
 From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
         martin.petersen@oracle.com
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-scsi@vger.kernel.org, Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-Subject: [PATCH V1 1/3] ufs: ufs-qcom: Add UFS ESI CPU affinity support
-Date: Thu, 22 Jan 2026 19:43:29 +0530
-Message-Id: <20260122141331.239354-2-nitin.rawat@oss.qualcomm.com>
+Subject: [PATCH V1 2/3] ufs: ufs-qcom: Align programming sequence for UFS controller v6.2
+Date: Thu, 22 Jan 2026 19:43:30 +0530
+Message-Id: <20260122141331.239354-3-nitin.rawat@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260122141331.239354-1-nitin.rawat@oss.qualcomm.com>
 References: <20260122141331.239354-1-nitin.rawat@oss.qualcomm.com>
@@ -90,28 +90,28 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Hrx72kTS c=1 sm=1 tr=0 ts=69723092 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEwNyBTYWx0ZWRfXyPkm0zcpsA/s
+ BsghmgSmJf85Y/r70trk+SPuq1lI3vr0czmKQIeP+K+s9w1YbFKvPYkUFINr+pO9fqHiThGeCx9
+ denV67OtdT49uRuLyGFcitA2WqB/vp09uraW2KipxqSB9g1TPa//1/9zW0I0+VTn8H+243+bWS/
+ lvnoSi/lG0hNiochai63IFdBwAiOPncLF/91TzoWt7SBJW6LhVK3lgfS5YHT/ySK4CNkjLNQ/AC
+ ZWp9X6zjjzgImfgx2WhYGXNWQXozBtQ5zFelAIAVxIX2jX4V0JWzGkfN5CPxNK7aecl9GyEnMTm
+ dbl+Ml54g2sKIP0tWg7zzCzqsRc9AnbpBq4g4U2udGuH60AvwLqrfyB/nkTmIhQOvDgdUqYylho
+ i046zYZtqP4rUJx+SSlicaS8HkQnsutzE+ed/x0Y+tqnd6xZEwELLK6NkNhCIeD40Yuc4Zgk1hE
+ ccy1txqZSzecZZ4D2gw==
+X-Proofpoint-ORIG-GUID: DcObYPgQbxIMDDo9NVkkgdFEvajrAsQW
+X-Authority-Analysis: v=2.4 cv=UOjQ3Sfy c=1 sm=1 tr=0 ts=69723092 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=l0ib3MoQakANPgn6tzIA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEwNyBTYWx0ZWRfXyMhiPTK3lPIM
- R2MTu1/m6bzP1aygk/nlIdk/M6yO/+2RkB+ED0vXAsIufhv89+EU3SgTfBfywlMxUqqHPQ95lkn
- jegVEC7CNRDfnyAypshdTkUaesvgrNklKDr9r9TbZsw8tZODDwf6PmxbP7BoXER/Gf4etk5mACA
- l7hiSE4DZov/GKHSJyWxwLkwIYmECp0INi/rufv4pjfv0REaZiAGs+W87xiR+1EWm8PF5xkuuEU
- bjujRbxXz9ktHZLxPV6AHPiSRQMht9ESX+dMSjgeOsVNygs93zn3KDYuaJQ+gR+P5ymA+70Hh+w
- vimmua2w0rBlWdryjyxavoUOuq/BTEZu4f7keJonQasqU2ZrtLW2Z/1hj1cNC1vpX5xUjlZiBw5
- /U5k9kLmSjV0VmWA8BBhkudUnfLLdLxB4XIyKPOUz1YiF50g72hpDvFCcKCV5Pvvr6RKZtioL7v
- WgH1AyOeI6/vzBlvu4w==
-X-Proofpoint-ORIG-GUID: XfXoFQuC5T4sqACsKDRgpdGmKaZ3zLFy
-X-Proofpoint-GUID: XfXoFQuC5T4sqACsKDRgpdGmKaZ3zLFy
+ a=HW2gPmhGDcn8-JjtCIgA:9
+X-Proofpoint-GUID: DcObYPgQbxIMDDo9NVkkgdFEvajrAsQW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-22_01,2026-01-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 suspectscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2601220107
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.46 / 15.00];
@@ -125,7 +125,7 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-90214-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90215-lists,linux-arm-msm=lfdr.de];
 	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -136,98 +136,83 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,oss.qualcomm.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 07C7468E62
+X-Rspamd-Queue-Id: C3A65681C1
 X-Rspamd-Action: no action
 
-Add Enhanced Shared Interrupt (ESI) CPU affinity support to improve
-UFS performance on Qualcomm platforms.
+UFS controller v6.2 requires bit 31 in the spare configuration register
+to be set for high-speed link startup mode, as per the Hardware
+Programming Guide (HPG).
 
-By Default, the IRQ core route interrupts to a limited number of
-cores while other cores remain idle. This patch enables dynamic
-interrupt affinity adjustment for better performance tuning by
-distributing ESI interrupts across all online CPUs in round-robin
-fashion.
-
-This reduces CPU contention and enables better performance optimization
-on Qualcomm UFS controllers by utilizing all available online CPUs.
+The spare register value is read during host driver initialization but
+gets cleared after UFS reset. To align with the UFS v6.2 programming
+sequence, preserve the spare register value during initialization and
+restore it during link startup to ensure proper high-speed mode
 
 Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 50 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/ufs/host/ufs-qcom.c | 11 ++++++++---
+ drivers/ufs/host/ufs-qcom.h |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 8ebee0cc5313..c43bb75d208c 100644
+index c43bb75d208c..ab5aed241913 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -2070,6 +2070,55 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *data)
- 	return IRQ_HANDLED;
- }
-
-+/**
-+ * ufs_qcom_set_esi_affinity - Set CPU affinity hints for ESI interrupts
-+ * @hba: UFS host controller instance
-+ *
-+ * Sets CPU affinity hints for ESI interrupts to distribute them across
-+ * online CPUs for better performance in round-robin fashion.
-+ */
-+static void ufs_qcom_set_esi_affinity(struct ufs_hba *hba)
-+{
-+	struct msi_desc *desc;
-+	int ret, i = 0, nr_irqs = 0;
-+	const cpumask_t *mask;
-+	int cpu;
-+
-+	__msi_lock_descs(hba->dev);
-+	/* Count the number of MSI descriptors */
-+	msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
-+		nr_irqs++;
-+	}
-+	__msi_unlock_descs(hba->dev);
-+
-+	if (nr_irqs == 0)
-+		return;
-+
-+	__msi_lock_descs(hba->dev);
-+	/* Set affinity hints for each interrupt in round-robin fashion */
-+	msi_for_each_desc(desc, hba->dev, MSI_DESC_ALL) {
-+		if (i >= nr_irqs)
-+			break;
-+
-+		/* Distribute interrupts across online CPUs in round-robin */
-+		cpu = cpumask_nth(i % num_online_cpus(), cpu_online_mask);
-+		mask = get_cpu_mask(cpu);
-+		if (!cpumask_subset(mask, cpu_online_mask)) {
-+			dev_err(hba->dev, "Invalid CPU %d in map, using online CPUs\n",
-+				cpu);
-+			mask = cpu_online_mask;
-+		}
-+
-+		ret = irq_set_affinity_hint(desc->irq, mask);
-+		if (ret < 0)
-+			dev_err(hba->dev, "Failed to set affinity hint to CPU %d for ESI IRQ %d, err = %d\n",
-+				cpu, desc->irq, ret);
-+
-+		i++;
-+	}
-+	__msi_unlock_descs(hba->dev);
-+}
-+
- static int ufs_qcom_config_esi(struct ufs_hba *hba)
+@@ -686,6 +686,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, bool is_pre_scale_up, unsign
+ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+ 					enum ufs_notify_change_status status)
  {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-@@ -2122,6 +2171,7 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
- 			    REG_UFS_CFG3);
- 	}
- 	ufshcd_mcq_enable_esi(hba);
-+	ufs_qcom_set_esi_affinity(hba);
- 	host->esi_enabled = true;
- 	return 0;
- }
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	int err = 0;
+
+ 	switch (status) {
+@@ -708,6 +709,10 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
+ 		 */
+ 		err = ufshcd_disable_host_tx_lcc(hba);
+
++		/* Update REG_UFS_DEBUG_SPARE_CFG to set HS-LSS mode in link startup */
++		if (host->hw_ver.major == 0x6 && host->hw_ver.minor == 0x2)
++			ufshcd_writel(hba, host->spare_cfg,
++				      REG_UFS_DEBUG_SPARE_CFG);
+ 		break;
+ 	default:
+ 		break;
+@@ -1084,7 +1089,7 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
+ static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
+ {
+ 	struct ufs_host_params *host_params = &host->host_params;
+-	u32 val, dev_major;
++	u32 dev_major;
+
+ 	/*
+ 	 * Default to powering up the PHY to the max gear possible, which is
+@@ -1103,8 +1108,8 @@ static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
+ 		 */
+ 		host->phy_gear = UFS_HS_G2;
+ 	} else if (host->hw_ver.major >= 0x5) {
+-		val = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
+-		dev_major = FIELD_GET(UFS_DEV_VER_MAJOR_MASK, val);
++		host->spare_cfg = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
++		dev_major = FIELD_GET(UFS_DEV_VER_MAJOR_MASK, host->spare_cfg);
+
+ 		/*
+ 		 * Since the UFS device version is populated, let's remove the
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index 380d02333d38..d09ef7f44305 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -308,6 +308,7 @@ struct ufs_qcom_host {
+ 	u32 phy_gear;
+
+ 	bool esi_enabled;
++	u32 spare_cfg;
+ };
+
+ struct ufs_qcom_drvdata {
 --
 2.34.1
 
