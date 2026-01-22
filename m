@@ -1,173 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-90241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +JnvHoRncmmrjwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 19:08:04 +0100
+	id SDPqNXdhcmnfjQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:42:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5A356C004
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 19:08:03 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAE216B8D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:42:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E03EB314A607
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:28:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 338A23084C9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:29:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE97E3DA2D6;
-	Thu, 22 Jan 2026 17:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5875730B51E;
+	Thu, 22 Jan 2026 17:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hdKExb2s"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b="soa+UBw5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sm24.hosting.reg.ru (sm24.hosting.reg.ru [31.31.198.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A601395731;
-	Thu, 22 Jan 2026 17:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CAB264617;
+	Thu, 22 Jan 2026 17:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=31.31.198.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769101613; cv=none; b=RqDtlEhamefCAgJ191Xra1ZbUmeSi8TsulFWWBQwGAOn5DV58KVluHsFXUpfTpqGDywD3P8Kfj9u/rIGdc9TAaH1GtsJL8YslwbRFboP0CGoi6r68ya57ejKNgfHC1031CjRMx2jkGgUFzk3PAi6haSdjGFXDn9djiUlTw/+5oA=
+	t=1769101968; cv=none; b=SVkLFGcV0VBwH5T6RozZeWnXKYYVgri74PihZ6BqTnx6LsCeczXTg/CAeditHUuF6iYbjAC3ETNMJMRIkCDvkokuo/gx8Y0FTarcnbXRTerGFDUd1CcLT1ua81bGs8nKUaFRl7Z16ZRFYjRcdfopZvJF8RFXkr67Ml2VcRtrASs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769101613; c=relaxed/simple;
-	bh=riDE5Q5BDE4FI/xKxhVniW2Qhd4SP6QksPMOACfu2/M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eIdc2sIjuXVp3279iw5s3f7IPJ1t3RECCiqLF+IRq8R33C6FtxrP3sqIrvSLo6D1y49SGs0XK3BdCKbpvKh/Nx8s9xx5PvigSN/Q2bfyBhqIbOTi/2KO28JuNyV3FTY1zeUkmxaEMTsd+DZhTG/PSEZG5skDmZPnw2nQu14LOas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hdKExb2s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67534C116C6;
-	Thu, 22 Jan 2026 17:06:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769101612;
-	bh=riDE5Q5BDE4FI/xKxhVniW2Qhd4SP6QksPMOACfu2/M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hdKExb2sEIKcJjvZGqffcSS2/X1AbgL8H287wRZVxqjkqCCbFN1zOCtIIEQbe5wIb
-	 4k7gBZsR10FwWyAWuMxTfoKU+/bTstVr8Lz+O6adTPPZcd0J3wZ0grO7m0ViRY4avz
-	 UvBap2V2rT1pkXTDA6WCvjM/Fr4sZ7AVhHM+hj1wlZtpTNh4zWhGkySOAKGJbpc13T
-	 SFTgMAAqdot1fp++cyL8dV9y/2yN7As4npdSyjcwh1b81uTGyUlCVFuNh75Df/kuIM
-	 DxohTvbNOtq4sTCMi6H51wwLtpbw4iqICx2x89XzacTd1mUd7HKWrKvR7aZx/FPVCB
-	 ZZFDPfqpcTN8w==
-Date: Thu, 22 Jan 2026 11:06:51 -0600
-From: Rob Herring <robh@kernel.org>
-To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Mike Looijmans <mike.looijmans@topic.nl>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
-	J =?iso-8859-1?Q?=2E_Neusch=E4fer?= <j.ne@posteo.net>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Catalin Popescu <catalin.popescu@leica-geosystems.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 1/4] dt-bindings: usb: Add binding for Genesys Logic
- GL3590 hub
-Message-ID: <20260122170651.GA2632938-robh@kernel.org>
-References: <20260122092852.887624-1-swati.agarwal@oss.qualcomm.com>
- <20260122092852.887624-2-swati.agarwal@oss.qualcomm.com>
+	s=arc-20240116; t=1769101968; c=relaxed/simple;
+	bh=McwNkBdBbVI3lKPxwBMVRD3ZrpjNRQBNMdX/j3SUp10=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sFIM7LNWZWVS2utNF0RKJbUDgWu4vJqk2nK5JSWM4KNu9a3S6LiOzGRiI3Ypz4YD3dwVUqFCBLufLOliARjm83hzd6KLw0OxIOyJJAWlJ101uT0ou+HYiTnx8klyOtC/dgGuH5SCkdTRJl+UG/ZQ4rG8jEgazkkvqQa9lk+Fsck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru; spf=none smtp.mailfrom=minlexx.ru; dkim=pass (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b=soa+UBw5; arc=none smtp.client-ip=31.31.198.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=minlexx.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=minlexx.ru;
+	s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:
+	Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=zSSKJTpdy9TXkwfbj76vqHdgLMiL4P0TtwRoVF0tQ3M=; b=soa+UBw57t7Za7BL5h3p7LYBGp
+	CmjGZZuqDvVk7zcf28vbxZeAPVuzMb34wdkikfA1lHbScD70dLyMLWv8FkWYv6gHa3rDydgL8A9e3
+	WsCpdXtz2OtrevhoKjMdnD0EvdKzS0/7v9Hz8GhshkkwZRn+WTUkkuE7V7KNP3GNrqeA=;
+Received: 
+	by sm24.hosting.reg.ru with esmtpsa (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(envelope-from <alexeymin@minlexx.ru>)
+	id 1viyES-00000006IfC-238Z;
+	Thu, 22 Jan 2026 20:12:32 +0300
+Message-ID: <577de3fc-f21e-4ddc-8f22-57fa05f2ac34@minlexx.ru>
+Date: Thu, 22 Jan 2026 20:12:32 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260122092852.887624-2-swati.agarwal@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] arm64: dts: qcom: add device tree for Xiaomi Redmi
+ Note 6 Pro (tulip)
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Gianluca Boiano <morf3089@gmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, robh@kernel.org, david@ixit.cz
+References: <20260120180052.1031231-1-morf3089@gmail.com>
+ <20260120180052.1031231-5-morf3089@gmail.com>
+ <d2aff319-d98a-4007-bfb5-8766e3c3c206@oss.qualcomm.com>
+Content-Language: en-US
+From: Alexey Minnekhanov <alexeymin@minlexx.ru>
+In-Reply-To: <d2aff319-d98a-4007-bfb5-8766e3c3c206@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_REJECT(1.00)[minlexx.ru:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[minlexx.ru : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90241-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90242-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[minlexx.ru:-];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	NEURAL_HAM(-0.00)[-0.992];
+	FROM_NEQ_ENVFROM(0.00)[alexeymin@minlexx.ru,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: D5A356C004
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,minlexx.ru:mid]
+X-Rspamd-Queue-Id: DAE216B8D0
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 02:58:49PM +0530, Swati Agarwal wrote:
-> Add the binding for the USB3.2 Genesys Logic GL3590 hub.
-> GL3590 hub requires 1.2V and 3.3V supplies for operation.
-> 
-> Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-> ---
->  .../bindings/usb/genesys,gl850g.yaml          | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/genesys,gl850g.yaml b/Documentation/devicetree/bindings/usb/genesys,gl850g.yaml
-> index 9a94b2a74a1e..6ab13785e832 100644
-> --- a/Documentation/devicetree/bindings/usb/genesys,gl850g.yaml
-> +++ b/Documentation/devicetree/bindings/usb/genesys,gl850g.yaml
-> @@ -15,6 +15,7 @@ properties:
->        - usb5e3,608
->        - usb5e3,610
->        - usb5e3,620
-> +      - usb5e3,625
->        - usb5e3,626
->  
->    reg: true
-> @@ -26,6 +27,10 @@ properties:
->      description:
->        The regulator that provides 3.3V or 5.0V core power to the hub.
->  
-> +  vdd12-supply:
-> +    description:
-> +      The regulator that provides 1.2V power to the hub.
-> +
->    peer-hub: true
->  
->    ports:
-> @@ -56,6 +61,7 @@ allOf:
->        properties:
->          peer-hub: false
->          vdd-supply: false
-> +        vdd12-supply: false
->  
->    - if:
->        properties:
-> @@ -68,6 +74,19 @@ allOf:
->        properties:
->          peer-hub: true
->          vdd-supply: true
-> +        vdd12-supply: false
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - usb5e3,625
-> +    then:
-> +      properties:
-> +        peer-hub: true
-> +        vdd-supply: true
-> +        vdd12-supply: true
+On 21.01.2026 15:42, Konrad Dybcio wrote:
+> On 1/20/26 7:00 PM, Gianluca Boiano wrote:
+>> Add initial device tree support for the Xiaomi Redmi Note 6 Pro
+>> (codename: tulip), a smartphone based on Qualcomm SDM636 SoC with
+>> 4GB RAM and a 6.26" 1080x2280 display.
+>>
+>> This enables:
+>> - Booting to a framebuffer console
+>> - USB support
+>> - Hall effect sensor
+>> - Battery monitoring
+>> - Charging (pm660_charger)
+>> - Status LED (pm660l_lpg)
+>>
+>> Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+>> ---
 
-Comment on v4 still applies. All the 'true' lines are pointless.
 
-Rob
+>> +&pm660l_wled {
+>> +	status = "okay";
+>> +};
+> 
+> This seems to as well
+
+There is a tablet named Mi PAD 4 (xiaomi-clover) which is not
+included in this series, but it uses separate backlight driver
+and does not use WLED.
+
+>> +
+>> +&rpm_requests {
+>> +	regulators-0 {
+>> +		compatible = "qcom,rpm-pm660l-regulators";
+>> +
+>> +		vdd_s1-supply = <&vph_pwr>;
+>> +		vdd_s2-supply = <&vph_pwr>;
+>> +		vdd_s3_s4-supply = <&vph_pwr>;
+>> +		vdd_s5-supply = <&vph_pwr>;
+>> +		vdd_s6-supply = <&vph_pwr>;
+>> +
+>> +		vdd_l1_l9_l10-supply = <&vreg_s2b_1p05>;
+>> +		vdd_l2-supply = <&vreg_bob>;
+>> +		vdd_l3_l5_l7_l8-supply = <&vreg_bob>;
+>> +		vdd_l4_l6-supply = <&vreg_bob>;
+>> +		vdd_bob-supply = <&vph_pwr>;
+>> +
+>> +		vreg_s1b_1p125: s1 {
+> 
+> Please diff the regulator settings, they're likely mostly common
+> 
+
+It should be doable IMO.
+
+>> +
+>> +&tlmm {
+>> +	gpio-reserved-ranges = <8 4>; /* Fingerprint SPI */
+>> +};
+> 
+> This setting is common to all of them too
+
+Once again clover is exception here, all 3 variants of clover
+are using
+
+      gpio-reserved-ranges = <0 4>;
+
+I think it might be better to leave this setting to board files?
+
+--
+Regards,
+Alexey Minnekhanov
 
