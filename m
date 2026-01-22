@@ -1,233 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-90146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6CtoM7XtcWlKZwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 10:28:21 +0100
+	id TDtVC//tcWlaZwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 10:29:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EE8864866
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 10:28:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C462648AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 10:29:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1D6E84F39DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:21:36 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4B5826C3E47
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:23:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DE3E355041;
-	Thu, 22 Jan 2026 09:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D633E36C0C5;
+	Thu, 22 Jan 2026 09:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="ix9C/GWL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/d07n/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011044.outbound.protection.outlook.com [52.101.70.44])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE48347BB9;
-	Thu, 22 Jan 2026 09:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769073693; cv=fail; b=mMuT4DiGhVFTE739uv62pUI93x1bAYGQKKZIFGHdANuVzKs51NvoSQuzychj03xKPSoj3asec/ej1agB+qKo5Z0DnrmsGzJLJZKgdncXCuak5ZC9oaegYLIJWO/K0wPwtgQzaRjFVWm4IRZyTSa5JT2d1QkwrIJVuoEwmBPtSkY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769073693; c=relaxed/simple;
-	bh=UH8yivkBx3HOJuS50cnQyCqeW4rGcrwZu/M4J9JhheM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Z+Saxe1m2IX9Y8aXjP3G9yi7KBfV4ZSbm4sGoCnyYqntPkBXDVfuKZZX+SAKkTfq+W4jpfY783/+gtInBwv7r8ro4K8pM2/7kePDCinhJjHiRgDexBreFMnpvat9x+iAXTVYP58NNedab+G6yxrfEpz+gTy2Hn7yqmGY/G4CWm4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=ix9C/GWL; arc=fail smtp.client-ip=52.101.70.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hfeLIHqUWocQgdxStpy7qJ9/Ci6BLtZKA6gVDODrczObk+Jo2ZlzsGET27JFGefqKMl8RjcR1e4YrpVcLLBAZHmpcfOQp5gV1R/Zg0mtIiArD64VXPtkE4g3rUaMuwVAbeGQalx8ztmojUEprTYYngdhcQmONBZQQttQumvRrDYh+1djXWSSRBTQO9+F1UroWOQMB6k50AuXgSqaPRuBvIQJz0Bh2z6REOIXijFySUmnBbS05TG1JFsIhOd0hMKq/3lL5y4+v0R6EwNNpPn4ROwaUk6iwmuF+2z4eKoJOlKhYzNZekHMMMF9OvC7pKIQfsJJtuiqZ5Xebh/V29MR4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DC94HxsU5WlWFPo8fA42IWzv2SCV5yEUDdgc68K/fA0=;
- b=JCv2GJRpDsITVXYFNahgPy1NMBjmA220BLjSnJSMAbHqfkY8WjfrcHOPRzJpVBSQr0Ld35/j5jcbmvnTqm0VsRKUGAHeN6dZsJIrJ0dD17jYtQxuDrbCEcFEinhwXatkFCtggzNzAIjOkbZXRbCK75ed/wmwucl1LHVFhDduS+NlRmAgS1MashsO884LiaBEjt5R+4kXF+yf4cBUvP4m0SmRewKI0PbDycXbShHJmgoN72t5orFJFdWGIOY85EO//czF8+5KlB7wpUvRnf4aiyuQE38ZPtvj0m9Sp3Iz3zjg0dThe/3tXxhunVVFgspaMiHZONkIn1QTYlklrgnutw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DC94HxsU5WlWFPo8fA42IWzv2SCV5yEUDdgc68K/fA0=;
- b=ix9C/GWLyvI3EiOLqZ2OAZdK5/IZa1l+sF1+mhqxaNSh4t8C5W689NxzSm2MQOEX8ez/vOCQ0ktK8WMOAS2Jstoue+NjK9Z+j/FnvS9fHJWt5JffwGu0PHJLSbuJaGZwHDMyEe+253gRFuWCNXkmqvjJz5Kiue1OAsh8adiu556Uozmn366fzLDrRc0GrbmxVT9AqAPhNgy1iV6u52W98X+tO/yA5mkbT+S5oNimUfO1mUWJ+ik245gEC7EPorJo6nz4ZVCUx8KwyLoK0HfOSm/qcr0jRtwFDOxBwlAdTQvbptA73gozg3SIbItDarjy6lwDk8yU9U2MDv+rxWbhbA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PAXPR04MB8253.eurprd04.prod.outlook.com (2603:10a6:102:1bf::7)
- by AMDPR04MB11605.eurprd04.prod.outlook.com (2603:10a6:20b:71a::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.10; Thu, 22 Jan
- 2026 09:21:28 +0000
-Received: from PAXPR04MB8253.eurprd04.prod.outlook.com
- ([fe80::b853:e05b:c1e5:41b7]) by PAXPR04MB8253.eurprd04.prod.outlook.com
- ([fe80::b853:e05b:c1e5:41b7%5]) with mapi id 15.20.9542.009; Thu, 22 Jan 2026
- 09:21:28 +0000
-Date: Thu, 22 Jan 2026 11:21:23 +0200
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: gregkh@linuxfoundation.org, rafael@kernel.org, broonie@kernel.org, 
-	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
-	robin.clark@oss.qualcomm.com, hanguidong02@gmail.com, quic_c_gdjako@quicinc.com, 
-	dmitry.baryshkov@oss.qualcomm.com, driver-core@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: do not register driver in probe()
-Message-ID: <6oogrqe3n5sxtpdydjqo4ucwp7n3ipqoupxtekvzbnqd7dae3s@q22wc7fpbtya>
-References: <20260121141215.29658-1-dakr@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121141215.29658-1-dakr@kernel.org>
-X-ClientProxiedBy: AS4P189CA0012.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d7::15) To PAXPR04MB8253.eurprd04.prod.outlook.com
- (2603:10a6:102:1bf::7)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5662835F8BD;
+	Thu, 22 Jan 2026 09:23:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769073798; cv=none; b=QXYk9FcuXVJp6Nm5NjgfUq1NFFZvPPjBl61HXMBbb3918/z9MO9YnlnBhvYel006qs+/E4HzUGV1K4vMoSYA20hrfZ4Wk+JkLr4xwK97gpa/iNQT7/0ODwxRSzfYRUZw9H53XggJqwDuq96Mw5HSTp/uB75k+QjWJV+ycZXkpzI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769073798; c=relaxed/simple;
+	bh=yJdKxIhYOUpUaBpsLGMKL4pD24z5wQ6BB3Ktu++YZqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jOu+NIpgDgDa2sAFBOsTTZFgWHBFM/cqxUOIs9HgBgs6wB6Mstik5tzogHMDb93qWtNpFvcOv330BUbyLul6WopWCGGeGSAmR+3gQgFFhNQ6N0xJwm4UK3UO/L6d2SFc62/5I/WNoyDdNZxtEaw9PyoUQ36RVo/Z/dQgoFfKzb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/d07n/X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884DDC19423;
+	Thu, 22 Jan 2026 09:23:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769073797;
+	bh=yJdKxIhYOUpUaBpsLGMKL4pD24z5wQ6BB3Ktu++YZqY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=i/d07n/XiyO/GYZA1Yd61IttxQ1mcR7bpCASWYbyei4lGJrH3PzHwefIKkxhhG09v
+	 s9iROZk+AcPE1TdQ6wq2CuzVLOdZLG00uls+kKsGdO7o2a835s1hR7nfr3lHNKxahc
+	 WInb/vUcRfD54E3+d9LLeGUTAFbeRlunWUOAe7Sg475DZoOrmt5E9Y11BEfWsTnxEA
+	 jcCrYjAyE3xNwG+HYbDG5Sk3kA5856FxsG5fQfOuOxTSCbemYdcpjucRZIE2C2vRE4
+	 iENgMKmwOc/YEnCZixdTiAK1LlKU1woO2U5+vPN+6Mvz69683ULDROGOXRqdESB3gr
+	 dFtW0t7lKni2Q==
+Date: Thu, 22 Jan 2026 10:23:03 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
+	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
+	l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+	kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
+	mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
+	heiko@sntech.de, srikanth.thokala@intel.com,
+	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be, magnus.damm@gmail.com,
+	christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
+	jonathanh@nvidia.com, hayashi.kunihiko@socionext.com,
+	mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org,
+	rongqianfeng@vivo.com, 18255117159@163.com,
+	shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
+	linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v9 4/5] PCI: dwc: ep: Support BAR subrange inbound
+ mapping via Address Match Mode iATU
+Message-ID: <aXHsd7-WWAGyhy_w@ryzen>
+References: <20260122084909.2390865-1-den@valinux.co.jp>
+ <20260122084909.2390865-5-den@valinux.co.jp>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB8253:EE_|AMDPR04MB11605:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8ccfd776-58be-4b08-957e-08de59979f0c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|19092799006|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?1LS3EjnX+w/X7pB7dZx1N7h3YwuMGJpQNYpfiLJQxyWOE73pXnqW+atd52wZ?=
- =?us-ascii?Q?cXxyjwj3jLNo4GsaWcveEXjomkejrr4i/KtrrgHlkvL6nbVZ0NY+Yl7ImB2G?=
- =?us-ascii?Q?zIjlths4b86LvwN71QK23nHmIgCLMCb+DVnkTz9c+5+Zntg8ii6K9CJ/qXMv?=
- =?us-ascii?Q?DX3jlRSS5fsbStr0eHxWhscwpMReXrxHlL308HLuvQYgCYwVNAMavaXF963R?=
- =?us-ascii?Q?cVnVeSHtNcYqKmHBHffXugCYm0uFOdLRvDDbUXLSJxii8e7ADJzrPipDEAEn?=
- =?us-ascii?Q?0JAt0LbDD9SeG2e+25mkIktSgetFFcXLrkl9/LgrGzsD6ni1LK5/Jsm6H9l0?=
- =?us-ascii?Q?oWuAQjyv+ZlPYTjjj14UvAhy5fxkjROKpINLuqU0zqiUHRuMcKICFBzWaGoi?=
- =?us-ascii?Q?OKqVs2ZxZmyiMyZnwSGItUm9SpQIW849OdUTa9gG/4dMeU94cS313kMMkRBi?=
- =?us-ascii?Q?yOrDFRr3VBRU2P2u0lDRQV/LvLQCVj2CcmhpFE2ikzdoLDf8dTRvKAb7p9/5?=
- =?us-ascii?Q?N2/v3aDtLcEEvlDuLf5+lfjLxCcl8xbyeWFD17MPNBksdc8X6JoqZldZQpwL?=
- =?us-ascii?Q?PVbDDn+tcXL6d9Id7aORLq626quzwRRgmIfvUfKnMFdGuMiiF1zbIISbEkwK?=
- =?us-ascii?Q?Wq6vVwhSGFnq03z7LwhR4Jderp9PXRVREOkUnUR51ZDZefKHNLqsecJFcQON?=
- =?us-ascii?Q?B7A60Mg+3eEokK7vq8oUy3aExAi9QD+bqd0KPKcaL/24+Ff426Cy/jtHlbOP?=
- =?us-ascii?Q?IRbJxQErLRVrfU5HKGro/b5K6VDTQcM2p7Fz1VW52o0zPiqwJOyAWHt7eJxj?=
- =?us-ascii?Q?qud5Yy81nUUHtkCLjTGwzJdsgP2IWL/8w/bkTsMVSRYqJXcr9nQhTJq3rDlf?=
- =?us-ascii?Q?iCui/j3HKjtxO98raE1+wQ5RDyR54C3NebFSMNo02ld0Ct0K6Tv8gJ2Fy3Jr?=
- =?us-ascii?Q?9uBCcqynFq9dLQJ/1A1gqwuH9sbF29zsVfE8+/koFHBm/ID2fMuH5ysBba3a?=
- =?us-ascii?Q?+ui8oz1sR2wOA9+tyoe1/0kEOqVH62W+drNJmVMFHKGMDCjAv1OLuse8TK7M?=
- =?us-ascii?Q?WGhV8HEfXWoa04/uaHYx7DpDiP35rFB/iY3FA6Lf/f3XNPTzSllbQ4KMimqM?=
- =?us-ascii?Q?kyR0EFHo0kJwQKLBHOEM47Nmdt/D4AIWsF3/UBbPDn6Gec8qgnElqHgOnXCe?=
- =?us-ascii?Q?1eyst1BS3Z6jwyjLxbHZXIvMFyIdxSR6LLz12J+4B8+ap5ACIbBWhkUlSgxx?=
- =?us-ascii?Q?w5jtq4dlGYbDRAX1lBjk/W/wg0fOUoi3fVmxAPsnONRgxv3nllubbKFRC4WX?=
- =?us-ascii?Q?4Ifh0+wgCIfPTtLvzDtIcqP5udeNPYk23qkTn2JTfawyrqqjT8XvI2jI50DM?=
- =?us-ascii?Q?yDE1RWEyG+G7Kg+eLEijF/x0nIPQC++SXa3Mrazho6QFQM9HzwrjZKdoLz6r?=
- =?us-ascii?Q?5DKI7+BB4TfAADlDQWtnGBzL68u1E3e9ok0rysqtAedIPOFdI7kxV9x1+Z6R?=
- =?us-ascii?Q?/cvT+6RHtisK3kNBIsSPqn2lthFKfONamoZkw4MrhJlOcHgnuNuCjowjhRVj?=
- =?us-ascii?Q?v/g4UTVcHMVkisoiODS9tn4B6QcXZZc2WHX5tiQ8?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8253.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(19092799006)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?tL62zeuJBlq7yl++LpbmWr+m6SeYO/zhQIUk8tncu0zCva3APqdkNmFORibY?=
- =?us-ascii?Q?TaV4/zSYo09UyDqoUvCsO53LStNzSsoXnwxzR5TVxwHVpuXy5m0J23X4tJPM?=
- =?us-ascii?Q?D1YgimGmEiILEuCefUdA3Myc0TDDbxh6CDqw2fRD8p7uGpwoYl2duMnp1Yzj?=
- =?us-ascii?Q?nVpartqXMLf2eDrWNqif5VRXdBGtVG9IIrwY9jbu3mqM/CGhvEgp89OOPhwo?=
- =?us-ascii?Q?cSfPEr0LrctWyxhMaPaumfF21eNCxHQyP5D6mK47Xz4kg6aACBSEIsqwPVuc?=
- =?us-ascii?Q?69irw6CaHUsIvdiWq0jbixFgS34LLvso8ueuSdW8slMfIzSqf8x702KW7cKl?=
- =?us-ascii?Q?NIiD9IO/kbr7iI9WqfDZM3qGMdlRetqBvDwuP9FyDP1/kuo6IpWKA3k0l02u?=
- =?us-ascii?Q?Toy9E/VRLuvuCdwPvC61GEsgOgJ00hX6xxlIFks7cnB+gE9VsDe3knEQ4SOx?=
- =?us-ascii?Q?2Bbfdw6gE72xGC1DrGpRGxdoOojgLDyqJyJqMu29ggAJikmV74KTspof/OpZ?=
- =?us-ascii?Q?L7/AFPUmzw4MeH9D0iVyQA3bXEdNIV7QJ2ZaYSFMVLZqmBnCt0SgG/tU3BAU?=
- =?us-ascii?Q?rugetNlFoYxBS1JF7VULlxPEE4j/XJOaa4CDNFSgOwnrs4yJw1kPmxhJ9b7E?=
- =?us-ascii?Q?hFNl7/dFIdkRtFu5Y4dVMpLCE3B5v8At5onlL50L/QQ2AQV//pklZEma567w?=
- =?us-ascii?Q?R5iXewl5iLk97IGGC7WPdS81wg54c5KWpKwqVUhWmx1MDFe1Ckfruec01Q3e?=
- =?us-ascii?Q?bdzSpE/EtTTZRQMqWRgXgPsG6atkp2X3GgVsGP8bcrOp/WKr/YDszUeBduY9?=
- =?us-ascii?Q?kUrTMpa0s1yv4UwB2PPpVk/H5b0U5aS4ixvdClWzc+oKXOB97yJiidMLTZWa?=
- =?us-ascii?Q?x9Xnp0KSdDUFbdeYSWqZp8dsInK+S829gJcd7XRp1P+g3fy6n4AirrTotH8H?=
- =?us-ascii?Q?BkYYQ7UjICTAlkdzyeXhnffJ7vCNeY4dhQIPtKKzj+mRIDiVpEdEs1tpEsmL?=
- =?us-ascii?Q?ehg9/6/7sqezVTilcHWykpTxD3SMzGNHgmVBFhe4P4HWRSDScB1SD6ELAteg?=
- =?us-ascii?Q?FWjVzvH2MRYIoX+OZ1PQvuGrY5ZvCZD+N6Z4Ws5+fuOYoQ3Q4LOfOIGCm+cJ?=
- =?us-ascii?Q?LOBLpP0s4ESdYbM3ef2oDCtIg9SBVd047WiVWTkeiQ6snjftOVB0Rkw0Mzyp?=
- =?us-ascii?Q?qthfqnnQGnz9eDtQw00i35PKMrTjLZNazIG0x2cVYDjDYw66ZwGSJsWDF6Uh?=
- =?us-ascii?Q?jNHSfjCrwH+8qVK/YRt5AJ8YN12/qiNL6qmqLVBbp7Q/Sfqu7k2CdzoXNZJ2?=
- =?us-ascii?Q?Un6E1LR7uAlH/CPwDJoVV4DrE3eUWM+0KjbE608j1L9fVZjxoF2PVZARLvfP?=
- =?us-ascii?Q?5n/t+/gaUehasI2d+53Mv81TCnxdmF/lmvNE5yS/OBkueg0kxtdGnK4cfFQo?=
- =?us-ascii?Q?/WN+PzOA2Gu1/UVp+Y4HxvhHLOgQ20TYRDiwEGLklsL/nRDolyesLb2hH72+?=
- =?us-ascii?Q?k6oRVWCjuYNz5lmYqsCw4AQVXBblhKqI+iUYuDADBcRwvOEJABjUy3Gbo8sn?=
- =?us-ascii?Q?Q81JTFdE0hkRwkPmkInbk2qtZXXUBa1pcBrAXnHWgTZDCO9hR5avm3lX9Llm?=
- =?us-ascii?Q?VtxJGMmMkjMGgEYfZGtTm/nXIweTiYuKcLHCujQponDsnLeLg5+ptwj/NmvG?=
- =?us-ascii?Q?/GRJZsw3nk/mF4zxCKp6Nnp8xt62AXhL/baIByfgN6sxMh5sQQaTSy530Ksl?=
- =?us-ascii?Q?MUP3Q0/Low=3D=3D?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ccfd776-58be-4b08-957e-08de59979f0c
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8253.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2026 09:21:28.0494
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m1zjWD+aVVxcCgXSrPiLo/4wd7mQrWkQdu98A3v7e32c3PMRl/GRkE+o0ek2V9QnadyMBD57CQ3fFLwzA0wV5w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR04MB11605
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260122084909.2390865-5-den@valinux.co.jp>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.54 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
+X-Spamd-Result: default: False [0.04 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[nxp.com:s=selector1];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90146-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,arm.com,8bytes.org,oss.qualcomm.com,gmail.com,quicinc.com,lists.linux.dev,vger.kernel.org,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	TAGGED_FROM(0.00)[bounces-90147-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,ti.com,nxp.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[nxp.com,none];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ioana.ciornei@nxp.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[nxp.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[53];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[nxp.com:email,nxp.com:dkim,dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns]
-X-Rspamd-Queue-Id: 7EE8864866
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[valinux.co.jp:email,nxp.com:email,dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8C462648AE
 X-Rspamd-Action: no action
 
-On Wed, Jan 21, 2026 at 03:12:01PM +0100, Danilo Krummrich wrote:
-> Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
-> qcom_smmu_impl_init") intended to also probe the TBU driver when
-> CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding
-> platform_driver_register() call into qcom_smmu_impl_init() which is
-> called from arm_smmu_device_probe().
+On Thu, Jan 22, 2026 at 05:49:08PM +0900, Koichiro Den wrote:
+> Extend dw_pcie_ep_set_bar() to support inbound mappings for BAR
+> subranges using Address Match Mode IB iATU when pci_epf_bar.num_submap
+> is non-zero.
 > 
-> However, it neither makes sense to register drivers from probe()
-> callbacks of other drivers, nor does the driver core allow registering
-> drivers with a device lock already being held.
+> Rename the existing BAR-match helper into dw_pcie_ep_ib_atu_bar() and
+> introduce dw_pcie_ep_ib_atu_addr() for Address Match Mode. When
+> num_submap is non-zero, read the assigned BAR base address and program
+> one inbound iATU window per subrange. Validate the submap array before
+> programming:
+> - each subrange is aligned to pci->region_align
+> - subranges cover the whole BAR (no gaps and no overlaps)
+> - subranges are sorted in ascending order by offset
 > 
-> The latter was revealed by commit dc23806a7c47 ("driver core: enforce
-> device_lock for driver_match_device()") leading to a deadlock condition
-> described in [1].
+> Track Address Match Mode mappings and tear them down on clear_bar() and
+> on set_bar() error paths to avoid leaving half-programmed state or
+> untranslated BAR holes.
 > 
-> Additionally, it was noted by Robin that the current approach is
-> potentially racy with async probe [2].
+> Advertise this capability by extending the common feature bit
+> initializer macro (DWC_EPC_COMMON_FEATURES).
 > 
-> Hence, fix this by registering the qcom_smmu_tbu_driver from
-> module_init(). Unfortunately, due to the vendoring of the driver, this
-> requires an indirection through arm-smmu-impl.c.
+> This enables multiple inbound windows within a single BAR, which is
+> useful on platforms where usable BARs are scarce but EPFs need multiple
+> inbound regions.
 > 
-> Reported-by: Mark Brown <broonie@kernel.org>
-> Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596@sirena.org.uk/
-> Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
-> Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@arm.com/ [2]
-> Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
-> Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qcom_smmu_impl_init")
-> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> ---
 
-The boot lockup was visible also on the NXP LX2160ARDB. This patch fixes
-it.
 
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com> #LX2160ARDB
+> @@ -331,6 +503,13 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>  		    ep->epf_bar[bar]->flags != flags)
+>  			return -EINVAL;
+>  
+> +		/*
+> +		 * When dynamically changing a BAR, tear down any existing
+> +		 * mappings before re-programming.
+> +		 */
+> +		if (ep->epf_bar[bar]->num_submap || epf_bar->num_submap)
+> +			dw_pcie_ep_clear_ib_maps(ep, bar);
+> +
+>  		/*
+>  		 * When dynamically changing a BAR, skip writing the BAR reg, as
+>  		 * that would clear the BAR's PCI address assigned by the host.
+> @@ -369,8 +548,12 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>  	else
+>  		type = PCIE_ATU_TYPE_IO;
+>  
+> -	ret = dw_pcie_ep_inbound_atu(ep, func_no, type, epf_bar->phys_addr, bar,
+> -				     size);
+> +	if (epf_bar->num_submap)
+> +		ret = dw_pcie_ep_ib_atu_addr(ep, func_no, type, epf_bar);
+> +	else
+> +		ret = dw_pcie_ep_ib_atu_bar(ep, func_no, type,
+> +					    epf_bar->phys_addr, bar, size);
 
+If someone calls set_bar() with a submap, without having called set_bar() first
+without a submap, we will still call dw_pcie_ep_ib_atu_addr() here.
+
+To make sure that dw_pcie_ep_ib_atu_addr() cannot be called without already
+having a BAR configured, to we perhaps want something like:
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 0567552b784c..fe26b7f7b212 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -487,6 +487,9 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+        if ((flags & PCI_BASE_ADDRESS_MEM_TYPE_64) && (bar & 1))
+                return -EINVAL;
+ 
++       if (!ep->epf_bar[bar] && epf_bar->num_submap)
++               return -EINVAL;
++
+        /*
+         * Certain EPF drivers dynamically change the physical address of a BAR
+         * (i.e. they call set_bar() twice, without ever calling clear_bar(), as
+
+
+or
+
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 0567552b784c..8aeaa6fe53f9 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -475,6 +475,7 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+        struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+        struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+        enum pci_barno bar = epf_bar->barno;
++       bool use_addr_match_mode = false;
+        size_t size = epf_bar->size;
+        enum pci_epc_bar_type bar_type;
+        int flags = epf_bar->flags;
+@@ -510,6 +511,9 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+                if (ep->epf_bar[bar]->num_submap || epf_bar->num_submap)
+                        dw_pcie_ep_clear_ib_maps(ep, bar);
+ 
++               if (epf_bar->num_submap)
++                       use_addr_match_mode = true;
++
+                /*
+                 * When dynamically changing a BAR, skip writing the BAR reg, as
+                 * that would clear the BAR's PCI address assigned by the host.
+@@ -548,7 +552,7 @@ static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+        else
+                type = PCIE_ATU_TYPE_IO;
+ 
+-       if (epf_bar->num_submap)
++       if (use_addr_match_mode)
+                ret = dw_pcie_ep_ib_atu_addr(ep, func_no, type, epf_bar);
+        else
+                ret = dw_pcie_ep_ib_atu_bar(ep, func_no, type,
 
