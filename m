@@ -1,220 +1,319 @@
-Return-Path: <linux-arm-msm+bounces-90107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AFytLSiIcWk1IAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 03:15:04 +0100
+	id kCWAJL+TcWlZJgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 04:04:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 803E360CA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 03:15:04 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09D8361261
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 04:04:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7FCB7407B84
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 02:10:42 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 647AB4E76DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 03:04:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B70383803C5;
-	Thu, 22 Jan 2026 02:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A86F366DAA;
+	Thu, 22 Jan 2026 03:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BZMT8Z6a";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AvcLSG21"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbYaekua"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com [209.85.214.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C20636AB5D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 02:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E903624DD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 03:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769047769; cv=none; b=lRs+J9pd1HRIfrPmrHDy/+aNEqlO03HBHXaTuWuXMg/Pv1B2Vws6Lj5Oo09yG5QFrECMZNfwPL2tAZRrge6LWafCtiyZ2AZzQrBtYvPLORWbyOm9j4Q1mIa3Wd4c8NPPEz+FNAZcQ/i05NLv7EfTWZmXiMw3kfbrbFhrhwEVNlI=
+	t=1769051061; cv=none; b=HrW2f/URbz8M58xtG912FbWDsxxnnw3/h7HvUkHkd2IKQl1bhLpSpNteX8sLxQasPA2oovVPi+KYPI+kFqTZ+nbYbub2Exg5292y3WYIia5YQ2edliUfg6V/GdYez3iq74DnI4vojeMYuqu9qwaQnxRQ0fOzxVPhvAreDkbA7ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769047769; c=relaxed/simple;
-	bh=U3SBm8Q4F2Lqg46nftP77Qbyf63TqJWnGptxyfW3r6I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kcCfx4fBvC4kHGCesqnu/dYy5ojn+F49J6on168Fo8jDnJXhdFkJlQAKc7vjhVK6LhseL8wlnsefxnHC4RLtuEgN3oursMpKcXlXFamKRh3VxASe4wobrtDzTbFqLnuJTPrBDZ2JnkdID9V5iMllKZXSwjPkcYOVaHTc5pui0kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BZMT8Z6a; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AvcLSG21; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60LJ1VL93902145
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 02:09:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=; b=BZMT8Z6aMJtCZ+DZ
-	wUklgb+eqJn24hQv0mrEEtwD7crXLJ6a/eRC63tiFNslClsoD58FML5FJmCgLPml
-	+V4f3R/4f7IUhJEEvDsmom518hdnVAyzFZILBU9DekztZoGZZaYsxKeTWIgkWYVy
-	Y+xOvKS1algFUWKM4Et3pkWLcMMPe9TBu9jLGFXVK+GEsThGuwAXMtNMrnpBqRQC
-	cYGlhPS7yYd0QUIi5BeG4XRfCcRlhIVeGpL9Mgvh9cVpJQIyz2UayEF5vZiLSR2Z
-	/wDNKY102NxP+Ikyp4blk2IuzQ1iH1mJLdFEh9jnJOTdGPlP6J6GI8BMV0ymE6I/
-	vGcL4w==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu4khh1t4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 02:09:21 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2a7a98ba326so4656305ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 18:09:21 -0800 (PST)
+	s=arc-20240116; t=1769051061; c=relaxed/simple;
+	bh=aWIpZruFnfeLnUmipF9PoJwZIk+pza0G6A4wP33USMs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=nLRxL7uyFuDhp7R6qx5cU5wG5JBpZTMzH1sRv8GfdmGqnO66BPpOQIhXzUhruhGh2ylbzUcts4udIMjROpdVCOCqWA6fzq00dvJ6TeiAj/3yxWg4cw8ZXuDqWRqN1zH462PDejrb+lFQ80mmLATqmwaUvn0OQCJYJUfM9/wLLbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbYaekua; arc=none smtp.client-ip=209.85.214.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f193.google.com with SMTP id d9443c01a7336-2a7a9b8ed69so4503875ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jan 2026 19:04:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769047761; x=1769652561; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=;
-        b=AvcLSG21TshtbJL0SaLulxFmjnvVvx+bGg+e112a0iE6JxdNn6FjpBWK54/JgPx2/X
-         4F5HwB1MH4VUQclIJ6YFYyoU7qcO7DLIyquDRzbtfhx5UetDzjNF8w0k+i4FvPLQiOSD
-         y8gGzkAxAtfbLtqlav7N5zGWe0ojzvZZVry5d6UA8KguOLQEpcTokf8M5rWB87iVsQc7
-         VosiGYziAaOunyN4Ct2En2HoYAwKzimiK+N8Gl9+/IUZfirCc0ieG9zN/yld5a/7p5uW
-         eRbjaI6TmtzdUGY6VljMA1kGWqPwJLDUTlxCBzGOsnPSvizQ56wPS3hfP+KXbq3gSAHP
-         rvyw==
+        d=gmail.com; s=20230601; t=1769051057; x=1769655857; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AVZBAJ5EXu46k88wk2XqEWl9oBv9MxHKCH3s/g0zXt0=;
+        b=HbYaekuasl4GvlGYX+ROb7YujhY3+6JnfRI1rzVQpZXjNEwtwSPAsI3C9p8xKZKciw
+         UGrNBGVwLxeNKv+YPhpfLQPLAPHpQ8GCTM0YLHxYfrSucIxKi8G0ZOUwhDz9V7PLjGgI
+         R6OAwiCD0lFiqkeXnZ7I4KURuxOM17Be3YeOVE35uIu/3pvhCqZVKr5obcPmecpg7Wbm
+         L3Kdhrf8wIpvapbbmb7sn1avF0i969fiQixF67A9v60Yy9uj1xyE95qxZg6NY0nUYyju
+         fzu1dK/YNfh5nk93SeQdbRWnxJ+MeXinxaeC39KSbAMkdHTYAAZqbDzDbc123BlKi9yU
+         h5HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769047761; x=1769652561;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=;
-        b=IIzBuQg9DaFLntVjGmOkQ7KWCMYG0d6zpbjcbBf8RSEX0r/Bd2y5tcDVeYoLZ01Ivj
-         48VEJr2NvgWDtVd2dicWkkniKo05VAgL9fOYhqpUuiz/LceZlPnDz9QtB9z3t1XrEwSf
-         1xjcARlrn97uHSXeJ/QS156U5ptp5TwizRF4wvMFdwPDhfMuXEIFgE/DyGkOb/6awNFh
-         UrG2dl+upC8fgXLW6MURmUQLIQiL3hyTmjc7FHbH6P7Rbct06WiEE+yLY8HcRxOYobRI
-         VZVsyMQWjZpSljUdVUDLJmSX+j3yTN54BBU3iaNiqCkcpS5sAjLReh+9Uzb+18PpDQgb
-         wMNg==
-X-Forwarded-Encrypted: i=1; AJvYcCXWBzaPDXRjyQPPgGrwaTmCAzeXhUxrRzmwfSNNa8bh4L3IcCmVLEupP4/dLgLmyNycJOhw1Xlgx/eWx3rX@vger.kernel.org
-X-Gm-Message-State: AOJu0YzlZDMYzBN28NrwcPh02pnL9AcOupsP8XXXYmHulogE0xEzb3qN
-	CXrrcSSt/4nunXLdvJavD40GBUTZcIwRXlxt1vDs9xicSAcuRnhioprRsuHbknNHOyhKQNpjZT+
-	6cLxEIde9vwv43lRyKVr//YpMq4dYTwv3O2Kp2WEE0xAq/hQMuIyeyjhbu06OSwspHyfn
-X-Gm-Gg: AZuq6aImiz1L5C+U47fHr9cQ4WxY0lEB1W4Naj7qoRU+eIxReZGfGjZZ4roveptZEbz
-	Z3YtJXCsREmEo1pGDnudzFVhBr9HvKZfQVVWuw20vgmKMZQN4pO/K7yMJNguG4L/IisKr5Si+F+
-	zO0tOaxqbYTapcvPSI9DX7ZgUISb1xTwRNFHimHxS1qDAAk3ALXSPRTEn/twsL6w4cldDzb2SPF
-	qRO+BCaKrBd8oWia/Sgn6vC5wYHFwVinc20DBUvbmpPSUxQUfGasSMASOqJqkJzZPbi5uhf38PZ
-	YXEIYxD0F1R8pzFf8hi2tLKgw8df7+WmbPLjCJ1WREerkOKWfv8TIcREgeeKANH9cA0aYHGZozF
-	ytR1lgnBeTv2mdwGEqm9WZb8+yzY1Pj/astp0YcEMpw07qBFebqaT+yETmgGotx7HBrAGldUz
-X-Received: by 2002:a17:903:2ac4:b0:2a7:a6fa:eddf with SMTP id d9443c01a7336-2a7d2f47348mr14195345ad.17.1769047761107;
-        Wed, 21 Jan 2026 18:09:21 -0800 (PST)
-X-Received: by 2002:a17:903:2ac4:b0:2a7:a6fa:eddf with SMTP id d9443c01a7336-2a7d2f47348mr14194925ad.17.1769047760623;
-        Wed, 21 Jan 2026 18:09:20 -0800 (PST)
-Received: from jiegan-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a780a4631csm49710305ad.18.2026.01.21.18.09.16
+        d=1e100.net; s=20230601; t=1769051057; x=1769655857;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=AVZBAJ5EXu46k88wk2XqEWl9oBv9MxHKCH3s/g0zXt0=;
+        b=wPYOEe6xilVHdhlfzndLdH2/PF/ffqaT2m7U/9Sq9LYXDSXwtnxInk6mr5aHhuSoev
+         abaihdsxGp5rK5hqVe21caK72ddO6OoSH7M8AMT+rIUH2oqH3jZx3TOvZhYKdIyTR9LK
+         jfO92Ewxu7oRmypaCJC76QvhQPUnELbwU9QdXSs7Nc/LtnAA8h9ptxT8n803WrWOBYJR
+         2KbFksK+6B+/Wzq4Re2/8CBZjzU1bQZKApTleiAulFhNei4RIvBqYB1x0sapvstTP9ov
+         KLq6DwMxLbWGI91sntS5aOX58EZ65NSWN7+JVQCUsa+m++GIA6njIBDw0DI8AB+d7b9a
+         NDBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWnvHSZjE3SUL6f+uicCgQo9tiWAx9nseh0nEi61eMW1pylG4Ys35bq+pdS8XFeGx7O2cIXPvlbz+ytubnM@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgTzSUZscsogeUUFEMGGPBJmrnrS4TwvnFECccnaGNnhBMO0qa
+	BRlMJWv8yEvLerSNxoYeUZGeY9poEqges/Vq8ZU+JgC34Cq9cvYqpPsS
+X-Gm-Gg: AZuq6aIL+aLAxogHHo0RJtBUjNEzoB/G/rPa+NrWlDHgBwZAL7Lod1s1LfU1HHzGyVc
+	YYtjobr8yEZ0e8olhfghRl8q7E/EbMpVqHPGdOKLROB0OX8cF/eciAFb7NzeB+cE/ZTsyaKXFkU
+	D0ALCM/20jB02cFj+mC7faSYU3Yl9mWPsj27Qr0BT6k7tNDoVh8olUTItUQq4NAg97MUFxqFfFd
+	MOH8eZwQ4wg1cSpkEQ9uaZCPAUkhmIiSACXVoxdgF80EEdzsbW0sa74mgpqHaKAhx+VEHpDl30M
+	gEX+SimiekuyR5M4tHXSWpMIIcAg8pJ9/ooFGxrBxzMCM2niYJyp7qu2EdQgMoCp5OmRTj67uRA
+	+/aWt9J6aiADzJ584Y7N0gX9fZKGQOcUo8KpqkbCBWmPnQFMAf5TsA5c0sFghoV1uea09xbKvKf
+	/Uu8upeYaUHyqDYdEmoRGf8sq0P1hzq9HDhfe6HNdriDAvz6Rth3mBXvUb/Pq4pJ3ntg==
+X-Received: by 2002:a17:902:cf41:b0:29e:fd60:2cf9 with SMTP id d9443c01a7336-2a76b169703mr73489085ad.54.1769051057371;
+        Wed, 21 Jan 2026 19:04:17 -0800 (PST)
+Received: from eurus-Lenovo-Legion-Y70002021.. (n058152022160.netvigator.com. [58.152.22.160])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7193fb998sm168938085ad.69.2026.01.21.19.04.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 18:09:20 -0800 (PST)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-Date: Thu, 22 Jan 2026 10:08:21 +0800
-Subject: [PATCH v10 8/8] arm64: dts: qcom: lemans: add interrupts to CTCU
- device
+        Wed, 21 Jan 2026 19:04:16 -0800 (PST)
+From: Wang Jiayue <akaieurus@gmail.com>
+To: dakr@kernel.org
+Cc: broonie@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com,
+	driver-core@lists.linux.dev,
+	gregkh@linuxfoundation.org,
+	hanguidong02@gmail.com,
+	iommu@lists.linux.dev,
+	joro@8bytes.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	quic_c_gdjako@quicinc.com,
+	rafael@kernel.org,
+	robin.clark@oss.qualcomm.com,
+	robin.murphy@arm.com,
+	will@kernel.org,
+	Wang Jiayue <akaieurus@gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: do not register driver in probe()
+Date: Thu, 22 Jan 2026 11:03:56 +0800
+Message-Id: <20260122030356.61373-1-akaieurus@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260121141215.29658-1-dakr@kernel.org>
+References: <20260121141215.29658-1-dakr@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260122-enable-byte-cntr-for-ctcu-v10-8-22978e3c169f@oss.qualcomm.com>
-References: <20260122-enable-byte-cntr-for-ctcu-v10-0-22978e3c169f@oss.qualcomm.com>
-In-Reply-To: <20260122-enable-byte-cntr-for-ctcu-v10-0-22978e3c169f@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769047716; l=769;
- i=jie.gan@oss.qualcomm.com; s=20250909; h=from:subject:message-id;
- bh=U3SBm8Q4F2Lqg46nftP77Qbyf63TqJWnGptxyfW3r6I=;
- b=b0vwksCJSZDVDR3oLaXtrkBBvR0U8dzLyYweInT8NsLxQOJVcZxRM7jEzAoSzriNC6jVcmj4I
- hz9WDiif8OjAXAC7wlDvD7OgH5Qyw+hXKLUZ4uHJM9F3pTHesvINDnY
-X-Developer-Key: i=jie.gan@oss.qualcomm.com; a=ed25519;
- pk=3LxxUZRPCNkvPDlWOvXfJNqNO4SfGdy3eghMb8puHuk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDAxNSBTYWx0ZWRfX5m7QGSTKO9iJ
- 6QuAtUZMOVr5o1UJ20z80DgTou7xOYGBuTpgn9sFWDb9ivrvcr5k9Iytnh0iYSfTQgyTk9X518B
- jPNLzCNdRGPJvSvtbF5mh6lgAq96z36osg+CGtBv1epL6gMj10K8ZC33PFo+CmTw+afdByVp7au
- UqGjqHU4J+zeTwxlmsqk5I19hLwLBKTNr1rCUVavLyR2Y2wfaA95LLLGV5jatGhEnPZXJsE1ENg
- ATUENbE4yGVBlk8hM+tZBjR8RVk9Y8/6OqzU49o78SgEI2kBjM1yaODvwblsrEiKtLfk5sm6X7i
- NiPROOkEeQdbrtY1bGav0j3wWZ6BYxsvqcDXmtGRf8YQLk0zHV3MIoluKkAaDR3z+O6ui8wTBwt
- Hjuu8rUS+odbqW8rJ1Gd1Y5yP2XD6/zmMCv+nFX2upxn+EUPanoV4aX5UtkziJ2ZkJxQjtEf58M
- UUYUBvfVCj3QKLO+OFg==
-X-Proofpoint-ORIG-GUID: MjfdOULZFXkUZwqmi1SvVeB0zSKq2wkN
-X-Authority-Analysis: v=2.4 cv=UOjQ3Sfy c=1 sm=1 tr=0 ts=697186d1 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=gBkj9RZkAcI1HbXH1KoA:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: MjfdOULZFXkUZwqmi1SvVeB0zSKq2wkN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-21_04,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601220015
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.46 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
-	TAGGED_FROM(0.00)[bounces-90107-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,0.61.12.232:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90109-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,lists.linux.dev,linuxfoundation.org,gmail.com,8bytes.org,lists.infradead.org,vger.kernel.org,quicinc.com,arm.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	PRECEDENCE_BULK(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 803E360CA0
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_FIVE(0.00)[5];
+	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
+	FROM_NEQ_ENVFROM(0.00)[akaieurus@gmail.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns]
+X-Rspamd-Queue-Id: 09D8361261
 X-Rspamd-Action: no action
 
-Add interrupts to enable byte-cntr function for TMC ETR devices.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/lemans.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 0b154d57ba24..75a468ddbf53 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -2776,6 +2776,9 @@ ctcu@4001000 {
- 			clocks = <&aoss_qmp>;
- 			clock-names = "apb";
- 
-+			interrupts = <GIC_SPI 270 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 262 IRQ_TYPE_EDGE_RISING>;
-+
- 			in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-
--- 
-2.34.1
-
+On Wed, Jan 21, 2026 at 10:12=E2=80=AFPM Danilo Krummrich <dakr@kernel.org>=
+ wrote:=0D
+>=0D
+> Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in=0D
+> qcom_smmu_impl_init") intended to also probe the TBU driver when=0D
+> CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding=
+=0D
+> platform_driver_register() call into qcom_smmu_impl_init() which is=0D
+> called from arm_smmu_device_probe().=0D
+>=0D
+> However, it neither makes sense to register drivers from probe()=0D
+> callbacks of other drivers, nor does the driver core allow registering=0D
+> drivers with a device lock already being held.=0D
+>=0D
+> The latter was revealed by commit dc23806a7c47 ("driver core: enforce=0D
+> device_lock for driver_match_device()") leading to a deadlock condition=0D
+> described in [1].=0D
+>=0D
+> Additionally, it was noted by Robin that the current approach is=0D
+> potentially racy with async probe [2].=0D
+>=0D
+> Hence, fix this by registering the qcom_smmu_tbu_driver from=0D
+> module_init(). Unfortunately, due to the vendoring of the driver, this=0D
+> requires an indirection through arm-smmu-impl.c.=0D
+>=0D
+> Reported-by: Mark Brown <broonie@kernel.org>=0D
+> Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596=
+@sirena.org.uk/=0D
+> Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/=
+ [1]=0D
+> Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@a=
+rm.com/ [2]=0D
+> Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_d=
+evice()")=0D
+> Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qco=
+m_smmu_impl_init")=0D
+=0D
+Glad the backtrace helped identify the root cause.=0D
+=0D
+I applied this patch to the qemu setup where I successfully reproduced the=
+=0D
+boot hang earlier, and the deadlock is resolved.=0D
+=0D
+Tested-by: Wang Jiayue <akaieurus@gmail.com>=0D
+Reviewed-by: Wang Jiayue <akaieurus@gmail.com>=0D
+=0D
+> Signed-off-by: Danilo Krummrich <dakr@kernel.org>=0D
+> ---=0D
+>  drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 14 +++++++++++++=0D
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 14 +++++++++----=0D
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 24 +++++++++++++++++++++-=0D
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 +++++=0D
+>  4 files changed, 52 insertions(+), 5 deletions(-)=0D
+>=0D
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/a=
+rm/arm-smmu/arm-smmu-impl.c=0D
+> index db9b9a8e139c..4565a58bb213 100644=0D
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c=0D
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c=0D
+> @@ -228,3 +228,17 @@ struct arm_smmu_device *arm_smmu_impl_init(struct ar=
+m_smmu_device *smmu)=0D
+>=0D
+>         return smmu;=0D
+>  }=0D
+> +=0D
+> +int __init arm_smmu_impl_module_init(void)=0D
+> +{=0D
+> +       if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))=0D
+> +               return qcom_smmu_module_init();=0D
+> +=0D
+> +       return 0;=0D
+> +}=0D
+> +=0D
+> +void __exit arm_smmu_impl_module_exit(void)=0D
+> +{=0D
+> +       if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))=0D
+> +               qcom_smmu_module_exit();=0D
+> +}=0D
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/a=
+rm/arm-smmu/arm-smmu-qcom.c=0D
+> index 573085349df3..22906d2c9a2d 100644=0D
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c=0D
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c=0D
+> @@ -774,10 +774,6 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct a=
+rm_smmu_device *smmu)=0D
+>  {=0D
+>         const struct device_node *np =3D smmu->dev->of_node;=0D
+>         const struct of_device_id *match;=0D
+> -       static u8 tbu_registered;=0D
+> -=0D
+> -       if (!tbu_registered++)=0D
+> -               platform_driver_register(&qcom_smmu_tbu_driver);=0D
+>=0D
+>  #ifdef CONFIG_ACPI=0D
+>         if (np =3D=3D NULL) {=0D
+> @@ -802,3 +798,13 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct a=
+rm_smmu_device *smmu)=0D
+>=0D
+>         return smmu;=0D
+>  }=0D
+> +=0D
+> +int __init qcom_smmu_module_init(void)=0D
+> +{=0D
+> +       return platform_driver_register(&qcom_smmu_tbu_driver);=0D
+> +}=0D
+> +=0D
+> +void __exit qcom_smmu_module_exit(void)=0D
+> +{=0D
+> +       platform_driver_unregister(&qcom_smmu_tbu_driver);=0D
+> +}=0D
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/ar=
+m-smmu/arm-smmu.c=0D
+> index 5e690cf85ec9..1e218fbea35a 100644=0D
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c=0D
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c=0D
+> @@ -2365,7 +2365,29 @@ static struct platform_driver arm_smmu_driver =3D =
+{=0D
+>         .remove =3D arm_smmu_device_remove,=0D
+>         .shutdown =3D arm_smmu_device_shutdown,=0D
+>  };=0D
+> -module_platform_driver(arm_smmu_driver);=0D
+> +=0D
+> +static int __init arm_smmu_init(void)=0D
+> +{=0D
+> +       int ret;=0D
+> +=0D
+> +       ret =3D platform_driver_register(&arm_smmu_driver);=0D
+> +       if (ret)=0D
+> +               return ret;=0D
+> +=0D
+> +       ret =3D arm_smmu_impl_module_init();=0D
+> +       if (ret)=0D
+> +               platform_driver_unregister(&arm_smmu_driver);=0D
+> +=0D
+> +       return ret;=0D
+> +}=0D
+> +module_init(arm_smmu_init);=0D
+> +=0D
+> +static void __exit arm_smmu_exit(void)=0D
+> +{=0D
+> +       arm_smmu_impl_module_exit();=0D
+> +       platform_driver_unregister(&arm_smmu_driver);=0D
+> +}=0D
+> +module_exit(arm_smmu_exit);=0D
+>=0D
+>  MODULE_DESCRIPTION("IOMMU API for ARM architected SMMU implementations")=
+;=0D
+>  MODULE_AUTHOR("Will Deacon <will@kernel.org>");=0D
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/ar=
+m-smmu/arm-smmu.h=0D
+> index 2dbf3243b5ad..26d2e33cd328 100644=0D
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h=0D
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h=0D
+> @@ -540,6 +540,11 @@ struct arm_smmu_device *arm_smmu_impl_init(struct ar=
+m_smmu_device *smmu);=0D
+>  struct arm_smmu_device *nvidia_smmu_impl_init(struct arm_smmu_device *sm=
+mu);=0D
+>  struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu=
+);=0D
+>=0D
+> +int __init arm_smmu_impl_module_init(void);=0D
+> +void __exit arm_smmu_impl_module_exit(void);=0D
+> +int __init qcom_smmu_module_init(void);=0D
+> +void __exit qcom_smmu_module_exit(void);=0D
+> +=0D
+>  void arm_smmu_write_context_bank(struct arm_smmu_device *smmu, int idx);=
+=0D
+>  int arm_mmu500_reset(struct arm_smmu_device *smmu);=0D
+>=0D
+>=0D
+> base-commit: dc23806a7c47ec5f1293aba407fb69519f976ee0=0D
+> --=0D
+> 2.52.0=0D
+>=0D
 
