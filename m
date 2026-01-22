@@ -1,243 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-90201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SBK+Hp8ncmmadwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:35:27 +0100
+	id mLiWIvXecWk+MgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:25:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1000675B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:35:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BB786306D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 09:25:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 30C54740087
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 12:56:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 292515A14BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 08:18:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4110F3101CE;
-	Thu, 22 Jan 2026 12:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77F8B322B6A;
+	Thu, 22 Jan 2026 08:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="IIzq8JcI"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="PvMWY5uf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973179.qiye.163.com (mail-m1973179.qiye.163.com [220.197.31.79])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970BA33D6CD;
-	Thu, 22 Jan 2026 12:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.79
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D1434EEE3;
+	Thu, 22 Jan 2026 08:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769086326; cv=none; b=VBHH80oVeOhS906CbPpOUD5Aowu1NyUxyeo8trbD/vTV+c43Vk1pHJi/ux0YQ8eg7MF2HR0PHoW5pnbJJL5sblA+ZRg8cC0cogXFA1dLUMtJnStDdGvoFxpHTpL00HP+E7fPml7rDop1OKCYUYf4cEvcVgQR/osZPymSX83w3Dw=
+	t=1769069924; cv=none; b=grY/TwwKtMFJU2TcOfdg1GObRs3yNtMLS78LWQzye4f7AXYFgBeYGsQy7jXkPYd3vZneUAPthldgjyCWmbP09SIrtkIQID1933T/pydCaC3Zdw/vHqR92LVDarsTXFnylEvnRX1iI/kOSudpKLZGzXlp+vS5IFuoAf/VIzfRiXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769086326; c=relaxed/simple;
-	bh=oH4OPF0tawrZSboWsqQV8Wk5V/Ve1JkWG943xoj6I/U=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=VLbO2MmNM9oCAyVPlbB7LuulnXPicEIfPf3zXFk65XjspdyKkKNzCsDubVZJCrpr9D2zqgT2z3eE/xSOSouVMT2ZtW/zxDkMJPBf1dtZ7gILfvLWpXcm5no4ZoWXfwA2hYwf1A7JOZj4uvDtYo6teiDDcSegQz9HCQ+6pSZQz+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=IIzq8JcI; arc=none smtp.client-ip=220.197.31.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3192b0431;
-	Thu, 22 Jan 2026 16:15:54 +0800 (GMT+08:00)
-Message-ID: <09f9acc1-d1ad-4971-8488-f0268cf08799@rock-chips.com>
-Date: Thu, 22 Jan 2026 16:15:52 +0800
+	s=arc-20240116; t=1769069924; c=relaxed/simple;
+	bh=7CIJ7TMjYpB8LpC3GI/NHJut7LLEZIAawxgiBGDf2Sk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LdxFM/nOyk3umVnHAKymbIuoHN5guzEzNttcDm1Blb3ONTdzm5SZcO+TiIZawti64L0TSQWpv+Piy0KNzgIB9ezWCkDXFQEy2qyR7TyxKtyDGU0uJ+M8+unKa2JmahWXKsQN0WGPoxF0x8ffGPxDyKM6nAZbpxxzGpwJbV/R45E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=PvMWY5uf; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
+Received: from 8bytes.org (p4ffe051a.dip0.t-ipconnect.de [79.254.5.26])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 0012B1C03FC;
+	Thu, 22 Jan 2026 09:18:39 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1769069920;
+	bh=7CIJ7TMjYpB8LpC3GI/NHJut7LLEZIAawxgiBGDf2Sk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PvMWY5ufBPgoOXsVdUw8Vj0CniCI9dAvxLDn4lDpuXmCKwHf2Gc0icqZELzs5/bxF
+	 hNLma+GYNrjzkPOB2Qi4+AsUIA14s87i2YIrIns6zc4PhvuV2MRETKhUZppOhAc+ZO
+	 QGhIF9P8a4rD10CKsr/W1YkuraSl0HsyvSmpxqlG2GQMDNQAFqIbyjiclWtBAR7EBY
+	 rwJVIzSjmh5iHWabfQ7oKB0IW2zjK9M184vYXLOwjmqd4/Z2zhJpdOFOGEe0Bw4xGJ
+	 PUWjW1bFZxAX6H9BTIBQAsDq7KiGmJLoJoO7pCJbKEBPMHsAltRtUIfPrAsN/CBAPq
+	 YvZDKQkPYin5g==
+Date: Thu, 22 Jan 2026 09:18:38 +0100
+From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: gregkh@linuxfoundation.org, rafael@kernel.org, broonie@kernel.org, 
+	will@kernel.org, robin.murphy@arm.com, robin.clark@oss.qualcomm.com, 
+	hanguidong02@gmail.com, quic_c_gdjako@quicinc.com, dmitry.baryshkov@oss.qualcomm.com, 
+	driver-core@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: do not register driver in probe()
+Message-ID: <mo5v74ryxfwik4ggr56c2xha34sfwq2kq6suxi65pbqxrdppnj@oqkirr2kgrey>
+References: <20260121141215.29658-1-dakr@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: dwc: Rename has_msi_ctrl to uses_imsi_rx for
- clarity
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>, Jingoo Han <jingoohan1@gmail.com>,
- Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-References: <20260121-remove_cap_clean_up-v1-0-e78115e5d467@oss.qualcomm.com>
- <20260121-remove_cap_clean_up-v1-2-e78115e5d467@oss.qualcomm.com>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20260121-remove_cap_clean_up-v1-2-e78115e5d467@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9be4c636e609cckunm14ea87cebf7b7
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGh4ZTFZNSkMaTEIYGUxNSUJWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=IIzq8JcI67qI+Dej9wE1vfiMIsKuAUdRsUki9Ewyc7/ZpxtxzVmnNKLSNyKh82lfwWaWUAdIg1aYu1obrvEdqH62PYny5b6liDg6SbF5mbVWmFt1N31hJz9v1Ebv7a2eTmE9GntwawGWNoEGh5gyD2xBOI6tVVdyT7pFV/AgHoQ=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=G7KAe8O/EONhIsPqZsYfU/8r+5SxhjqCO/8SBOh5FdI=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260121141215.29658-1-dakr@kernel.org>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.96 / 15.00];
+X-Spamd-Result: default: False [-0.29 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
+	R_MIXED_CHARSET(0.67)[subject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[8bytes.org:s=default];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-90201-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,kernel.org,google.com];
-	DMARC_POLICY_ALLOW(0.00)[rock-chips.com,none];
-	DKIM_TRACE(0.00)[rock-chips.com:+];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-90124-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	DMARC_NA(0.00)[8bytes.org: no valid DMARC record];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,arm.com,oss.qualcomm.com,gmail.com,quicinc.com,lists.linux.dev,vger.kernel.org,lists.infradead.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	FROM_NEQ_ENVFROM(0.00)[joro@8bytes.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[8bytes.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,qualcomm.com:email,rock-chips.com:email,rock-chips.com:dkim,rock-chips.com:mid]
-X-Rspamd-Queue-Id: D1000675B6
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[8bytes.org:dkim,amd.com:email,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1BB786306D
 X-Rspamd-Action: no action
 
-Hi Qiang,
+On Wed, Jan 21, 2026 at 03:12:01PM +0100, Danilo Krummrich wrote:
+> Commit 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in
+> qcom_smmu_impl_init") intended to also probe the TBU driver when
+> CONFIG_ARM_SMMU_QCOM_DEBUG is disabled, but also moved the corresponding
+> platform_driver_register() call into qcom_smmu_impl_init() which is
+> called from arm_smmu_device_probe().
+> 
+> However, it neither makes sense to register drivers from probe()
+> callbacks of other drivers, nor does the driver core allow registering
+> drivers with a device lock already being held.
+> 
+> The latter was revealed by commit dc23806a7c47 ("driver core: enforce
+> device_lock for driver_match_device()") leading to a deadlock condition
+> described in [1].
+> 
+> Additionally, it was noted by Robin that the current approach is
+> potentially racy with async probe [2].
+> 
+> Hence, fix this by registering the qcom_smmu_tbu_driver from
+> module_init(). Unfortunately, due to the vendoring of the driver, this
+> requires an indirection through arm-smmu-impl.c.
+> 
+> Reported-by: Mark Brown <broonie@kernel.org>
+> Closes: https://lore.kernel.org/lkml/7ae38e31-ef31-43ad-9106-7c76ea0e8596@sirena.org.uk/
+> Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
+> Link: https://lore.kernel.org/lkml/0c0d3707-9ea5-44f9-88a1-a65c62e3df8d@arm.com/ [2]
+> Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
+> Fixes: 0b4eeee2876f ("iommu/arm-smmu-qcom: Register the TBU driver in qcom_smmu_impl_init")
+> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 
-在 2026/01/22 星期四 15:45, Qiang Yu 写道:
-> The current "has_msi_ctrl" flag name is misleading because it suggests the
-> presence of any MSI controller, while it is specifically set for platforms
-> that lack .msi_init() callback and don't have "msi-parent" or "msi-map"
-> device tree properties, indicating they rely on the iMSI-RX module for MSI
-> functionality.
-> 
-> Rename it to "uses_imsi_rx" to make the intent clear:
-> - When true: Platform uses the iMSI-RX module for MSI handling
-> - When false: Platform has other MSI controller support (ITS/MBI, custom
-> handlers)
-> 
-> No functional changes, only improves code readability and eliminates
-> naming confusion.
-> 
+Acked-by: Joerg Roedel <joerg.roedel@amd.com>
 
-I love this patch, it's indeed confusing. But I noticed the naming
-seems inconsistency, for instance, there are already use_atu_msg,
-use_parent_dt_ranges, etc. Should we use use_imsi_rx instead?
+This patch should go via the branch that contains
 
-But in any case,
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+	dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()").
+	
+Otherwise we add a Fixes tag pointing to a commit which comes later in the git
+history.
 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> ---
->   drivers/pci/controller/dwc/pcie-designware-host.c | 16 ++++++++--------
->   drivers/pci/controller/dwc/pcie-designware.h      |  2 +-
->   drivers/pci/controller/dwc/pcie-qcom.c            |  4 ++--
->   3 files changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index a17833dd6f9d4b4aa06dc1fe09ffed5e2c28a82f..e7dbdf3670b426783e778be5064def10d2b209b1 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -255,7 +255,7 @@ void dw_pcie_msi_init(struct dw_pcie_rp *pp)
->   	u64 msi_target = (u64)pp->msi_data;
->   	u32 ctrl, num_ctrls;
->   
-> -	if (!pci_msi_enabled() || !pp->has_msi_ctrl)
-> +	if (!pci_msi_enabled() || !pp->uses_imsi_rx)
->   		return;
->   
->   	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
-> @@ -603,15 +603,15 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	}
->   
->   	if (pci_msi_enabled()) {
-> -		pp->has_msi_ctrl = !(pp->ops->msi_init ||
-> +		pp->uses_imsi_rx = !(pp->ops->msi_init ||
->   				     of_property_present(np, "msi-parent") ||
->   				     of_property_present(np, "msi-map"));
->   
->   		/*
-> -		 * For the has_msi_ctrl case the default assignment is handled
-> +		 * For the uses_imsi_rx case the default assignment is handled
->   		 * in the dw_pcie_msi_host_init().
->   		 */
-> -		if (!pp->has_msi_ctrl && !pp->num_vectors) {
-> +		if (!pp->uses_imsi_rx && !pp->num_vectors) {
->   			pp->num_vectors = MSI_DEF_NUM_VECTORS;
->   		} else if (pp->num_vectors > MAX_MSI_IRQS) {
->   			dev_err(dev, "Invalid number of vectors\n");
-> @@ -623,7 +623,7 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   			ret = pp->ops->msi_init(pp);
->   			if (ret < 0)
->   				goto err_deinit_host;
-> -		} else if (pp->has_msi_ctrl) {
-> +		} else if (pp->uses_imsi_rx) {
->   			ret = dw_pcie_msi_host_init(pp);
->   			if (ret < 0)
->   				goto err_deinit_host;
-> @@ -701,7 +701,7 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	dw_pcie_edma_remove(pci);
->   
->   err_free_msi:
-> -	if (pp->has_msi_ctrl)
-> +	if (pp->uses_imsi_rx)
->   		dw_pcie_free_msi(pp);
->   
->   err_deinit_host:
-> @@ -729,7 +729,7 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
->   
->   	dw_pcie_edma_remove(pci);
->   
-> -	if (pp->has_msi_ctrl)
-> +	if (pp->uses_imsi_rx)
->   		dw_pcie_free_msi(pp);
->   
->   	if (pp->ops->deinit)
-> @@ -1130,7 +1130,7 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
->   	 * the MSI and MSI-X capabilities of the Root Port to allow the drivers
->   	 * to fall back to INTx instead.
->   	 */
-> -	if (pp->has_msi_ctrl) {
-> +	if (pp->uses_imsi_rx) {
->   		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
->   		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
->   	}
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 53b65428fadb3d905b02bdcc06667065574f4f9d..33154bc89dd3b7d7fbe0ea749ca22bdc8292489c 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -416,7 +416,7 @@ struct dw_pcie_host_ops {
->   };
->   
->   struct dw_pcie_rp {
-> -	bool			has_msi_ctrl:1;
-> +	bool			uses_imsi_rx:1;
->   	bool			cfg0_io_shared:1;
->   	u64			cfg0_base;
->   	void __iomem		*va_cfg0_base;
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 13e6c334e10d21b9ebfe5f82de0aff3bce6191e3..999f5e083cef4e78b85a0111d2a90c3de65c83b5 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1633,7 +1633,7 @@ static void qcom_pci_free_msi(void *ptr)
->   {
->   	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
->   
-> -	if (pp && pp->has_msi_ctrl)
-> +	if (pp && pp->uses_imsi_rx)
->   		dw_pcie_free_msi(pp);
->   }
->   
-> @@ -1657,7 +1657,7 @@ static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
->   	if (ret)
->   		return ret;
->   
-> -	pp->has_msi_ctrl = true;
-> +	pp->uses_imsi_rx = true;
->   	dw_pcie_msi_init(pp);
->   
->   	return devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
-> 
+
+-Joerg
 
 
