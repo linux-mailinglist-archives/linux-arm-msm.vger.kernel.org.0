@@ -1,157 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-90237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4PV8DLxccmn5iwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:22:04 +0100
+	id QMqAGp5fcmnbjAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:34:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 437986B240
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:22:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 997ED6B67B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:34:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 416E43004633
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:07:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A8373305D3B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:19:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FE943DD1EE;
-	Thu, 22 Jan 2026 16:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687673994B7;
+	Thu, 22 Jan 2026 16:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b="AR0fbsTP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WK8Qdiy+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sm24.hosting.reg.ru (sm24.hosting.reg.ru [31.31.198.150])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B2B23A564;
-	Thu, 22 Jan 2026 16:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=31.31.198.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88298357A29;
+	Thu, 22 Jan 2026 16:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769100254; cv=none; b=KlyIDa5SPndo6e1pyCr2k1ghn3QebRmGans4GYXfxHhmz9jqAuMcmirx5pp5bxjOoe6VABhPhcu8rAaihDuJ70bIDM+989pWo7NVrm8bvioakymu21oFQsnBrX1imSXGH5Wa3zIrybbVmLsjsECN+oMOFq8EqbWxKohRH5pUEkw=
+	t=1769101162; cv=none; b=GoGyk6Q7P3doZhoCvzLekpVxjn+jfRyZH4GK70MSfGNFCwqOgInrwLifpTq8993ytI/N7e3iJjWqiHqlQ9obOBtj19rpARUpIXVUJkIT++mnWTezaLB/InzevbkJLJVhEVDlhJQ5DXtIiLoJsZOyVlLj/VAo/3MjiUK0FxyQqfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769100254; c=relaxed/simple;
-	bh=JG3LovOo8OfCeba/0jDRYVdiBKX1vrAercPsQQOpn1Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SGjQhB2pUlBtycjpqWOE7MSUJT8lq2IbNVgOWbWFP+lxAIdK3hSRS5dXsn0BSg1cfSlGm4dQ8CvMAk9eVaZqkwOj68cpy8WgSQbh8zXOjvlcp4ljQocfMYvJe8EGYbV4CB3X9t3f1QZ7dbM80jnzBpCLdA5ZUi4U54LzwNRPW0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru; spf=none smtp.mailfrom=minlexx.ru; dkim=pass (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b=AR0fbsTP; arc=none smtp.client-ip=31.31.198.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=minlexx.ru
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=minlexx.ru;
-	s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:
-	Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=X9lPr1dy2g4CLgGWk8MZMnU50xnfxCrtzUVtOSbSm0I=; b=AR0fbsTPXZkzdbGXnccGYrwTWn
-	cpBIF9bEaeWJinAH2u3C+MN2HY6jjQuFrycTKsSwKI6kQu2EA4aNLRYJtBrxI9tFGaW6p/mYmRRpH
-	aacCNYznPDzbkhj7NtAXbvhEdfztY+JuzoUHXmhyort5q/iBZgDxbkkz1lQpkp88KoQE=;
-Received: 
-	by sm24.hosting.reg.ru with esmtpsa (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(envelope-from <alexeymin@minlexx.ru>)
-	id 1vixms-000000060gQ-2E8B;
-	Thu, 22 Jan 2026 19:44:02 +0300
-Message-ID: <ac83f41e-08ad-4ffe-9f0e-02f8256af65c@minlexx.ru>
-Date: Thu, 22 Jan 2026 19:44:02 +0300
+	s=arc-20240116; t=1769101162; c=relaxed/simple;
+	bh=J5VqdBfB3qJLKokwNzHgugj/xR5O2h1qw7xFVlfjZa4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=kdVv66cO9V25zknpSrBPGzvo/bTFhjspeHbx0Xr4Uvgz8dqhdjBf2UtAmW9Nc7k9YPGZvQz57y1WD84lME4Of3Jzm1Burw08Dv8ISPf4trnAzlucasSRIpFqbVUoKS8PBfExv7Dg/2pQhGvv7FO4HCds2IBqe2HdQg2tDzgH1Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WK8Qdiy+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E2BC116D0;
+	Thu, 22 Jan 2026 16:59:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769101161;
+	bh=J5VqdBfB3qJLKokwNzHgugj/xR5O2h1qw7xFVlfjZa4=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=WK8Qdiy+OYob7AaCGw51BnlD5QnCxxjuxB5EckU4dxg2pceWfpf2hxcKJkAGzgwFv
+	 OYvOTfFdeWLftjTHM3KIMbaNG3YhhMm3cp18/6v/6az/gI/YGsh+WTX1ANIJxUNjYh
+	 cl/mjuaSdgT3rWYuCgUTf6UHnlg/1tRcJrYbOBdEOp6sNTpKOEKcgzWV5UUBmJd0NX
+	 F4SohSFUcSgon4U5tz/wv89xMjr8qloLQOeEn/d6QBDjT0SbWdWqo9mkOmFYG0Sf7l
+	 MKr9b6ddz/dSiwuBXDx4us3AZ2sp9epXfvMoT66uX2n8zu/GB8+2jbN0aSSOs+eDIg
+	 xXk9RSb1r82KA==
+Date: Thu, 22 Jan 2026 17:59:18 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Koichiro Den <den@valinux.co.jp>
+CC: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
+ kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
+ vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
+ l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+ kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
+ mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
+ heiko@sntech.de, srikanth.thokala@intel.com, marek.vasut+renesas@gmail.com,
+ yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
+ magnus.damm@gmail.com, christian.bruel@foss.st.com,
+ mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
+ thierry.reding@gmail.com, jonathanh@nvidia.com,
+ hayashi.kunihiko@socionext.com, mhiramat@kernel.org, kishon@kernel.org,
+ jirislaby@kernel.org, rongqianfeng@vivo.com, 18255117159@163.com,
+ shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
+ linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
+ linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+ linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v9_4/5=5D_PCI=3A_dwc=3A_ep=3A_Support_BAR_sub?=
+ =?US-ASCII?Q?range_inbound_mapping_via_Address_Match_Mode_iATU?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
+References: <20260122084909.2390865-1-den@valinux.co.jp> <20260122084909.2390865-5-den@valinux.co.jp> <aXHsd7-WWAGyhy_w@ryzen> <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
+Message-ID: <19D609EC-F850-4B43-A83C-0B8C70E641B5@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] arm64: dts: qcom: sdm660-xiaomi-lavender: fix
- regulator and SD settings
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Gianluca Boiano <morf3089@gmail.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, robh@kernel.org, david@ixit.cz
-References: <20260120180052.1031231-1-morf3089@gmail.com>
- <20260120180052.1031231-4-morf3089@gmail.com>
- <afa20489-adaf-46bd-b3e7-c763aba5d7c9@oss.qualcomm.com>
-Content-Language: en-US
-From: Alexey Minnekhanov <alexeymin@minlexx.ru>
-In-Reply-To: <afa20489-adaf-46bd-b3e7-c763aba5d7c9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.14 / 15.00];
+X-Spamd-Result: default: False [0.55 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	SUBJ_EXCESS_QP(1.20)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[minlexx.ru:s=dkim];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[minlexx.ru : SPF not aligned (relaxed),none];
+	XM_UA_NO_VERSION(0.01)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90237-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,ti.com,nxp.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[minlexx.ru:-];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	TAGGED_FROM(0.00)[bounces-90238-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.994];
-	FROM_NEQ_ENVFROM(0.00)[alexeymin@minlexx.ru,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_GT_50(0.00)[53];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.994];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,minlexx.ru:mid]
-X-Rspamd-Queue-Id: 437986B240
+	DBL_BLOCKED_OPENRESOLVER(0.00)[valinux.co.jp:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 997ED6B67B
 X-Rspamd-Action: no action
 
-On 21.01.2026 14:27, Konrad Dybcio wrote:
-> On 1/20/26 7:00 PM, Gianluca Boiano wrote:
->> Fix regulator configurations to ensure stable operation:
->> - vreg_l10a_1p8: Add regulator-system-load of 14000uA for proper USB PHY
->>    PLL operation
-> 
-> The driver needs to be fixed instead, as it should perform a
-> regulator_set_load()
+On 22 January 2026 15:29:02 CET, Koichiro Den <den@valinux=2Eco=2Ejp> wrote=
+:
+>
+>> To make sure that dw_pcie_ep_ib_atu_addr() cannot be called without alr=
+eady
+>> having a BAR configured, to we perhaps want something like:
+>
+>Thanks for the review=2E
+>Isn't the existing guard in dw_pcie_ep_ib_atu_addr sufficient?
+>
+>        [=2E=2E=2E]
+>        base =3D dw_pcie_ep_read_bar_assigned(ep, func_no, bar, epf_bar->=
+flags);
+>        if (!base) {
+>                dev_err(dev,
+>                        "BAR%u not assigned, cannot set up sub-range mapp=
+ings\n",
+>                        bar);
+>                return -EINVAL;
+>        }
+>
+
+Well, for a driver that does not call dw_pcie_ep_reset_bar() in their =2Ei=
+nit() to disable all BARs that are enabled in the controller by default, th=
+e host side will assign an PCI address even if no EPF has called set_bar() =
+on that BAR=2E
+
+See e=2Eg=2E
+https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/pci/pci=2Egit/commit/d=
+rivers/pci/controller/dwc/pcie-tegra194=2Ec?h=3Dcontroller/dwc&id=3D42f9c66=
+a6d0cc45758dab77233c5460e1cf003df
+
+There might be other EPC drivers that don't disable all BARs in their =2Ei=
+nit(), so I would say that simply checking if the BAR has an address is not=
+ sufficient to guarantee that an EPF driver has called set_bar()=2E
 
 
-Also change done by me in [1] with more detailed explanation:
+I think the safest option is my second suggestion because then we know tha=
+t we will only call
+dw_pcie_ep_ib_atu_addr()
 
-Since the commit f05ab10 ("arm64: dts: qcom: sdm660-lavender:
-Add missing USB phy supply") previously untouched by Linux regulator
-l10a is now used, but it exposed a bug from initial porting: when
-booting with USB cable inserted, or booting without cable and
-inserting it later, board reboots.
+When:
 
-Downstream vendor device tree has this:
+1) If ep->epf_bar[bar] is set:
+https://github=2Ecom/torvalds/linux/blob/v6=2E19-rc6/drivers/pci/controlle=
+r/dwc/pcie-designware-ep=2Ec#L363
 
-	rpm-regulator-ldoa10 {
-		status = "okay";
-		pm660_l10: regulator-l10 {
-			proxy-supply = <&pm660_l10>;
-			qcom,proxy-consumer-enable;
-			qcom,proxy-consumer-current = <14000>;
-			regulator-min-microvolt = <1780000>;
-			regulator-max-microvolt = <1950000>;
-			status = "okay";
-		};
-	};
 
-IIRC this qcom,proxy-consumer stuff is adding fake device that uses this
-regulator, but does nothing else except requesting specified voltage or
-current (in this case), until "real consumer" probes or something like
-that. The same can be achieved by simply adding regulator-system-load,
-and device stops rebooting when USB cable is inserted.
+2) All the other requirements to dynamically update a BAR is also met:
 
-This is also needed for all xiaomi-sdm660 boards, but not e.g on
-sdm630-sony ones.
+https://github=2Ecom/torvalds/linux/blob/v6=2E19-rc6/drivers/pci/controlle=
+r/dwc/pcie-designware-ep=2Ec#L368-L370
 
-I'm thinking maybe it is better to have regulators in sdm660-xiaomi-
-common.dtsi after all. The setup is mostly the same for them.
 
-[1] 
-https://github.com/sdm660-mainline/linux/commit/7121e17ee284bb6026c25d3f643fd020fa959877
 
---
-Regards,
-Alexey Minnekhanov
+Kind regards,
+Niklas
+
 
