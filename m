@@ -1,56 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-90245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OEAjMsBhcmnfjQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:43:28 +0100
+	id wGxeJCVkcmnfjQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:53:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BCD66B8FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:43:27 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6A5F6BC17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:53:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 79359304F59E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:31:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4E27830ADC56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:35:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46D9337649E;
-	Thu, 22 Jan 2026 17:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC4A638A70B;
+	Thu, 22 Jan 2026 17:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h1WWek2/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BvmUpGT8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF21372B28;
-	Thu, 22 Jan 2026 17:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DAE31CA4A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 17:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769102219; cv=none; b=jGUPg4KQ+uuEJ8T3pdY7hALHkTRoEf5cBabZLgW6aiAWt8G6LrqxVtWcAfIZwdR3vtb2nARNpLYyfY5ENI70E64lGAT/sF+kOj406n7C+WQ+5skxe3cJ2w1jr6bJwrh9GIewVxv+0AKh4k8nDi5DqAADXIh2o/OUlESntkSFHNs=
+	t=1769102438; cv=none; b=mGG9MWsHZmM2dgAUwafG/PZSm65fNhaWuRcBPdS+pfvI22qnjGZ3CAUrfFkFMW1WGjKPewUTGXJ4Bgb6MBWxWSJuoquFdw0gJhHxe1EKJAtwn+cV496oSHcz2PdN5y2tAivlpbi7ehn75lzw59DRUFSlSRfNEThm+EAr3CNi2vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769102219; c=relaxed/simple;
-	bh=czhrt6qU9W53d83wWXZNXSUrEG4WPODCrM75X7CHTjM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L0fdesjo6o1W38FzD6EJWGDuY74qz55CmOFJuHdxCjacJdpP1VqA2yu2Rv6OxmLtdot0xZf8l0fH4IdFLb3gRS7GUNFPi3Zo0Ukc1weaGXBH+zM7ttVL1qBMZr3e8EzxPN4MnMsITPiKJ5HetEGjeqs+onQGR9FrXVlQgr9Hn6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h1WWek2/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9378FC2BCB2;
-	Thu, 22 Jan 2026 17:16:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769102217;
-	bh=czhrt6qU9W53d83wWXZNXSUrEG4WPODCrM75X7CHTjM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=h1WWek2/5jcqZdn4fVlQo+m553ZImFYTaqn5kLRgxSQX6oo++iB4VyfP6Y8qpOkYP
-	 Y6fwm/MRHOrWfJfP1ZSqXGmkSH5ejzDH92uvu4KKKDNMww27LnmBuzU8jRzkENek+M
-	 Stskzhu3YcfqOc8Se6ClFNe43jpfu4XTJb7EYYuEb9A4oearHzXQBJ0lj/LLgBzXGu
-	 YjzbXx68tMCm2n0/NvZ6sAPGt5cN0SZ0LuaDZe4tzQ1H68bpc4bJWWfbeKBKSMTv4S
-	 vlUTk7Yo2s4NnODexudSr4YRL3TAF9Ti4jiZruQhQDEwaG2k/63SYi3dUHAji+5F99
-	 LzsAt5TFhwVEw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86BA9D3EE9E;
-	Thu, 22 Jan 2026 17:16:57 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Thu, 22 Jan 2026 22:46:54 +0530
-Subject: [PATCH v6 4/4] power: sequencing: Add the Power Sequencing driver
- for the PCIe M.2 connectors
+	s=arc-20240116; t=1769102438; c=relaxed/simple;
+	bh=n9RZtPFllLNwOyCjbUMdTCvnrM02g20QTY6jzHJIkQk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=neoK71d8iZB7JlFI3hCBMZw21so64g9o4p1UsPTqou8IXwx41XmbxGVy7BDGOgYqkfHbqnFs0JKxUYkS2HwzrN/SV+2w2B5YVDDUvKpqY05cGHKTmQ4bEZ54bFSQHqLj27ORZhLUj7BjCF4rjxpWJBjKhQ7DdruoEAkRrQ536bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BvmUpGT8; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-4359a302794so854594f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 09:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769102428; x=1769707228; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vp66PoEMaro4oICpmfiKYxfo9XQqIbFmXqoLz93VEMo=;
+        b=BvmUpGT82iiIhC3Xk+d071xVm7e+IRxoewBvylH+AeIcLMLqpCYXu9E9WU6iWUvdcW
+         QoP9DWr6MAZQNO8wr/BBC2AV2LnYm/EHIuBtRmLYqvt9rWMuDD8koYNMNE75+v2pTtuy
+         3LgvRDirQKYmuvFmITKEioZlvQ7uZ6t5QhKclecL/U1zKP9W1Sjb2Dhh61CvvzmzMXMq
+         0+EXWZ1uMJeqCLAcOEnlDAUjYXXeClfNYXj3T9i5lQb3lT6TVh8ypWUK2+Ww2LjEMdBB
+         OmmUolQrBCFTscJINHcKwoBU3zjXcDbgSF/Flm8NgUA4PWBIS56W3CUOBWRGUQVCmKry
+         q2Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769102428; x=1769707228;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vp66PoEMaro4oICpmfiKYxfo9XQqIbFmXqoLz93VEMo=;
+        b=TD6imx48N9ltGNOrthlkqBdx3fuIM8/QGwvMZ4lhLZuj95ytJhUTrFebZ2tqHs+fmY
+         yy7RecWudbbeLrmqzg8vHMyXUlndrfCTQHhr2Tnlj76xR41MuEsPpNykbgGTMmhNQFpY
+         F6IURqRSAGOVMMTBMd2APP7CtEOpM7+auE2QKjLsSEzser3JfWR+c39rq8xSjgCOTadG
+         dBxekfG7Q3JtbiAs5i0hkabqOeTSSmR5ywH8IBzkDhKH/ng1JqKHuJmH2w8QVR6RPsms
+         ayBK0Fybg1ArmE+GJj9HXqfdUQc8i9ENTPpDyifUqVf3E1Et3gZpKSjiIGnjjPKEnFay
+         yTnQ==
+X-Gm-Message-State: AOJu0YwQ4Ma5JSapPtfyLHbCBlq3Uo7QVf0imuAk2Pm65G4GYrWD3g8n
+	85s0EHyktdJMUjR8AvmcS+slbvKRF8ruwQ8e9p3EuemMWz7WmT/yBlkD
+X-Gm-Gg: AZuq6aKV91lsfta3/+bMvvUq/uhtL6qLScxvn11K3xiMphL5mKCKwHl7r1cO/0ePlu6
+	YBw3POc1+ubXWlJ6i9eYXEDZ73eYuNgn6u8teRi00pnMivgfggRaXzCEP5ZVio/Lcirq8/9Fjb9
+	oan9lbNxtayKVzKJRKQc5J2rZYcWz43Ngkw1nLxtSffLHqBv2Wz1Tnd5xU3cew6xCnuRLuwPJpA
+	3bYY8D/Qg0hFplUFsPAJuqDVhlfANC3+pIdvQ5CT0X+csFs1pemZP63CHjEiMg4wSy+QOKJdlHb
+	2kUGeUH1RhXc5U8bv65Fmgu1XTOJcCgXcno0Deeukj9a7wGcVCtq0d5QCMzm7J739YD7VVYdH0j
+	13+fDxUY6WCt5ij+XyEgq9coPmG97wGK2hD+gl+nd7xx0i5Q8Dxl3abaHekrvD6FGCOD/I39Ltb
+	PUB+1Psv/pVIEd6KoWzCg88vOya0wodaS1cDk8KHh8
+X-Received: by 2002:a05:6000:2dc3:b0:435:ae97:b37 with SMTP id ffacd0b85a97d-435b161343bmr424678f8f.52.1769102427581;
+        Thu, 22 Jan 2026 09:20:27 -0800 (PST)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-435b1f7ba0bsm51378f8f.40.2026.01.22.09.20.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jan 2026 09:20:27 -0800 (PST)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Thu, 22 Jan 2026 18:20:12 +0100
+Subject: [PATCH] pmdomain: qcom: rpmpd: fix off-by-one error in clamping to
+ the highest state
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,311 +85,85 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260122-pci-m2-v6-4-575da9f97239@oss.qualcomm.com>
-References: <20260122-pci-m2-v6-0-575da9f97239@oss.qualcomm.com>
-In-Reply-To: <20260122-pci-m2-v6-0-575da9f97239@oss.qualcomm.com>
-To: Bjorn Helgaas <bhelgaas@google.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
- Damien Le Moal <dlemoal@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-pm@vger.kernel.org, linux-ide@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7812;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=MrmblrG2JUxLhRhHQkVgoN7g+pVLmcvg9aZ9Ii+xtN8=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpcluHN3RueTwQ/o3zdxZcr6aj+Ny3g+qnSPyCX
- RI/5CTvL0mJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaXJbhwAKCRBVnxHm/pHO
- 9WbiB/98lvib3si3lbW+GSz8HT/YeqkOOxmZfVBQZ2VIxZe5fqwxu7ryxWOngkDxAMsySUSb6Jd
- umwrPa3RVCWhilEs3rP1K6OFK5Opiwu9746mIHpYXYC3rMgqZ6J8mhJji9Ml4nLF64/AKwc9Sos
- g4agtEoXH1O0CisnLMg8QhxWOo5G7oq46Dz9RieyxkZ1cLaG2jJrSZHH+PRaVJ91YKXHPBylRKk
- jjOsZzrm66NzL6aNZ+WixH0KlDgcHROC7HRW5V7pDjg1C7S/mQBKMKnRLqaRajlwp3oeY86pVyC
- ROOl7IUCPjuafsjqJfZIcBPYmDKZ3xpu14AHmvZPiYKx1LOZ
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+Message-Id: <20260122-qcom-rpmpd-clamp-fix-v1-1-7b6a67975a69@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAEtccmkC/x2MQQqAIBAAvxJ7bsEkjPpKdJB1q4U0U4hA+nvSc
+ QZmCmROwhmmpkDiW7KcoULXNkC7DRujuMqglTaq0xovOj2m6KNDOqyPuMqDyqiVnB3JDT3UNCa
+ u+t/Oy/t+432zk2YAAAA=
+X-Change-ID: 20260122-qcom-rpmpd-clamp-fix-060fcda9cd74
+To: Ulf Hansson <ulf.hansson@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90245-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-90248-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,arm.com:email,qualcomm.com:email,oss.qualcomm.com:mid,oss.qualcomm.com:replyto]
-X-Rspamd-Queue-Id: 9BCD66B8FD
+	FROM_NEQ_ENVFROM(0.00)[j4g8y7@gmail.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: E6A5F6BC17
 X-Rspamd-Action: no action
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+As it is indicated by the comment, the rpmpd_aggregate_corner() function
+tries to clamp the state to the highest corner/level supported by the
+given power domain, however the calculation of the highest state contains
+an off-by-one error.
 
-This driver is used to control the PCIe M.2 connectors of different
-Mechanical Keys attached to the host machines and supporting different
-interfaces like PCIe/SATA, USB/UART etc...
+The 'max_state' member of the 'rpmpd' structure indicates the highest
+corner/level, and as such it does not needs to be decremented.
 
-Currently, this driver supports only the Mechanical Key M connectors with
-PCIe interface. The driver also only supports driving the mandatory 3.3v
-and optional 1.8v power supplies. The optional signals of the Key M
-connectors are not currently supported.
+Change the code to use the 'max_state' value directly to avoid the error.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Fixes: 98c8b3efacae ("soc: qcom: rpmpd: Add sync_state")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- MAINTAINERS                               |   7 ++
- drivers/power/sequencing/Kconfig          |   8 ++
- drivers/power/sequencing/Makefile         |   1 +
- drivers/power/sequencing/pwrseq-pcie-m2.c | 168 ++++++++++++++++++++++++++++++
- 4 files changed, 184 insertions(+)
+ drivers/pmdomain/qcom/rpmpd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5b11839cba9d..2eb7b6d26573 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20791,6 +20791,13 @@ F:	Documentation/driver-api/pwrseq.rst
- F:	drivers/power/sequencing/
- F:	include/linux/pwrseq/
+diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
+index f8580ec0f73785544aeb6f686438f39b477d134d..98ab4f9ea9bff431614739f37cd32b7b3bb407e4 100644
+--- a/drivers/pmdomain/qcom/rpmpd.c
++++ b/drivers/pmdomain/qcom/rpmpd.c
+@@ -1001,7 +1001,7 @@ static int rpmpd_aggregate_corner(struct rpmpd *pd)
  
-+PCIE M.2 POWER SEQUENCING
-+M:	Manivannan Sadhasivam <mani@kernel.org>
-+L:	linux-pci@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/connector/pcie-m2-m-connector.yaml
-+F:	drivers/power/sequencing/pwrseq-pcie-m2.c
-+
- POWER STATE COORDINATION INTERFACE (PSCI)
- M:	Mark Rutland <mark.rutland@arm.com>
- M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index 280f92beb5d0..f5fff84566ba 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -35,4 +35,12 @@ config POWER_SEQUENCING_TH1520_GPU
- 	  GPU. This driver handles the complex clock and reset sequence
- 	  required to power on the Imagination BXM GPU on this platform.
+ 	/* Clamp to the highest corner/level if sync_state isn't done yet */
+ 	if (!pd->state_synced)
+-		this_active_corner = this_sleep_corner = pd->max_state - 1;
++		this_active_corner = this_sleep_corner = pd->max_state;
+ 	else
+ 		to_active_sleep(pd, pd->corner, &this_active_corner, &this_sleep_corner);
  
-+config POWER_SEQUENCING_PCIE_M2
-+	tristate "PCIe M.2 connector power sequencing driver"
-+	depends on OF || COMPILE_TEST
-+	help
-+	  Say Y here to enable the power sequencing driver for PCIe M.2
-+	  connectors. This driver handles the power sequencing for the M.2
-+	  connectors exposing multiple interfaces like PCIe, SATA, UART, etc...
-+
- endif
-diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing/Makefile
-index 96c1cf0a98ac..0911d4618298 100644
---- a/drivers/power/sequencing/Makefile
-+++ b/drivers/power/sequencing/Makefile
-@@ -5,3 +5,4 @@ pwrseq-core-y				:= core.o
- 
- obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)	+= pwrseq-qcom-wcn.o
- obj-$(CONFIG_POWER_SEQUENCING_TH1520_GPU) += pwrseq-thead-gpu.o
-+obj-$(CONFIG_POWER_SEQUENCING_PCIE_M2)	+= pwrseq-pcie-m2.o
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-new file mode 100644
-index 000000000000..96ea4adc9d22
---- /dev/null
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -0,0 +1,168 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_graph.h>
-+#include <linux/platform_device.h>
-+#include <linux/pwrseq/provider.h>
-+#include <linux/regulator/consumer.h>
-+#include <linux/slab.h>
-+
-+struct pwrseq_pcie_m2_pdata {
-+	const struct pwrseq_target_data **targets;
-+};
-+
-+struct pwrseq_pcie_m2_ctx {
-+	struct pwrseq_device *pwrseq;
-+	struct device_node *of_node;
-+	const struct pwrseq_pcie_m2_pdata *pdata;
-+	struct regulator_bulk_data *regs;
-+	size_t num_vregs;
-+	struct notifier_block nb;
-+};
-+
-+static int pwrseq_pcie_m2_m_vregs_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_enable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_pcie_m2_m_vregs_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_disable(ctx->num_vregs, ctx->regs);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_vregs_unit_data = {
-+	.name = "regulators-enable",
-+	.enable = pwrseq_pcie_m2_m_vregs_enable,
-+	.disable = pwrseq_pcie_m2_m_vregs_disable,
-+};
-+
-+static const struct pwrseq_unit_data *pwrseq_pcie_m2_m_unit_deps[] = {
-+	&pwrseq_pcie_m2_vregs_unit_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_unit_data pwrseq_pcie_m2_m_pcie_unit_data = {
-+	.name = "pcie-enable",
-+	.deps = pwrseq_pcie_m2_m_unit_deps,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_pcie_m2_m_pcie_target_data = {
-+	.name = "pcie",
-+	.unit = &pwrseq_pcie_m2_m_pcie_unit_data,
-+};
-+
-+static const struct pwrseq_target_data *pwrseq_pcie_m2_m_targets[] = {
-+	&pwrseq_pcie_m2_m_pcie_target_data,
-+	NULL
-+};
-+
-+static const struct pwrseq_pcie_m2_pdata pwrseq_pcie_m2_m_of_data = {
-+	.targets = pwrseq_pcie_m2_m_targets,
-+};
-+
-+static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
-+				 struct device *dev)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+	struct device_node *endpoint __free(device_node) = NULL;
-+
-+	/*
-+	 * Traverse the 'remote-endpoint' nodes and check if the remote node's
-+	 * parent matches the OF node of 'dev'.
-+	 */
-+	for_each_endpoint_of_node(ctx->of_node, endpoint) {
-+		struct device_node *remote __free(device_node) =
-+				of_graph_get_remote_port_parent(endpoint);
-+		if (remote && (remote == dev_of_node(dev)))
-+			return PWRSEQ_MATCH_OK;
-+	}
-+
-+	return PWRSEQ_NO_MATCH;
-+}
-+
-+static void pwrseq_pcie_m2_free_resources(void *data)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = data;
-+
-+	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pwrseq_pcie_m2_ctx *ctx;
-+	struct pwrseq_config config = {};
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->of_node = of_node_get(dev->of_node);
-+	ctx->pdata = device_get_match_data(dev);
-+	if (!ctx->pdata)
-+		return dev_err_probe(dev, -ENODEV,
-+				     "Failed to obtain platform data\n");
-+
-+	/*
-+	 * Currently, of_regulator_bulk_get_all() is the only regulator API that
-+	 * allows to get all supplies in the devicetree node without manually
-+	 * specifying them.
-+	 */
-+	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev), &ctx->regs);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get all regulators\n");
-+
-+	ctx->num_vregs = ret;
-+
-+	ret = devm_add_action_or_reset(dev, pwrseq_pcie_m2_free_resources, ctx);
-+	if (ret)
-+		return ret;
-+
-+	config.parent = dev;
-+	config.owner = THIS_MODULE;
-+	config.drvdata = ctx;
-+	config.match = pwrseq_pcie_m2_match;
-+	config.targets = ctx->pdata->targets;
-+
-+	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-+	if (IS_ERR(ctx->pwrseq))
-+		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+				     "Failed to register the power sequencer\n");
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
-+	{
-+		.compatible = "pcie-m2-m-connector",
-+		.data = &pwrseq_pcie_m2_m_of_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pwrseq_pcie_m2_of_match);
-+
-+static struct platform_driver pwrseq_pcie_m2_driver = {
-+	.driver = {
-+		.name = "pwrseq-pcie-m2",
-+		.of_match_table = pwrseq_pcie_m2_of_match,
-+	},
-+	.probe = pwrseq_pcie_m2_probe,
-+};
-+module_platform_driver(pwrseq_pcie_m2_driver);
-+
-+MODULE_AUTHOR("Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>");
-+MODULE_DESCRIPTION("Power Sequencing driver for PCIe M.2 connector");
-+MODULE_LICENSE("GPL");
 
+---
+base-commit: 95fad101a21d31b4facd1b9e0713bba1c517db6e
+change-id: 20260122-qcom-rpmpd-clamp-fix-060fcda9cd74
+
+Best regards,
 -- 
-2.51.0
-
+Gabor Juhos <j4g8y7@gmail.com>
 
 
