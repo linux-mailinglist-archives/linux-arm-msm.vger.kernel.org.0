@@ -1,178 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-90238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QMqAGp5fcmnbjAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:34:22 +0100
+	id UNtTMApfcmnbjAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:31:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 997ED6B67B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:34:21 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 209C36B57C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 18:31:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A8373305D3B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:19:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1B04B302A05F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 17:19:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687673994B7;
-	Thu, 22 Jan 2026 16:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 520083A0B17;
+	Thu, 22 Jan 2026 17:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WK8Qdiy+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D/mSaB/N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88298357A29;
-	Thu, 22 Jan 2026 16:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D292E5B3D;
+	Thu, 22 Jan 2026 16:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769101162; cv=none; b=GoGyk6Q7P3doZhoCvzLekpVxjn+jfRyZH4GK70MSfGNFCwqOgInrwLifpTq8993ytI/N7e3iJjWqiHqlQ9obOBtj19rpARUpIXVUJkIT++mnWTezaLB/InzevbkJLJVhEVDlhJQ5DXtIiLoJsZOyVlLj/VAo/3MjiUK0FxyQqfo=
+	t=1769101197; cv=none; b=I2Nykr2gMHDh2atSd60fUUN8Q+PHDDhgkUZNbDh1dO4nGYBreif9ggH8QcPqclwp+HRjJuGROzE1Ss9iLVZx386pu6M7K08zhwcrlvQpY1ue8pGcX0rSzLGkuCZ7SnFRJrSWFfW4X+zuNtpLGBnepO2ARfjaFggU4fMboWo3iG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769101162; c=relaxed/simple;
-	bh=J5VqdBfB3qJLKokwNzHgugj/xR5O2h1qw7xFVlfjZa4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=kdVv66cO9V25zknpSrBPGzvo/bTFhjspeHbx0Xr4Uvgz8dqhdjBf2UtAmW9Nc7k9YPGZvQz57y1WD84lME4Of3Jzm1Burw08Dv8ISPf4trnAzlucasSRIpFqbVUoKS8PBfExv7Dg/2pQhGvv7FO4HCds2IBqe2HdQg2tDzgH1Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WK8Qdiy+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E2BC116D0;
-	Thu, 22 Jan 2026 16:59:20 +0000 (UTC)
+	s=arc-20240116; t=1769101197; c=relaxed/simple;
+	bh=fnj5f0mzOP3nCSR0nXkS9PzcpIrYNOAhr7vqfig/jcU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jU+aBm/2otYUtAdEDfm+v2oGpTyG+4zI22lM+hSffGdqGb5CGNYdcjdD9UbxT5fUC2nGtXdq3igJ97cYm155f+89ZdVCtvssMpEv5YgrKkUce8531Hw/FYXDxrMeZZ2ZNYVZYXwxfULYYC7la7GZFWhui1HESUVa8VFay3pAuOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D/mSaB/N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E608C116C6;
+	Thu, 22 Jan 2026 16:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769101161;
-	bh=J5VqdBfB3qJLKokwNzHgugj/xR5O2h1qw7xFVlfjZa4=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=WK8Qdiy+OYob7AaCGw51BnlD5QnCxxjuxB5EckU4dxg2pceWfpf2hxcKJkAGzgwFv
-	 OYvOTfFdeWLftjTHM3KIMbaNG3YhhMm3cp18/6v/6az/gI/YGsh+WTX1ANIJxUNjYh
-	 cl/mjuaSdgT3rWYuCgUTf6UHnlg/1tRcJrYbOBdEOp6sNTpKOEKcgzWV5UUBmJd0NX
-	 F4SohSFUcSgon4U5tz/wv89xMjr8qloLQOeEn/d6QBDjT0SbWdWqo9mkOmFYG0Sf7l
-	 MKr9b6ddz/dSiwuBXDx4us3AZ2sp9epXfvMoT66uX2n8zu/GB8+2jbN0aSSOs+eDIg
-	 xXk9RSb1r82KA==
-Date: Thu, 22 Jan 2026 17:59:18 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Koichiro Den <den@valinux.co.jp>
-CC: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
- kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
- vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
- l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
- kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
- mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
- heiko@sntech.de, srikanth.thokala@intel.com, marek.vasut+renesas@gmail.com,
- yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be,
- magnus.damm@gmail.com, christian.bruel@foss.st.com,
- mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
- thierry.reding@gmail.com, jonathanh@nvidia.com,
- hayashi.kunihiko@socionext.com, mhiramat@kernel.org, kishon@kernel.org,
- jirislaby@kernel.org, rongqianfeng@vivo.com, 18255117159@163.com,
- shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
- linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
- linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v9_4/5=5D_PCI=3A_dwc=3A_ep=3A_Support_BAR_sub?=
- =?US-ASCII?Q?range_inbound_mapping_via_Address_Match_Mode_iATU?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
-References: <20260122084909.2390865-1-den@valinux.co.jp> <20260122084909.2390865-5-den@valinux.co.jp> <aXHsd7-WWAGyhy_w@ryzen> <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
-Message-ID: <19D609EC-F850-4B43-A83C-0B8C70E641B5@kernel.org>
+	s=k20201202; t=1769101197;
+	bh=fnj5f0mzOP3nCSR0nXkS9PzcpIrYNOAhr7vqfig/jcU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=D/mSaB/NDq2jreN5kdch+CxtKuutzH5sGJhcWs4Iuwgska/79RFnyt2+QmqWuOzGj
+	 gXH49QCP0UiMSu415Mm11bk6ywNiJ7DvUgjyJKtD5lGm1o9dzTHIfFfIwrF81pK4Fp
+	 FIOM5sjK9z0/1ApyexIZkGEuctP9XMkB7OVAKpVketT29w/lydGM6WPFTcIdN89gKa
+	 ZlfLq7d9bZ3zhooCGWOhKTCjyQef0+LHL0W7mB5nfskVQyFirlFZhE7SsbhxU6Q8OU
+	 9f0PgWIgO/clpgh3X13HxqSdcZ5UskxXCMbnTHq2Kg73Fo1ljatyxXFx2PkPQOKf2O
+	 Z9C0nbg45tr9Q==
+From: Will Deacon <will@kernel.org>
+To: bibek.patro@oss.qualcomm.com
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	charan.kalla@oss.qualcomm.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	iommu@lists.linux.dev,
+	joro@8bytes.org,
+	konrad.dybcio@oss.qualcomm.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robin.clark@oss.qualcomm.com,
+	robin.murphy@arm.com
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Restore ACTLR settings for MDSS on sa8775p
+Date: Thu, 22 Jan 2026 16:59:40 +0000
+Message-ID: <176909187807.2987598.8685170214732571189.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260120151105.614792-1-bibek.patro@oss.qualcomm.com>
+References: <20260120151105.614792-1-bibek.patro@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.55 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	SUBJ_EXCESS_QP(1.20)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,ti.com,nxp.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90239-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90238-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[53];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[will@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.994];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	NEURAL_HAM(-0.00)[-0.998];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[valinux.co.jp:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 997ED6B67B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arm64.dev:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 209C36B57C
 X-Rspamd-Action: no action
 
-On 22 January 2026 15:29:02 CET, Koichiro Den <den@valinux=2Eco=2Ejp> wrote=
-:
->
->> To make sure that dw_pcie_ep_ib_atu_addr() cannot be called without alr=
-eady
->> having a BAR configured, to we perhaps want something like:
->
->Thanks for the review=2E
->Isn't the existing guard in dw_pcie_ep_ib_atu_addr sufficient?
->
->        [=2E=2E=2E]
->        base =3D dw_pcie_ep_read_bar_assigned(ep, func_no, bar, epf_bar->=
-flags);
->        if (!base) {
->                dev_err(dev,
->                        "BAR%u not assigned, cannot set up sub-range mapp=
-ings\n",
->                        bar);
->                return -EINVAL;
->        }
->
+On Tue, 20 Jan 2026 20:41:05 +0530, bibek.patro@oss.qualcomm.com wrote:
+> The ACTLR configuration for the sa8775p MDSS client was inadvertently
+> dropped while reworking the commit f91879fdf70b ("iommu/arm-smmu-qcom:
+> Add actlr settings for mdss on Qualcomm platforms"). Without this
+> entry, the sa8775p MDSS block does not receive the intended default
+> ACTLR configuration.
+> 
+> Restore the missing compatible entry so that the platform receives the
+> expected behavior.
+> 
+> [...]
 
-Well, for a driver that does not call dw_pcie_ep_reset_bar() in their =2Ei=
-nit() to disable all BARs that are enabled in the controller by default, th=
-e host side will assign an PCI address even if no EPF has called set_bar() =
-on that BAR=2E
+Applied to iommu (arm/smmu/updates), thanks!
 
-See e=2Eg=2E
-https://git=2Ekernel=2Eorg/pub/scm/linux/kernel/git/pci/pci=2Egit/commit/d=
-rivers/pci/controller/dwc/pcie-tegra194=2Ec?h=3Dcontroller/dwc&id=3D42f9c66=
-a6d0cc45758dab77233c5460e1cf003df
+[1/1] iommu/arm-smmu-qcom: Restore ACTLR settings for MDSS on sa8775p
+      https://git.kernel.org/iommu/c/14e9a138dd02
 
-There might be other EPC drivers that don't disable all BARs in their =2Ei=
-nit(), so I would say that simply checking if the BAR has an address is not=
- sufficient to guarantee that an EPF driver has called set_bar()=2E
+Cheers,
+-- 
+Will
 
-
-I think the safest option is my second suggestion because then we know tha=
-t we will only call
-dw_pcie_ep_ib_atu_addr()
-
-When:
-
-1) If ep->epf_bar[bar] is set:
-https://github=2Ecom/torvalds/linux/blob/v6=2E19-rc6/drivers/pci/controlle=
-r/dwc/pcie-designware-ep=2Ec#L363
-
-
-2) All the other requirements to dynamically update a BAR is also met:
-
-https://github=2Ecom/torvalds/linux/blob/v6=2E19-rc6/drivers/pci/controlle=
-r/dwc/pcie-designware-ep=2Ec#L368-L370
-
-
-
-Kind regards,
-Niklas
-
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
