@@ -1,252 +1,308 @@
-Return-Path: <linux-arm-msm+bounces-90202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uN4BNUQocmmadwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:38:12 +0100
+	id 6ArABj8pcmmadwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:42:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87F7B67644
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:38:12 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 753C4676D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 14:42:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7C7597853F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 13:01:50 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 86B907A2819
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 13:17:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13CF529C325;
-	Thu, 22 Jan 2026 13:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF9A02E7BDE;
+	Thu, 22 Jan 2026 13:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="g9UNW76H";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MFdqQcui"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vu/vaqZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48512285068
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 13:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F752DC763;
+	Thu, 22 Jan 2026 13:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769086907; cv=none; b=L7o8Wc6Xmz+nwIy29/l8IRXKwuOEr3MXOO6yH+i0DhAMQxHc5PvQfaDs3KVQX8CLxnsMqwRaouEmsg5z/n+kKAZFFueiHA7fHKOzTNHXjF7qvLxLbuaWiV+UFfZ9qu/bvyPrbfWjAJa7s49NwJRjZ4aiC0N6+taye4iCqrmUlxs=
+	t=1769087844; cv=none; b=ondynYT0SVmdcmcj7HUsiePaVvft+/RD96lQGjPYYj5HnvY5xVgLzNVCQjnTDChfQjoV3t/G1GwawDF8IjXbPkIlMfkGKRMq+0BE86yv2pHSG8+w0WbjUo4udoxgvsv6PBHM2yysP8w5/LPbLo7HAqjOKo3qs4OZif6l3oRUs4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769086907; c=relaxed/simple;
-	bh=gADdveSoM8o+46ZADSQxyRa26NdWa+6jBjOUZ7l3SSc=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=unuAdPHL1Xe/bXbTTZW9LvNjJsFJ6fsOL2kUK178loGlrYyKAKFdB1598HPVb49t5TvisKHb6l9tzpFUreEWGStEaz5+Q4Pc6a3YeVbXmbuckgIOQwm9SPh/Oky8gc3l5/Smi6TDWe4+tKxDOjCq4hepPL8VXQPio5cb+BFrGaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=g9UNW76H; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MFdqQcui; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60M66hx23902374
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 13:01:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tTcYS5tH3ozwmazFbcCVIeHW08C2pZQa4cHM4VRC0zM=; b=g9UNW76HTEYdo3OP
-	z6c2axRHwNTqA4vntKiqYbwbYqH5x+4RHQdAymVx8Gm1mX1O9nmErcBHEKQzBj2O
-	OolNy8vZXflv4Muw8c6pLrimw9aGTV4phz4dYlypyZPj9GJXHAg67LHLSfaXLdFL
-	LRuzKaACPffc2JSBB/yXaancJqHrx3OJ1f3DocG52DlciLST85I/QwhOlWCAJcb1
-	EJoHC26i9qkn/ZpGdjVk5P49vj159CFQM86AVVPT9Lhtp92TbuNXJsEUT1XbFBiU
-	T7j9EXbJavzOEsGfYFgAHr6VkywGAADPpL+nniAZgtLoaYZtk2qEFzkFi9tFwva6
-	ifSpiQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bu4khjw1k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 13:01:43 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a0f4822f77so18391865ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 05:01:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769086903; x=1769691703; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tTcYS5tH3ozwmazFbcCVIeHW08C2pZQa4cHM4VRC0zM=;
-        b=MFdqQcuiBhBNvXZEOxICzAwuA7NUTk9RaFy1Xm6r9KBSEVptMubSYb3zZhfCr0MIgp
-         DCByarrKBzhwWi/kgDru5sm8msO8O3S7o6Bjm0jayeF4npmld3IDPojnIxOXHDIVd7xk
-         j8etV5kCNr79Gb2NTMi2vtpD8CbjJx3YEBVF/35xz3/wiw8i79KXEW8mh0YRwHMQA5hh
-         2nmMW+UyqUitCjVnjSp8BiC0K/lMbk3HtF23ACuyCPdikI5ieHR3FFQ8/01A/SDgNoji
-         FivQQGhk0hhTT2rCEwXcInPUu18MA6ZselMluqiYoCQ6atV8iuLZgc1osFT9v8zp66N1
-         jyXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769086903; x=1769691703;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTcYS5tH3ozwmazFbcCVIeHW08C2pZQa4cHM4VRC0zM=;
-        b=KhCFZfE22+OZsqpYw1hzFNTrZPc3Cd6sg+40m51iLPHD95R3QicYbRw0xfwfG3gOg2
-         ayidSZWfhkwQweXzGrI/xnnKf1MzOqUaRIKXy9JYbsmHJxm2lhiJWgpxP7lsTFN5UT3j
-         MyPKqAPcq+JAiitYPNN/9YudN/sRrBLuSMjY+VRMsO0fzSUQjMPoIp+LR+joVe6p9S/2
-         5SVNwMy7mcuzTLr0j8mMaoiaeup9T3lTdfzwDiqIONBkTps6wbofzyTKMS6sE4UUP4p2
-         H3bMHrtpJYdU6JLDuOo8bWhzGSpsODtG18PuAsPniMWassXV37Ou6B5OSCKyZq78nd89
-         YCUA==
-X-Forwarded-Encrypted: i=1; AJvYcCXZHOw4yXs4gTJhAYDh1R0ua3e22ct0G/9mIlthdm5oxh6Ct5W5ITcVrgR2Ek0cLjzCMeMksGiEmEYbDMJC@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUVNIhybaJiZRiUX52ypdpyX36hBuI97c6WzdJYtigIgCdBpUL
-	esRuTgFk9B3StzCklqzert12SYAAjU9KA447pVGuI0/4GO/AVYu7oW1XD1VjBsWTJkL0Z5UrDxA
-	TrqfMl4PtrDooqofuhJBIzddr5MChBfDcWVPejP7Eau+ZEEJMv9RImnSlcOAtUSbjA8mh
-X-Gm-Gg: AZuq6aKULp0U2zIdRIL86A8brbe2qfP0ICNZTijng81RkuLSRi32zT9psYOqdPLLgyY
-	I2TFE0f037/H4NleNC1bry43u94Ip+pBC8RzL/VsBjlNSv4ZnpQa4Db33DKZprAS8j5uZmI4L1s
-	5WRcL7aIhv5xseNezFNJUaCdMLGTApBKnqv4x1rcZ0iDHEwPsPVSmSfHlkv6a7h0ygDPoX9JDW6
-	mmyg+P0WvN2PPxrJuEIxP+Ia9OExwMKyhd14DjQ/0iwsIOrqKX5FeXOsF9pO/Oqea6KT7goEBy9
-	HbSw1w1T1nEHsH2VOKwLBCi0reuB6X8pHsX+n73jnSgU5H5cWTWr5XuQhmHcAQXkn3SM45hOkMe
-	8LnH2tAG0SWiMW+AAGlL31guvfvmqDE1/rYtyUGQ=
-X-Received: by 2002:a17:903:1a2b:b0:2a7:8839:dda1 with SMTP id d9443c01a7336-2a78839e2a9mr64350375ad.13.1769086903140;
-        Thu, 22 Jan 2026 05:01:43 -0800 (PST)
-X-Received: by 2002:a17:903:1a2b:b0:2a7:8839:dda1 with SMTP id d9443c01a7336-2a78839e2a9mr64349165ad.13.1769086901094;
-        Thu, 22 Jan 2026 05:01:41 -0800 (PST)
-Received: from [192.168.29.77] ([49.37.153.155])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81fa127875esm18117296b3a.35.2026.01.22.05.01.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jan 2026 05:01:40 -0800 (PST)
-Subject: Re: [PATCH v4] mmc: host: sdhci-msm: Add support for wrapped keys
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, ebiggers@kernel.org,
-        abel.vesa@linaro.org, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-References: <20260102124018.3643243-1-neeraj.soni@oss.qualcomm.com>
- <3a93822a-6ca1-4cc1-be12-38b2b04704da@intel.com>
- <23c9f3b9-f575-5bc6-e7f0-46238c26a7e5@oss.qualcomm.com>
- <CAPDyKFqJXQ1dYhgfO7bV2ha+GgyOtOtGcm0e-knYCRZCMteu5g@mail.gmail.com>
-From: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-Message-ID: <e0d5640a-61de-fc8c-ddea-cb695f45641c@oss.qualcomm.com>
-Date: Thu, 22 Jan 2026 18:31:36 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+	s=arc-20240116; t=1769087844; c=relaxed/simple;
+	bh=BboKZC7lJjpQsIwQ8SNg8wIaBhGEiugaek244I4OWiQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=axce/cRFbAbu/f+2xnPyjwcf7JwoReubBmAI4tJHn+le0r6PZfyKRHRL/PoGk9yVggrajf0APSSLJcue9fdLASLt4261laclCS7Xnpybq9kqZuLrcVcWL4mrr/RCZe8UQ5dp0LmTePXurDiC93U+NFcdBqHgrve+6JuE4DFj45I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vu/vaqZq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8657CC116C6;
+	Thu, 22 Jan 2026 13:17:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769087844;
+	bh=BboKZC7lJjpQsIwQ8SNg8wIaBhGEiugaek244I4OWiQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Vu/vaqZqS7AZZ1hiNQ//DWxncpJcqp2APCwNpEoAS7w06EwvT/CQ5oEesuZqpdj9U
+	 NH/O2YuNqLMSPoovHGJOBeyu+n7T6JAjqs03HQ+hJEoWLkgLYXpACTV9oPqc3duejH
+	 ZTj4T0eiyANOjllj6ZAFaN3kUbn3Y24bDKdXLxBL2xGNhSK8KUDqSa9bMhcrXscx/x
+	 74/Jq52YNXz0zYUu2mqo+LtqF+5bBjdmtbKFodXSQdRBSMpIn8PIS+IaXlEVM5hv0S
+	 W8TiSMPcncJvueHm9C+/KHyRuHiPojkccruUAfO9YeV0kaSK9J3COpudAS+Q9HEL6Y
+	 VtcURRO5cyDbQ==
+Date: Thu, 22 Jan 2026 18:47:09 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Chia-Lin Kao <acelan.kao@canonical.com>, Bjorn Helgaas <helgaas@kernel.org>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <76sr3yuwdaon3o3u5dfjycwlxhxcarid5tevgtao6aaapvwbzd@e7bam35dzt3k>
+References: <20250922-pci-dt-aspm-v2-0-2a65cf84e326@oss.qualcomm.com>
+ <20250922-pci-dt-aspm-v2-1-2a65cf84e326@oss.qualcomm.com>
+ <7306256a-b380-489b-8248-b774e6d3d80e@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAPDyKFqJXQ1dYhgfO7bV2ha+GgyOtOtGcm0e-knYCRZCMteu5g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDA5NyBTYWx0ZWRfX1Cv1owFocSUO
- x/lab2IQNTbaIDA3M04txg+ob6QFQyqiMw+k6u66AfKMDG9r3V9oBMGVKk5h1OaCAZu9DBEp5Ox
- R9tUt6pfeSwhlzmqpeKXXQr8sWdyFDoDmxV1X3GGRHVnzWfp5U7Sq53DgEbcW8M672S9wMu2d9q
- HBKrawtfD6jMybvBURC3AMC18uyTzVFom7PSAlG0T95zj5tedIjsmPpdD6ELupJiHQKvwlZo47O
- 1vBv6BYw014k09BGDNpSvGUl0hlUx0OyoTGGqoS1NNYOyhTIdOt6LY2VME936TOiOUXstDaVB1r
- qTodEaUCVlE4pjp9pN3mKFy3tTL01jZ4xbX5xX8mU2P8WcJtj8Tj/alYPisGkUVGYnyerruMYo3
- 4zD5g2sgQweJ8gu/npdcfd6/sLvwc0owcR5A1UOCgbQNkrH9y+7rVTHeIMjDggQoLGjYmU3t34D
- 3GZCQ8Ya6GtQtvM2XuA==
-X-Proofpoint-ORIG-GUID: ie_gdM98RlKSHGyneJbtOb5sReUGe1M5
-X-Authority-Analysis: v=2.4 cv=UOjQ3Sfy c=1 sm=1 tr=0 ts=69721fb7 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=mUqJYtKm3DnVQPgbyYslow==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=QyXUC8HyAAAA:8
- a=DbZcFCj0BrKUjWguvZgA:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: ie_gdM98RlKSHGyneJbtOb5sReUGe1M5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_01,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601220097
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7306256a-b380-489b-8248-b774e6d3d80e@nvidia.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.96 / 15.00];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
+	TAGGED_FROM(0.00)[bounces-90203-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,kernel.org,vger.kernel.org,linux.intel.com,canonical.com,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-90202-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neeraj.soni@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 87F7B67644
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 753C4676D3
 X-Rspamd-Action: no action
 
-Hi,
+On Thu, Jan 22, 2026 at 12:12:42PM +0000, Jon Hunter wrote:
+> Hi Manivannan,
+> 
+> On 22/09/2025 17:16, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > 
+> > So far, the PCI subsystem has honored the ASPM and Clock PM states set by
+> > the BIOS (through LNKCTL) during device initialization, if it relies on the
+> > default state selected using:
+> > 
+> > * Kconfig: CONFIG_PCIEASPM_DEFAULT=y, or
+> > * cmdline: "pcie_aspm=off", or
+> > * FADT: ACPI_FADT_NO_ASPM
+> > 
+> > This was done conservatively to avoid issues with the buggy devices that
+> > advertise ASPM capabilities, but behave erratically if the ASPM states are
+> > enabled. So the PCI subsystem ended up trusting the BIOS to enable only the
+> > ASPM states that were known to work for the devices.
+> > 
+> > But this turned out to be a problem for devicetree platforms, especially
+> > the ARM based devicetree platforms powering Embedded and *some* Compute
+> > devices as they tend to run without any standard BIOS. So the ASPM states
+> > on these platforms were left disabled during boot and the PCI subsystem
+> > never bothered to enable them, unless the user has forcefully enabled the
+> > ASPM states through Kconfig, cmdline, and sysfs or the device drivers
+> > themselves, enabling the ASPM states through pci_enable_link_state() APIs.
+> > 
+> > This caused runtime power issues on those platforms. So a couple of
+> > approaches were tried to mitigate this BIOS dependency without user
+> > intervention by enabling the ASPM states in the PCI controller drivers
+> > after device enumeration, and overriding the ASPM/Clock PM states
+> > by the PCI controller drivers through an API before enumeration.
+> > 
+> > But it has been concluded that none of these mitigations should really be
+> > required and the PCI subsystem should enable the ASPM states advertised by
+> > the devices without relying on BIOS or the PCI controller drivers. If any
+> > device is found to be misbehaving after enabling ASPM states that they
+> > advertised, then those devices should be quirked to disable the problematic
+> > ASPM/Clock PM states.
+> > 
+> > In an effort to do so, start by overriding the ASPM and Clock PM states set
+> > by the BIOS for devicetree platforms first. Separate helper functions are
+> > introduced to override the BIOS set states by enabling all of them if
+> > of_have_populated_dt() returns true. To aid debugging, print the overridden
+> > ASPM and Clock PM states as well.
+> > 
+> > In the future, these helpers could be extended to allow other platforms
+> > like VMD, newer ACPI systems with a cutoff year etc... to follow the path.
+> > 
+> > Link: https://lore.kernel.org/linux-pci/20250828204345.GA958461@bhelgaas
+> > Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > Link: https://patch.msgid.link/20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com
+> > ---
+> >   drivers/pci/pcie/aspm.c | 42 ++++++++++++++++++++++++++++++++++++++++--
+> >   1 file changed, 40 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index 919a05b9764791c3cc469c9ada62ba5b2c405118..cda31150aec1b67b6a48b60569222ea3d1c3d41f 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -15,6 +15,7 @@
+> >   #include <linux/math.h>
+> >   #include <linux/module.h>
+> >   #include <linux/moduleparam.h>
+> > +#include <linux/of.h>
+> >   #include <linux/pci.h>
+> >   #include <linux/pci_regs.h>
+> >   #include <linux/errno.h>
+> > @@ -235,13 +236,15 @@ struct pcie_link_state {
+> >   	u32 aspm_support:7;		/* Supported ASPM state */
+> >   	u32 aspm_enabled:7;		/* Enabled ASPM state */
+> >   	u32 aspm_capable:7;		/* Capable ASPM state with latency */
+> > -	u32 aspm_default:7;		/* Default ASPM state by BIOS */
+> > +	u32 aspm_default:7;		/* Default ASPM state by BIOS or
+> > +					   override */
+> >   	u32 aspm_disable:7;		/* Disabled ASPM state */
+> >   	/* Clock PM state */
+> >   	u32 clkpm_capable:1;		/* Clock PM capable? */
+> >   	u32 clkpm_enabled:1;		/* Current Clock PM state */
+> > -	u32 clkpm_default:1;		/* Default Clock PM state by BIOS */
+> > +	u32 clkpm_default:1;		/* Default Clock PM state by BIOS or
+> > +					   override */
+> >   	u32 clkpm_disable:1;		/* Clock PM disabled */
+> >   };
+> > @@ -373,6 +376,18 @@ static void pcie_set_clkpm(struct pcie_link_state *link, int enable)
+> >   	pcie_set_clkpm_nocheck(link, enable);
+> >   }
+> > +static void pcie_clkpm_override_default_link_state(struct pcie_link_state *link,
+> > +						   int enabled)
+> > +{
+> > +	struct pci_dev *pdev = link->downstream;
+> > +
+> > +	/* Override the BIOS disabled Clock PM state for devicetree platforms */
+> > +	if (of_have_populated_dt() && !enabled) {
+> > +		link->clkpm_default = 1;
+> > +		pci_info(pdev, "Clock PM state overridden: ClockPM+\n");
+> > +	}
+> > +}
+> > +
+> >   static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+> >   {
+> >   	int capable = 1, enabled = 1;
+> > @@ -395,6 +410,7 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+> >   	}
+> >   	link->clkpm_enabled = enabled;
+> >   	link->clkpm_default = enabled;
+> > +	pcie_clkpm_override_default_link_state(link, enabled);
+> >   	link->clkpm_capable = capable;
+> >   	link->clkpm_disable = blacklist ? 1 : 0;
+> >   }
+> > @@ -788,6 +804,26 @@ static void aspm_l1ss_init(struct pcie_link_state *link)
+> >   		aspm_calc_l12_info(link, parent_l1ss_cap, child_l1ss_cap);
+> >   }
+> > +static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
+> > +{
+> > +	struct pci_dev *pdev = link->downstream;
+> > +	u32 override;
+> > +
+> > +	/* Override the BIOS disabled ASPM states for devicetree platforms */
+> > +	if (of_have_populated_dt()) {
+> > +		link->aspm_default = PCIE_LINK_STATE_ASPM_ALL;
+> > +		override = link->aspm_default & ~link->aspm_enabled;
+> > +		if (override)
+> > +			pci_info(pdev, "ASPM states overridden: %s%s%s%s%s%s\n",
+> > +				 (override & PCIE_LINK_STATE_L0S) ? "L0s+, " : "",
+> > +				 (override & PCIE_LINK_STATE_L1) ? "L1+, " : "",
+> > +				 (override & PCIE_LINK_STATE_L1_1) ? "L1.1+, " : "",
+> > +				 (override & PCIE_LINK_STATE_L1_2) ? "L1.2+, " : "",
+> > +				 (override & PCIE_LINK_STATE_L1_1_PCIPM) ? "L1.1 PCI-PM+, " : "",
+> > +				 (override & PCIE_LINK_STATE_L1_2_PCIPM) ? "L1.2 PCI-PM+" : "");
+> > +	}
+> > +}
+> > +
+> >   static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+> >   {
+> >   	struct pci_dev *child = link->downstream, *parent = link->pdev;
+> > @@ -868,6 +904,8 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+> >   	/* Save default state */
+> >   	link->aspm_default = link->aspm_enabled;
+> > +	pcie_aspm_override_default_link_state(link);
+> > +
+> >   	/* Setup initial capable state. Will be updated later */
+> >   	link->aspm_capable = link->aspm_support;
+> 
+> 
+> Since this commit was added in Linux v6.18, I have been observing a suspend
+> test failures on some of our boards. The suspend test suspends the devices
+> for 20 secs and before this change the board would resume in about ~27 secs
+> (including the 20 sec sleep). After this change the board would take over 80
+> secs to resume and this triggered a failure.
+> 
+> Looking at the logs, I can see it is the NVMe device on the board that is
+> having an issue, and I see the reset failing ...
+> 
+>  [  945.754939] r8169 0007:01:00.0 enP7p1s0: Link is Up - 1Gbps/Full -
+>   flow control rx/tx
+>  [ 1002.467432] nvme nvme0: I/O tag 12 (400c) opcode 0x9 (Admin Cmd) QID
+>   0 timeout, reset controller
+>  [ 1002.493713] nvme nvme0: 12/0/0 default/read/poll queues
+>  [ 1003.050448] nvme nvme0: ctrl state 1 is not RESETTING
+>  [ 1003.050481] OOM killer enabled.
+>  [ 1003.054035] nvme nvme0: Disabling device after reset failure: -19
+> 
+> From the above timestamps the delay is coming from the NVMe. I see this
+> issue on several boards with different NVMe devices and I can workaround
+> this by disabling ASPM L0/L1 for these devices ...
+> 
+>  DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5011, quirk_disable_aspm_l0s_l1);
+>  DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5036, quirk_disable_aspm_l0s_l1);
+>  DECLARE_PCI_FIXUP_HEADER(0x1b4b, 0x1322, quirk_disable_aspm_l0s_l1);
+>  DECLARE_PCI_FIXUP_HEADER(0xc0a9, 0x540a, quirk_disable_aspm_l0s_l1);
+> 
+> I am curious if you have seen any similar issues?
+> 
 
-On 1/21/2026 3:56 PM, Ulf Hansson wrote:
-> On Mon, 19 Jan 2026 at 11:19, Neeraj Soni <neeraj.soni@oss.qualcomm.com> wrote:
->>
->> Hi,
->>
->> On 1/12/2026 12:35 PM, Adrian Hunter wrote:
->>> On 02/01/2026 14:40, Neeraj Soni wrote:
->>>> Add the wrapped key support for sdhci-msm by implementing the needed
->>>> methods in struct blk_crypto_ll_ops and setting the appropriate flag in
->>>> blk_crypto_profile::key_types_supported.
->>>>
->>>> Tested on SC7280 eMMC variant.
->>>>
->>>> How to test:
->>>>
->>>> Use the "v1.3.0" tag from https://github.com/google/fscryptctl and build
->>>> fscryptctl that supports generating wrapped keys.
->>>>
->>>> Enable the following config options:
->>>> CONFIG_BLK_INLINE_ENCRYPTION=y
->>>> CONFIG_QCOM_INLINE_CRYPTO_ENGINE=y
->>>> CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
->>>> CONFIG_MMC_CRYPTO=y
->>>>
->>>> Enable "qcom_ice.use_wrapped_keys" via kernel command line.
->>>>
->>>> $ mkfs.ext4 -F -O encrypt,stable_inodes /dev/disk/by-partlabel/vm-data
->>>> $ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
->>>> $ fscryptctl generate_hw_wrapped_key /dev/disk/by-partlabel/vm-data > /mnt/key.longterm
->>>> $ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
->>>> $ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
->>>> $ rm -rf /mnt/dir
->>>> $ mkdir /mnt/dir
->>>> $ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
->>>> $ dmesg > /mnt/dir/test.txt
->>>> $ sync
->>>>
->>>> Reboot the board
->>>>
->>>> $ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
->>>> $ ls /mnt/dir # File should be encrypted
->>>> $ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
->>>> $ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
->>>> $ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
->>>> $ cat /mnt/dir/test.txt # File should now be decrypted
->>>>
->>>> Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
->>>> Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
->>>
->>> Doesn't apply cleanly to mmc next.  Otherwise:
->>>
->>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
->>>
->> Is this a blocker for the patch to get merged? I will anyway see why it is not applying cleanly on mmc next
->> but wanted to know if this is necessary to resolve for these chagnes to get merged in Linux-next?
->>
+Marek reported a similar issue on ARM Juno board [1] on which one of the switch
+downstream port failed to come up while *entering* system suspend. But I was
+clueless as to why the device fails to function only while entering system
+suspend and not during runtime. I suspect something is going wrong in the
+suspend path.
+
+In your case, looks like the device is failing while resuming from suspend. Did
+you see any error log during suspend as well?
+
+> Other PCIe devices seem to be OK (like the realtek r8169) but just the NVMe
+> is having issues. So I am trying to figure out the best way to resolve this?
 > 
-> In some cases I decide to resolve the conflict when applying, but
-> there is no guarantee that I do that, especially during busy periods.
-> 
-> In this case, I prefer that you re-base and send a v5 please.
-Sure. I will resolve and post v5.
-> 
-> [...]
-> 
-> Kind regards
-> Uffe
-> 
-Regards
-Neeraj
+
+First let's try to isolate the issue to L0s or L1. Can you try disabling L0s
+first, then L1?
+
+I will also inspect the suspend/resume path in the meantime.
+
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/cae5cb24-a8b0-4088-bacd-14368f32bdc5@samsung.com/
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
