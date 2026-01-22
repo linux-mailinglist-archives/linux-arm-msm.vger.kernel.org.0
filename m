@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-90259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2DxOGvt8cmmklQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 20:39:39 +0100
+	id oCmnG/18cmmklQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 20:39:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB1936D1F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 20:39:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 094E86D208
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 20:39:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3FA92304C375
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5D377304CA74
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jan 2026 19:34:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6E21395726;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7C11395732;
 	Thu, 22 Jan 2026 19:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UnQvBSPw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtrpSa1t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695A2325716
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF75A3590C0
 	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 19:34:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769110486; cv=none; b=nW2R9Sf+KQwV8zfNc+zxZgNCA47OBEjYA1ycriptNk0dwpVF3LrnE2ZWWoLAXP8mbGbu5fKl8tILAB6uPSaUog4bGThpcHzKesdc2CkuLcUCAX1n6PopZvS1zxmX8/InrU4WffD9vmX/GWxdZ7D5QGAyfxXttc/CkpcCydgl4BE=
+	t=1769110486; cv=none; b=PwsBq+/spFqfv4I7z2UQgfASRjJvqIBn5AW+Te4MbWVwtOhJsdsg5GH4+C8SS64jnk5DUatFHQCigAtIfENv0bsHFQc9iMQ9UVWCBZbP2W5AF7J3Kogl3N5gnf7HogfKj7m+QQ8AZzAwuzWWeBkOExsn3gUBcINdbLE9+4Mgk60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1769110486; c=relaxed/simple;
-	bh=jTd4MTqmMNO3vH3GBJWQVldpXyq3xREZZ6+pJ2KLIaE=;
+	bh=CrxFUxr1mrz5eB+5MqEJWwahrvuI86sk5sMY/Qw1ky0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Sm75kxVymxyGCoFpbiJACuK3pvY4ZifLmiDbDv8H9bQQrfl2CDL4Vmhsbl8YSr95AHy/NZAc9RGNgk3V2a2oOWGSFrTm1pwTAADu/vxY7GH1Ggs8muE+di9acWbSlrHJleKnq3wrQeidTp8KfukdKchLZBhOw7e5hgGQSoQ6JM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UnQvBSPw; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:To:Cc; b=E/oRUgxLmQrUPEtJN05TOUJnx+/C1a7KHFkhGr7ewYgHfqc2y2IW1m6zeytHYAHQndslKTtuMWx32v2v5TbgjX7CAIvGGvJSMjMSYWr+vAZEPsRYmVPmiF6e91YEhEeye0StK7b6UuXBJYl933FWf5nr9/9JxtNZeBHBJY15lIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YtrpSa1t; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-47d63594f7eso12628275e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 11:34:36 -0800 (PST)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-42fbc305914so1212579f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 11:34:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769110474; x=1769715274; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769110475; x=1769715275; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vBXXzdoTJkB6zREE7VZrROs0/EXufGyyyFOZL5fXDdA=;
-        b=UnQvBSPwithfNhue9HQBGrT6Y4x0nK439BXNE7wVBhxoyBV8BbROSxQD4iui7aooaF
-         AT05chRiYQhDeF1PStcyAShk90pJQskEMi8TT1Rv3TK/DRSFQiC8+Xg65C/4zeSf2XoB
-         Xc0dR74HkXwDRS9FEw8SVz6+57Aq0FZZEH6kYUo2wImJ0ys1lUjEmJCMZDtzrUQdRCSG
-         XLAvFhB3DIgqU6QhQCR5DT/+4W3DVvhX8Y5vaawQ/pOwvMhzMM0BrDg/43e7H2YXvk5H
-         5Z1QvtYrXwxYTGn6M+Xz7YFr7Z9K50KazaScEjIFm/c8e+asXcVllQJCEN4ptNhDQZD1
-         s24A==
+        bh=To9ayxXdRoh6y4Rqdir3oO1ZDYFf362lQecdeoxQawk=;
+        b=YtrpSa1tOHvAIhwXezVvbv+2yGsAWg32ptxd7qkTuXtcfJ6oLBBCKJj+sso+3sdQTz
+         BYPnhfxBRea4BQn0KCe4GMgqJGzEWy2n32IRNG42535L8ivM0yapNuaJzO8luQVrWFyG
+         2rF5t0LCqPxTyQwF+iRLWxpw0hGy1og39zsHzF7qkz86I7abdLOcnwqJRs24sC+th9BT
+         Yu7gKzOUyTCYANBlHYqT8yfQuHtCKPhVNNLfSV4zz8MqWExv63mQP7kHaqpN+on0f+yJ
+         cTNxSBxz6rwtomoiSlSosTGfUJDn4og2oV/tqPy4BohHX8YtY5j2LnH/tf0f008Obq00
+         SeLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769110474; x=1769715274;
+        d=1e100.net; s=20230601; t=1769110475; x=1769715275;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=vBXXzdoTJkB6zREE7VZrROs0/EXufGyyyFOZL5fXDdA=;
-        b=pOlvJLOfQm1DnHIIyqYPOV9Pn3f3oMFElT4vBt0pOCv4WpqsGewHCvguYxgC9wu3/9
-         U5Qqq10Q9O8uS1I/eCJkZt0A2W6igt1ZCvtVVA/ASEFDvdmAIKFQjN+ll+n+Dxmn98Eq
-         sJqou4jPBQuUIFa0/ZS5EeL1cZ1o54B/7341lW/HB0+EK06ZUQ8W7dUm/ryelSJQtkmK
-         yoqQTJPukfTspTcO/a2Y2wJzUkITDxvsUYM37r75cKY4wxUhaaOgIohnG0UUABruAdNi
-         ftrmVIhH4jWDjW+o7D/yS9nTDt5n95pAx0N7b+mACwCgiUOxC+/tM6Nt1KXF7q1q7PdB
-         BR+w==
-X-Gm-Message-State: AOJu0YxZ8TT3+bwviOMcSF0foC8irYWpq+FEpiKWIWLOZy2T1JeDH5Xj
-	RwK/EOMO6P1nMl6kein4B/tPAzyMnFG7vHcAyCuP+uS5gWaxsfIA/Goo1I7EUQ==
-X-Gm-Gg: AZuq6aKEMowh1UbirCdixklXvM8j4P6p8HsXH4U9Ig8H9gzwuxJ0AwFzah92XvegYFg
-	kdY7zb9ajSnF356TJEvQB5sv1JxSZ0b8XcUg2G+YRfViuwZy0mirtJFlc0eciLIaRV8eMtXHcPF
-	1Jd4A0CYvKWb8Yfj+wptnWfXc5/GuIAi8sbZZd9qzAEX48HdSDLlnuD3j6ZrbOj0DHyDZB1pVPi
-	sw9WWtBFcTyEA73Q96qXSM0k0pTGOtDkOA2OUBWuEVTxo7e5Kf8CnpVwHyigx3bAbGwXzTMRnxw
-	XMx+sDHhsUVkFNmKknW8pwqVz4ZSRrygeMjdDP5D9l2paVF7n/bwYUWdBtMIOzD2nPts/688zkR
-	HQ4i5S2GMIyv0IpWPK0hcRULy1g0loveJP6kqa0kUSZMluvGg2P33kZGvviYL7MqcCqSbnXb8gw
-	dHSeNOWD7ghDJEr9Z3CPY8H7RQhysiZd+WsBTkbfKsSio9wLqHF6I=
-X-Received: by 2002:a05:600c:34c6:b0:480:2521:4d92 with SMTP id 5b1f17b1804b1-4804c9af7femr13146905e9.24.1769110473766;
-        Thu, 22 Jan 2026 11:34:33 -0800 (PST)
+        bh=To9ayxXdRoh6y4Rqdir3oO1ZDYFf362lQecdeoxQawk=;
+        b=IGGqK15xt/3leClJSADLPqHqQRG4NBspteLjHcG/wLRYF/bNNt9sNP7RrCY4hl0wOJ
+         HJ8bOl7e/T07WN5HTkixqSTygP56eg/BjVUZhwEH4zcNoLkn0TjsL0RqokG3T1m4Zaz+
+         7Z6ZOunb0nH9qTv+9c1D9WCDehdRJB2eDBnITgXe/kOLTdqtcepo8tp78uO+bMMGY4NF
+         sHCEebuQGS8kzcUX3TI7I8nI9/lwtMpxSJQBqNEmFxTi1zENeHrhZbuyhYZOEWgHmxkb
+         HMxe+yBYvun50lceXuLEPf4am4eAEL2aexllRTM3g77sJA5cwvGKkJ7N3fLXh67Ggv8S
+         35rA==
+X-Gm-Message-State: AOJu0Yx2K6fQBbSoVNGYrsHFbUovu/z2jdBQgrcob1+5vHk4PjYqlS7V
+	h4ugnF6ZW5hT8YfVaYJgGgVkkloefejtTPgA3wcaIyyC13MJi5kcb5ETqPWoFw==
+X-Gm-Gg: AZuq6aJ/ujoeuIQtSUtOLVLFDCAK2dYnsqL7CuSKZdgvx7fh4ac4l7ISfMr+NkQqg+U
+	2Wr+Ps6YKiGXMfNo12OaSco1GnK2nCa4xFUmfOUAQpGFGcBOThUNSmR1eFiwjXiZ7wUUYYVdgMs
+	q80HUJS6qPiz/p9Ev2V45HAeUsWJQPxwm1T0rF8hs3JMwxjTdMvBzOYp4S8B9lgEr1Vg3xbp3fm
+	C2fWjKnGb79833FDgvdhExVq+3HIiVDPM1nByO8pjcuuQ6Fohv5Xxl4AWieV8YtB5h+nxRiAqAk
+	tD433yn0im9gGQMeY8j7Qh3woV/MLlHrmQC9izPWi4XJFC5cBzGLeP4piwRCnX7zqDJq5mUDrRy
+	muA+Odsv5U7a6oRl9DKZwFIkW1u0ZR1g57NBvGbvypDQ+WYxGQD+9c5KRFSV/Ces236qgMkHFqk
+	SlutrLn1iNRn7oEeau+WljlsrAAIzGPL30sW4Lwuks
+X-Received: by 2002:a5d:588b:0:b0:435:a464:f468 with SMTP id ffacd0b85a97d-435b1606246mr1084984f8f.47.1769110474677;
+        Thu, 22 Jan 2026 11:34:34 -0800 (PST)
 Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-435b1c02dd4sm853240f8f.5.2026.01.22.11.34.32
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-435b1c02dd4sm853240f8f.5.2026.01.22.11.34.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 11:34:33 -0800 (PST)
+        Thu, 22 Jan 2026 11:34:34 -0800 (PST)
 From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Thu, 22 Jan 2026 20:34:22 +0100
-Subject: [PATCH 1/2] interconnect: qcom: smd-rpm: drop duplicated
- QCOM_RPM_SMD_KEY_RATE define
+Date: Thu, 22 Jan 2026 20:34:23 +0100
+Subject: [PATCH 2/2] interconnect: qcom: msm8974: drop duplicated
+ RPM_BUS_{MASTER,SLAVE}_REQ defines
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260122-icc-qcom-dupe-defines-v1-1-eea876c2d98f@gmail.com>
+Message-Id: <20260122-icc-qcom-dupe-defines-v1-2-eea876c2d98f@gmail.com>
 References: <20260122-icc-qcom-dupe-defines-v1-0-eea876c2d98f@gmail.com>
 In-Reply-To: <20260122-icc-qcom-dupe-defines-v1-0-eea876c2d98f@gmail.com>
 To: Georgi Djakov <djakov@kernel.org>
@@ -104,7 +104,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-90259-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90258-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -123,36 +123,42 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: AB1936D1F9
+X-Rspamd-Queue-Id: 094E86D208
 X-Rspamd-Action: no action
 
-The 'linux/soc/qcom/smd-rpm.h' header defines QCOM_RPM_SMD_KEY_RATE
-with the exact same value.
+Both the RPM_BUS_MASTER_REQ and the RPM_BUS_SLAVE_REQ constants are
+also defined in the 'icc-rpm.h' header.
 
-  $ git grep -nHE 'define[[:blank:]]+QCOM_RPM_SMD_KEY_RATE[[:blank:]]'
-  drivers/interconnect/qcom/smd-rpm.c:17:#define QCOM_RPM_SMD_KEY_RATE    0x007a484b
-  include/linux/soc/qcom/smd-rpm.h:52:#define QCOM_RPM_SMD_KEY_RATE                               0x007a484b
+  $ git grep -nHE 'define[[:blank:]]+RPM_BUS_MASTER_REQ[[:blank:]]'
+  drivers/interconnect/qcom/icc-rpm.h:16:#define RPM_BUS_MASTER_REQ       0x73616d62
+  drivers/interconnect/qcom/msm8974.c:176:#define RPM_BUS_MASTER_REQ      0x73616d62
 
-Drop the local define to avoid the duplication.
+  $ git grep -nHE 'define[[:blank:]]+RPM_BUS_SLAVE_REQ[[:blank:]]'
+  drivers/interconnect/qcom/icc-rpm.h:17:#define RPM_BUS_SLAVE_REQ        0x766c7362
+  drivers/interconnect/qcom/msm8974.c:177:#define RPM_BUS_SLAVE_REQ       0x766c7362
+
+Drop the local defines to avoid the duplications.
 
 No functional changes intended. Compile tested only.
 
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- drivers/interconnect/qcom/smd-rpm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/interconnect/qcom/msm8974.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
-index 8316c87a2c60f5f99edece3443cc60e9e75fa11f..dbc7ae50b02b7948217c856e3b1bee53c56f46e3 100644
---- a/drivers/interconnect/qcom/smd-rpm.c
-+++ b/drivers/interconnect/qcom/smd-rpm.c
-@@ -14,7 +14,6 @@
- #include "icc-rpm.h"
+diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
+index 469fc48ebfe94d9ebb723132564583f4790d4850..3239edc37f02f20bd65fbbcb4aa48dc7953c7c09 100644
+--- a/drivers/interconnect/qcom/msm8974.c
++++ b/drivers/interconnect/qcom/msm8974.c
+@@ -173,9 +173,6 @@ enum {
+ 	MSM8974_SNOC_SLV_QDSS_STM,
+ };
  
- #define RPM_KEY_BW		0x00007762
--#define QCOM_RPM_SMD_KEY_RATE	0x007a484b
- 
- static struct qcom_smd_rpm *icc_smd_rpm;
+-#define RPM_BUS_MASTER_REQ	0x73616d62
+-#define RPM_BUS_SLAVE_REQ	0x766c7362
+-
+ #define to_msm8974_icc_provider(_provider) \
+ 	container_of(_provider, struct msm8974_icc_provider, provider)
  
 
 -- 
