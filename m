@@ -1,378 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-90361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0Bi+DTGSc2ntxAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 16:22:25 +0100
+	id SLDrIN6jc2kbxwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 17:37:50 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 536CF77BCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 16:22:24 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE9F078962
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 17:37:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id D4E90308E308
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 15:08:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EB3303001C4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 16:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FD9B30DD36;
-	Fri, 23 Jan 2026 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64AAB22D9E9;
+	Fri, 23 Jan 2026 16:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DQmaPFVq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MX5v/1T3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5871ADC83;
-	Fri, 23 Jan 2026 15:07:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD9C259C9C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 16:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769180867; cv=none; b=fWYxLQ9mymO3tHK7s6cM1pce3V9qllu+wiEoJyyNMwmmdpE+OxrLhYx83ogNWBwkqwuVn05G5ILSxEgt/Q3q7xqmHf8p4wjAZRzvtYWoWdA/NC7nmE82h/X4wonaR1qyNHo9dIh15gAN5+3QEjyggzPu4UvdPzf+a7N9vYbLd+8=
+	t=1769186267; cv=none; b=lCJz9GFOLar65P9a0yrlMk2iwGRcHPVw1Gi1CDRA6ZqkAJdYqEeb70fyJyrQcVa3BNA5hZbPhi7IYCJ+RVgMM4Hjs/QYvk0E7HrzwFbq1Rxik9Y3/pd7GOXUxyLYSpVEX0hSW94GsflnXkoDM9kBBACP3onb0snOqwOdfs65YYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769180867; c=relaxed/simple;
-	bh=4rzsYpg5vacjDmYgd2IYFBj9DJPtV4uU0AUHG1ivZZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZM3fh5qnopXTDptkvQrG9JqBXyeJVMEkELnGyMz5MAS8ayPKHnn68vx1XvxFe0GKBydTpTLM+vCjiOqrjJyL44+ji+3BPxN8M0OAW7OsqKFvneXy8GytbNh7giF34IssuHNlW5dnn2LCwkG8GXrU6j1KHdxug69RSIWx1wpQ2y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DQmaPFVq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95F2C4CEF1;
-	Fri, 23 Jan 2026 15:07:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769180867;
-	bh=4rzsYpg5vacjDmYgd2IYFBj9DJPtV4uU0AUHG1ivZZc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DQmaPFVq+NGbg2kClo8j5I/8LsQDOwsn+cmwqfvEYv7ZeT4YDB/pHa8nRAT+h430l
-	 a2DPfKh0/ILPqrGbk+zw+4ObD9z6+U/Of8tuacoXEsdv3tamLsOr1RD8Rvb8LKtopU
-	 0EyEZsbT9b/ZzOfvKK2GCgVH3ZyscCgZvSDnTXxwMb4eUQS9N5ulEuFgP43QMx5tN5
-	 ZS6mB7FfSN/eITWRdAxYjMCoRV5rbp80cZ5h4OjS0dDg9J39joXcFMbriAVUr6h1iR
-	 jRPNFrnwx07l1HJG+3OvJiNRAtmcsMv0gDg/vCS307u3Dg79RkxuKF9l3qtdP+SlyB
-	 hEN9UFJdzIHAQ==
-Date: Fri, 23 Jan 2026 09:07:44 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Luca Weiss <luca.weiss@fairphone.com>, Taniya Das <taniya.das@oss.qualcomm.com>, 
-	Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom: document the Eliza Global
- Clock Controller
-Message-ID: <wjdc4mc4exqqsdijfgroce5psi673z7iwewvpt7egvu6kcsusd@eqgrk6j6raxv>
-References: <20260123-eliza-clocks-v1-0-664f1931f8c7@oss.qualcomm.com>
- <20260123-eliza-clocks-v1-1-664f1931f8c7@oss.qualcomm.com>
+	s=arc-20240116; t=1769186267; c=relaxed/simple;
+	bh=XfgJbaJiD7FxrM45vwdfh7MDrURrJgbbrXbkXomT15U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LocrHdlz5dV7wwt0NYYxqJ2hWiItHlVmZ/svVYLSW1zfzMbwMHk1/sb+bfK7tg6sPlPha+0v6eF1cYGvGtDk6nFRdFHDVBjlKVnGL51aus8n3gzxwUAFcsu2wIHEauBpEJqdp6LhcEpeyX6JEnye2660ZA/J3jp5cGTSpdMqm78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MX5v/1T3; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a77c1d5c3bso10705695ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 08:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769186265; x=1769791065; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CIf/jUCjzdJFezTzX6UtWeIusC7XBhWXZ9HJ+kURBZI=;
+        b=MX5v/1T3krJC7rFGD9nwsXFR15I7+At5QWx0A1bPm6x9tvjjVv9boN/hGeAy7uh5/J
+         UF9Va2PPQDqnVxe33thb3TmW5z9Ds35Cyzn7MMemHoQG3CrJ/ljW5TiMmQ4gMPeAZ5cW
+         qCXW/DxSoij04SJKFRV6JnwDES8PpUVWg7/5tS9qvJgV+jWSks280yq0eKFxso0aSNsR
+         oR8f8F234In9ws30dknarthbLUnUkyEJ/9RaobkX0aJWk1grysGt7/L7p8SC9nHGithI
+         9kY35yPVJEgHNYZ4AenZwZJRHStDRb0TTQsIFt2/uq+ta+EK4xOotRirAEWfllggW8kt
+         p5VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769186265; x=1769791065;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CIf/jUCjzdJFezTzX6UtWeIusC7XBhWXZ9HJ+kURBZI=;
+        b=cuvNZ13nZeVu561FrLmS/x2CsDKdnmsHIc1AkBnicQHZyyzWbW7YHB8pPPUxhQZ0cv
+         nRka2xo9/kC842fWEjXLI4eswsjVJvleGngS45v01B+S6R0wwoME76cHndCqtvLxWH4l
+         hQB8KIK5nBQpcpB2z/HWSP0E9Cz5ytErJS2Orn8vIhq3Trnd5cv8aGQ3AhJBhJGcg0OQ
+         h4jdNX6G/f+wAPNUbB79PoFwHD3WbY8xmvq5iMt9RA7hBqvRCwiX7/mxa2qVyCWYxYeb
+         uvd65in8tef7M8DkCz4Bi/x55WYbbQZewKaf75j0CdX3iea/bs4/aR1m5bFEMAk41lWy
+         6WtQ==
+X-Gm-Message-State: AOJu0YxinDRH4JXCvr1Y27feCSHc3Tji/cPb8Fs3yB4G4fiW2f1Deebo
+	TyRn3tv2cXgsBZ8y9oADWE0szYxdLkbrksscyNQ8SwoNR0ssmjI61N5n
+X-Gm-Gg: AZuq6aKFLNG2rxAO+sGgbO82Q/JKx+ixKc1xrMVWPIiWZv3x07XJ5ba0qWmNIB5RtE3
+	7sQLC1CwstzQ69JH/RBx+HKJQF1fq8iUhQ/eexep5Z2TZ3dCwnJH5ltEcX+kTrRL9vZl+/eswEM
+	ue2dnW5S4MHYBrowY1+7jvbHAROTRQpP9Obw41sjWr+zE/98jda1v3jWMIbkUxLt4sFaldrlKMZ
+	iMzpLEfCvZciv0DXR6A5jeTTs5jPS3VMRYDEp42j7Pcjq1fy+vdvy2Gg34DKAKt8TxL2LtLi8NB
+	PtLYYSXlNV/uYDKSvfjvqZiRdAQsV4EcjCs4HpwuZeDeizR+0pmpllxPv4yExnrVbYYQ2vbgJ9J
+	Viy7D5wrVK/VvoJgt8QgEoVGt4bLnGsvhW0ku8rjCqSaOstb8ZcMxgINtWXJ6kdu13dlV8EOKBF
+	/YLppSpxE3naXoFJrMY31iBwkFLbwxwpwXTQ==
+X-Received: by 2002:a17:90b:3a4f:b0:32e:3829:a71c with SMTP id 98e67ed59e1d1-35367603595mr3147765a91.16.1769186265087;
+        Fri, 23 Jan 2026 08:37:45 -0800 (PST)
+Received: from junjungu-PC.localdomain ([223.166.246.160])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3536dc506d0sm2491488a91.13.2026.01.23.08.37.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 08:37:44 -0800 (PST)
+From: Felix Gu <ustc.gu@gmail.com>
+Date: Sat, 24 Jan 2026 00:37:38 +0800
+Subject: [PATCH] drm/msm/adreno: Fix a reference leak in a6xx_gpu_init()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260123-eliza-clocks-v1-1-664f1931f8c7@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260124-a6xx_gpu-v1-1-fa0c8b2dcfb1@gmail.com>
+X-B4-Tracking: v=1; b=H4sIANGjc2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDQyNj3USzior49IJS3eSkZANL05SkVBMjYyWg8oKi1LTMCrBR0bG1tQA
+ maabFWgAAAA==
+X-Change-ID: 20260123-a6xx_gpu-cbc095dbe423
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Felix Gu <ustc.gu@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769186260; l=2013;
+ i=ustc.gu@gmail.com; h=from:subject:message-id;
+ bh=XfgJbaJiD7FxrM45vwdfh7MDrURrJgbbrXbkXomT15U=;
+ b=1+ZDVPOWVZlNST7+6jBAwaq3yRNaG1fjeNiRT/YcLb0Up78CXWFfBx8flp4p8vEci2TmwVfJO
+ XI5Grri2JkUDp+6hfSBPACgFGrn8F9tDYJCXBa1wH/o+/Vu5zKokf3w
+X-Developer-Key: i=ustc.gu@gmail.com; a=ed25519;
+ pk=fjUXwmjchVN7Ja6KGP55IXOzFeCl9edaHoQIEUA+/hw=
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-90362-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90361-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.997];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[ustcgu@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,fairphone.com:email]
-X-Rspamd-Queue-Id: 536CF77BCE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: EE9F078962
 X-Rspamd-Action: no action
 
-On Fri, Jan 23, 2026 at 03:37:13PM +0200, Abel Vesa wrote:
-> From: Taniya Das <taniya.das@oss.qualcomm.com>
-> 
-> Add bindings documentation for the Global Clock Controller on Qualcomm
-> Eliza SoC.
+In a6xx_gpu_init(), node is obtained via of_parse_phandle().
+While there was a manual of_node_put() at the end of the
+common path, several early error returns would bypass this call,
+resulting in a reference leak.
+Fix this by using the __free(device_node) cleanup handler to
+release the reference when the variable goes out of scope.
 
-I'd expect this to give some form of hint about why Eliza is added to
-the Milos binding.
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Regards,
-Bjorn
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 2129d230a92b..0bc518d9fd65 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2640,7 +2640,6 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct platform_device *pdev = priv->gpu_pdev;
+ 	struct adreno_platform_config *config = pdev->dev.platform_data;
+-	struct device_node *node;
+ 	struct a6xx_gpu *a6xx_gpu;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
+@@ -2660,7 +2659,8 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	adreno_gpu->registers = NULL;
+ 
+ 	/* Check if there is a GMU phandle and set it up */
+-	node = of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
++	struct device_node *node __free(device_node) =
++		of_parse_phandle(pdev->dev.of_node, "qcom,gmu", 0);
+ 	/* FIXME: How do we gracefully handle this? */
+ 	BUG_ON(!node);
+ 
+@@ -2702,7 +2702,6 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 		ret = a6xx_gmu_wrapper_init(a6xx_gpu, node);
+ 	else
+ 		ret = a6xx_gmu_init(a6xx_gpu, node);
+-	of_node_put(node);
+ 	if (ret) {
+ 		a6xx_destroy(&(a6xx_gpu->base.base));
+ 		return ERR_PTR(ret);
 
-> 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/clock/qcom,milos-gcc.yaml  |   9 +-
->  include/dt-bindings/clock/qcom,eliza-gcc.h         | 218 +++++++++++++++++++++
->  2 files changed, 225 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,milos-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,milos-gcc.yaml
-> index cf244c155f9a..539a0a804152 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,milos-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,milos-gcc.yaml
-> @@ -8,16 +8,21 @@ title: Qualcomm Global Clock & Reset Controller on Milos
->  
->  maintainers:
->    - Luca Weiss <luca.weiss@fairphone.com>
-> +  - Taniya Das <taniya.das@oss.qualcomm.com>
->  
->  description: |
->    Qualcomm global clock control module provides the clocks, resets and power
->    domains on Milos.
->  
-> -  See also: include/dt-bindings/clock/qcom,milos-gcc.h
-> +  See also:
-> +   - include/dt-bindings/clock/qcom,eliza-gcc.h
-> +   - include/dt-bindings/clock/qcom,milos-gcc.h
->  
->  properties:
->    compatible:
-> -    const: qcom,milos-gcc
-> +    enum:
-> +      - qcom,milos-gcc
-> +      - qcom,eliza-gcc
->  
->    clocks:
->      items:
-> diff --git a/include/dt-bindings/clock/qcom,eliza-gcc.h b/include/dt-bindings/clock/qcom,eliza-gcc.h
-> new file mode 100644
-> index 000000000000..3e0ff3fb69f6
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,eliza-gcc.h
-> @@ -0,0 +1,218 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_ELIZA_H
-> +#define _DT_BINDINGS_CLK_QCOM_GCC_ELIZA_H
-> +
-> +/* GCC clocks */
-> +#define GCC_AGGRE_NOC_PCIE_AXI_CLK				0
-> +#define GCC_AGGRE_UFS_PHY_AXI_CLK				1
-> +#define GCC_AGGRE_USB3_PRIM_AXI_CLK				2
-> +#define GCC_BOOT_ROM_AHB_CLK					3
-> +#define GCC_CAM_BIST_MCLK_AHB_CLK				4
-> +#define GCC_CAMERA_AHB_CLK					5
-> +#define GCC_CAMERA_HF_AXI_CLK					6
-> +#define GCC_CAMERA_SF_AXI_CLK					7
-> +#define GCC_CAMERA_XO_CLK					8
-> +#define GCC_CFG_NOC_PCIE_ANOC_AHB_CLK				9
-> +#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK				10
-> +#define GCC_CNOC_PCIE_SF_AXI_CLK				11
-> +#define GCC_DDRSS_GPU_AXI_CLK					12
-> +#define GCC_DDRSS_PCIE_SF_QTB_CLK				13
-> +#define GCC_DISP_AHB_CLK					14
-> +#define GCC_DISP_HF_AXI_CLK					15
-> +#define GCC_GP1_CLK						16
-> +#define GCC_GP1_CLK_SRC						17
-> +#define GCC_GP2_CLK						18
-> +#define GCC_GP2_CLK_SRC						19
-> +#define GCC_GP3_CLK						20
-> +#define GCC_GP3_CLK_SRC						21
-> +#define GCC_GPLL0						22
-> +#define GCC_GPLL0_OUT_EVEN					23
-> +#define GCC_GPLL4						24
-> +#define GCC_GPLL7						25
-> +#define GCC_GPLL8						26
-> +#define GCC_GPLL9						27
-> +#define GCC_GPU_CFG_AHB_CLK					28
-> +#define GCC_GPU_GEMNOC_GFX_CLK					29
-> +#define GCC_GPU_GPLL0_CPH_CLK_SRC				30
-> +#define GCC_GPU_GPLL0_DIV_CPH_CLK_SRC				31
-> +#define GCC_GPU_SMMU_VOTE_CLK					32
-> +#define GCC_MMU_TCU_VOTE_CLK					33
-> +#define GCC_PCIE_0_AUX_CLK					34
-> +#define GCC_PCIE_0_AUX_CLK_SRC					35
-> +#define GCC_PCIE_0_CFG_AHB_CLK					36
-> +#define GCC_PCIE_0_MSTR_AXI_CLK					37
-> +#define GCC_PCIE_0_PHY_RCHNG_CLK				38
-> +#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC				39
-> +#define GCC_PCIE_0_PIPE_CLK					40
-> +#define GCC_PCIE_0_PIPE_CLK_SRC					41
-> +#define GCC_PCIE_0_PIPE_DIV2_CLK				42
-> +#define GCC_PCIE_0_PIPE_DIV2_CLK_SRC				43
-> +#define GCC_PCIE_0_SLV_AXI_CLK					44
-> +#define GCC_PCIE_0_SLV_Q2A_AXI_CLK				45
-> +#define GCC_PCIE_1_AUX_CLK					46
-> +#define GCC_PCIE_1_AUX_CLK_SRC					47
-> +#define GCC_PCIE_1_CFG_AHB_CLK					48
-> +#define GCC_PCIE_1_MSTR_AXI_CLK					49
-> +#define GCC_PCIE_1_PHY_RCHNG_CLK				50
-> +#define GCC_PCIE_1_PHY_RCHNG_CLK_SRC				51
-> +#define GCC_PCIE_1_PIPE_CLK					52
-> +#define GCC_PCIE_1_PIPE_CLK_SRC					53
-> +#define GCC_PCIE_1_PIPE_DIV2_CLK				54
-> +#define GCC_PCIE_1_PIPE_DIV2_CLK_SRC				55
-> +#define GCC_PCIE_1_SLV_AXI_CLK					56
-> +#define GCC_PCIE_1_SLV_Q2A_AXI_CLK				57
-> +#define GCC_PCIE_RSCC_CFG_AHB_CLK				58
-> +#define GCC_PCIE_RSCC_XO_CLK					59
-> +#define GCC_PDM2_CLK						60
-> +#define GCC_PDM2_CLK_SRC					61
-> +#define GCC_PDM_AHB_CLK						62
-> +#define GCC_PDM_XO4_CLK						63
-> +#define GCC_QMIP_CAMERA_CMD_AHB_CLK				64
-> +#define GCC_QMIP_CAMERA_NRT_AHB_CLK				65
-> +#define GCC_QMIP_CAMERA_RT_AHB_CLK				66
-> +#define GCC_QMIP_GPU_AHB_CLK					67
-> +#define GCC_QMIP_PCIE_AHB_CLK					68
-> +#define GCC_QMIP_VIDEO_V_CPU_AHB_CLK				69
-> +#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK				70
-> +#define GCC_QUPV3_WRAP1_CORE_2X_CLK				71
-> +#define GCC_QUPV3_WRAP1_CORE_CLK				72
-> +#define GCC_QUPV3_WRAP1_QSPI_REF_CLK				73
-> +#define GCC_QUPV3_WRAP1_QSPI_REF_CLK_SRC			74
-> +#define GCC_QUPV3_WRAP1_S0_CLK					75
-> +#define GCC_QUPV3_WRAP1_S0_CLK_SRC				76
-> +#define GCC_QUPV3_WRAP1_S1_CLK					77
-> +#define GCC_QUPV3_WRAP1_S1_CLK_SRC				78
-> +#define GCC_QUPV3_WRAP1_S2_CLK					79
-> +#define GCC_QUPV3_WRAP1_S2_CLK_SRC				80
-> +#define GCC_QUPV3_WRAP1_S3_CLK					81
-> +#define GCC_QUPV3_WRAP1_S3_CLK_SRC				82
-> +#define GCC_QUPV3_WRAP1_S4_CLK					83
-> +#define GCC_QUPV3_WRAP1_S4_CLK_SRC				84
-> +#define GCC_QUPV3_WRAP1_S5_CLK					85
-> +#define GCC_QUPV3_WRAP1_S5_CLK_SRC				86
-> +#define GCC_QUPV3_WRAP1_S6_CLK					87
-> +#define GCC_QUPV3_WRAP1_S6_CLK_SRC				88
-> +#define GCC_QUPV3_WRAP1_S7_CLK					89
-> +#define GCC_QUPV3_WRAP1_S7_CLK_SRC				90
-> +#define GCC_QUPV3_WRAP2_CORE_2X_CLK				91
-> +#define GCC_QUPV3_WRAP2_CORE_CLK				92
-> +#define GCC_QUPV3_WRAP2_S0_CLK					93
-> +#define GCC_QUPV3_WRAP2_S0_CLK_SRC				94
-> +#define GCC_QUPV3_WRAP2_S1_CLK					95
-> +#define GCC_QUPV3_WRAP2_S1_CLK_SRC				96
-> +#define GCC_QUPV3_WRAP2_S2_CLK					97
-> +#define GCC_QUPV3_WRAP2_S2_CLK_SRC				98
-> +#define GCC_QUPV3_WRAP2_S3_CLK					99
-> +#define GCC_QUPV3_WRAP2_S3_CLK_SRC				100
-> +#define GCC_QUPV3_WRAP2_S4_CLK					101
-> +#define GCC_QUPV3_WRAP2_S4_CLK_SRC				102
-> +#define GCC_QUPV3_WRAP2_S5_CLK					103
-> +#define GCC_QUPV3_WRAP2_S5_CLK_SRC				104
-> +#define GCC_QUPV3_WRAP2_S6_CLK					105
-> +#define GCC_QUPV3_WRAP2_S6_CLK_SRC				106
-> +#define GCC_QUPV3_WRAP2_S7_CLK					107
-> +#define GCC_QUPV3_WRAP2_S7_CLK_SRC				108
-> +#define GCC_QUPV3_WRAP_1_M_AHB_CLK				109
-> +#define GCC_QUPV3_WRAP_1_S_AHB_CLK				110
-> +#define GCC_QUPV3_WRAP_2_M_AHB_CLK				111
-> +#define GCC_QUPV3_WRAP_2_S_AHB_CLK				112
-> +#define GCC_SDCC1_AHB_CLK					113
-> +#define GCC_SDCC1_APPS_CLK					114
-> +#define GCC_SDCC1_APPS_CLK_SRC					115
-> +#define GCC_SDCC1_ICE_CORE_CLK					116
-> +#define GCC_SDCC1_ICE_CORE_CLK_SRC				117
-> +#define GCC_SDCC2_AHB_CLK					118
-> +#define GCC_SDCC2_APPS_CLK					119
-> +#define GCC_SDCC2_APPS_CLK_SRC					120
-> +#define GCC_UFS_PHY_AHB_CLK					121
-> +#define GCC_UFS_PHY_AXI_CLK					122
-> +#define GCC_UFS_PHY_AXI_CLK_SRC					123
-> +#define GCC_UFS_PHY_ICE_CORE_CLK				124
-> +#define GCC_UFS_PHY_ICE_CORE_CLK_SRC				125
-> +#define GCC_UFS_PHY_PHY_AUX_CLK					126
-> +#define GCC_UFS_PHY_PHY_AUX_CLK_SRC				127
-> +#define GCC_UFS_PHY_RX_SYMBOL_0_CLK				128
-> +#define GCC_UFS_PHY_RX_SYMBOL_0_CLK_SRC				129
-> +#define GCC_UFS_PHY_RX_SYMBOL_1_CLK				130
-> +#define GCC_UFS_PHY_RX_SYMBOL_1_CLK_SRC				131
-> +#define GCC_UFS_PHY_TX_SYMBOL_0_CLK				132
-> +#define GCC_UFS_PHY_TX_SYMBOL_0_CLK_SRC				133
-> +#define GCC_UFS_PHY_UNIPRO_CORE_CLK				134
-> +#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC				135
-> +#define GCC_USB30_PRIM_ATB_CLK					136
-> +#define GCC_USB30_PRIM_MASTER_CLK				137
-> +#define GCC_USB30_PRIM_MASTER_CLK_SRC				138
-> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK				139
-> +#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC			140
-> +#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC		141
-> +#define GCC_USB30_PRIM_SLEEP_CLK				142
-> +#define GCC_USB3_PRIM_PHY_AUX_CLK				143
-> +#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC				144
-> +#define GCC_USB3_PRIM_PHY_COM_AUX_CLK				145
-> +#define GCC_USB3_PRIM_PHY_PIPE_CLK				146
-> +#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC				147
-> +#define GCC_VIDEO_AHB_CLK					148
-> +#define GCC_VIDEO_AXI0_CLK					149
-> +#define GCC_VIDEO_AXI1_CLK					150
-> +#define GCC_VIDEO_XO_CLK					151
-> +
-> +/* GCC power domains */
-> +#define GCC_PCIE_0_GDSC						0
-> +#define GCC_PCIE_0_PHY_GDSC					1
-> +#define GCC_PCIE_1_GDSC						2
-> +#define GCC_PCIE_1_PHY_GDSC					3
-> +#define GCC_UFS_MEM_PHY_GDSC					4
-> +#define GCC_UFS_PHY_GDSC					5
-> +#define GCC_USB30_PRIM_GDSC					6
-> +#define GCC_USB3_PHY_GDSC					7
-> +
-> +/* GCC resets */
-> +#define GCC_CAMERA_BCR						0
-> +#define GCC_DISPLAY_BCR						1
-> +#define GCC_GPU_BCR						2
-> +#define GCC_PCIE_0_BCR						3
-> +#define GCC_PCIE_0_LINK_DOWN_BCR				4
-> +#define GCC_PCIE_0_NOCSR_COM_PHY_BCR				5
-> +#define GCC_PCIE_0_PHY_BCR					6
-> +#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR			7
-> +#define GCC_PCIE_1_BCR						8
-> +#define GCC_PCIE_1_LINK_DOWN_BCR				9
-> +#define GCC_PCIE_1_NOCSR_COM_PHY_BCR				10
-> +#define GCC_PCIE_1_PHY_BCR					11
-> +#define GCC_PCIE_1_PHY_NOCSR_COM_PHY_BCR			12
-> +#define GCC_PCIE_PHY_BCR					13
-> +#define GCC_PCIE_PHY_CFG_AHB_BCR				14
-> +#define GCC_PCIE_PHY_COM_BCR					15
-> +#define GCC_PCIE_RSCC_BCR					16
-> +#define GCC_PDM_BCR						17
-> +#define GCC_QUPV3_WRAPPER_1_BCR					18
-> +#define GCC_QUPV3_WRAPPER_2_BCR					19
-> +#define GCC_QUSB2PHY_PRIM_BCR					20
-> +#define GCC_QUSB2PHY_SEC_BCR					21
-> +#define GCC_SDCC1_BCR						22
-> +#define GCC_SDCC2_BCR						23
-> +#define GCC_UFS_PHY_BCR						24
-> +#define GCC_USB30_PRIM_BCR					25
-> +#define GCC_USB3_DP_PHY_PRIM_BCR				26
-> +#define GCC_USB3_DP_PHY_SEC_BCR					27
-> +#define GCC_USB3_PHY_PRIM_BCR					28
-> +#define GCC_USB3_PHY_SEC_BCR					29
-> +#define GCC_USB3PHY_PHY_PRIM_BCR				30
-> +#define GCC_USB3PHY_PHY_SEC_BCR					31
-> +#define GCC_VIDEO_AXI0_CLK_ARES					32
-> +#define GCC_VIDEO_AXI1_CLK_ARES					33
-> +#define GCC_VIDEO_BCR						34
-> +#define GCC_CAMERA_HF_AXI_SLP_STG_ARES				37
-> +#define GCC_CAMERA_SF_AXI_SLP_STG_ARES				38
-> +#define GCC_CAMERA_HF_AXI_SEL_SLP_STG_ARES			39
-> +#define GCC_CAMERA_SF_AXI_SEL_SLP_STG_ARES			40
-> +#define GCC_CAMERA_HF_CLK_EN_SLP_STG				41
-> +#define GCC_CAMERA_SF_CLK_EN_SLP_STG				42
-> +#define GCC_CAMERA_HF_CLK_EN_SEL_SLP_STG			43
-> +#define GCC_CAMERA_SF_CLK_EN_SEL_SLP_STG			44
-> +
-> +#endif
-> 
-> -- 
-> 2.48.1
-> 
+---
+base-commit: a0c666c25aeefd16f4b088c6549a6fb6b65a8a1d
+change-id: 20260123-a6xx_gpu-cbc095dbe423
+
+Best regards,
+-- 
+Felix Gu <ustc.gu@gmail.com>
+
 
