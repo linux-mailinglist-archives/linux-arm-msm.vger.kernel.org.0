@@ -1,745 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-90305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uCtvOVk7c2kztgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 10:11:53 +0100
+	id 2Ic3Oww/c2kztgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 10:27:40 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88889730AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 10:11:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50318734B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 10:27:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E786C3003633
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 09:11:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A625D301CCC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 09:26:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 934AD316919;
-	Fri, 23 Jan 2026 09:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3EC0353ED7;
+	Fri, 23 Jan 2026 09:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mgi/Q/iB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gfAXlj21";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gsmyerfT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA9B303A05;
-	Fri, 23 Jan 2026 09:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0D1346AC0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 09:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769159511; cv=none; b=ZyeGomrBj6t0TxtQST+2ygBx7wXJSnbqIX8DMNAXX2HloR9TXJLKqsyU+7rSkE3gTYmQGEYtZSK+YjQi274QNY4eqPRGvZgLQQeIaOiXKofjAJRQ4n2E+emnlSSr4i5xek9aQzSZhpyM87I9zdeg4FbHxBK38TQzkOwtF3u0yLM=
+	t=1769160375; cv=none; b=h2va8PLyXYGM8IutqWmQZJybgtoNtSPwfHljDV9JAt3N6ets2qWDpRsfx7Jm/sDNY3+Vt2iWW7xCPnApm9Fb12/G+mFGTDOLOX4dz2D0g98I0t0OesvKtliICg/HnRVaSHTuTzNvxx9kzHPM5cDJjGLtDi5eK6HhIq/qHiUzFos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769159511; c=relaxed/simple;
-	bh=jliK6HGeroY22rdlTlF7rfTd8jXQadZe9hVX0slatrI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t+hSttwa7XRYGjFWK3r8+5ww+XTuzfS75QlCUY1ZFQaGzoscQkIPjorlqecETi2p7z1clJCaDoifz3iFpD8LaEeM6RFoBYoovoXXZ1eEh6EglcgvLZ8mVCOIBsZe5cPwPAdvOyRX1h0KnUKyJg9LxbRQopiw7WB1v+v1AQrZWUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mgi/Q/iB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B44C4CEF1;
-	Fri, 23 Jan 2026 09:11:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769159511;
-	bh=jliK6HGeroY22rdlTlF7rfTd8jXQadZe9hVX0slatrI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Mgi/Q/iBpj8XQH1yqzEkEjLtN0vCpJxP9LS+wNdSSFffWe3DZ5n3Vx6c0Xe3Uqz7C
-	 J7xhqkeb/hGNkIg9U5Lrul/4yY4Hz7nYt8jN4fPh364LeySslKFhhK81veB4ouB4hp
-	 YCJbKRfY7DU95Ae2vnaBMgtCu8D5it3ppb3qCmDnfaE75jOmQisvC5B/czdZmyi4Ws
-	 mt6KUdO1rdwyqZUyQiGT6t4xghs3ec8hBTJoprJFuuWiTViBs7NhNYubBYg8GJqagy
-	 zJWY2XbLfrRAP3x1YjYlabNLxaJG6S/fgPZrpEguZe+XAKvIuP8z1sP4e+/XwE9fdm
-	 lA/40qI+mGHVw==
-Date: Fri, 23 Jan 2026 09:11:41 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Petr Hodina via B4 Relay <devnull+petr.hodina.protonmail.com@kernel.org>
-Cc: petr.hodina@protonmail.com, David Lechner <dlechner@baylibre.com>, Nuno
- =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, David Heidelberg <david@ixit.cz>,
- linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] iio: light: add AMS TCS3400 RGB and RGB-IR color
- sensor driver
-Message-ID: <20260123091141.7ce41a22@jic23-huawei>
-In-Reply-To: <20260119-tsc3400-v1-2-82a65c5417aa@protonmail.com>
-References: <20260119-tsc3400-v1-0-82a65c5417aa@protonmail.com>
-	<20260119-tsc3400-v1-2-82a65c5417aa@protonmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1769160375; c=relaxed/simple;
+	bh=ZymD45HnA1Wj/EjCUHn4EAtDCmuZZ40XWkQeZWRpHuc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n4+uHH6YZ19RQU1sHeoGbNH2Xu5IJHv6mSEBwo9IagWMGlnZ/t9C+PAbqR4o0G7L6vKibaOkijXduY1kk5CcGbyuN0ZVEwBgz7F5NMzLcqR8OYRk2aWDPapqSzty88NfXDj2qMOrMBb/fWOFzyyDYfplX00HoYt30EkHVJoW3FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gfAXlj21; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gsmyerfT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60N8F9nC3649502
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 09:26:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	szx+1GRX6XbUl0ZWii2s6yevGzmPsLcdlC5e68ikQgY=; b=gfAXlj21SyBBq/Xe
+	rcFWjQVcNHGGa3F7SuhqZaQ+A+A556dyYev/qE5/Zu3DlQxGHy80QnvYyWL8WOeK
+	DnV/7uXk5P8ordqyGnzEYjVOTxtEjJk/m51BZMBhzLQuqwFg8o1cgPn92jsPC5vG
+	Lh3Ef55aGrmTCsGqKumopMgBJGGcc5q+hDrOavekJvfVHxZjZDpOFFvbsjqLeGzy
+	+yS7nrtpo1iJqRcbfe0TzDazpF71Y/t98j25gL6eoOCuvTC1UfS0hvmw/atrVx9d
+	NBAK6zYOeNteUNjTeUynDRqJGOKC6GrrGremvgDscdsAAZPCp5wgfqqQDNiAzwxN
+	UScdOg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4buy4nsmux-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 09:26:09 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c6de73fab8so48807785a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 01:26:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769160368; x=1769765168; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=szx+1GRX6XbUl0ZWii2s6yevGzmPsLcdlC5e68ikQgY=;
+        b=gsmyerfTCwLIn5RjDJZdKdX9yMmKw1onRVejvy/xhHy3U1BjA5Eiw56p1DUR5ieQak
+         06b45mRPLlm/d/LDd8bbI6jkWw8y5SUYfcnA4OH6dc831jlsznQeHaGGSJ0eAvRIKMcg
+         mMQi8mf1UhE96mDLvmxftpeGM3ygUUhjgZWwIdh/OKnc1HkLfecYy+I6kGToST32+NxK
+         w0DQu+enLDhgLJPRoyupoEWPjGzapWZWKN1erzip8G8DNcyVXUwlh7mgSMZIbQNIxeTB
+         N33c9/8Upq6gcK1ZlU35A+jveFccALrRrnjlWnPnEnZnVmGCDQLKVscft50S2xYJjzkq
+         HedQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769160368; x=1769765168;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=szx+1GRX6XbUl0ZWii2s6yevGzmPsLcdlC5e68ikQgY=;
+        b=H3QQjELY8th0Z8LnZuBbxnAOZSixducWQd5VQRASOdFzKP/U05tnbbBfR7yFYht9Ln
+         bte4TI+WxDVtaE/9EJQ7m00Gc7lqwBUnOauais/8Cds7b2pf1tGFwPP9kQB0l/FmaujR
+         n077WC1yc8EPFTNI4C6sVi1flD37m99zbp+GWYbTko7kYNiJD8w6tpY9LlEjTI8aVfus
+         Fjbk59rZMDLZifwOJrGl9uXgLLxN0IyZlqwPfwnzjDuPfSWExJpRJhi3oYkbUWM1eh8F
+         J9eQboLrlDJBsU1nqnxiXmmTBZT/MH4dCFfeBdbxUOQAsQ2xt4QapHwc9kMtoaTBZIlz
+         qstg==
+X-Forwarded-Encrypted: i=1; AJvYcCXPkFEcDKxV9d4vYptdUPPxaGEh1Z0MeR1ciNF4DI5PWNt0Y76dRjG6UmL89bhRMxuCvXoYUiNCcICWUO8n@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgSI3r/SCMsc0VXMqoauu53z4AfDG0iMdRwrWdcL8wlNCvE84I
+	8U1ZWNnJ/VU+ab+upbZrxmlSC1ZN//d9fC3bVhOpd8Nq0hfRBApudBfpgGatbF4oFh/6w/LQzLw
+	mPfzxs4vNVXQ7YTeibsOCTrNgyys0JBhxRveVVhHiyXzdlKEn3Sp3kDnOx/zLkFN9gnXf
+X-Gm-Gg: AZuq6aKfn+UF5WcZ+Pyz8kwSED00pUlYG5Ynn8jU8Y1BGvd7olft+V2Wm/Y5inrqKsB
+	cDq0PrY7+1YXz2t4/6Il+YdZqCQQF7qrf63EJ058h9LtZl8ni/3RKb0EY4cI3JbaxupaGECWNzO
+	cMc6L4L//U/ad4qfHqokXiHyB34wIrZ1ZVxlqeyF1QaR6gEI5nWFWK1rpxbuaqP1f49foeE5sTq
+	01MbrPDvTFyZgDo+U5Jsvo6m88Qge53hm7WiH3xpAIZ6gq+yT1lSIqMJFlFitWffL2PsqpllnHL
+	6ckK3Ekyh/uD8dfLPEfijNhDyYStlJVZUjjOzOVJmXB0xt110DVWem3U0khr8ElbND17nnvMjga
+	p8mOkovjcn2z5bOfjbcFX9GdZqOran3988fcmt5ByvQSjuwN9gUldQ3T+csS20n/BnsU=
+X-Received: by 2002:a05:620a:45a2:b0:8c5:33bf:524c with SMTP id af79cd13be357-8c6e2e1d328mr200642985a.6.1769160368429;
+        Fri, 23 Jan 2026 01:26:08 -0800 (PST)
+X-Received: by 2002:a05:620a:45a2:b0:8c5:33bf:524c with SMTP id af79cd13be357-8c6e2e1d328mr200641885a.6.1769160367935;
+        Fri, 23 Jan 2026 01:26:07 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6584b954d3dsm759623a12.23.2026.01.23.01.26.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Jan 2026 01:26:06 -0800 (PST)
+Message-ID: <f8097212-6388-4c4c-8f5d-a91df99a18c5@oss.qualcomm.com>
+Date: Fri, 23 Jan 2026 10:26:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] arm64: dts: qcom: sdm660-xiaomi-lavender: fix
+ regulator and SD settings
+To: Alexey Minnekhanov <alexeymin@minlexx.ru>,
+        Gianluca Boiano <morf3089@gmail.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, robh@kernel.org, david@ixit.cz
+References: <20260120180052.1031231-1-morf3089@gmail.com>
+ <20260120180052.1031231-4-morf3089@gmail.com>
+ <afa20489-adaf-46bd-b3e7-c763aba5d7c9@oss.qualcomm.com>
+ <ac83f41e-08ad-4ffe-9f0e-02f8256af65c@minlexx.ru>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <ac83f41e-08ad-4ffe-9f0e-02f8256af65c@minlexx.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 8x0U0VLmdEMU-iTIuEPxBRGXz_ig3QX4
+X-Authority-Analysis: v=2.4 cv=I5lohdgg c=1 sm=1 tr=0 ts=69733eb1 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=FKD-OoraEu4ia8LkOS8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: 8x0U0VLmdEMU-iTIuEPxBRGXz_ig3QX4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA3NCBTYWx0ZWRfXwjBJcixRBElK
+ 5/qLddSOVFu2RP5JlgYRf+s0KDStTzGh/SCRpEBFhgnV9LWZQ5Cu824yhEoEFvCD7vjLcxDY6sd
+ 9KeHe5z4o6kYMa18+PN9SRPbf8lw1dP4+0E06MvB5PxyY887W5tAM0sgidk65mh29yL4mV1YTiK
+ 8ml2gl3wMDeV6a1Oq+y3bpFhIw+2QqbTwed7klLJBBJe3O0FX4caDz4BNGl8IIWc2fSa641t8Dh
+ m6r2m5X8h7etwPLFdBxoKlrsj5g5wRPut+Z75JIYYwFuJUSO2GCg/IDXgNu4LoEXIeodpTl9MxM
+ vMRij2CEBpT/uwqZk8uUh+mwx8RkvvtI2YmSz5i2mYdWT9qa6Nt0uGeX9v1SWz4Y/SxqB8NIBmY
+ rc458NCFCDA9N61I/FM+BTzz3/mt8O6JYgyiREUQh7e6h18oZVevXnGQg53tDDUfVCuBi267IVA
+ f/hvIwlaLtnLaykPZaQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-23_01,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230074
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90305-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.995];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[protonmail.com,baylibre.com,analog.com,kernel.org,ixit.cz,vger.kernel.org];
-	TAGGED_RCPT(0.00)[linux-arm-msm,petr.hodina.protonmail.com,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[minlexx.ru,gmail.com,vger.kernel.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-90306-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 88889730AA
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 50318734B5
 X-Rspamd-Action: no action
 
-On Mon, 19 Jan 2026 18:19:07 +0100
-Petr Hodina via B4 Relay <devnull+petr.hodina.protonmail.com@kernel.org> wrote:
-
-> From: Petr Hodina <petr.hodina@protonmail.com>
+On 1/22/26 5:44 PM, Alexey Minnekhanov wrote:
+> On 21.01.2026 14:27, Konrad Dybcio wrote:
+>> On 1/20/26 7:00 PM, Gianluca Boiano wrote:
+>>> Fix regulator configurations to ensure stable operation:
+>>> - vreg_l10a_1p8: Add regulator-system-load of 14000uA for proper USB PHY
+>>>    PLL operation
+>>
+>> The driver needs to be fixed instead, as it should perform a
+>> regulator_set_load()
 > 
-> Add support for the AMS TCS3400 I2C color light-to-digital converter.
-> The driver supports RGBC and RGB-IR modes, programmable integration
-> time, optional interrupt-driven buffered capture, and regulator-based
-> power control.
 > 
-> Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
-Hi Petr,
+> Also change done by me in [1] with more detailed explanation:
+> 
+> Since the commit f05ab10 ("arm64: dts: qcom: sdm660-lavender:
+> Add missing USB phy supply") previously untouched by Linux regulator
+> l10a is now used, but it exposed a bug from initial porting: when
+> booting with USB cable inserted, or booting without cable and
+> inserting it later, board reboots.
 
-Seems you have a lot of reviews already.  I'll take a quick look
-as well but may well overlap with others.
+FYI this shouldn't be required with the upstream driver, I don't think
+the core calls .set_load(0) and RPM isn't notified of a current
+requirement change unless that happens (qcom_smd-regulator.c)
 
-Thanks,
+In the power grid, I see (current values representing the peak):
 
-Jonathan
+-- USB2
+VDDA (3.1 V - vdda-phy-dpdm-supply) - 60mA
+VDDA (1.8 V - vdda-pll-supply) - 30mA
 
->  M:	Mudit Sharma <muditsharma.info@gmail.com>
-> diff --git a/drivers/iio/light/Kconfig b/drivers/iio/light/Kconfig
-> index ac1408d374c9..73419d80e3a7 100644
-> --- a/drivers/iio/light/Kconfig
-> +++ b/drivers/iio/light/Kconfig
-> @@ -580,6 +580,17 @@ config ST_UVIS25_SPI
->  	depends on ST_UVIS25
->  	select REGMAP_SPI
->  
-> +config TCS3400
-> +	tristate "AMS TCS3400 color light-to-digital converter"
-> +	depends on I2C
-> +	default n
-Drop that as it's the default with nothing said.
-> +	help
-> +	  If you say yes here you get support for the AMS TCS3400.
-> +	  This sensor can detect ambient light and color (RGB) values.
-> +
-> +	  This driver can also be built as a module.  If so, the module
-> +	  will be called tcs3400.
+VDD (?) - 11.4 mA
+VDDA_DVDD (?) - 35 mA
 
-> diff --git a/drivers/iio/light/tcs3400.c b/drivers/iio/light/tcs3400.c
-> new file mode 100644
-> index 000000000000..22c8c4e803cf
-> --- /dev/null
-> +++ b/drivers/iio/light/tcs3400.c
-> @@ -0,0 +1,505 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * TCS3400 - AMS/TAOS color light sensor with RGBC and RGB-IR channels
-> + *
-> + * Copyright (c) 2025 Petr Hodina
-> + *
-This trailing blank line adds little other than more scrolling. Drop it.
-> + */
-> +
-> +#include <linux/module.h>
-Alphabetical order and sanity check that you are following the
-include what you use philosophy for includes (see threads
-on list currently about that).
+-- USB3
+VDDA (1.8 V) - 14 mA
+VDDA_CORE - 68.6 mA
 
-> +#include <linux/i2c.h>
-> +#include <linux/regulator/consumer.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/delay.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/iio/iio.h>
-> +#include <linux/iio/sysfs.h>
-> +#include <linux/iio/buffer.h>
-> +#include <linux/iio/triggered_buffer.h>
-> +#include <linux/iio/trigger.h>
-See below for comments on this.
-> +#include <linux/iio/trigger_consumer.h>
-> +
-> +#define TCS3400_DRV_NAME "tcs3400"
-> +#define TCS3400_CMD_REG(reg) (0x80 | (reg))
-> +#define TCS3400_CMD_SPECIAL 0xE0
-> +#define TCS3400_CMD_ALS_INT_CLR 0xE6
-> +#define TCS3400_CMD_ALL_INT_CLR 0xE7
-> +#define TCS3400_ENABLE 0x00
++Dmitry poked at 660 in the past
 
-I'd add _REG postfix to the register addresses. Makes it
-easier to tell what is address and what is field..
-
-> +#define TCS3400_ATIME 0x01
-> +#define TCS3400_WTIME 0x03
-> +#define TCS3400_PERSIST 0x0C
-> +#define TCS3400_CONTROL 0x0F /* Gain */
-> +#define TCS3400_STATUS 0x13
-> +#define TCS3400_CDATAL 0x14 /* Clear low */
-> +#define TCS3400_RDATAL 0x16
-> +#define TCS3400_GDATAL 0x18
-> +#define TCS3400_BDATAL 0x1A
-> +#define TCS3400_ID 0x12
-> +#define TCS3400_CHSEL 0xC0 /* Access IR channel: 0x00 RGBC, 0x80 RGB-IR */
-> +#define TCS3400_EN_PON BIT(0)
-Fine a way to clearly associate fields with register.
-Normally repeat the prefix. So this is maybe
-TCS3400_ENABLE_PON
-
-Put the fields with each register address define and it is
-worth looking at some of the indentation tweaks we often
-do to make it easier to read.
-
-
-> +#define TCS3400_EN_AEN BIT(1)
-> +#define TCS3400_EN_AIEN BIT(4)
-> +#define TCS3400_STATUS_AVALID BIT(0)
-> +#define TCS3400_STATUS_AINT BIT(4)
-> +#define TCS3400_GAIN_1X 0x00
-> +#define TCS3400_GAIN_4X 0x01
-> +#define TCS3400_GAIN_16X 0x02
-> +#define TCS3400_GAIN_64X 0x03
-> +#define TCS3400_MAX_ATIME 256
-> +
-> +#define TCS3400_IIO_CHANNEL(_index, _mod) { \
-> +	.type = IIO_INTENSITY, \
-> +	.modified = 1, \
-> +	.channel2 = IIO_MOD_##_mod, \
-> +	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | \
-> +			      BIT(IIO_CHAN_INFO_SCALE), \
-> +			      BIT(IIO_CHAN_INFO_SCALE) | \
-> +			      BIT(IIO_CHAN_INFO_INT_TIME), \
-> +	.indexed = 1, \
-> +	.channel = _index, \
-> +	.scan_index = _index, \
-> +	.scan_type = { \
-> +		.sign = 'u', \
-> +		.realbits = 16, \
-> +		.storagebits = 16, \
-> +		.endianness = IIO_LE, \
-
-Looks wrong with a le16_to_cpu in the read path.
-Arguably that shouldn't be in the buffered path, but given it's i2c and
-the cost of even talking to the device is high I don't mind if that
-simplifies your code.
-
-
-> +	}, \
-> +}
-> +
-> +struct tcs3400_data {
-> +	struct i2c_client *client;
-> +	struct mutex lock;
-> +	struct regulator *vdd_supply;
-> +	u8 atime;
-> +	u8 gain;
-> +	u8 channel_mode; /* 0x00 or 0x80 */
-> +	u16 clear_ir; /* clear when mode=0x00, IR when mode=0x80 */
-
-Sounds like you should control your ir_mode based on what channel is requested
-not a separate attribute that changes the meaning of the data.
-
-> +	u16 red;
-> +	u16 green;
-> +	u16 blue;
-> +};
-> +
-> +static const int tcs3400_gains[] = {1, 4, 16, 64};
-
- = { 1, 4, 16, 64 };
-
-is the preferred formatting in IIO.
-
-> +
-> +static int tcs3400_power_on(struct tcs3400_data *data)
-> +{
-> +	int ret;
-> +
-> +	ret = regulator_enable(data->vdd_supply);
-> +	if (ret)
-> +		return ret;
-> +
-> +	msleep(20);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tcs3400_power_off(struct tcs3400_data *data)
-> +{
-> +	regulator_disable(data->vdd_supply);
-After changes suggested below, this will not be needed.
-> +}
-> +
-> +static int tcs3400_write_reg(struct tcs3400_data *data, u8 reg, u8 val)
-> +{
-> +	return i2c_smbus_write_byte_data(data->client, TCS3400_CMD_REG(reg), val);
-> +}
-> +
-> +static int tcs3400_read_reg(struct tcs3400_data *data, u8 reg, u8 *val)
-> +{
-> +	int ret = i2c_smbus_read_byte_data(data->client, TCS3400_CMD_REG(reg));
-> +
-> +	if (ret < 0)
-> +		return ret;
-> +	*val = ret;
-> +
-> +	return 0;
-> +}
-> +
-> +static int tcs3400_read_word(struct tcs3400_data *data, u8 reg, u16 *val)
-> +{
-> +
-> +	__le16 buf;
-> +	int ret = i2c_smbus_read_i2c_block_data(data->client,
-> +						TCS3400_CMD_REG(reg), 2, (u8 *)&buf);
-
-sizeof(buf) rather than 2.
-
-> +	if (ret < 0)
-> +		return ret;
-> +	*val = le16_to_cpu(buf);
-> +	return 0;
-> +}
-> +static int tcs3400_clear_interrupt(struct tcs3400_data *data)
-> +{
-> +
-> +	return i2c_smbus_write_byte(data->client, TCS3400_CMD_ALS_INT_CLR);
-> +}
-> +
-> +static int tcs3400_read_channels(struct tcs3400_data *data)
-> +{
-> +
-> +	int ret, retries = 20;
-> +	u8 status;
-> +
-> +	do {
-> +		ret = tcs3400_read_reg(data, TCS3400_STATUS, &status);
-> +		if (ret)
-> +			return ret;
-> +		if (status & TCS3400_STATUS_AVALID)
-> +			break;
-> +		usleep_range(5000, 6000);
-
-Need a comment on why this sleep.  Mostly likely fsleep will be better choice.
-
-> +	} while (--retries);
-> +	if (!retries) {
-> +		dev_warn(&data->client->dev, "Timeout waiting for valid data\n");
-> +		return -ETIMEDOUT;
-> +	}
-> +	ret = tcs3400_read_word(data, TCS3400_CDATAL, &data->clear_ir);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = tcs3400_read_word(data, TCS3400_RDATAL, &data->red);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = tcs3400_read_word(data, TCS3400_GDATAL, &data->green);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = tcs3400_read_word(data, TCS3400_BDATAL, &data->blue);
-
-Datasheet is really vague on how much of the i2c protocol is supported.
-Any idea if bulk reads are an option?
-
-If not I'd suggest for read_raw at least you read only what is actually wanted.
-I2C busses are pretty slow! Might even be worth doing that for buffered
-reads.
-
-
-> +	if (ret)
-> +		return ret;
-> +	return 0;
-return tcs...
-
-> +}
-> +
-> +static irqreturn_t tcs3400_trigger_handler(int irq, void *p)
-> +{
-> +	struct iio_poll_func *pf = p;
-> +	struct iio_dev *indio_dev = pf->indio_dev;
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	u16 buf[4];
-> +	int ret;
-> +
-> +	mutex_lock(&data->lock);
-> +	ret = tcs3400_read_channels(data);
-> +	if (!ret) {		
-> +		buf[0] = data->clear_ir;
-> +		buf[1] = data->red;
-> +		buf[2] = data->green;
-> +		buf[3] = data->blue;
-> +		iio_push_to_buffers_with_timestamp(indio_dev, buf,
-> +						   iio_get_time_ns(indio_dev));
-
-Use iio_push_to_buffers_with_ts() and fix the error you'll see as a result.
-This function is deprecated because it makes it too easy to write a bug
-like you have done where the timestamp is off the end of the buffer.
-
-> +	}
-> +	mutex_unlock(&data->lock);
-> +
-> +	iio_trigger_notify_done(indio_dev->trig);
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static irqreturn_t tcs3400_irq_handler(int irq, void *priv)
-> +{
-> +	struct iio_dev *indio_dev = priv;
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	int ret;
-> +
-> +	mutex_lock(&data->lock);
-> +	ret = tcs3400_read_channels(data);
-> +	if (!ret)
-> +		iio_trigger_poll_nested(indio_dev->trig);
-
-I'm not sure what intent of this is... You seem to be poking a
-trigger that wasn't yours. That's a hard no as it could
-do absolutely anything.
-
-Superficially it looks like the driver should be registering
-a trigger of it's own and at least some of this logic
-belongs on that side of the trigger / device driver
-boundary.
-
-> +
-> +	tcs3400_clear_interrupt(data);
-> +	mutex_unlock(&data->lock);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int tcs3400_read_raw(struct iio_dev *indio_dev,
-> +			    struct iio_chan_spec const *chan,
-> +			    int *val, int *val2, long mask)
-> +{
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	int ret;
-> +
-> +	mutex_lock(&data->lock);
-> +	ret = tcs3400_read_channels(data);
-> +	if (ret) {
-> +		mutex_unlock(&data->lock);
-Guard will help here as well. See below.
-
-> +		return ret;
-> +	}
-> +
-> +	switch (mask) {
-> +	case IIO_CHAN_INFO_RAW:
-> +		switch (chan->channel2) {
-> +		case IIO_MOD_LIGHT_CLEAR:
-> +			*val = data->clear_ir;
-> +			break;
-> +		case IIO_MOD_LIGHT_RED:
-> +			*val = data->red;
-> +			break;
-> +		case IIO_MOD_LIGHT_GREEN:
-> +			*val = data->green;
-> +			break;
-> +		case IIO_MOD_LIGHT_BLUE:
-> +			*val = data->blue;
-> +			break;
-> +		default:
-> +			ret = -EINVAL;
-> +			break;
-> +		}
-> +		ret = IIO_VAL_INT;
-> +		break;
-> +	case IIO_CHAN_INFO_INT_TIME:
-> +		*val = 0;
-> +		*val2 = (TCS3400_MAX_ATIME - data->atime) * 2780000; /* 2.78 ms per cycle */
-> +		ret = IIO_VAL_INT_PLUS_MICRO;
-> +		break;
-> +	default:
-> +		ret = -EINVAL;
-> +	}
-> +	mutex_unlock(&data->lock);
-
-Use a guard() and early returns so the code flow is simpler.
-
-> +
-> +	return ret;
-> +}
-
-> +
-> +static const struct iio_chan_spec tcs3400_channels[] = {
-> +	TCS3400_IIO_CHANNEL(0, LIGHT_CLEAR),
-> +	TCS3400_IIO_CHANNEL(1, LIGHT_RED),
-> +	TCS3400_IIO_CHANNEL(2, LIGHT_GREEN),
-> +	TCS3400_IIO_CHANNEL(3, LIGHT_BLUE),
-> +	IIO_CHAN_SOFT_TIMESTAMP(4),
-> +};
-> +
-> +static ssize_t tcs3400_enable_show(struct device *dev,
-> +				   struct device_attribute *attr,
-> +				   char *buf)
-> +{
-> +	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	u8 enable;
-> +	int ret;
-> +
-> +	ret = tcs3400_read_reg(data, TCS3400_ENABLE, &enable);
-> +	if (ret)
-> +		return ret;
-> +	return sprintf(buf, "%d\n", !!(enable & (TCS3400_EN_PON | TCS3400_EN_AEN)));
-> +}
-> +
-> +static ssize_t tcs3400_enable_store(struct device *dev,
-> +				    struct device_attribute *attr,
-> +				    const char *buf, size_t len)
-> +{
-> +	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	bool enable;
-> +	int ret;
-> +	u8 val;
-> +
-> +	ret = kstrtobool(buf, &enable);
-> +	if (ret)
-> +		return ret;
-> +	mutex_lock(&data->lock);
-> +	if (enable)
-> +		val = TCS3400_EN_PON | TCS3400_EN_AEN;
-> +	else
-> +		val = 0;
-
-Not clear why you set up val under the lock.  Keep lock
-scope minimal where it doesn't hurt readability.
-
-
-> +	ret = tcs3400_write_reg(data, TCS3400_ENABLE, val);
-> +	mutex_unlock(&data->lock);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (enable)
-> +		msleep(20);
-> +	return len;
-> +}
-> +
-> +static ssize_t tcs3400_ir_mode_show(struct device *dev,
-> +				    struct device_attribute *attr,
-> +				    char *buf)
-> +{
-> +	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +
-> +	return sprintf(buf, "%d\n", !!data->channel_mode);
-> +}
-> +
-> +static ssize_t tcs3400_ir_mode_store(struct device *dev,
-> +				     struct device_attribute *attr,
-> +				     const char *buf, size_t len)
-> +{
-> +	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +	bool enable;
-> +	int ret;
-> +
-> +	ret = kstrtobool(buf, &enable);
-> +	if (ret)
-> +		return ret;
-> +	mutex_lock(&data->lock);
-> +	data->channel_mode = enable ? 0x80 : 0x00;
-
-Looks like it's setting 1 bit. Probably want a define for that field's mask.
-Is there anything else in that register?
-
-> +	ret = tcs3400_write_reg(data, TCS3400_CHSEL, data->channel_mode);
-> +	mutex_unlock(&data->lock);
-> +	return ret ? ret : len;
-> +}
-> +
-> +static IIO_DEVICE_ATTR(enable, 0644, tcs3400_enable_show, tcs3400_enable_store, 0);
-> +static IIO_DEVICE_ATTR(ir_mode, 0644, tcs3400_ir_mode_show, tcs3400_ir_mode_store, 0);
-> +
-> +static struct attribute *tcs3400_attributes[] = {
-> +	&iio_dev_attr_enable.dev_attr.attr,
-Why?  Generally expect a light sensor to be enabled and disabled automatically 
-based on other config. E.g. whether we have asked for data, enabled buffered capture
-or turned events on.
-
-> +	&iio_dev_attr_ir_mode.dev_attr.attr,
-
-Looks like custom ABI.  This is hard to get through review, but starting point
-is an ABI document in Documentation/ABI/testing/sysfs-bus-iio-*
-so we can easily see what the interface is.
-
-> +	NULL
-> +};
-> +
-> +static const struct attribute_group tcs3400_attribute_group = {
-> +	.attrs = tcs3400_attributes,
-> +};
-> +
-> +static const struct iio_info tcs3400_info = {
-> +	.read_raw = tcs3400_read_raw,
-> +	.write_raw = tcs3400_write_raw,
-> +	.attrs = &tcs3400_attribute_group,
-> +};
-> +
-> +static int tcs3400_probe(struct i2c_client *client)
-> +{
-> +	struct tcs3400_data *data;
-> +	struct iio_dev *indio_dev;
-> +	int ret;
-> +	u8 id;
-> +
-> +	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*data));
-> +	if (!indio_dev)
-> +		return -ENOMEM;
-> +
-> +	data = iio_priv(indio_dev);
-> +	data->client = client;
-> +	mutex_init(&data->lock);
-
-	ret = devm_mutex_init() in new code.
-
-> +
-> +	i2c_set_clientdata(client, indio_dev);
-
-Check if you still need this after the other changes suggested below.
-
-> +
-> +	data->vdd_supply = devm_regulator_get(&client->dev, "vdd");
-> +	if (IS_ERR(data->vdd_supply))
-> +		return dev_err_probe(&client->dev, PTR_ERR(data->vdd_supply),
-> +				     "Unable to get VDD regulator\n");
-> +
-> +	ret = tcs3400_power_on(data);
-
-Given you only turn it on at probe and off at remove
-devm_regulator_get_enable() is something you should be using.  Then just
-code the sleep inline here.
-
-> +	if (ret)
-> +		goto err_power_off;
-> +
-> +	ret = i2c_smbus_read_byte_data(client, TCS3400_CMD_REG(TCS3400_ID));
-> +	if (ret < 0) {
-> +		ret = -ENODEV;
-> +		goto err_power_off;
-> +		return ret;
-> +	}
-> +
-> +	id = ret;
-> +	if (id == 0x90)
-> +		dev_info(&client->dev, "TCS3401/5 Chip ID: 0x%02x\n", id);
-> +	if (id == 0x93)
-> +		dev_info(&client->dev, "TCS3403/7 Chip ID: 0x%02x\n", id);
-> +	else {
-> +		dev_err(&client->dev, "Unknown chip ID: 0x%02x\n", id);
-> +		ret = -ENODEV;
-
-you set ret then do nothing with it.  However, you should only dev_info
-on a mismatch anyway as failing probe on an ID miss match breaks the
-dt concept of fallback compatibles.   If the ID is miss matched, follow what
-the firmware told you it was.
-
-> +	}
-> +
-> +	data->atime = 0xF6; /* ~27.8 ms integration */
-> +	data->gain = TCS3400_GAIN_1X;
-> +	data->channel_mode = 0x00;
-> +
-> +	tcs3400_write_reg(data, TCS3400_ATIME, data->atime);
-
-These look likely to need error checks.
-
-> +	tcs3400_write_reg(data, TCS3400_CONTROL, data->gain);
-> +	tcs3400_write_reg(data, TCS3400_PERSIST, 0x00); /* interrupt every cycle */
-
-This seems like you have a data ready interrupt. Look at how we register
-triggers for those in other drivers.
-
-> +	tcs3400_write_reg(data, TCS3400_CHSEL, data->channel_mode); /* RGBC mode */
-> +
-> +	tcs3400_write_reg(data, TCS3400_ENABLE,
-> +			  TCS3400_EN_PON | TCS3400_EN_AEN | TCS3400_EN_AIEN);
-> +
-> +	indio_dev->name = TCS3400_DRV_NAME;
-
-Prefer it hard coded string inline here.  There is no particular reason
-it should match the driver name, particularly as you are adding multiple
-part support. It should match what you think the part is.
-
-> +	indio_dev->channels = tcs3400_channels;
-> +	indio_dev->num_channels = ARRAY_SIZE(tcs3400_channels);
-> +	indio_dev->info = &tcs3400_info;
-> +	indio_dev->modes = INDIO_DIRECT_MODE | INDIO_BUFFER_TRIGGERED;
-
-Look for whether other drivers do this (and more importantly why they don't).
-
-> +
-> +	ret = devm_iio_triggered_buffer_setup(&client->dev, indio_dev,
-> +					      NULL,
-> +					      tcs3400_trigger_handler,
-> +					      NULL);
-> +	if (ret)
-> +		goto err_power_off;
-> +	if (client->irq > 0) {
-> +		ret = devm_request_threaded_irq(&client->dev, client->irq,
-> +						NULL, tcs3400_irq_handler,
-> +						IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
-
-Firmware is responsible for direction of irq in modern drivers.
-We have some historical ones we can't risk 'fixing' this in. So should 
-be just IRQF_ONESHOT.
-
-
-> +						"tcs3400_irq", indio_dev);
-> +		if (ret)
-> +			goto err_power_off;
-> +	}
-> +
-> +	ret = devm_iio_device_register(&client->dev, indio_dev);
-> +	if (ret)
-> +		goto err_power_off;
-> +	return 0;
-> +err_power_off:
-> +	tcs3400_write_reg(data, TCS3400_ENABLE, 0);
-> +	tcs3400_power_off(data);
-> +	return ret;
-> +}
-> +
-> +static void tcs3400_remove(struct i2c_client *client)
-> +{
-> +	struct iio_dev *indio_dev = i2c_get_clientdata(client);
-> +	struct tcs3400_data *data = iio_priv(indio_dev);
-> +
-> +	tcs3400_write_reg(data, TCS3400_ENABLE, 0);
-> +	tcs3400_power_off(data);
-
-Look at how and when devm managed cleanup happens.  This is turning the
-power off before removing the userspace interfaces, never
-a recipe for success! :)
-
-Hint, see how we use devm_add_action_or_reset for this sort of driver
-specific cleanup -> that ensures correct sequencing and allows
-you to pair turn off with turn on.
-
-
-> +}
-
-
+Konrad
 
