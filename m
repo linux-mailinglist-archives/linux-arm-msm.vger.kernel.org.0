@@ -1,184 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-90279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0HE/OMgMc2ncrwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 06:53:12 +0100
+	id mGAnMDERc2klsAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 07:12:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6691C7090D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 06:53:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E904570CA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 07:12:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9C58E30162B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 05:53:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9C1BA301FF91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 06:10:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445AA39E19A;
-	Fri, 23 Jan 2026 05:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 648CB39F8BF;
+	Fri, 23 Jan 2026 06:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QXb6InXi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SHJxauZ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F1939CED6;
-	Fri, 23 Jan 2026 05:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D7539DB1D;
+	Fri, 23 Jan 2026 06:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769147585; cv=none; b=NZyI/Z33jdK0F4ooLv6B0O8U1/R2tjbAu/sU+k1wSRMroZjDsjnXbEZZeu9zakrF/IftrWwyvZRkU+d3z8Ga2OYo2mc7QdStF5Sfi4AgRGdHDKusDW0CbUcs3pbv0eQB0de9FORMaOYZfTjGFdpx0/zEaWK8/XLMWBhbYz23dgo=
+	t=1769148623; cv=none; b=iDSWmXfi303yfVxsOi1ZvxxMW7ODNJnn0ivEm7GlXQWjC431bZ/YUoAxFUmJ9OyuV6l6bWYiEuKGkjGoSo0eHZk7zgUjgIrKy++dJzqJTRn8vlyKg718j/klqH0txlfk6pAfcY14KMDojWpTu+ghFUQ5ba9WAU2fTqYmK452Qx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769147585; c=relaxed/simple;
-	bh=fJw+UAbcFeLr8GvMwZs7ehSXWVEZZg3BiMexaU+FlNI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NN9EqoOsq9G9JmXIeS5GOqs9+/g/sc57P5ahdwwsb0AMMrfsTd95/VjtaCpZm5VdrYGy6MIs+hgL23prgZnZN5XPOyks9mJB5mO3bTUeaP/cSdXXq/uFVtlG0IuxTBCvjkzeOXfJMzZY6Jk7VTq4d18ZRhoe20QidwDWu4qC/0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QXb6InXi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60N56CCm3656479;
-	Fri, 23 Jan 2026 05:52:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=6z9VwOA/MOV
-	0ELPu0mfZ7L3ZcZ3VrIUt8DVo2KxzSb0=; b=QXb6InXik03cqTcXVNH0ukJ5Qb7
-	7GAwbK2LoePOgRrOzqQd0JNDh8xOKJEOIbVKDVN7R0P4p9MfuxmdFK3TCfkkQDD8
-	FSv/lP33dOAphHKjK12Z57baW1nhrkpNebf1kKfjXtHitMDF0UTcLy6CKOrlY7kk
-	v7/1afamA+ikst6n5VzPUPLTe8+XPX400biysx9tsvSo030ItaOHyCJX0Lez61B+
-	MvbuM2m+aQNDzgpb81kZbbyHviXFKA7J2ynG4JnHTOVxfTXrt7OgEbiQRz4qYjx0
-	UJaVnbR/K5hA/AsrYG0XHYxodhHS1Sf1TQexcRcNqo0TSu/Ml1dKxl6/UOw==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bv2hw85e6-1
+	s=arc-20240116; t=1769148623; c=relaxed/simple;
+	bh=dfpWKxpIfuxVovqrNknmYppEYvMNoabwozeJP6tGAxI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VmFhThyE40xNB1/jnIuXgWJ0CG32+LYRQHLgWDcyKcZNv3rH6Z8rFgui3Zatc59K5BDCj0g6OHwg/6G9gl+gnOzJr1HyX+5sxmItDCwS07n9iC84kE3hksmRX0jX1+wChDJGLRjaT+kTrXQBkVk47WYZeqqIssvN7v/zB8QCtyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SHJxauZ9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60N5m0S53504255;
+	Fri, 23 Jan 2026 06:10:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Yhhc+9jljv1DLMMKeNn6k6bItM8clsa4abB8yMtaIJY=; b=SHJxauZ9SopCrhyx
+	oAMa1eOnKlw+EP7tPs7oEgsOgwLL4xa2O+htT2uZ9/EkNidrj2cbRfrUNNHfXUpR
+	RekzMV6E2QjABohaMv17/I5xDIT/A/bu6i4zkMUiD4LXmFTWpyU0X/ym/7xGx40z
+	U/AiMAhoXjL6Z5aU9AVA7EkLOupekGqNLjNlabBhW9S5rSwo5zeZzRx026ln9hTb
+	PjHDE42BIlpR8pOzLkmk+sfjsITyqQfX4Kgo4h4Pu7icEfUBoY9FjIwuQZf0qXih
+	aSMXqpBA4dZ7vmN3DxDFQP80Vw6FnZO6FyNjydz+KeqeXcPgf4caTDbOSHrBsMna
+	Q29vSw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bus981x1k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Jan 2026 05:52:50 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60N5qmkY004304;
-	Fri, 23 Jan 2026 05:52:48 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4br3gn8ryy-1
+	Fri, 23 Jan 2026 06:10:09 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 60N6A95u016585
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Jan 2026 05:52:48 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60N5qmoD004296;
-	Fri, 23 Jan 2026 05:52:48 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 60N5qlDt004293
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Jan 2026 05:52:48 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4766378)
-	id C15BA237CD; Fri, 23 Jan 2026 13:52:46 +0800 (CST)
-From: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, shuai.zhang@oss.qualcomm.com,
-        cheng.jiang@oss.qualcomm.com, chezhou@qti.qualcomm.com,
-        wei.deng@oss.qualcomm.com, yiboz@qti.qualcomm.com,
-        Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-Subject: [PATCH v1 2/2] Bluetooth: hci_qca: Enable HFP hardware offload for QCA2066 and WCN6855
-Date: Fri, 23 Jan 2026 13:52:43 +0800
-Message-Id: <20260123055243.2634107-3-mengshi.wu@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260123055243.2634107-1-mengshi.wu@oss.qualcomm.com>
-References: <20260123055243.2634107-1-mengshi.wu@oss.qualcomm.com>
+	Fri, 23 Jan 2026 06:10:09 GMT
+Received: from [10.151.36.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 22 Jan
+ 2026 22:10:06 -0800
+Message-ID: <3df0ad20-61c0-73c4-be8f-aea43f70cb69@quicinc.com>
+Date: Fri, 23 Jan 2026 11:39:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v6] mmc: sdhci-msm: Enable ICE for CQE-capable controllers
+ with non-CQE cards
+To: Ulf Hansson <ulf.hansson@linaro.org>
+CC: <adrian.hunter@intel.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <abel.vesa@linaro.org>, <ebiggers@kernel.org>
+References: <20251126064251.1928529-1-quic_mdalam@quicinc.com>
+ <CAPDyKFppNgYvHJDqfvyQ0DTYCwgcSR12D+-=04NGEDtbM8FmTA@mail.gmail.com>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <CAPDyKFppNgYvHJDqfvyQ0DTYCwgcSR12D+-=04NGEDtbM8FmTA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rmmruj87Hy0EDqGOvY-uk9Eyvd6XsBA5
-X-Proofpoint-ORIG-GUID: rmmruj87Hy0EDqGOvY-uk9Eyvd6XsBA5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA0MiBTYWx0ZWRfX9m2S6aa3lKYl
- PtSEf63Ge17cXsQRTl7DudfCyEwKrKyS/3E9nYxDGcnD022oOW1bJMs47GVwy9P+WHuXxRMJffR
- 14FJT2cQQlHGL4japLcuLSlXz0gqzWvSVM7v6y2ZEI6cDNz9y2Mbf8buQx9tw1Q9+7F5dGuaNa2
- 9LFNJImA7kyKVqUFWi3Z+458uUccs/hr6YM26VEOZJs11x/wKk7+OCpU331ZbM3qggwS98Vq8w6
- 82WPQvnLd1mae3/96YvEUm085JtNw2BI6DImCruf9bmMVQWTr/kAZt3h0cVzf9aoIvG/2RcDAmf
- +oFWBK2Shc4V/b+9zZBpCGvzDe/w5xMVfcenqjrfSvPFKnVaGw8TjiNK7iwTNVSplmoXqU/8hak
- RK+AU7d0kJiJJlcyjnD6KpUj15lDb86Lt1KGhIbvlmwUxVq+4deLeaYw3tSRTxbsm2cpVw6TDDf
- niwLF326bZzqQXbRl2g==
-X-Authority-Analysis: v=2.4 cv=A4Rh/qWG c=1 sm=1 tr=0 ts=69730cb3 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=lTINfPR8oJ7KkP3lkikA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA0NCBTYWx0ZWRfXyGbOkZShMDxr
+ D6sgbajJWy24htHb8PE7mHfAQpWPoio91dcKvl/W5PXaeFjQ+mzb+GV+IoAInstrKZaTetyKFsE
+ boehyCgZp+WuEltm8n07R0p9xA38rtiw1HYu9TW/4l1BrMd1VDSBxxP6mDnkyHu868luQApKnb1
+ df7o/hn60gfA7pbHz4EFel9cE0sOdMmyvhRsHuoAtBAcXXFxM/wNpeKS7g29vLq1531U3K6AXFk
+ 2qfYygRoZaVNYjUMmdiZ/qAHO3Ebs0U7TRkj1+9J/iU8AnHL1vNs90T72gpO9ZBtzHShSLVe2KQ
+ /u9kxTHQpjJfWwj1FXpSx3ae171Rva1kAI80t6ynKOMRFr64c5GvPfgGMyQIVDSxrTPACFvIH1k
+ aVJvIxAVU5HMohU1O7jZB7s1lDc8aQvwddR1PK0KfsQVkAuS/1foq8pOQHVYi2MTXyRl2+eoyVm
+ wK57X8lo+7yXfKvEldg==
+X-Authority-Analysis: v=2.4 cv=JuX8bc4C c=1 sm=1 tr=0 ts=697310c1 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8
+ a=xIS0LuMThQ_u9C2hoikA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: -0vaCrYYhC7-mesM5c_gB1yBuzzVFR2Z
+X-Proofpoint-ORIG-GUID: -0vaCrYYhC7-mesM5c_gB1yBuzzVFR2Z
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-22_06,2026-01-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230042
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230044
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-90279-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
+	DKIM_TRACE(0.00)[quicinc.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mengshi.wu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	PRECEDENCE_BULK(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90280-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,quicinc.com:dkim,quicinc.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[quic_mdalam@quicinc.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 6691C7090D
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: E904570CA6
 X-Rspamd-Action: no action
 
-Add QCA_CAP_HFP_HW_OFFLOAD capability flag to QCA2066 and WCN6855
-device data structures to enable Hands-Free Profile (HFP) hardware
-offload support on these Qualcomm Bluetooth chipsets.
+Hi,
 
-Signed-off-by: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
----
- drivers/bluetooth/hci_qca.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On 1/21/2026 6:14 PM, Ulf Hansson wrote:
+> On Wed, 26 Nov 2025 at 07:43, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+>>
+>> Enable Inline Crypto Engine (ICE) support for CQE-capable sdhci-msm
+>> controllers when used with eMMC cards that do not support CQE.
+>>
+>> This addresses the scenario where:
+>> - The host controller supports CQE (and has CQHCI crypto infrastructure)
+>> - The eMMC card does not support CQE
+>> - Standard (non-CMDQ) requests need crypto support
+>>
+>> This allows hardware-accelerated encryption and decryption for standard
+>> requests on CQE-capable hardware by utilizing the existing CQHCI crypto
+>> register space even when CQE functionality is not available due to card
+>> limitations.
+>>
+>> The implementation:
+>> - Adds ICE register definitions for non-CQE crypto configuration
+>> - Implements per-request crypto setup via sdhci_msm_ice_cfg()
+>> - Hooks into the request path via mmc_host_ops.request for non-CQE requests
+>> - Uses CQHCI register space (NONCQ_CRYPTO_PARM/DUN) for crypto configuration
+>>
+>> With this, CQE-capable controllers can benefit from inline encryption
+>> when paired with non-CQE cards, improving performance for encrypted I/O
+>> while maintaining compatibility with existing CQE crypto support.
+>>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+> 
+> This has been applied for next since a few weeks, but I have a
+> question. See more below.
+> 
+> [...]
+> 
+>>
+>>   drivers/mmc/host/sdhci-msm.c | 77 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 77 insertions(+)
+>>
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index 3b85233131b3..da356627d9de 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -157,6 +157,17 @@
+>>   #define CQHCI_VENDOR_CFG1      0xA00
+>>   #define CQHCI_VENDOR_DIS_RST_ON_CQ_EN  (0x3 << 13)
+>>
+>> +/* non command queue crypto enable register*/
+>> +#define NONCQ_CRYPTO_PARM              0x70
+>> +#define NONCQ_CRYPTO_DUN               0x74
+>> +
+>> +#define DISABLE_CRYPTO                 BIT(15)
+>> +#define CRYPTO_GENERAL_ENABLE          BIT(1)
+>> +#define HC_VENDOR_SPECIFIC_FUNC4       0x260
+>> +
+>> +#define ICE_HCI_PARAM_CCI      GENMASK(7, 0)
+>> +#define ICE_HCI_PARAM_CE       GENMASK(8, 8)
+>> +
+>>   struct sdhci_msm_offset {
+>>          u32 core_hc_mode;
+>>          u32 core_mci_data_cnt;
+>> @@ -300,6 +311,7 @@ struct sdhci_msm_host {
+>>          u32 dll_config;
+>>          u32 ddr_config;
+>>          bool vqmmc_enabled;
+>> +       bool non_cqe_ice_init_done;
+>>   };
+>>
+>>   static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+>> @@ -2012,6 +2024,68 @@ static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
+>>          return qcom_ice_evict_key(msm_host->ice, slot);
+>>   }
+>>
+>> +static void sdhci_msm_non_cqe_ice_init(struct sdhci_host *host)
+>> +{
+>> +       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +       struct mmc_host *mmc = msm_host->mmc;
+>> +       struct cqhci_host *cq_host = mmc->cqe_private;
+>> +       u32 config;
+>> +
+>> +       config = sdhci_readl(host, HC_VENDOR_SPECIFIC_FUNC4);
+>> +       config &= ~DISABLE_CRYPTO;
+>> +       sdhci_writel(host, config, HC_VENDOR_SPECIFIC_FUNC4);
+>> +       config = cqhci_readl(cq_host, CQHCI_CFG);
+>> +       config |= CRYPTO_GENERAL_ENABLE;
+>> +       cqhci_writel(cq_host, config, CQHCI_CFG);
+>> +}
+>> +
+>> +static void sdhci_msm_ice_cfg(struct sdhci_host *host, struct mmc_request *mrq)
+>> +{
+>> +       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +       struct mmc_host *mmc = msm_host->mmc;
+>> +       struct cqhci_host *cq_host = mmc->cqe_private;
+>> +       unsigned int crypto_params = 0;
+>> +       int key_index;
+>> +
+>> +       if (mrq->crypto_ctx) {
+>> +               if (!msm_host->non_cqe_ice_init_done) {
+>> +                       sdhci_msm_non_cqe_ice_init(host);
+>> +                       msm_host->non_cqe_ice_init_done = true;
+>> +               }
+>> +
+>> +               key_index = mrq->crypto_key_slot;
+>> +               crypto_params = FIELD_PREP(ICE_HCI_PARAM_CE, 1) |
+>> +                               FIELD_PREP(ICE_HCI_PARAM_CCI, key_index);
+>> +
+>> +               cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+>> +               cqhci_writel(cq_host, lower_32_bits(mrq->crypto_ctx->bc_dun[0]),
+>> +                            NONCQ_CRYPTO_DUN);
+>> +       } else {
+>> +               cqhci_writel(cq_host, crypto_params, NONCQ_CRYPTO_PARM);
+> 
+> Should we really call cqhci_writel() here, even if
+> sdhci_msm_non_cqe_ice_init() has not been called yet?
+> 
+Thanks for the pointing this. The else branch is intentional.
+for plain requests we must clear the crypto registers, otherwise
+the ICE hardware would continue using the previous encryption context.
+ICE initialization is only required when programming an encryption 
+context, so we don’t call sdhci_msm_non_cqe_ice_init() in the plain 
+path. Writing 0 to NONCQ_CRYPTO_PARM is safe without ICE init and 
+ensures that subsequent plain requests are handled correctly
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 4e1e113f4..212a92bbf 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2118,7 +2118,8 @@ static const struct qca_device_data qca_soc_data_wcn3998 __maybe_unused = {
- static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
- 	.soc_type = QCA_QCA2066,
- 	.num_vregs = 0,
--	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-+	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
-+			QCA_CAP_HFP_HW_OFFLOAD,
- };
- 
- static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
-@@ -2154,7 +2155,8 @@ static const struct qca_device_data qca_soc_data_wcn6855 __maybe_unused = {
- 		{ "vddrfa1p2", 257000 },
- 	},
- 	.num_vregs = 6,
--	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-+	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
-+			QCA_CAP_HFP_HW_OFFLOAD,
- };
- 
- static const struct qca_device_data qca_soc_data_wcn7850 __maybe_unused = {
--- 
-2.34.1
-
+Thanks,
+Alam.
 
