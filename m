@@ -1,318 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-90355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eDyXMXN9c2mGwwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 14:53:55 +0100
+	id uJ2AM1x+c2mQwwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 14:57:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AAE476800
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 14:53:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 359C976884
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 14:57:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 13186301CCC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 13:53:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C861C3035D77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 13:56:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DC082EA15C;
-	Fri, 23 Jan 2026 13:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6C842D838C;
+	Fri, 23 Jan 2026 13:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AuRKHtxF";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eNqTXmGf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVj/Og6D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6416B2D0C95
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 13:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B95266565;
+	Fri, 23 Jan 2026 13:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769176432; cv=none; b=KUBfpdNFlY21TUnJyyd8FUUusCHZi+uAPs0u2qX4o7bFpfZSwktIjncn1aLH171HKV9LZAGDpkQma4JUEdh+G2hs3ZRb+iiK2ineRohMjNz/jU8n1twfuuocbyX2sT4896FbJ/rKCqfonsbrP2eyfopI1ZfoqBiGWdabjmGlvrQ=
+	t=1769176591; cv=none; b=lZmJ9dbLQVTlHlRSrdDdzaTZbgJWUgDrRMHfWh+7fPeSg8vkoxvbkPlf7c9pg7fSNoOzXL03Bq3TlGcgOq6VdJ4fXTMcVF5nQ2oyqXcFgg2jgscomw0VG2an64VhbHoLL12OAfN7URG36QrKpm/xpdW9z29MFw89RuRAGXyKvEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769176432; c=relaxed/simple;
-	bh=ARsh7yVkaTjhfNXlQQNdqW8KzcgE7DBrjE6Oh4aiDDc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YZjL9pLUsgjsEP2HtiEE3gEoyvp80k4Yv8phtH+Ki/yEcO+CT7hnAf6eZkMrmQzUy1xLc7QB3ZZh6Dd9Gp6N6lrDAiQ/bkh5M2IWz5dEDM59ZnKkB90HigQ2NpZsjKcj3YTC8DU0iaDtAf+y6gjSgvy4JkQAIADm91gfxru3YFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AuRKHtxF; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eNqTXmGf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60N9GwnP722609
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 13:53:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xyk4VyTJvjXyVeGrau23wiL81EvwFDD9XQegtrqTgvc=; b=AuRKHtxFyw1rA19I
-	a9dqHS41Gy6UonEBf5+cW03Z5w7f4/MstRkmP2YPrg3/cNFqCMY5W1QGsCg2HHGJ
-	HwiYqeN/IExF2aO0y6eM8Hbo26EzXpAYavhv+xIUE5PHMEIMEt1Uc/sAV7aX9F8e
-	qra1j/+qP0RYd1WBreCaiRrlH1vZRI+7YFqrFpxedrNE06PgmVbvVupjaboiSoTF
-	zn4gjBQPnjNW15MY2B9+mvNCPUDmisCPFksd2TS0cHSxkMfEY4XZ6J0MV5KzZGyc
-	wQ+SR2k8f4CdcFTZ8zQYtRMN2q5wtVTzqw8GgVUGSoGcgpF/Duy658rZ+DrNDQuH
-	HLVtqg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bv069jamk-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 13:53:49 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34e5a9de94bso4210796a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 05:53:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769176428; x=1769781228; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xyk4VyTJvjXyVeGrau23wiL81EvwFDD9XQegtrqTgvc=;
-        b=eNqTXmGfSKMK4ITO4A8Hk5r52Me4+aQn/Sj2C23LhhgVTV+Kd87oCI8sct6rP9EDuF
-         88yeQ2DwP6JxjaeeOhvKWr3uBAC0x/Se1td8gb2C7hLNaVyP+7GvaAcebpAxcF5J8uDx
-         gUTIvpYYST09zhlOYOJeLGTNXrFH/CsTGuUJQ/3dqVzxaLCJ5SXL6j2oEvK8McabC1N5
-         W0COL1WdjqHChVkXeJMo3X7Bb3YZ3ZIpRh70i9wi8OBF8XerMhu/l+W9dCPI9LkPr0x4
-         CmzVPMgK+VHLuE+003XcJ79icWiK8jL/40N/DYls+ATrUKIN4X8ynXaYh7jGqqSE6Dak
-         gNZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769176428; x=1769781228;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xyk4VyTJvjXyVeGrau23wiL81EvwFDD9XQegtrqTgvc=;
-        b=QyUFO8ol/eqz3LmKdmVhSKateDoQrOBqDFZUu3F0sYSpe+CZlLEkaXw8FpSMzsjx+s
-         eXk6+WgxBTSkK4DyEofqe7aHNolIqSDLEaaRMunbylEYGMy9dxARZjmEmXoLa3zqrkED
-         p2Hn5qym+knJP9yLMa2437KrYF7Jl2KuRSOAuI4QAWe6XaM3X/zRymSQ7N6uRLDvSMMm
-         0Z6c1cLIgFt9j31gbiF6oyISDm1hwDqKDOcDDd/gyWnflxdR5i+S6bYvEyd99V0VqO7j
-         gwZj+6EMoOgJOTaGmnTuwig4+qNFbe+SYRaptLpbMwdN0qVhc3VpQgXco/MZ6Z+ZcKSE
-         drnw==
-X-Forwarded-Encrypted: i=1; AJvYcCUEq5d3AmTxYzToC/4SAiFHsBnNm1h1vUtkSMfQyTQG4qtJUON6r06r9qAa6gdsIMQL6eAmUAmXYtzCUFTJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YycjXr4WzcX/Hc6i4RjR+ldBCEOyU1ePMKPcd+kHSmBcyrJVAiV
-	jIDAVLj+HP3fzSxnKWdEV5N/Y3A+6F5ZXUd7IwLDYzArxq5h+rKwCNhz8UEcfh2XCzpqYSD8sY0
-	jGVw0IaIB0sBm0ucqFpAukDsmFGMQlddiAr37OYxCv3IhQ3Eqri7AlK9odGphO/DthNhx
-X-Gm-Gg: AZuq6aJQegYeMwa1XhI7FQfYl43o/GjVvCk1o90H+8SHCvOopbeHGS7oYC10C9fWLu4
-	o/L1Ej7f/enQsqxUc9ixbKmpc0AD4t0VRzNbHznU39jcg4ZbY5DlLhynH6eB45/X79FNq5zNLDJ
-	NkKOGCrfMShh8+6sIXtaK9fL2ac4d0zf1pWs4Z6Zo3fwJpRB0uX2oPAws8tCfUaObvgWV6S7kz/
-	RhSW7WH3EQNnEGmASrGdNjNr9MbU59QwMk7VQ0CUU0lSDphYd63vVr7joF+d5bD9fqPZhvmGHFt
-	jrkTO7W2OVdOn1JYA5nug2JUbk9TaGQPU9WWuxqs688lTQ9GLCUmHbWNPX+4aqhSLSr5xfJaJ5J
-	n9b+NCI0ZOFyx3dLmPGp7BEnhwhbiU7V75lRguic5
-X-Received: by 2002:a17:90b:4d8b:b0:340:ca7d:936a with SMTP id 98e67ed59e1d1-353688574d3mr2598999a91.18.1769176428031;
-        Fri, 23 Jan 2026 05:53:48 -0800 (PST)
-X-Received: by 2002:a17:90b:4d8b:b0:340:ca7d:936a with SMTP id 98e67ed59e1d1-353688574d3mr2598963a91.18.1769176427551;
-        Fri, 23 Jan 2026 05:53:47 -0800 (PST)
-Received: from [192.168.1.22] ([106.222.229.24])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-353352160a2sm5222874a91.7.2026.01.23.05.53.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 05:53:46 -0800 (PST)
-Message-ID: <57493aef-fb35-4377-8cf3-1df7f53470c9@oss.qualcomm.com>
-Date: Fri, 23 Jan 2026 19:23:39 +0530
+	s=arc-20240116; t=1769176591; c=relaxed/simple;
+	bh=GrLa4Ipr5uuNIx8FLflnc5DZHfapIQatDZ883pAbvVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rP/68Amsp/97ebVi9A5Z3y+IpLFDFftgze/STeaZ9l9GYV+edxVwOzLwGeO1+Licawn5LsCx/UxXCbQiILCo0O+4UoLXyj8kDadoI3M2U/7+TJIHKZ+BeBSmimS/wouMFdR1mN5qcxil9ZLkXl5JB3MqjyLzGNLV8MC169CAcd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVj/Og6D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6DEC19424;
+	Fri, 23 Jan 2026 13:56:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769176591;
+	bh=GrLa4Ipr5uuNIx8FLflnc5DZHfapIQatDZ883pAbvVk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fVj/Og6Dsam87eSwc/fSklA6b6iRd/S5y9Cq/EqOYRct5TAlVy2wrfRwMPHan/EOO
+	 xrBs8TR9glOT/Z0+/NpougmXdcqF/xEN4KJddW1acGRb1KMFKiTEu/zyCUCRFbg2HY
+	 uWpFZjJfr4pETvIsuLWZb+1iiSzW/kTaxRLha/lsEODM5VZNlQAjbEjaGfONVlPpca
+	 Bf59ufWV4Tbf7u5x8DXIDER1vjZPpsQ5BgHe4qO8HdlGuYymvZ9UFA5+NDAjF9QUs5
+	 PWwLeDEGX5BDoDZNOEPfHzAu8A2uM2yNMdt4UCT3luCzpqa3AbBB4tK2vU0Jy+6WVp
+	 K7TUPuejLZtwg==
+Date: Fri, 23 Jan 2026 19:26:14 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, 
+	manivannan.sadhasivam@oss.qualcomm.com, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
+	Kai-Heng Feng <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Chia-Lin Kao <acelan.kao@canonical.com>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>, 
+	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org, 
+	krishna.chundru@oss.qualcomm.com
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <unc5zefwndgcv7wufaezz3gkg3qtaymkjlmymhyqdqwzn3wybl@ow2rhbyt772h>
+References: <7306256a-b380-489b-8248-b774e6d3d80e@nvidia.com>
+ <20260122152903.GA1247682@bhelgaas>
+ <5z7c25nkb35prvax6vq6ud7eaeuhzsswbf7fqvmlgys3xftgwb@odocboejrdrv>
+ <e44c330b-778b-4fa1-b678-fa909cc05b03@nvidia.com>
+ <bf37b6a5-268d-4c07-a536-a826b3d5953b@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/8] remoteproc: qcom: probe all child devices
-From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, rafael@kernel.org, daniel.lezcano@linaro.org,
-        rui.zhang@intel.com, lukasz.luba@arm.com, konradybcio@kernel.org,
-        amitk@kernel.org, mani@kernel.org, casey.connolly@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20251223123227.1317244-1-gaurav.kohli@oss.qualcomm.com>
- <20251223123227.1317244-3-gaurav.kohli@oss.qualcomm.com>
- <evb5tn2cht7wk76fuc2wpsyxepknigfw37633n6ypuapstbceh@tn5glmi65bdv>
- <cb5430c8-12d6-4439-b1ae-c2f36f29a9f8@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <cb5430c8-12d6-4439-b1ae-c2f36f29a9f8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=eLUeTXp1 c=1 sm=1 tr=0 ts=69737d6d cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=EBd7WcfsMYPMwvoCMWz0vA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=32UuRXtoL6AckyYbW_AA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: ydOyRls77ZCXdGq5zmeW-AOJztaFd-Za
-X-Proofpoint-ORIG-GUID: ydOyRls77ZCXdGq5zmeW-AOJztaFd-Za
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDExMyBTYWx0ZWRfX+uI7rn6sLvrK
- ggUA+CxZZpknsZtSf8yM8A2wLP8gOggJulJYxuvHwVP7T2lMf/Gi2518qqeyCzts5UqlUCPYqpd
- MuYOSQmgRthf1hxbBlGCGcy7tzd8yqcVZ4j+yHQUuF1e5Dfn/Rvlz8lj1zfk1CiGc0r7hi/aXfu
- sx6Sq2ZwhK9NVdcBhuOH1bqpDVFcOhxb1L/3q5CrQrOVbkCpoBdkzSYZYXBbMqr0geVYwJwa9Cz
- sBl5mGgTWWr92IUI0rpplVv4J19CcK8+hbvJIf8eKGvoL5tEg8sQ28ccYvOoHckVtE/5o+x2YBI
- 2JpU9w7qMEgs8e3+fYwrvkNAg1TxTYPZYzXBxsGVnysGtLafLoVSo5mvvSfDWkWGN9T0S4FGnyG
- UiZRrevn5gQWOOypjbP6mgPsfbqCP6BmtirT1hNAKEh3rAq0uZCxraGkUnCDJ6G1uiFhr1DbvSe
- x9K2uA3qb+qkOOMH16g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-23_02,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 adultscore=0 impostorscore=0 clxscore=1015
- phishscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230113
+In-Reply-To: <bf37b6a5-268d-4c07-a536-a826b3d5953b@nvidia.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90355-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90356-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,google.com,vger.kernel.org,linux.intel.com,canonical.com,gmail.com,kernel.dk,lst.de,grimberg.me,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gaurav.kohli@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.968];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 6AAE476800
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 359C976884
 X-Rspamd-Action: no action
 
++ Krishna
 
-On 1/8/2026 12:37 PM, Gaurav Kohli wrote:
->
-> On 1/3/2026 8:26 PM, Bjorn Andersson wrote:
->> On Tue, Dec 23, 2025 at 06:02:21PM +0530, Gaurav Kohli wrote:
->>> From: Casey Connolly <casey.connolly@linaro.org>
->>>
->>> Generalise the qcom,bam-dmux child node support by probing all
->>> remoteproc children with of_platform_populate(). This will be used to
->>> enable support for devices which are best represented as subnodes of 
->>> the
->>> remoteproc, such as those representing QMI clients.
->> Please flip this around, start with the description of the problem
->> you're trying to solve.
->>
->>> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
->> This must have your signed-off-by, where you certifies the origin of
->> this patch.
->>
->>> ---
->>>   drivers/remoteproc/qcom_q6v5.c     | 4 ++++
->>>   drivers/remoteproc/qcom_q6v5_mss.c | 8 --------
->>>   2 files changed, 4 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/drivers/remoteproc/qcom_q6v5.c 
->>> b/drivers/remoteproc/qcom_q6v5.c
->>> index 58d5b85e58cd..a02839c7ed8c 100644
->>> --- a/drivers/remoteproc/qcom_q6v5.c
->>> +++ b/drivers/remoteproc/qcom_q6v5.c
->>> @@ -6,6 +6,7 @@
->>>    * Copyright (C) 2014 Sony Mobile Communications AB
->>>    * Copyright (c) 2012-2013, The Linux Foundation. All rights 
->>> reserved.
->>>    */
->>> +#include <linux/of_platform.h>
->>>   #include <linux/kernel.h>
->>>   #include <linux/platform_device.h>
->>>   #include <linux/interconnect.h>
->>> @@ -351,6 +352,8 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, 
->>> struct platform_device *pdev,
->>>           return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
->>>                        "failed to acquire interconnect path\n");
->>>   +    of_platform_populate(q6v5->dev->of_node, NULL, NULL, q6v5->dev);
->> There are other child nodes here, in particular the GLINK and SMD edges.
->> Do we really want platform_devices registered for them?
->>
->> Regards,
->> Bjorn
->
->
-> thanks for pointing this, can you please suggest the right approach.
->
-> This should not impact glink, as that is registering as rproc sub 
-> node, And we need rproc cooling as child node
->
-> of remote proc subsytem to create probe dependency only.
->
->
-> Can we do platform populate for specific child, would that be right 
-> approach. or we should create rproc cooling as independent of parent ?
->
+On Fri, Jan 23, 2026 at 10:55:28AM +0000, Jon Hunter wrote:
+> 
+> On 22/01/2026 19:14, Jon Hunter wrote:
+> 
+> ...
+> 
+> > > I think what is going on here is that since before commits
+> > > f3ac2ff14834 and
+> > > df5192d9bb0e, !pcie_aspm_enabled() check was passing as ASPM was not
+> > > enabled for
+> > > the device (and upstream port) and after those commits, this check is not
+> > > passing and the NVMe driver is not shutting down the controller and
+> > > expects the
+> > > link to be in L0/L1ss. But the Tegra controller driver initiates L2/L3
+> > > transition, and also turns off the device. So all the NVMe context
+> > > is lost
+> > > during suspend and while resuming, the NVMe driver got confused due
+> > > to lost
+> > > context.
+> > > 
+> > > Jon, could you please try the below hack and see if it fixes the issue?
+> > > 
+> > > diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+> > > index 0e4caeab739c..4b8d261117f5 100644
+> > > --- a/drivers/nvme/host/pci.c
+> > > +++ b/drivers/nvme/host/pci.c
+> > > @@ -3723,7 +3723,7 @@ static int nvme_suspend(struct device *dev)
+> > >           * state (which may not be possible if the link is up).
+> > >           */
+> > >          if (pm_suspend_via_firmware() || !ctrl->npss ||
+> > > -           !pcie_aspm_enabled(pdev) ||
+> > > +           pcie_aspm_enabled(pdev) ||
+> > >              (ndev->ctrl.quirks & NVME_QUIRK_SIMPLE_SUSPEND))
+> > >                  return nvme_disable_prepare_reset(ndev, true);
+> > > This will confirm whether the issue is due to Tegra controller
+> > > driver breaking
+> > > the NVMe driver assumption or not.
+> > 
+> > Yes that appears to be working! I will test some more boards to confirm.
+> 
+> So yes with the above all boards appear to be working fine.
+> 
+> How is this usually coordinated between the NVMe driver and Host controller
+> driver? It is not clear to me exactly where the problem is and if the NVMe
+> is not shutting down, then what should be preventing the Host controller
+> from shutting down.
+> 
 
-HI Bjorn,
+Well if the NVMe driver is not shutting down the device, then it expects the
+device to be in APST (NVMe low power state if supported) state and retain all
+the context across the suspend/resume cycle.
 
-I’d like to highlight the impact and details of placement of remoteproc 
-cooling dt node:
+But if the host controller powers down the device, then during resume, the
+device will start afresh and would've lost all the context (like queue info
+etc..). So when the NVMe driver resumes, it would expect the device to retain
+the context and try to use the device as such. But it won't work as the device
+will be in an unconfigured state and you'll see failures as you reported.
 
+Apparently, most host controller drivers never cared about it because either
+they were not tested with NVMe or they haven't enabled ASPM before. So the NVMe
+driver ended up shutting down the controller during suspend. But since we
+started enabling ASPM by default since 6.18, this issue is being uncovered.
 
-->As a child of the remote proc subsystem node:
-     In this configuration, the cooling device will only be probed once 
-the corresponding remote proc subsystem itself is probed.
+So to properly fix it, we need the controller drivers to perform below checks
+for all devices under the Root bus(ses) before initiating D3Cold:
 
-->Outside the remote proc subsystem, may be part of soc node:
-     In this setup, the cooling device will be probed independently. It 
-will wait until the remoteproc subsystem is brought up
-     before completing cooling registration.
-     The drawback here is that if the parent remoteproc subsystem is 
-disabled, the cooling device will still undergo an
-     unnecessary probe, even though it cannot be registered.
+1. Check if the device state is D3Hot. If it is not D3Hot, then the device is
+expected to stay in the current D-state by the client driver, so D3Cold should
+not be initiated.
 
->
->>> +
->>>       return 0;
->>>   }
->>>   EXPORT_SYMBOL_GPL(qcom_q6v5_init);
->>> @@ -361,6 +364,7 @@ EXPORT_SYMBOL_GPL(qcom_q6v5_init);
->>>    */
->>>   void qcom_q6v5_deinit(struct qcom_q6v5 *q6v5)
->>>   {
->>> +    of_platform_depopulate(q6v5->dev);
->>>       qmp_put(q6v5->qmp);
->>>   }
->>>   EXPORT_SYMBOL_GPL(qcom_q6v5_deinit);
->>> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c 
->>> b/drivers/remoteproc/qcom_q6v5_mss.c
->>> index 91940977ca89..d40565c1cc62 100644
->>> --- a/drivers/remoteproc/qcom_q6v5_mss.c
->>> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
->>> @@ -238,7 +238,6 @@ struct q6v5 {
->>>       struct qcom_rproc_pdm pdm_subdev;
->>>       struct qcom_rproc_ssr ssr_subdev;
->>>       struct qcom_sysmon *sysmon;
->>> -    struct platform_device *bam_dmux;
->>>       bool need_mem_protection;
->>>       bool has_alt_reset;
->>>       bool has_mba_logs;
->>> @@ -2029,7 +2028,6 @@ static int q6v5_alloc_memory_region(struct 
->>> q6v5 *qproc)
->>>   static int q6v5_probe(struct platform_device *pdev)
->>>   {
->>>       const struct rproc_hexagon_res *desc;
->>> -    struct device_node *node;
->>>       struct q6v5 *qproc;
->>>       struct rproc *rproc;
->>>       const char *mba_image;
->>> @@ -2163,10 +2161,6 @@ static int q6v5_probe(struct platform_device 
->>> *pdev)
->>>       if (ret)
->>>           goto remove_sysmon_subdev;
->>>   -    node = of_get_compatible_child(pdev->dev.of_node, 
->>> "qcom,bam-dmux");
->>> -    qproc->bam_dmux = of_platform_device_create(node, NULL, 
->>> &pdev->dev);
->>> -    of_node_put(node);
->>> -
->>>       return 0;
->>>     remove_sysmon_subdev:
->>> @@ -2186,8 +2180,6 @@ static void q6v5_remove(struct platform_device 
->>> *pdev)
->>>       struct q6v5 *qproc = platform_get_drvdata(pdev);
->>>       struct rproc *rproc = qproc->rproc;
->>>   -    if (qproc->bam_dmux)
->>> - of_platform_device_destroy(&qproc->bam_dmux->dev, NULL);
->>>       rproc_del(rproc);
->>>         qcom_q6v5_deinit(&qproc->q6v5);
->>> -- 
->>> 2.34.1
->>>
+2. Check if the device is wakeup capable. If it is, then check if it can support
+wakeup from D3Cold (with WAKE#).
+
+Only if both conditions are satisfied for all the devices under the Root busses,
+then the host controller driver should initiate D3Cold sequence.
+
+Krishna is going to post a patch that performs the above checks for
+pcie-designware-host driver. But since the above checks are platform agnostic,
+we should introduce a helper and resuse it across other controllers as well.
+
+Hope this clarifies.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
