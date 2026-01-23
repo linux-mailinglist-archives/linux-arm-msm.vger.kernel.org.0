@@ -1,241 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-90301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EBKxLIkkc2nCsgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 08:34:33 +0100
+	id eGOnDpo2c2lItAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 09:51:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE09171C38
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 08:34:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 999ED72BBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 09:51:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DF83A3008E14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 07:34:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1F0CF3011107
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 08:51:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0D6311C05;
-	Fri, 23 Jan 2026 07:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFE0830F934;
+	Fri, 23 Jan 2026 08:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NfT7cwqD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2x/rDF+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD1630C61F;
-	Fri, 23 Jan 2026 07:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971132E54DE;
+	Fri, 23 Jan 2026 08:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769153670; cv=none; b=YyFlK1s7A6R+CdqhRfjcNhZLQYPBNrs1ppIgrr0mZJ5KEeqBamkrxud50Pj5Kmz51Zs21tABriB65O6VMNZB8qKihDFUD9anTh4wbtVS8WAIbYkI+L6k43RJuNnYeW/73uz1vOCA1BtcldyWj6yrhUHGwYizt1+kJkWX+9+Dcfk=
+	t=1769158292; cv=none; b=cyoMO9zVzQSXkybhoabL5k3HM20uldq1YKqaf82claNMR4t6L5ALNfE7BBLUWQE+yUPICK5w53S6Q8fzMto5P6UQZJ+hxuMu3J2ASp2HkSS3b/mSH80KS3xNdQRl4oqd4Ug+goUZhcGo1oinVkfKdm7tB7XydlFly4VNxiDARl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769153670; c=relaxed/simple;
-	bh=7NMXnrjC1tbNqN85RiD6VP7O/R0tIVUPWDic30QZiGM=;
+	s=arc-20240116; t=1769158292; c=relaxed/simple;
+	bh=uHLu75YU3d5LFuDqYhNdrTluLj4QmEkgMjijx82wFVo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p7ZpXoxovExjTKuxXTfpkBNUoaZdlsaTgp3QvG8+XD4ULyOSaXzi5e42qtRDb2i5qXd+GdWfsqpR2JC8X4ZlMTZ/5pU6R58x0oiZ399/wpxC8MK+F2+/QMAMglZF1dJmQZzLsaBwtHDrTRDz48XlzWdcPZHawpPL8iGnoE7NZlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NfT7cwqD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F21C4CEF1;
-	Fri, 23 Jan 2026 07:34:26 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cAIToSmVChxu6b6IOpDtjudx+XvTjpG+LQ04rj/lCRmdiH+wzal94Lodzx9kvf+y5HgyF30wD/VnqXCNw0lYAxsw/JMMylEbY5VhovvZwmTFH1WGx6QzD1k/tn4F1J55WtfDAThQEb21RuARgqq0/YKmga7DWzoTM9oKeTdU/5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2x/rDF+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F06FC4CEF1;
+	Fri, 23 Jan 2026 08:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769153669;
-	bh=7NMXnrjC1tbNqN85RiD6VP7O/R0tIVUPWDic30QZiGM=;
+	s=k20201202; t=1769158292;
+	bh=uHLu75YU3d5LFuDqYhNdrTluLj4QmEkgMjijx82wFVo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NfT7cwqD55tNHJByyfHeodctBW2t4LfS5jMsFegZUaDh1HElpKXY5kqT3TrHhSZjV
-	 SyZgKwFcANJhySAdyZP69go/6yCt19oV+icdrKseWcLJQd0YEf5/G4hwdwgWfZ1b2h
-	 tJ/xwoF8NAwbSGKugl+nvNObyVhkYXrGWGhwh9E/Hqai5qDrYI8yIiz2jT3VvN2TfK
-	 VRL5kI1YoKxTIe3JQAelIMCLHzUplYgc3FXZQOYxKwyG862XPMbLsLHOcsmC9myJee
-	 KzMMUeJs/JP2mT49EXqTizeCPBdYB0y0KIH0ijELyYGe/Ss9GI2wbNHuhCBC6Yt/T8
-	 ZnthJz9yFMBZg==
-Date: Fri, 23 Jan 2026 13:04:22 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: Shawn Lin <shawn.lin@rock-chips.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: dwc: Rename has_msi_ctrl to uses_imsi_rx for
- clarity
-Message-ID: <ax2sy242cejr66p6tlbrghhnvlvfhubmtcjk426hsvjgn2gino@l3ncdjb4gfby>
-References: <20260121-remove_cap_clean_up-v1-0-e78115e5d467@oss.qualcomm.com>
- <20260121-remove_cap_clean_up-v1-2-e78115e5d467@oss.qualcomm.com>
- <09f9acc1-d1ad-4971-8488-f0268cf08799@rock-chips.com>
- <aXMQ2r1UKgAaYvNx@hu-qianyu-lv.qualcomm.com>
+	b=P2x/rDF+V1S8nsKTuKOnD9QTwc41mF+XW6CEW4Lczf+0Sd6Nq5HQYPZljIkT06Qsr
+	 wIpsWwJl7SNWJGjLv6Eul2oOhcXM+uSeslFw7p/fqlD351FGaNP7tTEeORpdakVZ2x
+	 TqvkKLgYvEcqDaF0pIhEqdOwsfBiNwfz73XPMMzNpH57FqZjOmS6Ef5yIk1U5pEv3/
+	 sDhbSopJR642hfZEnALQcni3Jw5qQtapD3e7lk65oHsqDb0Bur+Ix0+UDcHnBGwPU1
+	 //bi+O56i4qSkHisywxprWy1WySWG064VdIew5tpiaTSmeiHZoS4N3KNcwNWuzGqID
+	 JclBA/sfEIjRQ==
+Date: Fri, 23 Jan 2026 09:51:19 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org,
+	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
+	l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
+	kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
+	mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
+	heiko@sntech.de, srikanth.thokala@intel.com,
+	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com,
+	geert+renesas@glider.be, magnus.damm@gmail.com,
+	christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com, thierry.reding@gmail.com,
+	jonathanh@nvidia.com, hayashi.kunihiko@socionext.com,
+	mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org,
+	rongqianfeng@vivo.com, 18255117159@163.com,
+	shawn.lin@rock-chips.com, nicolas.frattaroli@collabora.com,
+	linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v9 4/5] PCI: dwc: ep: Support BAR subrange inbound
+ mapping via Address Match Mode iATU
+Message-ID: <aXM2hwCrziK2I8OL@ryzen>
+References: <20260122084909.2390865-1-den@valinux.co.jp>
+ <20260122084909.2390865-5-den@valinux.co.jp>
+ <aXHsd7-WWAGyhy_w@ryzen>
+ <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
+ <19D609EC-F850-4B43-A83C-0B8C70E641B5@kernel.org>
+ <l7wknbayighcczjkqfwhbaqrepjtbgxxstgkntoqvnrs7dnm6g@wvmy67ky37pv>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aXMQ2r1UKgAaYvNx@hu-qianyu-lv.qualcomm.com>
+In-Reply-To: <l7wknbayighcczjkqfwhbaqrepjtbgxxstgkntoqvnrs7dnm6g@wvmy67ky37pv>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[rock-chips.com,gmail.com,kernel.org,google.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-90301-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-90302-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,ti.com,nxp.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.978];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_GT_50(0.00)[53];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.982];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: EE09171C38
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 999ED72BBD
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 10:10:34PM -0800, Qiang Yu wrote:
-> On Thu, Jan 22, 2026 at 04:15:52PM +0800, Shawn Lin wrote:
-> > Hi Qiang,
-> > 
-> > 在 2026/01/22 星期四 15:45, Qiang Yu 写道:
-> > > The current "has_msi_ctrl" flag name is misleading because it suggests the
-> > > presence of any MSI controller, while it is specifically set for platforms
-> > > that lack .msi_init() callback and don't have "msi-parent" or "msi-map"
-> > > device tree properties, indicating they rely on the iMSI-RX module for MSI
-> > > functionality.
-> > > 
-> > > Rename it to "uses_imsi_rx" to make the intent clear:
-> > > - When true: Platform uses the iMSI-RX module for MSI handling
-> > > - When false: Platform has other MSI controller support (ITS/MBI, custom
-> > > handlers)
-> > > 
-> > > No functional changes, only improves code readability and eliminates
-> > > naming confusion.
-> > > 
-> > 
-> > I love this patch, it's indeed confusing. But I noticed the naming
-> > seems inconsistency, for instance, there are already use_atu_msg,
-> > use_parent_dt_ranges, etc. Should we use use_imsi_rx instead?
-> 
-> Thank you. You are right. Use_imsi_rx is more consistency.
-> 
+On Fri, Jan 23, 2026 at 10:16:21AM +0900, Koichiro Den wrote:
+> >
+> > There might be other EPC drivers that don't disable all BARs in their .init(), so I would say that simply checking if the BAR has an address is not sufficient to guarantee that an EPF driver has called set_bar().
+> >
+>
+> Even if an EPC driver does not reset the BAR in their .init() and some
+> default translation is left exposed, wouldn't it be safe as long as
+> dw_pcie_ep_ib_atu_addr() succeeds in programming inbound mappings for the
+> entire BAR?
 
-Ammended this change while applying, thanks Shawn!
+For e.g. on RK3588, the default HW configuration of the DWC controller has
+all 5 BARs as enabled, with a size of 1 GB.
 
-- Mani
+There is no inbound address translation for these BARs by default.
 
-> - Qiang Yu
-> > 
-> > But in any case,
-> > Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-> > 
-> > > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> > > ---
-> > >   drivers/pci/controller/dwc/pcie-designware-host.c | 16 ++++++++--------
-> > >   drivers/pci/controller/dwc/pcie-designware.h      |  2 +-
-> > >   drivers/pci/controller/dwc/pcie-qcom.c            |  4 ++--
-> > >   3 files changed, 11 insertions(+), 11 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > index a17833dd6f9d4b4aa06dc1fe09ffed5e2c28a82f..e7dbdf3670b426783e778be5064def10d2b209b1 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > @@ -255,7 +255,7 @@ void dw_pcie_msi_init(struct dw_pcie_rp *pp)
-> > >   	u64 msi_target = (u64)pp->msi_data;
-> > >   	u32 ctrl, num_ctrls;
-> > > -	if (!pci_msi_enabled() || !pp->has_msi_ctrl)
-> > > +	if (!pci_msi_enabled() || !pp->uses_imsi_rx)
-> > >   		return;
-> > >   	num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
-> > > @@ -603,15 +603,15 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
-> > >   	}
-> > >   	if (pci_msi_enabled()) {
-> > > -		pp->has_msi_ctrl = !(pp->ops->msi_init ||
-> > > +		pp->uses_imsi_rx = !(pp->ops->msi_init ||
-> > >   				     of_property_present(np, "msi-parent") ||
-> > >   				     of_property_present(np, "msi-map"));
-> > >   		/*
-> > > -		 * For the has_msi_ctrl case the default assignment is handled
-> > > +		 * For the uses_imsi_rx case the default assignment is handled
-> > >   		 * in the dw_pcie_msi_host_init().
-> > >   		 */
-> > > -		if (!pp->has_msi_ctrl && !pp->num_vectors) {
-> > > +		if (!pp->uses_imsi_rx && !pp->num_vectors) {
-> > >   			pp->num_vectors = MSI_DEF_NUM_VECTORS;
-> > >   		} else if (pp->num_vectors > MAX_MSI_IRQS) {
-> > >   			dev_err(dev, "Invalid number of vectors\n");
-> > > @@ -623,7 +623,7 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
-> > >   			ret = pp->ops->msi_init(pp);
-> > >   			if (ret < 0)
-> > >   				goto err_deinit_host;
-> > > -		} else if (pp->has_msi_ctrl) {
-> > > +		} else if (pp->uses_imsi_rx) {
-> > >   			ret = dw_pcie_msi_host_init(pp);
-> > >   			if (ret < 0)
-> > >   				goto err_deinit_host;
-> > > @@ -701,7 +701,7 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
-> > >   	dw_pcie_edma_remove(pci);
-> > >   err_free_msi:
-> > > -	if (pp->has_msi_ctrl)
-> > > +	if (pp->uses_imsi_rx)
-> > >   		dw_pcie_free_msi(pp);
-> > >   err_deinit_host:
-> > > @@ -729,7 +729,7 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
-> > >   	dw_pcie_edma_remove(pci);
-> > > -	if (pp->has_msi_ctrl)
-> > > +	if (pp->uses_imsi_rx)
-> > >   		dw_pcie_free_msi(pp);
-> > >   	if (pp->ops->deinit)
-> > > @@ -1130,7 +1130,7 @@ int dw_pcie_setup_rc(struct dw_pcie_rp *pp)
-> > >   	 * the MSI and MSI-X capabilities of the Root Port to allow the drivers
-> > >   	 * to fall back to INTx instead.
-> > >   	 */
-> > > -	if (pp->has_msi_ctrl) {
-> > > +	if (pp->uses_imsi_rx) {
-> > >   		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSI);
-> > >   		dw_pcie_remove_capability(pci, PCI_CAP_ID_MSIX);
-> > >   	}
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > > index 53b65428fadb3d905b02bdcc06667065574f4f9d..33154bc89dd3b7d7fbe0ea749ca22bdc8292489c 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > > @@ -416,7 +416,7 @@ struct dw_pcie_host_ops {
-> > >   };
-> > >   struct dw_pcie_rp {
-> > > -	bool			has_msi_ctrl:1;
-> > > +	bool			uses_imsi_rx:1;
-> > >   	bool			cfg0_io_shared:1;
-> > >   	u64			cfg0_base;
-> > >   	void __iomem		*va_cfg0_base;
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index 13e6c334e10d21b9ebfe5f82de0aff3bce6191e3..999f5e083cef4e78b85a0111d2a90c3de65c83b5 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -1633,7 +1633,7 @@ static void qcom_pci_free_msi(void *ptr)
-> > >   {
-> > >   	struct dw_pcie_rp *pp = (struct dw_pcie_rp *)ptr;
-> > > -	if (pp && pp->has_msi_ctrl)
-> > > +	if (pp && pp->uses_imsi_rx)
-> > >   		dw_pcie_free_msi(pp);
-> > >   }
-> > > @@ -1657,7 +1657,7 @@ static int qcom_pcie_ecam_host_init(struct pci_config_window *cfg)
-> > >   	if (ret)
-> > >   		return ret;
-> > > -	pp->has_msi_ctrl = true;
-> > > +	pp->uses_imsi_rx = true;
-> > >   	dw_pcie_msi_init(pp);
-> > >   	return devm_add_action_or_reset(dev, qcom_pci_free_msi, pp);
-> > > 
-> > 
+So for it to be safe, the size of the set_bar() call would have to
+match the current size of the BAR, but how should the EPF driver know
+that when it has not called set_bar() yet?
 
--- 
-மணிவண்ணன் சதாசிவம்
+dw_pcie_ep_read_bar_assigned() does not return the current size of the
+BAR. So you can't verify that the set_bar() call has the same size as
+the BARs "default size".
+
+
+>
+> That said, such usage apparently contradicts the documented usage (1st
+> set_bar with no submap, then with submap) described in the docs and commit
+> messages in this series, and allowing it would make things unnecessarily
+> complicated. So I agree that adding such a safeguard is the right approach.
+>
+> >
+> > I think the safest option is my second suggestion because then we know that we will only call
+> > dw_pcie_ep_ib_atu_addr()
+> >
+> > When:
+> >
+> > 1) If ep->epf_bar[bar] is set:
+> > https://github.com/torvalds/linux/blob/v6.19-rc6/drivers/pci/controller/dwc/pcie-designware-ep.c#L363
+> >
+> >
+> > 2) All the other requirements to dynamically update a BAR is also met:
+> >
+> > https://github.com/torvalds/linux/blob/v6.19-rc6/drivers/pci/controller/dwc/pcie-designware-ep.c#L368-L370
+> >
+>
+> That makes sense, and it ensures that the behavior always accords with the
+> docs and commit messages in this series.
+
+I think it makes most sense to put the "use_addr_translation = true"
+
+after the check:
+
+		/*
+		 * We can only dynamically change a BAR if the new BAR size and
+		 * BAR flags do not differ from the existing configuration.
+		 */
+		if (ep->epf_bar[bar]->barno != bar ||
+		    ep->epf_bar[bar]->size != size ||
+		    ep->epf_bar[bar]->flags != flags)
+			return -EINVAL;
+
+
+So we know that dw_pcie_ep_ib_atu_addr() is only called when the size is the
+same.
+
+
+Kind regards,
+Niklas
 
