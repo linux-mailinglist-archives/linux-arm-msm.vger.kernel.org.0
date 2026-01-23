@@ -1,239 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-90331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KIdgCZVYc2nruwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 12:16:37 +0100
+	id UEFcFwRZc2nruwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 12:18:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF40574E8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 12:16:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED1E074EC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 12:18:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C084304700C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 11:12:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 869E2302AE01
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 11:13:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C49335095;
-	Fri, 23 Jan 2026 11:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2A6C33A6ED;
+	Fri, 23 Jan 2026 11:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lPrZt5PR";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="U9SQW14+"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="zlxp6bbS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D6F3090CD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 11:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9B431AABF;
+	Fri, 23 Jan 2026 11:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769166765; cv=none; b=DpC0jDZ0I0KWJkU3hlKQYUCDwlSGqM936M3BkhGq7q3oCqhda/B/LFJHOq7NI5J3x6M7YyZq3yf/7HK03lVQ5gSjk57uhYKszsyr3T4mgJRA1ZeZWsCmL5lbHiFBfLTnSAs+mPSAwpRsF/LE4LoJwz3ITePjsh9C3+1AROdY1dk=
+	t=1769166818; cv=none; b=iYMIG+85xCaw1ILeEj3DFNfXo7hcsnJUsAnWQGEYcqiM8b3A6OitLn5GYnUbvr+2czpVzh7C0yRCelGrvP7DtqW5HMwxX8nYnhYw2Wa0VLd0UhAPVwkxIxFe6H1IPGDWqunNNTFPJ5PxK+ZRvlf8I13JkechRXG+e+CccBDckPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769166765; c=relaxed/simple;
-	bh=/vQrAR8IIWYATC8t1GPOamnvHOLe0v2fmber6Pveos4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=luPqiKXDWedz4xmxTP/WkumkoEJaLC5Pa+NcRaljTHAJr9WvtCseTWfIFARFBz6z5+WKhXaHCwghBjwPmWEFaKS+25ewTj0YY1l0GbdLZWbxVhKwMhvExeM9LnE2Q0EGfqF5Y0OfVe7q70yue36C+MQMFSnIL+5zRlLirHAHiNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lPrZt5PR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=U9SQW14+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60N6xhtD2916995
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 11:12:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hIkkP09EIHDNC88Vrq4ePjY6fipJQ9pcI6Pl65HLPD4=; b=lPrZt5PRXs2D2S1L
-	N7U5SKB4omvMYQZUYIKeaCNkn8cTvizPHnTzdWWKpTSnZ1wEsw9nidWVvtYPsaVU
-	pqwLhF4Bbl+hrtXroUWb9naoquWV06i9H9vmMV4waNNUWavPC3JOMOQardxWoP5C
-	xtA/6wy/yjOnK5BGyn6FTHqUV/mldhZncMijribiqfpWMg4VaDGsnsl/SCG7ZmxS
-	3D552Fv8Eu1B/+WcV/bqQzlEa6QiEa93Esae4A2vxsco3S8pp+3Z+XebQMRDZbTV
-	zocwUCV38rNU3RxUe6lNr/RvdDPFs6ZFtn4HTPflAx9oXOM9jV6usA4z0QVUCg/L
-	LzLjpQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4buvs1tdmd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 11:12:42 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-82181ef69ceso1035492b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 03:12:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769166762; x=1769771562; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hIkkP09EIHDNC88Vrq4ePjY6fipJQ9pcI6Pl65HLPD4=;
-        b=U9SQW14+zOu9BPFKl3qg4grTR+Rw04DemsAdMmgJcFQJTTvt0G8B94hOV5wqR9AjE7
-         JpzET0/pY0i6XL2oPiBfmEFYLiX8LiSa2Pbx1akBXVz592N85KMm+uwZNkqFH7ZSRlYH
-         zJZdTgYr8iYHfn7R6mH3xrzw4/5omlBv+pfyMq4W8gRr8zb+yBO6DVtXFkJ7wqH2qZfX
-         kxKbEwo7aBrN7oLj1rff51DAoOpScJ0eUjzgjJYiFOEVf3+92uTeD9TZMC1xXPwSPxTc
-         uzePVPowHlXN+Fj+G5nVeOgPIUQPewx+HZz8ug8/cMl1G4FKNF6bolRL+osiY63bXa6z
-         RSlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769166762; x=1769771562;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hIkkP09EIHDNC88Vrq4ePjY6fipJQ9pcI6Pl65HLPD4=;
-        b=ahzEaemQLD0AhgsX4lZf3o4PijeWR/7CU3xzCDlYv3JCX8uV59dAMyCvn2qpSmJaK2
-         /EnO02k+aOPiVC9wl3hHFyZBp78SB4P1TGpvDI3suVbwif2DIUneagG4Xqsrd+/b1r1N
-         b28RJU/blPhxPWlUTSKS3z3MYp8X/3BkrzItVv9yyaHhMy7kHahyrz+QySupRB+EP0Ll
-         PJ0tDjpdimS4Kgy2VpZy/i8lLuHZrH+DxfFg3mbs0DzaqQLRMiwDO5AiIQnC/3RxDNVp
-         X719qoSKNU4es9qt2fA1kvyU8aLH1Bvvtv2tIyF+XMvEcCxcPMoFwl1Lf0AC32QQYOIB
-         rc9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWqM0z7TyRSianCthJHaqUZr1xLHqkvsKBvrhWOa0LaoH4hdXcRVKMXnaX2uxAwi9CLctIy3YZ44j6sEltO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTnGFcoh0JhTJ5owQVk7NIWuR9kyunam+z/jpL1wfr4rYthhgB
-	9IVQYPn64QwVm3Vuh8DMkNWe778crAEvOurrVT7AKq/Q50c6Q9m2gswS1hewNBisACpJFsxNbOi
-	oTuQH1ktROcWOp/hZMuSVNim0LvT7WIezgdIwW5FcKA6REPToGHh0SnaHc9+yiYuWt3IW
-X-Gm-Gg: AZuq6aJtpa+sGPNEDomaDyPMaQS+rlWRPuYCCq+V2q4rMNpP90u//AaSV4EJs0KGrky
-	BbC+z8TnIUoTJvobx6e9/pJjmrdemYg/oy1hUfXnnvb+gXyqC4K62O1mr8l7jYtUU/g9RXN4z/+
-	GnfIXddzXC+1o6cnkDyWQgD2ay3vWxRK3IcfURQMVpmZtznYg2blvGiblL5VxJDu9JnmC9w4y3s
-	tGV+CDTfzLJu/I8REeO1QJhtybjUhTxjDzElUHiAzG2Sg+pq/Fe5cmo8h+MnkLaTEHCrjmtcFU2
-	JCiSMqbxyV83jjbiBfMX421pScmkBRxBScoTOWPREVATQR8DOJgwg2hdjrgQ+6DRmhJk5NbXvrV
-	uPq/kBhjCWMHFFiDcoF6/pq3mghztWQmueO9ipns=
-X-Received: by 2002:a05:6a00:138c:b0:821:a7b6:10a2 with SMTP id d2e1a72fcca58-82317ed4ab9mr2271441b3a.62.1769166761844;
-        Fri, 23 Jan 2026 03:12:41 -0800 (PST)
-X-Received: by 2002:a05:6a00:138c:b0:821:a7b6:10a2 with SMTP id d2e1a72fcca58-82317ed4ab9mr2271421b3a.62.1769166761337;
-        Fri, 23 Jan 2026 03:12:41 -0800 (PST)
-Received: from [10.217.223.121] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82318648ff0sm1952126b3a.11.2026.01.23.03.12.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 03:12:40 -0800 (PST)
-Message-ID: <82a6ba61-94a4-48bc-a012-d09152b32781@oss.qualcomm.com>
-Date: Fri, 23 Jan 2026 16:42:35 +0530
+	s=arc-20240116; t=1769166818; c=relaxed/simple;
+	bh=MJLO83jCA4MxM79trawupE0Yr9I28Svi19yQn9PK8no=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ioep1CfWaoGx77078qXSOazlNF63oH6V5yFOWoh/x8O95sQfvCspErlmCxap9C2ZESRGyOcdqIfxh5Yo0prc5tf70Ap5uYr/La/C3SWLIoPA9Ywke17yvAfIZEUyQP5VrlvzHas+aQLJ9MyunVAg5iXY6ydUGqidaD93QhRfWvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=zlxp6bbS; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rW6hIs7kbRE6sqC+VHhb8yfuCQxkSIbxM4EYUPiSqtQ=; b=zlxp6bbSAdrUvEEckC6IDgQkwS
+	smUH7veqqcf/A7ifQVrNarkgkN6fyrAyh3Wv9wXroHnUW1bGNyYswwd5gBGipBhCXXr/rouJDvOMn
+	e8L4drbydog/ojOmYaOIufuu3h8sPcPxTRcvhK9TtkuzOJ381J8hnTW+JNGn1KuSw3e98I4p+y/2q
+	tRG88KVUkDCOeiLMp26CFEdZDCOEUx303vTo87F9X9yacUkoK5+gEuN6C0dMaUzZtvaKhvvHxAwoT
+	zh/oFMfJltVh8yijjuPpiNLrclGxwHjLL1AqiNQzC0u9QkaGSpJN7zV7MFB8hLR1LsaU++zvruHgs
+	urysKlsA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:39500)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vjF6X-000000001uQ-3Rne;
+	Fri, 23 Jan 2026 11:13:29 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vjF6V-0000000022q-0aE9;
+	Fri, 23 Jan 2026 11:13:27 +0000
+Date: Fri, 23 Jan 2026 11:13:26 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next v2 00/14] net: stmmac: SerDes, PCS, BASE-X, and
+ inband goodies
+Message-ID: <aXNX1oi7nWLcPK28@shell.armlinux.org.uk>
+References: <aXNEwBW3OA1xLEUj@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] soc: qcom: ice: Add explicit power-domain and clock
- voting calls for ICE
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: Brian Masney <bmasney@redhat.com>,
-        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
- <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
- <7da1727a-c1cd-466d-88fc-e140b2e7fe5d@kernel.org>
- <54bf72b6-6397-4655-9c30-680b1374400b@kernel.org>
-Content-Language: en-US
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
-In-Reply-To: <54bf72b6-6397-4655-9c30-680b1374400b@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: U-n8wyYc3TSHDUc9PbMKp_PSmo1C0n0j
-X-Proofpoint-ORIG-GUID: U-n8wyYc3TSHDUc9PbMKp_PSmo1C0n0j
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA5MSBTYWx0ZWRfX9tN64uogOjon
- 86BsxyvrV5xF8hH1G+l1G6eAkFKyNyMZokjbXUvOlvfQYHcb143bPI1DX8miq5Zu8V0OCH66kiO
- opRZwL525XiMLKZ2qAlBUL4IRuGHBW5CXdhMK+oGmxSYKXImz5C8UJdAhhzIkEm+Ufz/GNhynZ9
- ztgtER7JTKxi6NfdzFt01qOen/9pZv/XjE/7dwkzSKJLEULk0JOAJqyWsFXpHB9ySojMrKMIEEt
- Kp5R8EQ/+N44TIpBN0uYzxNlOklk4Hb51QdV37x+8xRA+jd+3wAdFyV4M+4uS63x3AdJHurEccQ
- mBaVGHJyj9RTKLvdj7hWPtOcMC0qcs3k8ziiMoKqikQ4fQx9QCw8ng4gtThR6IH4oiIMrlz9epd
- 2lUBnuPeZRjI4vdjMaNLXfEukGjlyWtEsZ0HB/+vZuHXxx1ZXZcFV6md4e+Ck50h2bWcIZKZCPl
- +Gtp6gizMgcOTPQGjwA==
-X-Authority-Analysis: v=2.4 cv=faSgCkQF c=1 sm=1 tr=0 ts=697357aa cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=MQ79kWv7XlEYy8UUk9gA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-23_02,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 malwarescore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230091
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aXNEwBW3OA1xLEUj@shell.armlinux.org.uk>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90331-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-90332-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.992];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: BF40574E8E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:url,shell.armlinux.org.uk:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: ED1E074EC4
 X-Rspamd-Action: no action
 
-Hi Krzysztof,
+According to patchwork, this doesn't apply to net-next. That's odd,
+it was generated on last night's net next, and although there has been
+further work, it rebases cleanly on top of this morning's. How can
+these changes:
 
-On 1/23/2026 4:27 PM, Krzysztof Kozlowski wrote:
-> On 23/01/2026 09:58, Krzysztof Kozlowski wrote:
->>>  
->>>  	return 0;
->>> @@ -584,6 +597,10 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->>>  	if (IS_ERR(engine->core_clk))
->>>  		return ERR_CAST(engine->core_clk);
->>>  
->>> +	engine->iface_clk = devm_clk_get_enabled(dev, "iface_clk");
->>> +	if (IS_ERR(engine->iface_clk))
->>> +		return ERR_CAST(engine->iface_clk);
->>
->> And here actual breakage of ALL in-tree and out-of-tree DTS.
->>
->> NAK.
->>
->> Please read internal guideline.
+ drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c   |  6 +++++-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++++----
+ 2 files changed, 21 insertions(+), 5 deletions(-)
+
+which happened in net-next overnight result in this change in patch 1:
+
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+failing to apply?
+
+No, patchwork is clearly wrong.
+
+On Fri, Jan 23, 2026 at 09:52:00AM +0000, Russell King (Oracle) wrote:
+> This is the v1 submission: if it doesn't get tested but review goes
+> well, it'll end up in net-next and mainline without testing on the
+> affected hardware!
 > 
-> Internal docs are pretty scattered and messy so I failed to find this
-> there, which is surprising because this was frequent feedback. Therefore
-> please update Kernel Upstreaming internal page with following:
+> Mentioned previously, I've been trying to sort out the PCS support in
+> stmmac, and this series represents the current state of play.
 > 
-> With few exceptions, it is not allowed to break the ABI, by making
-> bindings or driver changes, where the existing or out of tree DTS would
-> fail to boot. Updating in-tree DTS does not matter here, because DTS
-> goes via different branch, thus driver branch would be always broken.
-> This is explicitly documented in DT rules and explained also in
-> maintainer-soc profile.
+> Previous posted patches centred around merely getting autonegotiation
+> to be configured correctly, to a point where the manual configuration
+> can be removed from the qcom-ethqos driver. The qcom-ethqos driver
+> uses both SGMII and 2500BASE-X, manually configuring the dwmac's
+> integrated PCS appropriately.
 > 
-> You need to either provide strong justification for ABI break or make
-> the changes backwards compatible.
+> This *untested* series attempts to take this further. The patches:
+> 
+> - clean up qcom-ethqos only-written mac_base member.
+> - convert qcom-ethqos to use the set_clk_tx_rate() method for setting
+>   the link clock rate.
+> - add support for phy_set_mode_ext() to the qcom "SGMII" ethernet
+>   SerDes driver (which is really only what it needs. Note that
+>   phy_set_mode_ext() is an expected call to be made, where as
+>   phy_set_speed() is optional and not. See PHY documentation.)
+> - add platform-glue independent SerDes support to the stmmac core
+>   driver. Currently, only qcom-ethqos will make use of this, and
+>   I suspect as we haven't had this, it's going to be difficult to
+>   convert other platform glue to use this - but had this existed
+>   earlier, we could've pushed people to use PHY to abstract some
+>   of the platform glue differences. Adding it now makes it available
+>   for future platform glue.
+> - convert qcom-ethqos to use this core SerDes support.
+> - arrange for stmmac_pcs.c to supply the phy_intf_sel field value
+>   if the integrated PCS will be used. (PHY_INTF_SEL_SGMII requires
+>   the integrated PCS rather than an external PCS.)
+> - add BASE-X support to the integrated PCS driver, and use it for
+>   BASE-X modes. This fully supports in-band mode, including reading
+>   the link partner advertisement.
+> - add in-band support for SGMII, reading the state from the RGSMII
+>   status field.
+> 
+> As we leave qcom-ethqos' manual configuration of the PCS in place at
+> the moment, the last patch adds reporting of any changes in its
+> configuration that the qcom-ethqos driver does beyond what phylink
+> requested, thus providing a path to debug and eventually remove
+> qcom-ethqos' manual configuration.
+> 
+> One patch is not included in this set - which adds a phy_intf_sel
+> value for external PCS (using PHY_INTF_SEL_GMII_MII). I believe all
+> external PCS use this mode when connected to a MAC capable of up to
+> 2.5G. However, no platform glue that provides the mac_select_pcs()
+> method also provide the set_phy_intf_sel() method, so we can safely
+> ignore this for now.
+> 
+> I would like to get this into net-next before the next merge window,
+> so testing would be appreciated. If there are issues with these patches
+> applied, please check whether the issue exists without these patches
+> and only report regressions caused by this patch set. For example,
+> I'm aware that qcom-ethqos has issues with 10Mbps mode due to an AQR
+> PHY being insanely provisioned to use SGMII in 1000M mode but with
+> rate matching with 10M media. This is not an issue that is relevant
+> to this patch series, but a problem with the PHY provisioning.
+> 
+> rfc->v1:
+>  - fix SGMII link status
+>  - avoid calling phy_get_mode() if PHY is null
+> v2:
+>  - fix further AI review bot dribble that could've been raised on
+>    the rfc version but wasn't.
+>  
+>  drivers/net/ethernet/stmicro/stmmac/Makefile       |   2 +-
+>  drivers/net/ethernet/stmicro/stmmac/common.h       |   1 -
+>  .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    |  74 ++-----
+>  drivers/net/ethernet/stmicro/stmmac/dwmac1000.h    |  12 +-
+>  .../net/ethernet/stmicro/stmmac/dwmac1000_core.c   |  11 +-
+>  drivers/net/ethernet/stmicro/stmmac/dwmac4.h       |  10 +-
+>  drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c  |  10 +-
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |  69 +++++--
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c   | 222 +++++++++++++++++++--
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h   |  53 ++---
+>  .../net/ethernet/stmicro/stmmac/stmmac_serdes.c    | 111 +++++++++++
+>  .../net/ethernet/stmicro/stmmac/stmmac_serdes.h    |  16 ++
+>  drivers/phy/qualcomm/phy-qcom-sgmii-eth.c          |  43 ++++
+>  include/linux/stmmac.h                             |   2 +
+>  14 files changed, 491 insertions(+), 145 deletions(-)
+> 
+> -- 
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 > 
 
-Ack and understood. Let me write this in a way that makes it backward
-compatible by using devm_clk_get_optional_enabled(). Like I explained, for
-Linux distros where CONFIG_SCSI_UFS_QCOM is override set to 'y'. This
-clock vote isn't really needed during probe.
-
-In qcom_ice_suspend/resume(). I'll only prepare/un-prepare this clock
-if it was found during probe.
-
-Hope this sounds good from DT perspective.
-
-> Best regards,
-> Krzysztof
-
-Thanks,
-Harshal
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
