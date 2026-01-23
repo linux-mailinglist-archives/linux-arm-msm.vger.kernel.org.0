@@ -1,160 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-90372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8FQ8ODG6c2kmyQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 19:13:05 +0100
+	id SAhaKEK7c2kmyQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 19:17:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EEF5796C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 19:13:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C769B7976B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 19:17:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0945130824EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 18:11:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1B05630078DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 18:16:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9C1F27B32B;
-	Fri, 23 Jan 2026 18:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E60F33EBF27;
+	Fri, 23 Jan 2026 18:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPbR0rmM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FXgSpBDG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125EF27A465
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 18:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6CD1DC9B3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 18:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769191863; cv=none; b=Q1IJW+KS+nLUdCbDQlSDGVy8b5Ws0EVmOlnOzlURJkrXDGRay//iupNCva7pW449dbUl2QwD9J2wBxUsO7js75GwCXk6BgfQuadpVY8u3dRcbYGOYFPIC4mWiqFJzsBZitIVn3MVJxFxGTBAgToxAwiLjo9BquWYh8Ha/E8NaCM=
+	t=1769192182; cv=none; b=PVw3Kf7wLKjXNLMrskrkWj/9PYlsbDUEf8YjQqlLCckraz+Q3B2vdkVTlNqpW86tKe+p+WIvBiHUny6Apg1S/XSxf3QnOrprlsYVMCs7YiVohEKymzb0T46WM25rhsXx29JnCFM7n8NZNBq8wh8ZHDhsa18r5p/fMuCBQdQ4Ffo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769191863; c=relaxed/simple;
-	bh=z6+4XFmAM+9E9nMdkW7Ivutg05qfOcI/VIcnBRViQZ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e9sy8UaspGyJga5SSF4yMwk6gkQbYpuXUtNJwfezpmXqf7dszOlmnOTXMYVMwFTaDhA2dqSXzaIkn1aZWjsbSVNDMcSxsgL/2W3VMo3I3XmZlLSQmiuXgISdepJgYW2CCWVb+CiDiKteQj1cIZCBnnVQmR7L73mFIYzkyFNd/wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPbR0rmM; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1769192182; c=relaxed/simple;
+	bh=YrvEfSD/FQaWoBQCBJYnesMKB6SqtunhQFFR5MFixr8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=iS6jlwSK1DoSRimcE7tOPD5uWZWMo+Eibv0oVcfH9YG8YVSuudzDb21iTygfn3EO+ut5rXUFnIRd+eVoIchcJ7qUXZ6tMsA7YaX78y94aw6VJ5JAgkp0SlzwfgwzvCaFsuXqjtxW00JNEZwuiUh9wKzEC/Ywlnay66WBeNDwVYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FXgSpBDG; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-432d256c2e6so2483506f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 10:11:01 -0800 (PST)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47fedb7c68dso25423635e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 10:16:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769191860; x=1769796660; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J0KMpHNofunhigiSe2e7em+jTqmhfyGJoueS1EQ8l48=;
-        b=PPbR0rmMEbt+M1i+koiovA1z8EsoQbhyp/PSj17YlQZFcAtfPrf0hMUyPWXaaqqLya
-         7CjHXhlGCK5v29eRqgkC2p0/sYoHifyVnW5ZK0xagAzpqM/OVUyITCbOm353wdX4ItC4
-         oeWzF0wUfx7/mqQKQFxOcEcFN+S0EMjFAXmX2qTdEQGFzgL9G0QBIIfBb+20bULaIRDT
-         0qrlJcAgAMc13ByZ+0d4ULYvknQ89mIugSJTzs+KN0zKudpE4oC/4hBVJYsqGF5/NzDL
-         aX44fNx5pgsKQKfvm/XiV0v3K279yWWF91xq69Pz4kImcTuiUqSV94x2N36/UWvsFI/K
-         ooKQ==
+        d=gmail.com; s=20230601; t=1769192180; x=1769796980; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fB34DkZTeq83fx/24zLXpPuRscQhBYQrDHPXCtTQLQ8=;
+        b=FXgSpBDG4AAeHMKX1VueKeGEpLO6AMYoEZPh7wI6Rfe58NadTjPe9FTfVhHpHX2Vum
+         ACw9QLqNZXV09L4+IZzm+YGfxYfrukJM2++muQWJn0GUuWdY2MA22PKc8t07DStRR8pa
+         ezMKomAYETT/5XJhVR1RYNv4hhkoxL+7nLUB0o0hIEoth2en38KRVRG5O40/+TFr8sLx
+         F9XmK4SfblpV2m2UjMnoJ8TLW3aqF0+GbtZbrud5vO20MHRB6fihdvligj5LgNNva8W+
+         iKCrJdfhuCjt1Py0FVz/j9CtxVLkIo4WHSdr2VUp0z5tm5+PceCzhAhLcyb4ykWzSY8l
+         3ZxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769191860; x=1769796660;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J0KMpHNofunhigiSe2e7em+jTqmhfyGJoueS1EQ8l48=;
-        b=OM76Y0QnGpJDyU8NhKX3YI34wfo5HGm/1q3Co69OA0CWlk/fLP2Wa2mfRxdYK4JVRy
-         MgHgQ2i3X5JzuRUNQ9OjQR9I+2rG1W2SrXQ6BhSxtXZS0TQmT2aMNiNsoODo2NADtZKR
-         ZN070rxIedJoP0Aw3pgxU4fpeGAhlI2nlCgwfsB3PXwoxYRkduA98gZwDjtALZuWWis7
-         RwRXYBulWW+oS+JAhhwTvyJawatYechscdwgyq6G9F8fSRn73LBuHylPyKJjUAbr4J0Z
-         J/sfoawjJ96FgxDchninmyhys2x/bUMzGSeHIGRxoRYVFzkzWzS8haHwAK13tFozR/87
-         khuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXj1E31bdCDg3HGV/Hm0laei7Vqx13rFlza+VNSv35hwIlRdusTKoc6D6wfZTxDPc0NV6NSCpWuSwr1UeGO@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2PDbvcZHDebfjksnI7d/7gWhPus2XTMgcAQ+tPBxEXomJC80e
-	611XpAaAvP4PLeHDCd+j+lug/X/xGbkVZZ5NI4b8tG4G2Cx6WYrTeYq+
-X-Gm-Gg: AZuq6aLcwz/IrDdSmITRmbKoUIa4uXBQ2cX44dhM5u1Sid3efvsu37zwHkkYhLx2Bew
-	FTdHuccI9Vjm5m7DI8D+Qw8rvidTqENVhztuwkXsUG4I8x+IOiT+gldNfUktSNjIpddvVyoNRjP
-	TzlrHrCbAgXdZOeHYARLdWy6G5aEFfcO8OaentpeMj4KqioWsW1EMVQV0NAhCrhUThFTUZPGeQA
-	xiMclk/02PbR3DbyBsa2+Es7JYS7GeOnylV3caQ/iGY0yk7Q2qvZafj7ODd7ibjzuAUT4Lc6nkJ
-	rpi4gnOPcTl6aU4h03Eghh9bjoZl+z+vwBA3mSdudQg392K/4nX3rZ21rTCmNCmn8uSLPL0aw12
-	qI5zb46jheiKQl2G8TFgzxqk9Tmrnvgfwp1r1MsXBpeu+jUzdKznLMwXSi3FYbKbgj4nvUkW3p7
-	jCG4LyG502j6Y88h8vTvI5WvztLw==
-X-Received: by 2002:a05:6000:200f:b0:435:ae10:cf84 with SMTP id ffacd0b85a97d-435b15887fcmr7722618f8f.5.1769191860167;
-        Fri, 23 Jan 2026 10:11:00 -0800 (PST)
-Received: from ?IPV6:2001:871:22a:cfb5::18a2? ([2001:871:22a:cfb5::18a2])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f7b4d8sm8059422f8f.38.2026.01.23.10.10.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 10:10:59 -0800 (PST)
-Message-ID: <ab9103dd-c1c6-473b-9dd7-87a3d5e203c9@gmail.com>
-Date: Fri, 23 Jan 2026 19:10:58 +0100
+        d=1e100.net; s=20230601; t=1769192180; x=1769796980;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fB34DkZTeq83fx/24zLXpPuRscQhBYQrDHPXCtTQLQ8=;
+        b=my0LYgvDEDJ3S7DLePNRFGomQRQ4ecdnePIsEf9u9iCheCNEzeoYd3phHinTmHB06n
+         5P+OhY4zLwxgzEddfCpURZxijeWtJb+ZUdhjguqWqhUMEHXB6ZOxXmHWz9ZIOa3kYj06
+         LyMyexPFbBs/1928x6QAIxkMDrVcpdA6E+grItDFcM8vBxD8HQBpI3kamneOC8RpPBWq
+         UsHPNJ7REpt9iUtxJmYJonk6GoP7C1PGfsB7tgWpe5HVceZhF5H10CmdUCU1X7j2zA2M
+         Ws8T+Ti/W1vPSsk+LoqPj70uvhC3cNSfAvGHH2/voz86hYDKlSWrZNfo/edjrtTbrlUr
+         juwA==
+X-Gm-Message-State: AOJu0Yy6hoUgVPh6TVtPt3MGg7DqEsnAOOy1dWlYvD4lGWfu/XFty4dt
+	lN82/+PXUbDc/urBZ0Xtw8Yjg975B2zYlLEdwnwdLkLPX50vV0TP7nE9
+X-Gm-Gg: AZuq6aIvLSUPCKzh9OhJ/YqxnzKsQ/exuRHg8/sKs1eFdlznNIuCbBHkgMCBmhtfVdm
+	4KwRuC79/AUFxyI6/vTwDu6w/2xhDtpvmEgqRR6h90jUjNNe/XQHxrK8HDvKdfoCGFVXkj29ZwA
+	h9vHFCiG6KRGvLsMAbypjb8Sc+3QXY/7xiw2UIyUARXlQZBRlrlfwS53EDY6U9iCbuuYLaTkgTu
+	v3zZwPW8vaCrWD9YCPjJqAutZB41YDLtge2TpKVDPnVVhHIIV4azJ0hjLvIjnjH92FT57OHRA/Z
+	/eh8jG/U7j21uDAdCZHAGt8GmPI8hQLxIDC1LkVPztvWKk2b/aH8/OzLVIhyYIBmVNzZ5KiI4yd
+	iNPkx7tMvoq6kB516YxTqnEIe3NI3FBiFOj2l9VKOkV36vugVRMwjUuoQgLlBNaKIWMPjiTfP1r
+	dm0PlQHWw+ppLk0Yex52C5KeFLwwHXxls0P4gvPLHz
+X-Received: by 2002:a05:600c:540f:b0:47e:e2eb:bc22 with SMTP id 5b1f17b1804b1-480511e4ed6mr36023275e9.5.1769192179522;
+        Fri, 23 Jan 2026 10:16:19 -0800 (PST)
+Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4804db7b434sm28693425e9.4.2026.01.23.10.16.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 10:16:19 -0800 (PST)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Fri, 23 Jan 2026 19:16:05 +0100
+Subject: [PATCH] arm64: dts: qcom: ipq9574: remove MP5496 regulator
+ references from SoC dtsi
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REGRESSION] qcom: iommu: nullpointer dereference on boot on
- apq8064
-To: Robin Murphy <robin.murphy@arm.com>, Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>,
- Matti Vaittinen <mazziesaccount@gmail.com>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-References: <569d7de2-cfcd-4d28-8bbf-14a0179f665e@gmail.com>
- <20260105180213.GG125261@ziepe.ca>
- <9a86120e-c0be-4ed5-a3de-cc7f164da154@arm.com>
- <5cab0953-c2a3-4baa-af91-e9519afef092@gmail.com>
- <da3fcb7f-4ac4-41c0-b3ad-055c6766fd5c@arm.com>
-Content-Language: en-US, de-DE
-From: Christian Schrefl <chrisi.schrefl@gmail.com>
-In-Reply-To: <da3fcb7f-4ac4-41c0-b3ad-055c6766fd5c@arm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260123-ipq9574-mp5496-cleanup-v1-1-9fa86f72b873@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAOS6c2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDQyNj3cyCQktTcxPd3AJTE0sz3eSc1MS80gLdxNRU46RUy+QUQ0sjJaD
+ mgqLUtMwKsMHRsbW1APz8codoAAAA
+X-Change-ID: 20260123-ipq9574-mp5496-cleanup-aee3be9cd192
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.14.2
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-90373-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,lists.linux.dev,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-90372-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[chrisischrefl@gmail.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[j4g8y7@gmail.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.0.1:email];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0EEF5796C9
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.0:email,0.0.0.2:email]
+X-Rspamd-Queue-Id: C769B7976B
 X-Rspamd-Action: no action
 
-Hi Robin
+The 'cpu-supply' properties in the IPQ9574 SoC dtsi are referencing to
+a regulator provided by an MP5496 PMIC via the RPM firmware which's node
+is defined  externally in the common RDP dtsi file.
 
-On 1/23/26 7:02 PM, Robin Murphy wrote:
-> On 2026-01-15 7:02 pm, Christian Schrefl wrote:
->> Hi Robin,
->>
->> Sorry for taking so long until I got to trying it out.
->> The patch fixes the crash!
-> 
-> Bah, in the process of writing this up properly I've realised that although it fixes the crash, I think it breaks the multi-IOMMU functionality, as .add_device will only be called for the first IOMMU instance, whereas the current code is cheekily abusing .of_xlate to link the device to both instances. And in fact that implies the existing code is yet more buggy, as it seems it will leak and reallocate dev_iommu_priv the first time it looks up the second instance (whose ctx_list will be empty), thus it's only working at all because in all cases the DT happens to list all the IDs for one instance before all for the other, and both use an identical set of ID values. Oh dear...
+Since the PMIC is not part of the SoC it should not be referenced from
+the SoC specific dtsi, so remove the properties from there and define
+those in the common RDP dtsi instead.
 
-Thanks for looking into this! I'm not familiar with the IOMMU subsystem so it would probably take me a long
-time to figure out anything useful about this.
+While at it, also change the prefix of the label from 'ipq9574' to
+'mp5496' to keep it consistent with the labels of the l{2,5} regulators
+provided by the same PMIC.
 
-> Are you using the GPU and/or display device(s) enough to be able to tell whether their IOMMUs are working as expected?
-No I currently only have a serial console, though at least the display used to work on earlier versions,
-but maybe that's just a configuration issue. Its on my list to investigate when I've got the time for it.
+No functional changes. According to dtx_diff there are no differences
+between the ipq9574*.dtb files built with and without the change.
 
-Cheers,
-Christian
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 18 +++++++++++++++++-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi            |  4 ----
+ 2 files changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+index bdb396afb9922a4369b4e96a09d0789cef21c046..fb398857b73d259f218f871b003e53007eb2fdb2 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+@@ -88,11 +88,27 @@ &blsp1_uart2 {
+ 	status = "okay";
+ };
+ 
++&cpu0 {
++	cpu-supply = <&mp5496_s1>;
++};
++
++&cpu1 {
++	cpu-supply = <&mp5496_s1>;
++};
++
++&cpu2 {
++	cpu-supply = <&mp5496_s1>;
++};
++
++&cpu3 {
++	cpu-supply = <&mp5496_s1>;
++};
++
+ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-mp5496-regulators";
+ 
+-		ipq9574_s1: s1 {
++		mp5496_s1: s1 {
+ 		/*
+ 		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
+ 		 * During regulator registration, kernel not knowing the initial voltage,
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+index d7278f2137ac58305cc4e82c1d6c26c08bc7a405..8cc0098fc5e364f2535f3a2d403c1745d929cbc6 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -56,7 +56,6 @@ cpu0: cpu@0 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq9574_s1>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -69,7 +68,6 @@ cpu1: cpu@1 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq9574_s1>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -82,7 +80,6 @@ cpu2: cpu@2 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq9574_s1>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+@@ -95,7 +92,6 @@ cpu3: cpu@3 {
+ 			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+ 			clock-names = "cpu";
+ 			operating-points-v2 = <&cpu_opp_table>;
+-			cpu-supply = <&ipq9574_s1>;
+ 			#cooling-cells = <2>;
+ 		};
+ 
+
+---
+base-commit: 78c13dac18cf0e6f6cbc6ea85d4f967e6cca9562
+change-id: 20260123-ipq9574-mp5496-cleanup-aee3be9cd192
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
 
