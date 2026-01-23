@@ -1,281 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-90273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iM43AwzMcmlgpgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 02:17:00 +0100
+	id cImdNpjQcmnKpgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 02:36:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4EA86EF7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 02:16:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F15B6F26B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 02:36:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BC7153011F16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 01:16:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8E467306EA1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jan 2026 01:28:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AA7617BEBF;
-	Fri, 23 Jan 2026 01:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68945376463;
+	Fri, 23 Jan 2026 01:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="gmrxX+Ke"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TkPKQxZK";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Dc9cVcBn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021120.outbound.protection.outlook.com [40.107.74.120])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CB12BE7AB;
-	Fri, 23 Jan 2026 01:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.120
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769131005; cv=fail; b=uwR8RNFXd8scW1kq7eAOSu3wo1iAuX9TB2pLVndihVkfgs1E8q+W7/H3FdjM5agtmduWRsNngpmbK1C3NxgOp0/bJC2oMFCgA1fXTlJMmsfWNi3sj+maLOMdvHe74ur4T9RW5pol4XIa13ACYFdvsMnu/4nJ2+uSGiZ+4/fKeYI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769131005; c=relaxed/simple;
-	bh=loS0PGdIrAzhJ4nXFm+T4xsGx+r4F2z59BLT8sWosP0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=XvFUlDH3G9EcZfdmRA3/27OiuPGkWkBghPsQeeJwHQPkMvaAUlircmpAO1OTW3zKfFBPgydRqQEpnuVvEQCGKRsUCYd5zIQ/VvuKJtKNwx90xUxJ0iOMqNaaVjSQyBJf9InkojceB7h6tqutvarBveTJReTnHqNbVGP7GFTX5aA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=gmrxX+Ke; arc=fail smtp.client-ip=40.107.74.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q9EeqErb7QNdxusE82s9RLkD6uf459cTuVlOYC6FegvDv/KEZrzs99u3ahDkZepdTQDH6RBMtNUX5PwyjSzyrxyHNX3fCS1mYjYF2kwdy8rQ+vQX9j5QIRMngg+qsteFjBA5ktmVkyQR8cA7RU0/ru9r+UhI0GeNMryhdAE1J954UbQyxwWSfm0Skg8OhWhTnHPzez2vHrw++o6tWfK+Un5aQCmF6d9fKFfB8OD+h+2ROFaBDDB1c/ZwzDzvxG+PnP31BdDj4JVMtjcT7nKXfxfXS2Wz144Xg6/1dHAr5cuw/xzOKb3jiG3Mf96DaPzop0BZCKzTx3RQLk7x1BjPYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t5mSSD+fAplRMfb3joiSiyJChCQwTs0sTG3eink0tGI=;
- b=MsnBQQO8WY5mWO23H4+hVbQOQ7Rgvl9UlxDont4DlZbCwQbm23XJKNxwSptUaO3RDHWT4ENw3S9VpDUkMRz92efSKzjcU8TE++VHw1HsEANU0jHncL3bw38hxiZQbW4m9MSiZ78VUebI6vQNku9oJ/R7qg/34bPxibM0voshVbkTsc1ckG1CsugdR+RWPU65QTklR0+52GA/NqOT3dFmjt6BbY3sl7hagsL2gHaf16ty0xLyqIvMF2EAH4mZYupBd2AP4hoDe3odYWZGlrVM/cauUYwRL6iPatiTke3bVAPqwimRU8/3qsNqOmeqGezE426AI9JX+L7g94Hbh2OOrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t5mSSD+fAplRMfb3joiSiyJChCQwTs0sTG3eink0tGI=;
- b=gmrxX+KeGbU/qdPfG1ETzb/JM/2x1wEqtAgs7TZCBgnaeGw9oG3oH/nzwIgpoUimZw1Fa2/v9frjQ9md1kWaZnIyEnQgldBiwn6x5x86sUNXI68qrHo8RMXD3GYwE2HM2m0/E+fFcV7YyJ+u26J2INWbW4K5FnAWxysSQfUvZKo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OS3P286MB2456.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:17f::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Fri, 23 Jan
- 2026 01:16:24 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9542.010; Fri, 23 Jan 2026
- 01:16:23 +0000
-Date: Fri, 23 Jan 2026 10:16:21 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: jingoohan1@gmail.com, mani@kernel.org, lpieralisi@kernel.org, 
-	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com, vigneshr@ti.com, 
-	s-vadapalli@ti.com, hongxing.zhu@nxp.com, l.stach@pengutronix.de, 
-	shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, 
-	festevam@gmail.com, minghuan.Lian@nxp.com, mingkai.hu@nxp.com, roy.zang@nxp.com, 
-	jesper.nilsson@axis.com, heiko@sntech.de, srikanth.thokala@intel.com, 
-	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com, geert+renesas@glider.be, 
-	magnus.damm@gmail.com, christian.bruel@foss.st.com, mcoquelin.stm32@gmail.com, 
-	alexandre.torgue@foss.st.com, thierry.reding@gmail.com, jonathanh@nvidia.com, 
-	hayashi.kunihiko@socionext.com, mhiramat@kernel.org, kishon@kernel.org, jirislaby@kernel.org, 
-	rongqianfeng@vivo.com, 18255117159@163.com, shawn.lin@rock-chips.com, 
-	nicolas.frattaroli@collabora.com, linux.amoon@gmail.com, vidyas@nvidia.com, Frank.Li@nxp.com, 
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
-	linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v9 4/5] PCI: dwc: ep: Support BAR subrange inbound
- mapping via Address Match Mode iATU
-Message-ID: <l7wknbayighcczjkqfwhbaqrepjtbgxxstgkntoqvnrs7dnm6g@wvmy67ky37pv>
-References: <20260122084909.2390865-1-den@valinux.co.jp>
- <20260122084909.2390865-5-den@valinux.co.jp>
- <aXHsd7-WWAGyhy_w@ryzen>
- <s6bnqkbuugi7oio7ybekdbk3dokpbe2bui2wjltdwajxix2app@wosgmhrfsriv>
- <19D609EC-F850-4B43-A83C-0B8C70E641B5@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <19D609EC-F850-4B43-A83C-0B8C70E641B5@kernel.org>
-X-ClientProxiedBy: TYCPR01CA0167.jpnprd01.prod.outlook.com
- (2603:1096:400:2b2::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086C236D50D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 01:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769131690; cv=none; b=fFZXsE2LRrbeuSVwntq10ctuUCHjGREs/6CxKovIUFT8g1Ffy1+8BptZfM7XKz7m/HTlrWZ+xw6XjgL7b6utd3O0+y0nCdbnsfPH6GenzprcYP5xgr8Hk5mnCOM1ivhUiRmEgbqOdDepF6RWpQwSLirZ2mBXpGGKW3kPzRC0ULU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769131690; c=relaxed/simple;
+	bh=vAVCWN4R8VmDkjt8UP3zubrMPwp3HWU/dmWQ+AZC7io=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FiCWMzrhqtdoevRMbWAkRiiVy5A1V9nEEzyM8o6TGE7mt1HVlZdpCiFTL1WqgCPBIrM50PCUbmuX5H19sK0yL9OgD8q3o+Kr6CDjXqLZZWFw3iiRkhNleD1Ca1AUVVH+bAk9AfrYdcWE1iMiSMY9OlT6bbRiBP7fIPH9HRtSq4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TkPKQxZK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dc9cVcBn; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60MMVhju2909018
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 01:27:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S9ilNfxsCAgF3/catfRgv/bNEw6+UvvAVmiznKDkFLs=; b=TkPKQxZKY18/K1T6
+	/glZzMFAAMzoQdwb94/IWwrZ9r36Z8AP7PuT13/n0NAt9LDji+3JGPSXfgwALrr1
+	dXAqlGFWFng6pMbzO3TCmdBP6kr0PnJSd3pr3+nmxSpbLC8ihb/xhEH58ZNZi8qG
+	WSuB/huyQoJXUmOq9IN4vISWnSJmGzIaIoB8AYMdrDba+CytYbR42KjFpp+G8bVV
+	4WcHF+qcIbpUd2daKtU6KjisqSwGK7uzStIGkrqU82b1O2hIL5tQpmIr6aykvr+O
+	QJaqdiaebxb7TKffJiwQtZTl3tayvxOKbPoc37y9JGN+dqE1R73hRYZn3QCXYQFi
+	KhIWvA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4buvs1rcrt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jan 2026 01:27:47 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-34c7d0c5ed2so1350657a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jan 2026 17:27:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769131667; x=1769736467; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S9ilNfxsCAgF3/catfRgv/bNEw6+UvvAVmiznKDkFLs=;
+        b=Dc9cVcBn5O4Qypn0dHIGgQW4PZNQMalqFM1fvnTtCjZQKDa2AWNElFEpc6B1eWD+DF
+         7QogDAzK/iUc6rYn+L/405eo0zLJxsAVYpYLxsX9gq0gcHdPIrrwcGtVAydia3ccIKEv
+         et74Q1lF6LmHfde2l+X2HirJti4RiRmet5ZXkDVnTyBWO3CJbZn++QuRpPtyr+B2CWZ+
+         LC36BTCdZugZTORs+E9oVDEz6dlOyfs0NTpZ03wl+z20U4V+etRWOT8N0JTSoGNmKdY9
+         UovOYhZNeaT2iRECuDMEYRCGB/GFsVjvn5HV3RUCCJMrlOCqXcOt9nw3+wrsfWu2+Q3A
+         5Jpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769131667; x=1769736467;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S9ilNfxsCAgF3/catfRgv/bNEw6+UvvAVmiznKDkFLs=;
+        b=kpA8aduUNt19CTE/lBwgGu1tJGIv62j5+O6+20WK4q+/VGmbjZ7LpCOISuRyV0Q4LN
+         bNCPmZtxTA85jRUNw9dqwqf8+L5jptbxnq0gB28oG/xJhmTpzKAvIcRBok+f4+BzBKrI
+         Az1dWWgsmikeGjqkFgzr5Q2dsEG4N/io1zAcQP4135ifmGB9SfVOIIGAhdYJiuU4SJda
+         xdwPGd6ONiGqPY/qENDpENyLIam+iaOeKvUovlQr+hNKqbkkY8tfD1K2D/g68bRi/dn6
+         nmbjr/4QIdoj+CPNO/1wmQixGGZaBByCfUoh//+A4Bc4W94b6WNHT1LgDkdgfqx05lIN
+         qWpg==
+X-Forwarded-Encrypted: i=1; AJvYcCW/7XToaGD+6ymq8DOs0y/8X/N/rlm4BlR1R06SvSkOXPcPkOjNSnBfTbwx1n55P2bcuG3QwDTjMGVFNMN9@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywf6dVlgJAm28YmG0VUsKS42AtDHnxUGhgCLTmkBoz+ZOV1Uw2i
+	WDPyULUqHphVDNZC0jsj9nbU6u1+eHmH05WnEzOh3mIZlaG7TvGioo3Ss/CdjsqLFeyb1P/7phC
+	V3K40GwroiTmnd2JvSNC5uCaqece2z95KBLeX7LXDpsg4rXq4/nGIICGTftSTh5VURuxI
+X-Gm-Gg: AZuq6aKf5nX4IKMz1XZpBq8FYcFl5V/AplKnVK8oi7UVXU6YnCkrJMKST7bW8Rjck09
+	aMcKjDTuJAfO9HvdorPBC6AM/iwFT2IyP2I/pjAcym4xlbuWRSublu6KLORKKa/MLTdY6KfQsZL
+	60DAyYRKs8wWLDn4n89HHu+wC3lMrSXdv/p4zmyrojRr85C7yxwMTK5TFAj8jEgplVPUbCGVKfr
+	cw4RRqRR+BlD/ecodGrK22M6fyHrK+Mz9TfGomkDdQzdr5SS4ARTx8JZScH6fvd53Mogn2D1Jsj
+	2ByECJuVhVMLlsVqdRmZLJbb474oMT9+rJMSvpCfAVnabmTmFAwZ9h8oc+Id7x50tQL/Z7qIJt0
+	B2ZAa8rnpQQV3kbUU1OweQ8G67qTrZhAGkihJMQxTpeMW6NoW42Q+eGt+e4adpYJPAoXrin7sl7
+	g=
+X-Received: by 2002:a17:90b:224b:b0:34c:aba2:dd95 with SMTP id 98e67ed59e1d1-35368b44712mr1380892a91.26.1769131666702;
+        Thu, 22 Jan 2026 17:27:46 -0800 (PST)
+X-Received: by 2002:a17:90b:224b:b0:34c:aba2:dd95 with SMTP id 98e67ed59e1d1-35368b44712mr1380868a91.26.1769131666182;
+        Thu, 22 Jan 2026 17:27:46 -0800 (PST)
+Received: from [10.133.33.105] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-353355e1161sm3480323a91.17.2026.01.22.17.27.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jan 2026 17:27:45 -0800 (PST)
+Message-ID: <d032a4cd-235c-437b-852e-998db8635056@oss.qualcomm.com>
+Date: Fri, 23 Jan 2026 09:27:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS3P286MB2456:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92cab8b6-18a9-4804-6151-08de5a1d05c2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|366016|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?IP2bAzVB8Tt/gg4tiiMoSVN2yW5x/yWeAMVBXsHzHaMrLBn0U7AcPnbXZPV2?=
- =?us-ascii?Q?bZsIKvK+kqf9Nv8cKzFDI4M1UB8klPJBatlaGWvlEi6Y1PkB+u449ct93XOl?=
- =?us-ascii?Q?L+X7N31hX31rklG9D1FhJg0J3viLbap62A3p52VwqeMixHGA7I1mG8Q0XcGU?=
- =?us-ascii?Q?6ADgMgYVpEn6EWuVSNXiksw8klyyC5eq1miKV3H5Vx/ifEXnufak5O3H9WXy?=
- =?us-ascii?Q?0/ihYm5a5peEFIhan3yJg+xlwKWfDpnUr33fv3JGFbctbJ64RPNuUQiAUbrz?=
- =?us-ascii?Q?Ugv78Ie6C9qnwh9rwN/NW2gyiamfRA8PFM7Tu3Tiywkb/Hz1y9FwrvoMsRou?=
- =?us-ascii?Q?j9ImiMQaa5pmVCMVHbMT+t8DV9MDb9XZUZozOFLXnP7wriY8vczZNvXAdmS6?=
- =?us-ascii?Q?RJY7jnlUQ7+A4I+haeYPOpDn253qnDG3AHMkqB5y62GV6RXMtvd4krlA7S8Z?=
- =?us-ascii?Q?UA5Sadw85SsWiq9KsLxk4m8p4Sccxc8T/WEuffw/MLAuEO8fSxFcIsv2D1Ch?=
- =?us-ascii?Q?WauIqiKMiNA9PMtP52y91u8mUw6TywT7uYybKp7MrUxdnpm7X7a7jeZKxGVK?=
- =?us-ascii?Q?AzQyBSqmJmhPU0obxzVIljZmrlxGZzImKqqqY6Hrx2vfut6WF/KTVr+QhG4m?=
- =?us-ascii?Q?8hA11WWXr0QTTymFWOEXY7s1PrnxkrztF1z8lu7Gn/UzuOgyrjqv2lN8iQ7r?=
- =?us-ascii?Q?Fb5EXK5EDAhnKWz+r/WqmASWiSoSHdhYlzb+tjb/B/qfb8Rj1HDIANdbeWza?=
- =?us-ascii?Q?wJnL51mE6ZgcBQYGth28nGyYKgncaRRatP0iJrSKoYoj0HwOrSBpihT/SGtu?=
- =?us-ascii?Q?BFJYp/2grxKiZyRjIusUU65aq/ZPcH7ykYAIEirxJhwTCvGbP6QKR69Oo9UG?=
- =?us-ascii?Q?YaEXDIyIIpjjAtdyWBPljJES8olwK6uYQ4UkRAtzcV/QRR0wH1lpoB/v7LSQ?=
- =?us-ascii?Q?YH7bPX/rIfeknX9wrk2ggneftQCWcwr/K6t/CKn7UGIlWSo7+49OBsrUNfzS?=
- =?us-ascii?Q?Hk6qhyDWx77DQ3WN8Bwpitok5pukHc72Ceody1Q3bq21Us1hmKWC3hJ6iD+7?=
- =?us-ascii?Q?hzkWPf0b/GsEjC1sjoL/tg3Ezh4YiJa3jYFb9+1J6ohkkmPMmcZFQGLGhOnQ?=
- =?us-ascii?Q?Q1ezqMIvi4jUFAVHUXVlgGZXlYXuG4VWPuO4m7ku2o0oC56GPbPgC+iyIc3f?=
- =?us-ascii?Q?Z1a1dv1SvcN5oZSF8DtwaXjQib1aaUxwjoIdezoazJp2T39ULPuaJuY5Fcq3?=
- =?us-ascii?Q?j+ucekr5io9W1S/cAiGVe+FLACtS3R1AUtNanRDOS+5XtFV1rVl0csUGQHYy?=
- =?us-ascii?Q?Zl4+lTSId3jV6WG4qiblt0RhO4AhAaAUz9WzoWbgKzgswi7LLPfULxCg0uvd?=
- =?us-ascii?Q?BTgjNMGaaCgymy5aUuwqBIZm1O+c6F46DTBbHdbAsA0f9b+3M9PwhbXffSI/?=
- =?us-ascii?Q?F7ubapy44wmltXDwKeLodK9KFCme6ZdqvF/4hR5cSE5VIOgZFv2YHmebjtU+?=
- =?us-ascii?Q?bOAf16JDokVk8Cpc1WGyb9OzXJYE3RtpNaPC/W6/e2RVxBc0yknwOnrrb+dX?=
- =?us-ascii?Q?UxvLWOb3I20DEYEaCORnpjTxAPphMSmvRLE/S/HU?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?uFKdkRN+IAQjOBce+7EjddDNFTsDh9spiX7UPYcIGWhwEPvRXzmHoI3ygf8Y?=
- =?us-ascii?Q?+3UAWL+mWrZ1zc9psJdOsuVXLcH25ZR+Lc2uqiaJXTLdEaUJvpW1PBx9vcHC?=
- =?us-ascii?Q?NMrJj+K31MFbvAE2b4r56MgU7ZbD7TdyrOg4sWTpDCnPASzBFWcKzoEzwnYe?=
- =?us-ascii?Q?tji7TbowIRXoq3xRk5OiWz4iXQCcGY6c4tgJfbpvIgg0zLAEdm4JWZ6SjJr9?=
- =?us-ascii?Q?rywcEkZFcum2gCEz6XBCQ+FWEQJ1i5t/EIcdf6iktnoRWeFmZq6nyLGMsPDc?=
- =?us-ascii?Q?QFdhd396w5Lefdek6BhrpkqESxuLnc5+hq6TpzRPphHUqbuQooJbEMKFjtsq?=
- =?us-ascii?Q?DJEgLbNsSH4JIm8ZDBxmP/ewIWfi/k5zY6ZZuxzcHURPpHTrukzjGGKNV0Sl?=
- =?us-ascii?Q?JBF0ycy5ftcnKEuU8lZjG/vfOY2MT9KHojKULWZ8V3fP4Iti4LMbxYTJQ2tC?=
- =?us-ascii?Q?lQUXFU+c0c3mhtskkIe7w9q9MRVhGnFyzrGilxXFjAPhj0WGho3mg+w07W5q?=
- =?us-ascii?Q?Ut4HqqKXVSealuBO3nd7ZX+UvHWuY4NoVGSZvP5fB0LUG/XmZSXYGH4KwN9A?=
- =?us-ascii?Q?+Q1Y5xb3dtsXkNk2dY8ayQ0P7XfT6DlkXd4XWvlVbwmZuEL4cgiF6XjHOHx6?=
- =?us-ascii?Q?Kmk8OfnH8R6HVYCovcPzEBCDuskCYsdmknmqEM1StT+rwpolq2LZZUD3SZEg?=
- =?us-ascii?Q?k3K7+1nJ3iSr9ntfjJb1lEImOeWaXEX+IluCpuIxAVBG2bnoIujttGP1r/cz?=
- =?us-ascii?Q?uWOnkUdv0tPjGZz/p6Dh+iQL2hMGSQ66z73XjLIydVQm2zPLTnIKLQ/zyIVH?=
- =?us-ascii?Q?+KExForjtFVBqGpsXQqrtxDjnZx0HsSFHZ6No3c4rvckjxGzc99Li0uW5gfu?=
- =?us-ascii?Q?rkNJQGmBiIAjUqzdZl7WdIcB7bhLSj9oAd/2docKjtceacad9nXRN/pyG3oA?=
- =?us-ascii?Q?vKnVgz5I6JHgcmw5m+NBeMFnWwlUf8/tFi6g2hjrHOO5xuta8sSE7PDMzS9K?=
- =?us-ascii?Q?ZU5BLljq8p1LMONS0sdfiZWJAJph/OYV9Wl+QP8jXs2bsyiIY3hE6Y2Cl3ry?=
- =?us-ascii?Q?R0mQRpE7J4jOw6ojbVaIpiSLHEddTGGQIvaP5WD+AYGiFyFLmankLhZlQH9P?=
- =?us-ascii?Q?5fsoUF2Wb2WaBN8TMo8gal8t9Tif1//u4huXCsWaLjAuzctbwPCTqyGVUpfZ?=
- =?us-ascii?Q?Ajq4XiYEimeWEdPl5IjT5l7dfjHRPbw2tIeG2izjdxMZAr3rOpS9roRbMspt?=
- =?us-ascii?Q?Kjazd1oEYqGQ4z7W84a9dQSykVo/MQkrtbBoqeHOT3vZ6UCyElUk9kLAujPO?=
- =?us-ascii?Q?88QwQK6yf8J/92H+XJFKsFEwLKcEudC0lBUNjjg7RhlR6Je3vBVThmCZvZUc?=
- =?us-ascii?Q?OxJAv5DtI7+JBboJHlEWff2t7Hji2OAeBJLkI6tZc2AVjL7SWLkUy3dO599a?=
- =?us-ascii?Q?9w2xCKahTaBjnbtLjQf2gmkx5OwSDzzfK6WNmB2sABaACUqAEAiKNTJjHbqT?=
- =?us-ascii?Q?4fTUcSR7MHgLciNu8MEpxWMvfdrfYu01mKr11Sdw8i7jU7V/eUu8LPwmF45+?=
- =?us-ascii?Q?dP6digMiNsryDu1q8Hgaq71diYpQbZhrNkzLl1W35Vd50rBm10jAY/O+wYvs?=
- =?us-ascii?Q?+1VEkak6wp1TJ1DDH3hK71nlk1/swSZ8qh+/2tEVZBVw/IjDQp6LK3WRVKFv?=
- =?us-ascii?Q?krhR+SpXLanat6z3dw4pdIMeSSXBKSxuL0JPBomZiFocT2DyUhFGF7o41ALp?=
- =?us-ascii?Q?KGw8ViKDKUN4zWJ/48p1fWLR8Oln2gegxkbCrKVNy3N3Bn3KYi0t?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92cab8b6-18a9-4804-6151-08de5a1d05c2
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2026 01:16:23.1754
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2brbgcZGu0r+ZtXTOKbkvCTqndJHNRTnzQbfDK52sBE2ewZaHNBW/ok7AxFmQTpWYmLAyok3ppbGhG/EoG4EIw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB2456
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/8] coresight: core: Refactoring ctcu_get_active_port
+ and make it generic
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20260122-enable-byte-cntr-for-ctcu-v10-0-22978e3c169f@oss.qualcomm.com>
+ <20260122-enable-byte-cntr-for-ctcu-v10-1-22978e3c169f@oss.qualcomm.com>
+ <525fe4ad-3d3e-4c05-a6f5-da91157f362e@arm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <525fe4ad-3d3e-4c05-a6f5-da91157f362e@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: Jfnn-EpUVG0NLHqhlVgmQ8391EsBPDB4
+X-Proofpoint-ORIG-GUID: Jfnn-EpUVG0NLHqhlVgmQ8391EsBPDB4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDAwNyBTYWx0ZWRfX1oEq7zVja8lT
+ hIIoVe1j6TcueR0X9vFQ6p+LIRxvPn1DUae+YQSUofUZIeTd1x8ssFrQQzHdmtrUJy8Nkhxk95V
+ 3Uw7kJFS81RceJ1r3OI0+ZO4rAHgJ5K716JyBDd7ov9El1z1rhTTnGBFtKJWNHW6LDK3E8uWjM6
+ Ih9AC56bp+lNkt3hlrjEOeXWdqnwPvf2NE23vSa5ZDMd7cpX/AR+7RQVNbHL734fhEsAOsEWRlS
+ d/U/o6CVVVzErIT2i2bRLWauABrvucdula1F3GAYIXCy80Uk6/qWK0/sVb4Zg9sC6SUjKXRCoLY
+ RIsL0FKk9hiF6T8EDP7nBO87trgujEEas1Cl+PE2Q1/D0K40QAdjqxov1/IeHw5wUY56xvV1Tg2
+ DsJsTxwdzUOCHv2GUFdaKmlBSmdDyqT3fCm/Gv1riQsB3gJFbBrMdM1loIt/ZUr8Hbn03WHz15G
+ OcsbNdpTJB9W3gNL8iw==
+X-Authority-Analysis: v=2.4 cv=faSgCkQF c=1 sm=1 tr=0 ts=6972ce93 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=fsjGGd5fPUumY84vGlEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-22_06,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601230007
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[valinux.co.jp,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[valinux.co.jp:s=selector1];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,ti.com,nxp.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90274-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90273-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[den@valinux.co.jp,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[valinux.co.jp:+];
-	RCPT_COUNT_GT_50(0.00)[53];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	NEURAL_HAM(-0.00)[-0.985];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,valinux.co.jp:email,valinux.co.jp:dkim]
-X-Rspamd-Queue-Id: A4EA86EF7C
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 3F15B6F26B
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 05:59:18PM +0100, Niklas Cassel wrote:
-> On 22 January 2026 15:29:02 CET, Koichiro Den <den@valinux.co.jp> wrote:
-> >
-> >> To make sure that dw_pcie_ep_ib_atu_addr() cannot be called without already
-> >> having a BAR configured, to we perhaps want something like:
-> >
-> >Thanks for the review.
-> >Isn't the existing guard in dw_pcie_ep_ib_atu_addr sufficient?
-> >
-> >        [...]
-> >        base = dw_pcie_ep_read_bar_assigned(ep, func_no, bar, epf_bar->flags);
-> >        if (!base) {
-> >                dev_err(dev,
-> >                        "BAR%u not assigned, cannot set up sub-range mappings\n",
-> >                        bar);
-> >                return -EINVAL;
-> >        }
-> >
-> 
-> Well, for a driver that does not call dw_pcie_ep_reset_bar() in their .init() to disable all BARs that are enabled in the controller by default, the host side will assign an PCI address even if no EPF has called set_bar() on that BAR.
 
-Thanks for the explanation.
 
+On 1/22/2026 6:00 PM, Suzuki K Poulose wrote:
+> On 22/01/2026 02:08, Jie Gan wrote:
+>> Remove ctcu_get_active_port from CTCU module and add it to the core
+>> framework.
+>>
+>> The port number is crucial for the CTCU device to identify which ETR
+>> it serves. With the port number we can correctly get required parameters
+>> of the CTCU device in TMC module.
+>>
+>> Reviewed-by: Mike Leach <mike.leach@linaro.org>
+>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c      | 24 +++++++++++++ 
+>> ++++++++++
+>>   drivers/hwtracing/coresight/coresight-ctcu-core.c | 19 
+>> +-----------------
+>>   drivers/hwtracing/coresight/coresight-priv.h      |  2 ++
+>>   3 files changed, 27 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/ 
+>> hwtracing/coresight/coresight-core.c
+>> index c660cf8adb1c..0e8448784c62 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -585,6 +585,30 @@ struct coresight_device 
+>> *coresight_get_sink(struct coresight_path *path)
+>>   }
+>>   EXPORT_SYMBOL_GPL(coresight_get_sink);
+>> +/**
+>> + * coresight_get_in_port: Find the input port number at @csdev where 
+>> a @remote
+>> + * device is connected to.
 > 
-> See e.g.
-> https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/drivers/pci/controller/dwc/pcie-tegra194.c?h=controller/dwc&id=42f9c66a6d0cc45758dab77233c5460e1cf003df
+> This doesn't match the code ?
 > 
-> There might be other EPC drivers that don't disable all BARs in their .init(), so I would say that simply checking if the BAR has an address is not sufficient to guarantee that an EPF driver has called set_bar().
-> 
+> We are looking at the remote devices' in_connections ?
 
-Even if an EPC driver does not reset the BAR in their .init() and some
-default translation is left exposed, wouldn't it be safe as long as
-dw_pcie_ep_ib_atu_addr() succeeds in programming inbound mappings for the
-entire BAR?
+csdev here is the coresight_device of the TMC_ETR. We would like to find 
+the in-port number of the CTCU device(remote) which is connected to the 
+TMC_ETR device(csdev).
 
-That said, such usage apparently contradicts the documented usage (1st
-set_bar with no submap, then with submap) described in the docs and commit
-messages in this series, and allowing it would make things unnecessarily
-complicated. So I agree that adding such a safeguard is the right approach.
+The description is incorrect, and I will update it in next version:
 
-> 
-> I think the safest option is my second suggestion because then we know that we will only call
-> dw_pcie_ep_ib_atu_addr()
-> 
-> When:
-> 
-> 1) If ep->epf_bar[bar] is set:
-> https://github.com/torvalds/linux/blob/v6.19-rc6/drivers/pci/controller/dwc/pcie-designware-ep.c#L363
-> 
-> 
-> 2) All the other requirements to dynamically update a BAR is also met:
-> 
-> https://github.com/torvalds/linux/blob/v6.19-rc6/drivers/pci/controller/dwc/pcie-designware-ep.c#L368-L370
-> 
+Find the input port number at @remote where the @csdev device is 
+connected to.
 
-That makes sense, and it ensures that the behavior always accords with the
-docs and commit messages in this series.
-
-Thanks a lot for the careful review,
-Koichiro
+Thanks,
+Jie
 
 > 
+>> + *
+>> + * @csdev: csdev of the device.
+>> + * @remote: csdev of the remote device which is connected to @csdev.
+>> + *
+>> + * Return: port number upon success or -EINVAL for fail.
+>> + */
+>> +int coresight_get_in_port(struct coresight_device *csdev,
+>> +              struct coresight_device *remote)
+>> +{
+>> +    struct coresight_platform_data *pdata = remote->pdata;
+>> +    int i;
+>> +
+>> +    for (i = 0; i < pdata->nr_inconns; ++i) {
+>> +        if (pdata->in_conns[i]->src_dev == csdev)
+>> +            return pdata->in_conns[i]->dest_port;
+>> +    }
 > 
-> Kind regards,
-> Niklas
+> Suzuki
 > 
+
 
