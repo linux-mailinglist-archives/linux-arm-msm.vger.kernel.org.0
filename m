@@ -1,252 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-90421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iB/kLR0qdWn8BQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:22:53 +0100
+	id WN7aNCkudWmYBgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:40:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 206997EDFD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:22:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 764D37EF27
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:40:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6272C3009166
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 20:22:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A326B301454E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 20:39:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 731ED239E76;
-	Sat, 24 Jan 2026 20:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B905280A3B;
+	Sat, 24 Jan 2026 20:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lWoWePvQ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SHQtNnnO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cRZ4icxN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A3326561E
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jan 2026 20:22:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D302741AC;
+	Sat, 24 Jan 2026 20:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769286168; cv=none; b=QQ3IbDRcpfTMEHkcptMSckgelw3AVKDFrymgoIPGyLKJfiuI9ELhDbKw2tDU6lqI60XmoU0OkNFJEP6Dulwfaa1rrJzXBMJWTyuUOjdWS8485qzRhkZmZliHZctlr/4dfHuFrVu0Ed8FMw5ln9HDV4u99Mz1leasTcbmyFE0UPY=
+	t=1769287192; cv=none; b=Neb4N/BN/6U5FYESg6Q8/gBTCNUNJ1oKjqOiLudVrFFxArJa7aHtovERY5OrNH0UAWmlgwLn5y28+NkJnulweVpTZELk9sgJ0ndnFaURfh1JeD/dev8Fqd/0APBR8MrW20A4+7uFEU8wsVc0GZ3o4ySy1ETVcSX+is+pBRZsZMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769286168; c=relaxed/simple;
-	bh=SCT7nQE/hYMoboU+umD+G3VmYfCfWPktmmoJSAp2Jw8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bl1VaE5HHvrUHQJ4AjzVcI9g401I6wDwFWdV0P2oaFezuoaE6u4xlMq5DecYEagLhdno4zz0TXG9kBMOcXrsS3ewnYH7HC+WzRVNNVcvvzOa8n0lXwDcGuAoyHl+vf8mmZI3W+MIFAchki/6/5nTAv81TtN/UY4+Qtur3jBBdXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lWoWePvQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SHQtNnnO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60OJUfYq1628488
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jan 2026 20:22:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=oFPaTDK3TLri6Kv5yIIBf32t
-	fJCORMMg2vmVaMPtZIs=; b=lWoWePvQIOI7JIoR7sLr8ieyUi1ZnWmKrOMPShTG
-	XwfYpC6+J8hjFZpszixxdJwuMtJMSCp3U3pzat7kFsENUjLaLnibaRdLeoOfmfaZ
-	dj+zcktWne/b8wVSxyTojUGupn2dac7xMJ6OKZGIiq0NAUfD4OEWjMD9z6e2jn+4
-	PeCbJracr29gF8FAL3iAKBNsabnDO8a48B8XxLwhWEJMtk4abZBSWgl12ctIpZA3
-	KGwRy3XqJOB6p7L5oANLwPAAsTvML8wkdR1L2ZoQSvs0j5pI3j/qtplVyAH8G9p9
-	lL9NxoPRHewyKN+USjkdlLb5R9xwXSZXaL5CrnNIUq8vxQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bvq9qh4f9-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jan 2026 20:22:45 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8ba026720eeso1098664285a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jan 2026 12:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769286165; x=1769890965; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oFPaTDK3TLri6Kv5yIIBf32tfJCORMMg2vmVaMPtZIs=;
-        b=SHQtNnnO65XMmq7Wf6GfNPiBn4DA1QfrcdrsRs7yBG1w9La40Dk53QTfpdSrw7LNwk
-         IgRqmnNrM5JtxLRl0A8Exir60qy9zaLEvzEbRZY8F7rRuvaFxyNi6Q7amhMaTmM8G2zh
-         /kTktNA2aDuZfkhfnd5cYkEeOrtxtNbjPE/n8EiC7QtHPkEf5T21gUvm3gXlRFVsK4m0
-         rSoVBt0cGMbuXLO94eEQO7dvlEXljoiCA/VlA+g/axgvgbMDDeqJj2mg7qqzx/eq9Z3z
-         S+Hy5kqXQ1DIKhuy6gf3v3XOf9aPu8IXIa66eSr5ZXumvrp9ZPlB9LKQ/7NdtazuqExT
-         FDaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769286165; x=1769890965;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oFPaTDK3TLri6Kv5yIIBf32tfJCORMMg2vmVaMPtZIs=;
-        b=vM4zDfiAM0tXQV50tzfizSkiIj/QJaf49zLV7in4NSqENsBjpYUaT9zFx85rEd09fB
-         iCBObasQIeQRlQs97AJwtD8EocUT0GZiN1rVP1CJkkYcYZ/wRnp5+RO6DWbUADqkDVUZ
-         FHVcoYo+h/X6xvMKwu8lf4+tlQgyiXqa0uZpAz3Nfikeowil+ntpoQXLP2foit7V9Mmg
-         w17RgieaVMJgEeFeHSAeyHLQUVfaj9imzFgV0/d9ESj+WDMKFzGXsm6NWvlK07wIrosl
-         +fIi+RUZhcmb83eRWu4mglpY2oX3LmqAi4vdSoAfUe1WB+uVM39sRKMmuPpfUMiNl5HQ
-         d/RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVoEtCt2+ZJUk/cCxGAbQsk6MfhluQzk7PjLdrgocxC5g0oesGx6FI87YTa54nP6V1E5f8o86W2Qh2QZnRA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZOyMNRhm06ovBhWac3XD1qSjKOt57DDTKaOdnJJ7gZMCkBKuK
-	JR0mZwL4Nq+t6/xQLyjm/OcskIAwjkTWjdvmvxbxlAzuBcggnic5gwYK0dBmP7UW7ZCmJUACZNq
-	jbUeVjYHNV60W7xmF7TUr9uLjqomZLuZTFeYoxOIcq5m0FPUAOuBgUojhpWmrWf7CWKGpXQgew9
-	1P
-X-Gm-Gg: AZuq6aK2SY/T47Vknp3m0jIuCLv04nRNcHdc0L5USNtIUYjvwHuPA37+4O3HtCJDd3O
-	0KrR9GB9AxoLDvKiCrfBXDfzNWQ2VNO0Z95+eTKkQZAY7zpwaGwkwyMsp6HMKQfiXlCOlNdrtkG
-	6iQipQJncSdYbdzaABAD9ZCP5Q05fvkYNlrdOFsxgCJfhOP48OfopOwJcmKnWSsGOawmh3aWN4W
-	XKVoEqsW3iO/7W6rUJxXLLKUyoN0OnKkvyt1rmYzPogmp+R05y52Cc21eCH9cb7cJyO7tiEtc6z
-	G/lobXW/AEUf06pxdd9fqHg63hVOvlgDTvcfHoqC3nnKrIXJmdz0kLufsiG2j5nbXbs0hb6SNAW
-	DloqZy1Rgh0kZtk0L+G3GxSJa852GdDebTNyns8YTUbbWJVBSIbc4DR7FCfcN02IRzK7VHZ/hZo
-	ZYg3XS27+h7MC3Zo9knVX56bs=
-X-Received: by 2002:a05:620a:4687:b0:8c6:a57c:842c with SMTP id af79cd13be357-8c6e2e363dcmr858944885a.67.1769286165086;
-        Sat, 24 Jan 2026 12:22:45 -0800 (PST)
-X-Received: by 2002:a05:620a:4687:b0:8c6:a57c:842c with SMTP id af79cd13be357-8c6e2e363dcmr858942685a.67.1769286164662;
-        Sat, 24 Jan 2026 12:22:44 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-385da1a6c87sm16017121fa.36.2026.01.24.12.22.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jan 2026 12:22:42 -0800 (PST)
-Date: Sat, 24 Jan 2026 22:22:40 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Taniya Das <taniya.das@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: videocc-glymur: Add video clock
- controller driver for Glymur
-Message-ID: <j3jj2mg4sdm2n4d6nedpnev5tvusvizpvodfzazil6nuvwrsqa@upcpbdzv6uie>
-References: <20260124-glymur_videocc-v1-0-668f8b9c63be@oss.qualcomm.com>
- <20260124-glymur_videocc-v1-2-668f8b9c63be@oss.qualcomm.com>
+	s=arc-20240116; t=1769287192; c=relaxed/simple;
+	bh=ciFoKHg56YdevqFvkiK45faajSDq444twCPMMJonpuM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S8SX7uhPGAhcHsYXirx9FA4fdY0ceG3NXadvERB2GqZdzd+LR8aAGNY23ts8VXV//7YlcuX8kTYl3T5BY1YlcyYqG0vChb3YyZrs77Ccfp2RE7ZlX6IoMeW+gVJ+ri0nZ3hIvz01W5McDoBjd5hKpQopIMWmiPynWTADk9bpK3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cRZ4icxN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60OJvjX91974565;
+	Sat, 24 Jan 2026 20:39:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=DPp7bYmwiI88NuJWeoYgfAzXcE/Q9pS/7oV
+	x6tCiBRM=; b=cRZ4icxNA9XGek+AeDyHuEsRuPbtA7jPnaNMGWGF6IL6CkWujU8
+	ozExpjI12TL6ONKZfx0BcJtH3AFmIQSGWxrDz7EpldS0Sj3aVQcoQZcZa5S+WTeW
+	0veCLn+WM/KV0pxE5otp4tLNaNfPFrfLb+d7foPaH4/n8UV+BoxWV+KDAOAFISGP
+	d0gv24I0JUsiToZgnNdCEarNaQUvj/hq2/ZcSiAXPwV/eNxIDbyb8Sa0r/RaOFRq
+	xDRrKYQZ8cmAyq3DOwYj//TDGH8H54eS7d9XnKJYWhyz0nDsBARLHlfGTpOwuvXt
+	LFQeWoncRsO8tO3WNyIiVx0V5mJRixeR3mw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bvq9f14k4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Jan 2026 20:39:32 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60OKdTv7031205;
+	Sat, 24 Jan 2026 20:39:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4bvq5ke8jc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Jan 2026 20:39:29 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60OKdSfH031186;
+	Sat, 24 Jan 2026 20:39:29 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 60OKdSWX031183
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Jan 2026 20:39:28 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
+	id E672D5C9; Sun, 25 Jan 2026 02:09:27 +0530 (+0530)
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
+        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonathan@marek.ca, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
+        quic_vproddut@quicinc.com
+Subject: [PATCH v6 0/2] Add DSI display support for QCS8300 target
+Date: Sun, 25 Jan 2026 02:09:23 +0530
+Message-Id: <20260124203925.2614008-1-quic_amakhija@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260124-glymur_videocc-v1-2-668f8b9c63be@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: y1Ekzin2ufH8OiAm3gqGffHQdfyhi4px
-X-Proofpoint-GUID: y1Ekzin2ufH8OiAm3gqGffHQdfyhi4px
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI0MDE2NiBTYWx0ZWRfX1okLmmEfP1vr
- 1nEdtAIRMafHqDV8W5rN6dun0EtbrvmQYbfIYow9ihQUVNfCnHUAIoBWue3e8l5WlDsyA2/uWov
- iSCOb6Y0xCaxlWJrP1NaRkPHkL7XQTRWKDbn1Dn5fSN40b6BkTcT8p0hZpUeAvxzM/aUBEiR3jw
- GeNNO2NroR2cj36ntsbaZslRm2Z70TllQD8jVhn2a1Ke61YITuD4yEDS996XHQ4xzDueAsaPA8J
- Q4NCngc3YzMr02T2QYqW8Osm9neS1f/T0YIkprkIjPedJtHXXGcOnYCE/iRYDVEFIjNtgfquf+t
- 4lvLEcoIWhE6UlKbhKLDu6nxqyjdtKIQdBiSiHYCV67SBoAF8ra0u5nz49YJcA8yvquCyDepJyb
- mzu6Ov1YcmP5mrXCg7vNtm2TWkLB62Zqbt12cDQ/LyPeJ0ZsNA8c0axnSL/FqmXsRJQOjzZg2rN
- At00tobfUM5Mq/8ivHw==
-X-Authority-Analysis: v=2.4 cv=TsTrRTXh c=1 sm=1 tr=0 ts=69752a15 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=aoCLA3dNgO5RQvRKTysA:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=YLGSCBGx c=1 sm=1 tr=0 ts=69752e04 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=RHkTxhJYF7RHL4dZ0YsA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 95wARbYKKHHRpRDj6BnkStHZmBkixMci
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI0MDE2OCBTYWx0ZWRfX9xXk9NZF9nko
+ RvfUWkqlKMnoNBXFgDUxTUm57x7dli+UbhXjp/CpyfMB9lsxC40FFj7zTgTbMdTfxnCTFWjSt7E
+ dgIYjqXVjg1Q9oUm9q+A5C9Etwlr7q8BhSX0R9ORHg5ZJbAWsKiP7AMf0tuMSvUPtg02BVsehGT
+ ZyddntGrw6Y/huyftOFuekHxtuMMWfPGQGCWzNsq/INFWiKdXYNGa1oQRkvEpEAubRS5H0FN7B9
+ +GvDiUwz4qoYXKOH8dQEAsIiFSMJiBBJXuBv7u4TqHvYbgTBZZP1ySuyyL4u0ofh+WAGM96aw+t
+ rTWVoBEgP2qvfDc7U6EGzMi6EKgQWBJgDH8RMpM20VN8kbeztWlcIHDj7gvQhQhrR0MVjloDsG2
+ VVlwxKM9gvp4oVHlAU1zfHbl0qrfpLKcRa0eoDUV6JWa2n019eOwMweuFFtXZTQsCRtl8OkeGX3
+ 0A5PHr30Z3ZlfMpX1Ag==
+X-Proofpoint-ORIG-GUID: 95wARbYKKHHRpRDj6BnkStHZmBkixMci
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-24_03,2026-01-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 lowpriorityscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 phishscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601240166
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601240168
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90421-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
+	FREEMAIL_CC(0.00)[quicinc.com,gmail.com,oss.qualcomm.com,poorly.run,somainline.org,kernel.org,intel.com,linaro.org,ideasonboard.com,marek.ca,kwiboo.se];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-90424-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[quic_amakhija@quicinc.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[quicinc.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,quicinc.com:mid,quicinc.com:dkim];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-0.995];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 206997EDFD
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: 764D37EF27
 X-Rspamd-Action: no action
 
-On Sat, Jan 24, 2026 at 11:05:03PM +0530, Taniya Das wrote:
-> Add support for the video clock controller for video clients to be able
-> to request for videocc clocks on Glymur platform.
-> 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/Kconfig          |   9 +
->  drivers/clk/qcom/Makefile         |   1 +
->  drivers/clk/qcom/gcc-glymur.c     |   1 +
->  drivers/clk/qcom/videocc-glymur.c | 526 ++++++++++++++++++++++++++++++++++++++
->  4 files changed, 537 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index a8a86ea6bb7445e396048a5bba23fce8d719281f..20af4340b08f98773eadcc4a97b1669f51277eb8 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -46,6 +46,15 @@ config CLK_GLYMUR_TCSRCC
->  	  Support for the TCSR clock controller on GLYMUR devices.
->  	  Say Y if you want to use peripheral devices such as USB/PCIe/EDP.
->  
-> +config CLK_GLYMUR_VIDEOCC
-> +	tristate "Glymur Video Clock Controller"
-> +	depends on ARM64 || COMPILE_TEST
-> +	select CLK_GLYMUR_GCC
-> +	help
-> +	  Support for the video clock controller on Glymur devices.
-> +	  Say Y if you want to support video devices and functionality such as
-> +	  video encode and decode.
-> +
->  config CLK_KAANAPALI_CAMCC
->  	tristate "Kaanapali Camera Clock Controller"
->  	depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 6b0ad8832b55f1914079f15323b8cdd1608ad4c0..a71dfd0ddf5122d91b5ab4427a9e36cdd57f7bbd 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -24,6 +24,7 @@ obj-$(CONFIG_CLK_GFM_LPASS_SM8250) += lpass-gfm-sm8250.o
->  obj-$(CONFIG_CLK_GLYMUR_DISPCC) += dispcc-glymur.o
->  obj-$(CONFIG_CLK_GLYMUR_GCC) += gcc-glymur.o
->  obj-$(CONFIG_CLK_GLYMUR_TCSRCC) += tcsrcc-glymur.o
-> +obj-$(CONFIG_CLK_GLYMUR_VIDEOCC) += videocc-glymur.o
->  obj-$(CONFIG_CLK_KAANAPALI_CAMCC) += cambistmclkcc-kaanapali.o camcc-kaanapali.o
->  obj-$(CONFIG_CLK_KAANAPALI_DISPCC) += dispcc-kaanapali.o
->  obj-$(CONFIG_CLK_KAANAPALI_GCC) += gcc-kaanapali.o
-> diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-> index 238e205735ed594618b8526651968a4f73b1104e..cd11470a75f3fec67c1c0cb7fb2b54a814cfaf65 100644
-> --- a/drivers/clk/qcom/gcc-glymur.c
-> +++ b/drivers/clk/qcom/gcc-glymur.c
-> @@ -8507,6 +8507,7 @@ static const struct qcom_reset_map gcc_glymur_resets[] = {
->  	[GCC_VIDEO_AXI0_CLK_ARES] = { 0x3201c, 2 },
->  	[GCC_VIDEO_AXI1_CLK_ARES] = { 0x32044, 2 },
->  	[GCC_VIDEO_BCR] = { 0x32000 },
-> +	[GCC_VIDEO_AXI0C_CLK_ARES] = { 0x32030, 2 },
+This series enables the support for DSI to DP bridge port
+(labeled as DSI0) of the Qualcomm's QCS8300 Ride platform.
 
-Separate commit, description, Fixes, etc.
+QCS8300 SoC has DSI controller v2.5.1 and DSI PHY v4.2.
+The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
 
->  };
->  
->  static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
-> diff --git a/drivers/clk/qcom/videocc-glymur.c b/drivers/clk/qcom/videocc-glymur.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..a5045866982554ea46a9d75033537e7771df8fd9
-> --- /dev/null
-> +++ b/drivers/clk/qcom/videocc-glymur.c
+---
 
-This one LGTM.
+Changes in v6: Addressed review comments from Konard
+   - Dt binding patches are merged in v5.
+   - Patch 1: Added new line at few palces and corret the regsiter
+     size.[Konard]
+   - Patch 2: Correct the order of the regulators and added new line.
+   - Link to v5:[konard]
+     https://lore.kernel.org/all/20260104134442.732876-1-quic_amakhija@quicinc.com/
 
+Changes in v5: Addressed review comments from Krzysztof
+   - Patch 1: Updated commit description. [Krzysztof]
+   - Patch 2: Updated commit description.
+   - Patch 3: Added reviewed by tag from Krzysztof. [Krzysztof]
+   - Link to v4:
+     https://lore.kernel.org/all/20251225152134.2577701-1-quic_amakhija@quicinc.com/
+ 
+Changes in v4: Addressed review comments from konard and Krzysztof
+   - Patch 1: Update commit description to clarify PHY compatible string
+              details.[Krzysztof]
+   - Patch 2: Update commit description to clarify CTRL compatible string
+              details.
+   - Patch 4: Added new lines at few places. [konard]
+   - Patch 5: 
+            - Moved regulator always-on and boot-on properties at the end of
+              the node. [konard]
+            - Added new lines at few places. [konard]
+            - Made the tlmm gpios entries sorted based on gpio index
+              number. [Konard]
+            - Drop output-high property. [konard]
+   - Link to v3 :
+     https://lore.kernel.org/all/20251125013302.3835909-1-quic_amakhija@quicinc.com/
+
+Changes in v3: Addressed review comments from konard and Dmitry
+   - Patch 2: Remove qcom,qcs8300-dsi-ctrl from clk details. [Dmitry]
+   - Remove PHY and CTRL driver support. The CTRL and PHY versions for
+     Monaco are the same as LeMans, and Monaco will use the same CTRL
+     and PHY based on the fallback compatible string [Dmitry/Konard]
+   - Patch 5: Rename the regulator used and arrange the compatible, reg,
+     address and size cell for i2cmux in proper order. [Dmitry]
+   - Link to v2:
+     https://lore.kernel.org/all/20251006013924.1114833-1-quic_amakhija@quicinc.com/
+
+Changes in v2: Addressed review comments from Konard and Dmitry
+   - Patch 1: Documented the qcom,qcs8300-dsi-phy-5nm compatible string.
+   - Patch 2: Documented the qcom,qcs8300-dsi-ctrl compatible string.
+   - Patch 3:
+           - Added qcom,qcs8300-dsi-ctrl and qcom,qcs8300-dsi-phy-5nm
+             compatible strings
+             to the Device Tree bindings. [Dmitry/Konard]
+           - Fixed indentation issue. [Dmitry]
+           - Drop the extra empty line. [Dmitry]
+   - Patch 4: Added PHY driver support for qcom,qcs8300-dsi-phy-5nm.
+   - Patch 5: Added CTRL driver support for qcom,qcs8300-dsi-ctrl.
+   - Patch 6: Included qcom,qcs8300-dsi-ctrl and
+     qcom,qcs8300-dsi-phy-5nm compatible strings in the Device Tree. [Dmitry/Konard]
+   - Link to v1:
+     https://lore.kernel.org/all/20250925053602.4105329-1-quic_amakhija@quicinc.com/
+
+Ayushi Makhija (2):
+  arm64: dts: qcom: qcs8300: add Display Serial Interface device nodes
+  arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
+
+ arch/arm64/boot/dts/qcom/monaco.dtsi      | 105 ++++++++++++-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 179 ++++++++++++++++++++++
+ 2 files changed, 283 insertions(+), 1 deletion(-)
+
+base-commit: e3b32dcb9f23e3c3927ef3eec6a5842a988fb574 ("next-20260121")
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
