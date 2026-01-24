@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-90425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0L0LB4c0dWmjCAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 22:07:19 +0100
+	id YP4CDXk4dWloCQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 22:24:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 714437EFE4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 22:07:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C54B7F09C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 22:24:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5882C300CC04
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:07:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 474AB300CE54
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jan 2026 21:24:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4340C27EFE3;
-	Sat, 24 Jan 2026 21:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A92927A927;
+	Sat, 24 Jan 2026 21:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RgeO9DfL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uCr7YfHd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C19311CAF;
-	Sat, 24 Jan 2026 21:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F4A10F1;
+	Sat, 24 Jan 2026 21:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769288835; cv=none; b=R0GYXt2QVHbqalzMXjrLtcVlywbpwvGtPdfeEjH7bH13HHXOUopsQwM7HSG4zTY3ZrXZRHz0JUQKjC/nc83iIv87cILYCdOPAVof0KS2G06b30cuActDaKTEQSpUqe5+tTeI635DqNTAIwRtSgO68AEe+IqcUA0jm364WDeKy/E=
+	t=1769289844; cv=none; b=gGeXgRom2TG9anBs7yuRvPLP+v5qY7LIO+mH8ehgTSddoeeH8TkNvTfUy/V/0IYjW0GOYfcjuTNvDii7TTC4Y6wENVfLUugUS3lzgg3jM9VxD9lg3WK6rBc8Q0U3YtpCIWSH5O4IkG0UYe1JIrQuKS18ab1get7HdyI8Usopob4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769288835; c=relaxed/simple;
-	bh=fLYqPxjONg1Zgh+aTVGoH1ZdZkZAy21ct3YQyuc3kTE=;
+	s=arc-20240116; t=1769289844; c=relaxed/simple;
+	bh=AJFo4eAxCnItWVeRCP+XLYGtuLNEENvSrhswbI1WgZw=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=dHiFL+36+prDq5L4JmsZY0z6PLrIf3GaBTkx0bLM4JrDg3YFdEEGL8OFPktD3AsnoUDk1+8SRocuOL7h6D4XWNBBKH2kbecnRXLYW3sWGzzQQ4A6aE5TdRlR13xSuMM14NrzxwmB3K0w6exPx+sYU70qI/eHUAnvGjcSffWybLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RgeO9DfL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DF5C116D0;
-	Sat, 24 Jan 2026 21:07:14 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=HsvXhTcPLzYc1JnNKtUk9FDN4IJtdhnBedeFDRsvn1fws2AriVcNIk5ibaFpKP3GRF/AvYrZlM4vJ9e5r+NRbpsV7xFkk7lVu4YuNLwmalPikwfu6+oF8J2xAFf0es+Cl1qXYgsaQELlRVFREvmdhiThrHM6O71REQrz0wp3Tvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uCr7YfHd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7151DC116D0;
+	Sat, 24 Jan 2026 21:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769288834;
-	bh=fLYqPxjONg1Zgh+aTVGoH1ZdZkZAy21ct3YQyuc3kTE=;
+	s=k20201202; t=1769289843;
+	bh=AJFo4eAxCnItWVeRCP+XLYGtuLNEENvSrhswbI1WgZw=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=RgeO9DfLHS+6Ptya//YIxeAfyOnvAagz8FWT2WSlYfMofG3IcBLiDQMkCNX0NXrwE
-	 xLUKi2dz/ZrIZJ/advG8HPP9kh0KfM4mLFGbxixpfbLr3xVZvUPCq+Xt7Sv6jxIrMZ
-	 Hko0WwJRuLzZXfIlmbpmqERHIi2rCzfrA0HeLpYx0+p5CGGY6sp1QjMMBcNdwSpeow
-	 Rwh0S3LRcGyEVq9B9mFAItctBsO90eOqOqz+frVcqd64WLNVLCPNKS/sY6o6uOvG4c
-	 TmDSRm6mKXpqCgzZkZAv74Uwv2V+JGhhJjOI++taEdAvGjhyB9drpu1Idlquym2HdE
-	 6YdHomtG4tYSw==
-Date: Sat, 24 Jan 2026 15:07:12 -0600
+	b=uCr7YfHdiPtr0RJAwoaf+mfGXnleR92qoy5sh34I7SD8ghUmrTH5rs3fcpdAXM/Pg
+	 RlrVT5qnq//dBIxoDUIy8PNq1G2Pr0XGBPljTsZnBWgUe/tV1R2kcc/s2ie49u+/vR
+	 faAkRoRI/uhWjdn+S2pKCnndTU+TP49iO8PamH2VRy4pAuQbAoZEnh8BgYtCUwTzLD
+	 FEvVvHK2CobUcpQgsHIpFzFhHQlChoRfEtg5KndfQjJCsWAbnh9FZQTUSwcVL9Us7V
+	 RX2Jrya3q3xXLQJB6t9XJ3KKi+bX6VpL8wWM8VVNjCq9aP2mrBjvp8FtKBN4B6gqv8
+	 JH/oCMQeU6V/g==
+Date: Sat, 24 Jan 2026 15:24:01 -0600
 From: Bjorn Helgaas <helgaas@kernel.org>
 To: manivannan.sadhasivam@oss.qualcomm.com
 Cc: Bjorn Helgaas <bhelgaas@google.com>,
@@ -62,11 +62,10 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	linux-pm@vger.kernel.org, linux-ide@vger.kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v6 0/4] PCI: Add initial support for handling PCIe M.2
- connectors in devicetree
-Message-ID: <20260124210712.GA180714@bhelgaas>
+Subject: Re: [PATCH v6 2/4] PCI/pwrctrl: Add support for handling PCIe M.2
+ connectors
+Message-ID: <20260124212401.GA181386@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,7 +74,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260122-pci-m2-v6-0-575da9f97239@oss.qualcomm.com>
+In-Reply-To: <20260122-pci-m2-v6-2-575da9f97239@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -88,11 +87,11 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90425-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90426-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -105,25 +104,30 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 714437EFE4
+X-Rspamd-Queue-Id: 7C54B7F09C
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 10:46:50PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> Hi,
+On Thu, Jan 22, 2026 at 10:46:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > 
-> This series is an initial attempt to support the PCIe M.2 connectors in the
-> kernel and devicetree binding. The PCIe M.2 connectors as defined in the PCI
-> Express M.2 Specification are widely used in Notebooks/Tablet form factors (even
-> in PCs). On the ACPI platforms, power to these connectors are mostly handled by
-> the firmware/BIOS and the kernel never bothered to directly power manage them as
-> like other PCIe connectors. But on the devicetree platforms, the kernel needs to
-> power manage these connectors with the help of the devicetree description. But
-> so far, there is no proper representation of the M.2 connectors in devicetree
-> binding. This forced the developers to fake the M.2 connectors as PMU nodes [1]
-> and fixed regulators in devicetree.
+> Add support for handling the PCIe M.2 connectors as Power Sequencing
+> devices. These connectors are exposed as the Power Sequencing devices
+> as they often support multiple interfaces like PCIe/SATA, USB/UART to the
+> host machine and each interfaces could be driven by different client
+> drivers at the same time.
 
-Could you rebase this series on pci/pwrctrl, please?
+s/each interfaces/each interface/
 
-I'm pretty sure I would mess up the conflict resolutions, and I have
-no way to test this.
+> This driver handles the PCIe interface of these connectors. It first checks
+> for the presence of the graph port in the Root Port node with the help of
+> of_graph_is_present() API, if present, it acquires/poweres ON the
+> corresponding pwrseq device.
+
+s/API, if/API. If/
+s/poweres/powers/
+
+> Once the pwrseq device is powered ON, the driver will skip parsing the Root
+> Port/Slot resources and registers with the pwrctrl framework.
+
+s/and registers/and register/
 
