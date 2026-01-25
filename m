@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-90472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OLyfDHtQdmk4PQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 18:18:51 +0100
+	id ECRhJFZmdmkmQQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 19:52:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73C0D81948
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 18:18:50 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8F9481CE8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 19:52:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DE22F3013A5D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 17:18:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6D40B300107B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jan 2026 18:52:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444CF23FC5A;
-	Sun, 25 Jan 2026 17:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B172EFD98;
+	Sun, 25 Jan 2026 18:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZzVFnCD"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="GUb3b+DY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7AB22A4EB
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jan 2026 17:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D1E23D2A1
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jan 2026 18:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769361485; cv=none; b=oDjkkWqr5Fhf55WXLdMWR3ZNZnq3VhnpKoM+rnaLG4FxB2NL7NDjyJcmM7vJ+AQSMbkY7i3TcZ3/Rdx/cdnWKB32EjYpeWAI9zGhSeqrn8UlqI+PhVuYRhm7zD73b/DzN+E3KG6ClYJRjFC8p3kz0e5uIPvhkXTF/jACRspc3IQ=
+	t=1769367120; cv=none; b=TEh0HQDKCAmLMvAvhpzH2MS0Kr//FnDroLV8p3Hss9w9yHqSjpUbl7hl0ZaWyBUl3ZQzAlQuKWrlawTCULvQ/+4UazdhIQA39wfD4pxEqd/loqLGP6NV7SNCp/D4oJPM+RG55dEoeoTIsJ5E/lAzsqS6rbKUc+F1mkblyNu9EQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769361485; c=relaxed/simple;
-	bh=SoaC+bTBADZsZ6lBW8YnpUI8AOZA6Bnbyobzs3M9ObI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AT8jZLj1BeghjvgGwiZqP6gE6oul1vbcAONwnbLm1XPqEKmm1ukFt8UiTd7TBTG/afTaduDL2sQ5LZAHroQzawRbeWMvq1kgwIhaFKQDK/gc1EQjyPN8+kmbC2hD0K5Li6QQMa7iV/rCXVCi+0tR2z4kzWk3DZxOXuNIbBO4C+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZzVFnCD; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a7d98c1879so19288325ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jan 2026 09:18:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769361483; x=1769966283; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l9H4UePuprwIqygwTYXIxu8X5uuYTZS1QdaUvyOfOkw=;
-        b=RZzVFnCDOydk6G/N+EnSGCb0lhH/ldFiFgLgYCZFSN42B0rZKqsKOCGbTEkxPrx98r
-         WoCCwYRavF/HYnQ+/qWzhQ5L1KyeqHhHmCGm6EPA0RvbYH7G5oF5pkFN8Es1rJ5JZyxA
-         1nluzrj+yfZr2inGwLY0gmVaGoJuftFt0mI8Ngqen20pDQQT6uchQwRd3ZRt1rhUoi5K
-         u8DRUQ0XBF4c7+sc/p/d0T8GFzN51m4Kf9uBzf28yAibDaAuhtyVpaNBFMY+ycUA2RTn
-         A6E/kDSO9yTvbTklIMmENi6Ssr6TW/4aOK0reNL6kYpHG6R9H3kCMiGkr1IX68Ic37bs
-         BL7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769361483; x=1769966283;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=l9H4UePuprwIqygwTYXIxu8X5uuYTZS1QdaUvyOfOkw=;
-        b=gESee20RqOU+cajdCzJwpy3ywLpS+KAjQ4bYHw78+fgvHyADFXrHjGTnChZokJL5x0
-         0V1b6A7COEa/iOjxe9uGYPaZ2CvIafrv9l3QkUigmQUXhcF1jv8ti4BvVUO1isDayuOo
-         vjMWUq0hSJaSoExl6WXs+g8DXhQiE7BUkjECFSj+bL2h6eCGDgFPez2W3srvARLWxuGP
-         JXcNXs9xQvBhPVLcO1PoL7onZrr/xR0pKPP4Rb4H2f8u0ACuRq9gEl3gu1B/0MAKjWjd
-         Hr8wJI1BYDNzRxPvDpT3tmd86jnyzzl/yBU4ZS9lxoCsp23OeGp2roObwN/9s/f3YhqJ
-         Gg9A==
-X-Gm-Message-State: AOJu0YzrvzK3PTKj2WzrHCvVWoBDEBNuKzy7suNyZ9JWys7LNOCEaBmw
-	VSN/DvwwgUB2j4tHN49wlIt9QRjOVCPCeu4xLD8aS/KMeFIrMITMyOUW
-X-Gm-Gg: AZuq6aIck/5FPMiHxXhD2P83vP7W7x/3IMvpg7sBsHuqHwy4wP0xwiHZ7nMKB8Ff2+T
-	rFYq30W6hJjc9Ob/q825KTFo2RrQNu3cmgoxwiR3ywONx/iqvvQJ83e60mPEpEN1iBLQsAwb0UO
-	DaxZdaPOz5ZHmLYjMGbEwrWTTQfd7xFf24Fq3HGLGB8YKYULC7TsahY2PCAgxRmi6gvylmQuvUw
-	uX66dD1TnimPC0Cg0pXqv4InBvOOp5bw+3W0tRmj0+oi0EujV8hANJ7a0Pw5qIQ62T6RNSADE0j
-	tzUMSu469qDrbnIFR1dludcr3PfO21zV0sHyUbhiDjjDoMYbnx7HGFC2t5AKBfCa4uQYJGENhFb
-	Touo8yZehS9BCv9OPs87WK1lTwpBnOMdQi7QSiDFQyKWDZGXbBwhzRPkyPy2Un7jeSAaT44nlwm
-	8zUdsGH7ZSIW6+Oak6YrAi6zdSkTJy7winftxu
-X-Received: by 2002:a17:902:f541:b0:29f:301a:f6cf with SMTP id d9443c01a7336-2a8452f0c27mr22161865ad.35.1769361482880;
-        Sun, 25 Jan 2026 09:18:02 -0800 (PST)
-Received: from saikiran-Yoga-Slim-7-14Q8X9 ([2402:e280:3d17:646:35ca:7619:a2ef:5e6c])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c635a3f2e12sm6924293a12.22.2026.01.25.09.17.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jan 2026 09:18:02 -0800 (PST)
-From: Saikiran <bjsaikiran@gmail.com>
-To: linux-media@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	bryan.odonoghue@linaro.org,
-	bod@kernel.org,
-	vladimir.zapolskiy@linaro.org,
-	hansg@kernel.org,
-	sakari.ailus@linux.intel.com,
-	mchehab@kernel.org,
-	Saikiran <bjsaikiran@gmail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH v2 2/2] media: i2c: ov02c10: Check for errors in disable_streams
-Date: Sun, 25 Jan 2026 22:47:45 +0530
-Message-ID: <20260125171745.484806-3-bjsaikiran@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260125171745.484806-1-bjsaikiran@gmail.com>
-References: <20260125171745.484806-1-bjsaikiran@gmail.com>
+	s=arc-20240116; t=1769367120; c=relaxed/simple;
+	bh=zMaEvU68BWlhZpxDtfLltxRySkbC44HvvmZ1IlohbuE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=piW3uFq3suTZJxKoTUbKQ8bu3XWmvTeq3HDCjw3wjtwWNQB3UHhoSPyjOlKVyTqe9f5aH8BxPwgVcDZL5/QsYizsOTVrDKMb++qd/YkJJRUZMlip4N9wZXl+wsFXLBmN4Q8beTES+t2qHHDo/8A3o3vmr7jcI79DL8bSFa43ygI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=GUb3b+DY; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=from:to:cc:subject:date:message-id
+	:mime-version:content-transfer-encoding; s=k1; bh=1cYkOR6p+28OeK
+	pILTeDYy1YUmgndRIsJrSEImzjWWs=; b=GUb3b+DY+9mJpJ7B3Rk9AyWsPIlsID
+	gYiUHWLfH4MhylfpJpW6wK1EEp4qmRvMXufRAsUMyjw3n6a7jZTjlMDlAiAJeytr
+	PDYusfLDkbrdpScgSILsNpYpTv9wxWk3n8sIRRm98T1X5yszKvRP0oq5bX6qilP5
+	LjHLu7d1lAZJzkgT7s2l3Qa9JZdRes785y0OH4j4PHwtTrndA/aCfpLOjcH1lb4z
+	BtZ0JoJOhdKJB5uQXdN4teK3yDzq+Q8ww2MIjkXg7v93zhNt8uES1joQCXP5zbLl
+	u9kPE+ySeVYAst58JG+Fjj7CLKQTVDUGyLh4C9GbhtN1nhxaNB2QPgsw==
+Received: (qmail 2369426 invoked from network); 25 Jan 2026 19:51:47 +0100
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 25 Jan 2026 19:51:47 +0100
+X-UD-Smtp-Session: l3s3148p1@Xefl4TpJKhBtKXAW
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: linux-renesas-soc@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev,
+	Mark Brown <broonie@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
+	Will Deacon <will@kernel.org>
+Subject: [RFC PATCH 0/4] hwspinlock: refactor headers into public provider/consumer pair
+Date: Sun, 25 Jan 2026 19:46:51 +0100
+Message-ID: <20260125184654.17843-6-wsa+renesas@sang-engineering.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,81 +102,113 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[sang-engineering.com:s=k1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
-	TAGGED_FROM(0.00)[bounces-90472-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[44];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-90473-lists,linux-arm-msm=lfdr.de,renesas];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[sang-engineering.com];
+	DKIM_TRACE(0.00)[sang-engineering.com:+];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bjsaikiran@gmail.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 73C0D81948
+	FROM_NEQ_ENVFROM(0.00)[wsa@sang-engineering.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[sang-engineering.com,foss.st.com,kernel.org,arndb.de,linux.alibaba.com,gmail.com,baylibre.com,linuxfoundation.org,redhat.com,lwn.net,lists.infradead.org,vger.kernel.org,st-md-mailman.stormreply.com,lists.linux.dev,analog.com,infradead.org,sholland.org,posteo.net];
+	NEURAL_HAM(-0.00)[-0.995];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: B8F9481CE8
 X-Rspamd-Action: no action
 
-The ov02c10_disable_streams() function ignores the return value from
-cci_write() when stopping the sensor. If the I2C write fails (e.g.,
-due to CCI timeout, power management race, or device removal), the
-error is silently lost.
+TLDR: I want to create a hwspinlock provider outside of the hwspinlock
+directory. So, I refactored the headers into a provider/consumer pair.
+Which seems to me like a reasonable seperation anyhow. No functional
+changes. My build tests went fine and buildbots are happy, too.
 
-While we still need to return 0 and call pm_runtime_put() regardless
-of hardware state (to prevent PM reference leaks and pipeline lock
-issues), we should at least log when the hardware stop fails.
+Longer explanation:
 
-This change:
-1. Captures the cci_write() return value
-2. Logs an error if the write fails
-3. Still returns 0 to ensure proper cleanup
+There is a device (MFIS) in newer Renesas SoCs which combines various
+things like hwspinlocks, mailboxes and other stuff. Sadly, these are not
+strictly separated. Registers are kind of mixed and its register
+unprotection scheme will need one of its own locks. I tried various
+paths to handle this device (MFD, auxiliary bus) but I concluded that
+the sub-device dependencies give enough reasons for a single driver in
+drivers/soc/. So, this series will allow me to instantiate a hwspinlock
+provider from the other directory.
 
-Returning an error from disable_streams would cause the camss driver's
-video_stop_streaming() to exit early without releasing the pipeline
-lock, permanently locking the camera.
+Patches 1+2 do the actual refactoring with a fallback being in place. I
+used '-B' with git-format-patch in this RFC, so the actual changes are
+more visible when the headers are moved.
 
-Fixes: 0e98938b0157 ("media: i2c: add OmniVision OV02C10 sensor driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Saikiran <bjsaikiran@gmail.com>
----
- drivers/media/i2c/ov02c10.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Patch 3 converts all the users. There are not many. We could try to get
+all the acks for this single patch. Or I can break it into single
+patches and send them to subsystems. I don't mind.
 
-diff --git a/drivers/media/i2c/ov02c10.c b/drivers/media/i2c/ov02c10.c
-index b86cae3d2b74..743d8544ac53 100644
---- a/drivers/media/i2c/ov02c10.c
-+++ b/drivers/media/i2c/ov02c10.c
-@@ -629,8 +629,12 @@ static int ov02c10_disable_streams(struct v4l2_subdev *sd,
- 				   u32 pad, u64 streams_mask)
- {
- 	struct ov02c10 *ov02c10 = to_ov02c10(sd);
-+	int ret;
-+
-+	ret = cci_write(ov02c10->regmap, OV02C10_REG_STREAM_CONTROL, 0, NULL);
-+	if (ret)
-+		dev_err(ov02c10->dev, "failed to stop streaming: %d\n", ret);
- 
--	cci_write(ov02c10->regmap, OV02C10_REG_STREAM_CONTROL, 0, NULL);
- 	pm_runtime_put(ov02c10->dev);
- 
- 	return 0;
+Patch 4 simply removes the fallback.
+
+Looking forward to comments on this approach. If the hwspinlock
+maintainers like it as is, I would kindly propose to apply patches 1+2
+after 7.0-rc1 comes out. This might sound a bit hasty, but a) I want to
+avoid chasing a moving target and b) this would remove one dependency of
+the hwspinlock driver I originally intend to upstream, of course.
+
+I would take care of patches 3+4 as needed.
+
+A branch can be found here:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git renesas/hwspinlock/refactor-includes
+
+Patches are based on linux-next as of 2026-01-21.
+
+Opinions?
+
+Thanks and happy hacking,
+
+   Wolfram
+
+
+Wolfram Sang (4):
+  hwspinlock: refactor existing headers into provider.h
+  hwspinlock: refactor existing headers into consumer.h
+  treewide: convert hwspinlock users to the new consumer header file
+  hwspinlock: remove old header file
+
+ Documentation/locking/hwspinlock.rst          |  2 +-
+ MAINTAINERS                                   |  2 +-
+ drivers/base/regmap/regmap.c                  |  2 +-
+ drivers/hwspinlock/hwspinlock_core.c          |  5 +--
+ drivers/hwspinlock/omap_hwspinlock.c          |  4 +-
+ drivers/hwspinlock/qcom_hwspinlock.c          |  4 +-
+ drivers/hwspinlock/sprd_hwspinlock.c          |  4 +-
+ drivers/hwspinlock/stm32_hwspinlock.c         |  4 +-
+ drivers/hwspinlock/sun6i_hwspinlock.c         |  4 +-
+ drivers/hwspinlock/u8500_hsem.c               |  5 +--
+ drivers/iio/adc/sc27xx_adc.c                  |  2 +-
+ drivers/irqchip/irq-stm32mp-exti.c            |  2 +-
+ drivers/mfd/syscon.c                          |  2 +-
+ drivers/nvmem/sc27xx-efuse.c                  |  2 +-
+ drivers/nvmem/sprd-efuse.c                    |  2 +-
+ drivers/pinctrl/stm32/pinctrl-stm32.c         |  2 +-
+ drivers/soc/qcom/smem.c                       |  2 +-
+ drivers/spi/spi-sprd-adi.c                    |  2 +-
+ .../{hwspinlock.h => hwspinlock/consumer.h}   | 22 ++--------
+ .../linux/hwspinlock/provider.h               | 40 ++++++++++++-------
+ 20 files changed, 49 insertions(+), 65 deletions(-)
+ rename include/linux/{hwspinlock.h => hwspinlock/consumer.h} (94%)
+ rename drivers/hwspinlock/hwspinlock_internal.h => include/linux/hwspinlock/provider.h (78%)
+
 -- 
-2.51.0
+2.47.3
 
 
