@@ -1,284 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-90541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cLqSMxVXd2nMeAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:59:17 +0100
+	id 2LtmD41Xd2lneQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 13:01:17 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C91287EAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:59:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51D9F87EF0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 13:01:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 31E9130038CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:59:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B477B30037EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A60732937A;
-	Mon, 26 Jan 2026 11:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E631730E854;
+	Mon, 26 Jan 2026 12:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GNnqwP/o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kpcH0Phf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B571133372D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 11:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E0730E0D5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 12:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769428747; cv=pass; b=rOU5wppxAVMeeE/pQkUbDG6yYnlI4CWsGGTx6FfKtP6lk8qi5v4CQqVDHsTwCD2kYIJt1cuHOf98KNY/m94XmUYy9feEj3zCATMyzBbdIM1bbzTG1X4WsYyTjuCophP1Q1NYH6VpVTWMiJ4hTgorQ8hVOfzInOOQTNZYQjO7rBY=
+	t=1769428873; cv=pass; b=ZmH7btUbl3sjTf0BLRsCIi10tnoXxFoppdZWiD82AREUq8XGPXSYH04TLlZBCcGyC5M5hhikran8/vYfE4/6qN6NO8p7ZEYVXPDwrmFen96R5UIZN1tNnnj0/fTmBOyTE/fXNei+Z8eV5+nZjEKdtAmNGr9CBzsLjNCJQFrx63s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769428747; c=relaxed/simple;
-	bh=ueDbZxfaJaRJBPNnQTV7LcSD+ot8kxI/8ecV5AaE3VI=;
+	s=arc-20240116; t=1769428873; c=relaxed/simple;
+	bh=+Ltx5xFR5vr2hiTz53OKY/RZN/uvi8YcCdTM4WuHmbE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IrMDMSv/OUlVgKjE/9aviYijWpP3791gxUz/AiDc1CPudcY2/5kdmBcCeJwM+hWulNKL9SiOdFIbrHkzZt1XDScUUmbWYZOpMNI1tc+lnBnJBDuOmQLnqTF88PO7DGN241moxRSMNqt/IRkRaYbxirGZb/i1p2ABEopdNTnNOTo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GNnqwP/o; arc=pass smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-34be2be4b7cso2274417a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 03:59:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769428745; cv=none;
+	 To:Cc:Content-Type; b=grvG9JM2UikLGCHQlWeLyatmLFKxNPIS6kd8p78l5BiLNBCGus4w9ZUdMumn1zY0+V4P8fWL6hLNN7UTuvlbtNO13f1p4EYYIPZntOjlu4yzhquDuZo/ejuZd6UouFHtvfDAYW7ju6WPeIq4ie8cyPJMS9t/IY+j2n8yS6rRAOM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kpcH0Phf; arc=pass smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-78f89501423so47788047b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 04:01:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769428871; cv=none;
         d=google.com; s=arc-20240605;
-        b=Jgi/ZYyr0BAcxTy0TXtC9lXobJiM8q/RxWhxOaw8Ka3o6WWjENrw0oSSgPgDw7DNi5
-         ICQkOPvbWJpJrDP6as/JpSpjqOIbeyLVnjoTJw7bjFPGtVIsnvK2MSEACB22+dHOc3yf
-         o43nOuS0gWouGubd7RrPhQDKD+Y1oG3koElHTQBjoi5ROvXRFmniRld4U+xLS2o0Mc9p
-         fbT4hx5UDZsiAF/OMcX2uS7lESocMQ8hyJ0L1SzIZOA4IHQPFV2rji/q3M3m+4ST4L6T
-         /zHOi4+5s1KUTYoflk1r//4SRubce7QdXQGcfypPS7gTHkAkvSqvSrb+TNkblt3C/e/g
-         HwnA==
+        b=KtrxmhQmmZagvcNUxkYz/euvk1FBmQy23PoMptJcapeqU9jqy5QPGBSMjNhsXBva/A
+         gvJMhoJdrmeXA30aAbXn74a3RVxmnt8wUJrQ3adX11yd/siKyjzCnMH2V6AzBChNqytP
+         1HzZRDfbOJ9WREzwS6tA2F9fLJPmXPMweUzlRrdx5wd4pK8V0ddnd+CSzmQeIHoYR+Ji
+         LbPw4pK4RuuOx9rs6nFBxEHn3ojreJXuI7aVXrczvcihubkwTSzM2YSdNPohZ30qTAbS
+         SsDDqcsObQzTaTnD/k5ol/2jHuerxp9fxYrCelqR0lamZW1GHsk5jabluLsLSzCnW78B
+         QoXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=lxU49EsEPtxJDyA2uj8GOndna+YV7i2iNMjekZIsTLQ=;
-        fh=w8EBEqywFWCc12X0CQXZQ3ELCY68LGGJ0EtM27tkBVo=;
-        b=lKVKEnInQL8YdamZn7XQ92yI1CwWXotuzUmwwfxpa3ADyPWfb/Lzb/YvqRq25upt6x
-         ptHO0g7A0ZGOdvZudH592J9NjpRMqEqgPHtc5skVNQRCWoAQF7cFbXwO1gE0/Ew92O/f
-         HIKz1kQ+fXgJeez5b0x2sWMjXl74geuANisV7potv60KbPCq4HVChJflK8afpNtj2auE
-         6+IrkqHhbuaTjh1w4XZTksm+dsNg3IQRZjqdAKWTCXk2zVF957pocdZh0u6QQlrhFVQN
-         afFbqsMQJOWPeGqxzt4Q04kUHhLw2dRslsPt68HTA/Tmx11cSNlrk4cnQ0McM3vwiSXf
-         7trg==;
+        bh=Mw4KTn7OReF9P8qDWL30dcxwGr9P25yZho6xXb2IBG8=;
+        fh=zoIKJHenqT4oL9zMvJrry/RpoIei622mjXkEdZK+2pE=;
+        b=CbxyGwG0WVrqYhjzTLnsvutTwr7z9HiU1bEL+EXeG7mxGPfN5JXdXuZmxTdCEmbwPP
+         SVPKSsevi/II4mhS/MomRtrIWM6uI2lGdKyy8wDaui34F/zS2BDo8yB5NV0rvHNEp4pa
+         5SxDuIzpHxk3NvENo9iN1PCJRlC2vFIDOE6OHAQTOerlWDYW+WZJcvt3hTS50GnI3/od
+         OPS3hbYNCMLe0IojclHWSGdThyNR6KXBvs2mnFbTUKgfNVr+F8LRWYH9BRSPkf7c/v3c
+         4BZcBcDfarMNFJELGISDRxgCgphZlpow6WIejvaxmF0+YmPa2PpKKpu24s0fYFeFIaLb
+         2aWQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769428745; x=1770033545; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1769428871; x=1770033671; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lxU49EsEPtxJDyA2uj8GOndna+YV7i2iNMjekZIsTLQ=;
-        b=GNnqwP/o3de3k+xzZsEBRPGU/J3QAslnMXgPHrKAgDC+4Y1slMotI6LqZHou0gO/s7
-         7k0iHOsah8VReR/v7tqraP0kHjcNMYXkr8TPlZW8Ef60mIkZh0lfd3TL6iwwnwgo9m9K
-         YRn1A7meFFaojlgQZofHbkags79+NFYAhfeia0BDj3vc9f3pcwfSrwzVYoApjgkPNVX2
-         GcuLd7W38FExWcjaUPfe0YdZOXr1XXYgXkCNRR890ePj3n5Zc2DVV2+L487mjiMyrs35
-         5VrTL/F99X+zlScU0jUMJtvPxK2kMpg73MVKooLOTdGlT4Orwcm0USGNucWe31WkNYAc
-         5vhw==
+        bh=Mw4KTn7OReF9P8qDWL30dcxwGr9P25yZho6xXb2IBG8=;
+        b=kpcH0Phfg0ycYH3Hm3/Od2DTFpOkwAVo4eRsX2Xsid/QJx2Gc6e5FTfvuWb1w21vP7
+         LVsOUq9MQL72j2AEt+GnF82WRzI5rsLRPlgATRFQxCm/c0Yl/Ih1hfCPra8Msoh6/4bY
+         5UVA9dL06u3NOXrmflQbknuHSvSPnD0M4xP88HBEQslSMYDgNisxG1xncAIv1akKd4Mq
+         L5ZyZCnOtBe8Z5Pbf1tuXu44i+mBPZSLanRJHkJhaFC5Y3TZW70oEJ8ZFKBk6ApRX6/A
+         Kta1+du8uAbiiCLUn+q+8vJgS5ZSgVrkInmoJQUyl9pSD3zP7Vt/LvGc0LEAo0Hmq+XW
+         SjQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769428745; x=1770033545;
+        d=1e100.net; s=20230601; t=1769428871; x=1770033671;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=lxU49EsEPtxJDyA2uj8GOndna+YV7i2iNMjekZIsTLQ=;
-        b=tPQh8IoMRod2wtyxLdhuZymCRJ1qJ3FTGeOMgPeLbDJIDYzf6U/6XpWoQlgMWBbMds
-         tCv/httjsASA+d/8LqGEazfypLGO/gKftBDW/pTYq68phCk7oAOC0F0zthfhkqdtan2I
-         1AblGndYr3PQ2RQ7cCuLwxRGp92TRXHKgsX0ndqnjVS1jJqHpLyS6Q2pQl/aGpX5cSFX
-         1MEjk1Tv8x4P97U4IJE9d8KIV+dWBCd7cCEwvV7kJqA1y2UIYI0/zd5HyY76ZmYOdRyk
-         ICANr7C6kgUdjsflIfHZXCdsl/qUNsgBZe2Vgnyy1WwyWJbT1v93DtFdtCqLHOdXNwvs
-         H/WQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVs0dkFVGgY9ohEDxd2SiUhwLeIXHqZ8GRAqpAnBU+dZY/AnKsdXKY7tiPFqMYW73SH36CEnIQiVerzMPnE@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRuZtsGVQ91Z2KolLhtYMr/nMp/C/ujbi1dEqIgZWizfqXivCT
-	d3YMj/DJTORatHDvkPQmib7il/3gTlfLIVH4o7Hktmn255lZFUKZoD1JC04OXAArqGc+f5Ro/1w
-	nxLhMA/9nOceRAbYuEwnxMAi/muTR+L8=
-X-Gm-Gg: AZuq6aKGzdLd5zlsLiJ82XSH10tIwBv1CMKVk8KIJxnVv/Ywy/uCtm0EHc3KIn3CZJR
-	xH9f9+pNPvRx+ejtHwSWOmfktgyEJt9SN/II9e4+HfoXn9zapqQXAKhvey32DooYYIcSc0JibqI
-	SReKHDNn5MhppMw812Uk8lm01b0I5v0a1VY1D7pCwdY+D/y9Jl8zqXkyVpy2kwDMgFgaWI/zi57
-	A/EJusQpEQpG4eKGz/1skeygANn1O49G/lriYYkGMZHVT6C61Ge8AABYA0uVrmjTedyeCCgZMbL
-	6twvO7au+cCP8zX1IoFojkpnuihz
-X-Received: by 2002:a17:90b:1c11:b0:34c:7182:cf9d with SMTP id
- 98e67ed59e1d1-353c41787efmr3269458a91.25.1769428744818; Mon, 26 Jan 2026
- 03:59:04 -0800 (PST)
+        bh=Mw4KTn7OReF9P8qDWL30dcxwGr9P25yZho6xXb2IBG8=;
+        b=mgZtqccfHdIkgambvlaxsQxLb2WBxy02nwkPtWl4QYlRASXHiP2Z8lLtNfa0J+G4lp
+         pRWJFpCKywC0eoyGQISCxw03gPD1u3h66mL3LymG0S8Bsvn7AunpickBbYskTw5HN/lg
+         TPRLMFB+NBAxpxNvKsBLgIbdtQscpcK1s8aQXCwi7MGTYZ841jGd8V+IrB4WpGi0UWEq
+         e/N+VSwy2Q/p3kThLafwtramjfb+iob7XeUIxd1iy/t1T8moIrWCcSZ2PLBHNfvn8pIC
+         0uQ7cpfNYMNNl1qR7Nh6l+qMiPpDKdhzIbA5UTPNyYCKnMChGKp1Sa9MoGnJ4+nPjBTU
+         t/Cg==
+X-Forwarded-Encrypted: i=1; AJvYcCWM4Ir/CT9s2wac7xjcB0co+n9afHW+Z2zPc3X5hE504D/D/CLLnxso3xX7auxjwZc3iVJSeSvsuIU/kFyh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzc1ssRbzuV3SFZur1riKCtOgxH/tbJq101GU+zPqrOpgD1CIMe
+	as888gYxDXyiyIfTJTd1Du72ao1Ptg9riPe3NxXDdARiAiJ6yGhFjeJAKbM+UOcA1zG+UeRsh0p
+	+PhXkVb+xrpqhlRHHd4vJk5DszJbm0kjf9f03++XONg==
+X-Gm-Gg: AZuq6aL/fi8BleNWtU5zXYNDEhfw78dWLyHc2QqkOFBm0GJqsN6ddcRNv/g8x/33DvJ
+	Bs42w5d+IOYUbNWtkIez7SQ9AaKonlDJtW5NB9OevWl4ArYbVK7IRjVywTiKXqW6N0d20eRns4M
+	w5yFkXjNL16iWOCqWfp0fpC5O1yx86jVUrOigw40V1lyQx3zUlSWYAjK6ciu186gEtfqrT1XDeS
+	Vf+VfQ2pzaxst7caKibMsCAWwDM2n0Redx60nHc2b8cuYd91cc2LA/SqS/ddzHB0smeFjybCX/T
+	2o2ZVw==
+X-Received: by 2002:a05:690e:d85:b0:649:60a9:bd84 with SMTP id
+ 956f58d0204a3-6497146c00emr2614295d50.43.1769428871187; Mon, 26 Jan 2026
+ 04:01:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260125171745.484806-1-bjsaikiran@gmail.com> <20260126061528.63785-1-bjsaikiran@gmail.com>
- <20260126061528.63785-2-bjsaikiran@gmail.com> <ef6cf6c5-3b5d-45f2-af67-0567262a4561@linaro.org>
- <CAAFDt1spRkj7kySCa8P=jehQHbYVT2j+nxLira1vwYkiCJ7LDw@mail.gmail.com> <b699fcf5-5cb0-41eb-b9de-e5c6e98aefaa@linaro.org>
-In-Reply-To: <b699fcf5-5cb0-41eb-b9de-e5c6e98aefaa@linaro.org>
-From: Saikiran B <bjsaikiran@gmail.com>
-Date: Mon, 26 Jan 2026 17:28:52 +0530
-X-Gm-Features: AZwV_QjRJQN9oQY4Bm_wvDz9C94tR-dF8CReD0RZ4DAvRDLQ6uVsM3VvLqo3HCI
-Message-ID: <CAAFDt1tjiEXbuChcY73+NYxPW=rB83P4Bks1TPGsHTTqoSzOuw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] media: i2c: ov02c10: Keep power on and use reset
- for power management
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, bod@kernel.org, 
-	rfoss@kernel.org, todor.too@gmail.com, vladimir.zapolskiy@linaro.org, 
-	hansg@kernel.org, sakari.ailus@linux.intel.com, mchehab@kernel.org, 
-	stable@vger.kernel.org
+References: <20260121-msm-next-quad-pipe-split-v17-0-6eb6d8675ca2@linaro.org>
+ <20260121-msm-next-quad-pipe-split-v17-2-6eb6d8675ca2@linaro.org>
+ <6kzd2g4hgffqz5ipaqbourgiefuxxh3njj44n35blo37z6hhhj@us7lzlgmjuld>
+ <CABymUCMf8LxX6VWUuzNJP+G1y3Xi5-CVYhaqLR7F=kU6ZgdcgA@mail.gmail.com>
+ <c56e4ylgwcqni23btaxegdbfg3tbkyp2vtjtboeb3kbvcfk27u@vrlh276djtfr>
+ <CABymUCP6ZDGtEJeQSZ48x8TZyJ4gKVDC+JzJRz-tZ0ksCUCqsA@mail.gmail.com>
+ <91d590de-fa00-4df3-923f-b49ad00cd9da@oss.qualcomm.com> <CABymUCOqxtYS7BaDMHeN2npn=4+Y-6kxLDOS6oskiiH58epR5w@mail.gmail.com>
+ <bbd8e584-4398-40da-9759-0c27f34214d3@oss.qualcomm.com>
+In-Reply-To: <bbd8e584-4398-40da-9759-0c27f34214d3@oss.qualcomm.com>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Mon, 26 Jan 2026 20:01:00 +0800
+X-Gm-Features: AZwV_Qjj_g2I7w5tIIriV_jOh7_nPwC9Miffd_hKixfAlcPtTCAzZn6knZ1J8uU
+Message-ID: <CABymUCMivNJt4fikx8XJ8KFZB-y4zc2RaqjBksxWrQFD9foEkg@mail.gmail.com>
+Subject: Re: [PATCH v17 2/4] drm/msm/dpu: Defer SSPP allocation until CRTC check
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90541-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90542-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[linux.dev,kernel.org,poorly.run,somainline.org,gmail.com,ffwll.ch,oss.qualcomm.com,linaro.org,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bjsaikiran@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jun.nie@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.36:email]
-X-Rspamd-Queue-Id: 2C91287EAC
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: 51D9F87EF0
 X-Rspamd-Action: no action
 
-"I don't think we've established the regulator is at fault. That's the
-feedback I'm giving you here. ... vreg_cam_1p8: regulator-cam-1p8 {
-compatible =3D "regulator-fixed";"
-
-Just to clarify on the regulators: on the Slim 7x, the camera supplies
-(avdd, dvdd, dovdd) are all RPMh-controlled LDOs (pm8010 and pm8550),
-not generic fixed regulators.
-
-As I've confirmed that the qcom-rpmh-regulator driver doesn't natively
-support active discharge or parsing off-on-delay-us (generic
-property), which explains why the physical discharge constraint wasn't
-being respected.
-
-I'm taking your advice to fix this properly at the platform level in
-my local tree (patching the RPMh driver and DTS to enforce the
-discharge delay).
-
-For the media driver patch (v3): I will follow Hans's suggestion to
-use Runtime PM Autosuspend. This handles the rapid open/close UX
-problem gracefully by keeping the regulators on during quick toggles,
-avoiding the need for the driver to "know" about the platform
-regulator constraints.
-
-I will proceed with my testing and will let you know of the results.
-
-Thanks for the feedback.
-
-Thanks,
-Saikiran
-
-
-On Mon, Jan 26, 2026 at 5:11=E2=80=AFPM Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=B9=B4=
+1=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 18:49=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On 26/01/2026 11:23, Saikiran B wrote:
-> > "Where do you get this conclusion from ? Are you inferring it from
-> > what you see on the platform or can you point to some known
-> > data-source for this ?"
+> On 26/01/2026 12:29, Jun Nie wrote:
+> > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=
+=B9=B41=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 18:13=E5=86=99=E9=81=93=EF=BC=
+=9A
+> >>
+> >> On 26/01/2026 12:06, Jun Nie wrote:
+> >>> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=
+=B9=B41=E6=9C=8822=E6=97=A5=E5=91=A8=E5=9B=9B 18:22=E5=86=99=E9=81=93=EF=BC=
+=9A
+> >>>>
+> >>>> On Thu, Jan 22, 2026 at 02:03:25PM +0800, Jun Nie wrote:
+> >>>>> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=
+=E5=B9=B41=E6=9C=8821=E6=97=A5=E5=91=A8=E4=B8=89 17:30=E5=86=99=E9=81=93=EF=
+=BC=9A
+> >>>>>>
+> >>>>>> On Wed, Jan 21, 2026 at 04:01:51PM +0800, Jun Nie wrote:
+> >>>>>>> Currently, plane splitting and SSPP allocation occur during the p=
+lane
+> >>>>>>> check phase. Defer these operations until dpu_assign_plane_resour=
+ces()
+> >>>>>>> is called from the CRTC side to ensure the topology information f=
+rom
+> >>>>>>> the CRTC check is available.
+> >>>>>>
+> >>>>>> Why is it important? What is broken otherwise?
+> >>>>>
+> >>>>> I see. Thanks! Will add below lines in next version.
+> >>>>>
+> >>>>> By default, the plane check occurs before the CRTC check.
+> >>>>> Without topology information from the CRTC, plane splitting
+> >>>>> cannot be properly executed. Consequently, the SSPP
+> >>>>> engine starts without a valid memory address, which triggers
+> >>>>> an IOMMU warning.
+> >>>>
+> >>>> What is plane splitting? Write commit message for somebody who doesn=
+'t
+> >>>> exactly know what is going on.
+> >>>
+> >>> Thanks for the suggestion! Any more revise is needed?
+> >>
+> >> Sadly enough the text below is not a significant improvement.
+> >>
+> >>>
+> >>> Currently, splitting plane into SSPP rectangles the allocation occur
+> >>> during the plane check phase, so that a plane can be supported by
+> >>> multiple hardware pipe.
+> >>
+> >> What does this mean? Without virtual planes in place, there are no
+> >> multiple hardware pipes.
+> >>
+> >>> While pipe topology is decided in CRTC check.
+> >>
+> >> ?? What does it mean here?
+> >>
+> >>> By default, the plane check occurs before the CRTC check in DRM
+> >>> framework. Without topology information from the CRTC, plane splittin=
+g
+> >>> cannot be properly executed.
+> >>
+> >> What does 'properly' mean here? How is it executed? What happens?
+> >>
+> >>> Consequently, the SSPP engine starts
+> >>> without a valid memory address, which triggers IOMMU warning.
+> >>
+> >> IOMMU faults. There are no "warnings".
+> >>
+> >>>
+> >>> Defer above plane operations until dpu_assign_plane_resources()
+> >>> is called from the CRTC side to ensure the topology information from
+> >>> the CRTC check is available.
+> >>
+> >>
+> > Thanks for the patience!
 > >
-> > This is determined on the Lenovo Yoga Slim 7x (X1E80100). I tested
-> > extensively and found that if I attempt to power-on the sensor less
-> > than ~2.3 seconds after power-off, it fails to identify or times out
-> > on I2C (brownout behavior). If we wait >2.3s, it works reliably 100%
-> > of the time.
+> >
+> > Currently, splitting plane into SSPP rectangles and allocation occur
+> > during the plane check phase. When virtual plane is enabled to support
+> > quad-pipe topology later, 2 SSPPs with 4 rect will be needed, so that
+> > a plane can be supported by 4 hardware pipes. And pipe number is
 >
-> I don't think we've established the regulator is at fault. That's the
-> feedback I'm giving you here.
+> number of pipes
 >
-> I think it is far, far, far more likely the power-on sequence of the
-> sensor needs tweaking.
+> > decided in CRTC check per interface number, resolution and hardware
+> > feature.
+>
+> Okay, but IOMMU errors were reported with virtual planes being disabled.
+> So how is it relevant?
+
+After revise of splitting plane into pipes, the number of pipes will be dec=
+ided
+by CRTC check for both virtual plane and non-virtual plane case to unify th=
+e
+plane handling,  instead of assumption of 2 pipes at most.
 >
 > >
-> > "2 seconds to discharge ? These regulators are PM8010 anyway - so
-> > you're saying the PMIC takes two seconds to discharge ?"
+> > By default, the plane check occurs before the CRTC check in DRM
+> > framework. Without topology information from the CRTC, plane splitting
+>
+> WHat is plane splitting?
+
+How about: s/plane splitting/splitting plane into pipes ?
+
+>
+> > will be skipped for the first time as pipe number is 0. Consequently,
+> > the SSPP engine starts without a valid memory address, which triggers
+> > IOMMU fault.
 > >
-> > Yes. I checked the regulator driver
-> > (drivers/regulator/qcom-rpmh-regulator.c) and found that unlike other
-> > Qualcomm regulator drivers (e.g., spmi/glink), it currently lacks
-> > active_discharge / pull-down support. Without active discharge, the
-> > voltage rails float and decay very slowly via leakage current when the
-> > load (sensor) is in reset/high-Z.
+> > Defer above plane related operations until dpu_assign_plane_resources()
+> > is called from the CRTC side to ensure the topology information from
+> > the CRTC check is available.
+> >
+> > Regards,
+> > Jun
+> >>
+> >> --
+> >> With best wishes
+> >> Dmitry
 >
 >
-> Right so looking at the power for this part we have:
->
-> &cci1_i2c1 {
->         camera@36 {
->                 compatible =3D "ovti,ov02c10";
->                 reg =3D <0x36>;
->
->                 reset-gpios =3D <&tlmm 237 GPIO_ACTIVE_LOW>;
->                 pinctrl-names =3D "default";
->                 pinctrl-0 =3D <&cam_rgb_default>;
->
->                 clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
->                 assigned-clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
->                 assigned-clock-rates =3D <19200000>;
->
->                 orientation =3D <0>; /* front facing */
->
->                 avdd-supply =3D <&vreg_l7b_2p8>;
->                 dvdd-supply =3D <&vreg_l7b_2p8>;
->                 dovdd-supply =3D <&vreg_cam_1p8>;
->
->                 port {
->                         ov02e10_ep: endpoint {
->                                 data-lanes =3D <1 2>;
->                                 link-frequencies =3D /bits/ 64 <400000000=
->;
->                                 remote-endpoint =3D <&csiphy4_ep>;
->                         };
->                 };
->         };
-> };
->
-> // qcom standard RPMh -> PMIC LDO regulators
-> // these are not the droids you are looking for
-> vreg_l7b_2p8: ldo7 {
->         regulator-name =3D "vreg_l7b_2p8";
->         regulator-min-microvolt =3D <2800000>;
->         regulator-max-microvolt =3D <2800000>;
->         regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-> };
->
-> // this OTOH
-> vreg_cam_1p8: regulator-cam-1p8 {
->         compatible =3D "regulator-fixed";
->
->         regulator-name =3D "VREG_CAM_1P8";
->         regulator-min-microvolt =3D <1800000>;
->         regulator-max-microvolt =3D <1800000>;
->
->         gpio =3D <&tlmm 91 GPIO_ACTIVE_HIGH>;
->         enable-active-high;
->
->         pinctrl-0 =3D <&cam_ldo_en>;
->         pinctrl-names =3D "default";
-> };
->
-> Dell has used - likely reused - part of the x86 design in the qcom
-> implementation - and toggles 1v8 via a GPIO directly.
->
-> If your theory about brown-out is correct then
->
-> vreg_cam_1p8: regulator-cam-1p8 {
->         // add this
->         off-on-delay-us =3D <20000>;
-> };
->
-> Then please let us know how she goes.
->
-> ---
-> bod
+> --
+> With best wishes
+> Dmitry
 
